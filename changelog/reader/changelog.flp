@@ -1,0 +1,24 @@
+﻿<flash_project name="changelog" version="1">
+    <project_folder name="org" expanded="true">
+        <project_folder name="as2lib" expanded="true">
+            <project_folder name="tool" expanded="true">
+                <project_folder name="changelog" expanded="true">
+                    <project_file path="./org/as2lib/tool/changelog/XMLParseErrorInfo.as" filetype="as" />
+                    <project_file path="./org/as2lib/tool/changelog/Config.as" filetype="as" />
+                    <project_file path="./org/as2lib/tool/changelog/DateFilter.as" filetype="as" />
+                    <project_file path="./org/as2lib/tool/changelog/Entry.as" filetype="as" />
+                    <project_file path="./org/as2lib/tool/changelog/EntryFilter.as" filetype="as" />
+                    <project_file path="./org/as2lib/tool/changelog/EntryMarker.as" filetype="as" />
+                    <project_file path="./org/as2lib/tool/changelog/FileNotFoundException.as" filetype="as" />
+                    <project_file path="./org/as2lib/tool/changelog/Main.as" filetype="as" />
+                    <project_file path="./org/as2lib/tool/changelog/Parser.as" filetype="as" />
+                    <project_file path="./org/as2lib/tool/changelog/ParserListener.as" filetype="as" />
+                    <project_file path="./org/as2lib/tool/changelog/StandardView.as" filetype="as" />
+                    <project_file path="./org/as2lib/tool/changelog/TraceView.as" filetype="as" />
+                    <project_file path="./org/as2lib/tool/changelog/ChangelogView.as" filetype="as" />
+                </project_folder>
+            </project_folder>
+        </project_folder>
+    </project_folder>
+    <project_file path="./changelog.fla" filetype="fla" profile="" def_file="true" />
+</flash_project>
