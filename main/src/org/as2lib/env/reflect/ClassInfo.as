@@ -32,7 +32,7 @@ import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
  * is used to get information about the class it represents.
  *
  * <p>You can use the static search methods #forName, #forObject, #forInstance
- * and #forClass.
+ * and #forClass to get class infos for specific cocrete classes.
  *
  * <p>If you for example have an instance you wanna get information about
  * you first must retrieve the appropriate ClassInfo instance and you

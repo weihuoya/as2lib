@@ -20,8 +20,24 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ReflectConfig;
 
 /**
- * PackageAlgorithm searches for the specified package and returns a PackageInfo
- * representing the found package.
+ * PackageAlgorithm searches for the specified package and returns a
+ * PackageInfo representing the found package.
+ *
+ * <p>To obtain the package info corresponding to package you use the
+ * PackageAlgorithm class as follows.
+ *
+ * <code>var packageAlgorithm:PackageAlgorithm = new PackageAlgorithm();
+ * var packageInfoByPackage:PackageInfo = packageAlgorithm.execute(org.as2lib.core);</code>
+ *
+ * <p>It is also possible to retrieve a package info by name.
+ *
+ * <code>packageInfoByName:PackageInfo = packageAlgorithm.executeByName("org.as2lib.core");</code>
+ *
+ * <p>Already retrieved package infos are stored in a cache. There thus 
+ * exists only one PackageInfo instance per package. The following returns
+ * true.
+ *
+ * <code>trace(packageInfoByPackage == packageInfoByName);</code>
  *
  * @author Simon Wacker
  */
@@ -103,6 +119,39 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Returns the package info representing the package corresponding to the
+	 * passed-in package name.
+	 *
+	 * <p>The name must be fully qualified, that means it must consist
+	 * of the package's path (namespace) as well as its name. For example
+	 * 'org.as2lib.core'.
+	 *
+	 * <p>Null gets returned if:
+	 * <ul>
+	 *   <li>The passed-in name is null, undefined or a blank string.</li>
+	 *   <li>There is no package with the given name, starting from the root 'package' that is by default _global.</li>
+	 * </ul>
+	 *
+	 * @param n the fully qualified name of the package
+	 * @return the package info representing the package corresponding to the name
+	 */
+	public function executeByName(n:String):PackageInfo {
+		if (!n) return null;
+		var p:PackageInfo = getCache().getRoot();
+		var f:Function = eval(p.getFullName() + "." + n);
+		if (!f) return null;
+		var r:PackageInfo = c.getPackage(f);
+		if (r) return r;
+		var a:Array = n.split(".");
+		var g:Object = p.getPackage();
+		for (var i:Number = 0; i < a.length; i++) {
+			g = g[a[i]];
+			p = c.addPackage(new PackageInfo(a[i], g, p));
+		}
+		return p;
 	}
 	
 }

@@ -22,8 +22,21 @@ import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.reflect.algorithm.ChildAlgorithm;
 
 /**
- * PackageInfo represents a real package in the Flash environment. This class is
- * used to get specific information about the package it represents.
+ * PackageInfo represents a real package in the Flash environment. This
+ * class is used to get specific information about the package it represents.
+ *
+ * <p>You can use the static search methods #forName and #forPackage to
+ * get package infos for specific packages.
+ *
+ * <p>If you for example have a package you wanna get information about
+ * you first must retrieve the appropriate PackageInfo instance and you
+ * can then use its methods to get the wanted information.
+ * 
+ * <code>var packageInfo:PackageInfo = PackageInfo.forPackage(org.as2lib.core);
+ * trace("Package full name: " + packageInfo.getFullName());
+ * trace("Parent package name: " + packageInfo.getParent().getName());
+ * trace("Child classes: " + packageInfo.getChildClasses());
+ * trace("Child packages: " + packageInfo.getChildPackages());</code>
  *
  * @author Simon Wacker
  */
@@ -64,11 +77,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	 */
 	public static function forName(packageName:String):PackageInfo {
 		if (!packageName) return null;
-		var p:Object = eval("_global." + packageName);
-		if (p) {
-			return forPackage(p);
-		}
-		return null;
+		return ReflectConfig.getPackageAlgorithm().executeByName(packageName);
 	}
 	
 	/**

@@ -32,11 +32,20 @@ import org.as2lib.env.reflect.ReflectConfig;
  * var classInfoByInstance:ClassInfo = classAlgorithm.execute(myInstance);
  * var classInfoByClass:ClassInfo = classAlgorithm.execute(MyClass);</code>
  *
+ * <p>It is also possible to retrieve a class info by name.
+ *
+ * <code>classInfoByName:ClassInfo = classAlgorithm.executeByName("MyClass");</code>
+ *
+ * <p>If the class is not contained in the root/default package you must
+ * specify the whole namespace/path.
+ *
+ * <code>classInfoByName:ClassInfo = classAlgorithm.executeByName("org.as2lib.MyClass");</code>
+ *
  * <p>Already retrieved class infos are stored in a cache. There thus 
  * exists only one ClassInfo instance of a class. The following returns
  * true.
  *
- * <code>trace(classInfoByInstance == classInfoByClass)</code>
+ * <code>trace(classInfoByInstance == classInfoByClass == classInfoByName);</code>
  *
  * @author Simon Wacker
  */

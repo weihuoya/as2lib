@@ -74,6 +74,8 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass {
 		this.s = new Object();
 		
 		this.a = true;
+		_global.ASSetPropFlags(b, null, 0, true);
+		_global.ASSetPropFlags(b, ["__proto__", "constructor", "prototype"], 1, true);
 		search(b);
 		
 		this.a = false;
@@ -81,7 +83,9 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass {
 		_global.ASSetPropFlags(d, null, 0, true);
 		_global.ASSetPropFlags(d, ["__proto__", "constructor", "__constructor__"], 1, true);
 		search(d);
+		
 		// ASSetPropFlags must be restored because unexpected behaviours get caused otherwise
+		_global.ASSetPropFlags(b, null, 1, true);
 		_global.ASSetPropFlags(d, null, 1, true);
 		
 		return r;
@@ -96,13 +100,13 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass {
 					g[n] = true;
 					if (!s[n]) {
 						r[r.length] = new PropertyInfo(n, t["__set__" + n], t[i], c, a);
-						r[n] = r[r.length];
+						r[n] = r[r.length-1];
 					}
 				} else if (i.indexOf("__set__") == 0) {
 					s[n] = true;
 					if (!g[n]) {
 						r[r.length] = new PropertyInfo(n, t[i], t["__get__" + n], c, a);
-						r[n] = r[r.length];
+						r[n] = r[r.length-1];
 					}
 				}
 			}
