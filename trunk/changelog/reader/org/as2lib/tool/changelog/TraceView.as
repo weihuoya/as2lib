@@ -32,8 +32,54 @@ class org.as2lib.tool.changelog.TraceView extends BasicClass implements Changelo
 	 */
 	public function update(list:Array):Void {
 		for(var i=0; i<list.length; i++) {
-			var element:EntryNode = EntryNode(list[i]);
-			trace(element.getDate().toString()+" - "+element.getPackage()+" - "+element.getType()+" - "+element.getContent());
+			traceEntry(list[i]);
 		}
+	}
+	
+	private function traceEntry(entry:EntryNode):Void {
+		var package:String = entry.getPackage();
+		var clazz:String = entry.getClass();
+		var method:String = entry.getMethod();
+		var variable:String = entry.getVariable();
+		var throws:String = entry.getThrows();
+		var somethingWrittenBeforeDate = false;
+		var content:String = "["+entry.getSign()+"] ";
+		if(package) {
+			content += package;
+			somethingWrittenBeforeDate = true;
+		}
+		if(clazz) {
+			if(package) {
+				content += ".";
+			}
+			content += entry.getClass();
+			somethingWrittenBeforeDate = true;
+		}
+		if(method) {
+			if(clazz || package) {
+				content += ".";
+			}
+			content += method;
+			somethingWrittenBeforeDate = true;
+		} else if (variable) {
+			if(clazz || package) {
+				content += ".";
+			}
+			content += variable;
+			somethingWrittenBeforeDate = true;
+		}
+		if(throws) {
+			content += " throws "+throws;
+		}
+		var date:Date = entry.getDate();
+		if(somethingWrittenBeforeDate) {
+			content += " ";
+		}
+		content += "("+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+")";
+		if(entry.getContent().length > 0) {
+			content += "\n"+entry.contentToString();
+		}
+		content += "\n";
+		trace(content);
 	}
 }

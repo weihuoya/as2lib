@@ -52,7 +52,7 @@ class org.as2lib.tool.changelog.EntryMarker extends MovieClip {
 		this.createTextField('sign', 2, 0, 0, 0, 0);
 		sign.autoSize = "left";
 		sign.selectable = false;
-		sign.text = getSign();
+		sign.text = entry.getSign();
 		
 		var tF:TextFormat = new TextFormat();
 		tF.color = 0xFFFFFF;
@@ -67,47 +67,6 @@ class org.as2lib.tool.changelog.EntryMarker extends MovieClip {
 	 */
 	public function setHeight(height:Number):Void {
 		background._height = height;
-	}
-	
-	/**
-	 * Getter for the Sign Character of the EntryNode.
-	 * Available Characters are:
-	 *   + ... add
-	 *   - ... remove
-	 *   * ... enhancement
-	 *   ! ... bugfix
-	 *   ~ ... change
-	 *   ? ... documentation
-	 * 
-	 * @see #entry
-	 * @return Type of the passed entry as String.
-	 */
-	private function getSign(Void):String {
-		var type:Number = entry.getType();
-		var result:String;
-		switch(type) {
-			case EntryNode.TYPE_ADD:
-				result = "+";
-				break;
-			case EntryNode.TYPE_REMOVE:
-				result = "-";
-				break;
-			case EntryNode.TYPE_CHANGE:
-				result = "~";
-				break;
-			case EntryNode.TYPE_BUGFIX:
-				result = "!";
-				break;
-			case EntryNode.TYPE_DOCUMENTATION:
-				result = "?";
-				break;
-			case EntryNode.TYPE_ENHANCEMENT:
-				result = "*";
-				break;
-			default:
-				result = "";
-		}
-		return result;
 	}
 	
 	/**
