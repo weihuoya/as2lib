@@ -1,29 +1,38 @@
 ﻿import org.as2lib.util.ObjectUtil;
-import org.as2lib.core.BasicClass;
 import org.as2lib.core.BasicInterface;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.ClassInfo;
 
 /**
- * Acts like a normal Array but assures that only objects from one and the same type are added to the Array.
+ * Acts like a normal Array but assures that only objects from one and the same
+ * type are added to the Array.
+ * 
+ * @author Simon Wacker
+ * @author Martin Heidegger
  */
-class org.as2lib.data.holder.TypedArray extends BasicClass implements BasicInterface {
-	public static var CASEINSENSITIVE = Array.CASEINSENSITIVE;
+class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface {
+	/*public static var CASEINSENSITIVE = Array.CASEINSENSITIVE;
 	public static var DESCENDING = Array.DESCENDING;
 	public static var NUMERIC = Array.NUMERIC;
 	public static var RETURNINDEXDARRAY = Array.RETURNINDEXEDARRAY;
-	public static var UNIQUESORT = Array.UNIQUESORT;
+	public static var UNIQUESORT = Array.UNIQUESORT;*/
 	
+	/** The Array the TypedArray wraps. */
 	private var array:Array;
+	
+	/** The type of values that can be added. */
 	private var type:Function;
 	
 	/**
 	 * Constructs a new TypedArray instance.
-	 * @param type
+	 *
+	 * @param type the type of the values this TypedArray contains
+	 * @param array the Array that shall be wrapped
 	 */
 	public function TypedArray(type:Function, array:Array) {
-		// Problem: The types the array passed as a parameter don't get checked.
-		if (array != null) this.array = array;
-		else this.array = new Array();
 		this.type = type;
+		this.array = array;
 	}
 	
 	/**
@@ -36,7 +45,6 @@ class org.as2lib.data.holder.TypedArray extends BasicClass implements BasicInter
 		}
 		var result:TypedArray;
 		if (l == 0) {
-			// TODO: Replace with .clone when ready
 			result = new TypedArray(this.type, this.array.concat());
 		} else {
 			result = new TypedArray(this.type, this.array.concat(arguments));
@@ -45,11 +53,12 @@ class org.as2lib.data.holder.TypedArray extends BasicClass implements BasicInter
 	}
 	
 	/**
-	 * Checks if the array already contains the object.
-	 * @param object
-	 * @return True if the array contains the object else false
+	 * Checks if the array already contains the passed object.
+	 *
+	 * @param object the object that shall be checked for availability
+	 * @return true if the array contains the object else false
 	 */
-	public function contains(object):Boolean {
+	/*public function contains(object):Boolean {
 		var l:Number = array.length;
 		for (var i:Number = 0; i < l; i++) {
 			if (array[i] === object) {
@@ -57,32 +66,34 @@ class org.as2lib.data.holder.TypedArray extends BasicClass implements BasicInter
 			}
 		}
 		return false;
-	}
+	}*/
 	
 	/**
-	 * Removes all content.
+	 * Removes all content out of the TypedArray.
+	 *
+	 * @param 
 	 */
-	public function clear(Void):Void {
+	/*public function clear(Void):Void {
 		array = new Array();
-	}
+	}*/
 	
 	/**
 	 * Sets the new value at the given position.
 	 * @param number
 	 * @param value
 	 */
-	public function setValue(number:Number, value):Void {
+	/*public function setValue(number:Number, value):Void {
 		this.array[number] = value;
-	}
+	}*/
 	
 	/**
 	 * Gets the value associated with the given number.
 	 * @param number
 	 * @return the value
 	 */
-	public function getValue(number:Number) {
+	/*public function getValue(number:Number) {
 		return this.array[number];
-	}
+	}*/
 	
 	/**
 	 * @see Array
@@ -153,32 +164,47 @@ class org.as2lib.data.holder.TypedArray extends BasicClass implements BasicInter
 	/**
 	 * @return the type of the array
 	 */
-	public function getType(Void):Function {
+	/*public function getType(Void):Function {
 		return this.type;
-	}
+	}*/
 	
 	/**
 	 * @see Array
 	 */
 	public function get length():Number {
-		return (this.array.length);
+		return this.array.length;
 	}
 	
 	/**
 	 * @see #length
 	 */
-	public function getLength():Number {
+	/*public function getLength():Number {
 		return this.length;
+	}*/
+	
+	public function getClass(Void):ClassInfo {
+		return ReflectUtil.getClassInfo(this);
+	}
+	
+	public function toString(Void):String {
+		return "";
 	}
 	
 	/**
-	 * Checks if the instance variable type does not match the type of the object.
-	 * @param object
-	 * @return true if the types do not match otherwise false
+	 * Checks if the object is of correct type.
+	 *
+	 * @param object the object that shall be type checked
+	 * @throws 
+	 */
+	/**
+	 * Validates the passed object based on its type.
+	 *
+	 * @param object the object which type shall be validated
+	 * @throws org.as2lib.env.except.IllegalArgumentException if the type of the object is not valid
 	 */
 	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new Error("Type Missmatch between " + object + " & " + type);
+			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].");
 		}
 	}
 }
