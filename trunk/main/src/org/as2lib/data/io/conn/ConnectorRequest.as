@@ -8,12 +8,14 @@ class org.as2lib.data.io.conn.ConnectorRequest extends BasicClass implements Bas
 	private var args:Array;
 	
 	public function ConnectorRequest(host:String, path:String, method:String) {
-		this.host = host;
-		this.path = path;
-		this.method = method;
-		this.args = new Array();
-		for(var i=3; i<arguments.length; i++) {
-			args.push(arguments[i]);
+		if(host != "" || host != null) this.host = host;
+		if(path != "" || path != null) this.path = path;
+		if(method != "" || method != null){
+			this.method = method;
+			this.args = new Array();
+			for(var i=3; i<arguments.length; i++) {
+				args.push(arguments[i]);
+			}
 		}
 	}
 	

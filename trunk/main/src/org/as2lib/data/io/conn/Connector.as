@@ -10,7 +10,7 @@ interface org.as2lib.data.io.conn.Connector extends BasicInterface {
 	public function setPath(path:String):Void;
 	public function getMethod(Void):String;
 	public function setMethod(method:String):Void;
-	public function getParams();
+	public function getParams(Void):Array;
 	public function setParams():Void;
 	public function addListener(listener:ConnectorListener):Void;
 	public function removeListener(listener:ConnectorListener):Void;
