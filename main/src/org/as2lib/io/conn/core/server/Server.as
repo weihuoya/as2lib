@@ -41,7 +41,7 @@ interface org.as2lib.io.conn.core.server.Server extends BasicInterface {
 	 * @param path the path through which the service can be accessed on the server
 	 * @param service the actual service which provides the functionalities
 	 */
-	public function putService(path:String, service):Void;
+	public function putService(path:String, service):ServerServiceProxy;
 	
 	/**
 	 * Adds the service already wrapped into a proxy to the server.

@@ -18,6 +18,32 @@ import org.as2lib.env.event.EventListener;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
 
 /**
+ * MethodInvocationErrorListener awaits an error response of a remote
+ * method invocation.
+ *
+ * <p>When and why the callback method gets invoked depends on the client
+ * you use.
+ *
+ * <p>This interface can either be instantiated directly or implemented
+ * by a class. If you instantiate it directly you must overwrite the
+ * callback method with an anonymous function.
+ * <code>
+ * var listener:MethodInvocationErrorListener = new MethodInvocationErrorListener();
+ * listener.onError = function(errorInfo:MethodInvocationErrorInfo):Void {
+ *   trace("Error occured when trying to invoke the method: " + errorInfo);
+ * }
+ * </code>
+ *
+ * <p>Implementing the interface by a class is a much neater way. But
+ * sometimes adds is unnecessary complexity.
+ * <code>
+ * class MyListener implements MethodInvocationErrorListener {
+ *   public function onError(errorInfo:MethodInvocationErrorInfo):Void {
+ *     trace("Error occured when trying to invoke the method: " + errorInfo);
+ *   }
+ * }
+ * </code>
+ *
  * @author Simon Wacker
  */
 interface org.as2lib.io.conn.core.event.MethodInvocationErrorListener extends EventListener {
@@ -25,8 +51,17 @@ interface org.as2lib.io.conn.core.event.MethodInvocationErrorListener extends Ev
 	/**
 	 * Gets executed when the method invocation failed.
 	 *
-	 * @param info contains information about the error
+	 * <p>Known issues are:
+	 * <ul>
+	 *   <li>The method threw an exception.</li>
+	 *   <li>The method does not exist on the remote service.</li>
+	 * </ul>
+	 *
+	 * <p>Remember that not all clients support this functionalities.
+	 *
+	 * @param errorInfo contains information about the error and some useful
+	 *                  information about the 'invoked' method
 	 */
-	public function onError(info:MethodInvocationErrorInfo):Void;
+	public function onError(errorInfo:MethodInvocationErrorInfo):Void;
 	
 }
