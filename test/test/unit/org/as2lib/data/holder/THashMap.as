@@ -3,7 +3,7 @@ import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.data.iterator.Iterator;
 
-class test.org.as2lib.data.holder.THashMap extends TestCase{
+class test.unit.org.as2lib.data.holder.THashMap extends TestCase{
 	public function THashMap(Void) {
 	}
    

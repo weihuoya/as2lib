@@ -42,10 +42,10 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	
 	private function fetchTestCaseMethodInfos(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestCaseMethodInfo);
-		var methodsIterator:Iterator = ReflectUtil.getClassInfo(this.testCase).getMethods().iterator();
-		while(methodsIterator.hasNext()){
-			var method:MethodInfo = MethodInfo(methodsIterator.next());
-			if(StringUtil.startsWith(method.getName(), 'test')) {
+		var methods:Array = ReflectUtil.getClassInfo(this.testCase).getMethods();
+		for (var i:Number = 0; i < methods.length; i++) {
+			var method:MethodInfo = methods[i];
+			if (StringUtil.startsWith(method.getName(), 'test')) {
 				result.unshift(new TestCaseMethodInfo(method, getTestRunner()));
 			}
 		}

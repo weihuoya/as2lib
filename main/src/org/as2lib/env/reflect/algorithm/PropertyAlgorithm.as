@@ -20,27 +20,25 @@ import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
-import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.PrimitiveTypeMap;
 
 /**
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass implements ContentAlgorithm {
-	private var r:Map;
-	private var g:Map;
-	private var s:Map;
+	private var r:Array;
+	private var g:Object;
+	private var s:Object;
 	private var c:ClassInfo;
 	private var a:Boolean;
 	
 	public function PropertyAlgorithm(Void) {
 	}
 	
-	public function execute(c:CompositeMemberInfo):Map {
+	public function execute(c:CompositeMemberInfo):Array {
 		this.c = ClassInfo(c);
-		this.r = new PrimitiveTypeMap();
-		this.g = new PrimitiveTypeMap();
-		this.s = new PrimitiveTypeMap();
+		this.r = new Array();
+		this.g = new Object();
+		this.s = new Object();
 		
 		this.a = true;
 		var b:Function = this.c.getType();
@@ -62,14 +60,14 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass impl
 			if (typeof(t[i]) == "function") {
 				var n = i.substring(7);
 				if (i.indexOf("__get__") == 0) {
-					g.put(n, true);
-					if (!s.get(n)) {
-						r.put(n, new PropertyInfo(n, t["__set__" + n], t[i], c, a));
+					g[n] = true;
+					if (!s[n]) {
+						r[r.length] = new PropertyInfo(n, t["__set__" + n], t[i], c, a);
 					}
 				} else if (i.indexOf("__set__") == 0) {
-					s.put(n, true);
-					if (!g.get(n)) {
-						r.put(n, new PropertyInfo(n, t[i], t["__get__" + n], c, a));
+					s[n] = true;
+					if (!g[n]) {
+						r[r.length] = new PropertyInfo(n, t[i], t["__get__" + n], c, a);
 					}
 				}
 			}

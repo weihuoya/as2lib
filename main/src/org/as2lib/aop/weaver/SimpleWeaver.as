@@ -49,10 +49,10 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	}
 	
 	private function weaveByPackage(a:PackageInfo):Void {
-		var b:Array = a.getChildClasses().getValues();
+		var b:Array = a.getChildClasses();
 		var i:Number = b.length;
 		while (--i-(-1)) weaveByClassInfo(b[i]);
-		var c:Array = a.getChildPackages().getValues();
+		var c:Array = a.getChildPackages();
 		var k:Number = c.length;
 		while (--k-(-1)) weaveByPackage(c[i]);
 	}
@@ -63,11 +63,11 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	}
 	
 	private function weaveByClassInfoAndAspect(a:ClassInfo, b:Aspect):Void {
-		var c:Array = a.getMethods().getValues();
+		var c:Array = a.getMethods();
 		var d:Array = b.getAdvices();
 		var i:Number = c.length;
 		while (--i-(-1)) weaveByJoinPointAndAdvices(new MethodJoinPoint(c[i], a.getType().prototype), d);
-		var e:Array = a.getProperties().getValues();
+		var e:Array = a.getProperties();
 		var k:Number = e.length;
 		while (--k-(-1)) {
 			var f:PropertyInfo = e[i];
@@ -111,11 +111,11 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	
 	public function weaveByObjectAndAspect(a:Object, b:Aspect):Void {
 		var c:ClassInfo = ReflectUtil.getClassInfo(a);
-		var d:Array = c.getMethods().getValues();
+		var d:Array = c.getMethods();
 		var h:Array = b.getAdvices();
 		var i:Number = d.length;
 		while (--i-(-1)) weaveByJoinPointAndAdvicesAndObject(new MethodJoinPoint(d[i], c.getType().prototype), h, a);
-		var e:Array = c.getProperties().getValues();
+		var e:Array = c.getProperties();
 		var k:Number = e.length;
 		while (--k-(-1)) {
 			var f:PropertyInfo = e[i];

@@ -74,26 +74,14 @@ class org.as2lib.data.holder.PrimitiveTypeMap extends BasicClass implements Map 
 	 * @see org.as2lib.data.holder.Map#getKeys()
 	 */
 	public function getKeys(Void):Array {
-		var result:Array = new Array();
-		var i:Number = keys.length;
-		while (--i-(-1)) {
-			result.push(keys[i]);
-		}
-		result.reverse();
-		return result;
+		return keys.concat();
 	}
 	
 	/**
 	 * @see org.as2lib.data.holder.Map#getValues()
 	 */
 	public function getValues(Void):Array {
-		var result:Array = new Array();
-		var i:Number = values.length;
-		while (--i-(-1)) {
-			result.push(values[i]);
-		}
-		result.reverse();
-		return result;
+		return values.concat();
 	}
 	
 	/**

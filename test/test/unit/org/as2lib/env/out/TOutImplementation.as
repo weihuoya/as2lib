@@ -2,9 +2,9 @@
 import org.as2lib.env.out.Out;
 import org.as2lib.env.except.Exception;
 import org.as2lib.env.except.FatalException;
-import test.org.as2lib.env.out.handler.UIAlertHandler;
+import test.unit.org.as2lib.env.out.handler.UIAlertHandler;
 
-class test.org.as2lib.env.out.TOutImplementation extends TestCase {
+class test.unit.org.as2lib.env.out.TOutImplementation extends TestCase {
 	
 	private var aOut:Out;
 	

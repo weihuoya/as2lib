@@ -3,7 +3,7 @@ import org.as2lib.data.holder.SimpleStack;
 import org.as2lib.data.holder.EmptyDataHolderException;
 import org.as2lib.data.iterator.Iterator;
 
-class test.org.as2lib.data.holder.TSimpleStack extends TestCase {
+class test.unit.org.as2lib.data.holder.TSimpleStack extends TestCase {
 	public function TSimpleStack(Void) {
 	}
 	

@@ -8,7 +8,7 @@ import org.as2lib.data.holder.Stack;
 /**
  * @author Simon Wacker
  */
-class test.org.as2lib.env.except.TException extends TestCase {
+class test.unit.org.as2lib.env.except.TException extends TestCase {
 	public function TException(Void) {
 	}
 	

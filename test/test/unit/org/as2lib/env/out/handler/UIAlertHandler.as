@@ -11,7 +11,7 @@ import mx.controls.Alert;
   *  be able to use the Alert class;
   * @author Christoph Atteneder
  */
-class test.org.as2lib.env.out.handler.UIAlertHandler extends BasicClass implements OutHandler {
+class test.unit.org.as2lib.env.out.handler.UIAlertHandler extends BasicClass implements OutHandler {
 
 	/**
 	 * @see org.as2lib.env.out.OutHandler

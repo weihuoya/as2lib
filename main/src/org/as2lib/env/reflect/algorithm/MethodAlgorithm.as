@@ -19,23 +19,21 @@ import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
-import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.PrimitiveTypeMap;
 
 /**
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass implements ContentAlgorithm {
-	private var r:Map;
+	private var r:Array;
 	private var i:ClassInfo;
 	private var s:Boolean;
 	
 	public function MethodAlgorithm(Void) {
 	}
 	
-	public function execute(i:CompositeMemberInfo):Map {
+	public function execute(i:CompositeMemberInfo):Array {
 		this.i = ClassInfo(i);
-		this.r = new PrimitiveTypeMap();
+		this.r = new Array();
 		
 		this.s = true;
 		var c:Function = this.i.getType();
@@ -60,7 +58,7 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass implem
 			if (t[k] instanceof Function
 					&& k.indexOf("__get__") < 0
 					&& k.indexOf("__set__") < 0) {
-				r.put(k, new MethodInfo(k, t[k], i, s));
+				r[r.length] = new MethodInfo(k, t[k], i, s);
 			}
 		}
 	}

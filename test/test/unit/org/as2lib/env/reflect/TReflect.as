@@ -5,14 +5,14 @@ import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.CompositeMemberInfo;
-import test.org.as2lib.env.reflect.treflect.SubClass;
-import test.org.as2lib.env.reflect.treflect.SuperClass;
-import test.org.as2lib.env.reflect.treflect.package0.Package0Class;
-import test.org.as2lib.env.reflect.treflect.package1.Package1Class;
+import test.unit.org.as2lib.env.reflect.treflect.SubClass;
+import test.unit.org.as2lib.env.reflect.treflect.SuperClass;
+import test.unit.org.as2lib.env.reflect.treflect.package0.Package0Class;
+import test.unit.org.as2lib.env.reflect.treflect.package1.Package1Class;
 
 import org.as2lib.core.BasicClass;
 
-class test.org.as2lib.env.reflect.TReflect extends TestCase {
+class test.unit.org.as2lib.env.reflect.TReflect extends TestCase {
 	private var subClass:SubClass;
 	private var superClass:SuperClass;
 	
@@ -23,9 +23,9 @@ class test.org.as2lib.env.reflect.TReflect extends TestCase {
 	private var subPackageInfo:PackageInfo;
 	private var superPackageInfo:PackageInfo;
 	
-	private var children:Map;
-	private var methods:Map;
-	private var properties:Map;
+	private var children:Array;
+	private var methods:Array;
+	private var properties:Array;
 	
 	public function TReflect(Void) {}
 	
@@ -36,7 +36,7 @@ class test.org.as2lib.env.reflect.TReflect extends TestCase {
 		subInfo = subClass.getClass();
 		superInfo = superClass.getClass();
 		
-		package = _global.test.org.as2lib.env.reflect.treflect;
+		package = _global.test.unit.org.as2lib.env.reflect.treflect;
 		subPackageInfo = subInfo.getParent();
 		superPackageInfo = superInfo.getParent();
 		
@@ -74,41 +74,17 @@ class test.org.as2lib.env.reflect.TReflect extends TestCase {
 	
 	public function testGetChildren(Void):Void {
 		assertNotUndefined("Could not obtain children from PackageInfo [" + subPackageInfo + "].", children);
-		
-		var childrenArray:Array = new Array();
-		var iterator:Iterator = children.iterator();
-		while (iterator.hasNext()) {
-			childrenArray.push(iterator.next());
-		}
-		
-		var amount:Number = childrenArray.length;
-		assertEquals("The amount of children found [" + amount + "] does not match the actual amount [4] of children.", childrenArray.length, 4);
+		assertEquals("The amount of children found [" + children.length + "] does not match the actual amount [4] of children.", children.length, 4);
 	}
 	
 	public function testGetMethods(Void):Void {
 		assertNotUndefined("Could not obtain methods from ClassInfo [" + subInfo + "].", methods);
-		
-		var methdosArray:Array = new Array();
-		var iterator:Iterator = methods.iterator();
-		while (iterator.hasNext()) {
-			methdosArray.push(iterator.next());
-		}
-
-		var amount:Number = methdosArray.length;
-		assertEquals("The amount of methods found [" + amount + "] does not match the actual amount [16] of methods.", methdosArray.length, 16);
+		assertEquals("The amount of methods found [" + methods.length + "] does not match the actual amount [16] of methods.", methods.length, 16);
 	}
 	
 	public function testGetProperties(Void):Void {
 		assertNotUndefined("Could not obtain methods from ClassInfo [" + subInfo + "].", properties);
-		
-		var propertiesArray:Array = new Array();
-		var iterator:Iterator = properties.iterator();
-		while (iterator.hasNext()) {
-			propertiesArray.push(iterator.next());
-		}
-		
-		var amount:Number = propertiesArray.length;
-		assertEquals("The amount of properties found [" + amount + "] does not match the actual amount [3] of properties.", propertiesArray.length, 3);
+		assertEquals("The amount of properties found [" + properties.length + "] does not match the actual amount [3] of properties.", properties.length, 3);
 	}
 	
 	public function testGetName(Void):Void {
@@ -134,9 +110,9 @@ class test.org.as2lib.env.reflect.TReflect extends TestCase {
 		assertNotUndefined("The full name of the ClassInfo [" + superInfo + "] could not be obtained.", superName);
 		assertNotUndefined("The full name of the PackageInfo [" + subPackageInfo + "] could not be obtained.", packageName);
 		
-		assertEquals("The obtained full name [" + subName + "] is not correct. It should be [test.org.as2lib.env.reflect.treflect.SubClass].", subName, "test.org.as2lib.env.reflect.treflect.SubClass");
-		assertEquals("The obtained full name [" + superName + "] is not correct. It should be [test.org.as2lib.env.reflect.treflect.SuperClass].", superName, "test.org.as2lib.env.reflect.treflect.SuperClass");
-		assertEquals("The obtained full name [" + packageName + "] is not correct. It should be [test.org.as2lib.env.reflect.treflect].", packageName, "test.org.as2lib.env.reflect.treflect");
+		assertEquals("The obtained full name [" + subName + "] is not correct. It should be [test.unit.org.as2lib.env.reflect.treflect.SubClass].", subName, "test.unit.org.as2lib.env.reflect.treflect.SubClass");
+		assertEquals("The obtained full name [" + superName + "] is not correct. It should be [test.unit.org.as2lib.env.reflect.treflect.SuperClass].", superName, "test.unit.org.as2lib.env.reflect.treflect.SuperClass");
+		assertEquals("The obtained full name [" + packageName + "] is not correct. It should be [test.unit.org.as2lib.env.reflect.treflect].", packageName, "test.unit.org.as2lib.env.reflect.treflect");
 	}
 	
 	public function testNewInstance(Void):Void {

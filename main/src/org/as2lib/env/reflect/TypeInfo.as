@@ -42,13 +42,13 @@ interface org.as2lib.env.reflect.TypeInfo extends CompositeMemberInfo {
 	public function getSuperType(Void):TypeInfo;
 	
 	/**
-	 * Returns a Map containing the operations represented by MethodInfos
+	 * Returns an Array containing the operations represented by MethodInfos
 	 * the type declares including the declared operations of all super
 	 * types.
 	 *
-	 * @return a Map containing MethodInfos representing the available operations
+	 * @return an Array containing MethodInfos representing the available operations
 	 */
-	public function getMethods(Void):Map;
+	public function getMethods(Void):Array;
 	
 	/**
 	 * Overload

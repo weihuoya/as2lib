@@ -47,7 +47,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	private var parent:PackageInfo;
 	
 	/** The children of the package. That means all classes and packages contained in the package. */
-	private var children:Map;
+	private var children:Array;
 	
 	/**
 	 * Constructs a new PackageInfo.
@@ -101,51 +101,49 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	}
 	
 	/**
-	 * Returns a Map containing CompositeMemberInfos representing the children of the
+	 * Returns an Array containing CompositeMemberInfos representing the children of the
 	 * package. That means all classes and packages contained in the package.
 	 *
-	 * @return a Map containing the children
+	 * @return an Array containing the children
 	 */
-	public function getChildren(Void):Map {
-		if (children == undefined) {
+	public function getChildren(Void):Array {
+		if (!children) {
 			children = ReflectConfig.getChildrenAlgorithm().execute(this);
 		}
 		return children;
 	}
 	
 	/**
-	 * Returns a Map containing ClassInfos representing the classes contained
+	 * Returns an Array containing ClassInfos representing the classes contained
 	 * in this package.
 	 *
-	 * @return a Map containing the classes
+	 * @return an Array containing the classes
 	 */
-	public function getChildClasses(Void):Map {
-		var result:Map = new HashMap();
-		var iterator:Iterator = getChildren().iterator();
-		var child:CompositeMemberInfo;
-		while (iterator.hasNext()) {
-			child = CompositeMemberInfo(iterator.next());
-			if (ObjectUtil.isInstanceOf(child, ClassInfo)) {
-				result.put(child.getName(), child);
+	public function getChildClasses(Void):Array {
+		var result:Array = new Array();
+		var l:Number = getChildren().length;
+		for (var i:Number = 0; i < l; i = i-(-1)) {
+			var child:CompositeMemberInfo = getChildren()[i];
+			if (child instanceof ClassInfo) {
+				result[result.length] = child;
 			}
 		}
 		return result;
 	}
 	
 	/**
-	 * Returns a Map containing PackageInfos representing the packages contained
+	 * Returns an Array containing PackageInfos representing the packages contained
 	 * in this package.
 	 *
-	 * @return a Map containing the packages
+	 * @return an Array containing the packages
 	 */
-	public function getChildPackages(Void):Map {
-		var result:Map = new HashMap();
-		var iterator:Iterator = getChildren().iterator();
-		var child:CompositeMemberInfo;
-		while (iterator.hasNext()) {
-			child = CompositeMemberInfo(iterator.next());
-			if (ObjectUtil.isInstanceOf(child, PackageInfo)) {
-				result.put(child.getName(), child);
+	public function getChildPackages(Void):Array {
+		var result:Array = new Array();
+		var l:Number = getChildren().length;
+		for (var i:Number = 0; i < l; i = i-(-1)) {
+			var child:CompositeMemberInfo = getChildren()[i];
+			if (child instanceof PackageInfo) {
+				result[result.length] = child;
 			}
 		}
 		return result;
