@@ -66,10 +66,10 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass impleme
 				var e:PackageInfo = c.getPackage(f);
 				if (!e) {
 					e = c.addPackage(new PackageInfo(i, f, a));
-				}
-				// replace recursion with loop
-				if (findAndStore(e, d)) {
-					return true;
+					// replace recursion with loop
+					if (findAndStore(e, d)) {
+						return true;
+					}
 				}
 			}
 		}
