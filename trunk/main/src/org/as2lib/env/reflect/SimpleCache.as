@@ -61,10 +61,10 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 */
 	public function getClass(object):ClassInfo {
 		if (ObjectUtil.isTypeOf(object, "object") || object instanceof Object) {
-			return ClassInfo(classes.get(object.__proto__));
+			return classes.get(object.__proto__);
 		}
 		if (ObjectUtil.isTypeOf(object, "function")) {
-			return ClassInfo(classes.get(object.prototype));
+			return classes.get(object.prototype);
 		}
 		throw new IllegalArgumentException("The object [" + object + "] must be either of type object or function.",
 										   this,
@@ -91,7 +91,7 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 * @return the PackageInfo representing the package
 	 */
 	public function getPackage(package):PackageInfo {
-		return PackageInfo(packages.get(package));
+		return packages.get(package);
 	}
 	
 	/**
