@@ -23,8 +23,8 @@ import org.as2lib.env.reflect.ClassInfo;
  *
  * <p>This class is mostly used internally. If you wanna obtain the methods
  * of a class you need its representing ClassInfo. You can then also use
- * the ClassInfo#getMethods method directly and do not have to make the detour
- * over this class. The ClassInfo#getMethods method is also easier to use
+ * the {@link ClassInfo#getMethods} method directly and do not have to make the detour
+ * over this class. The {@link ClassInfo#getMethods} method is also easier to use
  * and offers some extra functionalities.
  *
  * <p>If you nevertheless want to use this class here is how it works.
@@ -33,7 +33,7 @@ import org.as2lib.env.reflect.ClassInfo;
  * var methodAlgorithm:MethodAlgorithm = new MethodAlgorithm();
  * var methods:Array = methodAlgorithm.execute(classInfo);</code>
  *
- * <p>Refer to the #execute methods documentation for details on how to
+ * <p>Refer to the {@link #execute} methods documentation for details on how to
  * get data from the methods array appropriately.
  * 
  * @author Simon Wacker

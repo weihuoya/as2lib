@@ -149,7 +149,7 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 *
 	 * @param method the method of the handler to invoke if no added handler
 	 * matches the real arguments
-	 * @see #removeDefaultHandler(Void):Void
+	 * @see #removeDefaultHandler
 	 */
 	public function setDefaultHandler(method:Function):Void {
 		if (typeof(method) == "function") {
@@ -165,15 +165,15 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * <p>This handler is used if no other handler applies to a list of
 	 * arguments.
 	 *
-	 * @see #setDefaultHandler(Function):Void
+	 * @see #setDefaultHandler
 	 */
 	public function removeDefaultHandler(Void):Void {
 		defaultHandler = null;
 	}
 	
 	/**
-	 * @overload #addHandlerByHandler(OverloadHandler):Void
-	 * @overload #addHandlerByValue(Array, Function):OverloadHandler
+	 * @overload #addHandlerByHandler
+	 * @overload #addHandlerByValue
 	 */
 	public function addHandler() {
 		var l:Number = arguments.length;
@@ -198,10 +198,10 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * Adds a new overload handler.
 	 *
 	 * <p>Overload handlers get used to determine the method to forward
-	 * to. This is done using the OverloadHandler#matches and
-	 * OverloadHandler#isMoreExplicit methods. If both conditions hold true
+	 * to. This is done using the {@link OverloadHandler#matches} and
+	 * {@link OverloadHandler#isMoreExplicit} methods. If both conditions hold true
 	 * the method invocation gets forwarded to the method of the handler, that
-	 * gets returned by the OverloadHandler#getMethod method.
+	 * gets returned by the {@link OverloadHandler#getMethod} method.
 	 *
 	 * @param handler the new overload handler to add
 	 */
@@ -213,10 +213,10 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * Adds a new SimpleOverloadHandler based on the passed-in arguments.
 	 *
 	 * <p>Overload handlers get used to determine the method to forward
-	 * to. This is done using the OverloadHandler#matches and
-	 * OverloadHandler#isMoreExplicit methods. If both conditions hold true
+	 * to. This is done using the {@link OverloadHandler#matches} and
+	 * {@link OverloadHandler#isMoreExplicit} methods. If both conditions hold true
 	 * the method invocation gets forwarded to the method of the handler, that
-	 * gets returned by the OverloadHandler#getMethod method.
+	 * gets returned by the {@link OverloadHandler#getMethod} method.
 	 *
 	 * <p>The arguments' types are the types of arguments the method expects
 	 * from the real arguments to have. The SimpleOverloadHandler does its
@@ -256,8 +256,8 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	/**
 	 * Forwards the arguments to the corresponding overload handler.
 	 *
-	 * <p>This is not done by using the OverloadHandler#execute method but
-	 * manually by using apply on the method returned by the OverloadHandler#getMethod
+	 * <p>This is not done by using the {@link OverloadHandler#execute} method but
+	 * manually by using apply on the method returned by the {@link OverloadHandler#getMethod}
 	 * method.
 	 * Invoking the method this way increases the amount of possible
 	 * recurions with overlaoded methods.
@@ -269,7 +269,7 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * gets used if it has been set.
 	 *
 	 * <p>Overload handlers are supposed to have the same type signature
-	 * if the OverloadHandler#isMoreExplicit method returns null.
+	 * if the {@link OverloadHandler#isMoreExplicit} method returns null.
 	 *
 	 * @return the return value of the invoked method
 	 * @throws org.as2lib.env.overload.UnknownOverloadHandlerException if
@@ -293,7 +293,7 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * has been set.
 	 *
 	 * <p>Overload handlers are supposed to have the same type signature
-	 * if the OverloadHandler#isMoreExplicit method returns null.
+	 * if the {@link OverloadHandler#isMoreExplicit} method returns null.
 	 *
 	 * @param args the arguments that shall match to a specific overload handler
 	 * @return the most explicit overload handler
@@ -318,7 +318,7 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * has been set.
 	 *
 	 * <p>Overload handlers are supposed to have the same type signature
-	 * if the OverloadHandler#isMoreExplicit method returns null.
+	 * if the {@link OverloadHandler#isMoreExplicit} method returns null.
 	 *
 	 * @param overloadedMethod the overloaded method on the target
 	 * @param overloadArguments the arguments for which the overload shall be performed
@@ -365,7 +365,7 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	/**
 	 * Returns OverloadHandler instances that match the passed-in real arguments.
 	 *
-	 * <p>The match is performed using the OverlaodHandler#matches method.
+	 * <p>The match is performed using the {@link OverlaodHandler#matches} method.
 	 * 
 	 * @param args the arguments that shall match to overload handlers
 	 * @return an array containing the matching OverloadHandler instances

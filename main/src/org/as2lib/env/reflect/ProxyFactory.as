@@ -31,7 +31,7 @@ interface org.as2lib.env.reflect.ProxyFactory extends BasicInterface {
 	
 	/**
 	 * Creates a proxy for the given type and delegates method invocations
-	 * to the InvocationHandler#invoke method.
+	 * to the {@link InvocationHandler#invoke} method.
 	 *
 	 * <p>Types are classes or interfaces.
 	 *

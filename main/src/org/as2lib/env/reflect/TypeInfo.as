@@ -62,8 +62,8 @@ interface org.as2lib.env.reflect.TypeInfo extends PackageMemberInfo {
 	public function getPackage(Void):PackageInfo;
 	
 	/**
-	 * @overload #getMethodsByFlag(Boolean):Array
-	 * @overload #getMethodsByFilter(TypeMemberFilter):Array
+	 * @overload #getMethodsByFlag
+	 * @overload #getMethodsByFilter
 	 */
 	public function getMethods():Array;
 	
@@ -87,13 +87,12 @@ interface org.as2lib.env.reflect.TypeInfo extends PackageMemberInfo {
 	 * Returns an array containing the methods represented by MethodInfos
 	 * this type and super types' declare that do not get filtered/excluded.
 	 *
-	 * <p>The TypeMemberFilter#filter(TypeMemberInfo):Boolean gets invoked
-	 * for every method to determine whether it shall be contained in the 
-	 * result.
+	 * <p>The {@link TypeMemberFilter#filter} gets invoked for every method
+	 * to determine whether it shall be contained in the result.
 	 *
 	 * <p>If the passed-in methodFilter argument is null or undefined the
-	 * result of an invocation of #getMethodsByFlag with argument false
-	 * gets returned.
+	 * result of an invocation of {@link #getMethodsByFlag} with argument
+	 * false gets returned.
 	 *
 	 * <p>Note that methods of interfaces cannot be evaluated at run-time.
 	 * They thus have no declared methods for the reflection api.
@@ -104,8 +103,8 @@ interface org.as2lib.env.reflect.TypeInfo extends PackageMemberInfo {
 	public function getMethodsByFilter(methodFilter:TypeMemberFilter):Array;
 	
 	/**
-	 * @overload #getMethodByName(String):MethodInfo
-	 * @overload #getMethodByMethod(Function):MethodInfo
+	 * @overload #getMethodByName
+	 * @overload #getMethodByMethod
 	 */
 	public function getMethod():MethodInfo;
 	

@@ -24,10 +24,10 @@ import org.as2lib.env.reflect.string.MethodInfoStringifier;
  * MethodInfo represents a method.
  *
  * <p>MethodInfo instances for specific methods can be obtained using
- * the ClassInfo#getMethods or ClassInfo#getMethod methods. That means
+ * the {@link ClassInfo#getMethods} or {@link ClassInfo#getMethod} methods. That means
  * you first have to get a class info for the class that declares or
- * inherits the method. You can therefor use the ClassInfo#forObject,
- * ClassInfo#forClass, ClassInfo#forInstance or ClassInfo#forName methods.
+ * inherits the method. You can therefor use the {@link ClassInfo#forObject},
+ * {@link ClassInfo#forClass}, {@link ClassInfo#forInstance} or {@link ClassInfo#forName} methods.
  * 
  * <p>When you have obtained the method info you can use it to get
  * information about the method.
@@ -58,7 +58,7 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	/**
 	 * Returns the stringifier used to stringify method infos.
 	 *
-	 * <p>If no custom stringifier has been set via the #setStringifier
+	 * <p>If no custom stringifier has been set via the {@link #setStringifier}
 	 * method, a instance of the default MethodInfoStringifier gets returned.
 	 *
 	 * @return the stringifier that stringifies method infos
@@ -71,7 +71,7 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	/**
 	 * Sets the stringifier used to stringify method infos.
 	 *
-	 * <p>If you set a stringifier of value null or undefined #getStringifier
+	 * <p>If you set a stringifier of value null or undefined {@link #getStringifier}
 	 * will return the default stringifier.
 	 *
 	 * @param methodInfoStringifier the stringifier that stringifies method infos
@@ -161,7 +161,7 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	 * Returns the string representation of this method.
 	 *
 	 * <p>The string representation is obtained via the stringifier returned
-	 * by the #getStringifier method.
+	 * by the static {@link #getStringifier} method.
 	 *
 	 * @return the string representation of this method
 	 */

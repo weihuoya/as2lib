@@ -21,8 +21,8 @@ import org.as2lib.env.reflect.PackageMemberInfo;
  * PackageMemberInfo gets used to filter the result of searches for package
  * members, that are types and packages.
  *
- * <p>You can pass it for example in the PackageInfo.getMemberClasses or
- * PackageInfo.getMemberPackages methods to receive only classes or packages
+ * <p>You can pass it for example in the {@link PackageInfo#getMemberClasses} or
+ * {@link PackageInfo#getMemberPackages} methods to receive only classes or packages
  * that match your criteria.
  *
  * <p>Using this filter can mean a performance boost. Refer to the specific

@@ -25,9 +25,9 @@ import org.as2lib.core.BasicInterface;
  * of this method.
  *
  * <p>It also offers functionalities to match real arguments against the
- * expected arguments' types, #matches, and to determine which overload
+ * expected arguments' types, {@link #matches}, and to determine which overload
  * handler or rather which arguments' types of two handlers are more
- * explicit, #isMoreExplicit.
+ * explicit, {@link #isMoreExplicit}.
  *
  * <p>It also offers the ability to invoke/execute the target method
  * on a target scope passing-in a list of real arguments.

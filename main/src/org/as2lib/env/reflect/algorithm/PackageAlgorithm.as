@@ -55,7 +55,7 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 	}
 	
 	/**
-	 * Sets the cache that gets used by the #execute(Object) method to
+	 * Sets the cache that gets used by the {@link #execute} method to
 	 * look whether the package the shall be found is already stored.
 	 *
 	 * @param cache the new cache
@@ -65,8 +65,8 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 	}
 	
 	/**
-	 * Returns the cache set via the #setCache(Cache) method or the default
-	 * cache that gets returned by the ReflectConfig#getCache() method.
+	 * Returns the cache set via the {@link #setCache} method or the default
+	 * cache that gets returned by the {@link ReflectConfig#getCache} method.
 	 *
 	 * @return the currently used cache
 	 */

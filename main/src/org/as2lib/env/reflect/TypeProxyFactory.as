@@ -22,8 +22,9 @@ import org.as2lib.env.reflect.InvocationHandler;
  * TypeProxyFactory can be used to create proxies of types, that means
  * classes or interfaces.
  *
- * <p>If you know that you only need interface proxies you chould think
- * about using InterfaceProxyFactory because it offers higher performance.
+ * <p>If you know that you only need interface proxies you could think
+ * about using {@link InterfaceProxyFactory} because it offers higher
+ * performance.
  *
  * @author Simon Wacker
  */
@@ -46,7 +47,6 @@ class org.as2lib.env.reflect.TypeProxyFactory extends BasicClass implements Prox
 	 * @param type the type to create the proxy for
 	 * @param handler the handler to invoke on proxy method invocations
 	 * @return the created type proxy
-	 * @see ProxyFactory#createProxy(Function, InvocationHandler)
 	 */
 	public function createProxy(type:Function, handler:InvocationHandler) {
 		if (!type) return null;

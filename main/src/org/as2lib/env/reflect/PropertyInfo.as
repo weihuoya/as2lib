@@ -24,17 +24,17 @@ import org.as2lib.env.reflect.string.PropertyInfoStringifier;
 /**
  * PropertyInfo represents a property.
  *
- * <p>The term property means only properties added via Object#addProperty(..)
+ * <p>The term property means only properties added via Object#addProperty
  * or the ones added with the 'get' and 'set' keywords.
  * 'Normal' properties are not supported because at runtime you can only
  * evaluate them if they have been initialized. Therefore results could
  * vary dramatically.
  *
  * <p>PropertyInfo instances for specific properties can be obtained using
- * the ClassInfo#getProperties or ClassInfo#getProperty methods. That means
+ * the {@link ClassInfo#getProperties} or {@link ClassInfo#getProperty} methods. That means
  * you first have to get a class info for the class that declares or
- * inherits the property. You can therefor use the ClassInfo#forObject,
- * ClassInfo#forClass, ClassInfo#forInstance or ClassInfo#forName methods.
+ * inherits the property. You can therefor use the {@link ClassInfo#forObject},
+ * {@link ClassInfo#forClass}, {@link ClassInfo#forInstance} or {@link ClassInfo#forName} methods.
  * 
  * <p>When you have obtained the property info you can use it to get
  * information about the property.
@@ -70,7 +70,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	/**
 	 * Returns the stringifier used to stringify property infos.
 	 *
-	 * <p>If no custom stringifier has been set via the #setStringifier
+	 * <p>If no custom stringifier has been set via the {@link #setStringifier}
 	 * method, a instance of the default PropertyInfoStringifier gets returned.
 	 *
 	 * @return the stringifier that stringifies property infos
@@ -83,7 +83,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	/**
 	 * Sets the stringifier used to stringify property infos.
 	 *
-	 * <p>If you set a stringifier of value null or undefined #getStringifier
+	 * <p>If you set a stringifier of value null or undefined {@link #getStringifier}
 	 * will return the default stringifier.
 	 *
 	 * @param propertyInfoStringifier the stringifier that stringifies property infos
@@ -120,7 +120,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * Returns the name of the property.
 	 *
 	 * <p>If you want the getter or setter methods' name you must use the
-	 * getGetter()#getName or getGetter()#getName method. The name of the
+	 * getGetter()#getName or getSetter()#getName method. The name of the
 	 * getter or setter method is the prefix '__set__' or '__get__' plus
 	 * the name of the property.
 	 *
@@ -220,7 +220,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * Returns the string representation of this property.
 	 *
 	 * <p>The string representation is obtained via the stringifier returned
-	 * by the #getStringifier method.
+	 * by the static {@link #getStringifier} method.
 	 *
 	 * @return the string representation of this property
 	 */
