@@ -45,6 +45,11 @@ import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
  * trace("Declared methods: " + classInfo.getMethods(true));
  * trace("Declared properties: " + classInfo.getProperties(true));</code>
  *
+ * <p>Note that it is not possible right now to distinguish between
+ * interfaces and classes at run-time. Therefore are both classes and
+ * interfaces represented by ClassInfo instances. This is going to
+ * change as soon is a differentiation is possible.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {

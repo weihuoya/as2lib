@@ -169,7 +169,7 @@ class org.as2lib.test.unit.TestCaseMethodInfo extends BasicClass {
 	 */
 	public function executeTo(scope):Void {
 		executed = true;
-		getMethodInfo().applyTo(scope, null);
+		getMethodInfo().invoke(scope, null);
 	}
 	
 	/**

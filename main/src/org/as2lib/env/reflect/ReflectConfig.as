@@ -58,12 +58,6 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	/** Stores the root package of the hierarchy. */
 	private static var rootPackage:PackageInfo;
 	
-	/** Used to stringify MethodInfo instances. */
-	private static var methodInfoStringifier:Stringifier;
-	
-	/** Used to stringify PropertyInfo instances. */
-	private static var propertyInfoStringifier:Stringifier;
-	
 	/**
 	 * Private constructor to prevent instantiation.
 	 */
@@ -208,41 +202,4 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 		rootPackage = newRootPackage;
 	}
 	
-	/**
-	 * Sets the new Stringifier to stringify MethodInfos.
-	 *
-	 * @param stringifier the new MethodInfo Stringifier
-	 */
-	public static function setMethodInfoStringifier(stringifier:Stringifier):Void {
-		methodInfoStringifier = stringifier;
-	}
-	
-	/**
-	 * Returns the Stringifier used to stringify MethodInfos.
-	 *
-	 * @return the Stringifier used to stringify MethodInfos
-	 */
-	public static function getMethodInfoStringifier(Void):Stringifier {
-		if (!methodInfoStringifier) methodInfoStringifier = new MethodInfoStringifier();
-		return methodInfoStringifier;
-	}
-	
-	/**
-	 * Sets the new Stringifier to stringify PropertyInfos.
-	 *
-	 * @param stringifier the new PropertyInfo Stringifier
-	 */
-	public static function setPropertyInfoStringifier(stringifier:Stringifier):Void {
-		propertyInfoStringifier = stringifier;
-	}
-	
-	/**
-	 * Returns the Stringifier used to stringify PropertyInfos.
-	 *
-	 * @return the Stringifier used to stringify PropertyInfos
-	 */
-	public static function getPropertyInfoStringifier(Void):Stringifier {
-		if (!propertyInfoStringifier) propertyInfoStringifier = new PropertyInfoStringifier();
-		return propertyInfoStringifier;
-	}
 }
