@@ -14,53 +14,48 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicInterface;
 import org.as2lib.env.event.EventListener;
 import org.as2lib.env.event.EventInfo;
-import org.as2lib.env.event.ListenerArray;
-import org.as2lib.core.BasicInterface;
 
 /**
- * Interface for standardized Broadcasting.
- * This interface represents the basic pillar for broadcasting events.
- * The EventBroadcaster allows to add(@see #addListener)/remove(@see #removeListener) listener(@see EventListener) to a pool of listeners(@see ListenerArray); 
- * You can dispatch an Eventinfo(@see EventInfo) to all listener in the pool. This allows multiple informations
- * like ASBroadcaster oder EventBroadcaster. The big advantage in the EventBroadcaster is in the fact that you
- * have implement at least EventInfo and EventListener. If you want use the EventBroadcaster-System in the best way
- * you should extend EventInfo and EventListener for own purpose to define your access to the events.
+ * Interface for standardized broadcasting.
  * 
- * @version 1.0
- * @autor Martin Heidegger
+ * @author Martin Heidegger
  */
 interface org.as2lib.env.event.EventBroadcaster extends BasicInterface {
-	
 	/**
-	 * Adds a listener to the listener pool.
+	 * Adds a listener to the pool of listeners.
 	 * 
-	 * @param listener
+	 * @param listener the EventListener to be added to the pool
 	 */
 	public function addListener(listener:EventListener):Void;
 	
 	/**
-	 * Removes a listener from the listenerpool.
+	 * Removes a listener from the pool of listeners.
 	 * 
-	 * @param listener
+	 * @param listener the EventListener to be removed
+	 * @throws org.as2lib.env.except.IllegalArgumentException if the pool does not contain the passed listener
 	 */
 	public function removeListener(listener:EventListener):Void;
 	
 	/**
-	 * Removes all registered listener.
+	 * Removes all registered listeners.
 	 */
 	public function removeAllListener(Void):Void;
 	
 	/**
-	 * @return A copy of the listenerpool.
+	 * Returns a copy of the listener pool.
+	 *
+	 * @return a copy of the listener pool
 	 */
-	public function getAllListener(Void):ListenerArray;
+	public function getAllListener(Void):Array;
 	
 	/**
-	 * Dispatches the events associated with the name cotained in the EventInfo instance.
+	 * Dispatches the events associated with the name cotained in the
+	 * EventInfo instance.
 	 * 
-	 * @param event
+	 * @param event the EventInfo to be passed to the operation of the EventListeners
 	 */
 	public function dispatch(event:EventInfo):Void;
 }
