@@ -6,7 +6,7 @@ import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.data.iterator.Iterator;
-import org.as2lib.env.reflect.ReflectInfo;
+import org.as2lib.env.reflect.CacheInfo;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 import test.org.as2lib.env.reflect.*;
@@ -57,7 +57,7 @@ class test.org.as2lib.core.TReflections extends Test {
 		var children:HashMap = info.getChildren();
 		var iterator:Iterator = children.iterator();
 		while (iterator.hasNext()) {
-			var child:ReflectInfo = ReflectInfo(iterator.next());
+			var child:CacheInfo = CacheInfo(iterator.next());
 			trace (child.getName());
 		}
 		assertTrueWithMessage("getChildren() does not return a HashMap", ObjectUtil.isInstanceOf(children, HashMap));

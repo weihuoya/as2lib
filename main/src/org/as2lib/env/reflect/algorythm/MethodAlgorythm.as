@@ -1,4 +1,4 @@
-﻿import org.as2lib.env.reflect.ReflectInfo;
+﻿import org.as2lib.env.reflect.CacheInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
@@ -15,7 +15,7 @@ class org.as2lib.env.reflect.algorythm.MethodAlgorythm extends AbstractContentAl
 	public function MethodAlgorythm(Void) {
 	}
 	
-	public function execute(info:ReflectInfo):HashMap {
+	public function execute(info:CacheInfo):HashMap {
 		this.info = ClassInfo(info);
 		this.data = new HashMap();
 		

@@ -1,10 +1,10 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.HashMap;
-import org.as2lib.env.reflect.ReflectInfo;
+import org.as2lib.env.reflect.CacheInfo;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 
-class org.as2lib.env.reflect.PackageInfo extends BasicClass implements ReflectInfo {
+class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CacheInfo {
 	private var name:String;
 	private var fullName:String;
 	private var package;

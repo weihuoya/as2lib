@@ -1,9 +1,9 @@
-﻿import org.as2lib.env.reflect.ReflectInfo;
+﻿import org.as2lib.env.reflect.CacheInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 
-class org.as2lib.env.reflect.RootInfo extends PackageInfo implements ReflectInfo {
+class org.as2lib.env.reflect.RootInfo extends PackageInfo implements CacheInfo {
 	public function RootInfo(name:String, 
 							 package) {
 		super(name, package, undefined);

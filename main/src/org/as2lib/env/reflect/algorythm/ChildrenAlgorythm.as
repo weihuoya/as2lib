@@ -1,4 +1,4 @@
-﻿import org.as2lib.env.reflect.ReflectInfo;
+﻿import org.as2lib.env.reflect.CacheInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
@@ -18,7 +18,7 @@ class org.as2lib.env.reflect.algorythm.ChildrenAlgorythm extends AbstractContent
 		cache = ReflectUtil.getCache();
 	}
 	
-	public function execute(info:ReflectInfo):HashMap {
+	public function execute(info:CacheInfo):HashMap {
 		type = null;
 		
 		this.info = PackageInfo(info);
