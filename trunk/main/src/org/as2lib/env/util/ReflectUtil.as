@@ -145,7 +145,7 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 *
 	 * @return the root of the hierachy
 	 */
-	public static function getRoot(Void):RootInfo {
+	public static function getRootInfo(Void):RootInfo {
 		return ReflectConfig.getCache().getRoot();
 	}
 }
