@@ -142,29 +142,29 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
-	public function log(message:String):Void {
-		level.log(message, broadcaster);
+	public function log(message):Void {
+		level.log(message.toString(), broadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
-	public function debug(message:String):Void {
-		level.debug(message, broadcaster);
+	public function debug(message):Void {
+		level.debug(message.toString(), broadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
-	public function info(message:String):Void {
-		level.info(message, broadcaster);
+	public function info(message):Void {
+		level.info(message.toString(), broadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
-	public function warning(message:String):Void {
-		level.warning(message, broadcaster);
+	public function warning(message):Void {
+		level.warning(message.toString(), broadcaster);
 	}
 	
 	/**

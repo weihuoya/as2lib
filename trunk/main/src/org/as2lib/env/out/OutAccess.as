@@ -29,7 +29,7 @@ interface org.as2lib.env.out.OutAccess extends BasicInterface {
 	 *
 	 * @param message the message to be written out
 	 */
-	public function log(message:String):Void;
+	public function log(message):Void;
 	
 	/**
 	 * Outputs a message. The output will only be made when the OutLevel is set to
@@ -37,7 +37,7 @@ interface org.as2lib.env.out.OutAccess extends BasicInterface {
 	 *
 	 * @param message the message to be written out
 	 */
-	public function debug(message:String):Void;
+	public function debug(message):Void;
 	
 	/**
 	 * Outputs a message. The output will only be made when the OutLevel is set to
@@ -45,7 +45,7 @@ interface org.as2lib.env.out.OutAccess extends BasicInterface {
 	 *
 	 * @param message the message to be written out
 	 */
-	public function info(message:String):Void;
+	public function info(message):Void;
 	
 	/**
 	 * Outputs a message. The output will only be made when the OutLevel is set to
@@ -53,7 +53,7 @@ interface org.as2lib.env.out.OutAccess extends BasicInterface {
 	 *
 	 * @param message the message to be written out
 	 */
-	public function warning(message:String):Void;
+	public function warning(message):Void;
 	
 	/**
 	 * Outputs a Throwable. The output will only be made when the OutLevel is set to
