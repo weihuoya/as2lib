@@ -6,37 +6,37 @@
     <month value="8">
       <day value="24">
         <entry type="change" package="org.as2lib.test.unit">Refactored the complete Testunit System (new API)</entry>
-        <entry type="change" package="org.as2lib.data.holder" class="ArrayList">Moved to org.as2lib.data.holder.list.</entry>
-        <entry type="change" package="org.as2lib.data.holder" class="HashMap">Moved to org.as2lib.data.holder.map.</entry>
-        <entry type="change" package="org.as2lib.data.holder" class="LinearQueue">Moved to org.as2lib.data.holder.queue.</entry>
-        <entry type="change" package="org.as2lib.data.holder" class="PrimitiveTypeMap">Moved to org.as2lib.data.holder.map.</entry>
-        <entry type="change" package="org.as2lib.data.holder" class="PriorityList">Moved to org.as2lib.data.holder.list</entry>
-        <entry type="change" package="org.as2lib.data.holder" class="PriorityMap">Moved to org.as2lib.data.holder.map.</entry>
-        <entry type="change" package="org.as2lib.data.holder" class="SimpleStack">Moved to org.as2lib.data.holder.stack.</entry>
-        <entry type="change" package="org.as2lib.data.holder" class="TypedArray">Moved to org.as2lib.data.holder.array.</entry>
-        <entry type="change" package="org.as2lib.data.holder" class="TypedMap">Moved to org.as2lib.data.holder.map.</entry>
-        <entry type="change" package="org.as2lib.data.holder" class="TypedQueue">Moved to org.as2lib.data.holder.queue.</entry>
-        <entry type="change" package="org.as2lib.data.holder" class="TypedStack">Moved to org.as2lib.data.holder.stack.</entry>
-        <entry type="change" package="org.as2lib.data.holder.string" class="MapStringifier">Moved to org.as2lib.data.holder.map.</entry>
-        <entry type="change" package="org.as2lib.data.holder.string" class="StackStringifier">Moved to org.as2lib.data.holder.stack.</entry>
-        <entry type="change" package="org.as2lib.data.holder.string" class="QueueStringifier">Moved to org.as2lib.data.holder.queue.</entry>
-        <entry type="change" package="org.as2lib.data.iterator" class="Iterator">Moved to org.as2lib.data.holder.</entry>
-        <entry type="change" package="org.as2lib.data.iterator" class="ArrayIterator">Moved to org.as2lib.data.holder.array.</entry>
-        <entry type="change" package="org.as2lib.data.iterator" class="MapIterator">Moved to org.as2lib.data.holder.map.</entry>
+        <entry type="change" package="org.as2lib.data.holder" class="ArrayList"><change-move to="org.as2lib.data.holder.list" /></entry>
+        <entry type="change" package="org.as2lib.data.holder" class="HashMap"><change-move to="org.as2lib.data.holder.map" /></entry>
+        <entry type="change" package="org.as2lib.data.holder" class="LinearQueue"><change-move to="org.as2lib.data.holder.queue" /></entry>
+        <entry type="change" package="org.as2lib.data.holder" class="PrimitiveTypeMap"><change-move to="org.as2lib.data.holder.map" /></entry>
+        <entry type="change" package="org.as2lib.data.holder" class="PriorityList"><change-move to="org.as2lib.data.holder.list" /></entry>
+        <entry type="change" package="org.as2lib.data.holder" class="PriorityMap"><change-move to="org.as2lib.data.holder.map" /></entry>
+        <entry type="change" package="org.as2lib.data.holder" class="SimpleStack"><change-move to="org.as2lib.data.holder.stack" /></entry>
+        <entry type="change" package="org.as2lib.data.holder" class="TypedArray"><change-move to="org.as2lib.data.holder.array" /></entry>
+        <entry type="change" package="org.as2lib.data.holder" class="TypedMap"><change-move to="org.as2lib.data.holder.map" /></entry>
+        <entry type="change" package="org.as2lib.data.holder" class="TypedQueue"><change-move to="org.as2lib.data.holder.queue" /></entry>
+        <entry type="change" package="org.as2lib.data.holder" class="TypedStack"><change-move to="org.as2lib.data.holder.stack" /></entry>
+        <entry type="change" package="org.as2lib.data.holder.string" class="MapStringifier"><change-move to="org.as2lib.data.holder.map" /></entry>
+        <entry type="change" package="org.as2lib.data.holder.string" class="StackStringifier"><change-move to="org.as2lib.data.holder.stack" /></entry>
+        <entry type="change" package="org.as2lib.data.holder.string" class="QueueStringifier"><change-move to="org.as2lib.data.holder.queue" /></entry>
+        <entry type="change" package="org.as2lib.data.iterator" class="Iterator"><change-move to="org.as2lib.data.holder" /></entry>
+        <entry type="change" package="org.as2lib.data.iterator" class="ArrayIterator"><change-move to="org.as2lib.data.holder.array" /></entry>
+        <entry type="change" package="org.as2lib.data.iterator" class="MapIterator"><change-move to="org.as2lib.data.holder.map" /></entry>
         <entry type="remove" package="org.as2lib.data.iterator" class="ProtectedArrayIterator"></entry>
-        <entry type="add" package="org.as2lib.data.holder" class="ProtectedIterator">Acts as a general protected iterator for every iterator types.</entry>
-        <entry type="change" package="org.as2lib.data.iterator" class="NoSuchElementException">Moved to org.as2lib.data.holder.</entry>
-        <entry type="change" package="org.as2lib.util.string" class="Stringifier">Moved to org.as2lib.util.</entry>
-        <entry type="change" package="org.as2lib.util.string" class="ObjectStringifier">Moved to org.as2lib.core.</entry>
+        <entry type="add" package="org.as2lib.data.holder" class="ProtectedIterator">Acts as a general protected iterator for all iterator types.</entry>
+        <entry type="change" package="org.as2lib.data.iterator" class="NoSuchElementException"><change-move to="org.as2lib.data.holder" /></entry>
+        <entry type="change" package="org.as2lib.util.string" class="Stringifier"><change-move to="org.as2lib.util" /></entry>
+        <entry type="change" package="org.as2lib.util.string" class="ObjectStringifier"><change-move to="org.as2lib.core" /></entry>
         <entry type="remove" package="org.as2lib.util.string"></entry>
       </day>
       <day value="20">
-        <entry type="change" package="org.as2lib.env.reflect.algorithm" class="ContentAlgorithm" method="execute(info:CompositeMemberInfo):Map">to execute(info:CompositeMemberInfo):Array</entry>
-        <entry type="change" package="org.as2lib.env.reflect" class="PackageInfo" method="getChildPackages(Void):Map">to getChildPackages(Void):Array</entry>
-        <entry type="change" package="org.as2lib.env.reflect" class="PackageInfo" method="getChildClasses(Void):Map">to getChildClasses(Void):Array</entry>
-        <entry type="change" package="org.as2lib.env.reflect" class="PackageInfo" method="getChildren(Void):Map">to getChildren(Void):Array</entry>
-        <entry type="change" package="org.as2lib.env.reflect" class="ClassInfo" method="getProperties(Void):Map">to getProperties(Void):Array</entry>
-        <entry type="change" package="org.as2lib.env.reflect" class="TypeInfo" method="getMethods(Void):Map">to getMethods(Void):Array</entry>
+        <entry type="change" package="org.as2lib.env.reflect.algorithm" class="ContentAlgorithm" method="execute(info:CompositeMemberInfo):Map"><change-returnType to="Array" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect" class="PackageInfo" method="getChildPackages(Void):Map"><change-returnType to="Array" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect" class="PackageInfo" method="getChildClasses(Void):Map"><change-returnType to="Array" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect" class="PackageInfo" method="getChildren(Void):Map"><change-returnType to="Array" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect" class="ClassInfo" method="getProperties(Void):Map"><change-returnType to="Array" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect" class="TypeInfo" method="getMethods(Void):Map"><change-returnType to="Array" /></entry>
       </day>
     </month>
     <month value="7">
@@ -57,13 +57,13 @@
       </day>
       <day value="17">
         <entry type="add" package="org.as2lib.env.except" class="Throwable" method="addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void"></entry>
-        <entry type="changed" package="org.as2lib.env.except">Changed the addStackTraceElement() access specifier in org.as2lib.env.except.AbstractException from private to public.</entry>
+        <entry type="change" package="org.as2lib.env.except" class="AbstractException" method="addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void">Changed access specifier from private to public.</entry>
       </day>
       <day value="15">
         <entry type="add" package="org.as2lib.aop">AOP Framework added.</entry>
       </day>
       <day value="12">
-        <entry type="change" package="org.as2lib.env.overload" class="SimpleOverloadHandler" method="matches(args:Array):Boolean">it now returns true if you check null against any type as expected.</entry>
+        <entry type="change" package="org.as2lib.env.overload" class="SimpleOverloadHandler" method="matches(args:Array):Boolean">It now returns true if you check null against any type as expected.</entry>
       </day>
       <day value="11">
         <entry type="add" package="org.as2lib.util" class="StringUtil" method="endsWith(string:String, searchString:String):Boolean"></entry>
@@ -93,14 +93,14 @@
         <entry type="add" package="org.as2lib.env.except" class="SimpleStackTraceElementFactory"></entry>
         <entry type="add" package="org.as2lib.env.except" class="ExceptConfig" method="getStackTraceElementFactory(Void):StackTraceElementFactory"></entry>
         <entry type="add" package="org.as2lib.env.except" class="ExceptConfig" method="setStackTraceElementFactory(factory:StackTraceElementFactory):Void"></entry>
-        <entry type="change" package="org.as2lib.env.except" class="AbstractException" method="addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void">to use the newly created classes and operations.</entry>
+        <entry type="change" package="org.as2lib.env.except" class="AbstractException" method="addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void">It now uses the newly created classes and operations.</entry>
       </day>
       <day value="5">
         <entry type="bugfix" package="org.as2lib.env.except" class="SimpleStackTraceElement" method="getMethod():MethodInfo">Fixed serious bug that broke the whole program if a Throwable was thrown by an operation of the superclass (the operation couldn't be found in the throwing subclass and a Throwable has thus been thrown) - it was actually no bug in the SimpleStackTraceElement but in the ClassInfo's.getMethods() operation.</entry>
         <entry type="change" package="org.as2lib.env.reflect" class="ClassInfo" method="getMethods(Void):Map">It now also returns the operations declared by super types.</entry>
       </day>
       <day value="3">
-        <entry type="change" package="org.as2lib.env.event" class="DynamicEventBroadcasterFactory" method="createEventBroadcaster(Void):EventBroadcaster" throws="org.as2lib.env.except.UndefinedPropertyExceptiont">to org.as2lib.env.except.IllegalStateException.</entry>
+        <entry type="change" package="org.as2lib.env.event" class="DynamicEventBroadcasterFactory" method="createEventBroadcaster(Void):EventBroadcaster"><change-throws from="org.as2lib.env.except.UndefinedPropertyExceptiont" to="org.as2lib.env.except.IllegalStateException" /></entry>
         <entry type="remove" package="org.as2lib.env.except" class="UndefinedPropertyException"></entry>
         <entry type="add" package="org.as2lib.out.handler" class="SocketOutputServerHandler"></entry>
       </day>
@@ -108,35 +108,35 @@
     <month value="5">
       <day value="31">
         <entry type="documentation" package="org.as2lib.env.event">Improved overall documentation.</entry>
-        <entry type="change" package="org.as2lib.env.event" class="SimpleEventBroadcaster" variable="listeners:ListenerArray">to listeners:Array.</entry>
-        <entry type="change" package="org.as2lib.env.event" class="EventBroadcaster" method="getAllListener(Void):ListenerArray">to getAllListener(Void):Array.</entry>
-        <entry type="change" package="org.as2lib.env.event" class="SimpleEventBroadcaster" variable="normalDispatcher:EventDispatcher">to NORMAL_DISPATCHER:EventDispatcher.</entry>
-        <entry type="change" package="org.as2lib.env.event" class="SimpleEventBroadcaster" variable="logDispatcher:EventDispatcher">to LOG_DISPATCHER:EventDispatcher.</entry>
-        <entry type="change" package="org.as2lib.env.event" class="EventDispatcher" method="dispatch(event:EventInfo, listeners:ListenerArray):Void">to dispatch(event:EventInfo, listeners:Array):Void.</entry>
+        <entry type="change" package="org.as2lib.env.event" class="SimpleEventBroadcaster" variable="listeners:ListenerArray"><change-type to="Array" /></entry>
+        <entry type="change" package="org.as2lib.env.event" class="EventBroadcaster" method="getAllListener(Void):ListenerArray"><change-returnType to="Array" /></entry>
+        <entry type="change" package="org.as2lib.env.event" class="SimpleEventBroadcaster" variable="normalDispatcher:EventDispatcher"><change-rename to="NORMAL_DISPATCHER" /></entry>
+        <entry type="change" package="org.as2lib.env.event" class="SimpleEventBroadcaster" variable="logDispatcher:EventDispatcher"><change-rename to="LOG_DISPATCHER:EventDispatcher" /></entry>
+        <entry type="change" package="org.as2lib.env.event" class="EventDispatcher" method="dispatch(event:EventInfo, listeners:ListenerArray):Void"><change-arguments to="event:EventInfo, listeners:Array" /></entry>
         <entry type="remove" package="org.as2lib.env.event" class="ListenerArray"></entry>
-        <entry type="change" package="org.as2lib.env.event">Renamed Consumeable to Consumable.</entry>
-        <entry type="change" package="org.as2lib.env.event" class="EventDispatcher" method="dispatchConsumeable(event:EventInfo, listeners:Array):Void">to dispatchConsumable(event:EventInfo, listeners:Array):Void.</entry>
+        <entry type="change" package="org.as2lib.env.event" class="Consumeable"><change-rename to="Consumable" /></entry>
+        <entry type="change" package="org.as2lib.env.event" class="EventDispatcher" method="dispatchConsumeable(event:EventInfo, listeners:Array):Void"><change-rename to="dispatchConsumable" /></entry>
         <entry type="add" package="org.as2lib.env.event" class="SpeedEventBroadcaster">for fast broadcasting.</entry>
-        <entry type="change" package="org.as2lib.env.reflect" class="ClassInfo" method="newInstance(Void)">to newInstance(args:Array).</entry>
+        <entry type="change" package="org.as2lib.env.reflect" class="ClassInfo" method="newInstance(Void)"><change-arguments to="newInstance(args:Array)" /></entry>
       </day>
       <day value="30">
         <entry type="remove" package="org.as2lib.util" class="Executeable"></entry>
-        <entry type="change" package="org.as2lib.util" class="Call" method="new(object, func:Function, args:Array)">to new(object, func:Function).</entry>
-        <entry type="change" package="org.as2lib.util" class="Call" method="execute(Void)">to execute(args:Array).</entry>
+        <entry type="change" package="org.as2lib.util" class="Call" method="new(object, func:Function, args:Array)"><change-arguments to="object, func:Function" /></entry>
+        <entry type="change" package="org.as2lib.util" class="Call" method="execute(Void)"><change-arguments to="args:Array" /></entry>
       </day>
       <day value="28">
-        <entry type="change" package="org.as2lib.env.reflect.algorythm">to algorithm.</entry>
-        <entry type="change" package="org.as2lib.env.reflect.algorithm.ClassAlgorythm">to ClassAlgorithm.</entry>
-        <entry type="change" package="org.as2lib.env.reflect.algorithm.PackageAlgorythm">to PackageAlgorithm.</entry>
-        <entry type="change" package="org.as2lib.env.reflect.algorithm.ChildrenAlgorythm">to ChildrenAlgorithm.</entry>
-        <entry type="change" package="org.as2lib.env.reflect.algorithm.MethodAlgorythm">to MethodAlgorithm.</entry>
-        <entry type="change" package="org.as2lib.env.reflect.algorithm.PropertyAlgorythm">to PropertyAlgorithm.</entry>
-        <entry type="change" package="org.as2lib.env.reflect.algorithm.AbstractContentAlgorythm">to AbstractContentAlgorithm.</entry>
-        <entry type="change" package="org.as2lib.env.reflect.algorithm.ContentAlgorythm">to ContentAlgorithm.</entry>
-        <entry type="change" package="org.as2lib.env.reflect.algorithm.CacheAlgorythm">to CacheAlgorithm.</entry>
-        <entry type="change" package="org.as2lib.env.reflect.ReflectConfig" method="get-/set*Algorythm(*):*">to get-/set*Algorithm(*):*.</entry>
-        <entry type="change" package="org.as2lib.env.reflect.TypeInfo" method="getRepresentedType(Void):Function">to getType(Void):Function.</entry>
-        <entry type="change" package="org.as2lib.env.reflect.ClassInfo" method="getRepresentedType(Void):Function">to getType(Void):Function.</entry>
+        <entry type="change" package="org.as2lib.env.reflect.algorythm"><change-rename to="algorithm" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect.algorithm" class="ClassAlgorythm"><change-rename to="ClassAlgorithm." /></entry>
+        <entry type="change" package="org.as2lib.env.reflect.algorithm" class="PackageAlgorythm"><change-rename to="PackageAlgorithm" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect.algorithm" class="ChildrenAlgorythm"><change-rename to="ChildrenAlgorithm" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect.algorithm" class="MethodAlgorythm"><change-rename to="MethodAlgorithm" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect.algorithm" class="PropertyAlgorythm"><change-rename to="PropertyAlgorithm" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect.algorithm" class="AbstractContentAlgorythm"><change-rename to="AbstractContentAlgorithm" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect.algorithm" class="ContentAlgorythm"><change-rename to="ContentAlgorithm" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect.algorithm" class="CacheAlgorythm"><change-rename to="CacheAlgorithm" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect" class="ReflectConfig" method="get-/set*Algorythm(*):*"><change-rename to="get-/set*Algorithm" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect" class="TypeInfo" method="getRepresentedType(Void):Function"><change-rename to="getType" /></entry>
+        <entry type="change" package="org.as2lib.env.reflect" class="ClassInfo" method="getRepresentedType(Void):Function"><change-rename to="getType" /></entry>
       </day>
       <day value="26">
         <entry type="remove" package="org.as2lib.env.reflect" class="CompositeMemberInfo" method="getName(Void):String">[is already defined in interface MemberInfo].</entry>
