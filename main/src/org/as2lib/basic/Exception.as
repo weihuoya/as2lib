@@ -11,7 +11,7 @@ class org.as2lib.basic.Exception extends AbstractException implements Throwable 
 	/**
 	 * Constructs a new Exception instance.
 	 */
-	public function Exception(message:String, thrower:Object, args:FunctionArguments) {
+	public function Exception(message:String, thrower, args:FunctionArguments) {
 		super(message, thrower, args);
 	}
 	

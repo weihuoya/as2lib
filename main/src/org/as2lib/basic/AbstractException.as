@@ -11,11 +11,22 @@ class org.as2lib.basic.AbstractException extends Error {
 	private var thrower:Object;
 	private var args:FunctionArguments;
 	
-	private function AbstractException(message:String, thrower:Object, args:FunctionArguments) {
+	private function AbstractException(message:String, thrower, args:FunctionArguments) {
 		stack = new Stack();
 		this.message = message;
-		this.thrower = thrower;
 		this.args = args;
+		initThrower(thrower);
+	}
+	
+	private function initThrower(thrower):Void {
+		if (ObjectUtil.isTypeOf(thrower, "object")) {
+			this.thrower = thrower;
+			return;
+		}
+		if (ObjectUtil.isTypeOf(thrower, "function")) {
+			this.thrower = new (Function(thrower))();
+			return;
+		}
 	}
 	
 	public function getStack(Void):Stack {
@@ -37,15 +48,15 @@ class org.as2lib.basic.AbstractException extends Error {
 		return message;
 	}
 	
-	public function getClass(Void):ClassInfo {
-		return ReflectUtil.getClassInfo(this);
-	}
-	
 	public function getThrower(Void):Object {
 		return thrower;
 	}
 	
 	public function getArguments(Void):FunctionArguments {
 		return args;
+	}
+	
+	public function getClass(Void):ClassInfo {
+		return ReflectUtil.getClassInfo(this);
 	}
 }
