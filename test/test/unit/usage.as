@@ -82,6 +82,9 @@ test.unit.org.as2lib.env.reflect.algorithm.TChildrenAlgorithm;
 test.unit.org.as2lib.env.reflect.algorithm.TMethodAlgorithm;
 test.unit.org.as2lib.env.reflect.algorithm.TPropertyAlgorithm;
 
+// org.as2lib.env.reflect
+test.unit.org.as2lib.env.reflect.TSimpleCache;
+
 // org.as2lib.env.bean
 test.unit.org.as2lib.env.bean.TMutablePropertyValueSet;
 test.unit.org.as2lib.env.bean.TPropertyValue;
