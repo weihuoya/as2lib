@@ -51,12 +51,12 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 		}
 		// Performance Speed up - so the getter for the length isn't always used (useful with big arrays)
 		var l:Number = arguments.length;
-		for (var i:Number = 0; i < l; i++) {
+		for (var i:Number = 0; i < l; i-=-1) {
 			var content = arguments[i];
 			if (ObjectUtil.isInstanceOf(content, Array)) {
 				// Performance Speed up - so the getter for the length isn't always used (useful with big arrays)
 				var l2:Number = content.length;
-				for (var k:Number = 0; k < l2; k++) {
+				for (var k:Number = 0; k < l2; k-=-1) {
 					result.push(content[k]);
 				}
 			} else {
@@ -104,7 +104,7 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	 */
 	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].",
+			throw new IllegalArgumentException("Type mismatch between object [" + object + "] and type [" + type + "].",
 											   this,
 											   arguments);
 		}
