@@ -49,7 +49,7 @@
                       </td>
                       <td><img src="../images/seperatorVertical.gif" class="imageSeparatorVertical" alt=""></td>
                       <td class="contentTd">
-                        <h1>Basic Classes (worksheet 0.3)</h1>
+                        <h1>Basic Classes (worksheet 0.5)</h1>
                         For the success of an project with ActionScript 2.0 it is necessary to integrate additional functions that are low-level in Flash.<br>
                         <br>
                         Low-level called in this connection means that many features work in an "usually not suggested" way to handle operations so that other features don't have to use this techniques.<br>
@@ -59,10 +59,10 @@
                             <th>Content</th>
                           </tr>
                           <tr>
-                            <td><a href="#OutputHandling" title="Handling different Output during an project">Output handling</a></td>
+                            <td><a href="#Output" title="Handling different Output during an project">Output handling</a></td>
                           </tr>
                           <tr>
-                            <td><a href="#ExceptionHandling" title="Better Handling for Exceptions">Exception handling</a></td>
+                            <td><a href="#Exception" title="Better Handling for Exceptions">Exception handling</a></td>
                           </tr>
                           <tr>
                             <td><a href="#ReflectionHandling" title="Handling of Reflections within Classes">Reflection handling</a></td>
@@ -87,57 +87,58 @@
                           </tr>
                         </table>
                         <ol class="conceptList">
-                          <li><a name="OutputHandling"></a><h2>Output handling</h2>
-                            Usual output from an Application runs over <code>trace();</code> or an Exception. The Problem of this way is that most Applications work within an Environment where there is no "trace" defined.
+                          <li><a name="Output"></a><h2>Output handling</h2>
+                            Usually, the output from an application within flash runs over <code>trace();</code>(also exceptions). The Problem of this way is that this will only work within an environment where "trace" is supported (only the Flash Environment support this by default). All other cases (Within an website, as executeable or whatever) doesn't have a standard output. It even this is only switchable within the compiler for one level (display or not).
                             <ul>
-                              <li><h3>Solution</h3>
-                                To make sure that all Output can be dynamically handled within any application we create a basic bridge for accessing those Output:
-                                <code>class org.as2lib.basic.Out {}</code>
-                                that handle all accessing output requests.
+                              <li><a name="OutputReason"></a><h3>Reason</h3>
+                                We support this because we think that Output is mighty and output should be possible anywhere.
                               </li>
-                              <li><h3>Featured Output requests</h3>
+                              <li><a name="OutputSolution"></a><h3>Solution</h3>
+                                To make sure that all Output can be dynamically handled within any application we create a basic bridge for accessing those Output.<br>
+                                <br>
+                                This brigde should take all requests and forward it to OutputHandlers. There should be several Implementations for several kind of running systems.<br>
+                                <br>
+                                This bridge should also handle wether an output level has reached or not.
+                              </li>
+                              <li><a name="OutputAPI"></a><h3>API</h3>
+                                All functions should be accessed over the util class (with only static functions)
+                                <code>org.as2lib.basic.Out<code>
                                 <ul>
-                                  <li><h4>.write([String])</h4>
-                                    To Write stuff out. (equally to Trace)
+                                  <li><h5>.write([String]):Void</h5>
+                                    Simple string output to the standard device (compareable with trace).
                                   </li>
-                                  <li><a name="OutputHandling.error"></a><h4>.error([Exception])</h4>
-                                    Exceptions are usually not available in an .swf, this should declare them as Exception. This method should ensure that the given Exceptions get well printed. <br>
-                                    I suppose that an "TraceOutput" would handle it like:<code>...
-public function error (e:Exception) {
-  trace(" -- Error Occured -- ");
-  trace("    Name: "+e.getClass().getName();
-  trace("    Message: "+e.getMessage();
-  trace("    StackInformation: "+e.getInformation();
-  // and so on.
-  // (Only possible example)
-}
-...</code> and different other System's would display it maybe in an JavaScript Window or they hide some fields, or evaluate different more.
+                                  <li><a name="OutputHandling.error"></a><h4>.error([Exception]):Void</h4>
+                                    Exceptions are usually not visibile within an .swf (Except Flash MX 2004), this method should print exceptions in a better way.
                                   </li>
-                                  <li><h4>.log([String])</h4>
-                                    Log's differ from usually Output that it's not necessary for developing (you don't need to see them).
+                                  <li><h4>.log([String]):Void</h4>
+                                    Logging often works at files and more strict, the implementation of the Handler should choose how.
+                                  </li>
+                                  <li><h4>.setOutputHandler([OutputHandler]):Void</h4>
+                                    Usually the "StandardOutputHandler" should process all actions, but it will be very useful if you can change it to you special handler or an handler for an different system.
+                                  </li>
+                                  <li><h4>.setOutputLevel([Number]):Void</h4>
+                                    The Outputlevel defines which actions should be processed and which not. It is designed as binary flag, you may set it to:                                <pre>(0) 000 = No output.
+1 = 001 = processing only exceptions.
+2 = 010 = processing only logs.
+4 = 100 = processing only writes..</pre>
+and each combinition:
+<pre>(7) 111 = complete output</pre><br>
+                                    In this way, it's simple to extend it. There will be constants to simplify the access:
+                                    <code>.DO_EXCEPTIONS // 1
+.DO_LOG // 2
+.DO_WRITE // 4
+.DO_EXCEPTIONS_AND_LOG // DO_EXCEPTIONS | DO_LOG
+.DO_EXCEPTIONS_AND_WRITE // DO_EXCEPTIONS | DO_WRITE
+.DO_LOG_AND_WRITE // DO_LOG | DO_WRITE
+.DO_EVERYTHING // DO_EXCEPTIONS | DO_LOG | DO_WRITE</code>
                                   </li>
                                 </ul>
                               </li>
-                              <li><h3>Handling Outputs</h3>
-                                As you maybe have recognized, this Method only allows access to one function. To implement the main usage from an bridge we use different OutputWriter.<br>
-                                <br>
-                                OutputWriter are defined as Classes that implement an Interfaces for delegating the functionality. It should be possible to define one OutputWriter that handles this requests.
-                                <code>.setOutputWriter([OutputWriter])</code> should handle this.
+                              <li><a name="OutputHandler"></a><h3>OutputHandler</h3>
+                                Every OutputHandler must be an Implementation from the OutputHandlerInterface. To provide first access there will be an <pre>org.as2lib.basic.outputHandler.Trace</pre> that simple provides all output to the trace function. Further following: JavaScript OutputHandler and InScreen Outputhandler.
                               </li>
-                              <li><h3>Output Level</h3>
-                                There should be a mechanism to restrict the output level(to save performance or for publishing).
-                                <code>.setOutputLevel([Number])</code>
-                                The Number should be set as binary Digit:<br>
-                                <pre>(0) 000 = No output.
-(1) 001 = Exceptions showing.
-(2) 010 = Writing Logs.
-(4) 100 = Warnings showing.</pre>
-and each combinition:
-<pre>(7) 111 = Complete Output</pre>
-                                 <p class="note">Note: This Issue will probably get changed during the development.</p>
-                              </li>
-                              <li><h3>Exception Handling</h3>
-                                Exceptions shall be thrown when ...
+                              <li><a name="OutputExceptions"></a><h3>Exceptions</h3>
+                                Exceptions will get thrown if ...
                                 <ul>
                                   <li>no Exception was defined (<code>.error()</code>)</li>
                                   <li>the given String was empty (<code>.write()</code>,<code>.log()</code>)</li>
@@ -146,36 +147,66 @@ and each combinition:
                               </li>
                             </ul>
                           </li>
-                          <li><a name="ExceptionHandling"></a><h2>Exception handling</h2>
-                            Usual Exceptions within as2 throws output directly to to trace. The Problem is that a usual exception has no standard layout and there are some features missing.<br>
-                            We build an Basic Exception Class that handles some various problems for us:
+                          <li><a name="Exception"></a><h2>Exception handling</h2>
+                            Usually Exceptions within Flash get displayed with the trace(Error.toString()). The Result is very rare (if nothing defined only: "Error occured" will be displayed) This blocks exception-viewing within another environment than Flash MX 2004.
                             <ul>
-                              <li><h3>Problem with the stacktrace</h3>
-                                Actually its not possible to have an stacktrace when an exception gets thrown. The only acceptable solution can be reached by <a href="#ReflectionHandling" title="Handling informations for classes">Reflections</a>. It will be possible (that has been well testet) that it's not neccesary to insert "place" and "inFunction" var for getting the info's from the object that would be called.<br>
-                                <br>
-                                So we generate the classname (where the exception occured, <code>this</code>), the name of the function (where the exception occured <code>arguments.callee</code>) and all supplied arguments by the statement <code>arguments</code> that is setted by flash for each function.<br>
-                                There is an additional possibility for knowing the formerCall from the Object.</li>
-                              <li><h3>Naming problem</h3>
-                                Within as2 its not with the standard possible to fetch the name from an exception. Using <a href="#ReflectionHandling" title="Handling informations for classes">Reflections</a> we won't be used to this anymore. The Exception class should set its .name with the help from <a href="#ReflectionHandling" title="Handling informations for classes">Reflections</a> self.
+                              <li><a name="ExceptionReason"></a><h3>Reason</h3>
+                                The Error Class that Flash uses ist in best mind not useable. It doesn't allow you to find an error.
                               </li>
-                              <li><h3>Output problem</h3>
-                                The standard output when an exception occurs is in as2 very "small-sized". The as2 internal .toString() should only be improved in case to have an little better solution (for example:<code>[Exception WrongArgumentsException]</code>). Of course, using this way won't be very nice to view an exception. To really put out an Exception the Exception should redirect itself to the <a href="#OutputHandling.error" name="Error handling within the standard output system">Outputhandling</a> by using something like<code>...
-public function toString () {
-  org.as2lib.Out.error(this); // Everything next is up to the Output implementation.
-  return "[Exception "+getClass().getName()+"]";
-}
-...</code>. There should be an possibility for preventing this functionality but i don't see bigger problems with that (mail to me if think there is an problems with that:<a href="mailto:mastakaneda@sourceforge.net" title="Martin Heidegger">mastakaneda@sourceforge.net</a>)
+                              <li><a name="ExceptionSolution"></a><h3>Solution</h3>
+                                We will provide a class that extends the basic Error class (to keep in mind that it will be better in future), with new features.
                               </li>
-                              <li><h3>Exception Conversion</h3>
-                                You might have the used case that an Exception from type "a" that has been thrown should be transformed to a exception from type "b".<br>
-                                <br>
-                                It should be a quite comfortable way if an exception handles this with an standard function.
-                                <code>myException.convertTo(org.as2lib.basic.exceptions.WrongArgumentsException);</code>
-                                <p class="note">Note: Java handles this with an overloaded constructor(one using message, another one using another exception for the information). Quite not a fine way for as2, but i will maybe change my opinion by response.</p> 
-                              </li>
-                              <li><h3>Spoken in Code</h3>
+                              <li><a name="ExceptionNewFeatures"></a><h3>New Features</h3>
                                 <ul>
-                                  <li><h4>Enduser</h4>The enduser will see an exception similar to this by the OutputHandler (formed by the OutputHandler):
+                                  <li><h4>Automized name generation</h4>
+                                    To stop that you will have automatically to insert an Exception name
+                                    <code>class MyError extends Error {
+  public var name = "org.as2lib.basic.WrongArgumentException";
+}
+                                    </code>
+                                    we will use reflections to get automatically the name of the Exception.
+                                  </li>
+                                  <li><h4>Stack</h4>
+                                    We will save the previous called action with vars as small implementation of an stacktrace (as long as not more is supported) with the arguments object.<br>
+                                    This will save time in searching "where did this exception occur".
+                                  </li>
+                                  <li><h4>Exception Conversion</h4>
+                                    If you want to throw an Exception on by an different type when you've catched it there will be an functionality to convert one Exception to another, of course, your are able to cast it but this doesn't change the fields and the name would be the same, you wouldn't have noticed any difference. The conversion should fill the exception additionally with the old Stacktrace and type.
+                                  </li>
+                                </ul>
+                              </li>
+                              <li><a name="ExceptionAPI"></a><h3>API</h3>
+                                For using this exception it's only necessary to extend the basic class.
+                                Example:<code>class org.as2lib.basic.WrongArgumentsException extends org.as2lib.basic.Exception {
+}</code>, all the Rest will be done by the basic class.
+                                Methods:
+                                <ul>
+                                  <li><a name="ExceptionAPIgetName"/><h4>.getName():String</h4>
+                                    Returns the name from the exception.
+                                  </li>
+                                  <li><a name="ExceptionAPIgetStack"/><h4>.getStack():TypedArray(StackObject)</h4>
+                                    Returns all stackinformations.
+                                  </li>
+                                  <li><a name="ExceptionAPIgetMessage"/><h4>.getMessage():String</h4>on
+                                    Returns the provided message.
+                                  </li>
+                                  <li><a name="ExceptionAPItoString"/><h4>.toString():String</h4>
+                                    Returns an simple descriptionoutput as ascii graphic.<pre>--- Exception Occured ---
+  type: org.as2lib.basic.exceptions.WrongArgumentsException
+  message: You did something wrong.
+  by: org.as2lib.basic.StringUtil.trim([String 'home'], [Array 'my', 'yours', 'them']);
+      org.as2lib.basic.StringUtil.trimLeft(&lt;unknown&gt;);</pre>
+                                    This function also provides itself to <a href="#OutputHandlerAPIexception" title="Output handling for exceptions.">Out.exception()</a>.
+                                  </li>
+                                  <li><a name="ExceptionAPIconvertTo"/><h4>.convertTo([Function]):Exception</h4>
+                                    Returns a new class filled with the new and old informations. (also see here)
+                                  </li>
+                                </ul>
+                              </li>
+                              <li><a name="ExceptionExample"></a><h3>Example</h3>
+                                <ul>
+                                  <li><h4>Enduser</h4>
+                                    The enduser will see an exception similar to this by the OutputHandler (formed by the OutputHandler):
                                     <pre>--- Exception Occured ---
   type: org.as2lib.basic.exceptions.WrongArgumentsException
   message: You did something wrong.
@@ -187,48 +218,94 @@ public function toString () {
                                     <code>throw new org.as2lib.basic.exceptions.WrongArgumentsException('You did something wrong.', arguments);</code>
                                   </li>
                                   <li><h4>ExceptionDeveloper</h4>
-                                   The Exceptiondeveloper will have to code an exception like this:
-                                  <code>class org.as2lib.basic.exceptions.WrongArgumentsException extends Exception {
-  function WrongArgumentsException (message:String, infoArguments:Array) {
-    super(message, infoArguments);
-  }
+                                    The Exceptiondeveloper will have to code an exception like this:
+                                    <code>class org.as2lib.basic.exceptions.WrongArgumentsException extends Exception {
 }</code>
                                   </li>
                                 </ul>
                               </li>
                             </ul>
                           </li>
-                          <li><a name="ReflectionHandling"></a><h2>Reflection handling</h2>
-                            Java has a functionality for getting a classes name, methods and properties.<br>
-                            Actually it's inbuilt in Java. Flash hasn't got something like that "inbuilt". This might be a serious problem, so to solve this is very near.
-                            <h3>two Systems</h3>
-                            For using Reflections there will be a two way System:
+                          <li><h2>Basic Class</h2>
                             <ul>
-                              <li><h4>The Reflections Class</h4>
-                                There will be a basic class that handles all functionality that Reflections Support.
+                              <li><a name="BasicReason"></a><h3>Reason</h3>
+                                Some functionalities simple work faster when you only have to access it.
                               </li>
-                              <li><h4>The Basic Class</h4>
-                                There will be a basic class that every class should support (in Java this would an abstract class). One of its functionality will be to allow direct access to Reflection-Functionality:
-                                <code>.getClass().getName();</code>
+                              <li><a name="BasicSolution"></a><h3>Solution</h3>
+                                The Solution is a basic class that everyone can extend. So access these would make it simpler to use. But this class will only be provided as bridge to other functionalities. To guarantee that if you have no possibility to extend this class(easy possible) you can still use the util.
+                              </li>
+                              <li><a name="BasicContent"></a><h3>Content</h3>
+                                <ul>
+                                  <li><a href="#Reflections">Reflections</a>
+                                    <code>.getClass():ClassInfo;</code>
+                                  </li>
+                                  <li><a href="#Cloning">Cloning</a>
+                                    <code>.clone():Object;</code>
+                                  </li>
+                                  <li><a href="#Overloading">Overloading</a>
+                                    <code>.overload([arguments], [OverloadHandler1],...[OverloadHandlerN]);
+.createOverloadHandler([Array], [String]);
+                                    </code>
+                                  </li>
+                                </ul>
                               </li>
                             </ul>
-                            <h3>Logical Description</h3>
-                            The question i've heard most about this is "How the hell should this work?". There is an simple Answer: I use all scopeable areas that are available (starting with _level0 and _global), then i save all informations and step the name throught until i find the first instance, from there i will get the path. With the Path and "eval" i'm able to fetch everything else.
-                            <h3>Implemented Functionality</h3>
+                          </li>
+                          <li><a name="Reflections"></a><h2>Reflection handling</h2>
+                            Java has a functionality for getting a classes name, methods and properties. This is mighty for getting more informations about an instance you've got.<br>
                             <ul>
-                              <li><h3>Class Fetching</h3>
-                                It should be possible to fetch informations about an class.
-                                <code>Reflections.getClass([Class]/[Instance]);</code>
-                                The result should be an Instance of an ReflectionObject. This object contains informations about static vars, methods, name and the extended class.
-                                <code>ReflectionObject.getStaticVars():Array
-ReflectionObject.getMethods():Array
-ReflectionObject.getExtendedClass():ReflectionObject
-ReflectionObject.getName():String
-ReflectionObject.getVars():Array</code>
-                                <p class="note">Note: All functions use "lacy creation" so that no performance won't be lost.</p>
+                              <li><a name="ReflectionsReason"></a><h3>Reason</h3>
+                                Actually it's inbuilt in Java. Flash hasn't got something like that "inbuilt". This is a serious problem, so to solve this is not far away.
                               </li>
-                              <li><h3>Instance Fetching</h3>
-                                Very different to class fetching is instance fetching, major because it creates a lot of troubles with recursion and there should be really all cases checked. More details will follow after more tests.
+                              <li><a name="ReflectionsSolution"></a><h3>Solution</h3>
+                                We will provide an Util that handles all matter of reflections. This util will be found at <pre>org.as2lib.basic.Reflections</pre>.
+                                <h4>Logical Description</h4>
+                                The question i've heard most about this is "How the hell should this work?". There is an simple Answer: I use all scopeable areas that are available (starting with _level0 and _global), then i save all informations and step the name throught until i find the first instance, from there i will get the path. With the path and "eval" i'm able to fetch everything else.
+                              </li>
+                              <li><a name="ReflectionsAPI"></a><h3>API</h3>
+                                <ul>
+                                  <li><h4>.getClass([function]):ClassInfo</h4>
+                                    This single Accesspoint returns all informations within a ClassInfo object. 
+                                  </li>
+                                </ul>
+                              </li>
+                              <li><a name="ReflectionsClassInfo"></a><h3>ClassInfo</h3>
+                                <ul>
+                                  <li><a name="ReflectionClassInfoDescription"></a><h4>Description</h4>
+                                    This Class will do the main part instead of the reflections. It will access the 
+                                  </li>
+                                  <li><a name="ReflectionClassInfoAPI"></a><h4>API</h4>
+                                    <p class="note">Note: All functions use "lacy creation" so that no performance won't be lost.</p>
+                                    <ul>
+                                      <li><a name="ReflectionClassInfoAPIgetExtendedClass"></a><h5>.getExtendedClass():ClassInfo</h5>
+                                        Returns the informations about the class that's been extended. 
+                                      </li>
+                                      <li><a name="ReflectionClassInfoAPIgetMethods"></a><h5>.getMethods():TypedArray(String)</h5>
+                                        Returns the names from all (not startic) methods.
+                                      </li>
+                                      <li><a name="ReflectionClassInfoAPIgetName"></a><h5>.getName():String</h5>
+                                        Returns the Name from the class (without "_global.").
+                                      </li>
+                                      <li><a name="ReflectionClassInfoAPIgetStaticMethods"></a><h5>.getStaticMethods():String</h5>
+                                        Returns the names from all static methods.
+                                      </li>
+                                      <li><a name="ReflectionClassInfoAPIgetStaticVars"></a><h5>.getStaticVars():TypedArray(String)</h5>
+                                        Returns the names from all static vars.
+                                      </li>
+                                      <li><a name="ReflectionClassInfoAPIgetVars"></a><h5>.getVars():TypedArray(String)</h5>
+                                        Returns the names from all (not static) vars.
+                                      </li>
+                                    </ul>
+                                    This Class will do the main part instead of the reflections. It will access the 
+                                  </li>
+                                </ul>
+                              </li>
+                              <li><a name="ReflectionExceptions"></a><h3>Exceptions</h3>
+                                Exceptions will get thrown if ...
+                                <ul>
+                                  <li>no class(function) has been given</li>
+                                  <li>the class was outside the scopeable area</li>
+                                </ul>
                               </li>
                             </ul>
                           </li>
