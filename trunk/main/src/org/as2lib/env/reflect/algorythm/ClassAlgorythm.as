@@ -55,11 +55,11 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 		var i:String;
 		for (i in package) {
 			if (ObjectUtil.isTypeOf(package[i], "function")) {
-				if (executeClassLogic(i, package[i], info, object)) {
+				if (validateAndStoreClass(i, package[i], info, object)) {
 					return true;
 				}
 			} else if (ObjectUtil.isTypeOf(package[i], "object")) {
-				if (executePackageLogic(i, package[i], info, object)) {
+				if (validateAndStorePackage(i, package[i], info, object)) {
 					return true;
 				}
 			}
@@ -67,7 +67,7 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 		return false;
 	}
 	
-	private function executeClassLogic(name:String, clazz:Function, parent:PackageInfo, object):Boolean {
+	private function validateAndStoreClass(name:String, clazz:Function, parent:PackageInfo, object):Boolean {
 		if (object.__proto__ == clazz.prototype) {
 			storeClass(name, clazz, parent);
 			return true;
@@ -83,7 +83,7 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 		info = new ClassInfo(name, clazz, parent)
 	}
 	
-	private function executePackageLogic(name:String, package, parent:PackageInfo, object):Boolean {
+	private function validateAndStorePackage(name:String, package, parent:PackageInfo, object):Boolean {
 		var sp:PackageInfo = cache.getPackage(package);
 		if (ObjectUtil.isEmpty(sp)) {
 			sp = storePackage(name, package, parent);

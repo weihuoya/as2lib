@@ -29,14 +29,17 @@ import org.as2lib.util.StringUtil;
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorythm.PropertyAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
-	private var data:Map;
+	public static var TYPE_GETTER:Number = 0;
+	public static var TYPE_SETTER:Number = 1;
+	
+	private var result:Map;
 	private var getters:Map;
 	private var setters:Map;
 	private var staticGetters:Map;
 	private var staticSetters:Map;
 	private var info:ClassInfo;
 	private var staticFlag:Boolean;
-	private var type:String;
+	private var type:Number;
 	
 	public function PropertyAlgorythm(Void) {
 	}
@@ -45,7 +48,7 @@ class org.as2lib.env.reflect.algorythm.PropertyAlgorythm extends AbstractContent
 		type = null;
 		
 		this.info = ClassInfo(info);
-		this.data = new HashMap();
+		this.result = new HashMap();
 		this.getters = new HashMap();
 		this.setters = new HashMap();
 		this.staticGetters = new HashMap();
@@ -54,14 +57,14 @@ class org.as2lib.env.reflect.algorythm.PropertyAlgorythm extends AbstractContent
 		this.staticFlag = true;
 		var clazz:Function = this.info.getRepresentedClass();
 		search(clazz);
-		this.staticFlag = false;
-		var prototype = clazz.prototype;
-		_global.ASSetPropFlags(prototype, null, 6, true);
-		_global.ASSetPropFlags(prototype, ["__proto__", "constructor", "__constructor__"], 1, true);
-		search(prototype);
-		_global.ASSetPropFlags(prototype, null, 1, true);
 		
-		return data;
+		this.staticFlag = false;
+		ObjectUtil.setAccessPermission(clazz.prototype, ObjectUtil.ACCESS_ALL_ALLOWED);
+		_global.ASSetPropFlags(clazz.prototype, ["__proto__", "constructor", "__constructor__"], 1, true);
+		search(clazz.prototype);
+		ObjectUtil.setAccessPermission(clazz.prototype, ObjectUtil.ACCESS_IS_HIDDEN);
+		
+		return result;
 	}
 	
 	private function validate(target, name:String):Boolean {
@@ -70,7 +73,7 @@ class org.as2lib.env.reflect.algorythm.PropertyAlgorythm extends AbstractContent
 			if (StringUtil.startsWith(name, "__get__")) {
 				getters.put(coreName, true);
 				if (!setters.get(coreName)) {
-					type = "__get__";
+					type = TYPE_GETTER;
 					return true;
 				}
 				return false;
@@ -78,7 +81,7 @@ class org.as2lib.env.reflect.algorythm.PropertyAlgorythm extends AbstractContent
 			if (StringUtil.startsWith(name, "__set__")) {
 				setters.put(coreName, true);
 				if (!getters.get(coreName)) {
-					type = "__set__";
+					type = TYPE_SETTER;
 					return true;
 				}
 				return false;
@@ -90,14 +93,14 @@ class org.as2lib.env.reflect.algorythm.PropertyAlgorythm extends AbstractContent
 	private function store(name:String, target):Void {
 		var coreName = name.substring(7);
 		var property:PropertyInfo;
-		if (type == "__get__") {
+		if (type == TYPE_GETTER) {
 			property = new PropertyInfo(coreName, target["__set__" + coreName], target[name], info, staticFlag);
-			data.put(coreName, property);
+			result.put(coreName, property);
 			return;
 		}
-		if (type == "__set__") {
+		if (type == TYPE_SETTER) {
 			property = new PropertyInfo(coreName, target[name], target["__get__" + coreName], info, staticFlag);
-			data.put(coreName, property);
+			result.put(coreName, property);
 			return;
 		}
 	}
