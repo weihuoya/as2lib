@@ -90,6 +90,9 @@ test.unit.org.as2lib.aop.joinpoint.TPropertyJoinPoint;
 test.unit.org.as2lib.aop.joinpoint.TGetPropertyJoinPoint;
 test.unit.org.as2lib.aop.joinpoint.TSetPropertyJoinPoint;
 
+// org.as2lib.aop.matcher
+test.unit.org.as2lib.aop.matcher.TDefaultMatcher;
+
 // org.as2lib.env.reflect
 test.unit.org.as2lib.env.reflect.TSimpleCache;
 test.unit.org.as2lib.env.reflect.TClassInfo;
