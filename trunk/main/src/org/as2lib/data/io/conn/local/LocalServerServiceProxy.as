@@ -12,15 +12,14 @@ class org.as2lib.data.io.conn.local.LocalServerServiceProxy extends ExtendedLoca
 	}
 	
 	public function remoteCall() {
-		var overload:Overload = new Overload(this);
-		overload.addHandler([String, Array, String], remoteCallWithResponse);
-		overload.addHandler([String, Array], remoteCallWithoutResponse);
-		overload.forward(arguments);
+		var o:Overload = new Overload(this);
+		o.addHandler([String, Array, String], remoteCallWithResponse);
+		o.addHandler([String, Array], remoteCallWithoutResponse);
+		o.forward(arguments);
 	}
 	
 	public function remoteCallWithResponse(method:String, args:Array, listener:String):Void {
 		var response = service[method].apply(service, args);
-		
 		var lc:ExtendedLocalConnection = new ExtendedLocalConnection();
 		lc.send(listener, "onResponse", [response]);
 	}

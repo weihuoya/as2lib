@@ -1,4 +1,5 @@
 ﻿import org.as2lib.core.BasicClass;
+import org.as2lib.env.overload.Overload;
 import org.as2lib.data.io.conn.ServiceProxy;
 import org.as2lib.util.Call;
 import org.as2lib.data.holder.Map;
@@ -21,15 +22,22 @@ class org.as2lib.data.io.conn.local.LocalClientServiceProxy extends BasicClass i
 		listenerMap.put(method, call);
 	}
 	
-	public function invoke(method:String, args:Array):Void {
-		// use overloading
-		if (!args) {
-			args = new Array();
-		}
+	public function invoke():Void {
+		var o:Overload = new Overload(this);
+		o.addHandler([String, Array], invokeWithArgs);
+		o.addHandler([String], invokeWithoutArgs);
+		o.forward(arguments);
+	}
+	
+	public function invokeWithArgs(method:String, args:Array):Void {
 		if (listenerMap.containsKey(method)) {
 			connection.send(target, "remoteCall", [method, args], listenerMap.get(method));
 			return;
 		}
 		connection.send(target, "remoteCall", [method, args]);
+	}
+	
+	public function invokeWithoutArgs(method:String):Void {
+		invokeWithArgs(method, []);
 	}
 }

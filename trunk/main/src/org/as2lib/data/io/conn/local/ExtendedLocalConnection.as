@@ -15,22 +15,31 @@ class org.as2lib.data.io.conn.local.ExtendedLocalConnection extends LocalConnect
 	}
 	
 	public function send():Void {
-		var overload:Overload = new Overload(this);
-		overload.addHandler([String, String, Array], sendWithoutResponse);
-		overload.addHandler([String, String, Array, Call], sendWithResponse);
-		overload.forward(arguments);
+		var o:Overload = new Overload(this);
+		o.addHandler([String, String], sendWithoutArgsAndResponse);
+		o.addHandler([String, String, Array], sendWithArgs);
+		o.addHandler([String, String, Call], sendWithResponse);
+		o.addHandler([String, String, Array, Call], sendWithArgsAndResponse);
+		o.forward(arguments);
 	}
 	
-	public function sendWithoutResponse(host:String, method:String, args:Array):Void {
+	public function sendWithoutArgsAndResponse(host:String, method:String):Void {
+		sendWithArgs(host, method, []);
+	}
+	
+	public function sendWithArgs(host:String, method:String, args:Array):Void {
 		this.host = host;
 		if (!super.send.apply(this, [host, method].concat(args))) {
 			throw new SyntacticallyIncorrectMethodCallException("Passed arguments [" + args + "] are out of size.", this, arguments);
 		}
 	}
 	
-	public function sendWithResponse(host:String, method:String, args:Array, call:Call):Void {
-		this.host = host;
-		
+	public function sendWithResponse(host:String, method:String, call:Call):Void {
+		sendWithArgsAndResponse(host, method, [], call);
+	}
+	
+	public function sendWithArgsAndResponse(host:String, method:String, args:Array, call:Call):Void {
+		// args[0] stimmt nur in diesem ganz speziellen Fall!!!!!
 		var responseServerString:String = host + "." + args[0] + "_Return";
 
 		responseServer = new ExtendedLocalConnection();
@@ -41,12 +50,9 @@ class org.as2lib.data.io.conn.local.ExtendedLocalConnection extends LocalConnect
 		}
 		responseServer.connect(responseServerString);
 
-		var args:Array = [host, method].concat(args);
 		args.push(responseServerString);
 		
-		if (!super.send.apply(this, args)) {
-			throw new SyntacticallyIncorrectMethodCallException("Passed arguments [" + args + "] are out of size.", this, arguments);
-		}
+		sendWithArgs(host, method, args);
 	}
 	
 	private function onStatus(info):Void {
