@@ -41,7 +41,9 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 	public function execute(object):CompositeMemberInfo {
 		cache = ReflectConfig.getCache();
 		info = null;
+		ObjectUtil.setAccessPermission(cache.getRoot().getPackage(), null, ObjectUtil.ACCESS_ALL_ALLOWED);
 		findAndStore(cache.getRoot(), object);
+		ObjectUtil.setAccessPermission(cache.getRoot().getPackage(), null, ObjectUtil.ACCESS_IS_HIDDEN);
 		if (ObjectUtil.isEmpty(info)) {
 			throw new ReferenceNotFoundException("The class corresponding to the instance [" + object + "] could not be found.",
 												 this,
@@ -69,13 +71,13 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 	
 	private function validateAndStoreClass(name:String, clazz:Function, parent:PackageInfo, object):Boolean {
 		if (ObjectUtil.isTypeOf(object, "object")) {
-			if (object.__proto__ == clazz.prototype) {
+			if (object.__proto__ === clazz.prototype) {
 				storeClass(name, clazz, parent);
 				return true;
 			}
 		}
 		if (ObjectUtil.isTypeOf(object, "function")) {
-			if (object.prototype == clazz.prototype) {
+			if (object.prototype === clazz.prototype) {
 				storeClass(name, clazz, parent);
 				return true;
 			}
@@ -84,6 +86,7 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 	}
 	
 	private function storeClass(name:String, clazz:Function, parent:PackageInfo):Void {
+		trace(name);
 		info = new ClassInfo(name, clazz, parent)
 	}
 	
