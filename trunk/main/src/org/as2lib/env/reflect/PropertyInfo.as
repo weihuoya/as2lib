@@ -25,10 +25,7 @@ import org.as2lib.env.reflect.string.PropertyInfoStringifier;
  * PropertyInfo represents a property.
  *
  * <p>The term property means only properties added via Object#addProperty
- * or the ones added with the 'get' and 'set' keywords.
- * 'Normal' properties are not supported because at runtime you can only
- * evaluate them if they have been initialized. Therefore results could
- * vary dramatically.
+ * or the ones added with the 'get' and 'set' keywords, not variables.
  *
  * <p>PropertyInfo instances for specific properties can be obtained using
  * the {@link ClassInfo#getProperties} or {@link ClassInfo#getProperty} methods. That means
