@@ -46,7 +46,7 @@ class org.as2lib.core.overload.SimpleOverloadHandler extends BasicClass implemen
 	/**
 	 * @see org.as2lib.core.overload.OverloadHandler
 	 */
-	public function execute(anObject:Object, someArguments:Array):Object {
+	public function execute(anObject, someArguments:Array):Object {
 		return func.apply(anObject, someArguments);
 	}
 }

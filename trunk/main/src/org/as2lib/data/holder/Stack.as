@@ -4,7 +4,7 @@ import org.as2lib.data.iterator.ArrayIterator;
 class org.as2lib.data.holder.Stack {
 	private var target:Array;
 	
-	public function push(object:Object):Object {
+	public function push(object):Object {
 		target.push(object);
 		return object;
 	}

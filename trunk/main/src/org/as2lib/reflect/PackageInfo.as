@@ -12,7 +12,7 @@ class org.as2lib.reflect.PackageInfo extends BasicClass implements ReflectInfo {
 	private var children:HashMap;
 	
 	public function PackageInfo(name:String, 
-							  	package:Object, 
+							  	package, 
 							  	parent:PackageInfo) {
 		this.name = name;
 		this.package = package;

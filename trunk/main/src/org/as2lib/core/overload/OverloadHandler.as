@@ -17,5 +17,5 @@ interface org.as2lib.core.overload.OverloadHandler extends BasicInterface {
 	 * @param anObject The object to execute the method on.
 	 * @param someArguments The arguments to be passed as parameters.
 	 */
-	public function execute(anObject:Object, someArguments:Array):Object;
+	public function execute(anObject, someArguments:Array):Object;
 }

@@ -33,7 +33,7 @@ class org.as2lib.reflect.algorythm.MethodAlgorythm extends AbstractContentAlgory
 		return data;
 	}
 	
-	private function validate(target:Object, name:String):Boolean {
+	private function validate(target, name:String):Boolean {
 		if (ObjectUtil.isTypeOf(target[name], "function")) {
 			if (name.indexOf("__get__") != 0
 					&& name.indexOf("__set__") != 0) {
@@ -43,7 +43,7 @@ class org.as2lib.reflect.algorythm.MethodAlgorythm extends AbstractContentAlgory
 		return false;
 	}
 	
-	private function store(name:String, target:Object):Void {
+	private function store(name:String, target):Void {
 		var method:MethodInfo = new MethodInfo(name, target[name], info, staticFlag);
 		data.put(name, method);
 	}

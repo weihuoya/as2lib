@@ -39,7 +39,7 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	 * @param The Object the appropriate ClassInfo shall be found.
 	 * @return The appropriate ClassInfo instance containing all class information.
 	 */
-	public static function getClassInfo(object:Object):ClassInfo {
+	public static function getClassInfo(object):ClassInfo {
 		var info:ClassInfo = cache.getClass(object);
 		if (ObjectUtil.isEmpty(info)) {
 			info = ClassInfo(ReflectConfig.getClassAlgorythm().execute(object));
@@ -57,7 +57,7 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	 * @param The package the appropriate PackageInfo shall be found.
 	 * @return The appropriate PackageInfo instance containing all package information.
 	 */
-	public static function getPackageInfo(package:Object):PackageInfo {
+	public static function getPackageInfo(package):PackageInfo {
 		var info:PackageInfo = cache.getPackage(package);
 		if (ObjectUtil.isEmpty(info)) {
 			info = PackageInfo(ReflectConfig.getPackageAlgorythm().execute(package));

@@ -14,13 +14,13 @@ class org.as2lib.reflect.algorythm.PackageAlgorythm extends BasicClass implement
 		cache = ReflectUtil.getCache();
 	}
 	
-	public function execute(object:Object):ReflectInfo {
+	public function execute(object):ReflectInfo {
 		info = null;
 		findAndStore(cache.getRoot(), object);
 		return info;
 	}
 	
-	public function findAndStore(info:PackageInfo, object:Object):Boolean {
+	public function findAndStore(info:PackageInfo, object):Boolean {
 		var package:Object = info.getPackage();
 		var i:String;
 		for (i in package) {
@@ -33,7 +33,7 @@ class org.as2lib.reflect.algorythm.PackageAlgorythm extends BasicClass implement
 		return false;
 	}
 	
-	private function executePackageLogic(name:String, package:Object, parent:PackageInfo, object:Object):Boolean {
+	private function executePackageLogic(name:String, package, parent:PackageInfo, object):Boolean {
 		var sp:PackageInfo = cache.getPackage(package);
 		if (ObjectUtil.isEmpty(sp)) {
 			sp = storePackage(name, package, parent);
@@ -48,7 +48,7 @@ class org.as2lib.reflect.algorythm.PackageAlgorythm extends BasicClass implement
 		return false;
 	}
 	
-	private function storePackage(name:String, package:Object, parent:PackageInfo):PackageInfo {
+	private function storePackage(name:String, package, parent:PackageInfo):PackageInfo {
 		return cache.addPackage(new PackageInfo(name, package, parent));
 	}
 }

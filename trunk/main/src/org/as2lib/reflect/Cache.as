@@ -15,7 +15,7 @@ class org.as2lib.reflect.Cache extends BasicClass {
 		root = new RootInfo("root", _global);
 	}
 	
-	public function getClass(object:Object):ClassInfo {
+	public function getClass(object):ClassInfo {
 		return ClassInfo(classes.get(object.__proto__));
 	}
 	
@@ -24,7 +24,8 @@ class org.as2lib.reflect.Cache extends BasicClass {
 		return info;
 	}
 	
-	public function getPackage(object:Object):PackageInfo {
+	public function getPackage(object
+							   ):PackageInfo {
 		return PackageInfo(packages.get(object));
 	}
 	

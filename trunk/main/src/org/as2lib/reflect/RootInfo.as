@@ -5,7 +5,7 @@ import org.as2lib.util.ObjectUtil;
 
 class org.as2lib.reflect.RootInfo extends PackageInfo implements ReflectInfo {
 	public function RootInfo(name:String, 
-							 package:Object) {
+							 package) {
 		super(name, package, undefined);
 	}
 	

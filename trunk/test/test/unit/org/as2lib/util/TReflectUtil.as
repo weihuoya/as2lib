@@ -36,10 +36,10 @@ class test.org.as2lib.util.TReflectUtil extends Test {
 		
 	}
 	
-	private function getClassInfo(object:Object):ClassInfo {
+	private function getClassInfo(object):ClassInfo {
 		return ReflectUtil.getClassInfo(object);
 	}
-	private function getPackageInfo(package:Object):PackageInfo {
+	private function getPackageInfo(package):PackageInfo {
 		return ReflectUtil.getPackageInfo(package);
 	}
 }

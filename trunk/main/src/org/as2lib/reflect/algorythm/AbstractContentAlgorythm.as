@@ -5,7 +5,7 @@ class org.as2lib.reflect.algorythm.AbstractContentAlgorythm extends BasicClass {
 	private function AbstractContentAlgorythm(Void) {
 	}
 	
-	public function search(target:Object):Void {
+	public function search(target):Void {
 		var i:String;
 		for (i in target) {
 			if (validate(target, i)) {
@@ -14,10 +14,10 @@ class org.as2lib.reflect.algorythm.AbstractContentAlgorythm extends BasicClass {
 		}
 	}
 	
-	private function validate(target:Object, name:String):Boolean {
+	private function validate(target, name:String):Boolean {
 		return true;
 	}
 	
-	private function store(name:String, target:Object):Void {
+	private function store(name:String, target):Void {
 	}
 }
