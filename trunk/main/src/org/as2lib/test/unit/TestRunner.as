@@ -118,6 +118,9 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	/** Holder for the methodscope of the current Method. */
 	private var testCaseInstance:TestCase;
 	
+	/** Pause Flag (if pause is allowed or not. */
+	private var pauseAllowed:Boolean;
+	
 	/**
 	 * Constructs a new Testrunner
 	 */
@@ -271,12 +274,18 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	
 	/**
 	 * Pauses the process.
+	 * This is only possible during the execution of a testmethod (not before, not after).
+	 * Else it will add a error to the methodInfo.
 	 * 
 	 * @see #resume
 	 */
 	public function pause(Void):Void {
-		paused = true;
-		eB.dispatch(new PauseInfo(this));
+		if(!pauseAllowed) {
+			methodInfo.addInfo(new PauseError("IMPORTANT: Pause is not available before the execution of a testcase method. Action failed."))
+		} else {
+			paused = true;
+			eB.dispatch(new PauseInfo(this));
+		}
 	}
 	
 	/**
@@ -379,10 +388,12 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 				var sW:StopWatch = methodInfo.getStopWatch();
 				try {
 					sW.start();
+					pauseAllowed = true;
 					methodInfo.executeTo(testCaseInstance);
 				} catch (e) {
 					methodInfo.addInfo(new ExecutionError(methodInfo.getMethodInfo().toString()+" threw a unexpected exception.\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
 				}
+				pauseAllowed = false;
 				
 				if(isRunning()) {
 					sW.stop();
