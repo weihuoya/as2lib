@@ -5,6 +5,11 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2004">
       <month value="12">
+        <day value="20">
+          <entry type="remove" package="org.as2lib.env.reflect" class="NoSuchChildException"></entry>
+          <entry type="remove" package="org.as2lib.env.reflect" class="NoSuchTypeMemberException"></entry>
+          <entry type="remove" package="org.as2lib.env.reflect" class="ReferenceNotFoundException"></entry>
+        </day>
         <day value="19">
           <entry type="change" package="org.as2lib.env.reflect.algorithm" class="ChildrenAlgorithm"><change-rename to="ChildAlgorithm" /></entry>
           <entry type="remove" package="org.as2lib.env.reflect.algorithm" class="ContentAlgorithm"></entry>
