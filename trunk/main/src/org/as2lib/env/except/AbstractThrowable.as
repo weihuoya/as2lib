@@ -20,6 +20,7 @@ import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.env.except.ThrowableStringifier;
 import org.as2lib.util.Stringifier;
+import org.as2lib.env.log.LogUtil;
 
 /**
  * AbstractThrowable is an abstract class that contains sourced out functionalities
@@ -90,15 +91,7 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	 * @return the logger used to output the exception
 	 */
 	private static function getLogger(Void) {
-		if (logger === undefined) {
-			var repositoryManager = eval("_global." + "org.as2lib.env.log.LoggerRepositoryManager");
-			if (repositoryManager) {
-				logger = repositoryManager.getRepository().getLogger("org.as2lib.env.except.Throwable");
-			} else {
-				logger = null;
-			}
-		}
-		return logger;
+		return LogUtil.getLogger("org.as2lib.env.except.Throwable");
 	}
 	
 	/**

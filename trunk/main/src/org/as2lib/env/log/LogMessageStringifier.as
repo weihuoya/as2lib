@@ -31,8 +31,7 @@ class org.as2lib.env.log.LogMessageStringifier extends BasicClass implements Str
 	 */
 	public function execute(target):String {
 		var message:LogMessage = target;
-		return ("** " + message.getLevel() + " ** \n" 
-				+ message.getMessage());
+		return (message.getLevel() + "  " + message.getLoggerName() + " - " + message.getMessage());
 	}
 	
 }

@@ -160,7 +160,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			broadcaster.dispatch(new LogMessage(message, level));
+			broadcaster.dispatch(new LogMessage(message, level, null));
 		}
 	}
 	

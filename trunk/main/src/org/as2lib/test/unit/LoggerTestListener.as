@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.event.EventListener;
 import org.as2lib.env.log.Logger;
-import org.as2lib.env.log.LoggerRepositoryManager;
+import org.as2lib.env.log.LogManager;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestListener;
 import org.as2lib.test.unit.StartInfo;
@@ -30,7 +30,7 @@ import org.as2lib.test.unit.ResumeInfo;
  * Default listener for TestRunner.
  * Listener as default logger for the Testrunner. To be used as standard outwriter for the TestRunner.
  *
- * @see LoggerRepositoryManager#getRepository
+ * @see LogManager#getLoggerRepository
  * @see Logger
  * @author Martin Heidegger
  */
@@ -43,7 +43,7 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Test
 	 * @return the logger used to do the output
 	 */
 	private static function getLogger(Void):Logger {
-		if (!logger) logger = LoggerRepositoryManager.getRepository().getLogger("org.as2lib.test.util.LoggerTestListener");
+		if (!logger) logger = LogManager.getLoggerRepository().getLogger("org.as2lib.test.util.LoggerTestListener");
 		return logger;
 	}
 	

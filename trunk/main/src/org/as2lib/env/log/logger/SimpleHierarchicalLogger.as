@@ -230,7 +230,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends BasicClass impl
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			var logMessage:LogMessage = new LogMessage(message, level);
+			var logMessage:LogMessage = new LogMessage(message, level, name);
 			var broadcaster:EventBroadcaster = getBroadcaster();
 			var target:HierarchicalLogger = this;
 			while (target) {
