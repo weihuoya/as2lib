@@ -3,24 +3,24 @@ import org.as2lib.util.ObjectUtil;
 import org.as2lib.core.BasicClass;
 
 /**
+ * SimpleOverloadHandler is a default implementation of the OverloadHandler interface
+ *
  * @author: Simon Wacker
- * @version: 1.0
+ * @see org.as2lib.core.BasicClass
+ * @see org.as2lib.env.overload.OverloadHandler
  */
 class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implements OverloadHandler {
-	/**
-	 * Contains the arguments types of the function.
-	 */
+	/** Contains the arguments types of the operation. */
 	private var args:Array;
 	
-	/**
-	 * The name of the function.
-	 */
+	/** The operation to be executed on the given target. */
 	private var func:Function;
 	
 	/**
 	 * Constructs a new SimpleOverloadHandler instance.
-	 * @param someArguments
-	 * @param aFunction
+	 *
+	 * @param args the arguments types of the operation
+	 * @param func the actual operation to be executed on the target if the argumetns types match
 	 */
 	public function SimpleOverloadHandler(args:Array, func:Function) {
 		this.args = args;

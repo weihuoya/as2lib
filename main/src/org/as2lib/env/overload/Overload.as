@@ -3,44 +3,82 @@ import org.as2lib.env.overload.SimpleOverloadHandler;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.UnknownOverloadHandlerException;
 import org.as2lib.env.overload.OverloadException;
+import org.as2lib.util.ArrayUtil;
 
 /**
+ * You use this class to overload a method. Create a new instance of it, add the
+ * possible OverloadHandlers and call the #forward() operation. If an adequate
+ * OverloadHandler could be found the corresponding operation will be executed
+ * and the return value will be returned.
+ *
  * @author: Simon Wacker
+ * @see org.as2lib.core.BasicClass
  */
 class org.as2lib.env.overload.Overload extends BasicClass {
+	/** The list of registered handlers. */
 	private var handlers:Array;
-	private var args:Array;
-	private var target:Object;
 	
+	/** The arguments whose types shall be matched to a specific handler. */
+	private var args:Array;
+	
+	/** The target instance on which the operation will be invoked. */
+	private var target;
+	
+	/**
+	 * Constructs a new Overload instance.
+	 * 
+	 * @param target the target on which the operation will be invoked
+	 * @param args the arguments whose types shall be matched to a specific handler
+	 */
 	public function Overload(target, args:Array) {
 		this.handlers = new Array();
 		this.target = target;
 		this.args = args;
 	}
 	
+	/**
+	 * Adds a new OverloadHandler to the list of handlers.
+	 *
+	 * @param handler the new OverloadHandler to be registered
+	 */
 	public function addHandler(handler:OverloadHandler):Void {
 		handlers.push(handler);
 	}
 	
+	/**
+	 * Adds a new SimpleOverloadHandler to the list of handlers based on the passed
+	 * arguments. You can use this operation if you just wanna use the default
+	 * OverloadHandler.
+	 *
+	 * @param args the arguments types of the OverloadHandler to be matched
+	 * @param func the function corresponding to the passed arguments types
+	 * @return the newly created OverloadHandler
+	 */
 	public function addHandlerByValue(args:Array, func:Function):OverloadHandler {
 		var handler:OverloadHandler = new SimpleOverloadHandler(args, func); 
 		handlers.push(handler);
 		return handler;
 	}
 	
+	/**
+	 * Removes an OverloadHandler from the list of handlers. If the OverloadHandler
+	 * could not be found on the list the IllegalArgumentException will be thrown.
+	 *
+	 * @param handler the OverloadHandler to be removed
+	 * @throws org.as2lib.env.except.IllegalArgumentException if the specified OverloadHandler does not exist in the list of handlers
+	 */
 	public function removeHandler(handler:OverloadHandler):Void {
-		var l:Number = handlers.length;
-		for (var i:Number = 0; i < l; i++) {
-			if (handlers[i] == handler) {
-				handlers[i].splice(i, 1);
-				return;
-			}
-		}
-		throw new UnknownOverloadHandlerException("The OverloadHandler [" + handler + "] you tried to remove does not exist.", 
-												  this,
-												  arguments);
+		ArrayUtil.removeElement(handlers, handler);
 	}
 	
+	/**
+	 * Forwards the arguments to the corresponding OverloadHandler. The
+	 * UnknownOverloadHandlerException will be thrown if no adequate OverloadHandler
+	 * could be found.
+	 *
+	 * @return the return value of the called operation
+	 * @throws org.as2lib.env.overload.UnknownOverloadHandlerException if no adequate OverloadHandler could be found
+	 */
 	public function forward(Void) {
 		var handler:OverloadHandler;
 		var l:Number = handlers.length;
