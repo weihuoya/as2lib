@@ -26,25 +26,25 @@ import org.as2lib.env.except.IllegalArgumentException;
  */
 class org.as2lib.env.log.level.AbstractLogLevel extends BasicClass implements LogLevel {
 	
-	/** All output will be made. */
+	/** All log messages get logged. */
 	public static var ALL:LogLevel = new AbstractLogLevel(60, "ALL");
 	
-	/** All output that is at a lower output level than debug will be made. */
+	/** All log messages that are at a lower log level than debug get logged. */
 	public static var DEBUG:LogLevel = new AbstractLogLevel(50, "DEBUG");
 	
-	/** All output that is at a lower output level than info will be made. */
+	/** All log messages that are at a lower log level than info get logged. */
 	public static var INFO:LogLevel = new AbstractLogLevel(40, "INFO");
 	
-	/** All output that is at a lower output level than warning will be made. */
+	/** All log messages that are at a lower log level than warning get logged. */
 	public static var WARNING:LogLevel = new AbstractLogLevel(30, "WARNINING");
 	
-	/** All output that is at a lower output level than error will be made. */
+	/** All log messages that are at a lower log level than error get logged. */
 	public static var ERROR:LogLevel = new AbstractLogLevel(20, "ERROR");
 	
-	/** All output that is at a lower output level than fatal will be made. */
+	/** All log messages that are at a lower log level than fatal get logged. */
 	public static var FATAL:LogLevel = new AbstractLogLevel(10, "FATAL");
 	
-	/** No output will be made. */
+	/** No log messages get logged. */
 	public static var NONE:LogLevel = new AbstractLogLevel(0, "NONE");
 	
 	/** Stores the level in form of a number. */
