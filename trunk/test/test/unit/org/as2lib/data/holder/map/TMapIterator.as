@@ -15,7 +15,7 @@
  */
 
 import test.unit.org.as2lib.data.holder.AbstractTIterator;
-import org.as2lib.test.mock.support.SimpleMockControl;
+import org.as2lib.test.mock.MockControl;
 import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.data.holder.map.MapIterator;
 

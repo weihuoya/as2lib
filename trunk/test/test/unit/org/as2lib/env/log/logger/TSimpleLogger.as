@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.support.SimpleMockControl;
+import org.as2lib.test.mock.MockControl;
 import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.log.logger.SimpleLogger;
 import org.as2lib.env.log.LogLevel;
@@ -79,15 +79,15 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testAddHandlerViaGetAllHandler(Void):Void {
-		var h1c:SimpleMockControl = new SimpleMockControl(LogHandler);
+		var h1c:MockControl = new MockControl(LogHandler);
 		var h1:LogHandler = h1c.getMock();
 		h1c.replay();
 		
-		var h3c:SimpleMockControl = new SimpleMockControl(LogHandler);
+		var h3c:MockControl = new MockControl(LogHandler);
 		var h3:LogHandler = h3c.getMock();
 		h3c.replay();
 		
-		var h4c:SimpleMockControl = new SimpleMockControl(LogHandler);
+		var h4c:MockControl = new MockControl(LogHandler);
 		var h4:LogHandler = h4c.getMock();
 		h4c.replay();
 		
@@ -179,7 +179,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testIsEnabledWithNullArgument(Void):Void {
-		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();
 		lc.replay();
 		
@@ -193,7 +193,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	public function testIsEnabledWithTrueReturningLogLevel(Void):Void {
 		var a:LogLevel = new LogLevel();
 		
-		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();
 		l.isGreaterOrEqual(a);
 		lc.setReturnValue(true);
@@ -209,7 +209,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	public function testIsEnabledWithFalseReturningLogLevel(Void):Void {
 		var a:LogLevel = new LogLevel();
 		
-		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();
 		l.isGreaterOrEqual(a);
 		lc.setReturnValue(false);
@@ -223,7 +223,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testLogWithNullLevel(Void):Void {
-		var bc:SimpleMockControl = new SimpleMockControl(EventBroadcaster);
+		var bc:MockControl = new MockControl(EventBroadcaster);
 		var b:EventBroadcaster = bc.getMock();
 		bc.replay();
 		
@@ -237,13 +237,13 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	public function testLogWithDisabledLevel(Void):Void {
 		var a:LogLevel = new LogLevel();
 		
-		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();
 		l.isGreaterOrEqual(a);
 		lc.setReturnValue(false);
 		lc.replay();
 		
-		var bc:SimpleMockControl = new SimpleMockControl(EventBroadcaster);
+		var bc:MockControl = new MockControl(EventBroadcaster);
 		var b:EventBroadcaster = bc.getMock();
 		bc.replay();
 		
@@ -260,13 +260,13 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		var m:Object = new Object();
 		var a:LogLevel = new LogLevel();
 		
-		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();
 		l.isGreaterOrEqual(a);
 		lc.setReturnValue(true);
 		lc.replay();
 		
-		var bc:SimpleMockControl = new SimpleMockControl(EventBroadcaster);
+		var bc:MockControl = new MockControl(EventBroadcaster);
 		var b:EventBroadcaster = bc.getMock();
 		b.dispatch(null);
 		bc.setVoidCallable();
@@ -292,13 +292,13 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		var m:Object = new Object();
 		var a:LogLevel = new LogLevel();
 		
-		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();
 		l.isGreaterOrEqual(a);
 		lc.setReturnValue(true);
 		lc.replay();
 		
-		var bc:SimpleMockControl = new SimpleMockControl(EventBroadcaster);
+		var bc:MockControl = new MockControl(EventBroadcaster);
 		var b:EventBroadcaster = bc.getMock();
 		b.dispatch(null);
 		bc.setVoidCallable();
@@ -326,7 +326,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		var h2:LogHandler = new LogHandler();
 		var h3:LogHandler = new LogHandler();
 		
-		var lo2c:SimpleMockControl = new SimpleMockControl(SimpleLogger);
+		var lo2c:MockControl = new MockControl(SimpleLogger);
 		var lo2:SimpleLogger = lo2c.getMock();
 		lo2.getAllHandler();
 		lo2c.setReturnValue([h1, h2, h3]);
@@ -334,7 +334,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		lo2c.setReturnValue(null);
 		lo2c.replay();
 		
-		var loc:SimpleMockControl = new SimpleMockControl(SimpleLogger);
+		var loc:MockControl = new MockControl(SimpleLogger);
 		var lo:SimpleLogger = loc.getMock();
 		lo.getAllHandler();
 		loc.setReturnValue([h1, h2, h3]);
@@ -345,13 +345,13 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		var m:Object = new Object();
 		var a:LogLevel = new LogLevel();
 		
-		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();
 		l.isGreaterOrEqual(a);
 		lc.setReturnValue(true);
 		lc.replay();
 		
-		var bc:SimpleMockControl = new SimpleMockControl(EventBroadcaster);
+		var bc:MockControl = new MockControl(EventBroadcaster);
 		var b:EventBroadcaster = bc.getMock();
 		b.dispatch(null);
 		bc.setVoidCallable();
@@ -379,7 +379,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		var h2:LogHandler = new LogHandler();
 		var h3:LogHandler = new LogHandler();
 		
-		var lo2c:SimpleMockControl = new SimpleMockControl(SimpleLogger);
+		var lo2c:MockControl = new MockControl(SimpleLogger);
 		var lo2:SimpleLogger = lo2c.getMock();
 		lo2.getAllHandler();
 		lo2c.setReturnValue([h1, h2, h3]);
@@ -387,7 +387,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		lo2c.setReturnValue(null);
 		lo2c.replay();
 		
-		var loc:SimpleMockControl = new SimpleMockControl(SimpleLogger);
+		var loc:MockControl = new MockControl(SimpleLogger);
 		var lo:SimpleLogger = loc.getMock();
 		lo.getAllHandler();
 		loc.setReturnValue([h1, h2, h3]);
@@ -398,13 +398,13 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		var m:Object = new Object();
 		var a:LogLevel = new LogLevel();
 		
-		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();
 		l.isGreaterOrEqual(a);
 		lc.setReturnValue(true);
 		lc.replay();
 		
-		var bc:SimpleMockControl = new SimpleMockControl(EventBroadcaster);
+		var bc:MockControl = new MockControl(EventBroadcaster);
 		var b:EventBroadcaster = bc.getMock();
 		b.dispatch(null);
 		bc.setVoidCallable();

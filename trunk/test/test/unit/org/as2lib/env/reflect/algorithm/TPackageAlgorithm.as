@@ -16,7 +16,6 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
 import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.reflect.algorithm.PackageAlgorithm;
 import org.as2lib.env.reflect.PackageInfo;
@@ -30,7 +29,7 @@ import org.as2lib.env.reflect.CompositeMemberInfo;
 class test.unit.org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestCase {
 	
 	public function testExecuteWithNullAndUndefinedArgument(Void):Void {
-		var cc:MockControl = new SimpleMockControl(Cache);
+		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		cc.replay();
 		
@@ -46,7 +45,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestC
 		var p:Object = new Object();
 		var o:Object = new Object();
 		
-		var cc:MockControl = new SimpleMockControl(Cache);
+		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		c.getPackage(p);
 		cc.setReturnValue(o);
@@ -62,7 +61,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestC
 	public function testExecuteWithUnknownPackage(Void):Void {
 		var p:Object = new Object();
 		
-		var cc:MockControl = new SimpleMockControl(Cache);
+		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		c.getPackage(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([Object]));

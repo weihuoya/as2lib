@@ -16,7 +16,7 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
+import org.as2lib.test.mock.support.MockControl;
 import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.reflect.algorithm.ClassAlgorithm;
 import org.as2lib.env.reflect.ClassInfo;
@@ -33,7 +33,7 @@ import org.as2lib.core.BasicInterface;
 class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 	
 	public function testExecuteByNullAndUndefined(Void):Void {
-		var cc:MockControl = new SimpleMockControl(Cache);
+		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		cc.replay();
 		
@@ -48,7 +48,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 	public function testExecuteWithCachedClassInfo(Void):Void {
 		var info = new Object();
 		
-		var cc:MockControl = new SimpleMockControl(Cache);
+		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		c.getClass(TClassAlgorithm);
 		cc.setReturnValue(info);
@@ -65,7 +65,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		var Clazz:Function = function() {};
 		var o = new Clazz();
 		
-		var cc:MockControl = new SimpleMockControl(Cache);
+		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		c.getClass(o);
 		cc.setReturnValue(null);
@@ -88,7 +88,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 	
 	public function testExecuteByClass(Void):Void {
 		// What's wrong with this? --> c.addPackage() must always return the correct package because it is needed
-		/*var cc:MockControl = new SimpleMockControl(Cache);
+		/*var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		c.getClass(TClassAlgorithm);
 		cc.setReturnValue(null);
@@ -116,7 +116,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 	
 	public function testExecuteByInterface(Void):Void {
 		// What's wrong with this? --> c.addPackage() must always return the correct package because it is needed
-		/*var cc:MockControl = new SimpleMockControl(Cache);
+		/*var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		c.getClass(BasicInterface);
 		cc.setReturnValue(null);
@@ -146,7 +146,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		var o:BasicClass = new BasicClass();
 		
 		// What's wrong with this? --> c.addPackage() must always return the correct package because it is needed
-		/*var cc:MockControl = new SimpleMockControl(Cache);
+		/*var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		c.getClass(o);
 		cc.setReturnValue(null);
@@ -173,7 +173,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 	}
 	
 	public function testExecuteByString(Void):Void {
-		var cc:MockControl = new SimpleMockControl(Cache);
+		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		c.getClass("a");
 		cc.setReturnValue(null);
@@ -205,7 +205,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 	}
 	
 	public function testExecuteByNumber(Void):Void {
-		var cc:MockControl = new SimpleMockControl(Cache);
+		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		c.getClass(32);
 		cc.setReturnValue(null);
@@ -237,7 +237,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 	}
 	
 	public function testExecuteByBoolean(Void):Void {
-		var cc:MockControl = new SimpleMockControl(Cache);
+		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		c.getClass(false);
 		cc.setReturnValue(null);
@@ -271,7 +271,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 	public function testExecuteByFunction(Void):Void {
 		var f:Function = function() {};
 		
-		var cc:MockControl = new SimpleMockControl(Cache);
+		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		c.getClass(f);
 		cc.setReturnValue(null);
@@ -305,7 +305,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 	public function testExecuteByMovieClip(Void):Void {
 		_root.createEmptyMovieClip("testExecuteByMovieClip_mc", _root.getNextHighestDepth());
 		
-		var cc:MockControl = new SimpleMockControl(Cache);
+		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		c.getClass(_root.testExecuteByMovieClip_mc);
 		cc.setReturnValue(null);
@@ -340,7 +340,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 	public function testExecuteByTextField(Void):Void {
 		_root.createTextField("testExecuteByTextField_txt", _root.getNextHighestDepth(), 100, 100, 100, 100);
 		
-		var cc:MockControl = new SimpleMockControl(Cache);
+		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		c.getClass(_root.testExecuteByTextField_txt);
 		cc.setReturnValue(null);

@@ -16,7 +16,6 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
 import org.as2lib.env.overload.SimpleOverloadHandler;
 import org.as2lib.env.overload.OverloadHandler;
 import org.as2lib.core.BasicInterface;
@@ -126,7 +125,7 @@ class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase 
 		
 		h = new SimpleOverloadHandler([BasicClass], function() {});
 		assertTrue("3_0", h.matches([new BasicClass()]));
-		assertTrue("3_1", h.matches([new SimpleMockControl(Object)]));
+		assertTrue("3_1", h.matches([new MockControl(Object)]));
 		assertFalse("3_2", h.matches([new BasicInterface()]));
 		assertFalse("3_3", h.matches(["test"]));
 		assertFalse("3_4", h.matches([3]));
@@ -138,7 +137,7 @@ class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase 
 		
 		h = new SimpleOverloadHandler([BasicInterface], function() {});
 		assertTrue("4_0", h.matches([new BasicClass()]));
-		assertTrue("4_1", h.matches([new SimpleMockControl(Object)]));
+		assertTrue("4_1", h.matches([new MockControl(Object)]));
 		assertTrue("4_2", h.matches([new BasicInterface()]));
 		assertTrue("4_3", h.matches([new MockControl()]));
 		assertFalse("4_4", h.matches([3]));
@@ -172,7 +171,7 @@ class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase 
 	}
 	
 	public function testIsMoreExplicitWithNullReturningGetArgumentsMethod(Void):Void {
-		var hc:MockControl = new SimpleMockControl(OverloadHandler);
+		var hc:MockControl = new MockControl(OverloadHandler);
 		var mh:OverloadHandler = hc.getMock();
 		mh.getArguments();
 		hc.setReturnValue(null, 2);
@@ -188,7 +187,7 @@ class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase 
 	}
 	
 	public function testIsMoreExplicit(Void):Void {
-		var h:SimpleOverloadHandler = new SimpleOverloadHandler([Boolean, Number, String, Object, MockControl, SimpleMockControl], function() {});
+		var h:SimpleOverloadHandler = new SimpleOverloadHandler([Boolean, Number, String, Object, MockControl, MockControl], function() {});
 		assertTrue("1", h.isMoreExplicit(new SimpleOverloadHandler([Boolean, Number, String, Object, BasicInterface, BasicClass], function() {})));
 		
 		h = new SimpleOverloadHandler([Boolean], function() {});
@@ -216,7 +215,7 @@ class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase 
 		assertNull("5_0", h.isMoreExplicit(new SimpleOverloadHandler([Object], function() {})));
 		assertTrue("5_1", h.isMoreExplicit(new SimpleOverloadHandler([null], function() {})));
 		assertTrue("5_2", h.isMoreExplicit(new SimpleOverloadHandler([undefined], function() {})));
-		assertFalse("5_3", h.isMoreExplicit(new SimpleOverloadHandler([SimpleMockControl], function() {})));
+		assertFalse("5_3", h.isMoreExplicit(new SimpleOverloadHandler([MockControl], function() {})));
 		assertFalse("5_4", h.isMoreExplicit(new SimpleOverloadHandler([MockControl], function() {})));
 		assertFalse("5_5", h.isMoreExplicit(new SimpleOverloadHandler([BasicInterface], function() {})));
 		
@@ -232,10 +231,10 @@ class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase 
 		assertFalse("7_1", h.isMoreExplicit(new SimpleOverloadHandler([MockControl], function() {})));
 		assertTrue("7_2", h.isMoreExplicit(new SimpleOverloadHandler([Object], function() {})));
 		assertFalse("7_3", h.isMoreExplicit(new SimpleOverloadHandler([BasicClass], function() {})));
-		assertFalse("7_3", h.isMoreExplicit(new SimpleOverloadHandler([SimpleMockControl], function() {})));
+		assertFalse("7_3", h.isMoreExplicit(new SimpleOverloadHandler([MockControl], function() {})));
 		
-		h = new SimpleOverloadHandler([SimpleMockControl], function() {});
-		assertNull("8_0", h.isMoreExplicit(new SimpleOverloadHandler([SimpleMockControl], function() {})));
+		h = new SimpleOverloadHandler([MockControl], function() {});
+		assertNull("8_0", h.isMoreExplicit(new SimpleOverloadHandler([MockControl], function() {})));
 		assertTrue("8_1", h.isMoreExplicit(new SimpleOverloadHandler([BasicClass], function() {})));
 		assertTrue("8_2", h.isMoreExplicit(new SimpleOverloadHandler([Object], function() {})));
 		assertTrue("8_3", h.isMoreExplicit(new SimpleOverloadHandler([MockControl], function() {})));
@@ -244,7 +243,7 @@ class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase 
 		h = new SimpleOverloadHandler([BasicClass], function() {});
 		assertNull("9_0", h.isMoreExplicit(new SimpleOverloadHandler([BasicClass], function() {})));
 		assertTrue("9_1", h.isMoreExplicit(new SimpleOverloadHandler([Object], function() {})));
-		assertFalse("9_2", h.isMoreExplicit(new SimpleOverloadHandler([SimpleMockControl], function() {})));
+		assertFalse("9_2", h.isMoreExplicit(new SimpleOverloadHandler([MockControl], function() {})));
 		assertTrue("9_3", h.isMoreExplicit(new SimpleOverloadHandler([BasicInterface], function() {})));
 		assertFalse("9_4", h.isMoreExplicit(new SimpleOverloadHandler([MockControl], function() {})));
 	}

@@ -24,25 +24,17 @@ import org.as2lib.test.mock.ArgumentsMatcher;
 /**
  * @author Simon Wacker
  */
-interface org.as2lib.test.mock.MethodCallBehaviour extends BasicInterface {
+interface org.as2lib.test.mock.MethodBehaviour extends BasicInterface {
 	
-	public function setExpectedCall(expectedCall:MethodCall):Void;
+	public function getExpectedMethodCall(Void):MethodCall;
 	
-	public function getExpectedCall(Void):MethodCall;
+	public function addActualMethodCall(actualMethodCall:MethodCall):Void;
 	
-	public function addActualCall(actualArguments:MethodCall):Void;
-	
-	public function getActualCallCount(Void):Number;
-	
-	public function setExpectedRange(expectedRange:MethodCallRange):Void;
-	
-	public function getExpectedRange(Void):MethodCallRange;
-	
-	public function setResponse(response:MethodResponse):Void;
+	public function addMethodResponse(methodResponse:MethodResponse, methodCallRange:MethodCallRange):Void;
 	
 	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void;
 	
-	public function getArgumentsMatcher(Void):ArgumentsMatcher;
+	public function expectsAnotherMehodCall(Void):Boolean;
 	
 	public function response(Void);
 	

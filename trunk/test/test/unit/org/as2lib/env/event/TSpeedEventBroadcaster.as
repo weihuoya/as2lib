@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.support.SimpleMockControl;
+import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.event.SpeedEventBroadcaster;
 import org.as2lib.env.event.EventListener;
 import org.as2lib.env.event.EventInfo;
@@ -26,7 +26,7 @@ import org.as2lib.env.event.EventInfo;
 class test.unit.org.as2lib.env.event.TSpeedEventBroadcaster extends TestCase {
 	
 	public function testDispatchWithNullEventInfo(Void):Void {
-		var lc:SimpleMockControl = new SimpleMockControl(EventListener);
+		var lc:MockControl = new MockControl(EventListener);
 		var l:EventListener = lc.getMock();
 		lc.replay();
 		
@@ -39,13 +39,13 @@ class test.unit.org.as2lib.env.event.TSpeedEventBroadcaster extends TestCase {
 	}
 	
 	public function testDispatchWithNullName(Void):Void {
-		var ec:SimpleMockControl = new SimpleMockControl(EventInfo);
+		var ec:MockControl = new MockControl(EventInfo);
 		var e:EventInfo = ec.getMock();
 		e.getName();
 		ec.setReturnValue(null);
 		ec.replay();
 		
-		var lc:SimpleMockControl = new SimpleMockControl(EventListener);
+		var lc:MockControl = new MockControl(EventListener);
 		var l:EventListener = lc.getMock();
 		lc.replay();
 		
@@ -60,13 +60,13 @@ class test.unit.org.as2lib.env.event.TSpeedEventBroadcaster extends TestCase {
 	}
 	
 	public function testDispatchWithMultipleListeners(Void):Void {
-		var ec:SimpleMockControl = new SimpleMockControl(EventInfo);
+		var ec:MockControl = new MockControl(EventInfo);
 		var e:EventInfo = ec.getMock();
 		e.getName();
 		ec.setReturnValue("toString");
 		ec.replay();
 		
-		var lc:SimpleMockControl = new SimpleMockControl(EventListener);
+		var lc:MockControl = new MockControl(EventListener);
 		var l:EventListener = lc.getMock();
 		l.toString(e);
 		lc.setVoidCallable(3);

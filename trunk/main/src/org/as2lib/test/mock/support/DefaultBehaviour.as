@@ -18,10 +18,11 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.PrimitiveTypeMap;
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.MethodCallBehaviour;
+import org.as2lib.test.mock.MethodBehaviour;
 import org.as2lib.test.mock.Behaviour;
-import org.as2lib.test.mock.MethodCallBehaviourFactory;
-import org.as2lib.test.mock.support.DefaultMethodCallBehaviour;
+import org.as2lib.test.mock.MethodBehaviourFactory;
+import org.as2lib.test.mock.MethodCall;
+import org.as2lib.test.mock.support.DefaultMethodBehaviour;
 
 /**
  * @author Simon Wacker
@@ -29,36 +30,36 @@ import org.as2lib.test.mock.support.DefaultMethodCallBehaviour;
 class org.as2lib.test.mock.support.DefaultBehaviour extends BasicClass implements Behaviour {
 	
 	/** Stores added method call behaviours. */
-	private var methodCallBehaviours:Map;
+	private var methodBehaviours:Map;
 	
 	/** Currently used factory to create method call behaviours. */
-	private var methodCallBehaviourFactory:MethodCallBehaviourFactory;
+	private var methodBehaviourFactory:MethodBehaviourFactory;
 	
 	/**
 	 * Constructs a new instance.
 	 */
 	public function DefaultBehaviour(Void) {
-		methodCallBehaviours = new PrimitiveTypeMap();
+		methodBehaviours = new PrimitiveTypeMap();
 	}
 	
 	/**
-	 * Returns either the factory set via #setMethodCallBehaviourFactory()
+	 * Returns either the factory set via #setMethodBehaviourFactory()
 	 * or the default one.
 	 *
 	 * @return the currently used factory to obtain method call behaviours
 	 */
-	public function getMethodCallBehaviourFactory(Void):MethodCallBehaviourFactory {
-		if (!methodCallBehaviourFactory) methodCallBehaviourFactory = getDefaultMethodCallBehaviourFactory();
-		return methodCallBehaviourFactory;
+	public function getMethodBehaviourFactory(Void):MethodBehaviourFactory {
+		if (!methodBehaviourFactory) methodBehaviourFactory = getDefaultMethodBehaviourFactory();
+		return methodBehaviourFactory;
 	}
 	
 	/**
 	 * @return the default method call behaviour factory
 	 */
-	private function getDefaultMethodCallBehaviourFactory(Void):MethodCallBehaviourFactory {
-		var result:MethodCallBehaviourFactory = new MethodCallBehaviourFactory();
-		result.getMethodCallBehaviour = function(methodName:String):MethodCallBehaviour {
-			return new DefaultMethodCallBehaviour(methodName);
+	private function getDefaultMethodBehaviourFactory(Void):MethodBehaviourFactory {
+		var result:MethodBehaviourFactory = new MethodBehaviourFactory();
+		result.getMethodBehaviour = function(expectedMethodCall:MethodCall):MethodBehaviour {
+			return new DefaultMethodBehaviour(expectedMethodCall);
 		}
 		return result;
 	}
@@ -66,40 +67,47 @@ class org.as2lib.test.mock.support.DefaultBehaviour extends BasicClass implement
 	/**
 	 * Sets the factory used to obtain method call behaviours to store state.
 	 *
-	 * @param methodCallBehaviourFactory the new factory
+	 * @param methodBehaviourFactory the new factory
 	 */
-	public function setMethodCallBehaviourFactory(methodCallBehaviourFactory:MethodCallBehaviourFactory):Void {
-		this.methodCallBehaviourFactory = methodCallBehaviourFactory;
+	public function setMethodBehaviourFactory(methodBehaviourFactory:MethodBehaviourFactory):Void {
+		this.methodBehaviourFactory = methodBehaviourFactory;
 	}
 	
 	/**
-	 * @see Behaviour#addMethodCallBehaviour()
+	 * @see Behaviour#addMethodBehaviour()
 	 */
-	public function addMethodCallBehaviour(methodName:String):MethodCallBehaviour {
-		if (!methodCallBehaviours.containsKey(methodName)) methodCallBehaviours.put(methodName, new Array());
-		var behaviours:Array = methodCallBehaviours.get(methodName);
-		behaviours.push(getMethodCallBehaviourFactory().getMethodCallBehaviour(methodName));
-		return behaviours[behaviours.length-1];
+	public function addMethodBehaviour(methodName:String, methodBehaviour:MethodBehaviour):Void {
+		if (!methodBehaviours.containsKey(methodName)) methodBehaviours.put(methodName, new Array());
+		var behaviours:Array = methodBehaviours.get(methodName);
+		behaviours.push(methodBehaviour);
 	}
 	
 	/**
-	 * @see Behaviour#getMethodCallBehaviour()
+	 * @see Behaviour#createMethodBehaviour()
 	 */
-	public function getMethodCallBehaviour(methodName:String, args:Array):MethodCallBehaviour {
-		var behaviours:Array = methodCallBehaviours.get(methodName);
+	public function createMethodBehaviour(expectedMethodCall:MethodCall):MethodBehaviour {
+		return getMethodBehaviourFactory().getMethodBehaviour(expectedMethodCall);
+	}
+	
+	/**
+	 * @see Behaviour#getMethodBehaviour()
+	 */
+	public function getMethodBehaviour(actualMethodCall:MethodCall):MethodBehaviour {
+		var methodName:String = actualMethodCall.getMethodName();
+		var behaviours:Array = methodBehaviours.get(methodName);
 		var matchingBehaviours:Array = new Array();
 		for (var i:Number = 0; i < behaviours.length; i++) {
-			var behaviour:MethodCallBehaviour = behaviours[i];
-			if (behaviour.getArgumentsMatcher().matchArguments(behaviour.getExpectedCall().getArguments(), args)) {
+			var behaviour:MethodBehaviour = behaviours[i];
+			if (behaviour.getExpectedMethodCall().matches(actualMethodCall)) {
 				matchingBehaviours.push(behaviour);
 			}
 		}
 		if (matchingBehaviours.length < 1) return null;
 		if (matchingBehaviours.length < 2) return matchingBehaviours[0];
-		var result:MethodCallBehaviour = matchingBehaviours[matchingBehaviours.length-1];
+		var result:MethodBehaviour = matchingBehaviours[matchingBehaviours.length-1];
 		for (var i:Number = behaviours.length-1; i > -1; i--) {
-			var behaviour:MethodCallBehaviour = behaviours[i];
-			if (behaviour.getExpectedRange().contains(behaviour.getActualCallCount())) {
+			var behaviour:MethodBehaviour = behaviours[i];
+			if (behaviour.expectsAnotherMehodCall()) {
 				result = behaviour;
 			}
 		}
@@ -107,10 +115,10 @@ class org.as2lib.test.mock.support.DefaultBehaviour extends BasicClass implement
 	}
 	
 	/**
-	 * @see Behaviour#getLastMethodCallBehaviour()
+	 * @see Behaviour#getLastMethodBehaviour()
 	 */
-	public function getLastMethodCallBehaviour(Void):MethodCallBehaviour {
-		var behaviours:Array = methodCallBehaviours.getValues()[methodCallBehaviours.size()-1];
+	public function getLastMethodBehaviour(Void):MethodBehaviour {
+		var behaviours:Array = methodBehaviours.getValues()[methodBehaviours.size()-1];
 		return behaviours[behaviours.length-1];
 	}
 	
@@ -118,17 +126,17 @@ class org.as2lib.test.mock.support.DefaultBehaviour extends BasicClass implement
 	 * @see Behaviour#removeAllBehaviour()
 	 */
 	public function removeAllBehaviour(Void):Void {
-		methodCallBehaviours.clear();
+		methodBehaviours.clear();
 	}
 	
 	/**
 	 * @see Behaviour#verify()
 	 */
 	public function verify(testCase:TestCase):Void {
-		var behaviours:Array = methodCallBehaviours.getValues();
+		var behaviours:Array = methodBehaviours.getValues();
 		for (var i:Number = 0; i < behaviours.length; i++) {
 			for (var k:Number = 0; k < behaviours[i].length; k++) {
-				MethodCallBehaviour(behaviours[i][k]).verify(testCase);
+				MethodBehaviour(behaviours[i][k]).verify(testCase);
 			}
 		}
 	}

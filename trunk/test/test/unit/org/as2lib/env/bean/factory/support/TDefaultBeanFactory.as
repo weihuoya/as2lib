@@ -16,7 +16,6 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
 import org.as2lib.core.BasicInterface;
 import org.as2lib.env.except.Exception;
 import org.as2lib.env.except.FatalException;
@@ -68,11 +67,11 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 	}
 	
 	public function testGetBeanDefinitionNamesByType(Void):Void {
-		var bd1Control:MockControl = new SimpleMockControl(BeanDefinition);
-		var bd2Control:MockControl = new SimpleMockControl(BeanDefinition);
-		var bd3Control:MockControl = new SimpleMockControl(BeanDefinition);
-		var bd4Control:MockControl = new SimpleMockControl(BeanDefinition);
-		var bd5Control:MockControl = new SimpleMockControl(BeanDefinition);
+		var bd1Control:MockControl = new MockControl(BeanDefinition);
+		var bd2Control:MockControl = new MockControl(BeanDefinition);
+		var bd3Control:MockControl = new MockControl(BeanDefinition);
+		var bd4Control:MockControl = new MockControl(BeanDefinition);
+		var bd5Control:MockControl = new MockControl(BeanDefinition);
 		var bd1:BeanDefinition = bd1Control.getMock();
 		var bd2:BeanDefinition = bd2Control.getMock();
 		var bd3:BeanDefinition = bd3Control.getMock();
@@ -131,7 +130,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 	}
 	
 	public function testIsSingletonWithFactoryBean(Void):Void {
-		var bdC:MockControl = new SimpleMockControl(BeanDefinition);
+		var bdC:MockControl = new MockControl(BeanDefinition);
 		var bd:BeanDefinition = bdC.getMock();
 		bd.isSingleton();
 		bdC.setDefaultReturnValue(false);
@@ -151,7 +150,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 	}
 	
 	public function testIsSingletonNormal(Void):Void {
-		var bdC:MockControl = new SimpleMockControl(BeanDefinition);
+		var bdC:MockControl = new MockControl(BeanDefinition);
 		var bd:BeanDefinition = bdC.getMock();
 		bd.isSingleton();
 		bdC.setReturnValue(true);
@@ -182,7 +181,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 	}
 	
 	public function testGetBeanWithSingletonBeanDefinition(Void):Void {
-		var bdControl:MockControl = new SimpleMockControl(BeanDefinition);
+		var bdControl:MockControl = new MockControl(BeanDefinition);
 		var bd:BeanDefinition = bdControl.getMock();
 		bd.isSingleton();
 		bdControl.setDefaultReturnValue(true);
@@ -204,7 +203,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 	}
 	
 	public function testGetBeanByNameWithFactoryBeanPrefix(Void):Void {
-		var bdC:MockControl = new SimpleMockControl(BeanDefinition);
+		var bdC:MockControl = new MockControl(BeanDefinition);
 		var bd:BeanDefinition = bdC.getMock();
 		bd.isSingleton();
 		bdC.setDefaultReturnValue(true);
@@ -230,7 +229,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		var object = new Object();
 		StubFactoryBean.object = object;
 		
-		var bdC:MockControl = new SimpleMockControl(BeanDefinition);
+		var bdC:MockControl = new MockControl(BeanDefinition);
 		var bd:BeanDefinition = bdC.getMock();
 		bd.isSingleton();
 		bdC.setDefaultReturnValue(true);
@@ -267,7 +266,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 	}
 	
 	public function testCreateBeanCallbackFunctionalityAndPropertyAndConstructorArgumentsFunctionality(Void):Void {
-		var arg1C:MockControl = new SimpleMockControl(ConstructorArgumentValue);
+		var arg1C:MockControl = new MockControl(ConstructorArgumentValue);
 		var arg1:ConstructorArgumentValue = arg1C.getMock();
 		arg1.getType();
 		arg1C.setDefaultReturnValue(String);
@@ -275,7 +274,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		arg1C.setDefaultReturnValue("arg1");
 		arg1C.replay();
 		
-		var arg2C:MockControl = new SimpleMockControl(ConstructorArgumentValue);
+		var arg2C:MockControl = new MockControl(ConstructorArgumentValue);
 		var arg2:ConstructorArgumentValue = arg2C.getMock();
 		arg2.getType();
 		arg2C.setDefaultReturnValue(Object);
@@ -284,7 +283,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		arg2C.setDefaultReturnValue(actualArg2);
 		arg2C.replay();
 		
-		var arg3C:MockControl = new SimpleMockControl(ConstructorArgumentValue);
+		var arg3C:MockControl = new MockControl(ConstructorArgumentValue);
 		var arg3:ConstructorArgumentValue = arg3C.getMock();
 		arg3.getType();
 		arg3C.setDefaultReturnValue(Number);
@@ -293,7 +292,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		arg3C.setDefaultReturnValue(actualArg3);
 		arg3C.replay();
 		
-		var arg4C:MockControl = new SimpleMockControl(ConstructorArgumentValue);
+		var arg4C:MockControl = new MockControl(ConstructorArgumentValue);
 		var arg4:ConstructorArgumentValue = arg4C.getMock();
 		arg4.getType();
 		// should the type of the referenced bean or RuntimeBeanReference be returned?
@@ -302,13 +301,13 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		arg4C.setDefaultReturnValue(new RuntimeBeanReference("singleton"));
 		arg4C.replay();
 		
-		var cavlC:MockControl = new SimpleMockControl(ConstructorArgumentValueList);
+		var cavlC:MockControl = new MockControl(ConstructorArgumentValueList);
 		var cavl:ConstructorArgumentValueList = cavlC.getMock();
 		cavl.getArgumentValues();
 		cavlC.setDefaultReturnValue([arg1, arg2, arg3, arg4]);
 		cavlC.replay();
 		
-		var pv1C:MockControl = new SimpleMockControl(PropertyValue);
+		var pv1C:MockControl = new MockControl(PropertyValue);
 		var pv1:PropertyValue = pv1C.getMock();
 		pv1.getType();
 		pv1C.setDefaultReturnValue(Object);
@@ -319,7 +318,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		pv1C.setDefaultReturnValue(actualPv1);
 		pv1C.replay();
 
-		var pv2C:MockControl = new SimpleMockControl(PropertyValue);
+		var pv2C:MockControl = new MockControl(PropertyValue);
 		var pv2:PropertyValue = pv2C.getMock();
 		pv2.getType();
 		pv2C.setDefaultReturnValue(Object);
@@ -330,7 +329,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		pv2C.setDefaultReturnValue(actualPv2);
 		pv2C.replay();
 		
-		var pv3C:MockControl = new SimpleMockControl(PropertyValue);
+		var pv3C:MockControl = new MockControl(PropertyValue);
 		var pv3:PropertyValue = pv3C.getMock();
 		pv3.getType();
 		// should the type of the referenced bean or RuntimeBeanReference be returned?
@@ -341,13 +340,13 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		pv3C.setDefaultReturnValue(new RuntimeBeanReference("singleton"));
 		pv3C.replay();
 		
-		var pvsC:MockControl = new SimpleMockControl(PropertyValueSet);
+		var pvsC:MockControl = new MockControl(PropertyValueSet);
 		var pvs:PropertyValueSet = pvsC.getMock();
 		pvs.getPropertyValues();
 		pvsC.setDefaultReturnValue([pv1, pv2, pv3]);
 		pvsC.replay();
 		
-		var bdC:MockControl = new SimpleMockControl(LifecycleCallbackBeanDefinition);
+		var bdC:MockControl = new MockControl(LifecycleCallbackBeanDefinition);
 		var bd:LifecycleCallbackBeanDefinition = bdC.getMock();
 		bd.isSingleton();
 		bdC.setDefaultReturnValue(false);

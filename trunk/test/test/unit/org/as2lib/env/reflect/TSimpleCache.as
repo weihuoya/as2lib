@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.support.SimpleMockControl;
+import org.as2lib.test.mock.support.MockControl;
 import org.as2lib.env.reflect.SimpleCache;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
@@ -45,7 +45,7 @@ class test.unit.org.as2lib.env.reflect.TSimpleCache extends TestCase {
 		var Type:Function = function(Void) {
 		}
 		
-		var ic:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var ic:MockControl = new MockControl(ClassInfo);
 		var i:ClassInfo = ic.getMock();
 		i.getType();
 		ic.setReturnValue(Type);
@@ -68,7 +68,7 @@ class test.unit.org.as2lib.env.reflect.TSimpleCache extends TestCase {
 		}
 		SubType.prototype = new SuperType();
 		
-		var ic:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var ic:MockControl = new MockControl(ClassInfo);
 		var i:ClassInfo = ic.getMock();
 		i.getType();
 		ic.setReturnValue(SuperType);
@@ -96,7 +96,7 @@ class test.unit.org.as2lib.env.reflect.TSimpleCache extends TestCase {
 	public function testGetPackageWithCachedPackageInfo(Void):Void {
 		var p:Object = new Object();
 		
-		var ic:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var ic:MockControl = new MockControl(PackageInfo);
 		var i:PackageInfo = ic.getMock();
 		i.getPackage();
 		ic.setReturnValue(p);
@@ -125,7 +125,7 @@ class test.unit.org.as2lib.env.reflect.TSimpleCache extends TestCase {
 	public function testReleaseAllForPackages(Void):Void {
 		var p:Object = new Object();
 		
-		var ic:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var ic:MockControl = new MockControl(PackageInfo);
 		var i:PackageInfo = ic.getMock();
 		i.getPackage();
 		ic.setReturnValue(p, 2);
@@ -150,7 +150,7 @@ class test.unit.org.as2lib.env.reflect.TSimpleCache extends TestCase {
 		var Type:Function = function(Void) {
 		}
 		
-		var ic:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var ic:MockControl = new MockControl(ClassInfo);
 		var i:ClassInfo = ic.getMock();
 		i.getType();
 		ic.setReturnValue(Type, 2);

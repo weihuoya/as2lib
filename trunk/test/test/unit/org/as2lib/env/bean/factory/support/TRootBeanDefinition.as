@@ -16,7 +16,6 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
 import org.as2lib.env.bean.factory.support.RootBeanDefinition;
 import org.as2lib.env.bean.factory.config.ConstructorArgumentValueList;
 import org.as2lib.env.bean.PropertyValueSet;

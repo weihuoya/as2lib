@@ -16,7 +16,6 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
 import org.as2lib.env.bean.MutablePropertyValueSet;
 import org.as2lib.env.bean.PropertyValue;
 
@@ -28,7 +27,7 @@ class test.unit.org.as2lib.env.bean.TMutablePropertyValueSet extends TestCase {
 	/*public function testApplyWithMultiplePropertyValues(Void):Void {
 		var bean:Object = new Object();
 		
-		var valueControl:MockControl = new SimpleMockControl(PropertyValue);
+		var valueControl:MockControl = new MockControl(PropertyValue);
 		var value:PropertyValue = valueControl.getMock();
 		value.apply(bean);
 		valueControl.setVoidCallable(3);

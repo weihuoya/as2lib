@@ -16,7 +16,6 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.overload.OverloadHandler;
 import org.as2lib.env.overload.UnknownOverloadHandlerException;
@@ -52,13 +51,13 @@ class test.unit.org.as2lib.env.overload.TOverload extends TestCase {
 	public function testForwardWithMultipleOverloadHandlers(Void):Void {
 		var args:Array = [new Object(), "arg2", 3];
 		
-		var hc4:MockControl = new SimpleMockControl(OverloadHandler);
+		var hc4:MockControl = new MockControl(OverloadHandler);
 		var h4:OverloadHandler = hc4.getMock();
 		h4.matches(args);
 		hc4.setReturnValue(true);
 		hc4.replay();
 		
-		var hc3:MockControl = new SimpleMockControl(OverloadHandler);
+		var hc3:MockControl = new MockControl(OverloadHandler);
 		var h3:OverloadHandler = hc3.getMock();
 		h3.isMoreExplicit(h4);
 		hc3.setReturnValue(true);
@@ -68,13 +67,13 @@ class test.unit.org.as2lib.env.overload.TOverload extends TestCase {
 		hc3.setReturnValue(function() {});
 		hc3.replay();
 		
-		var hc2:MockControl = new SimpleMockControl(OverloadHandler);
+		var hc2:MockControl = new MockControl(OverloadHandler);
 		var h2:OverloadHandler = hc2.getMock();
 		h2.matches(args);
 		hc2.setReturnValue(false);
 		hc2.replay();
 		
-		var hc1:MockControl = new SimpleMockControl(OverloadHandler);
+		var hc1:MockControl = new MockControl(OverloadHandler);
 		var h1:OverloadHandler = hc1.getMock();
 		h1.isMoreExplicit(h3);
 		hc1.setReturnValue(false);
@@ -98,13 +97,13 @@ class test.unit.org.as2lib.env.overload.TOverload extends TestCase {
 	public function testForwardWithNoMatchingOverloadHandler(Void):Void {
 		var args:Array = [new Object(), "arg2", 3];
 		
-		var hc1:MockControl = new SimpleMockControl(OverloadHandler);
+		var hc1:MockControl = new MockControl(OverloadHandler);
 		var h1:OverloadHandler = hc1.getMock();
 		h1.matches(args);
 		hc1.setReturnValue(false);
 		hc1.replay();
 		
-		var hc2:MockControl = new SimpleMockControl(OverloadHandler);
+		var hc2:MockControl = new MockControl(OverloadHandler);
 		var h2:OverloadHandler = hc2.getMock();
 		h2.matches(args);
 		hc2.setReturnValue(false);
@@ -122,13 +121,13 @@ class test.unit.org.as2lib.env.overload.TOverload extends TestCase {
 	public function testForwardWithTwoOverloadHandlersWithTheSameTypeSignature(Void):Void {
 		var args:Array = [new Object(), "arg2", 3];
 		
-		var hc3:MockControl = new SimpleMockControl(OverloadHandler);
+		var hc3:MockControl = new MockControl(OverloadHandler);
 		var h3:OverloadHandler = hc3.getMock();
 		h3.matches(args);
 		hc3.setReturnValue(true);
 		hc3.replay();
 		
-		var hc1:MockControl = new SimpleMockControl(OverloadHandler);
+		var hc1:MockControl = new MockControl(OverloadHandler);
 		var h1:OverloadHandler = hc1.getMock();
 		h1.isMoreExplicit(h3);
 		hc1.setReturnValue(null);
