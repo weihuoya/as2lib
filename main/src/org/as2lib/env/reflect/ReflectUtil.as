@@ -85,9 +85,10 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	public static function getMethodNameByType(method:Function, type:Function):String {
 		if (!method || !type) return null;
 		var p = type.prototype;
+		var s = _global.ASSetPropFlags;
 		while (p) {
-			_global.ASSetPropFlags(p, null, 0, true);
-			_global.ASSetPropFlags(p, ["__proto__", "__constructor__"], 7, true);
+			s(p, null, 0, true);
+			s(p, ["__proto__", "__constructor__"], 7, true);
 			for (var n:String in p) {
 				try {
 					if (p[n] == method) return n;
@@ -95,18 +96,18 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 				}
 			}
 			// ASSetPropFlags must be restored because unexpected behaviours get caused otherwise
-			_global.ASSetPropFlags(p, null, 1, true);
+			s(p, null, 1, true);
 			p = p.__proto__;
 		}
 		for (var n:String in type) {
-			_global.ASSetPropFlags(type, null, 0, true);
-			_global.ASSetPropFlags(type, ["__proto__", "constructor", "prototype"], 7, true);
+			s(type, null, 0, true);
+			s(type, ["__proto__", "constructor", "prototype"], 7, true);
 			try {
 				if (type[n] == method) return n;
 			} catch (e) {
 			}
 			// ASSetPropFlags must be restored because unexpected behaviours get caused otherwise
-			_global.ASSetPropFlags(type, null, 1, true);
+			s(type, null, 1, true);
 		}
 		return null;
 	}
@@ -157,7 +158,6 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	/**
 	 * Private constructor.
 	 */
-	private function ReflectUtil(Void) {
-	}
+	private function ReflectUtil(Void) {}
 	
 }
