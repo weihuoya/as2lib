@@ -10,11 +10,11 @@ class org.as2lib.basic.event.dispatcher.NormalEventDispatcher implements EventDi
 	 * @see org.as2lib.basic.event.EventDispatcher
 	 */
 	public function dispatch(event:EventInfo, listeners:TypedArray):Void {
-		var type:String = event.getName();
-		if (!event.isConsumed) {
+		var name:String = event.getName();
+		if (!event.isConsumed()) {
 			var l:Number = listeners.length;
 			for (var i:Number = 0; i < l; i++) {
-				listeners[i][type](event);
+				listeners.getValue(i)[name](event);
 			}
 		}
 	}
