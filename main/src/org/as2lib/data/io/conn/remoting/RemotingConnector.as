@@ -2,6 +2,7 @@
 import org.as2lib.data.io.conn.ConnectorListener;
 import org.as2lib.data.io.conn.ConnectorRequest;
 import org.as2lib.env.event.EventBroadcaster;
+import org.as2lib.env.event.EventInfo;
 
 class org.as2lib.data.io.conn.remoting.RemotingConnector implements Connector {
 	private var gatewayUrl:String;
@@ -32,7 +33,8 @@ class org.as2lib.data.io.conn.remoting.RemotingConnector implements Connector {
 	
 	// for testing
 	public function dispatch(event:EventInfo):Void{
-		eventBroadcaster.dispatch();
+		trace("dispatch");
+		eventBroadcaster.dispatch(event);
 	}
 	
 	public function handleRequest(r:ConnectorRequest):Void {
