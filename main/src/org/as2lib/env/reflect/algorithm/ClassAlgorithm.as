@@ -44,7 +44,6 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass impleme
 		var a:Object = b.getPackage();
 		_global.ASSetPropFlags(a, null, 0, true);
 		findAndStore(b, d);
-		_global.ASSetPropFlags(a, null, 1, true);
 		if (!r) {
 			throw new ReferenceNotFoundException("The class corresponding to the instance [" + d + "] could not be found.", this, arguments);
 		}
@@ -67,9 +66,11 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass impleme
 				if (!e) {
 					e = c.addPackage(new PackageInfo(i, f, a));
 				}
-				// replace recursion with loop
-				if (findAndStore(e, d)) {
-					return true;
+				if (!a.isParentPackage(e)) {
+					// replace recursion with loop
+					if (findAndStore(e, d)) {
+						return true;
+					}
 				}
 			}
 		}
