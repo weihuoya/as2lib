@@ -24,6 +24,22 @@ import org.as2lib.env.reflect.ReflectConfig;
  * Searches for children, that means classes and packages, of a specific
  * package. Sub-packages are not searched through.
  *
+ * <p>This class is mostly used internally. If you wanna obtain the children
+ * of a package you need its representing PackageInfo. You can then also
+ * use the PackageInfo#getChildren, PackageInfo#getChildClasses and
+ * PackageInfo#getChildPackages methods directly and do not have to make
+ * the detour over this method. The PackageInfo's methods are also easier
+ * to use and offer some extra functionalities.
+ *
+ * <p>If you nevertheless want to use this class here is how it works.
+ *
+ * <code>var packageInfo:PackageInfo = PackageInfo.forPackage(org.as2lib.core);
+ * var childAlgorithm:ChildAlgorithm = new ChildAlgorithm();
+ * var children:Array = childAlgorithm.execute(packageInfo);</code>
+ *
+ * <p>Refer to the #execute methods documentation for details on how to
+ * get data from the children array appropriately.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass {
@@ -64,6 +80,20 @@ class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass {
 	 * <p>The resulting array contains instances of type CompositeMemberInfo,
 	 * that is either of type ClassInfo or PackageInfo.
 	 *
+	 * <p>The specific children can be either referenced by index or by name.
+	 * <dl>
+	 *   <dt>Reference child by index; can be class or package.</dt>
+	 *   <dd><code>myChildren[0];</code></dd>
+	 *   <dt>Reference class by index.</dt>
+	 *   <dd><code>myChildren.classes[0];</code></dd>
+	 *   <dt>Reference package by index.</dt>
+	 *   <dd><code>myChildren.packages[0];</code></dd>
+	 *   <dt>Reference class by name; use only the name of the class, excluding the namespace.</dt>
+	 *   <dd><code>myChildren.classes.MyClass;</code></dd>
+	 *   <dt>Reference package by name; use only the package name, excluding the namespace.</dt>
+	 *   <dd><code>myChildren.packages.mypackage;</code></dd>
+	 * </dl>
+	 *
 	 * <p>This method will return null if:
 	 * <ul>
 	 *   <li>The argument is null or undefined.</li>
@@ -84,6 +114,10 @@ class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass {
 		if (!t) return null;
 		getCache();
 		var r:Array = new Array();
+		var n:Array = new Array();
+		r["classes"] = n;
+		var m:Array = new Array();
+		r["packages"] = m;
 		var i:String;
 		for (i in t) {
 			if (typeof(t[i]) == "function") {
@@ -96,6 +130,8 @@ class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass {
 						b = c.addClass(new ClassInfo(i, t[i], p));
 					}
 					r[r.length] = b;
+					n[n.length] = b;
+					n[i] = b;
 				}
 			} else if (typeof(t[i]) == "object") {
 				var a:PackageInfo = c.getPackage(t[i]);
@@ -103,6 +139,8 @@ class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass {
 					a = c.addPackage(new PackageInfo(i, t[i], p));
 				}
 				r[r.length] = a;
+				m[m.length] = a;
+				m[i] = a;
 			}
 		}
 		return r;
