@@ -14,48 +14,92 @@
  * limitations under the License.
  */
 
-import org.as2lib.util.ObjectUtil;
 import org.as2lib.core.BasicInterface;
+import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
- * Acts like a normal Array but assures that only objects from one and the same
- * type are added to the Array.
+ * TypedArray acts like a normal array but assures that only objects of
+ * a specific type are added to the array.
+ *
+ * <p>Note that values that get added to this array using the dot-syntax
+ * do not get type-checked. For example:
+ * <code>
+ *   myArray[0] = "value1";
+ *   // or
+ *   myArray.myProp = "value2"; // myArray["myProp"] = "value2";
+ * </code>
+ *
+ * <p>A simple usage example:
+ * <code>
+ *   var array:Array = new TypedArray(Number);
+ *   array.push(0);
+ *   array.push(1);
+ *   array.push(2);
+ *   // throws an IllegalArgumentException because the value is not of the expected type
+ *   array.push("myString");
+ * </code>
+ * <p>You can also construct your array the following way:
+ * <code>
+ *   var array:Array = new TypedArray(Number, 0, 1, 2);
+ * </code>
  * 
  * @author Simon Wacker
  * @author Martin Heidegger
+ * @see http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001191.html
  */
 class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInterface {
 	
-	/** The type of values that can be added. */
+	/** The type of the values that can be added. */
 	private var type:Function;
 	
 	/**
 	 * Constructs a new TypedArray instance.
 	 *
-	 * @param type the type of the values this TypedArray contains
-	 * @param array the Array that shall be wrapped
+	 * <p>You can optionally pass-in values to populate this array with
+	 * after the type parameter. These values also get type-checked.
+	 * <code>
+	 *   var array:Array = new TypedArray(Number, 1, 2, 3);
+	 * </code>
+	 *
+	 * @param type the type of the values this array will contain
+	 * @param ..
 	 */
 	public function TypedArray(type:Function) {
 		this.type = type;
-		for (var i:Number = 1; i < arguments.length; i++) {
-			push(arguments[i]);
+		if (arguments.length > 1) {
+			arguments.shift();
+			push.apply(this, arguments);
 		}
 	}
 	
 	/**
-	 * Returns the type of the array all contained elements have.
+	 * Returns the type all elements of this array have.
 	 *
 	 * <p>This is the type passed-in on construction.
 	 *
-	 * @return the type of the array's elements
+	 * @return the type all elements of this array have
 	 */
 	public function getType(Void):Function {
 		return type;
 	}
 	
 	/**
-	 * @see Array#concat()
+	 * Concatenates the elements specified in the parameter list with the
+	 * elements of this array and returns a new array containing these elements.
+	 *
+	 * <p>This array itself is left unchanged.
+	 * 
+	 * <p>The returned array expects elements of the same type as this
+	 * array does.
+	 *
+	 * <p>If you do not pass-in any values a duplicate of this array gets
+	 * returned.
+	 *
+	 * @param ..
+	 * @return a new array that contains the elements of this array as well
+	 * as the passed-in elements
+	 * @see http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001192.html#3988964
 	 */
 	public function concat():TypedArray {
 		var result:TypedArray = new TypedArray(this.type);
@@ -83,37 +127,75 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 	}
 	
 	/**
-	 * @see Array#push()
+	 * Adds one or more elements to the end of this array and returns the
+	 * new length of this array.
+	 *
+	 * <p>The passed-in values get type-checked first. They will only be added
+	 * if they are of the correct type.
+	 *
+	 * @param value the new element to add to the end of this array
+	 * @param ..
+	 * @return the new length of this array
+	 * @throws IllegalArgumentException if one of the passed-in values is
+	 * of invalid type
+	 * @see http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001196.html#3989073
 	 */
 	public function push(value):Number {
-		validate(value);
-		return super.push(value);
+		if (arguments.length > 1) {
+			var l:Number = arguments.length;
+			for (var i:Number = 0; i < l; i++) {
+				validate(arguments[i]);
+			}
+		} else {
+			validate(value);
+		}
+		return super.push.apply(this, arguments);
 	}
 	
 	/**
-	 * @see Array#unshift()
+	 * Adds one or more elements to the beginning of this array and returns
+	 * the new length of this array.
+	 *
+	 * <p>The passed-in values get type-checked first. They will only be added
+	 * if they are of the correct type.
+	 *
+	 * @param value the new element to add to the beginnign of this array
+	 * @param ..
+	 * @return the new length of this array
+	 * @throws IllegalArgumentException if one of the passed-in values is
+	 * of invalid type
+	 * @see http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001204.html#3989452
 	 */
 	public function unshift(value):Number {
-		validate(value);
-		return super.unshift(value);
+		if (arguments.length > 1) {
+			var l:Number = arguments.length;
+			for (var i:Number = 0; i < l; i++) {
+				validate(arguments[i]);
+			}
+		} else {
+			validate(value);
+		}
+		return super.unshift.apply(this, arguments);
 	}
 	
 	/**
-	 * @see org.as2lib.core.BasicInterface#toString()
+	 * Returns the string representation of this array.
+	 *
+	 * @return the string representation of this array
 	 */
 	public function toString(Void):String {
 		return super.toString();
 	}
 
 	/**
-	 * Validates the passed object based on its type.
+	 * Validates the passed-in object based on its type.
 	 *
-	 * @param object the object which type shall be validated
+	 * @param object the object whose type to validate
 	 * @throws org.as2lib.env.except.IllegalArgumentException if the type of the object is not valid
 	 */
 	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between object [" + object + "] and type [" + type + "].", this, arguments);
+			throw new IllegalArgumentException("Type mismatch between object '" + object + "' and type '" + type + "'.", this, arguments);
 		}
 	}
 	
