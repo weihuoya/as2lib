@@ -74,11 +74,10 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	public function isMoreExplicitThan(handler:OverloadHandler):Boolean {
 		var points:Number = 0;
 		var args2:Array = handler.getArguments();
-		var l:Number = args.length;
-		for (var i:Number = 0; i < l; i++) {
+		for (var i:Number = args.length-1; i >= 0; i--) {
 			if (args[i] != args2[i]) {
 				if (ObjectUtil.isInstanceOf(args[i].prototype, args2[i])) {
-					points++;
+					points-=-1;
 				} else {
 					points--;
 				}
@@ -97,5 +96,29 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	 */
 	public function getArguments(Void):Array {
 		return args;
+	}
+	
+	/**
+	 * Constructs a more detailed String output information for this class.
+	 * 
+	 * @returns Instance as string.
+	 */
+	public function toString(Void):String {
+		// TODO: Extract to a Stringifier.
+		var result:String = "[object SimpleOverloadHandler";
+		var l:Number = args.length;
+		if(l > 0) {
+			result += " (";
+		}
+		for(var i:Number = 0; i < l; i++) {
+			if(i != 0) {
+				result += ", ";
+			}
+			result += args[i];
+		}
+		if(l > 0) {
+			result += ") ";
+		}
+		return result + "]";
 	}
 }
