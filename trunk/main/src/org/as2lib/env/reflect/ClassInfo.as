@@ -264,7 +264,8 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 		var property:PropertyInfo;
 		while (iterator.hasNext()) {
 			property = PropertyInfo(iterator.next());
-			if (property.getName() == concreteProperty) {
+			if (property.getGetter() == concreteProperty
+					|| property.getSetter() == concreteProperty) {
 				return property;
 			}
 		}
