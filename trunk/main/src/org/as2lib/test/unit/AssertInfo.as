@@ -14,25 +14,26 @@
  * limitations under the License.
  */
  
-import org.as2lib.core.BasicClass;
-import org.as2lib.util.string.Stringifier;
-import org.as2lib.test.unit.error.FailureException;
+import org.as2lib.core.BasicInterface;
 
 /**
- * Stringifier for a normal Failure.
+ * Definition for a Information about a Assertion.
+ * All informations about assertions have to implement this interface.
  * 
- * @see Failure
- * @author Martin Heidegger
+ * @autor Martin Heidegger
  */
-class org.as2lib.test.unit.stringifier.FailureStringifier extends BasicClass implements Stringifier {
+interface org.as2lib.test.unit.AssertInfo extends BasicInterface {
 	
 	/**
-	 * Returns a Failure as string.
-	 * 
-	 * @return Failure as string.
+	 * @return true if the assertion failed.
 	 */
-	public function execute (object):String {
-		var failure:FailureException = FailureException(object);
-		return("Userdefined failure occured: "+failure.getMessage());
-	}
+	public function isFailed(Void):Boolean;
+	
+	/**
+	 * Returns the message to the assertion.
+	 * If this assertion failed it should return the errorinfo, else the successinfo.
+	 * 
+	 * @return Message to the assertion.
+	 */
+	public function getMessage(Void):String;
 }

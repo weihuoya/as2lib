@@ -17,9 +17,8 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.test.unit.error.*;
-import org.as2lib.test.unit.Assert;
-import org.as2lib.test.unit.AssertException;
+import org.as2lib.test.unit.AssertInfo;
+import org.as2lib.test.unit.info.*;
 import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.test.unit.TestResult;
@@ -262,7 +261,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * 
 	 * @see TestRunner
 	 * @see #getTestRunner
-	 * @return Methodinformation for the curre
+	 * @return Methodinformation for the current testcase method.
 	 */
 	private function getMethodInformation(Void):TestCaseMethodInfo {
 		return getTestRunner().getCurrentTestCaseMethodInfo();
@@ -275,7 +274,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function fail(message:String):Void {
 		message = (typeof message == "string") ? message : "<no message applied>";
-		getMethodInformation().addError(new FailureException(message, this, arguments));
+		getMethodInformation().addInfo(new FailureInfo(message));
 	}
 	
 	/**
@@ -325,15 +324,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertTrueWithMessage(message:String, val:Boolean):Boolean {
-		try {
-			Assert.isTrue(message, val);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertTrue", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertTrueInfo(message, val);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -373,9 +366,6 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * This method asserts the same like @see #assertFalseWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isFalse
 	 * @see #assertFalse
 	 * @see #assertFalseWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
@@ -383,15 +373,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertFalseWithMessage(message:String, val:Boolean):Boolean {
-		try {
-			Assert.isFalse(message, val);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertFalse", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertFalseInfo(message, val);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -453,15 +437,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertEqualsWithMessage(message:String, val, compareTo):Boolean {
-		try {
-			Assert.isEqual(message, val, compareTo);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertEquals", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertEqualsInfo(message, val, compareTo);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -522,15 +500,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertNotEqualsWithMessage(message:String, val, compareTo):Boolean {
-		try {
-			Assert.isNotEqual(message, val, compareTo);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotEquals", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertNotEqualsInfo(message, val, compareTo);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -591,15 +563,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertSameWithMessage(message:String, val, compareTo):Boolean {
-		try {
-			Assert.isSame(message, val, compareTo);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertSame", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertSameInfo(message, val, compareTo);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -660,15 +626,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertNotSameWithMessage(message:String, val, compareTo):Boolean {
-		try {
-			Assert.isNotSame(message, val, compareTo);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotSame", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertNotSameInfo(message, val, compareTo);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -716,15 +676,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertNullWithMessage(message:String, val):Boolean {
-		try {
-			Assert.isNull(message, val);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNull", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertNullInfo(message, val);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -772,15 +726,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertNotNullWithMessage(message:String, val):Boolean {
-		try {
-			Assert.isNotNull(message, val);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotNull", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertNotNullInfo(message, val);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -828,15 +776,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertUndefinedWithMessage(message:String, val):Boolean {
-		try {
-			Assert.isUndefined(message, val);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertUndefined", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertUndefinedInfo(message, val);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -884,15 +826,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertNotUndefinedWithMessage(message:String, val):Boolean {
-		try {
-			Assert.isNotUndefined(message, val);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotUndefined", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertNotUndefinedInfo(message, val);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -940,15 +876,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertInfinityWithMessage(message:String, val):Boolean {
-		try {
-			Assert.isInfinity(message, val);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertInfinity", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertInfinityInfo(message, val);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -996,15 +926,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertNotInfinityWithMessage(message:String, val):Boolean {
-		try {
-			Assert.isNotInfinity(message, val);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotInfinity", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertNotInfinityInfo(message, val);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -1053,15 +977,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertEmptyWithMessage(message:String, val):Boolean {
-		try {
-			Assert.isEmpty(message, val);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertEmpty", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertEmptyInfo(message, val);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -1110,15 +1028,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertNotEmptyWithMessage(message:String, val):Boolean {
-		try {
-			Assert.isNotEmpty(message, val);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertEmpty", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertNotEmptyInfo(message, val);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -1255,15 +1167,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param args	Arguments that should be used by executing.
 	 */
 	private function assertThrowsWithCallAndMessage(message:String, call:Call, args:Array):Boolean {
-		try {
-			Assert.isThrowingWithoutType(message, call, args);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrowsWithCalAndMessage", this, arguments).initCause(e));
-		}
-		return false;
+		return assertThrowsWithCallAndMessageAndType(message, null, call, args);
 	}
 	
 	/**
@@ -1276,15 +1180,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param args	Arguments that should be used by executing.
 	 */
 	private function assertThrowsWithCallAndMessageAndType(message:String, type, call:Call, args:Array):Boolean {
-		try {
-			Assert.isThrowing(message, type, call, args);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrowsWithCallAndMessageAndType", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertThrowsInfo(message, type, call, args);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -1301,7 +1199,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 			return assertThrowsWithCallAndMessage(message, new Call(inObject, inObject[name]), args);
 		} else {
 			var e:IllegalArgumentException = new IllegalArgumentException("The method '"+name+"' is not available within "+inObject.toString(), this, arguments);
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrowsWithStringAndMessage", this, arguments).initCause(e));	
+			//getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrowsWithStringAndMessage", this, arguments).initCause(e));	
 			return false;
 		}
 	}
@@ -1321,7 +1219,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 			return assertThrowsWithCallAndMessageAndType(message, type, new Call(inObject, inObject[name]), args);
 		} else {
 			var e:IllegalArgumentException = new IllegalArgumentException("The method '"+name+"' is not available within "+inObject.toString(), this, arguments);
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrowsWithStringAndMessageAndType", this, arguments).initCause(e));	
+			//getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrowsWithStringAndMessageAndType", this, arguments).initCause(e));	
 			return false;
 		}
 	}
@@ -1488,15 +1386,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param args	Arguments that should be used by executing.
 	 */
 	private function assertNotThrowsWithCallAndMessage(message:String, call:Call, args:Array):Boolean {
-		try {
-			Assert.isNotThrowingWithoutType(message, call, args);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotThrows", this, arguments).initCause(e));
-		}
-		return false;
+		return assertNotThrowsWithCallAndMessageAndType(message, null, call, args);
 	}
 	
 	/**
@@ -1509,15 +1399,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param args	Arguments that should be used by executing.
 	 */
 	private function assertNotThrowsWithCallAndMessageAndType(message:String, type, call:Call, args:Array):Boolean {
-		try {
-			Assert.isNotThrowing(message, type, call, args);
-			return true;
-		} catch(e:org.as2lib.test.unit.AssertException) {
-			getMethodInformation().addError(e);
-		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotThrows", this, arguments).initCause(e));
-		}
-		return false;
+		var info:AssertInfo = new AssertNotThrowsInfo(message, type, call, args);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
@@ -1534,7 +1418,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 			return assertNotThrowsWithCallAndMessage(message, new Call(inObject, inObject[name]), args);
 		} else {
 			var e:IllegalArgumentException = new IllegalArgumentException("The method '"+name+"' is not available within "+inObject.toString(), this, arguments);
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotThrowsWithString", this, arguments).initCause(e));	
+			//getMethodInformation().addInfo(new UnexpectedException("Unexpected Exeption during assertNotThrowsWithString", this, arguments).initCause(e));	
 			return false;
 		}
 	}
@@ -1554,7 +1438,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 			return assertNotThrowsWithCallAndMessageAndType(message, type, new Call(inObject, inObject[name]), args);
 		} else {
 			var e:IllegalArgumentException = new IllegalArgumentException("The method '"+name+"' is not available within "+inObject.toString(), this, arguments);
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotThrowsWithStringAndMessageAndType", this, arguments).initCause(e));	
+			//getMethodInformation().addInfo(new UnexpectedException("Unexpected Exeption during assertNotThrowsWithStringAndMessageAndType", this, arguments).initCause(e));	
 			return false;
 		}
 	}

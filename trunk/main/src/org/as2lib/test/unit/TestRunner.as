@@ -17,7 +17,6 @@ import org.as2lib.test.unit.FinishInfo;
 import org.as2lib.test.unit.PauseInfo;
 import org.as2lib.test.unit.ResumeInfo;
 import org.as2lib.test.unit.TestCaseMethodInfo;
-import org.as2lib.test.unit.error.UnexpectedException;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.SimpleEventBroadcaster;
 import org.as2lib.env.overload.Overload;
@@ -168,7 +167,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 				var freshScope:TestCase = TestCase(currentTestCase.getTestCase().getClass().newInstance());
 			     	freshScope.setTestRunner(this);
 			} catch(e) {
-				methodInfo.addError(new UnexpectedException("IMPORTANT: Testcase threw an error by instanciation.", this, arguments).initCause(e));
+				//methodInfo.addError(new UnexpectedException("IMPORTANT: Testcase threw an error by instanciation.", this, arguments).initCause(e));
 			}
 			
 			// Prepare the execution of the method by setUp
@@ -176,7 +175,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 				try {
 					freshScope.setUp();
 				} catch (e) {
-					methodInfo.addError(new UnexpectedException("IMPORTANT: Error occured during set up. (Testcase won't get executed!)", freshScope, arguments).initCause(e));
+					//methodInfo.addError(new UnexpectedException("IMPORTANT: Error occured during set up. (Testcase won't get executed!)", freshScope, arguments).initCause(e));
 				}
 			}
 			
@@ -188,8 +187,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 					sW.start();
 					methodInfo.getMethodInfo().applyTo(freshScope, null);
 				} catch (e) {
-					// TODO: Change to Unexpected Exception !!!!
-					methodInfo.addError(new UnexpectedException(methodInfo.getMethodInfo().toString()+" threw a unexpected exception", freshScope, arguments).initCause(e));
+					//methodInfo.addError(new UnexpectedException(methodInfo.getMethodInfo().toString()+" threw a unexpected exception", freshScope, arguments).initCause(e));
 				}
 				sW.stop();
 				
@@ -197,7 +195,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 				try {
 					freshScope.tearDown();
 				} catch(e) {
-					methodInfo.addError(new UnexpectedException("IMPORTANT: Error occured during tear down.", freshScope, arguments).initCause(e));
+					//methodInfo.addError(new UnexpectedException("IMPORTANT: Error occured during tear down.", freshScope, arguments).initCause(e));
 				}
 				
 			}

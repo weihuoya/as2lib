@@ -2,7 +2,7 @@
 import org.as2lib.env.except.Exception;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.util.ReflectUtil;
-import org.as2lib.test.unit.error.*;
+import org.as2lib.test.unit.AssertException;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.Call;
 
@@ -31,14 +31,12 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 *
 	 * @see #isTrue
 	 * @see #isFalse
-	 * @see #isFalseWithMessage
 	 * @throws AssertIsTrueException if the assertion fails.
-	 * @param message	Message to be displayed if an error occures
 	 * @param object	Object that should be true.
 	 */
-	public static function isTrue (message:String, object):Void {
+	public static function isTrue (object):Void {
 		if(object !== true) {
-			throw new AssertIsTrueException(message, object, eval("th"+"is"), arguments);
+			throw new AssertException(object, eval("th"+"is"), arguments);
 		}
 	}
 	
@@ -49,12 +47,11 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 *
 	 * @see #isTrue
 	 * 
-	 * @param message	Message to be displayed if an error occures
 	 * @param object	Object that should be false.
 	 */
-	public static function isFalse (message:String, object):Void {
+	public static function isFalse (object):Void {
 		if(object !== false) {
-			throw new AssertIsFalseException(message, object, eval("th"+"is"), arguments);
+			throw new AssertException(object, eval("th"+"is"), arguments);
 		}
 	}
 	
@@ -66,13 +63,12 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 *
 	 * @see #isNotEqual
 	 * 
-	 * @param message	Message to be displayed if an error occures
 	 * @param var1		First Var.
 	 * @param var2		Second Var.
 	 */
-	public static function isEqual (message:String, var1, var2):Void {
+	public static function isEqual (var1, var2):Void {
 		if(var1 != var2) {
-			throw new AssertIsEqualException(message, var1, var2, eval("th"+"is"), arguments);
+			throw new AssertException(var1, var2, eval("th"+"is"), arguments);
 		}
 	}
 	
@@ -85,13 +81,12 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isEqual
 	 * 
 	 * @throws AssertIsNotEqualException if the assertion fails.
-	 * @param message	Message to be displayed if an error occures
 	 * @param var1		First Var.
 	 * @param var1		Second Var.
 	 */
-	public static function isNotEqual (message:String, var1, var2):Void {
+	public static function isNotEqual (var1, var2):Void {
 		if(var1 == var2) {
-			throw new AssertIsNotEqualException(message, var1, var2, eval("th"+"is"), arguments);
+			throw new AssertException(var1, var2, eval("th"+"is"), arguments);
 		}
 	}
 	
@@ -105,13 +100,12 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isNotSame
 	 * 
 	 * @throws AssertIsSameException if the assertion fails.
-	 * @param message	Message to be displayed if an error occures
 	 * @param var1		First Var.
 	 * @param var2		Second Var.
 	 */
-	public static function isSame (message:String, var1, var2):Void {
+	public static function isSame (var1, var2):Void {
 		if(var1 !== var2) {
-			throw new AssertIsSameException(message, var1, var2, eval("th"+"is"), arguments);
+			throw new AssertException(var1, var2, eval("th"+"is"), arguments);
 		}
 	}
 	
@@ -125,13 +119,12 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isSame
 	 * 
 	 * @throws AssertIsSameException if the assertion fails.
-	 * @param message	Message to be displayed if an error occures
 	 * @param var1		First Var.
 	 * @param var2		Second Var.
 	 */
-	public static function isNotSame (message:String, var1, var2):Void {
+	public static function isNotSame (var1, var2):Void {
 		if(var1 === var2) {
-			throw new AssertIsNotSameException(message, var1, var2, eval("th"+"is"), arguments);
+			throw new AssertException(var1, var2, eval("th"+"is"), arguments);
 		}
 	}
 
@@ -143,12 +136,11 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isNotNull
 	 * 
 	 * @throws AssertIsNullException if the assertion fails.
-	 * @param message	Message to be displayed if an error occurs
 	 * @param object	Object that should be null.
 	 */
-	public static function isNull (message:String, object):Void {
+	public static function isNull (object):Void {
 		if(object !== null) {
-			throw new AssertIsNullException(message, eval("th"+"is"), arguments, object);
+			throw new AssertException(eval("th"+"is"), arguments, object);
 		}
 	}
 	
@@ -160,12 +152,11 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isNull
 	 * 
 	 * @throws AssertIsNotNullException if the assertion fails.
-	 * @param message	Message to be displayed if an error occurs
 	 * @param object	Object that should not be null.
 	 */
-	public static function isNotNull (message:String, object):Void {
+	public static function isNotNull (object):Void {
 		if(object === null) {
-			throw new AssertIsNotNullException(message, eval("th"+"is"), arguments);
+			throw new AssertException(eval("th"+"is"), arguments);
 		}
 	}
 	
@@ -177,12 +168,11 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isNotUndefined
 	 * 
 	 * @throws AssertIsUndefinedException if the assertion fails.
-	 * @param message	Message to be displayed if an error occurs
 	 * @param object	Object that should be undefined.
 	 */
-	public static function isUndefined (message:String, object):Void {
+	public static function isUndefined (object):Void {
 		if(object !== undefined) {
-			throw new AssertIsUndefinedException(message, eval("th"+"is"), arguments, object);
+			throw new AssertException(eval("th"+"is"), arguments, object);
 		}
 	}
 	
@@ -194,12 +184,11 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isUndefined
 	 * 
 	 * @throws AssertIsNotUndefinedException if the assertion fails.
-	 * @param message	Message to be displayed if an error occurs
 	 * @param object	Object that should be undefined.
 	 */
-	public static function isNotUndefined (message:String, object):Void {
+	public static function isNotUndefined (object):Void {
 		if(object === undefined) {
-			throw new AssertIsNotUndefinedException(message, eval("th"+"is"), arguments);
+			throw new AssertException(eval("th"+"is"), arguments);
 		}
 	}
 	
@@ -211,12 +200,11 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isNotInfinity
 	 * 
 	 * @throws AssertIsInfinityException if the assertion fails.
-	 * @param message	Message to be displayed if an error occurs.
 	 * @param object		Object that should be Infinity.
 	 */
-	public static function isInfinity (message:String, object):Void {
+	public static function isInfinity (object):Void {
 		if(object !== Infinity) {
-			throw new AssertIsInfinityException(message, eval("th"+"is"), arguments, object);
+			throw new AssertException(eval("th"+"is"), arguments, object);
 		}
 	}
 	
@@ -228,12 +216,11 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isInfinity
 	 * 
 	 * @throws AssertIsNotInfinityException if the assertion fails.
-	 * @param message	Message to be displayed if an error occurs
 	 * @param object	Object that should not be Infinity.
 	 */
-	public static function isNotInfinity (message:String, object):Void {
+	public static function isNotInfinity (object):Void {
 		if(object === Infinity) {
-			throw new AssertIsNotInfinityException(message, eval("th"+"is"), arguments, object);
+			throw new AssertException(eval("th"+"is"), arguments, object);
 		}
 	}
 	
@@ -245,12 +232,11 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isNotEmpty
 	 * 
 	 * @throws AssertIsEmptyException if the assertion fails.
-	 * @param message	Message to be displayed if an error occurs
 	 * @param object	Object that should be empty.
 	 */
-	public static function isEmpty (message:String, object):Void {
+	public static function isEmpty (object):Void {
 		if(!ObjectUtil.isEmpty(object)) {
-			throw new AssertIsEmptyException(message, eval("th"+"is"), arguments, object);
+			throw new AssertException(eval("th"+"is"), arguments, object);
 		}
 	}
 	
@@ -262,12 +248,11 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isEmpty
 	 * 
 	 * @throws AssertIsNotEmptyException if the assertion fails.
-	 * @param message	Message to be displayed if an error occurs
 	 * @param object	Object that should not be empty.
 	 */
-	public static function isNotEmpty (message:String, object):Void {
+	public static function isNotEmpty (object):Void {
 		if(ObjectUtil.isEmpty(object)) {
-			throw new AssertIsNotEmptyException(message, eval("th"+"is"), arguments, object);
+			throw new AssertException(eval("th"+"is"), arguments, object);
 		}
 	}
 	
@@ -279,20 +264,19 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * 
 	 * @throws NothingThrownException if nothing was thrown.
 	 * @throws IllegalTypeThrownException if something different was thrown.
-	 * @param message	Message that should be submitted if it fails.
 	 * @param type		Exceptiontype that should be thrown.
 	 * @param call		Call that should be executed.
 	 * @param args		Arguments for the call.
 	 */
-	public static function isThrowing(message:String, type, call:Call, args):Void {
+	public static function isThrowing(type, call:Call, args):Void {
 		try {
 			call.execute(args);
-			throw new NothingThrownException(message, eval("th"+"is"), arguments, call, args);
+			throw new NothingThrownException(eval("th"+"is"), arguments, call, args);
 		} catch(e:org.as2lib.test.unit.error.NothingThrownException){
 			throw e;
 		} catch(e) {
 			if(!ObjectUtil.isInstanceOf(e, type)) {
-				throw new IllegalTypeThrownException(message, eval("th"+"is"), arguments, call, e, args);
+				throw new IllegalTypeThrownException(eval("th"+"is"), arguments, call, e, args);
 			}
 		}
 	}
@@ -304,14 +288,13 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isNotThrowing
 	 * 
 	 * @throws NothingThrownException if nothing was thrown.
-	 * @param message	Message that should be submitted if it fails.
 	 * @param call		Call that should be executed.
 	 * @param args		Arguments for the call.
 	 */
-	public static function isThrowingWithoutType(message:String,  call:Call, args):Void {
+	public static function isThrowingWithoutType( call:Call, args):Void {
 		try {
 			call.execute(args);
-			throw new NothingThrownException(message, eval("th"+"is"), arguments, call, args);
+			throw new NothingThrownException(eval("th"+"is"), arguments, call, args);
 		} catch(e:org.as2lib.test.unit.error.NothingThrownException){
 			throw e;
 		} catch(e) {
@@ -325,17 +308,16 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isThrowing
 	 * 
 	 * @throws ExpectedTypeThrownException if the exception was thrown.
-	 * @param message	Message that should be submitted if it fails.
 	 * @param type		Exceptiontype that should be thrown.
 	 * @param call		Call that should be executed.
 	 * @param args		Arguments for the call.
 	 */
-	public static function isNotThrowing(message:String, type, call:Call, args):Void {
+	public static function isNotThrowing(type, call:Call, args):Void {
 		try {
 			call.execute(args);
 		} catch(e) {
 			if(ObjectUtil.isInstanceOf(e, type)) {
-				throw new ExpectedTypeThrownException(message, eval("th"+"is"), arguments, call, args, e);
+				throw new ExpectedTypeThrownException(eval("th"+"is"), arguments, call, args, e);
 			}
 		}
 	}
@@ -347,15 +329,14 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isNotThrowing
 	 * 
 	 * @throws ExceptionThrownException if the exception was thrown.
-	 * @param message	Message that should be submitted if it fails.
 	 * @param call		Call that should be executed.
 	 * @param args		Arguments for the call.
 	 */
-	public static function isNotThrowingWithoutType(message:String, call:Call, args):Void {
+	public static function isNotThrowingWithoutType(call:Call, args):Void {
 		try {
 			call.execute(args);
 		} catch(e) {
-			throw new ExceptionThrownException(message, eval("th"+"is"), arguments, call, args, e);
+			throw new ExceptionThrownException(eval("th"+"is"), arguments, call, args, e);
 		}
 	}
 }
