@@ -390,9 +390,12 @@ class MyClass extends EventHandler {
   public function addListener (l:MyEventInterface) {
     super.addListener(l);
   }
+  public function gotoFrame (frame:Number) {
+    this.dispatchEvent(new MyEventHandler(frame);
+  }
 }</code>
                                      </li>
-                                     <li><h5>eventclass</h5>
+                                     <li><h5>Returned Eventhandler</h5>
                                        <code>import org.as2lib.basic.*
 class MyEventHandler extends EventHandler {
   public var eventName:String = "onEnterFrame";
@@ -403,7 +406,7 @@ class MyEventHandler extends EventHandler {
   }
 }</code>
                                      </li>
-                                     <li><h5>interface</h5>
+                                     <li><h5>Eventinterface</h5>
                                        <code>import org.as2lib.basic.*
 class MyEventInterface extends EventInterface {
   public function onEnterframe (e:MyEventHandler):Void;
@@ -413,7 +416,7 @@ class MyEventInterface extends EventInterface {
                                   </li>
                                   <li><a name="EventHandlingExampleListenerDeveloper"></a><h4>ListenerDeveloper</h4>
                                     <ol>
-                                      <li><h5>creating an listener</h5>
+                                      <li><h5>Listenercreation</h5>
                                        <code>import org.as2lib.basic.*
 class MyEventListener implements MyEventInterface {
   public function onEnterframe (e:MyEventHandler){
@@ -421,7 +424,7 @@ class MyEventListener implements MyEventInterface {
   }
 }</code>
                                       </li>
-                                      <li><h5>adding the listener</h5>
+                                      <li><h5>Listenerregistration/h5>
                                        <code>...
   var myObject:MyClass = new MyClass();
   myObject.addListener(new MyEventListener());
@@ -434,33 +437,71 @@ class MyEventListener implements MyEventInterface {
                             </ul>
                           </li>
                           <li><a name="TypedArray"></a><h2>Typed Array</h2>
-                            A typical problem using as2 is that an Array might have one or more types within an Array, in most cases, this is very problematic, especially when you want to publish your classes (within a team or generally), because other people can easily create chaos when they don't watch. 
-                            <h3>Where to find?</h3>
-                            Of course we need a Class you will find it at org.as2lib.basic.TypedArray. This class will use the as2 Array class and uses all Methods like Array as a Bridge. It should not be possible to directly set/get a Value like <code>#
-myArray = new Array();
-myArray["name"] = "bunny";</code> because the Compiler would not check it. We cant prevent this (the compiler completly blows it). But at least we can bind ( by not using a dynamic class, like Array is) that <code>
-myArray.name = "bunny"</code> will not work.
-                            <h3>Typedefinition</h3>
-                            The type of an Array should be defined within the constructor. Infact the Type should be the hole lifetime the same.<code>new TypedArray(org.as2lib.basic.Exception)</code>
-                            <h3>Typeinsurance</h3>
-                            We have a "not-dynamic" Class. So there must be methods for adding a value within this array with a name.
+                            A typical problem using as2 is that an array may have more types than one, this should never happen, especially when you want to publish your classes (within a team or generally), because other people can easily create chaos if they don't watch out.
                             <ul>
-                              <li>validation: <code>public function checkType(value) {
-  if(value instanceof this.type) {
-    return(this.type);
-  } else {
-    throw new org.as2lib.basic.exceptions.WrongTypeException("The given Value doesn't match to the Array's type");
-  }
-}</code></li>
-                              <li>setting: <code>public function setValue(name:String, to) {
-  this.internalArray[name] = checkType(to);
-}</code></li>
-                              <li>getting: <code>public function getValue(name:String) {
-  return(this.internalArray[name])
-}</code></li>
+                              <li><a name="TypedArrayReason"></a><h3>Reason</h3>
+                                We don't think flash will ever support this because Ecma Script has no support for this, it's needed almost everytime, so we decided to work on that.
+                              </li>
+                              <li><a name="TypedArraySolution"></a><h3>Solution</h3>
+                                The solution is preety simple: We take an array to an "not dynamic"-class and change all add-functionalities to type-matching functionalities.
+                              </li>
+                              <li><a name="TypedArrayAPI"></a><h3>API</h3>
+                                There will be one basic class that can be used as is or be extended:<pre>org.as2lib.basic.TypedArray</pre>
+                                You have to add an constructor type to that class: <code>new org.as2lib.basic.TypedArray(String)</code>
+                                Methods from TypedArray (differing to the Array Methods):
+                                <ul>
+                                  <li><a name="TypedArrayAPIpush"></a><h4>.push()</h4>
+                                    Push will throw an exception if you want to add a value with the wrong type.
+                                  </li>
+                                  <li><a name="TypedArrayAPIunshift"></a><h4>.concat()</h4>
+                                    Concat will throw an exception if you try to use values with the wrong type.
+                                  </li>
+                                  <li><a name="TypedArrayAPIunshift"></a><h4>.unshift()</h4>
+                                    Push will throw an exception if you want to unshift values with the wrong type.
+                                  </li>
+                                  <li><a name="TypedArrayAPIslice"></a><h4>.slice()</h4>
+                                    Slice will return an TypedArray instead of a normal Array.
+                                  </li>
+                                  <li><a name="TypedArrayAPIsplice"></a><h4>.splice()</h4>
+                                    Splice will return an TypedArray instead of a normal Array.
+                                  </li>
+                                  <li><a name="TypedArrayAPIsetField"></a><h4>.setField([String], Value);</h4>
+                                    Will add the content to the array(and throw an exception if the type doesn't match).
+                                  </li>
+                                  <li><a name="TypedArrayAPIgetField"></a><h4>.getField([String]);</h4>
+                                    Will return the content from the field by the name.
+                                  </li>
+                                  <li><a name="TypedArrayAPIgetType"></a><h4>.getType()[Object];</h4>
+                                    Will return the type that has been set.
+                                  </li>
+                                </ul>
+                              </li>
+                              <li><a name="TypedArrayExceptions"></a><h3>Exceptions</h3>
+                                Exceptions will be thrown if ...
+                                <ul>
+                                  <li>you forget setting an type within the constructor.</li>
+                                  <li>you try to add something to the array that doesn't match with the array's typedefinition.</li>
+                                </ul>
+                              </li>
+                              <li><a name="TypedArrayProblems"></a><h3>Problems</h3>
+                                <ol>
+                                  <li><a name="TypedArrayProblemsTypeInsurance"></a><h3>TypeInsurance</h3>
+                                    instanceof has a "bug" or its a flash specifica that i not really understand, this:<pre>[ClassA extends ClassB]
+                                    (new ClassA instanceof ClassB)</pre>
+                                    is true!<br>
+                                    That means we have to use an second check that this object really doesn't extend any class (even no superclass).
+                                  </li>
+                                  <li><a name="TypedArrayProblemsFlash"></a><h3>Flash Basic Functionality</h3>
+                                    In Flash its possible to access every method and content with [].
+                                    <code>
+                                      a = new NotDynamicClass();
+                                      a["monkey"] = "true";
+                                    </code>
+                                    To prevent this we will not extend the Array, this class will be an bridge to the array.
+                                  </li>
+                                </ol>
+                              </li>
                             </ul>
-                            <h3>Bridge Functionality</h3>
-                            Even the validation and the setting/getting of values are almost simple bridge functionalities. Different Methods like "sort, push, pop, ...." can surly be simple ported.
                           </li>
                           <li><a name="Cloning"></a><h2>Cloning</h2>
                             Cloning like in Java would run with a simple Interface that defines "this class is cloneable"(this will also exist in our case). Of course this interface should be shurly used by us too but also it as2 allows us a generic clone.
