@@ -1,11 +1,12 @@
 ﻿import org.as2lib.data.math.vector.LimitedVector;
 
-class org.as2lib.data.math.vector.Vector2D extends LimitedVector {
+class org.as2lib.data.math.vector.Vector3D extends LimitedVector {
 	
-	public function Vector2D(x:Number, y:Number) {
-		super(2);
+	public function Vector3D(x:Number, y:Number, z:Number) {
+		super(3);
 		if(x) setX(x);
 		if(y) setY(y);
+		if(z) setZ(z);
 
 	}
 	
@@ -17,6 +18,10 @@ class org.as2lib.data.math.vector.Vector2D extends LimitedVector {
 		setValue(1,y);
 	}
 	
+	public function setZ(z:Number):Void {
+		setValue(2,z);
+	}
+	
 	public function getX(Void):Number {
 		return getValue(0);
 	}
@@ -25,11 +30,16 @@ class org.as2lib.data.math.vector.Vector2D extends LimitedVector {
 		return getValue(1);
 	}
 	
+	public function getZ(Void):Number {
+		return getValue(2);
+	}
+	
 	public function toString(Void):String {
 		var result:String ="";
 		
 		result += "x = "+getX()+"\n";
 		result += "y = "+getY()+"\n";
+		result += "z = "+getZ()+"\n";
 		
 		return result;
 	}
