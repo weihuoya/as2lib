@@ -21,6 +21,8 @@ import org.as2lib.data.holder.HolderConfig;
 import org.as2lib.data.holder.ProtectedIterator;
 import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.data.holder.EmptyDataHolderException;
+import org.as2lib.util.Stringifier;
+import org.as2lib.data.holder.stack.StackStringifier;
 
 /**
  * A simple implementation of the Stack interface.
@@ -29,8 +31,30 @@ import org.as2lib.data.holder.EmptyDataHolderException;
  */
 class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Stack {
 	
+	/** Used to stringify stacks. */
+	private static var stringifier:Stringifier;
+	
 	/** Contains the inserted values. */
 	private var values:Array;
+	
+	/**
+	 * Returns the stringifier that stringifies stacks.
+	 *
+	 * @return the stringifier that stringifies stacks
+	 */
+	public static function getStringifier(Void):Stringifier {
+		if (!stringifier) stringifier = new StackStringifier();
+		return stringifier;
+	}
+	
+	/**
+	 * Sets the new stringifier that stringifies stacks.
+	 *
+	 * @param stackStringifier the new stack stringifier
+	 */
+	public static function setStringifier(stackStringifier:Stringifier):Void {
+		stringifier = stackStringifier;
+	}
 	
 	/**
 	 * Constructs a new SimpleStack.
@@ -102,7 +126,7 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
 	public function toString(Void):String {
-		return HolderConfig.getStackStringifier().execute(this);
+		return getStringifier().execute(this);
 	}
 	
 }

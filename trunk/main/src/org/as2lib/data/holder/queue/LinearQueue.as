@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
+import org.as2lib.data.holder.Queue;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.array.ArrayIterator;
-import org.as2lib.data.holder.Queue;
-import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.EmptyDataHolderException;
-import org.as2lib.data.holder.HolderConfig;
+import org.as2lib.util.Stringifier;
+import org.as2lib.data.holder.queue.QueueStringifier;
 
 /**
  * LinearQueue is an implementaion of the Queue interface. The LinearQueue stores
@@ -29,8 +30,30 @@ import org.as2lib.data.holder.HolderConfig;
  */
 class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Queue {
 	
+	/** Used to stringify queues. */
+	private static var stringifier:Stringifier;
+	
 	/** Contains the inserted elements. */
 	private var data:Array;
+	
+	/**
+	 * Returns the stringifier that stringifies queues.
+	 *
+	 * @return the stringifier that stringifies queues
+	 */
+	public static function getStringifier(Void):Stringifier {
+		if (!stringifier) stringifier = new QueueStringifier();
+		return stringifier;
+	}
+	
+	/**
+	 * Sets the new stringifier that stringifies queues.
+	 *
+	 * @param queueStringifier the new queue stringifier
+	 */
+	public static function setStringifier(queueStringifier:Stringifier):Void {
+		stringifier = queueStringifier;
+	}
 	
 	/**
 	 * Constructs a new LinearQueue.
@@ -98,7 +121,7 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
 	public function toString(Void):String {
-		return HolderConfig.getQueueStringifier().execute(this);
+		return getStringifier().execute(this);
 	}
 	
 }
