@@ -20,11 +20,22 @@ Although a testing API already exists for {\sl Actionscript 2}, as2unit\footnote
 Two actions shouldn't be necessary (including the Flash component, setting the parameters) to perform test cases, as it is presently the case with {\sl as2unit}. It should be possible for the developer to execute a test case through only one method call. A direct call of a class as well as a call of a whole package is possible. 
 \clearpage
 \begin{lstlisting}[frame=single]
-import org.as2lib.test.unit.Test;
-// Add your Tests here.
-test.org.as2lib.core.TReflections;
-Test.run("test.org");
+// Use your TestCase here:
+new test.org.as2lib.core.TReflections().run();
 \end{lstlisting}
+
+If you have more than one TestCase you can use a simplified way:
+\begin[2ndlisting}[frame=single]
+import org.as2lib.test.unit.TestSuiteFactory;
+import test.org.as2lib.core.* // Import Statement, to reduce the Lines.
+
+// Statements to 
+TestReflections;
+TestBasicClass;
+TestEventHandling;
+
+new TestSuiteFactory().collectAllTestCases().run();
+\end
 
 The cases to test must be invoked before the call to the test so that they are available during run time.
 Similar to test case APIs like: JUnit\footnote{\href{http://www.junit.org}{www.junit.org}}, a variety of methods are available to the developer (optional parameters are marked with []):
@@ -32,8 +43,10 @@ Similar to test case APIs like: JUnit\footnote{\href{http://www.junit.org}{www.j
 \begin{itemize}
 	\item \textbf{assertTrue}([\textit{message:String}], \textit{testVar1:Boolean}) - An error message will be reported if testVar1 is false.
 	\item \textbf{assertFalse}([\textit{message:String}],\textit{ testVar1:Boolean}) - An error message will be reported if testVar1 is true.
-	\item \textbf{assertEquals}([\textit{message:String}], \textit{testVar1}, \textit{testVar2}) - An error message will be reported if the passed parameters are not equal.
-	\item \textbf{assertNotEquals}([\textit{message:String}], \textit{testVar1}, \textit{testVar2}) - An error message will be reported if the passed parameters are equal.
+	\item \textbf{assertEquals}([\textit{message:String}], \textit{testVar1}, \textit{testVar2}) - An error message will be reported if the passed parameters are not equal (!=).
+	\item \textbf{assertNotEquals}([\textit{message:String}], \textit{testVar1}, \textit{testVar2}) - An error message will be reported if the passed parameters are equal (==).
+	\item \textbf{assertSame}([\textit{message:String}], \textit{testVar1}, \textit{testVar2}) - An error message will be reported if the passed parameters are not the same object (!==).
+	\item \textbf{assertNotSame}([\textit{message:String}], \textit{testVar1}, \textit{testVar2}) - An error message will be reported if the passed parameters are the same object (===).
 	\item \textbf{assertNull}([\textit{message:String}], \textit{testVar1}) - An error message will be reported if testVar1 is not null.
 	\item \textbf{assertNotNull}([\textit{message:String}], \textit{testVar1}) - Error message if testVar1 is null.
 	\item \textbf{assertUndefined}([\textit{message:String}], \textit{testVar1}) - Error message if testVar1 is not undefined.
@@ -47,31 +60,37 @@ Similar to test case APIs like: JUnit\footnote{\href{http://www.junit.org}{www.j
 	\item \textbf{assertNotThrows}(\textit{exception:Function, atObject, theFunction:String, parameter:Array}) - If an exception is thrown during the execution of the passed function(theFunction) of the object(atObjekt) with the parameter values(parameter) an error message will be reported.
 \end{itemize}
 
-A test case must extend the class Test\footnote{org.as2lib.test.unit.Test}. All methods of the test case that start with ``test'' are executed by the testing API. Look at the following coding example to better understand the TestCase API:
+A test case must extend the class TestCase\footnote{org.as2lib.test.unit.TestCase}. All methods of the test case that start with ``test'' are executed by the testing API. Look at the following coding example to better understand the TestCase API:
 \begin{lstlisting}[frame=single]
-import org.as2lib.test.unit.Test;
+import org.as2lib.test.unit.TestCase;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.ClassInfo;
 
-class test.org.as2lib.core.TReflections extends Test {
+class test.org.as2lib.core.TReflections extends TestCase {
 	private var clazz:BasicClass;
 	
-	public function TReflections(Void) {
-			clazz = new BasicClass();
+	public function TReflections(Void) {}
+	
+	public function setUp(Void):Void {
+		clazz = new BasicClass();
 	}
 	
 	public function testGetClass(Void):Void {
-		trace (":: testGetClass");
 		var info:ClassInfo = clazz.getClass();
+		
 		assertEquals(
-		"The name of the basic class changed",
-		info.getName(),
-		"BasicClass");
+			"The name of the basic class changed",
+			info.getName(),
+			"BasicClass");
+		
 		assertEquals(
-		"Problems evaluating the full name",
-		info.getFullName(),
-		"org.as2lib.core.BasicClass");
-		trace ("------------------");
+			"Problems evaluating the full name",
+			info.getFullName(),
+			"org.as2lib.core.BasicClass");
+	}
+	
+	public function tearDown(Void):Void {
+		delete clazz;
 	}
 }
 \end{lstlisting}
