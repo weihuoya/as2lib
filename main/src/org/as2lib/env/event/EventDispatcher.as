@@ -1,10 +1,14 @@
-﻿import org.as2lib.env.event.EventInfo;
-import org.as2lib.core.BasicInterface;
+﻿import org.as2lib.core.BasicInterface;
+import org.as2lib.core.Dispatcher;
+import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.event.ListenerArray;
 
 /**
  * EventDispatchers are used to dispatch to EventListeners.
- *
+ * Implement the EventDispatcher for different ways to dispatch events.
+ * It is possible to add an EventDispatcher instance to a DelegatingEventBroadcaster.
+ * 
+ * @see org.as2lib.env.event.DelegatingEventBroadcaster#setEventDispatcher
  * @author Simon Wacker
  * @author Martin Heidegger
  */
