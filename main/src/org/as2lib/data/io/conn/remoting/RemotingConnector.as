@@ -8,7 +8,7 @@ class org.as2lib.data.io.conn.remoting.RemotingConnector implements Connector {
 	private var gatewayUrl:String;
 	private var eventBroadcaster:EventBroadcaster;
 	
-	public function NetConnector(Void) {
+	public function RemotingConnector(Void) {
 		eventBroadcaster = new EventBroadcaster();
 	}
 	
@@ -24,13 +24,19 @@ class org.as2lib.data.io.conn.remoting.RemotingConnector implements Connector {
 	}
 	
 	public function addListener(l:ConnectorListener):Void {
+		trace("addListener");
 		eventBroadcaster.addListener(l);
 	}
 	
 	public function removeListener(l:ConnectorListener):Void {
+		trace("removeListener");
 		eventBroadcaster.removeListener(l);
 	}
 	
+	public function getEventBroadcaster(Void):EventBroadcaster {
+		trace("getEventBroadcaster");
+		return eventBroadcaster;
+	}
 	// for testing
 	public function dispatch(event:EventInfo):Void{
 		trace("dispatch");
