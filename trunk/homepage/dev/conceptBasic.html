@@ -68,7 +68,7 @@
                             <td><a href="#ReflectionHandling" title="Handling of Reflections within Classes">Reflection handling</a></td>
                           </tr>
                           <tr>
-                            <td>Event Handling (to come)</td>
+                            <td><a href="#EventHandling" title="Handling Events from classes">Event Handling</a></td>
                           </tr>
                           <tr>
                             <td>Typed Array (to come)</td>
@@ -207,7 +207,47 @@ ReflectionObject.getVars():Array</code>
                               </li>
                             </ul>
                           </li>
-                          <li><a name="#EventHandling"></a><h2>Event Handling (to come)</h2>
+                          <li><a name="#EventHandling"></a><h2>Event Handling</h2>
+                            Eventhandling within as2 should be a two sided sword. On the one hand it is necessary to have an easy handling for an event itself. On the other hand is generic eventhandling a problem because you can't guarantee that all event's fired reach the final client.<br>
+                            <h3>Generic Eventhandling</h3>
+                            For generic eventhandling there will be a (abstract) class <code>org.as2lib.basic.EventableElement extends BasicObject</code> to handle general events. This class will not have ANY public method. But this class should be based on the EventDispatcher by Macromedia.<br>
+                            <br>
+                            This class will provide the functionality to register and fire generic events by <code>.addEventListener(object, "event");
+.removeEventHandler(object, "event");</code>
+                            <h3>Eventrule for Using</h3>
+                            For cute Handling of this code the Workflow will have to look like this:
+                            <ol>
+                              <li>The Classwriter should define an Interface where all Event's are defined (how should elseway be sure that you implement Events?)
+                                <code>class MyEventInterface {
+  function onClick(e:MyEventObject):Void;
+  function onRelease(e:MyReleaseEventObject):Void;
+}</code>
+                              </li>
+                              <li>The Classwriter will have to define methods to add an Object using this Events.
+                                <code>class MyClass {
+  public function addMyEventListener(obj:MyEventInterface) {
+    this.addEventListener(obj, "onClick");
+    this.addEventListener(obj, "onRelease");
+  }
+}</code>
+                              </li>
+                              <li>The User from the Code will have to take a look at the Interface.
+                                <code>class MyEventListener implements MyEventInterface, AnotherEventInterface {
+  public function onClick(e:MyEventObject):Void {
+    // does something
+  }
+  public function onRelease(e:MyEventObject):Void {
+    // does something different
+  }
+  // and other events
+}</code></li>
+                              <li>Then the user add's his Eventhandler to the Object
+                                <code>new MyClass.addMyEventListener(new MyEventListener());</code>
+                              </li>
+                            </ol>
+                            <h3>Why so complicated?</h3>
+                            This is actually the best way to ensure that a function is really available and it finally reduces the operation speed of eventhandling by a better Code Handling.
+                            Of Course this way isn't perfect. It will maybe get changed within an future worksheet by an better idea, but actually i see no different possibility.
                           </li>
                           <li><a name="#TypedArray"></a><h2>Typed Array (to come)</h2>
                           </li>
