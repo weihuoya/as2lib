@@ -58,7 +58,7 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 	public function collectTestCases(package, recursive:Boolean):TestSuite {
 		var result:TestSuite = new TestSuite("<Generated TestSuite>");
 		ObjectUtil.setAccessPermission(package, null, ObjectUtil.ACCESS_ALL_ALLOWED);
-		collectAgent(rootObject, result, recursive);
+		collectAgent(package, result, recursive);
 		return result;
 	}
 
@@ -77,7 +77,7 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 				suite.addTest(TestCase(ClassUtil.createCleanInstance(child)));
 			}
 			if(typeof child == "object" && recursive) {
-				collectAgent(child, result, recursive);
+				collectAgent(child, suite, recursive);
 			}
 		}
 	}
