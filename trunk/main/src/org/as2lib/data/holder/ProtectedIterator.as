@@ -16,14 +16,18 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Iterator;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.except.UnsupportedOperationException;
 
 /**
- * The ProtectedIterator is used to iterate over any data holder without being
+ * ProtectedIterator is used to iterate over any data holder without being
  * able to remove elements.
  *
- * @author Michael Herrmann
+ * <p>This class acts as a wrapper for any class that implements the
+ * {@link Iterator} interface and wants to be protected.
+ *
  * @author Simon Wacker
+ * @author Michael Herrmann
  */
 class org.as2lib.data.holder.ProtectedIterator extends BasicClass implements Iterator {
 	
@@ -31,30 +35,55 @@ class org.as2lib.data.holder.ProtectedIterator extends BasicClass implements Ite
 	private var iterator:Iterator;
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new ProtectedIterator instance.
 	 * 
+	 * <p>This iterator forwards all functionality to the wrapped passed-in
+	 * iterator, except the removal of the current element.
+	 *
 	 * @param iterator the iterator to protect
+	 * @throws IllegalArgumentException if the passed-in iterator is null or undefined
 	 */
 	public function ProtectedIterator(iterator:Iterator) {
+		if (!iterator) throw new IllegalArgumentException("The passed-in iterator to protect '" + iterator + "' is not allowed to be null or undefined.", this, arguments);
 		this.iterator = iterator;
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Iterator#hasNext(Void):Boolean
+	 * Returns whether there are more elements to iterate over.
+	 *
+	 * <p>For any special functionality that may be performed refer to the
+	 * wrapped iterator that has been passed-in on construction. This method
+	 * simply delegates to the wrapped iterator.
+	 *
+	 * @return true if there is a next element else false
 	 */
 	public function hasNext(Void):Boolean {
 		return iterator.hasNext();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Iterator#next(Void)
+	 * Returns the next element.
+	 *
+	 * <p>For any special functionality that may be performed refer to the
+	 * wrapped iterator that has been passed-in on construction. This method
+	 * simply delegates to the wrapped iterator.
+	 *
+	 * @return the next element
+	 * @throws org.as2lib.data.holder.NoSuchElementException if there is
+	 * no next element
 	 */
 	public function next(Void) {
 		return iterator.next();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holders.Iterator#remove()
+	 * This method always throws an UnsupportedOperationException because
+	 * this method is not supported by this iterator.
+	 *
+	 * <p>This method even has the duty to not let the removal of elements
+	 * happen.
+	 *
+	 * @throws UnsupportedOperationException
 	 */
 	public function remove(Void):Void {
 		throw new UnsupportedOperationException("This Iterator does not support the remove() method.", this, arguments);
