@@ -13,8 +13,10 @@
 // 
 
 import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
+/*
 import org.as2lib.env.log.logger.TraceLogger;
 import org.as2lib.env.log.logger.VoidLogger;
+*/
 import org.as2lib.env.log.logger.RootLogger;
 import org.as2lib.env.log.handler.TraceHandler;
 import org.as2lib.env.log.level.AbstractLogLevel;
@@ -46,7 +48,7 @@ import org.as2lib.test.unit.TestSuiteFactory;
   LogManager.setLoggerRepository(loggerHierarchy); 
   
   var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("org.as2lib");
-  logger.addHandler(new TraceHandler());
+  //logger.addHandler(new TraceHandler());
   
   // Log to trace console in org.as2lib package
   loggerHierarchy.addLogger(logger);
