@@ -72,10 +72,10 @@
                             <td><a href="#TypedArray" title="To make sure all contents are from the same type">Typed Array</a></td>
                           </tr>
                           <tr>
-                            <td><a href="#TestCases" title="System testing with TestCases">Test Cases</td>
+                            <td><a href="#TestCases" title="System testing with TestCases">Test Cases</a></td>
                           </tr>
                           <tr>
-                            <td><a href="#BasicClass" title="Basic class to extend">Basic Class</td>
+                            <td><a href="#BasicClass" title="Basic class to extend">Basic Class</a></td>
                           </tr>
                           <tr>
                             <td><a href="#ReflectionHandling" title="Handling of Reflections within Classes">Reflection handling</a></td>
@@ -103,7 +103,7 @@
                               </li>
                               <li><a name="OutputAPI"></a><h3>API</h3>
                                 All functions will be accessible through the org.as2lib.basic.Out class with the following static functions:
-                                <codeorg.as2lib.basic.Out</code>
+                                <code>org.as2lib.basic.Out</code>
                                 <ul>
                                   <li><a name="OutputHandlerAPIWrite"></a><h4>.write([String]):Void</h4>
                                     Simple string output to the standard device (comparable with <a href="http://livedocs.macromedia.com/flash/mx2004/main/03_wri29.htm" target="_blank" title="Macromedia Documentation for accessing the Output Panel">trace</a>).
@@ -251,7 +251,7 @@ and each combination:
                               <li><a name="EventHandlingAPI"></a><h3>API</h3>
                                 We act at different fronts:
                                 <ul>
-                                  <li><a name="EventHandlingAPIAbstractClass"></a><h4>Basic Class</h3>
+                                  <li><a name="EventHandlingAPIAbstractClass"></a><h4>Basic Class</h4>
                                     The basic class ist the main class for eventhandling. It will be provided within:
                                     <pre>org.as2lib.basic.EventHandler</pre>
                                     This class should be extended if you want to access all functionalities:
@@ -290,10 +290,10 @@ class MyClass extends SomethingDifferent {
                                     Each Event will have to extend this class!<br>
                                     The only field from <pre>org.as2lib.basic.Event</pre> is [static] "eventName" that has to be set (which event is fired), different vars may be set too, but they will be specific for this event.
                                   </li>
-                                  <li><a name="EventHandlingAPIInterface"></a><h4>Basic Interface</h3>
+                                  <li><a name="EventHandlingAPIInterface"></a><h4>Basic Interface</h4>
                                     The only use from this Interface, found in <pre>org.as2lib.basic.EventListenerInterface</pre> is to make sure an Listener is used an not any object.
                                   </li>
-                                  <li><a name="EventHandlingAPIGeneric"></a><h4>Generic EventHandling</h3>
+                                  <li><a name="EventHandlingAPIGeneric"></a><h4>Generic EventHandling</h4>
                                     We won't support generic eventhandling, the ASBroadcaster does this ugly job faster.
                                   </li>
                                 </ul>
@@ -573,7 +573,7 @@ a["monkey"] = "true";
                                 As example for using Overloading:
                                 <ul>
                                   <li><h4>Within the basic class:</h4>
-                                  <code>public function doSomething() {
+                                    <code>public function doSomething() {
   overload (
     arguments,
     createOverloadHandler([String, Number], "doSomethingWay1"),
@@ -581,7 +581,7 @@ a["monkey"] = "true";
   );
 }</code></li>
                                   <li><h4>Using the util class:</h4>
-                                  <code>import org.as2lib.basic.BasicUtil;
+                                    <code>import org.as2lib.basic.BasicUtil;
  ...
  public function doSomething() {
    BasicUtil.overload (
@@ -591,6 +591,7 @@ a["monkey"] = "true";
      BasicUtil.createOverloadHandler([String], "doSomethingWay2")
    );
  }</code></li>
+                                </ul>
                               </li>
                               <li><a name="OverloadingFuture"></a><h3>Possible future addition</h3>
                                 It could be very possible to use wildcards within the Overloadhandler.
@@ -627,4 +628,12 @@ a["monkey"] = "true";
               <tr>
                 <td><img src="../images/borderBottomLeft.gif" alt="" class="imageBorderBottomLeft"></td>
                 <td><img src="../images/borderBottomCenter.gif" alt="" class="imageBorderBottomCenter"></td>
-                <td><img src="../images/borderBottomRight.gif" alt=""
+                <td><img src="../images/borderBottomRight.gif" alt="" class="imageBorderBottomRight"></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </center>
+  </body>
+</html>
