@@ -20,26 +20,35 @@ import org.as2lib.data.holder.Stack;
 import org.as2lib.data.holder.Iterator;
 
 /**
- * StackStringifier is the default Stringifier used to stringify Stacks.
+ * StackStringifier stringifies instances of type {@link Stack}.
  *
  * @author Simon Wacker
- * @see org.as2lib.data.holder.Stack
+ * @see Stack
  */
 class org.as2lib.data.holder.stack.StackStringifier extends BasicClass implements Stringifier {
+	
 	/**
-	 * @see org.as2lib.util.string.Stringifier
+	 * Returns the string representation of the passed-in {@link Stack} instance.
+	 *
+	 * <p>The string representation is constructed as follows:
+	 * <pre>
+	 *   [lastlyAddedValue, penultimatelyAddedValue, ...]
+	 * </pre>
+	 *
+	 * @return the string representation of the passed-in stack
 	 */
 	public function execute(target):String {
-		var stack:Stack = Stack(target);
+		var stack:Stack = target;
 		var result:String = "[";
-		var iterator:Iterator = stack.iterator();
-		while (iterator.hasNext()) {
-			result += iterator.next().toString();
-			if (iterator.hasNext()) {
+		var array:Array = stack.toArray();
+		for (var i:Number = 0; i < array.length; i++) {
+			result += array[i].toString();
+			if (i < array.length-1) {
 				result += ", ";
 			}
 		}
 		result += "]";
 		return result;
 	}
+	
 }
