@@ -381,7 +381,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	public function testSetPropertyValueForKeyNumberWithoutPrefix(Void):Void {
 		var mC:MockControl = new SimpleMockControl(Object);
 		var wo:Object = mC.getMock();
-		wo.setValue("3", "value");
+		wo.setValue(3, "value");
 		mC.setVoidCallable(3);
 		mC.replay();
 		

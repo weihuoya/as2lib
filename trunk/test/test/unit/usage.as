@@ -49,9 +49,8 @@ test.unit.org.as2lib.io.file.TFile;
 test.unit.org.as2lib.io.file.TBitAndByteFormat;
 
 // Environment tests
-test.unit.org.as2lib.env.reflect.TReflect;
 test.unit.org.as2lib.env.out.TOutImplementation;
-test.unit.org.as2lib.env.log.repository.TLoggerHierarchy;
+//test.unit.org.as2lib.env.log.repository.TLoggerHierarchy; // causes the player to break up
 test.unit.org.as2lib.env.log.logger.TSimpleLogger;
 test.unit.org.as2lib.env.reflect.TResolveProxyFactory;
 
@@ -77,7 +76,11 @@ test.unit.org.as2lib.util.TArrayUtil;
 test.unit.org.as2lib.util.TMathUtil;
 
 // org.as2lib.env.reflect.algorithm
-
+test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm;
+test.unit.org.as2lib.env.reflect.algorithm.TPackageAlgorithm;
+test.unit.org.as2lib.env.reflect.algorithm.TChildrenAlgorithm;
+test.unit.org.as2lib.env.reflect.algorithm.TMethodAlgorithm;
+test.unit.org.as2lib.env.reflect.algorithm.TPropertyAlgorithm;
 
 // org.as2lib.env.bean
 test.unit.org.as2lib.env.bean.TMutablePropertyValueSet;

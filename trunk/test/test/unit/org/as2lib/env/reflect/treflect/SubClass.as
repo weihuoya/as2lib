@@ -11,6 +11,12 @@ class test.unit.org.as2lib.env.reflect.treflect.SubClass extends SuperClass {
 	private function privateMethod(Void):Void {
 	}
 	
+	public static function set staticSetAndGetProperty(p:String):Void {
+	}
+	public static function get staticSetAndGetProperty():String {
+		return "";
+	}
+	
 	public function set setOnlyProperty(p:String):Void {
 	}
 	public function get getOnlyProperty():String {
