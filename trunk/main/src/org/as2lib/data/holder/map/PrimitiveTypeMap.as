@@ -143,8 +143,21 @@ class org.as2lib.data.holder.map.PrimitiveTypeMap extends BasicClass implements 
 			indexMap[key] = undefined;
 			keys.splice(i, 1);
 			values.splice(i, 1);
+			removeIndex(i);
 		}
 		return result;
+	}
+	
+	/**
+	 * Internal method to resort the other indexes.
+	 */
+	private function removeIndex(index:Number) {
+		var i:Number = indexMap.length;
+		for(var i:String in indexMap) {
+			if(indexMap[i] > index) {
+				indexMap[i]--;
+			}
+		}
 	}
 	
 	/**
