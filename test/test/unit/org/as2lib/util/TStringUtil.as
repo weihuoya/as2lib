@@ -13,13 +13,13 @@ class test.org.as2lib.util.TStringUtil extends Test {
 		assertEqualsWithMessage("Replace from more chars", StringUtil.replace("hollallallajdkalalasjfella", "lla", "*"), "ho***jdkalalasjfe*");
 	}
 	
-	private function testTrim():Void {
+	private function testTrim(Void):Void {
 		assertEqualsWithMessage("Content: Empty", StringUtil.trim(""), "");
 		assertEqualsWithMessage("Content: hallo", StringUtil.trim("hallo"), "hallo");
 		assertEqualsWithMessage("Content:  h a ll o ", StringUtil.trim(" h a llo "), "h a llo");
 		assertEqualsWithMessage("Content: \\n\\thallo", StringUtil.trim("\n\thallo\n\t"), "hallo");
 	}
-	private function testRightTrim ():Void {
+	private function testRightTrim (Void):Void {
 		assertUndefinedWithMessage("Content: Undefined", StringUtil.rightTrim(undefined));
 		assertEqualsWithMessage("Content: Empty", StringUtil.rightTrim(""), "");
 		assertEqualsWithMessage("Content: hallo", StringUtil.rightTrim("hallo"), "hallo");
@@ -27,7 +27,7 @@ class test.org.as2lib.util.TStringUtil extends Test {
 		assertEqualsWithMessage("Content: \\n\\thallo\\n\\t", StringUtil.rightTrim("\n\thallo\n\t"), "\n\thallo");
 	}
 	
-	private function testLeftTrim ():Void {
+	private function testLeftTrim (Void):Void {
 		assertUndefinedWithMessage("Content: Undefined", StringUtil.leftTrim(undefined));
 		assertEqualsWithMessage("Content: Empty", StringUtil.leftTrim(""), "");
 		assertEqualsWithMessage("Content: hallo", StringUtil.leftTrim("hallo"), "hallo");
@@ -35,7 +35,7 @@ class test.org.as2lib.util.TStringUtil extends Test {
 		assertEqualsWithMessage("Content: \\n\\thallo", StringUtil.leftTrim("\n\thallo"), "hallo");
 	}
 	
-	private function testCheckEmail ():Void {
+	private function testCheckEmail (Void):Void {
 		assertFalseWithMessage("Content: Undefined", StringUtil.checkEmail(undefined));
 		assertFalseWithMessage("Content: null", StringUtil.checkEmail(undefined));
 		assertFalseWithMessage("Content: hallo", StringUtil.checkEmail("hallo"));
@@ -54,8 +54,7 @@ class test.org.as2lib.util.TStringUtil extends Test {
 		assertTrueWithMessage("Content: h.gah@hase.com", StringUtil.checkEmail("h.gah@hase.com"));
 	}
 	
-	private function testCheckLength ():Void {
-		
+	private function testCheckLength (Void):Void {
 		assertFalseWithMessage("Content: undefined/undefined", StringUtil.checkLength(undefined,undefined));
 		assertFalseWithMessage("Content: ''/undefined", StringUtil.checkLength('',undefined));
 		assertFalseWithMessage("Content: ''/0", StringUtil.checkLength('',0));
@@ -63,5 +62,8 @@ class test.org.as2lib.util.TStringUtil extends Test {
 		assertTrueWithMessage("Content: 'hase'/3", StringUtil.checkLength('hase',3));
 		assertTrueWithMessage("Content: 'hase'/4", StringUtil.checkLength('hase',4));
 		assertThrows(IllegalArgumentException, StringUtil, "checkLength", ['hase', 0]);
+	}
+	
+	private function testContains (Void):Void {
 	}
 }
