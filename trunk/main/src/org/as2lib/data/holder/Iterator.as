@@ -23,6 +23,7 @@ import org.as2lib.core.BasicInterface;
  * @author Simon Wacker
  */
 interface org.as2lib.data.holder.Iterator extends BasicInterface {
+	
 	/**
 	 * Returns whether there exists another object to iterate over.
 	 *
@@ -34,7 +35,7 @@ interface org.as2lib.data.holder.Iterator extends BasicInterface {
 	 * Returns the next object.
 	 *
 	 * @return the next object
-	 * @throws org.as2lib.data.iterator.NoSuchElementException if there is no next element
+	 * @throws org.as2lib.data.holder.NoSuchElementException if there is no next element
 	 */
 	public function next(Void);
 	
@@ -46,4 +47,5 @@ interface org.as2lib.data.holder.Iterator extends BasicInterface {
 	 * @throws org.as2lib.env.except.UnsupportedOperationException if the operation is not supported by the given Iterator
 	 */
 	public function remove(Void):Void;
+	
 }

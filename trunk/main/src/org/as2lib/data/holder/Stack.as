@@ -18,11 +18,10 @@ import org.as2lib.data.holder.Iterator;
 import org.as2lib.core.BasicInterface;
 
 /**
- * ?
- *
  * @author Simon Wacker
  */
 interface org.as2lib.data.holder.Stack extends BasicInterface {
+	
 	/**
 	 * Pushes the value to the Stack.
 	 *
@@ -50,7 +49,7 @@ interface org.as2lib.data.holder.Stack extends BasicInterface {
 	 * Returns an Iterator used to iterate over the values of the Stack.
 	 *
 	 * @return an Iterator to iterate over the Stack
-	 * @see org.as2lib.data.iterator.Iterator
+	 * @see org.as2lib.data.holder.Iterator
 	 */
 	public function iterator(Void):Iterator;
 	
@@ -60,4 +59,5 @@ interface org.as2lib.data.holder.Stack extends BasicInterface {
 	 * @return true if the Stack is empty else false
 	 */
 	public function isEmpty(Void):Boolean;
+	
 }

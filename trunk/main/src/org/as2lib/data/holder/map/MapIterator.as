@@ -26,6 +26,7 @@ import org.as2lib.core.BasicClass;
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.map.MapIterator extends BasicClass implements Iterator {
+	
 	/** The target data holder to iterate over. */
 	private var target:Map;
 	
@@ -46,14 +47,14 @@ class org.as2lib.data.holder.map.MapIterator extends BasicClass implements Itera
 	}
 	
 	/**
-	 * @see org.as2lib.data.iterator.Iterator#hasNext()
+	 * @see org.as2lib.data.holder.Iterator#hasNext()
 	 */
 	public function hasNext(Void):Boolean {
 		return iterator.hasNext();
 	}
 	
 	/**
-	 * @see org.as2lib.data.iterator.Iterator#next()
+	 * @see org.as2lib.data.holder.Iterator#next()
 	 */
 	public function next(Void) {
 		key = iterator.next();
@@ -61,10 +62,11 @@ class org.as2lib.data.holder.map.MapIterator extends BasicClass implements Itera
 	}
 	
 	/**
-	 * @see org.as2lib.data.iterator.Iterator#remove()
+	 * @see org.as2lib.data.holder.Iterator#remove()
 	 */
 	public function remove(Void):Void {
 		iterator.remove();
 		target.remove(key);
 	}
+	
 }

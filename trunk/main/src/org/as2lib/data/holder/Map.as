@@ -24,6 +24,7 @@ import org.as2lib.core.BasicInterface;
  * @author Simon Wacker
  */
 interface org.as2lib.data.holder.Map extends BasicInterface {
+	
 	/**
 	 * Checks if the key exists.
 	 *
@@ -95,7 +96,7 @@ interface org.as2lib.data.holder.Map extends BasicInterface {
 	 * Returns an Iterator to iterate over the values of the Map.
 	 *
 	 * @return an Iterator to iterate over the Map
-	 * @see org.as2lib.data.iterator.Iterator
+	 * @see org.as2lib.data.holder.Iterator
 	 */
 	public function iterator(Void):Iterator;
 	
@@ -112,4 +113,5 @@ interface org.as2lib.data.holder.Map extends BasicInterface {
 	 * @return true if the Map contains mappings else false
 	 */
 	public function isEmpty(Void):Boolean;
+	
 }
