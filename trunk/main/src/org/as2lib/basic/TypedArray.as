@@ -81,7 +81,7 @@ class org.as2lib.basic.TypedArray {
 	/**
 	 * @see Array
 	 */
-	public function pop( Void ):Object {
+	public function pop(Void):Object {
 		return this.array.pop();
 	}
 	
