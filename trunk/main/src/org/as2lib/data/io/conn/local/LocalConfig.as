@@ -32,8 +32,13 @@ import org.as2lib.data.io.conn.local.LocalServerFactory;
  */
 
 class org.as2lib.data.io.conn.local.LocalConfig extends BasicClass {
+	/** The used ConnectionFactory */
 	private static var connectionFactory:ConnectionFactory;
+	
+	/** The used ServerRegistry */
 	private static var serverRegistry:ServerRegistry;
+	
+	/** The used ServerFactory */
 	private static var serverFactory:ServerFactory;
 	
 	/**
