@@ -20,7 +20,6 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.data.holder.Map;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.reflect.ReflectConfig;
-import org.as2lib.env.reflect.NoSuchChildException;
 import org.as2lib.env.reflect.RootInfo;
 import org.as2lib.env.overload.Overload;
 
@@ -61,7 +60,6 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 * 
 	 * @param object the object the appropriate ClassInfo shall be found.
 	 * @return the appropriate ClassInfo instance containing all class information
-	 * @throws IllegalArgumentException if the passed in object is neither of type function nor object
 	 */
 	public static function getClassInfoByObject(object):ClassInfo {
 		var info:ClassInfo = ReflectConfig.getCache().getClass(object);
@@ -74,20 +72,18 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	
 	/**
 	 * Returns the ClassInfo corresponding to the passed name. The name must
-	 * be composed of the class's path as well as its name.
+	 * be composed of the class's path as well as its name. If no class exists
+	 * with the given path null will be returned.
 	 *
 	 * @param name the full name of the class
 	 * @return a ClassInfo representing the class corresponding to the name
-	 * @throws org.as2lib.env.reflect.NoSuchChildException if the class with the specified name does not exist
 	 */
 	public static function getClassInfoByName(name:String):ClassInfo {
 		var clazz:Function = eval("_global." + name);
 		if (ObjectUtil.isTypeOf(clazz, "function")) {
 			return getClassInfoByObject(clazz);
 		}
-		throw new NoSuchChildException("The class [" + name + "] you tried to obtain does not exist.",
-										eval("th" + "is"),
-										arguments);
+		return null;
 	}
 	
 	/**
@@ -124,20 +120,18 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	
 	/**
 	 * Returns the PackageInfo corresponding to the passed name. The name must
-	 * be composed of the package's path as well as its name.
+	 * be composed of the package's path as well as its name. If no such package
+	 * exists null will be returned.
 	 *
 	 * @param name the full name of the package
 	 * @return a PackageInfo representing the package corresponding to the name
-	 * @throws org.as2lib.env.reflect.NoSuchChildException if the package with the specified name does not exist
 	 */
 	public static function getPackageInfoByName(name:String):PackageInfo {
 		var package:Object = eval("_global." + name);
 		if (ObjectUtil.isTypeOf(package, "object")) {
 			return getPackageInfoByPackage(package);
 		}
-		throw new NoSuchChildException("The package [" + name + "] you tried to obtain does not exist.",
-										eval("th" + "is"),
-										arguments);
+		return null;
 	}
 	
 	/**

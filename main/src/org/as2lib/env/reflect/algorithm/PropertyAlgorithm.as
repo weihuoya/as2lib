@@ -25,6 +25,7 @@ import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass implements ContentAlgorithm {
+	
 	private var r:Array;
 	private var g:Object;
 	private var s:Object;
@@ -35,7 +36,9 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass impl
 	}
 	
 	public function execute(c:CompositeMemberInfo):Array {
+		if (c == null) return null;
 		this.c = ClassInfo(c);
+		if (this.c == null) return null;
 		this.r = new Array();
 		this.g = new Object();
 		this.s = new Object();
@@ -73,4 +76,5 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass impl
 			}
 		}
 	}
+	
 }

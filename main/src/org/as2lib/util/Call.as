@@ -29,6 +29,7 @@ import org.as2lib.util.ObjectUtil;
  * @author Martin Heidegger
  */
 class org.as2lib.util.Call extends BasicClass {
+	
 	/** The object to execute the Function one. */
 	private var object;
 	
@@ -77,15 +78,16 @@ class org.as2lib.util.Call extends BasicClass {
 		if(ObjectUtil.isEmpty(object)) {
 			result += object.toString()+"."+ObjectUtil.getChildName(object, func);
 		} else {
-			try {
-				var classInfo:ClassInfo = ReflectUtil.getClassInfo(object);
+			var classInfo:ClassInfo = ReflectUtil.getClassInfo(object);
+			if (classInfo) {
 				result += classInfo.getFullName();
 				result += "."+classInfo.getMethodByMethod(func).getName();
-			} catch(e:org.as2lib.env.reflect.ReferenceNotFoundException) {
+			} else {
 				result += object.toString()+"."+ObjectUtil.getChildName(object, func);
 			}
 		}
 		result += "() ]";
 		return result;
 	}
+	
 }

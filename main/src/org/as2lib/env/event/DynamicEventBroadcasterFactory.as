@@ -41,11 +41,8 @@ class org.as2lib.env.event.DynamicEventBroadcasterFactory extends BasicClass imp
 	 */
 	public function setEventBroadcasterClass(clazz:Function) {
 		if (!ClassUtil.isImplementationOf(clazz, EventBroadcaster)){
-			try {
-				var className:String = ReflectUtil.getClassInfo(clazz).getName();
-			} catch(e:org.as2lib.env.reflect.ReferenceNotFoundException) {
-				var className:String = "unknown";
-			}
+			var className:String = ReflectUtil.getClassInfo(clazz).getName();
+			if (!className) className = "unknown";
 			throw new IllegalArgumentException("The argument clazz ["+clazz+":"+className+"] is not an Implementation of org.as2lib.env.event.EventBroadcaster.",this,arguments);
 		}
 		this.clazz = clazz;
