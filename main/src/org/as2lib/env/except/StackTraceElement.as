@@ -26,9 +26,26 @@ import org.as2lib.env.reflect.MethodInfo;
  * @author Martin Heidegger
  */
 interface org.as2lib.env.except.StackTraceElement extends BasicInterface {
-	public function getThrower(Void);
+	/**
+	 * Returns a ClassInfo representing the class that has thrown the Throwable.
+	 *
+	 * @return a ClassInfo representing the throwing class
+	 */
+	public function getThrower(Void):ClassInfo;
 	
-	public function getMethod(Void):Function;
+	/**
+	 * Returns the method in form of a MethodInfo that threw the Throwable.
+	 *
+	 * @return the method that threw the Throwable
+	 */
+	public function getMethod(Void):MethodInfo;
 	
+	/**
+	 * Returns the arguments that have been passed to the throwing method.
+	 * NOTE: This method will be removed as soon as it is possible to determine
+	 * the arguments types a method takes.
+	 *
+	 * @return the passed arguments
+	 */
 	public function getArguments(Void):FunctionArguments;
 }

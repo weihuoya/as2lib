@@ -16,6 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.reflect.ClassMemberInfo;
 
@@ -30,10 +31,10 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements ClassMem
 	private var name:String;
 	
 	/** The setter operation of the property. */
-	private var setter:Function;
+	private var setter:MethodInfo;
 	
 	/** The getter operation of the property. */
-	private var getter:Function;
+	private var getter:MethodInfo;
 	
 	/** The class that declares the property. */
 	private var declaringClass:ClassInfo;
@@ -56,10 +57,32 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements ClassMem
 								 declaringClass:ClassInfo,
 								 staticFlag:Boolean) {
 		this.name = name;
-		this.setter = setter;
-		this.getter = getter;
 		this.declaringClass = declaringClass;
 		this.staticFlag = staticFlag;
+		setSetter(setter);
+		setGetter(getter);
+	}
+	
+	/**
+	 * Sets the setter of the property.
+	 *
+	 * @param getter the property's setter
+	 */
+	private function setSetter(concreteSetter:Function):Void {
+		if (concreteSetter != undefined) {
+			setter = new MethodInfo("set " + getName(), concreteSetter, getDeclaringClass(), isStatic());
+		}
+	}
+	
+	/**
+	 * Sets the getter of the property.
+	 *
+	 * @param getter the property's getter
+	 */
+	private function setGetter(concreteGetter:Function):Void {
+		if (concreteGetter != undefined) {
+			setter = new MethodInfo("get " + getName(), concreteGetter, getDeclaringClass(), isStatic());
+		}
 	}
 	
 	/**
@@ -74,7 +97,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements ClassMem
 	 * 
 	 * @return the propertie's setter
 	 */
-	public function getSetter(Void):Function {
+	public function getSetter(Void):MethodInfo {
 		return setter;
 	}
 	
@@ -83,7 +106,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements ClassMem
 	 * 
 	 * @return the propertie's getter
 	 */
-	public function getGetter(Void):Function {
+	public function getGetter(Void):MethodInfo {
 		return getter;
 	}
 	
