@@ -137,6 +137,10 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		bdC.setDefaultReturnValue(false);
 		bd.getBeanClass();
 		bdC.setDefaultReturnValue(StubFactoryBean);
+		bd.getConstructorArgumentValues();
+		bdC.setReturnValue(null);
+		bd.getPropertyValues();
+		bdC.setReturnValue(null);
 		bdC.replay();
 		
 		var bf:DefaultBeanFactory = new DefaultBeanFactory();
@@ -151,6 +155,8 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		var bd:BeanDefinition = bdC.getMock();
 		bd.isSingleton();
 		bdC.setReturnValue(true);
+		bd.getBeanClass();
+		bdC.setReturnValue(null);
 		bdC.replay();
 		
 		var bf:DefaultBeanFactory = new DefaultBeanFactory();
@@ -182,6 +188,10 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		bdControl.setDefaultReturnValue(true);
 		bd.getBeanClass();
 		bdControl.setDefaultReturnValue(Object);
+		bd.getConstructorArgumentValues();
+		bdControl.setReturnValue(null);
+		bd.getPropertyValues();
+		bdControl.setReturnValue(null);
 		bdControl.replay();
 		
 		var bf:DefaultBeanFactory = new DefaultBeanFactory();
@@ -200,6 +210,10 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		bdC.setDefaultReturnValue(true);
 		bd.getBeanClass();
 		bdC.setDefaultReturnValue(StubFactoryBean);
+		bd.getConstructorArgumentValues();
+		bdC.setReturnValue(null);
+		bd.getPropertyValues();
+		bdC.setReturnValue(null);
 		bdC.replay();
 		
 		var bf:DefaultBeanFactory = new DefaultBeanFactory();
@@ -222,6 +236,10 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		bdC.setDefaultReturnValue(true);
 		bd.getBeanClass();
 		bdC.setDefaultReturnValue(StubFactoryBean);
+		bd.getConstructorArgumentValues();
+		bdC.setReturnValue(null);
+		bd.getPropertyValues();
+		bdC.setReturnValue(null);
 		bdC.replay();
 		
 		var bf:DefaultBeanFactory = new DefaultBeanFactory();
