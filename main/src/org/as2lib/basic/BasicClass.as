@@ -1,12 +1,10 @@
 ﻿import org.as2lib.basic.BasicInterface;
 import org.as2lib.basic.Overload;
 import org.as2lib.basic.overload.OverloadHandler;
-import org.as2lib.data.TypedArray;
 import org.as2lib.basic.reflect.ClassInfo;
 import org.as2lib.util.OverloadUtil;
 import org.as2lib.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
-import org.as2lib.util.StringifyUtil;
 
 /**
  * The basic class that implements the basic functionalities.
