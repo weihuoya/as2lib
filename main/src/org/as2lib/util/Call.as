@@ -18,6 +18,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.util.AccessPermission;
 
 /**
  * Call is used to enable another object to make a function call in another
@@ -73,7 +74,7 @@ class org.as2lib.util.Call extends BasicClass {
 		// TODO: Refactor the code and outsource it.
 		var result:String="";
 		result += "[type " + ReflectUtil.getTypeNameForInstance(this) + " -> ";
-		ObjectUtil.setAccessPermission(object, null, ObjectUtil.ACCESS_ALL_ALLOWED);
+		AccessPermission.set(object, null, AccessPermission.ALL_ALLOWED);
 		if (ObjectUtil.isEmpty(object)) {
 			result += object.toString() + "." + ObjectUtil.getChildName(object, func);
 		} else {
