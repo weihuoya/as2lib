@@ -53,7 +53,7 @@ interface org.as2lib.env.overload.OverloadHandler extends BasicInterface {
 	 * @return true if this OverloadHandler is more explicit else false
 	 * @throws org.as2lib.env.overload.IllegalTypeException if the two OverloadHandler have the same explicity
 	 */
-	public function isMoreExplicitThan(handler:OverloadHandler):Boolean;
+	public function isMoreExplicit(handler:OverloadHandler):Boolean;
 	
 	/**
 	 * Returns the arguments Array that contains the type siganture of the

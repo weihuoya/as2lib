@@ -30,6 +30,7 @@ import org.as2lib.env.except.IllegalArgumentException;
  * @author Simon Wacker
  */
 class org.as2lib.env.overload.Overload extends BasicClass {
+	
 	/** The list of registered handlers. */
 	private var handlers:Array;
 	
@@ -153,8 +154,9 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 		var i:Number = matchingHandlers.length;
 		var result:OverloadHandler = matchingHandlers[--i];
 		while (--i-(-1)) {
-			if (!result.isMoreExplicitThan(matchingHandlers[i])) result = matchingHandlers[i];
+			if (!result.isMoreExplicit(matchingHandlers[i])) result = matchingHandlers[i];
 		}
 		return result;
 	}
+	
 }

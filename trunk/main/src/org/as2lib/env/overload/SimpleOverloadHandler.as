@@ -67,9 +67,9 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	}
 	
 	/**
-	 * @see org.as2lib.env.overload.OverloadHandler#isMoreExplicitThan()
+	 * @see org.as2lib.env.overload.OverloadHandler#isMoreExplicit()
 	 */
-	public function isMoreExplicitThan(handler:OverloadHandler):Boolean {
+	public function isMoreExplicit(handler:OverloadHandler):Boolean {
 		var scores:Number = 0;
 		var args2:Array = handler.getArguments();
 		var i:Number = args.length;

@@ -16,6 +16,7 @@
 
 import org.as2lib.env.out.OutAccess;
 import org.as2lib.env.out.OutHandler;
+import org.as2lib.env.out.OutLevel;
 
 /**
  * @author Simon Wacker
