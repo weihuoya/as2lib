@@ -9,7 +9,7 @@ In der {\sl as2lib} gibt es nicht nur eine Array Klasse(TypedArray\footnote{org.
 
 \paragraph{TypedArray:} Die Klasse TypedArray erlaubt eine strikte Datentypisierung eines Arrays.
 \begin{lstlisting}[frame=single]
-import org.as2lib.data.holder.TypedArray;
+import org.as2lib.data.holder.array.TypedArray;
 
 var myA:TypedArray = new TypedArray(Number);
 myA.push(2);
@@ -29,14 +29,15 @@ Weitere {\sl as2lib} Datentypen sind:
 	\item \textbf{HashMap}: Ein Datentyp dem ein Key und der dazugehörige Wert übergeben werden kann. Er besitzt alle Methoden einer normalen HashMap(siehe Java).
 	
 \begin{lstlisting}[frame=single]
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.Map;
+import org.as2lib.data.holder.map.HashMap;
 
 var aPerson:Person = new Person("Christoph",
 	"Atteneder");
 var bPerson:Person = new Person("Martin",
 	"Heidegger");
 
-var nickNames:HashMap = new HashMap();
+var nickNames:Map = new HashMap();
 nickNames.put(aPerson,"ripcurlx");
 nickNames.put(bPerson,"mastaKaneda");
 
@@ -51,9 +52,10 @@ mastaKaneda
 	\item \textbf{Stack}: Einem Stack können mit der Methode \emph{push} Werte hinzugefügt bzw. mit \emph{pop} wieder entfernt werden. Es kann immer nur auf das oberste Element zugegriffen werden.
 	
 \begin{lstlisting}[frame=single]
-import org.as2lib.data.holder.SimpleStack;
+import org.as2lib.data.holder.Stack;
+import org.as2lib.data.holder.stack.SimpleStack;
 
-var myS:SimpleStack = new SimpleStack();
+var myS:Stack = new SimpleStack();
 myS.push("gehts?!");
 myS.push("wie");
 myS.push("Hallo");
@@ -70,9 +72,10 @@ gehts?!
 \item \textbf{Queue}: Einer Queue können mit der Methode \emph{enqueue} Werte hinzugefügt bzw. mit \emph{dequeue} wieder entfernt werden. Es kann immer nur auf das erste Element zugegriffen werden. Mit der Methode \emph{peek} kann zusätzlich auf das erste Element zugegriffen werden, ohne es aus der Reihe zu entfernen.
 	
 \begin{lstlisting}[frame=single]
-import org.as2lib.data.holder.LinearQueue;
+import org.as2lib.data.holder.Queue;
+import org.as2lib.data.holder.queue.LinearQueue;
 
-var aLQ:LinearQueue = new LinearQueue();
+var aLQ:Queue = new LinearQueue();
 aLQ.enqueue("Hallo");
 aLQ.enqueue("wie");
 aLQ.enqueue("gehts?!");
@@ -100,18 +103,20 @@ Zusätzlich zu den Datentypen wurden auch \emph{Iteratoren}\footnote{Ein Iterator
 Möchte man z.B.: alle Elemente einer HashMap ausgeben, kann diese Aufgabe mit einem MapIterator leicht gelöst werden.
 \clearpage
 \begin{lstlisting}[frame=single]
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.Map;
+import org.as2lib.data.holder.map.HashMap;
+import org.as2lib.data.holder.Iterator;
 
 var aPerson:Person = new Person("Christoph",
 	"Atteneder");
 var bPerson:Person = new Person("Martin",
 	"Heidegger");
 
-var nickNames:HashMap = new HashMap();
+var nickNames:Map = new HashMap();
 nickNames.put(aPerson,"ripcurlx");
 nickNames.put(bPerson,"mastaKaneda");
 
-var it:Iterator = myH.getIterator();
+var it:Iterator = myH.iterator();
 
 while(it.hasNext()){
 	trace(it.next());
