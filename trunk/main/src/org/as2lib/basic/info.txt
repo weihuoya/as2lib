@@ -1,0 +1,11 @@
+This Package should only contain Classes that arn't or different available by the Standard Library.
+
+Packagemaster: Martin Heidegger
+
+Contain (should Status):
+
+VisibleElement - Class to use MovieClip within a Script
+Out - Output Class for different uses.
+EventHandler - Basic Handler Class for Events
+Exception - Class for better useable Exceptions
+- exceptions - Different Exceptions used in the complete Project
