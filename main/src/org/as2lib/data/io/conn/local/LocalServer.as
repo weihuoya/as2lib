@@ -10,30 +10,20 @@ import org.as2lib.env.event.EventInfo;
 import org.as2lib.Config;
 import org.as2lib.env.out.OutAccess;
 
-//import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 
+import org.as2lib.data.holder.TypedArray;
+import org.as2lib.data.iterator.ArrayIterator;
+
 /**
- * Ideas: functionality to automatic call send method after a specific time
- * Functionality of LocalConnection:
- * LC.send(conName, method [, p1,...,pN]):Boolean;
- * LC.send returns true if syntax was correct, it doesn´t
- * mean that a successful connection has been established.
- * If you want to check the connection you have to use the
- * onStatus() method. Also you have a size restriction of passed
- * data.
- * LC.connect();
- * LC.close();
- * LC.allowDomain
- * LC.allowInsecureDomain
- * LC.onStatus();
- * LC.domain();
+ * LocalServer is a LocalConnection server, who is able to add clients and broadcast
+ * messages to all clients.
  *
  * @author Christoph Atteneder
  * @version 1.0
- * @date 30.04.2004
+ * @date 13.05.2004
  */
 
 class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implements Connector {
@@ -41,66 +31,101 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	/* EventBroadcaster for onResponse and onError - events */
 	private var eventBroadcaster:EventBroadcaster;
 	
-	/* connection id used to identify the correct local connection */
+	/** 
+	 * Part of connection id used to identify the correct local connection.
+	 * In Server not neccessary.
+	 */
 	private var host:String;
 	
+	/** 
+	 * Part of connection id used to identify the correct local connection.
+	 * In Server not neccessary.
+	 */
 	private var path:String;
 	
+	/* name of method, which should be passed to a client */
 	private var method:String;
-	private var cMethod:String;
 	
+	/* Parameters, which should be passed */
 	private var params:Array;
 	
-	/* LocalConnection object for connection */
+	/**
+	 * String, which method on the clients is accessed 
+	 * @see LocalServer constructor
+	 */
+	private var cMethod:String;
+	
+	/* LocalConnection object for broadcasting messages */
 	private var sender:LocalConnection;
 	
-	/* stores domain, used by allowDomain, for security */
+	/* Stores domain, used by allowDomain, for security */
 	private var domain:String;
 
-	private var clients:Array;
+	/* List of clients */
+	private var clients:TypedArray;
 	
+	/* Standard debug output */
 	private var aOut:OutAccess;
 	
+	/**
+	 * Constructs a new LocalServer instance.
+	 * Initializes array for parameters, list of clients, the out object and
+	 * the method, which is called on the clients.
+	 */
 	public function LocalServer(Void) {
 		eventBroadcaster = Config.getEventBroadcasterFactory().createEventBroadcaster();
 		params = new Array();
-		clients = new Array();
+		clients = new TypedArray(String);
 		aOut = Config.getOut();
 		cMethod = "clientMethod";
 	}
 	
+	/**
+	 * Inits LocalConnection. Listens to a LocalConnection with id "register", which is 
+	 * used by LocalClients to establish a connection to LocalServer
+	 */
 	public function initConnection(Void):Void {
 		aOut.debug("initConnection");
-		
-		//receiver = new LocalConnection();
+	
 		connect("register");
+	}
+	
+	/**
+	 * Adds a LocalClient, which tries to connect through LocalConnection with
+	 * id "register". If the client doesn´t exists in the client list it is added.
+	 * @param id a String, which represents the LocalConnection through
+	 * 			 which a connection from the server can be established.
+	 */
+	public function addClient(id:String):Void{
+		aOut.debug("addClient: "+id);
 		
-		//sender = new LocalConnection();
-        //sender.onStatus = onStatus;
+		if(clients.contains(id)) return;
+		
+    	clients.push(id);
+		
+		aOut.debug("clients.getValue("+(clients.length-1)+") = "+clients.getValue(clients.length-1));
 	}
 	
-	public function addClient(name:String):Void{
-		aOut.debug("addClient: "+name);
-		var l:Number = clients.length;
-    	while(l--){
-			if(clients[l]==name) return;
-    	}
-    	clients.push(name);
-		aOut.debug("clients["+(clients.length-1)+"] = "+clients[clients.length-1]);
-	}
-	
+	/**
+	 * Sends data to clients. The data can include a name of a method and its
+	 * parameters.
+	 */
 	private function dispatch(Void):Void{
-		sender = new LocalConnection();
 		aOut.debug("dispatch");
+		
 		var l:Number = clients.length;
-		aOut.debug("length:"+l);
 		var args:Array = new Array();
+		sender = new LocalConnection();
+		
+		aOut.debug("clients.length:"+l);
+		
 		args.push(cMethod);
 		args.push(method);
 		args = args.concat(params);
+		
 		while(l--){
-			aOut.debug("dispatch: "+clients[l]);
-			sender.send.apply(null,[clients[l]].concat(args));
+			aOut.debug("dispatch: "+clients.getValue(l));
+			sender.send.apply(null,[clients.getValue(l)].concat(args));
 		}
 	}
 	
@@ -143,6 +168,16 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	
 	public function onStatus(infoObj){
 		aOut.debug("onStatus: "+infoObj.level);
+		/*if (infoObject.level!="error"){
+		googleConnection.connect(connectionName);
+		connected=true
+		}
+		else {
+			if (tries--){
+				searching.text = "Waiting for LocalConnection ("+tries+" attempts left)"
+				iv=setInterval(initConnection,1000)
+			}
+		}*/
 		if(infoObj.level == "error") {
 			eventBroadcaster.dispatch(new ConnectorError("There is no receiver with this defined connection identifier",this,arguments,true,false));
 		}
