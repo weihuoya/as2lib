@@ -105,6 +105,8 @@ org.as2lib.env.reflect.TClassInfo;
 org.as2lib.env.reflect.TClassInfo_Method;
 org.as2lib.env.reflect.TClassInfo_Property;
 org.as2lib.env.reflect.TPackageInfo;
+org.as2lib.env.reflect.TPackageInfo_Class;
+org.as2lib.env.reflect.TPackageInfo_Package;
 org.as2lib.env.reflect.TTypeProxyFactory;
 
 // org.as2lib.env.reflect.algorithm

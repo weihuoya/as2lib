@@ -19,10 +19,26 @@ import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.ClassInfo;
 
 /**
- * Searches for all properties of a class. Properties are not meant to be
- * normal fields/variables of an instance or class but macromedia properties
- * that can be declared via the 'set' or 'get' keyword or the addProperty(..)
- * method.
+ * Searches for all properties of a class.
+ *
+ * <p>Properties are not meant to be normal variables or fields of an
+ * instance or class but implicit properties that can be declared via
+ * the 'set' or 'get' keyword or the addProperty(..) method.
+ *
+ * <p>This class is mostly used internally. If you wanna obtain the properties
+ * of a class you need its representing ClassInfo. You can then also use
+ * the ClassInfo#getProperties method directly and do not have to make the detour
+ * over this class. The ClassInfo#getProperties method is also easier to use
+ * and offers some extra functionalities.
+ *
+ * <p>If you nevertheless want to use this class here is how it works.
+ *
+ * <code>var classInfo:ClassInfo = ClassInfo.forClass(MyClass);
+ * var propertyAlgorithm:PropertyAlgorithm = new PropertyAlgorithm();
+ * var properties:Array = propertyAlgorithm.execute(classInfo);</code>
+ *
+ * <p>Refer to the #execute methods documentation for details on how to
+ * get data from the properties array appropriately.
  *
  * @author Simon Wacker
  */

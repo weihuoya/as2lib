@@ -22,6 +22,7 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.Cache;
+import org.as2lib.env.reflect.SimpleCache;
 import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
@@ -73,7 +74,11 @@ class org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCase {
 	
 	// crashes flex
 	public function testExecute(Void):Void {
-		ReflectConfig.getCache().releaseAll();
+		var rc:MockControl = new MockControl(PackageInfo);
+		var r:PackageInfo = rc.getMock();
+		r.getPackage();
+		rc.setReturnValue(_global);
+		rc.replay();
 		
 		var pc:MockControl = new MockControl(PackageInfo);
 		var p:PackageInfo = pc.getMock();
@@ -82,15 +87,26 @@ class org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCase {
 		pc.replay();
 		
 		var a:ChildAlgorithm = new ChildAlgorithm();
+		a.setCache(new SimpleCache(r));
 		var c:Array = a.execute(p);
 		assertSame("there should be 4 children", c.length, 4);
 		for (var i:Number = 0; i < c.length; i++) {
 			if (c[i] instanceof ClassInfo) {
 				var k:ClassInfo = c[i];
+				var found:Boolean = false;
+				for (var y:Number = 0; y < c["classes"].length; y++) {
+					if (c["classes"][y] == k) {
+						found = true;
+						break;
+					}
+				}
+				assertTrue(k.getName() + ": second storage by index failed", found);
 				if (k.getName() == "SubClass") {
+					assertSame("SubClass: storage by name failed", k, c["classes"][k.getName()]);
 					assertSame("SubClass: wrong type", k.getType(),org.as2lib.env.reflect.treflect.SubClass);
 					assertSame("SubClass: wrong parent", k.getParent(), p);
 				} else if (k.getName() == "SuperClass") {
+					assertSame("SuperClass: storage by name failed", k, c["classes"][k.getName()]);
 					assertSame("SuperClass: wrong type", k.getType(),org.as2lib.env.reflect.treflect.SuperClass);
 					assertSame("SuperClass: wrong parent", k.getParent(), p);
 				} else {
@@ -98,10 +114,20 @@ class org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCase {
 				}
 			} else if (c[i] instanceof PackageInfo) {
 				var j:PackageInfo = c[i];
+				var found:Boolean = false;
+				for (var y:Number = 0; y < c["packages"].length; y++) {
+					if (c["packages"][y] == j) {
+						found = true;
+						break;
+					}
+				}
+				assertTrue(k.getName() + ": second storage by index failed", found);
 				if (j.getName() == "package0") {
+					assertSame("package0: storage by name failed", j, c["packages"][j.getName()]);
 					assertSame("package0: wrong object", j.getPackage(),org.as2lib.env.reflect.treflect.package0);
 					assertSame("package0: wrong parent", j.getParent(), p);
 				} else if (j.getName() == "package1") {
+					assertSame("package1: storage by name failed", j, c["packages"][j.getName()]);
 					assertSame("package1: wrong object", j.getPackage(),org.as2lib.env.reflect.treflect.package1);
 					assertSame("package1: wrong parent", j.getParent(), p);
 				} else {
@@ -113,6 +139,7 @@ class org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCase {
 		}
 		
 		pc.verify();
+		rc.verify();
 	}
 	
 	public function testExecuteWithEmptyPackage(Void):Void {
