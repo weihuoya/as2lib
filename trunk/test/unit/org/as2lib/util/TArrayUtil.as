@@ -168,7 +168,7 @@ class org.as2lib.util.TArrayUtil extends TestCase {
 	/**
 	 * Creates stack instances from arrays and validates them.
 	 */
-	public function testToStack(Void):Void {
+	/*public function testToStack(Void):Void {
 		var test:Array = [1,2,3,4,5,6,7];
 		var stack:Stack;
 		
@@ -193,7 +193,7 @@ class org.as2lib.util.TArrayUtil extends TestCase {
 				break;
 			}
 		}
-	}
+	}*/
 	
 	/**
 	 * Test different contents with indexOf

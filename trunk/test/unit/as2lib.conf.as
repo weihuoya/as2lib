@@ -19,7 +19,7 @@ import org.as2lib.env.log.logger.RootLogger;
 import org.as2lib.env.log.handler.TraceHandler;
 import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.repository.LoggerHierarchy;
-import org.as2lib.env.log.LoggerRepositoryManager;
+import org.as2lib.env.log.LogManager;
 import org.as2lib.test.unit.LoggerTestListener;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestSuiteFactory;
@@ -36,14 +36,14 @@ import org.as2lib.test.unit.TestSuiteFactory;
 //
 //  You can read more about logging in the documentation of
 //    * org.as2lib.env.log.Logger
-//    * org.as2lib.env.log.LoggerRepositoryManager
+//    * org.as2lib.env.log.LogManager
 //
   
   // Use a LoggerHierarchy as repository and takes a RootLogger with level All
   var loggerHierarchy:LoggerHierarchy = new LoggerHierarchy(new RootLogger(AbstractLogLevel.ALL));
   
   // Tell the Logger Repository to use the loggerHierarchy for default.
-  LoggerRepositoryManager.setRepository(loggerHierarchy); 
+  LogManager.setLoggerRepository(loggerHierarchy); 
   
   var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("org.as2lib");
   logger.addHandler(new TraceHandler());
