@@ -11,12 +11,12 @@ class org.as2lib.basic.event.dispatcher.LogEventDispatcher implements EventDispa
 	 * @see org.as2lib.basic.event.EventDispatcher
 	 */
 	public function dispatch(event:EventInfo, listeners:TypedArray):Void {
-		var type:String = event.getName();
+		var name:String = event.getName();
 		if (!event.isConsumed) {
 			var l:Number = listeners.length;
 			for (var i:Number = 0; i < l; i++) {
 				//Out.write("Forwarding event #" + i + " with type " + type)
-				listeners[i][type](event);
+				listeners.getValue(i)[name](event);
 			}
 		}
 	}

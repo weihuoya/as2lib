@@ -18,14 +18,14 @@ class org.as2lib.util.ObjectUtil {
 	public static function typesMatch(anObject:Object, aType:Function):Boolean {
 		if (ObjectUtil.isPrimitiveType(anObject)) {
 			if (ObjectUtil.isTypeOf(aType(anObject), anObject)) {
-				return false;
+				return true;
 			}
 		} else {
 			if (ObjectUtil.isInstanceOf(anObject, aType)) {
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	/**

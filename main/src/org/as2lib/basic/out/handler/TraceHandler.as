@@ -1,4 +1,5 @@
 ﻿import org.as2lib.basic.out.OutHandler;
+import org.as2lib.basic.out.OutInfo;
 
 /**
  * @author Simon Wacker
@@ -8,14 +9,14 @@ class org.as2lib.basic.out.handler.TraceHandler implements OutHandler {
 	/**
 	 * @see org.as2lib.basic.out.OutHandler
 	 */
-	public function write(message:String):Void {
-		trace (message);
+	public function write(info:OutInfo):Void {
+		trace (info.getMessage());
 	}
 	
 	/**
 	 * @see org.as2lib.basic.out.OutHandler
 	 */
-	public function error(exception:Exception):Void {
-		//trace (ExceptionUtil.toString(exception));
+	public function error(info:OutInfo):Void {
+		//trace (ExceptionUtil.toString(info.getException()));
 	}
 }
