@@ -14,57 +14,51 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
-import org.as2lib.env.reflect.algorithm.AbstractContentAlgorithm;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
-import org.as2lib.util.ObjectUtil;
-import org.as2lib.util.StringUtil;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends AbstractContentAlgorithm implements ContentAlgorithm {
-	private var result:Map;
-	private var info:ClassInfo;
-	private var staticFlag:Boolean;
+class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass implements ContentAlgorithm {
+	private var r:Map;
+	private var i:ClassInfo;
+	private var s:Boolean;
 	
 	public function MethodAlgorithm(Void) {
 	}
 	
-	public function execute(info:CompositeMemberInfo):Map {
-		this.info = ClassInfo(info);
-		this.result = new HashMap();
+	public function execute(i:CompositeMemberInfo):Map {
+		this.i = ClassInfo(i);
+		this.r = new HashMap();
 		
-		this.staticFlag = true;
-		var clazz:Function = this.info.getType();
-		search(clazz);
+		this.s = true;
+		var c:Function = this.i.getType();
+		search(c);
 		
-		this.staticFlag = false;
-		ObjectUtil.setAccessPermission(clazz.prototype, null, ObjectUtil.ACCESS_ALL_ALLOWED);
-		ObjectUtil.setAccessPermission(clazz.prototype, ["__proto__", "constructor", "__constructor__"], ObjectUtil.ACCESS_NOTHING_ALLOWED);
-		search(clazz.prototype);
-		ObjectUtil.setAccessPermission(clazz.prototype, null, ObjectUtil.ACCESS_IS_HIDDEN);
+		this.s = false;
+		var p:Object = c.prototype;
+		_global.ASSetPropFlags(p, null, 0, true);
+		_global.ASSetPropFlags(p, ["__proto__", "constructor", "__constructor__"], 7, true);
+		search(p);
+		_global.ASSetPropFlags(p, null, 1, true);
 		
-		return result;
+		return r;
 	}
 	
-	private function validate(target, name:String):Boolean {
-		if (ObjectUtil.isTypeOf(target[name], "function")) {
-			if (!StringUtil.startsWith(name, "__get__")
-					&& !StringUtil.startsWith(name, "__set__")) {
-				return true;
+	private function search(t):Void {
+		var k:String;
+		for (k in t) {
+			if (t[k] instanceof Function
+					&& k.indexOf("__get__") < 0
+					&& k.indexOf("__set__") < 0) {
+				r.put(k, new MethodInfo(k, t[k], i, s));
 			}
 		}
-		return false;
-	}
-	
-	private function store(name:String, target):Void {
-		var method:MethodInfo = new MethodInfo(name, target[name], info, staticFlag);
-		result.put(name, method);
 	}
 }
