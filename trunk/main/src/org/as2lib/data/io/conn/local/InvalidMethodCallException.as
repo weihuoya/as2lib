@@ -17,6 +17,8 @@
 import org.as2lib.env.except.Exception;
 
 /**
+ * Signals that a method has been invoked incorrectly.
+ * 
  * @author Christoph Atteneder
  */
 class org.as2lib.data.io.conn.local.InvalidMethodCallException extends Exception {

@@ -27,9 +27,22 @@ class org.as2lib.data.io.conn.local.LocalUtil extends BasicClass {
 	/**
 	 * Generates service identier with passed host and service name.
 	 *
+	 * @param host of required service
+	 * @param name of required service
 	 * @return generated service identifier
 	 */
 	public static function generateServiceId(host:String, name:String):String {
 		return host+"/"+name;
+	}
+	
+	/**
+	 * Generates response identier with passed connection and method name.
+	 *
+	 * @param connectionName of response LocalConnection
+	 * @param method of response LocalConnection
+	 * @return generated response identifier
+	 */
+	public static function generateResponseId(connectionName:String, method:String):String {
+		return  connectionName + "." + method + "_Return"
 	}
 }
