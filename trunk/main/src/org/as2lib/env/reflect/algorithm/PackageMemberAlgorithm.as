@@ -21,40 +21,40 @@ import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.ReflectConfig;
 
 /**
- * Searches for children, that means classes and packages, of a specific
+ * Searches for members, that means types and packages, of a specific
  * package. Sub-packages are not searched through.
  *
- * <p>This class is mostly used internally. If you wanna obtain the children
+ * <p>This class is mostly used internally. If you wanna obtain the members
  * of a package you need its representing PackageInfo. You can then also
- * use the PackageInfo#getChildren, PackageInfo#getChildClasses and
- * PackageInfo#getChildPackages methods directly and do not have to make
+ * use the PackageInfo#getMembers, PackageInfo#getMemberClasses and
+ * PackageInfo#getMemberPackages methods directly and do not have to make
  * the detour over this method. The PackageInfo's methods are also easier
  * to use and offer some extra functionalities.
  *
  * <p>If you nevertheless want to use this class here is how it works.
  *
  * <code>var packageInfo:PackageInfo = PackageInfo.forPackage(org.as2lib.core);
- * var childAlgorithm:ChildAlgorithm = new ChildAlgorithm();
- * var children:Array = childAlgorithm.execute(packageInfo);</code>
+ * var packageMemberAlgorithm:PackageMemberAlgorithm = new PackageMemberAlgorithm();
+ * var members:Array = packageMemberAlgorithm.execute(packageInfo);</code>
  *
  * <p>Refer to the #execute methods documentation for details on how to
- * get data from the children array appropriately.
+ * get data from the members array appropriately.
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass {
+class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass {
 	
 	private var c:Cache;
 	
 	/**
 	 * Constructs a new instance.
 	 */
-	public function ChildAlgorithm(Void) {
+	public function PackageMemberAlgorithm(Void) {
 	}
 	
 	/**
-	 * Sets the cache that gets used by the #execute(Object) method to
-	 * look whether the child package or class is already stored.
+	 * Sets the cache that gets used by the #execute method to
+	 * look whether the member package or class is already stored.
 	 *
 	 * @param cache the new cache
 	 */
@@ -64,7 +64,7 @@ class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass {
 	
 	/**
 	 * Returns the cache set via the #setCache(Cache) method or the default
-	 * cache that gets returned by the ReflectConfig#getCache() method.
+	 * cache that gets returned by the ReflectConfig#getCache method.
 	 *
 	 * @return the currently used cache
 	 */
@@ -74,24 +74,24 @@ class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass {
 	}
 	
 	/**
-	 * Executes the search for the children, that means child classes and
-	 * packages.
+	 * Executes the search for the members, that means member types and
+	 * packages, in the passed-in package.
 	 *
-	 * <p>The resulting array contains instances of type CompositeMemberInfo,
+	 * <p>The resulting array contains instances of type PackageMemberInfo,
 	 * that is either of type ClassInfo or PackageInfo.
 	 *
-	 * <p>The specific children can be either referenced by index or by name.
+	 * <p>The specific members can be either referenced by index or by name.
 	 * <dl>
-	 *   <dt>Reference child by index; can be class or package.</dt>
-	 *   <dd><code>myChildren[0];</code></dd>
+	 *   <dt>Reference member by index; can be class or package.</dt>
+	 *   <dd><code>myMembers[0];</code></dd>
 	 *   <dt>Reference class by index.</dt>
-	 *   <dd><code>myChildren.classes[0];</code></dd>
+	 *   <dd><code>myMembers.classes[0];</code></dd>
 	 *   <dt>Reference package by index.</dt>
-	 *   <dd><code>myChildren.packages[0];</code></dd>
+	 *   <dd><code>myMembers.packages[0];</code></dd>
 	 *   <dt>Reference class by name; use only the name of the class, excluding the namespace.</dt>
-	 *   <dd><code>myChildren.classes.MyClass;</code></dd>
+	 *   <dd><code>myMembers.classes.MyClass;</code></dd>
 	 *   <dt>Reference package by name; use only the package name, excluding the namespace.</dt>
-	 *   <dd><code>myChildren.packages.mypackage;</code></dd>
+	 *   <dd><code>myMembers.packages.mypackage;</code></dd>
 	 * </dl>
 	 *
 	 * <p>This method will return null if:
@@ -102,11 +102,11 @@ class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass {
 	 *
 	 * <p>Only the passed-in package will be searched through.
 	 *
-	 * <p>In case the cache already contains a specific child class or package
-	 * info it will be added to the children array.
+	 * <p>In case the cache already contains a specific member class or package
+	 * info it will be added to the members array.
 	 *
 	 * @param g the PackageInfo instance representing the package to search through
-	 * @return the children of the package, a blank array or null
+	 * @return the members of the package, a blank array or null
 	 */
 	public function execute(p:PackageInfo):Array {
 		if (p == null) return null;

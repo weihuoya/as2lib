@@ -112,7 +112,7 @@ org.as2lib.env.reflect.TTypeProxyFactory;
 // org.as2lib.env.reflect.algorithm
 org.as2lib.env.reflect.algorithm.TClassAlgorithm;
 org.as2lib.env.reflect.algorithm.TPackageAlgorithm;
-org.as2lib.env.reflect.algorithm.TChildAlgorithm;
+org.as2lib.env.reflect.algorithm.TPackageMemberAlgorithm;
 org.as2lib.env.reflect.algorithm.TMethodAlgorithm;
 org.as2lib.env.reflect.algorithm.TPropertyAlgorithm;
 

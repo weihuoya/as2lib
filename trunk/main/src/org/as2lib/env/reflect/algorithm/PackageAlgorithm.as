@@ -126,7 +126,7 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 	 * passed-in package name.
 	 *
 	 * <p>The name must be fully qualified, that means it must consist
-	 * of the package's path (namespace) as well as its name. For example
+	 * of the package's path as well as its name. For example
 	 * 'org.as2lib.core'.
 	 *
 	 * <p>Null gets returned if:

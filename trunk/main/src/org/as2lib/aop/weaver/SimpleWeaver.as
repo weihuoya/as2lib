@@ -82,10 +82,10 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	 * in.
 	 */
 	private function weaveByPackage(a:PackageInfo):Void {
-		var b:Array = a.getChildClasses();
+		var b:Array = a.getMemberClasses();
 		var i:Number = b.length;
 		while (--i-(-1)) weaveByClassInfo(b[i]);
-		var c:Array = a.getChildPackages();
+		var c:Array = a.getMemberPackages();
 		var k:Number = c.length;
 		while (--k-(-1)) weaveByPackage(c[i]);
 	}

@@ -21,7 +21,7 @@ import org.as2lib.env.reflect.algorithm.PackageAlgorithm;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.SimpleCache;
-import org.as2lib.env.reflect.CompositeMemberInfo;
+import org.as2lib.env.reflect.PackageMemberInfo;
 import org.as2lib.env.reflect.ReflectConfig;
 
 /**
@@ -83,8 +83,8 @@ class org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestCase {
 	
 	public function testExecuteWithExistingPackage(Void):Void {
 		var a:PackageAlgorithm = new PackageAlgorithm();
-		var pp1:CompositeMemberInfo = a.execute(_global.org.as2lib.core);
-		var pp2:CompositeMemberInfo = a.execute(_global.org.as2lib);
+		var pp1:PackageMemberInfo = a.execute(_global.org.as2lib.core);
+		var pp2:PackageMemberInfo = a.execute(_global.org.as2lib);
 		assertNotNull("pp1 should not be null", pp1);
 		assertNotNull("pp2 should not be null", pp2);
 		var p1:PackageInfo = PackageInfo(pp1);

@@ -23,7 +23,7 @@ import org.as2lib.env.reflect.algorithm.ClassAlgorithm;
 import org.as2lib.env.reflect.algorithm.PackageAlgorithm;
 import org.as2lib.env.reflect.algorithm.MethodAlgorithm;
 import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
-import org.as2lib.env.reflect.algorithm.ChildAlgorithm;
+import org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm;
 import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.env.reflect.SimpleCache;
 import org.as2lib.env.reflect.string.MethodInfoStringifier;
@@ -49,8 +49,8 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	/** The property algorithm used to find properties. */
 	private static var propertyAlgorithm:PropertyAlgorithm;
 	
-	/** The child algorithm used to find children. */
-	private static var childAlgorithm:ChildAlgorithm;
+	/** The package member algorithm used to find package members. */
+	private static var packageMemberAlgorithm:PackageMemberAlgorithm;
 	
 	/** All ClassInfos and PackageInfos that have already been found will be cached here. */
 	private static var cache:Cache;
@@ -153,22 +153,22 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	}
 	
 	/** 
-	 * Sets the algorithm used to find and store children of a package.
+	 * Sets the algorithm used to find and store members of a package.
 	 *
-	 * @param algorithm the new algorithm to find and store the children
+	 * @param algorithm the new algorithm to find and store the members
 	 */
-	public static function setChildAlgorithm(algorithm:ChildAlgorithm):Void {
-		childAlgorithm = algorithm;
+	public static function setPackageMemberAlgorithm(algorithm:PackageMemberAlgorithm):Void {
+		packageMemberAlgorithm = algorithm;
 	}
 	
 	/**
-	 * Returns the algorithm used to find and store children.
+	 * Returns the algorithm used to find and store members.
 	 *
-	 * @return the algorithm to find and store children
+	 * @return the algorithm to find and store members
 	 */
-	public static function getChildAlgorithm(Void):ChildAlgorithm {
-		if (!childAlgorithm) childAlgorithm = new ChildAlgorithm();
-		return childAlgorithm;
+	public static function getPackageMemberAlgorithm(Void):PackageMemberAlgorithm {
+		if (!packageMemberAlgorithm) packageMemberAlgorithm = new PackageMemberAlgorithm();
+		return packageMemberAlgorithm;
 	}
 	
 	/**

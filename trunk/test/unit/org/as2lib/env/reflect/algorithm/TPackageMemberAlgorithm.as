@@ -17,10 +17,10 @@
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.test.mock.support.TypeArgumentsMatcher;
-import org.as2lib.env.reflect.algorithm.ChildAlgorithm;
+import org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.reflect.CompositeMemberInfo;
+import org.as2lib.env.reflect.PackageMemberInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.SimpleCache;
 import org.as2lib.env.reflect.ReflectConfig;
@@ -30,7 +30,7 @@ import org.as2lib.data.holder.map.HashMap;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCase {
+class org.as2lib.env.reflect.algorithm.TPackageMemberAlgorithm extends TestCase {
 	
 	public function setUp(Void):Void {
 		org.as2lib.env.reflect.treflect;
@@ -45,7 +45,7 @@ class org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCase {
 		var c:Cache = cc.getMock();
 		cc.replay();
 		
-		var a:ChildAlgorithm = new ChildAlgorithm();
+		var a:PackageMemberAlgorithm = new PackageMemberAlgorithm();
 		a.setCache(c);
 		assertNull("execute(null) should return null", a.execute(null));
 		assertNull("execute(undefined) should return null", a.execute(undefined));
@@ -64,7 +64,7 @@ class org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCase {
 		var c:Cache = cc.getMock();
 		cc.replay();
 		
-		var a:ChildAlgorithm = new ChildAlgorithm();
+		var a:PackageMemberAlgorithm = new PackageMemberAlgorithm();
 		a.setCache(c);
 		assertNull(a.execute(i));
 		
@@ -86,10 +86,10 @@ class org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCase {
 		pc.setReturnValue(_global.org.as2lib.env.reflect.treflect);
 		pc.replay();
 		
-		var a:ChildAlgorithm = new ChildAlgorithm();
+		var a:PackageMemberAlgorithm = new PackageMemberAlgorithm();
 		a.setCache(new SimpleCache(r));
 		var c:Array = a.execute(p);
-		assertSame("there should be 4 children", c.length, 4);
+		assertSame("there should be 4 members", c.length, 4);
 		for (var i:Number = 0; i < c.length; i++) {
 			if (c[i] instanceof ClassInfo) {
 				var k:ClassInfo = c[i];
@@ -134,7 +134,7 @@ class org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCase {
 					fail("unkown package '" + k + "'");
 				}
 			} else {
-				fail("child of unkown type: " + c[i]);
+				fail("member of unkown type: " + c[i]);
 			}
 		}
 		
@@ -152,10 +152,10 @@ class org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCase {
 		pc.setReturnValue(_global.testExecuteWithEmptyPackage.empty);
 		pc.replay();
 		
-		var a:ChildAlgorithm = new ChildAlgorithm();
+		var a:PackageMemberAlgorithm = new PackageMemberAlgorithm();
 		var c:Array = a.execute(p);
-		assertNotNull("children array should not be null", c);
-		assertSame("there should be no children", c.length, 0);
+		assertNotNull("members array should not be null", c);
+		assertSame("there should be no members", c.length, 0);
 		
 		pc.verify();
 	}

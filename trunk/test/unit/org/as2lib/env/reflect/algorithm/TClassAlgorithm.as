@@ -20,7 +20,7 @@ import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.reflect.algorithm.ClassAlgorithm;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.reflect.CompositeMemberInfo;
+import org.as2lib.env.reflect.PackageMemberInfo;
 import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.SimpleCache;
@@ -99,7 +99,7 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		//a.setCache(c);
 		
-		var info:CompositeMemberInfo = a.execute(TClassAlgorithm);
+		var info:PackageMemberInfo = a.execute(TClassAlgorithm);
 		assertNotNull("Class for object could not be found.", info);
 		var objectInfo:ClassInfo = ClassInfo(info);
 		assertNotNull("Returned instance is not of type ClassInfo.", objectInfo);
@@ -127,7 +127,7 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		//a.setCache(c);
 		
-		var info:CompositeMemberInfo = a.execute(BasicInterface);
+		var info:PackageMemberInfo = a.execute(BasicInterface);
 		assertNotNull("Class for object could not be found.", info);
 		var objectInfo:ClassInfo = ClassInfo(info);
 		assertNotNull("Returned instance is not of type ClassInfo.", objectInfo);
@@ -157,7 +157,7 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		//a.setCache(c);
 		
-		var info:CompositeMemberInfo = a.execute(o);
+		var info:PackageMemberInfo = a.execute(o);
 		assertNotNull("Class for object could not be found.", info);
 		var objectInfo:ClassInfo = ClassInfo(info);
 		assertNotNull("Returned instance is not of type ClassInfo.", objectInfo);
@@ -193,7 +193,7 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		a.setCache(c);
 
-		var info:CompositeMemberInfo = a.execute("a");
+		var info:PackageMemberInfo = a.execute("a");
 		assertNotNull("Class for string could not be found.", info);
 		var stringInfo:ClassInfo = ClassInfo(info);
 		assertNotNull("Returned instance is not of type ClassInfo.", stringInfo);
@@ -225,7 +225,7 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		a.setCache(c);
 
-		var info:CompositeMemberInfo = a.execute(32);
+		var info:PackageMemberInfo = a.execute(32);
 		assertNotNull("Class for number could not be found.", info);
 		var numberInfo:ClassInfo = ClassInfo(info);
 		assertNotNull("Returned instance is not of type ClassInfo.", numberInfo);
@@ -257,7 +257,7 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		a.setCache(c);
 
-		var info:CompositeMemberInfo = a.execute(false);
+		var info:PackageMemberInfo = a.execute(false);
 		assertNotNull("Class for boolean could not be found.", info);
 		var booleanInfo:ClassInfo = ClassInfo(info);
 		assertNotNull("Returned instance is not of type ClassInfo.", booleanInfo);
@@ -291,7 +291,7 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		a.setCache(c);
 
-		var info:CompositeMemberInfo = a.execute(f);
+		var info:PackageMemberInfo = a.execute(f);
 		assertNotNull("Class for function could not be found.", info);
 		var functionInfo:ClassInfo = ClassInfo(info);
 		assertNotNull("Returned instance is not of type ClassInfo.", functionInfo);
@@ -325,7 +325,7 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		a.setCache(c);
 
-		var info:CompositeMemberInfo = a.execute(_root.testExecuteByMovieClip_mc);
+		var info:PackageMemberInfo = a.execute(_root.testExecuteByMovieClip_mc);
 		assertNotNull("Class for movieclip could not be found.", info);
 		var movieClipInfo:ClassInfo = ClassInfo(info);
 		assertNotNull("Returned instance is not of type ClassInfo.", movieClipInfo);
@@ -360,7 +360,7 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		a.setCache(c);
 
-		var info:CompositeMemberInfo = a.execute(_root.testExecuteByTextField_txt);
+		var info:PackageMemberInfo = a.execute(_root.testExecuteByTextField_txt);
 		assertNotNull("Class for textfield could not be found.", info);
 		var movieClipInfo:ClassInfo = ClassInfo(info);
 		assertNotNull("Returned instance is not of type ClassInfo.", movieClipInfo);
