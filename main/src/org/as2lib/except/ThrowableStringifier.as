@@ -1,6 +1,6 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.core.string.Stringifier;
-import org.as2lib.core.exept.Throwable;
+import org.as2lib.except.Throwable;
 import org.as2lib.util.ReflectUtil;
 import org.as2lib.reflect.ClassInfo;
 

@@ -3,7 +3,7 @@ import org.as2lib.event.EventDispatcher;
 import org.as2lib.event.Consumeable;
 import org.as2lib.event.ListenerArray;
 import org.as2lib.core.BasicClass;
-import org.as2lib.Config;
+import org.as2lib.event.EventConfig;
 
 /**
  * @version 1.0
@@ -16,7 +16,7 @@ class org.as2lib.event.dispatcher.LogEventDispatcher extends BasicClass implemen
 		var name:String = event.getName();
 		var l:Number = listeners.length;
 		for (var i:Number = 0; i < l; i++) {
-			Config.out.log("Forwarding event #" + i + " with name " + name);
+			EventConfig.getOut().log("Forwarding event #" + i + " with name " + name);
 			listeners.get(i)[name](event);
 		}
 	}
@@ -25,7 +25,7 @@ class org.as2lib.event.dispatcher.LogEventDispatcher extends BasicClass implemen
 		var name:String = event.getName();
 		var l:Number = listeners.length;
 		for (var i:Number = 0; i < l; i++) {
-			Config.out.log("Forwarding event #" + i + " with name " + name);
+			EventConfig.getOut().log("Forwarding event #" + i + " with name " + name);
 			listeners.get(i)[name](event);
 			if (Consumeable(event).isConsumed()) {
 				return;

@@ -2,7 +2,7 @@
 import org.as2lib.out.info.OutWriteInfo;
 import org.as2lib.out.info.OutErrorInfo;
 import org.as2lib.event.EventInfo;
-import org.as2lib.util.OutUtil;
+import org.as2lib.out.OutConfig;
 import org.as2lib.core.BasicClass;
 
 /**
@@ -14,13 +14,13 @@ class org.as2lib.out.handler.TraceHandler extends BasicClass implements OutHandl
 	 * @see org.as2lib.out.OutHandler
 	 */
 	public function write(info:OutWriteInfo):Void {
-		trace (OutUtil.stringifyWriteInfo(info));
+		trace (OutConfig.stringifyWriteInfo(info));
 	}
 	
 	/**
 	 * @see org.as2lib.out.OutHandler
 	 */
 	public function error(info:OutErrorInfo):Void {
-		trace (OutUtil.stringifyErrorInfo(info));
+		trace (OutConfig.stringifyErrorInfo(info));
 	}
 }

@@ -2,15 +2,9 @@
 import org.as2lib.reflect.Cache;
 import org.as2lib.reflect.ClassInfo;
 import org.as2lib.reflect.PackageInfo;
-import org.as2lib.reflect.algorythm.CacheAlgorythm;
-import org.as2lib.reflect.algorythm.ClassAlgorythm;
-import org.as2lib.reflect.algorythm.PackageAlgorythm;
-import org.as2lib.reflect.algorythm.ContentAlgorythm;
-import org.as2lib.reflect.algorythm.MethodAlgorythm;
-import org.as2lib.reflect.algorythm.PropertyAlgorythm;
-import org.as2lib.reflect.algorythm.ChildrenAlgorythm;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.reflect.ReflectConfig;
 
 /**
  * @author Simon Wacker
@@ -23,11 +17,6 @@ import org.as2lib.util.ObjectUtil;
 class org.as2lib.util.ReflectUtil extends BasicClass {
 	/** All classes and packages that have already been found will be cached here. */
 	private static var cache:Cache = new Cache();
-	private static var classAlgorythm:CacheAlgorythm = new ClassAlgorythm();
-	private static var packageAlgorythm:CacheAlgorythm = new PackageAlgorythm();
-	private static var methodAlgorythm:ContentAlgorythm = new MethodAlgorythm();
-	private static var propertyAlgorythm:ContentAlgorythm = new PropertyAlgorythm();
-	private static var childrenAlgorythm:ContentAlgorythm = new ChildrenAlgorythm();
 	
 	/**
 	 * The constructor is private to prevent an instantiation.
@@ -53,7 +42,7 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	public static function getClassInfo(object:Object):ClassInfo {
 		var info:ClassInfo = cache.getClass(object);
 		if (ObjectUtil.isEmpty(info)) {
-			info = ClassInfo(classAlgorythm.execute(object));
+			info = ClassInfo(ReflectConfig.getClassAlgorythm().execute(object));
 		}
 		return info;
 	}
@@ -71,7 +60,7 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	public static function getPackageInfo(package:Object):PackageInfo {
 		var info:PackageInfo = cache.getPackage(package);
 		if (ObjectUtil.isEmpty(info)) {
-			info = PackageInfo(packageAlgorythm.execute(package));
+			info = PackageInfo(ReflectConfig.getPackageAlgorythm().execute(package));
 		}
 		return info;
 	}
@@ -85,7 +74,7 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	 * @return A HashMap holding MethodInfo instances for each method.
 	 */
 	public static function getMethods(info:ClassInfo):HashMap {
-		return methodAlgorythm.execute(info);
+		return ReflectConfig.getMethodAlgorythm().execute(info);
 	}
 	
 	/** 
@@ -96,7 +85,7 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	 * @return A HashMap holding PropertyInfo instances for each property.
 	 */
 	public static function getProperties(info:ClassInfo):HashMap {
-		return propertyAlgorythm.execute(info);
+		return ReflectConfig.getPropertyAlgorythm().execute(info);
 	}
 	
 	/**
@@ -107,41 +96,6 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	 * @return A HashMap containing all children of the appropriate package.
 	 */
 	public static function getChildren(info:PackageInfo):HashMap {
-		return childrenAlgorythm.execute(info);
-	}
-	
-	/**
-	 * Sets the CacheAlgorythm used by the getClassInfo() operation.
-	 */
-	public static function setClassAlgorythm(algorythm:CacheAlgorythm):Void {
-		classAlgorythm = algorythm;
-	}
-	
-	/** 
-	 * Sets the CacheAlgorythm used by the getPackageInfo() operation.
-	 */
-	public static function setPackageAlgorythm(algorythm:CacheAlgorythm):Void {
-		packageAlgorythm = algorythm;
-	}
-	
-	/** 
-	 * Sets the ContentAlgorythm used by the getMethods() operation.
-	 */
-	public static function setMethodAlgorythm(algorythm:ContentAlgorythm):Void {
-		methodAlgorythm = algorythm;
-	}
-	
-	/** 
-	 * Sets the ContentAlgorythm used by the getProperties() operation.
-	 */
-	public static function setPropertyAlgorythm(algorythm:ContentAlgorythm):Void {
-		propertyAlgorythm = algorythm;
-	}
-	
-	/** 
-	 * Sets the ContentAlgorythm used by the getChildren() operation.
-	 */
-	public static function setChildrenAlgorythm(algorythm:ContentAlgorythm):Void {
-		childrenAlgorythm = algorythm;
+		return ReflectConfig.getChildrenAlgorythm().execute(info);
 	}
 }
