@@ -31,6 +31,7 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 		classes = new HashMap();
 		packages = new HashMap();
 		root = RootInfo.getInstance();
+		addPackage(root);
 	}
 	
 	/**
