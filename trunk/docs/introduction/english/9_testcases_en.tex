@@ -26,7 +26,7 @@ new test.org.as2lib.core.TReflections().run();
 \end{lstlisting}
 
 If you have more than one TestCase you can use a simplified way:
-\begin[2ndlisting}[frame=single]
+\begin[lstlisting}[frame=single]
 import org.as2lib.test.unit.TestSuiteFactory;
 import test.org.as2lib.core.* // Import Statement, to reduce the Lines.
 
@@ -38,8 +38,9 @@ TestEventHandling;
 new TestSuiteFactory().collectAllTestCases().run();
 \end
 
-The cases to test must be invoked before the call to the test so that they are available during run time.
-Similar to test case APIs like: JUnit\footnote{\href{http://www.junit.org}{www.junit.org}}, a variety of methods are available to the developer (optional parameters are marked with []):
+
+The cases to test must be invoked before the test call so that they are available while run time.
+Similar to test case APIs like: JUnit\footnote{\href{http://www.junit.org}{www.junit.org}}, a variety of methods are available for the developer (optional parameters are marked with []):
 
 \begin{itemize}
 	\item \textbf{assertTrue}([\textit{message:String}], \textit{testVar1:Boolean}) - An error message will be reported if testVar1 is false.
@@ -61,7 +62,7 @@ Similar to test case APIs like: JUnit\footnote{\href{http://www.junit.org}{www.j
 	\item \textbf{assertNotThrows}(\textit{exception:Function, atObject, theFunction:String, parameter:Array}) - If an exception is thrown during the execution of the passed function(theFunction) of the object(atObjekt) with the parameter values(parameter) an error message will be reported.
 \end{itemize}
 
-A test case must extend the class TestCase\footnote{org.as2lib.test.unit.TestCase}. All methods of the test case that start with ``test'' are executed by the testing API. Look at the following coding example to better understand the TestCase API:
+A test case must extend the class TestCase\footnote{org.as2lib.test.unit.TestCase}. All methods of the test case that start with ``test'' are executed by the testing API. The following coding example should show you how to use the Test Case API.
 \begin{lstlisting}[frame=single]
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.core.BasicClass;
