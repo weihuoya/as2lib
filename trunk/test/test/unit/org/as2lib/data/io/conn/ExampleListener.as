@@ -11,7 +11,8 @@ class test.org.as2lib.data.io.conn.ExampleListener extends BasicClass implements
 	private var myOut:Out;
 	
 	public function ExampleListener(Void) {
-		cnt=counter++;
+		counter++;
+		cnt=counter;
 		myOut = new Out();
 		myOut.info("ExampleListener.instance: "+counter);
 	}
@@ -20,12 +21,14 @@ class test.org.as2lib.data.io.conn.ExampleListener extends BasicClass implements
 	 * Executes a call.
 	 */
 	public function onError(error:ConnectorError):Void{
-		trace("onError "+cnt);
+		//trace("onError "+cnt);
+		//trace();
 		myOut.error(error);
+		//myOut.error(error);
 	}
 	
 	public function onResponse(response:ConnectorResponse):Void{
-		trace("onResponse");
-		myOut.info(response.toString());
+		trace(response.getName());
+		//myOut.info(response.toString());
 	}
 }
