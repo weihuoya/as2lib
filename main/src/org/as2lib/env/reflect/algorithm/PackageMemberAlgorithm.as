@@ -129,7 +129,7 @@ class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass
 				if (!eval("_global." + i.split("_").join(".")) || i.indexOf("_") < 0) {
 					var b:ClassInfo = c.getClass(t[i]);
 					if (!b) {
-						b = c.addClass(new ClassInfo(i, t[i], p));
+						b = c.addClass(new ClassInfo(t[i], i, p));
 					}
 					r[r.length] = b;
 					r[i] = b;
@@ -139,7 +139,7 @@ class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass
 			} else if (typeof(t[i]) == "object") {
 				var a:PackageInfo = c.getPackage(t[i]);
 				if (!a) {
-					a = c.addPackage(new PackageInfo(i, t[i], p));
+					a = c.addPackage(new PackageInfo(t[i], i, p));
 				}
 				r[r.length] = a;
 				r[i] = a;

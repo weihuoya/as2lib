@@ -51,6 +51,7 @@ class org.as2lib.env.reflect.InterfaceProxyFactory extends BasicClass implements
 		if (!interfaze) return null;
 		var result:Object = new Object();
 		result.__proto__ = interfaze.prototype;
+		result.__constructor__ = interfaze;
 		result.__resolve = function(methodName:String):Function {
 			return (function() {
 				return handler.invoke(this, methodName, arguments);

@@ -21,38 +21,44 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.ReflectConfig;
 
 /**
- * ClassAlgorithm searches for the class of a specific instance and returns
- * a ClassInfo instance representing the found class.
+ * ClassAlgorithm searches for the class of a specific instance or class
+ * and returns information about that class.
  *
- * <p>To obtain the class info corresponding to an instance or a class 
- * you use the ClassAlgorithm class as follows.
+ * <p>This class is rather cumbersome to use. It is recommended to use
+ * the static {@link ClassInfo#forObject}, {@link ClassInfo#forInstance},
+ * {@link ClassInfo#forClass} and {@link ClassInfo#forName} methods instead.
+ * They offer more sophisticated return values and do also store ClassInfo
+ * instances retrieved by classes or instances and not only these by
+ * name like this algorithm does.
+ *
+ * <p>To obtain information corresponding to an instance or a class 
+ * you can use this class as follows.
  *
  * <code>var myInstance:MyClass = new MyClass();
  * var classAlgorithm:ClassAlgorithm = new ClassAlgorithm();
- * var classInfoByInstance:ClassInfo = classAlgorithm.execute(myInstance);
- * var classInfoByClass:ClassInfo = classAlgorithm.execute(MyClass);</code>
+ * var infoByInstance:Object = classAlgorithm.execute(myInstance);
+ * var infoByClass:Object = classAlgorithm.execute(MyClass);</code>
  *
  * <p>It is also possible to retrieve a class info by name.
  *
  * <code>classInfoByName:ClassInfo = classAlgorithm.executeByName("MyClass");</code>
  *
  * <p>If the class is not contained in the root/default package you must
- * specify the whole namespace/path.
+ * specify the whole path / its namespace.
  *
  * <code>classInfoByName:ClassInfo = classAlgorithm.executeByName("org.as2lib.MyClass");</code>
  *
  * <p>Already retrieved class infos are stored in a cache. There thus 
- * exists only one ClassInfo instance of a class. The following returns
- * true.
- *
- * <code>trace(classInfoByInstance == classInfoByClass == classInfoByName);</code>
+ * exists only one ClassInfo instance per class. Note that the {@link #execute}
+ * method does not return ClassInfo instances and does thus not store
+ * the found information.
  *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 	
 	private var c:Cache;
-	private var r:ClassInfo;
+	private var r;
 	
 	/**
 	 * Constructs a new instance.
@@ -82,61 +88,166 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 	}
 	
 	/**
-	 * Executes the search for the class.
+	 * @overload #executeByClass
+	 * @overload #executeByInstance
+	 */
+	public function execute(d):ClassInfo {
+		if (typeof(d) == "function") {
+			return executeByClass(d);
+		}
+		return executeByInstance(d);
+	}
+	
+	/**
+	 * Executes the search for the passed-in class and returns information
+	 * about that class.
 	 *
-	 * <p>This method will return null if:
+	 * <p>The returned object has the following properties:
+	 * <dl>
+	 *   <dt>clazz</dt>
+	 *   <dd>The class as Function that has been searched for, that is the
+	 *       passed-in class.</dd>
+	 *   <dt>name</dt>
+	 *   <dd>The name as String of the searched for class.</dd>
+	 *   <dt>package</dt>
+	 *   <dd>The package represented by a {@ling PackageInfo} instance the
+	 *       class is declared in / resides in, that is the namespace of 
+	 *       the class.</dd>
+	 * </dl>
+	 *
+	 * <p>Null will be returned if:
 	 * <ul>
-	 *   <li>The argument is null or undefined.</li>
+	 *   <li>The passed-in class is null or undefined.</li>
+	 *   <li>The passed-in class could not be found.</li>
+	 * </ul>
+	 *
+	 * <p>The search starts on the package returned by the {@link Cache#getRoot}
+	 * method. If this method returns a package info whose getPackage method
+	 * returns null or undefined _global is used instead.
+	 *
+	 * @param d the class to return information about
+	 * @return an object that contains information about the passed-in class
+	 * @see #getCache
+	 */
+	public function executeByClass(d:Function) {
+		if (!d) return null;
+		return executeByComparator(function(f:Function) {
+								       return f == d;
+								   });
+	}
+	
+	/**
+	 * Executes the search for the class the passed-in object is an instance
+	 * of and returns information about that class.
+	 *
+	 * <p>The returned object has the following properties:
+	 * <dl>
+	 *   <dt>clazz</dt>
+	 *   <dd>The class as Function that has been searched for.</dd>
+	 *   <dt>name</dt>
+	 *   <dd>The name as String of the searched for class.</dd>
+	 *   <dt>package</dt>
+	 *   <dd>The package represented by a {@ling PackageInfo} instance the
+	 *       class is declared in / resides in, that is the namespace of 
+	 *       the class.</dd>
+	 * </dl>
+	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in instance is null or undefined.</li>
+	 *   <li>The passed-in class could not be found.</li>
+	 * </ul>
+	 *
+	 * <p>The search starts on the package returned by the {@link Cache#getRoot}
+	 * method. If this method returns a package info whose getPackage method
+	 * returns null or undefined _global is used instead.
+	 *
+	 * @param d the instance of the class to return information about
+	 * @return an object that contains information about the class the passed-in
+	 * object is an instance of
+	 * @see #getCache
+	 */
+	public function executeByInstance(d) {
+		// not 'if (!d)' because 'd' could be en empty string or a boolean
+		if (d == null) return null;
+		return executeByComparator(function(f:Function) {
+								       return f.prototype === d.__proto__;
+								   });
+	}
+	
+	/**
+	 * Executes the search for the class and returns information about that
+	 * class.
+	 *
+	 * <p>The returned object has the following properties:
+	 * <dl>
+	 *   <dt>clazz</dt>
+	 *   <dd>The class as Function that has been searched for.</dd>
+	 *   <dt>name</dt>
+	 *   <dd>The name as String of the searched for class.</dd>
+	 *   <dt>package</dt>
+	 *   <dd>The package represented by a {@ling PackageInfo} instance the
+	 *       class is declared in / resides in, that is the namespace of 
+	 *       the class.</dd>
+	 * </dl>
+	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in comparator method is null or undefined.</li>
 	 *   <li>The searched for class could not be found.</li>
 	 * </ul>
 	 *
-	 * <p>The search starts on the package returned by the cache's getRoot()
-	 * method. That is by default _global.
+	 * <p>The search starts on the package returned by the {@link Cache#getRoot}
+	 * method. If this method returns a package info whose getPackage method
+	 * returns null or undefined _global is used instead.
 	 *
-	 * <p>In case the cache already contains the wanted class info it will
-	 * be returned.
+	 * <p>The passed-in comparator gets invoked for every found class to
+	 * determine whether it is the right one or not. The comparator method
+	 * gets passed the found class and must return true or false. If it
+	 * returns true the algorithm stops and returns the information about
+	 * this class.
 	 *
-	 * @param d instance of the class to find or
-	 *          the class itself
-	 * @return a ClassInfo instance representing the class or null
+	 * @param v the comparator to determine the correct class
+	 * @return an object that contains information about the class
+	 * @see #getCache
 	 */
-	public function execute(d):ClassInfo {
-		if (d == null) return null;
-		r = getCache().getClass(d);
-		if (r) return r;
-		var b:PackageInfo = c.getRoot();
+	public function executeByComparator(v:Function) {
+		if (!v) return null;
+		r = null;
+		var b:PackageInfo = getCache().getRoot();
 		var a:Object = b.getPackage();
+		if (!a) a = _global;
 		_global.ASSetPropFlags(a, null, 0, true);
-		findAndStore(b, d);
+		findAndStore(b, v);
 		return r;
 	}
 	
-	private function findAndStore(a:PackageInfo, d):Boolean {
+	private function findAndStore(a:PackageInfo, v:Function):Boolean {
 		var p = a.getPackage();
 		var i:String;
 		for (i in p) {
 			var f = p[i];
 			if (typeof(f) == "function") {
-				if (d == f || d.__proto__ === f.prototype) {
-				/*if (typeof(d) == "function" && d.prototype === f.prototype
-						|| d.__proto__ === f.prototype) {*/
+				if (v(f)) {
 					// flex stores every class in _global and in its actual package
 					// e.g. org.as2lib.core.BasicClass is stored in _global with name org_as2lib_core_BasicClass
 					// this if-clause excludes these extra stored classes
 					if (!eval("_global." + i.split("_").join(".")) || i.indexOf("_") < 0) {
-						r = new ClassInfo(i, f, a);
-						c.addClass(r);
+						r = new Object();
+						r.clazz = f;
+						r.name = i;
+						r.package = a;
 						return true;
 					}
 				}
 			} else if (typeof(f) == "object") {
 				var e:PackageInfo = c.getPackage(f);
 				if (!e) {
-					e = c.addPackage(new PackageInfo(i, f, a));
+					e = c.addPackage(new PackageInfo(f, i, a));
 				}
 				if (!e.isParentPackage(a)) {
-					// replace recursion with loop
-					if (findAndStore(e, d)) {
+					// todo: replace recursion with loop
+					if (findAndStore(e, v)) {
 						return true;
 					}
 				}
@@ -175,10 +286,10 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 		var g:Object = p.getPackage();
 		for (var i:Number = 0; i < a.length; i++) {
 			if (i == a.length-1) {
-				return c.addClass(new ClassInfo(a[i], f, p));
+				return c.addClass(new ClassInfo(f, a[i], p));
 			} else {
 				g = g[a[i]];
-				p = c.addPackage(new PackageInfo(a[i], g, p));
+				p = c.addPackage(new PackageInfo(g, a[i], p));
 			}
 		}
 		return null;

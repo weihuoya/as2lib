@@ -26,8 +26,8 @@ import org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm;
  * PackageInfo represents a real package in the Flash environment. This
  * class is used to get specific information about the package it represents.
  *
- * <p>You can use the static search methods #forName and #forPackage to
- * get package infos for specific packages.
+ * <p>You can use the static search methods {@link #forName} and 
+ * {@link #forPackage} to get package infos for specific packages.
  *
  * <p>If you for example have a package you wanna get information about
  * you first must retrieve the appropriate PackageInfo instance and you
@@ -98,24 +98,27 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 */
 	public static function forPackage(package):PackageInfo {
 		if (package == null) return null;
-		return ReflectConfig.getPackageAlgorithm().execute(package);
+		return ReflectConfig.getCache().addPackage(new PackageInfo(package));
 	}
 	
 	/**
 	 * Constructs a new PackageInfo instance.
 	 *
-	 * <p>All arguments are allowed to be null, but keep in mind that if one is
-	 * not all methods function.
+	 * <p>Note that you do not have to pass-in the concrete package. But
+	 * if you do not pass it in some methods cannot do their job correctly.
+	 * 
+	 * <p>If you do not pass-in the name or the parent they get resolved
+	 * lazily when requested using the passed-in package.
 	 *
-	 * @param name the name of the package
 	 * @param package the actual package the PackageInfo shall represent
-	 * @param parent the PackageInfo representing the parent package
+	 * @param name (optional) the name of the package
+	 * @param parent (optional) the PackageInfo representing the parent package
 	 */
-	public function PackageInfo(name:String, 
-							  	package, 
+	public function PackageInfo(package,
+								name:String,  
 							  	parent:PackageInfo) {
-		this.name = name;
 		this.package = package;
+		this.name = name;
 		this.parent = parent;
 	}
 	
@@ -123,13 +126,13 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * Sets the algorithm used to find members.
 	 *
 	 * <p>If you pass an algorithm of value null or undefined,
-	 * #getPackageMemberAlgorithm() will return the default one.
+	 * {@link #getPackageMemberAlgorithm} will return the default one.
 	 *
-	 * <p>This algorithm is used by the #getMembers() method.
+	 * <p>This algorithm is used by the {@link #getMembers} method.
 	 *
 	 * @param packageMemberAlgorithm the new member algorithm to find members
 	 *
-	 * @see #getPackageMemberAlgorithm()
+	 * @see #getPackageMemberAlgorithm
 	 */
 	public function setPackageMemberAlgorithm(packageMemberAlgorithm:PackageMemberAlgorithm):Void {
 		this.packageMemberAlgorithm = packageMemberAlgorithm;
@@ -138,16 +141,16 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	/**
 	 * Returns the member algorithm used to find members of this package.
 	 *
-	 * <p>Either the algorithm set via #setPackageMemberAlgorithm() will be
+	 * <p>Either the algorithm set via {@link #setPackageMemberAlgorithm} will be
 	 * returned or the default member algorithm returned by the
-	 * ReflectConfig#getPackageMemberAlgorithm() method.
+	 * {@link ReflectConfig#getPackageMemberAlgorithm} method.
 	 *
 	 * <p>If you set an algorithm of value null or undefined the default
 	 * one will be used.
 	 *
 	 * @return the currently used member algorithm
 	 *
-	 * @see #setPackageMemberAlgorithm(PackageMemberAlgorithm)
+	 * @see #setPackageMemberAlgorithm
 	 */
 	public function getPackageMemberAlgorithm(Void):PackageMemberAlgorithm {
 		if (!packageMemberAlgorithm) packageMemberAlgorithm = ReflectConfig.getPackageMemberAlgorithm();
@@ -162,9 +165,10 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * name would be 'core'.
 	 *
 	 * @return the name of the package
-	 * @see #getFullName(Void):String
+	 * @see #getFullName
 	 */
 	public function getName(Void):String {
+		if (name === undefined) initNameAndParent();
 		return name;
 	}
 	
@@ -174,8 +178,8 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 *
 	 * <p>The path does not get included if:
 	 * <ul>
-	 *   <li>The #getParent method returns null or undefined.</li>
-	 *   <li>The #getParent method returns the root package, that means its #isRoot method returns true.</li>
+	 *   <li>The {@link #getParent} method returns null or undefined.</li>
+	 *   <li>The {@link #getParent} method returns the root package, that means its {@link #isRoot} method returns true.</li>
 	 * </ul>
 	 *
 	 * @return the full name of the package
@@ -208,12 +212,25 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * @return the parent of the represented package
 	 */
 	public function getParent(Void):PackageInfo {
+		if (parent === undefined) initNameAndParent();
 		return parent;
 	}
 	
 	/**
-	 * @overload #getMembersByFlag(Boolean):Array
-	 * @overload #getMembersByFilter(PackageMemberFilter):Array
+	 * Initializes the name and the parent of the represented package.
+	 *
+	 * <p>This is done using the result of an execution of the package algorithm
+	 * returned by {@link ReflectConfig#getPackageAlgorithm}.
+	 */
+	private function initNameAndParent(Void):Void {
+		var info = ReflectConfig.getPackageAlgorithm().execute(getPackage());
+		if (name === undefined) name = info.name == null ? null : info.name;
+		if (parent === undefined) parent = info.parent == null ? null : info.parent;
+	}
+	
+	/**
+	 * @overload #getMembersByFlag
+	 * @overload #getMembersByFilter
 	 */
 	public function getMembers():Array {
 		var o:Overload = new Overload(this);
@@ -236,8 +253,8 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 *
 	 * <p>Null will be returned if
 	 * <ul>
-	 *   <li>The #getPackage method returns null or undefined.</li>
-	 *   <li>The #getPackageMemberAlgorithm().execute method returns null or undefined.</li>
+	 *   <li>The {@link #getPackage} method returns null or undefined.</li>
+	 *   <li>The {@link #getPackageMemberAlgorithm}.execute method returns null or undefined.</li>
 	 * </ul>
 	 *
 	 * @param filterSubPackages (optional) determines whether the sub-packages'
@@ -268,17 +285,17 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * <p>The members of a package are all types and packages contained in
 	 * the represented package.
 	 *
-	 * <p>The PackageMemberFilter#filter(PackageMemberFilter):Boolean method
+	 * <p>The {@link PackageMemberFilter#filter} method
 	 * gets invoked for every package member to determine whether it shall
 	 * be contained in the result.
 	 *
 	 * <p>If the passed-in packageMemberFilter is null or undefined the
-	 * result of the invocation of #getMembersByFlag(Boolean):Array with
+	 * result of the invocation of {@link #getMembersByFlag} with
 	 * argument 'true' gets returned.
 	 *
 	 * <p>Null will be returned if
 	 * <ul>
-	 *   <li>The #getPackage method returns null or undefined.</li>
+	 *   <li>The {@link #getPackage} method returns null or undefined.</li>
 	 *   <li>The #getPackageMemberAlgorithm().execute method returns null or undefined.</li>
 	 * </ul>
 	 *
@@ -299,8 +316,8 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	}
 	
 	/**
-	 * @overload #getMemberClassesByFlag(Boolean):Array
-	 * @overload #getMemberClassesByFilter(PackageMemberFilter):Array
+	 * @overload #getMemberClassesByFlag
+	 * @overload #getMemberClassesByFilter
 	 */
 	public function getMemberClasses():Array {
 		var o:Overload = new Overload(this);
@@ -320,7 +337,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 *
 	 * <p>Null will be returned if
 	 * <ul>
-	 *   <li>The #getPackage method returns null or undefined.</li>
+	 *   <li>The {@link #getPackage} method returns null or undefined.</li>
 	 *   <li>The #getPackageMemberAlgorithm().execute method returns null or undefined.</li>
 	 * </ul>
 	 *
@@ -349,17 +366,17 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * class members of the package and sub-packages that do not get
 	 * filtered/excluded.
 	 *
-	 * <p>The PackageMemberFilter#filter(PackageMemberFilter):Boolean method
+	 * <p>The {@link PackageMemberFilter#filter} method
 	 * gets invoked for every member class to determine whether it shall
 	 * be contained in the result.
 	 *
 	 * <p>If the passed-in clasFilter is null or undefined the result of the
-	 * invocation of #getMemberClassesByFlag(Boolean):Array with argument
+	 * invocation of {@link #getMemberClassesByFlag} with argument
 	 * 'true' gets returned.
 	 *
 	 * <p>Null will be returned if
 	 * <ul>
-	 *   <li>The #getPackage method returns null or undefined.</li>
+	 *   <li>The {@link #getPackage} method returns null or undefined.</li>
 	 *   <li>The #getPackageMemberAlgorithm().execute method returns null or undefined.</li>
 	 * </ul>
 	 *
@@ -380,8 +397,8 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	}
 	
 	/**
-	 * @overload #getMemberPackagesByFlag(Boolean):Array
-	 * @overload #getMemberPackagesByFilter(PackageMemberFilter):Array
+	 * @overload #getMemberPackagesByFlag
+	 * @overload #getMemberPackagesByFilter
 	 */
 	public function getMemberPackages():Array {
 		var o:Overload = new Overload(this);
@@ -392,7 +409,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	}
 	
 	/**
-	 * Returns an array containing PackageInfo instances representing the
+	 * Returns an array containing {@link PackageInfo} instances representing the
 	 * member packages of the package and maybe the ones of the sub-packages.
 	 *
 	 * <p>If the passed-in argument filterSubPackages is null or undefined
@@ -401,7 +418,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 *
 	 * <p>Null will be returned if
 	 * <ul>
-	 *   <li>The #getPackage method returns null or undefined.</li>
+	 *   <li>The {@link #getPackage} method returns null or undefined.</li>
 	 *   <li>The #getPackageMemberAlgorithm().execute method returns null or undefined.</li>
 	 * </ul>
 	 *
@@ -426,21 +443,21 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	}
 	
 	/**
-	 * Returns an array containing PackageInfo instances representing the
+	 * Returns an array containing {@link PackageInfo} instances representing the
 	 * package members of the package and sub-packages that do not get
 	 * filtered/excluded.
 	 *
-	 * <p>The PackageMemberFilter#filter(PackageMemberFilter):Boolean method
+	 * <p>The {@link PackageMemberFilter#filter} method
 	 * gets invoked for every member package to determine whether it shall
 	 * be contained in the result.
 	 *
 	 * <p>If the passed-in packageFilter is null or undefined the result of the
-	 * invocation of #getMemberPackagesByFlag(Boolean):Array with argument
+	 * invocation of {@link #getMemberPackagesByFlag} with argument
 	 * 'true' gets returned.
 	 *
 	 * <p>Null will be returned if
 	 * <ul>
-	 *   <li>The #getPackage method returns null or undefined.</li>
+	 *   <li>The {@link #getPackage} method returns null or undefined.</li>
 	 *   <li>The #getPackageMemberAlgorithm().execute method returns null or undefined.</li>
 	 * </ul>
 	 *
@@ -461,8 +478,8 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	}
 	
 	/**
-	 * @overload #getMemberByName(String):PackageMemberInfo
-	 * @overload #getMemberByMember(*):PackageMemberInfo
+	 * @overload #getMemberByName
+	 * @overload #getMemberByMember
 	 */
 	public function getMember():PackageMemberInfo {
 		var o:Overload = new Overload(this);
@@ -472,14 +489,14 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	}
 	
 	/**
-	 * Returns the PackageMemberInfo corresponding to the name of the member.
+	 * Returns the package member info corresponding to the name of the member.
 	 *
 	 * <p>If the package member with the passed-in name cannot be found directly
 	 * in the represented package its sub-packages get searched through.
 	 *
 	 * <p>Null will be returned if:
 	 * <ul>
-	 *   <li>The #getMembers method returns null or undefined.</li>
+	 *   <li>The {@link #getMembers} method returns null or undefined.</li>
 	 *   <li>The passed-in name is null or undefined.</li>
 	 *   <li>There is no member with the passed-in name.</li>
 	 * </ul>
@@ -501,7 +518,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	}
 	
 	/**
-	 * Returns the PackageMemberInfo corresponding to the passed-in concrete
+	 * Returns the package member info corresponding to the passed-in concrete
 	 * member.
 	 *
 	 * <p>If the package member corresponding to the passed-in concrete member
@@ -510,7 +527,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 *
 	 * <p>Null will be returned if:
 	 * <ul>
-	 *   <li>The #getMembers method returns null or undefined.</li>
+	 *   <li>The {@link #getMembers} method returns null or undefined.</li>
 	 *   <li>The passed-in argument is null or undefined.</li>
 	 *   <li>The member could not be found.</li>
 	 * </ul>
@@ -528,8 +545,8 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	}
 	
 	/**
-	 * @overload #getMemberClassByName(String):ClassInfo
-	 * @overload #getMemberClassByClass(Function):ClassInfo
+	 * @overload #getMemberClassByName
+	 * @overload #getMemberClassByClass
 	 */
 	public function getMemberClass(clazz):ClassInfo {
 		var o:Overload = new Overload(this);
@@ -606,8 +623,8 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	}
 	
 	/**
-	 * @overload #getMemberPackageByName(String):PackageInfo
-	 * @overload #getMemberPackageByPackage(*):PackageInfo
+	 * @overload #getMemberPackageByName
+	 * @overload #getMemberPackageByPackage
 	 */
 	public function getMemberPackage(package):PackageInfo {
 		var o:Overload = new Overload(this);
@@ -625,7 +642,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * <p>Null will be returned if:
 	 * <ul>
 	 *   <li>The passed-in package name is null or undefined.</li>
-	 *   <li>The #getMemberPackages method returns null.</li>
+	 *   <li>The {@link #getMemberPackages} method returns null.</li>
 	 *   <li>There is no package with the given name.</li>
 	 * </ul>
 	 *
@@ -655,7 +672,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * <p>Null will be returned if:
 	 * <ul>
 	 *   <li>The passed-in concrete package is null or undefined.</li>
-	 *   <li>The #getMemberPackages method returns null.</li>
+	 *   <li>The {@link #getMemberPackages} method returns null.</li>
 	 *   <li>A package matching the passed-in concrete package could not be found.</li>
 	 * </ul>
 	 *
