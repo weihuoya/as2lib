@@ -51,8 +51,17 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 		stringifier = listStringifier;
 	}
 	
-	public function ArrayList(Void) {
-		data = new Array();
+	/**
+	 * Constructs a new ArrayList instance.
+	 *
+	 * @param source (optional) an array that contains values to populate the new list with
+	 */
+	public function ArrayList(source:Array) {
+		if (source) {
+			data = source.concat();
+		} else {
+			data = new Array();
+		}
 	}
 	
 	public function insert(value):Void {

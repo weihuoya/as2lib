@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.core.BasicClass;
-
+import org.as2lib.env.except.IllegalArgumentException;
 
 /**
  * Container for a lot of different Methods to work with strings.
@@ -354,4 +353,5 @@ class org.as2lib.util.StringUtil extends BasicClass {
 		
 		return w.join(" ");
 	}
+	
 }

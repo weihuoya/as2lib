@@ -51,4 +51,25 @@ class org.as2lib.data.holder.map.AbstractMap extends BasicClass {
 	private function AbstractMap(Void) {
 	}
 	
+	/**
+	 * Populates the map with the source's content.
+	 *
+	 * <p>Iterates over the passed-in source with the for..in
+	 * loop and uses the variables' names as key and their values as
+	 * value. Variables that are hidden from for..in loops will not be
+	 * added to the map.
+	 *
+	 * <p>It then uses the put(String, *):Void method to add the key
+	 * value pair.
+	 *
+	 * @param source an object that contains values to populate the new source with
+	 */
+	private function populate(source):Void {
+		if (source) {
+			for (var i:String in source) {
+				this["put"](i, source[i]);
+			}
+		}
+	}
+	
 }

@@ -33,11 +33,19 @@ class org.as2lib.data.holder.map.HashMap extends AbstractMap implements Map {
 	private var values:Array;
 	
 	/**
-	 * Constructs a new HashMap.
+	 * Constructs a new HashMap instance.
+	 *
+	 * <p>The map iterates over the passed-in source with the for..in
+	 * loop and uses the variables' names as key and their values as
+	 * value. Variables that are hidden from for..in loops will not be
+	 * added to the map.
+	 *
+	 * @param source (optional) an object that contains values to populate the new source with
 	 */
-	public function HashMap(Void) {
+	public function HashMap(source) {
 		keys = new Array();
 		values = new Array();
+		populate(source);
 	}
 
 	/**
