@@ -253,6 +253,9 @@ class org.as2lib.tool.changelog.node.EntryNode extends BasicClass {
 		var l:Number = content.length;
 		var i:Number;
 		for(i=0; i<l; i-=-1) {
+			if(i!=0) {
+				result += " ";
+			}
 			result += content[i].toHTML();
 		}
 		return result;
@@ -268,6 +271,9 @@ class org.as2lib.tool.changelog.node.EntryNode extends BasicClass {
 		var l:Number = content.length;
 		var i:Number;
 		for(i=0; i<l; i-=-1) {
+			if(i!=0) {
+				result += " ";
+			}
 			result += content[i].toString();
 		}
 		return result;

@@ -49,11 +49,16 @@ class org.as2lib.tool.changelog.node.ChangeThrowsNode extends BasicClass {
 	 * @return Entry as html.
 	 */
 	public function toHTML(Void):String {
+		var result:String = "<b>Changed thrown exception</b>";
 		if(from) {
-			return ("<b>"+to+"</b> gets thrown instead of <b>"+from+"</b> (<i>"+annotation+"</i>).");
-		} else {
-			return ("<b>"+to+"</b> gets thrown (<i>"+annotation+"</i>).");
+			result += " from <i>"+from+"</i>";
 		}
+		result += " to <i>"+to+"</i>";
+		if(annotation.length > 0) {
+			result += "("+annotation+")";
+		}
+		result += ".";
+		return result;
 	}
 	
 	/**
@@ -62,10 +67,15 @@ class org.as2lib.tool.changelog.node.ChangeThrowsNode extends BasicClass {
 	 * @return Entry as string.
 	 */
 	public function toString(Void):String {
+		var result:String = "Changed thrown exception";
 		if(from) {
-			return (to+" gets thrown instead of "+from+" ("+annotation+").");
-		} else {
-			return (to+" gets thrown ("+annotation+").");
+			result += " from "+from;
 		}
+		result += " to "+to;
+		if(annotation.length > 0) {
+			result += "("+annotation+")";
+		}
+		result += ".";
+		return result;
 	}
 }

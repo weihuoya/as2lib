@@ -49,12 +49,17 @@ class org.as2lib.tool.changelog.node.ChangeArgumentsNode extends BasicClass {
 	 * @return Entry as html.
 	 */
 	public function toHTML(Void):String {
-		var 
+		var result:String;
 		if(from) {
-			return ("<b>Arguments changed</b> from <i>"+from+"</i> to <i>"+to+"</i> ("+annotation+").");
+			result = "<b>Changed arguments</b> from <i>"+from+"</i> to <i>"+to+"</i>";
 		} else {
-			return ("<b>Arguments set</b> to <i>"+to+"</i> ("+annotation+").");
+			result = "<b>Set arguments</b> to <i>"+to+"</i>";
 		}
+		if(annotation.length > 0) {
+			result += "("+annotation+")";
+		}
+		result += ".";
+		return result;
 	}
 	
 	/**
@@ -63,10 +68,16 @@ class org.as2lib.tool.changelog.node.ChangeArgumentsNode extends BasicClass {
 	 * @return Entry as string.
 	 */
 	public function toString(Void):String {
+		var result:String;
 		if(from) {
-			return ("Arguments changed from "+from+" to "+to+" ("+annotation+").");
+			result = "Changed arguments from "+from+" to "+to+"";
 		} else {
-			return ("Arguments set to "+to+" ("+annotation+").");
+			result = "Set arguments to "+to+"";
 		}
+		if(annotation.length > 0) {
+			result += "("+annotation+")";
+		}
+		result += ".";
+		return result;
 	}
 }

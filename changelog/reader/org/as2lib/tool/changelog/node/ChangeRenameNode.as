@@ -49,7 +49,13 @@ class org.as2lib.tool.changelog.node.ChangeRenameNode extends BasicClass {
 	 * @return Entry as html.
 	 */
 	public function toHTML(Void):String {
-		return ("<b>Renamed</b> from <i>"+from+"</i> to <i>"+to+"</i> ("+annotation+").");
+		var result:String;
+		result = "<b>Renamed</b> "+from+" to "+to;
+		if(annotation.length > 0) {
+			result += "("+annotation+")";
+		}
+		result += ".";
+		return result;
 	}
 	
 	/**
@@ -58,6 +64,12 @@ class org.as2lib.tool.changelog.node.ChangeRenameNode extends BasicClass {
 	 * @return Entry as string.
 	 */
 	public function toString(Void):String {
-		return ("Renamed from "+from+" to "+to+" ("+annotation+").");
+		var result:String;
+		result = "Renamed "+from+" to "+to;
+		if(annotation.length > 0) {
+			result += "("+annotation+")";
+		}
+		result += ".";
+		return result;
 	}
 }

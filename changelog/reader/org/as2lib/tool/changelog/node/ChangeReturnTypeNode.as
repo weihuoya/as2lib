@@ -49,11 +49,17 @@ class org.as2lib.tool.changelog.node.ChangeReturnTypeNode extends BasicClass {
 	 * @return Entry as html.
 	 */
 	public function toHTML(Void):String {
+		var result:String;
 		if(from) {
-			return ("<b>Returntype canged</b> from <i>"+from+"</i> to <i>"+to+"</i> ("+annotation+").");
+			result = "<b>Changed return type</b> from <i>"+from+"</i> to <i>"+to+"</i>";
 		} else {
-			return ("<b>Returntype canged</b> to <i>"+to+"</i> ("+annotation+").");
+			result = "<b>Changed return type</b> to <i>"+to+"</i>";
 		}
+		if(annotation.length > 0) {
+			result += "("+annotation+")";
+		}
+		result += ".";
+		return result;
 	}
 	
 	/**
@@ -62,10 +68,16 @@ class org.as2lib.tool.changelog.node.ChangeReturnTypeNode extends BasicClass {
 	 * @return Entry as string.
 	 */
 	public function toString(Void):String {
+		var result:String;
 		if(from) {
-			return ("Returntype canged from "+from+" to "+to+" ("+annotation+").");
+			result = "Changed return type from "+from+" to "+to;
 		} else {
-			return ("Returntype canged to "+to+" ("+annotation+").");
+			result = "Changed return type to "+to;
 		}
+		if(annotation.length > 0) {
+			result += "("+annotation+")";
+		}
+		result += ".";
+		return result;
 	}
 }
