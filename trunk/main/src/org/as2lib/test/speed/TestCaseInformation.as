@@ -67,6 +67,6 @@ class org.as2lib.test.speed.TestCaseInformation {
 	 * @return name from the wrapped object.
 	 */
 	public function getName(Void):String {
-		return ReflectUtil.getClassInfo(Object(this.testCase)).getName();
+		return ReflectUtil.getClassInfo(this.testCase).getName();
 	}
 }

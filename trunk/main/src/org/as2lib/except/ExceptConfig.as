@@ -18,7 +18,7 @@ class org.as2lib.except.ExceptConfig extends BasicClass {
 	}
 	
 	public static function getOut(Void):OutAccess {
-		if (ObjectUtil.isEmpty(Object(out))) {
+		if (ObjectUtil.isEmpty(out)) {
 			return Config.getOut();
 		}
 		return out;

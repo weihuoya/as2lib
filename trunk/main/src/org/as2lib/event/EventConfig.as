@@ -14,7 +14,7 @@ class org.as2lib.event.EventConfig extends BasicClass {
 	}
 	
 	public static function getOut(Void):OutAccess {
-		if (ObjectUtil.isEmpty(Object(out))) {
+		if (ObjectUtil.isEmpty(out)) {
 			return Config.getOut();
 		}
 		return out;
