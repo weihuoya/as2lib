@@ -1,1 +1,3 @@
-Überarbeiten!!!!!!
+Hashtable toString() - Source out in util class with HashtableStringifier.
+
+Add new data holders.

@@ -2,23 +2,22 @@
 
 class org.as2lib.data.ArrayIterator implements Iterator {
 	private var target:Array;
-	private var currentIndex:Number;
+	private var index:Number;
 	
 	public function ArrayIterator(newTarget:Array) {
 		target = newTarget;
-		currentIndex = -1;
+		index = -1;
 	}
 	
 	public function hasNext(Void):Boolean {
-		return (currentIndex < target.length - 1);
+		return (index < target.length - 1);
 	}
 	
 	public function next(Void):Object {
-		return target[++currentIndex];
+		return target[++index];
 	}
 	
 	public function remove(Void):Void {
-		target.splice(currentIndex, 1);
-		currentIndex--;
+		target.splice(index--, 1);
 	}
 }
