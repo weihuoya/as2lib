@@ -16,11 +16,11 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
-import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
- * ObjectStringifier is the most basic form of Stringifiers. It stringifies all
- * kinds of objects.
+ * ObjectStringifier is the most basic form of Stringifiers. It stringifies
+ * all kinds of objects, that means classes, instances and primitives.
  *
  * @author Simon Wacker
  */
@@ -30,7 +30,7 @@ class org.as2lib.core.ObjectStringifier extends BasicClass implements Stringifie
 	 * @see org.as2lib.util.string.Stringifier
 	 */
 	public function execute(target):String {
-		return "[type " + ClassInfo.forObject(target).getFullName() + "]";
+		return "[type " + ReflectUtil.getClassName(target) + "]";
 	}
 	
 }

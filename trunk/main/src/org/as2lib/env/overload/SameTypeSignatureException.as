@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.env.overload.OverloadException;
-import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * SameTypeSignatureException is thrown when two or more OverloadHandlers have
@@ -63,12 +63,12 @@ class org.as2lib.env.overload.SameTypeSignatureException extends OverloadExcepti
 		// won't be displayed).
 		if (!asString) {
 			asString = message;
-			try {
-				var classInfo:ClassInfo = ClassInfo.forObject(overloadTarget);
-				asString += "\n  Overloaded Method: " + classInfo.getMethodByMethod(overloadedMethod);
-			} catch (e) {
-				if (classInfo.getConstructor().getMethod() == overloadedMethod) {
-					asString += "\n  Overloaded Method: " + classInfo.getConstructor();
+			var methodName:String = ReflectUtil.getMethodName(overloadedMethod, overloadTarget);
+			if (methodName) {
+				asString += "\n  Overloaded Method: " + (ReflectUtil.isMethodStatic(methodName, overloadTarget) ? "static " : "") + methodName;
+			} else {
+				if (ReflectUtil.isConstructor(overloadedMethod, overloadTarget)) {
+					asString += "\n  Overloaded Method: new";
 				}
 			}
 			asString += "\n  Used Arguments["+overloadArguments.length+"]: ";

@@ -17,13 +17,10 @@
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.except.ExceptConfig;
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.data.holder.Stack;
 import org.as2lib.data.holder.stack.SimpleStack;
-import org.as2lib.env.log.LoggerRepositoryManager;
-import org.as2lib.env.log.Logger;
 
 /**
  * AbstractThrowable is an abstract class that contains sourced out functionalities
@@ -35,8 +32,12 @@ import org.as2lib.env.log.Logger;
  */
 class org.as2lib.env.except.AbstractThrowable extends Error {
 	
-	/** Logger used to output the exception. */
-	private static var logger:Logger;
+	/** 
+	 * Logger used to output the exception.
+	 * Not typed because typing would add dependency on the logging module.
+	 * (org.as2lib.env.log)
+	 */
+	private static var logger;
 	
 	/** The saved stack of operation calls. */
 	private var stackTrace:Stack;
@@ -48,10 +49,28 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	private var message:String;
 	
 	/**
-	 * @return logger used to output the exception
+	 * Returns the logger used to output the exception.
+	 *
+	 * <p>This method's return type is not specified because this would
+	 * introduce dependency on the logging module (org.as2lib.env.log).
+	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The logging module is not included.</li>
+	 *   <li>The logger repository's getLogger-method returns null.</li>
+	 * </ul>
+	 * 
+	 * @return the logger used to output the exception
 	 */
-	private static function getLogger(Void):Logger {
-		if (!logger) logger = LoggerRepositoryManager.getRepository().getLogger("org.as2lib.env.except.Throwable");
+	private static function getLogger(Void) {
+		if (logger === undefined) {
+			var repositoryManager = eval("_global." + "org.as2lib.env.log.LoggerRepositoryManager");
+			if (repositoryManager) {
+				logger = repositoryManager.getRepository().getLogger("org.as2lib.env.except.Throwable");
+			} else {
+				logger = null;
+			}
+		}
 		return logger;
 	}
 	
@@ -110,15 +129,6 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	 */
 	public function getMessage(Void):String {
 		return message;
-	}
-	
-	/**
-	 * Uses the ReflectUtil#getClassInfo() operation to fulfill the task.
-	 *
-	 * @see org.as2lib.core.BasicInterface#getClass()
-	 */
-	public function getClass(Void):ClassInfo {
-		return ClassInfo.forInstance(this);
 	}
 	
 }

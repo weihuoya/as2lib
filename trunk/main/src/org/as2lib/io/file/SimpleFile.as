@@ -23,6 +23,7 @@ import org.as2lib.io.file.FileListener;
 import org.as2lib.io.file.FileEventInfo;
 import org.as2lib.io.file.FileNotLoadedException;
 import org.as2lib.util.StringUtil;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * Default implementation of a file used within ActionScript.
@@ -295,9 +296,9 @@ class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
 	 */
 	public function toString(Void):String {
 		var result:String;
-		result = "[type "+getClass().getFullName()
-				 + " | Location: "+getLocation()
-				 + "; Size: "+new ByteFormat(getBytesTotal()).toString(false, 2)
+		result = "[type " + ReflectUtil.getClassNameForInstance(this)
+				 + " | Location: " + getLocation()
+				 + "; Size: " + new ByteFormat(getBytesTotal()).toString(false, 2)
 				 + "; ]";
 		return result;
 	}

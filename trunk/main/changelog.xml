@@ -5,6 +5,10 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="1">
+         <day value="25>
+           <entry type="add" package="org.as2lib.env.reflect" class="ReflectUtil">Offers lightweight reflection support. It has no dependence on any other as2lib module. That means if you use it no other modules will be included.</entry>
+           <entry type="remove" package="org.as2lib.core" class="BasicInterface" method="getClass(Void):ClassInfo">Removed method to remove dependency on reflection module (org.as2lib.env.reflect).</entry>
+         </day>
          <day value="24">
            <entry type="change" package="org.as2lib.env.except" class="StackTraceElement" method="getThrower(Void):ClassInfo">Changed return type to *.</entry>
            <entry type="change" package="org.as2lib.env.except" class="StackTraceElement" method="getMethod(Void):MethodInfo">Changed return type to Function.</entry>

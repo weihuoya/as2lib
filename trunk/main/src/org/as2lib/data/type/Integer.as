@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.data.type.NumberFormatException;
 
 /**
@@ -62,13 +61,5 @@ class org.as2lib.data.type.Integer extends Number implements BasicInterface {
 	public function toString(Void):String {
 		return int.toString();
 	}
-	
-	/**
-	 * Uses the ReflectUtil#getClassInfo() operation to fulfill the task.
-	 *
-	 * @see org.as2lib.core.BasicInterface#getClass()
-	 */
-	public function getClass(Void):ClassInfo {
-		return ClassInfo.forInstance(this);
-	}
+
 }

@@ -15,8 +15,6 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.reflect.MethodInfo;
 
 /**
  * StackTraceElement represents an element in the stack trace returned by

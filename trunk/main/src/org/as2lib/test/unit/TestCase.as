@@ -26,6 +26,7 @@ import org.as2lib.test.unit.TestRunner;
 import org.as2lib.util.Call;
 import org.as2lib.util.ClassUtil;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.env.reflect.ClassInfo;
 
 /**
  * Basic Testcase class to be extended.
@@ -222,7 +223,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		if(!doNotPrintResult) {
 			 doNotPrintResult = false;
 		}
-		return new TestRunner().run(ClassUtil.createCleanInstance(getClass().getType()), doNotPrintResult);
+		return new TestRunner().run(ClassUtil.createCleanInstance(ClassInfo.forInstance(this).getType()), doNotPrintResult);
 	}
 	
 	/**

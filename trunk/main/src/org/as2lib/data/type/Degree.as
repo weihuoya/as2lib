@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.data.type.Angle;
-import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.util.ObjectUtil;
 
 /**
@@ -62,15 +61,6 @@ class org.as2lib.data.type.Degree extends Number implements Angle {
 	 */
 	public function toDegree(Void):Number {
 		return degree;
-	}
-	
-	/**
-	 * Uses the ReflectUtil#getClassInfo() operation to fulfill the task.
-	 *
-	 * @see org.as2lib.core.BasicInterface#getClass()
-	 */
-	public function getClass(Void):ClassInfo {
-		return ClassInfo.forInstance(this);
 	}
 	
 	/**

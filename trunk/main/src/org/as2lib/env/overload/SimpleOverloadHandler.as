@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.overload.OverloadHandler;
-import org.as2lib.util.ObjectUtil;
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.util.ObjectUtil;
+import org.as2lib.env.overload.OverloadHandler;
 import org.as2lib.env.overload.SameTypeSignatureException;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * SimpleOverloadHandler is a default implementation of the OverloadHandler
@@ -148,16 +148,16 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 		var result:String = "[object SimpleOverloadHandler";
 		var l:Number = args.length;
 		if(l > 0) {
-			result += " (";
+			result += "(";
 		}
 		for(var i:Number = 0; i < l; i++) {
 			if(i != 0) {
 				result += ", ";
 			}
-			result += ClassInfo.forObject(args[i]).getName();
+			result += ReflectUtil.getClassName(args[i]);
 		}
 		if(l > 0) {
-			result += ") ";
+			result += ")";
 		}
 		return result + "]";
 	}
