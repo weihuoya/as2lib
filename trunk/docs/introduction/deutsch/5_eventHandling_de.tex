@@ -1,0 +1,54 @@
+\chapter{Event Handling}
+\label{sec:EventHandling}
+
+\paragraph{Beweggrund:}
+Ereignisse(\emph{Events}) brauchen in {\sl Flash} sehr viel Rechenleistung und sind ein grundlegender Bestandteil bei der Entwicklung von Benutzeroberflächen. Viele Entwickler verwenden den in {\sl Flash} inkludierten \emph{AsBroadcaster}\footnote{Nicht dokumentiertes Feature von Flash MX 2004} oder die \emph{EventDispatcher}\footnote{mx.events.EventDispatcher} Klasse von {\sl Macromedia} für diese Problematik. Jedoch gibt es weder genaue Spezifikationen für \emph{EventListener} noch für einzelne Events und deren Übergabewerte.
+Die Festlegung von Schnittstellen über Interfaces ist für eine "`saubere"' Programmierung unumgänglich. Es fehlen unter anderem für Entwickler von \emph{Listenern}(Objekte die auf bestimmte Events warten) wichtige Informationen bezüglich Events und der Übergabeparameter.
+
+\paragraph{Lösungsansatz:}
+
+Um zu einer Lösung zu gelangen müssen folgende Probleme bewältigt werden:
+
+\begin{itemize}
+	\item Der Objektentwickler muss definieren, welche Events abgewartet werden können.
+	\item Der Listenerentwickler muss alle Events definieren.
+	\item Der Objektentwickler muss die Möglichkeit haben, Events auszulösen.
+	\item Der Objektentwickler sollte genauere Informationen einem Event hinzufügen können.
+\end{itemize}
+Die {\sl as2lib} unterstützt \emph{Event Handling}, da es ein Kernstück der Applikationsentwicklung ist. Verwendet man direkt den Flash internen \emph{AsBroadcaster} kann es zu einer ineffizienten Implementierung kommen. Der \emph{EventDispatcher} von {\sl Macromedia} ist nicht frei zugänglich, kann also nur verwendet werden wenn man {\sl Macromedia Flash} käuflich erworben hat, und stellt nicht alle benötigten Funktionalitäten zur Verfügung.
+
+Das wichtigste Interface des \emph{event} Packages mit der man als Entwickler in Berührung kommt ist der \emph{EventBroadcaster}\footnote{org.as2lib.env.event.EventBroadcaster}. Es können mehrere Listener(Zuhörer) zum EventBroadcaster(Ereignissverteiler) hinzugefügt,
+\begin{lstlisting}[frame=single]
+addListener(listener:EventListener)
+\end{lstlisting}
+aber auch wieder entfernt werden.
+\begin{lstlisting}[frame=single]
+removeListener(listener:EventListener)
+\end{lstlisting}
+Wie man in den Methodenaufrufen erkennen kann müssen die Listener Objekte das EventListener Interface implementieren. Für eigene Projekte empfiehlt es sich ein eigenes EventListener Interface zu erstellen.
+
+Möchte man den \emph{EventBroadcaster} verwenden kann man seine Funktionalitäten einfach nach folgender Methode
+erwerben, siehe Abb.\ \ref{fig:as2libeventhandling}, S.\ \pageref{fig:as2libeventhandling}. Diese Abbildung zeigte eine einfach Anwendung des {\sl as2lib} Event Handlings. Es werden bis auf den SimpleEventListener nur Klassen der {\sl as2lib} verwendet.
+
+\begin{lstlisting}[frame=single][caption=SimpleEventListener]
+import org.as2lib.env.event.EventListener;
+import org.as2lib.core.BasicClass;
+
+class edu.diplomarbeit.listener.SimpleEventListener 
+	extends BasicClass implements EventListener {
+	
+	public function onTest(){
+		trace("onTest");
+	}
+}
+\end{lstlisting}
+
+Die einzelnen Schritte des as2lib EventHandlings werden durch die nummerierten Pfeile dargestellt.
+
+\begin{figure}
+\begin{center}
+\includegraphics{eventhandling.eps}
+\caption{Ablauf eines einfachen Event Handling Beispiels.}
+\label{fig:as2libeventhandling}
+\end{center}
+\end{figure}

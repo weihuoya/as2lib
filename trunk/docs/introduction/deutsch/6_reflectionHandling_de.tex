@@ -1,0 +1,48 @@
+\chapter{Reflections}
+\label{sec:Reflections}
+
+\paragraph{Beweggrund:}
+
+In Java ist es möglich Informationen über den Namen der Klasse, deren Methoden und Eigenschaften über Reflections zu ermitteln. Diese eingebaute Funktionalität von Java ist in {\sl Flash} bzw. {\sl Actionscript 2} nicht integriert und wird deshalb von der {\sl as2lib} unterstützt.
+
+\paragraph{Lösungsansatz:}
+Um diese Funktionalitäten in {\sl Flash} verwenden zu können wurden die Reflections nach folgendem Schema implementiert.
+Ausgehend vom Namensbereich \emph{\_global} wird die Actionscript Klassenstruktur durchsucht. Wird ein Objekt gefunden, wird es als Package erkannt. Ein Unterobjekt vom Typ Function wird als Klasse gekennzeichntet.
+
+Eine der vielen Anwendungen von Reflections in der {\sl as2lib} ist zB.: die \emph{BasicClass}, siehe Kapitel \ref{sec:CorePackage}. Die Methode \emph{getClass}, der BasicClass greift auf die Methode \emph{getClassInfo} der ReflectUtil\footnote{org.as2lib.env.util.ReflectUtil} Klasse zu und gibt ein \emph{ClassInfo} Objekt zurück, dass alle wichtigen Informationen der Klasse zur Verfügung stellt. Das \emph{reflect}\footnote{org.as2lib.env.reflect} Package arbeitet mit unterschiedlichen Algorithmen um an die Klasseninformationen zu gelangen. Die Sammlung aller Algorithmen befindet sich im \emph{algorythm}\footnote{org.as2lib.env.reflect.algorythm} Package der \emph{as2lib}. Die Funktionaliäten der Reflections können auch direkt über die \emph{ReflectUtil} Klasse verwendet werden.
+\begin{lstlisting}[frame=single]
+import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.ClassInfo;
+import edu.test.TestClass;
+
+var aClass:TestClass = new TestClass();
+var aClassInfo:ClassInfo = ReflectUtil.getClassInfo(
+				aClass);
+\end{lstlisting}
+Das erzeugte Objekt vom Typ \emph{ClassInfo} beinhaltet Methoden um genauere Informationen der Klasse zu erhalten.
+Seine Methoden sind:
+
+\begin{itemize}
+	\item \textbf{getName(}):\textit{String} - Name der Klasse z.B.: "`TestClass"'.
+	\item \textbf{getFullName()}:\textit{String} - Name der Klasse inklusive Packageinformationen z.B.: "`edu.test.TestClass"'.
+	\item \textbf{getRepresentedClass()}:\textit{Function} - Klasse zu der die Klasseninformation erstellt wurde.
+	\item \textbf{getConstructor()}: \textit{ConstructorInfo} - Gibt Konstruktor der Klasse als ConstructorInfo zurück.
+	\item \textbf{getSuperClass(}):\textit{ClassInfo} - Informationen zur Vaterklasse, falls vorhanden.
+	\item \textbf{newInstance(}) - Neue Instanz der Klasse zu der die Klasseninformation erstellt wurde.
+	\item \textbf{getParent()}:\textit{PackageInfo} - Informationen zum Package in dem sich die Klasse befindet.
+	\item \textbf{getMethods()}:\textit{Map} - Map, siehe Kapitel \ref{sec:DataHolding}, die Informationen zu den einzelnen Methoden der Klasse beinhaltet.
+	\item \textbf{getMethod(methodName:String)}:\textit{MethodInfo} - Gibt Information zur Methode dessen Name übergeben wurde als MethodInfo zurück.
+	\item \textbf{getMethod(concreteMethod:Function)}:\textit{MethodInfo} - Gibt Information zur Methode die übergeben wurde als MethodInfo zurück.
+	\item \textbf{getProperties()}:\textit{HashMap} - HashMap, die Informationen zu den einzelnen Eigenschaften, falls sie eine get set Methode besitzen zurückliefert.
+	\item \textbf{getProperty(propertyName:String)}:\textit{PropertyInfo} - Gibt Information zur Eigenschaft dessen Name übergeben wurde als PropertyInfo zurück.
+	\item \textbf{getProperty(concreteProperty:Function)}:\textit{PropertyInfo} - Gibt Information zur Eigenschaft die übergeben wurde als PropertyInfo zurück.
+\end{itemize}
+Die Verknüpfungen der einzelnen Info Klassen zeigt die Abbildung \ref{fig:as2libreflect} auf Seite \pageref{fig:as2libreflect}.
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics{reflect.eps}
+\caption{Hierarchie der Info Klassen im \emph{reflect} Package}
+\label{fig:as2libreflect}
+\end{center}
+\end{figure}
+

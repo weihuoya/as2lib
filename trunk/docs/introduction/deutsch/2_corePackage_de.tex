@@ -1,0 +1,37 @@
+\chapter{Core Package}
+\label{sec:CorePackage}
+
+\paragraph{Beweggrund:}
+Das Festlegen und zur Verfügung stellen gewisser Funktionalitäten in allen Klassen vereinfacht die Entwicklung und Fehlerbehebung während der Entwicklung.
+
+\paragraph{Lösungsansatz:}
+Alle Klassen, Interfaces und Packages der {\sl as2lib} unterliegen gewissen Vorgaben. Die wichtigsten Kernklassen befinden sich im \emph{\textbf{core}-Package}.
+
+\section{BasicInterface}
+\label{sec:BasicInterface}
+
+Zur besseren Definition von Klassenfunktionalitäten wird in der {\sl as2lib} intensiv von \emph{Interfaces} Gebrauch gemacht. Jedes erstellte Interface der {\sl as2lib} erweitert das \emph{BasicInterface}, um folgende Funktionalität in jeder {\sl as2lib} Klasse sicherzustellen:
+
+\begin{itemize}
+	\item \textbf{getClass()}:\textit{ClassInfo} - Diese Methode liefert genauere Informationen zur Klasse, in der diese Funktion aufgerufen wird. Die zurückgegebene Information ist vom Typ \emph{ClassInfo} und beinhaltet zusätzlich deren Klassennamen, Informationen wie Methoden, Eigenschaften, Klassenpfad und Superklasse.
+	\item \textbf{toString()}:\textit{String} - Diese Methode gibt einen String der die Klasse repräsentiert zurück.
+\end{itemize}
+
+Die Logik der \emph{getClass} Methode wird in der \emph{BasicClass} Klasse zur Verfügung gestellt (siehe Abb.\  \ref{fig:corepackage}, S.\ \pageref{fig:corepackage}).
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics{core.eps}
+\caption{Hauptbestandteile des \emph{core} Packages}
+\label{fig:corepackage}
+\end{center}
+\end{figure}
+
+\section{BasicClass}
+\label{sec:BasicClass}
+Die Grundklasse der {\sl as2lib} ist die \emph{BasicClass} Klasse. Alle Klassen der {\sl as2lib} sind direkt oder indirekt von der \emph{BasicClass} Klasse abgeleitet. Sie implementiert das \emph{BasicInterface} und stellt über die \emph{ReflectUtil}\footnote{org.as2lib.env.util.ReflectUtil} Klasse und die \emph{ObjectUtil}\footnote{org.as2lib.util.ObjectUtil} Klasse  die Logik für folgende Methoden zur Verfügung:
+
+\begin{itemize}
+	\item \textbf{getClass()}:\textit{ClassInfo} - Erklärung siehe BasicInterface. Das Erstellen der Klasseninformationen wird durch das {\sl as2lib} \emph{reflection} Package, siehe Kapitel \ref{sec:Reflections}, ermöglicht.
+	\item \textbf{toString()}:\textit{String} - Diese Methode liefert eine Darstellung der Klasse, vom Typ String, zurück. 
+\end{itemize}
