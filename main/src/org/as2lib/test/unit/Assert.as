@@ -356,7 +356,7 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isNotNull
 	 * @see #isNotNullWithoutMessage
 	 * 
-	 * @throws AssertIsNotNullException if the assertion fails.
+	 * @throws AssertIsNullException if the assertion fails.
 	 * @param message	Message to be displayed if an error occurs
 	 * @param var1 Variable that should be null.
 	 */
@@ -417,6 +417,58 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 			throw new AssertIsNotNullException(message, eval("th"+"is"), arguments);
 		}
 	}
+
+	/**
+	 * overload
+	 * @see #isUndefinedWithoutMessage
+	 * @see #isUndefinedWithMessage
+	 */
+	public static function isUndefined():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that);
+		overload.addHandler([String, undefined], isUndefinedWithMessage);
+		overload.addHandler([String, Object], isUndefinedWithMessage);
+		overload.addHandler([Object], isUndefinedWithoutMessage);
+		overload.addHandler([undefined], isUndefinedWithoutMessage);
+		overload.addHandler([], isUndefinedWithoutMessage);
+		overload.forward(arguments);
+	}
+	
+	/**
+	 * Checks that a variable is a reference to undefined.
+	 * Checks with a === that a variable is undefined.
+	 *
+	 * @see #isUndefined
+	 * @see #isUndefinedWithMessage
+	 * @see #isNotUndefined
+	 * @see #isNotUndefinedWithoutMessage
+	 * @see #isNotUndefinedWithMessage
+	 * 
+	 * @throws AssertIsNullException if the assertion fails.
+	 * @param var1 Variable that should be null
+	 */
+	public static function isUndefinedWithoutMessage (var1):Void {
+		isUndefinedWithMessage ("", var1);
+	}
+	
+	/**
+	 * Appends a Message to @see #isUndefined.
+	 *
+	 * @see #isUndefined
+	 * @see #isUndefinedWithMessage
+	 * @see #isUndefinedWithMessage
+	 * @see #isNotUndefined
+	 * @see #isNotUndefinedWithoutMessage
+	 * 
+	 * @throws AssertIsUndefinedException if the assertion fails.
+	 * @param message	Message to be displayed if an error occurs
+	 * @param var1 Variable that should be undefined.
+	 */
+	public static function isUndefinedWithMessage (message:String, var1):Void {
+		if(var1 !== undefined) {
+			throw new AssertIsUndefinedException(message, eval("th"+"is"), arguments, var1);
+		}
+	}
 	
 	/**
 	 * overload
@@ -463,52 +515,7 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 			//addError("isNotUndefined failed: "+var1+" message: "+message);
 		}
 	}
-	
-	/**
-	 * overload
-	 * @see #isUndefinedWithMessage
-	 * @see #isUndefinedWithoutMessage
-	 * /
-	private static function isUndefined():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, Object], isUndefinedWithMessage);
-		overload.addHandler([Object], isUndefinedWithoutMessage);
-		overload.forward(arguments);
-	}
-	
-	/**
-	 * Asserts if an Var is undefined.
-	 *
-	 * @see #isNotUndefined
-	 * @see #isNotUndefinedWithoutMessage
-	 * @see #isNotUndefinedWithMessage
-	 * @see #isUndefined
-	 * @see #isUndefinedWithMessage
-	 * 
-	 * @param var1	Var that should be Undefined.
-	 * /
-	private static function isUndefinedWithoutMessage (var1):Void {
-		isUndefinedWithMessage("", var1);
-	}
-	
-	/**
-	 * Adds a Message to #isUndefined.
-	 *
-	 * @see #isNotUndefined
-	 * @see #isNotUndefinedWithoutMessage
-	 * @see #isNotUndefinedWithMessage
-	 * @see #isUndefined
-	 * @see #isUndefinedWithoutMessage
-	 * 
-	 * @param message	Message to be displayed if an error occures
-	 * @param var1		Var that should not be Undefined.
-	 * /
-	private static function isUndefinedWithMessage (message:String, var1):Void {
-		if(var1 != undefined) {
-			//addError("isUndefined failed: "+var1+" message: "+message);
-		}
-	}
+
 	
 	/**
 	 * overload
