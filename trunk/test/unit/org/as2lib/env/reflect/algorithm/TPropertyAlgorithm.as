@@ -57,34 +57,40 @@ class org.as2lib.env.reflect.algorithm.TPropertyAlgorithm extends TestCase {
 		var p:ClassInfo = pc.getMock();
 		p.getType();
 		pc.setReturnValue(org.as2lib.env.reflect.treflect.SubClass);
+		p.getFullName();
+		pc.setDefaultReturnValue("lo");
 		pc.replay();
 		
 		var a:PropertyAlgorithm = new PropertyAlgorithm();
 		var c:Array = a.execute(p);
 		assertNotNull("property array should not be null", c);
 		assertSame("there should be 4 properties", c.length, 4);
+		assertSame(PropertyInfo(c["setOnlyProperty"]).getSetter().getMethod(), org.as2lib.env.reflect.treflect.SubClass.prototype["__set__setOnlyProperty"]);
+		assertSame(PropertyInfo(c["getOnlyProperty"]).getGetter().getMethod(), org.as2lib.env.reflect.treflect.SubClass.prototype["__get__getOnlyProperty"]);
+		assertSame(PropertyInfo(c["setAndGetProperty"]).getSetter().getMethod(), org.as2lib.env.reflect.treflect.SubClass.prototype["__set__setAndGetProperty"]);
+		assertSame(PropertyInfo(c["staticSetAndGetProperty"]).getSetter().getMethod(), org.as2lib.env.reflect.treflect.SubClass["__set__staticSetAndGetProperty"]);
 		for (var i:Number = 0; i < c.length; i++) {
 			var k:PropertyInfo = c[i];
 			if (k.getName() == "setOnlyProperty") {
-				assertSame("setOnlyProperty: setter", k.getSetter().getMethod(),org.as2lib.env.reflect.treflect.SubClass.prototype["__set__" + k.getName()]);
+				assertSame("setOnlyProperty: setter", k.getSetter().getMethod(), org.as2lib.env.reflect.treflect.SubClass.prototype["__set__" + k.getName()]);
 				// Souldn't it be null?
 				assertEmpty("setOnlyProperty: getter", k.getGetter());
 				assertFalse("setOnlyProperty: static", k.isStatic());
 				assertSame("setOnlyProperty: type", k.getDeclaringType(), p);
 			} else if (k.getName() == "getOnlyProperty") {
-				assertSame("getOnlyProperty: getter", k.getGetter().getMethod(),org.as2lib.env.reflect.treflect.SubClass.prototype["__get__" + k.getName()]);
+				assertSame("getOnlyProperty: getter", k.getGetter().getMethod(), org.as2lib.env.reflect.treflect.SubClass.prototype["__get__" + k.getName()]);
 				// Souldn't it be null?
 				assertEmpty("getOnlyProperty: setter", k.getSetter());
 				assertFalse("getOnlyProperty: static", k.isStatic());
 				assertSame("getOnlyProperty: type", k.getDeclaringType(), p);
 			} else if (k.getName() == "setAndGetProperty") {
-				assertSame("setAndGetProperty: setter", k.getSetter().getMethod(),org.as2lib.env.reflect.treflect.SubClass.prototype["__set__" + k.getName()]);
-				assertSame("setAndGetProperty: getter", k.getGetter().getMethod(),org.as2lib.env.reflect.treflect.SubClass.prototype["__get__" + k.getName()]);
+				assertSame("setAndGetProperty: setter", k.getSetter().getMethod(), org.as2lib.env.reflect.treflect.SubClass.prototype["__set__" + k.getName()]);
+				assertSame("setAndGetProperty: getter", k.getGetter().getMethod(), org.as2lib.env.reflect.treflect.SubClass.prototype["__get__" + k.getName()]);
 				assertFalse("setAndGetProperty: static", k.isStatic());
 				assertSame("setAndGetProperty: type", k.getDeclaringType(), p);
 			} else if (k.getName() == "staticSetAndGetProperty") {
-				assertSame("staticSetAndGetProperty: setter", k.getSetter().getMethod(),org.as2lib.env.reflect.treflect.SubClass["__set__" + k.getName()]);
-				assertSame("staticSetAndGetProperty: getter", k.getGetter().getMethod(),org.as2lib.env.reflect.treflect.SubClass["__get__" + k.getName()]);
+				assertSame("staticSetAndGetProperty: setter", k.getSetter().getMethod(), org.as2lib.env.reflect.treflect.SubClass["__set__" + k.getName()]);
+				assertSame("staticSetAndGetProperty: getter", k.getGetter().getMethod(), org.as2lib.env.reflect.treflect.SubClass["__get__" + k.getName()]);
 				assertTrue("staticSetAndGetProperty: static", k.isStatic());
 				assertSame("staticSetAndGetProperty: type", k.getDeclaringType(), p);
 			} else {

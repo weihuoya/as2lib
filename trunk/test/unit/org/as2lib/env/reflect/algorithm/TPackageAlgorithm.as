@@ -20,6 +20,7 @@ import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.reflect.algorithm.PackageAlgorithm;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.Cache;
+import org.as2lib.env.reflect.SimpleCache;
 import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.ReflectConfig;
 
@@ -97,6 +98,94 @@ class org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestCase {
 		assertSame("name of p2 should be 'core'", p2.getName(), "as2lib");
 		assertSame("actual package of p1 should be org.as2lib.core", p1.getPackage(), _global.org.as2lib.core);
 		assertSame("actual package of p2 should be org.as2lib", p2.getPackage(), _global.org.as2lib);
+	}
+	
+	public function testExecuteByNameWithNullName(Void):Void {
+		var cc:MockControl = new MockControl(Cache);
+		var c:Cache = cc.getMock();
+		cc.replay();
+		
+		var a:PackageAlgorithm = new PackageAlgorithm();
+		assertNull(a.executeByName(null));
+		assertNull(a.executeByName(undefined));
+		assertNull(a.executeByName());
+		
+		cc.verify();
+	}
+	
+	public function testExecuteByNameWithCachedPackageInfo(Void):Void {
+		var rc:MockControl = new MockControl(PackageInfo);
+		var r:PackageInfo = rc.getMock();
+		r.getFullName();
+		rc.setReturnValue("_global");
+		rc.replay();
+		
+		var ic:MockControl = new MockControl(PackageInfo);
+		var i:PackageInfo = ic.getMock();
+		ic.replay();
+		
+		var cc:MockControl = new MockControl(Cache);
+		var c:Cache = cc.getMock();
+		c.getRoot();
+		cc.setReturnValue(r);
+		c.getPackage(org.as2lib.core);
+		cc.setReturnValue(i);
+		cc.replay();
+		
+		var a:PackageAlgorithm = new PackageAlgorithm();
+		a.setCache(c);
+		assertSame(a.executeByName("org.as2lib.core"), i);
+		
+		cc.verify();
+		ic.verify();
+		rc.verify();
+	}
+	
+	public function testExecuteByNameWithIllegalName(Void):Void {
+		var rc:MockControl = new MockControl(PackageInfo);
+		var r:PackageInfo = rc.getMock();
+		r.getFullName();
+		rc.setReturnValue("_global");
+		rc.replay();
+		
+		var cc:MockControl = new MockControl(Cache);
+		var c:Cache = cc.getMock();
+		c.getRoot();
+		cc.setReturnValue(r);
+		cc.replay();
+		
+		var a:PackageAlgorithm = new PackageAlgorithm();
+		a.setCache(c);
+		assertNull(a.executeByName("org.as2lib.unknownpackage"));
+		
+		cc.verify();
+		rc.verify();
+	}
+	
+	public function testExecuteByName(Void):Void {
+		_global.org.as2lib.core.textexecutebynamepackage = {};
+		
+		var rc:MockControl = new MockControl(PackageInfo);
+		var r:PackageInfo = rc.getMock();
+		r.getFullName();
+		rc.setReturnValue("_global");
+		r.getPackage();
+		rc.setReturnValue(_global, 2);
+		r.isRoot();
+		rc.setDefaultReturnValue(true);
+		rc.replay();
+		
+		var a:PackageAlgorithm = new PackageAlgorithm();
+		a.setCache(new SimpleCache(r));
+		var i:PackageInfo = a.executeByName("org.as2lib.core.textexecutebynamepackage");
+		assertSame(i.getName(), "textexecutebynamepackage");
+		assertSame(i.getFullName(), "org.as2lib.core.textexecutebynamepackage");
+		assertSame("wrong package ", i.getPackage(), _global.org.as2lib.core.textexecutebynamepackage);
+		assertSame(i.getParent().getFullName(), "org.as2lib.core");
+		assertSame("wrong parent package", i.getParent().getPackage(), _global.org.as2lib.core);
+		assertSame("wrong root package", i.getParent().getParent().getParent().getParent(), r);
+		
+		rc.verify();
 	}
 	
 }

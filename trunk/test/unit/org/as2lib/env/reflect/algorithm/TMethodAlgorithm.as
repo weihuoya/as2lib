@@ -65,6 +65,10 @@ class org.as2lib.env.reflect.algorithm.TMethodAlgorithm extends TestCase {
 		var c:Array = a.execute(p);
 		assertNotNull("method array should not be null", c);
 		assertSame("there should be 4 methods", c.length, 4);
+		assertSame(MethodInfo(c["publicMethod"]).getMethod(), org.as2lib.env.reflect.treflect.SubClass.prototype.publicMethod);
+		assertSame(MethodInfo(c["privateMethod"]).getMethod(), org.as2lib.env.reflect.treflect.SubClass.prototype["private" + "Method"]);
+		assertSame(MethodInfo(c["publicStaticMethod"]).getMethod(), org.as2lib.env.reflect.treflect.SubClass.publicStaticMethod);
+		assertSame(MethodInfo(c["privateStaticMethod"]).getMethod(), org.as2lib.env.reflect.treflect.SubClass["private" + "StaticMethod"]);
 		for (var i:Number = 0; i < c.length; i++) {
 			var k:MethodInfo = c[i];
 			if (k.getName() == "publicMethod") {
@@ -102,7 +106,6 @@ class org.as2lib.env.reflect.algorithm.TMethodAlgorithm extends TestCase {
 		var c:Array = a.execute(p);
 		assertNotNull("method array should not be null", c);
 		assertSame("there should be no methods", c.length, 0);
-		trace(c[0].getName());
 		
 		pc.verify();
 	}
