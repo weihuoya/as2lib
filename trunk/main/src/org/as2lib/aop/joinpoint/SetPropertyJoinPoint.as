@@ -9,7 +9,7 @@ class org.as2lib.aop.joinpoint.SetPropertyJoinPoint extends PropertyJoinPoint {
 		super(info, thiz);
 	}
 	
-	public function execute(args:Array) {
+	public function proceed(args:Array) {
 		return PropertyInfo(getInfo()).getSetter().getMethod().apply(getThis(), args);
 	}
 	

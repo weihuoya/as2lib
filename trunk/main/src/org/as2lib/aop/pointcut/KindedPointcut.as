@@ -1,7 +1,6 @@
 ﻿import org.as2lib.aop.pointcut.AbstractPointcut;
 import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.JoinPoint;
-import org.as2lib.aop.matcher.Matcher;
 
 /**
  * @author Simon Wacker
