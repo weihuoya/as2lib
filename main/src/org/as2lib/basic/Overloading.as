@@ -1,5 +1,6 @@
 ﻿import org.as2lib.basic.OverloadHandler;
 import org.as2lib.util.OverloadingUtil;
+import org.as2lib.basic.TypedArray;
 
 /**
  * @author: Simon Wacker
@@ -11,7 +12,7 @@ interface org.as2lib.basic.Overloading {
 	 * @param someArguments
 	 * @param someOverloadHandlers
 	 */
-	public function overload(someArguments:Array, someOverloadHandlers:Array):Void;
+	public function overload(someArguments:Array, someOverloadHandlers:TypedArray):Void;
 	
 	/**
 	 * Instantiates a new OverloadHandler.
