@@ -18,7 +18,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.EventBroadcasterFactory;
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.env.except.UndefinedPropertyException;
+import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ClassUtil;
 
@@ -55,11 +55,11 @@ class org.as2lib.env.event.DynamicEventBroadcasterFactory extends BasicClass imp
 	 * Creates and returns a new instance of a the defined EventBroadcaster class.
 	 * 
 	 * @return a new instance of the defined EventBroadcaster class
-	 * @throws PropertyUndefinedException if the class has not been defined through the operation #setEventBroadcasterClass() yet.
+	 * @throws IllegalStateException if the class has not been defined through the operation #setEventBroadcasterClass() yet.
 	 */
 	public function createEventBroadcaster(Void):EventBroadcaster {
 		if (!clazz) {
-			throw new UndefinedPropertyException("You have to set a class through the #setEventBroadcasterClass() operation before you call this operation.", this, arguments);
+			throw new IllegalStateException("You have to set a class through the #setEventBroadcasterClass() operation before you call this operation.", this, arguments);
 		}
 		return EventBroadcaster(new clazz());
 	}
