@@ -126,5 +126,23 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 			throw new UnknownServiceException("Service with url [" + url + "] does not exist.", this, arguments).initCause(exception);
 		}
 	}
+	
+	/**
+	 * Enables us to use the proxy as follows:
+	 * <code>myProxy.myMethod("myArg1", myCallback);</code>
+	 * 
+	 * @param methodName the name of the method to invoke on the remote service
+	 * @return the function to execute as the actual method passing the actual arguments
+	 */
+	private function __resolve(methodName:String):Function {
+		var owner:ClientServiceProxy = this;
+		return (function():Void {
+			if (arguments[arguments.length] instanceof MethodInvocationCallback) {
+				owner.invokeByNameAndArgumentsAndCallback(methodName, arguments, MethodInvocationCallback(arguments.pop()));
+			} else {
+				owner.invokeByNameAndArguments(methodName, arguments);
+			}
+		});
+	}
 
 }
