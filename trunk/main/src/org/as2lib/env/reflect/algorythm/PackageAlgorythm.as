@@ -6,6 +6,14 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 
+/**
+ * PackageAlgorythm searches for the specified package and returns a PackageInfo
+ * representing the found package.
+ *
+ * @author Simon Wacker
+ * @see org.as2lib.core.BasicClass
+ * @see org.as2lib.env.reflect.algorythm.CacheAlgorythm
+ */
 class org.as2lib.env.reflect.algorythm.PackageAlgorythm extends BasicClass implements CacheAlgorythm {
 	private var cache:Cache;
 	private var info:PackageInfo;
