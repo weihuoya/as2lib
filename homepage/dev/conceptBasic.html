@@ -207,7 +207,7 @@ ReflectionObject.getVars():Array</code>
                               </li>
                             </ul>
                           </li>
-                          <li><a name="#EventHandling"></a><h2>Event Handling</h2>
+                          <li><a name="EventHandling"></a><h2>Event Handling</h2>
                             Eventhandling within as2 should be a two sided sword. On the one hand it is necessary to have an easy handling for an event itself. On the other hand is generic eventhandling a problem because you can't guarantee that all event's fired reach the final client.<br>
                             <h3>Generic Eventhandling</h3>
                             For generic eventhandling there will be a (abstract) class <code>org.as2lib.basic.EventableElement extends BasicObject</code> to handle general events. This class will not have ANY public method. But this class should be based on the EventDispatcher by Macromedia.<br>
@@ -242,16 +242,16 @@ ReflectionObject.getVars():Array</code>
   // and other events
 }</code></li>
                               <li>Then the user add's his Eventhandler to the Object
-                                <code>new MyClass.addMyEventListener(new MyEventListener());</code>
+                                <code>new MyClass().addMyEventListener(new MyEventListener());</code>
                               </li>
                             </ol>
                             <h3>Why so complicated?</h3>
                             This is actually the best way to ensure that a function is really available and it finally reduces the operation speed of eventhandling by a better Code Handling.
                             Of Course this way isn't perfect. It will maybe get changed within an future worksheet by an better idea, but actually i see no different possibility.
                           </li>
-                          <li><a name="#TypedArray"></a><h2>Typed Array (to come)</h2>
+                          <li><a name="TypedArray"></a><h2>Typed Array (to come)</h2>
                           </li>
-                          <li><a name="#Overloading"></a><h2>Overloading (to come)</h2>
+                          <li><a name="Overloading"></a><h2>Overloading (to come)</h2>
                           </li>
                         </ol>
                         
