@@ -161,7 +161,7 @@ class org.as2lib.basic.TypedArray {
 	 * @param object
 	 * @return true if the types do not match otherwise false
 	 */
-	public function typeDoesNotMatch(object:Object):Boolean {
+	private function typeDoesNotMatch(object:Object):Boolean {
 		if (ObjectUtil.isPrimitiveType(object)) {
 			if (ObjectUtil.typesMatch(this.type(object), object)) {
 				return false;
