@@ -143,6 +143,8 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	 * Constructs a new Out instance and sets the default OutLevel, ALL.
 	 */
 	public function Out(name:String) {
+		// Stays here until all classes in the current API have been rewritten to use the
+		// new Output API.
 		if (name === undefined) level = ALL;
 		this.name = name;
 		broadcaster = OutConfig.getEventBroadcasterFactory().createEventBroadcaster();
