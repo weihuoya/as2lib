@@ -77,18 +77,16 @@ pre {
   margin-bottom: 0.2em;
   display: block;
 }
-ul {
+ul ul, ol ul {
   margin: 0em;
   margin-top: 0.2em;
   margin-bottom: 1em;
 }
-ol {
+ol{
   margin: 0em;
   padding: 0em;
   margin-top: 0.2em;
   margin-bottom: 1em;
-}
-ol ol{
   margin-left: 2.3em;
 }
 .mainTable {
@@ -232,6 +230,7 @@ ol ol{
 }
 .conceptList {
   padding: 0px;
+  margin: 0px;
   list-style: none;
 }
 .conceptList ul {
