@@ -15,21 +15,30 @@
  */
  
 import org.as2lib.core.BasicClass;
-import org.as2lib.test.unit.AssertInfo;
+import org.as2lib.test.unit.ExecutionInfo;
 import org.as2lib.env.except.AbstractOperationException;
 
 /**
- * Definition for a Information about a Assertion.
- * All informations about assertions have to implement this interface.
+ * Implementation of @see ExecutionInfo as basis for all AssertInformations.
  * 
  * @autor Martin Heidegger
  */
-class org.as2lib.test.unit.AbstractAssertInfo extends BasicClass implements AssertInfo {
+class org.as2lib.test.unit.AbstractAssertInfo extends BasicClass implements ExecutionInfo {
 	
+	/** True if the execution has failed. */
 	private var failed:Boolean;
+	
+	/** True if the assertion has been executed. */
 	private var executed:Boolean;
+	
+	/** Message applied to the assertion. */
 	private var message:String;
 	
+	/**
+	 * Constructs a new AbstractAssertInfo.
+	 * 
+	 * @param message Message for the AssertInformation.
+	 */
 	public function AbstractAssertInfo(message:String) {
 		this.message = message;
 		executed = false;
@@ -59,7 +68,14 @@ class org.as2lib.test.unit.AbstractAssertInfo extends BasicClass implements Asse
 		return true;
 	}
 	
-	public function hasMessage(Void):Boolean {
+	/**
+	 * Information getter if a message has been applied to the information.
+	 * 
+	 * Only for internal use. It applies in all/most extended classes.
+	 * 
+	 * @return true if a message has been applied to the infromation.
+	 */
+	private function hasMessage(Void):Boolean {
 		return(message.length > 0);
 	}
 	
