@@ -7,6 +7,7 @@ import org.as2lib.env.overload.UnknownOverloadHandlerException;
 import org.as2lib.test.unit.Failure;
 import org.as2lib.test.unit.TestConfig;
 import org.as2lib.util.ClassUtil;
+import org.as2lib.util.ObjectUtil;
 
 /**
  * Basic Class to be Extended by all Testcases.
@@ -586,6 +587,90 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	private static function assertUndefinedWithMessage (message:String, var1):Void {
 		if(var1 != undefined) {
 			addError("assertUndefined failed: "+var1+" message: "+message);
+		}
+	}
+	
+	/**
+	 * overload
+	 * @see #assertIsEmptyWithMessage
+	 * @see #assertIsEmptyWithoutMessage
+	 */
+	private static function assertIsEmpty():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that);
+		overload.addHandlerByValue([String, Object], assertIsEmptyWithMessage);
+		overload.addHandlerByValue([Object], assertIsEmptyWithoutMessage);
+		overload.forward(arguments);
+	}
+	
+	/**
+	 * Asserts if an Var is empty.
+	 *
+	 * @see #assertIsEmpty
+	 * @see ObjectUtil#isEmpty
+	 * @see #assertIsEmptyWithMessage
+	 * 
+	 * @param var1		Var that should be empty.
+	 */
+	private static function assertIsEmptyWithoutMessage (var1):Void {
+		assertIsEmptyWithMessage("", var1);
+	}
+	
+	/**
+	 * Asserts if an Var is empty.
+	 *
+	 * @see #assertIsEmpty
+	 * @see ObjectUtil#isEmpty
+	 * @see #assertIsEmptyWithMessage
+	 * 
+	 * @param message	Message to be displayed if an error occures
+	 * @param var1		Var that should be empty.
+	 */
+	private static function assertIsEmptyWithMessage (message:String, var1):Void {
+		if(!ObjectUtil.isEmpty(var1)) {
+			addError("assertIsEmpty failed: "+var1+" message: "+message);
+		}
+	}
+	
+	/**
+	 * overload
+	 * @see #assertIsNotEmptyWithMessage
+	 * @see #assertIsNotEmptyWithoutMessage
+	 */
+	private static function assertIsNotEmpty():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that);
+		overload.addHandlerByValue([String, Object], assertIsNotEmptyWithMessage);
+		overload.addHandlerByValue([Object], assertIsNotEmptyWithoutMessage);
+		overload.forward(arguments);
+	}
+	
+	/**
+	 * Asserts if an Var is not empty.
+	 *
+	 * @see #assertIsNotEmpty
+	 * @see ObjectUtil#isEmpty
+	 * @see #assertIsNotEmptyWithMessage
+	 * 
+	 * @param var1		Var that should be empty.
+	 */
+	private static function assertIsNotEmptyWithoutMessage (var1):Void {
+		assertIsNotEmptyWithMessage("", var1);
+	}
+	
+	/**
+	 * Asserts if an Var is empty.
+	 *
+	 * @see #assertIsNotEmpty
+	 * @see ObjectUtil#isEmpty
+	 * @see #assertIsNotEmptyWithMessage
+	 * 
+	 * @param message	Message to be displayed if an error occures
+	 * @param var1		Var that should be empty.
+	 */
+	private static function assertIsNotEmptyWithMessage (message:String, var1):Void {
+		if(ObjectUtil.isEmpty(var1)) {
+			addError("assertIsNotEmpty failed: "+var1+" message: "+message);
 		}
 	}
 	
