@@ -46,9 +46,9 @@ interface org.as2lib.env.except.Throwable extends BasicInterface {
 	public function getMessage(Void):String;
 	
 	/**
-	 * Returns the instance that has thrown the Throwable.
+	 * Returns the object that has thrown the Throwable.
 	 *
-	 * @return the throwing instance
+	 * @return the throwing object
 	 */
 	public function getThrower(Void);
 	
