@@ -10,18 +10,18 @@ class test.unit.org.as2lib.data.math.vector.TAbstractVector extends TestCase {
 	public function TAbstractVector(Void) {}
 	
 	public function fillVector(vector:Vector):Void {
-		vector.set(0, 22);
-		vector.set(1, 34);
-		vector.set(2, 66);
+		vector.setValue(0, 22);
+		vector.setValue(1, 34);
+		vector.setValue(2, 66);
 	}
 	
-	public function testGet(Void):Void {
+	public function testGetValue(Void):Void {
 		var vector:Vector = new AbstractVector();
 		fillVector(vector);
-		assertSame("Vector.get(0) should return 22.", vector.get(0), 22);
-		assertSame("Vector.get(1) should return 34.", vector.get(1), 34);
-		assertSame("Vector.get(2) should return 66.", vector.get(2), 66);
-		assertUndefined("Vector.get(3) should return undefined.", vector.get(3));
+		assertSame("Vector.getValue(0) should return 22.", vector.getValue(0), 22);
+		assertSame("Vector.getValue(1) should return 34.", vector.getValue(1), 34);
+		assertSame("Vector.getValue(2) should return 66.", vector.getValue(2), 66);
+		assertUndefined("Vector.getValue(3) should return undefined.", vector.getValue(3));
 	}
 	
 	public function testClear(Void):Void {
