@@ -28,12 +28,6 @@ import org.as2lib.env.reflect.ClassInfo;
  * @author Martin Heidegger
  */
 class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface {
-	/*public static var CASEINSENSITIVE = Array.CASEINSENSITIVE;
-	public static var DESCENDING = Array.DESCENDING;
-	public static var NUMERIC = Array.NUMERIC;
-	public static var RETURNINDEXDARRAY = Array.RETURNINDEXEDARRAY;
-	public static var UNIQUESORT = Array.UNIQUESORT;*/
-	
 	/** The type of values that can be added. */
 	private var type:Function;
 	
@@ -48,7 +42,7 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	}
 	
 	/**
-	 * @see Array
+	 * @see Array#concat()
 	 */
 	public function concat():TypedArray {
 		var l:Number = arguments.length;
@@ -68,7 +62,7 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	}
 	
 	/**
-	 * @see Array
+	 * @see Array#push()
 	 */
 	public function push(value):Number {
 		validate(value);
@@ -76,7 +70,7 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	}
 	
 	/**
-	 * @see Array
+	 * @see Array#unshift()
 	 */
 	public function unshift(value):Number {
 		validate(value);
@@ -84,17 +78,17 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	}
 	
 	/**
-	 * @see org.as2lib.core.BasicInterface
+	 * @see org.as2lib.core.BasicInterface#getClass()
 	 */
 	public function getClass(Void):ClassInfo {
 		return ReflectUtil.getClassInfo(this);
 	}
 	
 	/**
-	 * @see org.as2lib.core.BasicInterface
+	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
 	public function toString(Void):String {
-		return "";
+		return super.toString();
 	}
 
 	/**
