@@ -36,7 +36,7 @@ interface org.as2lib.env.out.OutLevel extends BasicInterface {
 	 * @param message the message object to be written out
 	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
-	public function log(message, broadcaster:EventBroadcaster):Void;
+	public function log(message, broadcaster:EventBroadcaster, staticBroadcaster:EventBroadcaster):Void;
 	
 	/**
 	 * Outputs a message object.
@@ -44,7 +44,7 @@ interface org.as2lib.env.out.OutLevel extends BasicInterface {
 	 * @param message the message object to be written out
 	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
-	public function debug(message, broadcaster:EventBroadcaster):Void;
+	public function debug(message, broadcaster:EventBroadcaster, staticBroadcaster:EventBroadcaster):Void;
 	
 	/**
 	 * Outputs a message object.
@@ -52,7 +52,7 @@ interface org.as2lib.env.out.OutLevel extends BasicInterface {
 	 * @param message the message to be written out
 	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
-	public function info(message, broadcaster:EventBroadcaster):Void;
+	public function info(message, broadcaster:EventBroadcaster, staticBroadcaster:EventBroadcaster):Void;
 	
 	/**
 	 * Outputs a message object.
@@ -60,7 +60,7 @@ interface org.as2lib.env.out.OutLevel extends BasicInterface {
 	 * @param message the message object to be written out
 	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
-	public function warning(message, broadcaster:EventBroadcaster):Void;
+	public function warning(message, broadcaster:EventBroadcaster, staticBroadcaster:EventBroadcaster):Void;
 	
 	/**
 	 * Outputs an message object.
@@ -68,7 +68,7 @@ interface org.as2lib.env.out.OutLevel extends BasicInterface {
 	 * @param message the message object to be written out
 	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
-	public function error(message, broadcaster:EventBroadcaster):Void;
+	public function error(message, broadcaster:EventBroadcaster, staticBroadcaster:EventBroadcaster):Void;
 	
 	/**
 	 * Outputs an message object.
@@ -76,5 +76,5 @@ interface org.as2lib.env.out.OutLevel extends BasicInterface {
 	 * @param message the message object to be written out
 	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
-	public function fatal(message, broadcaster:EventBroadcaster):Void;
+	public function fatal(message, broadcaster:EventBroadcaster, staticBroadcaster:EventBroadcaster):Void;
 }

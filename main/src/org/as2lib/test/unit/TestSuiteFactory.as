@@ -65,6 +65,21 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 	/**
 	 * Agent to collect TestCases within a package.
 	 * 
+	 * Note: If you want that a class gets blocked from collection simple add
+	 * a static method "blockCollecting" that returns true.
+	 * 
+	 * Example:
+	 * <code>
+	 *   import org.as2lib.test.unit.TestCase;
+	 * 
+	 *   class MyTest extends TestCase {
+	 *     public static function blockCollecting(Void):Boolean {
+	 *	     return true;
+	 *     }
+	 *   }  
+	 * </code>
+	 * 
+	 * 
 	 * @param package Package to search in.
 	 * @param suite TestSuite to add the found TestCase.
 	 * @param recursive Recursive Flag.
@@ -73,7 +88,7 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 		var i:String;
 		for(i in package) {
 			var child = package[i];
-			if(typeof child == "function" && ClassUtil.isSubClassOf(child, TestCase)) {
+			if(typeof child == "function" && ClassUtil.isSubClassOf(child, TestCase) && !child.blockCollecting()) {
 				suite.addTest(TestCase(ClassUtil.createCleanInstance(child)));
 			}
 			if(typeof child == "object" && recursive) {

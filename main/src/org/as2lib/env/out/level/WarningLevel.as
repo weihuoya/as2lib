@@ -28,7 +28,9 @@ class org.as2lib.env.out.level.WarningLevel extends ErrorLevel {
 	/**
 	 * @see org.as2lib.env.out.OutLevel
 	 */
-	public function warning(message, broadcaster:EventBroadcaster):Void {
-		broadcaster.dispatch(new OutInfo(message, Out.WARNING));
+	public function warning(m, b:EventBroadcaster, s:EventBroadcaster):Void {
+		var o:OutInfo = new OutInfo(m, Out.WARNING);
+		b.dispatch(o);
+		s.dispatch(o);
 	}
 }
