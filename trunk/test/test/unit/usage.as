@@ -20,6 +20,8 @@
  * access this file and all testcases that are listed here will
  * be executed. Simple add your test to get it executed.
  */
+ 
+// Data Holder tests
 test.unit.org.as2lib.data.holder.array.TArrayIterator;
 test.unit.org.as2lib.data.holder.array.TTypedArray;
 test.unit.org.as2lib.data.holder.list.TPriorityList;
@@ -30,16 +32,26 @@ test.unit.org.as2lib.data.holder.map.THashMap;
 test.unit.org.as2lib.data.holder.map.TPriorityMap;
 test.unit.org.as2lib.data.holder.map.TTypedMap;
 test.unit.org.as2lib.data.holder.map.TPrimitiveTypeMap;
+test.unit.org.as2lib.data.holder.stack.TSimpleStack;
+test.unit.org.as2lib.data.holder.stack.TTypedStack;
+
+// File tests
 test.unit.org.as2lib.io.file.TFile;
 test.unit.org.as2lib.io.file.TBitAndByteFormat;
+
+// Environment tests
 test.unit.org.as2lib.env.reflect.TReflect;
 test.unit.org.as2lib.env.out.TOutImplementation;
 test.unit.org.as2lib.env.log.repository.TLoggerHierarchy;
 test.unit.org.as2lib.env.log.logger.TSimpleLogger;
 test.unit.org.as2lib.env.reflect.TResolveProxyFactory;
+
+// Mock tests
 test.unit.org.as2lib.test.mock.support.TDefaultMethodCallBehaviour;
 test.unit.org.as2lib.test.mock.support.TDefaultMockBehaviour;
 test.unit.org.as2lib.test.mock.support.TDefaultArgumentsMatcher;test.unit.org.as2lib.util.TStringUtil;
+
+// Util tests
 test.unit.org.as2lib.util.TArrayUtil;
 test.unit.org.as2lib.util.TObjectUtil;
 test.unit.org.as2lib.util.TStringUtil;
