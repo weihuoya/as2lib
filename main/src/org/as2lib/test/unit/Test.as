@@ -778,8 +778,8 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	/**
 	 * Asserts if an Exception is thrown by calling an Function.
 	 * 
-	 * @param exception		Class of the Exception that should be thrown.
-	 * @param atObject		Object where the call should be called.
+	 * @param exception	Class of the Exception that should be thrown.
+	 * @param atObject	Object where the call should get called.
 	 * @param theFunction	Function that should be called.
 	 * @param parameters	Parameters to call.
 	 */
@@ -790,11 +790,27 @@ class org.as2lib.test.unit.Test extends BasicClass {
 		} catch (e) {
 			exceptionThrown = true;
 			if (!(e instanceof exception)) {
-				addError("assertThrows: "+ReflectUtil.getClassInfo(e).getName()+" was thrown but "+ReflectUtil.getClassInfo(new exception()).getName()+" was expected with "+theFunction+"("+parameters+")");
+				addError("assertThrows: ["+ReflectUtil.getClassInfo(e).getFullName()+"] was thrown but ["+ReflectUtil.getClassInfo(new exception()).getName()+"] was expected by calling ."+theFunction+"("+parameters+")");
 			}
 		}
 		if (!exceptionThrown) {
-			addError("assertThrows: No exception was thrown but "+ReflectUtil.getClassInfo(new exception()).getName()+" was expected for ."+theFunction+"("+parameters+")");
+			addError("assertThrows: No exception was thrown but ["+ReflectUtil.getClassInfo(new exception()).getFullName()+"] was expected for ."+theFunction+"("+parameters+")");
+		}
+	}
+	
+	/**
+	 * Asserts that no exception will be thrown @ a call.
+	 * 
+	 * @param atObject	Object where the call should get called.
+	 * @param theFunction	Function that should be called.
+	 * @param parameters	Parameters to call.
+	 */
+	private static function assertNotThrows(atObject, theFunction:String, parameters:Array):Void {
+		var exceptionThrown:Boolean = false;
+		try {
+			atObject[theFunction].apply(atObject, parameters);
+		} catch (e) {
+			addError("assertNotThrows: ["+ReflectUtil.getClassInfo(e).getFullName()+"] was thrown but not expected with ."+theFunction+"("+parameters+")");
 		}
 	}
 }
