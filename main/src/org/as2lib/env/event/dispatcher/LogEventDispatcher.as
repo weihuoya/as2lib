@@ -6,11 +6,14 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.event.EventConfig;
 
 /**
- * @version 1.0
+ * An implementation of the EventDispatcher interface that logs the dispatching
+ * of the event.
+ *
+ * @author Simon Wacker
  */
 class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass implements EventDispatcher {
 	/**
-	 * @see org.as2lib.env.event.EventDispatcher
+	 * @see org.as2lib.env.event.EventDispatcher#dispatch()
 	 */
 	public function dispatch(event:EventInfo, listeners:ListenerArray):Void {
 		var name:String = event.getName();
@@ -21,6 +24,9 @@ class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass impl
 		}
 	}
 	
+	/**
+	 * @see org.as2lib.env.event.EventDispatcher#dispatchConsumeable()
+	 */
 	public function dispatchConsumeable(event:EventInfo, listeners:ListenerArray):Void {
 		var name:String = event.getName();
 		var l:Number = listeners.length;

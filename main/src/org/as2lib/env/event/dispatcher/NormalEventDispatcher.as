@@ -5,11 +5,13 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.event.ListenerArray;
 
 /**
- * @version 1.0
+ * A normal implementation of the EventDispatcher interface.
+ *
+ * @author Simon Wacker
  */
 class org.as2lib.env.event.dispatcher.NormalEventDispatcher extends BasicClass implements EventDispatcher {
 	/**
-	 * @see org.as2lib.env.event.EventDispatcher
+	 * @see org.as2lib.env.event.EventDispatcher#dispatch()
 	 */
 	public function dispatch(event:EventInfo, listeners:ListenerArray):Void {
 		var name:String = event.getName();
@@ -19,6 +21,9 @@ class org.as2lib.env.event.dispatcher.NormalEventDispatcher extends BasicClass i
 		}
 	}
 	
+	/**
+	 * @see org.as2lib.env.event.EventDispatcher#dispatchConsumeable()
+	 */
 	public function dispatchConsumeable(event:EventInfo, listeners:ListenerArray):Void {
 		var name:String = event.getName();
 		var l:Number = listeners.length;
