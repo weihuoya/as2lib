@@ -27,6 +27,14 @@ class org.as2lib.util.TDateFormatter extends TestCase {
 		assertSame("pattern 'dd.mm.yyyy' is interpreted wrongly", "08.03.2005", f.format(new Date(2005, 2, 8)));
 	}
 	
+	public function testFormatWithQuotes(Void):Void {
+		var f:DateFormatter;
+		var p:String = " -- 'test' '' 'dd.mm.yyyy o''clock ;)' -- ' YY MM DD d m y h s S ''' yyyy";
+		var r:String = " -- test ' dd.mm.yyyy o'clock ;) --  YY MM DD d m y h s S ' 2005";
+		f = new DateFormatter(p);
+		assertSame("pattern [" + p + "] is interpreted wrongly", r, f.format(new Date(2005, 0)));
+	}
+	
 	public function testFormatYear(Void):Void {
 		var f:DateFormatter;
 		f = new DateFormatter("y");
@@ -115,6 +123,112 @@ class org.as2lib.util.TDateFormatter extends TestCase {
 		f = new DateFormatter("DDDDDD");
 		assertSame("pattern 'DDDDDD' is interpreted wrongly", "Sunday", f.format(new Date(2005, 2, 20)));
 		assertSame("pattern 'DDDDDD' is interpreted wrongly", "Monday", f.format(new Date(2005, 2, 14)));
+	}
+	
+	public function testFormatHourInAmPm(Void):Void {
+		var f:DateFormatter;
+		f = new DateFormatter("h");
+		assertSame("pattern 'h' is interpreted wrongly", "12", f.format(new Date(2005, 2, 28, 0)));
+		assertSame("pattern 'h' is interpreted wrongly", "4", f.format(new Date(2005, 2, 28, 4)));
+		assertSame("pattern 'h' is interpreted wrongly", "6", f.format(new Date(2005, 2, 28, 18)));
+		assertSame("pattern 'h' is interpreted wrongly", "12", f.format(new Date(2005, 2, 28, 24)));
+		assertSame("pattern 'h' is interpreted wrongly", "12", f.format(new Date(2005, 2, 28, 12)));
+		f = new DateFormatter("hh");
+		assertSame("pattern 'hh' is interpreted wrongly", "12", f.format(new Date(2005, 2, 28, 0)));
+		assertSame("pattern 'hh' is interpreted wrongly", "04", f.format(new Date(2005, 2, 28, 4)));
+		assertSame("pattern 'hh' is interpreted wrongly", "06", f.format(new Date(2005, 2, 28, 18)));
+		assertSame("pattern 'hh' is interpreted wrongly", "09", f.format(new Date(2005, 2, 28, 21)));
+		f = new DateFormatter("hhhh");
+		assertSame("pattern 'hhhh' is interpreted wrongly", "0012", f.format(new Date(2005, 2, 28, 0)));
+		assertSame("pattern 'hhhh' is interpreted wrongly", "0004", f.format(new Date(2005, 2, 28, 4)));
+		assertSame("pattern 'hhhh' is interpreted wrongly", "0006", f.format(new Date(2005, 2, 28, 18)));
+		assertSame("pattern 'hhhh' is interpreted wrongly", "0009", f.format(new Date(2005, 2, 28, 21)));
+	}
+	
+	public function testFormatHourInDay(Void):Void {
+		var f:DateFormatter;
+		f = new DateFormatter("H");
+		assertSame("pattern 'H' is interpreted wrongly", "0", f.format(new Date(2005, 2, 28, 0)));
+		assertSame("pattern 'H' is interpreted wrongly", "4", f.format(new Date(2005, 2, 28, 4)));
+		assertSame("pattern 'H' is interpreted wrongly", "18", f.format(new Date(2005, 2, 28, 18)));
+		assertSame("pattern 'H' is interpreted wrongly", "0", f.format(new Date(2005, 2, 28, 24)));
+		assertSame("pattern 'H' is interpreted wrongly", "12", f.format(new Date(2005, 2, 28, 12)));
+		f = new DateFormatter("HH");
+		assertSame("pattern 'HH' is interpreted wrongly", "00", f.format(new Date(2005, 2, 28, 0)));
+		assertSame("pattern 'HH' is interpreted wrongly", "04", f.format(new Date(2005, 2, 28, 4)));
+		assertSame("pattern 'HH' is interpreted wrongly", "18", f.format(new Date(2005, 2, 28, 18)));
+		assertSame("pattern 'HH' is interpreted wrongly", "21", f.format(new Date(2005, 2, 28, 21)));
+		f = new DateFormatter("HHHH");
+		assertSame("pattern 'HHHH' is interpreted wrongly", "0000", f.format(new Date(2005, 2, 28, 0)));
+		assertSame("pattern 'HHHH' is interpreted wrongly", "0004", f.format(new Date(2005, 2, 28, 4)));
+		assertSame("pattern 'HHHH' is interpreted wrongly", "0018", f.format(new Date(2005, 2, 28, 18)));
+		assertSame("pattern 'HHHH' is interpreted wrongly", "0021", f.format(new Date(2005, 2, 28, 21)));
+	}
+	
+	public function testFormatMinuteInHour(Void):Void {
+		var f:DateFormatter;
+		f = new DateFormatter("n");
+		assertSame("pattern 'n' is misinterpreted", "8", f.format(new Date(0, 0, 0, 0, 8)));
+		assertSame("pattern 'n' is misinterpreted", "47", f.format(new Date(2005, 2, 28, 0, 47)));
+		assertSame("pattern 'n' is misinterpreted", "0", f.format(new Date(2005, 2, 28, 0, 0)));
+		assertSame("pattern 'n' is misinterpreted", "59", f.format(new Date(2005, 2, 28, 0, 59)));
+		f = new DateFormatter("nn");
+		assertSame("pattern 'nn' is misinterpreted", "08", f.format(new Date(2005, 2, 28, 0, 8)));
+		assertSame("pattern 'nn' is misinterpreted", "47", f.format(new Date(2005, 2, 28, 0, 47)));
+		assertSame("pattern 'nn' is misinterpreted", "00", f.format(new Date(2005, 2, 28, 0, 0)));
+		assertSame("pattern 'nn' is misinterpreted", "59", f.format(new Date(2005, 2, 28, 0, 59)));
+		f = new DateFormatter("nnnn");
+		assertSame("pattern 'nnnn' is misinterpreted", "0008", f.format(new Date(2005, 2, 28, 0, 8)));
+		assertSame("pattern 'nnnn' is misinterpreted", "0047", f.format(new Date(2005, 2, 28, 0, 47)));
+		assertSame("pattern 'nnnn' is misinterpreted", "0000", f.format(new Date(2005, 2, 28, 0, 0)));
+		assertSame("pattern 'nnnn' is misinterpreted", "0059", f.format(new Date(2005, 2, 28, 0, 59)));
+	}
+	
+	public function testFormatSecondInMinute(Void):Void {
+		var f:DateFormatter;
+		f = new DateFormatter("s");
+		assertSame("pattern 's' is misinterpreted", "8", f.format(new Date(0, 0, 0, 0, 0, 8)));
+		assertSame("pattern 's' is misinterpreted", "47", f.format(new Date(2005, 2, 28, 0, 0, 47)));
+		assertSame("pattern 's' is misinterpreted", "0", f.format(new Date(2005, 2, 28, 0, 0, 0)));
+		assertSame("pattern 's' is misinterpreted", "59", f.format(new Date(2005, 2, 28, 0, 0, 59)));
+		f = new DateFormatter("ss");
+		assertSame("pattern 'ss' is misinterpreted", "08", f.format(new Date(2005, 2, 28, 0, 0, 8)));
+		assertSame("pattern 'ss' is misinterpreted", "47", f.format(new Date(2005, 2, 28, 0, 0, 47)));
+		assertSame("pattern 'ss' is misinterpreted", "00", f.format(new Date(2005, 2, 28, 0, 0, 0)));
+		assertSame("pattern 'ss' is misinterpreted", "59", f.format(new Date(2005, 2, 28, 0, 0, 59)));
+		f = new DateFormatter("ssss");
+		assertSame("pattern 'ssss' is misinterpreted", "0008", f.format(new Date(2005, 2, 28, 0, 0, 8)));
+		assertSame("pattern 'ssss' is misinterpreted", "0047", f.format(new Date(2005, 2, 28, 0, 0, 47)));
+		assertSame("pattern 'ssss' is misinterpreted", "0000", f.format(new Date(2005, 2, 28, 0, 0, 0)));
+		assertSame("pattern 'ssss' is misinterpreted", "0059", f.format(new Date(2005, 2, 28, 0, 0, 59)));
+	}
+	
+	public function testFormatMillisecond(Void):Void {
+		var f:DateFormatter;
+		f = new DateFormatter("S");
+		assertSame("pattern 'S' is misinterpreted", "8", f.format(new Date(0, 0, 0, 0, 0, 0, 8)));
+		assertSame("pattern 'S' is misinterpreted", "47", f.format(new Date(2005, 2, 28, 0, 0, 0, 47)));
+		assertSame("pattern 'S' is misinterpreted", "0", f.format(new Date(2005, 2, 28, 0, 0, 0, 0)));
+		assertSame("pattern 'S' is misinterpreted", "394", f.format(new Date(2005, 2, 28, 0, 0, 0, 394)));
+		assertSame("pattern 'S' is misinterpreted", "999", f.format(new Date(2005, 2, 28, 0, 0, 0, 999)));
+		f = new DateFormatter("SS");
+		assertSame("pattern 'SS' is misinterpreted", "08", f.format(new Date(0, 0, 0, 0, 0, 0, 8)));
+		assertSame("pattern 'SS' is misinterpreted", "47", f.format(new Date(2005, 2, 28, 0, 0, 0, 47)));
+		assertSame("pattern 'SS' is misinterpreted", "00", f.format(new Date(2005, 2, 28, 0, 0, 0, 0)));
+		assertSame("pattern 'SS' is misinterpreted", "394", f.format(new Date(2005, 2, 28, 0, 0, 0, 394)));
+		assertSame("pattern 'SS' is misinterpreted", "999", f.format(new Date(2005, 2, 28, 0, 0, 0, 999)));
+		f = new DateFormatter("SSS");
+		assertSame("pattern 'SSS' is misinterpreted", "008", f.format(new Date(0, 0, 0, 0, 0, 0, 8)));
+		assertSame("pattern 'SSS' is misinterpreted", "047", f.format(new Date(2005, 2, 28, 0, 0, 0, 47)));
+		assertSame("pattern 'SSS' is misinterpreted", "000", f.format(new Date(2005, 2, 28, 0, 0, 0, 0)));
+		assertSame("pattern 'SSS' is misinterpreted", "394", f.format(new Date(2005, 2, 28, 0, 0, 0, 394)));
+		assertSame("pattern 'SSS' is misinterpreted", "999", f.format(new Date(2005, 2, 28, 0, 0, 0, 999)));
+		f = new DateFormatter("SSSSS");
+		assertSame("pattern 'SSSSS' is misinterpreted", "00008", f.format(new Date(0, 0, 0, 0, 0, 0, 8)));
+		assertSame("pattern 'SSSSS' is misinterpreted", "00047", f.format(new Date(2005, 2, 28, 0, 0, 0, 47)));
+		assertSame("pattern 'SSSSS' is misinterpreted", "00000", f.format(new Date(2005, 2, 28, 0, 0, 0, 0)));
+		assertSame("pattern 'SSSSS' is misinterpreted", "00394", f.format(new Date(2005, 2, 28, 0, 0, 0, 394)));
+		assertSame("pattern 'SSSSS' is misinterpreted", "00999", f.format(new Date(2005, 2, 28, 0, 0, 0, 999)));
 	}
 	
 }
