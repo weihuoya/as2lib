@@ -10,14 +10,15 @@ class org.as2lib.data.holder.HashMap implements Map {
 	public function Hashtable() {
 		keys = new Array();
 		values = new Array();
+		keys[-1] = values[-1] = null;
 	}
 	
 	public function containsKey(key:Object):Boolean {
-		return findKey(key) != -1;
+		return (findKey(key) != -1);
 	}
 	
 	public function containsValue(value:Object):Boolean {
-		return findValue(value) != -1;
+		return (findValue(value) != -1);
 	}
 	
 	public function getKeys(Void):Array {
@@ -29,41 +30,45 @@ class org.as2lib.data.holder.HashMap implements Map {
 	}
 	
 	public function get(key:Object):Object {
-		return containsKey(key) ? values[findKey(key)] : null;
+		return values[findKey(key)];
 	}
 	
 	public function put(key:Object, value:Object):Object {
-		if (containsKey(key)) {
-			var result:Object = get(key);
-			values[findKey(key)] = value;
-			return result;
+		var result:Object = null;
+		var i:Number = findKey(key);
+		if(i!=-1) {
+			result = values[i];
+			values[i] = value;
+		} else {
+			keys.push(key);
+			values.push(value);
 		}
-		keys.push(key);
-		values.push(value);
-		return null;
+		return result;
 	}
 	
 	public function clear(Void):Void {
 		keys = new Array();
 		values = new Array();
+		keys[-1] = values[-1] = null;
 	}
 	
 	public function putAll(map:Map):Void {
 		var valueIterator:ArrayIterator = new ArrayIterator(map.getValues());
 		var keyIterator:ArrayIterator = new ArrayIterator(map.getKeys())
 		while (keyIterator.hasNext()) {
-			set(keyIterator.next(), valueIterator.next());
+			put(keyIterator.next(), valueIterator.next());
 		}
 	}
 	
 	public function remove(key:Object):Object {
-		if (findKey(key) != -1) {
-			var result:Object = get(key);
-			values.splice(findKey(key), 1);
-			keys.splice(findKey(key), 1);
-			return result;
+		var result:Object = null;
+		var i:Number = findKey(key);
+		if(i!=-1) {
+			result = values[i];
+			values.splice(i, 1);
+			keys.splice(i, 1);
 		}
-		return null;
+		return result;
 	}
 	
 	public function iterator(Void):Iterator {
@@ -75,25 +80,19 @@ class org.as2lib.data.holder.HashMap implements Map {
 	}
 	
 	public function isEmpty(Void):Boolean {
-		return size() == 0;
+		return (size() == 0);
 	}
 	
 	private function findValue(value:Object):Number {
-		for (var i:Number = 0; i < size(); i++) {
-			if (values[i] == value) {
-				return i;
-			}
-		}
-		return -1;
+		var l = values.length;
+		while (values[--l] != value && l>-1);
+		return l;
 	}
 	
 	private function findKey(key:Object):Number {
-		for (var i:Number = 0; i < size(); i++) {
-			if (keys[i] == key) {
-				return i;
-			}
-		}
-		return -1;
+		var l = keys.length;
+		while (keys[--l] != key && l>-1);
+		return l;
 	}
 	
 	public function toString(Void):String {
