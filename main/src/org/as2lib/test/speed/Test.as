@@ -50,7 +50,7 @@ class org.as2lib.test.speed.Test {
 	}
 	
 	/**
-	 * Adds a Testcase to get tested.
+	 * Adds a testcase to get tested.
 	 *
 	 * @param Testcase that should be added.
 	 */
@@ -73,8 +73,7 @@ class org.as2lib.test.speed.Test {
 	}
 	
 	/**
-	 * Defines the times how often all Testcases should
-	 * be run by defining run.
+	 * Defines the times how often all Testcases should be processed.
 	 *
 	 * @see #run
 	 */
@@ -83,7 +82,9 @@ class org.as2lib.test.speed.Test {
 	}
 	
 	/**
-	 * @return the fastest Testcase.
+	 * Evaluates the fastest testcase out of all available testcases.
+	 *
+	 * @return the fastest testcase.
 	 * @see TestCase
 	 */
 	private function getFastestTestCase(Void):TestCaseInformation {
@@ -100,31 +101,54 @@ class org.as2lib.test.speed.Test {
 	}
 	
 	/**
-	 * Prints the Result from all Tests.
+	 * Redirects the result as a string to the output writer.
+	 * 
+	 * @see #run
 	 */
 	public function printResult(Void):Void {
+		this.out.info(this.resultAsString());
+	}
+	
+	/**
+	 * Generates a comparison using all available informations.
+	 *
+	 * @returns A string containing all relevant informations.
+	 */
+	public function resultAsString(Void):String {
 		var fastest:TestCaseInformation = this.getFastestTestCase();
-		var result:String = "-- Testresult ["+this.calls+" calls] -- \n";
+		var result:String = "          -- Testresult ["+this.calls+" calls] -- \n";
 		for(var i:Number=0; i<this.speedTestCases.length; i++) {
 			var obj:TestCaseInformation = TestCaseInformation(this.speedTestCases.getValue(i));
 			if(fastest == obj) {
 				result += "[fastest] "+Math.round(this.getPercent(obj, fastest))+"% "+obj.getName()+": total time:"+obj.getTotalTime()+"ms; average time:"+obj.getAverageTime()+"ms;\n";
 			} else {
-				result += "          "+Math.round(this.getPercent(obj, fastest))+"% "+obj.getName()+": total time:"+obj.getTotalTime()+"ms; average time:"+obj.getAverageTime()+"ms;\n";
+				result += "          "+Math.round(this.getPercent(obj, fastest))+"% "+obj.getName()+": total time:"+obj.getTotalTime()+"ms; average time:"+obj.getAverageTime()+"ms; (+"+Math.round(this.getAverageTimeDifference(obj, fastest)*1000)/1000+"ms)\n";
 			}
 		}
-		this.out.info(result);
+		return result;
 	}
 	
 	/**
-	 * Returns the percentage from a testCaseInfo dependting to a base.
+	 * Calculates the percentage of the speed from a testCaseInfo depending to a base.
 	 *
-	 * @param TestcaseInfo that should get Compared
-	 * @param TestcaseInfo that repesents the base
-	 * @returns Number in Percent (100%=100) 
+	 * @param TestcaseInfo that should get compared.
+	 * @param TestcaseInfo that represents the base.
+	 * @returns Number in Percent (100%=100).
 	 * @see org.as2lib.test.speed.TestInformation
 	 */
 	private function getPercent(from:TestCaseInformation, base:TestCaseInformation):Number{
 		return(from.getTotalTime()/base.getTotalTime()*100);
+	}
+	
+	/**
+	 * Calulates the average time difference between the average time of a testcaseinformation depending to a base.
+	 * 
+	 * @param Testcaseinfo that should get compared.
+	 * @param TestcaseInfo that represents the base.
+	 * @returns The timedifference in milliseconds.
+	 * @see org.as2ib.test.speed.TestInformation
+	 */
+	private function getAverageTimeDifference(from:TestCaseInformation, base:TestCaseInformation):Number {
+		return(from.getAverageTime()-base.getAverageTime());
 	}
 }
