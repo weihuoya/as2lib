@@ -19,7 +19,6 @@ import org.as2lib.data.io.conn.ConnectorRequest;
 import org.as2lib.data.io.conn.ConnectorError;
 import org.as2lib.data.io.conn.ConnectorResponse;
 import org.as2lib.data.io.conn.local.ReservedConnectionException;
-import org.as2lib.data.io.conn.local.MissingClientsException;
 import org.as2lib.data.io.conn.local.MissingClientException;
 import org.as2lib.data.io.conn.local.NotAllowedDomainException;
 import org.as2lib.data.io.conn.local.ClientStatusListener;
@@ -123,7 +122,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		aOut.debug(getClass().getName()+".broadcast");
 		
 		if(clients.isEmpty()){
-			eventBroadcaster.dispatch(new ConnectorError(new MissingClientsException("LocalServer has no clients to broadcast !",this,arguments)));
+			eventBroadcaster.dispatch(new ConnectorError(new MissingClientException("LocalServer has no clients to broadcast !",this,arguments)));
 			return;
 		}
 		
@@ -153,6 +152,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	 */
 	public function serverMethod():Void {
 		aOut.debug(arguments.toString());
+		eventBroadcaster.dispatch(new ConnectorResponse("Client "+arguments[0]+" sent: "+arguments.toString()));
 	}
 	
 	/**

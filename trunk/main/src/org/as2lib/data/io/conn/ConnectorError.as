@@ -14,7 +14,7 @@
  * limitations under the License.
  */
  
-import org.as2lib.env.except.AbstractException;
+import org.as2lib.env.except.Exception;
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.core.BasicClass;
 
@@ -34,9 +34,9 @@ class org.as2lib.data.io.conn.ConnectorError extends BasicClass implements Event
 	private var name:String;
 	
 	/** Thrown Exception */
-	private var exception:AbstractException;
+	private var exception:Exception;
 		 
-	public function ConnectorError(exception:AbstractException) {
+	public function ConnectorError(exception:Exception) {
 		
 		name = "onError";
 		this.exception = exception;
@@ -52,7 +52,7 @@ class org.as2lib.data.io.conn.ConnectorError extends BasicClass implements Event
 	/**
 	 * @return The specified Exception.
 	 */
-	public function getException(Void):AbstractException {
+	public function getException(Void):Exception {
 		return exception;
 	}
 }
