@@ -1,9 +1,9 @@
 ﻿import org.as2lib.test.unit.TestCase;
 import org.as2lib.data.io.conn.local.LocalConnector;
 import org.as2lib.data.io.conn.ConnectorRequest;
-import test.org.as2lib.data.io.conn.ExampleListener;
+import test.unit.org.as2lib.data.io.conn.ExampleListener;
 
-class test.org.as2lib.data.io.conn.local.TLocalConnector extends TestCase{
+class test.unit.org.as2lib.data.io.conn.local.TLocalConnector extends TestCase{
 	
 	private var connector:LocalConnector;
 	

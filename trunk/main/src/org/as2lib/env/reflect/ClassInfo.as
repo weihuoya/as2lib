@@ -53,10 +53,10 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	private var parent:PackageInfo;
 	
 	/** The methods the class has. */
-	private var methods:Map;
+	private var methods:Array;
 	
 	/** The properties of the class. */
-	private var properties:Map;
+	private var properties:Array;
 	
 	/** The class's constructor. */
 	private var constructor:ConstructorInfo;
@@ -152,11 +152,11 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	/**
 	 * @see org.as2lib.env.reflect.TypeInfo#getMethods()
 	 */
-	public function getMethods(Void):Map {
-		if (ObjectUtil.isEmpty(methods)) {
+	public function getMethods(Void):Array {
+		if (!methods) {
 			methods = ReflectConfig.getMethodAlgorithm().execute(this);
 			if (getSuperType() != null) {
-				methods.putAll(getSuperType().getMethods());
+				methods.concat(getSuperType().getMethods());
 			}
 		}
 		return methods;
@@ -176,41 +176,43 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @see org.as2lib.env.reflect.TypeInfo#getMethodByName()
 	 */
 	public function getMethodByName(methodName:String):MethodInfo {
-		var result:MethodInfo = getMethods().get(methodName);
-		if (ObjectUtil.isAvailable(result)) {
-			return result;
+		var l:Number = getMethods().length;
+		for (var i:Number = 0; i < l; i = i-(-1)) {
+			var method:MethodInfo = getMethods()[i];
+			if (method.getName() == methodName) {
+				return method;
+			}
 		}
-		throw new NoSuchTypeMemberException("The method with the name [" + methodName + "] you tried to obtain does not exist.",
-										this,
-										arguments);
+		throw new NoSuchTypeMemberException("The method with the name [" + methodName + "] you tried to obtain does not exist.", this, arguments);
 	}
 	
 	/**
 	 * @see org.as2lib.env.reflect.TypeInfo#getMethodByMethod()
 	 */
 	public function getMethodByMethod(concreteMethod:Function):MethodInfo {
-		var iterator:Iterator = getMethods().iterator();
-		var method:MethodInfo;
-		while (iterator.hasNext()) {
-			method = MethodInfo(iterator.next());
+		var l:Number = getMethods().length;
+		for (var i:Number = 0; i < l; i = i-(-1)) {
+			var method:MethodInfo = getMethods()[i];
 			if (method.getMethod() == concreteMethod) {
 				return method;
 			}
 		}
-		throw new NoSuchTypeMemberException("The method [" + concreteMethod + "] you tried to obtain does not exist in this class.",
-										this,
-										arguments);
+		throw new NoSuchTypeMemberException("The method [" + concreteMethod + "] you tried to obtain does not exist in this class.", this, arguments);
 	}
 	
 	/**
-	 * Returns a Map containing the properties represented by PropertyInfos
-	 * the class has. Lazy loading is used.
+	 * Returns an Array containing the properties represented by PropertyInfos
+	 * the class has. As well as the properties defined by super classes. Lazy
+	 * loading is used.
 	 *
-	 * @return a Map containing PropertyInfos representing the properties
+	 * @return an Array containing PropertyInfos representing the properties
 	 */
-	public function getProperties(Void):Map {
-		if (ObjectUtil.isEmpty(properties)) {
+	public function getProperties(Void):Array {
+		if (!properties) {
 			properties = ReflectConfig.getPropertyAlgorithm().execute(this);
+			if (getSuperType() != null) {
+				properties.concat(ClassInfo(getSuperType()).getProperties());
+			}
 		}
 		return properties;
 	}
@@ -235,13 +237,14 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @throws org.as2lib.env.reflect.NoSuchTypeMemberException if the property you tried to obtain does not exist
 	 */
 	public function getPropertyByName(propertyName:String):PropertyInfo {
-		var property:PropertyInfo = getProperties().get(propertyName);
-		if (ObjectUtil.isAvailable(property)) {
-			return property;
+		var l:Number = getProperties().length;
+		for (var i:Number = 0; i < l; i = i-(-1)) {
+			var property:PropertyInfo = getProperties()[i];
+			if (property.getName() == propertyName) {
+				return property;
+			}
 		}
-		throw new NoSuchTypeMemberException("The property with the name [" + propertyName + "] you tried to obtain does not exist.",
-										this,
-										arguments);
+		throw new NoSuchTypeMemberException("The property with the name [" + propertyName + "] you tried to obtain does not exist.", this, arguments);
 	}
 	
 	/**
@@ -252,17 +255,14 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @throws org.as2lib.env.reflect.NoSuchTypeMemberException if the property you tried to obtain does not exist
 	 */
 	public function getPropertyByProperty(concreteProperty:Function):PropertyInfo {
-		var iterator:Iterator = getProperties().iterator();
-		var property:PropertyInfo;
-		while (iterator.hasNext()) {
-			property = PropertyInfo(iterator.next());
+		var l:Number = getProperties().length;
+		for (var i:Number = 0; i < l; i = i-(-1)) {
+			var property:PropertyInfo = getProperties()[i];
 			if (property.getGetter() == concreteProperty
 					|| property.getSetter() == concreteProperty) {
 				return property;
 			}
 		}
-		throw new NoSuchTypeMemberException("The property [" + concreteProperty + "] you tried to obtain does not exist in this class.",
-										this,
-										arguments);
+		throw new NoSuchTypeMemberException("The property [" + concreteProperty + "] you tried to obtain does not exist in this class.", this, arguments);
 	}
 }

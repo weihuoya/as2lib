@@ -28,5 +28,5 @@ interface org.as2lib.env.reflect.algorithm.ContentAlgorithm {
 	 * @param info a CompositeMemberInfo used as the basis of the search
 	 * @return a HashMap containing the searched for values
 	 */
-	public function execute(info:CompositeMemberInfo):Map;
+	public function execute(info:CompositeMemberInfo):Array;
 }

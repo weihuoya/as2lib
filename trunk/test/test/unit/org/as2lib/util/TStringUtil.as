@@ -4,7 +4,7 @@ import org.as2lib.env.except.IllegalArgumentException;
 /**
  * 
  */
-class test.org.as2lib.util.TStringUtil extends TestCase {
+class test.unit.org.as2lib.util.TStringUtil extends TestCase {
 	
 	private function testReplace (Void):Void {
 		assertUndefined("Replace of nothing", StringUtil.replace(undefined, "as", "da"));

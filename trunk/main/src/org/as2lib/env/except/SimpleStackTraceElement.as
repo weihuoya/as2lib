@@ -88,10 +88,10 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 			if (tempMethod.getMethod() == concreteMethod) {
 				return (method = tempMethod);
 			}
-			var property:PropertyInfo;
-			var iterator:Iterator = getThrower().getProperties().iterator();
-			while (iterator.hasNext()) {
-				property = PropertyInfo(iterator.next());
+			var properties:Array = getThrower().getProperties();
+			var l:Number = properties.length;
+			for (var i:Number = 0; i < l; i = i-(-1)) {
+				var property:PropertyInfo = properties[i];
 				tempMethod = property.getGetter();
 				if (tempMethod.getMethod() == concreteMethod) {
 					return (method = tempMethod);

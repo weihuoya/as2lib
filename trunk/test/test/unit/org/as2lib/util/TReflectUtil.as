@@ -1,11 +1,11 @@
 ﻿import org.as2lib.test.unit.TestCase;
-import test.org.as2lib.util.treflectutil.SubClass;
-import test.org.as2lib.util.treflectutil.SuperClass;
+import test.unit.org.as2lib.util.treflectutil.SubClass;
+import test.unit.org.as2lib.util.treflectutil.SuperClass;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
 
-class test.org.as2lib.util.TReflectUtil extends TestCase {
+class test.unit.org.as2lib.util.TReflectUtil extends TestCase {
 	private var sub:SubClass;
 	private var sup:SuperClass;
 	
@@ -22,7 +22,7 @@ class test.org.as2lib.util.TReflectUtil extends TestCase {
 		subInfo = getClassInfo(sub);
 		superInfo = getClassInfo(sup);
 		
-		package = _global.test.org.as2lib.util.treflectutil;
+		package = _global.test.unit.org.as2lib.util.treflectutil;
 		packageInfo = getPackageInfo(package);
 	}
 	

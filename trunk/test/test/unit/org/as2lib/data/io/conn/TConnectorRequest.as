@@ -1,7 +1,7 @@
 ﻿import org.as2lib.test.unit.TestCase;
 import org.as2lib.data.io.conn.ConnectorRequest;
 
-class test.org.as2lib.data.io.conn.TConnectorRequest extends TestCase {
+class test.unit.org.as2lib.data.io.conn.TConnectorRequest extends TestCase {
    
 	public function TConnectorRequest() {}
    

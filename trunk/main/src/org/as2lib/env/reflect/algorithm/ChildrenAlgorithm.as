@@ -20,9 +20,6 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
-import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.PrimitiveTypeMap;
-import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ReflectConfig;
 
@@ -33,11 +30,11 @@ class org.as2lib.env.reflect.algorithm.ChildrenAlgorithm extends BasicClass impl
 	public function ChildrenAlgorithm(Void) {
 	}
 	
-	public function execute(g:CompositeMemberInfo):Map {
+	public function execute(g:CompositeMemberInfo):Array {
 		var c:Cache = ReflectConfig.getCache();
 		
 		var p:PackageInfo = PackageInfo(g);
-		var r:Map = new PrimitiveTypeMap();
+		var r:Array = new Array();
 		
 		var t:Object = p.getPackage();
 		
@@ -49,14 +46,14 @@ class org.as2lib.env.reflect.algorithm.ChildrenAlgorithm extends BasicClass impl
 					b = new ClassInfo(i, t[i], p);
 					c.addClass(b);
 				}
-				r.put(i, b);
+				r[r.length] = b;
 			} else if (typeof(t[i]) == "object") {
 				var a:PackageInfo = c.getPackage(t[i]);
 				if (!a) {
 					a = new PackageInfo(i, t[i], p);
 					c.addPackage(a);
 				}
-				r.put(i, a);
+				r[r.length] = a;
 			}
 		}
 		

@@ -10,7 +10,7 @@ import org.as2lib.util.ObjectUtil;
 /**
  * @author Simon Wacker
  */
-class test.org.as2lib.env.overload.TOverload extends TestCase {
+class test.unit.org.as2lib.env.overload.TOverload extends TestCase {
 	public function TOverload(Void) {
 	}
 	

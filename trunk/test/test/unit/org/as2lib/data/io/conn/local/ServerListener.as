@@ -5,7 +5,7 @@ import org.as2lib.data.io.conn.ConnectorResponse;
 import org.as2lib.Config;
 import org.as2lib.env.out.OutAccess;
 
-class test.org.as2lib.data.io.conn.local.ServerListener extends BasicClass implements ConnectorListener {
+class test.unit.org.as2lib.data.io.conn.local.ServerListener extends BasicClass implements ConnectorListener {
 	/** Internal counter (just to do something */
 	public static var counter:Number = 0;
 	private var cnt:Number;

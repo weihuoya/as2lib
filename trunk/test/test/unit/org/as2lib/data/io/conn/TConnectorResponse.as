@@ -1,8 +1,8 @@
 ﻿import org.as2lib.test.unit.TestCase;
 import org.as2lib.data.io.conn.ConnectorResponse;
-import test.org.as2lib.data.io.conn.response.TPerson;
+import test.unit.org.as2lib.data.io.conn.response.TPerson;
 
-class test.org.as2lib.data.io.conn.TConnectorResponse extends TestCase {
+class test.unit.org.as2lib.data.io.conn.TConnectorResponse extends TestCase {
 	
 	public function TConnectorResponse(Void) {}
 	
