@@ -22,6 +22,7 @@
         <entry type="remove" package="org.as2lib.env.out" class="OutConfig" method="getWriteStringifier(Void):Stringifier"></entry>
         <entry type="remove" package="org.as2lib.env.out" class="OutConfig" method="setErrorStringifier(OutInfoStringifier):Void"></entry>
         <entry type="remove" package="org.as2lib.env.out" class="OutConfig" method="getErrorStringifier(Void):Stringifier"></entry>
+        <entry type="bugfix" package="org.as2lib.env.reflect.algorithm" class="ClassAlgorithm">It's now possible to obtain the corresponding ClassInfos of primitive types and MovieClips.</entry>
       </day>
     </month>
     <month value="8">
