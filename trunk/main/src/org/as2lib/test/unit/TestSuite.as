@@ -80,11 +80,8 @@ class org.as2lib.test.unit.TestSuite extends BasicClass implements Test {
 	 * @param doNotPrintResult [Optional Parameter, null interpreted as false] Boolean if the Result should be printed immediately or not.
 	 * @return TestRunner that run this test (including all informations about the run).
 	 */
-	public function run(doNotPrintResult:Boolean):TestRunner {
-		if(!doNotPrintResult) {
-			 doNotPrintResult = false;
-		}
-		return new TestRunner().run(this, doNotPrintResult);
+	public function run():TestRunner {
+		return new TestRunner().run(this);
 	}
 	
 	/**
