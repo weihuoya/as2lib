@@ -28,9 +28,7 @@ import org.as2lib.env.bean.MutablePropertyValueSet;
 import org.as2lib.env.bean.PropertyValueConverter;
 import org.as2lib.env.bean.PropertyValueConverterHolder;
 import org.as2lib.env.bean.FatalBeanException;
-import org.as2lib.env.bean.converter.NumberConverter;
-import org.as2lib.env.bean.converter.BooleanConverter;
-import org.as2lib.env.bean.converter.ClassConverter;
+import org.as2lib.env.bean.converter.*;
 
 /**
  * @author Simon Wacker
@@ -46,6 +44,7 @@ class org.as2lib.env.bean.SimpleBeanWrapper extends AbstractBeanWrapper implemen
 		registerPropertyValueConverterByTypeAndPathAndConverter(Number, null, new NumberConverter());
 		registerPropertyValueConverterByTypeAndPathAndConverter(Boolean, null, new BooleanConverter());
 		registerPropertyValueConverterByTypeAndPathAndConverter(Function, null, new ClassConverter());
+		registerPropertyValueConverterByTypeAndPathAndConverter(Array, null, new StringArrayConverter());
 	}
 	
 	public function getPropertyValue(propertyName:String) {
