@@ -60,7 +60,7 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 * @throws IllegalArgumentException if the passed in object is neither of type function nor object
 	 */
 	public function getClass(object):ClassInfo {
-		if (ObjectUtil.isTypeOf(object, "object")) {
+		if (ObjectUtil.isTypeOf(object, "object") || object instanceof Object) {
 			return ClassInfo(classes.get(object.__proto__));
 		}
 		if (ObjectUtil.isTypeOf(object, "function")) {
