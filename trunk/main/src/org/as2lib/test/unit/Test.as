@@ -243,7 +243,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * @see #assertFalse
 	 * @see #assertFalseWithMessage
 	 * 
-	 * @param message	Message to be displayed when an Error occured
+	 * @param message	Message to be displayed if an error occures
 	 * @param var1	Var that should be true.
 	 */
 	private static function assertTrueWithMessage (message:String, var1):Void {
@@ -288,7 +288,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * @see #assertFalse
 	 * @see #assertFalseWithoutMessage
 	 * 
-	 * @param message	Message to be displayed when an Error occured
+	 * @param message	Message to be displayed if an error occures
 	 * @param var1		First Var.
 	 */
 	private static function assertFalseWithMessage (message:String, var1):Void {
@@ -335,7 +335,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * @see #assertNotEqualsWithoutMessage
 	 * @see #assertNotEqualsWithMessage
 	 * 
-	 * @param message	Message to be displayed when an Error occured
+	 * @param message	Message to be displayed if an error occures
 	 * @param var1		First Var.
 	 * @param var2		Second Var.
 	 */
@@ -384,7 +384,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * @see #assertNotEquals
 	 * @see #assertNotEqualsWithoutMessage
 	 * 
-	 * @param message	Message to be displayed when an Error occured
+	 * @param message	Message to be displayed if an error occures
 	 * @param var1		First Var.
 	 * @param var2		Second Var.
 	 */
@@ -430,7 +430,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * @see #assertNullWithMessage
 	 * @see #assertNullWithoutMessage
 	 * 
-	 * @param message	Message to be displayed when an Error occured
+	 * @param message	Message to be displayed if an error occures
 	 * @param var1		Var that should not be Null.
 	 */
 	private static function assertNotNullWithMessage (message:String, var1):Void {
@@ -439,13 +439,26 @@ class org.as2lib.test.unit.Test extends BasicClass {
 		}
 	}
 
+	/**
+	 * overload
+	 * @see #assertNullWithMessage
+	 * @see #assertNullWithoutMessage
+	 */
+	private static function assertNull():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that,arguments);
+		overload.addHandlerByValue([String, Object], assertNullWithMessage);
+		overload.addHandlerByValue([Object], assertNullWithoutMessage);
+		overload.forward();
+	}
 	
 	/**
 	 * Asserts if an Var is Null.
 	 *
 	 * @see #assertNotNull
-	 * @see #assertNotNullWIthoutMessage
+	 * @see #assertNotNullWithoutMessage
 	 * @see #assertNotNullWithMessage
+	 * @see #assertNull
 	 * @see #assertNullWithMessage
 	 * 
 	 * @param var1	Var that should be Null.
@@ -458,10 +471,12 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * Adds a Message to #assertNull.
 	 *
 	 * @see #assertNotNull
+	 * @see #assertNotNullWithoutMessage
+	 * @see #assertNotNullWithMessage
 	 * @see #assertNull
-	 * @see #assertNullWithMessage
+	 * @see #assertNullWithoutMessage
 	 * 
-	 * @param message	Message to be displayed when an Error occured
+	 * @param message	Message to be displayed if an error occures
 	 * @param var1		Var that should not be Null.
 	 */
 	private static function assertNullWithMessage (message:String, var1):Void {
@@ -471,26 +486,43 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	}
 	
 	/**
+	 * overload
+	 * @see #assertNotUndefinedWithMessage
+	 * @see #assertNotUndefinedWithoutMessage
+	 */
+	private static function assertNotUndefined():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that,arguments);
+		overload.addHandlerByValue([String, Object], assertNotUndefinedWithMessage);
+		overload.addHandlerByValue([Object], assertNotUndefinedWithoutMessage);
+		overload.forward();
+	}
+	
+	/**
 	 * Asserts if an Var is not Undefined.
 	 *
 	 * @see #assertNotUndefinedWithMessage
+	 * @see #assertNotUndefined
 	 * @see #assertUndefined
+	 * @see #assertUndefinedWithoutMessage
 	 * @see #assertUndefinedWithMessage
 	 * 
 	 * @param var1	Var that should not be Undefined.
 	 */
-	private static function assertNotUndefined (var1):Void {
-		assertNotUndefinedWithMessage("undefined", var1);
+	private static function assertNotUndefinedWithoutMessage (var1):Void {
+		assertNotUndefinedWithMessage("", var1);
 	}
 	
 	/**
 	 * Adds a Message to #assertNotUndefined.
 	 *
 	 * @see #assertNotUndefined
+	 * @see #assertNotUndefinedWithoutMessage
 	 * @see #assertUndefined
+	 * @see #assertUndefinedWithoutMessage
 	 * @see #assertUndefinedWithMessage
 	 * 
-	 * @param message	Message to be displayed when an Error occured
+	 * @param message	Message to be displayed if an error occures
 	 * @param var1		Var that should not be Undefined.
 	 */
 	private static function assertNotUndefinedWithMessage (message:String, var1):Void {
@@ -500,26 +532,43 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	}
 	
 	/**
+	 * overload
+	 * @see #assertUndefinedWithMessage
+	 * @see #assertUndefinedWithoutMessage
+	 */
+	private static function assertUndefined():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that,arguments);
+		overload.addHandlerByValue([String, Object], assertUndefinedWithMessage);
+		overload.addHandlerByValue([Object], assertUndefinedWithoutMessage);
+		overload.forward();
+	}
+	
+	/**
 	 * Asserts if an Var is undefined.
 	 *
 	 * @see #assertNotUndefined
+	 * @see #assertNotUndefinedWithoutMessage
 	 * @see #assertNotUndefinedWithMessage
+	 * @see #assertUndefined
 	 * @see #assertUndefinedWithMessage
 	 * 
 	 * @param var1	Var that should be Undefined.
 	 */
-	private static function assertUndefined (var1):Void {
-		assertUndefinedWithMessage("undefined", var1);
+	private static function assertUndefinedWithoutMessage (var1):Void {
+		assertUndefinedWithMessage("", var1);
 	}
 	
 	/**
 	 * Adds a Message to #assertUndefined.
 	 *
-	 * @see #assertNotUndefinedWithMessage
 	 * @see #assertNotUndefined
+	 * @see #assertNotUndefinedWithoutMessage
+	 * @see #assertNotUndefinedWithMessage
 	 * @see #assertUndefined
+	 * @see #assertUndefinedWithoutMessage
 	 * 
-	 * @param message	Message to be displayed when an Error occured
+	 * @param message	Message to be displayed if an error occures
 	 * @param var1		Var that should not be Undefined.
 	 */
 	private static function assertUndefinedWithMessage (message:String, var1):Void {
@@ -529,26 +578,43 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	}
 	
 	/**
+	 * overload
+	 * @see #assertNotInfinityWithMessage
+	 * @see #assertNotInfinityWithoutMessage
+	 */
+	private static function assertNotInfinity():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that,arguments);
+		overload.addHandlerByValue([String, Object], assertNotInfinityWithMessage);
+		overload.addHandlerByValue([Object], assertNotInfinityWithoutMessage);
+		overload.forward();
+	}
+	
+	/**
 	 * Asserts if an Var is Infinity.
 	 *
+	 * @see #assertNotInifity
 	 * @see #assertNotInifityWithMessage
 	 * @see #assertInfinity
+	 * @see #assertInfinityWithoutMessage
 	 * @see #assertInfinityWithMessage
 	 * 
 	 * @param var1	Var that should not be Infinity.
 	 */	
-	private static function assertNotInfinity (var1:Number):Void {
-		assertNotInfinityWithMessage("undefined", var1);
+	private static function assertNotInfinityWithoutMessage (var1:Number):Void {
+		assertNotInfinityWithMessage("", var1);
 	}
 
 	/**
 	 * Adds a Message to #assertNotInfinity.
 	 *
 	 * @see #assertNotInifity
+	 * @see #assertNotInifityWithoutMessage
 	 * @see #assertInfinity
+	 * @see #assertInfinityWithoutMessage
 	 * @see #assertInfinityWithMessage
 	 * 
-	 * @param message	Message to be displayed when an Error occured
+	 * @param message	Message to be displayed if an error occures
 	 * @param var1		Var that should not be Infinity.
 	 */	
 	private static function assertNotInfinityWithMessage (message:String, var1:Number):Void {
@@ -557,29 +623,45 @@ class org.as2lib.test.unit.Test extends BasicClass {
 		}
 	}
 	
+	/**
+	 * overload
+	 * @see #assertInfinityWithMessage
+	 * @see #assertInfinityWithoutMessage
+	 */
+	private static function assertInfinity():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that,arguments);
+		overload.addHandlerByValue([String, Object], assertInfinityWithMessage);
+		overload.addHandlerByValue([Object], assertInfinityWithoutMessage);
+		overload.forward();
+	}
 	
 	/**
 	 * Asserts if an Var is not Infinity.
 	 *
 	 * @see #assertNotInfinity
+	 * @see #assertNotInifityWithoutMessage
 	 * @see #assertNotInifityWithMessage
+	 * @see #assertInfinity
 	 * @see #assertInfinityWithMessage
 	 * 
 	 * @param var1	Var that should be Infinity.
 	 */	
-	private static function assertInfinity (var1:Number):Void {
-		assertInfinityWithMessage("undefined", var1);
+	private static function assertInfinityWithoutMessage (var1:Number):Void {
+		assertInfinityWithMessage("", var1);
 	}
 
 	/**
 	 * Adds a Message to #assertInfinity.
 	 *
-	 * @see #assertNotInifity
-	 * @see #assertNotInfinityWithMessage
+	 * @see #assertNotInfinity
+	 * @see #assertNotInifityWithoutMessage
+	 * @see #assertNotInifityWithMessage
 	 * @see #assertInfinity
+	 * @see #assertInfinityWithoutMessage
 	 * 
-	 * @param message	Message to be displayed when an Error occured.
-	 * @param var1		Var that should not be Infinity.
+	 * @param message	Message to be displayed if an error occures.
+	 * @param var1		Var that should be Infinity.
 	 */	
 	private static function assertInfinityWithMessage (message:String, var1:Number):Void {
 		if(var1 == Infinity) {
@@ -602,7 +684,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * @param exception		Class of the Exception that should be thrown.
 	 * @param atObject		Object where the call should be called.
 	 * @param theFunction	Function that should be called.
-	 * @param parameters	Parameters to call the Array.
+	 * @param parameters	Parameters to call.
 	 */
 	private static function assertThrows(exception:Function, atObject, theFunction:String, parameters:Array):Void {
 		var exceptionThrown:Boolean = false;
@@ -611,11 +693,11 @@ class org.as2lib.test.unit.Test extends BasicClass {
 		} catch (e) {
 			exceptionThrown = true;
 			if (!(e instanceof exception)) {
-				addError("assertThrows: A different exception was thrown.");
+				addError("assertThrows: A unexpected exception was thrown.");
 			}
 		}
 		if (!exceptionThrown) {
-			addError("assertThrows: No Exception was thrown.");
+			addError("assertThrows: No exception was thrown.");
 		}
 	}
 }
