@@ -43,9 +43,10 @@ interface org.as2lib.env.reflect.TypeInfo extends CompositeMemberInfo {
 	
 	/**
 	 * Returns a Map containing the operations represented by MethodInfos
-	 * the type has.
+	 * the type declares including the declared operations of all super
+	 * types.
 	 *
-	 * @return a Map containing MethodInfos representing the operations
+	 * @return a Map containing MethodInfos representing the available operations
 	 */
 	public function getMethods(Void):Map;
 	

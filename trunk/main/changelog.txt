@@ -126,3 +126,9 @@
       >> org.as2lib.env.except
 
         > fixed serious bug in SimpleStackTraceElement.getMethod() that broke the whole program if a Throwable was thrown by an operation of the superclass (the operation couldn't be found in the throwing subclass and a Throwable was thus being thrown)
+        - it was actually no bug in the SimpleStackTraceElement but in the ClassInfo's.getMethods() operation
+
+
+      >> org.as2lib.env.reflect
+
+        > changed ClassInfo.getMethods() it now also returns the operations declared by the super type
