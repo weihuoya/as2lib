@@ -31,8 +31,10 @@ class org.as2lib.env.event.dispatcher.NormalEventDispatcher extends BasicClass i
 	public function dispatch(event:EventInfo, listeners:Array):Void {
 		var name:String = event.getName();
 		var l:Number = listeners.length;
-		for (var i:Number = 0; i < l; i++) {
-			listeners[i][name](event);
+		if(name != null) {
+			for (var i:Number = 0; i < l; i++) {
+				listeners[i][name](event);
+			}
 		}
 	}
 	
@@ -42,10 +44,12 @@ class org.as2lib.env.event.dispatcher.NormalEventDispatcher extends BasicClass i
 	public function dispatchConsumable(event:EventInfo, listeners:Array):Void {
 		var name:String = event.getName();
 		var l:Number = listeners.length;
-		for (var i:Number = 0; i < l; i++) {
-			listeners[i][name](event);
-			if (Consumable(event).isConsumed()) {
-				return;
+		if(name != null) {
+			for (var i:Number = 0; i < l; i++) {
+				listeners[i][name](event);
+				if (Consumable(event).isConsumed()) {
+					return;
+				}
 			}
 		}
 	}
