@@ -57,8 +57,8 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass impleme
 		for (i in p) {
 			var f = p[i];
 			if (typeof(f) == "function") {
-				if ((d instanceof Object) && d.__proto__ === f.prototype
-						|| typeof(d) == "function" && d.prototype === f.prototype) {
+				if (typeof(d) == "function" && d.prototype === f.prototype
+						|| /*(d instanceof Object)*/ typeof(d) == "object" && d.__proto__ === f.prototype) {
 					r = new ClassInfo(i, f, a);
 					return true;
 				}
