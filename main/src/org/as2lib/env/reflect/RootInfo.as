@@ -5,17 +5,30 @@ import org.as2lib.util.ObjectUtil;
 
 /**
  * RootInfo represents the root of the class path. The root in the Flash environment
- * is _global. There can only exist one RootInfo instance.
+ * is _global. There can only exist one RootInfo instance. Thus it is implemented
+ * as a Singleton.
  *
  * @author Simon Wacker
  * @see org.as2lib.env.reflect.PackageInfo
  * @see org.as2lib.env.reflect.CacheInfo
  */
 class org.as2lib.env.reflect.RootInfo extends PackageInfo implements CacheInfo {
+	/** The onliest instance of the RootInfo class. */
+	private static var instance:RootInfo = new RootInfo();
+	
+	/**
+	 * Returns the onliest instance of the RootInfo class.
+	 *
+	 * @return an instance of the RootInfo class
+	 */
+	public static function getInstance(Void):RootInfo {
+		return instance;
+	}
+	
 	/**
 	 * Constructs a RootInfo.
 	 */
-	public function RootInfo(Void) {
+	private function RootInfo(Void) {
 		super("root", _global, undefined);
 	}
 	

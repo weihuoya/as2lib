@@ -29,7 +29,7 @@ class org.as2lib.env.reflect.Cache extends BasicClass {
 	public function Cache(Void) {
 		classes = new HashMap();
 		packages = new HashMap();
-		root = new RootInfo();
+		root = RootInfo.getInstance();
 	}
 	
 	/**
