@@ -14,7 +14,7 @@ import org.as2lib.util.Call;
  * All methods throw exceptions if the matching condition failed.
  * 
  * @author Martin Heidegger
- * @see org.as2lib.test.unit.TestCases
+ * @see org.as2lib.test.unit.TestCase
  * @see org.as2lib.test.unit.TestResult
  * @see org.as2lib.test.unit.TestCaseMethodInfo
  */
@@ -22,35 +22,11 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	
 	/** Private Constructor, not instanciatable */
 	private function Assert (Void) {}
-	
-	/**
-	 * overload
-	 * @see #isTrueWithMessage
-	 * @see #isTrueWithoutMessage
-	 */
-	public static function isTrue():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, Object], isTrueWithMessage);
-		overload.addHandler([Object], isTrueWithoutMessage);
-		overload.forward(arguments);
-	}
-	
-	/**
-	 * Checks if the given value var1 is true.
-	 *
-	 * @see #isTrueWithMessage
-	 * @see #isFalse
-	 * @see #isFalseWithoutMessage
-	 * @see #isFalseWithMessage
-	 * @throws AssertIsTrueException if the assertion fails.
-	 * @param var1		Var that should be true.
-	 */
-	public static function isTrueWithoutMessage (var1:Boolean):Void {
-		isTrueWithMessage ("", var1);
-	}
 
 	/**
+	 * Checks if the given object is the same like true.
+	 * Throws a exception if the check fails.
+	 * 
 	 * Appends a Message to @see #isTrue.
 	 *
 	 * @see #isTrue
@@ -58,624 +34,223 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isFalseWithMessage
 	 * @throws AssertIsTrueException if the assertion fails.
 	 * @param message	Message to be displayed if an error occures
-	 * @param var1	Var that should be true.
+	 * @param object	Object that should be true.
 	 */
-	public static function isTrueWithMessage (message:String, var1):Void {
-		if(var1 !== true) {
-			throw new AssertIsTrueException(message, var1, eval("th"+"is"), arguments);
+	public static function isTrue (message:String, object):Void {
+		if(object !== true) {
+			throw new AssertIsTrueException(message, object, eval("th"+"is"), arguments);
 		}
 	}
 	
-	/**
-	 * overload
-	 * @see #isFalseWithMessage
-	 * @see #isFalseWithoutMessage
-	 */
-	public static function isFalse():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, Object], isFalseWithMessage);
-		overload.addHandler([Object], isFalseWithoutMessage);
-		overload.forward(arguments);
-	}
 	
 	/**
-	 * Checks if the given value var1 is false.
-	 * 
-	 * @see #isTrue
-	 * @see #isTrueWithoutMessage
-	 * @see #isTrueWithMessage
-	 * @see #isFalse
-	 * @see #isFalseWithMessage
-	 * @throws AssertIsFalseException if the assertion fails.
-	 * @param var1	First var.
-	 */
-	public static function isFalseWithoutMessage (var1):Void {
-		isFalseWithMessage ("", var1);
-	}
-	
-	/**
-	 * Uses a Message to @see #isFalse.
+	 * Checks if the given object is the same like false.
+	 * Throws a exception if the check fails.
 	 *
 	 * @see #isTrue
-	 * @see #isTrueWithMessage
-	 * @see #isFalse
-	 * @see #isFalseWithoutMessage
 	 * 
 	 * @param message	Message to be displayed if an error occures
-	 * @param var1		First Var.
+	 * @param object	Object that should be false.
 	 */
-	public static function isFalseWithMessage (message:String, var1):Void {
-		if(var1 !== false) {
-			throw new AssertIsFalseException(message, var1, eval("th"+"is"), arguments);
+	public static function isFalse (message:String, object):Void {
+		if(object !== false) {
+			throw new AssertIsFalseException(message, object, eval("th"+"is"), arguments);
 		}
-	}
-	
-	/**
-	 * overload
-	 * @see #isEqualWithMessage
-	 * @see #isEqualWithoutMessage
-	 */
-	public static function isEqual():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, Object, Object], isEqualWithMessage);
-		overload.addHandler([Object, Object], isEqualWithoutMessage);
-		overload.forward(arguments);
 	}
 	
 	/**
 	 * Compares two valus if they are the same.
 	 * This method compares two variables if the content is equal by "==".
 	 *
-	 * @see #isEqual
-	 * @see #isEqualWithMessage
-	 * @see #isNotEqual
-	 * @see #isNotEqualWithoutMessage
-	 * @see #isNotEqualWithMessage
-	 * 
-	 * @throws AssertIsEqualException if the assertion fails.
-	 * @param var1 First var.
-	 * @param var2 Second var.
-	 */
-	public static function isEqualWithoutMessage (var1, var2):Void {
-		isEqualWithMessage ("", var1, var2);
-	}
-	
-	/**
-	 * Appends a Message to @see #isEqual.
+	 * Throws a exception if the check fails.
 	 *
-	 * @see #isEqual
-	 * @see #isEqualWithMessage
 	 * @see #isNotEqual
-	 * @see #isNotEqualWithoutMessage
-	 * @see #isNotEqualWithMessage
 	 * 
 	 * @param message	Message to be displayed if an error occures
-	 * @param var1 First Var.
-	 * @param var2 Second Var.
+	 * @param var1		First Var.
+	 * @param var2		Second Var.
 	 */
-	public static function isEqualWithMessage (message:String, var1, var2):Void {
+	public static function isEqual (message:String, var1, var2):Void {
 		if(var1 != var2) {
 			throw new AssertIsEqualException(message, var1, var2, eval("th"+"is"), arguments);
 		}
 	}
 	
 	/**
-	 * overload
-	 * @see #isNotEqualWithoutMessage
-	 * @see #isNotEqualWithMessage
-	 */
-	public static function isNotEqual():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, Object, Object], isNotEqualWithMessage);
-		overload.addHandler([Object, Object], isNotEqualWithoutMessage);
-		overload.forward(arguments);
-	}
-	
-	/**
 	 * Checks if two given objects are not equal.
 	 * This method compares two variables if the content is not equal by "==".
-	 * 
-	 * @see #isEqual
-	 * @see #isEqualWithoutMessage
-	 * @see #isEqualWithMessage
-	 * @see #isNotEqual
-	 * @see #isNotEqualWithMessage
-	 * 
-	 * @throws AssertIsNotEqualException if the assertion fails.
-	 * @param var1 First var.
-	 * @param var2 Second var.
-	 */
-	public static function isNotEqualWithoutMessage (var1, var2):Void {
-		isEqualWithMessage ("", var1, var2);
-	}
-	
-	/**
-	 * Appends a Message to @see #isNotEqual.
 	 *
+	 * Throws a exception if the check fails.
+	 * 
 	 * @see #isEqual
-	 * @see #isEqualWithMessage
-	 * @see #isEqualWithMessage
-	 * @see #isNotEqual
-	 * @see #isNotEqualWithoutMessage
 	 * 
 	 * @throws AssertIsNotEqualException if the assertion fails.
 	 * @param message	Message to be displayed if an error occures
-	 * @param var1 First Var.
-	 * @param var1 Second Var.
+	 * @param var1		First Var.
+	 * @param var1		Second Var.
 	 */
-	public static function isNotEqualWithMessage (message:String, var1, var2):Void {
+	public static function isNotEqual (message:String, var1, var2):Void {
 		if(var1 == var2) {
 			throw new AssertIsNotEqualException(message, var1, var2, eval("th"+"is"), arguments);
 		}
 	}
 	
 	/**
-	 * overload
-	 * @see #isSameWithMessage
-	 * @see #isSameWithoutMessage
-	 */
-	public static function isSame():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, Object, Object], isSameWithMessage);
-		overload.addHandler([Object, Object], isSameWithoutMessage);
-		overload.forward(arguments);
-	}
-	
-	/**
 	 * Compares two valus if they are the same.
 	 * This method compares two variables if they are references
 	 * to the same object by ===.
-	 *
-	 * @see #isSame
-	 * @see #isSameWithMessage
-	 * @see #isNotSame
-	 * @see #isNotSameWithoutMessage
-	 * @see #isNotSameWithMessage
 	 * 
-	 * @throws AssertIsSameException if the assertion fails.
-	 * @param var1 First var.
-	 * @param var2 Second var.
-	 */
-	public static function isSameWithoutMessage (var1, var2):Void {
-		isSameWithMessage ("", var1, var2);
-	}
-	
-	/**
-	 * Appends a Message to @see #isSame.
+	 * Throws a exception if the check fails.
 	 *
-	 * @see #isSame
-	 * @see #isSameWithMessage
 	 * @see #isNotSame
-	 * @see #isNotSameWithoutMessage
-	 * @see #isNotSameWithMessage
 	 * 
 	 * @throws AssertIsSameException if the assertion fails.
 	 * @param message	Message to be displayed if an error occures
-	 * @param var1 First Var.
-	 * @param var2 Second Var.
+	 * @param var1		First Var.
+	 * @param var2		Second Var.
 	 */
-	public static function isSameWithMessage (message:String, var1, var2):Void {
+	public static function isSame (message:String, var1, var2):Void {
 		if(var1 !== var2) {
 			throw new AssertIsSameException(message, var1, var2, eval("th"+"is"), arguments);
 		}
-	}
-	/**
-	 * overload
-	 * @see #isNotSameWithMessage
-	 * @see #isNotSameWithoutMessage
-	 */
-	public static function isNotSame():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, Object, Object], isNotSameWithMessage);
-		overload.addHandler([Object, Object], isNotSameWithoutMessage);
-		overload.forward(arguments);
 	}
 	
 	/**
 	 * Compares two valus if they are not the same.
 	 * This method compares two variables if they are references
 	 * to the same object by !==.
-	 *
-	 * @see #isNotSame
-	 * @see #isNotSameWithMessage
-	 * @see #isSame
-	 * @see #isSameWithoutMessage
-	 * @see #isSameWithMessage
 	 * 
-	 * @throws AssertIsSameException if the assertion fails.
-	 * @param var1 First var.
-	 * @param var2 Second var.
-	 */
-	public static function isNotSameWithoutMessage (var1, var2):Void {
-		isNotSameWithMessage ("", var1, var2);
-	}
-	
-	/**
-	 * Appends a Message to @see #isNotSame.
+	 * Throws a exception if the check fails.
 	 *
-	 * @see #isNotSame
-	 * @see #isNotSameWithMessage
 	 * @see #isSame
-	 * @see #isSameWithoutMessage
-	 * @see #isSameWithMessage
 	 * 
 	 * @throws AssertIsSameException if the assertion fails.
 	 * @param message	Message to be displayed if an error occures
-	 * @param var1 First Var.
-	 * @param var2 Second Var.
+	 * @param var1		First Var.
+	 * @param var2		Second Var.
 	 */
-	public static function isNotSameWithMessage (message:String, var1, var2):Void {
+	public static function isNotSame (message:String, var1, var2):Void {
 		if(var1 === var2) {
 			throw new AssertIsNotSameException(message, var1, var2, eval("th"+"is"), arguments);
 		}
 	}
 
 	/**
-	 * overload
-	 * @see #isNullWithoutMessage
-	 * @see #isNullWithMessage
-	 */
-	public static function isNull():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, undefined], isNullWithMessage);
-		overload.addHandler([String, Object], isNullWithMessage);
-		overload.addHandler([Object], isNullWithoutMessage);
-		overload.addHandler([undefined], isNullWithoutMessage);
-		overload.addHandler([], isNullWithoutMessage);
-		overload.forward(arguments);
-	}
-	
-	/**
 	 * Checks that a variable is a reference to null.
 	 * Checks with a === that a variable is null.
+	 * Throws a exception if the check fails.
 	 *
-	 * @see #isNull
-	 * @see #isNullWithMessage
 	 * @see #isNotNull
-	 * @see #isNotNullWithoutMessage
-	 * @see #isNotNullWithMessage
-	 * 
-	 * @throws AssertIsNullException if the assertion fails.
-	 * @param var1 Variable that should be null
-	 */
-	public static function isNullWithoutMessage (var1):Void {
-		isNullWithMessage ("", var1);
-	}
-	
-	/**
-	 * Appends a Message to @see #isNull.
-	 *
-	 * @see #isNull
-	 * @see #isNullWithMessage
-	 * @see #isNullWithMessage
-	 * @see #isNotNull
-	 * @see #isNotNullWithoutMessage
 	 * 
 	 * @throws AssertIsNullException if the assertion fails.
 	 * @param message	Message to be displayed if an error occurs
-	 * @param var1 Variable that should be null.
+	 * @param object	Object that should be null.
 	 */
-	public static function isNullWithMessage (message:String, var1):Void {
-		if(var1 !== null) {
-			throw new AssertIsNullException(message, eval("th"+"is"), arguments, var1);
+	public static function isNull (message:String, object):Void {
+		if(object !== null) {
+			throw new AssertIsNullException(message, eval("th"+"is"), arguments, object);
 		}
-	}
-	
-	/**
-	 * overload
-	 * @see #isNotNullWithoutMessage
-	 * @see #isNotNullWithMessage
-	 */
-	public static function isNotNull():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, undefined], isNotNullWithMessage);
-		overload.addHandler([String, Object], isNotNullWithMessage);
-		overload.addHandler([Object], isNotNullWithoutMessage);
-		overload.addHandler([undefined], isNotNullWithoutMessage);
-		overload.addHandler([], isNotNullWithoutMessage);
-		overload.forward(arguments);
 	}
 	
 	/**
 	 * Checks that a variable does not contain null.
 	 * Checks with a !== that a variable is not null.
-	 *
-	 * @see #isNotNull
-	 * @see #isNotNullWithMessage
-	 * @see #isNull
-	 * @see #isNullWithoutMessage
-	 * @see #isNullWithMessage
-	 * 
-	 * @throws AssertIsNotNullException if the assertion fails.
-	 * @param var1 Variable that should not be null.
-	 */
-	public static function isNotNullWithoutMessage (var1):Void {
-		isNotNullWithMessage ("", var1);
-	}
-	
-	/**
-	 * Appends a Message to @see #isNotNull.
+	 * Throws a exception if the check fails.
 	 *
 	 * @see #isNull
-	 * @see #isNullWithoutMessage
-	 * @see #isNotNull
-	 * @see #isNotNullWithMessage
-	 * @see #isNotNullWithoutMessage
 	 * 
 	 * @throws AssertIsNotNullException if the assertion fails.
 	 * @param message	Message to be displayed if an error occurs
-	 * @param var1 Variable that should not be null.
+	 * @param object	Object that should not be null.
 	 */
-	public static function isNotNullWithMessage (message:String, var1):Void {
-		if(var1 === null) {
+	public static function isNotNull (message:String, object):Void {
+		if(object === null) {
 			throw new AssertIsNotNullException(message, eval("th"+"is"), arguments);
 		}
-	}
-
-	/**
-	 * overload
-	 * @see #isUndefinedWithoutMessage
-	 * @see #isUndefinedWithMessage
-	 */
-	public static function isUndefined():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, undefined], isUndefinedWithMessage);
-		overload.addHandler([String, Object], isUndefinedWithMessage);
-		overload.addHandler([Object], isUndefinedWithoutMessage);
-		overload.addHandler([undefined], isUndefinedWithoutMessage);
-		overload.addHandler([], isUndefinedWithoutMessage);
-		overload.forward(arguments);
 	}
 	
 	/**
 	 * Checks that a value contains undefined.
 	 * Checks with a === that a variable is undefined.
-	 *
-	 * @see #isUndefined
-	 * @see #isUndefinedWithMessage
-	 * @see #isNotUndefined
-	 * @see #isNotUndefinedWithoutMessage
-	 * @see #isNotUndefinedWithMessage
+	 * Throws a exception if the check fails.
 	 * 
-	 * @throws AssertIsUndefinedException if the assertion fails.
-	 * @param var1 Variable that should be null
-	 */
-	public static function isUndefinedWithoutMessage (var1):Void {
-		isUndefinedWithMessage ("", var1);
-	}
-	
-	/**
-	 * Appends a Message to @see #isUndefined.
-	 *
-	 * @see #isUndefined
-	 * @see #isUndefinedWithMessage
 	 * @see #isNotUndefined
-	 * @see #isNotUndefinedWithMessage
-	 * @see #isNotUndefinedWithoutMessage
 	 * 
 	 * @throws AssertIsUndefinedException if the assertion fails.
 	 * @param message	Message to be displayed if an error occurs
-	 * @param var1 Variable that should be undefined.
+	 * @param object	Object that should be undefined.
 	 */
-	public static function isUndefinedWithMessage (message:String, var1):Void {
-		if(var1 !== undefined) {
-			throw new AssertIsUndefinedException(message, eval("th"+"is"), arguments, var1);
+	public static function isUndefined (message:String, object):Void {
+		if(object !== undefined) {
+			throw new AssertIsUndefinedException(message, eval("th"+"is"), arguments, object);
 		}
-	}
-
-	/**
-	 * overload
-	 * @see #isNotUndefinedWithoutMessage
-	 * @see #isNotUndefinedWithMessage
-	 */
-	public static function isNotUndefined():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, undefined], isNotUndefinedWithMessage);
-		overload.addHandler([String, Object], isNotUndefinedWithMessage);
-		overload.addHandler([Object], isNotUndefinedWithoutMessage);
-		overload.addHandler([undefined], isNotUndefinedWithoutMessage);
-		overload.addHandler([], isNotUndefinedWithoutMessage);
-		overload.forward(arguments);
 	}
 	
 	/**
 	 * Checks that a value does not contain undefined.
 	 * Checks with a !== that a variable is not undefined.
+	 * Throws a exception if the check fails.
 	 *
-	 * @see #isNotUndefined
-	 * @see #isNotUndefinedWithMessage
 	 * @see #isUndefined
-	 * @see #isUndefinedWithoutMessage
-	 * @see #isUndefinedWithMessage
-	 * 
-	 * @throws AssertIsNotUndefinedException if the assertion fails.
-	 * @param var1 Variable that should not be undefined
-	 */
-	public static function isNotUndefinedWithoutMessage (var1):Void {
-		isNotUndefinedWithMessage ("", var1);
-	}
-	
-	/**
-	 * Appends a Message to @see #isNotUndefined.
-	 *
-	 * @see #isNotUndefined
-	 * @see #isNotUndefinedWithoutMessage
-	 * @see #isUndefined
-	 * @see #isUndefinedWithMessage
-	 * @see #isUndefinedWithoutMessage
 	 * 
 	 * @throws AssertIsNotUndefinedException if the assertion fails.
 	 * @param message	Message to be displayed if an error occurs
-	 * @param var1 Variable that should be undefined.
+	 * @param object	Object that should be undefined.
 	 */
-	public static function isNotUndefinedWithMessage (message:String, var1):Void {
-		if(var1 === undefined) {
+	public static function isNotUndefined (message:String, object):Void {
+		if(object === undefined) {
 			throw new AssertIsNotUndefinedException(message, eval("th"+"is"), arguments);
 		}
-	}
-
-	/**
-	 * overload
-	 * @see #isInfinityWithoutMessage
-	 * @see #isInfinityWithMessage
-	 */
-	public static function isInfinity():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, undefined], isInfinityWithMessage);
-		overload.addHandler([String, Object], isInfinityWithMessage);
-		overload.addHandler([Object], isInfinityWithoutMessage);
-		overload.addHandler([undefined], isInfinityWithoutMessage);
-		overload.addHandler([], isInfinityWithoutMessage);
-		overload.forward(arguments);
 	}
 	
 	/**
 	 * Checks that a variable is a reference to Infinity.
 	 * Checks with a === that a variable is Infinity.
+	 * Throws a exception if the check fails.
 	 *
-	 * @see #isInfinity
-	 * @see #isInfinityWithMessage
 	 * @see #isNotInfinity
-	 * @see #isNotInfinityWithoutMessage
-	 * @see #isNotInfinityWithMessage
-	 * 
-	 * @throws AssertIsInfinityException if the assertion fails.
-	 * @param var1 Variable that should be Infinity.
-	 */
-	public static function isInfinityWithoutMessage (var1):Void {
-		isInfinityWithMessage ("", var1);
-	}
-	
-	/**
-	 * Appends a Message to @see #isInfinity.
-	 *
-	 * @see #isInfinity
-	 * @see #isInfinityWithoutMessage
-	 * @see #isNotInfinity
-	 * @see #isNotInfinityWithMessage
-	 * @see #isNotInfinityWithoutMessage
 	 * 
 	 * @throws AssertIsInfinityException if the assertion fails.
 	 * @param message	Message to be displayed if an error occurs.
-	 * @param var1		Variable that should be Infinity.
+	 * @param object		Object that should be Infinity.
 	 */
-	public static function isInfinityWithMessage (message:String, var1):Void {
-		if(var1 !== Infinity) {
-			throw new AssertIsInfinityException(message, eval("th"+"is"), arguments, var1);
+	public static function isInfinity (message:String, object):Void {
+		if(object !== Infinity) {
+			throw new AssertIsInfinityException(message, eval("th"+"is"), arguments, object);
 		}
-	}
-
-	/**
-	 * overload
-	 * @see #isNotInfinityWithoutMessage
-	 * @see #isNotInfinityWithMessage
-	 */
-	public static function isNotInfinity():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, undefined], isNotInfinityWithMessage);
-		overload.addHandler([String, Object], isNotInfinityWithMessage);
-		overload.addHandler([Object], isNotInfinityWithoutMessage);
-		overload.addHandler([undefined], isNotInfinityWithoutMessage);
-		overload.addHandler([], isNotInfinityWithoutMessage);
-		overload.forward(arguments);
 	}
 	
 	/**
 	 * Checks that a variable is not a reference to Infinity.
 	 * Checks with a !== that a variable is not Infinity.
-	 *
-	 * @see #isNotInfinity
-	 * @see #isNotInfinityWithMessage
-	 * @see #isInfinity
-	 * @see #isInfinityWithoutMessage
-	 * @see #isInfinityWithMessage
+	 * Throws a exception if the check fails.
 	 * 
-	 * @throws AssertIsNotInfinityException if the assertion fails.
-	 * @param var1 Variable that should not be Infinity.
-	 */
-	public static function isNotInfinityWithoutMessage (var1):Void {
-		isNotInfinityWithMessage ("", var1);
-	}
-	
-	/**
-	 * Appends a Message to @see #isNotInfinity.
-	 *
-	 * @see #isNotInfinity
-	 * @see #isNotInfinityWithoutMessage
 	 * @see #isInfinity
-	 * @see #isInfinityWithMessage
-	 * @see #isInfinityWithoutMessage
 	 * 
 	 * @throws AssertIsNotInfinityException if the assertion fails.
 	 * @param message	Message to be displayed if an error occurs
-	 * @param var1 Variable that should not be Infinity.
+	 * @param object	Object that should not be Infinity.
 	 */
-	public static function isNotInfinityWithMessage (message:String, var1):Void {
-		if(var1 === Infinity) {
-			throw new AssertIsNotInfinityException(message, eval("th"+"is"), arguments, var1);
+	public static function isNotInfinity (message:String, object):Void {
+		if(object === Infinity) {
+			throw new AssertIsNotInfinityException(message, eval("th"+"is"), arguments, object);
 		}
-	}
-
-	/**
-	 * overload
-	 * @see #isEmptyWithoutMessage
-	 * @see #isEmptyWithMessage
-	 */
-	public static function isEmpty():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, undefined], isEmptyWithMessage);
-		overload.addHandler([String, Object], isEmptyWithMessage);
-		overload.addHandler([Object], isEmptyWithoutMessage);
-		overload.addHandler([undefined], isEmptyWithoutMessage);
-		overload.addHandler([], isEmptyWithoutMessage);
-		overload.forward(arguments);
 	}
 	
 	/**
 	 * Checks that a variable is undefined or null.
 	 * Checks with a != that a variable is not undefined or null.
-	 *
-	 * @see #isEmpty
-	 * @see #isEmptyWithMessage
-	 * @see #isNotEmpty
-	 * @see #isNotEmptyWithoutMessage
-	 * @see #isNotEmptyWithMessage
+	 * Throws a exception if the check fails.
 	 * 
-	 * @throws AssertIsEmptyException if the assertion fails.
-	 * @param var1 Variable that should be empty.
-	 */
-	public static function isEmptyWithoutMessage (var1):Void {
-		isEmptyWithMessage ("", var1);
-	}
-	
-	/**
-	 * Appends a Message to @see #isEmptyWithoutMessage.
-	 * 
-	 * @see #isEmpty.
-	 * @see #isEmptyWithoutMessage
 	 * @see #isNotEmpty
-	 * @see #isNotEmptyWithMessage
-	 * @see #isNotEmptyWithoutMessage
 	 * 
 	 * @throws AssertIsEmptyException if the assertion fails.
 	 * @param message	Message to be displayed if an error occurs
-	 * @param var1 Variable that should be empty.
+	 * @param object	Object that should be empty.
 	 */
-	public static function isEmptyWithMessage (message:String, var1):Void {
-		if(!ObjectUtil.isEmpty(var1)) {
-			throw new AssertIsEmptyException(message, eval("th"+"is"), arguments, var1);
+	public static function isEmpty (message:String, object):Void {
+		if(!ObjectUtil.isEmpty(object)) {
+			throw new AssertIsEmptyException(message, eval("th"+"is"), arguments, object);
 		}
 	}
 	
@@ -688,17 +263,19 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * 
 	 * @throws AssertIsNotEmptyException if the assertion fails.
 	 * @param message	Message to be displayed if an error occurs
-	 * @param var1 Variable that should not be empty.
+	 * @param object	Object that should not be empty.
 	 */
-	public static function isNotEmpty (message:String, var1):Void {
-		if(ObjectUtil.isEmpty(var1)) {
-			throw new AssertIsNotEmptyException(message, eval("th"+"is"), arguments, var1);
+	public static function isNotEmpty (message:String, object):Void {
+		if(ObjectUtil.isEmpty(object)) {
+			throw new AssertIsNotEmptyException(message, eval("th"+"is"), arguments, object);
 		}
 	}
 	
 	/**
 	 * Checks if a call throws a exception type.
 	 * Executes the given call and checks if it throws an defined error else it will throw an exception.
+	 * 
+	 * @see #isNotThrowing
 	 * 
 	 * @throws NothingThrownException if nothing was thrown.
 	 * @throws IllegalTypeThrownException if something different was thrown.
@@ -716,6 +293,28 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 		} catch(e) {
 			if(!ObjectUtil.isInstanceOf(e, type)) {
 				throw new IllegalTypeThrownException(message, eval("th"+"is"), arguments, call, e, args);
+			}
+		}
+	}
+	
+	/**
+	 * Checks if a call doesn't throw a expected exception type.
+	 * Executes the given call and checks if it doesn't throw an defined error else it will throw an exception.
+	 * 
+	 * @see #isThrowing
+	 * 
+	 * @throws ExpectedTypeThrownException if the exception was thrown.
+	 * @param message	Message that should be submitted if it fails.
+	 * @param type		Exceptiontype that should be thrown.
+	 * @param call		Call that should be executed.
+	 * @param args		Arguments for the call.
+	 */
+	public static function isNotThrowing(message:String, type, call:Call, args):Void {
+		try {
+			call.execute(args);
+		} catch(e) {
+			if(ObjectUtil.isInstanceOf(e, type)) {
+				throw new ExpectedTypeThrownException(message, eval("th"+"is"), arguments, call, e, args);
 			}
 		}
 	}

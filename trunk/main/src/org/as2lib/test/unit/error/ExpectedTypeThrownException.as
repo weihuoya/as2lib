@@ -18,7 +18,7 @@ import org.as2lib.env.except.Exception;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.test.unit.AssertException;
 import org.as2lib.test.unit.TestCaseMethodInfo;
-import org.as2lib.test.unit.stringifier.IllegalTypeThrownExceptionStringifier;
+import org.as2lib.test.unit.stringifier.ExpectedTypeThrownExceptionStringifier;
 import org.as2lib.util.string.Stringifier;
 import org.as2lib.util.Call;
 
@@ -26,10 +26,10 @@ import org.as2lib.util.Call;
  * @autor Martin Heidegger
  */
  
-class org.as2lib.test.unit.error.IllegalTypeThrownException extends Exception implements AssertException {
+class org.as2lib.test.unit.error.ExpectedTypeThrownException extends Exception implements AssertException {
 	
 	// Stringifier holder for the class.
-	private static var stringifier:Stringifier = new IllegalTypeThrownExceptionStringifier();
+	private static var stringifier:Stringifier = new ExpectedTypeThrownExceptionStringifier();
 	
 	// Call that has been executed.
 	private var call:Call;
@@ -41,13 +41,14 @@ class org.as2lib.test.unit.error.IllegalTypeThrownException extends Exception im
 	private var nestedException;
 	
 	/**
-	 * Constructs a new IllegalTypeThrownException.
+	 * Constructs a new ExpectedTypeThrownException.
 	 * 
-	 * @param message Message appended to the failure.
-	 * @param thrower Thrower of the Exception
-	 * @parma args Argument of the method
+	 * @param message			Message appended to the failure.
+	 * @param thrower			Thrower of the Exception
+	 * @param args				Argument of the method
+	 * @param nestedException	Exception that has been thrown
 	 */
-	function IllegalTypeThrownException (message:String, thrower, args, call, nestedException, callArgs) {
+	function ExpectedTypeThrownException (message:String, thrower, args, call:Call, callArgs:Array, nestedException) {
 		super(message, thrower, args);
 		this.call = call;
 		this.callArgs = callArgs;
@@ -85,21 +86,21 @@ class org.as2lib.test.unit.error.IllegalTypeThrownException extends Exception im
 	}
 	
 	/**
-	 * Getter for the Call arguments.
-	 * 
-	 * @return Arguments that has been executed with the Call.
-	 */
-	public function getCallArguments(Void):Array {
-		return callArgs;
-	}
-	
-	/**
 	 * Getter for the exception thrown to this class.
 	 * 
 	 * @return Exception that was thrown.
 	 */
 	public function getNestedException(Void) {
 		return nestedException;
+	}
+	
+	/**
+	 * Getter for the Call arguments.
+	 * 
+	 * @return Arguments that has been executed with the Call.
+	 */
+	public function getCallArguments(Void):Array {
+		return callArgs;
 	}
 	
 	/**
