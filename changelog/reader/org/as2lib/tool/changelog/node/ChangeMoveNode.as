@@ -54,7 +54,7 @@ class org.as2lib.tool.changelog.node.ChangeMoveNode extends BasicClass {
 		if(from) {
 			result += from+" ";
 		}
-		result += " to "+to;
+		result += "to "+to;
 		if(annotation.length > 0) {
 			result += "("+annotation+")";
 		}

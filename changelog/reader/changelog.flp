@@ -3,7 +3,7 @@
         <project_folder name="as2lib" expanded="true">
             <project_folder name="tool" expanded="true">
                 <project_folder name="changelog" expanded="true">
-                    <project_folder name="node" expanded="true">
+                    <project_folder name="node" expanded="false">
                         <project_file path="./org/as2lib/tool/changelog/node/EntryNode.as" filetype="as" />
                         <project_file path="./org/as2lib/tool/changelog/node/ChangeArgumentsNode.as" filetype="as" />
                         <project_file path="./org/as2lib/tool/changelog/node/ChangeTypeNode.as" filetype="as" />

@@ -270,6 +270,46 @@ class org.as2lib.tool.changelog.node.EntryNode extends BasicClass {
 	}
 	
 	/**
+	 * Getter for the Sign Character of the EntryNode.
+	 * Available Characters are:
+	 *   + ... add
+	 *   - ... remove
+	 *   * ... enhancement
+	 *   ! ... bugfix
+	 *   ~ ... change
+	 *   ? ... documentation
+	 * 
+	 * @return Type of the passed entry as String.
+	 */
+	public function getSign(Void):String {
+		var type:Number = getType();
+		var result:String;
+		switch(type) {
+			case EntryNode.TYPE_ADD:
+				result = "+";
+				break;
+			case EntryNode.TYPE_REMOVE:
+				result = "-";
+				break;
+			case EntryNode.TYPE_CHANGE:
+				result = "~";
+				break;
+			case EntryNode.TYPE_BUGFIX:
+				result = "!";
+				break;
+			case EntryNode.TYPE_DOCUMENTATION:
+				result = "?";
+				break;
+			case EntryNode.TYPE_ENHANCEMENT:
+				result = "*";
+				break;
+			default:
+				result = "";
+		}
+		return result;
+	}
+	
+	/**
 	 * Extended .toString method.
 	 *
 	 * @return Entry as string.
