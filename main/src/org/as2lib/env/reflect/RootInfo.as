@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.reflect.CacheInfo;
+import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
@@ -26,9 +26,9 @@ import org.as2lib.util.ObjectUtil;
  *
  * @author Simon Wacker
  * @see org.as2lib.env.reflect.PackageInfo
- * @see org.as2lib.env.reflect.CacheInfo
+ * @see org.as2lib.env.reflect.CompositeMemberInfo
  */
-class org.as2lib.env.reflect.RootInfo extends PackageInfo implements CacheInfo {
+class org.as2lib.env.reflect.RootInfo extends PackageInfo implements CompositeMemberInfo {
 	/** The onliest instance of the RootInfo class. */
 	private static var instance:RootInfo = new RootInfo();
 	

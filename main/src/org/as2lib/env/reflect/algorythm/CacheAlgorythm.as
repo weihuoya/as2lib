@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.reflect.CacheInfo;
+import org.as2lib.env.reflect.CompositeMemberInfo;
 
 /**
  * @author Simon Wacker
  */
 interface org.as2lib.env.reflect.algorythm.CacheAlgorythm {
 	/**
-	 * Executes the algorythm and returns the searched for CacheInfo.
+	 * Executes the algorythm and returns the searched for CompositeMemberInfo.
 	 *
 	 * @param object the object you search for
-	 * @return the searched for CacheInfo
+	 * @return the searched for CompositeMemberInfo
 	 */
-	public function execute(object):CacheInfo;
+	public function execute(object):CompositeMemberInfo;
 }
