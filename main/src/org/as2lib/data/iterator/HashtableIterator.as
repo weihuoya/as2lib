@@ -1,8 +1,8 @@
-﻿import org.as2lib.data.Iterator;
-import org.as2lib.data.ArrayIterator;
-import org.as2lib.data.Hashtable;
+﻿import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.iterator.ArrayIterator;
+import org.as2lib.data.holder.Hashtable;
 
-class org.as2lib.data.HashtableIterator implements Iterator {
+class org.as2lib.data.iterator.HashtableIterator implements Iterator {
 	private var target:Hashtable;
 	private var iterator:ArrayIterator;
 	private var key:Object;

@@ -1,9 +1,9 @@
-﻿import org.as2lib.data.Map;
-import org.as2lib.data.HashtableIterator;
-import org.as2lib.data.Iterator;
-import org.as2lib.data.ArrayIterator;
+﻿import org.as2lib.data.holder.Map;
+import org.as2lib.data.iterator.HashtableIterator;
+import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.iterator.ArrayIterator;
 
-class org.as2lib.data.Hashtable implements Map {
+class org.as2lib.data.holder.Hashtable implements Map {
 	private var keys:Array;
 	private var values:Array;
 	

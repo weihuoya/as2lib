@@ -1,7 +1,7 @@
-﻿import org.as2lib.data.Iterator;
-import org.as2lib.data.ArrayIterator;
+﻿import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.iterator.ArrayIterator;
 
-class org.as2lib.data.Stack {
+class org.as2lib.data.holder.Stack {
 	private var target:Array;
 	
 	public function push(object:Object):Object {

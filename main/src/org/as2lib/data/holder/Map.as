@@ -1,6 +1,6 @@
-﻿import org.as2lib.data.Iterator;
+﻿import org.as2lib.data.iterator.Iterator;
 
-interface org.as2lib.data.Map {
+interface org.as2lib.data.holder.Map {
 	public function containsKey(key:Object):Boolean;
 	public function containsValue(value:Object):Boolean;
 	public function getKeys(Void):Array;

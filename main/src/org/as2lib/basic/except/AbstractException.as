@@ -1,5 +1,5 @@
 ﻿import org.as2lib.basic.Throwable;
-import org.as2lib.data.Stack;
+import org.as2lib.data.holder.Stack;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.ReflectUtil;
 import org.as2lib.basic.reflect.ClassInfo;
