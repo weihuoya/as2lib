@@ -45,8 +45,9 @@ class org.as2lib.test.mock.support.ReplayState extends BasicClass implements Moc
 	 * @see MockControlState#invokeMethod()
 	 */
 	public function invokeMethod(call:MethodCall) {
-		var behaviour:MethodCallBehaviour = behaviour.getMethodCallBehaviour(call.getMethodName());
-		behaviour.addActualCall(call);
+		var callBehaviour:MethodCallBehaviour = behaviour.getMethodCallBehaviour(call.getMethodName());
+		callBehaviour.addActualCall(call);
+		return callBehaviour.response();
 	}
 	
 	/**

@@ -29,23 +29,23 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	private var minimum:Number;
 	private var maximum:Number;
 	
-	public function DefaultMethodCallRange() {
+	public function MethodCallRange() {
 		var o:Overload = new Overload(this);
-		o.addHandler([], DefaultMethodCallRangeByVoid);
-		o.addHandler([Number], DefaultMethodCallRangeByQuantity);
-		o.addHandler([Number, Number], DefaultMethodCallRangeByMinimumAndMaximumQuantity);
+		o.addHandler([], MethodCallRangeByVoid);
+		o.addHandler([Number], MethodCallRangeByQuantity);
+		o.addHandler([Number, Number], MethodCallRangeByMinimumAndMaximumQuantity);
 		o.forward(arguments);
 	}
 	
-	private function DefaultMethodCallRangeByVoid(Void):Void {
-		DefaultMethodCallRangeByQuantity(QUANTITY_ANY);
+	private function MethodCallRangeByVoid(Void):Void {
+		MethodCallRangeByQuantity(QUANTITY_ANY);
 	}
 	
-	private function DefaultMethodCallRangeByQuantity(quantity):Void {
-		DefaultMethodCallRangeByMinimumAndMaximumQuantity(quantity, quantity);
+	private function MethodCallRangeByQuantity(quantity):Void {
+		MethodCallRangeByMinimumAndMaximumQuantity(quantity, quantity);
 	}
 	
-	private function DefaultMethodCallRangeByMinimumAndMaximumQuantity(minimum:Number, maximum:Number):Void {
+	private function MethodCallRangeByMinimumAndMaximumQuantity(minimum:Number, maximum:Number):Void {
 		if (minimum < 0) throw new IllegalArgumentException("Minimum quantity [" + minimum + "] must not be negative.", this, arguments);
 		if (minimum > maximum) throw new IllegalArgumentException("Minimum quantity [" + minimum + "] must not be bigger than the maximum quantity [" + maximum + "].", this, arguments);
 		this.minimum = minimum;
