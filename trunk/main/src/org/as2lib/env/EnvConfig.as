@@ -2,6 +2,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.out.Out;
 import org.as2lib.env.out.OutAccess;
+import org.as2lib.util.ObjectUtil;
 
 /**
  * EnvConfig is the fundamental configuration class for all classes in the env
@@ -25,14 +26,16 @@ class org.as2lib.env.EnvConfig extends BasicClass {
 	}
 	
 	/**
-	 * Returns a OutAccess instance.
+	 * Returns the OutAccess instance currently used. If no OutAccess instance
+	 * has been set manually the OutAccess instance returned by Conifg#getOut()
+	 * will be used.
 	 *
-	 * @return the OutAccess instance
+	 * @return the OutAccess instance used
 	 */
 	public static function getOut(Void):OutAccess {
-		if(out) {
-			return out;
+		if (ObjectUtil.isEmpty(out)) {
+			return Config.getOut();
 		}
-		return Config.getOut();
+		return out;
 	}
 }
