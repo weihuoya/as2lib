@@ -1,0 +1,57 @@
+\chapter{Preview}
+\label{sec:Ausblick}
+
+\section{Connection Handling}
+\label{sec:ConnectionHandling}
+\paragraph{Motivation:}
+
+Les connexions avec des sources de données externes peuvent être fait de plusieurs façons avec {\sl Flash MX 2004}. Elles peuvent être accédé via Flash Remoting, Web Services, XMLSocket. Le chargement du XML ou de fichier texte, une requête vers un URL (ex: CGI, PHP,\...) ou une connexion entre 2 SWF différent (LocalConnection) peuvent aussi être fait.   L'implémentation de ces interfaces peut différer grandement, ce qui résulte en une implémentation individuelle de chaque interface. Même si les data components de {\sl Flash MX Professional 2004} sont déjà fournis pour certaines interfaces (Web Services et fichier  XML), les paramètre qui leur sont envoyés sont différents. Près du fait que vous devez posséder la version professionnelle, il n'existe pas de solution purement en ActionScript 2 qui supporte tous les interfaces, et que leurs utilisations soient identique.
+
+\paragraph{Solution:}
+{\sl As2lib} fournit une interface standard pour chaque type de connexion. Toutes les connexions sont basées sur un \emph{Proxy}, en contraste avec le proxy régulier de {\sl Flash Remoting}, à un typage fort et permet de valider à la compilation.
+
+\section{as2lib console}
+\label{sec:as2libDebugKonsole}
+
+\subsection{Requirements}
+\label{sec:Anforderungen}
+Durant le développement d'un application Flash, on peut utilisé la console et le débuggeur. Mais lorsque l'application est déployée sur le serveur web et qu'il survient une erreur, il est très difficile d'identifier la source de l'erreur.  Cette circonstance coûte du temps et de l'argent. Il devrait être possible d'afficher l'erreur et le statut indépendamment de l'environnement de développement.  A cause de cela, as2lib fournit une console externe qui offre cette fonctionnalité.
+
+Voici les fonctionnalités  de la console d'{\sl as2lib} :
+\begin{itemize}
+	\item Affichage de la gestion de sortie, voir chapitre \ref{sec:OutputHandling} page \pageref{sec:OutputHandling}, devrait être possible à l'intérieur de l'environnement de développement ainsi que pour les application en ligne.
+	\item Affichage et débugage des connexions vers les sources de données externes.
+	\item Affichage et débugage des événements.
+	\item Affichage de tous les objets de l'application sous forme d'arbre.
+	\item Informations détaillé de chaque MovieClip.
+	\item Utilisation de la RAM pour chaque élément.
+\end{itemize}
+
+\subsection{The as2lib console}
+\label{sec:DieAs2libConsole}
+
+Dans le premier prototype de la console {\sl as2lib} nous utilisons la gestion de sortie d'{\sl as2lib}, voir chapitre \ref{sec:OutputHandling} page \pageref{sec:OutputHandling}, et la gestion des connexions, voir section \ref{sec:ConnectionHandling} à la page \pageref{sec:ConnectionHandling}. La première fonctionnalité de base qui est supporté dans la {\sl console as2lib} est montrée dans la figure \ref{fig:as2libVerwendung} à la page \pageref{fig:as2libVerwendung}.
+Le prototype supporte le sortie (ex: \emph{Out.debug()}, \emph{Out.info()},\...) de tous les applications Flash qui lui y sont connecté à la console. L'application flash peut se trouvé dans le navigateur web autant que dans un IDE.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=1\textwidth]{uml/as2lib/console.eps}
+\caption{Usage of the {\sl as2lib console}}
+\label{fig:as2libVerwendung}
+\end{center}
+\end{figure}
+
+En partant de ces conditions, une ébauche expérimentale a été fait et fournit les fonctionnalités souhaitées (voir figure \ref{fig:entwurf} à la page \pageref{fig:entwurf}). La console consiste de différents onglets pour afficher la sortie de chaque \emph{OutLevel}. L'onglet \emph{All} affiche toutes les sorties.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=1\textwidth]{uml/as2lib/as2libconsole.eps}
+\caption{Utilisation de la console {\sl as2lib}}
+\label{fig:entwurf}
+\end{center}
+\end{figure}
+
+\section{Roadmap}
+\label{sec:Roadmap}
+
+see \href{http://www.as2lib.org/roadmap.php}{www.as2lib.org/roadmap.php}
