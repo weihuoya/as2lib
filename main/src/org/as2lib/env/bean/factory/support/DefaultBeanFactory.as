@@ -17,6 +17,7 @@
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.PrimitiveTypeMap;
 import org.as2lib.env.bean.factory.BeanFactory;
+import org.as2lib.env.bean.factory.FactoryBean;
 import org.as2lib.env.bean.factory.BeanDefinitionStoreException;
 import org.as2lib.env.bean.factory.NoSuchBeanDefinitionException;
 import org.as2lib.env.bean.factory.BeanNotOfRequiredTypeException;
@@ -33,6 +34,12 @@ import org.as2lib.env.bean.factory.config.ConfigurableHierarchicalBeanFactory;
 class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBeanFactory implements ConfigurableBeanFactory, ConfigurableListableBeanFactory, ConfigurableHierarchicalBeanFactory {
 	
 	//---------------------------------------------------------------------
+	// Class data
+	//---------------------------------------------------------------------
+	
+	public static var FACTORY_BEAN_PREFIX:String = "&";
+	
+	//---------------------------------------------------------------------
 	// Instance data
 	//---------------------------------------------------------------------
 	
@@ -42,6 +49,8 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	
 	private var parentBeanFactory:BeanFactory;
 	
+	private var allowBeanDefinitionOverriding:Boolean;
+	
 	//---------------------------------------------------------------------
 	// Constructors
 	//---------------------------------------------------------------------
@@ -50,6 +59,7 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 		this.parentBeanFactory = parentBeanFactory;
 		beanDefinitionMap = new PrimitiveTypeMap();
 		singletonBeanMap = new PrimitiveTypeMap();
+		allowBeanDefinitionOverriding = true;
 	}
 	
 	//---------------------------------------------------------------------
@@ -57,10 +67,33 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	//---------------------------------------------------------------------
 	
 	public function registerBeanDefinition(beanName:String, beanDefinition:BeanDefinition):Void {
-		if (beanDefinitionMap.containsKey(beanName)) {
+		if (!allowBeanDefinitionOverriding && beanDefinitionMap.containsKey(beanName)) {
 			throw new BeanDefinitionStoreException("Bean name [" + beanName + "] must only be registered once in bean factory.", this, arguments);
 		}
 		beanDefinitionMap.put(beanName, beanDefinition);
+	}
+	
+	public function setAllowBeanDefinitionOverriding(allowBeanDefinitionOverriding:Boolean):Void {
+		this.allowBeanDefinitionOverriding = allowBeanDefinitionOverriding;
+	}
+	
+	private function getBeanByNameAndBean(name:String, bean) {
+		if (bean instanceof FactoryBean && name.indexOf(FACTORY_BEAN_PREFIX) != 0) {
+			return FactoryBean(bean).getObject();
+		} else {
+			return bean;
+		}
+	}
+	
+	private function transformBeanName(name:String):String {
+		var result:String = name;
+		if (!name) {
+			throw new NoSuchBeanDefinitionException("Cannot get bean with null name [" + name + "].", this, arguments);
+		}
+		if (name.indexOf(FACTORY_BEAN_PREFIX) == 0) {
+			result = name.substring(FACTORY_BEAN_PREFIX.length);
+		}
+		return result;
 	}
 	
 	//---------------------------------------------------------------------
@@ -72,18 +105,19 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	}
 	
 	public function getBeanByName(name:String) {
+		var beanName:String = transformBeanName(name);
 		try {
-			var beanDefinition:BeanDefinition = getBeanDefinition(name);
+			var beanDefinition:BeanDefinition = getBeanDefinition(beanName);
 			if (beanDefinition.isSingleton()) {
-				if (singletonBeanMap.get(name)) {
-					return singletonBeanMap.get(name);
+				if (singletonBeanMap.containsKey(beanName)) {
+					return getBeanByNameAndBean(name, singletonBeanMap.get(beanName));
 				} else {
 					var result = beanDefinition.createBean();
-					singletonBeanMap.put(name, result);
-					return result;
+					singletonBeanMap.put(beanName, result);
+					return getBeanByNameAndBean(name, result);
 				}
 			} else {
-				return beanDefinition.createBean();
+				return getBeanByNameAndBean(name, beanDefinition.createBean());
 			}
 		} catch (exception:org.as2lib.env.bean.factory.NoSuchBeanDefinitionException) {
 			return getParentBeanFactory().getBeanByName(name);
@@ -99,20 +133,18 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	}
 	
 	public function isSingleton(beanName:String):Boolean {
-		return getBeanDefinition(beanName).isSingleton();
+		var beanDefinition:BeanDefinition = getBeanDefinition(beanName);
+		if (beanDefinition.getBeanClass() == FactoryBean 
+				|| beanDefinition.getBeanClass().prototype instanceof FactoryBean) {
+			return FactoryBean(getBean(FACTORY_BEAN_PREFIX + beanName)).isSingleton();
+		} else {
+			return getBeanDefinition(beanName).isSingleton();
+		}
 	}
 	
 	//---------------------------------------------------------------------
 	// Implementation of ConfigurableBeanFactory
 	//---------------------------------------------------------------------
-	
-	public function destroySingletons(Void):Void {
-		var beanNames:Array = singletonBeanMap.getKeys();
-		for (var i:Number = 0; i < beanNames.length; i++) {
-			getBeanDefinition(beanNames[i]).destroyBean(singletonBeanMap.get(beanNames[i]));
-		}
-		singletonBeanMap.clear();
-	}
 	
 	public function registerSingleton(beanName:String, singleton):Void {
 		registerBeanDefinition(beanName, new SingletonBeanDefinition(beanName, this, singleton));
