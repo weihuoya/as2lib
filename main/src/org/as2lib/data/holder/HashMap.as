@@ -2,8 +2,9 @@
 import org.as2lib.data.iterator.HashMapIterator;
 import org.as2lib.data.iterator.Iterator;
 import org.as2lib.data.iterator.ArrayIterator;
+import org.as2lib.core.BasicClass;
 
-class org.as2lib.data.holder.HashMap implements Map {
+class org.as2lib.data.holder.HashMap extends BasicClass implements Map {
 	private var keys:Array;
 	private var values:Array;
 	
