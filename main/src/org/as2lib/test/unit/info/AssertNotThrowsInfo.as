@@ -73,7 +73,7 @@ class org.as2lib.test.unit.info.AssertNotThrowsInfo extends AbstractAssertInfo {
 				return true;
 			}
 		}
-		return (type == null);
+		return false;
 	}
 	
 	/**
