@@ -28,6 +28,8 @@ class test.Test {
 	private static var startedAt:String;
 	// Path where the Action Started
 	private static var startedPath:String;
+	// Var to view the actual running case from outside
+	public static var runningTest;
 	
 	/**
 	 * Starts a Testcase (useful with different Methods to start an Testcase)
@@ -118,7 +120,9 @@ class test.Test {
 		} else {
 			for(var i:String in pathObject) {
 				if(typeof pathObject[i] == "function") {
-					runClass (pathObject[i], myPath+i);
+					runClass (pathObject[i], myPath+"."+i);
+				} else if (typeof pathObject[i] == "object") {
+					runObject (pathObject[i], myPath+"."+i);
 				}
 			}
 		}
@@ -138,7 +142,11 @@ class test.Test {
 		paths.push(myPath);
 		
 		var toMyObject = pathObject.__proto__;
-		atClass = myPath;
+		atClass = pathObject;
+		
+		runningTest = toMyObject;
+		
+		
 		
 		// Setting the right Properties to get all Functions!
 		_global.ASSetPropFlags(toMyObject,null,6,true);			
