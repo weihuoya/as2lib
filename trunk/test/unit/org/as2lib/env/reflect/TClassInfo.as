@@ -40,7 +40,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		pc.replay();
 		
 		var MyClass:Function = function() {};
-		var i:ClassInfo = new ClassInfo("MyClass", MyClass, p);
+		var i:ClassInfo = new ClassInfo(MyClass, "MyClass", p);
 		assertSame("wrong name", i.getName(), "MyClass");
 		assertSame("wrong type", i.getType(), MyClass);
 		assertSame("wrong package", i.getPackage(), p);
@@ -55,7 +55,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 	}
 	
 	public function testGetFullNameWithNullParent(Void):Void {
-		var i:ClassInfo = new ClassInfo("MyClass", null, null);
+		var i:ClassInfo = new ClassInfo(null, "MyClass", null);
 		assertSame(i.getFullName(), "MyClass");
 	}
 	
@@ -66,7 +66,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		rc.setReturnValue(true);
 		rc.replay();
 		
-		var i:ClassInfo = new ClassInfo("MyClass", null, r);
+		var i:ClassInfo = new ClassInfo(null, "MyClass", r);
 		assertSame(i.getFullName(), "MyClass");
 		
 		rc.verify();
@@ -81,7 +81,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		rc.setReturnValue("org.as2lib.mypackage");
 		rc.replay();
 		
-		var i:ClassInfo = new ClassInfo("MyClass", null, r);
+		var i:ClassInfo = new ClassInfo(null, "MyClass", r);
 		assertSame(i.getFullName(), "org.as2lib.mypackage.MyClass");
 		
 		rc.verify();
@@ -94,14 +94,14 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 	
 	public function testGetConstructorWithDefinedType(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		var ci:MethodInfo = i.getConstructor();
 		assertNotEmpty("returned constructor info should not be null or undefined", ci);
 		assertSame(ci.getMethod(), Type);
 	}
 	
 	public function testGetSuperTypeForObject(Void):Void {
-		var i:ClassInfo = new ClassInfo(null, Object, null);
+		var i:ClassInfo = new ClassInfo(Object, null, null);
 		assertNull("Object has no super type.", i.getSuperType());
 	}
 	
@@ -109,11 +109,11 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		
 		Type.prototype = null;
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		assertNull("prototype is set to null", i.getSuperType());
 		
 		Type.prototype = undefined;
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		assertNull("prototype is set to undefined", i.getSuperType());
 	}
 	
@@ -130,7 +130,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		ac.setReturnValue(i);
 		ac.replay();
 		
-		var o:ClassInfo = new ClassInfo(null, Type, null);
+		var o:ClassInfo = new ClassInfo(Type, null, null);
 		o.setClassAlgorithm(a);
 		assertSame(o.getSuperType(), i);
 		
@@ -153,7 +153,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 			parent.assertSame(arguments.length, 0);
 		};
 		
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		var o = i.newInstance(null)
 		assertNotNull(o);
 		assertTrue(o.invoked);
@@ -177,7 +177,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 			parent.assertSame(arguments[2], arg3);
 		};
 		
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		var o = i.newInstance(["arg1", 2, arg3])
 		assertNotNull(o);
 		assertTrue(o.invoked);
