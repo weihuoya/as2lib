@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog xmlns="as2lib"
-			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="aslib http://www.as2lib.org/changelog_0.91.xsd">
-	<release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
-		<year value="2004">
-			<month value="9">
-      <day value="26">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="aslib http://www.as2lib.org/changelog_0.91.xsd">
+  <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
+    <year value="2004">
+      <month value="10">
+        <day value="3">
+          <entry type="change" package="org.as2lib.env.reflect" class="ClassInfo" property="constructor:ConstructorInfo"><change-rename to="classConstructor">Renamed it because the name 'constructor' caused an exception in Flex.</change-rename></entry>
+        </day>
+      </month>
+      <month value="9">
+        <day value="26">
           <entry type="bugfix" package="org.as2lib.env.reflect" link="https://sourceforge.net/tracker/index.php?func=detail&aid=1028923&group_id=94206&atid=607074">Important Bugfix#1028923 about infinite recursion in reflections.</entry>
           <entry type="bugfix" package="org.as2lib.env.reflect" link="https://sourceforge.net/tracker/index.php?func=detail&aid=1035084&group_id=94206&atid=607074">Removed hiding of classes by reflections</entry>
-      </day>
-	    <day value="16">
+        </day>
+        <day value="16">
           <entry type="documentation" package="org.as2lib.aop.joinpoint" class="*">Added documentation.</entry>
           <entry type="documentation" package="org.as2lib.aop.pointcut" class="*">Added documentation.</entry>
           <entry type="documentation" package="org.as2lib.aop.aspect" class="*">Added documentation.</entry>
@@ -22,11 +27,11 @@
           <entry type="documentation" package="org.as2lib.aop" class="*">Added documentation.</entry>
           <entry type="add" package="org.as2lib.core" class="BasicMovieClip">Basic class for classes that need to extend MovieClip.</entry>
         </day>
-			  <day value="10">
-			    <entry type="add" package="org.as2lib.env.out" class="Out">Added method .addStaticHandler and .removeStaticHandler to print output of all instances.</entry>
-			    <entry type="add" package="org.as2lib.test.unit" class="TestSuiteFactory" method="collectAgent()">Added possibility to block the collecting of a Testcase by the static method .blockCollecting(Void):Boolean.</entry>
-			  </day>
-			</month>
-		</year>
-    </release>
+        <day value="10">
+          <entry type="add" package="org.as2lib.env.out" class="Out">Added method .addStaticHandler and .removeStaticHandler to print output of all instances.</entry>
+          <entry type="add" package="org.as2lib.test.unit" class="TestSuiteFactory" method="collectAgent()">Added possibility to block the collecting of a Testcase by the static method .blockCollecting(Void):Boolean.</entry>
+        </day>
+      </month>
+    </year>
+  </release>
 </changelog>
