@@ -18,6 +18,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.conn.core.event.MethodInvocationCallback;
+import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
 
 /**
  * Offers default implementations of some methods needed when implemnting
@@ -31,11 +32,14 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicCla
 	 * Generates the response url for a service.
 	 *
 	 * <p>The response url gets composed as follows:
-	 * [serviceUrl]_[methodName]_Return
+	 * [serviceUrl].[methodName]_Return_[index]
 	 *
 	 * <p>If the methodName is null, undefined or an empty string it will
 	 * be composed as follows:
-	 * [serviceUrl]_Return
+	 * [serviceUrl]_Return_[index]
+	 *
+	 * <p>Index is a number from null to infinite depending on how many
+	 * responses are pending.
 	 *
 	 * @param serviceUrl the url to the service
 	 * @param methodName the responsing method
@@ -44,8 +48,21 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicCla
 	 */
 	public static function generateResponseServiceUrl(serviceUrl:String, methodName:String):String {
 		if (!serviceUrl) throw new IllegalArgumentException("Service url must not be null, undefined or an empty string.");
-		if (!methodName) return serviceUrl + "_Return";
-		return serviceUrl + "_" + methodName + "_Return";
+		if (!methodName) {
+			var result:String = serviceUrl + "_Return";
+			var i:Number = 0;
+			while (EnhancedLocalConnection.connectionExists(result + "_" + i)) {
+				i++;
+			}
+			return result + "_" + i;
+		} else {
+			var result:String = serviceUrl + "_" + methodName + "_Return";
+			var i:Number = 0;
+			while (EnhancedLocalConnection.connectionExists(result + "_" + i)) {
+				i++;
+			}
+			return result + "_" + i;
+		}
 	}
 	
 	/**

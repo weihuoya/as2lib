@@ -89,7 +89,12 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 		for(i in package) {
 			var child = package[i];
 			if(typeof child == "function" && ClassUtil.isSubClassOf(child, TestCase) && !child.blockCollecting()) {
-				suite.addTest(Test(ClassUtil.createCleanInstance(child)));
+				// flex stores every class in _global and in its actual package
+				// e.g. org.as2lib.core.BasicClass is stored in _global with name org_as2lib_core_BasicClass
+				// this if-clause excludes these extra stored classes
+				if (!eval("_global." + i.split("_").join(".")) || i.indexOf("_") < 0) {
+					suite.addTest(Test(ClassUtil.createCleanInstance(child)));
+				}
 			}
 			if(typeof child == "object" && recursive) {
 				collectAgent(child, suite, recursive);

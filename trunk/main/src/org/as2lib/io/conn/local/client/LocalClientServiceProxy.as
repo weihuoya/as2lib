@@ -171,7 +171,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 		try {
 			responseService.connect(responseUrl);
 		} catch (exception:org.as2lib.io.conn.local.core.ReservedConnectionException) {
-			throw new ReservedServiceException("Service with url [" + url + "] does already exist.", this, arguments).initCause(exception);
+			throw new ReservedServiceException("Response service with url [" + responseUrl + "] does already exist.", this, arguments).initCause(exception);
 		}
 		
 		var errorListener:MethodInvocationErrorListener = getBlankMethodInvocationErrorListener();

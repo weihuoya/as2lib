@@ -96,9 +96,14 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 			if (typeof(f) == "function") {
 				if (typeof(d) == "function" && d.prototype === f.prototype
 						|| d.__proto__ === f.prototype) {
-					r = new ClassInfo(i, f, a);
-					c.addClass(r);
-					return true;
+					// flex stores every class in _global and in its actual package
+					// e.g. org.as2lib.core.BasicClass is stored in _global with name org_as2lib_core_BasicClass
+					// this if-clause excludes these extra stored classes
+					if (!eval("_global." + i.split("_").join(".")) || i.indexOf("_") < 0) {
+						r = new ClassInfo(i, f, a);
+						c.addClass(r);
+						return true;
+					}
 				}
 			} else if (typeof(f) == "object") {
 				var e:PackageInfo = c.getPackage(f);
