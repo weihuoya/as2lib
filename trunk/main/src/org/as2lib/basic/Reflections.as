@@ -1,32 +1,53 @@
 ﻿
 import org.as2lib.basic.ReflectionObject
+import org.as2lib.basic.exceptions.*
 
 class org.as2lib.basic.Reflections {
 	public static var foundTypes:Array;
 	public static var foundObjects:Array;
 	public static var foundClasses:Array;
+	private static var started:Boolean;
 	
 	public static function findObject (realObject):ReflectionObject {
-		// Search in all Paths
-		startIndex();
-		// Return if Found
-		return(allReadyFound(realObject));
+		if(!started) {
+			checkType(realObject, "org.as2lib.basic.Reflections", "findObject");
+			// Reset previous Searches
+			resetResults();
+			// Search in all Paths
+			startIndexAll();
+			// Return if Found
+			var foundObj = allReadyFound(realObject);
+			if(!foundObj) {
+				throw new ObjectNotFoundException("The Object was at no reachable place. Maybe the scope from the Object was set to an function.", "org.as2lib.basic.Reflections", "findObject", arguments);
+			} else {
+				return(foundObj);
+			}
+		}
 	}
 	
-	public static function startIndex (Void):Void {
+	public static function checkType (object, place:String, inFunction:String):Void {
+		if(typeof object == "undefined" || object == "null") {
+			throw new WrongArgumentException("It is not possible to search for "+object, place, inFunction, new Array(object));
+		}
+	}
+	
+	public static function resetResults (Void):Void {
 		foundTypes = new Array();
 		foundObjects = new Array();
 		foundClasses = new Array();
-		
+	}
+	
+	public static function startIndexAll (Void):Void {
+		started = true;
 		var root = new ReflectionObject(_root);
 		root.addReference("_root", "_root", null);
 		var global = new ReflectionObject(_global);
 		global.addReference("_global", "_global", null);
+		started = false;
 	}
 	
 	public static function getClass (realObject):ReflectionObject {
 		var reflClass = allReadyFoundReflectionClass(realObject);
-		trace('--> nu class'+typeof realObject);
 		if(reflClass) {
 			return(reflClass);
 		} else {
@@ -43,7 +64,6 @@ class org.as2lib.basic.Reflections {
 	}
 	
 	public static function getType (reflObj:ReflectionObject):String {
-		
 		var realObject = reflObj.realObject;
 		var type:String;
 		if(typeof realObject != "object") {
@@ -87,73 +107,4 @@ class org.as2lib.basic.Reflections {
 			}
 		}
 	}
-	
-	/*
-	private static var checkedInstances:Array;
-	private static var foundNodes:Array;
-	private static var paths:Array;
-	
-	public static function getPathsForObject(baseObj:Object, obj:Object):Array {
-		checkedInstances = new Array();
-		foundNodes = new Array();
-		paths = new Array();
-		runPathForObject(baseObj, obj);
-		return(foundNodes);
-	}
-	
-	public static function getObjectInObject(baseObj:Object, obj:Object):ReflectionObject {
-		var foundNodes:Array = getPathsForObject(baseObj, obj);
-		var returnValue = new ReflectionObject();
-	}
-	
-	public static function getClassName(instance:Object):String {
-	}
-	
-	public static function getClassPath(myClass:Function):String {
-	}
-	
-	
-	public static function getMethodName(myMethod:Function):String {
-	}
-	
-	public static function getStack () {
-	}
-	
-	public static function fetchAllInfos () {
-	}
-	public static function getMethodsForObject (obj:Object):Array {
-		var returnValue:Array = new Array();
-		for(var i in obj) {
-			if(typeof obj[i] == "function") {
-				returnValue.push(i);
-			}
-		}
-	}
-	
-	public static function runPathForObject (baseObj:Object, obj:Object):Void {
-		if(typeof obj == "object") {
-			if(baseObj === obj) {
-				foundNodes.push(paths.join('.'));
-			}
-			if(!objectIsChecked(baseObj)) {
-				_global.ASSetPropFlags(baseObj,null,6,true);
-				checkedInstances.push(baseObj);
-				for(var i in baseObj) {
-					paths.push(i);
-					runPathForObject(baseObj[i], obj);
-					paths.pop();
-				}
-			}
-		}
-	}
-
-	private static function objectIsChecked(obj):Boolean {
-		for(var i in checkedInstances) {
-			if(checkedInstances[i] === obj) {
-				return(true);
-			}
-		}
-		return(false);
-	}
-	*/
 }
