@@ -1,4 +1,4 @@
-﻿import org.as2lib.test.unit.Test;
+﻿import org.as2lib.test.unit.TestCase;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.except.Exception;
 import org.as2lib.env.except.IllegalStateException;
@@ -8,7 +8,7 @@ import org.as2lib.data.holder.Stack;
 /**
  * @author Simon Wacker
  */
-class test.org.as2lib.env.except.TException extends Test {
+class test.org.as2lib.env.except.TException extends TestCase {
 	public function TException(Void) {
 	}
 	

@@ -1,9 +1,9 @@
-﻿import org.as2lib.test.unit.Test;
+﻿import org.as2lib.test.unit.TestCase;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.data.iterator.Iterator;
 
-class test.org.as2lib.data.holder.THashMap extends Test{
+class test.org.as2lib.data.holder.THashMap extends TestCase{
 	public function THashMap(Void) {
 	}
    
@@ -29,8 +29,8 @@ class test.org.as2lib.data.holder.THashMap extends Test{
 		map.put("key1", true);
 		map.put("key2", false);
 		var keys:Array = map.getKeys();
-		assertEquals(keys[0], "key1");
-		assertEquals(keys[1], "key2");
+		assertEquals("hi", keys[0], "key1");
+		assertEquals("hi", keys[1], "key2");
 		// Changes made to the Array returned by HashMap.getKeys() must not alter the HashMap's actual keys. 
 		keys[0] = "Hi!";
 		if(map.getKeys()[0]=="Hi!") {

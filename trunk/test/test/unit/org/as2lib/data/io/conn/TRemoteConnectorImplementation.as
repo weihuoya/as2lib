@@ -1,4 +1,4 @@
-﻿import org.as2lib.test.unit.Test;
+﻿import org.as2lib.test.unit.TestCase;
 import test.org.as2lib.data.io.conn.TImplementation;
 import test.org.as2lib.data.io.conn.ExampleListener;
 import org.as2lib.data.io.conn.remoting.RemotingConnector;
@@ -9,16 +9,18 @@ import org.as2lib.env.event.SimpleEventInfo;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.out.Out;
 
-class test.org.as2lib.data.io.conn.TRemoteConnectorImplementation extends Test{
+class test.org.as2lib.data.io.conn.TRemoteConnectorImplementation extends TestCase {
 	
-   private var connector:RemotingConnector;
-   private var myEB:EventBroadcaster;
-   private var myOut:Out;
+	private var connector:RemotingConnector;
+	private var myEB:EventBroadcaster;
+	private var myOut:Out;
    
-   public function TRemoteConnectorImplementation() {
-     connector = new RemotingConnector();
-	 myOut = new Out();
-   }
+	public function TRemoteConnectorImplementation() {}
+   
+	public function setUp(Void):Void {
+		connector = new RemotingConnector();
+		myOut = new Out();
+	}
 	
 	private function connectionTest(con:RemotingConnector){
 		myOut.info("----------------------------------------");
@@ -26,9 +28,9 @@ class test.org.as2lib.data.io.conn.TRemoteConnectorImplementation extends Test{
 		var gatewayUrl:String = "http://192.168.0.2/flashservices/gateway";//"http://127.0.0.1:8500/flashservices/gateway"
 		con.setIdentifier(gatewayUrl);
 		
-		Test.assertEqualsWithoutMessage(gatewayUrl,gatewayUrl);
-		Test.assertEqualsWithoutMessage(gatewayUrl,"blabla");
-		Test.assertEqualsWithoutMessage(gatewayUrl,con.getIdentifier());
+		assertEquals(gatewayUrl,gatewayUrl);
+		assertEquals(gatewayUrl,"blabla");
+		assertEquals(gatewayUrl,con.getIdentifier());
 		
 		myOut.info("----------------------------------------");
 		myOut.info("---- Test of Listener ----");
@@ -54,7 +56,7 @@ class test.org.as2lib.data.io.conn.TRemoteConnectorImplementation extends Test{
 		
 	}
    
-   public function testConnection() {
-      connectionTest(connector);
-   }
+	public function testConnection() {
+		connectionTest(connector);
+	}
 }

@@ -1,4 +1,4 @@
-﻿import org.as2lib.test.unit.Test;
+﻿import org.as2lib.test.unit.TestCase;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.overload.OverloadHandler;
 import org.as2lib.env.overload.SimpleOverloadHandler;
@@ -10,7 +10,7 @@ import org.as2lib.util.ObjectUtil;
 /**
  * @author Simon Wacker
  */
-class test.org.as2lib.env.overload.TOverload extends Test {
+class test.org.as2lib.env.overload.TOverload extends TestCase {
 	public function TOverload(Void) {
 	}
 	
@@ -24,7 +24,7 @@ class test.org.as2lib.env.overload.TOverload extends Test {
 	public function testAddHandlerByValue(Void):Void {
 		var o:Overload = new Overload(this);
 		var oh:OverloadHandler = o.addHandler([], new Function());
-		assertIsNotEmpty("The received OverloadHandler [" + oh + "] is empty.", oh);
+		assertNotEmpty("The received OverloadHandler [" + oh + "] is empty.", oh);
 		assertTrue("The received instance [" + oh + "] is not of type OverloadHandler.", ObjectUtil.isInstanceOf(oh, OverloadHandler));
 		assertNotThrows(o, "removeHandler", [oh]);
 	}
@@ -53,6 +53,6 @@ class test.org.as2lib.env.overload.TOverload extends Test {
 	}
 	
 	private function secondMethod(Void):Void {
-		addError("The wrong method is being executed.");
+		fail("The wrong method is being executed.");
 	}
 }
