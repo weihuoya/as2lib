@@ -44,14 +44,10 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	/* EventBroadcaster for onResponse and onError - events */
 	private var eventBroadcaster:EventBroadcaster;
 	
-	/** 
-	 * Defines domain of which client should be allowed
-	 */
+	/* Defines domain of which client should be allowed */
 	private var host:String;
 	
-	/** 
-	 * Defines additional domain of which client should be allowed
-	 */
+	/* Additional Parameter, which can be used */
 	private var path:String;
 	
 	/* name of method, which should be passed to a client */
@@ -132,6 +128,9 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		aOut.debug(getClass().getName()+".clients.length:"+clients.size());
 		
 		args.push(clientMethod);
+		
+		if(path)args.push(path);
+		
 		args.push(method);
 		args = args.concat(params);
 		
@@ -152,7 +151,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	 */
 	public function serverMethod():Void {
 		aOut.debug(arguments.toString());
-		eventBroadcaster.dispatch(new ConnectorResponse("Client "+arguments[0]+" sent: "+arguments.toString()));
+		eventBroadcaster.dispatch(new ConnectorResponse(arguments));
 	}
 	
 	/**
@@ -173,17 +172,16 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	}
 	
 	/**
-	 * Sets additional path. In case of LocalConnection a possible second domain
-	 *  to restrict domain access.
-	 * @param path an url representing allowed domain (e.g. "www.as2lib.org")
+	 * Sets additional transer parameter.
+	 * @param path optional parameter
 	 */
 	public function setPath(path:String):Void {
 		this.path = path;
 	}
 	
 	/**
-	 * Returns path/domain
-	 * @return path an url representing allowed domain (e.g. "www.as2lib.org")
+	 * Returns path
+	 * @return path optional parameter
 	 */
 	public function getPath(Void):String {
 		return path;
@@ -247,9 +245,8 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	public function allowDomain(clientDomain:String){
 		aOut.debug(getClass().getName()+".allowDomain: "+clientDomain);
 		aOut.debug(getClass().getName()+".host: "+host);
-		aOut.debug(getClass().getName()+".path: "+path);
 		if(host){
-			if(clientDomain == host || clientDomain == path){
+			if(clientDomain == host){
 				return true;
 			}
 			else{
