@@ -12,6 +12,8 @@ import org.as2lib.util.ReflectUtil;
 import test.org.as2lib.reflect.*;
 import org.as2lib.basic.Out;
 import org.as2lib.Config;
+import test.org.as2lib.basic.reflect.DummieClass;
+import test.org.as2lib.basic.reflect.AnotherDummie
 
 /**
  * Testcase for Reflections.
