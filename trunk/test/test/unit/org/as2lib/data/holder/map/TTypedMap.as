@@ -19,6 +19,7 @@ import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.TypedMap;
 import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.data.holder.Iterator;
+import org.as2lib.util.ArrayUtil;
 import test.unit.org.as2lib.data.holder.AbstractTMap;
 import org.as2lib.env.except.IllegalArgumentException;
 
@@ -45,6 +46,9 @@ class test.unit.org.as2lib.data.holder.map.TTypedMap extends AbstractTMap {
 	public function testPut(Void):Void {
 		var map:Map = new TypedMap(String, new HashMap());
 		assertThrows("A IllegalArgumentException should be thrown if the wrong type of content (1) was put to the map", IllegalArgumentException, map, "put", ["a", 2]);
+		assertNotEquals("The content may not be inserted", map.get("a"), 2);
+		assertTrue("There should not be any key added", ArrayUtil.isSame(map.getKeys(), []));
+		assertTrue("There should not be any value added", ArrayUtil.isSame(map.getValues(), []));
 	}
 	
 	/**
@@ -57,5 +61,8 @@ class test.unit.org.as2lib.data.holder.map.TTypedMap extends AbstractTMap {
 		map2.put("a", 1);
 		map2.put("b", 2);
 		assertThrows("A IllegalArgumentException should be thrown if the wrong type of content (1) was put to the map", IllegalArgumentException, map, "putAll", [map2]);
+		assertNotEquals("The content may not be inserted", map.get("a"), 1);
+		assertTrue("There should not be any key added", ArrayUtil.isSame(map.getKeys(), []));
+		assertTrue("There should not be any value added", ArrayUtil.isSame(map.getValues(), []));
 	}
 }
