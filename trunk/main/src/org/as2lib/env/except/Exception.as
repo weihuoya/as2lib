@@ -2,6 +2,7 @@
 import org.as2lib.core.BasicInterface;
 import org.as2lib.env.except.AbstractException;
 import org.as2lib.env.except.ExceptConfig;
+import org.as2lib.util.ObjectUtil;
 
 /**
  * Exception is a normal default implementation of the Throwable interface.
@@ -29,7 +30,10 @@ class org.as2lib.env.except.Exception extends AbstractException implements Throw
 	 * @return a blank String
 	 */
 	public function toString(Void):String {
-		ExceptConfig.getOut().error(this);
-		return "";
+		if (ObjectUtil.isEmpty(arguments.caller)) {
+			ExceptConfig.getOut().error(this);
+			return;
+		}
+		return ExceptConfig.getThrowableStringifier().execute(this);
 	}
 }

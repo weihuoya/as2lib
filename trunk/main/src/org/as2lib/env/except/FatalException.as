@@ -2,6 +2,7 @@
 import org.as2lib.core.BasicInterface;
 import org.as2lib.env.except.AbstractException;
 import org.as2lib.env.except.ExceptConfig;
+import org.as2lib.util.ObjectUtil;
 
 /**
  * FatalException is a default implementation of the Throwable interface. It is
@@ -31,7 +32,10 @@ class org.as2lib.env.except.FatalException extends AbstractException implements 
 	 * @return a blank String
 	 */
 	public function toString(Void):String {
-		ExceptConfig.getOut().fatal(this);
-		return "";
+		if (ObjectUtil.isEmpty(arguments.caller)) {
+			ExceptConfig.getOut().fatal(this);
+			return;
+		}
+		return ExceptConfig.getThrowableStringifier().execute(this);
 	}
 }
