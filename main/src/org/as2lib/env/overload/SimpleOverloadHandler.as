@@ -51,8 +51,11 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 			return false;
 		}
 		for (var i:Number = 0; i < l; i++) {
-			if (!ObjectUtil.typesMatch(someArguments[i], args[i])) {
-				return false;
+			// Should ObjectUtil.typesMatch() return true for a check of null against any type?
+			if (someArguments[i] != null) {
+				if (!ObjectUtil.typesMatch(someArguments[i], args[i])) {
+					return false;
+				}
 			}
 		}
 		return true;
