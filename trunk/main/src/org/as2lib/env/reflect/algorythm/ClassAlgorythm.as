@@ -66,7 +66,6 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 	
 	private function storeClass(name:String, clazz:Function, parent:PackageInfo):Void {
 		info = new ClassInfo(name, clazz, parent)
-		cache.addClass(info);
 	}
 	
 	private function executePackageLogic(name:String, package, parent:PackageInfo, object):Boolean {
