@@ -4,7 +4,7 @@
 A \emph{Test Case} is a class/method that verifies the correct behaviour of a specific class/method. Every developer has to create test cases for his or her own classes and is assisted by a test case API that offers functionality for automated testing.
 
 \paragraph{Motivation:}
-Although a testing API already exists for {\sl Actionscript 2}, as2unit\footnote{\href{http://www.as2unit.org}{www.as2unit.org}}, our own testing API was created because the following reasons:
+Although two testing API's already exists for {\sl Actionscript 2}, as2unit\footnote{\href{http://www.as2unit.org}{asunit.sourceforge.net}} and asunit\footnote{\href{http://asunit.sourceforge.net}{www.asunit.org}}, our own testing API was created because the following reasons:
 
 \begin{itemize}
 	\item {\sl As2unit} supports only few functionalities (as2unit 7 test methods - as2lib 17 test methods).
@@ -14,7 +14,7 @@ Although a testing API already exists for {\sl Actionscript 2}, as2unit\footnote
 	\item {\sl As2unit} can always test only one class.
 	\item {\s1 As2unit} is not build to support different views. 
 	\item {\s1 As2unit} does not support pause() and resume() during TestCases (Tests that have a time delay like using onEnterframe). 
-\end{itemize}
+\end{itemize} 
 
 \paragraph{Solution:}
 
@@ -30,7 +30,7 @@ If you have more than one TestCase you can use a simplified way:
 import org.as2lib.test.unit.TestSuiteFactory;
 import test.org.as2lib.core.* // Import Statement, to reduce the Lines.
 
-// Statements to 
+// Usage to classes to include them in compile time.
 TestReflections;
 TestBasicClass;
 TestEventHandling;
