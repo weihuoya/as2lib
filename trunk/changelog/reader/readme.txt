@@ -1,6 +1,6 @@
 Release Information:
 
- This is the first release of the as2lib changelog reader - 0.9.
+ This is the second release of the as2lib changelog reader - 0.91.
  It is available as evaluation version and as as2lib useage example.
 
  It reads a xml file that is valid as as2lib-changelog. The changelog
@@ -26,4 +26,3 @@ Known Bugs:
 
  * It is currently not sorted (simple one after another).
  * A "\n" adds two lines.
- * Horizontal scrollbars appears by very low width (sometimes).
