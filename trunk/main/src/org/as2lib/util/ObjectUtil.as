@@ -255,44 +255,4 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	public static function isAvailable(object):Boolean {
 		return (object != undefined);
 	}
-	
-	/**
-	 * Iterates through the passed Object using the for..in loop and executes
-	 * the Call passing the found object and the name of the object.
-	 * 
-	 * Example:
-	 * <CODE>
-	 *   class MyClass {
-	 * 
-     *      private var a:String;
-     *      private var b:String;
-     *      private var c:String;
-	 * 
-	 *      public function MyClass() {
-	 *          a = "1";
-	 *          b = "2";
-	 *          c = "2";
-	 *      }
-	 *      
-	 *      public function traceObject(value, name:String):Void {
-	 *          trace(name+": "+value);
-	 *      }
-	 * 
-	 *      public function listAll() {
-     *          var call:Call = new Call(this, traceObject);
-	 *          ObjectUtil.forEach(this, call);
-	 *      }
-	 *   }
-	 * </CODE>
-	 *  
-	 * @param object the object to iterate over
-	 * @param call the Call to be executed for each found object
-	 */
-	/*public static function forEach(object, call:Call):Void {
-		var i:String;
-		for (i in object) {
-			call.execute([object[i], i]);
-		}
-	}*/
-	
 }
