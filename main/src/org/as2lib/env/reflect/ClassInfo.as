@@ -7,8 +7,7 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.CacheInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.PropertyInfo;
-import org.as2lib.env.reflect.NoSuchMethodException;
-import org.as2lib.env.reflect.NoSuchPropertyException;
+import org.as2lib.env.reflect.NoSuchClassMemberException;
 import org.as2lib.env.EnvConfig;
 
 /**
@@ -140,7 +139,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	 *
 	 * @param methodName the name of the method you wanna obtain
 	 * @return the MethodInfo correspoinding to the method name
-	 * @throws org.as2lib.env.reflect.NoSuchMethodException if the method you tried to obtain does not exist
+	 * @throws org.as2lib.env.reflect.NoSuchClassMemberException if the method you tried to obtain does not exist
 	 */
 	public function getMethod(methodName:String):MethodInfo {
 		var iterator:Iterator = getMethods().iterator();
@@ -151,7 +150,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 				return method;
 			}
 		}
-		throw new NoSuchMethodException("The method with the name [" + methodName + "] you tried to obtain does not exist.",
+		throw new NoSuchClassMemberException("The method with the name [" + methodName + "] you tried to obtain does not exist.",
 										this,
 										arguments);
 	}
@@ -174,7 +173,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	 *
 	 * @param propertyName the name of the property you wanna obtain
 	 * @return the PropertyInfo correspoinding to the property's name
-	 * @throws org.as2lib.env.reflect.NoSuchPropertyException if the property you tried to obtain does not exist
+	 * @throws org.as2lib.env.reflect.NoSuchClassMemberException if the property you tried to obtain does not exist
 	 */
 	public function getProperty(propertyName:String):PropertyInfo {
 		var iterator:Iterator = getProperties().iterator();
@@ -185,7 +184,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 				return property;
 			}
 		}
-		throw new NoSuchPropertyException("The property with the name [" + propertyName + "] you tried to obtain does not exist.",
+		throw new NoSuchClassMemberException("The property with the name [" + propertyName + "] you tried to obtain does not exist.",
 										this,
 										arguments);
 	}
