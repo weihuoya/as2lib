@@ -36,6 +36,7 @@ import org.as2lib.env.log.logger.AbstractLogger;
  *
  * @author Simon Wacker
  * @see org.as2lib.env.log.handler.FlashoutHandler
+ * @see <a href="http://www.potapenko.com/flashout">Flashout</a>
  */
 class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements Logger {
 	
@@ -52,7 +53,7 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	private var name:String;
 	
 	/**
-	 * Constructs a new FlashoutLogger instance.
+	 * Constructs a new {@code FlashoutLogger} instance.
 	 *
 	 * <p>The default log level is {@code ALL}. This means all messages
 	 * regardless of their level are logged.
@@ -94,7 +95,8 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	/**
 	 * Sets the log level.
 	 *
-	 * <p>The log level determines which messages are logged and are not.
+	 * <p>The log level determines which messages are logged and which are
+	 * not.
 	 *
 	 * <p>A level of value {@code null} or {@code undefined} os interpreted
 	 * as level {@code ALL}, which is also the default level.
@@ -123,9 +125,6 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	/**
 	 * Checks if this logger is enabled for debug level output.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
-	 *
 	 * @return {@code true} if debug output is made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#DEBUG
 	 * @see #debug
@@ -136,9 +135,6 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	
 	/**
 	 * Checks if this logger is enabled for info level output.
-	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
 	 *
 	 * @return {@code true} if info output is made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#INFO
@@ -151,9 +147,6 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	/**
 	 * Checks if this logger is enabled for warning level output.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
-	 *
 	 * @return {@code true} if warning output is made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#WARNING
 	 * @see #warning
@@ -165,9 +158,6 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	/**
 	 * Checks if this logger is enabled for error level output.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
-	 *
 	 * @return {@code true} if error output is made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#ERROR
 	 * @see #error
@@ -178,9 +168,6 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	
 	/**
 	 * Checks if this logger is enabled for fatal level output.
-	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
 	 *
 	 * @return {@code true} if fatal output is made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#FATAL
