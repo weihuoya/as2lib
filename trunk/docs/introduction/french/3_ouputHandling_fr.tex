@@ -1,0 +1,86 @@
+\chapter{Output Handling}
+\label{sec:OutputHandling}
+
+\paragraph{Motivation:}
+La sortie normale d'une application Flash est fait via l'opération interne:
+\begin{lstlisting}[frame=single]
+trace(expression);
+\end{lstlisting}
+La sortie d'un trace est néanmoins seulement visible qu'à l'intérieur d'un environnement de développement qui supporte cette opération.  Dans tous les autres cas (ex: dans un application Web), il n'y a pas de standard de défini. Une librairie devrait fournir une sortie standardisée pour les utilisateurs et les développeurs dans tous les cas possibles.
+
+\paragraph{Solution:}
+Pour avoir plusieurs types de sortie dans tous les environnements\footnote{Flash peut rouler dans le player, dans {\sl Macromedia Central}, dans un application compilé (*.exe)}, il suffit d'utiliser la classe \emph{Out}\footnote{org.as2lib.env.out.Out}. Cela donne la possibilité par exemple de sauvegarder les messages d'erreur côté serveur, afin de s'assurer que l'erreur soit perceptible seulement pour le développeur et non pour le client. La classe \emph{Out} traite les requêtes selon la configuration de un ou plusieurs \emph{OutputHandler}\footnote{org.as2lib.env.out.OutputHandler, org.as2lib.env.out.handler.*}. {\sl As2lib} offre une sortie standardisée pour un nombre illimité d'interfaces.
+
+\paragraph{Usage:}
+Un exemple simple de l'utilisation de la gestion de sortie d'{\sl as2lib} est vu dans la figure \ref{fig:outHandling},p. \pageref{fig:outHandling}. Après avoir créé une instance de la classe \emph{Out} et fournie le \emph{TraceHandler}\footnote{org.as2lib.env.out.handler.TraceHandler}, on peut procédé à l'utilisation.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics{uml/as2lib/out.eps}
+\caption{Utilisation de la gestion de sortie d'{\sl as2lib}}
+\label{fig:outHandling}
+\end{center}
+\end{figure}
+
+La séquence de chaque action est déterminée par leurs numéros. 
+	On peut, comme dans la figure \ref{fig:outHandling}, p. \pageref{fig:outHandling}, utilisé des sorties prédéfini comme le \emph{TraceHandler} ou \emph{ExternalConsoleHandler}\footnote{org.as2lib.env.out.handler.ExternalConsoleHandler} ou bien faire sa propre implémentation de l'interface \emph{OutputHandler}(ex.: sortie avec le component Alert de Macromedia)\footnote{Le component Alert de {\sl Macromedia} doit être dans la librairie et vous devez posséder {\sl Flash MX 2004 Professional}, pour accéder à la classe Alert.}:
+
+\begin{lstlisting}[frame=single]
+import org.as2lib.env.event.EventInfo;
+import org.as2lib.env.out.OutHandler;
+import org.as2lib.env.out.info.OutWriteInfo;
+import org.as2lib.env.out.info.OutErrorInfo;
+import org.as2lib.env.out.OutConfig;
+import org.as2lib.core.BasicClass;
+import mx.controls.Alert;
+
+class test.org.as2lib.env.out.handler.UIAlertHandler 
+	extends BasicClass implements OutHandler {
+
+	public function write(info:OutWriteInfo):Void {
+		Alert.show(info.getMessage(), 
+			getClass().getName());
+	}
+	
+	public function error(info:OutErrorInfo):Void {
+		Alert.show(
+			OutConfig.getErrorStringifier().execute(info),
+			getClass().getName()
+		);
+	}
+}
+\end{lstlisting}
+
+Par la définition d'un niveau de sortie (ex.: \emph{aOut.setLevel(Out.DEBUG)}), il est possible d'empêcher la sortie de certaines informations.
+Les niveaux possibles sont :
+\begin{itemize}
+	\item Out.ALL
+	\item Out.DEBUG
+	\item Out.INFO
+	\item Out.WARNING
+	\item Out.ERROR
+	\item Out.FATAL
+	\item Out.NONE
+\end{itemize}
+
+Cette graduation permet un débuguage clair durant le développement et une réécriture rapide de la sortie lorsque l'application est terminée.  Durant le développement (ex.: avec \emph{DEBUG}), toutes les informations ayant un niveau inférieur à celui sélectionné sont utilisés (\textit{DEBUG}): \textit{DEBUG}, \textit{INFO}, \textit{WARNING}, \textit{ERROR} et \textit{FATAL}. Il n'y a que \textit{LOG} qui est omis.
+
+\begin{lstlisting}[frame=single]
+var aOut = new Out();
+
+aOut.setLevel(Out.DEBUG);
+
+aOut.log("log me Please!");
+aOut.debug("debug me Please!");
+aOut.info("inform me Please!");
+aOut.warning("warn me Please!");
+aOut.error(new Exception("Output Error", this));
+aOut.fatal(new FatalException("Fatal Output Error",
+	this));
+\end{lstlisting}
+
+Lorsque l'application est finie, sortir seulement les erreurs fatales peut être fait avec une seule ligne de code.
+
+\begin{lstlisting}[frame=single]
+aOut.setLevel(Out.FATAL);
+\end{lstlisting}
