@@ -1,5 +1,4 @@
 ﻿import org.as2lib.core.BasicClass;
-import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.data.holder.HashMap;
@@ -15,23 +14,10 @@ import org.as2lib.env.reflect.ReflectConfig;
  * @see org.as2lib.core.BasicClass
  */
 class org.as2lib.env.util.ReflectUtil extends BasicClass {
-	/** All ClassInfos and PackageInfos that have already been found will be cached here. */
-	private static var cache:Cache = new Cache();
-	
 	/**
 	 * The constructor is private to prevent instantiation.
 	 */
 	private function ReflectUtil(Void) {
-	}
-	
-	/**
-	 * Returns the cache used to cache all ClassInfos and PackageInfos that have
-	 * already been found.
-	 *
-	 * @return the cache used to cache ClassInfos and PackageInfos
-	 */
-	public static function getCache(Void):Cache {
-		return cache;
 	}
 	
 	/**
@@ -48,10 +34,10 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 * @throws IllegalArgumentException if the passed in object is neither of type function nor object
 	 */
 	public static function getClassInfo(object):ClassInfo {
-		var info:ClassInfo = cache.getClass(object);
+		var info:ClassInfo = ReflectConfig.getCache().getClass(object);
 		if (ObjectUtil.isEmpty(info)) {
 			info = ClassInfo(ReflectConfig.getClassAlgorythm().execute(object));
-			getCache().addClass(info);
+			ReflectConfig.getCache().addClass(info);
 		}
 		return info;
 	}
@@ -68,10 +54,10 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 * @return the appropriate PackageInfo instance containing all package information.
 	 */
 	public static function getPackageInfo(package):PackageInfo {
-		var info:PackageInfo = cache.getPackage(package);
+		var info:PackageInfo = ReflectConfig.getCache().getPackage(package);
 		if (ObjectUtil.isEmpty(info)) {
 			info = PackageInfo(ReflectConfig.getPackageAlgorythm().execute(package));
-			getCache().addPackage(info);
+			ReflectConfig.getCache().addPackage(info);
 		}
 		return info;
 	}
