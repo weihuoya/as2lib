@@ -16,7 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.out.OutRepository;
-import org.as2lib.env.out.OutHierachy;
+import org.as2lib.env.out.OutHierarchy;
 import org.as2lib.env.out.Out;
 import org.as2lib.env.out.RootOut;
 
@@ -38,7 +38,7 @@ class org.as2lib.env.out.OutRepositoryManager extends BasicClass {
 	 * @return the currently used OutRepository instance
 	 */
 	public static function getRepository(Void):OutRepository {
-		if (!repository) repository = new OutHierachy(new RootOut(Out.ALL));
+		if (!repository) repository = new OutHierarchy(new RootOut(Out.ALL));
 		return repository;
 	}
 	
