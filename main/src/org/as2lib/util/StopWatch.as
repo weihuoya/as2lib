@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.except.IllegalStateException;
 
 /**
  * Simple Stopwatch for stopping the time.
@@ -63,24 +64,29 @@ class org.as2lib.util.StopWatch {
 	
 	/**
 	 * Starts the time recording process.
-	 * It closes a former started process.
+	 * 
+	 * @throws IllegalStateException if the Stopwatch is already started.
 	 */
 	public function start(Void):Void {
 		if(isStarted()) {
-			this.stop();
+			throw new IllegalStateException("Stopwatch is already started.", this, arguments);
 		}
 		started = true;
 		startTimeKeys.push(getTimer());
 	}
 	
 	/**
-	 * Stops the time recording process If a process is started
+	 * Stops the time recording process If a process is started.
+	 * 
+	 * @throws IllegalStateException if the Stopwatch isn't already started.
 	 */
 	public function stop(Void):Void {
-		var stopTime:Number = getTimer();
-		if(isStarted()) {
-			stopTimeKeys[startTimeKeys.length-1] = stopTime;
+		if(!isStarted()) {
+			throw new IllegalStateException("Stopwatch isn't started yet.", this, arguments);
 		}
+		var stopTime:Number = getTimer();
+		stopTimeKeys[startTimeKeys.length-1] = stopTime;
+		started = false;
 	}
 	
 	/**
@@ -99,28 +105,34 @@ class org.as2lib.util.StopWatch {
 	public function reset(Void):Void {
 		startTimeKeys = new Array();
 		stopTimeKeys = new Array();
+		started = false;
 	}
 	
 	/**
 	 * Calculates and returns the running time in milliseconds.
-	 * If the Stopwatch is started it will be stopped.
+	 * The StopWatch will not be stopped by calling this method.
+	 * If the StopWatch is still running it takes the actualTime
+	 * as stoptime for this result.
 	 * 
 	 * @return Running time in milliseconds.
 	 * @see #getTimeInSeconds
 	 */
 	public function getTimeInMilliSeconds(Void):Number {
-		this.stop();
+		if(isStarted()) {
+			stopTimeKeys[startTimeKeys.length-1] = getTimer();
+		}
 		var result:Number = 0;
 		for(var i:Number=0; i<startTimeKeys.length; i++) {
 			result += (stopTimeKeys[i]-startTimeKeys[i]);
 		}
-		return result;
-		
+		return result;		
 	}
 	
 	/**
 	 * Calculates and returns the running time in seconds.
-	 * If the Stopwatch is started it will be stopped.
+	 * The StopWatch will not be stopped by calling this method.
+	 * If the StopWatch is still running it takes the actualTime
+	 * as stoptime for this result.
 	 * 
 	 * @return Running time in seconds.
 	 * @see #getTimeInMilliSeconds.
@@ -131,21 +143,21 @@ class org.as2lib.util.StopWatch {
 	
 	/**
 	 * Generates as String with all Start- and StopTimes in milliseconds.
-	 * Overwritten supermethod.
+	 * Overwritten supermethod. This method does not affect any other class
+	 * state.
 	 * 
 	 * @return Detailed info about this Stopwatch.
 	 */
 	public function toString(Void):String {
-		this.stop();
 		var result:String;
 		result = "\n------- [STOPWATCH] -------";
 		for(var i:Number=0; i<startTimeKeys.length; i++) {
-			result += "\nstarted["+startTimeKeys[i]+"ms] stopped["+stopTimeKeys[i]+"ms]";
+			result += "\n started["+startTimeKeys[i]+"ms] stopped["+stopTimeKeys[i]+"ms]";
 		}
 		if(i==0) {
-			result += "\nnever started  ";
+			result += "\n never started.";
 		} else {
-			result += "\n\ntotal runnning time: "+getTimeInMilliSeconds()+"ms";
+			result += "\n\n total runnning time: "+getTimeInMilliSeconds()+"ms";
 		}
 		result += "\n---------------------------\n";
 		return result;
