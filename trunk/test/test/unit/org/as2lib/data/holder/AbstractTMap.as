@@ -1,4 +1,20 @@
-﻿import org.as2lib.test.unit.TestCase;
+﻿/*
+ * Copyright the original author or authors.
+ * 
+ * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.mozilla.org/MPL/MPL-1.1.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import org.as2lib.test.unit.TestCase;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.Iterator;
 
@@ -91,9 +107,10 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 	public function testRemove(Void):Void {
 		var map:Map = getMap();
 		fillMap(map);
-		map.remove("key");
-		map.remove(12);
-		map.remove(true);
+		assertEquals("Map.remove should return former value: 'stringKey'", map.remove("key"), "stringKey");
+		assertEquals("Map.remove should return former value: 15", map.remove(12), 15);
+		assertEquals("Map.remove should return former value: false", map.remove(true), false);
+		assertUndefined("Map.remove should return 'undefined' if it was not available", map.remove("a"));
 		assertFalse("Map.containsKey('key') should return false.", map.containsKey("key"));
 		assertFalse("Map.containsKey(12) should return false.", map.containsKey(12));
 		assertFalse("Map.containsKey(true) should return false.", map.containsKey(true));
@@ -140,6 +157,5 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 		assertUndefined("Element 15 corresponding to key 12 should have been deleted in iterator.", map.get(12));
 		assertSame("Mapping from value 'stringKey' to key 'key' should still exist.", map.get("key"), "stringKey");
 		assertSame("Mapping from value false to key true should still exist.", map.get(true), false);
-	}
-	
+	}	
 }
