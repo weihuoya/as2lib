@@ -23,7 +23,7 @@ class test.org.as2lib.env.overload.TOverload extends Test {
 	
 	public function testAddHandlerByValue(Void):Void {
 		var o:Overload = new Overload(this);
-		var oh:OverloadHandler = o.addHandlerByValue([], new Function());
+		var oh:OverloadHandler = o.addHandler([], new Function());
 		assertIsNotEmpty("The received OverloadHandler [" + oh + "] is empty.", oh);
 		assertTrue("The received instance [" + oh + "] is not of type OverloadHandler.", ObjectUtil.isInstanceOf(oh, OverloadHandler));
 		assertNotThrows(o, "removeHandler", [oh]);
@@ -31,15 +31,15 @@ class test.org.as2lib.env.overload.TOverload extends Test {
 	
 	public function testRemoveHandler(Void):Void {
 		var o:Overload = new Overload(this);
-		var oh:OverloadHandler = o.addHandlerByValue([], new Function());
+		var oh:OverloadHandler = o.addHandler([], new Function());
 		assertNotThrows(o, "removeHandler", [oh]);
 		assertThrows(IllegalArgumentException, o, "removeHandler", [new SimpleOverloadHandler([], new Function())]);
 	}
 	
 	public function testForward(Void):Void {
 		var o:Overload = new Overload(this);
-		o.addHandlerByValue([String, Object], firstMethod);
-		o.addHandlerByValue([Object, String], secondMethod);
+		o.addHandler([String, Object], firstMethod);
+		o.addHandler([Object, String], secondMethod);
 		var number:Number = Number(o.forward(["string", new Object()]));
 		assertTrue("The returned number [" + number + "] does not have the correct value [0].", (number == 0));
 		assertThrows(SameTypeSignatureException, o, "forward", [[new String("firstString"), new String("secondString")]]);
