@@ -4,14 +4,14 @@ import org.as2lib.basic.reflect.ClassInfo;
 import org.as2lib.basic.reflect.Cache;
 import org.as2lib.basic.reflect.algorythm.ContentAlgorythm;
 import org.as2lib.basic.reflect.algorythm.AbstractContentAlgorythm;
-import org.as2lib.data.holder.Hashtable;
+import org.as2lib.data.holder.HashMap;
 
 class org.as2lib.basic.reflect.algorythm.PropertyAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
-	private var data:Hashtable;
-	private var getters:Hashtable;
-	private var setters:Hashtable;
-	private var staticGetters:Hashtable;
-	private var staticSetters:Hashtable;
+	private var data:HashMap;
+	private var getters:HashMap;
+	private var setters:HashMap;
+	private var staticGetters:HashMap;
+	private var staticSetters:HashMap;
 	private var info:ClassInfo;
 	private var staticFlag:Boolean;
 	private var type:String;
@@ -19,15 +19,15 @@ class org.as2lib.basic.reflect.algorythm.PropertyAlgorythm extends AbstractConte
 	public function PropertyAlgorythm(Void) {
 	}
 	
-	public function execute(info:ReflectInfo):Hashtable {
+	public function execute(info:ReflectInfo):HashMap {
 		type = null;
 		
 		this.info = ClassInfo(info);
-		this.data = new Hashtable();
-		this.getters = new Hashtable();
-		this.setters = new Hashtable();
-		this.staticGetters = new Hashtable();
-		this.staticSetters = new Hashtable();
+		this.data = new HashMap();
+		this.getters = new HashMap();
+		this.setters = new HashMap();
+		this.staticGetters = new HashMap();
+		this.staticSetters = new HashMap();
 		
 		this.staticFlag = true;
 		var clazz:Function = this.info.getClass();

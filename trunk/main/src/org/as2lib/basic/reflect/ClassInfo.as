@@ -1,5 +1,5 @@
 ﻿import org.as2lib.basic.BasicClass;
-import org.as2lib.data.holder.Hashtable;
+import org.as2lib.data.holder.HashMap;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.ReflectUtil;
 import org.as2lib.basic.reflect.PackageInfo;
@@ -12,8 +12,8 @@ class org.as2lib.basic.reflect.ClassInfo extends BasicClass implements ReflectIn
 	private var clazz:Function;
 	private var superClass:ClassInfo;
 	private var parent:PackageInfo;
-	private var methods:Hashtable;
-	private var properties:Hashtable;
+	private var methods:HashMap;
+	private var properties:HashMap;
 	
 	public function ClassInfo(name:String, 
 							  clazz:Function, 
@@ -56,21 +56,21 @@ class org.as2lib.basic.reflect.ClassInfo extends BasicClass implements ReflectIn
 		return parent;
 	}
 	
-	public function getMethods(Void):Hashtable {
+	public function getMethods(Void):HashMap {
 		if (ObjectUtil.isEmpty(methods)) {
 			methods = ReflectUtil.getMethods(this);
 		}
 		return methods;
 	}
 	
-	public function getProperties(Void):Hashtable {
+	public function getProperties(Void):HashMap {
 		if (ObjectUtil.isEmpty(properties)) {
 			properties = ReflectUtil.getProperties(this);
 		}
 		return properties;
 	}
 	
-	public function getChildren(Void):Hashtable {
+	public function getChildren(Void):HashMap {
 		return null;
 	}
 }

@@ -4,7 +4,7 @@ import org.as2lib.basic.reflect.ClassInfo;
 import org.as2lib.basic.reflect.PackageInfo;
 import org.as2lib.basic.reflect.MethodInfo;
 import org.as2lib.basic.reflect.PropertyInfo;
-import org.as2lib.data.holder.Hashtable;
+import org.as2lib.data.holder.HashMap;
 import org.as2lib.data.iterator.Iterator;
 import org.as2lib.basic.reflect.ReflectInfo;
 import org.as2lib.util.ObjectUtil;
@@ -48,19 +48,19 @@ class test.org.as2lib.basic.TReflections extends Test {
 	
 	public function testGetChildren(Void):Void {
 		var info = ReflectUtil.getPackageInfo(_global.test.org.as2lib.basic.reflect);
-		var children:Hashtable = info.getChildren();
+		var children:HashMap = info.getChildren();
 		var iterator:Iterator = children.iterator();
 		while (iterator.hasNext()) {
 			var child:ReflectInfo = ReflectInfo(iterator.next());
 			trace (child.getName());
 		}
-		assertTrueWithMessage("getChildren() does not return a Hashtable", ObjectUtil.isInstanceOf(children, Hashtable));
+		assertTrueWithMessage("getChildren() does not return a HashMap", ObjectUtil.isInstanceOf(children, HashMap));
 		trace ("----------------------------------------------");
 	}
 	
 	public function testGetMethods(Void):Void {
 		var info:ClassInfo = clazz.getClass();
-		var methods:Hashtable = info.getMethods();
+		var methods:HashMap = info.getMethods();
 		var iterator:Iterator = methods.iterator()
 		while(iterator.hasNext()) {
 			var method:MethodInfo = MethodInfo(iterator.next());
@@ -71,7 +71,7 @@ class test.org.as2lib.basic.TReflections extends Test {
 	
 	public function testGetProperties(Void):Void {
 		var info:ClassInfo = (new DummieClass()).getClass();
-		var properties:Hashtable = Hashtable(info.getProperties());
+		var properties:HashMap = HashMap(info.getProperties());
 		var prop:PropertyInfo;
 		var iterator:Iterator = properties.iterator();
 		while (iterator.hasNext()) {

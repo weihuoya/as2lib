@@ -1,17 +1,17 @@
 ﻿import org.as2lib.basic.BasicClass;
-import org.as2lib.data.holder.Hashtable;
+import org.as2lib.data.holder.HashMap;
 import org.as2lib.basic.reflect.ClassInfo;
 import org.as2lib.basic.reflect.PackageInfo;
 import org.as2lib.basic.reflect.RootInfo;
 
 class org.as2lib.basic.reflect.Cache extends BasicClass {
-	private var classes:Hashtable;
-	private var packages:Hashtable;
+	private var classes:HashMap;
+	private var packages:HashMap;
 	private var root:RootInfo;
 	
 	public function Cache(Void) {
-		classes = new Hashtable();
-		packages = new Hashtable();
+		classes = new HashMap();
+		packages = new HashMap();
 		root = new RootInfo("root", _global);
 	}
 	

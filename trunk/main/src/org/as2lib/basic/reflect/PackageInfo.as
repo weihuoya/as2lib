@@ -1,5 +1,5 @@
 ﻿import org.as2lib.basic.BasicClass;
-import org.as2lib.data.holder.Hashtable;
+import org.as2lib.data.holder.HashMap;
 import org.as2lib.basic.reflect.ReflectInfo;
 import org.as2lib.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
@@ -9,7 +9,7 @@ class org.as2lib.basic.reflect.PackageInfo extends BasicClass implements Reflect
 	private var fullName:String;
 	private var package:Object;
 	private var parent:PackageInfo;
-	private var children:Hashtable;
+	private var children:HashMap;
 	
 	public function PackageInfo(name:String, 
 							  	package:Object, 
@@ -41,7 +41,7 @@ class org.as2lib.basic.reflect.PackageInfo extends BasicClass implements Reflect
 		return parent;
 	}
 	
-	public function getChildren(Void):Hashtable {
+	public function getChildren(Void):HashMap {
 		if (children == undefined) {
 			children = ReflectUtil.getChildren(this);
 		}

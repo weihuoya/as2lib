@@ -1,13 +1,13 @@
 ﻿import org.as2lib.data.iterator.Iterator;
 import org.as2lib.data.iterator.ArrayIterator;
-import org.as2lib.data.holder.Hashtable;
+import org.as2lib.data.holder.HashMap;
 
-class org.as2lib.data.iterator.HashtableIterator implements Iterator {
-	private var target:Hashtable;
+class org.as2lib.data.iterator.HashMapIterator implements Iterator {
+	private var target:HashMap;
 	private var iterator:ArrayIterator;
 	private var key:Object;
 	
-	public function HashtableIterator(newTarget:Hashtable) {
+	public function HashtableIterator(newTarget:HashMap) {
 		target = newTarget;
 		iterator = new ArrayIterator(target.getKeys());
 	}

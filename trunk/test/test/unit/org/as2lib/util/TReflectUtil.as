@@ -27,10 +27,12 @@ class test.org.as2lib.util.TReflectUtil extends Test {
 	}
 	
 	public function testGetClassInfo(Void):Void {
+		trace ("testGetClassInfo");
 		trace (subInfo === getClassInfo(sub));
 		trace (superInfo === subInfo.getSuperClass());
 	}
 	public function testGetPackageInfo(Void):Void {
+		trace ("testGetPackageInfo");
 		trace (packageInfo === getPackageInfo(package));
 		trace (packageInfo === subInfo.getParent());
 		

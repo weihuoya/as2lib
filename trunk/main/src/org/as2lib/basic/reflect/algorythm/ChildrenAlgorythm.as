@@ -4,12 +4,12 @@ import org.as2lib.basic.reflect.ClassInfo;
 import org.as2lib.basic.reflect.Cache;
 import org.as2lib.basic.reflect.algorythm.ContentAlgorythm;
 import org.as2lib.basic.reflect.algorythm.AbstractContentAlgorythm;
-import org.as2lib.data.holder.Hashtable;
+import org.as2lib.data.holder.HashMap;
 import org.as2lib.util.ObjectUtil;
 
 class org.as2lib.basic.reflect.algorythm.ChildrenAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
 	private var cache:Cache;
-	private var data:Hashtable;
+	private var data:HashMap;
 	private var info:PackageInfo;
 	private var type:String;
 	
@@ -17,11 +17,11 @@ class org.as2lib.basic.reflect.algorythm.ChildrenAlgorythm extends AbstractConte
 		this.cache = cache;
 	}
 	
-	public function execute(info:ReflectInfo):Hashtable {
+	public function execute(info:ReflectInfo):HashMap {
 		type = null;
 		
 		this.info = PackageInfo(info);
-		this.data = new Hashtable();
+		this.data = new HashMap();
 		
 		var package:Object = this.info.getPackage();
 		search(package);
