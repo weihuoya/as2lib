@@ -17,15 +17,17 @@
 import org.as2lib.env.except.Exception;
 
 /**
- * AopException is the base aop Exception.
+ * AopException is the base aop exception.
  *
  * @author Simon Wacker
  */
 class org.as2lib.aop.AopException extends Exception {
+	
 	/**
-	 * @see org.as2lib.env.except.Exception#Constructor()
+	 * @see org.as2lib.env.except.Exception#new()
 	 */
 	public function AopException(message:String, thrower, args:FunctionArguments) {
-		super(message, thrower, args);
+		super (message, thrower, args);
 	}
+	
 }
