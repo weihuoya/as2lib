@@ -63,6 +63,7 @@
 
     :: 05/31/04 :: Simon Wacker ::
 
+
       >> org.as2lib.env.reflect
 
         > changed ClassInfo.newInstance() to newInstance(args:Array)
@@ -97,3 +98,17 @@
           * org.as2lib.env.event.SimpleEventBroadcaster
 
         > added SpeedEventBroadcaster
+
+
+
+    :: 06/03/04 :: Simon Wacker ::
+
+
+      >> org.as2lib.env.event
+
+        > changed throwed Throwable in DynamicEventBroadcasterFactory.createEventBroadcaster() from org.as2lib.env.except.UndefinedPropertyExceptiont to org.as2lib.env.except.IllegalStateException
+
+      
+      >> org.as2lib.env.except
+
+        > removed UndefinedPropertyException
