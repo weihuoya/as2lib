@@ -9,7 +9,7 @@
 interface org.as2lib.reflect.ClassInfo { 
       
      /** 
-      * @returns the name from the class
+      * @return the name of the class
       */ 
      public function getName(Void):String; 
      
@@ -18,57 +18,61 @@ interface org.as2lib.reflect.ClassInfo {
       * If you set the name this way, reflections will be switched off.
       * This value won't get validated by an internal routine.
       *
-      * @param name for this class
+      * @param name of this class
       */
      public function setName(to:String):Void;
      
      /** 
-      * @returns the constructor from the class.
+      * @return the constructor of the class.
       */ 
      public function getConstructor(Void):Function; 
      
      /** 
-      * @returns a new Instance from this constructor appending Arguments to the constructor.
+      * @return a new instance of the constructor appending arguments to the constructor.
       */ 
      public function newInstance(usedArguments:Array):Object; 
       
      /** 
-      * Returns a TypedArray from type String containing all Vars that an Instance of this class has. 
+      * @return a TypedArray from type String containing all Vars that an Instance of this class has. 
       */ 
      public function getVars(Void):TypedArray; 
      
      /**
-      * Overwrite the internal
+      * Overwrite the internal array of vars.
+      * @param the TypedArray
       */
      public function setVars(to:TypedArray):Void;
      
      /** 
-      * Returns a TypedArray from type MethodInfo containing all Methods that an Instance of this class has. 
+      * @return a TypedArray from type MethodInfo containing all methods that an instance of this class has. 
       */ 
      public function getMethods(Void):TypedArray; 
      
      /**
-      * TODO: Docu
+      * Sets the method array that will be returned by the call of the getMethods method.
+      * @param the TypedArray containing the definitions of the methods
       */
      public function setMethods(to:TypedArray):Void;
       
      /** 
-      * Returns a TypedArray from type String containing all Vars that the Class has. 
+      * @return a TypedArray from type String containing all Vars that the Class has. 
       */ 
      public function getStaticVars(Void):TypedArray; 
      
      /**
-      * TODO: Docu
+      * Sets the static vars array that will be returned by the invocation of the getStaticVars method.
+      * @param the TypedArray containing the definitions of all static vars
       */
      public function setStaticVars(to:TypedArray):Void;
       
      /** 
-      * Returns a TypedArray from type MethodInfo containing all Methods that the Class has. 
+      * @return a TypedArray from type MethodInfo containing all Methods that the Class has. 
       */ 
      public function getStaticMethods(Void):TypedArray; 
      
      /**
-      * TODO: Docu
+      * Sets the TypedArray that will be returned by an invocation of the getStaticMethods method.
+      * @param the TypedArray that contains the definitions of the static methods.
       */
      public function setStaticMethods(to:TypedArray):Void;
  
