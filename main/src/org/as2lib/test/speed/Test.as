@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.env.out.OutAccess;
-import org.as2lib.data.holder.TypedArray;
+import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.test.speed.TestCaseInformation;
 import org.as2lib.test.speed.TestCase;
 import org.as2lib.env.except.IllegalArgumentException;

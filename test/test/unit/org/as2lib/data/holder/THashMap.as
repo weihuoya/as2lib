@@ -1,7 +1,7 @@
 ﻿import org.as2lib.test.unit.TestCase;
 import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.HashMap;
-import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.holder.map.HashMap;
+import org.as2lib.data.holder.Iterator;
 
 class test.unit.org.as2lib.data.holder.THashMap extends TestCase{
 	public function THashMap(Void) {

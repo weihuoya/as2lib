@@ -1,8 +1,8 @@
 ﻿import org.as2lib.test.unit.TestCase;
-import org.as2lib.data.holder.SimpleStack;
+import org.as2lib.data.holder.stack.SimpleStack;
 import org.as2lib.data.holder.Stack;
 import org.as2lib.data.holder.EmptyDataHolderException;
-import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.holder.Iterator;
 import test.unit.org.as2lib.data.holder.AbstractTStack;
 
 class test.unit.org.as2lib.data.holder.TSimpleStack extends AbstractTStack {

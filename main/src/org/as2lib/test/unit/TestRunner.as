@@ -1,10 +1,10 @@
 ﻿import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.TypedArray;
+import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.data.holder.HashMap;
-import org.as2lib.data.holder.TypedQueue;
-import org.as2lib.data.holder.TypedMap;
-import org.as2lib.data.iterator.Iterator;
-import org.as2lib.data.iterator.ArrayIterator;
+import org.as2lib.data.holder.queue.TypedQueue;
+import org.as2lib.data.holder.map.TypedMap;
+import org.as2lib.data.holder.Iterator;
+import org.as2lib.data.holder.ArrayIterator;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.TestSuite;
 import org.as2lib.test.unit.TestResult;

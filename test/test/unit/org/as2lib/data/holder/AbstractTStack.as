@@ -1,7 +1,7 @@
 ﻿import org.as2lib.test.unit.TestCase;
 import org.as2lib.data.holder.Stack;
 import org.as2lib.data.holder.EmptyDataHolderException;
-import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.holder.Iterator;
 
 class test.unit.org.as2lib.data.holder.AbstractTStack extends TestCase {
 	
