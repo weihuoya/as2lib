@@ -15,6 +15,7 @@ class org.as2lib.basic.reflect.algorythm.ClassAlgorythm extends BasicClass imple
 	}
 	
 	public function execute(object:Object):ReflectInfo {
+		info = null;
 		findAndStore(cache.getRoot(), object);
 		return info;
 	}

@@ -18,6 +18,8 @@ class org.as2lib.basic.reflect.algorythm.ChildrenAlgorythm extends AbstractConte
 	}
 	
 	public function execute(info:ReflectInfo):Hashtable {
+		type = null;
+		
 		this.info = PackageInfo(info);
 		this.data = new Hashtable();
 		

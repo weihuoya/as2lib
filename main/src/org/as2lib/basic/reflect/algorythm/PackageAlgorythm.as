@@ -14,6 +14,7 @@ class org.as2lib.basic.reflect.algorythm.PackageAlgorythm extends BasicClass imp
 	}
 	
 	public function execute(object:Object):ReflectInfo {
+		info = null;
 		findAndStore(cache.getRoot(), object);
 		return info;
 	}
