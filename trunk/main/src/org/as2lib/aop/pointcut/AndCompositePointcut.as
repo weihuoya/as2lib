@@ -20,9 +20,8 @@ class org.as2lib.aop.pointcut.AndCompositePointcut extends AbstractCompositePoin
 	
 	public function captures(joinPoint:JoinPoint):Boolean {
 		var iterator:Iterator = pointcutStack.iterator();
-		var pointcut:Pointcut;
 		while (iterator.hasNext()) {
-			pointcut = Pointcut(iterator.next());
+			var pointcut:Pointcut = Pointcut(iterator.next());
 			if (!pointcut.captures(joinPoint)) {
 				return false;
 			}

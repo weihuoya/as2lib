@@ -2,7 +2,6 @@
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.aop.joinpoint.JoinPointDescription;
-import org.as2lib.aop.joinpoint.JoinPointConfig;
 
 /**
  * @author Simon Wacker

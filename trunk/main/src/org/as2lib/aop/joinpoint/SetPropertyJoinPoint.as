@@ -12,4 +12,8 @@ class org.as2lib.aop.joinpoint.SetPropertyJoinPoint extends PropertyJoinPoint {
 	public function execute(args:Array) {
 		return PropertyInfo(getInfo()).getSetter().getMethod().apply(getThis(), args);
 	}
+	
+	public function getType(Void):Number {
+		return TYPE_PROPERTY_SET;
+	}
 }

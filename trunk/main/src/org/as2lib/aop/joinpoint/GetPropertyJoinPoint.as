@@ -12,4 +12,8 @@ class org.as2lib.aop.joinpoint.GetPropertyJoinPoint extends PropertyJoinPoint {
 	public function proceed(args:Array) {
 		return PropertyInfo(getInfo()).getGetter().getMethod().apply(getThis(), args);
 	}
+	
+	public function getType(Void):Number {
+		return TYPE_PROPERTY_GET;
+	}
 }
