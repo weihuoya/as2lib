@@ -17,33 +17,35 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.except.IllegalArgumentException;
-//import org.as2lib.env.log.level.DynamicLogLevel;
 
 /**
+ * AbstractLogLevel acts as a basic access point for the pre-defined levels
+ * All, Debug, Info, Warning, Error, Fatal and None.
+ *
  * @author Simon Wacker
  */
-class org.as2lib.env.log.level.AbstractLogLevel extends BasicClass implements LogLevel /* Could be removed when using DynamicLogLevel() */ {
+class org.as2lib.env.log.level.AbstractLogLevel extends BasicClass implements LogLevel {
 	
 	/** All output will be made. */
-	public static var ALL:LogLevel = new AbstractLogLevel(60, "ALL");					// new DynamicLogLevel(60, "ALL");
+	public static var ALL:LogLevel = new AbstractLogLevel(60, "ALL");
 	
 	/** All output that is at a lower output level than debug will be made. */
-	public static var DEBUG:LogLevel = new AbstractLogLevel(50, "DEBUG");				// new DynamicLogLevel(50, "DEBUG");
+	public static var DEBUG:LogLevel = new AbstractLogLevel(50, "DEBUG");
 	
 	/** All output that is at a lower output level than info will be made. */
-	public static var INFO:LogLevel = new AbstractLogLevel(40, "INFO");					// new DynamicLogLevel(40, "INFO");
+	public static var INFO:LogLevel = new AbstractLogLevel(40, "INFO");
 	
 	/** All output that is at a lower output level than warning will be made. */
-	public static var WARNING:LogLevel = new AbstractLogLevel(30, "WARNINING");			// new DynamicLogLevel(30, "WARNINING");
+	public static var WARNING:LogLevel = new AbstractLogLevel(30, "WARNINING");
 	
 	/** All output that is at a lower output level than error will be made. */
-	public static var ERROR:LogLevel = new AbstractLogLevel(20, "ERROR");				// new DynamicLogLevel(20, "ERROR");
+	public static var ERROR:LogLevel = new AbstractLogLevel(20, "ERROR");
 	
 	/** All output that is at a lower output level than fatal will be made. */
-	public static var FATAL:LogLevel = new AbstractLogLevel(10, "FATAL");				// new DynamicLogLevel(10, "FATAL");
+	public static var FATAL:LogLevel = new AbstractLogLevel(10, "FATAL");
 	
 	/** No output will be made. */
-	public static var NONE:LogLevel = new AbstractLogLevel(0, "NONE");					// new DynamicLogLevel(0, "NONE");
+	public static var NONE:LogLevel = new AbstractLogLevel(0, "NONE");
 	
 	/** Stores the level in form of a number. */
 	private var level:Number;
@@ -54,6 +56,8 @@ class org.as2lib.env.log.level.AbstractLogLevel extends BasicClass implements Lo
 	/**
 	 * Private constructor.
 	 *
+	 * @param level the level represented by a number
+	 * @param name the name of the level
 	 * @throws IllegalArgumentException if passed-in level is null or undefined
 	 */
 	private function AbstractLogLevel(level:Number, name:String) {
@@ -63,27 +67,37 @@ class org.as2lib.env.log.level.AbstractLogLevel extends BasicClass implements Lo
 	}
 	
 	/**
+	 * Compares the number representation of this level with the one of the
+	 * passed-in level using the is greater or equal operator.
+	 *
 	 * True will be returned if:
 	 * <ul>
 	 *   <li>This level is greater or equal than the passed-in one.</li>
 	 *   <li>The passed-in level is null or undefined.</li>
 	 * </ul>
 	 *
-	 * @see LogLevel#isGreaterOrEqual()
+	 * @param level the level to compare this level with
+	 * @return true if this level is greater or equal than the passed-in one else false
 	 */
 	public function isGreaterOrEqual(level:LogLevel):Boolean {
 		return (this.level >= level.toNumber());
 	}
 	
 	/**
-	 * @see LogLevel#toNumber()
+	 * Returns the number representation of this level.
+	 *
+	 * <p>The return value is never null or undefined.
+	 *
+	 * @return the number representation of this level
 	 */
 	public function toNumber(Void):Number {
 		return level;
 	}
 	
 	/**
-	 * @see LogLevel#toString()
+	 * Returns the string representation of this level.
+	 *
+	 * @return the string representation of this level
 	 */
 	public function toString(Void):String {
 		return name;

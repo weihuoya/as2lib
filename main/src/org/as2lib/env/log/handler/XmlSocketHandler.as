@@ -19,9 +19,11 @@ import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
 
 /**
- * XmlSocketHandler is an implementation of the LogHandler interface
- * that uses the XMLSocket to handle the received data. It was originally
- * designed to work with the POWERFLASHER's SOS XML-Socket-Server.
+ * XmlSocketHandler uses the XMLSocket to log the received data.
+ *
+ * <p>It was originally designed to work with the POWERFLASHER's SOS 
+ * XML-Socket-Server but you can use it for any output device that is
+ * accessible over the XML socket.
  *
  * @author Simon Wacker
  */
@@ -31,7 +33,7 @@ class org.as2lib.env.log.handler.XmlSocketHandler extends BasicClass implements 
 	private var socket:XMLSocket;
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new XmlSocketHandler instance.
 	 *
 	 * @param host a fully qualified DNS domain name
 	 * @param port the TCP port number on the host used to establish a connection
@@ -42,12 +44,15 @@ class org.as2lib.env.log.handler.XmlSocketHandler extends BasicClass implements 
 	}
 	
 	/**
-	 * Uses the XMLSocket connection for the output.
+	 * Uses the xml socket connection to log the passed-in message.
 	 *
-	 * @see LogMessageHandler#write()
+	 * <p>Uses the LogMessage#toString method to obtain the string to
+	 * log.
+	 *
+	 * @param message the message to log
 	 */
 	public function write(message:LogMessage):Void {
-		socket.send(message + "\n");
+		socket.send(message.toString());
 	}
 	
 }
