@@ -245,7 +245,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		
 		var result = getName()+" run in ["+ms+"ms]. ";
 		
-		result += (errors>0) ? errors+" error(s)"+methodResult : "no error occured";
+		result += (errors>0) ? errors + ((errors > 1) ? " errors" : " error") + " occured" + methodResult : "no error occured";
 		
 		return result;
 	}

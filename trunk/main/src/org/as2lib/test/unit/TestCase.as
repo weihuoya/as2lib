@@ -157,6 +157,14 @@ import org.as2lib.util.ObjectUtil;
  *       <th>assertNotThrows</th>
  *       <td><i>call</i>(<i>arguments</i>) doesnt throw <i>exception</i></td>
  *     </tr>
+ *     <tr>
+ *       <th>assertTypeOf</th>
+ *       <td><i>value</i> typeof <i>type</i></td>
+ *     </tr>
+ *     <tr>
+ *       <th>assertInstanceOf</th>
+ *       <td><i>value</i> instanceof <i>type</i></td>
+ *     </tr>
  *   </tbody>
  * </table>
  * 
@@ -1442,5 +1450,82 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertNotThrowsWithFunctionAndMessageAndType(message:String, type, inObject, func:Function, args:Array):Boolean {
 		return assertNotThrowsWithCallAndMessageAndType(message, type, new Call(inObject, func), args);
+	}
+	
+	/**
+	 * overload
+	 * 
+	 * @see #assertTypeOfWithMessage
+	 * @see #assertTypeOfWithoutMessage
+	 */
+	private function assertTypeOf():Boolean {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([Object, String], assertTypeOfWithoutMessage);
+		overload.addHandler([String, Object, String], assertTypeOfWithMessage);
+		return overload.forward(arguments);
+	}
+	
+	/**
+	 * Asserts that the type of a value a special type.
+	 * 
+	 * @see #assertTypeOfWithMessage
+	 * @see org.as2lib.util.ObjectUtil#isTypeOf
+	 * @param val	Value to be validated.
+	 * @param type	Expected type of the value.
+	 */
+	private function assertTypeOfWithoutMessage(val, type:String):Boolean {
+		return assertTypeOfWithMessage("", val, type);
+	}
+	
+	/**
+	 * Asserts that the type of a value a special type and adds a exception if the assertion fails.
+	 * 
+	 * @see #assertTypeOfWithoutMessage
+	 * @param message	Message to be appended if the assertion fails.
+	 * @param val		Value to be validated.
+	 * @param type		Expected type of the value.
+	 */
+	private function assertTypeOfWithMessage(message:String, val, type:String):Boolean {
+		var info:ExecutionInfo = new AssertTypeOfInfo(message, val, type);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
+	}
+	
+	/**
+	 * overload
+	 * 
+	 * @see #assertInstanceOfWithMessage
+	 * @see #assertInstanceOfWithoutMessage
+	 */
+	private function assertInstanceOf():Boolean {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([Object, Function], assertInstanceOfWithoutMessage);
+		overload.addHandler([String, Object, Function], assertInstanceOfWithMessage);
+		return overload.forward(arguments);
+	}
+	
+	/**
+	 * Asserts that a value is a instance of a special type.
+	 * 
+	 * @see #assertInstanceOfWithoutMessage
+	 * @param val		Value to be validated.
+	 * @param type		Expected type of the value.
+	 */
+	private function assertInstanceOfWithoutMessage(val, type:Function):Boolean {
+		return assertInstanceOfWithMessage("", val, type);
+	}
+	
+	/**
+	 * Asserts that a value is a instance of a special type and adds a message if the assertion fails.
+	 * 
+	 * @see #assertInstanceOfWithoutMessage
+	 * @param message	Message to be appended if the assertion fails.
+	 * @param val		Value to be validated.
+	 * @param type		Expected type of the value.
+	 */
+	private function assertInstanceOfWithMessage(message:String, val, type:Function):Boolean {
+		var info:ExecutionInfo = new AssertInstanceOfInfo(message, val, type);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
 	}
 }
