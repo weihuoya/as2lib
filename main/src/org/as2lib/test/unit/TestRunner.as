@@ -38,7 +38,7 @@ import org.as2lib.test.unit.PauseInfo;
 import org.as2lib.test.unit.ResumeInfo;
 import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.env.event.EventBroadcaster;
-import org.as2lib.env.event.SimpleEventBroadcaster;
+import org.as2lib.env.event.SpeedEventBroadcaster;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.util.ArrayUtil;
 import org.as2lib.util.StringUtil;
@@ -143,7 +143,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	 * Constructs a new Testrunner
 	 */
 	public function TestRunner(Void) {
-		eB = new SimpleEventBroadcaster();
+		eB = new SpeedEventBroadcaster();
 		startInfo = new StartInfo(this);
 		pauseInfo = new PauseInfo(this);
 		progressInfo = new ProgressInfo(this);
