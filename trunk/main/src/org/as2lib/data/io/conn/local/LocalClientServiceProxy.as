@@ -3,6 +3,8 @@ import org.as2lib.data.io.conn.ServiceProxy;
 import org.as2lib.util.Call;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.io.conn.local.ReservedHostException;
+import org.as2lib.data.io.conn.local.LocalClientServiceStatusListener;
 
 class org.as2lib.data.io.conn.local.LocalClientServiceProxy extends BasicClass implements ServiceProxy {
 	private var target:String;
@@ -30,13 +32,14 @@ class org.as2lib.data.io.conn.local.LocalClientServiceProxy extends BasicClass i
 				this.listener.execute([response]);
 				this.close();
 			}
-			responseServer.connect(target + "." + method + "_Return");
-<<<<<<< LocalClientServiceProxy.as
-			//responseSever.connect.apply(responseServer,[target + "." + method + "_Return"]);
-=======
-			connection.send(target, "remoteCall", method, args, (target + "." + method + "_Return"));
+			if(!responseServer.connect(target + "." + method + "_Return")) {
+				throw new ReservedHostException("Connection with name [" + target + "." + method + "_Return] is already in use.", this, arguments);
+			}
+			var statusListener:LocalClientServiceStatusListener = new LocalClientServiceStatusListener(target,method);
+			connection.send.apply(statusListener,[target,"remoteCall", method, args, (target + "." + method + "_Return")]);
+			//connection.onStatus = function(info){trace("onStatus:"+info.level)}
+			//connection.send(target, "remoteCall", method, args, (target + "." + method + "_Return"));
 			return;
->>>>>>> 1.4
 		}
 		connection.send(target, "remoteCall", method, args);
 	}
