@@ -29,13 +29,27 @@ import org.as2lib.data.io.conn.local.core.LocalConnectionTemplate;
  */
 class org.as2lib.data.io.conn.local.server.LocalServerRegistry extends BasicClass implements ServerRegistry {
 	
+	/** Stores the only available LocalServerRegistry instance. */
+	private static var instance:LocalServerRegistry;
+	
 	/** Contains all registered Servers. */
 	private var serverRegistry:Object;
 	
 	/**
+	 * LocalServerRegistry is a singleton. An instance of this class can
+	 * thus only be obtained through this operation.
+	 *
+	 * @returns a LocalServerRegistry instance.
+	 */
+	public static function getInstance(Void):LocalServerRegistry {
+		if (!instance) instance = new LocalServerRegistry();
+		return instance;
+	}
+	
+	/**
 	 * Constructs a new LocalServerRegistry.
 	 */
-	public function LocalServerRegistry(Void) {
+	private function LocalServerRegistry(Void) {
 		serverRegistry = new Object();
 	}
 	
