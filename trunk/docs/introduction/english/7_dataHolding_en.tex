@@ -30,6 +30,7 @@ More {\sl as2lib} data types are:
 	\item \textbf{Map}\footnote{org.as2lib.data.holder.Map}: A data type which holds keys and their values. It has every common method of a regular Map (see Java).
 	
 \begin{lstlisting}[frame=single]
+import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
 
 var aPerson:Person = new Person("Christoph",
@@ -37,7 +38,7 @@ var aPerson:Person = new Person("Christoph",
 var bPerson:Person = new Person("Martin",
 	"Heidegger");
 
-var nickNames:HashMap = new HashMap();
+var nickNames:Map = new HashMap();
 nickNames.put(aPerson,"ripcurlx");
 nickNames.put(bPerson,"mastaKaneda");
 
@@ -62,9 +63,10 @@ The \emph{map} package also includes:
 	\item \textbf{Stack}\footnote{org.as2lib.data.holder.Stack}: You can add values to a Stack with the \emph{push} method and remove them with the \emph{pop} method. Only the last added value can be accessed.
 	
 \begin{lstlisting}[frame=single]
+import org.as2lib.data.holder.Stack;
 import org.as2lib.data.holder.stack.SimpleStack;
 
-var myS:SimpleStack = new SimpleStack();
+var myS:Stack = new SimpleStack();
 myS.push("uuuuuuup?!");
 myS.push("what's");
 myS.push("Hi");
@@ -88,9 +90,10 @@ The \emph{stack} package also includes:
 \item \textbf{Queue}\footnote{org.as2lib.data.holder.Queue}: In contrast to the Stack you can only access the first element. You can add values with the \emph{enqueue} method and remove them with the \emph{dequeue} method. If you don´t want to remove the first element while accessing it you can use the \emph{peek} method.
 
 \begin{lstlisting}[frame=single]
-import org.as2lib.data.holder.LinearQueue;
+import org.as2lib.data.holder.Queue;
+import org.as2lib.data.holder.queue.LinearQueue;
 
-var aLQ:LinearQueue = new LinearQueue();
+var aLQ:Queue = new LinearQueue();
 aLQ.enqueue("Hi");
 aLQ.enqueue("whats");
 aLQ.enqueue("uuuuup?!");
@@ -113,40 +116,17 @@ The \emph{queue} package also includes:
 	\item TypedQueue
 \end{itemize}
 
-\item \textbf{List}\footnote{org.as2lib.data.holder.List}: A List provides additional functionalities in opposite to a simple Array.
-
-\begin{lstlisting}[frame=single]
-import org.as2lib.data.holder.list.ArrayList;
-
-var aLQ:LinearQueue = new LinearQueue();
-aLQ.enqueue("Hi");
-aLQ.enqueue("whats");
-aLQ.enqueue("uuuuup?!");
-trace(aLQ.peek());
-trace(aLQ.dequeue());
-trace(aLQ.dequeue());
-trace(aLQ.dequeue());
-\end{lstlisting}
-\emph{Output:}
-\begin{verbatim}
-Hi
-Hi
-whats
-uuuuup?!
-\end{verbatim}
-\end{itemize}
-
-
 In addition to these data types \emph{Iterators}\footnote{An iterator makes it easier to access elements of a collection without knowing its structure.} are also provided:
 
 \begin{itemize}
-	\item \textbf{ArrayIterator} : Because of the fact that the additional data types are based internally on Arrays, every special Iterator indirectly uses the ArrayIterator{\footnote{org.as2lib.data.io.iterator.ArrayIterator}}.
+	\item \textbf{ArrayIterator} : Because of the fact that the additional data types are based internally on Arrays, every special Iterator indirectly uses the ArrayIterator{\footnote{org.as2lib.data.holder.array.ArrayIterator}}.
 	\item \textbf{MapIterator} : If you call the \emph{iterator()} method in a HashMap it returns a MapIterator to you.
 	\item 
 \end{itemize}
-If you like to print every element of a HashMap, you can do so with a MapIterator\footnote{org.as2lib.data.iterator.MapIterator}:
+If you like to print every element of a HashMap, you can do so with a MapIterator\footnote{org.as2lib.data.holder.map.MapIterator}:
 \clearpage
 \begin{lstlisting}[frame=single]
+import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.data.holder.Iterator;
 
@@ -155,11 +135,11 @@ var aPerson:Person = new Person("Christoph",
 var bPerson:Person = new Person("Martin",
 	"Heidegger");
 
-var nickNames:HashMap = new HashMap();
+var nickNames:Map = new HashMap();
 nickNames.put(aPerson,"ripcurlx");
 nickNames.put(bPerson,"mastaKaneda");
 
-var it:Iterator = myH.getIterator();
+var it:Iterator = myH.iterator();
 
 while(it.hasNext()){
 	trace(it.next());
