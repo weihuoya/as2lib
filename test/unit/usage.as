@@ -100,6 +100,7 @@ org.as2lib.io.conn.local.client.TLocalClientServiceProxy;
 org.as2lib.io.conn.local.client.TLocalClientServiceProxyFactory;
 
 // org.as2lib.env.reflect
+/*
 org.as2lib.env.reflect.TSimpleCache;
 org.as2lib.env.reflect.TClassInfo;
 org.as2lib.env.reflect.TClassInfo_Method;
@@ -107,10 +108,10 @@ org.as2lib.env.reflect.TClassInfo_Property;
 org.as2lib.env.reflect.TPackageInfo;
 org.as2lib.env.reflect.TPackageInfo_Class;
 org.as2lib.env.reflect.TPackageInfo_Package;
-org.as2lib.env.reflect.TTypeProxyFactory;
+org.as2lib.env.reflect.TTypeProxyFactory;*/
 
 // org.as2lib.env.reflect.algorithm
-org.as2lib.env.reflect.algorithm.TClassAlgorithm;
+//org.as2lib.env.reflect.algorithm.TClassAlgorithm;
 org.as2lib.env.reflect.algorithm.TPackageAlgorithm;
 org.as2lib.env.reflect.algorithm.TPackageMemberAlgorithm;
 org.as2lib.env.reflect.algorithm.TMethodAlgorithm;
@@ -140,5 +141,5 @@ org.as2lib.env.except.TException;
 org.as2lib.env.except.TFatalException;
 org.as2lib.env.except.TStackTraceElement;
 org.as2lib.env.except.TIllegalArgumentException;
-/*org.as2lib.env.except.TIllegalStateException;
-org.as2lib.env.except.TUnsupportedOperationException;*/
+org.as2lib.env.except.TIllegalStateException;
+org.as2lib.env.except.TUnsupportedOperationException;
