@@ -1,6 +1,0 @@
-﻿import org.as2lib.reflect.ReflectInfo;
-import org.as2lib.data.holder.HashMap;
-
-interface org.as2lib.reflect.algorythm.ContentAlgorythm {
-	public function execute(info:ReflectInfo):HashMap;
-}

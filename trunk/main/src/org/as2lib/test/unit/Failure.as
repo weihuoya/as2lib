@@ -1,4 +1,4 @@
-﻿import org.as2lib.util.ReflectUtil;
+﻿import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.core.BasicClass;
 
 /**

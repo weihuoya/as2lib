@@ -1,17 +1,17 @@
 ﻿import org.as2lib.test.unit.Test;
 import org.as2lib.core.BasicClass;
-import org.as2lib.reflect.ClassInfo;
-import org.as2lib.reflect.PackageInfo;
-import org.as2lib.reflect.MethodInfo;
-import org.as2lib.reflect.PropertyInfo;
+import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.env.reflect.PackageInfo;
+import org.as2lib.env.reflect.MethodInfo;
+import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.data.iterator.Iterator;
-import org.as2lib.reflect.ReflectInfo;
+import org.as2lib.env.reflect.ReflectInfo;
 import org.as2lib.util.ObjectUtil;
-import org.as2lib.util.ReflectUtil;
-import test.org.as2lib.reflect.*;
+import org.as2lib.env.util.ReflectUtil;
+import test.org.as2lib.env.reflect.*;
 import org.as2lib.core.Out;
-import org.as2lib.Config;
+import org.as2lib.env.EnvConfig;
 import test.org.as2lib.core.reflect.DummieClass;
 import test.org.as2lib.core.reflect.AnotherDummie
 

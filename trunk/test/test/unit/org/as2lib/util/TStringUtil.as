@@ -1,6 +1,6 @@
 ﻿import org.as2lib.test.unit.Test;
 import org.as2lib.util.StringUtil;
-import org.as2lib.except.IllegalArgumentException;
+import org.as2lib.env.except.IllegalArgumentException;
 /**
  * 
  */
