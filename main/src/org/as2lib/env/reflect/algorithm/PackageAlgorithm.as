@@ -15,37 +15,34 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.reflect.algorythm.CacheAlgorythm;
+import org.as2lib.env.reflect.algorithm.CacheAlgorithm;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.reflect.ReferenceNotFoundException;
 
 /**
- * ClassAlgorythm searches for the class of a specific instance and returns a
- * ClassInfo representing the found class.
+ * PackageAlgorithm searches for the specified package and returns a PackageInfo
+ * representing the found package.
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass implements CacheAlgorythm {
+class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass implements CacheAlgorithm {
 	private var cache:Cache;
-	private var info:ClassInfo;
+	private var info:PackageInfo;
 	
-	public function ClassAlgorythm(Void) {
+	public function PackageAlgorithm(Void) {
 	}
 	
 	public function execute(object):CompositeMemberInfo {
 		cache = ReflectConfig.getCache();
 		info = null;
-		ObjectUtil.setAccessPermission(cache.getRoot().getPackage(), null, ObjectUtil.ACCESS_ALL_ALLOWED);
 		findAndStore(cache.getRoot(), object);
-		ObjectUtil.setAccessPermission(cache.getRoot().getPackage(), null, ObjectUtil.ACCESS_IS_HIDDEN);
 		if (ObjectUtil.isEmpty(info)) {
-			throw new ReferenceNotFoundException("The class corresponding to the instance [" + object + "] could not be found.",
+			throw new ReferenceNotFoundException("The package [" + object + "] could not be found.",
 												 this,
 												 arguments);
 		}
@@ -56,11 +53,7 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 		var package = info.getPackage();
 		var i:String;
 		for (i in package) {
-			if (ObjectUtil.isTypeOf(package[i], "function")) {
-				if (validateAndStoreClass(i, package[i], info, object)) {
-					return true;
-				}
-			} else if (ObjectUtil.isTypeOf(package[i], "object")) {
+			if (ObjectUtil.isTypeOf(package[i], "object")) {
 				if (validateAndStorePackage(i, package[i], info, object)) {
 					return true;
 				}
@@ -69,30 +62,14 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 		return false;
 	}
 	
-	private function validateAndStoreClass(name:String, clazz:Function, parent:PackageInfo, object):Boolean {
-		if (ObjectUtil.isTypeOf(object, "object")) {
-			if (object.__proto__ === clazz.prototype) {
-				storeClass(name, clazz, parent);
-				return true;
-			}
-		}
-		if (ObjectUtil.isTypeOf(object, "function")) {
-			if (object.prototype === clazz.prototype) {
-				storeClass(name, clazz, parent);
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private function storeClass(name:String, clazz:Function, parent:PackageInfo):Void {
-		info = new ClassInfo(name, clazz, parent)
-	}
-	
 	private function validateAndStorePackage(name:String, package, parent:PackageInfo, object):Boolean {
 		var sp:PackageInfo = cache.getPackage(package);
 		if (ObjectUtil.isEmpty(sp)) {
 			sp = storePackage(name, package, parent);
+		}
+		if (package == object) {
+			info = sp;
+			return true;
 		}
 		if (findAndStore(sp, object)) {
 			return true;

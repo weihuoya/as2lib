@@ -108,7 +108,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	 */
 	public function getChildren(Void):Map {
 		if (children == undefined) {
-			children = ReflectConfig.getChildrenAlgorythm().execute(this);
+			children = ReflectConfig.getChildrenAlgorithm().execute(this);
 		}
 		return children;
 	}

@@ -20,9 +20,9 @@ import org.as2lib.data.holder.Map;
 /**
  * @author Simon Wacker
  */
-interface org.as2lib.env.reflect.algorythm.ContentAlgorythm {
+interface org.as2lib.env.reflect.algorithm.ContentAlgorithm {
 	/**
-	 * Executes the algorythm and returns a HashMap containing the searched for
+	 * Executes the algorithm and returns a HashMap containing the searched for
 	 * values.
 	 *
 	 * @param info a CompositeMemberInfo used as the basis of the search

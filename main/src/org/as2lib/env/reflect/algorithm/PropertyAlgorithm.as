@@ -15,11 +15,11 @@
  */
 
 import org.as2lib.env.reflect.CompositeMemberInfo;
-import org.as2lib.env.reflect.MethodInfo;
+import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
-import org.as2lib.env.reflect.algorythm.ContentAlgorythm;
-import org.as2lib.env.reflect.algorythm.AbstractContentAlgorythm;
+import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
+import org.as2lib.env.reflect.algorithm.AbstractContentAlgorithm;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.util.ObjectUtil;
@@ -28,17 +28,31 @@ import org.as2lib.util.StringUtil;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorythm.MethodAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
+class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends AbstractContentAlgorithm implements ContentAlgorithm {
+	public static var TYPE_GETTER:Number = 0;
+	public static var TYPE_SETTER:Number = 1;
+	
 	private var result:Map;
+	private var getters:Map;
+	private var setters:Map;
+	private var staticGetters:Map;
+	private var staticSetters:Map;
 	private var info:ClassInfo;
 	private var staticFlag:Boolean;
+	private var type:Number;
 	
-	public function MethodAlgorythm(Void) {
+	public function PropertyAlgorithm(Void) {
 	}
 	
 	public function execute(info:CompositeMemberInfo):Map {
+		type = null;
+		
 		this.info = ClassInfo(info);
 		this.result = new HashMap();
+		this.getters = new HashMap();
+		this.setters = new HashMap();
+		this.staticGetters = new HashMap();
+		this.staticSetters = new HashMap();
 		
 		this.staticFlag = true;
 		var clazz:Function = this.info.getRepresentedType();
@@ -55,16 +69,39 @@ class org.as2lib.env.reflect.algorythm.MethodAlgorythm extends AbstractContentAl
 	
 	private function validate(target, name:String):Boolean {
 		if (ObjectUtil.isTypeOf(target[name], "function")) {
-			if (!StringUtil.startsWith(name, "__get__")
-					&& !StringUtil.startsWith(name, "__set__")) {
-				return true;
+			var coreName = name.substring(7);
+			if (StringUtil.startsWith(name, "__get__")) {
+				getters.put(coreName, true);
+				if (!setters.get(coreName)) {
+					type = TYPE_GETTER;
+					return true;
+				}
+				return false;
+			} 
+			if (StringUtil.startsWith(name, "__set__")) {
+				setters.put(coreName, true);
+				if (!getters.get(coreName)) {
+					type = TYPE_SETTER;
+					return true;
+				}
+				return false;
 			}
 		}
 		return false;
 	}
 	
 	private function store(name:String, target):Void {
-		var method:MethodInfo = new MethodInfo(name, target[name], info, staticFlag);
-		result.put(name, method);
+		var coreName = name.substring(7);
+		var property:PropertyInfo;
+		if (type == TYPE_GETTER) {
+			property = new PropertyInfo(coreName, target["__set__" + coreName], target[name], info, staticFlag);
+			result.put(coreName, property);
+			return;
+		}
+		if (type == TYPE_SETTER) {
+			property = new PropertyInfo(coreName, target[name], target["__get__" + coreName], info, staticFlag);
+			result.put(coreName, property);
+			return;
+		}
 	}
 }
