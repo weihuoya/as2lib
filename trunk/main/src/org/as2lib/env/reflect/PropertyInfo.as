@@ -15,10 +15,11 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.reflect.TypeInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.util.ObjectUtil;
-import org.as2lib.env.reflect.ClassMemberInfo;
+import org.as2lib.env.reflect.TypeMemberInfo;
 
 /**
  * PropertyInfo represents a property.
@@ -26,7 +27,7 @@ import org.as2lib.env.reflect.ClassMemberInfo;
  * @author Simon Wacker
  * @see org.as2lib.core.BasicClass
  */
-class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements ClassMemberInfo {
+class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemberInfo {
 	/** The name of the property. */
 	private var name:String;
 	
@@ -70,7 +71,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements ClassMem
 	 */
 	private function setSetter(concreteSetter:Function):Void {
 		if (concreteSetter != undefined) {
-			setter = new MethodInfo("__set__" + getName(), concreteSetter, getDeclaringClass(), isStatic());
+			setter = new MethodInfo("__set__" + getName(), concreteSetter, getDeclaringType(), isStatic());
 		}
 	}
 	
@@ -81,12 +82,12 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements ClassMem
 	 */
 	private function setGetter(concreteGetter:Function):Void {
 		if (concreteGetter != undefined) {
-			setter = new MethodInfo("__get__" + getName(), concreteGetter, getDeclaringClass(), isStatic());
+			setter = new MethodInfo("__get__" + getName(), concreteGetter, getDeclaringType(), isStatic());
 		}
 	}
 	
 	/**
-	 * @see org.as2lib.env.reflect.ClassMemberInfo#getName()
+	 * @see org.as2lib.env.reflect.TypeMemberInfo#getName()
 	 */
 	public function getName(Void):String {
 		return name;
@@ -111,9 +112,9 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements ClassMem
 	}
 	
 	/**
-	 * @see org.as2lib.env.reflect.ClassMemberInfo#getDeclaringClass()
+	 * @see org.as2lib.env.reflect.TypeMemberInfo#getDeclaringType()
 	 */
-	public function getDeclaringClass(Void):ClassInfo {
+	public function getDeclaringType(Void):TypeInfo {
 		return declaringClass;
 	}
 	
@@ -136,7 +137,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements ClassMem
 	}
 	
 	/**
-	 * @see org.as2lib.env.reflect.ClassMemberInfo#isStatic()
+	 * @see org.as2lib.env.reflect.TypeMemberInfo#isStatic()
 	 */
 	public function isStatic(Void):Boolean {
 		return staticFlag;

@@ -21,10 +21,11 @@ import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.CompositeMemberInfo;
-import org.as2lib.env.reflect.MethodInfo;
+import org.as2lib.env.reflect.TypeInfo;
 import org.as2lib.env.reflect.PropertyInfo;
+import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.ConstructorInfo;
-import org.as2lib.env.reflect.NoSuchClassMemberException;
+import org.as2lib.env.reflect.NoSuchTypeMemberException;
 import org.as2lib.env.EnvConfig;
 import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.overload.Overload;
@@ -35,7 +36,7 @@ import org.as2lib.env.overload.Overload;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CompositeMemberInfo {
+class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	/** The name of the class. */
 	private var name:String;
 	
@@ -76,20 +77,14 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CompositeMe
 	}
 	
 	/**
-	 * Returns the name of the class.
-	 *
-	 * @return the name of the class
+	 * @see org.as2lib.env.reflect.MemberInfo#getName()
 	 */
 	public function getName(Void):String {
 		return name;
 	}
 	
 	/**
-	 * Returns the full name of the class. Lazy loading is used here. That means
-	 * that the full name will not be resolved until this method is called. Once
-	 * the full name has been resolved it will be stored.
-	 *
-	 * @return the full name of the class
+	 * @see org.as2lib.env.reflect.CompositeMemberInfo#getFullName()
 	 */
 	public function getFullName(Void):String {
 		if (ObjectUtil.isEmpty(fullName)) {
@@ -102,11 +97,9 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CompositeMe
 	}
 	
 	/**
-	 * Returns the class this ClassInfo represents.
-	 *
-	 * @return the class represented by this ClassInfo
+	 * @see org.as2lib.env.reflect.TypeInfo#getRepresentedType()
 	 */
-	public function getRepresentedClass(Void):Function {
+	public function getRepresentedType(Void):Function {
 		return clazz;
 	}
 	
@@ -117,19 +110,15 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CompositeMe
 	 */
 	public function getConstructor(Void):ConstructorInfo {
 		if (ObjectUtil.isEmpty(constructor)) {
-			constructor = new ConstructorInfo(getRepresentedClass(), this);
+			constructor = new ConstructorInfo(getRepresentedType(), this);
 		}
 		return constructor;
 	}
 	
 	/**
-	 * Returns the super class's ClassInfo of the class this ClassInfo represents.
-	 * The lazy loading strategy is used here to prevent doing the work if it is
-	 * not needed at all.
-	 * 
-	 * @return the super class's ClassInfo
+	 * @see org.as2lib.env.reflect.TypeInfo#getSuperType()
 	 */
-	public function getSuperClass(Void):ClassInfo {
+	public function getSuperType(Void):TypeInfo {
 		if (ObjectUtil.isEmpty(superClass)) {
 			superClass = ReflectUtil.getClassInfo(clazz.prototype);
 		}
@@ -146,20 +135,14 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CompositeMe
 	}
 	
 	/**
-	 * Returns the parent of the class. The parent is the package represented
-	 * by a PackageInfo the class resides in.
-	 *
-	 * @return the parent of the class
+	 * @see org.as2lib.env.reflect.CompositeMemberInfo#getParent()
 	 */
 	public function getParent(Void):PackageInfo {
 		return parent;
 	}
 	
 	/**
-	 * Returns a Map containing the operations represented by MethodInfos
-	 * the class has. Lazy loading is used.
-	 *
-	 * @return a Map containing MethodInfos representing the operations
+	 * @see org.as2lib.env.reflect.TypeInfo#getMethods()
 	 */
 	public function getMethods(Void):Map {
 		if (ObjectUtil.isEmpty(methods)) {
@@ -169,9 +152,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CompositeMe
 	}
 	
 	/**
-	 * Overload
-	 * #getMethodByName()
-	 * #getMethodByMethod()
+	 * @see org.as2lib.env.reflect.TypeInfo#getMethod()
 	 */
 	public function getMethod(method):MethodInfo {
 		var overload:Overload = new Overload(this);
@@ -181,28 +162,20 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CompositeMe
 	}
 	
 	/**
-	 * Returns the MethodInfo corresponding to the passed method name.
-	 *
-	 * @param methodName the name of the method you wanna obtain
-	 * @return the MethodInfo correspoinding to the method name
-	 * @throws org.as2lib.env.reflect.NoSuchClassMemberException if the method you tried to obtain does not exist
+	 * @see org.as2lib.env.reflect.TypeInfo#getMethodByName()
 	 */
 	public function getMethodByName(methodName:String):MethodInfo {
 		var result:MethodInfo = getMethods().get(methodName);
 		if (ObjectUtil.isAvailable(result)) {
 			return result;
 		}
-		throw new NoSuchClassMemberException("The method with the name [" + methodName + "] you tried to obtain does not exist.",
+		throw new NoSuchTypeMemberException("The method with the name [" + methodName + "] you tried to obtain does not exist.",
 										this,
 										arguments);
 	}
 	
 	/**
-	 * Returns the MethodInfo corresponding to the passed method.
-	 *
-	 * @param method the method you wanna obtain the corresponding MethodInfo
-	 * @return the MethodInfo correspoinding to the method
-	 * @throws org.as2lib.env.reflect.NoSuchClassMemberException if the method you tried to obtain does not exist
+	 * @see org.as2lib.env.reflect.TypeInfo#getMethodByMethod()
 	 */
 	public function getMethodByMethod(concreteMethod:Function):MethodInfo {
 		var iterator:Iterator = getMethods().iterator();
@@ -213,7 +186,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CompositeMe
 				return method;
 			}
 		}
-		throw new NoSuchClassMemberException("The method [" + concreteMethod + "] you tried to obtain does not exist in this class.",
+		throw new NoSuchTypeMemberException("The method [" + concreteMethod + "] you tried to obtain does not exist in this class.",
 										this,
 										arguments);
 	}
@@ -248,14 +221,14 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CompositeMe
 	 *
 	 * @param propertyName the name of the property you wanna obtain
 	 * @return the PropertyInfo correspoinding to the property's name
-	 * @throws org.as2lib.env.reflect.NoSuchClassMemberException if the property you tried to obtain does not exist
+	 * @throws org.as2lib.env.reflect.NoSuchTypeMemberException if the property you tried to obtain does not exist
 	 */
 	public function getPropertyByName(propertyName:String):PropertyInfo {
 		var property:PropertyInfo = getProperties().get(propertyName);
 		if (ObjectUtil.isAvailable(property)) {
 			return property;
 		}
-		throw new NoSuchClassMemberException("The property with the name [" + propertyName + "] you tried to obtain does not exist.",
+		throw new NoSuchTypeMemberException("The property with the name [" + propertyName + "] you tried to obtain does not exist.",
 										this,
 										arguments);
 	}
@@ -265,7 +238,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CompositeMe
 	 *
 	 * @param property the property the corresponding PropertyInfo shall be returned
 	 * @return the PropertyInfo correspoinding to the property
-	 * @throws org.as2lib.env.reflect.NoSuchClassMemberException if the property you tried to obtain does not exist
+	 * @throws org.as2lib.env.reflect.NoSuchTypeMemberException if the property you tried to obtain does not exist
 	 */
 	public function getPropertyByProperty(concreteProperty:Function):PropertyInfo {
 		var iterator:Iterator = getProperties().iterator();
@@ -277,7 +250,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CompositeMe
 				return property;
 			}
 		}
-		throw new NoSuchClassMemberException("The property [" + concreteProperty + "] you tried to obtain does not exist in this class.",
+		throw new NoSuchTypeMemberException("The property [" + concreteProperty + "] you tried to obtain does not exist in this class.",
 										this,
 										arguments);
 	}

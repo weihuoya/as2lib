@@ -32,8 +32,6 @@ import org.as2lib.env.except.IllegalArgumentException;
  * used to store specific information about the package it represents.
  *
  * @author Simon Wacker
- * @see org.as2lib.core.BasicClass
- * @see org.as2lib.env.reflect.CompositeMemberInfo
  */
 class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CompositeMemberInfo {
 	/** The name of the package. */
@@ -67,19 +65,14 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	}
 	
 	/**
-	 * Returns the name of the package. The name does not include the path.
-	 *
-	 * @return the name of the package
+	 * @see org.as2lib.env.reflect.MemberInfo#getName()
 	 */
 	public function getName(Void):String {
 		return name;
 	}
 	
 	/**
-	 * Returns the full name of the package. The full name is composed of the
-	 * name and the path.
-	 *
-	 * @return the full name of the package
+	 * @see org.as2lib.env.reflect.CompositeMemberInfo#getFullName()
 	 */
 	public function getFullName(Void):String {
 		if (ObjectUtil.isEmpty(fullName)) {
@@ -101,10 +94,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	}
 	
 	/**
-	 * Returns the parent of the package represented by a PackageInfo. The parent
-	 * is the package the package resides in.
-	 *
-	 * @return the PackageInfo representing the parent of the package
+	 * @see org.as2lib.env.reflect.MemberInfo#getParent()
 	 */
 	public function getParent(Void):PackageInfo {
 		return parent;
@@ -251,7 +241,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 		var iterator:Iterator = getChildClasses().iterator();
 		while (iterator.hasNext()) {
 			result = ClassInfo(iterator.next());
-			if (result.getRepresentedClass() == clazz) {
+			if (result.getRepresentedType() == clazz) {
 				return result;
 			}
 		}

@@ -15,8 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.reflect.ClassMemberInfo;
+import org.as2lib.env.reflect.TypeInfo;
+import org.as2lib.env.reflect.TypeMemberInfo;
 
 /**
  * MethodInfo represents an operation.
@@ -24,15 +24,15 @@ import org.as2lib.env.reflect.ClassMemberInfo;
  * @author Simon Wacker
  * @see org.as2lib.core.BasicClass
  */
-class org.as2lib.env.reflect.MethodInfo extends BasicClass implements ClassMemberInfo {
+class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMemberInfo {
 	/** The name of the operation. */
 	private var name:String;
 	
 	/** The actual operation. */
 	private var method:Function;
 	
-	/** The class that declares the operation. */
-	private var declaringClass:ClassInfo;
+	/** The type that declares the operation. */
+	private var declaringType:TypeInfo;
 	
 	/** A flag representing whether the operaion is static of not. */
 	private var staticFlag:Boolean;
@@ -42,21 +42,21 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements ClassMembe
 	 *
 	 * @param name the name of the operation
 	 * @param method the actual operation
-	 * @param declaringClass the declaring class of the operation
+	 * @param declaringType the declaring type of the operation
 	 * @param static a flag representing whether the operation is static
 	 */
 	public function MethodInfo(name:String,
 							   method:Function,
-							   declaringClass:ClassInfo,
+							   declaringType:TypeInfo,
 							   staticFlag:Boolean) {
 		this.name = name;
 		this.method = method;
-		this.declaringClass = declaringClass;
+		this.declaringType = declaringType;
 		this.staticFlag = staticFlag;
 	}
 	
 	/**
-	 * @see org.as2lib.env.reflect.ClassMemberInfo#getName()
+	 * @see org.as2lib.env.reflect.TypeMemberInfo#getName()
 	 */
 	public function getName(Void):String {
 		return name;
@@ -72,14 +72,14 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements ClassMembe
 	}
 	
 	/**
-	 * @see org.as2lib.env.reflect.ClassMemberInfo#getDeclaringClass()
+	 * @see org.as2lib.env.reflect.TypeMemberInfo#getDeclaringType()
 	 */
-	public function getDeclaringClass(Void):ClassInfo {
-		return declaringClass;
+	public function getDeclaringType(Void):TypeInfo {
+		return declaringType;
 	}
 	
 	/**
-	 * @see org.as2lib.env.reflect.ClassMemberInfo#isStatic()
+	 * @see org.as2lib.env.reflect.TypeMemberInfo#isStatic()
 	 */
 	public function isStatic(Void):Boolean {
 		return staticFlag;

@@ -79,7 +79,7 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 * @return the added ClassInfo
 	 */
 	public function addClass(info:ClassInfo):ClassInfo {
-		classes.put(info.getRepresentedClass().prototype, info);
+		classes.put(info.getRepresentedType().prototype, info);
 		return info;
 	}
 	
