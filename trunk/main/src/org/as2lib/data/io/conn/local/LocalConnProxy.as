@@ -14,20 +14,23 @@ class org.as2lib.data.io.conn.local.LocalConnProxy extends BasicClass implements
 	
 	public function __resolve(methodName:String):Function {
 		var result:Function = function() {
-			
 			var lc:LocalConnection = new LocalConnection();
-			lc.onResponse = function(response){
+			lc["onResponse"] = function(response){
 				this.response = response;
 				responseFlag = false;
 			}
 			var o:Object = new Object();
-			lc.connect(host+"/"+methodName+"_Return");
+			lc.connect(target + "." + methodName + "_Return");
 			
-			var args:Array = [target, methodName].push(arguments);
-			connection.send.apply(connection, args);
+			var args:Array = [target, methodName];
+			args.push(arguments);
+			connection.send.apply(connection, args, target + "." + methodName + "_Return");
 			
-			while(responseFlag){}
+			while (responseFlag) {
+			}
+			
+			lc["response"];
 		}
-		return lc.response;
+		return result;
 	}
 }
