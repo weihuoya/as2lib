@@ -47,21 +47,21 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicCla
 	 * @throws IllegalArgumentException if the passed-in service url is null, undefined or an empty stirng
 	 */
 	public static function generateResponseServiceUrl(serviceUrl:String, methodName:String):String {
-		if (!serviceUrl) throw new IllegalArgumentException("Service url must not be null, undefined or an empty string.");
+		if (!serviceUrl) throw new IllegalArgumentException("Service url must not be null, undefined or an empty string.", eval("th" + "is"), arguments);
 		if (!methodName) {
 			var result:String = serviceUrl + "_Return";
 			var i:Number = 0;
 			while (EnhancedLocalConnection.connectionExists(result + "_" + i)) {
 				i++;
 			}
-			return result + "_" + i;
+			return (result + "_" + i);
 		} else {
 			var result:String = serviceUrl + "_" + methodName + "_Return";
 			var i:Number = 0;
 			while (EnhancedLocalConnection.connectionExists(result + "_" + i)) {
 				i++;
 			}
-			return result + "_" + i;
+			return (result + "_" + i);
 		}
 	}
 	
