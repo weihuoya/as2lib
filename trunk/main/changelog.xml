@@ -5,6 +5,9 @@
 	<release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
 		<year value="2004">
 			<month value="9">
+        <day value="15">
+          <entry type="add" package="org.as2lib.core" class="BasicMovieClip">Basic class for classes that need to extend MovieClip.</entry>
+        </day>
 			  <day value="10">
 			    <entry type="add" package="org.as2lib.env.out" class="Out">Added method .addStaticHandler and .removeStaticHandler to print output of all instances.</entry>
 			    <entry type="add" package="org.as2lib.test.unit" class="TestSuiteFactory" method="collectAgent()">Added possibility to block the collecting of a Testcase by the static method .blockCollecting(Void):Boolean.</entry>
