@@ -1,4 +1,5 @@
 ﻿import org.as2lib.basic.OverloadHandler;
+import org.as2lib.basic.TypedArray;
 
 /**
  * @author: Simon Wacker
@@ -17,7 +18,7 @@ class org.as2lib.util.OverloadingUtil {
 	 * @param someArguments
 	 * @param someOverloadHandlers
 	 */
-	public static function overload(anObject:Object, someArguments:Array, someOverloadHandlers:Array):Void {
+	public static function overload(anObject:Object, someArguments:Array, someOverloadHandlers:TypedArray):Void {
 		var oh:OverloadHandler;
 		var foundHandler = false;
 		var l:Number = someOverloadHandlers.length;
