@@ -24,23 +24,18 @@ class org.as2lib.data.io.conn.remoting.RemotingConnector implements Connector {
 	}
 	
 	public function addListener(l:ConnectorListener):Void {
-		trace("addListener");
+		//trace("addListener");
 		eventBroadcaster.addListener(l);
 	}
 	
 	public function removeListener(l:ConnectorListener):Void {
-		trace("removeListener");
+		//trace("removeListener");
 		eventBroadcaster.removeListener(l);
 	}
 	
 	public function getEventBroadcaster(Void):EventBroadcaster {
-		trace("getEventBroadcaster");
+		//trace("getEventBroadcaster");
 		return eventBroadcaster;
-	}
-	// for testing
-	public function dispatch(event:EventInfo):Void{
-		trace("dispatch");
-		eventBroadcaster.dispatch(event);
 	}
 	
 	public function handleRequest(r:ConnectorRequest):Void {
