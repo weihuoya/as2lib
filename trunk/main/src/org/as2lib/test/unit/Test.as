@@ -116,7 +116,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 				try {
 					var tempVar = new useClass();
 				} catch (e) {
-					addError("Internal Error: TestClass "+myPath+" could not initalized. Exception was thrown. Type: "+ReflectUtil.getClassInfo(e).getName()+"; Message: "+e.getMessage());
+					addError("Internal Error: TestClass "+myPath+" could not initalized. Exception was thrown. Type: "+ReflectUtil.getClassInfo(e).getFullName()+"; Message: "+e.getMessage());
 				}
 				runTest(tempVar, myPath);
 			}
