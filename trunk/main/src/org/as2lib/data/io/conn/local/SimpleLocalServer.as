@@ -5,6 +5,7 @@ import org.as2lib.data.io.conn.local.LocalServer;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.data.io.conn.local.ReservedHostException;
 import org.as2lib.data.io.conn.local.LocalConfig;
+import org.as2lib.data.io.conn.local.ServiceAdapter;
 
 class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass implements LocalServer {
 	private var host:String;
@@ -21,10 +22,11 @@ class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass impleme
 		var keys:Array = serviceMap.getKeys();
 		var iterator:Iterator = serviceMap.iterator();
 		while (iterator.hasNext()){
-			var service:Object = iterator.next();
+			var adapter:ServiceAdapter = iterator.next();
 			var key:String = String(keys.shift());
 			// source out: 'host + "/" + key'
-			if (!service.connect(host + "/" + key)){
+			var lc:LocalConnection = adapter.getLocalConnection();
+			if (!lc.connect(host + "/" + key)){
 				throw new ReservedHostException("Connection with name [" + host + "/" + key + "] is already in use.", this, arguments);
 			}
 		}
@@ -38,23 +40,8 @@ class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass impleme
 	}
 	
 	public function putService(service:String, object):Void {
-		var adapter:Object = new Object();
-		ObjectUtil.setAccessPermission(LocalConnection.prototype, null, ObjectUtil.ACCESS_PROTECT_OVERWRITE | ObjectUtil.ACCESS_PROTECT_DELETE);
-		ObjectUtil.setAccessPermission(LocalConnection.prototype, ["__proto__", "constructor"], ObjectUtil.ACCESS_NOTHING_ALLOWED);
-		var i:String;
-		for (i in LocalConnection.prototype) {
-			adapter[i] = LocalConnection.prototype[i];
-		}
-		adapter.__proto__ = object;
-		adapter.__resolve = function(methodName:String):Function {
-			trace("methodName");
-			var result:Function = function(args:Array, server:String) {
-				var result = this.super[methodName].apply(this.super, args);
-				var lc:LocalConnection = new LocalConnection();
-				lc.send(server, "onResponse", result);
-			}
-			return result;
-		}
+		
+		var adapter:ServiceAdapter = new ServiceAdapter(object,new LocalConnection());
 		serviceMap.put(service, adapter);
 	}
 	
