@@ -69,7 +69,7 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 	 * 
 	 * @return the string representation of this exception
 	 */
-	public function toString(Void):String {
+	private function doToString(Void):String {
 		// The resulting string gets constructed lazily and gets stored once it has been generated.
 		// It would take unnecessary much time to generate the string representation if you'd catch
 		// it and it would never get displayed.

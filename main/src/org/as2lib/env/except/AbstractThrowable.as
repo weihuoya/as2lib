@@ -217,4 +217,21 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 		return message;
 	}
 	
+	/**
+	 * Returns the string representation of this throwable.
+	 *
+	 * <p>The string representation is obtained via the stringifier
+	 * returned by the static #getStringifier method.
+	 *
+	 * <p>If you want to change the string representation either set
+	 * a new stringifier via the static #setStringifier method or if
+	 * you wnat the string representation only change for one throwable
+	 * and its sub-classes overwrite this method.
+	 *
+	 * @return the string representation of this throwable
+	 */
+	private function doToString(Void):String {
+		return getStringifier().execute(this);
+	}
+	
 }
