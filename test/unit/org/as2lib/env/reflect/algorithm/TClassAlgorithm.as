@@ -23,6 +23,7 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.reflect.Cache;
+import org.as2lib.env.reflect.SimpleCache;
 import org.as2lib.core.BasicClass;
 import org.as2lib.core.BasicInterface;
 
@@ -369,6 +370,117 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		
 		cc.verify();
 		_root.testExecuteByTextField_txt.removeTextField();
+	}
+	
+	public function testExecuteByNameWithNullName(Void):Void {
+		var cc:MockControl = new MockControl(Cache);
+		var c:Cache = cc.getMock();
+		cc.replay();
+		
+		var a:ClassAlgorithm = new ClassAlgorithm();
+		assertNull(a.executeByName(null));
+		assertNull(a.executeByName(undefined));
+		assertNull(a.executeByName());
+		
+		cc.verify();
+	}
+	
+	public function testExecuteByNameWithCachedClassInfo(Void):Void {
+		var rc:MockControl = new MockControl(PackageInfo);
+		var r:PackageInfo = rc.getMock();
+		r.getFullName();
+		rc.setReturnValue("_global");
+		rc.replay();
+		
+		var ic:MockControl = new MockControl(ClassInfo);
+		var i:ClassInfo = ic.getMock();
+		ic.replay();
+		
+		var cc:MockControl = new MockControl(Cache);
+		var c:Cache = cc.getMock();
+		c.getRoot();
+		cc.setReturnValue(r);
+		c.getClass(org.as2lib.core.BasicClass);
+		cc.setReturnValue(i);
+		cc.replay();
+		
+		var a:ClassAlgorithm = new ClassAlgorithm();
+		a.setCache(c);
+		assertSame(a.executeByName("org.as2lib.core.BasicClass"), i);
+		
+		cc.verify();
+		ic.verify();
+		rc.verify();
+	}
+	
+	public function testExecuteByNameWithIllegalName(Void):Void {
+		var rc:MockControl = new MockControl(PackageInfo);
+		var r:PackageInfo = rc.getMock();
+		r.getFullName();
+		rc.setReturnValue("_global");
+		rc.replay();
+		
+		var cc:MockControl = new MockControl(Cache);
+		var c:Cache = cc.getMock();
+		c.getRoot();
+		cc.setReturnValue(r);
+		cc.replay();
+		
+		var a:ClassAlgorithm = new ClassAlgorithm();
+		a.setCache(c);
+		assertNull(a.executeByName("org.as2lib.core.UnknownClass"));
+		
+		cc.verify();
+		rc.verify();
+	}
+	
+	public function testExecuteByNameWithIllegalType(Void):Void {
+		var rc:MockControl = new MockControl(PackageInfo);
+		var r:PackageInfo = rc.getMock();
+		r.getFullName();
+		rc.setReturnValue("_global");
+		rc.replay();
+		
+		var cc:MockControl = new MockControl(Cache);
+		var c:Cache = cc.getMock();
+		c.getRoot();
+		cc.setReturnValue(r);
+		c.getClass(org.as2lib.core);
+		cc.setReturnValue(null);
+		cc.replay();
+		
+		var a:ClassAlgorithm = new ClassAlgorithm();
+		a.setCache(c);
+		assertNull(a.executeByName("org.as2lib.core"));
+		
+		cc.verify();
+		rc.verify();
+	}
+	
+	public function testExecuteByName(Void):Void {
+		_global.org.as2lib.core.TClassAlgorithmTestExecute = function() {};
+		
+		var rc:MockControl = new MockControl(PackageInfo);
+		var r:PackageInfo = rc.getMock();
+		r.getFullName();
+		rc.setReturnValue("_global");
+		r.getPackage();
+		rc.setReturnValue(_global, 2);
+		r.isRoot();
+		rc.setDefaultReturnValue(true);
+		rc.replay();
+		
+		var a:ClassAlgorithm = new ClassAlgorithm();
+		a.setCache(new SimpleCache(r));
+		var i:ClassInfo = a.executeByName("org.as2lib.core.TClassAlgorithmTestExecute");
+		assertSame(i.getName(), "TClassAlgorithmTestExecute");
+		assertSame(i.getFullName(), "org.as2lib.core.TClassAlgorithmTestExecute");
+		assertSame("wrong type ", i.getType(), _global.org.as2lib.core.TClassAlgorithmTestExecute);
+		assertSame(i.getParent().getFullName(), "org.as2lib.core");
+		assertSame("wrong package", i.getParent().getPackage(), _global.org.as2lib.core);
+		assertSame("wrong root package", i.getParent().getParent().getParent().getParent(), r);
+		
+		rc.verify();
 	}
 	
 }

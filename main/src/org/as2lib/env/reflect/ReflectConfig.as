@@ -195,7 +195,7 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 * @return the root package of the hierarchy.
 	 */
 	public static function getRootPackage(Void):PackageInfo {
-		if (!rootPackage) rootPackage = new PackageInfo("root", _global, null);
+		if (!rootPackage) rootPackage = new PackageInfo("_global", _global, null);
 		return rootPackage;
 	}
 	

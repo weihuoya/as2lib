@@ -6,6 +6,7 @@
     <year value="2005">
        <month value="2">
          <day value="9">
+           <entry type="add" package="org.as2lib.env.reflect.algorithm" class="ClassAlgorithm" method="executeByName(String):ClassInfo">Returns a class info instance corresponding to the name.</entry>
            <entry type="add" package="org.as2lib.env.reflect" class="TypeInfo" method="getMethodsByFlag(filterSuperTypes:Boolean):Array">Excludes methods of super types when you pass-in true.</entry>
            <entry type="add" package="org.as2lib.env.reflect" class="TypeInfo" method="getMethodsByFilter(TypeMemberFilter):Array">Excludes the methods that do not pass the filter policies.</entry>
            <entry type="add" package="org.as2lib.env.reflect" class="ClassInfo" method="getPropertiesByFlag(filterSuperTypes:Boolean):Array">Excludes properties of super types when you pass-in true.</entry>
