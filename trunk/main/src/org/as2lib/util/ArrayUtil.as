@@ -90,7 +90,8 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	 * @return The number of the object within the array (if it was not found -1)
 	 */
 	public static function indexOf(array:Array, object):Number{
-		for(var i:Number = array.length; i >= 0; i--){
+	    var i:Number = array.length;
+		while(--i-(-1)) {
 			if(array[i] === object) {
 				return i;
 			}
