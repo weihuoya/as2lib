@@ -1,12 +1,11 @@
-﻿import org.as2lib.basic.OverloadHandler;
-import org.as2lib.util.OverloadingUtil;
+﻿import org.as2lib.basic.overload.OverloadHandler;
 import org.as2lib.basic.TypedArray;
 
 /**
  * @author: Simon Wacker
  * @version: 1.0
  */
-interface org.as2lib.basic.Overloading {
+interface org.as2lib.basic.Overload {
 	/**
 	 * Handles the invocation of the appropriate OverloadHandler.
 	 * @param someArguments

@@ -2,7 +2,7 @@
  * @author: Simon Wacker
  * @version: 1.0
  */
-interface org.as2lib.basic.OverloadHandler {
+interface org.as2lib.basic.overload.OverloadHandler {
 	/**
 	 * Checks if the types of the arguments match the types of the OverloadHandler.
 	 * @param someArguments
