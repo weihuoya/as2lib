@@ -182,30 +182,30 @@
                                 <ul>
                                   <li>No indents by tabs, all indents by two spaces.</li>
                                   <li>A line should be max. about 120 chars. (try to limit it to about 100 chars)</li>
-                                  <li>Use no braces with the return statement if you have no operation.elseway use them.<pre class="code">function doesSomething (a:String, b:String) {
-  if(a == b) {
+                                  <li>Use no braces with the return statement if you have no operation.elseway use them.<pre class="code">function doesSomething(a:String, b:String) {
+  if(a==b) {
     return (a-b);
   }
   return a;
 }</pre></li>
                                   <li>Braces behind methods and classes are always in the same line, using a space for seperation:
                                     <pre class="code">class A {
-  function A () {
+  function A() {
   }
 }</pre>
                                   </li>
                                   <li>Between the condition keyword and the condition should not be a character free. Seperations only between characters.
-                                    <pre class="code">if(a == b && b == c) {
+                                    <pre class="code">if(a==b && b==c) {
 }</pre>
                                   </li>
                                   <li>Braces for conditions or loops should also be within the same line:
-                                    <pre class="code">function a (a:String, b:String) { 
-  if(a == b) {
+                                    <pre class="code">function a(a:String, b:String) { 
+  if(a==b) {
     // Code
   } else {
     // Code
   }
-  for(var a:Number = 0; a &lt;= 10; a++) {
+  for(var a:Number=0; a&lt;=10; a++) {
     // Code
   }
   switch(a) {
@@ -218,36 +218,36 @@
                                   </li>
                                   <li>If the Arguments for an method exceeds 120 chars you should use linebreaks.
                                     <pre class="code">class A {
-  function A ( anArgument:String, anotherArgument:Number, aThirdArgument:Object,
+  function A(anArgument:String, anotherArgument:Number, aThirdArgument:Object,
                aFourthArgument:MyClass) {
     // Code
   }
 }</pre>
                                   </li>
-                                  <li>Use Void if an Method returns nothing or uses no argument. This will increase the readability.<pre class="code">function doAllIWant( Void ):Void {
+                                  <li>Use Void if an Method returns nothing or uses no argument. This will increase the readability.<pre class="code">function doAllIWant(Void):Void {
 }</pre></li>
                                 </ul>
                               </li>
                               <li><h3>Good practise:</h3>
                                 <ul>
                                   <li>Don't (never!) use as2 internal Setter and Getter (call them "bad"!). You won't be able to define them within interfaces and you will have a naming problem (everytime!). We suggest you that you use:<pre class="code">private var a:String;
-public function setA (to:Number):Void {
+public function setA(to:Number):Void {
   this.a = to;
 }
-public function getA ( Void ):Number {
+public function getA(Void):Number {
   return(this.a);
 }</pre> This allows you a pretty setting of vars.</li>
                                   <li>Never use public vars. Variables are not controlable, every user of your class can create not planned actions!</li>
                                   <li>Your constructor should not do the work for initializing. If you wan't to provide clear constructing use and init method. This allows you even by extending an class to do some operations <b>before</b> you call the super constructor. <pre class="code">class A {
-  function A () {
+  function A() {
     this.init();
   }
-  private function init () {
+  private function init() {
     // Does something.
   }
 }
 class B extends A {
-  function B () {
+  function B() {
     this.init();
   }
   private function init() {
@@ -271,7 +271,7 @@ class B extends A {
                                         <td>Primary, secondary and tertiary counter.</td>
                                       </tr>
                                       <tr>
-                                        <th>returnValue</th>
+                                        <th>result</th>
                                         <td>Value that gets returned.</td>
                                       </tr>
                                       <tr>
