@@ -25,6 +25,126 @@ import org.as2lib.env.reflect.algorithm.ChildAlgorithm;
  */
 class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	
+	public function testIsParentPackageWithNullArgument(Void):Void {
+		var p:PackageInfo = new PackageInfo(null, null, null);
+		assertFalse(p.isParentPackage(null));
+	}
+	
+	public function testIsParentPackageWithTheSameInstances(Void):Void {
+		var p:PackageInfo = new PackageInfo(null, null, null);
+		assertFalse(p.isParentPackage(p));
+	}
+	
+	public function testIsParentPackageWithRootPackageArgument(Void):Void {
+		var ppc:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp:PackageInfo = ppc.getMock();
+		pp.isRoot();
+		ppc.setReturnValue(true);
+		ppc.replay();
+		
+		var p:PackageInfo = new PackageInfo(null, null, null);
+		assertFalse(p.isParentPackage(pp));
+		
+		ppc.verify(this);
+	}
+	
+	public function testIsParentPackageWithPackageArgumentWhoseGetParentMethodReturnsNull(Void):Void {
+		var ppc:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp:PackageInfo = ppc.getMock();
+		pp.getParent();
+		ppc.setReturnValue(null);
+		pp.isRoot();
+		ppc.setReturnValue(false);
+		ppc.replay();
+		
+		var p:PackageInfo = new PackageInfo(null, null, null);
+		assertFalse(p.isParentPackage(pp));
+		
+		ppc.verify(this);
+	}
+	
+	public function testIsParentPackageWithDirectParentPackageMatch(Void):Void {
+		var p:PackageInfo = new PackageInfo(null, null, null);
+		
+		var ppc:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp:PackageInfo = ppc.getMock();
+		pp.getParent();
+		ppc.setReturnValue(p);
+		pp.isRoot();
+		ppc.setReturnValue(false);
+		ppc.replay();
+		
+		assertTrue(p.isParentPackage(pp));
+		
+		ppc.verify(this);
+	}
+	
+	public function testIsParentPackageWithMultipleLevels(Void):Void {
+		var p:PackageInfo = new PackageInfo(null, null, null);
+		
+		var pp3c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp3:PackageInfo = pp3c.getMock();
+		pp3.getParent();
+		pp3c.setReturnValue(p);
+		pp3.isRoot();
+		pp3c.setReturnValue(false);
+		pp3c.replay();
+		
+		var pp2c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp2:PackageInfo = pp2c.getMock();
+		pp2.getParent();
+		pp2c.setReturnValue(pp3);
+		pp2.isRoot();
+		pp2c.setReturnValue(false);
+		pp2c.replay();
+		
+		var pp1c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp1:PackageInfo = pp1c.getMock();
+		pp1.getParent();
+		pp1c.setReturnValue(pp2);
+		pp1.isRoot();
+		pp1c.setReturnValue(false);
+		pp1c.replay();
+		
+		assertTrue(p.isParentPackage(pp1));
+		
+		pp1c.verify(this);
+		pp2c.verify(this);
+		pp3c.verify(this);
+	}
+	
+	public function testIsParentPackageWithMultipleLevelsAndNoMatch(Void):Void {
+		var p:PackageInfo = new PackageInfo(null, null, null);
+		
+		var pp3c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp3:PackageInfo = pp3c.getMock();
+		pp3.isRoot();
+		pp3c.setReturnValue(true);
+		pp3c.replay();
+		
+		var pp2c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp2:PackageInfo = pp2c.getMock();
+		pp2.getParent();
+		pp2c.setReturnValue(pp3);
+		pp2.isRoot();
+		pp2c.setReturnValue(false);
+		pp2c.replay();
+		
+		var pp1c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp1:PackageInfo = pp1c.getMock();
+		pp1.getParent();
+		pp1c.setReturnValue(pp2);
+		pp1.isRoot();
+		pp1c.setReturnValue(false);
+		pp1c.replay();
+		
+		assertFalse(p.isParentPackage(pp1));
+		
+		pp1c.verify(this);
+		pp2c.verify(this);
+		pp3c.verify(this);
+	}
+	
 	public function testNewWithNullArguments(Void):Void {
 		var p:PackageInfo = new PackageInfo(null, null, null);
 		assertNull(p.getName());
