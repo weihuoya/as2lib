@@ -52,6 +52,7 @@ class org.as2lib.env.reflect.TypeProxyFactory extends BasicClass implements Prox
 		if (!type) return null;
 		var result:Object = new Object();
 		result.__proto__ = type.prototype;
+		result.__constructor__ = type;
 		var prototype:Object = type.prototype;
 		while (prototype != Object.prototype) {
 			_global.ASSetPropFlags(prototype, null, 0, true);

@@ -44,7 +44,7 @@ import org.as2lib.env.reflect.ReflectConfig;
 class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 	
 	private var c:Cache;
-	private var p:PackageInfo;
+	private var p;
 	
 	/**
 	 * Constructs a new instance.
@@ -74,28 +74,37 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 	}
 	
 	/**
-	 * Executes the search for the package.
+	 * Executes the search for the passed-in package and returns information
+	 * about that package.
 	 *
-	 * <p>This method will return null if:
+	 * <p>The returned object has the following properties:
+	 * <dl>
+	 *   <dt>package</dt>
+	 *   <dd>The package as Object that has been searched for, that is the
+	 *       passed-in package.</dd>
+	 *   <dt>name</dt>
+	 *   <dd>The name as String of the searched for package.</dd>
+	 *   <dt>parent</dt>
+	 *   <dd>The parent represented by a {@ling PackageInfo} instance the
+	 *       package is declared in / resides in.</dd>
+	 * </dl>
+	 *
+	 * <p>Null will be returned if:
 	 * <ul>
-	 *   <li>The argument is null or undefined.</li>
+	 *   <li>The passed-in package is null or undefined.</li>
 	 *   <li>The searched for package could not be found.</li>
 	 * </ul>
 	 *
 	 * <p>The search starts on the package returned by the cache's getRoot()
-	 * method. That is by default _global.
+	 * method, that is by default _global.
 	 *
-	 * <p>In case the cache already contains the wanted package info it will
-	 * be returned.
-	 *
-	 * @param o the package to find
-	 * @return a PckageInfo instance representing the package or null
+	 * @param o the package to return information about
+	 * @return an object that contains information about the passed-in package
 	 */
-	public function execute(o):PackageInfo {
+	public function execute(o) {
 		if (o == null) return null;
-		p = getCache().getPackage(o);
-		if (p) return p;
-		findAndStore(c.getRoot(), o);
+		p = null;
+		findAndStore(getCache().getRoot(), o);
 		return p;
 	}
 	
@@ -105,13 +114,19 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 		for (i in b) {
 			var e:Object = b[i];
 			if (typeof(e) == "object") {
-				var d:PackageInfo = c.addPackage(new PackageInfo(i, e, a));
 				if (e == o) {
-					p = d;
+					p = new Object();
+					p.package = o;
+					p.name = i;
+					p.parent = a;
 					return true;
 				}
+				var d:PackageInfo = c.getPackage(e);
+				if (!d) {
+					d = c.addPackage(new PackageInfo(e, i, a));
+				}
 				if (!d.isParentPackage(a)) {
-					// replace recursion with loop
+					// todo: replace recursion with loop
 					if (findAndStore(d, o)) {
 						return true;
 					}
@@ -149,7 +164,7 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 		var g:Object = p.getPackage();
 		for (var i:Number = 0; i < a.length; i++) {
 			g = g[a[i]];
-			p = c.addPackage(new PackageInfo(a[i], g, p));
+			p = c.addPackage(new PackageInfo(g, a[i], p));
 		}
 		return p;
 	}

@@ -31,8 +31,9 @@ import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
  * ClassInfo reflects a real class in the Flash environment. This class
  * is used to get information about the class it represents.
  *
- * <p>You can use the static search methods #forName, #forObject, #forInstance
- * and #forClass to get class infos for specific cocrete classes.
+ * <p>You can use the static search methods {@link #forName}, {@link #forObject},
+ * {@link #forInstance} and {@link #forClass} to get class infos for 
+ * specific cocrete classes.
  *
  * <p>If you for example have an instance you wanna get information about
  * you first must retrieve the appropriate ClassInfo instance and you
@@ -90,7 +91,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	/**
 	 * Returns the class info corresponding to the passed-in name.
 	 *
-	 * <p>The name must be full qualified, that means it muste be composed
+	 * <p>The name must be fully qualified, that means it must be composed
 	 * of the class's path (namespace) as well as its name. For example
 	 * 'org.as2lib.core.BasicClass'.
 	 *
@@ -102,7 +103,10 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *   <li>The ReflectConfig.getClassAlgorithm()#executeForName method returns null.</li>
 	 * </ul>
 	 *
-	 * @param className the full qualified class name
+	 * <p>This method first checks whether the class is already contained
+	 * in the cache.
+	 *
+	 * @param className the fully qualified class name
 	 * @return a class info representing the class corresponding to the name
 	 */
 	public static function forName(className:String):ClassInfo {
@@ -124,53 +128,113 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * <p>Null will be returned if:
 	 * <ul>
 	 *   <li>The object is null or undefined.</li>
-	 *   <li>The class info corresponding to the object could not be generated.</li>
+	 *   <li>The class info corresponding to the object could not be found.</li>
 	 * </ul>
 	 *
 	 * @param object the object you wanna get a class info for
 	 * @return the class info corresponding to the object
 	 */
 	public static function forObject(object):ClassInfo {
-		// not '!object' because parameter 'object' could be a blank string
+		// not '!object' because parameter 'object' could be an empty string
 		if (object == null) return null;
-		return ReflectConfig.getClassAlgorithm().execute(object);
+		var classInfo:ClassInfo = ReflectConfig.getCache().getClass(object);
+		if (classInfo) return classInfo;
+		// not 'object instanceof Function' because that would include instances
+		// of type Function that were created using the new keyword 'new Function()'.
+		if (typeof(object) == "function") {
+			return forClass(object);
+		}
+		return forInstance(object);
 	}
 	
 	/**
-	 * This method does the same as the #forObject(*):ClassInfo method.
-	 * It is planned to separate the class algorithm into two. One that
-	 * searches specifically for instances and one that searches for
-	 * classes to gain performance improvements.
+	 * Returns the class info corresponding to the passed-in instance, that
+	 * is the class info representing the class the pssed-in instance is
+	 * an instance of.
+	 *
+	 * <p>This method first checks whether the class is already contained
+	 * in the cache and adds it to the cache if not.
+	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in instance is null or undefined.</li>
+	 *   <li>The class corresponding to the instance could not be found.</li>
+	 * </ul>
+	 *
+	 * @param instance the instance you wanna get the class info for
+	 * @return the class info representing the class tha passed-in instance
+	 * is an instance of
 	 */
 	public static function forInstance(instance):ClassInfo {
 		// not '!instance' because parameter 'instance' could be a blank string
 		if (instance == null) return null;
-		return forObject(instance);
+		var classInfo:ClassInfo = ReflectConfig.getCache().getClass(instance);
+		if (classInfo) return classInfo;
+		// if the __constructor__ is defined it most probably references the correct class
+		if (instance.__constructor__) {
+			// check if it really is the correct one
+			// it may be incorrect if the __proto__ property was set manually like myInstance.__proto__ = MyClass.prototype
+			if (instance.__constructor__.prototype == instance.__proto__) {
+				return ReflectConfig.getCache().addClass(new ClassInfo(instance.__constructor__));
+			}
+		}
+		// if the __constructor__ is not defined or is not the correct one the constructor may be correct
+		// this is most probably true for MovieClips, TextFields etc. that have been put on the stage without
+		// linkage to any other class
+		if (instance.constructor) {
+			// check if it really is the correct one
+			// it may be incorrect if the __proto__ property was set manually like myInstance.__proto__ = MyClass.prototype
+			if (instance.constructor.prototype == instance.__proto__) {
+				return ReflectConfig.getCache().addClass(new ClassInfo(instance.constructor));
+			}
+		}
+		// if all the above tests do not hold true we must search for the class using the instance
+		var info = ReflectConfig.getClassAlgorithm().executeByInstance(instance);
+		// info is null if the class algorithm could not find the appropriate class
+		if (info) {
+			// Would throwing an exception be more appropriate if any of the following
+			// if-statements holds true?
+			if (info.name == null) info.name = null;
+			if (!info.clazz) info.clazz = null;
+			if (!info.package) info.package = null;
+			return ReflectConfig.getCache().addClass(new ClassInfo(info.clazz, info.name, info.package));
+		}
+		return null;
 	}
 	
 	/**
-	 * This method does the same as the #forObject(*):ClassInfo method.
-	 * It is planned to separate the class algorithm into two. One that
-	 * searches specifically for instances and one that searches for
-	 * classes to gain performance improvements.
+	 * Returns the class info corresponding to the passed-in class.
+	 *
+	 * <p>This method first checks whether the class is already contained
+	 * in the cache and adds it to the cache if not.
+	 *
+	 * <p>Null will be returned if the passed-in class is null or undefined.
+	 *
+	 * @param clazz the class you wanna get the class info for
+	 * @return the class info representing the passed-in class
 	 */
 	public static function forClass(clazz:Function):ClassInfo {
 		if (!clazz) return null;
-		return forObject(clazz);
+		var classInfo:ClassInfo = ReflectConfig.getCache().getClass(clazz);
+		if (classInfo) return classInfo;
+		return ReflectConfig.getCache().addClass(new ClassInfo(clazz));
 	}
 	
 	/**
 	 * Constructs a new ClassInfo instance.
 	 *
-	 * <p>All arguments are allowed to be null, but keep in mind that not
-	 * all methods will function if one is.
+	 * <p>Note that you do not have to pass-in the class. But if you do not
+	 * pass it in some methods cannot do their job correctly.
 	 * 
-	 * @param name the name of the class
-	 * @param class the class the newly created ClassInfo represents
-	 * @param package the package in which the class is declared
+	 * <p>If you do not pass-in the name or the package they get resolved
+	 * lazily when requested using the passed-in class.
+	 *
+	 * @param class the class the newly created class info represents
+	 * @param name (optional) the name of the class
+	 * @param package (optional) the package in which the class is declared / resides in
 	 */
-	public function ClassInfo(name:String, 
-							  clazz:Function, 
+	public function ClassInfo(clazz:Function,
+							  name:String,
 							  package:PackageInfo) {
 		this.name = name;
 		this.clazz = clazz;
@@ -181,12 +245,12 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * Sets the algorithm used to find classes. 
 	 *
 	 * <p>If you pass an algorithm of value null or undefined,
-	 * #getClassAlgorithm() will return the default one.
+	 * {@link #getClassAlgorithm} will return the default one.
 	 *
-	 * <p>This algorithm is used by the #getSuperType() method.
+	 * <p>This algorithm is used by the {@link #getSuperType} method.
 	 *
 	 * @param classAlgorithm the new class algorithm to find classes
-	 * @see #getClassAlgorithm(Void):ClassAlgorithm
+	 * @see #getClassAlgorithm
 	 */
 	public function setClassAlgorithm(classAlgorithm:ClassAlgorithm):Void {
 		this.classAlgorithm = classAlgorithm;
@@ -195,15 +259,15 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	/**
 	 * Returns the class algorithm used to find classes.
 	 *
-	 * <p>Either the algorithm set via #setClassAlgorithm() will be
+	 * <p>Either the algorithm set via {@link #setClassAlgorithm} will be
 	 * returned or the default class algorithm returned by the
-	 * ReflectConfig#getClassAlgorithm() method.
+	 * {@link ReflectConfig#getClassAlgorithm} method.
 	 *
 	 * <p>If you set an algorithm of value null or undefined the default
 	 * one will be used.
 	 *
 	 * @return the currently used class algorithm
-	 * @see #setClassAlgorithm(ClassAlgorithm):Void
+	 * @see #setClassAlgorithm
 	 */
 	public function getClassAlgorithm(Void):ClassAlgorithm {
 		if (!classAlgorithm) classAlgorithm = ReflectConfig.getClassAlgorithm();
@@ -214,12 +278,12 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * Sets the algorithm used to find methods.
 	 *
 	 * <p>If you pass an algorithm of value null or undefined,
-	 * #getMethodAlgorithm() will return the default one.
+	 * {@link #getMethodAlgorithm} will return the default one.
 	 *
-	 * <p>This algorithm is used by the #getMethods() method.
+	 * <p>This algorithm is used by the {@link #getMethods} method.
 	 *
 	 * @param methodAlgorithm the new method algorithm to find methods
-	 * @see #getMethodAlgorithm(Void):MethodAlgorithm
+	 * @see #getMethodAlgorithm
 	 */
 	public function setMethodAlgorithm(methodAlgorithm:MethodAlgorithm):Void {
 		this.methodAlgorithm = methodAlgorithm;
@@ -228,15 +292,15 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	/**
 	 * Returns the method algorithm used to find methods.
 	 *
-	 * <p>Either the algorithm set via #setMethodAlgorithm() will be
+	 * <p>Either the algorithm set via {@link #setMethodAlgorithm} will be
 	 * returned or the default method algorithm returned by the
-	 * ReflectConfig#getMethodAlgorithm() method.
+	 * {@link ReflectConfig#getMethodAlgorithm} method.
 	 *
 	 * <p>If you set an algorithm of value null or undefined the default
 	 * one will be used.
 	 *
 	 * @return the currently used method algorithm
-	 * @see #setMethodAlgorithm(MethodAlgorithm):Void
+	 * @see #setMethodAlgorithm
 	 */
 	public function getMethodAlgorithm(Void):MethodAlgorithm {
 		if (!methodAlgorithm) methodAlgorithm = ReflectConfig.getMethodAlgorithm();
@@ -247,12 +311,12 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * Sets the algorithm used to find properties.
 	 *
 	 * <p>If you pass an algorithm of value null or undefined,
-	 * #getPropertyAlgorithm() will return the default one.
+	 * {@link #getPropertyAlgorithm} will return the default one.
 	 *
-	 * <p>This algorithm is used by the #getProperties() method.
+	 * <p>This algorithm is used by the {@link #getProperties} method.
 	 *
 	 * @param propertyAlgorithm the new property algorithm to find properties
-	 * @see #getPropertyAlgorithm(Void):PropertyAlgorithm
+	 * @see #getPropertyAlgorithm
 	 */
 	public function setPropertyAlgorithm(propertyAlgorithm:PropertyAlgorithm):Void {
 		this.propertyAlgorithm = propertyAlgorithm;
@@ -261,15 +325,15 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	/**
 	 * Returns the property algorithm used to find properties.
 	 *
-	 * <p>Either the algorithm set via #setPropertyAlgorithm() will be
+	 * <p>Either the algorithm set via {@link #setPropertyAlgorithm} will be
 	 * returned or the default property algorithm returned by the
-	 * ReflectConfig#getPropertyAlgorithm() method.
+	 * {@link ReflectConfig#getPropertyAlgorithm} method.
 	 *
 	 * <p>If you set an algorithm of value null or undefined the default
 	 * one will be used.
 	 *
 	 * @return the currently used property algorithm
-	 * @see #setPropertyAlgorithm(PropertyAlgorithm):Void
+	 * @see #setPropertyAlgorithm
 	 */
 	public function getPropertyAlgorithm(Void):PropertyAlgorithm {
 		if (!propertyAlgorithm) propertyAlgorithm = ReflectConfig.getPropertyAlgorithm();
@@ -277,16 +341,17 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * Returns the name of the class without its namespace.
+	 * Returns the name of the represented class without its namespace.
 	 *
 	 * <p>The namespace is the package path to the class. The namespace of
 	 * the class 'org.as2lib.core.BasicClass' is 'org.as2lib.core'. In this
 	 * example this method would only return 'BasicClass'.
 	 *
-	 * @reutrn the name of the class
-	 * @see #getFullName(Void):String
+	 * @reutrn the name of the represented class
+	 * @see #getFullName
 	 */
 	public function getName(Void):String {
+		if (name === undefined) initNameAndPackage();
 		return name;
 	}
 	
@@ -297,11 +362,11 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * <p>The path will not be included if:
 	 * <ul>
 	 *   <li>The #getPackage method returns null or undefined.</li>
-	 *   <li>The #getPackage method returns a package whose #isRoot method returns true.</li>
+	 *   <li>The #getPackage method returns a package whose {@link #isRoot} method returns true.</li>
 	 * </ul>
 	 *
 	 * @return the full name of the represented class
-	 * @see #getName(Void):String
+	 * @see #getName
 	 */
 	public function getFullName(Void):String {
 		if (fullName === undefined) {
@@ -325,13 +390,13 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	/**
 	 * Returns the class's constructor representation.
 	 *
-	 * <p>If the #getType method returns null or undefined, null will be
+	 * <p>If the {@link #getType} method returns null or undefined, null will be
 	 * returned.
 	 *
 	 * <p>You can use the returned ConstructorInfo instance to get the actual
 	 * constructor. Note that the constructor in Flash is the same as the
-	 * class. Thus #getType() and #getConstructor()#getMethod() return the
-	 * same.
+	 * class. Thus the function returned by the {@link #getType} method and the
+	 * {@link ConstructorInfo#getMethod} method of this class info is the same.
 	 *
 	 * @return the constructor of the class.
 	 */
@@ -361,12 +426,12 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * </ul>
 	 *
 	 * @return the super class of the class this info represents
-	 * @see #setClassAlgorithm(ClassAlgorithm):Void
+	 * @see #forInstance
 	 */
 	public function getSuperType(Void):TypeInfo {
 		if (superClass === undefined) {
 			if (clazz.prototype.__proto__) {
-				superClass = ClassInfo(getClassAlgorithm().execute(clazz.prototype));
+				superClass = forInstance(clazz.prototype);
 			} else {
 				superClass = null;
 			}
@@ -377,7 +442,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	/**
 	 * Creates a new instance of the class passing the constructor arguments.
 	 *
-	 * <p>Null will be returned if the #getType method returns null or
+	 * <p>Null will be returned if the {@link #getType} method returns null or
 	 * undefined.
 	 *
 	 * <p>The passed-in args are allowed to be null or undefined. This gets
@@ -390,6 +455,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		if (!clazz) return null;
 		var result:Object = new Object();
 		result.__proto__ = clazz.prototype;
+		result.__constructor__ = clazz;
 		clazz.apply(result, args);
 		return result;
 	}
@@ -403,12 +469,25 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @return the package the represented class is declared in / resides in
 	 */
 	public function getPackage(Void):PackageInfo {
+		if (package === undefined) initNameAndPackage();
 		return package;
 	}
 	
 	/**
-	 * @overload #getMethodsByFlag(Boolean):Array
-	 * @overload #getMethodsByFilter(TypeMemberFilter):Array
+	 * Initializes the name and the package of the represented class.
+	 *
+	 * <p>This is done using the result of an execution of the class algorithm
+	 * returned by {@link ReflectConfig#getClassAlgorithm}.
+	 */
+	private function initNameAndPackage(Void):Void {
+		var info = ReflectConfig.getClassAlgorithm().executeByClass(getType());
+		if (name === undefined) name = info.name == null ? null : info.name;
+		if (package === undefined) package = info.package == null ? null : info.package;
+	}
+	
+	/**
+	 * @overload #getMethodsByFlag
+	 * @overload #getMethodsByFilter
 	 */
 	public function getMethods():Array {
 		var o:Overload = new Overload(this);
@@ -419,15 +498,15 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * Returns an array containing the methods represented by MethodInfos
-	 * this type declares and maybe the ones of the super types.
+	 * Returns an array containing the methods represented by {@link MethodInfo}
+	 * instances this type declares and maybe the ones of the super types.
 	 *
 	 * <p>The super types' methods are included if you pass-in false, null
 	 * or undefined and excluded/filtered if you pass-in true.
 	 *
 	 * <p>Null gets returned if:
 	 * <ul>
-	 *   <li>The #getType method returns null or undefined.</li>
+	 *   <li>The {@link #getType} method returns null or undefined.</li>
 	 *   <li>The method algorithm returns null or undefined.</li>
 	 * </ul>
 	 *
@@ -450,20 +529,20 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * Returns an array containing the methods represented by MethodInfos
-	 * this type and super types' declare that do not get filtered/excluded.
+	 * Returns an array containing the methods represented by {@link MethodInfo}
+	 * instances this type and super types' declare that do not get filtered/excluded.
 	 *
-	 * <p>The TypeMemberFilter#filter(TypeMemberInfo):Boolean method gets invoked
+	 * <p>The {@link TypeMemberFilter#filter} method gets invoked
 	 * for every method to determine whether it shall be contained in the 
 	 * result.
 	 *
 	 * <p>If the passed-in method filter is null or undefined the result of
-	 * the invocation of #getMethodsByFlag(Boolean):Array with argument 
+	 * the invocation of {@link #getMethodsByFlag} with argument 
 	 * 'false' gets returned.
 	 *
 	 * <p>Null gets returned if:
 	 * <ul>
-	 *   <li>The #getType method returns null or undefined.</li>
+	 *   <li>The {@link #getType} method returns null or undefined.</li>
 	 *   <li>The method algorithm returns null or undefined.</li>
 	 * </ul>
 	 *
@@ -484,8 +563,8 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * @overload #getMethodByName(String):MethodInfo
-	 * @overload #getMethodByMethod(Function):MethodInfo
+	 * @overload #getMethodByName
+	 * @overload #getMethodByMethod
 	 */
 	public function getMethod():MethodInfo {
 		var overload:Overload = new Overload(this);
@@ -522,7 +601,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * Returns teh method info corresponding to the passed-in concrete method.
+	 * Returns the method info corresponding to the passed-in concrete method.
 	 *
 	 * Null will be returned if:
 	 * <ul>
@@ -553,8 +632,8 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * @overload #getPropertiesByFlag(Boolean):Array
-	 * @overload #getPropertiesByFilter(TypeMemberFilter):Array
+	 * @overload #getPropertiesByFlag
+	 * @overload #getPropertiesByFilter
 	 */
 	public function getProperties():Array {
 		var o:Overload = new Overload(this);
@@ -565,8 +644,8 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * Returns an array containing the properties represented by PropertyInfos
-	 * this type declares and maybe the ones of the super types.
+	 * Returns an array containing the properties represented by {@link PropertyInfo}
+	 * instances this type declares and maybe the ones of the super types.
 	 *
 	 * <p>The super types' properties are included if you pass-in false, null
 	 * or undefined and excluded/filtered if you pass-in true.
@@ -596,20 +675,20 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * Returns an array containing the properties represented by PropertyInfos
-	 * this type and super types' declare that do not get filtered/excluded.
+	 * Returns an array containing the properties represented by {@link PropertyInfo}
+	 * instances this type and super types' declare that do not get filtered/excluded.
 	 *
-	 * <p>The TypeMemberFilter#filter(TypeMemberInfo):Boolean gets invoked
+	 * <p>The {@link TypeMemberFilter#filter} gets invoked
 	 * for every property to determine whether it shall be contained in the 
 	 * result.
 	 *
 	 * <p>If the passed-in method filter is null or undefined the result of
-	 * the invocation of #getPropertiesByFlag(Boolean):Array with argument 
+	 * the invocation of {@link #getPropertiesByFlag} with argument 
 	 * 'false' gets returned.
 	 *
 	 * <p>Null gets returned if:
 	 * <ul>
-	 *   <li>The #getType method returns null or undefined.</li>
+	 *   <li>The {@link #getType} method returns null or undefined.</li>
 	 *   <li>The property algorithm returns null or undefined.</li>
 	 * </ul>
 	 *
@@ -630,8 +709,8 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * @overload #getPropertyByName(String):PropertyInfo
-	 * @overload #getPropertyByProperty(Function):PropertyInfo
+	 * @overload #getPropertyByName
+	 * @overload #getPropertyByProperty
 	 */
 	public function getProperty():PropertyInfo {
 		var overload:Overload = new Overload(this);
@@ -650,7 +729,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *   <li>A property with the given name does not exist on the represented class or any super class.</li>
 	 * </ul>
 	 *
-	 * <p>If this class overwrites a property of any super class the, PropertyInfo
+	 * <p>If this class overwrites a property of any super class the PropertyInfo
 	 * instance of the overwriting property will be returned.
 	 *
 	 * <p>The declaring type of the returned property info is not always the
