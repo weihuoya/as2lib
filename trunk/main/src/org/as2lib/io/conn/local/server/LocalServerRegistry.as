@@ -18,7 +18,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.conn.core.server.ServerRegistry;
 import org.as2lib.io.conn.core.server.ReservedHostException;
-import org.as2lib.io.conn.local.core.LocalConnectionTemplate;
+import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
 
 /**
  * Implementation of a ServerRegistry to handle all existing Servers.
@@ -42,7 +42,7 @@ class org.as2lib.io.conn.local.server.LocalServerRegistry extends BasicClass imp
 	 * @see org.as2lib.io.conn.local.ServerRegistry#containsServer()
 	 */
 	public function containsServer(host:String):Boolean {
-		return LocalConnectionTemplate.connectionExists(host);
+		return EnhancedLocalConnection.connectionExists(host);
 	}
 	
 	/**
@@ -52,7 +52,7 @@ class org.as2lib.io.conn.local.server.LocalServerRegistry extends BasicClass imp
 	 */
 	public function registerServer(host:String):Void {
 		if (!host) throw new IllegalArgumentException("Host must not be null, undefined or a blank string.", this, arguments);
-		var connection:LocalConnectionTemplate = new LocalConnectionTemplate();
+		var connection:EnhancedLocalConnection = new EnhancedLocalConnection();
 		try {
 			connection.connect(host);
 		} catch(exception:org.as2lib.io.conn.local.core.ReservedConnectionException) {
@@ -67,7 +67,7 @@ class org.as2lib.io.conn.local.server.LocalServerRegistry extends BasicClass imp
 	 */
 	public function removeServer(host:String):Void {
 		if (serverRegistry[host]) {
-			var connection:LocalConnectionTemplate = serverRegistry[host];
+			var connection:EnhancedLocalConnection = serverRegistry[host];
 			connection.close();
 			serverRegistry[host] = undefined;
 			return;

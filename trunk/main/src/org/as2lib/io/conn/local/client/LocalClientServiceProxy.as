@@ -23,7 +23,7 @@ import org.as2lib.io.conn.core.event.MethodInvocationCallback;
 import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
-import org.as2lib.io.conn.local.core.LocalConnectionTemplate;
+import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
 
 /**
  * Proxy handles client request to a certain service and its response.
@@ -37,8 +37,8 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	/** The url of the service. */
 	private var url:String;
 	
-	/** Used LocalConnectionTemplate. */
-	private var connection:LocalConnectionTemplate;
+	/** Used EnhancedLocalConnection. */
+	private var connection:EnhancedLocalConnection;
 	
 	/** Stores all currently used response services. */
 	private var responseServices:Array;
@@ -50,7 +50,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	 */
 	public function LocalClientServiceProxy(url:String) {
 		this.url = url;
-		connection = new LocalConnectionTemplate();
+		connection = new EnhancedLocalConnection();
 		responseServices = new Array();
 	}
 	
@@ -72,7 +72,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	public function invokeByNameAndArgumentsAndCallback(name:String, args:Array, callback:MethodInvocationCallback):MethodInvocationCallback {
 		var responseUrl:String = generateResponseServiceUrl(url, name);
 		
-		var responseService:LocalConnectionTemplate = new LocalConnectionTemplate();
+		var responseService:EnhancedLocalConnection = new EnhancedLocalConnection();
 		var index:Number = responseServices.push(responseService) - 1;
 		var owner:LocalClientServiceProxy = this;
 		responseService["onReturn"] = function(returnValue):Void {

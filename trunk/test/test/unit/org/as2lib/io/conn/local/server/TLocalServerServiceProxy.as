@@ -21,7 +21,7 @@ import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
 import org.as2lib.io.conn.local.server.LocalServerServiceProxy;
-import org.as2lib.io.conn.local.core.LocalConnectionTemplate;
+import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
 
 /**
  * @author Simon Wacker
@@ -61,8 +61,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 	}
 	
 	public function testRunWithNullHost(Void):Void {
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.connect("myPath");
 		cc.replay();
 		
@@ -75,8 +75,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 	}
 	
 	public function testRunWithEmptyStringHost(Void):Void {
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.connect("myPath");
 		cc.replay();
 		
@@ -89,8 +89,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 	}
 	
 	public function testRunWithHost(Void):Void {
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.connect("local.as2lib.org/myPath");
 		cc.replay();
 		
@@ -103,8 +103,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 	}
 	
 	public function testRunWithAlreadyRunningServiceProxy(Void):Void {
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.connect("local.as2lib.org/myPath");
 		c.close();
 		c.connect("local.simonwacker.com/myPath");
@@ -121,8 +121,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 	}
 	
 	public function testRunWithReservedService(Void):Void {
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.connect("local.as2lib.org/myPath");
 		cc.setThrowable(new org.as2lib.io.conn.local.core.ReservedConnectionException("message ;)"));
 		cc.replay();
@@ -139,8 +139,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 	}
 	
 	public function testStopWithNotRunningServiceProxy(Void):Void {
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.close();
 		cc.replay();
 		
@@ -153,8 +153,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 	}
 	
 	public function testStopWithRunningServiceProxy(Void):Void {
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.connect("local.as2lib.org/myPath");
 		c.close();
 		cc.replay();
@@ -323,8 +323,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
 		bc.replay();
 		
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.send("responseService", "onError", null, null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([null, null, Array, MethodInvocationErrorListener]));
 		cc.replay();
@@ -350,8 +350,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
 		bc.replay();
 		
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.send("responseService", "onError", null, null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([null, null, Array, MethodInvocationErrorListener]));
 		cc.replay();
@@ -377,8 +377,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
 		bc.replay();
 		
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.send("responseService", "onError", null, null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([null, null, Array, MethodInvocationErrorListener]));
 		cc.replay();
@@ -405,8 +405,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 		var b:EventBroadcaster = bc.getMock();
 		bc.replay();
 		
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.send("responseService", "onReturn", null, null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([null, null, Array, MethodInvocationErrorListener]));
 		cc.replay();
@@ -434,8 +434,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 		var b:EventBroadcaster = bc.getMock();
 		bc.replay();
 		
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.send("responseService", "onReturn", null, null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([null, null, Array, MethodInvocationErrorListener]));
 		cc.replay();
@@ -463,8 +463,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
 		bc.replay();
 		
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.send("responseService", "onError", null, null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([null, null, Array, MethodInvocationErrorListener]));
 		cc.replay();
@@ -492,8 +492,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
 		bc.replay();
 		
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.send("unknownResponseService", "onReturn", null, null);
 		cc.setThrowable(new org.as2lib.io.conn.local.core.UnknownConnectionException("unknown connection exception"));
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([null, null, Array, MethodInvocationErrorListener]));
@@ -521,8 +521,8 @@ class test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends
 		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
 		bc.replay();
 		
-		var cc:MockControl = new MockControl(LocalConnectionTemplate);
-		var c:LocalConnectionTemplate = cc.getMock();
+		var cc:MockControl = new MockControl(EnhancedLocalConnection);
+		var c:EnhancedLocalConnection = cc.getMock();
 		c.send("responseService", "onReturn", null, null);
 		cc.setThrowable(new org.as2lib.io.conn.core.client.MethodInvocationException("method invocation exception"));
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([null, null, Array, MethodInvocationErrorListener]));
