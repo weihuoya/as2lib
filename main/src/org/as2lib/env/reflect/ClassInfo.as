@@ -145,17 +145,19 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	
 	/**
 	 * Returns the class info corresponding to the passed-in instance, that
-	 * is the class info representing the class the pssed-in instance is
+	 * is the class info representing the class the passed-in instance is
 	 * an instance of.
 	 *
 	 * <p>This method first checks whether the class is already contained
 	 * in the cache and adds it to the cache if not.
 	 *
 	 * @param instance the instance you wanna get the class info for
-	 * @return the class info representing the class tha passed-in instance
+	 * @return the class info representing the class the passed-in instance
 	 * is an instance of
-	 * @throws IllegalArgumentException if the passed-in instance is null or undefined
-	 * @throws ClassNotFoundException if the class corresponding to the passed-in instance could not be found
+	 * @throws IllegalArgumentException if the passed-in instance is null or
+	 * undefined
+	 * @throws ClassNotFoundException if the class corresponding to the passed-in
+	 * instance could not be found
 	 */
 	public static function forInstance(instance):ClassInfo {
 		// not '!instance' because parameter 'instance' could be a blank string

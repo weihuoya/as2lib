@@ -158,6 +158,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	/**
 	 * Private constructor.
 	 */
-	private function ReflectUtil(Void) {}
+	private function ReflectUtil(Void) {
+	}
 	
 }

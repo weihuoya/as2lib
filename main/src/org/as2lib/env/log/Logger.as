@@ -21,23 +21,24 @@ import org.as2lib.env.log.LogLevel;
  * Logger declares all methods needed to write log messages in a well
  * defined and performant way.
  *
- * <p>The basic methods to write the log messages are {@link #log}, {@link #debug},
- * {@link #info}, {@link #warning} and {@link #fatal}.
+ * <p>The basic methods to write the log messages are {@link #log},
+ * {@link #debug}, {@link #info}, {@link #warning} and {@link #fatal}.
  *
  * <p>The first thing to note is that you can write log messages at
- * different levels. These levels are {@link #DEBUG}, {@link #INFO}, {@link #WARNING}, {@link #ERROR} and
- * {@link #FATAL}. Depending on what level was set only messages at a given
- * level are logged.
+ * different levels. These levels are {@link #DEBUG}, {@link #INFO},
+ * {@link #WARNING}, {@link #ERROR} and {@link #FATAL}. Depending on what
+ * level has been set only messages at a given level are logged.
  * The levels are organized in a hierarchical manner. That means if you
- * set you log level to {@link #ALL} every messages get logged. If you set it
- * to {@link #ERROR} only messages at {@link #ERROR} and {@link #FATAL} level get logged and so on.
- * It is also possible to define your own set of levels. You can therefor
- * use the {@link #isEnabled} and {@link #log} methods.
+ * set the log level to {@link #ALL} every messages get logged. If you set
+ * it to {@link #ERROR} only messages at {@link #ERROR} and {@link #FATAL}
+ * level get logged and so on. It is also possible to define your own set
+ * of levels. You can therefor use the {@link #isEnabled} and {@link #log}
+ * methods.
  *
  * <p>To do not waste unnecessary performance in constructing log messages
  * that do not get logged you can use the {@link #isEnabled}, {@link #isDebugEnabled},
- * {@link #isInfoEnabled}, {@link #isWarningEnabled}, {@link #isErrorEnabled} and {@link #isFatalEnabled}
- * methods.
+ * {@link #isInfoEnabled}, {@link #isWarningEnabled}, {@link #isErrorEnabled}
+ * and {@link #isFatalEnabled} methods.
  *
  * <p>Note that the message does in neither case have to be a string.
  * That means you can pass-in messages and let the actual handler or logger
@@ -57,7 +58,7 @@ import org.as2lib.env.log.LogLevel;
  * This depends on what methods the implementation of this interface
  * offers.
  * Note also that depending on the concrete implementation and the message
- * it may be faster to do not call any of the is*Enabled(..) methods.
+ * it may be faster to do not call any of the is*Enabled methods.
  *
  * @author Simon Wacker
  */
