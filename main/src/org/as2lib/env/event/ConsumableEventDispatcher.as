@@ -15,18 +15,19 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.env.event.EventInfo;
+import org.as2lib.env.event.EventDispatcher;
+import org.as2lib.env.event.ConsumableEventInfo;
 
 /**
- * EventDispatchers are used to dispatch to EventListeners.
+ * ConsumableEventDispatchers are used to dispatch to ConsumableEventListeners.
  * Implement the EventDispatcher for different ways to dispatch events.
- * It is possible to add an EventDispatcher instance to a DelegatingEventBroadcaster.
+ * It is possible to add an ConsumableEventDispatcher instance to a DelegatingConsumableEventBroadcaster.
  * 
  * @author Simon Wacker
  * @author Martin Heidegger
- * @see org.as2lib.env.event.DelegatingEventBroadcaster#setEventDispatcher()
+ * @see org.as2lib.env.event.DelegatingConsumableEventBroadcaster#setEventDispatcher()
  */
-interface org.as2lib.env.event.EventDispatcher extends BasicInterface {
+interface org.as2lib.env.event.ConsumableEventDispatcher extends EventDispatcher {
 	
 	/**
 	 * Dispatches the event to all EventListeners with the help of the EventInfo
@@ -35,5 +36,6 @@ interface org.as2lib.env.event.EventDispatcher extends BasicInterface {
 	 * @param info the EventInfo to be passed to the event
 	 * @param listeners the EventListeners to dispatch to
 	 */
-	public function dispatch(event:EventInfo, listeners:Array):Void;
+	public function dispatchConsumable(event:ConsumableEventInfo, listeners:Array):Void;
+	
 }

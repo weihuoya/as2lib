@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
+import org.as2lib.env.event.ConsumableEventBroadcaster;
+import org.as2lib.env.event.ConsumableEventDispatcher;
+
 /**
- * The Consumable interface can be implemented by EventInfos.
- *
+ * Special form of EventBroadcaster that delegates the dispatching process
+ * to a EventDispatcher. You can implement your own EventDispatcher and
+ * have thus the freedom to dispatch events at your will.
+ * 
  * @author Martin Heidegger
  * @author Simon Wacker
  */
-interface org.as2lib.env.event.Consumable {
+interface org.as2lib.env.event.DelegatingConsumableEventBroadcaster extends ConsumableEventBroadcaster {
 	/**
-	 * Marks the Consumable as consumed.
+	 * Sets the EventDispatcher to delegate to.
+	 * 
+	 * @param eventDispatcher EventDispatcher instance to delegate to
 	 */
-	public function consume(Void):Void;
-	
-	/**
-	 * Returns whether the Consumable has already been consumed.
-	 *
-	 * @return true if the Consumable is marked as consumed else false
-	 */
-	public function isConsumed(Void):Boolean;
+	public function setDispatcher(eventDispatcher:ConsumableEventDispatcher):Void;
 }

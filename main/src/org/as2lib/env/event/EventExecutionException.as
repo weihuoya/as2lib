@@ -14,25 +14,24 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.EventInfo;
+import org.as2lib.env.except.WrapperException;
 
 /**
- * Extension of usual EventInfo including consume functionality.
+ * Exception as Wrapper for a exception thrown during execution of a event.
  *
  * @author Martin Heidegger
- * @see EventInfo
  */
-interface org.as2lib.env.event.ConsumableEventInfo extends EventInfo {
+class org.as2lib.env.event.EventExecutionException extends WrapperException {
 	
 	/**
-	 * Marks the Consumable as consumed.
-	 */
-	public function consume(Void):Void;
-	
-	/**
-	 * Returns whether the Consumable has already been consumed.
+	 * Constructs a new EventExecutionExceptions
 	 *
-	 * @return true if the Consumable is marked as consumed else false
+	 * @param e Generic error to be wrapped
+	 * @param message Message to the exception.
+	 * @param scope Scope where the exception was thrown.
+	 * @param args Arguments of the scope.
 	 */
-	public function isConsumed(Void):Boolean;
+	public function EventExecutionException(e, message:String, scope, args:FunctionArguments) {
+		super(e, message, scope, args);
+	}
 }
