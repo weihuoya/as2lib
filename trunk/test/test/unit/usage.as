@@ -38,7 +38,7 @@ test.unit.org.as2lib.data.holder.queue.TLinearQueue;
 test.unit.org.as2lib.data.holder.queue.TTypedQueue;
 
 // Data Type Tests
-/*test.unit.org.as2lib.data.type.TInteger;
+test.unit.org.as2lib.data.type.TInteger;
 test.unit.org.as2lib.data.type.TDegree;
 test.unit.org.as2lib.data.type.TRadian;
 test.unit.org.as2lib.data.type.TNaturalNumber;
@@ -47,9 +47,6 @@ test.unit.org.as2lib.data.type.TNaturalNumberIncludingZero;
 // File tests
 test.unit.org.as2lib.io.file.TFile;
 test.unit.org.as2lib.io.file.TBitAndByteFormat;
-
-// Environment tests
-test.unit.org.as2lib.env.out.TOutImplementation;
 
 // org.as2lib.env.overload
 test.unit.org.as2lib.env.overload.TOverload;
@@ -135,12 +132,10 @@ test.unit.org.as2lib.env.event.TSimpleEventBroadcaster;
  
 // org.as2lib.env.except
 // - TODO some problem with TIllegalStateException and TUnsupportedOperationException exceeds 256 levels of recursion -
-/*
 test.unit.org.as2lib.env.except.TException;
 test.unit.org.as2lib.env.except.TFatalException;
 test.unit.org.as2lib.env.except.TSimpleStackTraceElement;
-test.unit.org.as2lib.env.except.TIllegalStateException;
-test.unit.org.as2lib.env.except.TUnsupportedOperationException;
+/*test.unit.org.as2lib.env.except.TIllegalStateException;
+test.unit.org.as2lib.env.except.TUnsupportedOperationException;*/
 test.unit.org.as2lib.env.except.TSimpleStackTraceElement;
 test.unit.org.as2lib.env.except.TIllegalArgumentException;
-*/

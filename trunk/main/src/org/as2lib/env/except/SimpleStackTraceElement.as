@@ -17,11 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.ExceptConfig;
 import org.as2lib.env.except.StackTraceElement;
-import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.reflect.MethodInfo;
-import org.as2lib.env.reflect.PropertyInfo;
-import org.as2lib.util.ObjectUtil;
-import org.as2lib.data.holder.Iterator;
 
 /**
  * Simple implementation of the StackTraceElement interface.
@@ -32,16 +27,10 @@ import org.as2lib.data.holder.Iterator;
 class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implements StackTraceElement {
 	
 	/** The thrower. */
-	private var concreteThrower;
+	private var thrower;
 	
 	/** The throwing method. */
-	private var concreteMethod:Function;
-	
-	/** A ClassInfo representing the thrower. */
-	private var thrower:ClassInfo;
-	
-	/** A MethodInfo representing the throwing method. */
-	private var method:MethodInfo;
+	private var method:Function;
 	
 	/** The arguments passed to the throwing method. */
 	private var args:Array;
@@ -54,52 +43,22 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 	 * @param args the arguments passed to the throwing method
 	 */
 	public function SimpleStackTraceElement(thrower, method:Function, args:Array) {
-		this.concreteThrower = thrower;
-		this.concreteMethod = method;
-		this.args = args;
+		this.thrower = thrower ? thrower : null;
+		this.method = method ? method : null;
+		this.args = args ? args : null;
 	}
 	
 	/**
 	 * @see org.as2lib.env.except.StackTraceElement#getThrower()
 	 */
-	public function getThrower(Void):ClassInfo {
-		if (!thrower) thrower = ClassInfo.forObject(concreteThrower);
+	public function getThrower(Void) {
 		return thrower;
 	}
 	
 	/**
 	 * @see org.as2lib.env.except.StackTraceElement#getMethod()
 	 */
-	public function getMethod(Void):MethodInfo {
-		if (!method) {
-			if (!getThrower()) {
-				break;
-			}
-			var tempMethod:MethodInfo = getThrower().getConstructor();
-			if (tempMethod.getMethod() == concreteMethod) {
-				return (method = tempMethod);
-			}
-			tempMethod = getThrower().getMethod(concreteMethod);
-			if (tempMethod.getMethod() == concreteMethod) {
-				return (method = tempMethod);
-			}
-			var properties:Array = getThrower().getProperties();
-			var l:Number = properties.length;
-			for (var i:Number = 0; i < l; i = i-(-1)) {
-				var property:PropertyInfo = properties[i];
-				tempMethod = property.getGetter();
-				if (tempMethod.getMethod() == concreteMethod) {
-					return (method = tempMethod);
-				}
-				tempMethod = property.getSetter();
-				if (tempMethod.getMethod() == concreteMethod) {
-					return (method = tempMethod);
-				}
-			}
-		}
-		if(!method) {
-			return null;
-		}
+	public function getMethod(Void):Function {
 		return method;
 	}
 	
@@ -107,9 +66,6 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 	 * @see org.as2lib.env.except.StackTraceElement#getArguments()
 	 */
 	public function getArguments(Void):Array {
-		if(!args) {
-			return null;
-		}
 		return args;
 	}
 	
