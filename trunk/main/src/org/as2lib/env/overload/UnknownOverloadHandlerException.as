@@ -65,7 +65,10 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 		// won't be displayed).
 		if(!asString) {
 			asString = message;
-			asString += "\n  Overloaded Method: " + ReflectUtil.getClassInfo(target).getMethodByMethod(overloadArguments.caller);
+			try {
+				asString += "\n  Overloaded Method: " + ReflectUtil.getClassInfo(target).getMethodByMethod(overloadArguments.caller);
+			} catch(e) {
+			}
 			asString += "\n  Used Arguments["+overloadArguments[0].length+"]: ";
 			for(var i:Number = 0; i < overloadArguments[0].length; i++) {
 				if(i != 0) {
