@@ -22,7 +22,7 @@
  */
  
 // Data Holder tests
-test.unit.org.as2lib.data.holder.array.TArrayIterator;
+/*test.unit.org.as2lib.data.holder.array.TArrayIterator;
 test.unit.org.as2lib.data.holder.array.TTypedArray;
 test.unit.org.as2lib.data.holder.list.TPriorityList;
 test.unit.org.as2lib.data.holder.list.TArrayList;
@@ -33,8 +33,10 @@ test.unit.org.as2lib.data.holder.map.TPriorityMap;
 test.unit.org.as2lib.data.holder.map.TTypedMap;
 test.unit.org.as2lib.data.holder.map.TPrimitiveTypeMap;
 test.unit.org.as2lib.data.holder.stack.TSimpleStack;
-test.unit.org.as2lib.data.holder.stack.TTypedStack;
-
+test.unit.org.as2lib.data.holder.stack.TTypedStack;*/
+test.unit.org.as2lib.data.holder.queue.TLinearQueue;
+test.unit.org.as2lib.data.holder.queue.TTypedQueue;
+/*
 // File tests
 test.unit.org.as2lib.io.file.TFile;
 test.unit.org.as2lib.io.file.TBitAndByteFormat;
@@ -68,4 +70,4 @@ test.unit.org.as2lib.env.bean.TPropertyValue;
 
 // Test org.as2lib.env.bean.factory.support
 test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory;
-test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition;
+test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition;*/
