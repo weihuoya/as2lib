@@ -46,7 +46,7 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 	
 	/**
 	 * Returns either the factory set via #setMethodBehaviorFactory()
-	 * or the default one.
+	 * or the default one which returns an instance of DefaultMethodBehavior.
 	 *
 	 * @return the currently used factory to obtain method call behaviors
 	 */
@@ -69,6 +69,9 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 	/**
 	 * Sets the factory used to obtain method call behaviors to store state.
 	 *
+	 * <p>If you set a factory of null or undefined #getMethodBehaviorFactory(Void):MethodBehaviorFactory
+	 * returns the default one.
+	 *
 	 * @param methodBehaviorFactory the new factory
 	 */
 	public function setMethodBehaviorFactory(methodBehaviorFactory:MethodBehaviorFactory):Void {
@@ -76,6 +79,12 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 	}
 	
 	/**
+	 * If the method name is null, undefined or a blank string the one
+	 * returned by the method behaviour's expected method call will be used.
+	 * If this is also null, undefined or a blank string a '[unknown]' will
+	 * be used.
+	 *
+	 * @throws IllegalArgumentException if the passed-in method behavior is null or undefined
 	 * @see Behavior#addMethodBehavior()
 	 */
 	public function addMethodBehavior(methodName:String, methodBehavior:MethodBehavior):Void {
@@ -96,6 +105,12 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 	}
 	
 	/**
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The actual method call is null or undefined.</li>
+	 *   <li>There is no matching behavior registered.</li>
+	 * </ul>
+	 *
 	 * @see Behavior#getMethodBehavior()
 	 */
 	public function getMethodBehavior(actualMethodCall:MethodCall):MethodBehavior {

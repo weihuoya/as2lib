@@ -36,7 +36,9 @@ class org.as2lib.test.mock.MethodResponse extends BasicClass {
 	
 	/**
 	 * Sets the return value that gets returned when calling the
-	 * #response() operation.
+	 * #response(Void) method.
+	 *
+	 * <p>Setting a return value disables the throwable behavior.
 	 *
 	 * @param returnValue the return value to return
 	 */
@@ -46,8 +48,10 @@ class org.as2lib.test.mock.MethodResponse extends BasicClass {
 	}
 	
 	/**
-	 * Sets the throwable to throw when the #response() method gets
+	 * Sets the throwable to throw when the #response(Void) method gets
 	 * invoked.
+	 *
+	 * <p>Setting a throwable disables the return value behavior.
 	 *
 	 * @param throwable the throwable to throw
 	 */
@@ -61,7 +65,7 @@ class org.as2lib.test.mock.MethodResponse extends BasicClass {
 	 * both have been set, the one that has been set at last will
 	 * be used.
 	 *
-	 * @return the return value if set
+	 * @return the set return value
 	 * @throws the set throwable
 	 */
 	public function response(Void) {

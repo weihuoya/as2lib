@@ -23,16 +23,43 @@ import org.as2lib.test.mock.MethodCall;
  */
 interface org.as2lib.test.mock.Behavior extends BasicInterface {
 	
+	/**
+	 * Adds a new method behavior for the passed-in method.
+	 *
+	 * @param methodName the method name to register the method behavior for
+	 * @param methodBehavior the method behavior to register
+	 */
 	public function addMethodBehavior(methodName:String, methodBehavior:MethodBehavior):Void;
 	
+	/**
+	 * Creates a new method behavior for the expected method call.
+	 *
+	 * @param expectedMethodCall the method call to create a behavior for
+	 * @return the newly created method behavior
+	 */
 	public function createMethodBehavior(expectedMethodCall:MethodCall):MethodBehavior;
 	
+	/**
+	 * Returns the method behavior that matches the given actual method
+	 * call.
+	 *
+	 * @return a matching method behavior
+	 */
 	public function getMethodBehavior(actualMethodCall:MethodCall):MethodBehavior;
 	
+	/**
+	 * @return the lastly added method behavior
+	 */
 	public function getLastMethodBehavior(Void):MethodBehavior;
 	
+	/**
+	 * Removes all added behaviors.
+	 */
 	public function removeAllBehavior(Void):Void;
 	
+	/**
+	 * Verifies every behavior.
+	 */
 	public function verify(Void):Void;
 	
 }
