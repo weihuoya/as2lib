@@ -36,12 +36,11 @@ class org.as2lib.data.io.conn.local.ExtendedLocalConnection extends LocalConnect
 		responseServer = new ExtendedLocalConnection();
 		responseServer.call = call;
 		responseServer.onResponse = function(response):Void {
-			trace("hah");
 			this.call.execute([response]);
 			this.close();
 		}
 		responseServer.connect(responseServerString);
-		
+
 		var args:Array = [host, method].concat(args);
 		args.push(responseServerString);
 		

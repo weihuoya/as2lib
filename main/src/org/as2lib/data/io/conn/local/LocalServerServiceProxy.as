@@ -20,7 +20,9 @@ class org.as2lib.data.io.conn.local.LocalServerServiceProxy extends ExtendedLoca
 	
 	public function remoteCallWithResponse(method:String, args:Array, listener:String):Void {
 		var response = service[method].apply(service, args);
-		send(listener, "onResponse", [response]);
+		
+		var lc:ExtendedLocalConnection = new ExtendedLocalConnection();
+		lc.send(listener, "onResponse", [response]);
 	}
 	
 	public function remoteCallWithoutResponse(method:String, args:Array):Void {
