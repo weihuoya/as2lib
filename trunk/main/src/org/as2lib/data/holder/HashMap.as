@@ -7,7 +7,7 @@ class org.as2lib.data.holder.HashMap implements Map {
 	private var keys:Array;
 	private var values:Array;
 	
-	public function Hashtable() {
+	public function HashMap() {
 		keys = new Array();
 		values = new Array();
 		keys[-1] = values[-1] = null;
