@@ -1,4 +1,4 @@
-﻿import org.as2lib.basic.out.Out;
+﻿import org.as2lib.out.Out;
 import org.as2lib.data.holder.TypedArray;
 import org.as2lib.test.speed.TestCaseInformation;
 import org.as2lib.test.speed.TestCase;

@@ -1,7 +1,7 @@
 ﻿import org.as2lib.basic.BasicInterface;
 import org.as2lib.basic.overload.Overload;
 import org.as2lib.basic.overload.OverloadHandler;
-import org.as2lib.basic.reflect.ClassInfo;
+import org.as2lib.reflect.ClassInfo;
 import org.as2lib.util.OverloadUtil;
 import org.as2lib.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;

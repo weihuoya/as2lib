@@ -1,14 +1,14 @@
 ﻿import org.as2lib.basic.BasicClass;
-import org.as2lib.basic.reflect.Cache;
-import org.as2lib.basic.reflect.ClassInfo;
-import org.as2lib.basic.reflect.PackageInfo;
-import org.as2lib.basic.reflect.algorythm.CacheAlgorythm;
-import org.as2lib.basic.reflect.algorythm.ClassAlgorythm;
-import org.as2lib.basic.reflect.algorythm.PackageAlgorythm;
-import org.as2lib.basic.reflect.algorythm.ContentAlgorythm;
-import org.as2lib.basic.reflect.algorythm.MethodAlgorythm;
-import org.as2lib.basic.reflect.algorythm.PropertyAlgorythm;
-import org.as2lib.basic.reflect.algorythm.ChildrenAlgorythm;
+import org.as2lib.reflect.Cache;
+import org.as2lib.reflect.ClassInfo;
+import org.as2lib.reflect.PackageInfo;
+import org.as2lib.reflect.algorythm.CacheAlgorythm;
+import org.as2lib.reflect.algorythm.ClassAlgorythm;
+import org.as2lib.reflect.algorythm.PackageAlgorythm;
+import org.as2lib.reflect.algorythm.ContentAlgorythm;
+import org.as2lib.reflect.algorythm.MethodAlgorythm;
+import org.as2lib.reflect.algorythm.PropertyAlgorythm;
+import org.as2lib.reflect.algorythm.ChildrenAlgorythm;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.util.ObjectUtil;
 

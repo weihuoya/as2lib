@@ -36,20 +36,20 @@
                 </project_folder>
                 <project_folder name="out" expanded="true">
                     <project_folder name="handler" expanded="true">
-                        <project_file path="./org/as2lib/basic/out/handler/TraceHandler.as" filetype="as" />
+                        <project_file path="./org.as2lib.out/handler/TraceHandler.as" filetype="as" />
                     </project_folder>
                     <project_folder name="level" expanded="true">
-                        <project_file path="./org/as2lib/basic/out/level/Warning.as" filetype="as" />
-                        <project_file path="./org/as2lib/basic/out/level/All.as" filetype="as" />
-                        <project_file path="./org/as2lib/basic/out/level/Debug.as" filetype="as" />
-                        <project_file path="./org/as2lib/basic/out/level/Error.as" filetype="as" />
-                        <project_file path="./org/as2lib/basic/out/level/Fatal.as" filetype="as" />
-                        <project_file path="./org/as2lib/basic/out/level/Info.as" filetype="as" />
-                        <project_file path="./org/as2lib/basic/out/level/None.as" filetype="as" />
+                        <project_file path="./org.as2lib.out/level/Warning.as" filetype="as" />
+                        <project_file path="./org.as2lib.out/level/All.as" filetype="as" />
+                        <project_file path="./org.as2lib.out/level/Debug.as" filetype="as" />
+                        <project_file path="./org.as2lib.out/level/Error.as" filetype="as" />
+                        <project_file path="./org.as2lib.out/level/Fatal.as" filetype="as" />
+                        <project_file path="./org.as2lib.out/level/Info.as" filetype="as" />
+                        <project_file path="./org.as2lib.out/level/None.as" filetype="as" />
                     </project_folder>
-                    <project_file path="./org/as2lib/basic/out/OutLevel.as" filetype="as" />
-                    <project_file path="./org/as2lib/basic/out/OutHandler.as" filetype="as" />
-                    <project_file path="./org/as2lib/basic/out/OutInfo.as" filetype="as" />
+                    <project_file path="./org.as2lib.out/OutLevel.as" filetype="as" />
+                    <project_file path="./org.as2lib.out/OutHandler.as" filetype="as" />
+                    <project_file path="./org.as2lib.out/OutInfo.as" filetype="as" />
                 </project_folder>
                 <project_file path="./org/as2lib/basic/BasicClass.as" filetype="as" />
                 <project_file path="./org/as2lib/basic/BasicInterface.as" filetype="as" />

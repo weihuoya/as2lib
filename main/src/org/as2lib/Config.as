@@ -1,4 +1,4 @@
-﻿import org.as2lib.basic.out.Out;
+﻿import org.as2lib.out.Out;
 
 /**
  * Rudimentary Config File.

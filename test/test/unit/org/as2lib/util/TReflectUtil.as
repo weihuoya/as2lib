@@ -2,8 +2,8 @@
 import test.org.as2lib.util.treflectutil.SubClass;
 import test.org.as2lib.util.treflectutil.SuperClass;
 import org.as2lib.util.ReflectUtil;
-import org.as2lib.basic.reflect.ClassInfo;
-import org.as2lib.basic.reflect.PackageInfo;
+import org.as2lib.reflect.ClassInfo;
+import org.as2lib.reflect.PackageInfo;
 
 class test.org.as2lib.util.TReflectUtil extends Test {
 	private var sub:SubClass;

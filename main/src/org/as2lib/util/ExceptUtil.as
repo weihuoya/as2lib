@@ -1,7 +1,7 @@
 ﻿import org.as2lib.basic.BasicClass;
-import org.as2lib.basic.except.ThrowableStringifier;
+import org.as2lib.except.ThrowableStringifier;
 import org.as2lib.basic.string.Stringifier;
-import org.as2lib.basic.except.Throwable;
+import org.as2lib.except.Throwable;
 
 class org.as2lib.util.ExceptUtil extends BasicClass {
 	private static var stringifier:Stringifier = new ThrowableStringifier();
