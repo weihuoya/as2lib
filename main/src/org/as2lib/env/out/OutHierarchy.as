@@ -28,7 +28,7 @@ import org.as2lib.env.out.DefaultOutFactory;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.env.out.OutHierachy extends BasicClass implements OutRepository {
+class org.as2lib.env.out.OutHierarchy extends BasicClass implements OutRepository {
 	
 	/** Stores already retrieved Out instances by name. */
 	private var outs:Map;
@@ -42,7 +42,7 @@ class org.as2lib.env.out.OutHierachy extends BasicClass implements OutRepository
 	/**
 	 * Constructs a new OutHierachy instance.
 	 */
-	public function OutHierachy(root:Out) {
+	public function OutHierarchy(root:Out) {
 		this.root = root;
 		outs = new PrimitiveTypeMap();
 	}
