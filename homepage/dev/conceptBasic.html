@@ -50,16 +50,16 @@
                       <td><img src="../images/seperatorVertical.gif" class="imageSeparatorVertical" alt=""></td>
                       <td class="contentTd">
                         <h1>Basic Classes (worksheet 0.5)</h1>
-                        For the success of an project with ActionScript 2.0 it is necessary to integrate additional functions that are low-level in Flash.<br>
+                        For the success of a project with ActionScript 2.0 it is necessary to integrate additional functions that are low-level in Flash.<br>
                         <br>
-                        Low-level called in this connection means that many features work in an "usually not suggested" way to handle operations so that other features don't have to use this techniques.<br>
-                        (for example: __proto__, constructor(), ... everything that stay's in connection with static stuff)
+                        Low-level called in this connection means that many features work in a "usually not suggested" way to handle operations so that other features don't have to use these techniques.<br>
+                        (for example: __proto__, constructor(), ... everything that has a connection with static stuff)
                         <table class="listeningTable">
                           <tr>
                             <th>Content</th>
                           </tr>
                           <tr>
-                            <td><a href="#Output" title="Handling different Output during an project">Output handling</a></td>
+                            <td><a href="#Output" title="Handling different Output during a project">Output handling</a></td>
                           </tr>
                           <tr>
                             <td><a href="#Exception" title="Better Handling for Exceptions">Exception handling</a></td>
@@ -88,40 +88,40 @@
                         </table>
                         <ol class="conceptList">
                           <li><a name="Output"></a><h2>Output handling</h2>
-                            Usually, the output from an application within flash runs over <code>trace();</code>(also exceptions). The Problem of this way is that this will only work within an environment where "trace" is supported (only the Flash Environment support this by default). All other cases (Within an website, as executeable or whatever) doesn't have a standard output. It even this is only switchable within the compiler for one level (display or not).
+                            Usually, the output from an application within flash runs over <code>trace();</code>(including reports about uncaught errors). The Problem of this way is that it will only work within an environment where "trace" is supported (only the Flash environment supports this by default). All other cases (within a website, in an executeable file, etc.) don't have a standard output. The output of trace actions is not even guaranteed in the Flash environment, because their export can be switched off(and, of course back on) in the publish settings.
                             <ul>
                               <li><a name="OutputReason"></a><h3>Reason</h3>
-                                We support this because we think that Output is mighty and output should be possible anywhere.
+                                We support this because we think that output is absolutely necessary(for the user as for the developer) and that it should be possible anywhere.
                               </li>
                               <li><a name="OutputSolution"></a><h3>Solution</h3>
-                                To make sure that all Output can be dynamically handled within any application we create a basic bridge for accessing those Output.<br>
+                                To make sure that all output can be handled dynamically within any application(and any player) we create a basic bridge to access the needed functionality.<br>
                                 <br>
-                                This brigde should take all requests and forward it to OutputHandlers. There should be several Implementations for several kind of running systems.<br>
+                                This bridge should take all requests and forward it to OutputHandlers. There should be several implementations for several kinds of runntime environments.<br>
                                 <br>
-                                This bridge should also handle wether an output level has reached or not.
+                                This bridge should also decide wether the current output level(for more details see below) allows the requested action. If not, it does simply nothing.
                               </li>
                               <li><a name="OutputAPI"></a><h3>API</h3>
-                                All functions should be accessed over the util class (with only static functions)
-                                <code>org.as2lib.basic.Out<code>
+                                All functions will be accessible through the org.as2lib.basic.Out class with the following static functions:
+                                <codeorg.as2lib.basic.Out</code>
                                 <ul>
-                                  <li><h5>.write([String]):Void</h5>
-                                    Simple string output to the standard device (compareable with trace).
+                                  <li><h4>.write([String]):Void</h4>
+                                    Simple string output to the standard device (comparable with trace).
                                   </li>
                                   <li><a name="OutputHandling.error"></a><h4>.error([Exception]):Void</h4>
-                                    Exceptions are usually not visibile within an .swf (Except Flash MX 2004), this method should print exceptions in a better way.
+                                    Exceptions are usually not visible within a .swf (except in the Flash MX 2004 testing environment), this method should print exceptions in a better way.
                                   </li>
                                   <li><h4>.log([String]):Void</h4>
-                                    Logging often works at files and more strict, the implementation of the Handler should choose how.
+                                    Logging often works with files and is more strict, the implementation of the Handler should choose how.
                                   </li>
                                   <li><h4>.setOutputHandler([OutputHandler]):Void</h4>
-                                    Usually the "StandardOutputHandler" should process all actions, but it will be very useful if you can change it to you special handler or an handler for an different system.
+                                    Usually the "StandardOutputHandler"(which is itself implementing the OutputHandlerInterface) should process all actions, but it will be possible to write custom output handlers for specific needs/various systems.
                                   </li>
                                   <li><h4>.setOutputLevel([Number]):Void</h4>
-                                    The Outputlevel defines which actions should be processed and which not. It is designed as binary flag, you may set it to:                                <pre>(0) 000 = No output.
+                                    The Outputlevel defines which actions are processed and which not. It is designed as a binary flag, you may set it to:                                <pre>(0) 000 = No output.
 1 = 001 = processing only exceptions.
 2 = 010 = processing only logs.
 4 = 100 = processing only writes..</pre>
-and each combinition:
+and each combination:
 <pre>(7) 111 = complete output</pre><br>
                                     In this way, it's simple to extend it. There will be constants to simplify the access:
                                     <code>.DO_EXCEPTIONS // 1
@@ -135,14 +135,14 @@ and each combinition:
                                 </ul>
                               </li>
                               <li><a name="OutputHandler"></a><h3>OutputHandler</h3>
-                                Every OutputHandler must be an Implementation from the OutputHandlerInterface. To provide first access there will be an <pre>org.as2lib.basic.outputHandler.Trace</pre> that simple provides all output to the trace function. Further following: JavaScript OutputHandler and InScreen Outputhandler.
+                                Every OutputHandler must implement the OutputHandlerInterface. To provide a fundament there will be an <pre>org.as2lib.basic.outputHandler.Trace</pre> class that simply delegates every output to the trace function. Further classes may be: JavaScript OutputHandler and InScreen Outputhandler.
                               </li>
                               <li><a name="OutputExceptions"></a><h3>Exceptions</h3>
-                                Exceptions will get thrown if ...
+                                Exceptions will be thrown if ...
                                 <ul>
                                   <li>no Exception was defined (<code>.error()</code>)</li>
                                   <li>the given String was empty (<code>.write()</code>,<code>.log()</code>)</li>
-                                  <li>no OutputWriter was available (default value is an "TraceOutputWriter")</li>
+                                  <li>no OutputWriter was available (default value is a "TraceOutputWriter")</li>
                                 </ul>
                               </li>
                             </ul>
@@ -167,11 +167,11 @@ and each combinition:
                                     we will use reflections to get automatically the name of the Exception.
                                   </li>
                                   <li><h4>Stack</h4>
-                                    We will save the previous called action with vars as small implementation of an stacktrace (as long as not more is supported) with the arguments object.<br>
+                                    We will save the previous called action with vars as small implementation of a stacktrace (as long as not more is supported) with the arguments object.<br>
                                     This will save time in searching "where did this exception occur".
                                   </li>
                                   <li><h4>Exception Conversion</h4>
-                                    If you want to throw an Exception on by an different type when you've catched it there will be an functionality to convert one Exception to another, of course, your are able to cast it but this doesn't change the fields and the name would be the same, you wouldn't have noticed any difference. The conversion should fill the exception additionally with the old Stacktrace and type.
+                                    If you want to throw an Exception on by a different type when you've catched it there will be a functionality to convert one Exception to another, of course, your are able to cast it but this doesn't change the fields and the name would be the same, you wouldn't have noticed any difference. The conversion should fill the exception additionally with the old Stacktrace and type.
                                   </li>
                                 </ul>
                               </li>
@@ -191,7 +191,7 @@ and each combinition:
                                     Returns the provided message.
                                   </li>
                                   <li><a name="ExceptionAPItoString"/><h4>.toString():String</h4>
-                                    Returns an simple descriptionoutput as ascii graphic.<pre>--- Exception Occured ---
+                                    Returns a simple descriptionoutput as ascii graphic.<pre>--- Exception Occured ---
   type: org.as2lib.basic.exceptions.WrongArgumentsException
   message: You did something wrong.
   by: org.as2lib.basic.StringUtil.trim([String 'home'], [Array 'my', 'yours', 'them']);
@@ -258,9 +258,9 @@ and each combinition:
                                 Actually it's inbuilt in Java. Flash hasn't got something like that "inbuilt". This is a serious problem, so to solve this is not far away.
                               </li>
                               <li><a name="ReflectionsSolution"></a><h3>Solution</h3>
-                                We will provide an Util that handles all matter of reflections. This util will be found at <pre>org.as2lib.basic.Reflections</pre>.
+                                We will provide a Util that handles all matter of reflections. This util will be found at <pre>org.as2lib.basic.Reflections</pre>.
                                 <h4>Logical Description</h4>
-                                The question i've heard most about this is "How the hell should this work?". There is an simple Answer: I use all scopeable areas that are available (starting with _level0 and _global), then i save all informations and step the name throught until i find the first instance, from there i will get the path. With the path and "eval" i'm able to fetch everything else.
+                                The question i've heard most about this is "How the hell should this work?". There is a simple Answer: I use all scopeable areas that are available (starting with _level0 and _global), then i save all informations and step the name throught until i find the first instance, from there i will get the path. With the path and "eval" i'm able to fetch everything else.
                               </li>
                               <li><a name="ReflectionsAPI"></a><h3>API</h3>
                                 <ul>
@@ -301,7 +301,7 @@ and each combinition:
                                 </ul>
                               </li>
                               <li><a name="ReflectionExceptions"></a><h3>Exceptions</h3>
-                                Exceptions will get thrown if ...
+                                Exceptions will be thrown if ...
                                 <ul>
                                   <li>no class(function) has been given</li>
                                   <li>the class was outside the scopeable area</li>
@@ -349,7 +349,7 @@ and each combinition:
                             </ol>
                             <h3>Why so complicated?</h3>
                             This is actually the best way to ensure that a function is really available and it finally reduces the operation speed of eventhandling by a better Code Handling.
-                            Of Course this way isn't perfect. It will maybe get changed within an future worksheet by an better idea, but actually i see no different possibility.
+                            Of Course this way isn't perfect. It will maybe get changed within a future worksheet by a better idea, but actually i see no different possibility.
                             <h3>Different access</h3>
                             Well, first previewable Problem will be that one class is not able to extend this Eventhandler, because it has already extended on class.
                             The simplest way to allow this way is to get an Eventhandler as instance.
@@ -367,14 +367,14 @@ and each combinition:
                           <li><a name="TypedArray"></a><h2>Typed Array</h2>
                             A typical problem using as2 is that an Array might have one or more types within an Array, in most cases, this is very problematic, especially when you want to publish your classes (within a team or generally), because other people can easily create chaos when they don't watch. 
                             <h3>Where to find?</h3>
-                            Of course we need an Class you will find it at org.as2lib.basic.TypedArray. This class will use the as2 Array class and uses all Methods like Array as an Bridge. It should not be possible to directly set/get an Value like <code>#
+                            Of course we need a Class you will find it at org.as2lib.basic.TypedArray. This class will use the as2 Array class and uses all Methods like Array as a Bridge. It should not be possible to directly set/get a Value like <code>#
 myArray = new Array();
-myArray["name"] = "bunny";</code> because the Compiler would not check it. We cant prevent this (the compiler completly blows it). But at least we can bind ( by not using an dynamic class, like Array is) that <code>
+myArray["name"] = "bunny";</code> because the Compiler would not check it. We cant prevent this (the compiler completly blows it). But at least we can bind ( by not using a dynamic class, like Array is) that <code>
 myArray.name = "bunny"</code> will not work.
                             <h3>Typedefinition</h3>
                             The type of an Array should be defined within the constructor. Infact the Type should be the hole lifetime the same.<code>new TypedArray(org.as2lib.basic.Exception)</code>
                             <h3>Typeinsurance</h3>
-                            We have an "not-dynamic" Class. So there must be methods for adding an value within this array with an name.
+                            We have a "not-dynamic" Class. So there must be methods for adding a value within this array with a name.
                             <ul>
                               <li>validation: <code>public function checkType(value) {
   if(value instanceof this.type) {
@@ -394,13 +394,13 @@ myArray.name = "bunny"</code> will not work.
                             Even the validation and the setting/getting of values are almost simple bridge functionalities. Different Methods like "sort, push, pop, ...." can surly be simple ported.
                           </li>
                           <li><a name="Cloning"></a><h2>Cloning</h2>
-                            Cloning like in Java would run with an simple Interface that defines "this class is cloneable"(this will also exist in our case). Of course this interface should be shurly used by us too but also it as2 allows us an generic clone.
+                            Cloning like in Java would run with a simple Interface that defines "this class is cloneable"(this will also exist in our case). Of course this interface should be shurly used by us too but also it as2 allows us a generic clone.
                             <h3>Idea</h3>Often it's complicating that the compiler won't check all possibilities and no exceptions won't be thrown (even if the developer does really bad stuff). But it gives us the possibilty for simple using the objects constructor and proto to make a real clone with that. One &quot;for(in)&quot; loop could handle all that.                            <h3>Location</h3>
                             Of course it's basic functionality like <a href="#ReflectionHandling" title="Basically Stuff for Classhandling with Reflections">Reflections</a> so this should be also in the "BasicClass" that all other extend as ".clone()" Method.
                             <h3>Access points</h3>
-                            The code/handling should be in an Util class &quot;org.as2lib.basic.Helper&quot;(or something like that)
+                            The code/handling should be in a Util class &quot;org.as2lib.basic.Helper&quot;(or something like that)
                             <h3>Complete cloning</h3>
-                            Sometimes it is a real problem that cloning only clones one level. There should be additionally an Method to clone the complete tree &quot;.cloneComplete&quot; which is defined as &quot;Chain of Responsibility&quot; (Design Pattern) this simply uses &quot;.cloneComplete&quot; recursivly (okay it's a little more difficult).
+                            Sometimes it is a real problem that cloning only clones one level. There should be additionally a Method to clone the complete tree &quot;.cloneComplete&quot; which is defined as &quot;Chain of Responsibility&quot; (Design Pattern) this simply uses &quot;.cloneComplete&quot; recursivly (okay it's a little more difficult).
                             <p class="note">Note: Interfaces (specially small one) make problems with casting, therefore this won't be available within an interface.</p>
                           </li>
                           <li><a name="Overloading"></a><h2>Overloading</h2>
@@ -411,7 +411,7 @@ myArray.name = "bunny"</code> will not work.
 }
 public function doSomethingWay2() {
 }</code>
-                            In this case it will be nice in future to change it to a supported overloading. The second thing is that this can be well documented. But this means an Separation for this overloading would look like this:
+                            In this case it will be nice in future to change it to a supported overloading. The second thing is that this can be well documented. But this means a Separation for this overloading would look like this:
                             <code>public function doSomething() {
   if(arguments[0] instanceOf Home) {
     doSomethingWay1(arguments[0], arguments[1]);
@@ -452,9 +452,9 @@ public function doSomethingWay2() {
                             <h3>What are Testcases</h3>
                             A Testcase is a Class/Method that checks a different method if it works correctly. A Developer has to write a Testcase alone for his class, a Testcase system has to provide the functionality for automated testing
                             <h3>What we do like other systems</h3>
-                            We have (like all other System too) a basic Class that should be extended. This class will support different functionalities to compare values and define wether a testcase failed or not (for example: assertEquals(), assertTrue() etc.). For all this functionality there should be a inverse functionality to check the difference (example: assertNotEquals(), assertFalse(), etc.).<br>Usually a TestcaseSystem works with overloading, but in fact, we decided to use this as rare as posible so each method should have an additional method to provide an message to the failure (for example: assertTrueWithMessage(), assertFalseWithMessage(), etc.). <p class="note">Note: with as2unit you have also to make different notations to the testcase itself, we will avoid this.</p>
+                            We have (like all other System too) a basic Class that should be extended. This class will support different functionalities to compare values and define wether a testcase failed or not (for example: assertEquals(), assertTrue() etc.). For all this functionality there should be a inverse functionality to check the difference (example: assertNotEquals(), assertFalse(), etc.).<br>Usually a TestcaseSystem works with overloading, but in fact, we decided to use this as rare as posible so each method should have an additional method to provide a message to the failure (for example: assertTrueWithMessage(), assertFalseWithMessage(), etc.). <p class="note">Note: with as2unit you have also to make different notations to the testcase itself, we will avoid this.</p>
                             <h3>Running Code</h3>
-                            To run Testcases you should not have to do two different things(as as2unit has). Developers should be able to start a testcase within an call(not add a whole component to the stage). This should work with &lt;basicClass&gt;.run(&quot;&lt;path&gt;&quot;) this way is usual and simple but within flash it doesn't compile the testcase if you use an string. So we will provide a second access to run an testcase seperatly with &lt;basicClass&gt;.runClass(&lt;path&gt;) so the Class itself will be compiled because it is defined as is within the call.
+                            To run Testcases you should not have to do two different things(as as2unit has). Developers should be able to start a testcase within a call(not add a whole component to the stage). This should work with &lt;basicClass&gt;.run(&quot;&lt;path&gt;&quot;) this way is usual and simple but within flash it doesn't compile the testcase if you use a string. So we will provide a second access to run a testcase seperatly with &lt;basicClass&gt;.runClass(&lt;path&gt;) so the Class itself will be compiled because it is defined as is within the call.
                             <h3>Handling Output</h3>
                             The Output Handling should run over the standard OutputHandling. Simple Text Output to Asccii graphics. Another difference to other testsystems should be defined by displaying more details within the result (like which testcases were found and which work correctly), mostly because it's often not clear whether a testcase is found or not.
                           </li>
@@ -463,7 +463,7 @@ public function doSomethingWay2() {
                             <h3>What are Regulary Expressions?</h3>
                             Regulary Expressions are a simple but mighty way to search within Strings. JavaScript supports Regulary Expressions well and i got no idea why flash not.
                             <h3>How will they be supported?</h3>
-                            Support will come within an Util Class. One Accesspoint (at least) will handle a Regulary Expression. Further details will come during real concept and Worksheet for this.
+                            Support will come within a Util Class. One Accesspoint (at least) will handle a Regulary Expression. Further details will come during real concept and Worksheet for this.
                             <p class="note">Note: This has the lowest priority.</p>
                           </li>
                         </ol>
