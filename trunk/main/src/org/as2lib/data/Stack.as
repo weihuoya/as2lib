@@ -1,20 +1,20 @@
 ﻿class org.as2lib.data.Stack {
-	private var array:Array;
+	private var data:Array;
 	
 	public function push(object:Object):Object {
-		array.push(object);
+		data.push(object);
 		return object;
 	}
 	
 	public function pop(Void):Object {
-		return array.pop();
+		return data.pop();
 	}
 	
 	public function peek(Void):Object {
-		return array[array.length - 1];
+		return data[data.length - 1];
 	}
 	
 	public function isEmpty() {
-		return (array.length == 0);
+		return (data.length == 0);
 	}
 }

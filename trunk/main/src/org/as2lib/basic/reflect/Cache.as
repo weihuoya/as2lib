@@ -20,7 +20,7 @@ class org.as2lib.basic.reflect.Cache extends BasicClass {
 	}
 	
 	public function addClass(info:ClassInfo):ClassInfo {
-		classes.set(info.getClass().prototype, info);
+		classes.put(info.getClass().prototype, info);
 		return info;
 	}
 	
@@ -29,7 +29,7 @@ class org.as2lib.basic.reflect.Cache extends BasicClass {
 	}
 	
 	public function addPackage(info:PackageInfo):PackageInfo {
-		packages.set(info.getPackage(), info);
+		packages.put(info.getPackage(), info);
 		return info;
 	}
 	

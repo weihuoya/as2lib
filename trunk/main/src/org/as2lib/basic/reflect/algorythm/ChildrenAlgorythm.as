@@ -46,7 +46,7 @@ class org.as2lib.basic.reflect.algorythm.ChildrenAlgorythm extends AbstractConte
 				clazz = new ClassInfo(name, target[name], info);
 				cache.addClass(clazz);
 			}
-			data.set(name, clazz);
+			data.put(name, clazz);
 			return;
 		}
 		if (type == "package") {
@@ -55,7 +55,7 @@ class org.as2lib.basic.reflect.algorythm.ChildrenAlgorythm extends AbstractConte
 				package = new PackageInfo(name, target[name], info);
 				cache.addPackage(package);
 			}
-			data.set(name, package);
+			data.put(name, package);
 			return;
 		}
 	}
