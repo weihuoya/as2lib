@@ -33,7 +33,7 @@ class org.as2lib.env.reflect.ResolveProxyFactory extends BasicClass implements P
 		while (prototype != Object.prototype) {
 			_global.ASSetPropFlags(prototype, null, 6, true);
 			for (var i:String in prototype) {
-				if (i != "__proto__" && i != "__constructor__" && i != "constructor") {
+				if (i != "__proto__" && i != "__constructor__" && i != "constructor" && typeof(prototype[i]) == "function") {
 					result[i] = function() {
 									return handler.invoke(this, arguments.callee.methodName, arguments);
 								};
