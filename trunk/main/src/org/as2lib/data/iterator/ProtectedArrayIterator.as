@@ -14,51 +14,22 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.iterator.Iterator;
-import org.as2lib.data.iterator.NoSuchElementException;
-import org.as2lib.env.except.IllegalStateException;
-import org.as2lib.core.BasicClass;
+import org.as2lib.data.iterator.ArrayIterator;
 import org.as2lib.env.except.UnsupportedOperationException;
 
 /**
- * The ProtectedArrayIterator is used to iterate over an Array without being able to remove elements.
+ * The ProtectedArrayIterator is used to iterate over an Array without being
+ * able to remove elements.
  *
  * @author Michael Herrmann
+ * @author Simon Wacker
  */
-class org.as2lib.data.iterator.ProtectedArrayIterator extends BasicClass implements Iterator {
-	/** The target data holder. */
-	private var target:Array;
-	
-	/** The current index of the iteration. */
-	private var index:Number;
-	
+class org.as2lib.data.iterator.ProtectedArrayIterator extends ArrayIterator {
 	/**
-	 * Constructs a new ProtectedArrayIterator.
-	 *
-	 * @param newTarget the Array to iterate over
+	 * @see org.as2lib.data.iterator.ArrayIterator#Constructor()
 	 */
 	public function ProtectedArrayIterator(newTarget:Array) {
-		target = newTarget;
-		index = -1;
-	}
-	
-	/**
-	 * @see org.as2lib.data.iterator.Iterator#hasNext()
-	 */
-	public function hasNext(Void):Boolean {
-		return (index < target.length - 1);
-	}
-	
-	/**
-	 * @see org.as2lib.data.iterator.Iterator#next()
-	 */
-	public function next(Void) {
-		if (!hasNext()) {
-			throw new NoSuchElementException("There is no more element.",
-											 this,
-											 arguments);
-		}
-		return target[++index];
+		super(newTarget);
 	}
 	
 	/**
