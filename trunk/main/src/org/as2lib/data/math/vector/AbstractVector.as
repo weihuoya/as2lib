@@ -10,17 +10,15 @@ class org.as2lib.data.math.vector.AbstractVector extends BasicClass implements V
 		v = new TypedArray(Number);
 	}
 		
-	public function set(index:Number, value:Number):Boolean {
-		var result = true;
-		v[index] = (v[index]==undefined)? value: result = false;
-		return result;
+	public function setValue(index:Number, value:Number) {
+		v[index] = value;
 	}
 	
 	public function clear(Void):Void {
 		v = new TypedArray(Number);
 	}
 	
-	public function get(index:Number) {
+	public function getValue(index:Number) {
 		return v[index];
 	}
 	
