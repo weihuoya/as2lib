@@ -94,15 +94,17 @@ class org.as2lib.data.Hashtable implements Map {
 		return -1;
 	}
 	
-	/*public function toString(Void):String {
+	public function toString(Void):String {
 		var result:String = "{";
 		var valueIterator:ArrayIterator = new ArrayIterator(values);
-		for (var keyIterator:ArrayIterator = new ArrayIterator(keys); keyIterator.hasNext();) {
+		var keyIterator:ArrayIterator = new ArrayIterator(keys)
+		while (keyIterator.hasNext()) {
 			result += keyIterator.next().toString()+"="+valueIterator.next().toString();
-			if (keyIterator.hasNext())
+			if (keyIterator.hasNext()) {
 				result += ", ";
+			}
 		}
 		result += "}";
 		return result;
-	}*/
+	}
 }
