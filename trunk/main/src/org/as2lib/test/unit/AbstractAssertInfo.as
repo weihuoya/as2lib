@@ -50,11 +50,13 @@ class org.as2lib.test.unit.AbstractAssertInfo extends BasicClass implements Asse
 	/**
 	 * Template method to be overwritten. This will be called by the first
 	 * time if isFailed() was executed.
+	 * 
+	 * Note: The method failes by standard.
 	 *
 	 * @return true if the execution failed, false if it didn't.
 	 */
 	private function execute(Void):Boolean {
-		return false;
+		return true;
 	}
 	
 	public function hasMessage(Void):Boolean {

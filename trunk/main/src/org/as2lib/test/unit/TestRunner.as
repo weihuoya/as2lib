@@ -1,10 +1,10 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.array.TypedArray;
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.array.ArrayIterator;
+import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.data.holder.queue.TypedQueue;
 import org.as2lib.data.holder.map.TypedMap;
 import org.as2lib.data.holder.Iterator;
-import org.as2lib.data.holder.ArrayIterator;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.TestSuite;
 import org.as2lib.test.unit.TestResult;
@@ -17,10 +17,12 @@ import org.as2lib.test.unit.FinishInfo;
 import org.as2lib.test.unit.PauseInfo;
 import org.as2lib.test.unit.ResumeInfo;
 import org.as2lib.test.unit.TestCaseMethodInfo;
+import org.as2lib.test.unit.info.*;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.SimpleEventBroadcaster;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.util.ArrayUtil;
+import org.as2lib.util.StringUtil;
 import org.as2lib.util.StopWatch;
 
 class org.as2lib.test.unit.TestRunner extends BasicClass {
@@ -167,7 +169,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 				var freshScope:TestCase = TestCase(currentTestCase.getTestCase().getClass().newInstance());
 			     	freshScope.setTestRunner(this);
 			} catch(e) {
-				//methodInfo.addError(new UnexpectedException("IMPORTANT: Testcase threw an error by instanciation.", this, arguments).initCause(e));
+				methodInfo.addInfo(new InstanciationError("IMPORTANT: Testcase threw an error by instanciation.\n"+StringUtil.addSpaceIndent(e.toString(), 2), this, arguments));
 			}
 			
 			// Prepare the execution of the method by setUp
@@ -175,7 +177,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 				try {
 					freshScope.setUp();
 				} catch (e) {
-					//methodInfo.addError(new UnexpectedException("IMPORTANT: Error occured during set up. (Testcase won't get executed!)", freshScope, arguments).initCause(e));
+					methodInfo.addInfo(new SetUpError("IMPORTANT: Error occured during set up. (Testcase won't get executed!)\n"+StringUtil.addSpaceIndent(e.toString(), 2), freshScope, arguments));
 				}
 			}
 			
@@ -187,7 +189,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 					sW.start();
 					methodInfo.getMethodInfo().applyTo(freshScope, null);
 				} catch (e) {
-					//methodInfo.addError(new UnexpectedException(methodInfo.getMethodInfo().toString()+" threw a unexpected exception", freshScope, arguments).initCause(e));
+					methodInfo.addInfo(new ExecutionError(methodInfo.getMethodInfo().toString()+" threw a unexpected exception.\n"+StringUtil.addSpaceIndent(e.toString(), 2), freshScope, arguments));
 				}
 				sW.stop();
 				
@@ -195,7 +197,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 				try {
 					freshScope.tearDown();
 				} catch(e) {
-					//methodInfo.addError(new UnexpectedException("IMPORTANT: Error occured during tear down.", freshScope, arguments).initCause(e));
+					methodInfo.addInfo(new TearDownError("IMPORTANT: Error occured during tear down.\n"+StringUtil.addSpaceIndent(e.toString(), 2), freshScope, arguments));
 				}
 				
 			}
