@@ -1,1 +1,8 @@
-asdfasdfadsfs
+class MyClass {
+  function myFunction () {
+  }
+  function mySecondFunction () {
+  }
+  function myThirdFunction () {
+  }
+}
