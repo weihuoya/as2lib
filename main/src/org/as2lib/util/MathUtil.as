@@ -32,21 +32,29 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	
 	/**
 	 * Checks if a number is odd.
+	 * Note: Only integers can be odd!
 	 *
 	 * @param n The number to check.
 	 * @return True if the number is odd, false if not.
 	 */
 	public static function isOdd(n:Number):Boolean{
+		if(n%1 != 0){
+			return false;
+		}
 		return Boolean(n%2);
 	}
 	
 	/**
 	 * Checks if a number is even.
+	 * Note: Only integers can be even!
 	 *
 	 * @param n The number to check.
 	 * @return True if the number is even, false if not.
 	 */	
 	public static function isEven(n:Number):Boolean{
+		if(n%1 != 0){
+			return false;
+		}
 		return (n%2 == 0);
 	}
 	
@@ -67,7 +75,7 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * @return True if the number is a natural, false if not.
 	 */	
 	public static function isNatural(n:Number):Boolean{
-		if(n >= 0 && MathUtil.isInteger(n)){
+		if(n >= 0 && n%1 == 0){
 			return true;
 		}else{
 			return false;
@@ -101,7 +109,7 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * @return The factorial of the number.
 	 */
 	public static function factorial(n:Number):Number{
-		if(n < 0){
+		if(n < 0 || n%1 != 0){
 			throw new IllegalArgumentException("The passed argument must be a positive integer.", eval("th"+"is"), arguments);
 		}
 		if(n == 0){
