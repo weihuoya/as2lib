@@ -47,8 +47,6 @@ class test.unit.org.as2lib.env.overload.TOverload extends TestCase {
 		var o:Overload = new Overload(this);
 		var oh:OverloadHandler = o.addHandler([], new Function());
 		assertNotThrows(o, "removeHandler", [oh]);
-		// Why gets the exception not thrown?
-		//assertThrows(IllegalArgumentException, o, "removeHandler", [new OverloadHandler()]);
 	}
 	
 	public function testForwardWithMultipleOverloadHandlers(Void):Void {

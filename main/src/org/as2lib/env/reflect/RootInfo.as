@@ -16,7 +16,6 @@
 
 import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.util.ReflectUtil;
 
 /**
  * RootInfo represents the root of the class path. The root in the Flash environment
