@@ -15,8 +15,6 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.Stack;
-import org.as2lib.data.holder.stack.SimpleStack;
 import org.as2lib.aop.Pointcut;
 
 /**
@@ -25,13 +23,13 @@ import org.as2lib.aop.Pointcut;
 class org.as2lib.aop.pointcut.AbstractCompositePointcut extends BasicClass {
 	
 	/** Stores all added pointcuts. */
-	private var pointcutStack:Stack;
+	private var pointcutArray:Array;
 	
 	/**
 	 * Private constructor that constructs a new AbstractCompositePointcut.
 	 */
 	private function AbstractCompositePointcut(Void) {
-		pointcutStack = new SimpleStack();
+		pointcutArray = new Array();
 	}
 	
 	/**
@@ -42,7 +40,7 @@ class org.as2lib.aop.pointcut.AbstractCompositePointcut extends BasicClass {
 	 * @param pointcut the pointcut to be added
 	 */
 	public function addPointcut(pointcut:Pointcut):Void {
-		if (pointcut) pointcutStack.push(pointcut);
+		if (pointcut) pointcutArray.push(pointcut);
 	}
 	
 }
