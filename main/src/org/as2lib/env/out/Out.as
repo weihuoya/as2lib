@@ -23,25 +23,25 @@ import org.as2lib.core.BasicClass;
  */
 class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	/** All output will be made. */
-	public static var ALL:OutLevel = new All();
+	public static var ALL:OutLevel = new AllLevel();
 	
-	/** All output that is at a lower output level than Debug will be made. */
-	public static var DEBUG:OutLevel = new Debug();
+	/** All output that is at a lower output level than DebugLevel will be made. */
+	public static var DEBUG:OutLevel = new DebugLevel();
 	
-	/** All output that is at a lower output level than Info will be made. */
-	public static var INFO:OutLevel = new Info();
+	/** All output that is at a lower output level than InfoLevel will be made. */
+	public static var INFO:OutLevel = new InfoLevel();
 	
-	/** All output that is at a lower output level than Warning will be made. */
-	public static var WARNING:OutLevel = new Warning();
+	/** All output that is at a lower output level than WarningLevel will be made. */
+	public static var WARNING:OutLevel = new WarningLevel();
 	
-	/** All output that is at a lower output level than Error will be made. */
-	public static var ERROR:OutLevel = new Error();
+	/** All output that is at a lower output level than ErrorLevel will be made. */
+	public static var ERROR:OutLevel = new ErrorLevel();
 	
-	/** All output that is at a lower output level than Fatal will be made. */
-	public static var FATAL:OutLevel = new Fatal();
+	/** All output that is at a lower output level than FatalLevel will be made. */
+	public static var FATAL:OutLevel = new FatalLevel();
 	
 	/** No output will be made. */
-	public static var NONE:OutLevel = new None();
+	public static var NONE:OutLevel = new NoneLevel();
 	
 	/** The actual OutLevel of the Out instance. */
 	private var level:OutLevel;
