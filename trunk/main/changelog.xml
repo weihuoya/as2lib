@@ -6,6 +6,9 @@
     <year value="2005">
        <month value="2">
          <day value="12">
+           <entry type="remove" package="org.as2lib.env.reflect" class="ReflectException"></entry>
+           <entry type="change" package="static org.as2lib.env.reflect" class="ReflectConfig" method="get-/setMethodInfoStringifier">Moved to MethodInfo class and renamed to get-/setStringifier.</entry>
+           <entry type="change" package="org.as2lib.env.reflect" class="MethodInfo" method="applyTo"><change-rename to="invoke" /></entry>
            <entry type="add" package="org.as2lib.env.reflect" class="PackageInfo" method="getMembersByFlag(filterSubPackages:Boolean):Array">'filterSubPackages' defines whether members of sub-packages shall also be included in the result.</entry>
            <entry type="add" package="org.as2lib.env.reflect" class="PackageInfo" method="getMembersByFilter(PackageMemberFilter):Array">Let's you filter members with your own set of rules.</entry>
            <entry type="add" package="org.as2lib.env.reflect" class="PackageInfo" method="getMemberClassesByFlag(filterSubPackages:Boolean):Array">'filterSubPackages' defines whether member classes of sub-packages shall also be included in the result.</entry>

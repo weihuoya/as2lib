@@ -17,16 +17,24 @@
 import org.as2lib.core.BasicInterface;
 
 /**
- * MemberInfo is the base interface extended by all other classes representing
- * members in the org.as2lib.env.reflect package.
+ * MemberInfo represents a member in the Flash environment.
+ *
+ * <p>Members are basically every constructs of the programming language.
+ * Members are for example methods, properties/variables, classes,
+ * interfaces and packages.
  *
  * @author Simon Wacker
  */
 interface org.as2lib.env.reflect.MemberInfo extends BasicInterface {
+	
 	/**
 	 * Returns the name of the member.
+	 *
+	 * <p>The name of the member does not include its preceding package
+	 * structure when taling of interfaces, classes or packages.
 	 *
 	 * @return the member's name
 	 */
 	public function getName(Void):String;
+	
 }
