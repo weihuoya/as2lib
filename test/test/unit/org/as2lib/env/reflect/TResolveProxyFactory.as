@@ -25,12 +25,12 @@ class test.unit.org.as2lib.env.reflect.TResolveProxyFactory extends TestCase {
 		var owner:TResolveProxyFactory = this;
 		handler.invoke = function(proxy, method:String, args:FunctionArguments) {
 			owner.assertSame(proxy1, proxy);
-			owner.assertSame("getClass", method);
+			owner.assertSame("toString", method);
 			owner.assertSame("arg1", args[0]);
 			owner.assertSame("arg2", args[1]);
 		}
 		proxy1 = BasicInterface(factory.createProxy(BasicInterface, handler));
-		proxy1.getClass("arg1", "arg2");
+		proxy1.toString("arg1", "arg2");
 	}
 	
 	public function testInvocationPropagationWithClass(Void):Void {
@@ -42,7 +42,7 @@ class test.unit.org.as2lib.env.reflect.TResolveProxyFactory extends TestCase {
 		handler.invoke = function(proxy, method:String, args:FunctionArguments) {
 			owner.assertSame(proxy1, proxy);
 			if (this["count"] == 0) {
-				owner.assertSame("getClass", method);
+				owner.assertSame("toString", method);
 				owner.assertSame("arg1", args[0]);
 				owner.assertSame("arg2", args[1]);
 			}
@@ -53,7 +53,7 @@ class test.unit.org.as2lib.env.reflect.TResolveProxyFactory extends TestCase {
 			this["count"]++;
 		}
 		proxy1 = PropertyValue(factory.createProxy(PropertyValue, handler));
-		proxy1.getClass("arg1", "arg2");
+		proxy1.toString("arg1", "arg2");
 		proxy1.getName();
 		assertSame(handler["count"], 2);
 	}

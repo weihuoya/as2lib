@@ -21,8 +21,6 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.data.holder.Stack;
 import org.as2lib.env.except.Throwable;
-import org.as2lib.env.except.StackTraceElementFactory;
-import org.as2lib.env.except.SimpleStackTraceElementFactory;
 import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.env.except.ExceptConfig;
 
@@ -43,33 +41,19 @@ class test.unit.org.as2lib.env.except.TAbstractThrowable extends TestCase {
 		return true;
 	}
 	
-	/**
-	 *
-	 */
-	public function tearDown(Void):Void {
-		ExceptConfig.setStackTraceElementFactory(new SimpleStackTraceElementFactory());
-	}
-	
 	public function getThrowable(message:String, thrower, args:FunctionArguments):Throwable {
 		throw new Error("Abstract method that should be overwritten.");
 		return null;
 	}
+	
 	public function testNewWithNullArguments(Void):Void {
-		var e:StackTraceElement = new StackTraceElement();
-		
-		var stefControl:MockControl = new MockControl(StackTraceElementFactory);
-		var stef:StackTraceElementFactory = stefControl.getMock();
-		stef.getStackTraceElement(null, undefined, null);
-		stefControl.setReturnValue(e);
-		stefControl.replay();
-		
-		ExceptConfig.setStackTraceElementFactory(stef);
-		
 		var t:Throwable = getThrowable(null, null, null);
 		assertNull(t.getMessage());
-		assertSame(t.getStackTrace().pop(), e);
 		
-		stefControl.verify();
+		var e:StackTraceElement = StackTraceElement(t.getStackTrace().pop());
+		assertNull(e.getMethod());
+		assertNull(e.getThrower());
+		assertNull(e.getArguments());
 	}
 	/*
 	public function testNewWithRealArguments(Void):Void {
@@ -92,8 +76,6 @@ class test.unit.org.as2lib.env.except.TAbstractThrowable extends TestCase {
 	}*/
 	
 	public function testInitCauseWithNullArgument(Void):Void {
-		ExceptConfig.setStackTraceElementFactory(new SimpleStackTraceElementFactory());
-		
 		var t:Throwable = getThrowable("message", this, arguments);
 		assertThrows(IllegalArgumentException, t, "initCause", [null]);
 	}
