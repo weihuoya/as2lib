@@ -68,7 +68,11 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	}
 	
 	public function getBeanByName(name:String) {
-		return getBeanDefinition(name).getBean();
+		try {
+			return getBeanDefinition(name).getBean();
+		} catch (exception:org.as2lib.env.bean.factory.NoSuchBeanDefinitionException) {
+			return getParentBeanFactory().getBeanByName(name);
+		}
 	}
 	
 	public function getBeanByNameAndType(name:String, requiredType:Function) {
@@ -122,8 +126,11 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	public function getBeanDefinitionNamesByType(type:Function):Array {
 		var result:Array = new Array();
 		var beanDefinitionNames:Array = beanDefinitionMap.getKeys();
-		for (var i:Number = 0; i < beanDefinitionNames; i++) {
-			if (BeanDefinition(beanDefinitionMap.get(beanDefinitionNames[i])) instanceof type) {
+		for (var i:Number = 0; i < beanDefinitionNames.length; i++) {
+			var beanClass:Function = BeanDefinition(beanDefinitionMap.get(beanDefinitionNames[i])).getBeanClass();
+			var currentBean = new Object();
+			currentBean.__proto__ = beanClass.prototype;
+			if (currentBean instanceof type) {
 				result.push(beanDefinitionNames[i]);
 			}
 		}
@@ -137,10 +144,7 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	public function getBeanDefinition(beanName:String):BeanDefinition {
 		var result:BeanDefinition = beanDefinitionMap.get(beanName);
 		if (!result) {
-			result = getParentBeanFactory().getBeanByName(beanName);
-			if (!result) {
-				throw new NoSuchBeanDefinitionException("There is no bean definition with name [" + beanName + "].", this, arguments);
-			}
+			throw new NoSuchBeanDefinitionException("There is no bean definition with name [" + beanName + "].", this, arguments);
 		}
 		return result;
 	}
