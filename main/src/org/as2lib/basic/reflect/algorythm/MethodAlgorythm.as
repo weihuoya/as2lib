@@ -45,6 +45,6 @@ class org.as2lib.basic.reflect.algorythm.MethodAlgorythm extends AbstractContent
 	
 	private function store(name:String, target:Object):Void {
 		var method:MethodInfo = new MethodInfo(name, target[name], info, staticFlag);
-		data.set(name, method);
+		data.put(name, method);
 	}
 }

@@ -3,25 +3,24 @@ import org.as2lib.data.ArrayIterator;
 import org.as2lib.data.Hashtable;
 
 class org.as2lib.data.HashtableIterator implements Iterator {
+	private var target:Hashtable;
+	private var keyIterator:ArrayIterator;
+	private var lastKey:String;
 	
-	private var _target:Hashtable;
-	private var _keyIterator:ArrayIterator;
-	private var _lastKey:String;
-	
-	public function HashtableIterator(target:Hashtable) {
-		_target = target;
-		_keyIterator = new ArrayIterator(target.getKeys());
+	public function HashtableIterator(newTarget:Hashtable) {
+		target = newTarget;
+		keyIterator = new ArrayIterator(target.getKeys());
 	}
 	
-	public function hasNext():Boolean {
-		return _keyIterator.hasNext();
+	public function hasNext(Void):Boolean {
+		return keyIterator.hasNext();
 	}
-	public function next():Object {
-		_lastKey = String(_keyIterator.next());
-		return _target.get(_lastKey);
+	public function next(Void):Object {
+		lastKey = String(keyIterator.next());
+		return target.get(lastKey);
 	}
-	public function remove():Void {
-		_keyIterator.remove();
-		_target.remove(_lastKey);
+	public function remove(Void):Void {
+		keyIterator.remove();
+		target.remove(lastKey);
 	}
 }

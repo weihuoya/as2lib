@@ -45,7 +45,7 @@ class org.as2lib.basic.reflect.algorythm.PropertyAlgorythm extends AbstractConte
 		if (typeof(prototype[name] == "function")) {
 			var coreName = name.substring(7);
 			if (name.indexOf("__get__") == 0) {
-				getters.set(coreName, true);
+				getters.put(coreName, true);
 				if (!setters.get(coreName)) {
 					type = "__get__";
 					return true;
@@ -53,7 +53,7 @@ class org.as2lib.basic.reflect.algorythm.PropertyAlgorythm extends AbstractConte
 				return false;
 			} 
 			if (name.indexOf("__set__") == 0) {
-				setters.set(coreName, true);
+				setters.put(coreName, true);
 				if (!getters.get(coreName)) {
 					type = "__set__";
 					return true;
@@ -69,12 +69,12 @@ class org.as2lib.basic.reflect.algorythm.PropertyAlgorythm extends AbstractConte
 		var property:PropertyInfo;
 		if (type == "__get__") {
 			property = new PropertyInfo(coreName, target["__set__" + coreName], target[name], info, staticFlag);
-			data.set(coreName, property);
+			data.put(coreName, property);
 			return;
 		}
 		if (type == "__set__") {
 			property = new PropertyInfo(coreName, target[name], target["__get__" + coreName], info, staticFlag);
-			data.set(coreName, property);
+			data.put(coreName, property);
 			return;
 		}
 	}
