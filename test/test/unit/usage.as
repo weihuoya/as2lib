@@ -55,11 +55,6 @@ test.unit.org.as2lib.env.out.TOutImplementation;
 test.unit.org.as2lib.env.overload.TOverload;
 test.unit.org.as2lib.env.overload.TSimpleOverloadHandler;
 
-// Mock tests
-test.unit.org.as2lib.test.mock.support.TDefaultMethodCallBehaviour;
-test.unit.org.as2lib.test.mock.support.TDefaultMockBehaviour;
-test.unit.org.as2lib.test.mock.support.TDefaultArgumentsMatcher;test.unit.org.as2lib.util.TStringUtil;
-
 // Util tests
 test.unit.org.as2lib.util.TArrayUtil;
 test.unit.org.as2lib.util.TObjectUtil;
@@ -71,6 +66,17 @@ test.unit.org.as2lib.util.TStopWatch;
 test.unit.org.as2lib.util.TObjectUtil;
 test.unit.org.as2lib.util.TArrayUtil;
 test.unit.org.as2lib.util.TMathUtil;
+
+// org.as2lib.test.mock
+test.unit.org.as2lib.test.mock.TMethodCall;
+test.unit.org.as2lib.test.mock.TMethodResponse;
+test.unit.org.as2lib.test.mock.TMethodCallRange;
+
+// org.as2lib.test.mock.support
+test.unit.org.as2lib.test.mock.support.TRecordState;
+test.unit.org.as2lib.test.mock.support.TReplayState;
+test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour;
+test.unit.org.as2lib.test.mock.support.TDefaultBehaviour;
 
 // org.as2lib.env.reflect
 test.unit.org.as2lib.env.reflect.TSimpleCache;
@@ -98,6 +104,9 @@ test.unit.org.as2lib.env.bean.TSimpleBeanWrapper;
 // org.as2lib.env.bean.factory.support
 test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory;
 test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition;
+
+// org.as2lib.env.event
+test.unit.org.as2lib.env.event.TSpeedEventBroadcaster;
 
 // org.as2lib.env.except tests
 test.unit.org.as2lib.env.except.TSimpleStackTraceElement;

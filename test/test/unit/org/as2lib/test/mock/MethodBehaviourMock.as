@@ -36,7 +36,7 @@ class test.unit.org.as2lib.test.mock.MethodBehaviourMock extends BasicClass impl
 	private var __addActualMethodCall:Object;
 	private var __addMethodResponse:Object;
 	private var __setArgumentsMatcher:Object;
-	private var __expectsAnotherMehodCall:Object;
+	private var __expectsAnotherMethodCall:Object;
 	private var __response:Object;
 	private var __verify:Object;
 	
@@ -47,13 +47,23 @@ class test.unit.org.as2lib.test.mock.MethodBehaviourMock extends BasicClass impl
 		__addActualMethodCall = new Object();
 		__addMethodResponse = new Object();
 		__setArgumentsMatcher = new Object();
-		__expectsAnotherMehodCall = new Object();
+		__expectsAnotherMethodCall = new Object();
 		__response = new Object();
 		__verify = new Object();
 	}
 	
 	public function replay(Void):Void {
 		state = REPLAY;
+	}
+	
+	public function doVerify(Void):Void {
+		if (__getExpectedMethodCall.callExpected != __getExpectedMethodCall.called) testCase["fail"]("getExpectedMethodCall(..): Expected method call.");
+		if (__addActualMethodCall.callExpected != __addActualMethodCall.called) testCase["fail"]("addActualMethodCall(..): Expected method call.");
+		if (__addMethodResponse.callExpected != __addMethodResponse.called) testCase["fail"]("addMethodResponse(..): Expected method call.");
+		if (__setArgumentsMatcher.callExpected != __setArgumentsMatcher.called) testCase["fail"]("setArgumentsMatcher(..): Expected method call.");
+		if (__expectsAnotherMethodCall.callExpected != __expectsAnotherMethodCall.called) testCase["fail"]("expectsAnotherMethodCall(..): Expected method call.");
+		if (__response.callExpected != __response.called) testCase["fail"]("response(..): Expected method call.");
+		if (__verify.callExpected != __verify.called) testCase["fail"]("verify(..): Expected method call.");
 	}
 	
 	public function setGetExpectedMethodCallReturnValue(returnValue:MethodCall):Void {
@@ -65,6 +75,7 @@ class test.unit.org.as2lib.test.mock.MethodBehaviourMock extends BasicClass impl
 			__getExpectedMethodCall.callExpected = true;
 		} else {
 			if (__getExpectedMethodCall.callExpected) {
+				__getExpectedMethodCall.called = true;
 				return __getExpectedMethodCall.returnValue;
 			} else {
 				testCase["fail"]("getExpectedMethodCall(..): Unexpected call.");
@@ -78,6 +89,7 @@ class test.unit.org.as2lib.test.mock.MethodBehaviourMock extends BasicClass impl
 			__addActualMethodCall.actualMethodCall = actualMethodCall;
 		} else {
 			if (__addActualMethodCall.callExpected) {
+				__addActualMethodCall.called = true;
 				testCase["assertSame"]("Wrong actual method call.", __addActualMethodCall.actualMethodCall, actualMethodCall);
 			} else {
 				testCase["fail"]("addActualMethodCall(..): Unexpected call.");
@@ -92,6 +104,7 @@ class test.unit.org.as2lib.test.mock.MethodBehaviourMock extends BasicClass impl
 			__addMethodResponse.methodCallRange = methodCallRange;
 		} else {
 			if (__addMethodResponse.callExpected) {
+				__addMethodResponse.called = true;
 				testCase["assertSame"]("Wrong method response.", __addMethodResponse.methodResponse, methodResponse);
 				testCase["assertSame"]("Wrong method call range.", __addMethodResponse.methodCallRange, methodCallRange);
 			} else {
@@ -106,6 +119,7 @@ class test.unit.org.as2lib.test.mock.MethodBehaviourMock extends BasicClass impl
 			__setArgumentsMatcher.argumentsMatcher = argumentsMatcher;
 		} else {
 			if (__setArgumentsMatcher.callExpected) {
+				__setArgumentsMatcher.called = true;
 				testCase["assertSame"]("Wrong arguments matcher.", __setArgumentsMatcher.argumentsMatcher, argumentsMatcher);
 			} else {
 				testCase["fail"]("setArgumentsMatcher(..): Unexpected call.");
@@ -113,18 +127,19 @@ class test.unit.org.as2lib.test.mock.MethodBehaviourMock extends BasicClass impl
 		}
 	}
 	
-	public function setExpectsAnotherMehodCallReturnValue(returnValue:Boolean):Void {
-		__expectsAnotherMehodCall.returnValue = returnValue;
+	public function setExpectsAnotherMethodCallReturnValue(returnValue:Boolean):Void {
+		__expectsAnotherMethodCall.returnValue = returnValue;
 	}
 	
-	public function expectsAnotherMehodCall(Void):Boolean {
+	public function expectsAnotherMethodCall(Void):Boolean {
 		if (state == RECORD) {
-			__expectsAnotherMehodCall.callExpected = true;
+			__expectsAnotherMethodCall.callExpected = true;
 		} else {
-			if (__expectsAnotherMehodCall.callExpected) {
-				return __expectsAnotherMehodCall.returnValue;
+			if (__expectsAnotherMethodCall.callExpected) {
+				__expectsAnotherMethodCall.called = true;
+				return __expectsAnotherMethodCall.returnValue;
 			} else {
-				testCase["fail"]("expectsAnotherMehodCall(..): Unexpected call.");
+				testCase["fail"]("expectsAnotherMethodCall(..): Unexpected call.");
 			}
 		}
 	}
@@ -138,6 +153,7 @@ class test.unit.org.as2lib.test.mock.MethodBehaviourMock extends BasicClass impl
 			__response.callExpected = true;
 		} else {
 			if (__response.callExpected) {
+				__response.called = true;
 				return __response.returnValue;
 			} else {
 				testCase["fail"]("response(..): Unexpected call.");
@@ -151,6 +167,7 @@ class test.unit.org.as2lib.test.mock.MethodBehaviourMock extends BasicClass impl
 			__verify.testCase = testCase;
 		} else {
 			if (__verify.callExpected) {
+				__verify.called = true;
 				testCase["assertSame"]("Wrong test case.", __verify.testCase, testCase);
 			} else {
 				testCase["fail"]("verify(..): Unexpected call.");

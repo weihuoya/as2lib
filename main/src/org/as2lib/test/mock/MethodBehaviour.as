@@ -34,7 +34,7 @@ interface org.as2lib.test.mock.MethodBehaviour extends BasicInterface {
 	
 	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void;
 	
-	public function expectsAnotherMehodCall(Void):Boolean;
+	public function expectsAnotherMethodCall(Void):Boolean;
 	
 	public function response(Void);
 	

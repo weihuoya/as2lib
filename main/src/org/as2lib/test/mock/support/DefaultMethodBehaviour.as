@@ -47,7 +47,7 @@ class org.as2lib.test.mock.support.DefaultMethodBehaviour extends BasicClass imp
 		actualMethodCalls.push(actualMethodCall);
 	}
 	
-	public function getActualMethodCalls(Void):Array {
+	public function getAllActualMethodCall(Void):Array {
 		return actualMethodCalls.concat();
 	}
 	
@@ -60,7 +60,7 @@ class org.as2lib.test.mock.support.DefaultMethodBehaviour extends BasicClass imp
 		expectedMethodCall.setArgumentsMatcher(argumentsMatcher);
 	}
 	
-	public function expectsAnotherMehodCall(Void):Boolean {
+	public function expectsAnotherMethodCall(Void):Boolean {
 		return (getCurrentMethodCallRangeIndex() > -1)
 	}
 	

@@ -52,12 +52,7 @@ class org.as2lib.test.mock.support.RecordState extends BasicClass implements Moc
 	 * @see MockControlState#invokeMethod()
 	 */
 	public function invokeMethod(methodCall:MethodCall) {
-		var methodBehaviour:MethodBehaviour = behaviour.createMethodBehaviour(methodCall);
-		if (methodCall.getMethodName() && methodCall.getMethodName() != "") {
-			behaviour.addMethodBehaviour(methodCall.getMethodName(), methodBehaviour);
-		} else {
-			behaviour.addMethodBehaviour("[unknown]", methodBehaviour);
-		}
+		behaviour.addMethodBehaviour(methodCall.getMethodName(), behaviour.createMethodBehaviour(methodCall));
 	}
 	
 	/**

@@ -17,6 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.PrimitiveTypeMap;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MethodBehaviour;
 import org.as2lib.test.mock.Behaviour;
@@ -34,6 +35,8 @@ class org.as2lib.test.mock.support.DefaultBehaviour extends BasicClass implement
 	
 	/** Currently used factory to create method call behaviours. */
 	private var methodBehaviourFactory:MethodBehaviourFactory;
+	
+	private var lastMethodName:String;
 	
 	/**
 	 * Constructs a new instance.
@@ -77,6 +80,10 @@ class org.as2lib.test.mock.support.DefaultBehaviour extends BasicClass implement
 	 * @see Behaviour#addMethodBehaviour()
 	 */
 	public function addMethodBehaviour(methodName:String, methodBehaviour:MethodBehaviour):Void {
+		if (!methodBehaviour) throw new IllegalArgumentException("Method behaviour must not be null or undefined.", this, arguments);
+		if (methodName == null || methodName == "") methodName = methodBehaviour.getExpectedMethodCall().getMethodName();
+		if (methodName == null || methodName == "") methodName = "[unknown]";
+		lastMethodName = methodName;
 		if (!methodBehaviours.containsKey(methodName)) methodBehaviours.put(methodName, new Array());
 		var behaviours:Array = methodBehaviours.get(methodName);
 		behaviours.push(methodBehaviour);
@@ -93,7 +100,9 @@ class org.as2lib.test.mock.support.DefaultBehaviour extends BasicClass implement
 	 * @see Behaviour#getMethodBehaviour()
 	 */
 	public function getMethodBehaviour(actualMethodCall:MethodCall):MethodBehaviour {
+		if (!actualMethodCall) return null;
 		var methodName:String = actualMethodCall.getMethodName();
+		if (methodName == null || methodName == "") methodName = "[unknown]";
 		var behaviours:Array = methodBehaviours.get(methodName);
 		var matchingBehaviours:Array = new Array();
 		for (var i:Number = 0; i < behaviours.length; i++) {
@@ -107,7 +116,7 @@ class org.as2lib.test.mock.support.DefaultBehaviour extends BasicClass implement
 		var result:MethodBehaviour = matchingBehaviours[matchingBehaviours.length-1];
 		for (var i:Number = behaviours.length-1; i > -1; i--) {
 			var behaviour:MethodBehaviour = behaviours[i];
-			if (behaviour.expectsAnotherMehodCall()) {
+			if (behaviour.expectsAnotherMethodCall()) {
 				result = behaviour;
 			}
 		}
@@ -118,7 +127,7 @@ class org.as2lib.test.mock.support.DefaultBehaviour extends BasicClass implement
 	 * @see Behaviour#getLastMethodBehaviour()
 	 */
 	public function getLastMethodBehaviour(Void):MethodBehaviour {
-		var behaviours:Array = methodBehaviours.getValues()[methodBehaviours.size()-1];
+		var behaviours:Array = methodBehaviours.get(lastMethodName);
 		return behaviours[behaviours.length-1];
 	}
 	
