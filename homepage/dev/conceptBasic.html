@@ -148,13 +148,13 @@ and each combination:
                             </ul>
                           </li>
                           <li><a name="Exception"></a><h2>Exception handling</h2>
-                            Usually Exceptions within Flash get displayed with the trace(Error.toString()). The Result is very rare (if nothing defined only: "Error occured" will be displayed) This blocks exception-viewing within another environment than Flash MX 2004.
+                            Uncaught exceptions are usually displayed by <code>trace(Error.toString());</code>The result is very minimalistic (if toString is not overridden by the exception's class, only: "Error occured" is displayed). This blocks viewing informations about uncaught exceptions within another than the Flash MX 2004 testing environment.
                             <ul>
                               <li><a name="ExceptionReason"></a><h3>Reason</h3>
-                                The Error Class that Flash uses ist in best mind not useable. It doesn't allow you to find an error.
+                                The Error class provided by AS 2.0 is not really helpful. It doesn't allow you to find an error.
                               </li>
                               <li><a name="ExceptionSolution"></a><h3>Solution</h3>
-                                We will provide a class that extends the basic Error class (to keep in mind that it will be better in future), with new features.
+                                We will provide a class that extends the basic Error class (to keep in mind that it will be better in future), with an extended functionality.
                               </li>
                               <li><a name="ExceptionNewFeatures"></a><h3>New Features</h3>
                                 <ul>
