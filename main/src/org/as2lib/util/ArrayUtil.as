@@ -63,19 +63,39 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	
 	/**
 	 * Checks if the array already contains the passed object.
+	 * It checks the content with a for-in loop. In this way all arrays can
+	 * be passed in.
 	 *
-	 * @param array the Array that contains the elements
-	 * @param object the object that shall be checked for availability
+	 * @param array The array that shall contain the object.
+	 * @param object The object that shall be checked for availability.
 	 * @return true if the array contains the object else false
 	 */
 	public static function contains(array:Array, object):Boolean {
-		var l:Number = array.length;
-		for (var i:Number = 0; i < l; i++) {
+		for (var i:String in array) {
 			if (array[i] === object) {
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Checks the index of a object within a array.
+	 * It checks the content of a array by counting to the array length.
+	 * It will return the first occurency of the object within the array.
+	 * If the object wasn't found -1 will be returned.
+	 *
+	 * @param array The array that shall contain the object.
+	 * @param object The object to get the position from.
+	 * @return The number of the object within the array (if it was not found -1)
+	 */
+	public static function indexOf(array:Array, object):Number{
+		for(var i:Number = array.length; i >= 0; i--){
+			if(array[i] === object) {
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	/**
