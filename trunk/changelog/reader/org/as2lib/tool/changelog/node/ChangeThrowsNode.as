@@ -44,24 +44,6 @@ class org.as2lib.tool.changelog.node.ChangeThrowsNode extends BasicClass {
 	}
 	
 	/**
-	 * Method to get the Content as HTML
-	 *
-	 * @return Entry as html.
-	 */
-	public function toHTML(Void):String {
-		var result:String = "<b>Changed thrown exception</b>";
-		if(from) {
-			result += " from <i>"+from+"</i>";
-		}
-		result += " to <i>"+to+"</i>";
-		if(annotation.length > 0) {
-			result += "("+annotation+")";
-		}
-		result += ".";
-		return result;
-	}
-	
-	/**
 	 * Extended .toString method.
 	 *
 	 * @return Entry as string.

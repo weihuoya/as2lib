@@ -44,21 +44,6 @@ class org.as2lib.tool.changelog.node.ChangeRenameNode extends BasicClass {
 	}
 	
 	/**
-	 * Method to get the Content as HTML
-	 *
-	 * @return Entry as html.
-	 */
-	public function toHTML(Void):String {
-		var result:String;
-		result = "<b>Renamed</b> "+from+" to "+to;
-		if(annotation.length > 0) {
-			result += "("+annotation+")";
-		}
-		result += ".";
-		return result;
-	}
-	
-	/**
 	 * Extended .toString method.
 	 *
 	 * @return Entry as string.
