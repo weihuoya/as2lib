@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.tool.changelog.Entry;
+import org.as2lib.tool.changelog.node.EntryNode;
 
 /**
  * Marker MovieClip for a Entry.
@@ -29,7 +29,7 @@ import org.as2lib.tool.changelog.Entry;
 class org.as2lib.tool.changelog.EntryMarker extends MovieClip {
 	
 	// Holder for the Entry that applies to the MovieClip (passed by initParameter of attachMovie)
-	private var entry:Entry;
+	private var entry:EntryNode;
 	
 	// MovieClip holder for the background.
 	private var background:MovieClip;
@@ -70,7 +70,7 @@ class org.as2lib.tool.changelog.EntryMarker extends MovieClip {
 	}
 	
 	/**
-	 * Getter for the Sign Character of the Entry.
+	 * Getter for the Sign Character of the EntryNode.
 	 * Available Characters are:
 	 *   + ... add
 	 *   - ... remove
@@ -86,22 +86,22 @@ class org.as2lib.tool.changelog.EntryMarker extends MovieClip {
 		var type:Number = entry.getType();
 		var result:String;
 		switch(type) {
-			case Entry.TYPE_ADD:
+			case EntryNode.TYPE_ADD:
 				result = "+";
 				break;
-			case Entry.TYPE_REMOVE:
+			case EntryNode.TYPE_REMOVE:
 				result = "-";
 				break;
-			case Entry.TYPE_CHANGE:
+			case EntryNode.TYPE_CHANGE:
 				result = "~";
 				break;
-			case Entry.TYPE_BUGFIX:
+			case EntryNode.TYPE_BUGFIX:
 				result = "!";
 				break;
-			case Entry.TYPE_DOCUMENTATION:
+			case EntryNode.TYPE_DOCUMENTATION:
 				result = "?";
 				break;
-			case Entry.TYPE_ENHANCEMENT:
+			case EntryNode.TYPE_ENHANCEMENT:
 				result = "*";
 				break;
 			default:
@@ -120,22 +120,22 @@ class org.as2lib.tool.changelog.EntryMarker extends MovieClip {
 		var type:Number = entry.getType();
 		var result:Number;
 		switch(type) {
-			case Entry.TYPE_ADD:
+			case EntryNode.TYPE_ADD:
 				result = 0x27CC01;
 				break;
-			case Entry.TYPE_REMOVE:
+			case EntryNode.TYPE_REMOVE:
 				result = 0xE78800;
 				break;
-			case Entry.TYPE_CHANGE:
+			case EntryNode.TYPE_CHANGE:
 				result = 0x0065CD;
 				break;
-			case Entry.TYPE_BUGFIX:
+			case EntryNode.TYPE_BUGFIX:
 				result = 0xE72B00;
 				break;
-			case Entry.TYPE_DOCUMENTATION:
+			case EntryNode.TYPE_DOCUMENTATION:
 				result = 0x747474;
 				break;
-			case Entry.TYPE_ENHANCEMENT:
+			case EntryNode.TYPE_ENHANCEMENT:
 				result = 0x98D11E;
 				break;
 			default:

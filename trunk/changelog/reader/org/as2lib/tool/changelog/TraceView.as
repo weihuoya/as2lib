@@ -16,7 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.tool.changelog.ChangelogView;
-import org.as2lib.tool.changelog.Entry;
+import org.as2lib.tool.changelog.node.EntryNode;
 
 /**
  * Simple @see ChangelogView implementation for Debug reasons.
@@ -32,7 +32,7 @@ class org.as2lib.tool.changelog.TraceView extends BasicClass implements Changelo
 	 */
 	public function update(list:Array):Void {
 		for(var i=0; i<list.length; i++) {
-			var element:Entry = Entry(list[i]);
+			var element:EntryNode = EntryNode(list[i]);
 			trace(element.getDate().toString()+" - "+element.getPackage()+" - "+element.getType()+" - "+element.getContent());
 		}
 	}

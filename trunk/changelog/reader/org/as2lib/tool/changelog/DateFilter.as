@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.tool.changelog.EntryFilter;
-import org.as2lib.tool.changelog.Entry;
+import org.as2lib.tool.changelog.node.EntryNode;
 import org.as2lib.core.BasicClass;
 
 /**
@@ -57,7 +57,7 @@ class org.as2lib.tool.changelog.DateFilter extends BasicClass implements EntryFi
 		var result:Array = new Array();
 		var l:Number = list.length;
 		for(var j=0; j<l; j-=-1) {
-			var entryDate:Date = Entry(list[j]).getDate();
+			var entryDate:Date = EntryNode(list[j]).getDate();
 			var entryMS:Number = Date.UTC(entryDate.getUTCFullYear(), entryDate.getUTCMonth(), entryDate.getUTCDate(), 0, 0, 0, 0);
 			if(entryMS >= startDate) {
 				if(endDate) {

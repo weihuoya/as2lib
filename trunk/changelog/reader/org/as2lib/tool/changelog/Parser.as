@@ -14,13 +14,13 @@
  * limitations under the License.
  */
  
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.data.holder.Map;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.SimpleEventInfo;
 import org.as2lib.env.event.SpeedEventBroadcaster;
 import org.as2lib.tool.changelog.Config;
-import org.as2lib.tool.changelog.Entry;
+import org.as2lib.tool.changelog.node.EntryNode;
 import org.as2lib.tool.changelog.ParserListener;
 import org.as2lib.tool.changelog.XMLParseErrorInfo;
 
@@ -119,7 +119,7 @@ class org.as2lib.tool.changelog.Parser extends XML{
 	/**
 	 * Getter for the entries contained in the XML file.
 	 *
-	 * @return Array that contains @see Entry instances.
+	 * @return Array that contains @see EntryNode instances.
 	 */
 	public function getEntries():Array {
 		getEntriesInNode(this.firstChild.firstChild);
@@ -134,7 +134,7 @@ class org.as2lib.tool.changelog.Parser extends XML{
 	private function getEntriesInNode(node:XMLNode):Void {
 		for(var i:Number=0; i<node.childNodes.length; i++) {
 			if(node.childNodes[i].nodeName == "entry") {
-				entryMap.put(node.childNodes[i], new Entry(node.childNodes[i]));
+				entryMap.put(node.childNodes[i], new EntryNode(node.childNodes[i]));
 			} else {
 				getEntriesInNode(node.childNodes[i]);
 			}

@@ -3,10 +3,20 @@
         <project_folder name="as2lib" expanded="true">
             <project_folder name="tool" expanded="true">
                 <project_folder name="changelog" expanded="true">
+                    <project_folder name="node" expanded="true">
+                        <project_file path="./org/as2lib/tool/changelog/node/EntryNode.as" filetype="as" />
+                        <project_file path="./org/as2lib/tool/changelog/node/ChangeArgumentsNode.as" filetype="as" />
+                        <project_file path="./org/as2lib/tool/changelog/node/ChangeTypeNode.as" filetype="as" />
+                        <project_file path="./org/as2lib/tool/changelog/node/ChangeMoveNode.as" filetype="as" />
+                        <project_file path="./org/as2lib/tool/changelog/node/ChangeRenameNode.as" filetype="as" />
+                        <project_file path="./org/as2lib/tool/changelog/node/ChangeReturnTypeNode.as" filetype="as" />
+                        <project_file path="./org/as2lib/tool/changelog/node/ChangeReturnValueNode.as" filetype="as" />
+                        <project_file path="./org/as2lib/tool/changelog/node/ChangeThrowsNode.as" filetype="as" />
+                        <project_file path="./org/as2lib/tool/changelog/node/ContentNode.as" filetype="as" />
+                    </project_folder>
                     <project_file path="./org/as2lib/tool/changelog/XMLParseErrorInfo.as" filetype="as" />
                     <project_file path="./org/as2lib/tool/changelog/Config.as" filetype="as" />
                     <project_file path="./org/as2lib/tool/changelog/DateFilter.as" filetype="as" />
-                    <project_file path="./org/as2lib/tool/changelog/Entry.as" filetype="as" />
                     <project_file path="./org/as2lib/tool/changelog/EntryFilter.as" filetype="as" />
                     <project_file path="./org/as2lib/tool/changelog/EntryMarker.as" filetype="as" />
                     <project_file path="./org/as2lib/tool/changelog/FileNotFoundException.as" filetype="as" />
@@ -21,4 +31,5 @@
         </project_folder>
     </project_folder>
     <project_file path="./changelog.fla" filetype="fla" profile="" def_file="true" />
+    <project_file path="./changelog.xml" filetype="xml" />
 </flash_project>

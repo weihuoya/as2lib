@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.tool.changelog.Entry;
+import org.as2lib.tool.changelog.node.EntryNode;
 import org.as2lib.tool.changelog.EntryMarker;
 import org.as2lib.tool.changelog.ChangelogView;
 
@@ -147,7 +147,7 @@ class org.as2lib.tool.changelog.StandardView extends BasicClass implements Chang
 	 *
 	 * @param entry Entry to add to the markerList.
 	 */
-	private function addListElement(entry:Entry):Void {
+	private function addListElement(entry:EntryNode):Void {
 		markerList.push(mc.attachMovie('Marker', 'marker'+count, count, {entry:entry}));
 		
 		mc.createTextField('text'+count, (count+1), 13, 0, 10, 10);
@@ -166,6 +166,7 @@ class org.as2lib.tool.changelog.StandardView extends BasicClass implements Chang
 	    var package:String = entry.getPackage();
 	    var clazz:String = entry.getClass();
 	    var method:String = entry.getMethod();
+		var variable:String = entry.getVariable();
 		if(package) {
 			content += package;
 		}
@@ -179,10 +180,15 @@ class org.as2lib.tool.changelog.StandardView extends BasicClass implements Chang
 			if(clazz || package) {
 				content += ".";
 			}
-			content += entry.getMethod();
+			content += method();
+		} else if (variable) {
+			if(clazz || package) {
+				content += ".";
+			}
+			content += variable();
 		}
 		var date:Date = entry.getDate();
-		content += "</b> ("+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+")<br />"+entry.getContent();
+		content += "</b> ("+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+")<br />"+entry.toHTML();
 		// <end> Content generation.
 		
 		tF.htmlText = content;
