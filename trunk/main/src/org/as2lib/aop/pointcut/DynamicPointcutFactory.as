@@ -30,86 +30,86 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	
 	private function bindOrCompositePointcut(Void):Void {
 		var rule:PointcutRule = new PointcutRule();
-		rule.execute = function(description:String):Boolean {
-			return (description.indexOf(" || ") != -1);
+		rule.execute = function(pattern:String):Boolean {
+			return (pattern.indexOf(" || ") != -1);
 		}
 		var factory:PointcutFactory = new PointcutFactory();
-		factory.getPointcut = function(description:String):Pointcut {
-			return (new OrCompositePointcut(description));
+		factory.getPointcut = function(pattern:String):Pointcut {
+			return (new OrCompositePointcut(pattern));
 		}
 		bindFactory(rule, factory);
 	}
 	
 	private function bindAndCompositePointcut(Void):Void {
 		var rule:PointcutRule = new PointcutRule();
-		rule.execute = function(description:String):Boolean {
-			return (description.indexOf(" && ") != -1);
+		rule.execute = function(pattern:String):Boolean {
+			return (pattern.indexOf(" && ") != -1);
 		}
 		var factory:PointcutFactory = new PointcutFactory();
-		factory.getPointcut = function(description:String):Pointcut {
-			return (new AndCompositePointcut(description));
+		factory.getPointcut = function(pattern:String):Pointcut {
+			return (new AndCompositePointcut(pattern));
 		}
 		bindFactory(rule, factory);
 	}
 	
 	private function bindMethodPointcut(Void):Void {
 		var rule:PointcutRule = new PointcutRule();
-		rule.execute = function(description:String):Boolean {
-			return (description.indexOf("execution") == 0);
+		rule.execute = function(pattern:String):Boolean {
+			return (pattern.indexOf("execution") == 0);
 		}
 		var factory:PointcutFactory = new PointcutFactory();
-		factory.getPointcut = function(description:String):Pointcut {
-			description = description.substring(10, description.length - 3);
-			return (new KindedPointcut(description, AbstractJoinPoint.TYPE_METHOD));
+		factory.getPointcut = function(pattern:String):Pointcut {
+			pattern = pattern.substring(10, pattern.length - 3);
+			return (new KindedPointcut(pattern, AbstractJoinPoint.TYPE_METHOD));
 		}
 		bindFactory(rule, factory);
 	}
 	
 	private function bindSetPropertyPointcut(Void):Void {
 		var rule:PointcutRule = new PointcutRule();
-		rule.execute = function(description:String):Boolean {
-			return (description.indexOf("set") == 0);
+		rule.execute = function(pattern:String):Boolean {
+			return (pattern.indexOf("set") == 0);
 		}
 		var factory:PointcutFactory = new PointcutFactory();
-		factory.getPointcut = function(description:String):Pointcut {
-			description = description.substring(4, description.length - 1);
-			return (new KindedPointcut(description, AbstractJoinPoint.TYPE_SET_PROPERTY));
+		factory.getPointcut = function(pattern:String):Pointcut {
+			pattern = pattern.substring(4, pattern.length - 1);
+			return (new KindedPointcut(pattern, AbstractJoinPoint.TYPE_SET_PROPERTY));
 		}
 		bindFactory(rule, factory);
 	}
 	
 	private function bindGetPropertyPointcut(Void):Void {
 		var rule:PointcutRule = new PointcutRule();
-		rule.execute = function(description:String):Boolean {
-			return (description.indexOf("get") == 0);
+		rule.execute = function(pattern:String):Boolean {
+			return (pattern.indexOf("get") == 0);
 		}
 		var factory:PointcutFactory = new PointcutFactory();
-		factory.getPointcut = function(description:String):Pointcut {
-			description = description.substring(4, description.length - 1);
-			return (new KindedPointcut(description, AbstractJoinPoint.TYPE_GET_PROPERTY));
+		factory.getPointcut = function(pattern:String):Pointcut {
+			pattern = pattern.substring(4, pattern.length - 1);
+			return (new KindedPointcut(pattern, AbstractJoinPoint.TYPE_GET_PROPERTY));
 		}
 		bindFactory(rule, factory);
 	}
 	
 	/*private function bindWithinPointcut(Void):Void {
 		var rule:PointcutRule = new PointcutRule();
-		rule.execute = function(description:String):Boolean {
-			return (description.indexOf("within") == 0);
+		rule.execute = function(pattern:String):Boolean {
+			return (pattern.indexOf("within") == 0);
 		}
 		var factory:PointcutFactory = new PointcutFactory();
-		factory.getPointcut = function(description:String):Pointcut {
-			description = description.substring(7, description.length - 1);
-			return (new WithinPointcut(description));
+		factory.getPointcut = function(pattern:String):Pointcut {
+			pattern = pattern.substring(7, pattern.length - 1);
+			return (new WithinPointcut(pattern));
 		}
 		bindFactory(rule, factory);
 	}*/
 	
-	public function getPointcut(description:String):Pointcut {
+	public function getPointcut(pattern:String):Pointcut {
 		var iterator:Iterator = new ArrayIterator(factoryMap.getKeys());
 		while (iterator.hasNext()) {
 			var rule:PointcutRule = iterator.next();
-			if (rule.execute(description)) {
-				return factoryMap.get(rule).getPointcut(description);
+			if (rule.execute(pattern)) {
+				return factoryMap.get(rule).getPointcut(pattern);
 			}
 		}
 	}
