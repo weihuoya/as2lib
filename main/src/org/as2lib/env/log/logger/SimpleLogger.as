@@ -27,136 +27,301 @@ import org.as2lib.env.log.LogMessage;
  * SimpleLogger is a simple implementation of the ConfigurableLogger
  * interface.
  *
+ * <p>The basic methods to write the log messages are #log, #debug,
+ * #info, #warning and #fatal.
+ *
+ * <p>The first thing to note is that you can write log messages at
+ * different levels. These levels are DEBUG, INFO, WARNING, ERROR and
+ * FATAL. Depending on what level was set only messages at a given
+ * level are logged.
+ * The levels are organized in a hierarchical manner. That means if you
+ * set you log level to ALL every messages get logged. If you set it
+ * to ERROR only messages at ERROR and FATAL level get logged and so on.
+ * It is also possible to define your own set of levels. You can therefor
+ * use the #isEnabled(LogLevel):Boolean and log(*, LogLevel):Boolean
+ * methods.
+ *
+ * <p>To do not waste unnecessary performance in constructing log messages
+ * that do not get logged you can use the #isEnabled, #isDebugEnabled,
+ * #isInfoEnabled, #isWarningEnabled, #isErrorEnabled and #isFatalEnabled
+ * methods.
+ *
+ * <p>Note that the message does in neither case have to be a string.
+ * That means you can pass-in messages and let the actual handler or logger
+ * decide how to produce a string representation of the message. That is in
+ * most cases done by using the toString method of the specific message.
+ * You can use this method to do not lose performance in cases where
+ * the message does not get logged.
+ *
+ * <p>The actaul log output gets made by log handlers. To configure and
+ * access the handlers of this logger you can use the methods #addHandler,
+ * #removeHandler, #removeAllHandler and #getAllHandler. There are a
+ * few pre-defined handlers for different output devices. Take a look
+ * at the org.as2lib.env.log.handler package for these.
+ *
+ * <p>This logger can simply be used as follows:
+ * <code>var logger:SimpleLogger = new SimpleLogger();
+ * // adds a trace handler that is responsible for making the output
+ * logger.addHandler(new TraceHandler());
+ * // checks if the output gets actually made
+ * if (logger.isInfoEnabled()) {
+	 // log the message at the info level
+ *   logger.info("This is a informative log message.");
+ * }</code>
+ *
  * <p>It cannot be used with the LoggerHierarchy because it does not
- * offer hierarchy support. If you want to use you logger in a hierarchy
+ * offer hierarchy support. If you want to use your logger in a hierarchy
  * use the SimpleHierarchicalLogger instead.
  *
  * @author Simon Wacker
+ * @see org.as2lib.env.log.Logger
  */
 class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements ConfigurableLogger {
 	
-	/** The actual level. */
+	/** The set level. */
 	private var level:LogLevel;
 	
-	/** Stores the broadcaster factory. */
+	/** The set level as number. */
+	private var levelAsNumber:Number;
+	
+	/** The debug level. */
+	private var debugLevel:LogLevel;
+	
+	/** The debug level as number. */
+	private var debugLevelAsNumber:Number;
+	
+	/** The info level. */
+	private var infoLevel:LogLevel;
+	
+	/** The info level as number. */
+	private var infoLevelAsNumber:Number;
+	
+	/** The warning level. */
+	private var warningLevel:LogLevel;
+	
+	/** The warning level as number. */
+	private var warningLevelAsNumber:Number;
+	
+	/** The error level. */
+	private var errorLevel:LogLevel;
+	
+	/** The error level as number. */
+	private var errorLevelAsNumber:Number;
+	
+	/** The fatal level. */
+	private var fatalLevel:LogLevel;
+	
+	/** The fatal level as number. */
+	private var fatalLevelAsNumber:Number;
+	
+	/** The broadcaster to dispatch the messages to all handlers. */
 	private var broadcaster:EventBroadcaster;
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new SimpleLogger instance.
 	 *
-	 * @param name the name of the new logger
+	 * <p>The default log level is ALL. This means all messages regardless
+	 * of their level get logged.
+	 *
+	 * <p>The default broadcaster is of type SpeedEventBroadcaster.
+	 *
+	 * @param broadcaster (optional) the broadcaster used to broadcast to the added handlers
 	 */
 	public function SimpleLogger(broadcaster:EventBroadcaster) {
 		this.broadcaster = broadcaster ? broadcaster : new SpeedEventBroadcaster();
+		level = AbstractLogLevel.ALL;
+		levelAsNumber = level.toNumber();
+		debugLevel = AbstractLogLevel.DEBUG;
+		debugLevelAsNumber = debugLevel.toNumber();
+		infoLevel = AbstractLogLevel.INFO;
+		infoLevelAsNumber = infoLevel.toNumber();
+		warningLevel = AbstractLogLevel.WARNING;
+		warningLevelAsNumber = warningLevel.toNumber();
+		errorLevel = AbstractLogLevel.ERROR;
+		errorLevelAsNumber = errorLevel.toNumber();
+		fatalLevel = AbstractLogLevel.FATAL;
+		fatalLevelAsNumber = fatalLevel.toNumber();
 	}
 	
 	/**
-	 * @see ConfigurableLogger#setLevel()
+	 * Sets the log level.
+	 *
+	 * <p>The log level determines which messages get logged and which do
+	 * not get logged.
+	 *
+	 * <p>A level of value null or undefined gets interpreted as level ALL,
+	 * which is also the default level.
+	 *
+	 * @param level the new log level
 	 */
 	public function setLevel(level:LogLevel):Void {
-		if (!level) level = AbstractLogLevel.ALL;
-		this.level = level;
+		if (level) {
+			this.level = level;
+			levelAsNumber = level.toNumber();
+		} else {
+			this.level = AbstractLogLevel.ALL;
+			levelAsNumber = level.toNumber();
+		}
 	}
 	
 	/**
-	 * If the level has not been set, that means is undefined, the level of
-	 * the parent will be returned.
+	 * Returns the set level.
 	 *
-	 * <p>Null or undefined will only be returned if this level is not defined
-	 * and the parent's getLevel() method returns null or undefined.
-	 *
-	 * @see Logger#getLevel()
+	 * @return the set level
 	 */
 	public function getLevel(Void):LogLevel {
 		return level;
 	}
 	
 	/**
-	 * @see ConfigurableLogger#addHandler()
+	 * Adds a new log handler.
+	 *
+	 * <p>Log handlers get used to actually log the messages. They determine
+	 * what information to log and to which output device.
+	 *
+	 * <p>This method simply does nothing if the passed-in handler is null
+	 * or undefined.
+	 *
+	 * @param handler the new log handler to log messages
 	 */
 	public function addHandler(handler:LogHandler):Void {
-		if (handler)
+		if (handler) {
 			broadcaster.addListener(handler);
+		}
 	}
 	
 	/**
-	 * @see ConfigurableLogger#removeHandler()
+	 * Removes all occerrences of the passed-in log handler.
+	 *
+	 * <p>If the passed-in handler is null or undefined the method invocation
+	 * simply gets ignored.
+	 *
+	 * @param handler the log handler to remove
 	 */
 	public function removeHandler(handler:LogHandler):Void {
-		if (handler)
+		if (handler) {
 			broadcaster.removeListener(handler);
+		}
 	}
 	
 	/**
-	 * @see ConfigurableLogger#removeAllHandler()
+	 * Removes all added log handlers.
 	 */
 	public function removeAllHandler(Void):Void {
 		broadcaster.removeAllListener();
 	}
 	
 	/**
-	 * This method never returns null or undefined.
+	 * Returns all handlers that were directly added to this logger.
 	 *
-	 * @see HierarchicalLogger#getAllHandler()
+	 * <p>If there are no added handlers an empty array gets returned.
+	 *
+	 * @return all added log handlers
 	 */
 	public function getAllHandler(Void):Array {
 		return broadcaster.getAllListener();
 	}
 	
 	/**
+	 * Checks whether this logger is enabled for the passed-in log level.
+	 *
 	 * False will be returned if:
 	 * <ul>
 	 *   <li>This logger is not enabled for the passed-in level.</li>
 	 *   <li>The passed-in level is null or undefined.</li>
 	 * </ul>
 	 *
-	 * @see Logger#isEnabled()
+	 * <p>Using this method as shown in the class documentation may improve
+	 * performance depending on how long the log message construction takes.
+	 *
+	 * @param level the level to make the check upon
+	 * @return true if this logger is enabled for the given level else false
+	 * @see #log(*, LogLevel):Void
 	 */
 	public function isEnabled(level:LogLevel):Boolean {
 		if (!level) return false;
-		return getLevel().isGreaterOrEqual(level);
+		return (levelAsNumber >= level.toNumber());
 	}
 	
 	/**
-	 * @see Logger#isDebugEnabled()
+	 * Checks if this logger is enabled for debug level output.
+	 *
+	 * <p>Using this method as shown in the class documentation may improve
+	 * performance depending on how long the log message construction takes.
+	 *
+	 * @return true if debug output gets made
+	 * @see org.as2lib.env.log.level.AbstractLogLevel#DEBUG
+	 * @see #debug(*):Void
 	 */
 	public function isDebugEnabled(Void):Boolean {
-		return isEnabled(AbstractLogLevel.DEBUG);
+		return (levelAsNumber >= debugLevelAsNumber);
 	}
 	
 	/**
-	 * @see Logger#isInfoEnabled()
+	 * Checks if this logger is enabled for info level output.
+	 *
+	 * <p>Using this method as shown in the class documentation may improve
+	 * performance depending on how long the log message construction takes.
+	 *
+	 * @return true if info output gets made
+	 * @see org.as2lib.env.log.level.AbstractLogLevel#INFO
+	 * @see #info(*):Void
 	 */
 	public function isInfoEnabled(Void):Boolean {
-		return isEnabled(AbstractLogLevel.INFO);
+		return (levelAsNumber >= infoLevelAsNumber);
 	}
 	
 	/**
-	 * @see Logger#isWarningEnabled()
+	 * Checks if this logger is enabled for warning level output.
+	 *
+	 * <p>Using this method as shown in the class documentation may improve
+	 * performance depending on how long the log message construction takes.
+	 *
+	 * @return true if warning output gets made
+	 * @see org.as2lib.env.log.level.AbstractLogLevel#WARNING
+	 * @see #warning(*):Void
 	 */
 	public function isWarningEnabled(Void):Boolean {
-		return isEnabled(AbstractLogLevel.WARNING);
+		return (levelAsNumber >= warningLevelAsNumber);
 	}
 	
 	/**
-	 * @see Logger#isErrorEnabled()
+	 * Checks if this logger is enabled for error level output.
+	 *
+	 * <p>Using this method as shown in the class documentation may improve
+	 * performance depending on how long the log message construction takes.
+	 *
+	 * @return true if error output gets made
+	 * @see org.as2lib.env.log.level.AbstractLogLevel#ERROR
+	 * @see #error(*):Void
 	 */
 	public function isErrorEnabled(Void):Boolean {
-		return isEnabled(AbstractLogLevel.ERROR);
+		return (levelAsNumber >= errorLevelAsNumber);
 	}
 	
 	/**
-	 * @see Logger#isFatalEnabled()
+	 * Checks if this logger is enabled for fatal level output.
+	 *
+	 * <p>Using this method as shown in the class documentation may improve
+	 * performance depending on how long the log message construction takes.
+	 *
+	 * @return true if fatal output gets made
+	 * @see org.as2lib.env.log.level.AbstractLogLevel#FATAL
+	 * @see #fatal(*):Void
 	 */
 	public function isFatalEnabled(Void):Boolean {
-		return isEnabled(AbstractLogLevel.FATAL);
+		return (levelAsNumber >= fatalLevelAsNumber);
 	}
 	
 	/**
-	 * Broadcasts the passed-in message to all handlers of this logger as
-	 * well as to the handlers of every parent logger.
+	 * Logs the message object at the given level.
 	 *
-	 * @see Logger#log()
+	 * <p>The message gets only logged when this logger is enabled for
+	 * the passed-in log level.
+	 *
+	 * @param message the message object to log
+	 * @param level the specific level at which the message shall be logged
+	 * @see #isEnabled(LogLevel):Boolean
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
@@ -165,38 +330,78 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	}
 	
 	/**
-	 * @see Logger#debug()
+	 * Logs the message object at debug level.
+	 *
+	 * <p>The message gets only logged when the level is set to debug or
+	 * a level above.
+	 *
+	 * @param message the message object to log
+	 * @see #isDebugEnabled(Void):Boolean
 	 */
 	public function debug(message):Void {
-		log(message, AbstractLogLevel.DEBUG);
+		if (isDebugEnabled()) {
+			broadcaster.dispatch(new LogMessage(message, debugLevel, null));
+		}
 	}
 	
 	/**
-	 * @see Logger#info()
+	 * Logs the message object at info level.
+	 *
+	 * <p>The message gets only logged when the level is set to info or
+	 * a level above.
+	 *
+	 * @param message the message object to log
+	 * @see #isInfoEnabled(Void):Boolean
 	 */
 	public function info(message):Void {
-		log(message, AbstractLogLevel.INFO);
+		if (isInfoEnabled()) {
+			broadcaster.dispatch(new LogMessage(message, infoLevel, null));
+		}
 	}
 	
 	/**
-	 * @see Logger#warning()
+	 * Logs the message object at warning level.
+	 *
+	 * <p>The message gets only logged when the level is set to warning or
+	 * a level above.
+	 *
+	 * @param message the message object to log
+	 * @see #isWarningEnabled(Void):Boolean
 	 */
 	public function warning(message):Void {
-		log(message, AbstractLogLevel.WARNING);
+		if (isWarningEnabled()) {
+			broadcaster.dispatch(new LogMessage(message, warningLevel, null));
+		}
 	}
 	
 	/**
-	 * @see Logger#error()
+	 * Logs the message object at error level.
+	 *
+	 * <p>The message gets only logged when the level is set to error or a
+	 * level above.
+	 *
+	 * @param message the message object to log
+	 * @see #isErrorEnabled(Void):Boolean
 	 */
 	public function error(message):Void {
-		log(message, AbstractLogLevel.ERROR);
+		if (isErrorEnabled()) {
+			broadcaster.dispatch(new LogMessage(message, errorLevel, null));
+		}
 	}
 	
 	/**
-	 * @see Logger#fatal()
+	 * Logs the message object at fatal level.
+	 *
+	 * <p>The message gets only logged when the level is set to fatal or a
+	 * level above.
+	 *
+	 * @param message the message object to log
+	 * @see #isFatalEnabled(Void):Boolean
 	 */
 	public function fatal(message):Void {
-		log(message, AbstractLogLevel.FATAL);
+		if (isFatalEnabled()) {
+			broadcaster.dispatch(new LogMessage(message, fatalLevel, null));
+		}
 	}
 	
 }

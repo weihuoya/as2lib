@@ -19,15 +19,26 @@ import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
 
 /**
+ * RootLogger represents the root in a logger hierarchy.
+ *
+ * <p>The name of a root logger is by default 'root'.
+ *
+ * <p>You must set a log level because otherwise the level in the hierarchy
+ * could be null which could cause unexpected behavior.
+ *
+ * <p>This class gets normally used in conjunction with the LoggerHierarchy.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.env.log.logger.RootLogger extends SimpleHierarchicalLogger {
 	
 	/**
-	 * Constructs a new instance. The name will be automatically set to
-	 * 'root'.
+	 * Constructs a new RootLogger instance.
 	 *
-	 * @param level the level to use, null is not allowed
+	 * <p>The name gets automatically set to 'root'.
+	 *
+	 * @param level the level of this logger
+	 * @throws IllegalArgumentException if the passed-in level is null or undefined
 	 */
 	public function RootLogger(level:LogLevel) {
 		super("root");
@@ -35,11 +46,12 @@ class org.as2lib.env.log.logger.RootLogger extends SimpleHierarchicalLogger {
 	}
 	
 	/**
-	 * Prevents null levels.
+	 * Sets the level of this logger.
 	 *
-	 * @param level the level to use, null is not allowed
-	 * @throws IllegalArgumentException when you try to set a level with value null
-	 * @see org.as2lib.env.log.ConfigurableLogger
+	 * <p>A level of value null or undefined is not allowed.
+	 *
+	 * @param level the level of this logger
+	 * @throws IllegalArgumentException when you try to set a level of value null or undefined
 	 */
 	public function setLevel(level:LogLevel):Void {
 		if (!level) throw new IllegalArgumentException("The instance [" + this + "] is not allowed to have a level value of null.", this, arguments);
