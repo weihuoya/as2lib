@@ -18,26 +18,66 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.event.EventInfo;
 
 /**
+ * MethodInvocationReturnInfo is a data transfer object used to inform
+ * clients that the method invocation completed successfully.
+ *
+ * <p>This class gets used in conjunction with the MethodInvocationCallback
+ * and MethodInvocationReturnListener classes.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.io.conn.core.event.MethodInvocationReturnInfo extends BasicClass implements EventInfo {
 	
-	/** The result returned by the invoked method. */
+	/** The return value returned by the invoked method. */
 	private var returnValue;
 	
+	/** Url of the service the method should have been invoked on. */
+	private var serviceUrl:String;
+	
+	/** The name of the method to be executed. */
+	private var methodName:String;
+	
+	/** The arguments used for the invocation. */
+	private var methodArguments:Array;
+	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new MethodInvocationReturnInfo instance.
 	 *
+	 * @param serviceUrl the url to the service the method should be or was invoked on
+	 * @param methodName the name of the method to be executed
+	 * @param methodArguments the arguments used as parameters for the method invocation
 	 * @param returnValue the result of the invoked method
 	 */
-	public function MethodInvocationReturnInfo(returnValue) {
+	public function MethodInvocationReturnInfo(serviceUrl:String, methodName:String, methodArguments:Array, returnValue) {
+		this.serviceUrl = serviceUrl;
+		this.methodName = methodName;
+		this.methodArguments = methodArguments;
 		this.returnValue = returnValue;
 	}
 	
+	/**
+	 * @return the url to the service the method should be or was executed on
+	 */
+	public function getServiceUrl(Void):String {
+		return serviceUrl;
+	}
+	
+	/**
+	 * @return the name of the method that should be or was executed on the service
+	 */
+	public function getMethodName(Void):String {
+		return methodName;
+	}
+	
+	/**
+	 * @return the arguments used as parameters for the method invocation
+	 */
+	public function getMethodArguments(Void):Array {
+		return methodArguments;
+	}
+	
 	/*
-	 * Returns the result returned by the invoked method.
-	 *
-	 * @param the result of the invoked method
+	 * @return the return value of the invoked method
 	 */
 	public function getReturnValue(Void) {
 		return returnValue;

@@ -203,10 +203,10 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 			if (service[methodName]) {
 				service[methodName].apply(service, args);
 			} else {
-				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(path, methodName, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null));
+				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(path, methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null));
 			}
 		} catch (exception) {
-			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(path, methodName, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, exception));
+			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(path, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, exception));
 		}
 	}
 	
@@ -257,32 +257,32 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 		var listener:MethodInvocationErrorListener = new MethodInvocationErrorListener();
 		var owner:LocalServerServiceProxy = this;
 		listener.onError = function(info:MethodInvocationErrorInfo):Void {
-			owner.getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(owner.getPath(), methodName, MethodInvocationErrorInfo.ERROR_UNKNOWN, null));
+			owner.getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(owner.getPath(), methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR, null));
 		}
 		try {
 			if (service[methodName]) {
 				var returnValue = service[methodName].apply(service, args);
-				sendResponse(methodName, responseServiceUrl, "onReturn", [new MethodInvocationReturnInfo(returnValue)], listener);
+				sendResponse(methodName, args, responseServiceUrl, "onReturn", [new MethodInvocationReturnInfo(getPath(), methodName, args, returnValue)], listener);
 			} else {
-				sendResponse(methodName, responseServiceUrl, "onError", [new MethodInvocationErrorInfo(getPath(), methodName, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null)], listener);
-				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null));
+				sendResponse(methodName, args, responseServiceUrl, "onError", [new MethodInvocationErrorInfo(getPath(), methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null)], listener);
+				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null));
 			}
 		} catch (serviceMethodException) {
-			sendResponse(methodName, responseServiceUrl, "onError", [new MethodInvocationErrorInfo(path, methodName, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, serviceMethodException)], listener)
-			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, serviceMethodException));
+			sendResponse(methodName, args, responseServiceUrl, "onError", [new MethodInvocationErrorInfo(path, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, serviceMethodException)], listener)
+			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, serviceMethodException));
 		}
 	}
 	
 	/**
 	 * Sends a response to the client.
 	 */
-	private function sendResponse(methodName:String, responseServiceUrl:String, responseMethod:String, responseArguments:Array, responseListener:MethodInvocationErrorListener):Void {
+	private function sendResponse(methodName:String, methodArguments:Array, responseServiceUrl:String, responseMethod:String, responseArguments:Array, responseListener:MethodInvocationErrorListener):Void {
 		try {
 			getConnection().send(responseServiceUrl, responseMethod, responseArguments, responseListener);
 		} catch (uce:org.as2lib.io.conn.local.core.UnknownConnectionException) {
-			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, MethodInvocationErrorInfo.ERROR_UNKNOWN_SERVICE, uce));
+			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, methodArguments, MethodInvocationErrorInfo.UNKNOWN_SERVICE_ERROR, uce));
 		} catch (mie:org.as2lib.io.conn.core.client.MethodInvocationException) {
-			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, MethodInvocationErrorInfo.ERROR_ARGUMENTS_OVERSIZED, mie));
+			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, methodArguments, MethodInvocationErrorInfo.OVERSIZED_ARGUMENTS_ERROR, mie));
 		}
 	}
 	

@@ -278,8 +278,8 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 		client.onStatus = function(info) {
 			owner.clientArray.splice(index, 1);
 			if (info.level == "error") {
-				owner.dispatchError(new MethodInvocationErrorInfo(connectionName, methodName, MethodInvocationErrorInfo.ERROR_UNKNOWN));
-				listener.onError(new MethodInvocationErrorInfo(connectionName, methodName, MethodInvocationErrorInfo.ERROR_UNKNOWN));
+				owner.dispatchError(new MethodInvocationErrorInfo(connectionName, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR));
+				listener.onError(new MethodInvocationErrorInfo(connectionName, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR));
 			}
 		}
 		if (!client.send.apply(client, [connectionName, methodName].concat(args)))

@@ -18,15 +18,41 @@ import org.as2lib.env.event.EventListener;
 import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
 
 /**
+ * MethodInvocationReturnListener awaits a return value of a remote
+ * method invocation.
+ *
+ * <p>This interface can either be instantiated directly or implemented
+ * by a class. If you instantiate it directly you must overwrite the
+ * callback method with an anonymous function.
+ * <code>
+ * var listener:MethodInvocationReturnListener = new MethodInvocationReturnListener();
+ * listener.onReturn = function(returnInfo:MethodInvocationReturnInfo):Void) {
+ *   trace("Invoked method successfully: " + returnInfo); 
+ * }
+ * </code>
+ *
+ * <p>Implementing the interface by a class is a much neater way. But
+ * sometimes it adds unnecessary complexity.
+ * <code>
+ * class MyListener implements MethodInvocationReturnListener {
+ *   public function onReturn(returnInfo:MethodInvocationReturnInfo):Void {
+ *     trace("Invoked method successfully: " + returnInfo); 
+ *   }
+ * }
+ * </code>
+ *
  * @author Simon Wacker
  */
 interface org.as2lib.io.conn.core.event.MethodInvocationReturnListener extends EventListener {
 	
 	/**
-	 * Gets executed when the method invocation succeeded.
+	 * Gets executed when the return value of the method invocation arrives.
 	 *
-	 * @param info contains the result of the method invocation
+	 * <p>That indicates that the method was invoked successfully.
+	 *
+	 * @param returnInfo contains the return value and some other useful 
+	 *                   information about the invoked method
 	 */
-	public function onReturn(info:MethodInvocationReturnInfo):Void;
+	public function onReturn(returnInfo:MethodInvocationReturnInfo):Void;
 	
 }

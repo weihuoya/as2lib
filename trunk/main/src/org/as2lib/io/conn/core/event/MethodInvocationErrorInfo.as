@@ -18,70 +18,92 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.event.EventInfo;
 
 /**
+ * MethodInvocationErrorInfo is a data transfer object used to inform
+ * the client of an error that occured during a 'remote' method invocation.
+ *
+ * <p>It defines constants, that can be used to identify what kind of
+ * error occured.
+ *
+ * <p>This class gets used in conjunction with the MethodInvocationCallback
+ * and MethodInvocationErrorListener classes.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.io.conn.core.event.MethodInvocationErrorInfo extends BasicClass implements EventInfo {
 	
 	/** Indicates an error of unknown origin. */
-	public static var ERROR_UNKNOWN:Number = 0;
+	public static var UNKNOWN_ERROR:Number = 0;
 	
 	/** Indicates an error caused because of a not existing service. */
-	public static var ERROR_UNKNOWN_SERVICE:Number = 1;
+	public static var UNKNOWN_SERVICE_ERROR:Number = 1;
 	
 	/** Indicates that the method to be invoked does not exist. */
-	public static var ERROR_UNKNOWN_METHOD:Number = 2;
+	public static var UNKNOWN_METHOD_ERROR:Number = 2;
 	
 	/** Indicates an error caused by arguments that are out of size. */
-	public static var ERROR_ARGUMENTS_OVERSIZED:Number = 3;
+	public static var OVERSIZED_ARGUMENTS_ERROR:Number = 3;
 	
 	/** Indicates that the service method to be invoked threw an exception. */
-	public static var ERROR_SERVICE_METHOD:Number = 4;
+	public static var METHOD_EXCEPTION_ERROR:Number = 4;
 	
 	/** Url of the service the method should have been invoked on. */
-	private var url:String;
+	private var serviceUrl:String;
 	
 	/** The name of the method to be executed. */
-	private var method:String;
+	private var methodName:String;
+	
+	/** The arguments used for the invocation. */
+	private var methodArguments:Array;
 	
 	/** A number indicating the type of the error. */
-	private var error:Number;
+	private var errorCode:Number;
 	
 	/** The exception that has caused the error. */
 	private var exception;
 	
 	/**
-	 * Constructs a new MethodInvocationErrorInfo.
+	 * Constructs a new MethodInvocationErrorInfo instance.
 	 *
-	 * @param connection the identifier of the connection the method should have been executed on
-	 * @param method the name of the method to be executed
+	 * @param serviceUrl the url to the service the method should be or was invoked on
+	 * @param methodName the name of the method to be executed
+	 * @param methodArguments the arguments used as parameters for the method invocation
 	 * @param error a number indicating the type of the error
+	 * @param exception the exception that caused the error
 	 */
-	public function MethodInvocationErrorInfo(url:String, method:String, error:Number, exception) {
-		this.url = url;
-		this.method = method;
-		this.error = error;
+	public function MethodInvocationErrorInfo(serviceUrl:String, methodName:String, methodArguments:Array, errorCode:Number, exception) {
+		this.serviceUrl = serviceUrl;
+		this.methodName = methodName;
+		this.methodArguments = methodArguments;
+		this.errorCode = errorCode;
 		this.exception = exception;
 	}
 	
 	/**
-	 * @return the connection identifier passed via the constructor arguments
+	 * @return the url to the service the method should be or was executed on
 	 */
-	public function getUrl(Void):String {
-		return url;
+	public function getServiceUrl(Void):String {
+		return serviceUrl;
 	}
 	
 	/**
-	 * @return the method name passed to the constructor on initialization
+	 * @return the name of the method that should be or was executed on the service
 	 */
-	public function getMethod(Void):String {
-		return method;
+	public function getMethodName(Void):String {
+		return methodName;
 	}
 	
 	/**
-	 * @return the error code that describes the error type
+	 * @return the arguments used as parameters for the method invocation
 	 */
-	public function getError(Void):Number {
-		return error;
+	public function getMethodArguments(Void):Array {
+		return methodArguments;
+	}
+	
+	/**
+	 * @return the error code that describes the type of the error
+	 */
+	public function getErrorCode(Void):Number {
+		return errorCode;
 	}
 	
 	/**
@@ -92,7 +114,8 @@ class org.as2lib.io.conn.core.event.MethodInvocationErrorInfo extends BasicClass
 	}
 	
 	/**
-	 * @see EventInfo
+	 * @return 'onError'
+	 * @see EventInfo#getName(Void):String
 	 */
 	public function getName(Void):String {
 		return "onError";

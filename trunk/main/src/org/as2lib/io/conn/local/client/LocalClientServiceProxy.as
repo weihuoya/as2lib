@@ -107,8 +107,8 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	 * @throws IllegalArgumentException if the passed-in method name is null or an empty string
 	 * @see ClientServiceProxy#invokeByNameAndArguments(String, Array):MethodInvocationCallback
 	 */
-	public function invokeByNameAndArguments(name:String, args:Array):MethodInvocationCallback {
-		return invokeByNameAndArgumentsAndCallback(name, args, null);
+	public function invokeByNameAndArguments(methodName:String, args:Array):MethodInvocationCallback {
+		return invokeByNameAndArgumentsAndCallback(methodName, args, null);
 	}
 	
 	/**
