@@ -1,5 +1,6 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.ThrowableStringifier;
+import org.as2lib.env.except.StackTraceElementStringifier;
 import org.as2lib.core.string.Stringifier;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.out.OutAccess;
@@ -15,7 +16,9 @@ import org.as2lib.env.EnvConfig;
  */
 class org.as2lib.env.except.ExceptConfig extends BasicClass {
 	/** The Stringifier used to stringify a Throwable */
-	private static var stringifier:Stringifier = new ThrowableStringifier();
+	private static var throwableStringifier:Stringifier = new ThrowableStringifier();
+	
+	private static var stackTraceElementStringifier:Stringifier = new StackTraceElementStringifier();
 	
 	/** The OutAccess that is used by the Throwables toString() operation. */
 	private static var out:OutAccess;
@@ -54,8 +57,8 @@ class org.as2lib.env.except.ExceptConfig extends BasicClass {
 	 *
 	 * @param stringifier the new Stringifier used to stringify Throwables
 	 */
-	public static function setStringifier(newStringifier:Stringifier):Void {
-		stringifier = newStringifier;
+	public static function setThrowableStringifier(newStringifier:Stringifier):Void {
+		throwableStringifier = newStringifier;
 	}
 	
 	/**
@@ -63,7 +66,15 @@ class org.as2lib.env.except.ExceptConfig extends BasicClass {
 	 *
 	 * @return the Stringifier that stringifies Throwables
 	 */
-	public static function getStringifier(Void):Stringifier {
-		return stringifier;
+	public static function getThrowableStringifier(Void):Stringifier {
+		return throwableStringifier;
+	}
+	
+	public static function setStackTraceElementStringifier(newStringifier:Stringifier):Void {
+		stackTraceElementStringifier = newStringifier;
+	}
+	
+	public static function getStackTraceElementStringifier(Void):Stringifier {
+		return stackTraceElementStringifier;
 	}
 }

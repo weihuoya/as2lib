@@ -38,10 +38,8 @@ class org.as2lib.env.except.ThrowableStringifier extends BasicClass implements S
 		var next:StackTraceElement;
 		while (iterator.hasNext()) {
 			next = StackTraceElement(iterator.next());
-			trace (next.getMethod());
 			result += ("  at " 
-					   + next.getThrower().getFullName() + "."
-					   + next.getMethod().getName() + "()");
+					   + next.toString());
 			if (iterator.hasNext()) {
 				result += "\n";
 			}

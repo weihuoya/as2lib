@@ -5,6 +5,7 @@ import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.data.iterator.Iterator;
 import org.as2lib.data.holder.HashMap;
+import org.as2lib.env.except.ExceptConfig;
 
 /**
  * @author Simon Wacker
@@ -39,6 +40,6 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	}
 	
 	public function toString(Void):String {
-		return "";
+		return ExceptConfig.getStackTraceElementStringifier().execute(this);
 	}
 }
