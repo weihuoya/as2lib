@@ -112,8 +112,8 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 			cache[h] = info;
 		} else {
 			cache[p.__as2lib__hashCode = hashCodeCounter++] = info;
+			_global.ASSetPropFlags(p, "__as2lib__hashCode", 1, true);
 		}
-		_global.ASSetPropFlags(p, "__as2lib__hashCode", 1, true);
 		return info;
 	}
 	
@@ -153,8 +153,8 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 			cache[h] = info;
 		} else {
 			cache[p.__as2lib__hashCode = hashCodeCounter++] = info;
+			_global.ASSetPropFlags(p, "__as2lib__hashCode", 1, true);
 		}
-		_global.ASSetPropFlags(p, "__as2lib__hashCode", 1, true);
 		return info;
 	}
 	
