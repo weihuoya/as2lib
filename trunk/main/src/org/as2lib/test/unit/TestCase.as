@@ -410,8 +410,10 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		overload.addHandler([undefined, Object], assertEqualsWithoutMessage);
 		overload.addHandler([Object, undefined], assertEqualsWithoutMessage);
 		overload.addHandler([Object, Object], assertEqualsWithoutMessage);
+		overload.addHandler([String, String], assertEqualsWithoutMessage);
 		overload.addHandler([undefined], assertEqualsWithoutMessage);
 		overload.addHandler([Object], assertEqualsWithoutMessage);
+		overload.addHandler([String], assertEqualsWithMessage);
 		overload.addHandler([], assertEqualsWithoutMessage);
 		return overload.forward(arguments);
 	}
@@ -479,6 +481,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		overload.addHandler([undefined, Object], assertNotEqualsWithoutMessage);
 		overload.addHandler([Object, undefined], assertNotEqualsWithoutMessage);
 		overload.addHandler([Object, Object], assertNotEqualsWithoutMessage);
+		overload.addHandler([String, String], assertNotEqualsWithoutMessage);
 		overload.addHandler([undefined], assertNotEqualsWithoutMessage);
 		overload.addHandler([Object], assertNotEqualsWithoutMessage);
 		overload.addHandler([], assertNotEqualsWithoutMessage);
@@ -547,6 +550,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		overload.addHandler([undefined, Object], assertSameWithoutMessage);
 		overload.addHandler([Object, undefined], assertSameWithoutMessage);
 		overload.addHandler([Object, Object], assertSameWithoutMessage);
+		overload.addHandler([String, String], assertSameWithoutMessage);
 		overload.addHandler([undefined], assertSameWithoutMessage);
 		overload.addHandler([Object], assertSameWithoutMessage);
 		overload.addHandler([], assertSameWithoutMessage);
@@ -615,6 +619,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		overload.addHandler([undefined, Object], assertNotSameWithoutMessage);
 		overload.addHandler([Object, undefined], assertNotSameWithoutMessage);
 		overload.addHandler([Object, Object], assertNotSameWithoutMessage);
+		overload.addHandler([String, String], assertNotSameWithoutMessage);
 		overload.addHandler([undefined], assertNotSameWithoutMessage);
 		overload.addHandler([Object], assertNotSameWithoutMessage);
 		overload.addHandler([], assertNotSameWithoutMessage);
