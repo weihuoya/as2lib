@@ -64,6 +64,13 @@ class org.as2lib.basic.event.EventBroadcaster {
 	}
 	
 	/**
+	 * Removes all registered listeners.
+	 */
+	public function removeAllListeners(Void):Void {
+		listeners.clear();
+	}
+	
+	/**
 	 * @return A copy of the listeners array
 	 */
 	public function getListeners(Void):TypedArray {

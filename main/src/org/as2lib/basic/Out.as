@@ -69,6 +69,13 @@ class org.as2lib.basic.Out implements OutAccess {
 	}
 	
 	/**
+	 * Removes all registered handlers.
+	 */
+	public function removeAllHandlers(Void):Void {
+		broadcaster.removeAllListeners();
+	}
+	
+	/**
 	 * @see org.as2lib.basic.OutAccess
 	 */
 	public function log(message:String):Void {
