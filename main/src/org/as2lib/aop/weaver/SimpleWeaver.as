@@ -145,7 +145,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	}
 	
 	public function addAspectByAspectAndAffectedTypes(a:Aspect, b:Array):Void {
-		z.push(a);
-		y.push(b);
+		z.unshift(eval("a"));
+		y.unshift(b);
 	}
 }
