@@ -7,9 +7,6 @@ import org.as2lib.core.BasicClass;
  * @version 1.0
  */
 class org.as2lib.env.out.info.OutWriteInfo extends BasicClass implements EventInfo {
-	/** The name of the event. */
-	private var name:String;
-	
 	/** The message. */
 	private var message:String;
 	
@@ -18,8 +15,7 @@ class org.as2lib.env.out.info.OutWriteInfo extends BasicClass implements EventIn
 	/**
 	 * Constructs a new OutInfo instance.
 	 */
-	public function OutWriteInfo(aName:String, aMessage:String, aLevel:OutLevel) {
-		name = aName;
+	public function OutWriteInfo(aMessage:String, aLevel:OutLevel) {
 		message = aMessage;
 		level = aLevel;
 	}
@@ -39,6 +35,6 @@ class org.as2lib.env.out.info.OutWriteInfo extends BasicClass implements EventIn
 	 * @see org.as2lib.env.event.EventInfo
 	 */
 	public function getName(Void):String {
-		return name;
+		return "write";
 	}
 }

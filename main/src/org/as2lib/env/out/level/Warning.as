@@ -13,7 +13,7 @@ class org.as2lib.env.out.level.Warning extends Error {
 	 * @see org.as2lib.env.out.OutLevel
 	 */
 	public function warning(message:String, broadcaster:EventBroadcaster):Void {
-		var event:EventInfo = new OutWriteInfo("write", message, Out.WARNING);
+		var event:EventInfo = new OutWriteInfo(message, Out.WARNING);
 		broadcaster.dispatch(event);
 	}
 }
