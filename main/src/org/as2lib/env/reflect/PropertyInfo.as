@@ -1,6 +1,7 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.env.reflect.ClassMemberInfo;
 
 /**
  * PropertyInfo represents a property.
@@ -8,7 +9,7 @@ import org.as2lib.util.ObjectUtil;
  * @author Simon Wacker
  * @see org.as2lib.core.BasicClass
  */
-class org.as2lib.env.reflect.PropertyInfo extends BasicClass {
+class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements ClassMemberInfo {
 	/** The name of the property. */
 	private var name:String;
 	
@@ -46,9 +47,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass {
 	}
 	
 	/**
-	 * Returns the name of the property.
-	 *
-	 * @return the propertie's name
+	 * @see org.as2lib.env.reflect.ClassMemberInfo#getName()
 	 */
 	public function getName(Void):String {
 		return name;
@@ -73,9 +72,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass {
 	}
 	
 	/**
-	 * Returns the declaring class of the property.
-	 *
-	 * @return the propertie's declaring class
+	 * @see org.as2lib.env.reflect.ClassMemberInfo#getDeclaringClass()
 	 */
 	public function getDeclaringClass(Void):ClassInfo {
 		return declaringClass;
@@ -100,9 +97,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass {
 	}
 	
 	/**
-	 * Returns whether the property is static or not.
-	 *
-	 * @return true when the property is static else false
+	 * @see org.as2lib.env.reflect.ClassMemberInfo#isStatic()
 	 */
 	public function isStatic(Void):Boolean {
 		return staticFlag;
