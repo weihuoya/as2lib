@@ -1,4 +1,5 @@
 ﻿import org.as2lib.core.BasicClass;
+import org.as2lib.aop.matcher.Matcher;
 
 /**
  * @author Simon Wacker
@@ -10,5 +11,9 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	public static var TYPE_PROPERTY_GET:Number = 3;
 	
 	private function AbstractJoinPoint(Void) {
+	}
+	
+	public function matches(pattern:String):Boolean {
+		return Matcher.matches((this["getInfo"]().getDeclaringType().getFullName() + "." + this["getInfo"]().getName()), pattern);
 	}
 }

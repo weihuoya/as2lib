@@ -10,4 +10,5 @@ interface org.as2lib.aop.JoinPoint extends BasicInterface {
 	public function getThis(Void);
 	public function clone(Void):JoinPoint;
 	public function getType(Void):Number;
+	public function matches(pattern:String):Boolean;
 }

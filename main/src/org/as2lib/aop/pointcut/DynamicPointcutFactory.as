@@ -6,11 +6,10 @@ import org.as2lib.data.iterator.ArrayIterator;
 import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.pointcut.OrCompositePointcut;
 import org.as2lib.aop.pointcut.AndCompositePointcut;
-import org.as2lib.aop.pointcut.MethodPointcut;
-import org.as2lib.aop.pointcut.GetPropertyPointcut;
-import org.as2lib.aop.pointcut.SetPropertyPointcut;
+import org.as2lib.aop.pointcut.KindedPointcut;
 import org.as2lib.aop.pointcut.PointcutFactory;
 import org.as2lib.aop.pointcut.PointcutRule;
+import org.as2lib.aop.joinpoint.AbstractJoinPoint;
 
 /**
  * @author Simon Wacker
@@ -59,7 +58,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		var factory:PointcutFactory = new PointcutFactory();
 		factory.getPointcut = function(description:String):Pointcut {
 			description = description.substring(10, description.length - 3);
-			return (new MethodPointcut(description));
+			return (new KindedPointcut(description, AbstractJoinPoint.TYPE_METHOD));
 		}
 		bindFactory(rule, factory);
 	}
@@ -72,7 +71,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		var factory:PointcutFactory = new PointcutFactory();
 		factory.getPointcut = function(description:String):Pointcut {
 			description = description.substring(4, description.length - 1);
-			return (new SetPropertyPointcut(description));
+			return (new KindedPointcut(description, AbstractJoinPoint.TYPE_PROPERTY_SET));
 		}
 		bindFactory(rule, factory);
 	}
@@ -85,7 +84,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		var factory:PointcutFactory = new PointcutFactory();
 		factory.getPointcut = function(description:String):Pointcut {
 			description = description.substring(4, description.length - 1);
-			return (new GetPropertyPointcut(description));
+			return (new KindedPointcut(description, AbstractJoinPoint.TYPE_PROPERTY_GET));
 		}
 		bindFactory(rule, factory);
 	}
