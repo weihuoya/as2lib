@@ -222,10 +222,10 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 */
 	private static function assertTrue():Void {
 		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that,arguments);
+		var overload:Overload = new Overload(that);
 		overload.addHandlerByValue([String, Object], assertTrueWithMessage);
 		overload.addHandlerByValue([Object], assertTrueWithoutMessage);
-		overload.forward();
+		overload.forward(arguments);
 	}
 	
 	/**
@@ -265,10 +265,10 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 */
 	private static function assertFalse():Void {
 		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that,arguments);
+		var overload:Overload = new Overload(that);
 		overload.addHandlerByValue([String, Object], assertFalseWithMessage);
 		overload.addHandlerByValue([Object], assertFalseWithoutMessage);
-		overload.forward();
+		overload.forward(arguments);
 	}
 	
 	/**
@@ -310,10 +310,10 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 */
 	private static function assertEquals():Void {
 		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that,arguments);
+		var overload:Overload = new Overload(that);
 		overload.addHandlerByValue([String, Object, Object], assertEqualsWithMessage);
 		overload.addHandlerByValue([Object, Object], assertEqualsWithoutMessage);
-		overload.forward();
+		overload.forward(arguments);
 	}
 	
 	/**
@@ -358,10 +358,10 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 */
 	private static function assertNotEquals():Void {
 		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that,arguments);
+		var overload:Overload = new Overload(that);
 		overload.addHandlerByValue([String, Object, Object], assertNotEqualsWithMessage);
 		overload.addHandlerByValue([Object, Object], assertNotEqualsWithoutMessage);
-		overload.forward();
+		overload.forward(arguments);
 	}
 	
 	/**
@@ -407,10 +407,10 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 */
 	private static function assertNotNull():Void {
 		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that,arguments);
+		var overload:Overload = new Overload(that);
 		overload.addHandlerByValue([String, Object], assertNotNullWithMessage);
 		overload.addHandlerByValue([Object], assertNotNullWithoutMessage);
-		overload.forward();
+		overload.forward(arguments);
 	}
 	
 	/**
@@ -452,10 +452,10 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 */
 	private static function assertNull():Void {
 		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that,arguments);
+		var overload:Overload = new Overload(that);
 		overload.addHandlerByValue([String, Object], assertNullWithMessage);
 		overload.addHandlerByValue([Object], assertNullWithoutMessage);
-		overload.forward();
+		overload.forward(arguments);
 	}
 	
 	/**
@@ -498,10 +498,10 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 */
 	private static function assertNotUndefined():Void {
 		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that,arguments);
+		var overload:Overload = new Overload(that);
 		overload.addHandlerByValue([String, Object], assertNotUndefinedWithMessage);
 		overload.addHandlerByValue([Object], assertNotUndefinedWithoutMessage);
-		overload.forward();
+		overload.forward(arguments);
 	}
 	
 	/**
@@ -544,10 +544,10 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 */
 	private static function assertUndefined():Void {
 		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that,arguments);
+		var overload:Overload = new Overload(that);
 		overload.addHandlerByValue([String, Object], assertUndefinedWithMessage);
 		overload.addHandlerByValue([Object], assertUndefinedWithoutMessage);
-		overload.forward();
+		overload.forward(arguments);
 	}
 	
 	/**
@@ -590,10 +590,10 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 */
 	private static function assertNotInfinity():Void {
 		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that,arguments);
+		var overload:Overload = new Overload(that);
 		overload.addHandlerByValue([String, Object], assertNotInfinityWithMessage);
 		overload.addHandlerByValue([Object], assertNotInfinityWithoutMessage);
-		overload.forward();
+		overload.forward(arguments);
 	}
 	
 	/**
@@ -636,10 +636,10 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 */
 	private static function assertInfinity():Void {
 		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that,arguments);
+		var overload:Overload = new Overload(that);
 		overload.addHandlerByValue([String, Object], assertInfinityWithMessage);
 		overload.addHandlerByValue([Object], assertInfinityWithoutMessage);
-		overload.forward();
+		overload.forward(arguments);
 	}
 	
 	/**
