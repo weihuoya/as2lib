@@ -82,8 +82,20 @@ class org.as2lib.env.except.FatalException extends AbstractThrowable implements 
 	 * executes the Logger#fatal method passing 'this' because it thinks
 	 * that the virtual machine called this method.
 	 *
-	 * <p>The string representation is obtained via the stringifier returned
-	 * by the static #getStringifier method.
+	 * <p>The string representation is obtained via the invocation of the
+	 * #doToString method that uses the stringifier returned by the static
+	 * #getStringifier method.
+	 *
+	 * <p>If you want to change the appearance of all exceptions set a new
+	 * stringifier via #setStringifier.
+	 *
+	 * <p>If you only want to change the string representation of one exception
+	 * and its sub-classes overwrite the #doToString method.
+	 *
+	 * <p>Do not overwrite this toString method because you will lose the
+	 * functionality that invokes the logger when the exception has not
+	 * been caught and has now reached the final 'level', the virtual machine,
+	 * that invokes this toString method.
 	 *
 	 * @return a string representation of this fatal exception
 	 */
@@ -91,7 +103,7 @@ class org.as2lib.env.except.FatalException extends AbstractThrowable implements 
 		if (!arguments.caller && getLogger()) {
 			getLogger().fatal(this);
 		}
-		return getStringifier().execute(this);
+		return doToString();
 	}
 	
 }
