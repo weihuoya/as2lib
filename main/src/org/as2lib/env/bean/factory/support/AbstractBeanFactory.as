@@ -26,7 +26,7 @@ class org.as2lib.env.bean.factory.support.AbstractBeanFactory extends BasicClass
 		var o:Overload = new Overload(this);
 		o.addHandler([String], this["getBeanByName"]);
 		o.addHandler([String, Function], this["getBeanByNameAndType"]);
-		o.forward(arguments);
+		return o.forward(arguments);
 	}
 	
 	public function getBeanDefinitionNames():Array {
