@@ -5,6 +5,12 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2004">
       <month value="11">
+        <day value="18">
+          <entry type="change" package="org.as2lib.util" class="Call"><change-throws to="IllegalArgumentException"></change-throws> If the applied arguments are null.</entry>
+          <entry type="add" package="org.as2lib.util" class="ArrayUtil" method="removeAllOccurances(array:Array, element)"></entry>
+          <entry type="add" package="org.as2lib.util" class="ArrayUtil" method="removeFirstOccurance(array:Array, element)"></entry>
+          <entry type="add" package="org.as2lib.util" class="ArrayUtil" method="removeLastOccurance(array:Array, element)"></entry>
+        </day>
         <day value="1">
           <entry type="change" package="org.as2lib.util" class="StringUtil"><change-throws to="IllegalArgumentException"></change-throws></entry>
         </day>
