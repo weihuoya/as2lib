@@ -16,11 +16,19 @@
 
 
 /**
- * BasicInterface is the basic interface for each class in the as2lib framework.
+ * BasicInterface is the basic interface for each class in the as2lib
+ * framework.
  * 
- * <p>It is recommended to always implement this interface in the classes of your
- * own project but it is not a necessity. You can use all functionality of the 
- * as2lib framework without implementing it.
+ * <p>It is recommended to always implement this interface in the classes
+ * of your own project but it is not a necessity. You can use all 
+ * functionality of the as2lib framework without implementing it.
+ *
+ * <p>In enables you to call the #theString method on instances that
+ * have been casted to interfaces.
+ *
+ * <p>The default implementation BasicClass offers an enhanced #toString
+ * method implementation that returns a better string representation
+ * than the default Object#toString method of Flash.
  *
  * @author Simon Wacker
  * @author Martin Heidegger
@@ -30,9 +38,9 @@
 interface org.as2lib.core.BasicInterface {       
 	 
 	/**
-	 * Returns a String representation of the instance.
+	 * Returns a String representation of this instance.
 	 *
-	 * @return a String representing the instance
+	 * @return the String representation of this instance
 	 */
 	public function toString(Void):String;
 	
