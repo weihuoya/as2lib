@@ -8,9 +8,6 @@ import org.as2lib.core.BasicClass;
  * @version 1.0
  */
 class org.as2lib.env.out.info.OutErrorInfo extends BasicClass implements EventInfo {
-	/** The name of the event. */
-	private var name:String;
-	
 	/** The exception. */
 	private var throwable:Throwable;
 	
@@ -19,8 +16,7 @@ class org.as2lib.env.out.info.OutErrorInfo extends BasicClass implements EventIn
 	/**
 	 * Constructs a new OutInfo instance.
 	 */
-	public function OutErrorInfo(aName:String, aThrowable:Throwable, aLevel:OutLevel) {
-		name = aName;
+	public function OutErrorInfo(aThrowable:Throwable, aLevel:OutLevel) {
 		throwable = aThrowable;
 		level = aLevel;
 	}
@@ -40,6 +36,6 @@ class org.as2lib.env.out.info.OutErrorInfo extends BasicClass implements EventIn
 	 * @see org.as2lib.env.event.EventInfo
 	 */
 	public function getName(Void):String {
-		return name;
+		return "error";
 	}
 }

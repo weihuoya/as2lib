@@ -13,7 +13,7 @@ class org.as2lib.env.out.level.Debug extends Info {
 	 * @see org.as2lib.env.out.OutLevel
 	 */
 	public function debug(message:String, broadcaster:EventBroadcaster):Void {
-		var event:EventInfo = new OutWriteInfo("write", message, Out.DEBUG);
+		var event:EventInfo = new OutWriteInfo(message, Out.DEBUG);
 		broadcaster.dispatch(event);
 	}
 }
