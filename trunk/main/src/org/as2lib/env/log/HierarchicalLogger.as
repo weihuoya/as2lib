@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.env.log.Logger;
+import org.as2lib.env.log.LogLevel;
 
 /**
  * HierarchicalLogger gets implemented to enable to logger to take part
@@ -49,6 +50,13 @@ interface org.as2lib.env.log.HierarchicalLogger extends Logger {
 	 * @return the name of this logger
 	 */
 	public function getName(Void):String;
+	
+	/**
+	 * Returns the level of this or the one of the parent logger.
+	 *
+	 * @return the level of this or the one of the parent logger.
+	 */
+	public function getLevel(Void):LogLevel;
 	
 	/**
 	 * Returns all handlers this logger broadcasts to when logging a message.
