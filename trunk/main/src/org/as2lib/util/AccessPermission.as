@@ -131,6 +131,7 @@ class org.as2lib.util.AccessPermission extends BasicClass {
 	 * @link http://chattyfig.figleaf.com/flashcoders-wiki/index.php?ASSetPropFlags
 	 */
 	public static function isEnumerable(target, object:String):Boolean {
+		// Why not use target.isPropertyEnumerable(object)?
 		for(var i:String in target){
 			if(i == object) return true;
 		}

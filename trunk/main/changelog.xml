@@ -5,6 +5,14 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="2">
+         <day value="6">
+           <entry type="change" package="org.as2lib.util" class="ObjectUtil" method="setAccessPermission(..)">Moved and renamed to AccessPermission.set(..).</entry>
+           <entry type="change" package="org.as2lib.util" class="ObjectUtil" method="getAccessPermission(..)">Moved and renamed to AccessPermission.get(..).</entry>
+           <entry type="change" package="org.as2lib.util" class="ObjectUtil" method="isEnumerable(..)"><change-move to="AccessPermission" /></entry>
+           <entry type="change" package="org.as2lib.util" class="ObjectUtil" method="isOverwritable(..)"><change-move to="AccessPermission" /></entry>
+           <entry type="change" package="org.as2lib.util" class="ObjectUtil" method="isDeletable(..)"><change-move to="AccessPermission" /></entry>
+           <entry type="change" package="org.as2lib.util" class="ObjectUtil" method="ACCESS_ALL_ALLOWED, ACCESS_IS_HIDDEN/ACCESS_PROTECT_DELETE/ACCESS_PROTECT_OVERWRITE/ACCESS_NOTHING_ALLOWED">Moved and renamed to AccessPermission.ALL_ALLOWED/IS_HIDDEN/PROTECT_DELETE/PROTECT_OVERWRITE/NOTHING_ALLOWED</entry>
+         </day>
          <day value="4">
            <entry type="add" package="org.as2lib.util" class="AccessPermission"></entry>
            <entry type="change" package="static org.as2lib.env.reflect" class="ReflectUtil" method="getClassName(..)"><change-rename to="getTypeName(..)" /></entry>

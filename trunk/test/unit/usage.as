@@ -62,6 +62,7 @@ org.as2lib.util.TStopWatch;
 org.as2lib.util.TObjectUtil;
 org.as2lib.util.TArrayUtil;
 org.as2lib.util.TMathUtil;
+org.as2lib.util.AccessPermission;
 
 // org.as2lib.test.mock
 org.as2lib.test.mock.TMethodCall;
