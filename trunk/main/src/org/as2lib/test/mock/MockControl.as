@@ -23,12 +23,12 @@ import org.as2lib.env.reflect.ProxyFactory;
 import org.as2lib.env.reflect.ResolveProxyFactory;
 import org.as2lib.env.reflect.InvocationHandler;
 import org.as2lib.test.mock.ArgumentsMatcher;
-import org.as2lib.test.mock.MethodBehaviour;
-import org.as2lib.test.mock.Behaviour;
+import org.as2lib.test.mock.MethodBehavior;
+import org.as2lib.test.mock.Behavior;
 import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodResponse;
-import org.as2lib.test.mock.support.DefaultBehaviour;
+import org.as2lib.test.mock.support.DefaultBehavior;
 import org.as2lib.test.mock.MockControlState;
 import org.as2lib.test.mock.support.RecordState;
 import org.as2lib.test.mock.support.ReplayState;
@@ -48,8 +48,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/** Stores the created mock proxy. */
 	private var mock;
 	
-	/** Stores the mock behaviours. */
-	private var behaviour:Behaviour;
+	/** Stores the mock behaviors. */
+	private var behavior:Behavior;
 	
 	/** Stores the state. */
 	private var state:MockControlState;
@@ -62,33 +62,33 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	
 	/**
 	 * @overload #MockControlByType()
-	 * @overload #MockControlByTypeAndBehaviour()
+	 * @overload #MockControlByTypeAndBehavior()
 	 */
 	public function MockControl() {
 		var o:Overload = new Overload(this);
 		o.addHandler([Function], MockControlByType);
-		o.addHandler([Function, Behaviour], MockControlByTypeAndBehaviour);
+		o.addHandler([Function, Behavior], MockControlByTypeAndBehavior);
 		o.forward(arguments);
 	}
 	
 	/**
-	 * Constrcuts a new instance using the default behaviour.
+	 * Constrcuts a new instance using the default behavior.
 	 *
 	 * @param type the interface or class to create a mock object for
 	 */
 	private function MockControlByType(type:Function) {
-		MockControlByTypeAndBehaviour(type, new DefaultBehaviour());
+		MockControlByTypeAndBehavior(type, new DefaultBehavior());
 	}
 	
 	/**
 	 * Constructs a new instance.
 	 *
 	 * @param type the interface or class to create a mock object for
-	 * @param behaviour the instance to store the behaviour of the mock inside
+	 * @param behavior the instance to store the behavior of the mock inside
 	 */
-	private function MockControlByTypeAndBehaviour(type:Function, behaviour:Behaviour):Void {
+	private function MockControlByTypeAndBehavior(type:Function, behavior:Behavior):Void {
 		this.type = type;
-		this.behaviour = behaviour;
+		this.behavior = behavior;
 		reset();
 	}
 	
@@ -128,8 +128,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 */
 	private function getDefaultRecordStateFactory(Void):MockControlStateFactory {
 		var result:MockControlStateFactory = new MockControlStateFactory();
-		result.getMockControlState = function(behaviour:Behaviour):MockControlState {
-			return new RecordState(behaviour);
+		result.getMockControlState = function(behavior:Behavior):MockControlState {
+			return new RecordState(behavior);
 		}
 		return result;
 	}
@@ -159,8 +159,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 */
 	private function getDefaultReplayStateFactory(Void):MockControlStateFactory {
 		var result:MockControlStateFactory = new MockControlStateFactory();
-		result.getMockControlState = function(behaviour:Behaviour):MockControlState {
-			return new ReplayState(behaviour);
+		result.getMockControlState = function(behavior:Behavior):MockControlState {
+			return new ReplayState(behavior);
 		}
 		return result;
 	}
@@ -215,7 +215,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 * operation.
 	 */
 	public function replay(Void):Void {
-		state = getReplayStateFactory().getMockControlState(behaviour);
+		state = getReplayStateFactory().getMockControlState(behavior);
 	}
 	
 	/**
@@ -224,8 +224,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 * removed and that the mock object will again be in record state.
 	 */
 	public function reset(Void):Void {
-		behaviour.removeAllBehaviour();
-		state = getRecordStateFactory().getMockControlState(behaviour);
+		behavior.removeAllBehavior();
+		state = getRecordStateFactory().getMockControlState(behavior);
 	}
 	
 	/**

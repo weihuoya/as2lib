@@ -16,13 +16,13 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.support.ReplayState;
-import org.as2lib.test.mock.Behaviour;
+import org.as2lib.test.mock.Behavior;
 import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodResponse;
 import org.as2lib.test.mock.ArgumentsMatcher;
-import test.unit.org.as2lib.test.mock.BehaviourMock;
-import test.unit.org.as2lib.test.mock.MethodBehaviourMock;
+import test.unit.org.as2lib.test.mock.BehaviorMock;
+import test.unit.org.as2lib.test.mock.MethodBehaviorMock;
 
 /**
  * @author Simon Wacker
@@ -38,13 +38,13 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 	}
 	
 	public function testNewWithRealArgument(Void):Void {
-		var b:Behaviour = new Behaviour();
+		var b:Behavior = new Behavior();
 		var s:ReplayState = new ReplayState(b);
-		assertSame(s.getBehaviour(), b);
+		assertSame(s.getBehavior(), b);
 	}
 	
 	public function testVerifyWithNullArgument(Void):Void {
-		var b:BehaviourMock = new BehaviourMock(this);
+		var b:BehaviorMock = new BehaviorMock(this);
 		b.verify();
 		b.replay();
 		
@@ -55,7 +55,7 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 	}
 	
 	public function testVerifyWithRealArgument(Void):Void {
-		var b:BehaviourMock = new BehaviourMock(this);
+		var b:BehaviorMock = new BehaviorMock(this);
 		b.verify();
 		b.replay();
 		
@@ -65,18 +65,18 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 		b.doVerify();
 	}
 	
-	public function testInvokeMethodWithAvailableMethodBehaviourAndNullArgument(Void):Void {
+	public function testInvokeMethodWithAvailableMethodBehaviorAndNullArgument(Void):Void {
 		var rv:Object = new Object();
 		
-		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		var m:MethodBehaviorMock = new MethodBehaviorMock(this);
 		m.addActualMethodCall(null);
 		m.response();
 		m.setResponseReturnValue(rv);
 		m.replay();
 		
-		var b:BehaviourMock = new BehaviourMock(this);
-		b.getMethodBehaviour(null);
-		b.setGetMethodBehaviourReturnValue(m);
+		var b:BehaviorMock = new BehaviorMock(this);
+		b.getMethodBehavior(null);
+		b.setGetMethodBehaviorReturnValue(m);
 		b.replay();
 		
 		var s:ReplayState = new ReplayState(b);
@@ -86,19 +86,19 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 		m.doVerify();
 	}
 	
-	public function testInvokeMethodWithAvailableMethodBehaviourAndRealArgument(Void):Void {
+	public function testInvokeMethodWithAvailableMethodBehaviorAndRealArgument(Void):Void {
 		var rv:Object = new Object();
 		var mc:MethodCall = new MethodCall("methodName", []);
 		
-		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		var m:MethodBehaviorMock = new MethodBehaviorMock(this);
 		m.addActualMethodCall(mc);
 		m.response();
 		m.setResponseReturnValue(rv);
 		m.replay();
 		
-		var b:BehaviourMock = new BehaviourMock(this);
-		b.getMethodBehaviour(mc);
-		b.setGetMethodBehaviourReturnValue(m);
+		var b:BehaviorMock = new BehaviorMock(this);
+		b.getMethodBehavior(mc);
+		b.setGetMethodBehaviorReturnValue(m);
 		b.replay();
 		
 		var s:ReplayState = new ReplayState(b);
@@ -108,21 +108,21 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 		m.doVerify();
 	}
 	
-	public function testInvokeMethodWithUnavailableMethodBehaviourAndNullArgument(Void):Void {
+	public function testInvokeMethodWithUnavailableMethodBehaviorAndNullArgument(Void):Void {
 		var rv:Object = new Object();
 		
-		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		var m:MethodBehaviorMock = new MethodBehaviorMock(this);
 		m.addActualMethodCall(null);
 		m.response();
 		m.setResponseReturnValue(rv);
 		m.replay();
 		
-		var b:BehaviourMock = new BehaviourMock(this);
-		b.getMethodBehaviour(null);
-		b.setGetMethodBehaviourReturnValue(null);
-		b.createMethodBehaviour(null);
-		b.setCreateMethodBehaviourReturnValue(m);
-		b.addMethodBehaviour("[unknown]", m);
+		var b:BehaviorMock = new BehaviorMock(this);
+		b.getMethodBehavior(null);
+		b.setGetMethodBehaviorReturnValue(null);
+		b.createMethodBehavior(null);
+		b.setCreateMethodBehaviorReturnValue(m);
+		b.addMethodBehavior("[unknown]", m);
 		b.replay();
 		
 		var s:ReplayState = new ReplayState(b);
@@ -132,22 +132,22 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 		m.doVerify();
 	}
 	
-	public function testInvokeMethodWithUnavailableMethodBehaviourAndRealArgument(Void):Void {
+	public function testInvokeMethodWithUnavailableMethodBehaviorAndRealArgument(Void):Void {
 		var rv:Object = new Object();
 		var mc:MethodCall = new MethodCall("methodName", []);
 		
-		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		var m:MethodBehaviorMock = new MethodBehaviorMock(this);
 		m.addActualMethodCall(mc);
 		m.response();
 		m.setResponseReturnValue(rv);
 		m.replay();
 		
-		var b:BehaviourMock = new BehaviourMock(this);
-		b.getMethodBehaviour(mc);
-		b.setGetMethodBehaviourReturnValue(null);
-		b.createMethodBehaviour(null);
-		b.setCreateMethodBehaviourReturnValue(m);
-		b.addMethodBehaviour("methodName", m);
+		var b:BehaviorMock = new BehaviorMock(this);
+		b.getMethodBehavior(mc);
+		b.setGetMethodBehaviorReturnValue(null);
+		b.createMethodBehavior(null);
+		b.setCreateMethodBehaviorReturnValue(m);
+		b.addMethodBehavior("methodName", m);
 		b.replay();
 		
 		var s:ReplayState = new ReplayState(b);
@@ -157,22 +157,22 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 		m.doVerify();
 	}
 	
-	public function testInvokeMethodWithUnavailableMethodBehaviourAndRealArgumentAndNullMethodName(Void):Void {
+	public function testInvokeMethodWithUnavailableMethodBehaviorAndRealArgumentAndNullMethodName(Void):Void {
 		var rv:Object = new Object();
 		var mc:MethodCall = new MethodCall(null, []);
 		
-		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		var m:MethodBehaviorMock = new MethodBehaviorMock(this);
 		m.addActualMethodCall(mc);
 		m.response();
 		m.setResponseReturnValue(rv);
 		m.replay();
 		
-		var b:BehaviourMock = new BehaviourMock(this);
-		b.getMethodBehaviour(mc);
-		b.setGetMethodBehaviourReturnValue(null);
-		b.createMethodBehaviour(null);
-		b.setCreateMethodBehaviourReturnValue(m);
-		b.addMethodBehaviour("[unknown]", m);
+		var b:BehaviorMock = new BehaviorMock(this);
+		b.getMethodBehavior(mc);
+		b.setGetMethodBehaviorReturnValue(null);
+		b.createMethodBehavior(null);
+		b.setCreateMethodBehaviorReturnValue(m);
+		b.addMethodBehavior("[unknown]", m);
 		b.replay();
 		
 		var s:ReplayState = new ReplayState(b);
@@ -182,22 +182,22 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 		m.doVerify();
 	}
 	
-	public function testInvokeMethodWithUnavailableMethodBehaviourAndRealArgumentAndBlankStringMethodName(Void):Void {
+	public function testInvokeMethodWithUnavailableMethodBehaviorAndRealArgumentAndBlankStringMethodName(Void):Void {
 		var rv:Object = new Object();
 		var mc:MethodCall = new MethodCall("", []);
 		
-		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		var m:MethodBehaviorMock = new MethodBehaviorMock(this);
 		m.addActualMethodCall(mc);
 		m.response();
 		m.setResponseReturnValue(rv);
 		m.replay();
 		
-		var b:BehaviourMock = new BehaviourMock(this);
-		b.getMethodBehaviour(mc);
-		b.setGetMethodBehaviourReturnValue(null);
-		b.createMethodBehaviour(null);
-		b.setCreateMethodBehaviourReturnValue(m);
-		b.addMethodBehaviour("[unknown]", m);
+		var b:BehaviorMock = new BehaviorMock(this);
+		b.getMethodBehavior(mc);
+		b.setGetMethodBehaviorReturnValue(null);
+		b.createMethodBehavior(null);
+		b.setCreateMethodBehaviorReturnValue(m);
+		b.addMethodBehavior("[unknown]", m);
 		b.replay();
 		
 		var s:ReplayState = new ReplayState(b);
@@ -208,7 +208,7 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 	}
 	
 	public function testSetMethodResponse(Void):Void {
-		var b:BehaviourMock = new BehaviourMock(this);
+		var b:BehaviorMock = new BehaviorMock(this);
 		b.replay();
 		
 		var s:ReplayState = new ReplayState(b);
@@ -222,7 +222,7 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 	}
 	
 	public function testSetArgumentsMatcher(Void):Void {
-		var b:BehaviourMock = new BehaviourMock(this);
+		var b:BehaviorMock = new BehaviorMock(this);
 		b.replay();
 		
 		var s:ReplayState = new ReplayState(b);
