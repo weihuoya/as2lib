@@ -4,6 +4,7 @@ import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.StackTraceElement;
+import org.as2lib.env.except.SimpleStackTraceElement;
 import org.as2lib.data.holder.Stack;
 
 /**
@@ -37,7 +38,7 @@ class org.as2lib.env.except.AbstractException extends Error {
 	}
 	
 	private function addStackTraceElement(thrower, method:Function):Void {
-		var element:StackTraceElement = new StackTraceElement(thrower, method);
+		var element:StackTraceElement = new SimpleStackTraceElement(thrower, method);
 		stackTrace.push(element);
 	}
 	
