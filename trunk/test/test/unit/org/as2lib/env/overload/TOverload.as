@@ -18,6 +18,8 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.overload.OverloadHandler;
+import org.as2lib.env.overload.OverloadException;
+import org.as2lib.env.overload.SimpleOverloadHandler;
 import org.as2lib.env.overload.UnknownOverloadHandlerException;
 import org.as2lib.env.overload.SameTypeSignatureException;
 import org.as2lib.env.except.IllegalArgumentException;
@@ -92,6 +94,30 @@ class test.unit.org.as2lib.env.overload.TOverload extends TestCase {
 		hc2.verify();
 		hc3.verify();
 		hc4.verify();
+	}
+	
+	public function normalHandler(Void):String {
+		return "d";
+	}
+	
+	public function testDefaultHandler(Void):Void {
+		var overload:Overload = new Overload(this);
+		var defaultHandler:Function = function() {return "c";};
+
+		// Usual case
+		overload.addHandler([String], normalHandler);
+		overload.setDefaultHandler(defaultHandler);
+		assertEquals("The result of overloading to a default handler should be c", overload.forward(["a", "b"]), "c");
+		assertEquals("The result of overloading to another handler should be d", overload.forward(["a"]), "d");
+		
+		// Removed default handler
+		overload.setDefaultHandler(null);
+		assertThrows("The overloading should throw a exception if the defaulthandler was removed", OverloadException, overload, "forward", [["a", "b"]]);
+		
+		// Case with another free handler
+		overload.setDefaultHandler(defaultHandler);
+		overload.addHandler(new SimpleOverloadHandler(null, normalHandler));
+		assertEquals("The result of overloading to another handler with no argument should be c", overload.forward(["a", "b"]), "c");		
 	}
 	
 	public function testForwardWithNoMatchingOverloadHandler(Void):Void {
