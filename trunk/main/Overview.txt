@@ -6,7 +6,8 @@ interface org.as2lib.basic.BasicInterface {
       * @throws org.as2lib.basic.reflect.ReferenceNotFoundException if no reference from the class was found. 
       */ 
      public function getClass():org.as2lib.reflect.ClassInfo; 
-      
+}
+
 interface org.as2lib.basic.Cloneable {
       /** 
       * Returns a clone from actually used Object 
@@ -15,6 +16,7 @@ interface org.as2lib.basic.Cloneable {
       */ 
      public function clone():Object; 
 }
+
 interface org.as2lib.basic.Overloading {
      /** 
       * Processes the overloading, finds a matching type within the TypeArray 
@@ -31,13 +33,10 @@ interface org.as2lib.basic.Overloading {
       * 
       * @param 
       */ 
-     public function createOverloadHandler(matches:TypedArray,forwardsTo:Function):Void; 
-}
+     public function createOverloadHandler(matches:TypedArray,forwardsTo:Function):OverloadHandler;
 }
  
-class org.as2lib.basic.BasicClass implements org.as2lib.basic.BasicInterface { 
- 
-} 
+class org.as2lib.basic.BasicClass implements org.as2lib.basic.BasicInterface {}
  
  
 interface org.as2lib.basic.reflect.ClassInfo { 
@@ -93,25 +92,23 @@ interface org.as2lib.basic.OverloadHandler {
      /** 
       * Returns true if the usedArguments 
       */ 
-     public function doesMatch (args:Array):Boolean; 
+     public function matches (args:Array):Boolean;
       
      /** 
       * Executes  
       */ 
-     public function execute (args:Array):Void; 
+     public function execute (target:Object, args:Array):Void; 
 } 
  
-class org.as2lib.basic.SimpleOverloadHandler implements org.as2lib.basic.OverloadHandler { 
-} 
+class org.as2lib.basic.SimpleOverloadHandler implements org.as2lib.basic.OverloadHandler {} 
  
 interface org.as2lib.basic.reflect.MethodInfo { 
      public function getName():String; 
-     public function getMethod():String; 
+     public function getMethod():Function; 
      public function getDeclaringClass():ClassInfo; 
 } 
  
-class org.as2lib.basic.reflect.SimpleMethodInfo implements org.as2lib.basic.reflect.MethodInfo { 
-} 
+class org.as2lib.basic.reflect.SimpleMethodInfo implements org.as2lib.basic.reflect.MethodInfo {} 
 
 interface org.as2lib.basic.Cloneable {
      public function clone():Object;
@@ -120,6 +117,7 @@ interface org.as2lib.basic.Cloneable {
 class org.as2lib.basic.Exception extends Error implements BasicInterface {
      public function toString():String;
      public function getStack():Stack;
+     public function getStackTrace():String;
      public function initCause(e:Exception):Void;
      public function getCause():Exception;
      public function getMessage():String;
