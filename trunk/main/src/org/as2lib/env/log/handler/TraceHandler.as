@@ -26,6 +26,27 @@ import org.as2lib.core.BasicClass;
  */
 class org.as2lib.env.log.handler.TraceHandler extends BasicClass implements LogHandler {
 	
+	/** Holder for the traceHandler instance */
+	private static var traceHandler:TraceHandler;
+	
+	/**	
+	 * Private instanciation only, use .getInstance.
+	 * Since Flash supports only one output console, only one TraceHandler is necessary.
+	 *
+	 * @see #getInstance
+	 */
+	private function TraceHandler() {}
+	
+	/**
+	 * Returns a instance of the TraceHandler.
+	 *
+	 * @return Instance of a TraceHandler.
+	 */
+	public static function getInstance(Void):TraceHandler {
+		if(!traceHandler) traceHandler = new TraceHandler();
+		return traceHandler;
+	}
+	
 	/**
 	 * Uses #trace(String) to make the output.
 	 *
