@@ -7,9 +7,9 @@ class org.as2lib.data.io.conn.ConnectorResponse extends BasicClass implements Ev
 	private var name:String;
 	private var data:Object;
 	
-	public function ConnectorResponse() {
+	public function ConnectorResponse(data:Object) {
 		name = "onResponse";
-	
+		this.data = data;
 	}
 	
 	public function getData(Void):Object {
