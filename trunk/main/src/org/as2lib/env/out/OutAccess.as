@@ -56,18 +56,18 @@ interface org.as2lib.env.out.OutAccess extends BasicInterface {
 	public function warning(message):Void;
 	
 	/**
-	 * Outputs an error object. The output will only be made when the OutLevel is set to
+	 * Outputs a message object. The output will only be made when the OutLevel is set to
 	 * Out.ERROR or an above OutLevel. Refer to Out to see the correct order of OutLevels.
 	 *
-	 * @param error the error object to be written out
+	 * @param message the message object to be written out
 	 */
-	public function error(error):Void;
+	public function error(message):Void;
 	
 	/**
-	 * Outputs an error object. The output will only be made when the OutLevel is set to
+	 * Outputs a message object. The output will only be made when the OutLevel is set to
 	 * Out.FATAL or an above OutLevel. Refer to Out to see the correct order of OutLevels.
 	 *
-	 * @param error the error object to be written out
+	 * @param message the message object to be written out
 	 */
-	public function fatal(error):Void;
+	public function fatal(message):Void;
 }

@@ -168,14 +168,14 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
-	public function error(error):Void {
-		level.error(error, broadcaster);
+	public function error(message):Void {
+		level.error(message, broadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
-	public function fatal(error):Void {
-		level.fatal(error, broadcaster);
+	public function fatal(message):Void {
+		level.fatal(message, broadcaster);
 	}
 }
