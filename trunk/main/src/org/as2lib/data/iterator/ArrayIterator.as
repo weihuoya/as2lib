@@ -1,6 +1,7 @@
 ﻿import org.as2lib.data.iterator.Iterator;
+import org.as2lib.core.BasicClass;
 
-class org.as2lib.data.iterator.ArrayIterator implements Iterator {
+class org.as2lib.data.iterator.ArrayIterator extends BasicClass implements Iterator {
 	private var target:Array;
 	private var index:Number;
 	

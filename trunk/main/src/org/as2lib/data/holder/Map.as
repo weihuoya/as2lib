@@ -1,6 +1,7 @@
 ﻿import org.as2lib.data.iterator.Iterator;
+import org.as2lib.core.BasicInterface;
 
-interface org.as2lib.data.holder.Map {
+interface org.as2lib.data.holder.Map extends BasicInterface {
 	public function containsKey(key):Boolean;
 	public function containsValue(value):Boolean;
 	public function getKeys(Void):Array;

@@ -1,9 +1,11 @@
 ﻿import org.as2lib.util.ObjectUtil;
+import org.as2lib.core.BasicClass;
+import org.as2lib.core.BasicInterface;
 
 /**
  * Acts like a normal Array but assures that only objects from one and the same type are added to the Array.
  */
-class org.as2lib.data.holder.TypedArray {
+class org.as2lib.data.holder.TypedArray extends BasicClass implements BasicInterface {
 	public static var CASEINSENSITIVE = Array.CASEINSENSITIVE;
 	public static var DESCENDING = Array.DESCENDING;
 	public static var NUMERIC = Array.NUMERIC;
