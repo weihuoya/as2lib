@@ -18,15 +18,24 @@ import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.level.AbstractLogLevel;
 
 /**
+ * DynamicLogLevel lets you dynamically create your own levels.
+ *
+ * <p>The default levels All, Debug, Info, Warning, Error, Fatal and
+ * None normally meet all requirements.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.env.log.level.DynamicLogLevel extends AbstractLogLevel implements LogLevel {
 	
 	/**
-	 * @see AbstractLogLevel#new()
+	 * Constructs a new DynamicLogLevel instance.
+	 *
+	 * @param level the level represented by a number
+	 * @param name the name of the level
+	 * @throws IllegalArgumentException if passed-in level is null or undefined
 	 */
 	public function DynamicLogLevel(level:Number, name:String) {
-		super(level, name);
+		super (level, name);
 	}
 	
 }

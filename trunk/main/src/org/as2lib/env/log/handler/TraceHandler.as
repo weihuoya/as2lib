@@ -19,8 +19,8 @@ import org.as2lib.env.log.LogMessage;
 import org.as2lib.core.BasicClass;
 
 /**
- * TraceHandler is an implementation of the LogHandler interface. It uses
- * #trace(String) to write the message out.
+ * TraceHandler uses trace to log the message. Or better to output the
+ * message to Flash's output console.
  *
  * @author Simon Wacker
  */
@@ -43,17 +43,26 @@ class org.as2lib.env.log.handler.TraceHandler extends BasicClass implements LogH
 	
 	/**	
 	 * Constructs a new TraceHandler instance.
+	 *
+	 * <p>You can use one and the same instance for multiple loggers. So
+	 * think about using the handler returned by the static #getInstance
+	 * method.
+	 * Using this instance prevents the instantiation of unnecessary trace
+	 * handlers and and saves storage.
 	 */
 	public function TraceHandler(Void) {
 	}
 	
 	/**
-	 * Uses #trace(String) to make the output.
+	 * Uses trace to write the log message out.
 	 *
-	 * @see LogHandler#write()
+	 * <p>Uses the LogMessage#toString method to obtain the string that
+	 * gets written out.
+	 *
+	 * @param message the log message to write out
 	 */
 	public function write(message:LogMessage):Void {
-		trace(message);
+		trace(message.toString());
 	}
 	
 }
