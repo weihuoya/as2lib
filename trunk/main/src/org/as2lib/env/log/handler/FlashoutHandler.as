@@ -20,8 +20,9 @@ import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.level.AbstractLogLevel;
 
 /**
- * FlashoutHandler uses the Flashout class provided by the flashout eclipse
- * plugin to log messages.
+ * FlashoutHandler logs messages to the Flashout console.
+ *
+ * <p>The {@code Flashout} class is needed.
  *
  * @author Simon Wacker
  * @see org.as2lib.env.log.logger.FlashoutLogger
@@ -57,14 +58,15 @@ class org.as2lib.env.log.handler.FlashoutHandler extends BasicClass implements L
 	}
 	
 	/**
-	 * Uses the Flashout class to write the log message out.
+	 * Writes log messages to the Flashout console.
 	 *
 	 * <p>Uses the {@link LogMessage#toString} method to obtain the string that
-	 * is written out.
+	 * is logged.
 	 *
-	 * @param message the log message to write out
+	 * @param message the message to log
 	 */
 	public function write(message:LogMessage):Void {
+		// todo: log directly to the console without help of the Flashout class
 		switch (message.getLevel()) {
 			case AbstractLogLevel.DEBUG:
 				Flashout["async" + "Log"]("debug_log", message.toString());
