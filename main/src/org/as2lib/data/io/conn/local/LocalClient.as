@@ -5,7 +5,6 @@ import org.as2lib.data.io.conn.ConnectorError;
 import org.as2lib.data.io.conn.ConnectorResponse;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.EventInfo;
-//import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
@@ -15,7 +14,7 @@ import org.as2lib.env.out.OutAccess;
 /**
  * @author Christoph Atteneder
  * @version 1.0
- * @date 30.04.2004
+ * @date 13.05.2004
  */
 
 class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implements Connector {
@@ -23,9 +22,14 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 	/* EventBroadcaster for onResponse and onError - events */
 	private var eventBroadcaster:EventBroadcaster;
 	
-	/* connection id used to identify the correct local connection */
+	/** 
+	 * Defines domain of which server should be allowed
+	 */
 	private var host:String;
 	
+	/** 
+	 * Defines additional domain of which server should be allowed
+	 */
 	private var path:String;
 	
 	private var method:String;
@@ -44,41 +48,43 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 	private var domain:String;
 	
 	public function LocalClient(Void) {
+		aOut.debug(getClass().getName()+"- Constructor");
+		
 		eventBroadcaster = Config.getEventBroadcasterFactory().createEventBroadcaster();
 		params = new Array();
 		aOut = Config.getOut();
 	}
 	
 	public function initConnection(Void):Void {
-		aOut.debug("initConnection");
+		aOut.debug(getClass().getName()+".initConnection");
+		
 		connID = getRandomID();
+		
 		sender = new LocalConnection();
-		//sender.name = "lc"+Number(new Date());
-		//lc.connect(lc.name);
-		sender.send("register","addClient", connID);
-		connect(connID);
-		//sender.send("register","addClient", getRandomID());
+		
+		var args:Array = new Array("register","addClient",connID);
+		sender.send.apply(this,args);
+		//sender.send("register","addClient", connID);
+		if(!connect(connID)){
+			eventBroadcaster.dispatch(new ConnectorError("Connection name '"+connID+"' is already used by another LocalConnection",this,arguments,true,false));
+		}
 	}
 	
-	/*public function onServerStarted():Void {
-		
-	}*/
-	
-	public function getRandomID(Void):String {
+	private function getRandomID(Void):String {
+		aOut.debug(getClass().getName()+".getRandomID");
         var s:String = "abcdefghijklmnopqrstuvwxyz";
         var cnt:Number = 10;
-		var result:String = new String(host + path+"_");
+		var result:String = new String("conn_");//(host + path+"_");
         while (cnt--) {
             result += s.charAt(Math.floor(Math.random() * s.length));
         }
         return result;
     }
 	
-	public function clientMethod() {
-		//params = arguments;
-		_root.output_txt.text=arguments.toString();
-		aOut.debug("clientMethod");
-		aOut.debug(arguments.toString());
+	public function clientMethod():Void {
+		aOut.debug(getClass().getName()+".clientMethod");
+		eventBroadcaster.dispatch(new ConnectorResponse(arguments));
+		//aOut.debug(arguments.toString());
 	}
 	
 	public function setHost(host:String):Void {
@@ -105,7 +111,7 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 		this.method = method;
 	}
 	
-	public function getParams() {
+	public function getParams(Void):Array {
 		return params;
 	}
 	
@@ -115,18 +121,28 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 	}
 	
 	public function onStatus(infoObj){
-		if(infoObj.level == "error") {
-			eventBroadcaster.dispatch(new ConnectorError("There is no receiver with this defined connection identifier",this,arguments,true,false));
+		aOut.debug(getClass().getName()+".onStatus: "+infoObj.level);
+		if(infoObj.level == "error") {;
+			eventBroadcaster.dispatch(new ConnectorError("There is no server to listen to !",this,arguments,true,false));
 		}
+		/*if(infoObj.level == "status") {
+			eventBroadcaster.dispatch(new ConnectorResponse("Serverbroadcast was successful!"));
+		}*/
 	}
 	
+	/**
+	 * @see org.as2lib.data.io.conn.Connector
+	 */
 	public function addListener(l:ConnectorListener):Void {
-		//trace("addListener");
+		aOut.debug(getClass().getName()+".addListener");
 		eventBroadcaster.addListener(l);
 	}
 	
+	/**
+	 * @see org.as2lib.data.io.conn.Connector
+	 */
 	public function removeListener(l:ConnectorListener):Void {
-		//trace("removeListener");
+		aOut.debug(getClass().getName()+".removeListener");
 		eventBroadcaster.removeListener(l);
 	}
 	

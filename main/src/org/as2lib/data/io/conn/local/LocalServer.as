@@ -61,6 +61,8 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	/* Standard debug output */
 	private var aOut:OutAccess;
 	
+	//private var currClient:String;
+	
 	/*private var cacheClient:String;
 	private var connTests:Number = 10;*/
 	
@@ -102,8 +104,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		if(clients.contains(id)) return;
 		
     	clients.push(id);
-		
-		aOut.debug("clients.getValue("+(clients.length-1)+") = "+clients.getValue(clients.length-1));
+		eventBroadcaster.dispatch(new ConnectorResponse(getClass().getName()+".addClient on "+(clients.length-1)+" with "+clients.getValue(clients.length-1)));
 	}
 	
 	/**
@@ -132,7 +133,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		while(l--){
 			aOut.debug(getClass().getName()+".dispatch: "+clients.getValue(l));
 			sender.send.apply(this,[clients.getValue(l)].concat(args));
-			//cacheClient = clients.getValue(l);
+			//currClient = clients.getValue(l);
 		}
 	}
 	
@@ -221,10 +222,10 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	public function onStatus(infoObj){
 		aOut.debug(getClass().getName()+".onStatus: "+infoObj.level);
 		if(infoObj.level == "error") {
-			eventBroadcaster.dispatch(new ConnectorError("There is no receiver with this defined connection identifier",this,arguments,true,false));
+			eventBroadcaster.dispatch(new ConnectorError("One client doesn´t exist anymore",this,arguments,true,false));
 		}
 		if(infoObj.level == "status") {
-			eventBroadcaster.dispatch(new ConnectorResponse("Serverbroadcast was successful!"));
+			eventBroadcaster.dispatch(new ConnectorResponse("Broadcast to client was successful!"));
 		}
 	}
 	
@@ -235,8 +236,16 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	 */
 	public function allowDomain(clientDomain:String){
 		aOut.debug(getClass().getName()+".allowDomain: "+clientDomain);
+		aOut.debug(getClass().getName()+".host: "+host);
+		aOut.debug(getClass().getName()+".path: "+path);
 		if(host){
-			return (clientDomain == host || clientDomain == path);
+			if(clientDomain == host || clientDomain == path){
+				return true;
+			}
+			else{
+				eventBroadcaster.dispatch(new ConnectorError("Clientdomain "+clientDomain+" is not allowed !",this,arguments,false,true));
+				return false;
+			}
 		}
 		else{
 			return true;
@@ -263,6 +272,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	 * @see org.as2lib.data.io.conn.Connector
 	 */
 	public function handleRequest(r:ConnectorRequest):Void {
+		aOut.debug(getClass().getName()+".handleRequest.getHost: "+getHost());
 		var h:String = r.getHost();
 		var p:String = r.getPath();
 		var m:String = r.getMethod();
