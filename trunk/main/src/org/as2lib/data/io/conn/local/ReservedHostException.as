@@ -17,7 +17,7 @@
 import org.as2lib.env.except.Exception;
 
 /**
- * ReservedConnectionException will be thrown if a connection identifier is
+ * ReservedHostException will be thrown if a connection identifier is
  * already used by another connection.
  *
  * @author Christoph Atteneder
