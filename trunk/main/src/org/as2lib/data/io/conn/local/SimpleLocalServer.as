@@ -47,6 +47,7 @@ class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass impleme
 		}
 		adapter.__proto__ = object;
 		adapter.__resolve = function(methodName:String):Function {
+			trace("methodName");
 			var result:Function = function(args:Array, server:String) {
 				var result = this.super[methodName].apply(this.super, args);
 				var lc:LocalConnection = new LocalConnection();

@@ -14,7 +14,7 @@ class org.as2lib.data.io.conn.local.LocalConnProxy extends BasicClass implements
 		var result:Function = function() {
 			var lc:LocalConnection = new LocalConnection();
 			lc["responseFlag"] = true;
-			lc["onResponse"] = function(response){
+			lc["onResponse"] = function(response) {
 				this.response = response;
 				this.responseFlag = false;
 			}
@@ -25,10 +25,10 @@ class org.as2lib.data.io.conn.local.LocalConnProxy extends BasicClass implements
 			args.push(arguments);
 			connection.send.apply(connection, args, target + "." + methodName + "_Return");
 			
-			while (lc["responseFlag"]) {
-			}
+			/*while (lc["responseFlag"]) {
+			}*/
 			
-			lc["response"];
+			return lc["response"];
 		}
 		return result;
 	}
