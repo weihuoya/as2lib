@@ -27,10 +27,6 @@ class org.as2lib.data.holder.Stack extends BasicClass {
 		return (new ArrayIterator(target));
 	}
 	
-	public function getIterator(Void):Iterator {
-		return iterator();
-	}
-	
 	public function isEmpty() {
 		return (target.length == 0);
 	}

@@ -10,7 +10,7 @@ class org.as2lib.data.holder.string.StackStringifier extends BasicClass implemen
 	public function execute(target):String {
 		var stack:Stack = Stack(target);
 		var result:String = "[";
-		var iterator:Iterator = stack.getIterator();
+		var iterator:Iterator = stack.iterator();
 		while (iterator.hasNext()) {
 			result += iterator.next().toString();
 			if (iterator.hasNext()) {

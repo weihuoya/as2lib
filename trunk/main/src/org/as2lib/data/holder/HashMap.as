@@ -77,16 +77,8 @@ class org.as2lib.data.holder.HashMap extends BasicClass implements Map {
 		return (new MapIterator(this));
 	}
 	
-	public function getIterator(Void):Iterator {
-		return iterator();
-	}
-	
 	public function size(Void):Number {
 		return keys.length;
-	}
-	
-	public function getSize(Void):Number {
-		return size();
 	}
 	
 	public function isEmpty(Void):Boolean {
