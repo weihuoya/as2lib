@@ -18,6 +18,7 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.util.ArrayUtil;
 import org.as2lib.util.MathUtil;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.data.type.*;
 
 /**
  * Test of all methods in MathUtil.
@@ -31,25 +32,19 @@ class test.unit.org.as2lib.util.TMathUtil extends TestCase {
 	 */
 	public function testIsOdd(Void):Void {
 		// Normal Case
-		assertTrue("1 is a odd number", MathUtil.isOdd(1));
-		assertFalse("2 is not a odd number", MathUtil.isOdd(2));
+		assertTrue("1 is a odd number", MathUtil.isOdd(new Integer(1)));
+		assertFalse("2 is not a odd number", MathUtil.isOdd(new Integer(2)));
 		
 		// Zero Case
-		assertFalse("0 is a odd number", MathUtil.isOdd(0));
+		assertFalse("0 is a odd number", MathUtil.isOdd(new Integer(0)));
 		
 		// Negative Case
-		assertTrue("-1 is a odd number", MathUtil.isOdd(-1));
-		assertFalse("-2 is not a odd number", MathUtil.isOdd(-2));
+		assertTrue("-1 is a odd number", MathUtil.isOdd(new Integer(-1)));
+		assertFalse("-2 is not a odd number", MathUtil.isOdd(new Integer(-2)));
 		
 		// Case with "bigger number"
-		assertTrue("2047 is a odd number", MathUtil.isOdd(2047));
-		assertFalse("2048 is not a odd number", MathUtil.isOdd(2048));
-		
-		// Case with floating point numbers (base will be used)
-		assertFalse("1.47 is not a odd number", MathUtil.isOdd(1.47));
-		assertFalse("1.48 is not a odd number", MathUtil.isOdd(1.48));
-		assertFalse("2.47 is not a odd number", MathUtil.isOdd(2.47));
-		assertFalse("2.48 is not a odd number", MathUtil.isOdd(2.48));
+		assertTrue("2047 is a odd number", MathUtil.isOdd(new Integer(2047)));
+		assertFalse("2048 is not a odd number", MathUtil.isOdd(new Integer(2048)));
 	}
 	
 	/**
@@ -57,25 +52,19 @@ class test.unit.org.as2lib.util.TMathUtil extends TestCase {
 	 */
 	public function testIsEven(Void):Void {
 		// Normal Case
-		assertFalse("1 is not a even number", MathUtil.isEven(1));
-		assertTrue("2 is a even number", MathUtil.isEven(2));
+		assertFalse("1 is not a even number", MathUtil.isEven(new Integer(1)));
+		assertTrue("2 is a even number", MathUtil.isEven(new Integer(2)));
 		
 		// Zero Case
-		assertTrue("0 is a even number", MathUtil.isEven(0));
+		assertTrue("0 is a even number", MathUtil.isEven(new Integer(0)));
 		
 		// Negative Case
-		assertFalse("-1 is not a even number", MathUtil.isEven(-1));
-		assertTrue("-2 is a even number", MathUtil.isEven(-2));
+		assertFalse("-1 is not a even number", MathUtil.isEven(new Integer(-1)));
+		assertTrue("-2 is a even number", MathUtil.isEven(new Integer(-2)));
 		
 		// Case with "bigger number"
-		assertFalse("2047 is not a even number", MathUtil.isEven(2047));
-		assertTrue("2048 is a even number", MathUtil.isEven(2048));
-		
-		// Case with floating point numbers (base will be used)
-		assertFalse("1.47 is not a even number", MathUtil.isEven(1.47));
-		assertFalse("1.48 is not a even number", MathUtil.isEven(1.48));
-		assertFalse("2.47 is not a even number", MathUtil.isEven(2.47));
-		assertFalse("2.48 is not a even number", MathUtil.isEven(2.48));
+		assertFalse("2047 is not a even number", MathUtil.isEven(new Integer(2047)));
+		assertTrue("2048 is a even number", MathUtil.isEven(new Integer(2048)));
 	}
 	
 	/**
@@ -123,7 +112,7 @@ class test.unit.org.as2lib.util.TMathUtil extends TestCase {
 	public function testIsPrime(Void):Void {
 		
 		// Tests the first 60 numbers
-		for(var i=0; i<60; i++) {
+		for(var i=1; i<60; i++) {
 			switch(i) {
 				case 2:
 				case 3:
@@ -142,18 +131,12 @@ class test.unit.org.as2lib.util.TMathUtil extends TestCase {
 				case 47:
 				case 53:
 				case 59:
-					assertTrue(i+" is a prime number", MathUtil.isPrime(i));
+					assertTrue(i+" is a prime number", MathUtil.isPrime(new NaturalNumber(i)));
 					break;
 				default:
-					assertFalse(i+" is not a prime number", MathUtil.isPrime(i));
+					assertFalse(i+" is not a prime number", MathUtil.isPrime(new NaturalNumber(i)));
 			}
 		}
-		
-		// Zero Case
-		assertFalse("0 is not a prime number", MathUtil.isPrime(0));
-		
-		// Negative Case
-		assertFalse("-3 is not a prime number", MathUtil.isPrime(-3));
 	}
 	
 	/**
@@ -162,37 +145,34 @@ class test.unit.org.as2lib.util.TMathUtil extends TestCase {
 	public function testFactorial(Void):Void {
 		
 		// Tests some cases
-		assertEquals("Factorial of 0 is 1", MathUtil.factorial(0), 1);
-		assertEquals("Factorial of 1 is 1", MathUtil.factorial(1), 1);
-		assertEquals("Factorial of 2 is 2", MathUtil.factorial(2), 2);
-		assertEquals("Factorial of 3 is 6", MathUtil.factorial(3), 6);
-		assertEquals("Factorial of 4 is 24", MathUtil.factorial(4), 24);
-		assertEquals("Factorial of 5 is 120", MathUtil.factorial(5), 120);
-		assertEquals("Factorial of 6 is 720", MathUtil.factorial(6), 720);
-		assertEquals("Factorial of 7 is 5040", MathUtil.factorial(7), 5040);
-		assertEquals("Factorial of 8 is 40320", MathUtil.factorial(8), 40320);
-		
-		assertThrows("Getting the factorial of -1 should throw a IllegalArgumentException", IllegalArgumentException, MathUtil, "factorial", [-1]);
-		assertThrows("Getting the factorial of 0.5 should throw a IllegalArgumentException", IllegalArgumentException, MathUtil, "factorial", [0.5]);
+		assertEquals("Factorial of 0 is 1", MathUtil.factorial(new NaturalNumberIncludingZero(0)), 1);
+		assertEquals("Factorial of 1 is 1", MathUtil.factorial(new NaturalNumberIncludingZero(1)), 1);
+		assertEquals("Factorial of 2 is 2", MathUtil.factorial(new NaturalNumberIncludingZero(2)), 2);
+		assertEquals("Factorial of 3 is 6", MathUtil.factorial(new NaturalNumberIncludingZero(3)), 6);
+		assertEquals("Factorial of 4 is 24", MathUtil.factorial(new NaturalNumberIncludingZero(4)), 24);
+		assertEquals("Factorial of 5 is 120", MathUtil.factorial(new NaturalNumberIncludingZero(5)), 120);
+		assertEquals("Factorial of 6 is 720", MathUtil.factorial(new NaturalNumberIncludingZero(6)), 720);
+		assertEquals("Factorial of 7 is 5040", MathUtil.factorial(new NaturalNumberIncludingZero(7)), 5040);
+		assertEquals("Factorial of 8 is 40320", MathUtil.factorial(new NaturalNumberIncludingZero(8)), 40320);
 	}
 	
 	/**
 	 * Compares the results of getDivisors with the real results
 	 */
 	public function testGetDivisors(Void):Void {
-		assertTrue("Divisors of 1 are 1", ArrayUtil.isSame(MathUtil.getDivisors(1), [1]));
-		assertTrue("Divisors of 2 are 1,2", ArrayUtil.isSame(MathUtil.getDivisors(2), [1,2]));
-		assertTrue("Divisors of 3 are 1,3", ArrayUtil.isSame(MathUtil.getDivisors(3), [1,3]));
-		assertTrue("Divisors of 4 are 1,2,4", ArrayUtil.isSame(MathUtil.getDivisors(4), [1,2,4]));
-		assertTrue("Divisors of 5 are 1,5", ArrayUtil.isSame(MathUtil.getDivisors(5), [1,5]));
-		assertTrue("Divisors of 6 are 1,2,3,6", ArrayUtil.isSame(MathUtil.getDivisors(6), [1,2,3,6]));
-		assertTrue("Divisors of 7 are 1,7", ArrayUtil.isSame(MathUtil.getDivisors(7), [1,7]));
-		assertTrue("Divisors of 8 are 1,2,4,8", ArrayUtil.isSame(MathUtil.getDivisors(8), [1,2,4,8]));
-		assertTrue("Divisors of 9 are 1,3,9", ArrayUtil.isSame(MathUtil.getDivisors(9), [1,3,9]));
-		assertTrue("Divisors of 10 are 1,2,5,10", ArrayUtil.isSame(MathUtil.getDivisors(10), [1,2,5,10]));
-		assertTrue("Divisors of 11 are 1,11", ArrayUtil.isSame(MathUtil.getDivisors(11), [1,11]));
-		assertTrue("Divisors of 12 are 1,2,3,4,6,12", ArrayUtil.isSame(MathUtil.getDivisors(12), [1,2,3,4,6,12]));
-		assertTrue("Divisors of 0 are none", ArrayUtil.isSame(MathUtil.getDivisors(0), []));
+		assertTrue("Divisors of 1 are 1", ArrayUtil.isSame(MathUtil.getDivisors(new NaturalNumberIncludingZero(1)), [1]));
+		assertTrue("Divisors of 2 are 1,2", ArrayUtil.isSame(MathUtil.getDivisors(new NaturalNumberIncludingZero(2)), [1,2]));
+		assertTrue("Divisors of 3 are 1,3", ArrayUtil.isSame(MathUtil.getDivisors(new NaturalNumberIncludingZero(3)), [1,3]));
+		assertTrue("Divisors of 4 are 1,2,4", ArrayUtil.isSame(MathUtil.getDivisors(new NaturalNumberIncludingZero(4)), [1,2,4]));
+		assertTrue("Divisors of 5 are 1,5", ArrayUtil.isSame(MathUtil.getDivisors(new NaturalNumberIncludingZero(5)), [1,5]));
+		assertTrue("Divisors of 6 are 1,2,3,6", ArrayUtil.isSame(MathUtil.getDivisors(new NaturalNumberIncludingZero(6)), [1,2,3,6]));
+		assertTrue("Divisors of 7 are 1,7", ArrayUtil.isSame(MathUtil.getDivisors(new NaturalNumberIncludingZero(7)), [1,7]));
+		assertTrue("Divisors of 8 are 1,2,4,8", ArrayUtil.isSame(MathUtil.getDivisors(new NaturalNumberIncludingZero(8)), [1,2,4,8]));
+		assertTrue("Divisors of 9 are 1,3,9", ArrayUtil.isSame(MathUtil.getDivisors(new NaturalNumberIncludingZero(9)), [1,3,9]));
+		assertTrue("Divisors of 10 are 1,2,5,10", ArrayUtil.isSame(MathUtil.getDivisors(new NaturalNumberIncludingZero(10)), [1,2,5,10]));
+		assertTrue("Divisors of 11 are 1,11", ArrayUtil.isSame(MathUtil.getDivisors(new NaturalNumberIncludingZero(11)), [1,11]));
+		assertTrue("Divisors of 12 are 1,2,3,4,6,12", ArrayUtil.isSame(MathUtil.getDivisors(new NaturalNumberIncludingZero(12)), [1,2,3,4,6,12]));
+		assertTrue("Divisors of 0 are none", ArrayUtil.isSame(MathUtil.getDivisors(new NaturalNumberIncludingZero(0)), []));
 	}
 	
 }

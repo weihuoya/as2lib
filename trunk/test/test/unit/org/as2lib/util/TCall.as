@@ -16,6 +16,7 @@
  
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.util.Call;
+import org.as2lib.util.ConstructorCall;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
@@ -34,8 +35,13 @@ class test.unit.org.as2lib.util.TCall extends TestCase {
 		instance = this;
 	}
 	
+	/**
+	 * Validates that invalid Arguments really throw a exception
+	 */
 	public function testInvalidArguments(Void):Void {
-		// TODO: Test with invalid constructor call, you nedd the constructor call class.
+		assertThrows("Both have to be given", IllegalArgumentException, new ConstructorCall(Call), [null, null]);
+		assertThrows("Method has to be given", IllegalArgumentException, new ConstructorCall(Call), [{}]);
+		assertThrows("Scope has to be given", IllegalArgumentException, new ConstructorCall(Call), [null, function(){}]);
 	}
 	
 	/**

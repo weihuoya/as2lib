@@ -52,11 +52,8 @@ class org.as2lib.util.ClassUtil extends BasicClass {
 	public static function isImplementationOf(clazz:Function, interfaceObject:Function):Boolean {
 		var base = clazz.prototype;
 		// A interface must not be in the prototype chain.
-		while(base !== undefined) {
-			base = base.__proto__;
-			if(base === interfaceObject.prototype) {
-				return false;
-			}
+		if(isSubClassOf(clazz, interfaceObject)) {
+			return false;
 		}
 		// If its a interface then it has to be not extended but the thing has to be a instance of it
 		return (createCleanInstance(clazz) instanceof interfaceObject);

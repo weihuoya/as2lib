@@ -17,6 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.util.ArrayUtil;
+import org.as2lib.data.type.*;
 
 /**
  * MathUtil contains fundamental math operations.
@@ -31,30 +32,22 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	}
 	
 	/**
-	 * Checks if a number is odd.
-	 * Note: Only integers can be odd!
+	 * Checks if a integer is odd.
 	 *
 	 * @param n The number to check.
 	 * @return True if the number is odd, false if not.
 	 */
-	public static function isOdd(n:Number):Boolean{
-		if(n%1 != 0){
-			return false;
-		}
+	public static function isOdd(n:Integer):Boolean{
 		return Boolean(n%2);
 	}
 	
 	/**
-	 * Checks if a number is even.
-	 * Note: Only integers can be even!
+	 * Checks if a integer is even.
 	 *
 	 * @param n The number to check.
 	 * @return True if the number is even, false if not.
 	 */	
-	public static function isEven(n:Number):Boolean{
-		if(n%1 != 0){
-			return false;
-		}
+	public static function isEven(n:Integer):Boolean{
 		return (n%2 == 0);
 	}
 	
@@ -69,7 +62,7 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	}
 
 	/**
-	 * Checks if a number is a naturak.
+	 * Checks if a number is natural.
 	 *
 	 * @param n The number to check.
 	 * @return True if the number is a natural, false if not.
@@ -90,8 +83,8 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * @param n The number to check.
 	 * @return True if the number is a prime, false if not.
 	 */	
-	public static function isPrime(n:Number):Boolean{
-		if(n<=1){
+	public static function isPrime(n:NaturalNumber):Boolean{
+		if(n == 1) {
 			return false;
 		}
 		for(var i:Number=2; i<n-1; i++){
@@ -108,28 +101,28 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * @param n The number to calculate its factorial from.
 	 * @return The factorial of the number.
 	 */
-	public static function factorial(n:Number):Number{
-		if(n < 0 || n%1 != 0){
-			throw new IllegalArgumentException("The passed argument must be a positive integer.", eval("th"+"is"), arguments);
-		}
-		if(n == 0){
+	public static function factorial(n:NaturalNumberIncludingZero):Number{
+		if(n == 0) {
 			return 1;
 		}
-		for(var i:Number = n-1; i>1; i--){
-			n*=i;
+		var d:Number = n.valueOf(); // Performance Speed up (this way the instance will not be used anymore
+		var i:Number = d-1;
+		while(i) {
+			d=d*i;
+			i--;
 		}
-		return n;
+		return d;
 	}
 		
 	/**
 	 * Returns an array with all the divisors of a given number.
 	 *
-	 * @param Number The number to get the divisors from.
+	 * @param n The number to get the divisors from.
 	 * @return An array with the divisors of the number.
 	 */
-	public static function getDivisors(n:Number):Array{
+	public static function getDivisors(n:NaturalNumberIncludingZero):Array{
 		var divisors:Array = new Array();
-		for(var i:Number=1; i<=n; i++){
+		for(var i:Number=0; i<=n; i++) {
 			if(n%i == 0){
 				divisors.push(i);
 			}
