@@ -26,7 +26,7 @@ import org.as2lib.env.except.IllegalArgumentException;
  * TypedQueue is used as a wrapper for {@link Queue} instances that ensures
  * that only values of a specific type can be added to the wrapped queue.
  *
- * <p>This method simply delegates all method invocations to the wrapped
+ * <p>This class simply delegates all method invocations to the wrapped
  * queue. If the specific method is responsible for adding values it first
  * checks if the values to add are of the expected type. If they are the
  * method invocation gets forwarded, otherwise an {@link IllegalArgumentException}

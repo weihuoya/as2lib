@@ -14,13 +14,80 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.holder.map.AbstractMap;
 import org.as2lib.data.holder.Map;
+import org.as2lib.data.holder.Iterator;
+import org.as2lib.data.holder.map.AbstractMap;
 import org.as2lib.data.holder.map.ValueMapIterator;
 import org.as2lib.data.holder.map.KeyMapIterator;
-import org.as2lib.data.holder.Iterator;
 
 /**
+ * PrimitiveTypeMap can be used to map any primitive type key to any
+ * type of value.
+ *
+ * <p>Primitive data types are strings, numbers and booleans. When
+ * using this map you normally use it in conjunction with string keys,
+ * because you can use arrays for numbers and for booleans you normally
+ * do not need a data holder at all.
+ *
+ * <p>Note that if you only want to map values to keys you can also
+ * do this using a dynamic or untyped object. But if you also want to
+ * be able to iterate over your keys and values in the correct order
+ * or if you want this iteration to be fast - the for..in loop is quite
+ * slow - you should use this map.
+ *
+ * <p>This class offers ordered mapping functionality. That means that
+ * the {@link #getKeys} and {@link #getValues} methods return the keys
+ * and values in the order they were put to the map and that the iterators
+ * returned by the methods {@link #valueIterator} and {@link #keyIterator}
+ * also iterate over the keys and values in the correct order.
+ *
+ * <p>This map offers two methods that help you find out whether it contains
+ * a specific key or value. These two methods are {@link #containsKey}
+ * and {@link #containsValue}.
+ *
+ * <p>To get the data stored in the map you can use the {@link #getKeys},
+ * {@link #getValues} and {@link #get} methods. If you want to iterate
+ * over the values of the map you can use the iterators returned by the
+ * {@link #iterator} or {@link #valueIterator} methods. If you want to
+ * iterate over the keys you can use the iterator returned by the
+ * {@link #keyIterator} method.
+ *
+ * <p>To add key value pairs to the map you can use the {@link #put} and
+ * {@link #putAll} methods. The putAll method lets you add all key-value
+ * pairs contained in the passed-in map to this map.
+ *
+ * <p>To remove key-value pairs you can use the {@link #remove} and
+ * {@link #clear} methods. The remove method deletes only the key-value
+ * pair corresponding to the passed-in key, while the clear method removes
+ * all key-value pairs.
+ *
+ * <p>There are two more methods you may need. The {@link #getSize} and
+ * the {@link #isEmpty} method. These methods give you information about
+ * whether this map contains any mappings and how many mappings it contains.
+ *
+ * <p>To change the string representation returned by the {@link #toString}
+ * method you can set your own stringifier using the static {@link setStringifier}
+ * method.
+ *
+ * <p>A simple example:
+ * <code>
+ *   // construct the map
+ *   var map:Map = new PrimitiveTypeMap();
+ *   map.put("key1", "value1");
+ *   map.put("key2", "value2");
+ *   map.put("key3", "value3");
+ *   // use the map
+ *   trace(map.get("key1"));
+ *   trace(map.get("key2"));
+ *   trace(map.get("key3"));
+ * </code>
+ * <p>The output:
+ * <pre>
+ *   value1
+ *   value2
+ *   value3
+ * </pre>
+ *
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.map.PrimitiveTypeMap extends AbstractMap implements Map {
@@ -28,13 +95,13 @@ class org.as2lib.data.holder.map.PrimitiveTypeMap extends AbstractMap implements
 	/** Contains the mappings. */
 	private var map:Object;
 	
-	/** */
+	/** The key-index pairs. */
 	private var indexMap:Object;
 	
-	/** */
+	/** The keys stored in an array. */
 	private var keys:Array;
 	
-	/** */
+	/** The values stored in an array. */
 	private var values:Array;
 	
 	/**
@@ -45,7 +112,7 @@ class org.as2lib.data.holder.map.PrimitiveTypeMap extends AbstractMap implements
 	 * value. Variables that are hidden from for..in loops will not be
 	 * added to the map.
 	 *
-	 * @param source (optional) an object that contains values to populate the new source with
+	 * @param source (optional) an object that contains values to populate this map with
 	 */
 	public function PrimitiveTypeMap(source) {
 		map = new Object();
@@ -57,14 +124,22 @@ class org.as2lib.data.holder.map.PrimitiveTypeMap extends AbstractMap implements
 	}
 
 	/**
-	 * @see org.as2lib.data.holder.Map#containsKey()
+	 * Checks if the passed-in key exists.
+	 *
+	 * <p>That means whether a value has been mapped to it.
+	 *
+	 * @param key the key to be checked for availability
+	 * @return true if the key exists else false
 	 */
 	public function containsKey(key):Boolean {
 		return (map[key] != undefined);
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#containsValue()
+	 * Checks if the passed-in value is mapped to a key.
+	 *
+	 * @param value the value to be checked for availability
+	 * @return true if the value is mapped to a key else false
 	 */
 	public function containsValue(value):Boolean {
 		var i:Number = keys.length;
@@ -77,28 +152,42 @@ class org.as2lib.data.holder.map.PrimitiveTypeMap extends AbstractMap implements
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#getKeys()
+	 * Returns an array that contains all keys that have a value mapped to
+	 * it.
+	 *
+	 * @return an array that contains all keys
 	 */
 	public function getKeys(Void):Array {
 		return keys.concat();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#getValues()
+	 * Returns an array that contains all values that are mapped to a key.
+	 *
+	 * @return an array that contains all mapped values
 	 */
 	public function getValues(Void):Array {
 		return values.concat();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#get()
+	 * Returns the value that is mapped to the passed-in key.
+	 *
+	 * @param key the key to return the appropriate value for
+	 * @return the value appropriate to the key
 	 */
 	public function get(key) {
 		return map[key];
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#put()
+	 * Maps the specified key to the value.
+	 *
+	 * <p>Null and undefined values are allowed.
+	 *
+	 * @param key the key used as identifier for the value
+	 * @param value the value to map to the key
+	 * @return the value that was originally mapped to the key or null
 	 */
 	public function put(key, value) {
 		var result;
@@ -115,18 +204,9 @@ class org.as2lib.data.holder.map.PrimitiveTypeMap extends AbstractMap implements
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#clear()
-	 */
-	public function clear(Void):Void {
-		map = new Object();
-		indexMap = new Object();
-		indexMap.__proto__ = undefined;
-		keys = new Array();
-		values = new Array();
-	}
-	
-	/**
-	 * @see org.as2lib.data.holder.Map#putAll()
+	 * Copies all mappings from the passed-in map to this map.
+	 *
+	 * @param map the mappings to add to this map
 	 */
 	public function putAll(map:Map):Void {
 		var values:Array = map.getValues();
@@ -138,7 +218,10 @@ class org.as2lib.data.holder.map.PrimitiveTypeMap extends AbstractMap implements
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#remove()
+	 * Removes the mapping from the specified key to the value.
+	 *
+	 * @param key the key identifying the mapping to be removed
+	 * @return the value that was originally mapped to the key
 	 */
 	public function remove(key) {
 		var result;
@@ -149,59 +232,82 @@ class org.as2lib.data.holder.map.PrimitiveTypeMap extends AbstractMap implements
 			indexMap[key] = undefined;
 			keys.splice(i, 1);
 			values.splice(i, 1);
-			removeIndex(i);
+			// restore indexes in indexMap
+			for (var k:Number = i; k < keys.length; k++) {
+				indexMap[keys[k]]--;
+			}
 		}
 		return result;
 	}
 	
 	/**
-	 * Internal method to resort the other indexes.
+	 * Clears all mappings.
 	 */
-	private function removeIndex(index:Number) {
-		for (var k:String in indexMap) {
-			if (indexMap[k] > index) {
-				indexMap[k]--;
-			}
-		}
+	public function clear(Void):Void {
+		map = new Object();
+		indexMap = new Object();
+		indexMap.__proto__ = undefined;
+		keys = new Array();
+		values = new Array();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#iterator()
+	 * Returns an iterator to iterate over the values of this map.
+	 *
+	 * @return an iterator to iterate over the values of this map
+	 * @see #valueIterator
+	 * @see #getValues
 	 */
 	public function iterator(Void):Iterator {
 		return (new ValueMapIterator(this));
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#valueIterator()
+	 * Returns an iterator to iterate over the values of this map.
+	 *
+	 * @return an iterator to iterate over the values of this map
+	 * @see #iterator
+	 * @see #getValues
 	 */
 	public function valueIterator(Void):Iterator {
 		return iterator();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#keyIterator()
+	 * Returns an iterator to iterate over the keys of this map.
+	 *
+	 * @return an iterator to iterate over the keys of this map
+	 * @see #getKeys
 	 */
 	public function keyIterator(Void):Iterator {
 		return new KeyMapIterator(this);
 	}
 
 	/**
-	 * @see org.as2lib.data.holder.Map#size()
+	 * Returns the amount of mappings.
+	 *
+	 * @return the amount of mappings
 	 */
 	public function size(Void):Number {
 		return keys.length;
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#isEmpty()
+	 * Returns whether this map contains any mappings.
+	 *
+	 * @return true if this map contains mappings else false
 	 */
 	public function isEmpty(Void):Boolean {
 		return (size() < 1);
 	}
 	
 	/**
-	 * @see org.as2lib.core.BasicInterface#toString()
+	 * Returns the string representation of this map.
+	 *
+	 * <p>The string representation is obtained using the stringifier returned
+	 * by the static {@link #getStringifier} method.
+	 *
+	 * @return the string representation of this map
 	 */
 	public function toString(Void):String {
 		return getStringifier().execute(this);

@@ -32,6 +32,9 @@ import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
  */
 class org.as2lib.env.log.logger.RootLogger extends SimpleHierarchicalLogger {
 	
+	/** Makes the static variables of the super-class accessible through this class. */
+	private static var __proto__:Function = SimpleHierarchicalLogger;
+	
 	/**
 	 * Constructs a new RootLogger instance.
 	 *

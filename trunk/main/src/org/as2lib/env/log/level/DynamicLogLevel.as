@@ -28,7 +28,7 @@ import org.as2lib.env.log.level.AbstractLogLevel;
 class org.as2lib.env.log.level.DynamicLogLevel extends AbstractLogLevel implements LogLevel {
 	
 	/** Makes the static variables of the super-class accessible through this class. */
-	public static var __proto__:Function = AbstractLogLevel;
+	private static var __proto__:Function = AbstractLogLevel;
 	
 	/**
 	 * Constructs a new DynamicLogLevel instance.

@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.data.holder.Map;
@@ -22,8 +23,37 @@ import org.as2lib.data.holder.Map;
 /**
  * ValueMapIterator is used to iterate over the values of a map.
  *
- * @author Michael Hermann
+ * <p>This iterator is quite simple to use. There is one method to check
+ * whether there are more elements left to iterate over {@link #hasNext},
+ * one method to get the next element {@link #next} and one to remove
+ * the current element {@link #remove}.
+ *
+ * <p>And here is how it works:
+ * <code>
+ *   var map:Map = new HashMap();
+ *   map.put("key1", 1);
+ *   map.put("key2", 2);
+ *   map.put("key3", 3);
+ *   var iterator:Iterator = new ValueMapIterator(map);
+ *   while (iterator.hasNext()) {
+ *     trace(iterator.next());
+ *   }
+ * </code>
+ *
+ * <p>You normally do not use this class directly. You normally obtain
+ * an iterator that iterates over the values of a map using the
+ * {@link Map#valueIterator} method. The returned iterator can, but does
+ * not have to be an instance of this class.
+ *
+ * <code>
+ *   var map:Map = new HashMap();
+ *   // ...
+ *   var iterator:Iterator = map.valueIterator();
+ *   // ...
+ * </code>
+ *
  * @author Simon Wacker
+ * @author Michael Hermann
  */
 class org.as2lib.data.holder.map.ValueMapIterator extends BasicClass implements Iterator {
 	
@@ -40,21 +70,29 @@ class org.as2lib.data.holder.map.ValueMapIterator extends BasicClass implements 
 	 * Constructs a new ValueMapIterator instance.
 	 *
 	 * @param target the map to iterate over
+	 * @throws IllegalArgumentException if the passed-in target map is null or undefined
 	 */
-	public function ValueMapIterator(newTarget:Map) {
-		target = newTarget;
+	public function ValueMapIterator(target:Map) {
+		if (!target) throw new IllegalArgumentException("The passed-in target map '" + target + "' is not allowed to be null or undefined.", this, arguments);
+		this.target = target;
 		iterator = new ArrayIterator(target.getKeys());
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Iterator#hasNext()
+	 * Returns whether there exists another value to iterate over.
+	 *
+	 * @return true if there is at least one value left to iterate over
 	 */
 	public function hasNext(Void):Boolean {
 		return iterator.hasNext();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Iterator#next()
+	 * Returns the next value.
+	 *
+	 * @return the next value
+	 * @throws org.as2lib.data.holder.NoSuchElementException if there is
+	 * no next value
 	 */
 	public function next(Void) {
 		key = iterator.next();
@@ -62,7 +100,11 @@ class org.as2lib.data.holder.map.ValueMapIterator extends BasicClass implements 
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Iterator#remove()
+	 * Removes the currently selected key-value pair from this iterator
+	 * and from the map this iterator iterates over.
+	 *
+	 * @throws org.as2lib.env.except.IllegalStateException if you try to 
+	 * remove a key-value pair when none is selected
 	 */
 	public function remove(Void):Void {
 		iterator.remove();
