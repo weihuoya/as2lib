@@ -55,13 +55,13 @@ class test.org.as2lib.util.TStringUtil extends Test {
 	}
 	
 	private function testCheckLength (Void):Void {
-		assertFalseWithMessage("Content: undefined/undefined", StringUtil.checkLength(undefined,undefined));
-		assertFalseWithMessage("Content: ''/undefined", StringUtil.checkLength('',undefined));
-		assertFalseWithMessage("Content: ''/0", StringUtil.checkLength('',0));
-		assertFalseWithMessage("Content: 'ha'/3", StringUtil.checkLength('ha',3));
-		assertTrueWithMessage("Content: 'hase'/3", StringUtil.checkLength('hase',3));
-		assertTrueWithMessage("Content: 'hase'/4", StringUtil.checkLength('hase',4));
-		assertThrows(IllegalArgumentException, StringUtil, "checkLength", ['hase', 0]);
+		assertFalseWithMessage("Content: undefined/undefined", StringUtil.assureLength(undefined,undefined));
+		assertFalseWithMessage("Content: ''/undefined", StringUtil.assureLength('',undefined));
+		assertFalseWithMessage("Content: ''/0", StringUtil.assureLength('',0));
+		assertFalseWithMessage("Content: 'ha'/3", StringUtil.assureLength('ha',3));
+		assertTrueWithMessage("Content: 'hase'/3", StringUtil.assureLength('hase',3));
+		assertTrueWithMessage("Content: 'hase'/4", StringUtil.assureLength('hase',4));
+		assertThrows(IllegalArgumentException, StringUtil, "assureLength", ['hase', 0]);
 	}
 	
 	private function testContains (Void):Void {
