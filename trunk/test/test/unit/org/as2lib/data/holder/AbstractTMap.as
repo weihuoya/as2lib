@@ -110,7 +110,7 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 		assertSame("Last elemnt should be false.", iterator.next(), false);
 		assertFalse("Iterator should have no more elments.", iterator.hasNext());
 		// null or undefined?
-		assertNull("Element 15 corresponding to key 12 should have been deleted in iterator.", map.get(12));
+		assertUndefined("Element 15 corresponding to key 12 should have been deleted in iterator.", map.get(12));
 		assertSame("Mapping from value 'stringKey' to key 'key' should still exist.", map.get("key"), "stringKey");
 		assertSame("Mapping from value false to key true should still exist.", map.get(true), false);
 	}
