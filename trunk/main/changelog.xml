@@ -22,7 +22,7 @@
           <entry type="add" package="org.as2lib.env.out" class="Out" method="static getRootOut(Void):Out" />
         </day>
         <day value="3">
-          <entry type="change" package="org.as2lib.env.reflect" class="ClassInfo" property="constructor:ConstructorInfo"><change-rename to="classConstructor">Renamed it because the name 'constructor' caused an exception in Flex.</change-rename></entry>
+          <entry type="bugfix" package="org.as2lib.env.reflect" class="ClassInfo" variable="constructor:ConstructorInfo"><change-rename to="classConstructor">Renamed it because the name 'constructor' caused an exception in Flex.</change-rename></entry>
         </day>
       </month>
       <month value="9">
