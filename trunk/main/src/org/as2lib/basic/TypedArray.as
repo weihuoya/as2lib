@@ -43,6 +43,28 @@ class org.as2lib.basic.TypedArray {
 	}
 	
 	/**
+	 * Checks if the array already contains the object.
+	 * @param object
+	 * @return True if the array contains the object else false
+	 */
+	public function contains(object:Object):Boolean {
+		var l:Number = array.length;
+		for (var i:Number = 0; i < l; i++) {
+			if (array[i] === object) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Removes all content.
+	 */
+	public function clear(Void):Void {
+		array = new Array();
+	}
+	
+	/**
 	 * Gets the value associated with the given number.
 	 * @param number
 	 * @return the value
@@ -148,21 +170,6 @@ class org.as2lib.basic.TypedArray {
 	 */
 	public function get length():Number {
 		return (this.array.length);
-	}
-	
-	/**
-	 * Checks if the array already contains the object.
-	 * @param object
-	 * @return True if the array contains the object else false
-	 */
-	public function contains(object:Object):Boolean {
-		var l:Number = array.length;
-		for (var i:Number = 0; i < l; i++) {
-			if (array[i] === object) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	/**
