@@ -58,7 +58,7 @@ class org.as2lib.env.log.handler.LuminicBoxHandler extends BasicClass implements
 	private var consolePublisher:ConsolePublisher;
 	
 	/**	
-	 * Constructs a new LuminicBoxHandler instance.
+	 * Constructs a new {@code LuminicBoxHandler} instance.
 	 *
 	 * <p>You can use one and the same instance for multiple loggers. So
 	 * think about using the handler returned by the static {@link #getInstance}
@@ -78,8 +78,8 @@ class org.as2lib.env.log.handler.LuminicBoxHandler extends BasicClass implements
 	/**
 	 * Writes directly to the LuminicBox console.
 	 *
-	 * <p>Uses the {@link LogMessage#toString} method to obtain the string
-	 * to write out.
+	 * <p>The {@code ConsolePublisher} determines how the string representation
+	 * is constructed.
 	 *
 	 * @param message the log message to write out
 	 */

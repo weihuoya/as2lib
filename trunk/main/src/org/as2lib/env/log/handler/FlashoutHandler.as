@@ -24,7 +24,8 @@ import org.as2lib.env.log.level.AbstractLogLevel;
  * plugin to log messages.
  *
  * @author Simon Wacker
- * @see http://www.potapenko.com/flashout
+ * @see org.as2lib.env.log.logger.FlashoutLogger
+ * @see <a href="http://www.potapenko.com/flashout">Flashout</a>
  */
 class org.as2lib.env.log.handler.FlashoutHandler extends BasicClass implements LogHandler {
 	
