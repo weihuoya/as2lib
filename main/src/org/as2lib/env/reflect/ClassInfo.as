@@ -1,4 +1,4 @@
-﻿ust /*
+﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -37,6 +37,7 @@ import org.as2lib.env.overload.Overload;
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
+	
 	/** The name of the class. */
 	private var name:String;
 	
@@ -265,4 +266,5 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		}
 		throw new NoSuchTypeMemberException("The property [" + concreteProperty + "] you tried to obtain does not exist in this class.", this, arguments);
 	}
+	
 }
