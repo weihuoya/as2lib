@@ -304,9 +304,8 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * @return true if the object is of primitive type else false
 	 */
 	public static function isPrimitiveType(anObject):Boolean {
-		return (typeof(anObject) == "string"
-				|| typeof(anObject) == "number"
-				|| typeof(anObject) == "boolean");
+		var t:String = typeof(anObject);
+		return (t == "string" || t == "number" || t == "boolean");
 	}
 	
 	/**
@@ -355,8 +354,17 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * @return true if the object is an explicit instance of the class else false
 	 */
 	public static function isExplicitInstanceOf(object, clazz:Function):Boolean {
-		return (isInstanceOf(object, clazz) &&
-				!isInstanceOf(object.__proto__, clazz));
+		if(clazz == String) {
+			return typeof object == TYPE_STRING;
+		}
+		if(clazz == Number) {
+			return typeof object == TYPE_NUMBER;
+		}
+		if(clazz == Boolean) {
+			return typeof object == TYPE_BOOLEAN;
+		}
+		return (object instanceof clazz &&
+				!(object.__proto__ instanceof clazz));
 	}
 	
 	/**
