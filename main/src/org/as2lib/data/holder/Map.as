@@ -20,13 +20,50 @@ import org.as2lib.core.BasicInterface;
 /**
  * Map is the base interface for data holders that map keys to values.
  *
- * @author Michael Herrmann
+ * <p>A map offers two methods that help you find out whether it contains
+ * a specific key or value. These two methods are {@link #containsKey}
+ * and {@link #containsValue}.
+ *
+ * <p>To get the data stored in the map you can use the {@link #getKeys},
+ * {@link #getValues} and {@link #get} methods. If you want to iterate
+ * over the values of the map you can use the iterators returned by the
+ * {@link #iterator} or {@link #valueIterator} methods. If you want to
+ * iterate over the keys you can use the iterator returned by the
+ * {@link #keyIterator} method.
+ *
+ * <p>To add key value pairs to the map you can use the {@link #put} and
+ * {@link #putAll} methods. The putAll method lets you add all key-value
+ * pairs contained in the passed-in map to this map.
+ *
+ * <p>To remove key-value pairs you can use the {@link #remove} and
+ * {@link #clear} methods. The remove method deletes only the key-value
+ * pair corresponding to the passed-in key, while the clear method removes
+ * all key-value pairs.
+ *
+ * <p>There are two more methods you may need. The {@link #getSize} and
+ * the {@link #isEmpty} method. These methods give you information about
+ * whether this map contains any mappings and how many mappings it contains.
+ *
+ * <p>A map can for example be used as follows:
+ * <code>
+ *   // the map gets set up somewhere
+ *   var map:Map = new MyMap();
+ *   map.put("myKey", "myValue");
+ *   // at some different place in your code
+ *   if (map.containsKey("myKey")) {
+ *     trace(map.get("myKey"));
+ *   }
+ * </code>
+ *
  * @author Simon Wacker
+ * @author Michael Herrmann
  */
 interface org.as2lib.data.holder.Map extends BasicInterface {
 	
 	/**
-	 * Checks if the key exists.
+	 * Checks if the passed-in key exists.
+	 *
+	 * <p>That means whether a value has been mapped to it.
 	 *
 	 * @param key the key to be checked for availability
 	 * @return true if the key exists else false
@@ -34,7 +71,7 @@ interface org.as2lib.data.holder.Map extends BasicInterface {
 	public function containsKey(key):Boolean;
 	
 	/**
-	 * Checks if the value is mapped to a key.
+	 * Checks if the passed-in value is mapped to a key.
 	 *
 	 * @param value the value to be checked for availability
 	 * @return true if the value is mapped to a key else false
@@ -42,23 +79,24 @@ interface org.as2lib.data.holder.Map extends BasicInterface {
 	public function containsValue(value):Boolean;
 	
 	/**
-	 * Returns an Array that contains all the keys.
+	 * Returns an array that contains all keys that have a value mapped to
+	 * it.
 	 *
-	 * @return an Array containing the keys
+	 * @return an array that contains all keys
 	 */
 	public function getKeys(Void):Array;
 	
 	/**
-	 * Returns an Array containing all the values.
+	 * Returns an array that contains all values that are mapped to a key.
 	 *
-	 * @return an Array containing the values
+	 * @return an array that contains all mapped values
 	 */
 	public function getValues(Void):Array;
 	
 	/**
-	 * Returns the value that is mapped to the passed key.
+	 * Returns the value that is mapped to the passed-in key.
 	 *
-	 * @param key the key the appropriate value shall be returned
+	 * @param key the key to return the appropriate value for
 	 * @return the value appropriate to the key
 	 */
 	public function get(key);
@@ -67,15 +105,15 @@ interface org.as2lib.data.holder.Map extends BasicInterface {
 	 * Maps the specified key to the value.
 	 *
 	 * @param key the key used as identifier for the value
-	 * @param value the value that shall be mapped to the key
+	 * @param value the value to map to the key
 	 * @return the value that was originally mapped to the key or null
 	 */
 	public function put(key, value);
 	
 	/**
-	 * Copies all mappings from the specified map to this map.
+	 * Copies all mappings from the passed-in map to this map.
 	 *
-	 * @param map mappings to be stored in this map
+	 * @param map the mappings to add to this map
 	 */
 	public function putAll(map:Map):Void;
 	
@@ -93,19 +131,20 @@ interface org.as2lib.data.holder.Map extends BasicInterface {
 	public function clear(Void):Void;
 	
 	/**
-	 * Returns an Iterator to iterate over the values of the Map.
+	 * Returns an iterator to iterate over the values of this map.
 	 *
-	 * @return an Iterator to iterate over the Map
-	 * @see org.as2lib.data.holder.Iterator
+	 * @return an iterator to iterate over the values of this map
+	 * @see #valueIterator
+	 * @see #getValues
 	 */
 	public function iterator(Void):Iterator;
 	
 	/**
 	 * Returns an iterator to iterate over the values of this map.
 	 *
-	 * @return an iterator to iterate over this map
-	 * @see #iterator(Void):Iterator
-	 * @see org.as2lib.data.holder.Iterator
+	 * @return an iterator to iterate over the values of this map
+	 * @see #iterator
+	 * @see #getValues
 	 */
 	public function valueIterator(Void):Iterator;
 	
@@ -113,7 +152,7 @@ interface org.as2lib.data.holder.Map extends BasicInterface {
 	 * Returns an iterator to iterate over the keys of this map.
 	 *
 	 * @return an iterator to iterate over the keys of this map
-	 * @see org.as2lib.data.holder.Iterator
+	 * @see #getKeys
 	 */
 	public function keyIterator(Void):Iterator;
 	
@@ -125,9 +164,9 @@ interface org.as2lib.data.holder.Map extends BasicInterface {
 	public function size(Void):Number;
 	
 	/**
-	 * Returns whether the Map contains any mappings.
+	 * Returns whether this map contains any mappings.
 	 *
-	 * @return true if the Map contains mappings else false
+	 * @return true if this map contains mappings else false
 	 */
 	public function isEmpty(Void):Boolean;
 	

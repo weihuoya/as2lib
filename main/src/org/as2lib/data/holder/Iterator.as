@@ -19,32 +19,54 @@ import org.as2lib.core.BasicInterface;
 /**
  * Iterators are used to iterate over data holders.
  *
- * @author Michael Herrmann
+ * <p>An iterator is quite simple to use. There is one method to check
+ * whether there are more elements left to iterate over {@link #hasNext},
+ * one method to get the next element {@link #next} and one to remove
+ * the current element {@link #remove}.
+ *
+ * <p>And here is how it works:
+ * <code>
+ *   var iterator:Iterator = new MyIterator("value1", "value2", "value3");
+ *   while (iterator.hasNext()) {
+ *     trace(iterator.next());
+ *   }
+ * </code>
+ * <p>The output would be the following:
+ * <pre>
+ *   value1
+ *   value2
+ *   value3
+ * </pre>
+ *
  * @author Simon Wacker
+ * @author Michael Herrmann
  */
 interface org.as2lib.data.holder.Iterator extends BasicInterface {
 	
 	/**
-	 * Returns whether there exists another object to iterate over.
+	 * Returns whether there exists another element to iterate over.
 	 *
-	 * @return true if there are objects left to iterate over
+	 * @return true if there is at least one lement left to iterate over
 	 */
 	public function hasNext(Void):Boolean;
 	
 	/**
-	 * Returns the next object.
+	 * Returns the next element.
 	 *
-	 * @return the next object
-	 * @throws org.as2lib.data.holder.NoSuchElementException if there is no next element
+	 * @return the next element
+	 * @throws org.as2lib.data.holder.NoSuchElementException if there is
+	 * no next element
 	 */
 	public function next(Void);
 	
 	/**
-	 * Removes the presently selected object from the data holder the Iterator
-	 * iterates over.
+	 * Removes the currently selected element from this iterator and from
+	 * the data holder this iterator iterates over.
 	 *
-	 * @throws org.as2lib.env.except.IllegalStateException if you try to remove an element when none is selected
-	 * @throws org.as2lib.env.except.UnsupportedOperationException if the operation is not supported by the given Iterator
+	 * @throws org.as2lib.env.except.IllegalStateException if you try to 
+	 * remove an element when none is selected
+	 * @throws org.as2lib.env.except.UnsupportedOperationException if this
+	 * method is not supported by the concrete implementation of this interface
 	 */
 	public function remove(Void):Void;
 	
