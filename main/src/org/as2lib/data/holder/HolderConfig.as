@@ -19,6 +19,7 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.data.holder.map.MapStringifier;
 import org.as2lib.data.holder.stack.StackStringifier;
 import org.as2lib.data.holder.queue.QueueStringifier;
+import org.as2lib.data.holder.list.ListStringifier;
 
 /**
  * HolderConfig is the fundamental configuration file for all classes residing
@@ -35,6 +36,9 @@ class org.as2lib.data.holder.HolderConfig extends BasicClass {
 	
 	/** Used to stringify Queues. */
 	private static var queueStringifier:Stringifier;
+	
+	/** Used to stringify Queues. */
+	private static var listStringifier:Stringifier;
 	
 	/** 
 	 * Private constructor.
@@ -97,5 +101,15 @@ class org.as2lib.data.holder.HolderConfig extends BasicClass {
 	public static function getQueueStringifier(Void):Stringifier {
 		if (!queueStringifier) queueStringifier = new QueueStringifier();
 		return queueStringifier;
+	}
+	
+	/**
+	 * Returns the currently used Stringifier used to stringify Lists.
+	 *
+	 * @return the currently used List Stringifier
+	 */
+	public static function getListStringifier(Void):Stringifier {
+		if (!listStringifier) listStringifier = new ListStringifier();
+		return listStringifier;
 	}
 }
