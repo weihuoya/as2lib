@@ -53,7 +53,10 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	private static var childAlgorithm:ChildAlgorithm;
 	
 	/** All ClassInfos and PackageInfos that have already been found will be cached here. */
-	private static var cache:Cache = new SimpleCache();
+	private static var cache:Cache;
+	
+	/** Stores the root package of the hierarchy. */
+	private static var rootPackage:PackageInfo;
 	
 	/** Used to stringify MethodInfo instances. */
 	private static var methodInfoStringifier:Stringifier;
@@ -175,6 +178,7 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 * @return the cache used to cache ClassInfos and PackageInfos
 	 */
 	public static function getCache(Void):Cache {
+		if (!cache) cache = new SimpleCache(getRootPackage());
 		return cache;
 	}
 	
@@ -185,6 +189,23 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 */
 	public static function setCache(newCache:Cache):Void {
 		cache = newCache;
+	}
+	
+	/**
+	 * @return the root package of the hierarchy.
+	 */
+	public static function getRootPackage(Void):PackageInfo {
+		if (!rootPackage) rootPackage = new PackageInfo("root", _global, null);
+		return rootPackage;
+	}
+	
+	/**
+	 * Sets the new root of the hierarchy.
+	 *
+	 * @param newRootPackage the new root package
+	 */
+	public static function setRootPackage(newRootPackage:PackageInfo):Void {
+		rootPackage = newRootPackage;
 	}
 	
 	/**

@@ -31,7 +31,7 @@ import org.as2lib.env.event.SimpleEventBroadcaster;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.ObjectUtil;
-import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.overload.Overload;
 
 /**
@@ -221,7 +221,7 @@ class org.as2lib.env.out.Out extends BasicClass implements ConfigurableOut, Hier
 	 */
 	public function isEnabled(level:OutLevel):Boolean {
 		if (getLevel() == level) return true;
-		return (getLevel() instanceof ReflectUtil.getClassInfo(level).getType());
+		return (getLevel() instanceof ClassInfo.forInstance(level).getType());
 	}
 	
 	/**

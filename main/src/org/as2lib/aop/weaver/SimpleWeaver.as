@@ -18,11 +18,11 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.aop.Weaver;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.aop.Aspect;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.TypeMemberInfo;
+import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.joinpoint.MethodJoinPoint;
 import org.as2lib.aop.joinpoint.GetPropertyJoinPoint;
@@ -69,7 +69,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 		while (--i-(-1)) {
 			var a:Array = y[i];
 			if (!a) {
-				weaveByPackage(ReflectUtil.getRootInfo());
+				weaveByPackage(ReflectConfig.getRootPackage());
 			} else {
 				var k:Number = a.length;
 				while (--k-(-1)) weaveByClassAndAspect(a[k], z[i]);
@@ -166,7 +166,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	 * @see org.as2lib.aop.Weaver#weaveByClass(Function, Aspect):Void
 	 */
 	public function weaveByClassAndAspect(a:Function, b:Aspect):Void {
-		weaveByClassInfoAndAspect(ReflectUtil.getClassInfo(a), b);
+		weaveByClassInfoAndAspect(ClassInfo.forClass(a), b);
 	}
 	
 	/**
@@ -181,7 +181,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	 * @see org.as2lib.aop.Weaver#weaveByClass(Object, Aspect):Void
 	 */
 	public function weaveByObjectAndAspect(a:Object, b:Aspect):Void {
-		var c:ClassInfo = ReflectUtil.getClassInfo(a);
+		var c:ClassInfo = ClassInfo.forInstance(a);
 		var d:Array = c.getMethods();
 		var h:Array = b.getAdvices();
 		var i:Number = d.length;

@@ -48,6 +48,54 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	private var childAlgorithm:ChildAlgorithm;
 	
 	/**
+	 * Returns the package info corresponding to the passed-in name.
+	 *
+	 * <p>The package name is composed of the preceding path and the
+	 * actual package name.
+	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in name is null, undefined or a blank string.</li>
+	 *   <li>There is no package with the given name.</li>
+	 * </ul>
+	 *
+	 * @param packageName the full name of the package
+	 * @return the package info corresponding to the passed-in name
+	 */
+	public static function forName(packageName:String):PackageInfo {
+		if (!packageName) return null;
+		var p:Object = eval("_global." + packageName);
+		if (p) {
+			return forPackage(p);
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the package info corresponding to the passed-in package.
+	 *
+	 * <p>This method first checks whether the package is already
+	 * contained in the cache.
+	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in package is null or undefined.</li>
+	 *   <li>The package info corresponding to the package could not be generated.</li>
+	 * </ul>
+	 *
+	 * @param package the package you wanna get the package info for
+	 * @return the package info corresponding to the passed-in package
+	 */
+	public static function forPackage(package):PackageInfo {
+		if (package == null) return null;
+		var info:PackageInfo = ReflectConfig.getCache().getPackage(package);
+		if (!info) {
+			info = ReflectConfig.getPackageAlgorithm().execute(package);
+		}
+		return info;
+	}
+	
+	/**
 	 * Constructs a new PackageInfo instance.
 	 *
 	 * <p>All arguments are allowed to be null, but keep in mind that if one is
@@ -121,7 +169,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	 */
 	public function getFullName(Void):String {
 		if (fullName === undefined) {
-			if (getParent().isRoot() || !getParent()) {
+			if (getParent().isRoot() || isRoot()) {
 				return (fullName = getName());
 			}
 			fullName = getParent().getFullName() + "." + getName();
@@ -390,13 +438,15 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	}
 	
 	/**
-	 * Returns false because a PackageInfo can never be the root. The root is
-	 * represented by the RootInfo instance.
+	 * Returns whether this package info is represents a root package.
 	 *
-	 * @return false
+	 * <p>It is supposed to be a root package when its parent is null or
+	 * undefined.
+	 *
+	 * @return true if this package info represents a root package else false
 	 */
 	public function isRoot(Void):Boolean {
-		return false;
+		return !getParent();
 	}
 	
 	/** 

@@ -17,7 +17,7 @@
 import org.as2lib.test.unit.AbstractAssertInfo;
 import org.as2lib.util.Call;
 import org.as2lib.util.StringUtil;
-import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.ClassInfo;
 
 /**
  * Information holder and examiner of a assertNotThrows call.
@@ -88,7 +88,7 @@ class org.as2lib.test.unit.info.AssertNotThrowsInfo extends AbstractAssertInfo {
 		}
 		result += "!\n";
 		if(typeof type == "function") {
-			result += "  - Expected exception:\n      "+ReflectUtil.getClassInfo(type).getFullName();
+			result += "  - Expected exception:\n      "+ClassInfo.forClass(type).getFullName();
 		} else if(type == null) {
 			result += "  - No exception expected.";
 		} else {
@@ -111,7 +111,7 @@ class org.as2lib.test.unit.info.AssertNotThrowsInfo extends AbstractAssertInfo {
 		var result:String = "assertNotThrows executed. ";
 		
 		if(typeof type == "function") {
-			result += ReflectUtil.getClassInfo(type).getFullName();
+			result += ClassInfo.forClass(type).getFullName();
 		} else {
 			result += type;
 		}

@@ -17,7 +17,6 @@
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.core.BasicInterface;
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.Config;
 
@@ -29,6 +28,7 @@ import org.as2lib.Config;
  * @author Martin Heidegger
  */
 class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInterface {
+	
 	/** The type of values that can be added. */
 	private var type:Function;
 	
@@ -90,7 +90,7 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 	 * @see org.as2lib.core.BasicInterface#getClass()
 	 */
 	public function getClass(Void):ClassInfo {
-		return ReflectUtil.getClassInfo(this);
+		return ClassInfo.forInstance(this);
 	}
 	
 	/**
@@ -108,9 +108,8 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 	 */
 	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between object [" + object + "] and type [" + type + "].",
-											   this,
-											   arguments);
+			throw new IllegalArgumentException("Type mismatch between object [" + object + "] and type [" + type + "].", this, arguments);
 		}
 	}
+	
 }

@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.env.overload.OverloadException;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
 
 /**
@@ -65,7 +64,7 @@ class org.as2lib.env.overload.SameTypeSignatureException extends OverloadExcepti
 		if (!asString) {
 			asString = message;
 			try {
-				var classInfo:ClassInfo = ReflectUtil.getClassInfo(overloadTarget);
+				var classInfo:ClassInfo = ClassInfo.forObject(overloadTarget);
 				asString += "\n  Overloaded Method: " + classInfo.getMethodByMethod(overloadedMethod);
 			} catch (e) {
 				if (classInfo.getConstructor().getMethod() == overloadedMethod) {

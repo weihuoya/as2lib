@@ -20,7 +20,6 @@ import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.PropertyInfo;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.data.holder.Iterator;
 
@@ -31,6 +30,7 @@ import org.as2lib.data.holder.Iterator;
  * @author Martin Heidegger
  */
 class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implements StackTraceElement {
+	
 	/** The thrower. */
 	private var concreteThrower;
 	
@@ -63,9 +63,7 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 	 * @see org.as2lib.env.except.StackTraceElement#getThrower()
 	 */
 	public function getThrower(Void):ClassInfo {
-		if (ObjectUtil.isEmpty(thrower)) {
-			thrower = ReflectUtil.getClassInfo(concreteThrower);
-		}
+		if (!thrower) thrower = ClassInfo.forObject(concreteThrower);
 		return thrower;
 	}
 	
@@ -115,4 +113,5 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 	public function toString(Void):String {
 		return ExceptConfig.getStackTraceElementStringifier().execute(this);
 	}
+	
 }

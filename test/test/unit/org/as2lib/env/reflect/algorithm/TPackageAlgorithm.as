@@ -20,8 +20,8 @@ import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.reflect.algorithm.PackageAlgorithm;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.Cache;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.CompositeMemberInfo;
+import org.as2lib.env.reflect.ReflectConfig;
 
 /**
  * @author Simon Wacker
@@ -67,7 +67,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestC
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([Object]));
 		cc.setDefaultReturnValue(null);
 		c.getRoot();
-		cc.setReturnValue(ReflectUtil.getRootInfo());
+		cc.setReturnValue(ReflectConfig.getRootPackage());
 		c.addPackage(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([PackageInfo]));
 		cc.setDefaultReturnValue(null);

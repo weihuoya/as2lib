@@ -22,7 +22,6 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.CompositeMemberInfo;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
 
