@@ -322,11 +322,14 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		overload.addHandler([String, Object, undefined], assertEqualsWithMessage);
 		overload.addHandler([String, undefined, Object], assertEqualsWithMessage);
 		overload.addHandler([String, Object, Object], assertEqualsWithMessage);
-		overload.addHandler([Object, Object], assertEqualsWithoutMessage);
+		overload.addHandler([String, undefined], assertEqualsWithMessage);
+		overload.addHandler([String, Object], assertEqualsWithMessage);
+		overload.addHandler([undefined, undefined], assertEqualsWithoutMessage);
 		overload.addHandler([undefined, Object], assertEqualsWithoutMessage);
 		overload.addHandler([Object, undefined], assertEqualsWithoutMessage);
-		overload.addHandler([undefined, undefined], assertEqualsWithoutMessage);
+		overload.addHandler([Object, Object], assertEqualsWithoutMessage);
 		overload.addHandler([undefined], assertEqualsWithoutMessage);
+		overload.addHandler([Object], assertEqualsWithoutMessage);
 		overload.addHandler([], assertEqualsWithoutMessage);
 		return overload.forward(arguments);
 	}
@@ -385,11 +388,17 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertNotEquals():Boolean {
 		var overload:Overload = new Overload(this);
+		overload.addHandler([String, Object, undefined], assertNotEqualsWithMessage);
+		overload.addHandler([String, undefined, Object], assertNotEqualsWithMessage);
 		overload.addHandler([String, Object, Object], assertNotEqualsWithMessage);
-		overload.addHandler([Object, Object], assertNotEqualsWithoutMessage);
+		overload.addHandler([String, undefined], assertNotEqualsWithMessage);
+		overload.addHandler([String, Object], assertNotEqualsWithMessage);
+		overload.addHandler([undefined, undefined], assertNotEqualsWithoutMessage);
 		overload.addHandler([undefined, Object], assertNotEqualsWithoutMessage);
 		overload.addHandler([Object, undefined], assertNotEqualsWithoutMessage);
-		overload.addHandler([undefined, undefined], assertNotEqualsWithoutMessage);
+		overload.addHandler([Object, Object], assertNotEqualsWithoutMessage);
+		overload.addHandler([undefined], assertNotEqualsWithoutMessage);
+		overload.addHandler([Object], assertNotEqualsWithoutMessage);
 		overload.addHandler([], assertNotEqualsWithoutMessage);
 		return overload.forward(arguments);
 	}
@@ -450,11 +459,14 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		overload.addHandler([String, Object, undefined], assertSameWithMessage);
 		overload.addHandler([String, undefined, Object], assertSameWithMessage);
 		overload.addHandler([String, Object, Object], assertSameWithMessage);
-		overload.addHandler([Object, Object], assertSameWithoutMessage);
+		overload.addHandler([String, undefined], assertSameWithMessage);
+		overload.addHandler([String, Object], assertSameWithMessage);
+		overload.addHandler([undefined, undefined], assertSameWithoutMessage);
 		overload.addHandler([undefined, Object], assertSameWithoutMessage);
 		overload.addHandler([Object, undefined], assertSameWithoutMessage);
-		overload.addHandler([undefined, undefined], assertSameWithoutMessage);
+		overload.addHandler([Object, Object], assertSameWithoutMessage);
 		overload.addHandler([undefined], assertSameWithoutMessage);
+		overload.addHandler([Object], assertSameWithoutMessage);
 		overload.addHandler([], assertSameWithoutMessage);
 		return overload.forward(arguments);
 	}
@@ -496,6 +508,74 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	private function assertSameWithMessage(message:String, val, compareTo):Boolean {
 		try {
 			Assert.isSameWithMessage(message, val, compareTo);
+			return true;
+		} catch(e:org.as2lib.test.unit.AssertException) {
+			getMethodInformation().addError(e);
+		} catch(e) {
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertEquals", this, arguments).initCause(e));
+		}
+		return false;
+	}
+	
+	/**
+	 * overload
+	 * @see #assertNotSameWithMessage
+	 * @see #assertNotSameWithoutMessage
+	 */
+	private function assertNotSame():Boolean {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String, Object, undefined], assertNotSameWithMessage);
+		overload.addHandler([String, undefined, Object], assertNotSameWithMessage);
+		overload.addHandler([String, Object, Object], assertNotSameWithMessage);
+		overload.addHandler([String, undefined], assertNotSameWithMessage);
+		overload.addHandler([String, Object], assertNotSameWithMessage);
+		overload.addHandler([undefined, undefined], assertNotSameWithoutMessage);
+		overload.addHandler([undefined, Object], assertNotSameWithoutMessage);
+		overload.addHandler([Object, undefined], assertNotSameWithoutMessage);
+		overload.addHandler([Object, Object], assertNotSameWithoutMessage);
+		overload.addHandler([undefined], assertNotSameWithoutMessage);
+		overload.addHandler([Object], assertNotSameWithoutMessage);
+		overload.addHandler([], assertNotSameWithoutMessage);
+		return overload.forward(arguments);
+	}
+	
+	/**
+	 * Asserts that two variables do not contain the same object reference else it fails.
+	 * This method compares two variables if they do not contain the same object reference.
+	 * It compares the two variables with "!==". @see #assertNotEquals compares
+	 * two variables with "!=" as value match.
+	 * 
+	 * Note: This method refers to the Assert Util
+	 * 
+	 * @see Assert#isNotEqual
+	 * @see Assert#isNotSame
+	 * @see #assertNotSame
+	 * @see #assertNotSameWithMessage
+	 * @param val Object that should be compared.
+	 * @param compareTo Object to compare with val.
+	 * @return true if no error occured else false
+	 */
+	private function assertNotSameWithoutMessage(val, compareTo):Boolean {
+		return assertNotSameWithMessage("", val, compareTo);
+	}
+	
+	/**
+	 * Asserts that two variables do not contain the same object reference else it fails.
+	 * This method asserts the same like @see #assertNotSameWithoutMessage
+	 * but it adds a message to the failure.
+	 * 
+	 * @see Assert#isNotEqual
+	 * @see Assert#isNotSame
+	 * @see #assertNotSame
+	 * @see #assertNotSameWithoutMessage
+	 * @param message Message that should be provided if the assertion fails.
+	 * @param val Object that should be compared.
+	 * @param compareTo Object to compare with val.
+	 * @return true if no error occured else false
+	 */
+	private function assertNotSameWithMessage(message:String, val, compareTo):Boolean {
+		try {
+			Assert.isNotSameWithMessage(message, val, compareTo);
 			return true;
 		} catch(e:org.as2lib.test.unit.AssertException) {
 			getMethodInformation().addError(e);
