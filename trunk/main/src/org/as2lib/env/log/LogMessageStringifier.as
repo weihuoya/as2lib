@@ -16,6 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
+import org.as2lib.util.DateFormatter;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogMessage;
 
@@ -33,48 +34,49 @@ class org.as2lib.env.log.LogMessageStringifier extends BasicClass implements Str
 	/** Flag that determines whether to show the name of the logger in the string representation. */
 	private var showLoggerName:Boolean;
 	
-	/** Flag that determines whether to show the time in the string representation. */
-	private var showTime:Boolean;
+	/** The time formatter to format the time stamp if desired. */
+	private var timeFormatter:DateFormatter;
 	
 	/**
 	 * Constructs a new LogMessageStringifier instance.
 	 *
 	 * <p>Level and logger name are shown by default.
 	 *
-	 * <p>The time is not shown by default.
+	 * <p>If {@code timeFormat} is nor passed-in or is {@code null} or
+	 * {@code undefined} the date-time is not shown in the log message.
 	 *
-	 * @param showLevel determines whether to show levels in the string representation
-	 * @param shoLoggerName determines whether to show the logger name in the string representation
-	 * @param showTime determines whether to show the time in the string representation
+	 * @param showLevel determines whether to show levels in the string
+	 * representation
+	 * @param shoLoggerName determines whether to show the logger name in
+	 * the string representation
+	 * @param timeFormat (optional) the time format pattern used to format the
+	 * time stamp
+	 * @see org.as2lib.util.DateFormatter
 	 */
-	public function LogMessageStringifier(showLevel:Boolean, showLoggerName:Boolean, showTime:Boolean) {
+	public function LogMessageStringifier(showLevel:Boolean, showLoggerName:Boolean, timeFormat:String) {
 		this.showLevel = showLevel == null ? true : showLevel;
 		this.showLoggerName = showLoggerName == null ? true : showLoggerName;
-		this.showTime = showTime;
+		if (timeFormat != null) this.timeFormatter = new DateFormatter(timeFormat);
 	}
 	
 	/**
 	 * Returns the string representation of the passed-in LogMessage instance.
 	 *
-	 * <p>The returned string gets composed as follows:
-	 * [hours]:[minutes]:[seconds].[milliseconds]  [theLogLevel]  [theLoggerName] - [theMessage]
+	 * <p>The returned string is composed as follows:
+	 * <code>
+	 *   [theTime]  [theLogLevel]  [theLoggerName] - [theMessage]
+	 * </code>
 	 *
 	 * <p>Depending on your custom settings, which information to show and
 	 * which not, a few parts may be left out.
-	 *
-	 * <p>The hours, minutes and seconds represent the time 
-	 *
-	 * <p>The elapsedMilliseconds are the milliseconds the elapsed since 
-	 * system start up on creation of the log message.
 	 *
 	 * @return the string representation of the log message
 	 */
 	public function execute(target):String {
 		var message:LogMessage = target;
 		var info = "";
-		if (showTime) {
-			var time:Date = new Date(message.getTimeStamp());
-			info += time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds() + "." + time.getMilliseconds() + "  ";
+		if (timeFormatter) {
+			info += timeFormatter.format(new Date(message.getTimeStamp())) + "  ";
 		}
 		if (showLevel) info += message.getLevel() + "  ";
 		if (showLoggerName) info += message.getLoggerName() + " - ";

@@ -62,7 +62,7 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	 * @return the currently used stringifier
 	 */
 	public static function getStringifier(Void):Stringifier {
-		if (!stringifier) stringifier = new LogMessageStringifier(true, true, false);
+		if (!stringifier) stringifier = new LogMessageStringifier(true, true, "HH:nn:ss.S");
 		return stringifier;
 	}
 	
