@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.core.string.Stringifier;
+import org.as2lib.util.string.Stringifier;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.data.holder.Stack;
 import org.as2lib.data.iterator.Iterator;
@@ -28,7 +28,7 @@ import org.as2lib.env.except.StackTraceElement;
  */
 class org.as2lib.env.except.StackTraceStringifier extends BasicClass implements Stringifier {
 	/**
-	 * @see org.as2lib.core.string.Stringifier#execute()
+	 * @see org.as2lib.util.string.Stringifier#execute()
 	 */
 	public function execute(target):String {
 		var stack:Stack = Stack(target);

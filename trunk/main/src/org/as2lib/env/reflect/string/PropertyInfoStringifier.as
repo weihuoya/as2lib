@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.core.string.Stringifier;
+import org.as2lib.util.string.Stringifier;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.PropertyInfo;
 
@@ -26,7 +26,7 @@ import org.as2lib.env.reflect.PropertyInfo;
  */
 class org.as2lib.env.reflect.string.PropertyInfoStringifier extends BasicClass implements Stringifier {
 	/**
-	 * @see org.as2lib.core.string.Stringifier#execute()
+	 * @see org.as2lib.util.string.Stringifier#execute()
 	 */
 	public function execute(target):String {
 		var property:PropertyInfo = PropertyInfo(target);

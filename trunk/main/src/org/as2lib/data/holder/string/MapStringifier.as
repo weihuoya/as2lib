@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.core.string.Stringifier;
+import org.as2lib.util.string.Stringifier;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.iterator.ArrayIterator;
 import org.as2lib.data.iterator.Iterator;
@@ -28,7 +28,7 @@ import org.as2lib.data.iterator.Iterator;
  */
 class org.as2lib.data.holder.string.MapStringifier extends BasicClass implements Stringifier {
 	/**
-	 * @see org.as2lib.core.string.Stringifier
+	 * @see org.as2lib.util.string.Stringifier
 	 */
 	public function execute(target):String {
 		var map:Map = Map(target);
