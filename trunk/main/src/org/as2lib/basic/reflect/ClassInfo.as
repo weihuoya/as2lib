@@ -1,5 +1,5 @@
 ﻿import org.as2lib.basic.BasicClass;
-import org.as2lib.data.Hashtable;
+import org.as2lib.data.holder.Hashtable;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.ReflectUtil;
 import org.as2lib.basic.reflect.PackageInfo;

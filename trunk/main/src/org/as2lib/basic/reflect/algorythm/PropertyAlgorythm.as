@@ -4,7 +4,7 @@ import org.as2lib.basic.reflect.ClassInfo;
 import org.as2lib.basic.reflect.Cache;
 import org.as2lib.basic.reflect.algorythm.ContentAlgorythm;
 import org.as2lib.basic.reflect.algorythm.AbstractContentAlgorythm;
-import org.as2lib.data.Hashtable;
+import org.as2lib.data.holder.Hashtable;
 
 class org.as2lib.basic.reflect.algorythm.PropertyAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
 	private var data:Hashtable;

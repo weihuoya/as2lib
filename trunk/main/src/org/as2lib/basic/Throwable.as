@@ -1,4 +1,4 @@
-﻿import org.as2lib.data.Stack;
+﻿import org.as2lib.data.holder.Stack;
 import org.as2lib.basic.BasicInterface;
 
 /**

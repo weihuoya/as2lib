@@ -4,7 +4,7 @@ import org.as2lib.basic.reflect.ClassInfo;
 import org.as2lib.basic.reflect.Cache;
 import org.as2lib.basic.reflect.algorythm.ContentAlgorythm;
 import org.as2lib.basic.reflect.algorythm.AbstractContentAlgorythm;
-import org.as2lib.data.Hashtable;
+import org.as2lib.data.holder.Hashtable;
 import org.as2lib.util.ObjectUtil;
 
 class org.as2lib.basic.reflect.algorythm.MethodAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
