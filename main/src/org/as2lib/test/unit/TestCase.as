@@ -413,7 +413,6 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		overload.addHandler([String, String], assertEqualsWithoutMessage);
 		overload.addHandler([undefined], assertEqualsWithoutMessage);
 		overload.addHandler([Object], assertEqualsWithoutMessage);
-		overload.addHandler([String], assertEqualsWithMessage);
 		overload.addHandler([], assertEqualsWithoutMessage);
 		return overload.forward(arguments);
 	}
