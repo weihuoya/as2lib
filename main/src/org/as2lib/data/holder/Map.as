@@ -20,7 +20,7 @@ import org.as2lib.core.BasicInterface;
 /**
  * Map is the base interface for data holders that map keys to values.
  *
- * @author Michael Hermann
+ * @author Michael Herrmann
  * @author Simon Wacker
  */
 interface org.as2lib.data.holder.Map extends BasicInterface {
