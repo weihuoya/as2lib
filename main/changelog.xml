@@ -4,6 +4,18 @@
     xsi:schemaLocation="aslib http://www.as2lib.org/changelog_0.91.xsd">
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2004">
+      <month value="12">
+        <day value="2">
+          <entry type="add" package="org.as2lib.util" class="ConstructorCall">New Class to call a constructor within a assertThrows testcase</entry>
+          <entry type="add" package="org.as2lib.data.type" class="Angle">Common Interface to work with angles</entry>
+          <entry type="add" package="org.as2lib.data.type" class="Degree">Degree implementation of angle</entry>
+          <entry type="add" package="org.as2lib.data.type" class="Radian">Radian implementation of angle</entry>
+          <entry type="add" package="org.as2lib.data.type" class="Integer">Class to work with integers</entry>
+          <entry type="add" package="org.as2lib.data.type" class="NaturalNumber">Class to work with natural numbers</entry>
+          <entry type="add" package="org.as2lib.data.type" class="NaturalNumberIncludingZero">Class to work with natural numbers (including zero)</entry>
+          <entry type="add" package="org.as2lib.data.type" class="NumberFormatException">Exception to throw if a Number was not transformable into a different format</entry>
+        </day>
+      </month>
       <month value="11">
 	    <day value="29">
 	      <entry type="add" package="org.as2lib.util" class="ArrayUtil" method="isSame(array1:Array, array2:Array):Boolean"></entry>
