@@ -6,6 +6,8 @@ import org.as2lib.env.reflect.algorythm.ContentAlgorythm;
 import org.as2lib.env.reflect.algorythm.AbstractContentAlgorythm;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
+import org.as2lib.util.ObjectUtil;
+import org.as2lib.util.StringUtil;
 
 /**
  * @author Simon Wacker
@@ -36,7 +38,6 @@ class org.as2lib.env.reflect.algorythm.PropertyAlgorythm extends AbstractContent
 		this.staticFlag = true;
 		var clazz:Function = this.info.getClass();
 		search(clazz);
-		
 		this.staticFlag = false;
 		var prototype = clazz.prototype;
 		_global.ASSetPropFlags(prototype, null, 6, true);
@@ -48,9 +49,9 @@ class org.as2lib.env.reflect.algorythm.PropertyAlgorythm extends AbstractContent
 	}
 	
 	private function validate(target, name:String):Boolean {
-		if (typeof(prototype[name] == "function")) {
+		if (ObjectUtil.isTypeOf(target[name], "function")) {
 			var coreName = name.substring(7);
-			if (name.indexOf("__get__") == 0) {
+			if (StringUtil.startsWith(name, "__get__")) {
 				getters.put(coreName, true);
 				if (!setters.get(coreName)) {
 					type = "__get__";
@@ -58,7 +59,7 @@ class org.as2lib.env.reflect.algorythm.PropertyAlgorythm extends AbstractContent
 				}
 				return false;
 			} 
-			if (name.indexOf("__set__") == 0) {
+			if (StringUtil.startsWith(name, "__set__")) {
 				setters.put(coreName, true);
 				if (!getters.get(coreName)) {
 					type = "__set__";

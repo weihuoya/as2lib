@@ -13,8 +13,6 @@ import org.as2lib.env.reflect.ReferenceNotFoundException;
  * representing the found package.
  *
  * @author Simon Wacker
- * @see org.as2lib.core.BasicClass
- * @see org.as2lib.env.reflect.algorythm.CacheAlgorythm
  */
 class org.as2lib.env.reflect.algorythm.PackageAlgorythm extends BasicClass implements CacheAlgorythm {
 	private var cache:Cache;

@@ -16,35 +16,35 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	/**
 	 * Constant for hiding an object from for-in loops.
 	 * 
-	 * @see #setAccessPermissions()
+	 * @see #setAccessPermission()
      */
 	public static var ACCESS_IS_HIDDEN = 1
 	
 	/**
 	 * Constant for setting an object deletable.
 	 * 
-	 * @see #setAccessPermissions()
+	 * @see #setAccessPermission()
      */
 	public static var ACCESS_CAN_DELETE = 2;
 	
 	/**
 	 * Constant for setting an object overwritable.
 	 * 
-	 * @see #setAccessPermissions()
+	 * @see #setAccessPermission()
      */
 	public static var ACCESS_CAN_OVERWRITE = 4;
 	
 	/**
 	 * Constant for allowing everything to an object.
 	 * 
-	 * @see #setAccessPermissions()
+	 * @see #setAccessPermission()
      */
 	public static var ACCESS_ALL_ALLOWED = ACCESS_CAN_DELETE | ACCESS_CAN_OVERWRITE;
 	
 	/**
 	 * Constant for allowing nothing..
 	 * 
-	 * @see #setAccessPermissions()
+	 * @see #setAccessPermission()
      */
 	public static var ACCESS_NOTHING_ALLOWED = ACCESS_IS_HIDDEN;
 	
@@ -118,7 +118,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * @param object the object that shall be modified.
 	 * @param status the access permission that shall be applied.
 	 */
-	public static function setAccessPermissions(object, access:Number):Void {
+	public static function setAccessPermission(object, access:Number):Void {
 		_global.ASSetPropFlags(object, null, access, true);
 	}
 	
