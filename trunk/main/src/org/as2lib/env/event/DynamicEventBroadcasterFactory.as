@@ -30,8 +30,18 @@ import org.as2lib.util.ClassUtil;
  * @author Martin Heidegger
  */
 class org.as2lib.env.event.DynamicEventBroadcasterFactory extends BasicClass implements EventBroadcasterFactory {
+	
 	/** Internal holder for the class that will be instantiated. */
 	private var clazz:Function;
+	
+	/**
+	 * Constructs a new DynamicEventBroadcasterFactory instance.
+	 *
+	 * @param clazz the class that gets used by the #createEventBroadcaster() method.
+	 */
+	public function DynamicEventBroadcasterFactory(clazz:Function) {
+		setEventBroadcasterClass(clazz);
+	}
 	
 	/**
 	 * Sets the class that will be used by #createEventBroadcaster()
@@ -60,4 +70,5 @@ class org.as2lib.env.event.DynamicEventBroadcasterFactory extends BasicClass imp
 		}
 		return EventBroadcaster(new clazz());
 	}
+	
 }
