@@ -1,7 +1,11 @@
-﻿import org.as2lib.test.unit.Failure;
-import org.as2lib.env.util.ReflectUtil;
+﻿import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.core.BasicClass;
+import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.out.Out;
+import org.as2lib.env.out.string.WriteStringifier;
+import org.as2lib.test.unit.Failure;
+import org.as2lib.test.unit.TestConfig;
+import org.as2lib.env.overload.UnknownOverloadHandlerException;
 
 /**
  * Basic Class to be Extended by all Testcases.
@@ -78,7 +82,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * Basic Method for Testruns. path Should be a String of Classes
 	 * where the Test should run. All Objects that extend This Class will be used.
 	 * The Method checks if the Object to this Path is an Method (Class) or an Object (Instance)
-     * So you can use "run(test.className)" or "run(test)".
+	 * So you can use "run(test.className)" or "run(test)".
 	 *
 	 * @see #runPath
 	 *
@@ -124,7 +128,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 		initTest("runObject");
 		var that = eval("th"+"is");
 		if(pathObject instanceof that) {
-      runTest(pathObject, myPath);
+			runTest(pathObject, myPath);
 		} else {
 			for(var i:String in pathObject) {
 				if(typeof pathObject[i] == "function") {
@@ -180,24 +184,26 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * @param path	Initial Runpath of the Testcase
 	 */
 	private static function printResult(Void):Void {
-		trace(" Testcaseresult for "+startedPath+" ["+(getTimer()-startTime)+"ms]:");
+		var result:String = "\n";
+		result += "Testcaseresult for "+startedPath+" ["+(getTimer()-startTime)+"ms]:\n";
 		if(paths.length > 0) {
 			for(var i:Number = 0; i<paths.length ; i++) {
-				trace("  Testcase found:"+paths[i]);
+				result += "  Testcase found:"+paths[i]+"\n";
 			}
-			trace("");
+			result += "\n";
 			if(errors.length > 0) {
-				trace("  "+errors.length+" Errors occured");
+				result += "  "+errors.length+" Errors occured"+"\n";
 				for(var i:Number = 0; i< errors.length; i++) {
-					trace(errors[i].toString());
+					result += errors[i].toString()+"\n";
 				}			
 			} else {
-				trace("  -- No Error occured --");
+				result += "  -- No Error occured --\n";
 			}
 		} else {
-			trace("  -- No Testcases found @ "+startedPath+"--");
+			result += "  -- No Testcases found @ "+startedPath+"--\n";
 		}
-		trace("");
+		result += "\n";
+		TestConfig.getOut().info(result);
 	}
 	
 	/**
@@ -693,7 +699,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 		} catch (e) {
 			exceptionThrown = true;
 			if (!(e instanceof exception)) {
-				addError("assertThrows: A unexpected exception was thrown.");
+				addError("assertThrows: "+ReflectUtil.getClassInfo(e).getName()+" was thrown but "+ReflectUtil.getClassInfo(new exception()).getName()+" was expected with "+theFunction+"("+parameters+")");
 			}
 		}
 		if (!exceptionThrown) {
