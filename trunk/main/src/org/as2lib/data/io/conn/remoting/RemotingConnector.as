@@ -45,11 +45,11 @@ class org.as2lib.data.io.conn.remoting.RemotingConnector extends BasicClass impl
 	}
 	
 	public function onResult(data){
-		eventBroadcaster.dispatch(new ConnectorResponse(data,this,new FunctionArguments(),true,false));
+		eventBroadcaster.dispatch(new ConnectorResponse(data));
 	}
 	
 	public function onStatus(info){
-		eventBroadcaster.dispatch(new ConnectorError(info.description,this,new FunctionArguments(),true,false));
+		eventBroadcaster.dispatch(new ConnectorError(info.description,this,arguments,true,false));
 	}
 	
 	/*public function getEventBroadcaster(Void):EventBroadcaster {
