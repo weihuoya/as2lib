@@ -219,15 +219,8 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	public static function isSame():Void {
 		var that = eval("th"+"is");
 		var overload:Overload = new Overload(that);
-		overload.addHandler([String, undefined, undefined], isSameWithMessage);
-		overload.addHandler([String, Object, undefined], isSameWithMessage);
 		overload.addHandler([String, Object, Object], isSameWithMessage);
-		overload.addHandler([String, Object], isSameWithMessage);
-		overload.addHandler([String, undefined], isSameWithMessage);
-		overload.addHandler([Object, undefined], isSameWithoutMessage);
 		overload.addHandler([Object, Object], isSameWithoutMessage);
-		overload.addHandler([Object], isSameWithoutMessage);
-		overload.addHandler([undefined], isSameWithoutMessage);
 		overload.forward(arguments);
 	}
 	
@@ -267,6 +260,57 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	public static function isSameWithMessage (message:String, var1, var2):Void {
 		if(var1 !== var2) {
 			throw new AssertIsSameException(message, var1, var2, eval("th"+"is"), arguments);
+		}
+	}
+	/**
+	 * overload
+	 * @see #isNotSameWithMessage
+	 * @see #isNotSameWithoutMessage
+	 */
+	public static function isNotSame():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that);
+		overload.addHandler([String, Object, Object], isNotSameWithMessage);
+		overload.addHandler([Object, Object], isNotSameWithoutMessage);
+		overload.forward(arguments);
+	}
+	
+	/**
+	 * Compares two valus if they are not the same.
+	 * This method compares two variables if they are references
+	 * to the same object by !==.
+	 *
+	 * @see #isNotSame
+	 * @see #isNotSameWithMessage
+	 * @see #isSame
+	 * @see #isSameWithoutMessage
+	 * @see #isSameWithMessage
+	 * 
+	 * @throws AssertIsSameException if the assertion fails.
+	 * @param var1 First var.
+	 * @param var2 Second var.
+	 */
+	public static function isNotSameWithoutMessage (var1, var2):Void {
+		isNotSameWithMessage ("", var1, var2);
+	}
+	
+	/**
+	 * Appends a Message to @see #isNotSame.
+	 *
+	 * @see #isNotSame
+	 * @see #isNotSameWithMessage
+	 * @see #isSame
+	 * @see #isSameWithoutMessage
+	 * @see #isSameWithMessage
+	 * 
+	 * @throws AssertIsSameException if the assertion fails.
+	 * @param message	Message to be displayed if an error occures
+	 * @param var1 First Var.
+	 * @param var2 Second Var.
+	 */
+	public static function isNotSameWithMessage (message:String, var1, var2):Void {
+		if(var1 === var2) {
+			throw new AssertIsNotSameException(message, var1, var2, eval("th"+"is"), arguments);
 		}
 	}
 	
