@@ -5,6 +5,14 @@
 	<release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
 		<year value="2004">
 			<month value="9">
+	    <day value="16">
+          <entry type="documentation" package="org.as2lib.aop.joinpoint" class="*">Added documentation.</entry>
+          <entry type="documentation" package="org.as2lib.aop.pointcut" class="*">Added documentation.</entry>
+          <entry type="documentation" package="org.as2lib.aop.aspect" class="*">Added documentation.</entry>
+          <entry type="documentation" package="org.as2lib.aop.weaver" class="*">Added documentation.</entry>
+          <entry type="documentation" package="org.as2lib.aop.matcher" class="*">Added documentation.</entry>
+          <entry type="documentation" package="org.as2lib.aop.advice" class="*">Added documentation.</entry>
+	    </day>
         <day value="15">
           <entry type="documentation" package="org.as2lib.aop" class="*">Added documentation.</entry>
           <entry type="add" package="org.as2lib.core" class="BasicMovieClip">Basic class for classes that need to extend MovieClip.</entry>
