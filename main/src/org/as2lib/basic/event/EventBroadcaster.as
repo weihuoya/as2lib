@@ -3,6 +3,7 @@ import org.as2lib.basic.event.EventDispatcher;
 import org.as2lib.basic.event.dispatcher.NormalEventDispatcher;
 import org.as2lib.basic.event.dispatcher.LogEventDispatcher;
 import org.as2lib.basic.event.EventListener;
+import org.as2lib.basic.event.EventInfo;
 
 /**
  * @version 1.0
@@ -41,6 +42,44 @@ class org.as2lib.basic.event.EventBroadcaster {
 	 * @param listener
 	 */
 	public function addListener(listener:EventListener):Void {
-		
+		if (listeners.contains(Object(listener))) {
+			//throw new Exception();
+		}
+		listeners.push(Object(listener));
+	}
+	
+	/**
+	 * Removes a listener from the list of listeners.
+	 * @param listener
+	 */
+	public function removeListener(listener:EventListener):Void {
+		var l:Number = listeners.length;
+		for (var i:Number = 0; i <= l; i++) {
+			if (listeners[i] === listener) {
+				listeners.splice(i,1);
+				return;
+			}
+		}
+		//throw new Exception();
+	}
+	
+	/**
+	 * @return A copy of the listeners array
+	 */
+	public function getListeners(Void):TypedArray {
+		var result:TypedArray = new TypedArray();
+		var l:Number = listeners.length;
+		for (var i:Number = 0; i < l; i++) {
+			result[i] = listeners[i];
+		}
+		return result;
+	}
+	
+	/**
+	 * Dispatches the events associated with the name cotained in the EventInfo instance.
+	 * @param event
+	 */
+	public function dispatch(event:EventInfo):Void {
+		dispatcher.dispatch(event, listeners);
 	}
 }
