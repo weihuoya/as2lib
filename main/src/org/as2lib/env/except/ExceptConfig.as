@@ -38,9 +38,6 @@ class org.as2lib.env.except.ExceptConfig extends BasicClass {
 	/** Used to stringify the StackTrace returned by Throwable#getStackTrace(). */
 	private static var stackTraceStringifier:Stringifier;
 	
-	/** Stores the StackTraceElementFactory used to obtain StackTraceElement instances. */
-	private static var stackTraceElementFactory:StackTraceElementFactory;
-	
 	/**
 	 * Private constructor.
 	 */

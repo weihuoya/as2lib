@@ -82,9 +82,6 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	 * @param args the arguments of the throwing operation
 	 */
 	private function AbstractThrowable(message:String, thrower, args:Array) {
-		/*if ((message == undefined) || !thrower || !args) {
-			throw new IllegalArgumentException("All three specified arguments [message:String, thrower, args:Array] must be passed.", this, arguments);
-		}*/
 		stackTrace = new SimpleStack();
 		this.message = message;
 		addStackTraceElement(thrower, args.callee, args);
@@ -96,8 +93,7 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	 * @see org.as2lib.env.except.Throwable#addStackTraceElement()
 	 */
 	public function addStackTraceElement(thrower, method:Function, args:Array):Void {
-		var element:StackTraceElement = ExceptConfig.getStackTraceElementFactory().getStackTraceElement(thrower, method, args);
-		stackTrace.push(element);
+		stackTrace.push(new StackTraceElement(thrower, method, args));
 	}
 	
 	/**

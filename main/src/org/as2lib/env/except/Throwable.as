@@ -26,6 +26,7 @@ import org.as2lib.core.BasicInterface;
  * @author Simon Wacker
  */
 interface org.as2lib.env.except.Throwable extends BasicInterface {
+	
 	/**
 	 * Returns a Stack of the operations that were called before this Throwable
 	 * was thrown.
@@ -71,4 +72,5 @@ interface org.as2lib.env.except.Throwable extends BasicInterface {
 	 * @return the message set via the constructor
 	 */
 	public function getMessage(Void):String;
+	
 }
