@@ -1,0 +1,59 @@
+\chapter{Speed Tests}
+\label{sec:SpeedTests}
+
+\paragraph{Motivation:}
+Tester les applications pour leur performance est inévitable parce que le succès d'une application dépend largement sur la performance.
+
+\paragraph{Solution:}
+On peut procéder à un test de vitesse en suivant le schéma suivant:
+\begin{itemize}
+	\item Creating of single test cases.
+	Example for MyAddSpeedTest:
+\begin{lstlisting}[frame=single]
+import org.as2lib.test.speed.TestCase;
+
+class MyAddSpeedTest implements TestCase {
+	private var a:Number = 0;
+	public function run (Void):Void {
+		a++;
+	}
+}
+\end{lstlisting}
+	\item Importé les classes SpeedTest et OutputHandler.
+\begin{lstlisting}[frame=single]
+import org.as2lib.test.speed.Test;
+import org.as2lib.Config;
+\end{lstlisting}
+	\item Créer une instance de la classe Test  et lui envoyé le OutputHandler.
+\begin{lstlisting}[frame=single]
+var test:Test = new Test();
+test.setOut(Config.getOut());
+\end{lstlisting}
+	\item Assigner le nombre de test à être exécuté.
+\begin{lstlisting}[frame=single]
+test.setCalls(1000);
+\end{lstlisting}
+	\item Le test peut débuter après avoir ajouté les tests unitaires qui doivent être testés. La paramètre \emph{true} dans \emph{test.run()} déclanche la sortie immédiate des résultats du test.
+\begin{lstlisting}[frame=single]
+test.addTestCase(new MyAddSpeedTest());
+test.addTestCase(new MyMinusSpeedTest());
+test.run(true);
+\end{lstlisting}
+\end{itemize}
+\clearpage
+\emph{Output:}
+\begin{lstlisting}[frame=single]
+** InfoLevel **
+-- Testresult [2000 calls] --
+187% TypedArrayTest: total time:457ms; 
+	average time:0.2285ms; (+0.106ms)
+111% ArrayTest: total time:272ms; 
+	average time:0.136ms; (+0.014ms)
+[fastest] 100% ASBroadcasterTest: total time:245ms; 
+	average time:0.1225ms;
+175% EventDispatcherTest: total time:428ms; 
+	average time:0.214ms; (+0.092ms)
+191% EventBroadcasterTest: total time:469ms; 
+	average time:0.2345ms; (+0.112ms)
+\end{lstlisting}
+La sortie du test de vitesse affiche le nombre d'appels, le temps en écoulé au total et le temps écoulé en moyenne. Il trouve le test le plus rapide et affiche sous forme de pourcentage l'efficacité de chaque test par rapport au plus rapide.
