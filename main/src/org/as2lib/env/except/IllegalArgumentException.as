@@ -1,4 +1,4 @@
-﻿import org.as2lib.env.except.Exception;
+﻿import org.as2lib.env.except.FatalException;
 
 /**
  * IllegalArgumentException gets thrown to indicate that a method has been passed 
@@ -7,7 +7,7 @@
  * @author Simon Wacker
  * @see org.as2lib.env.except.Exception
  */
-class org.as2lib.env.except.IllegalArgumentException extends Exception {
+class org.as2lib.env.except.IllegalArgumentException extends FatalException {
 	/**
 	 * @see org.as2lib.env.except.Exception#Constructor()
 	 */
