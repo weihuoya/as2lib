@@ -231,7 +231,7 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 * @return true if one of these characters are contained in string.
 	 */
 	public static function contains(string:String, chars:String):Boolean {
-		for (var i:Number = 0; i < chars.length; i++) {
+		for (var i:Number = chars.length-1; i >= 0 ; i--) {
 			if (string.indexOf(chars.charAt(i)) >= 0) {
 				return true;
 			}
@@ -311,7 +311,7 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 */
 	public static function multiply(string:String, factor:Number):String {
 		var result:String="";
-		for(var i=0; i<factor; i++) {
+		for(var i=factor; i>0; i--) {
 			result += string;
 		}
 		return result;
