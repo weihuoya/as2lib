@@ -32,10 +32,13 @@ import org.as2lib.env.reflect.Cache;
  */
 class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	/** The cached ClassInfos. */
-	private var classes:Map;
+	private var classes:Object;
 	
 	/** The cache PackageInfos. */
-	private var packages:Map;
+	private var packages:Object;
+	
+	/** Stores the amount of generated hash codes. */
+	private var hashCodeCounter:Number;
 	
 	/** The root represented by a RootInfo. */
 	private var root:RootInfo;
@@ -44,8 +47,9 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 * Constructs a new Cache instance.
 	 */
 	public function SimpleCache(Void) {
-		classes = new HashMap();
-		packages = new HashMap();
+		classes = new Object();
+		packages = new Object();
+		hashCodeCounter = 0;
 		root = RootInfo.getInstance();
 		addPackage(root);
 	}
@@ -61,9 +65,19 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 */
 	public function getClass(object):ClassInfo {
 		if (typeof(object) == "function") {
-			return classes.get(object.prototype);
+			var p:Object = object.prototype;
+			var c:Number = p.__as2lib__hashCode;
+			if (c == p.__proto__.__as2lib__hashCode) {
+				return;
+			}
+			return classes[c];
 		} else {
-			return classes.get(object.__proto__);
+			var p:Object = object.__proto__;
+			var c:Number = p.__as2lib__hashCode;
+			if (c == p.__proto__.__as2lib__hashCode) {
+				return;
+			}
+			return classes[c];
 		}
 	}
 	
@@ -75,7 +89,7 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 * @return the added ClassInfo
 	 */
 	public function addClass(info:ClassInfo):ClassInfo {
-		classes.put(info.getType().prototype, info);
+		classes[info.getType().prototype.__as2lib__hashCode = hashCodeCounter++] = info;
 		return info;
 	}
 	
@@ -87,7 +101,7 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 * @return the PackageInfo representing the package
 	 */
 	public function getPackage(package):PackageInfo {
-		return packages.get(package);
+		return packages[package.__as2lib__hashCode];
 	}
 	
 	/**
@@ -98,7 +112,7 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 * @return the added PackageInfo
 	 */
 	public function addPackage(info:PackageInfo):PackageInfo {
-		packages.put(info.getPackage(), info);
+		packages[info.getPackage().__as2lib__hashCode = hashCodeCounter++] = info;
 		return info;
 	}
 	

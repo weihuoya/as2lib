@@ -93,9 +93,9 @@ class test.org.as2lib.env.reflect.TReflect extends TestCase {
 		while (iterator.hasNext()) {
 			methdosArray.push(iterator.next());
 		}
-		
+
 		var amount:Number = methdosArray.length;
-		assertEquals("The amount of methods found [" + amount + "] does not match the actual amount [14] of methods.", methdosArray.length, 14);
+		assertEquals("The amount of methods found [" + amount + "] does not match the actual amount [16] of methods.", methdosArray.length, 16);
 	}
 	
 	public function testGetProperties(Void):Void {

@@ -18,6 +18,7 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.Config;
 
 /**
  * BasicClass is the basic class with default implementations of the functionality
@@ -31,12 +32,11 @@ class org.as2lib.core.BasicClass implements BasicInterface {
 	 * Uses the ReflectUtil#getClassInfo() operation to fulfill the task.
 	 *
 	 * @see org.as2lib.core.BasicInterface#getClass()
-	 * @see org.as2lib.env.util.ReflectUtil;
 	 */
 	public function getClass(Void):ClassInfo {
 		return ReflectUtil.getClassInfo(this);
 	}
-	
+
 	/**
 	 * Returns a String representation of the instance. The String representation
 	 * is obtained via the ObjectUtil#stringify() operation.

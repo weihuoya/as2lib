@@ -19,6 +19,7 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.Config;
 
 /**
  * Acts like a normal Array but assures that only objects from one and the same
