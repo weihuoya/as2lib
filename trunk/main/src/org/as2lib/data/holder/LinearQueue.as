@@ -3,6 +3,7 @@ import org.as2lib.data.iterator.ArrayIterator;
 import org.as2lib.data.holder.Queue;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.EmptyQueueException;
+import org.as2lib.data.holder.HolderConfig;
 
 class org.as2lib.data.holder.LinearQueue extends BasicClass implements Queue {
 	private var data:Array;
@@ -39,5 +40,9 @@ class org.as2lib.data.holder.LinearQueue extends BasicClass implements Queue {
 	
 	public function iterator(Void):Iterator {
 		return (new ArrayIterator(data));
+	}
+	
+	public function toString(Void):String {
+		return HolderConfig.getQueueStringifier().execute(this);
 	}
 }
