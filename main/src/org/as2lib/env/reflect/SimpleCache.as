@@ -21,12 +21,23 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.Cache;
 
 /**
- * A simple implementation of the Cache interface. This implementation
- * sets a property with name '__as2lib__hashCode' on every cached class
- * and package to offer high performance.
+ * SimpleCache is a simple and performant implementation of the Cache
+ * interface.
+ *
+ * <p>The caching of classes and packages leads to higher performance. 
+ * You also must cache them because for example the parent of two classes 
+ * residing in the same package should be the same PackageInfo instance.
+ *
+ * <p>The cache is mostly used internally. But you can also use it to
+ * add ClassInfo or PackageInfo instances directly so that they do not
+ * have to be searched for. This can improve the performance dramatically
+ * with classes or packages that are needed quite often.
+ *
+ * <p>This implementation sets a property with name '__as2lib__hashCode'
+ * on every cached class and package to offer high performance. Do not
+ * delete this property.
  *
  * @author Simon Wacker
- * @see org.as2lib.env.reflect.Cache
  */
 class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 
@@ -36,13 +47,16 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	/** Stores the amount of generated hash codes. */
 	private var hashCodeCounter:Number;
 	
-	/** The root represented by a RootInfo. */
+	/** The root represented by a PackageInfo instance. */
 	private var root:PackageInfo;
 	
 	/**
 	 * Constructs a new SimpleCache instance.
 	 *
-	 * @param root the root package of the hierarchy
+	 * <p>The root/default package determines where the ClassAlgorithm
+	 * and PackageAlgorithm start their search.
+	 *
+	 * @param root the root/default package of the hierarchy
 	 */
 	public function SimpleCache(root:PackageInfo) {
 		this.root = root;
@@ -50,26 +64,17 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	}
 	
 	/**
-	 * @see Cache#releaseAll()
-	 */
-	public function releaseAll(Void):Void {
-		cache = new Array();
-		hashCodeCounter = 0;
-		addPackage(root);
-	}
-	
-	/**
-	 * Returns the ClassInfo representing either the class the object was instantiated
-	 * of or the class that was passed in.
+	 * Returns the class info representing either the class the object was
+	 * instantiated of or the class that was passed in.
 	 *
-	 * <p>Null or undefined will be returned if:
+	 * <p>Null will be returned if:
 	 * <ul>
-	 *   <li>There is no corresponding class info cached.</li>
-	 *   <li>The passed-in argument is null or undefined.</li>
+	 *   <li>There is no corresponding ClassInfo instance cached.</li>
+	 *   <li>The passed-in object is null or undefined.</li>
 	 * </ul>
 	 *
-	 * @param object the instance or class the appropriate ClassInfo shall be returned
-	 * @return the ClassInfo representing the class or null or undefined
+	 * @param object the instance or class the appropriate class info shall be returned
+	 * @return the class info representing the class
 	 */
 	public function getClass(object):ClassInfo {
 		if (object == null) return null;
@@ -93,12 +98,11 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	}
 	
 	/**
-	 * Adds a ClassInfo to the list of cached ClassInfos and returns the added
-	 * ClassInfo. If the ClassInfo to add is null or undefined, null will be
-	 * returned.
+	 * Adds a class info to the list of cached class infos and returns the
+	 * added class info.
 	 * 
-	 * @param info the ClassInfo that shall be added
-	 * @return the added ClassInfo or null
+	 * @param info the class info to add
+	 * @return the added class info
 	 */
 	public function addClass(info:ClassInfo):ClassInfo {
 		if (!info) return null;
@@ -109,16 +113,16 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	}
 	
 	/**
-	 * Returns the PackageInfo representing the package.
+	 * Returns the package info representing the package. 
 	 *
-	 * <p>Null or undefined will be returned if:
+	 * <p>Null will be returned if:
 	 * <ul>
-	 *   <li>The appropriate package info has not been cached already.</li>
-	 *   <li>The passed-in argument is null or undefined.</li>
+	 *   <li>There is no corresponding PackageInfo instance cached.</li>
+	 *   <li>The passed-in package is null or undefined.</li>
 	 * </ul>
 	 *
-	 * @param package the package the appropriate PackageInfo shall be found
-	 * @return the PackageInfo representing the package or null or undefined
+	 * @param package the package the appropriate package info shall be returned
+	 * @return the pakcage info representing the passed-in package
 	 */
 	public function getPackage(package):PackageInfo {
 		if (!package) return null;
@@ -126,11 +130,10 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	}
 	
 	/**
-	 * Adds a PackageInfo to the list of cache PackageInfos and returns the added
-	 * PackageInfo. If the PackageInfo is null or undefined, null will be returned.
+	 * Adds a package info to the cache and returns the added package info.
 	 *
-	 * @param info the PackageInfo that shall be added
-	 * @return the added PackageInfo or null
+	 * @param info the package info to add
+	 * @return the added package info
 	 */
 	public function addPackage(info:PackageInfo):PackageInfo {
 		if (!info) return null;
@@ -141,12 +144,26 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	}
 	
 	/**
-	 * Returns the root of the whole hierachy.
+	 * Returns the root package of the whole package hierarchy.
 	 *
-	 * @return the root
+	 * <p>The root package is also refered to as the default package.
+	 *
+	 * <p>The root/default package determines where the ClassAlgorithm
+	 * and PackageAlgorithm start their search.
+	 *
+	 * @return the root/default package
 	 */
 	public function getRoot(Void):PackageInfo {
 		return root;
+	}
+	
+	/**
+	 * Releases all cached class and package infos.
+	 */
+	public function releaseAll(Void):Void {
+		cache = new Array();
+		hashCodeCounter = 0;
+		addPackage(root);
 	}
 	
 }
