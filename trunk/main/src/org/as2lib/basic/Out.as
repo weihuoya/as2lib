@@ -108,14 +108,14 @@ class org.as2lib.basic.Out extends BasicClass implements OutAccess {
 	/**
 	 * @see org.as2lib.basic.OutAccess
 	 */
-	public function error(exception:Throwable):Void {
-		level.error(exception, broadcaster);
+	public function error(throwable:Throwable):Void {
+		level.error(throwable, broadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.basic.OutAccess
 	 */
-	public function fatal(exception:Throwable):Void {
-		level.fatal(exception, broadcaster);
+	public function fatal(throwable:Throwable):Void {
+		level.fatal(throwable, broadcaster);
 	}
 }

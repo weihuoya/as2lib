@@ -13,8 +13,8 @@ class org.as2lib.basic.out.level.Error extends Fatal {
 	/**
 	 * @see org.as2lib.basic.out.OutLevel
 	 */
-	public function error(exception:Throwable, broadcaster:EventBroadcaster):Void {
-		var event:EventInfo = new OutErrorInfo("error", exception, Out.ERROR);
+	public function error(throwable:Throwable, broadcaster:EventBroadcaster):Void {
+		var event:EventInfo = new OutErrorInfo("error", throwable, Out.ERROR);
 		broadcaster.dispatch(event);
 	}
 }

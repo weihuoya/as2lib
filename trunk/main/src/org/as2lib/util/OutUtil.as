@@ -1,6 +1,7 @@
 ﻿import org.as2lib.basic.BasicClass;
 import org.as2lib.basic.out.OutWriteInfo;
 import org.as2lib.basic.out.OutErrorInfo;
+import org.as2lib.util.StringifyUtil;
 
 class org.as2lib.util.OutUtil extends BasicClass {
 	private function OutUtil(Void) {
@@ -13,6 +14,6 @@ class org.as2lib.util.OutUtil extends BasicClass {
 	
 	public static function getErrorString(info:OutErrorInfo):String {
 		return (info.getLevel().getClass().getName() + ":\n"
-				+ info.getException().getMessage());
+				+ StringifyUtil.stringifyThrowable(info.getThrowable()));
 	}
 }

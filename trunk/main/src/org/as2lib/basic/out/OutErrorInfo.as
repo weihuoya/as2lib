@@ -12,16 +12,16 @@ class org.as2lib.basic.out.OutErrorInfo extends BasicClass implements EventInfo 
 	private var name:String;
 	
 	/** The exception. */
-	private var exception:Throwable;
+	private var throwable:Throwable;
 	
 	private var level:OutLevel;
 	
 	/**
 	 * Constructs a new OutInfo instance.
 	 */
-	public function OutErrorInfo(aName:String, anException:Throwable, aLevel:OutLevel) {
+	public function OutErrorInfo(aName:String, aThrowable:Throwable, aLevel:OutLevel) {
 		name = aName;
-		exception = anException;
+		throwable = aThrowable;
 		level = aLevel;
 	}
 	
@@ -32,8 +32,8 @@ class org.as2lib.basic.out.OutErrorInfo extends BasicClass implements EventInfo 
 	/**
 	 * @return the exception
 	 */
-	public function getException(Void):Throwable {
-		return exception;
+	public function getThrowable(Void):Throwable {
+		return throwable;
 	}
 	
 	/**
