@@ -43,7 +43,7 @@ class org.as2lib.env.except.Exception extends AbstractThrowable implements Throw
 	 * @return a blank String if the operation is not called out of an operation, otherwise the result of ExceptConfig#getThrowableStringifier()#execute(this) will be returned
 	 */
 	public function toString(Void):String {
-		if (!arguments.caller) {
+		if (!arguments.caller && getLogger()) {
 			getLogger().error(this);
 			return "";
 		}

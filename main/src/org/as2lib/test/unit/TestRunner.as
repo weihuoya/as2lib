@@ -39,6 +39,7 @@ import org.as2lib.env.overload.Overload;
 import org.as2lib.util.ArrayUtil;
 import org.as2lib.util.StringUtil;
 import org.as2lib.util.StopWatch;
+import org.as2lib.env.reflect.ClassInfo;
 
 /**
  * Central TestSystem Class to run Testcases and TestSuites.
@@ -357,7 +358,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 			methodInfo = TestCaseMethodInfo(currentTestCaseMethodIterator.next());
 			
 			try {
-				testCaseInstance = TestCase(currentTestCase.getTestCase().getClass().newInstance());
+				testCaseInstance = TestCase(ClassInfo.forInstance(currentTestCase.getTestCase()).newInstance());
 				testCaseInstance.setTestRunner(this);
 			} catch(e) {
 				methodInfo.addInfo(new InstanciationError("IMPORTANT: Testcase threw an error by instanciation.\n"+StringUtil.addSpaceIndent(e.toString(), 2), this, arguments));

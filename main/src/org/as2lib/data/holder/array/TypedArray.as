@@ -17,8 +17,6 @@
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.core.BasicInterface;
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.Config;
 
 /**
  * Acts like a normal Array but assures that only objects from one and the same
@@ -84,13 +82,6 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 	public function unshift(value):Number {
 		validate(value);
 		return super.unshift(value);
-	}
-	
-	/**
-	 * @see org.as2lib.core.BasicInterface#getClass()
-	 */
-	public function getClass(Void):ClassInfo {
-		return ClassInfo.forInstance(this);
 	}
 	
 	/**

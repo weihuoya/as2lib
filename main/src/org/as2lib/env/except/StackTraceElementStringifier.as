@@ -17,9 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
 import org.as2lib.env.except.StackTraceElement;
-import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.reflect.MethodInfo;
-import org.as2lib.env.reflect.PropertyInfo;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * StackTraceElementStringifier is used to stringify StackTraceElements.
@@ -35,45 +33,31 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 	public function execute(target):String {
 		var element:StackTraceElement = target;
 		var result:String = "";
+		var thrower = element.getThrower();
+		var method:Function = element.getMethod();
 		
-		var thrower:ClassInfo = ClassInfo.forObject(element.getThrower());
-		var throwerName:String = thrower.getFullName();
-		if (throwerName == undefined) {
+		var throwerName:String = ReflectUtil.getClassName(thrower);
+		if (throwerName == null) {
 			throwerName = "[unknown]";
 		}
 		
-		var method:MethodInfo = getMethod(thrower, element.getMethod());
-		
-		var methodName:String = method.getName();
-		if (methodName == undefined) {
-			methodName = "[unknown]";
+		var methodName:String;
+		if ((method == thrower || method == thrower.__constructor__) && thrower) {
+			// source string 'new' out, to a constant
+			methodName = "new";
+		} else {
+			var methodName:String = ReflectUtil.getMethodName(method, thrower);
+			if (methodName == null) {
+				methodName = "[unknown]";
+			}
 		}
-		result += method.isStatic() ? "static " : "";
+		result += ReflectUtil.isMethodStatic(methodName, thrower) ? "static " : "";
 		
 		result += throwerName;
 		result += "." + methodName;
 		result += "(" + (element.getArguments() ? element.getArguments() : "[unknown]") + ")";
 	
 		return result;
-	}
-	
-	private function getMethod(thrower:ClassInfo, method:Function) {
-		if (!thrower || !method) return null;
-		if (thrower.getConstructor().getMethod() == method) {
-			return thrower.getConstructor();
-		}
-		var tempMethod:MethodInfo = thrower.getMethod(method);
-		if (tempMethod) return tempMethod;
-		var tempProperty:PropertyInfo = thrower.getProperty(method);
-		if (tempProperty) {
-			if (tempProperty.getGetter().getMethod() == method) {
-				return tempProperty.getGetter().getMethod();
-			}
-			if (tempProperty.getSetter().getMethod() == method) {
-				return tempProperty.getSetter().getMethod()
-			}
-		}
-		return null;
 	}
 	
 }

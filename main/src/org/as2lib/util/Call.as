@@ -16,7 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 
 /**
@@ -72,15 +72,15 @@ class org.as2lib.util.Call extends BasicClass {
 	public function toString(Void):String {
 		// TODO: Refactor the code and outsource it.
 		var result:String="";
-		result += "[type " + ClassInfo.forInstance(this).getName() + " -> ";
+		result += "[type " + ReflectUtil.getClassNameForInstance(this) + " -> ";
 		ObjectUtil.setAccessPermission(object, null, ObjectUtil.ACCESS_ALL_ALLOWED);
 		if (ObjectUtil.isEmpty(object)) {
 			result += object.toString() + "." + ObjectUtil.getChildName(object, func);
 		} else {
-			var classInfo:ClassInfo = ClassInfo.forObject(object);
-			if (classInfo) {
-				result += classInfo.getFullName();
-				result += "." + classInfo.getMethodByMethod(func).getName();
+			var className:String = ReflectUtil.getClassName(object);
+			if (className) {
+				result += className;
+				result += "." + ReflectUtil.getMethodName(func, object);
 			} else {
 				result += object.toString() + "." + ObjectUtil.getChildName(object, func);
 			}

@@ -18,6 +18,7 @@ import org.as2lib.aop.Aspect;
 import org.as2lib.aop.advice.AbstractAdvice;
 import org.as2lib.aop.advice.BeforeAdvice;
 import org.as2lib.aop.JoinPoint;
+import org.as2lib.env.reflect.ClassInfo;
 
 /**
  * @author Simon Wacker
@@ -37,7 +38,7 @@ class org.as2lib.aop.advice.AbstractBeforeAdvice extends AbstractAdvice {
 	public function getProxy(joinPoint:JoinPoint):Function {
 		var owner:AbstractBeforeAdvice = this;
 		return (function() {
-			joinPoint = joinPoint.getClass().newInstance([joinPoint.getInfo(), this]);
+			joinPoint = ClassInfo.forInstance(joinPoint).newInstance([joinPoint.getInfo(), this]);
 			return owner.executeJoinPoint(joinPoint, arguments);
 		});
 	}

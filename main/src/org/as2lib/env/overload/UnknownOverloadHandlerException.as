@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.env.overload.OverloadException;
-import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * UnknownOverloadHandlerException will be thrown if no appropriate OverloadHandler
@@ -71,13 +71,13 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 		// it would take unnecessary much time to construct it if you catch it (and it
 		// won't be displayed).
 		if (!asString) {
-			asString = getMessage();
-			try {
-				var classInfo:ClassInfo = ClassInfo.forObject(overloadTarget);
-				asString += "\n  Overloaded Method: " + classInfo.getMethodByMethod(overloadedMethod);
-			} catch (e) {
-				if (classInfo.getConstructor().getMethod() == overloadedMethod) {
-					asString += "\n  Overloaded Method: " + classInfo.getConstructor();
+			asString = message;
+			var methodName:String = ReflectUtil.getMethodName(overloadedMethod, overloadTarget);
+			if (methodName) {
+				asString += "\n  Overloaded Method: " + (ReflectUtil.isMethodStatic(methodName, overloadTarget) ? "static " : "") + methodName;
+			} else {
+				if (ReflectUtil.isConstructor(overloadedMethod, overloadTarget)) {
+					asString += "\n  Overloaded Method: new";
 				}
 			}
 			asString += "\n  Used Arguments["+overloadArguments.length+"]: ";
@@ -87,7 +87,7 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 				}
 				asString += overloadArguments[i];
 			}
-			asString += "\n  Available Handlers: ";
+			asString += "\n  Used Handlers: ";
 			for(var i:Number = 0; i < overloadHandlers.length; i++) {
 				asString += "\n    "+overloadHandlers[i].toString();
 			}
