@@ -33,18 +33,51 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass imple
 	private var c:Cache;
 	private var p:PackageInfo;
 	
+	/**
+	 * Constructs a new instance.
+	 */
 	public function PackageAlgorithm(Void) {
 	}
 	
+	/**
+	 * Sets the cache that gets used by the #execute(Object) method to
+	 * look whether the package the shall be found is already stored.
+	 *
+	 * @param cache the new cache
+	 */
 	public function setCache(cache:Cache):Void {
 		c = cache;
 	}
 	
+	/**
+	 * Returns the cache set via the #setCache(Cache) method or the default
+	 * cache that gets returned by the ReflectConfig#getCache() method.
+	 *
+	 * @return the currently used cache
+	 */
 	public function getCache(Void):Cache {
 		if (!c) c = ReflectConfig.getCache();
 		return c;
 	}
 	
+	/**
+	 * Executes the search for the package.
+	 *
+	 * <p>This method will return null if:
+	 * <ul>
+	 *   <li>The argument is null or undefined.</li>
+	 *   <li>The searched for package could not be found.</li>
+	 * </ul>
+	 *
+	 * <p>The search starts on the package returned by the cache's getRoot()
+	 * method. That is by default _global.
+	 *
+	 * <p>In case the cache already contains the wanted package info it will
+	 * be returned.
+	 *
+	 * @param o the package to find
+	 * @return a PckageInfo instance representing the package or null
+	 */
 	public function execute(o):CompositeMemberInfo {
 		if (o == null) return null;
 		p = getCache().getPackage(o);
@@ -53,7 +86,7 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass imple
 		return p;
 	}
 	
-	public function findAndStore(a:PackageInfo, o):Boolean {
+	private function findAndStore(a:PackageInfo, o):Boolean {
 		var b = a.getPackage();
 		var i:String;
 		for (i in b) {

@@ -25,7 +25,7 @@ import org.as2lib.env.reflect.ReflectConfig;
 
 /**
  * ClassAlgorithm searches for the class of a specific instance and returns a
- * ClassInfo representing the found class.
+ * ClassInfo instance representing the found class.
  *
  * @author Simon Wacker
  */
@@ -34,18 +34,52 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass impleme
 	private var c:Cache;
 	private var r:ClassInfo;
 	
+	/**
+	 * Constructs a new instance.
+	 */
 	public function ClassAlgorithm(Void) {
 	}
 	
+	/**
+	 * Sets the cache that gets used by the #execute(Object) method to
+	 * look whether the class the shall be found is already stored.
+	 *
+	 * @param cache the new cache
+	 */
 	public function setCache(cache:Cache):Void {
 		c = cache;
 	}
 	
+	/**
+	 * Returns the cache set via the #setCache(Cache) method or the default
+	 * cache that gets returned by the ReflectConfig#getCache() method.
+	 *
+	 * @return the currently used cache
+	 */
 	public function getCache(Void):Cache {
 		if (!c) c = ReflectConfig.getCache();
 		return c;
 	}
 	
+	/**
+	 * Executes the search for the class.
+	 *
+	 * <p>This method will return null if:
+	 * <ul>
+	 *   <li>The argument is null or undefined.</li>
+	 *   <li>The searched for class could not be found.</li>
+	 * </ul>
+	 *
+	 * <p>The search starts on the package returned by the cache's getRoot()
+	 * method. That is by default _global.
+	 *
+	 * <p>In case the cache already contains the wanted class info it will
+	 * be returned.
+	 *
+	 * @param d instance of the class to find or
+	 *          the class itself
+	 * @return a ClassInfo instance representing the class or null
+	 */
 	public function execute(d):CompositeMemberInfo {
 		if (d == null) return null;
 		r = getCache().getClass(d);
@@ -57,7 +91,7 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass impleme
 		return r;
 	}
 	
-	public function findAndStore(a:PackageInfo, d):Boolean {
+	private function findAndStore(a:PackageInfo, d):Boolean {
 		var p = a.getPackage();
 		var i:String;
 		for (i in p) {

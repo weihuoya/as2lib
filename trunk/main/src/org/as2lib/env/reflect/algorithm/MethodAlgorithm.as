@@ -21,6 +21,8 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
 
 /**
+ * Searches for all methods of a specific class.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass implements ContentAlgorithm {
@@ -29,9 +31,29 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass implem
 	private var i:ClassInfo;
 	private var s:Boolean;
 	
+	/**
+	 * Constructs a new instance.
+	 */
 	public function MethodAlgorithm(Void) {
 	}
 	
+	/**
+	 * Searches for all methods of a class.
+	 * 
+	 * <p>The resulting array contains instances of type MethodInfo.
+	 *
+	 * <p>This method will return null if:
+	 * <ul>
+	 *   <li>The argument is null or undefined.</li>
+	 *   <li>The argument is not of type ClassInfo.</li>
+	 * </ul>
+	 *
+	 * <p>Only the passed in class will be searched through, no
+	 * super classes.
+	 *
+	 * @param i the ClassInfo instance representing the class to search through
+	 * @return the found methods, a blank array or null
+	 */
 	public function execute(i:CompositeMemberInfo):Array {
 		if (i == null) return null;
 		
