@@ -20,15 +20,53 @@ import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
- * StackTraceElementStringifier is used to stringify StackTraceElements.
+ * StackTraceElementStringifier stringifies StackTraceElement instances.
  *
  * @author Simon Wacker
  * @author Martin Heidegger
  */
 class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass implements Stringifier {
 	
+	/** Show the real arguments. */
+	private var showArgumentsValues:Boolean;
+	
 	/**
-	 * @see org.as2lib.util.string.Stringifier#execute()
+	 * Constructs a new StackTraceElementStringifier instance.
+	 *
+	 * <p>By default the types of the arguments are shown and not their
+	 * value.
+	 *
+	 * @param showArgumentsValues determines whether to show a string representation
+	 * of the arguments' values, that is the string that gets returned by their
+	 * toString methods, (true) or only the types of the arguments (false).
+	 */
+	public function StackTraceElementStringifier(showArgumentsValues:Boolean) {
+		this.showArgumentsValues = showArgumentsValues;
+	}
+	
+	/**
+	 * Returns the string representation of the passed-in StackTraceElement
+	 * instance.
+	 *
+	 * <p>The string representation is composed as follows:
+	 * <pre>static theFullQualifiedNameOfTheThrower.theMethodName(theFirstArgument, ..)</pre>
+	 *
+	 * <p>Depending on the settings arguments are either represented by their
+	 * types of by the result of their toString methods.
+	 *
+	 * <p>A real string representation could look like this:
+	 * <pre>org.as2lib.data.holder.MyDataHolder.setMaximumLength(Number)</pre>
+	 * or this:
+	 * <pre>org.as2lib.data.holder.MyDataHolder.setMaximumLength(-2)</pre>
+	 *
+	 * <p>If an element is null, undefined or its string representation could
+	 * not been obtained the string '[unknown]' gets used.
+	 *
+	 * <p>If the method of the stack trace element is the constructor of the
+	 * thrower the string 'new' gets used.
+	 *
+	 * @param target the StackTraceElement instance to stringify
+	 * @return the string representation of the passed-in StackTraceElement
 	 */
 	public function execute(target):String {
 		var element:StackTraceElement = target;
@@ -55,7 +93,19 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 		
 		result += throwerName;
 		result += "." + methodName;
-		result += "(" + (element.getArguments().toString() ? element.getArguments().toString() : "[unknown]") + ")";
+		result += "(";
+		if (showArgumentsValues) {
+			result += element.getArguments().toString() ? element.getArguments().toString() : "[unknown]";
+		} else {
+			var args:Array = element.getArguments();
+			for (var i:Number = 0; i < args.length; i++) {
+				var argType:String = ReflectUtil.getTypeName(args[i]);
+				if (argType == null) argType = "[unknown]";
+				result += argType;
+				if (i < args.length-1) result += ", ";
+			}
+		}
+		result += ")";
 	
 		return result;
 	}

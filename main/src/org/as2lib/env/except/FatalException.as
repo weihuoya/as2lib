@@ -18,18 +18,58 @@ import org.as2lib.env.except.Throwable;
 import org.as2lib.env.except.AbstractThrowable;
 
 /**
- * FatalException is a default implementation of the Throwable interface. It is
- * different from the Exception in that it marks the Throwable as fatal. Which
- * has a fatality than the normal Exception.
+ * FatalException is a default implementation of the Throwable interface.
+ *
+ * <p>It differs from the Exception class in that it marks the throwable
+ * as fatal. That means it differs from a normal Exception in its fatality.
+ *
+ * <p>It also uses the Logger#fatal method to log/output itself, while
+ * the Exception class uses the Logger#error method.
+ *
+ * <p>You can use this class as follows:
+ * 
+ * <code>throw new FatalException("This is a detailed message that explains the problem.", this, arguments);<code>
+ *
+ * <p>The above example is supposed to be in a method, that has been
+ * declared on a class.
+ *
+ * <p>Note that you normally do not throw instances of this class directly.
+ * It is better to sub-class it, that means to create a custom exception,
+ * that explains its purpose more closely by its name, and throw this
+ * exception instead.
+ *
+ * <p>If you are building a framework that shall be reused it is also
+ * helpful to built a exception inheritance hierarchy, where you have
+ * one base class. You can then categorize different exceptions by
+ * their inheritance hierarchy.
+ * This enables you to catch all exceptions from your whole framework
+ * or only from specific parts of your framework.
+ *
+ * <p>For a detailed explanation on how to use throwables, what this
+ * exception framework offers you and how to work appropriately with
+ * throwables take a look at the class documentation of the Throwable
+ * class.
  *
  * @author Simon Wacker
  */
 class org.as2lib.env.except.FatalException extends AbstractThrowable implements Throwable {
 	
 	/**
-	 * Constructs a new FatalException.
+	 * Constructs a new FatalException instance.
 	 *
-	 * @see org.as2lib.env.except.AbstractThrowable#new()
+	 * <p>All arguments are allowed to be null or undefined. But if one is,
+	 * the string representation returned by the #toString method is not
+	 * complete anymore.
+	 *
+	 * <p>The args array should be the internal arguments array of the
+	 * method that throws the throwable. The internal arguments array exists
+	 * in every method and contains its parameters, the callee method and
+	 * the caller method. You can refernce it in every method using the name
+	 * 'arguments'.
+	 *
+	 * @param message the message that describes in detail what the problem is
+	 * @param thrower the object that declares the method that throws this throwable
+	 * @param args the arguments of the throwing method
 	 */
 	public function FatalException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
@@ -39,8 +79,11 @@ class org.as2lib.env.except.FatalException extends AbstractThrowable implements 
 	 * Returns a string representation of this fatal exception.
 	 *
 	 * <p>If you do not call this method out of another method, it also
-	 * executes the logger's fatal-method passing this because it thinks
+	 * executes the Logger#fatal method passing 'this' because it thinks
 	 * that the virtual machine called this method.
+	 *
+	 * <p>The string representation is obtained via the stringifier returned
+	 * by the static #getStringifier method.
 	 *
 	 * @return a string representation of this fatal exception
 	 */

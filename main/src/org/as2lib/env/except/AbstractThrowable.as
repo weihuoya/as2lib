@@ -24,12 +24,19 @@ import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogManager;
 
 /**
- * AbstractThrowable is an abstract class that contains sourced out functionalities
- * used by both the classes Exception and the class FatalException. It is
- * thought to be an abstract implementation of the Throwable interface.
+ * AbstractThrowable is an abstract class that contains sourced out
+ * functionalities used by the classes Exception and FatalException.
+ * 
+ * <p>It is thought to be an abstract implementation of the Throwable
+ * interface. Because of that sub-classes must implement the Throwable
+ * interface if they are themselves not abstract.
+ *
+ * <p>This class extends the Error class. Thus you can use sub-classes
+ * of it as throwable type in catch-blocks in Flex.
  *
  * @author Simon Wacker
  * @see Error
+ * @see org.as2lib.env.except.Throwable
  */
 class org.as2lib.env.except.AbstractThrowable extends Error {
 	
@@ -74,12 +81,12 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	}
 	
 	/**
-	 * Returns the logger used to output the exception.
+	 * Returns the logger used to log/output the throwable.
 	 *
-	 * <p>Null will be returned if LogManager#getLogger return null or
+	 * <p>Null will be returned if LogManager#getLogger returns null or
 	 * undefined.
 	 * 
-	 * @return the logger used to output the exception
+	 * @return the logger used to output the throwable
 	 */
 	private static function getLogger(Void):Logger {
 		if (logger === undefined) {
@@ -89,43 +96,102 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	}
 	
 	/**
-	 * The private constructor.
+	 * Constructs a new AbstractThrowable instance.
 	 *
-	 * @param message the message describing what went wrong
-	 * @param thrower the instance that throwed the Throwable
-	 * @param args the arguments of the throwing operation
+	 * <p>All arguments are allowed to be null or undefined. But if one is,
+	 * the string representation returned by the #toString method is not
+	 * complete anymore.
+	 *
+	 * <p>The args array should be the internal arguments array of the
+	 * method that throws the throwable. The internal arguments array exists
+	 * in every method and contains its parameters, the callee method and
+	 * the caller method. You can refernce it in every method using the name
+	 * 'arguments'.
+	 *
+	 * @param message the message that describes in detail what the problem is
+	 * @param thrower the object that declares the method that throws this throwable
+	 * @param args the arguments of the throwing method
 	 */
 	private function AbstractThrowable(message:String, thrower, args:Array) {
-		stackTrace = new Array();
 		this.message = message;
+		stackTrace = new Array();
 		addStackTraceElement(thrower, args.callee, args);
 		// TODO: Implement findMethod to display the next line correctly.
 		// addStackTraceElement(undefined, args.caller, new Array());
 	}
 	
 	/**
-	 * @see org.as2lib.env.except.Throwable#addStackTraceElement()
+	 * Adds a StackTraceElement instance to the stack trace.
+	 *
+	 * <p>The new stack trace element is added to the end of the stack trace.
+	 *
+	 * <p>At some parts in your application you may want to add stack trace
+	 * elements manually. This can help you to get a clearer image of what
+	 * went where wrong and why.
+	 * You can use this method to do so.
+	 *
+	 * @param thrower the object that threw, rethrew or forwarded (let pass) the throwable
+	 * @param method the method that threw, rethrew or forwarded (let pass) the throwable
+	 * @param args the arguments the method was invoked with when throwing, rethrowing or forwarding (leting pass) the throwable
 	 */
 	public function addStackTraceElement(thrower, method:Function, args:Array):Void {
 		stackTrace.push(new StackTraceElement(thrower, method, args));
 	}
 	
 	/**
-	 * @see org.as2lib.env.except.Throwable#getStack()
+	 * Returns an array that contains StackTraceElement instances of the
+	 * methods the were invoked before this throwable was thrown.
+	 *
+	 * <p>The last element is always the one that contains the actual method
+	 * that threw the throwable.
+	 *
+	 * <p>The stack trace helps you a lot because it says you where the
+	 * throwing of the throwable took place and also what arguments caused
+	 * the throwing.
+	 *
+	 * <p>The returned stack trace is never null or undefined. If no stack
+	 * trace element has been set an empty array gets returned.
+	 *
+	 * @return a stack containing the invoked methods until the throwable was thrown
 	 */
 	public function getStackTrace(Void):Array {
 		return stackTrace;
 	}
 	
 	/**
-	 * @see org.as2lib.env.except.Throwable#getCause()
+	 * Returns the initialized cause.
+	 *
+	 * <p>The cause is the throwable that caused this throwable to be thrown.
+	 *
+	 * @return the initialized cause
+	 * @see #initCause
 	 */
 	public function getCause(Void):Throwable {
 		return cause;
 	}
 	
 	/**
-	 * @see org.as2lib.env.except.Throwable#initCause()
+	 * Initializes the cause of this throwable.
+	 *
+	 * <p>The cause can only be initialized once. You normally initialize 
+	 * a cause if you throw a throwable due to the throwing of another throwable.
+	 * Thereby you do not lose the information the cause offers.
+	 * 
+	 * <p>This method returns this throwable to have an easy way to initialize
+	 * the cause.
+	 * Following is how you could use the cause mechanism.
+	 *
+	 * <code>try {
+	 *   myInstance.invokeMethodThatThrowsAThrowable();
+	 * } catch (e:org.as2lib.env.except.Throwable) {
+	 *   throw new MyThrowable("myMessage", this, arguments).initCause(e);
+	 * }</code>
+	 * 
+	 * @param cause the throwable that caused the throwing of this throwable
+	 * @return this throwable itself
+	 * @throws org.as2lib.env.except.IllegalArgumentException if the passed-in cause is null or undefined
+	 * @throws org.as2lib.env.except.IllegalStateException if the cause has already been initialized
+	 * @see #getCause
 	 */
 	public function initCause(newCause:Throwable):Throwable {
 		if (!newCause) throw new IllegalArgumentException("Cause must not be null or undefined.", this, arguments);
@@ -135,7 +201,17 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	}
 	
 	/**
-	 * @see org.as2lib.env.except.Throwable#getMessage()
+	 * Returns the message that describes in detail what went wrong.
+	 *
+	 * <p>The message should be understandable, even for non-programmers.
+	 * It should contain detailed information about what went wrong. And
+	 * maybe also how the user that sees this message can solve the problem.
+	 *
+	 * <p>If the throwable was thrown for example because of a wrong collaborator
+	 * or an illegal string or something similar, provide the string representation
+	 * of it in the error message. It is recommended to put these into '-signs.
+	 *
+	 * @return the message that describes the problem in detail
 	 */
 	public function getMessage(Void):String {
 		return message;

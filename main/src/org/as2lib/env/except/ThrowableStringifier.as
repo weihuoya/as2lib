@@ -21,23 +21,100 @@ import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
- * ThrowableStringifier is used to stringify a Throwable.
+ * ThrowableStringifier stringifies instances of type Throwable.
  *
  * @author Simon Wacker
  */
 class org.as2lib.env.except.ThrowableStringifier extends BasicClass implements Stringifier {
 	
+	/** Show the stack trace. */
+	private var showStackTrace:Boolean;
+	
+	/** Show the cause. */
+	private var showCause:Boolean;
+	
 	/**
-	 * @see org.as2lib.util.string.Stringifier#execute()
+	 * Constructs a new ThrowableStringifier instance.
+	 *
+	 * <p>You can switch different parts of the string representation on 
+	 * or off using the show* parameters.
+	 *
+	 * <p>The stack trace and the cause are be default shown. That means
+	 * if you want them to be contained in the resultin string representation
+	 * you do not have to specify these parameters.
+	 *
+	 * <p>The settings apply only to the throwable to stringify. That means
+	 * they do not apply for its cause. The cause is responsible for stringifying
+	 * itself.
+	 *
+	 * @param showStackTrace determines whether the string representation contains the stack trace
+	 * @param showCause determines whether the string representation contains the cause
+	 */
+	public function ThrowableStringifier(showStackTrace:Boolean, showCause:Boolean) {
+		this.showStackTrace = showStackTrace == null ? true : showStackTrace;
+		this.showCause = showCause == null ? true : showCause;
+	}
+	
+	/**
+	 * Returns a string representation of the passed-in Throwable instance.
+	 *
+	 * <p>Depending on the settings you made on instantiation the stack
+	 * trace and cause is contained in the resulting string or not.
+	 *
+	 * <p>Note that the cause gets stringified by its own stringifier. That
+	 * means the setting show stack trace and show cause settings apply only
+	 * for this throwable and not for its causes.
+	 * The cause is responsible for stringifying itself.
+	 *
+	 * <p>The throwable elements are also responsible for stringifying themselves.
+	 *
+	 * <p>The string representation is composed as follows:
+	 * <pre>theFullQualifiedNameOfTheThrowable: theMessage
+	 *   at theStringRepresentationOfTheStackTraceElement
+	 *   ..
+	 * Caused by: theStringRepresentationOfTheCause</pre>
+	 *
+	 * <p>Here is how a real string representation could look like:
+	 * <pre>org.as2lib.data.holder.IllegalLengthException: The argument length '-2' is not allowed to be negative.
+	 *   at org.as2lib.data.holder.MyDataHolder.setMaximumLength(Number)
+	 * Caused by: org.as2lib.data.math.IllegalNumberException: The argument number '-2' is not allowed in a range from 0 to ∞.
+	 *   at org.as2lib.data.math.Range.setNumber(Number)</pre>
+	 *
+	 * @param target the Throwable to stringify
+	 * @return the string representation of the throwable
+	 * @see #stringifyStackTrace
 	 */
 	public function execute(target):String {
 		var throwable:Throwable = target;
-		return (ReflectUtil.getTypeNameForInstance(throwable) + ": " + throwable.getMessage() + "\n"
-				+ stringifyStackTrace(throwable.getStackTrace()));
+		var result:String = "";
+		result += ReflectUtil.getTypeNameForInstance(throwable) + ": " + throwable.getMessage();
+		var stackTrace:Array = throwable.getStackTrace();
+		if (stackTrace && stackTrace.length > 0) {
+			result += "\n" + stringifyStackTrace(throwable.getStackTrace());
+		}
+		var cause:Throwable = throwable.getCause();
+		if (cause) {
+			result += "\nCaused by: " + cause;
+		}
+		return result;
 	}
 
 	/**
-	 * Stringifies the passed-in stack trace.
+	 * Stringifies the passed-in stack trace array that contains StackTraceElement
+	 * instances.
+	 *
+	 * <p>The individual StackTraceElement instances are responsible for
+	 * stringifying themselves.
+	 *
+	 * <p>The resulting string representation is composed as follows:
+	 * <pre>  at theStringRepresentationOfTheFirstStackTraceElement
+	 *   at theStringRepresentationOfTheSecondStackTraceElement
+	 *   ..</pre>
+	 *
+	 * <p>A real string representation could look like this:
+	 * <pre>  at org.as2lib.data.math.Range.setNumber(Number)
+	 *   at org.as2lib.data.holder.MyDataHolder.setMaximumLength(Number)
+	 *   at com.simonwacker.MyApplication.initialize()</pre>
 	 *
 	 * @param stackTrace the stack trace to stringify
 	 * @return the string representation of the stack trace
