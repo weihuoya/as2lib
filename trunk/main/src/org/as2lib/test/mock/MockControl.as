@@ -112,6 +112,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/** Factory used to obtain the replay state. */
 	private var replayStateFactory:MockControlStateFactory;
 	
+	/** Determines whether to handle {@code toString} method invocations. */
+	private var handleToStringInvocations:Boolean;
+	
 	/**
 	 * Returns a default arguments matcher.
 	 *
@@ -133,8 +136,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * @overload #MockControlByType(Function):Void
-	 * @overload #MockControlByTypeAndBehavior(Function, Behavior):Void
+	 * @overload #MockControlByType
+	 * @overload #MockControlByTypeAndBehavior
 	 */
 	public function MockControl() {
 		var o:Overload = new Overload(this);
@@ -173,15 +176,58 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 * <p>When you have finished recording you must switch to replay state
 	 * using the #replay method.
 	 *
+	 * <p>{@code toString} invocations on the mock are by default not handled.
+	 *
 	 * @param type the interface or class to create a mock object for
 	 * @param behavior the instance to store the behavior of the mock
 	 * @throws IllegalArgumentException if the passed-in type is null or undefined
+	 * @see #setHandleToStringInvocations
 	 */
 	private function MockControlByTypeAndBehavior(type:Function, behavior:Behavior):Void {
 		if (!type) throw new IllegalArgumentException("The argument type '" + type + "' is not allowed to be null or undefined.");
 		this.type = type;
 		this.behavior = behavior ? behavior : new DefaultBehavior();
+		this.handleToStringInvocations = false;
 		reset();
+	}
+	
+	/**
+	 * Sets whether to handle {@code toString} invocations on mocks or not.
+	 *
+	 * <p>Handling {@code toString} invocations means that these invocations
+	 * are added to the expected or actual behavior. This means if you set
+	 * {@code handleToStringInvocations} to {@code true} calling this method
+	 * on the mock in replay state results in an added expection and in record
+	 * state in a verification whether the call was expected. If you set
+	 * it to {@code false} the result of an invocation of the mock's {@code toString}
+	 * method is returned.
+	 *
+	 * <p>If {@code handleToStringInvocations} is {@code null}, it is interpreted
+	 * as {@code false}.
+	 *
+	 * @param handleToStringInvocations determines whether to handle {@code toStirng}
+	 * method invocations
+	 */
+	public function setHandleToStringInvocations(handleToStringInvocations:Boolean):Void {
+		this.handleToStringInvocations = !handleToStringInvocations ? false : true;
+	}
+	
+	/**
+	 * Returns whether {@code toString} invocations on the mock are handled.
+	 *
+	 * <p>Handling {@code toString} invocations means that these invocations
+	 * are added to the expected or actual behavior. This means if they are
+	 * handled, calling the {@code toString} method on the mock in replay
+	 * state results in an added expection and in record state in a verification
+	 * whether the call was expected. If they are not handled, the result of
+	 * an invocation of the mock's {@code toString} method is returned.
+	 *
+	 * @return {@code true} if {@code toString} invocations are handled, else
+	 * {@code false}
+	 * @see #setHandleToStringInvocations
+	 */
+	public function areToStringInvocationsHandled(Void):Boolean {
+		return this.handleToStringInvocations;
 	}
 	
 	/**
@@ -337,11 +383,12 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 		var result:InvocationHandler = getBlankInvocationHandler();
 		var owner:MockControl = this;
 		result.invoke = function(proxy, method:String, args:Array) {
-			// 'toString' must be excluded because it gets used everytime an output gets made.
+			// 'toString' must be excluded because it is used everytime output is made.
 			// For example in the success and failure messages of the unit testing api.
-			if (method != "toString") {
-				return owner.invokeMethod(method, args);
+			if (method == "toString" && !owner.areToStringInvocationsHandled()) {
+				return owner.getMock().__proto__.toString.apply(owner.getMock());
 			}
+			return owner.invokeMethod(method, args);
 		}
 		return result;
 	}
@@ -464,9 +511,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * @overload #setReturnValueByValue(*):Void
-	 * @overload #setReturnValueByValueAndQuantity(*, Number):Void
-	 * @overload #setReturnValueByValueAndMinimumAndMaximumQuantity(*, Number, Number):Void
+	 * @overload #setReturnValueByValue
+	 * @overload #setReturnValueByValueAndQuantity
+	 * @overload #setReturnValueByValueAndMinimumAndMaximumQuantity
 	 */
 	public function setReturnValue():Void {
 		var o:Overload = new Overload(this);
@@ -518,9 +565,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * @overload #setThrowableByThrowable(*):Void
-	 * @overload #setThrowableByThrowableAndQuantity(*, Number):Void
-	 * @overload #setThrowableByThrowableAndMinimumAndMaximumQuantity(*, Number, Number):Void
+	 * @overload #setThrowableByThrowable
+	 * @overload #setThrowableByThrowableAndQuantity
+	 * @overload #setThrowableByThrowableAndMinimumAndMaximumQuantity
 	 */
 	public function setThrowable():Void {
 		var o:Overload = new Overload(this);
@@ -572,9 +619,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * @overload #setVoidCallableByVoid(Void):Void
-	 * @overload #setVoidCallableByQuantity(Number):Void
-	 * @overload #setVoidCallableByMinimumAndMaximumQuantity(Number, Number):Void
+	 * @overload #setVoidCallableByVoid
+	 * @overload #setVoidCallableByQuantity
+	 * @overload #setVoidCallableByMinimumAndMaximumQuantity
 	 */
 	public function setVoidCallable():Void {
 		var o:Overload = new Overload(this);
