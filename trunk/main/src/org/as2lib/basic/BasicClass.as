@@ -1,6 +1,7 @@
 ﻿import org.as2lib.basic.BasicInterface;
 import org.as2lib.basic.Overloading;
 import org.as2lib.basic.OverloadHandler;
+import org.as2lib.basic.TypedArray;
 import org.as2lib.reflect.ClassInfo;
 import org.as2lib.reflect.SimpleClassInfo;
 import org.as2lib.util.OverloadingUtil;
@@ -20,7 +21,7 @@ class org.as2lib.basic.BasicClass implements BasicInterface, Overloading {
 	/**
 	 * @see org.as2lib.basic.Overloading
 	 */
-	public function overload(someArguments:Array, someOverloadHandlers:Array):Void {
+	public function overload(someArguments:Array, someOverloadHandlers:TypedArray):Void {
 		OverloadingUtil.overload(this, someArguments, someOverloadHandlers);
 	}
 	
