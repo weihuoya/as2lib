@@ -30,15 +30,23 @@ class org.as2lib.data.holder.PrimitiveTypeMap extends BasicClass implements Map 
 	/** Contains the mappings. */
 	private var map:Object;
 	
-	/** Stores the number of put values. */
-	private var length:Number;
+	/** */
+	private var indexMap:Object;
+	
+	/** */
+	private var keys:Array;
+	
+	/** */
+	private var values:Array;
 	
 	/**
 	 * Constructs a new PrimitiveTypeMap.
 	 */
 	public function PrimitiveTypeMap(Void) {
 		map = new Object();
-		length = 0;
+		indexMap = new Object();
+		keys = new Array();
+		values = new Array();
 	}
 
 	/**
@@ -52,9 +60,9 @@ class org.as2lib.data.holder.PrimitiveTypeMap extends BasicClass implements Map 
 	 * @see org.as2lib.data.holder.Map#containsValue()
 	 */
 	public function containsValue(value):Boolean {
-		var i:String;
-		for (i in map) {
-			if (map[i] == value) {
+		var i:Number = keys.length;
+		while (--i-(-1)) {
+			if (values[i] == value) {
 				return true;
 			}
 		}
@@ -66,9 +74,9 @@ class org.as2lib.data.holder.PrimitiveTypeMap extends BasicClass implements Map 
 	 */
 	public function getKeys(Void):Array {
 		var result:Array = new Array();
-		var i:String;
-		for (i in map) {
-			result.push(i);
+		var i:Number = keys.length;
+		while (--i-(-1)) {
+			result.push(keys[i]);
 		}
 		result.reverse();
 		return result;
@@ -79,9 +87,9 @@ class org.as2lib.data.holder.PrimitiveTypeMap extends BasicClass implements Map 
 	 */
 	public function getValues(Void):Array {
 		var result:Array = new Array();
-		var i:String;
-		for (i in map) {
-			result.push(map[i]);
+		var i:Number = values.length;
+		while (--i-(-1)) {
+			result.push(values[i]);
 		}
 		result.reverse();
 		return result;
@@ -99,8 +107,14 @@ class org.as2lib.data.holder.PrimitiveTypeMap extends BasicClass implements Map 
 	 */
 	public function put(key, value) {
 		var result = null;
-		if (map[key] != undefined) result = map[key];
-		else length++;
+		var i:Number = indexMap[key];
+		if (i != undefined) {
+			result = values[i];
+			values[i] = value;
+		} else {
+			indexMap[key] = keys.push(key) - 1;
+			values.push(value);
+		}
 		map[key] = value;
 		return result;
 	}
@@ -128,9 +142,13 @@ class org.as2lib.data.holder.PrimitiveTypeMap extends BasicClass implements Map 
 	 */
 	public function remove(key) {
 		var result = null;
-		if(map[key] != undefined) {
-			result = map[key];
+		var i:Number = indexMap[key];
+		if (i != undefined) {
+			result = values[i];
 			map[key] = undefined;
+			indexMap[key] = undefined;
+			keys.splice(i, 1);
+			values.splice(i, 1);
 		}
 		return result;
 	}
@@ -146,14 +164,14 @@ class org.as2lib.data.holder.PrimitiveTypeMap extends BasicClass implements Map 
 	 * @see org.as2lib.data.holder.Map#size()
 	 */
 	public function size(Void):Number {
-		return length;
+		return keys.length;
 	}
 	
 	/**
 	 * @see org.as2lib.data.holder.Map#isEmpty()
 	 */
 	public function isEmpty(Void):Boolean {
-		return (size() == 0);
+		return (keys.length == 0);
 	}
 	
 	/**

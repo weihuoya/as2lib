@@ -21,7 +21,7 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
 import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.PrimitiveTypeMap;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ReflectConfig;
@@ -37,7 +37,7 @@ class org.as2lib.env.reflect.algorithm.ChildrenAlgorithm extends BasicClass impl
 		var c:Cache = ReflectConfig.getCache();
 		
 		var p:PackageInfo = PackageInfo(g);
-		var r:Map = new HashMap();
+		var r:Map = new PrimitiveTypeMap();
 		
 		var t:Object = p.getPackage();
 		
