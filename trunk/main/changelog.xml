@@ -5,7 +5,9 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="3">
-         <day value="26">           
+         <day value="26">
+           <entry type="change" package="org.as2lib.env.except" class="Throwable" method="initCause(cause:Throwable):Void"><change-arguments to="cause:*" /></entry>
+           <entry type="change" package="org.as2lib.env.except" class="Throwable" method="getCause(Void):Throwable"><change-returnType to="*" /></entry>
            <entry type="change" package="org.as2lib.test.mock" class="Behavior" method="removeAllBehavior"><change-rename to="removeAllBehaviors" /></entry>
            <entry type="change" package="org.as2lib.env.event" class="EventBroadcaster" method="removeAllListener"><change-rename to="removeAllListeners" /></entry>
            <entry type="change" package="org.as2lib.env.event" class="EventBroadcaster" method="addAllListener"><change-rename to="addAllListeners" /></entry>
