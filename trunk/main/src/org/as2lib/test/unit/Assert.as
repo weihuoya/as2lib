@@ -61,7 +61,7 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 */
 	public static function isTrueWithMessage (message:String, var1):Void {
 		if(var1 !== true) {
-			throw new AssertIsTrueException(message, var1, arguments.callee, arguments);
+			throw new AssertIsTrueException(message, var1, eval("th"+"is"), arguments);
 		}
 	}
 	
@@ -106,7 +106,7 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 */
 	public static function isFalseWithMessage (message:String, var1):Void {
 		if(var1 !== false) {
-			throw new AssertIsFalseException(message, var1, arguments.callee, arguments);
+			throw new AssertIsFalseException(message, var1, eval("th"+"is"), arguments);
 		}
 	}
 	
@@ -125,8 +125,7 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	
 	/**
 	 * Compares two valus if they are the same.
-	 * This method compares two value if they are the same
-	 * this means it compares it by ===.
+	 * This method compares two variables if the content is equal by "==".
 	 *
 	 * @see #isEqual
 	 * @see #isEqualWithMessage
@@ -156,7 +155,7 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @param var2 Second Var.
 	 */
 	public static function isEqualWithMessage (message:String, var1, var2):Void {
-		if(var1 !== var2) {
+		if(var1 != var2) {
 			throw new AssertIsEqualException(message, var1, var2, eval("th"+"is"), arguments);
 		}
 	}
@@ -176,8 +175,8 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	
 	/**
 	 * Checks if two given objects are not equal.
-	 * Both objects have to implement the Comparable Interface.
-	 *
+	 * This method compares two variables if the content is not equal by "==".
+	 * 
 	 * @see #isEqual
 	 * @see #isEqualWithoutMessage
 	 * @see #isEqualWithMessage
@@ -207,8 +206,67 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @param var1 Second Var.
 	 */
 	public static function isNotEqualWithMessage (message:String, var1, var2):Void {
-		if(var1 === var2) {
-			throw new AssertIsNotEqualException(message, var1, var2);
+		if(var1 == var2) {
+			throw new AssertIsNotEqualException(message, var1, var2, eval("th"+"is"), arguments);
+		}
+	}
+	
+	/**
+	 * overload
+	 * @see #isSameWithMessage
+	 * @see #isSameWithoutMessage
+	 */
+	public static function isSame():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that);
+		overload.addHandler([String, undefined, undefined], isSameWithMessage);
+		overload.addHandler([String, Object, undefined], isSameWithMessage);
+		overload.addHandler([String, Object, Object], isSameWithMessage);
+		overload.addHandler([String, Object], isSameWithMessage);
+		overload.addHandler([String, undefined], isSameWithMessage);
+		overload.addHandler([Object, undefined], isSameWithoutMessage);
+		overload.addHandler([Object, Object], isSameWithoutMessage);
+		overload.addHandler([Object], isSameWithoutMessage);
+		overload.addHandler([undefined], isSameWithoutMessage);
+		overload.forward(arguments);
+	}
+	
+	/**
+	 * Compares two valus if they are the same.
+	 * This method compares two variables if they are references
+	 * to the same object by ===.
+	 *
+	 * @see #isSame
+	 * @see #isSameWithMessage
+	 * @see #isNotSame
+	 * @see #isNotSameWithoutMessage
+	 * @see #isNotSameWithMessage
+	 * 
+	 * @throws AssertIsSameException if the assertion fails.
+	 * @param var1 First var.
+	 * @param var2 Second var.
+	 */
+	public static function isSameWithoutMessage (var1, var2):Void {
+		isSameWithMessage ("", var1, var2);
+	}
+	
+	/**
+	 * Appends a Message to @see #isSame.
+	 *
+	 * @see #isSame
+	 * @see #isSameWithMessage
+	 * @see #isNotSame
+	 * @see #isNotSameWithoutMessage
+	 * @see #isNotSameWithMessage
+	 * 
+	 * @throws AssertIsSameException if the assertion fails.
+	 * @param message	Message to be displayed if an error occures
+	 * @param var1 First Var.
+	 * @param var2 Second Var.
+	 */
+	public static function isSameWithMessage (message:String, var1, var2):Void {
+		if(var1 !== var2) {
+			throw new AssertIsSameException(message, var1, var2, eval("th"+"is"), arguments);
 		}
 	}
 	
@@ -220,14 +278,17 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	public static function isNotNull():Void {
 		var that = eval("th"+"is");
 		var overload:Overload = new Overload(that);
-		overload.addHandler([String, Number], isNotNullWithMessage);
-		overload.addHandler([Number], isNotNullWithoutMessage);
+		overload.addHandler([String, undefined], isNotNullWithMessage);
+		overload.addHandler([String, Object], isNotNullWithMessage);
+		overload.addHandler([Object], isNotNullWithoutMessage);
+		overload.addHandler([undefined], isNotNullWithoutMessage);
+		overload.addHandler([], isNotNullWithoutMessage);
 		overload.forward(arguments);
 	}
 	
 	/**
 	 * Checks if two given objects are not equal.
-	 * Both objects have to implement the Comparable Interface.
+	 * This methods checks with "!=" if two given variables do not contain the same value.
 	 *
 	 * @see #isNotNull
 	 * @see #isNotNullWithMessage
@@ -258,53 +319,8 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @param var1 Second Var.
 	 */
 	public static function isNotNullWithMessage (message:String, var1):Void {
-		if(var1 !== null) {
-			throw new AssertIsNotNullException(message, var1);
-		}
-	}
-	
-	/**
-	 * overload
-	 * @see #isNotNullWithMessage
-	 * @see #isNotNullWithoutMessage
-	 * /
-	private static function isNotNull():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, Object], isNotNullWithMessage);
-		overload.addHandler([Object], isNotNullWithoutMessage);
-		overload.forward(arguments);
-	}
-	
-	/**
-	 * Asserts if an Var is not Null.
-	 *
-	 * @see #isNotNull
-	 * @see #isNotNullWithMessage
-	 * @see #isNull
-	 * @see #isNullWithMessage
-	 * 
-	 * @param var1	Var that should be Null.
-	 * /
-	private static function isNotNullWithoutMessage (var1):Void {
-		isNotNullWithMessage("", var1);
-	}	
-	
-	/**
-	 * Adds a Message to #isNotNull.
-	 *
-	 * @see #isNotNull
-	 * @see #isNotNullWithoutMessage
-	 * @see #isNull
-	 * @see #isNullWithMessage
-	 * @see #isNullWithoutMessage
-	 * 
-	 * @param message	Message to be displayed if an error occures
-	 * @param var1		Var that should not be Null.
-	 * /
-	private static function isNotNullWithMessage (message:String, var1):Void {
 		if(var1 === null) {
-			//addError("isNotNull failed: "+var1+" message: "+message);
+			throw new AssertIsNotNullException(message, eval("th"+"is"), arguments);
 		}
 	}
 
