@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.holder.Iterator;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Stack;
 import org.as2lib.util.ObjectUtil;
@@ -26,7 +26,7 @@ import org.as2lib.env.except.IllegalArgumentException;
  *
  * @author Simon Wacker
  */
-class org.as2lib.data.holder.TypedStack extends BasicClass implements Stack {
+class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stack {
 	/** The wrapped Stack. */
 	private var stack:Stack;
 	

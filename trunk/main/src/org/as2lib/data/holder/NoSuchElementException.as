@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicInterface;
+import org.as2lib.env.except.Exception;
 
 /**
- * Stringifiers are used to stringify any kind of object.
+ * NoSuchElementException will be thrown if the element you tried to obtain does
+ * not exist.
  *
  * @author Simon Wacker
  */
-interface org.as2lib.util.string.Stringifier extends BasicInterface {
+class org.as2lib.data.holder.NoSuchElementException extends Exception {
 	/**
-	 * Returns a String representation of the passed object.
-	 *
-	 * @param target the target object to be stringified
+	 * @see org.as2lib.env.except.Exception#Constructor()
 	 */
-	public function execute(target):String;
+	public function NoSuchElementException(message:String, thrower, args:FunctionArguments) {
+		super (message, thrower, args);
+	}
 }

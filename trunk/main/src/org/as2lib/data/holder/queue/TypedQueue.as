@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.iterator.Iterator;
-import org.as2lib.data.iterator.ArrayIterator;
+import org.as2lib.data.holder.Iterator;
+import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.data.holder.Queue;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.EmptyDataHolderException;
@@ -29,7 +29,7 @@ import org.as2lib.env.except.IllegalArgumentException;
  *
  * @author Simon Wacker
  */
-class org.as2lib.data.holder.TypedQueue extends BasicClass implements Queue {
+class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queue {
 	/** The Queue the TypedQueue wraps. */
 	private var queue:Queue;
 	

@@ -16,22 +16,22 @@
 
 import org.as2lib.data.holder.AbstractPriority;
 import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.data.iterator.MapIterator;
-import org.as2lib.data.iterator.Iterator;
-import org.as2lib.data.iterator.ArrayIterator;
+import org.as2lib.data.holder.map.MapIterator;
+import org.as2lib.data.holder.Iterator;
+import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.data.holder.HolderConfig;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.data.holder.PriorityMap extends AbstractPriority implements Map {
+class org.as2lib.data.holder.map.PriorityMap extends AbstractPriority implements Map {
 	private var map:Map;
 	private var priorityArray:Array;
 	
 	/**
-	 * Constructs a new HashMap.
+	 * Constructs a new PriorityMap.
 	 */
 	public function PriorityMap(map:Map) {
 		this.map = map;

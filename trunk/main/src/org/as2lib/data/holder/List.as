@@ -1,5 +1,5 @@
 ﻿import org.as2lib.core.BasicInterface;
-import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.holder.Iterator;
 
 /**
  * @author Simon Wacker

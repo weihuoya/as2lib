@@ -15,12 +15,12 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.util.string.Stringifier;
+import org.as2lib.util.Stringifier;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.data.holder.Stack;
-import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.holder.Iterator;
 import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.env.except.ExceptConfig;
 

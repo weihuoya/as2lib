@@ -18,7 +18,7 @@ import org.as2lib.Config;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.out.info.OutWriteInfo;
 import org.as2lib.env.out.info.OutErrorInfo;
-import org.as2lib.util.string.Stringifier;
+import org.as2lib.util.Stringifier;
 import org.as2lib.env.out.string.WriteStringifier;
 import org.as2lib.env.out.string.ErrorStringifier;
 import org.as2lib.env.event.EventBroadcasterFactory;

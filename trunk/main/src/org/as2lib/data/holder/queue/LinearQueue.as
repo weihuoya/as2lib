@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.iterator.Iterator;
-import org.as2lib.data.iterator.ArrayIterator;
+import org.as2lib.data.holder.Iterator;
+import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.data.holder.Queue;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.EmptyDataHolderException;
@@ -27,7 +27,7 @@ import org.as2lib.data.holder.HolderConfig;
  *
  * @author Simon Wacker
  */
-class org.as2lib.data.holder.LinearQueue extends BasicClass implements Queue {
+class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Queue {
 	/** Contains the inserted elements. */
 	private var data:Array;
 	

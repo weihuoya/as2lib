@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.data.holder.Stack;
-import org.as2lib.data.holder.SimpleStack;
+import org.as2lib.data.holder.stack.SimpleStack;
 
 /**
  * ArrayUtil contains fundamental operations to manipulate Arrays.

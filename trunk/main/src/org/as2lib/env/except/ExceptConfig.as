@@ -20,7 +20,7 @@ import org.as2lib.env.except.StackTraceElementStringifier;
 import org.as2lib.env.except.StackTraceStringifier;
 import org.as2lib.env.except.StackTraceElementFactory;
 import org.as2lib.env.except.SimpleStackTraceElementFactory;
-import org.as2lib.util.string.Stringifier;
+import org.as2lib.util.Stringifier;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.out.OutAccess;
 import org.as2lib.env.EnvConfig;
