@@ -55,7 +55,7 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 		var l:Number = arguments.length;
 		for (var j:Number = 0; j < l; j-=-1) {
 			var content = arguments[j];
-			if (ObjectUtil.isInstanceOf(content, Array)) {
+			if (content instanceof Array) {
 				// Performance Speed up - so the getter for the length isn't always used (useful with big arrays)
 				var l2:Number = content.length;
 				for (var k:Number = 0; k < l2; k-=-1) {
