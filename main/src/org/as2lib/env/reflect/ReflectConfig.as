@@ -19,10 +19,8 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.reflect.algorithm.CacheAlgorithm;
 import org.as2lib.env.reflect.algorithm.ClassAlgorithm;
 import org.as2lib.env.reflect.algorithm.PackageAlgorithm;
-import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
 import org.as2lib.env.reflect.algorithm.MethodAlgorithm;
 import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
 import org.as2lib.env.reflect.algorithm.ChildAlgorithm;
@@ -38,20 +36,21 @@ import org.as2lib.env.reflect.string.PropertyInfoStringifier;
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
-	/** The CacheAlgorithm used to find classes. */
-	private static var classAlgorithm:CacheAlgorithm;
 	
-	/** The CacheAlgorithm used to find packages. */
-	private static var packageAlgorithm:CacheAlgorithm;
+	/** The class algorithm used to find classes. */
+	private static var classAlgorithm:ClassAlgorithm;
 	
-	/** The ContentAlgorithm used to find methods. */
-	private static var methodAlgorithm:ContentAlgorithm;
+	/** The property algorithm used to find packages. */
+	private static var packageAlgorithm:PackageAlgorithm;
 	
-	/** The ContentAlgorithm used to find properties. */
-	private static var propertyAlgorithm:ContentAlgorithm;
+	/** The method algorithm used to find methods. */
+	private static var methodAlgorithm:MethodAlgorithm;
 	
-	/** The ContentAlgorithm used to find children. */
-	private static var childAlgorithm:ContentAlgorithm;
+	/** The property algorithm used to find properties. */
+	private static var propertyAlgorithm:PropertyAlgorithm;
+	
+	/** The child algorithm used to find children. */
+	private static var childAlgorithm:ChildAlgorithm;
 	
 	/** All ClassInfos and PackageInfos that have already been found will be cached here. */
 	private static var cache:Cache = new SimpleCache();
@@ -63,108 +62,108 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	private static var propertyInfoStringifier:Stringifier;
 	
 	/**
-	 * Private constructor to prevent an instantiation.
+	 * Private constructor to prevent instantiation.
 	 */
 	private function ReflectConfig(Void) {
 	}
 	
 	/**
-	 * Sets the CacheAlgorithm used to return the appropriate ClassInfo of a specific
-	 * instance.
+	 * Sets the algorithm used to return the appropriate ClassInfo instance
+	 * of a specific instance or class.
 	 *
-	 * @param algorithm the new CacheAlgorithm to return appropriate ClassInfos
+	 * @param algorithm the new class algortihm to return appropriate ClassInfo instances
 	 */
-	public static function setClassAlgorithm(algorithm:CacheAlgorithm):Void {
+	public static function setClassAlgorithm(algorithm:ClassAlgorithm):Void {
 		classAlgorithm = algorithm;
 	}
 	
 	/**
-	 * Returns the CacheAlgorithm used to find classes and return ClassInfos 
+	 * Returns the algorithm used to find classes and return ClassInfo instances
 	 * representing this classes.
 	 *
-	 * @return the CacheAlgorithm used to return ClassInfos
+	 * @return the algorithm used to return ClassInfo instances
 	 */
-	public static function getClassAlgorithm(Void):CacheAlgorithm {
+	public static function getClassAlgorithm(Void):ClassAlgorithm {
 		if (!classAlgorithm) classAlgorithm = new ClassAlgorithm();
 		return classAlgorithm;
 	}
 	
 	/**
-	 * Sets the CacheAlgorithm used to return the appropriate PackageInfo of a 
-	 * specific instance.
+	 * Sets the algorithm used to return the appropriate PackageInfo instance of a 
+	 * specific package.
 	 *
-	 * @param algorithm the new CacheAlgorithm to return appropriate PackageInfos
+	 * @param algorithm the new algorithm to return appropriate PackageInfo instances
 	 */
-	public static function setPackageAlgorithm(algorithm:CacheAlgorithm):Void {
+	public static function setPackageAlgorithm(algorithm:PackageAlgorithm):Void {
 		packageAlgorithm = algorithm;
 	}
 	
 	/**
-	 * Returns the CacheAlgorithm used to find packages and return ClassInfos 
+	 * Returns the algorithm used to find packages and return PackageInfo instances 
 	 * representing this packages.
 	 *
-	 * @return the CacheAlgorithm used to return PackageInfos
+	 * @return the algorithm used to return appropriate PackageInfo instances
 	 */
-	public static function getPackageAlgorithm(Void):CacheAlgorithm {
+	public static function getPackageAlgorithm(Void):PackageAlgorithm {
 		if (!packageAlgorithm) packageAlgorithm = new PackageAlgorithm();
 		return packageAlgorithm;
 	}
 	
 	/** 
-	 * Sets the ContentAlgorithm used to find and store MethodInfos representing
-	 * operations of a class.
+	 * Sets the algorithm used to find MethodInfo instances representing
+	 * methods of a class.
 	 *
-	 * @param algorithm the new ContentAlgorithm to find and store MethodInfos
+	 * @param algorithm the new algorithm to find and store MethodInfo instances
 	 */
-	public static function setMethodAlgorithm(algorithm:ContentAlgorithm):Void {
+	public static function setMethodAlgorithm(algorithm:MethodAlgorithm):Void {
 		methodAlgorithm = algorithm;
 	}
 	
 	/**
-	 * Returns the ContentAlgorithm used to find and store MethodInfos.
+	 * Returns the algorithm used to find MethodInfo instances.
 	 *
-	 * @return the ContentAlgorithm to find and store MethodInfos
+	 * @return the algorithm to find MethodInfo instances
 	 */
-	public static function getMethodAlgorithm(Void):ContentAlgorithm {
+	public static function getMethodAlgorithm(Void):MethodAlgorithm {
 		if (!methodAlgorithm) methodAlgorithm = new MethodAlgorithm();
 		return methodAlgorithm;
 	}
 	
 	/** 
-	 * Sets the ContentAlgorithm used to find and store PropertyInfos representing
+	 * Sets the algorithm used to find PropertyInfo instances representing
 	 * properties of a class.
 	 *
-	 * @param algorithm the new ContentAlgorithm to find and store PropertyInfos
+	 * @param algorithm the new algorithm to find PropertyInfo instances
 	 */
-	public static function setPropertyAlgorithm(algorithm:ContentAlgorithm):Void {
+	public static function setPropertyAlgorithm(algorithm:PropertyAlgorithm):Void {
 		propertyAlgorithm = algorithm;
 	}
 	
 	/**
-	 * Returns the ContentAlgorithm used to find and store PropertyInfos.
+	 * Returns the algorithm used to find PropertyInfo instances.
 	 *
-	 * @return the ContentAlgorithm to find and store PropertyInfos
+	 * @return the algorithm to find PropertyInfo instances
 	 */
-	public static function getPropertyAlgorithm(Void):ContentAlgorithm {
+	public static function getPropertyAlgorithm(Void):PropertyAlgorithm {
 		if (!propertyAlgorithm) propertyAlgorithm = new PropertyAlgorithm();
 		return propertyAlgorithm;
 	}
 	
 	/** 
-	 * Sets the ContentAlgorithm used to find and store childrens of a package.
+	 * Sets the algorithm used to find and store children of a package.
 	 *
-	 * @param algorithm the new ContentAlgorithm to find and store the children
+	 * @param algorithm the new algorithm to find and store the children
 	 */
-	public static function setChildAlgorithm(algorithm:ContentAlgorithm):Void {
+	public static function setChildAlgorithm(algorithm:ChildAlgorithm):Void {
 		childAlgorithm = algorithm;
 	}
 	
 	/**
-	 * Returns the ContentAlgorithm used to find and store children.
+	 * Returns the algorithm used to find and store children.
 	 *
-	 * @return the ContentAlgorithm to find and store children
+	 * @return the algorithm to find and store children
 	 */
-	public static function getChildAlgorithm(Void):ContentAlgorithm {
+	public static function getChildAlgorithm(Void):ChildAlgorithm {
 		if (!childAlgorithm) childAlgorithm = new ChildAlgorithm();
 		return childAlgorithm;
 	}

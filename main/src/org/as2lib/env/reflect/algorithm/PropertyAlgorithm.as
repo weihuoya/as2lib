@@ -15,11 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.reflect.Cache;
-import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
 
 /**
  * Searches for all properties of a class. Properties are not meant to be
@@ -29,7 +26,7 @@ import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass implements ContentAlgorithm {
+class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass {
 	
 	private var r:Array;
 	private var g:Object;
@@ -50,8 +47,7 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass impl
 	 *
 	 * <p>This method will return null if:
 	 * <ul>
-	 *   <li>The argument is null.</li>
-	 *   <li>The argument is not of type ClassInfo.</li>
+	 *   <li>The argument is null or undefined.</li>
 	 *   <li>The argument's getType() method returns null or undefined.</li>
 	 * </ul>
 	 *
@@ -61,12 +57,11 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass impl
 	 * @param c the ClassInfo instance representing the class to search through
 	 * @return the found properties, a blank array or null
 	 */
-	public function execute(c:CompositeMemberInfo):Array {
+	public function execute(c:ClassInfo):Array {
 		if (c == null) return null;
-		this.c = ClassInfo(c);
-		if (this.c == null) return null;
-		var b:Function = this.c.getType();
+		var b:Function = c.getType();
 		if (!b) return null;
+		this.c = c;
 		this.r = new Array();
 		this.g = new Object();
 		this.s = new Object();

@@ -22,8 +22,9 @@ import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.ConstructorInfo;
 import org.as2lib.env.reflect.ReflectConfig;
-import org.as2lib.env.reflect.algorithm.CacheAlgorithm;
-import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
+import org.as2lib.env.reflect.algorithm.ClassAlgorithm;
+import org.as2lib.env.reflect.algorithm.MethodAlgorithm;
+import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
 
 /**
  * ClassInfo represents a real class in the Flash environment. This class is used
@@ -58,13 +59,13 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	private var classConstructor:ConstructorInfo;
 	
 	/** Stores the algorithm to find classes. */
-	private var classAlgorithm:CacheAlgorithm;
+	private var classAlgorithm:ClassAlgorithm;
 	
 	/** Stores the algorithm to find methods of this class. */
-	private var methodAlgorithm:ContentAlgorithm;
+	private var methodAlgorithm:MethodAlgorithm;
 	
 	/** Stores the algorithm to find properties of this class. */
-	private var propertyAlgorithm:ContentAlgorithm;
+	private var propertyAlgorithm:PropertyAlgorithm;
 	
 	/**
 	 * Constructs a new ClassInfo.
@@ -96,7 +97,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *
 	 * @see #getClassAlgorithm()
 	 */
-	public function setClassAlgorithm(classAlgorithm:CacheAlgorithm):Void {
+	public function setClassAlgorithm(classAlgorithm:ClassAlgorithm):Void {
 		this.classAlgorithm = classAlgorithm;
 	}
 	
@@ -112,9 +113,9 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *
 	 * @return the currently used class algorithm
 	 *
-	 * @see #setClassAlgorithm(CacheAlgorithm)
+	 * @see #setClassAlgorithm(ClassAlgorithm)
 	 */
-	public function getClassAlgorithm(Void):CacheAlgorithm {
+	public function getClassAlgorithm(Void):ClassAlgorithm {
 		if (!classAlgorithm) classAlgorithm = ReflectConfig.getClassAlgorithm();
 		return classAlgorithm;
 	}
@@ -131,7 +132,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *
 	 * @see #getMethodAlgorithm()
 	 */
-	public function setMethodAlgorithm(methodAlgorithm:ContentAlgorithm):Void {
+	public function setMethodAlgorithm(methodAlgorithm:MethodAlgorithm):Void {
 		this.methodAlgorithm = methodAlgorithm;
 	}
 	
@@ -147,9 +148,9 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *
 	 * @return the currently used method algorithm
 	 *
-	 * @see #setMethodAlgorithm(ContentAlgorithm)
+	 * @see #setMethodAlgorithm(MethodAlgorithm)
 	 */
-	public function getMethodAlgorithm(Void):ContentAlgorithm {
+	public function getMethodAlgorithm(Void):MethodAlgorithm {
 		if (!methodAlgorithm) methodAlgorithm = ReflectConfig.getMethodAlgorithm();
 		return methodAlgorithm;
 	}
@@ -166,7 +167,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *
 	 * @see #getPropertyAlgorithm()
 	 */
-	public function setPropertyAlgorithm(propertyAlgorithm:ContentAlgorithm):Void {
+	public function setPropertyAlgorithm(propertyAlgorithm:PropertyAlgorithm):Void {
 		this.propertyAlgorithm = propertyAlgorithm;
 	}
 	
@@ -182,9 +183,9 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *
 	 * @return the currently used property algorithm
 	 *
-	 * @see #setPropertyAlgorithm(ContentAlgorithm)
+	 * @see #setPropertyAlgorithm(PropertyAlgorithm)
 	 */
-	public function getPropertyAlgorithm(Void):ContentAlgorithm {
+	public function getPropertyAlgorithm(Void):PropertyAlgorithm {
 		if (!propertyAlgorithm) propertyAlgorithm = ReflectConfig.getPropertyAlgorithm();
 		return propertyAlgorithm;
 	}
@@ -256,7 +257,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * </ul>
 	 *
 	 * @see org.as2lib.env.reflect.TypeInfo#getSuperType()
-	 * @see #setClassAlgorithm(CacheAlgorithm)
+	 * @see #setClassAlgorithm(ClassAlgorithm)
 	 */
 	public function getSuperType(Void):TypeInfo {
 		if (superClass === undefined) {

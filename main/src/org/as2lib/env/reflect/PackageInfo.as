@@ -19,7 +19,7 @@ import org.as2lib.env.overload.Overload;
 import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.ReflectConfig;
-import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
+import org.as2lib.env.reflect.algorithm.ChildAlgorithm;
 
 /**
  * PackageInfo represents a real package in the Flash environment. This class is
@@ -45,7 +45,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	private var children:Array;
 	
 	/** Stores the child algorithm. */
-	private var childAlgorithm:ContentAlgorithm;
+	private var childAlgorithm:ChildAlgorithm;
 	
 	/**
 	 * Constructs a new PackageInfo instance.
@@ -77,7 +77,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	 *
 	 * @see #getChildAlgorithm()
 	 */
-	public function setChildAlgorithm(childAlgorithm:ContentAlgorithm):Void {
+	public function setChildAlgorithm(childAlgorithm:ChildAlgorithm):Void {
 		this.childAlgorithm = childAlgorithm;
 	}
 	
@@ -93,9 +93,9 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	 *
 	 * @return the currently used child algorithm
 	 *
-	 * @see #setChildAlgorithm(ContentAlgorithm)
+	 * @see #setChildAlgorithm(ChildAlgorithm)
 	 */
-	public function getChildAlgorithm(Void):ContentAlgorithm {
+	public function getChildAlgorithm(Void):ChildAlgorithm {
 		if (!childAlgorithm) childAlgorithm = ReflectConfig.getChildAlgorithm();
 		return childAlgorithm;
 	}
