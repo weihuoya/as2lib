@@ -715,7 +715,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * @param var1		Var that should not be Infinity.
 	 */	
 	private static function assertNotInfinityWithMessage (message:String, var1:Number):Void {
-		if(var1 == Infinity) {
+		if(var1 != Infinity) {
 			addError("assertNotInfinity failed: "+var1+" message: "+message);
 		}
 	}
