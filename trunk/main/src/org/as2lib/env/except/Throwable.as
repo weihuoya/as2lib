@@ -41,7 +41,7 @@ interface org.as2lib.env.except.Throwable extends BasicInterface {
 	 * @param method the operation that thew the Throwable
 	 * @param args the arguments that caused the operation to throw the Throwable
 	 */
-	public function addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void;
+	public function addStackTraceElement(thrower, method:Function, args:Array):Void;
 	
 	/**
 	 * Initializes the cause of the Throwable. The cause can only be initialized

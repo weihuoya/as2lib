@@ -108,5 +108,7 @@ test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition;
 // org.as2lib.env.event
 test.unit.org.as2lib.env.event.TSpeedEventBroadcaster;
 
-// org.as2lib.env.except tests
+// org.as2lib.env.except
+test.unit.org.as2lib.env.except.TException;
+test.unit.org.as2lib.env.except.TFatalException;
 test.unit.org.as2lib.env.except.TSimpleStackTraceElement;

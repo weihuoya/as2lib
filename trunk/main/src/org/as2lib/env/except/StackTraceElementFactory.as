@@ -29,5 +29,5 @@ interface org.as2lib.env.except.StackTraceElementFactory extends BasicInterface 
 	 * @param args the arguments that caused the method to throw the Throwable
 	 * @return a StackTraceElement instance
 	 */
-	public function getStackTraceElement(thrower, method:Function, args:FunctionArguments):StackTraceElement;
+	public function getStackTraceElement(thrower, method:Function, args:Array):StackTraceElement;
 }
