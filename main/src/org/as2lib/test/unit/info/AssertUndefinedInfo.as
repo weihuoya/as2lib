@@ -16,6 +16,11 @@
 
 import org.as2lib.test.unit.AbstractAssertInfo;
 
+/**
+ * Information holder and examiner of a assertUndefined call.
+ * 
+ * @author Martin Heidegger.
+ */
 class org.as2lib.test.unit.info.AssertUndefinedInfo extends AbstractAssertInfo {
 	
 	/** Internal holder of the variable value. */
