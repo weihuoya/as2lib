@@ -32,11 +32,15 @@ class org.as2lib.core.ObjectStringifier extends BasicClass implements Stringifie
 	 * Returns a string representation of the passed-in object.
 	 *
 	 * <p>The string representation is composed as follows:
-	 * <pre>[type theFullQualifiedNameOfTheObjectsType]</pre>
+	 * <pre>
+	 *  [type theFullQualifiedNameOfTheObjectsType]
+	 * </pre>
 	 *
-	 * <p>The string representation of the class BasicClass or instances
-	 * of it looks like this:
-	 * <pre>[type org.as2lib.core.BasicClass]</pre>
+	 * <p>The string representation of the class {@link BasicClass} or
+	 * instances of it looks like this:
+	 * <pre>
+	 *   [type org.as2lib.core.BasicClass]
+	 * </pre>
 	 *
 	 * @param target the target object to stringify
 	 * @return the string representation of the passed-in object

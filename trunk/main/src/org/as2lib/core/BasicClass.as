@@ -19,7 +19,7 @@ import org.as2lib.Config;
 
 /**
  * BasicClass is the basic class with default implementations of the
- * functionalities declared by the BasicInterface.
+ * functionalities declared by the {@link BasicInterface}.
  *
  * @author Simon Wacker
  * @author Martin Heidegger
@@ -27,10 +27,10 @@ import org.as2lib.Config;
 class org.as2lib.core.BasicClass implements BasicInterface {
 
 	/**
-	 * Returns a string representation of this instance.
+	 * Returns the string representation of this instance.
 	 *
 	 * <p>The String representation is obtained via the stringifier returned
-	 * by the Config#getObjectStringifier method.
+	 * by the {@link Config#getObjectStringifier} method.
 	 *
 	 * @return the string representation of this instance
 	 */

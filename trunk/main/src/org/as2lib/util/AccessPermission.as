@@ -31,26 +31,30 @@ import org.as2lib.core.BasicClass;
  * example be enumerable in one reference but not in another. Here's a little
  * example.
  *
- * <code>var object:Object = new Object();
- * object.myProperty = new Object();
- * object.mySecondReference = object.myProperty;
- * trace("myProperty:          Value: " + object.myProperty);
- * trace("mySecondReference:   Value: " + object.mySecondReference);
- * AccessPermission.set(object, ["myProperty"], AccessPermission.PROTECT_DELETE);
- * trace("myProperty:          Permission: " + AccessPermission.get(object, "myProperty"));
- * trace("mySecondReference:   Permission: " + AccessPermission.get(object, "mySecondReference"));
- * delete object.myProperty;
- * delete object.mySecondReference;
- * trace("myProperty:          Value: " + object.myProperty);
- * trace("mySecondReference:   Value: " + object.mySecondReference);</code>
+ * <code>
+ *   var object:Object = new Object();
+ *   object.myProperty = new Object();
+ *   object.mySecondReference = object.myProperty;
+ *   trace("myProperty:          Value: " + object.myProperty);
+ *   trace("mySecondReference:   Value: " + object.mySecondReference);
+ *   AccessPermission.set(object, ["myProperty"], AccessPermission.PROTECT_DELETE);
+ *   trace("myProperty:          Permission: " + AccessPermission.get(object, "myProperty"));
+ *   trace("mySecondReference:   Permission: " + AccessPermission.get(object, "mySecondReference"));
+ *   delete object.myProperty;
+ *   delete object.mySecondReference;
+ *   trace("myProperty:          Value: " + object.myProperty);
+ *   trace("mySecondReference:   Value: " + object.mySecondReference);
+ * </code>
  *
  * <p>The output of the above example looks as follows:
- * <pre>myProperty:          Value: [object Object]
- * mySecondReference:   Value: [object Object]
- * myProperty:          Permission: 2
- * mySecondReference:   Permission: 0
- * myProperty:          Value: [object Object]
- * mySecondReference:   Value: undefined</pre>
+ * <pre>
+ *   myProperty:          Value: [object Object]
+ *   mySecondReference:   Value: [object Object]
+ *   myProperty:          Permission: 2
+ *   mySecondReference:   Permission: 0
+ *   myProperty:          Value: [object Object]
+ *   mySecondReference:   Value: undefined
+ * </pre>
  *
  * <p>As you can see, the above statement holds true. We have two references
  * that reference the same object. We set the access permission of one
@@ -58,45 +62,49 @@ import org.as2lib.core.BasicClass;
  * was applied to, but the other reference.
  *
  * <p>Following is another example with a property in its normal state
- * and another protected property we applied the #ALLOW_NOTHING access
- * permission to.
+ * and another protected property we applied the {@link #ALLOW_NOTHING}
+ * access permission to.
  *
- * <code>var object:Object = new Object();
- * object.myNormalProperty = "myNormalPropertyValue";
- * object.myProtectedProperty = "myProtectedPropertyValue";
- * trace("myNormalProperty:      Default Permission: " + AccessPermission.get(object, "myNormalProperty"));
- * trace("myProtectedProperty:   Default Permission: " + AccessPermission.get(object, "myProtectedProperty"));
- * AccessPermission.set(object, ["myProtectedProperty"], AccessPermission.ALLOW_NOTHING);
- * trace("myProtectedProperty:   New Permission: " + AccessPermission.get(object, "myProtectedProperty"));
- * object.myNormalProperty = "newMyNormalPropertyValue";
- * object.myProtectedProperty = "newMyProtectedPropertyValue";
- * trace("myNormalProperty:      Value After Overwriting: " + object.myNormalProperty);
- * trace("myProtectedProperty:   Value After Overwriting: " + object.myProtectedProperty);
- * for (var i:String in object) {
- *   trace(i + ":      Found In For..In Loop, Value: " + object[i]);
- * }
- * delete object.myNormalProperty;
- * delete object.myProtectedProperty;
- * trace("myNormalProperty:      Value After Deletion: " + object.myNormalProperty);
- * trace("myProtectedProperty:   Value After Deletion: " + object.myProtectedProperty);</code>
+ * <code>
+ *   var object:Object = new Object();
+ *   object.myNormalProperty = "myNormalPropertyValue";
+ *   object.myProtectedProperty = "myProtectedPropertyValue";
+ *   trace("myNormalProperty:      Default Permission: " + AccessPermission.get(object, "myNormalProperty"));
+ *   trace("myProtectedProperty:   Default Permission: " + AccessPermission.get(object, "myProtectedProperty"));
+ *   AccessPermission.set(object, ["myProtectedProperty"], AccessPermission.ALLOW_NOTHING);
+ *   trace("myProtectedProperty:   New Permission: " + AccessPermission.get(object, "myProtectedProperty"));
+ *   object.myNormalProperty = "newMyNormalPropertyValue";
+ *   object.myProtectedProperty = "newMyProtectedPropertyValue";
+ *   trace("myNormalProperty:      Value After Overwriting: " + object.myNormalProperty);
+ *   trace("myProtectedProperty:   Value After Overwriting: " + object.myProtectedProperty);
+ *   for (var i:String in object) {
+ *     trace(i + ":      Found In For..In Loop, Value: " + object[i]);
+ *   }
+ *   delete object.myNormalProperty;
+ *   delete object.myProtectedProperty;
+ *   trace("myNormalProperty:      Value After Deletion: " + object.myNormalProperty);
+ *   trace("myProtectedProperty:   Value After Deletion: " + object.myProtectedProperty);
+ * </code>
  *
  * <p>The output of this example looks as follows:
- * <pre>myNormalProperty:      Default Permission: 0
- * myProtectedProperty:   Default Permission: 0
- * myProtectedProperty:   New Permission: 7
- * myNormalProperty:      Value After Overwriting: newMyNormalPropertyValue
- * myProtectedProperty:   Value After Overwriting: myProtectedPropertyValue
- * myNormalProperty:      Found In For..In Loop, Value: newMyNormalPropertyValue
- * myNormalProperty:      Value After Deletion: undefined
- * myProtectedProperty:   Value After Deletion: myProtectedPropertyValue</pre>
+ * <pre>
+ *   myNormalProperty:      Default Permission: 0
+ *   myProtectedProperty:   Default Permission: 0
+ *   myProtectedProperty:   New Permission: 7
+ *   myNormalProperty:      Value After Overwriting: newMyNormalPropertyValue
+ *   myProtectedProperty:   Value After Overwriting: myProtectedPropertyValue
+ *   myNormalProperty:      Found In For..In Loop, Value: newMyNormalPropertyValue
+ *   myNormalProperty:      Value After Deletion: undefined
+ *   myProtectedProperty:   Value After Deletion: myProtectedPropertyValue
+ * </pre>
  *
  * <p>As you can see the protected property cannot be deleted, overwritten
  * and is hidden from for..in loops, while the non-protected property
  * can be deleted, can be overwritten and can be enumerated.
  *
- * <p>Besides the #get method you can check properties for specific
- * access permissions using the #isEnumerable, #isDeletable and #isOverwritable
- * methods.
+ * <p>Besides the {@link #get} method you can check properties for specific
+ * access permissions using the {@link #isEnumerable}, {@link #isDeletable}
+ * and {@link #isOverwritable} methods.
  *
  * @author Simon Wacker
  */
@@ -134,30 +142,30 @@ class org.as2lib.util.AccessPermission extends BasicClass {
 	 * You can apply the access values
 	 * <table>
 	 *   <tr>
-	 *     <th>#HIDE</th>
+	 *     <th>{@link #HIDE}</th>
 	 *     <td>Hides object from for-in loops.</td>
 	 *   </tr>
 	 *   <tr>
-	 *     <th>#PROTECT_DELETE</th>
+	 *     <th>{@link #PROTECT_DELETE}</th>
 	 *     <td>Protects an object from deletion</td>
 	 *   </tr>
 	 *   <tr>
-	 *     <th>#PROTECT_OVERWRITE</th>
+	 *     <th>{@link #PROTECT_OVERWRITE}</th>
 	 *     <td>Protects an object from overwriting</td>
 	 *   </tr>
 	 *   <tr>
-	 *     <th>#ALLOW_EVERYTHING</th>
+	 *     <th>{@link #ALLOW_EVERYTHING}</th>
 	 *     <td>Allows everything (reading, deleting, over-writing)</td>
 	 *   </tr>
 	 *   <tr>
-	 *     <th>#ALLOW_NOTHING</th>
+	 *     <th>{@link #ALLOW_NOTHING}</th>
 	 *     <td>Allows nothing (reading, deleting, over-writing)</td>
 	 *   </tr>
 	 * </table>
 	 * as fast references.
 	 * 
 	 * You can combine these values as follows:
-	 * #PROTECT_DELETE | #PROTECT_OVERWRITE
+	 * {@link #PROTECT_DELETE} | {@link #PROTECT_OVERWRITE}
 	 * to apply two access permissions.
 	 *
 	 * @param target the object that holds references to the objects the access permissions shall be applied
@@ -174,8 +182,8 @@ class org.as2lib.util.AccessPermission extends BasicClass {
 	 * for a listing of these numbers and the information they represent.
 	 *
 	 * <p>You can also find out what the returned access permission number
-	 * means using the constants #ALLOW_EVERYTHING, #ALLOW_NOTHING, #HIDE,
-	 * #PROTECT_DELETE and #PROTECT_OVERWRITE. The returned number must be
+	 * means using the constants {@link #ALLOW_EVERYTHING}, {@link #ALLOW_NOTHING}, {@link #HIDE},
+	 * {@link #PROTECT_DELETE} and {@link #PROTECT_OVERWRITE}. The returned number must be
 	 * either of these constants or a bitwise or combination of them.
 	 *
 	 * @param target the target object the object resides in
