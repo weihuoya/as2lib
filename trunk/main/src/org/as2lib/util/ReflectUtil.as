@@ -26,7 +26,6 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	private static var cache:Cache = new Cache();
 	private static var classAlgorythm:CacheAlgorythm = new ClassAlgorythm(cache);
 	private static var packageAlgorythm:CacheAlgorythm = new PackageAlgorythm(cache);
-	private static var superClassAlgorythm:ContentAlgorythm = new SuperClassAlgorythm(cache);
 	private static var methodAlgorythm:ContentAlgorythm = new MethodAlgorythm(cache);
 	private static var propertyAlgorythm:ContentAlgorythm = new PropertyAlgorythm(cache);
 	private static var childrenAlgorythm:ContentAlgorythm = new ChildrenAlgorythm(cache);
@@ -70,23 +69,6 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 			packageAlgorythm.execute(package);
 		}
 		return cache.getPackage(package);
-	}
-	
-	/**
-	 * This operation returns the super class based on the passed in ClassInfo instance.
-	 * It first checks if the ClassInfo of the searched for class already exists.
-	 * If not it will use the appropriate ContentAlgorythm to find the class and create a ClassInfo instance of it.
-	 * Otherwise the ClassInfo just will be returned.
-	 * Do algorythm to find and store the super class can be set by you via the setSuperClassAlgorythm() operation.
-	 *
-	 * @param The ClassInfo instance the super class shall be returned.
-	 * @return The ClassInfo instance representing the super class.
-	 */
-	public static function getSuperClassInfo(info:ClassInfo):ClassInfo {
-		if (ObjectUtil.isEmpty(cache.getClass(info.getClass().prototype))) {
-			superClassAlgorythm.execute(info);
-		}
-		return cache.getClass(info.getClass().prototype);
 	}
 	
 	/**
@@ -135,13 +117,6 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	 */
 	public static function setPackageAlgorythm(algorythm:CacheAlgorythm):Void {
 		packageAlgorythm = algorythm;
-	}
-	
-	/** 
-	 * Sets the ContentAlgorythm used by the getSuperClass() operation.
-	 */
-	public static function setSuperClassAlgorythm(algorythm:ContentAlgorythm):Void {
-		superClassAlgorythm = algorythm;
 	}
 	
 	/** 
