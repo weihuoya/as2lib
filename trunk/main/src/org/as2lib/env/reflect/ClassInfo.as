@@ -26,6 +26,7 @@ import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.NoSuchClassMemberException;
 import org.as2lib.env.EnvConfig;
 import org.as2lib.env.reflect.ReflectConfig;
+import org.as2lib.env.overload.Overload;
 
 /**
  * ClassInfo represents a real class in the Flash environment. This class is used
@@ -152,13 +153,25 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	}
 	
 	/**
+	 * Overload
+	 * #getMethodByName()
+	 * #getMethodByMethod()
+	 */
+	public function getMethod(method):MethodInfo {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String], getMethodByName);
+		overload.addHandler([Function], getMethodByMethod);
+		return overload.forward(arguments);
+	}
+	
+	/**
 	 * Returns the MethodInfo corresponding to the passed method name.
 	 *
 	 * @param methodName the name of the method you wanna obtain
 	 * @return the MethodInfo correspoinding to the method name
 	 * @throws org.as2lib.env.reflect.NoSuchClassMemberException if the method you tried to obtain does not exist
 	 */
-	public function getMethod(methodName:String):MethodInfo {
+	public function getMethodByName(methodName:String):MethodInfo {
 		var iterator:Iterator = getMethods().iterator();
 		var method:MethodInfo;
 		while (iterator.hasNext()) {
@@ -168,6 +181,27 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 			}
 		}
 		throw new NoSuchClassMemberException("The method with the name [" + methodName + "] you tried to obtain does not exist.",
+										this,
+										arguments);
+	}
+	
+	/**
+	 * Returns the MethodInfo corresponding to the passed method.
+	 *
+	 * @param method the method you wanna obtain the corresponding MethodInfo
+	 * @return the MethodInfo correspoinding to the method
+	 * @throws org.as2lib.env.reflect.NoSuchClassMemberException if the method you tried to obtain does not exist
+	 */
+	public function getMethodByMethod(concreteMethod:Function):MethodInfo {
+		var iterator:Iterator = getMethods().iterator();
+		var method:MethodInfo;
+		while (iterator.hasNext()) {
+			method = MethodInfo(iterator.next());
+			if (method.getMethod() == concreteMethod) {
+				return method;
+			}
+		}
+		throw new NoSuchClassMemberException("The method [" + concreteMethod + "] you tried to obtain does not exist in this class.",
 										this,
 										arguments);
 	}
@@ -186,13 +220,25 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	}
 	
 	/**
+	 * Overload
+	 * #getPropertyByName()
+	 * #getPropertyByProperty()
+	 */
+	public function getProperty(property):PropertyInfo {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String], getPropertyByName);
+		overload.addHandler([Function], getPropertyByProperty);
+		return overload.forward(arguments);
+	}
+	
+	/**
 	 * Returns the PropertyInfo corresponding to the passed property name.
 	 *
 	 * @param propertyName the name of the property you wanna obtain
 	 * @return the PropertyInfo correspoinding to the property's name
 	 * @throws org.as2lib.env.reflect.NoSuchClassMemberException if the property you tried to obtain does not exist
 	 */
-	public function getProperty(propertyName:String):PropertyInfo {
+	public function getPropertyByName(propertyName:String):PropertyInfo {
 		var iterator:Iterator = getProperties().iterator();
 		var property:PropertyInfo;
 		while (iterator.hasNext()) {
@@ -202,6 +248,27 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 			}
 		}
 		throw new NoSuchClassMemberException("The property with the name [" + propertyName + "] you tried to obtain does not exist.",
+										this,
+										arguments);
+	}
+	
+	/**
+	 * Returns the PropertyInfo corresponding to the passed property.
+	 *
+	 * @param property the property the corresponding PropertyInfo shall be returned
+	 * @return the PropertyInfo correspoinding to the property
+	 * @throws org.as2lib.env.reflect.NoSuchClassMemberException if the property you tried to obtain does not exist
+	 */
+	public function getPropertyByProperty(concreteProperty:Function):PropertyInfo {
+		var iterator:Iterator = getProperties().iterator();
+		var property:PropertyInfo;
+		while (iterator.hasNext()) {
+			property = PropertyInfo(iterator.next());
+			if (property.getName() == concreteProperty) {
+				return property;
+			}
+		}
+		throw new NoSuchClassMemberException("The property [" + concreteProperty + "] you tried to obtain does not exist in this class.",
 										this,
 										arguments);
 	}
