@@ -14,6 +14,7 @@ class broadcasting.ArrayTest implements TestCase {
 	private var content:Array;
 	
 	function ArrayTest () {
+		trace ("constructor");
 		this.content = new Array();
 		this.content.push(new ExampleCall());
 		this.content.push(new ExampleCall());
@@ -24,6 +25,7 @@ class broadcasting.ArrayTest implements TestCase {
 	}
 	
 	public function run(Void):Void {
+		trace ("run");
 		for(var i=0; i<this.content.length; i++) {
 			this.content[i]["call"]();
 		}

@@ -1,6 +1,6 @@
 ﻿import org.as2lib.test.speed.TestCase;
 import broadcasting.ExampleCall;
-import org.as2lib.data.TypedArray;
+import org.as2lib.data.holder.TypedArray;
 /**
  * Test for a minimal Eventhandling with an Array.
  * Runs a test applying to an Array with 6 contentNodes.
@@ -26,7 +26,7 @@ class broadcasting.TypedArrayTest implements TestCase {
 	
 	public function run(Void):Void {
 		for(var i=0; i<this.content.length; i++) {
-			this.content[i]["call"]();
+			this.content.getValue(i)["call"]();
 		}
 	}
 	public function getName(Void):String {
