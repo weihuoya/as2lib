@@ -190,3 +190,9 @@
     :: 07/02/04 :: Simon Wacker ::
 
         > changed '!message' in org.as2lib.env.except.AbstractException.new() to '(message == undefined)' because passing a blank String resulted in a failure
+
+
+
+    :: 07/02/04 :: Simon Wacker ::
+
+        > added org.as2lib.util.StringUtil.endsWith()
