@@ -8,7 +8,7 @@ import org.as2lib.env.event.Consumeable;
 import org.as2lib.core.BasicClass;
 
 /**
- * @version 1.0
+ * @author Simon Wacker
  */
 class org.as2lib.env.event.EventBroadcaster extends BasicClass {
 	/** A reference to the NormalEventDispatcher. */
@@ -33,7 +33,8 @@ class org.as2lib.env.event.EventBroadcaster extends BasicClass {
 	
 	/**
 	 * Sets a new dispatcher to be used by the dispatch method.
-	 * @param newDispatcher
+	 *
+	 * @param dispatcher the new dispatcher to be used
 	 */
 	public function setDispatcher(newDispatcher:EventDispatcher):Void {
 		dispatcher = newDispatcher;
@@ -41,7 +42,8 @@ class org.as2lib.env.event.EventBroadcaster extends BasicClass {
 	
 	/**
 	 * Adds a new listener to the list of listeners.
-	 * @param listener
+	 *
+	 * @param listener the new listener
 	 */
 	public function addListener(listener:EventListener):Void {
 		listeners.push(listener);
@@ -49,7 +51,8 @@ class org.as2lib.env.event.EventBroadcaster extends BasicClass {
 	
 	/**
 	 * Removes a listener from the list of listeners.
-	 * @param listener
+	 *
+	 * @param listener the listener that shall be removed
 	 */
 	public function removeListener(listener:EventListener):Void {
 		listeners.remove(listener);
@@ -63,7 +66,9 @@ class org.as2lib.env.event.EventBroadcaster extends BasicClass {
 	}
 	
 	/**
-	 * @return A copy of the listeners array
+	 * Returns a copy of all registered listeners.
+	 *
+	 * @return a copy of the ListenerArray
 	 */
 	public function getAllListener(Void):ListenerArray {
 		var result:ListenerArray = new ListenerArray();
@@ -75,8 +80,9 @@ class org.as2lib.env.event.EventBroadcaster extends BasicClass {
 	}
 	
 	/**
-	 * Dispatches the events associated with the name cotained in the EventInfo instance.
-	 * @param event
+	 * Dispatches to all registered EventListeners.
+	 *
+	 * @param event the EventInfo to be passed to the operation of the EventListeners
 	 */
 	public function dispatch(event:EventInfo):Void {
 		if (event instanceof Consumeable) {
