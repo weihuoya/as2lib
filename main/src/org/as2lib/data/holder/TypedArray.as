@@ -3,7 +3,7 @@
 /**
  * Acts like a normal Array but assures that only objects from one and the same type are added to the Array.
  */
-class org.as2lib.data.TypedArray {
+class org.as2lib.data.holder.TypedArray {
 	public static var CASEINSENSITIVE = Array.CASEINSENSITIVE;
 	public static var DESCENDING = Array.DESCENDING;
 	public static var NUMERIC = Array.NUMERIC;
