@@ -254,6 +254,20 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	}
 	
 	/**
+	 * Tests whether a String ends with the searchString.
+	 *
+	 * @param string the String to be checked
+	 * @param searchString the String that is being searched for at the end string
+	 * @return true if string starts with searchString
+	 */
+	public static function endsWith(string:String, searchString:String):Boolean {
+		if (string.lastIndexOf(searchString) == (string.length - searchString.length)) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * Adds a space indent to a existing String.
 	 * This method is useful for different kind of ASCII Output writing.
 	 * It generates a dynamic size of space indents in front of every
