@@ -3,20 +3,13 @@ import org.as2lib.data.io.conn.ConnectorListener;
 import org.as2lib.data.io.conn.ConnectorRequest;
 import org.as2lib.data.io.conn.ConnectorError;
 import org.as2lib.data.io.conn.ConnectorResponse;
-
-import org.as2lib.data.io.conn.local.ConnectionReservedException;
-import org.as2lib.env.except.IllegalArgumentException;
-
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.EventInfo;
-
 import org.as2lib.Config;
 import org.as2lib.env.out.OutAccess;
-
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
-
 import org.as2lib.data.holder.TypedArray;
 import org.as2lib.data.iterator.ArrayIterator;
 
@@ -35,14 +28,12 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	private var eventBroadcaster:EventBroadcaster;
 	
 	/** 
-	 * Part of connection id used to identify the correct local connection.
-	 * In Server not neccessary.
+	 * Defines domain of which client should be allowed
 	 */
 	private var host:String;
 	
 	/** 
-	 * Part of connection id used to identify the correct local connection.
-	 * In Server not neccessary.
+	 * Defines additional domain of which client should be allowed
 	 */
 	private var path:String;
 	
@@ -62,7 +53,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	private var sender:LocalConnection;
 	
 	/* Stores domain, used by allowDomain, for security */
-	private var domain:String;
+	//private var domain:String;
 
 	/* List of clients */
 	private var clients:TypedArray;
@@ -70,16 +61,21 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	/* Standard debug output */
 	private var aOut:OutAccess;
 	
+	/*private var cacheClient:String;
+	private var connTests:Number = 10;*/
+	
 	/**
 	 * Constructs a new LocalServer instance.
 	 * Initializes array for parameters, list of clients, the out object and
 	 * the method, which is called on the clients.
 	 */
 	public function LocalServer(Void) {
+		aOut = Config.getOut();
+		aOut.debug(getClass().getName()+" - Constructor");
+		
 		eventBroadcaster = Config.getEventBroadcasterFactory().createEventBroadcaster();
 		params = new Array();
 		clients = new TypedArray(String);
-		aOut = Config.getOut();
 		clientMethod = "clientMethod";
 	}
 	
@@ -88,10 +84,9 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	 * used by LocalClients to establish a connection to LocalServer
 	 */
 	public function initConnection(Void):Void {
-		aOut.debug("initConnection");
+		aOut.debug(getClass().getName()+".initConnection");
 		if(!connect("register")){
-			throw new IllegalArgumentException("Connection name 'register' is already used by another LocalConnection",this,arguments);
-			//eventBroadcaster.dispatch(new ConnectorError("Connection name 'register' is already used by another LocalConnection",this,arguments,true,false));
+			eventBroadcaster.dispatch(new ConnectorError("Connection name 'register' is already used by another LocalConnection",this,arguments,true,false));
 		}
 	}
 	
@@ -102,7 +97,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	 * 			 which a connection from the server can be established.
 	 */
 	public function addClient(id:String):Void{
-		aOut.debug("addClient: "+id);
+		aOut.debug(getClass().getName()+".addClient: "+id);
 		
 		if(clients.contains(id)) return;
 		
@@ -116,21 +111,28 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	 * parameters.
 	 */
 	private function dispatch(Void):Void{
-		aOut.debug("dispatch");
+		aOut.debug(getClass().getName()+".dispatch");
 		
 		var l:Number = clients.length;
+		
+		if(l==0){
+			eventBroadcaster.dispatch(new ConnectorError("No clients added!",this,arguments,false,true));
+			return;
+		}
+		
 		var args:Array = new Array();
 		sender = new LocalConnection();
 		
-		aOut.debug("clients.length:"+l);
+		aOut.debug(getClass().getName()+".clients.length:"+l);
 		
 		args.push(clientMethod);
 		args.push(method);
 		args = args.concat(params);
 		
 		while(l--){
-			aOut.debug("dispatch: "+clients.getValue(l));
-			sender.send.apply(null,[clients.getValue(l)].concat(args));
+			aOut.debug(getClass().getName()+".dispatch: "+clients.getValue(l));
+			sender.send.apply(this,[clients.getValue(l)].concat(args));
+			//cacheClient = clients.getValue(l);
 		}
 	}
 	
@@ -209,7 +211,6 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		return params;
 	}
 	
-	
 	/**
 	 * Is called if an error occured while trying to establish a connection.
 	 * If an error is caught it is tried again to connect until an connection 
@@ -218,32 +219,49 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	 * @param infoObj  can be used to identify error/ in this case only infoObj.level="error" is possible
 	 */
 	public function onStatus(infoObj){
-		aOut.debug("onStatus: "+infoObj.level);
-		/*if (infoObject.level!="error"){
-			connect(connectionName);
-		connected=true
-		}
-		else {
-			if (tries--){
-				searching.text = "Waiting for Clients ("+tries+" attempts left)"
-				iv=setInterval(initConnection,1000)
-			}
-		}*/
+		aOut.debug(getClass().getName()+".onStatus: "+infoObj.level);
 		if(infoObj.level == "error") {
 			eventBroadcaster.dispatch(new ConnectorError("There is no receiver with this defined connection identifier",this,arguments,true,false));
 		}
+		if(infoObj.level == "status") {
+			eventBroadcaster.dispatch(new ConnectorResponse("Serverbroadcast was successful!"));
+		}
 	}
 	
+	/**
+	 * Is called when a client tries to connect to server. It checks if the client is from an
+	 * allowed domain.
+	 * @param clientDomain  domain from sending client
+	 */
+	public function allowDomain(clientDomain:String){
+		aOut.debug(getClass().getName()+".allowDomain: "+clientDomain);
+		if(host){
+			return (clientDomain == host || clientDomain == path);
+		}
+		else{
+			return true;
+		}
+	}
+	
+	/**
+	 * @see org.as2lib.data.io.conn.Connector
+	 */
 	public function addListener(l:ConnectorListener):Void {
-		//trace("addListener");
+		aOut.debug(getClass().getName()+".addListener");
 		eventBroadcaster.addListener(l);
 	}
 	
+	/**
+	 * @see org.as2lib.data.io.conn.Connector
+	 */
 	public function removeListener(l:ConnectorListener):Void {
-		//trace("removeListener");
+		aOut.debug(getClass().getName()+".removeListener");
 		eventBroadcaster.removeListener(l);
 	}
 	
+	/**
+	 * @see org.as2lib.data.io.conn.Connector
+	 */
 	public function handleRequest(r:ConnectorRequest):Void {
 		var h:String = r.getHost();
 		var p:String = r.getPath();
