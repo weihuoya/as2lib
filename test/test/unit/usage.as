@@ -27,7 +27,7 @@ test.unit.org.as2lib.data.holder.array.TTypedArray;
 test.unit.org.as2lib.data.holder.list.TPriorityList;
 test.unit.org.as2lib.data.holder.list.TArrayList;
 test.unit.org.as2lib.data.holder.TProtectedIterator;
-test.unit.org.as2lib.data.holder.map.TMapIterator;
+test.unit.org.as2lib.data.holder.map.TValueMapIterator;
 test.unit.org.as2lib.data.holder.map.THashMap;
 test.unit.org.as2lib.data.holder.map.TPriorityMap;
 test.unit.org.as2lib.data.holder.map.TTypedMap;

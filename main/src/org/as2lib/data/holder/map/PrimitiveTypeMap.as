@@ -16,9 +16,9 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.map.MapIterator;
+import org.as2lib.data.holder.map.ValueMapIterator;
+import org.as2lib.data.holder.map.KeyMapIterator;
 import org.as2lib.data.holder.Iterator;
-import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.data.holder.HolderConfig;
 
 /**
@@ -27,6 +27,7 @@ import org.as2lib.data.holder.HolderConfig;
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.map.PrimitiveTypeMap extends BasicClass implements Map {
+	
 	/** Contains the mappings. */
 	private var map:Object;
 	
@@ -164,7 +165,21 @@ class org.as2lib.data.holder.map.PrimitiveTypeMap extends BasicClass implements 
 	 * @see org.as2lib.data.holder.Map#iterator()
 	 */
 	public function iterator(Void):Iterator {
-		return (new MapIterator(this));
+		return (new ValueMapIterator(this));
+	}
+	
+	/**
+	 * @see org.as2lib.data.holder.Map#valueIterator()
+	 */
+	public function valueIterator(Void):Iterator {
+		return iterator();
+	}
+	
+	/**
+	 * @see org.as2lib.data.holder.Map#keyIterator()
+	 */
+	public function keyIterator(Void):Iterator {
+		return new KeyMapIterator(this);
 	}
 
 	/**
@@ -187,4 +202,5 @@ class org.as2lib.data.holder.map.PrimitiveTypeMap extends BasicClass implements 
 	public function toString(Void):String {
 		return HolderConfig.getMapStringifier().execute(this);
 	}
+	
 }

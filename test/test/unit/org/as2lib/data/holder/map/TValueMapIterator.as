@@ -17,14 +17,14 @@
 import test.unit.org.as2lib.data.holder.AbstractTIterator;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.data.holder.map.HashMap;
-import org.as2lib.data.holder.map.MapIterator;
+import org.as2lib.data.holder.map.ValueMapIterator;
 
 /**
  * Specific Iterator Test for the MapIterator
  * 
  * @author Martin Heidegger
  */
-class test.unit.org.as2lib.data.holder.map.TMapIterator extends AbstractTIterator {
+class test.unit.org.as2lib.data.holder.map.TValueMapIterator extends AbstractTIterator {
 	
 	/* Array content */
 	private var content:Array;
@@ -52,7 +52,7 @@ class test.unit.org.as2lib.data.holder.map.TMapIterator extends AbstractTIterato
 		map.put("k", content[10]);
 		map.put("l", content[11]);
 		
-		iterator = new MapIterator(map);
+		iterator = new ValueMapIterator(map);
 	}
 	
 	/**

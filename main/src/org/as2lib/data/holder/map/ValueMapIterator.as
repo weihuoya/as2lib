@@ -14,34 +14,34 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.data.holder.Map;
-import org.as2lib.core.BasicClass;
 
 /**
- * MapIterator is used to iterate over a Map.
+ * ValueMapIterator is used to iterate over the values of a map.
  *
  * @author Michael Hermann
  * @author Simon Wacker
  */
-class org.as2lib.data.holder.map.MapIterator extends BasicClass implements Iterator {
+class org.as2lib.data.holder.map.ValueMapIterator extends BasicClass implements Iterator {
 	
 	/** The target data holder to iterate over. */
 	private var target:Map;
 	
-	/** The ArrayIterator used as a helper. */
+	/** The iterator used as a helper. */
 	private var iterator:ArrayIterator;
 	
 	/** The presently selected key. */
 	private var key;
 	
 	/**
-	 * Constructs a new MapIterator.
+	 * Constructs a new ValueMapIterator instance.
 	 *
-	 * @param target the Map to iterate over
+	 * @param target the map to iterate over
 	 */
-	public function MapIterator(newTarget:Map) {
+	public function ValueMapIterator(newTarget:Map) {
 		target = newTarget;
 		iterator = new ArrayIterator(target.getKeys());
 	}

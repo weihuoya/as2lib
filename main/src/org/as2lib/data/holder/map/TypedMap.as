@@ -16,7 +16,6 @@
  */
 
 import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.map.MapIterator;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.core.BasicClass;
@@ -125,6 +124,20 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	 */
 	public function iterator(Void):Iterator {
 		return map.iterator();
+	}
+	
+	/**
+	 * @see org.as2lib.data.holder.Map#valueIterator()
+	 */
+	public function valueIterator(Void):Iterator {
+		return map.valueIterator();
+	}
+	
+	/**
+	 * @see org.as2lib.data.holder.Map#keyIterator()
+	 */
+	public function keyIterator(Void):Iterator {
+		return map.keyIterator();
 	}
 	
 	/**

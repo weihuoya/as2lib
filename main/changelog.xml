@@ -6,6 +6,11 @@
     <year value="2005">
        <month value="1">
          <day value="19">
+           <entry type="remove" package="org.as2lib.data.holder.map" class="MapIterator">Added KeyMapIterator and ValueMapIterator instead.</entry>
+           <entry type="add" package="org.as2lib.data.holder.map" class="KeyMapIterator">Iterates over the keys of a map.</entry>
+           <entry type="add" package="org.as2lib.data.holder.map" class="ValueMapIterator">Iterates over the values of a map.</entry>
+           <entry type="add" package="org.as2lib.data.holder.map" class="Map" method="keyIterator(Void):Iterator">Returns an iterator to iterate over the keys of a map.</entry>
+           <entry type="add" package="org.as2lib.data.holder.map" class="Map" method="valueIterator(Void):Iterator">Returns an iterator to iterate over the values of a map.</entry>
            <entry type="change">Changed all occurences of type FunctionArguments to Array. Done change because FunctionArguments cannot be instantiated, FunctionArguments is not explicitely needed, to allow for better testing.</entry>
          </day>
          <day value="16">
