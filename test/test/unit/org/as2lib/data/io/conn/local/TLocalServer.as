@@ -5,34 +5,36 @@ import test.org.as2lib.data.io.conn.ExampleListener;
 
 class test.org.as2lib.data.io.conn.local.TLocalServer extends Test{
 	
-	private var connector:LocalConnector;
+	private var server:LocalServer;
 	
-	public function TLocalConnectorImplementation() {
+	public function TLocalServer(Void) {
 	}
    
-	public function connectorTest(Void):Void{
-	   	connector = new LocalConnector();
+	public function serverTest(Void):Void{
+	   	server = new LocalServer();
 		
-		connector.setHost("www.as2lib.org");
-		connector.setPath("/testConnection");
-		connector.setMethod("draw");
-		connector.setParams(10,25);
+		//restrict domain access
+		server.setHost("localhost");
+		server.setPath("www.as2lib.org");
+
+		server.setMethod("draw");
+		server.setParams(10,25);
 		
-		assertEquals(connector.getHost(),"www.as2lib.org");
-		assertEquals(connector.getPath(),"/testConnection");
-		assertEquals(connector.getMethod(),"draw");
+		assertEquals(server.getHost(),"localhost");
+		assertEquals(server.getPath(),"www.as2lib.org");
+		assertEquals(server.getMethod(),"draw");
 		
-		var aParams:Array = connector.getParams();
+		var aParams:Array = server.getParams();
 		assertEquals(aParams[0],10);
 		assertEquals(aParams[1],25);
 		
-		connector.handleRequest(new ConnectorRequest("www.as2lib.org","/anotherConnection","walk",40,33));
+		server.handleRequest(new ConnectorRequest("www.as2lib.net","localhost","walk",40,33));
 		
-		assertEquals(connector.getHost(),"www.as2lib.org");
-		assertEquals(connector.getPath(),"/anotherConnection");
-		assertEquals(connector.getMethod(),"walk");
+		assertEquals(server.getHost(),"www.as2lib.net");
+		assertEquals(server.getPath(),"localhost");
+		assertEquals(server.getMethod(),"walk");
 		
-		var aParams:Array = connector.getParams();
+		var aParams:Array = server.getParams();
 		assertEquals(aParams[0],40);
 		assertEquals(aParams[1],33);
 	}
@@ -40,17 +42,16 @@ class test.org.as2lib.data.io.conn.local.TLocalServer extends Test{
 	public function listenerTest(Void):Void {
 		
 		var remListener:ExampleListener = new ExampleListener();
-		connector.addListener(new ExampleListener());
-		connector.addListener(remListener);
-		connector.addListener(new ExampleListener());
+		server.addListener(new ExampleListener());
+		server.addListener(remListener);
+		server.addListener(new ExampleListener());
 		
-		connector.removeListener(remListener);
-		
-		connector.initConnection();
+		server.removeListener(remListener);
+		server.handleRequest(new ConnectorRequest("www.as2lib.net","localhost","walk",40,33));
 	}
 	
 	public function testLocalServer(Void):Void {
-		connectorTest();
-		//listenerTest();
+		serverTest();
+		listenerTest();
 	}
 }
