@@ -22,64 +22,82 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.util.ObjectUtil;
 
 /**
- * Cache is used to cache classes and packages. The caching of classes and packages
- * leads to higher performance. You also must cache them because for example the
- * parent of two classes residing in one package should be the same PackageInfo
- * instance.
+ * Cache chaches classes and packages.
+ *
+ * <p>The caching of classes and packages leads to higher performance. 
+ * You also must cache them because for example the parent of two classes 
+ * residing in the same package should be the same PackageInfo instance.
+ *
+ * <p>The cache is mostly used internally. But you can also use it to
+ * add ClassInfo or PackageInfo instances directly so that they do not
+ * have to be searched for. This can improve the performance dramatically
+ * with classes or packages that are needed quite often.
  *
  * @author Simon Wacker
  */
 interface org.as2lib.env.reflect.Cache extends BasicInterface {
 	
 	/**
-	 * Releases all class and package infos that have been cached so
-	 * far.
-	 */
-	public function releaseAll(Void):Void;
-	
-	/**
-	 * Returns the ClassInfo representing either the class the object was instantiated
-	 * of or the class that was passed in. If there is no corresponding ClassInfo
-	 * cached nothing will be returned.
+	 * Returns the class info representing either the class the object was
+	 * instantiated of or the class that was passed in.
 	 *
-	 * @param object the instance or class the appropriate ClassInfo shall be returned
-	 * @return the ClassInfo representing the class
-	 * @throws IllegalArgumentException if the passed in object is neither of type function nor object
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>There is no corresponding ClassInfo instance cached.</li>
+	 *   <li>The passed-in object is null or undefined.</li>
+	 * </ul>
+	 *
+	 * @param object the instance or class the appropriate class info shall be returned
+	 * @return the class info representing the class
 	 */
 	public function getClass(object):ClassInfo;
 	
 	/**
-	 * Adds a ClassInfo to the list of cached ClassInfos and returns the added
-	 * ClassInfo.
+	 * Adds a class info to the list of cached class infos and returns the
+	 * added class info.
 	 * 
-	 * @param info the ClassInfo that shall be added
-	 * @return the added ClassInfo
+	 * @param info the class info to add
+	 * @return the added class info
 	 */
 	public function addClass(info:ClassInfo):ClassInfo;
 	
 	/**
-	 * Returns the PackageInfo representing the package. If the appropriate PackageInfo
-	 * has not been cached already and does thus not exist nothing will be returned.
+	 * Returns the package info representing the package. 
 	 *
-	 * @param package the package the appropriate PackageInfo shall be found
-	 * @return the PackageInfo representing the package
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>There is no corresponding PackageInfo instance cached.</li>
+	 *   <li>The passed-in package is null or undefined.</li>
+	 * </ul>
+	 *
+	 * @param package the package the appropriate package info shall be returned
+	 * @return the pakcage info representing the passed-in package
 	 */
 	public function getPackage(package):PackageInfo;
 	
 	/**
-	 * Adds a PackageInfo to the list of cache PackageInfos and returns teh added
-	 * PackageInfo.
+	 * Adds a package info to the cache and returns the added package info.
 	 *
-	 * @param info the PackageInfo that shall be added
-	 * @return the added PackageInfo
+	 * @param info the package info to add
+	 * @return the added package info
 	 */
 	public function addPackage(info:PackageInfo):PackageInfo;
 	
 	/**
-	 * Returns the root of the whole hierachy.
+	 * Returns the root package of the whole package hierarchy.
 	 *
-	 * @return the root
+	 * <p>The root package is also refered to as the default package.
+	 *
+	 * <p>The root/default package set determines where the ClassAlgorithm
+	 * and PackageAlgorithm start their search.
+	 *
+	 * @return the root/default package
 	 */
 	public function getRoot(Void):PackageInfo;
+	
+	/**
+	 * Releases all cached class and package infos.
+	 */
+	public function releaseAll(Void):Void;
 	
 }

@@ -19,13 +19,23 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.env.reflect.MethodInfo;
 
 /**
- * MethodInfoStringifier is used to stringify MethodInfos.
+ * MethodInfoStringifier stringifies MethodInfo instances.
  *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.string.MethodInfoStringifier extends BasicClass implements Stringifier {
+	
 	/**
-	 * @see org.as2lib.util.string.Stringifier#execute()
+	 * Returns a string representation of the passed-in MethodInfo
+	 * instance.
+	 *
+	 * <p>The string representation is composed as follows:
+	 * [fullQualifiedDeclaringTypeName].[methodName]()
+	 * or if static:
+	 * static [fullQualifiedDeclaringTypeName].[methodName]()
+	 *
+	 * @param target an instance of type MethodInfo that shall be stringified
+	 * @return the string representation of the passed-in method info
 	 */
 	public function execute(target):String {
 		var method:MethodInfo = MethodInfo(target);
@@ -37,4 +47,5 @@ class org.as2lib.env.reflect.string.MethodInfoStringifier extends BasicClass imp
 		result += "." + method.getName() + "()";
 		return result;
 	}
+	
 }

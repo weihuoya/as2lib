@@ -19,13 +19,23 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.env.reflect.PropertyInfo;
 
 /**
- * PropertyInfoStringifier is used to stringify PropertyInfos.
+ * PropertyInfoStringifier stringifies PropertyInfo instances.
  *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.string.PropertyInfoStringifier extends BasicClass implements Stringifier {
+	
 	/**
-	 * @see org.as2lib.util.string.Stringifier#execute()
+	 * Returns a string representation of the passed-in PropertyInfo
+	 * instance.
+	 *
+	 * <p>The string representation is composed as follows:
+	 * [fullQualifiedDeclaringTypeName].[propertyName]
+	 * or if static:
+	 * static [fullQualifiedDeclaringTypeName].[propertyName]
+	 *
+	 * @param target an instance of type PropertyInfo that shall be stringified
+	 * @return the string representation of the passed-in property info
 	 */
 	public function execute(target):String {
 		var property:PropertyInfo = PropertyInfo(target);
@@ -37,4 +47,5 @@ class org.as2lib.env.reflect.string.PropertyInfoStringifier extends BasicClass i
 		result += "." + property.getName();
 		return result;
 	}
+	
 }
