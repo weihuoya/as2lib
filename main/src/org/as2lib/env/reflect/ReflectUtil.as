@@ -36,25 +36,27 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	
 	public static function getTypeNameForInstance(instance):String {
 		if (instance == null) return null;
-		// MovieClips on the stage do not have a '__constructor__' but a 'constructor' variable.
-		return getTypeNameForType(instance.__constructor__ ? instance.__constructor__ : instance.constructor);
+		_global.ASSetPropFlags(_global, null, 0, true);
+		// The '__constructor__' or 'constructor' properties may not be correct with dynamic instances.
+		// We thus use the '__proto__' property that referes to the prototype of the type.
+		return getTypeNameForPrototypeByPackage(instance.__proto__, _global, "");
 	}
 	
 	public static function getTypeNameForType(type:Function):String {
 		if (!type) return null;
 		_global.ASSetPropFlags(_global, null, 0, true);
-		return getTypeNameForTypeByPackage(type, _global, "");
+		return getTypeNameForPrototypeByPackage(type.prototype, _global, "");
 	}
 	
-	private static function getTypeNameForTypeByPackage(c:Function, p, n:String):String {
+	private static function getTypeNameForPrototypeByPackage(c, p, n:String):String {
 		for (var r:String in p) {
 			try {
 				// flex stores every class in _global and in its actual package
 				// e.g. org.as2lib.core.BasicClass is stored in _global with name org_as2lib_core_BasicClass
 				// the first part of the if-clause excludes these extra stored classes
-				if ((!eval("_global." + r.split("_").join(".")) || r.indexOf("_") < 0) && p[r] == c) return (n + r);
+				if ((!eval("_global." + r.split("_").join(".")) || r.indexOf("_") < 0) && p[r].prototype == c) return (n + r);
 				if (p[r].__constructor__ == Object) {
-					r = getTypeNameForTypeByPackage(c, p[r], n + r + ".");
+					r = getTypeNameForPrototypeByPackage(c, p[r], n + r + ".");
 					if (r) return r;
 				}
 			} catch (e) {
@@ -73,7 +75,11 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	
 	public static function getMethodNameByInstance(method:Function, instance):String {
 		if (!method || instance == null) return null;
-		return getMethodNameByType(method, instance.__constructor__);
+		// MovieClips on the stage do not have a '__constructor__' but a 'constructor' variable.
+		// Note that this causes problems with dynamically created inheritance chains like
+		// myMovieClip.__proto__ = MyClass.prototype because the '__constructor__' and 'constructor' 
+		// properties do not get changed.
+		return getMethodNameByType(method, instance.__constructor__ ? instance.__constructor__ : instance.constructor);
 	}
 	
 	public static function getMethodNameByType(method:Function, type:Function):String {
@@ -137,7 +143,11 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	
 	public static function isConstructorByInstance(constructor:Function, instance):Boolean {
 		if (!constructor || instance == null) return false;
-		return isConstructorByType(constructor, instance.__constructor__);
+		// MovieClips on the stage do not have a '__constructor__' but a 'constructor' variable.
+		// Note that this causes problems with dynamically created inheritance chains like
+		// myMovieClip.__proto__ = MyClass.prototype because the '__constructor__' and 'constructor' 
+		// properties do not get changed.
+		return isConstructorByType(constructor, instance.__constructor__ ? instance.__constructor__ : instance.constructor);
 	}
 	
 	public static function isConstructorByType(constructor:Function, type:Function):Boolean {

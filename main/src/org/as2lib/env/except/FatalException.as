@@ -68,7 +68,7 @@ class org.as2lib.env.except.FatalException extends AbstractThrowable implements 
 	 * 'arguments'.
 	 *
 	 * @param message the message that describes in detail what the problem is
-	 * @param thrower the object that declares the method that throws this throwable
+	 * @param thrower the object that declares the method that throws this fatal exception
 	 * @param args the arguments of the throwing method
 	 */
 	public function FatalException(message:String, thrower, args:Array) {
