@@ -15,10 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.test.mock.ArgumentsMatcher;
 import org.as2lib.test.mock.support.DefaultArgumentsMatcher;
-import org.as2lib.test.mock.AssertionFailedError;
 
 /**
  * @author Simon Wacker
@@ -31,7 +29,7 @@ class org.as2lib.test.mock.MethodCall extends BasicClass {
 	
 	public function MethodCall(methodName:String, args:Array) {
 		this.methodName = methodName;
-		this.args = args;
+		this.args = args ? args : new Array();
 	}
 	
 	public function getMethodName(Void):String {
@@ -52,9 +50,9 @@ class org.as2lib.test.mock.MethodCall extends BasicClass {
 	}
 	
 	public function matches(methodCall:MethodCall):Boolean {
-		if (methodName != methodCall.getMethodName())
-			throw new IllegalArgumentException("Method names [" + methodName + ", " + methodCall.getMethodName() + "] must be the same.", this, arguments);
-		return getArgumentsMatcher().matchArguments(args, methodCall.getArguments());
+		if (!methodCall) return false;
+		if (methodName != methodCall.getMethodName()) return false;
+		return getArgumentsMatcher().matchArguments(args, methodCall.getArguments() ? methodCall.getArguments() : new Array());
 	}
 	
 	public function toString(Void):String {

@@ -16,7 +16,6 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
 import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
 import org.as2lib.env.reflect.PackageInfo;
@@ -42,7 +41,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TPropertyAlgorithm extends Test
 	}
 	
 	public function testExecuteWithArgumentWhoseGetTypeMethodReturnsNull(Void):Void {
-		var ic:MockControl = new SimpleMockControl(ClassInfo);
+		var ic:MockControl = new MockControl(ClassInfo);
 		var i:ClassInfo = ic.getMock();
 		i.getType();
 		ic.setReturnValue(null);
@@ -55,7 +54,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TPropertyAlgorithm extends Test
 	}
 	
 	public function testExecute(Void):Void {
-		var pc:MockControl = new SimpleMockControl(ClassInfo);
+		var pc:MockControl = new MockControl(ClassInfo);
 		var p:ClassInfo = pc.getMock();
 		p.getType();
 		pc.setReturnValue(test.unit.org.as2lib.env.reflect.treflect.SubClass);
@@ -98,7 +97,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TPropertyAlgorithm extends Test
 	}
 	
 	public function testExecuteByClassWithoutMethods(Void):Void {
-		var pc:MockControl = new SimpleMockControl(ClassInfo);
+		var pc:MockControl = new MockControl(ClassInfo);
 		var p:ClassInfo = pc.getMock();
 		p.getType();
 		pc.setReturnValue(test.unit.org.as2lib.env.reflect.treflect.SuperClass);

@@ -41,10 +41,10 @@ interface org.as2lib.test.mock.MockControlState extends BasicInterface {
 	 * specified number of times, and will react by either returning the
 	 * return value, throwing an exception or just doing nothing.
 	 *
-	 * @param response handles incoming requests appropriately
-	 * @param range stores the minimum and maximum quantity of method calls
+	 * @param methodResponse handles incoming requests appropriately
+	 * @param methodCallRange stores the minimum and maximum quantity of method calls
 	 */ 
-	public function setResponse(response:MethodResponse, range:MethodCallRange):Void;
+	public function setMethodResponse(methodResponse:MethodResponse, methodCallRange:MethodCallRange):Void;
 	
 	/**
 	 * Sets the arguments matcher that will be used for the last method specified

@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.support.SimpleMockControl;
+import org.as2lib.test.mock.MockControl;
 import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.level.DynamicLogLevel;
@@ -45,7 +45,7 @@ class test.unit.org.as2lib.env.log.level.TDynamicLogLevel extends TestCase {
 	}
 	
 	public function testIsGreaterOrEqualWithNullReturningGetLevelMethod(Void):Void {
-		var ac:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var ac:MockControl = new MockControl(LogLevel);
 		var a:LogLevel = ac.getMock();
 		a.toNumber();
 		ac.setReturnValue(null);
@@ -58,7 +58,7 @@ class test.unit.org.as2lib.env.log.level.TDynamicLogLevel extends TestCase {
 	}
 	
 	public function testIGreaterOfEqualWithEqualLevel(Void):Void {
-		var ac:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var ac:MockControl = new MockControl(LogLevel);
 		var a:LogLevel = ac.getMock();
 		a.toNumber();
 		ac.setReturnValue(2);
@@ -70,13 +70,13 @@ class test.unit.org.as2lib.env.log.level.TDynamicLogLevel extends TestCase {
 		ac.verify(this);
 	}
 	
-	public function testIGreaterOfEqualWithGreaterLevel(Void):Void {
-		var ac:SimpleMockControl = new SimpleMockControl(LogLevel);
+	public function testIsGreaterOrEqualWithGreaterLevel(Void):Void {
+		var ac:MockControl = new MockControl(LogLevel);
 		var a:LogLevel = ac.getMock();
 		a.toNumber();
 		ac.setReturnValue(44);
 		ac.replay();
-		
+
 		var l:DynamicLogLevel = new DynamicLogLevel(2, "name");
 		assertFalse(l.isGreaterOrEqual(a));
 		
@@ -84,7 +84,7 @@ class test.unit.org.as2lib.env.log.level.TDynamicLogLevel extends TestCase {
 	}
 	
 	public function testIGreaterOfEqualWithSmallerLevel(Void):Void {
-		var ac:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var ac:MockControl = new MockControl(LogLevel);
 		var a:LogLevel = ac.getMock();
 		a.toNumber();
 		ac.setReturnValue(1);

@@ -16,18 +16,21 @@
 
 import org.as2lib.core.BasicInterface;
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.MethodCallBehaviour;
+import org.as2lib.test.mock.MethodBehaviour;
+import org.as2lib.test.mock.MethodCall;
 
 /**
  * @author Simon Wacker
  */
 interface org.as2lib.test.mock.Behaviour extends BasicInterface {
 	
-	public function addMethodCallBehaviour(methodName:String):MethodCallBehaviour;
+	public function addMethodBehaviour(methodName:String, methodBehaviour:MethodBehaviour):Void;
 	
-	public function getMethodCallBehaviour(methodName:String, args:Array):MethodCallBehaviour;
+	public function createMethodBehaviour(expectedMethodCall:MethodCall):MethodBehaviour;
 	
-	public function getLastMethodCallBehaviour(Void):MethodCallBehaviour;
+	public function getMethodBehaviour(actualMethodCall:MethodCall):MethodBehaviour;
+	
+	public function getLastMethodBehaviour(Void):MethodBehaviour;
 	
 	public function removeAllBehaviour(Void):Void;
 	

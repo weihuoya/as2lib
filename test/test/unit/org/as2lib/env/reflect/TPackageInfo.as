@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.support.SimpleMockControl;
+import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.algorithm.ChildAlgorithm;
@@ -36,7 +36,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	}
 	
 	public function testIsParentPackageWithRootPackageArgument(Void):Void {
-		var ppc:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var ppc:MockControl = new MockControl(PackageInfo);
 		var pp:PackageInfo = ppc.getMock();
 		pp.isRoot();
 		ppc.setReturnValue(true);
@@ -49,7 +49,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	}
 	
 	public function testIsParentPackageWithPackageArgumentWhoseGetParentMethodReturnsNull(Void):Void {
-		var ppc:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var ppc:MockControl = new MockControl(PackageInfo);
 		var pp:PackageInfo = ppc.getMock();
 		pp.getParent();
 		ppc.setReturnValue(null);
@@ -66,7 +66,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	public function testIsParentPackageWithDirectParentPackageMatch(Void):Void {
 		var p:PackageInfo = new PackageInfo(null, null, null);
 		
-		var ppc:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var ppc:MockControl = new MockControl(PackageInfo);
 		var pp:PackageInfo = ppc.getMock();
 		pp.getParent();
 		ppc.setReturnValue(p);
@@ -82,7 +82,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	public function testIsParentPackageWithMultipleLevels(Void):Void {
 		var p:PackageInfo = new PackageInfo(null, null, null);
 		
-		var pp3c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp3c:MockControl = new MockControl(PackageInfo);
 		var pp3:PackageInfo = pp3c.getMock();
 		pp3.getParent();
 		pp3c.setReturnValue(p);
@@ -90,7 +90,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		pp3c.setReturnValue(false);
 		pp3c.replay();
 		
-		var pp2c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp2c:MockControl = new MockControl(PackageInfo);
 		var pp2:PackageInfo = pp2c.getMock();
 		pp2.getParent();
 		pp2c.setReturnValue(pp3);
@@ -98,7 +98,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		pp2c.setReturnValue(false);
 		pp2c.replay();
 		
-		var pp1c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp1c:MockControl = new MockControl(PackageInfo);
 		var pp1:PackageInfo = pp1c.getMock();
 		pp1.getParent();
 		pp1c.setReturnValue(pp2);
@@ -116,13 +116,13 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	public function testIsParentPackageWithMultipleLevelsAndNoMatch(Void):Void {
 		var p:PackageInfo = new PackageInfo(null, null, null);
 		
-		var pp3c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp3c:MockControl = new MockControl(PackageInfo);
 		var pp3:PackageInfo = pp3c.getMock();
 		pp3.isRoot();
 		pp3c.setReturnValue(true);
 		pp3c.replay();
 		
-		var pp2c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp2c:MockControl = new MockControl(PackageInfo);
 		var pp2:PackageInfo = pp2c.getMock();
 		pp2.getParent();
 		pp2c.setReturnValue(pp3);
@@ -130,7 +130,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		pp2c.setReturnValue(false);
 		pp2c.replay();
 		
-		var pp1c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pp1c:MockControl = new MockControl(PackageInfo);
 		var pp1:PackageInfo = pp1c.getMock();
 		pp1.getParent();
 		pp1c.setReturnValue(pp2);
@@ -173,7 +173,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	}
 	
 	public function testGetFullNameWithRootAsParent(Void):Void {
-		var rc:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var rc:MockControl = new MockControl(PackageInfo);
 		var r:PackageInfo = rc.getMock();
 		r.isRoot();
 		rc.setReturnValue(true);
@@ -186,7 +186,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	}
 	
 	public function testGetFullNameWithNormalParent(Void):Void {
-		var rc:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var rc:MockControl = new MockControl(PackageInfo);
 		var r:PackageInfo = rc.getMock();
 		r.isRoot();
 		rc.setReturnValue(false);
@@ -201,7 +201,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	}
 	
 	public function testGetChildrenWithNullPackage(Void):Void {
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		ac.replay();
 		
@@ -215,7 +215,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		var p:Object = new Object();
 		var i:PackageInfo = new PackageInfo(null, p, null);
 		
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		a.execute(i);
 		ac.setReturnValue(["child1", "child2", "child3"]);
@@ -241,31 +241,31 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		var p:Object = new Object();
 		var i:PackageInfo = new PackageInfo(null, p, null);
 		
-		var c1c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
 		c1c.replay();
 		
-		var c2c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c2c:MockControl = new MockControl(ClassInfo);
 		var c2:ClassInfo = c2c.getMock();
 		c2c.replay();
 		
-		var c3c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c3c:MockControl = new MockControl(ClassInfo);
 		var c3:ClassInfo = c3c.getMock();
 		c3c.replay();
 		
-		var p1c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p1c:MockControl = new MockControl(PackageInfo);
 		var p1:PackageInfo = p1c.getMock();
 		p1c.replay();
 		
-		var p2c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p2c:MockControl = new MockControl(PackageInfo);
 		var p2:PackageInfo = p2c.getMock();
 		p2c.replay();
 		
-		var p3c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p3c:MockControl = new MockControl(PackageInfo);
 		var p3:PackageInfo = p3c.getMock();
 		p3c.replay();
 		
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		a.execute(i);
 		ac.setReturnValue([c1, p1, c2, c3, p2, p3]);
@@ -297,31 +297,31 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		var p:Object = new Object();
 		var i:PackageInfo = new PackageInfo(null, p, null);
 		
-		var c1c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
 		c1c.replay();
 		
-		var c2c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c2c:MockControl = new MockControl(ClassInfo);
 		var c2:ClassInfo = c2c.getMock();
 		c2c.replay();
 		
-		var c3c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c3c:MockControl = new MockControl(ClassInfo);
 		var c3:ClassInfo = c3c.getMock();
 		c3c.replay();
 		
-		var p1c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p1c:MockControl = new MockControl(PackageInfo);
 		var p1:PackageInfo = p1c.getMock();
 		p1c.replay();
 		
-		var p2c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p2c:MockControl = new MockControl(PackageInfo);
 		var p2:PackageInfo = p2c.getMock();
 		p2c.replay();
 		
-		var p3c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p3c:MockControl = new MockControl(PackageInfo);
 		var p3:PackageInfo = p3c.getMock();
 		p3c.replay();
 		
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		a.execute(i);
 		ac.setReturnValue([c1, p1, c2, c3, p2, p3]);
@@ -345,7 +345,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	}
 	
 	public function testGetChildByNameWithNullName(Void):Void {
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		ac.replay();
 		
@@ -366,43 +366,43 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		var p:Object = new Object();
 		var i:PackageInfo = new PackageInfo(null, p, null);
 		
-		var c1c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
 		c1.getName();
 		c1c.setDefaultReturnValue("class1");
 		c1c.replay();
 		
-		var c2c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c2c:MockControl = new MockControl(ClassInfo);
 		var c2:ClassInfo = c2c.getMock();
 		c2.getName();
 		c2c.setDefaultReturnValue("class2");
 		c2c.replay();
 		
-		var c3c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c3c:MockControl = new MockControl(ClassInfo);
 		var c3:ClassInfo = c3c.getMock();
 		c3.getName();
 		c3c.setDefaultReturnValue("class3");
 		c3c.replay();
 		
-		var p1c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p1c:MockControl = new MockControl(PackageInfo);
 		var p1:PackageInfo = p1c.getMock();
 		p1.getName();
 		p1c.setDefaultReturnValue("package1");
 		p1c.replay();
 		
-		var p2c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p2c:MockControl = new MockControl(PackageInfo);
 		var p2:PackageInfo = p2c.getMock();
 		p2.getName();
 		p2c.setDefaultReturnValue("package2");
 		p2c.replay();
 		
-		var p3c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p3c:MockControl = new MockControl(PackageInfo);
 		var p3:PackageInfo = p3c.getMock();
 		p3.getName();
 		p3c.setDefaultReturnValue("package3");
 		p3c.replay();
 		
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		a.execute(i);
 		ac.setReturnValue([c1, p1, c2, c3, p2, p3]);
@@ -427,7 +427,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	}
 	
 	public function testGetChildByChildWithNullAndUndefinedArgument(Void):Void {
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		ac.replay();
 		
@@ -455,43 +455,43 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		var p:Object = new Object();
 		var i:PackageInfo = new PackageInfo(null, p, null);
 		
-		var c1c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
 		c1.getType();
 		c1c.setDefaultReturnValue(T1);
 		c1c.replay();
 		
-		var c2c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c2c:MockControl = new MockControl(ClassInfo);
 		var c2:ClassInfo = c2c.getMock();
 		c2.getType();
 		c2c.setDefaultReturnValue(T2);
 		c2c.replay();
 		
-		var c3c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c3c:MockControl = new MockControl(ClassInfo);
 		var c3:ClassInfo = c3c.getMock();
 		c3.getType();
 		c3c.setDefaultReturnValue(T3);
 		c3c.replay();
 		
-		var p1c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p1c:MockControl = new MockControl(PackageInfo);
 		var p1:PackageInfo = p1c.getMock();
 		p1.getPackage();
 		p1c.setDefaultReturnValue(cp1);
 		p1c.replay();
 		
-		var p2c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p2c:MockControl = new MockControl(PackageInfo);
 		var p2:PackageInfo = p2c.getMock();
 		p2.getPackage();
 		p2c.setDefaultReturnValue(cp2);
 		p2c.replay();
 		
-		var p3c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p3c:MockControl = new MockControl(PackageInfo);
 		var p3:PackageInfo = p3c.getMock();
 		p3.getPackage();
 		p3c.setDefaultReturnValue(cp3);
 		p3c.replay();
 		
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		a.execute(i);
 		ac.setReturnValue([c1, p1, c2, c3, p2, p3]);
@@ -516,7 +516,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	}
 	
 	public function testGetChildClassByNameWithNullName(Void):Void {
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		ac.replay();
 		
@@ -537,37 +537,37 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		var p:Object = new Object();
 		var i:PackageInfo = new PackageInfo(null, p, null);
 		
-		var c1c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
 		c1.getName();
 		c1c.setDefaultReturnValue("class1");
 		c1c.replay();
 		
-		var c2c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c2c:MockControl = new MockControl(ClassInfo);
 		var c2:ClassInfo = c2c.getMock();
 		c2.getName();
 		c2c.setDefaultReturnValue("class2");
 		c2c.replay();
 		
-		var c3c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c3c:MockControl = new MockControl(ClassInfo);
 		var c3:ClassInfo = c3c.getMock();
 		c3.getName();
 		c3c.setDefaultReturnValue("class3");
 		c3c.replay();
 		
-		var p1c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p1c:MockControl = new MockControl(PackageInfo);
 		var p1:PackageInfo = p1c.getMock();
 		p1c.replay();
 		
-		var p2c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p2c:MockControl = new MockControl(PackageInfo);
 		var p2:PackageInfo = p2c.getMock();
 		p2c.replay();
 		
-		var p3c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p3c:MockControl = new MockControl(PackageInfo);
 		var p3:PackageInfo = p3c.getMock();
 		p3c.replay();
 		
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		a.execute(i);
 		ac.setReturnValue([c1, p1, c2, c3, p2, p3]);
@@ -592,7 +592,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	}
 	
 	public function testGetChildClassByClassWithNullAndUndefinedArgument(Void):Void {
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		ac.replay();
 		
@@ -620,43 +620,43 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		var p:Object = new Object();
 		var i:PackageInfo = new PackageInfo(null, p, null);
 		
-		var c1c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
 		c1.getType();
 		c1c.setDefaultReturnValue(T1);
 		c1c.replay();
 		
-		var c2c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c2c:MockControl = new MockControl(ClassInfo);
 		var c2:ClassInfo = c2c.getMock();
 		c2.getType();
 		c2c.setDefaultReturnValue(T2);
 		c2c.replay();
 		
-		var c3c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c3c:MockControl = new MockControl(ClassInfo);
 		var c3:ClassInfo = c3c.getMock();
 		c3.getType();
 		c3c.setDefaultReturnValue(T3);
 		c3c.replay();
 		
-		var p1c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p1c:MockControl = new MockControl(PackageInfo);
 		var p1:PackageInfo = p1c.getMock();
 		p1.getPackage();
 		p1c.setDefaultReturnValue(cp1);
 		p1c.replay();
 		
-		var p2c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p2c:MockControl = new MockControl(PackageInfo);
 		var p2:PackageInfo = p2c.getMock();
 		p2.getPackage();
 		p2c.setDefaultReturnValue(cp2);
 		p2c.replay();
 		
-		var p3c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p3c:MockControl = new MockControl(PackageInfo);
 		var p3:PackageInfo = p3c.getMock();
 		p3.getPackage();
 		p3c.setDefaultReturnValue(cp3);
 		p3c.replay();
 		
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		a.execute(i);
 		ac.setReturnValue([c1, p1, c2, c3, p2, p3]);
@@ -679,7 +679,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	}
 	
 	public function testGetChildPackageByNameWithNullName(Void):Void {
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		ac.replay();
 		
@@ -700,37 +700,37 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		var p:Object = new Object();
 		var i:PackageInfo = new PackageInfo(null, p, null);
 		
-		var c1c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
 		c1c.replay();
 		
-		var c2c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c2c:MockControl = new MockControl(ClassInfo);
 		var c2:ClassInfo = c2c.getMock();
 		c2c.replay();
 		
-		var c3c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c3c:MockControl = new MockControl(ClassInfo);
 		var c3:ClassInfo = c3c.getMock();
 		c3c.replay();
 		
-		var p1c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p1c:MockControl = new MockControl(PackageInfo);
 		var p1:PackageInfo = p1c.getMock();
 		p1.getName();
 		p1c.setDefaultReturnValue("package1");
 		p1c.replay();
 		
-		var p2c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p2c:MockControl = new MockControl(PackageInfo);
 		var p2:PackageInfo = p2c.getMock();
 		p2.getName();
 		p2c.setDefaultReturnValue("package2");
 		p2c.replay();
 		
-		var p3c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p3c:MockControl = new MockControl(PackageInfo);
 		var p3:PackageInfo = p3c.getMock();
 		p3.getName();
 		p3c.setDefaultReturnValue("package3");
 		p3c.replay();
 		
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		a.execute(i);
 		ac.setReturnValue([c1, p1, c2, c3, p2, p3]);
@@ -755,7 +755,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	}
 	
 	public function testGetChildPackageByPackageWithNullAndUndefinedArgument(Void):Void {
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		ac.replay();
 		
@@ -783,43 +783,43 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		var p:Object = new Object();
 		var i:PackageInfo = new PackageInfo(null, p, null);
 		
-		var c1c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
 		c1.getType();
 		c1c.setDefaultReturnValue(T1);
 		c1c.replay();
 		
-		var c2c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c2c:MockControl = new MockControl(ClassInfo);
 		var c2:ClassInfo = c2c.getMock();
 		c2.getType();
 		c2c.setDefaultReturnValue(T2);
 		c2c.replay();
 		
-		var c3c:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var c3c:MockControl = new MockControl(ClassInfo);
 		var c3:ClassInfo = c3c.getMock();
 		c3.getType();
 		c3c.setDefaultReturnValue(T3);
 		c3c.replay();
 		
-		var p1c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p1c:MockControl = new MockControl(PackageInfo);
 		var p1:PackageInfo = p1c.getMock();
 		p1.getPackage();
 		p1c.setDefaultReturnValue(cp1);
 		p1c.replay();
 		
-		var p2c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p2c:MockControl = new MockControl(PackageInfo);
 		var p2:PackageInfo = p2c.getMock();
 		p2.getPackage();
 		p2c.setDefaultReturnValue(cp2);
 		p2c.replay();
 		
-		var p3c:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var p3c:MockControl = new MockControl(PackageInfo);
 		var p3:PackageInfo = p3c.getMock();
 		p3.getPackage();
 		p3c.setDefaultReturnValue(cp3);
 		p3c.replay();
 		
-		var ac:SimpleMockControl = new SimpleMockControl(ChildAlgorithm);
+		var ac:MockControl = new MockControl(ChildAlgorithm);
 		var a:ChildAlgorithm = ac.getMock();
 		a.execute(i);
 		ac.setReturnValue([c1, p1, c2, c3, p2, p3]);

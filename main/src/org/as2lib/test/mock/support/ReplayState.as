@@ -18,7 +18,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControlState;
-import org.as2lib.test.mock.MethodCallBehaviour;
+import org.as2lib.test.mock.MethodBehaviour;
 import org.as2lib.test.mock.Behaviour;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodCall;
@@ -45,15 +45,16 @@ class org.as2lib.test.mock.support.ReplayState extends BasicClass implements Moc
 	/**
 	 * @see MockControlState#invokeMethod()
 	 */
-	public function invokeMethod(call:MethodCall) {
-		var callBehaviour:MethodCallBehaviour = behaviour.getMethodCallBehaviour(call.getMethodName(), call.getArguments());
-		if (callBehaviour) {
-			callBehaviour.addActualCall(call);
-			return callBehaviour.response();
+	public function invokeMethod(methodCall:MethodCall) {
+		var methodBehaviour:MethodBehaviour = behaviour.getMethodBehaviour(methodCall);
+		if (methodBehaviour) {
+			methodBehaviour.addActualMethodCall(methodCall);
+			return methodBehaviour.response();
 		} else {
-			callBehaviour = behaviour.addMethodCallBehaviour(call.getMethodName());
-			callBehaviour.addActualCall(call);
-			return callBehaviour.response();
+			methodBehaviour = behaviour.createMethodBehaviour(null);
+			behaviour.addMethodBehaviour(methodCall.getMethodName(), methodBehaviour);
+			methodBehaviour.addActualMethodCall(methodCall);
+			return methodBehaviour.response();
 		}
 	}
 	
@@ -65,9 +66,9 @@ class org.as2lib.test.mock.support.ReplayState extends BasicClass implements Moc
 	}
 	
 	/**
-	 * @see MockControlState#setResponse()
+	 * @see MockControlState#setMethodResponse()
 	 */ 
-	public function setResponse(response:MethodResponse, range:MethodCallRange):Void {
+	public function setMethodResponse(methodResponse:MethodResponse, methodCallRange:MethodCallRange):Void {
 		throw new IllegalStateException("Method must not be called in replay state.", this, arguments);
 	}
 	

@@ -24,7 +24,7 @@ import org.as2lib.test.mock.AssertionFailedError;
  */
 class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	
-	private static var QUANTITY_ANY:Number = Number.POSITIVE_INFINITY;
+	public static var ANY_QUANTITY:Number = Number.POSITIVE_INFINITY;
 	
 	private var minimum:Number;
 	private var maximum:Number;
@@ -38,16 +38,24 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	}
 	
 	private function MethodCallRangeByVoid(Void):Void {
-		MethodCallRangeByQuantity(QUANTITY_ANY);
+		MethodCallRangeByQuantity(ANY_QUANTITY);
 	}
 	
 	private function MethodCallRangeByQuantity(quantity):Void {
+		if (quantity == null) quantity = ANY_QUANTITY;
 		MethodCallRangeByMinimumAndMaximumQuantity(quantity, quantity);
 	}
 	
 	private function MethodCallRangeByMinimumAndMaximumQuantity(minimum:Number, maximum:Number):Void {
-		if (minimum < 0) throw new IllegalArgumentException("Minimum quantity [" + minimum + "] must not be negative.", this, arguments);
-		if (minimum > maximum) throw new IllegalArgumentException("Minimum quantity [" + minimum + "] must not be bigger than the maximum quantity [" + maximum + "].", this, arguments);
+		if (minimum == null) minimum = ANY_QUANTITY;
+		if (maximum == null) maximum = ANY_QUANTITY;
+		if (minimum < 0) minimum = -minimum;
+		if (maximum < 0) maximum = -maximum;
+		if (minimum > maximum) {
+			var oldMinimum:Number = minimum;
+			minimum = maximum;
+			maximum = oldMinimum;
+		}
 		this.minimum = minimum;
 		this.maximum = maximum;
 	}
@@ -61,7 +69,9 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	}
 	
 	public function contains(quantity:Number):Boolean {
-		if (minimum != QUANTITY_ANY && maximum != QUANTITY_ANY) {
+		if (quantity == null) return false;
+		if (minimum != ANY_QUANTITY && maximum != ANY_QUANTITY) {
+			if (quantity < 0) quantity = -quantity;
 			if (minimum > quantity || maximum < quantity) {
 				return false;
 			}

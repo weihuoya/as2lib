@@ -16,7 +16,6 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
 import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.reflect.algorithm.ChildAlgorithm;
 import org.as2lib.env.reflect.PackageInfo;
@@ -42,7 +41,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCas
 	}
 	
 	public function testExecuteWithNullAndUndefinedArguments(Void):Void {
-		var cc:MockControl = new SimpleMockControl(Cache);
+		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		cc.replay();
 		
@@ -55,13 +54,13 @@ class test.unit.org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCas
 	}
 	
 	public function testExecuteWithArgumentWhoseGetPackageMethodReturnsNull(Void):Void {
-		var ic:MockControl = new SimpleMockControl(PackageInfo);
+		var ic:MockControl = new MockControl(PackageInfo);
 		var i:PackageInfo = ic.getMock();
 		i.getPackage();
 		ic.setReturnValue(null);
 		ic.replay();
 		
-		var cc:MockControl = new SimpleMockControl(Cache);
+		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
 		cc.replay();
 		
@@ -76,7 +75,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCas
 	public function testExecute(Void):Void {
 		ReflectConfig.getCache().releaseAll();
 		
-		var pc:MockControl = new SimpleMockControl(PackageInfo);
+		var pc:MockControl = new MockControl(PackageInfo);
 		var p:PackageInfo = pc.getMock();
 		p.getPackage();
 		pc.setReturnValue(_global.test.unit.org.as2lib.env.reflect.treflect);
@@ -120,7 +119,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCas
 		_global.testExecuteWithEmptyPackage = new Object();
 		_global.testExecuteWithEmptyPackage.empty = new Object();
 		
-		var pc:MockControl = new SimpleMockControl(PackageInfo);
+		var pc:MockControl = new MockControl(PackageInfo);
 		var p:PackageInfo = pc.getMock();
 		p.getPackage();
 		pc.setReturnValue(_global.testExecuteWithEmptyPackage.empty);

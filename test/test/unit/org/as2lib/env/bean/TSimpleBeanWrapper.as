@@ -18,7 +18,6 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.core.BasicInterface;
 import org.as2lib.core.BasicClass;
-import org.as2lib.test.mock.support.SimpleMockControl;
 import org.as2lib.env.bean.SimpleBeanWrapper;
 import org.as2lib.env.bean.FatalBeanException;
 import org.as2lib.env.bean.PropertyValue;
@@ -81,14 +80,14 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
 		var c1:PropertyValueConverter = new PropertyValueConverter();
 		bw.registerPropertyValueConverter(BasicClass, c1);
-		assertSame(bw.findPropertyValueConverter(SimpleMockControl, null), c1);
+		assertSame(bw.findPropertyValueConverter(MockControl, null), c1);
 	}
 	
 	public function testFindPropertyValueConverterWithRegisteredInterfaceForImplementationClass(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
 		var c1:PropertyValueConverter = new PropertyValueConverter();
 		bw.registerPropertyValueConverter(BasicInterface, c1);
-		assertSame(bw.findPropertyValueConverter(SimpleMockControl, null), c1);
+		assertSame(bw.findPropertyValueConverter(MockControl, null), c1);
 	}
 	
 	public function testFindPropertyValueConverterWithDirectTypeForPropertyName(Void):Void {
@@ -109,14 +108,14 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
 		var c2:PropertyValueConverter = new PropertyValueConverter();
 		bw.registerPropertyValueConverter(BasicClass, "property", c2);
-		assertSame(bw.findPropertyValueConverter(SimpleMockControl, "property"), c2);
+		assertSame(bw.findPropertyValueConverter(MockControl, "property"), c2);
 	}
 	
 	public function testFindPropertyValueConverterWithRegisteredInterfaceForImplementationClassAndPropertyName(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
 		var c2:PropertyValueConverter = new PropertyValueConverter();
 		bw.registerPropertyValueConverter(BasicInterface, "property", c2);
-		assertSame(bw.findPropertyValueConverter(SimpleMockControl, "property"), c2);
+		assertSame(bw.findPropertyValueConverter(MockControl, "property"), c2);
 	}
 	
 	public function testFindPropertyValueConverterWithRegisteredInterfaceForWrongInterfaceButRightPropertyName(Void):Void {
@@ -136,7 +135,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	public function testFindPropertyValueConverterWithRegisteredClassForWrongClassButRightPropertyName(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
 		var c2:PropertyValueConverter = new PropertyValueConverter();
-		bw.registerPropertyValueConverter(SimpleMockControl, "property", c2);
+		bw.registerPropertyValueConverter(MockControl, "property", c2);
 		assertNull(bw.findPropertyValueConverter(BasicClass, "property"));
 	}
 	
@@ -148,7 +147,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		assertSame("1", bw.findPropertyValueConverter(MockControl, "property"), c1);
 		
 		var c2:PropertyValueConverter = new PropertyValueConverter();
-		bw.registerPropertyValueConverter(SimpleMockControl, "property", c2);
+		bw.registerPropertyValueConverter(MockControl, "property", c2);
 		assertSame("2", bw.findPropertyValueConverter(null, "property"), c2);
 	}
 	
@@ -183,7 +182,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	}
 	
 	public function testGetPropertyValueForSimpleNameWithMethodPrefix(Void):Void {
-		var woC:MockControl = new SimpleMockControl(Object);
+		var woC:MockControl = new MockControl(Object);
 		var wo:Object = woC.getMock();
 		wo.returnProperty();
 		woC.setReturnValue("value");
@@ -197,7 +196,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	}
 	
 	public function testGetPropertyValueForSimpleNameWithoutPrefix(Void):Void {
-		var woC:MockControl = new SimpleMockControl(Object);
+		var woC:MockControl = new MockControl(Object);
 		var wo:Object = woC.getMock();
 		wo.getProperty();
 		woC.setReturnValue("value");
@@ -236,7 +235,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	}
 	
 	public function testGetPropertyValueForPropertyKeyNumberWithMethodPrefix(Void):Void {
-		var mc:MockControl = new SimpleMockControl(Object);
+		var mc:MockControl = new MockControl(Object);
 		var m:Object = mc.getMock();
 		m.returnProperty(3);
 		mc.setReturnValue("value");
@@ -250,7 +249,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	}
 	
 	public function testGetPropertyValueForPropertyKeyNumberWithoutPrefix(Void):Void {
-		var mc:MockControl = new SimpleMockControl(Object);
+		var mc:MockControl = new MockControl(Object);
 		var m:Object = mc.getMock();
 		m.getProperty(3);
 		mc.setReturnValue("value");
@@ -274,7 +273,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	}
 	
 	public function testGetPropertyValueForPropertyKeyStringWithMethodPrefix(Void):Void {
-		var mc:MockControl = new SimpleMockControl(Object);
+		var mc:MockControl = new MockControl(Object);
 		var m:Object = mc.getMock();
 		m.returnProperty("key");
 		mc.setReturnValue("value", 3);
@@ -289,7 +288,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	}
 	
 	public function testGetPropertyValueForPropertyKeyStringWithoutPrefix(Void):Void {
-		var mc:MockControl = new SimpleMockControl(Object);
+		var mc:MockControl = new MockControl(Object);
 		var m:Object = mc.getMock();
 		m.getProperty("key");
 		mc.setReturnValue("value", 3);
@@ -330,7 +329,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	}
 	
 	public function testSetPropertyValueBySimpleNameAndValueWithMethodPrefix(Void):Void {
-		var mC:MockControl = new SimpleMockControl(Object);
+		var mC:MockControl = new MockControl(Object);
 		var wo:Object = mC.getMock();
 		wo.putProperty("value");
 		mC.setVoidCallable();
@@ -343,7 +342,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	}
 	
 	public function testSetPropertyValueBySimpleNameAndValueWithoutPrefix(Void):Void {
-		var mC:MockControl = new SimpleMockControl(Object);
+		var mC:MockControl = new MockControl(Object);
 		var wo:Object = mC.getMock();
 		wo.setProperty("value");
 		mC.setVoidCallable();
@@ -364,7 +363,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	}
 	
 	public function testSetPropertyValueForKeyNumberWithMethodPrefix(Void):Void {
-		var mC:MockControl = new SimpleMockControl(Object);
+		var mC:MockControl = new MockControl(Object);
 		var wo:Object = mC.getMock();
 		wo.putValue(3, "value");
 		mC.setVoidCallable(3);
@@ -379,7 +378,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	}
 	
 	public function testSetPropertyValueForKeyNumberWithoutPrefix(Void):Void {
-		var mC:MockControl = new SimpleMockControl(Object);
+		var mC:MockControl = new MockControl(Object);
 		var wo:Object = mC.getMock();
 		wo.setValue(3, "value");
 		mC.setVoidCallable(3);
@@ -406,7 +405,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	}
 	
 	public function testSetPropertyValueForKeyStringWithMethodPrefix(Void):Void {
-		var mC:MockControl = new SimpleMockControl(Object);
+		var mC:MockControl = new MockControl(Object);
 		var wo:Object = mC.getMock();
 		wo.putValue("key", "value");
 		mC.setVoidCallable(3);
@@ -421,7 +420,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	}
 	
 	public function testSetPropertyValueForKeyStringWithoutPrefix(Void):Void {
-		var mC:MockControl = new SimpleMockControl(Object);
+		var mC:MockControl = new MockControl(Object);
 		var wo:Object = mC.getMock();
 		wo.setValue("key", "value");
 		mC.setVoidCallable(3);

@@ -16,7 +16,6 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
 import org.as2lib.env.bean.PropertyValue;
 
 /**
@@ -28,7 +27,7 @@ class test.unit.org.as2lib.env.bean.TPropertyValue extends TestCase {
 		var value:Object = new Object();
 		var propertyValue:PropertyValue = new PropertyValue("test", value, "");
 		
-		var beanControl:MockControl = new SimpleMockControl(Object);
+		var beanControl:MockControl = new MockControl(Object);
 		var bean:Object = beanControl.getMock();
 		bean.test(value);
 		beanControl.setVoidCallable();
@@ -43,7 +42,7 @@ class test.unit.org.as2lib.env.bean.TPropertyValue extends TestCase {
 		var value:Object = new Object();
 		var propertyValue:PropertyValue = new PropertyValue("value", value);
 		
-		var beanControl:MockControl = new SimpleMockControl(Object);
+		var beanControl:MockControl = new MockControl(Object);
 		var bean:Object = beanControl.getMock();
 		bean.setValue(value);
 		beanControl.setVoidCallable();
@@ -58,7 +57,7 @@ class test.unit.org.as2lib.env.bean.TPropertyValue extends TestCase {
 		var value:Object = new Object();
 		var propertyValue:PropertyValue = new PropertyValue("value", value, "add");
 		
-		var beanControl:MockControl = new SimpleMockControl(Object);
+		var beanControl:MockControl = new MockControl(Object);
 		var bean:Object = beanControl.getMock();
 		bean.addValue(value);
 		beanControl.setVoidCallable();

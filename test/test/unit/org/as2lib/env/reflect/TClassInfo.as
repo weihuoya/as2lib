@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.support.SimpleMockControl;
+import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.MethodInfo;
@@ -38,7 +38,7 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 	}
 	
 	public function testNewWithRealArguments(Void):Void {
-		var pc:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var pc:MockControl = new MockControl(PackageInfo);
 		var p:PackageInfo = pc.getMock();
 		pc.replay();
 		
@@ -63,7 +63,7 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 	}
 	
 	public function testGetFullNameWithRootAsParent(Void):Void {
-		var rc:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var rc:MockControl = new MockControl(PackageInfo);
 		var r:PackageInfo = rc.getMock();
 		r.isRoot();
 		rc.setReturnValue(true);
@@ -76,7 +76,7 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 	}
 	
 	public function testGetFullNameWithNormalParent(Void):Void {
-		var rc:SimpleMockControl = new SimpleMockControl(PackageInfo);
+		var rc:MockControl = new MockControl(PackageInfo);
 		var r:PackageInfo = rc.getMock();
 		r.isRoot();
 		rc.setReturnValue(false);
@@ -123,11 +123,11 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 	public function testGetSuperTypeForClassWithSuperClass(Void):Void {
 		var Type:Function = function() {};
 		
-		var ic:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var ic:MockControl = new MockControl(ClassInfo);
 		var i:ClassInfo = ic.getMock();
 		ic.replay();
 		
-		var ac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var ac:MockControl = new MockControl(ClassAlgorithm);
 		var a:ClassAlgorithm = ac.getMock();
 		a.execute(Type.prototype);
 		ac.setReturnValue(i);
@@ -195,13 +195,13 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
 		
-		var mac:SimpleMockControl = new SimpleMockControl(MethodAlgorithm);
+		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
 		ma.execute(i);
 		mac.setReturnValue(["method1", "method2", "method3", "method4", "method5", "method6"]);
 		mac.replay();
 		
-		var cac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(null);
@@ -226,19 +226,19 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
 		
-		var sic:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var sic:MockControl = new MockControl(ClassInfo);
 		var si:ClassInfo = sic.getMock();
 		si.getMethods();
 		sic.setReturnValue(["method4", "method5", "method6"]);
 		sic.replay();
 		
-		var mac:SimpleMockControl = new SimpleMockControl(MethodAlgorithm);
+		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
 		ma.execute(i);
 		mac.setReturnValue(["method1", "method2", "method3"]);
 		mac.replay();
 		
-		var cac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(si);
@@ -274,31 +274,31 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
 		
-		var m1c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m1c:MockControl = new MockControl(MethodInfo);
 		var m1:MethodInfo = m1c.getMock();
 		m1.getName();
 		m1c.setReturnValue("method1");
 		m1c.replay();
 		
-		var m2c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m2c:MockControl = new MockControl(MethodInfo);
 		var m2:MethodInfo = m2c.getMock();
 		m2.getName();
 		m2c.setReturnValue("method2");
 		m2c.replay();
 		
-		var m3c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m3c:MockControl = new MockControl(MethodInfo);
 		var m3:MethodInfo = m3c.getMock();
 		m3.getName();
 		m3c.setReturnValue("method3");
 		m3c.replay();
 		
-		var mac:SimpleMockControl = new SimpleMockControl(MethodAlgorithm);
+		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
 		ma.execute(i);
 		mac.setReturnValue([m1, m2, m3]);
 		mac.replay();
 		
-		var cac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(null);
@@ -319,31 +319,31 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
 		
-		var m1c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m1c:MockControl = new MockControl(MethodInfo);
 		var m1:MethodInfo = m1c.getMock();
 		m1.getName();
 		m1c.setDefaultReturnValue("method1");
 		m1c.replay();
 		
-		var m2c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m2c:MockControl = new MockControl(MethodInfo);
 		var m2:MethodInfo = m2c.getMock();
 		m2.getName();
 		m2c.setDefaultReturnValue("method2");
 		m2c.replay();
 		
-		var m3c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m3c:MockControl = new MockControl(MethodInfo);
 		var m3:MethodInfo = m3c.getMock();
 		m3.getName();
 		m3c.setDefaultReturnValue("method3");
 		m3c.replay();
 		
-		var mac:SimpleMockControl = new SimpleMockControl(MethodAlgorithm);
+		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
 		ma.execute(i);
 		mac.setReturnValue([m1, m2, m3]);
 		mac.replay();
 		
-		var cac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(null);
@@ -366,43 +366,43 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
 		
-		var m1c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m1c:MockControl = new MockControl(MethodInfo);
 		var m1:MethodInfo = m1c.getMock();
 		m1.getName();
 		m1c.setDefaultReturnValue("method1");
 		m1c.replay();
 		
-		var m2c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m2c:MockControl = new MockControl(MethodInfo);
 		var m2:MethodInfo = m2c.getMock();
 		m2.getName();
 		m2c.setDefaultReturnValue("method2");
 		m2c.replay();
 		
-		var m3c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m3c:MockControl = new MockControl(MethodInfo);
 		var m3:MethodInfo = m3c.getMock();
 		m3.getName();
 		m3c.setDefaultReturnValue("method3");
 		m3c.replay();
 		
-		var mac:SimpleMockControl = new SimpleMockControl(MethodAlgorithm);
+		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
 		ma.execute(i);
 		mac.setReturnValue([m1, m2, m3]);
 		mac.replay();
 		
-		var sm2c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var sm2c:MockControl = new MockControl(MethodInfo);
 		var sm2:MethodInfo = sm2c.getMock();
 		sm2.getName();
 		sm2c.setDefaultReturnValue("method2");
 		sm2c.replay();
 		
-		var scc:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var scc:MockControl = new MockControl(ClassInfo);
 		var sc:ClassInfo = scc.getMock();
 		sc.getMethods();
 		scc.setReturnValue(sm2);
 		scc.replay();
 		
-		var cac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(sc);
@@ -435,31 +435,31 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
 		
-		var m1c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m1c:MockControl = new MockControl(MethodInfo);
 		var m1:MethodInfo = m1c.getMock();
 		m1.getMethod();
 		m1c.setReturnValue(function() {});
 		m1c.replay();
 		
-		var m2c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m2c:MockControl = new MockControl(MethodInfo);
 		var m2:MethodInfo = m2c.getMock();
 		m2.getMethod();
 		m2c.setReturnValue(function() {});
 		m2c.replay();
 		
-		var m3c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m3c:MockControl = new MockControl(MethodInfo);
 		var m3:MethodInfo = m3c.getMock();
 		m3.getMethod();
 		m3c.setReturnValue(function() {});
 		m3c.replay();
 		
-		var mac:SimpleMockControl = new SimpleMockControl(MethodAlgorithm);
+		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
 		ma.execute(i);
 		mac.setReturnValue([m1, m2, m3]);
 		mac.replay();
 		
-		var cac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(null);
@@ -484,31 +484,31 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
 		
-		var m1c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m1c:MockControl = new MockControl(MethodInfo);
 		var m1:MethodInfo = m1c.getMock();
 		m1.getMethod();
 		m1c.setDefaultReturnValue(cm1);
 		m1c.replay();
 		
-		var m2c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m2c:MockControl = new MockControl(MethodInfo);
 		var m2:MethodInfo = m2c.getMock();
 		m2.getMethod();
 		m2c.setDefaultReturnValue(cm2);
 		m2c.replay();
 		
-		var m3c:SimpleMockControl = new SimpleMockControl(MethodInfo);
+		var m3c:MockControl = new MockControl(MethodInfo);
 		var m3:MethodInfo = m3c.getMock();
 		m3.getMethod();
 		m3c.setDefaultReturnValue(cm3);
 		m3c.replay();
 		
-		var mac:SimpleMockControl = new SimpleMockControl(MethodAlgorithm);
+		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
 		ma.execute(i);
 		mac.setReturnValue([m1, m2, m3]);
 		mac.replay();
 		
-		var cac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(null);
@@ -538,13 +538,13 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
 		
-		var mac:SimpleMockControl = new SimpleMockControl(PropertyAlgorithm);
+		var mac:MockControl = new MockControl(PropertyAlgorithm);
 		var ma:PropertyAlgorithm = mac.getMock();
 		ma.execute(i);
 		mac.setReturnValue(["property1", "property2", "property3", "property4", "property5", "property6"]);
 		mac.replay();
 		
-		var cac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(null);
@@ -569,19 +569,19 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
 		
-		var sic:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var sic:MockControl = new MockControl(ClassInfo);
 		var si:ClassInfo = sic.getMock();
 		si.getProperties();
 		sic.setReturnValue(["property4", "property5", "property6"]);
 		sic.replay();
 		
-		var mac:SimpleMockControl = new SimpleMockControl(PropertyAlgorithm);
+		var mac:MockControl = new MockControl(PropertyAlgorithm);
 		var ma:PropertyAlgorithm = mac.getMock();
 		ma.execute(i);
 		mac.setReturnValue(["property1", "property2", "property3"]);
 		mac.replay();
 		
-		var cac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(si);
@@ -617,31 +617,31 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
 		
-		var m1c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m1c:MockControl = new MockControl(PropertyInfo);
 		var m1:PropertyInfo = m1c.getMock();
 		m1.getName();
 		m1c.setReturnValue("property1");
 		m1c.replay();
 		
-		var m2c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m2c:MockControl = new MockControl(PropertyInfo);
 		var m2:PropertyInfo = m2c.getMock();
 		m2.getName();
 		m2c.setReturnValue("property2");
 		m2c.replay();
 		
-		var m3c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m3c:MockControl = new MockControl(PropertyInfo);
 		var m3:PropertyInfo = m3c.getMock();
 		m3.getName();
 		m3c.setReturnValue("property3");
 		m3c.replay();
 		
-		var mac:SimpleMockControl = new SimpleMockControl(PropertyAlgorithm);
+		var mac:MockControl = new MockControl(PropertyAlgorithm);
 		var ma:PropertyAlgorithm = mac.getMock();
 		ma.execute(i);
 		mac.setReturnValue([m1, m2, m3]);
 		mac.replay();
 		
-		var cac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(null);
@@ -662,31 +662,31 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
 		
-		var m1c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m1c:MockControl = new MockControl(PropertyInfo);
 		var m1:PropertyInfo = m1c.getMock();
 		m1.getName();
 		m1c.setDefaultReturnValue("property1");
 		m1c.replay();
 		
-		var m2c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m2c:MockControl = new MockControl(PropertyInfo);
 		var m2:PropertyInfo = m2c.getMock();
 		m2.getName();
 		m2c.setDefaultReturnValue("property2");
 		m2c.replay();
 		
-		var m3c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m3c:MockControl = new MockControl(PropertyInfo);
 		var m3:PropertyInfo = m3c.getMock();
 		m3.getName();
 		m3c.setDefaultReturnValue("property3");
 		m3c.replay();
 		
-		var mac:SimpleMockControl = new SimpleMockControl(PropertyAlgorithm);
+		var mac:MockControl = new MockControl(PropertyAlgorithm);
 		var ma:PropertyAlgorithm = mac.getMock();
 		ma.execute(i);
 		mac.setReturnValue([m1, m2, m3]);
 		mac.replay();
 		
-		var cac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(null);
@@ -709,43 +709,43 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
 		
-		var m1c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m1c:MockControl = new MockControl(PropertyInfo);
 		var m1:PropertyInfo = m1c.getMock();
 		m1.getName();
 		m1c.setDefaultReturnValue("property1");
 		m1c.replay();
 		
-		var m2c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m2c:MockControl = new MockControl(PropertyInfo);
 		var m2:PropertyInfo = m2c.getMock();
 		m2.getName();
 		m2c.setDefaultReturnValue("property2");
 		m2c.replay();
 		
-		var m3c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m3c:MockControl = new MockControl(PropertyInfo);
 		var m3:PropertyInfo = m3c.getMock();
 		m3.getName();
 		m3c.setDefaultReturnValue("property3");
 		m3c.replay();
 		
-		var mac:SimpleMockControl = new SimpleMockControl(PropertyAlgorithm);
+		var mac:MockControl = new MockControl(PropertyAlgorithm);
 		var ma:PropertyAlgorithm = mac.getMock();
 		ma.execute(i);
 		mac.setReturnValue([m1, m2, m3]);
 		mac.replay();
 		
-		var sm2c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var sm2c:MockControl = new MockControl(PropertyInfo);
 		var sm2:PropertyInfo = sm2c.getMock();
 		sm2.getName();
 		sm2c.setDefaultReturnValue("property2");
 		sm2c.replay();
 		
-		var scc:SimpleMockControl = new SimpleMockControl(ClassInfo);
+		var scc:MockControl = new MockControl(ClassInfo);
 		var sc:ClassInfo = scc.getMock();
 		sc.getProperties();
 		scc.setReturnValue(sm2);
 		scc.replay();
 		
-		var cac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(sc);
@@ -778,7 +778,7 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
 		
-		var m1c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m1c:MockControl = new MockControl(PropertyInfo);
 		var m1:PropertyInfo = m1c.getMock();
 		m1.getGetter();
 		m1c.setReturnValue(function() {});
@@ -786,7 +786,7 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		m1c.setReturnValue(function() {});
 		m1c.replay();
 		
-		var m2c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m2c:MockControl = new MockControl(PropertyInfo);
 		var m2:PropertyInfo = m2c.getMock();
 		m2.getGetter();
 		m2c.setReturnValue(function() {});
@@ -794,7 +794,7 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		m2c.setReturnValue(function() {});
 		m2c.replay();
 		
-		var m3c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m3c:MockControl = new MockControl(PropertyInfo);
 		var m3:PropertyInfo = m3c.getMock();
 		m3.getGetter();
 		m3c.setReturnValue(function() {});
@@ -802,13 +802,13 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		m3c.setReturnValue(function() {});
 		m3c.replay();
 		
-		var mac:SimpleMockControl = new SimpleMockControl(PropertyAlgorithm);
+		var mac:MockControl = new MockControl(PropertyAlgorithm);
 		var ma:PropertyAlgorithm = mac.getMock();
 		ma.execute(i);
 		mac.setReturnValue([m1, m2, m3]);
 		mac.replay();
 		
-		var cac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(null);
@@ -833,7 +833,7 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
 		
-		var m1c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m1c:MockControl = new MockControl(PropertyInfo);
 		var m1:PropertyInfo = m1c.getMock();
 		m1.getGetter();
 		m1c.setDefaultReturnValue(cm1);
@@ -841,7 +841,7 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		m1c.setDefaultReturnValue(null);
 		m1c.replay();
 		
-		var m2c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m2c:MockControl = new MockControl(PropertyInfo);
 		var m2:PropertyInfo = m2c.getMock();
 		m2.getGetter();
 		m2c.setDefaultReturnValue(cm2);
@@ -849,7 +849,7 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		m2c.setDefaultReturnValue(null);
 		m2c.replay();
 		
-		var m3c:SimpleMockControl = new SimpleMockControl(PropertyInfo);
+		var m3c:MockControl = new MockControl(PropertyInfo);
 		var m3:PropertyInfo = m3c.getMock();
 		m3.getGetter();
 		m3c.setDefaultReturnValue(null);
@@ -857,13 +857,13 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		m3c.setDefaultReturnValue(cm3);
 		m3c.replay();
 		
-		var mac:SimpleMockControl = new SimpleMockControl(PropertyAlgorithm);
+		var mac:MockControl = new MockControl(PropertyAlgorithm);
 		var ma:PropertyAlgorithm = mac.getMock();
 		ma.execute(i);
 		mac.setReturnValue([m1, m2, m3]);
 		mac.replay();
 		
-		var cac:SimpleMockControl = new SimpleMockControl(ClassAlgorithm);
+		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(null);
