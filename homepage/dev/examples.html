@@ -49,7 +49,144 @@
                         <h1>Workstyle</h1>
                         To get clean code we decided to create some code-"rules" for us. You find here every information about do's and don't within our code.<br>
                         <br>
-                        <h2></h2>
+                        <ol class="conceptList">
+                          <li><h2>Code practice</h2>
+                            <ul>
+                              <li><h3>Naming</h3>
+                                <table class="description">
+                                  <tr>
+                                    <th>Classes/Interfaces</th>
+                                    <td>Every word is wrote behind each other, without seperation, big initial letter. No abbrevations should be used.<br>
+                                      <br>
+                                      Good example:
+                                      <table class="example">
+                                        <tr>
+                                          <td class="good">class MyClass</td>
+                                        </tr>
+                                      </table><br>
+                                      <br>
+                                      Bad example:
+                                      <table class="example">
+                                        <tr>
+                                          <td class="bad">class myClass</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bad">class myCls</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bad">class My_Class</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bad">class myclass</td>
+                                        </tr>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Packagenames</th>
+                                    <td>Like normal Methods we write them. Packagenames should be contain one word(avoid using more), written in lowercase letters.<br>
+                                      <br>
+                                      Good example:
+                                      <table class="example">
+                                        <tr>
+                                          <td class="good">org.as2lib.basic</td>
+                                        </tr>
+                                       </table><br>
+                                       <br>
+                                       Bad example:
+                                       <table class="example">
+                                        <tr>
+                                          <td class="bad">org.as2libBasic</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bad">org.As2LibBasic</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bad">Org.As2lib.Basic</td>
+                                        </tr>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Methods/Vars</th>
+                                    <td>Methods should be written lower case. Each word should be separated by a uppercase initial letter.<br>
+                                      <br>
+                                      Good example:
+                                      <table class="example">
+                                        <tr>
+                                          <td class="good">private var aVar:String;</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="good">private function aMethod ():Void { }</td>
+                                        </tr>
+                                      </table><br>
+                                      <br>
+                                      Bad example:
+                                      <table class="example">
+                                        <tr>
+                                          <td class="bad">private var $aVar:String;</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bad">private var AVar:String;</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bad">private var A_Var:String;</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bad">private var Avar:String;</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bad">private var _aVar:String;</td>
+                                        </tr>
+                                      </table></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Constants</th>
+                                    <td>Constants should always be written with capitals using an underscore to seperate.</td>
+                                  </tr>
+                                </table>
+                              </li>
+                              <li><h3>Codeformat</h3>
+                                <ul>
+                                  <li>No indents by tabs, all indents by two spaces.</li>
+                                  <li>A line should be max. about 120 chars. (try to limit it to 100 chars)</li>
+                                  <li>Braces behind methods and classes are always in the same line, using a space for seperation:
+                                    <pre class="code">class A {
+  function A () {
+  }
+}</pre>
+                                  </li>
+                                  <li>Braces for conditions or loops should also be within the same line:
+                                    <pre class="code">function a (a:String, b:String) { 
+  if(a == b) {
+    // Code
+  } else {
+    // Code
+  }
+  for(var a:Number = 0; a &lt;= 10; a++) {
+    // Code
+  }
+  switch(a) {
+    case "0":
+    case "1":
+    default:
+  }
+  
+}</pre>
+                                  </li>
+                                  <li>If the Arguments for an method exceeds 120 chars you should use linebreaks.
+                                    <pre class="code">class A {
+  function A ( anArgument:String, anotherArgument:Number, aThirdArgument:Object,
+               aFourthArgument:MyClass) {
+    // Code
+  }
+}</pre>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                        </ol>
                       </td>
                     </tr>
                   </table>
