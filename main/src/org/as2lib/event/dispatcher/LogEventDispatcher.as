@@ -1,16 +1,16 @@
-﻿import org.as2lib.basic.event.EventInfo;
-import org.as2lib.basic.event.EventDispatcher;
-import org.as2lib.basic.event.Consumeable;
-import org.as2lib.basic.event.ListenerArray;
+﻿import org.as2lib.event.EventInfo;
+import org.as2lib.event.EventDispatcher;
+import org.as2lib.event.Consumeable;
+import org.as2lib.event.ListenerArray;
 import org.as2lib.basic.BasicClass;
 import org.as2lib.Config;
 
 /**
  * @version 1.0
  */
-class org.as2lib.basic.event.dispatcher.LogEventDispatcher extends BasicClass implements EventDispatcher {
+class org.as2lib.event.dispatcher.LogEventDispatcher extends BasicClass implements EventDispatcher {
 	/**
-	 * @see org.as2lib.basic.event.EventDispatcher
+	 * @see org.as2lib.event.EventDispatcher
 	 */
 	public function dispatch(event:EventInfo, listeners:ListenerArray):Void {
 		var name:String = event.getName();

@@ -3,5 +3,5 @@
 /**
  * @version 1.0
  */
-interface org.as2lib.basic.event.EventListener extends BasicInterface {
+interface org.as2lib.event.EventListener extends BasicInterface {
 }
