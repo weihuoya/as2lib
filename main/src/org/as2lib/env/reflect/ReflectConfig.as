@@ -11,6 +11,7 @@ import org.as2lib.env.reflect.algorythm.PropertyAlgorythm;
 import org.as2lib.env.reflect.algorythm.ChildrenAlgorythm;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.env.reflect.SimpleCache;
 
 /**
  * ReflectConfig is the main config used to globally configure key parts of the
@@ -34,6 +35,9 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	
 	/** The ContentAlgorythm used to find children. */
 	private static var childrenAlgorythm:ContentAlgorythm = new ChildrenAlgorythm();
+	
+	/** All ClassInfos and PackageInfos that have already been found will be cached here. */
+	private static var cache:Cache = new SimpleCache();
 	
 	/**
 	 * Private constructor to prevent an instantiation.
@@ -135,5 +139,19 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 */
 	public static function getChildrenAlgorythm(Void):ContentAlgorythm {
 		return childrenAlgorythm;
+	}
+	
+	/**
+	 * Returns the cache used to cache all ClassInfos and PackageInfos that have
+	 * already been found.
+	 *
+	 * @return the cache used to cache ClassInfos and PackageInfos
+	 */
+	public static function getCache(Void):Cache {
+		return cache;
+	}
+	
+	public static function setCache(newCache:Cache):Void {
+		cache = newCache;
 	}
 }

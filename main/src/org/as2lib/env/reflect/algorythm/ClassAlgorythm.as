@@ -6,6 +6,7 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.reflect.ReferenceNotFoundException;
 
 /**
@@ -20,11 +21,11 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 	private var cache:Cache;
 	private var info:ClassInfo;
 	
-	public function ClassAlgorythm() {
-		cache = ReflectUtil.getCache();
+	public function ClassAlgorythm(Void) {
 	}
 	
 	public function execute(object):CacheInfo {
+		cache = ReflectConfig.getCache();
 		info = null;
 		findAndStore(cache.getRoot(), object);
 		if (ObjectUtil.isEmpty(info)) {
