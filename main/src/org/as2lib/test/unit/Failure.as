@@ -1,4 +1,6 @@
-﻿/**
+﻿import org.as2lib.util.ReflectUtil;
+
+/**
  * Failure Class if an Failure was caused by an Testcase.
  *
  * @autor Martin Heidegger
@@ -32,7 +34,7 @@ class org.as2lib.test.unit.Failure {
 	 * @return	Failure as String.
 	 */
     public function toString ():String {
-		var returnValue:String = "   Error @ "+this.atClass+" | "+this.atFunction+"() occured ["+this.atTime+"ms]";
+		var returnValue:String = "   Error @ "+ReflectUtil.getClassInfo(this.atClass).getFullName()+"."+this.atFunction+"() occured ["+this.atTime+"ms]";
 		returnValue += "\n      "+message;
 		return(returnValue);
 	}
