@@ -41,7 +41,7 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 	
 	private var method:String;
 	
-	private var params:FunctionArguments;
+	private var params:Array;
 	
 	/* LocalConnection object for connection */
 	private var loc:LocalConnection;
@@ -52,6 +52,7 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 	public function LocalConnector(Void) {
 		eventBroadcaster = new EventBroadcaster();
 		loc = new LocalConnection();
+		params = new Array();
 	}
 	
 	public function initConnection(Void):Void {
@@ -87,9 +88,7 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 	}
 	
 	public function setParams():Void {
-		for(var i=0; i<arguments.length; i++) {
-			params.push(arguments[i]);
-		}
+		params = arguments;
 	}
 	
 	public function addListener(l:ConnectorListener):Void {
@@ -103,9 +102,13 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 	}
 	
 	public function handleRequest(r:ConnectorRequest):Void {
-		if(r.getHost()) host = r.getHost();
-		if(r.getPath()) path = r.getPath();
-		if(r.getMethod()) path = r.getMethod();
+		var h:String = r.getHost();
+		var p:String = r.getPath();
+		var m:String = r.getMethod();
+		
+		if(h) host = h;
+		if(p) path = p;
+		if(m) method = m;
 		
 		/*if(LocalRequest(r).getMethod()){
 			loc.send(connId,LocalRequest(r).getMethod());
