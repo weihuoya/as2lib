@@ -12,4 +12,18 @@ interface org.as2lib.basic.interfaces.Classifiable {
 	* @return				The object's class' constructor
 	*/
 	public function getClass():Function;
+	
+	/**
+	* Returns an object's class's name.
+	* 
+	* @return				The object's class's name
+	*/
+	static function getClassName():String;
+	
+	/**
+	* Returns an object's class's path.
+	* 
+	* @return				The object's class's path
+	*/
+	static function getClassPath():String;
 }
