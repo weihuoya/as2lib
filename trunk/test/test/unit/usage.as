@@ -78,6 +78,11 @@ test.unit.org.as2lib.test.mock.support.TReplayState;
 test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour;
 test.unit.org.as2lib.test.mock.support.TDefaultBehaviour;
 
+// org.as2lib.aop.pointcut
+test.unit.org.as2lib.aop.pointcut.TKindedPointcut;
+test.unit.org.as2lib.aop.pointcut.TAndCompositePointcut;
+test.unit.org.as2lib.aop.pointcut.TOrCompositePointcut;
+
 // org.as2lib.env.reflect
 test.unit.org.as2lib.env.reflect.TSimpleCache;
 test.unit.org.as2lib.env.reflect.TClassInfo;

@@ -37,10 +37,12 @@ class org.as2lib.aop.pointcut.AbstractCompositePointcut extends BasicClass {
 	/**
 	 * Adds a new pointcut to the list of pointcuts.
 	 *
+	 * <p>Does not add the pointcut if it is null or undefined.
+	 *
 	 * @param pointcut the pointcut to be added
 	 */
 	public function addPointcut(pointcut:Pointcut):Void {
-		pointcutStack.push(pointcut);
+		if (pointcut) pointcutStack.push(pointcut);
 	}
 	
 }

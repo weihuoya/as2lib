@@ -34,19 +34,31 @@ class org.as2lib.aop.pointcut.AndCompositePointcut extends AbstractCompositePoin
 	 * @param pointcutString the string representing the and-composite pointcut
 	 */
 	public function AndCompositePointcut(pointcutString:String) {
-		var pointcuts:Array = pointcutString.split(" && ");
-		for (var i:Number = 0; i < pointcuts.length; i++) {
-			addPointcut(PointcutConfig.getPointcutFactory().getPointcut(pointcuts[i]));
+		if (pointcutString != null && pointcutString != "") {
+			// source this out
+			var pointcuts:Array = pointcutString.split(" && ");
+			for (var i:Number = 0; i < pointcuts.length; i++) {
+				addPointcut(PointcutConfig.getPointcutFactory().getPointcut(pointcuts[i]));
+			}
 		}
 	}
 	
 	/**
+	 * False will be returned if:
+	 * <ul>
+	 *   <li>The passed-in join point is null or undefined.</li>
+	 *   <li>Any of the pointcuts' captures()-method returns false.</li>
+	 *   <li>There are no pointcuts added.</li>
+	 * </ul>
+	 *
 	 * @see org.as2lib.aop.Pointcut#captures(JoinPoint):Boolean
 	 */
 	public function captures(joinPoint:JoinPoint):Boolean {
+		if (!joinPoint) return false;
+		if (pointcutStack.isEmpty()) return false;
 		var iterator:Iterator = pointcutStack.iterator();
 		while (iterator.hasNext()) {
-			var pointcut:Pointcut = Pointcut(iterator.next());
+			var pointcut:Pointcut = iterator.next();
 			if (!pointcut.captures(joinPoint)) {
 				return false;
 			}

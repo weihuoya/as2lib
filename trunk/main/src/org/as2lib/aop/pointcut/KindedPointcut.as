@@ -28,24 +28,43 @@ import org.as2lib.aop.JoinPoint;
 class org.as2lib.aop.pointcut.KindedPointcut extends AbstractPointcut implements Pointcut {
 	
 	/** Stores the type of the matching join points. */
-	private var matchingJoinPoint:Number;
+	private var matchingJoinPointType:Number;
 	
 	/**
 	 * Constructs a new KindedPointcut instance.
 	 *
+	 * <p>Depending on the join points matches-method a pattern of value
+	 * null or undefined will cause the #captures(JoinPoint)-method to
+	 * return true or false.
+	 *
+	 * <p>A matching join point type of value null or undefined gets
+	 * interpreted as any type of join point allowed.
+	 *
 	 * @param pattern the join point pattern
-	 * @param matchingJoinPoint the type of join points that match the pointcut type
+	 * @param matchingJoinPointType the type of join points that match the pointcut type
 	 */
-	public function KindedPointcut(pattern:String, matchingJoinPoint:Number) {
+	public function KindedPointcut(pattern:String, matchingJoinPointType:Number) {
 		setJoinPointPattern(pattern);
-		this.matchingJoinPoint = matchingJoinPoint;
+		this.matchingJoinPointType = matchingJoinPointType;
 	}
 	
 	/**
+	 * False will be returned if:
+	 * <ul>
+	 *   <li>The passed-in join point is null or undefined.</li>
+	 *   <li>The passed-in join point does not match the given join point pattern.</li>
+	 *   <li>The passed-in join points type does not match the given one.</li>
+	 * </ul>
+	 *
 	 * @see org.as2lib.aop.Pointcut#captures(JoinPoint):Boolean
+	 * @see JoinPoint#matches(String):Boolean
 	 */
 	public function captures(joinPoint:JoinPoint):Boolean {
-		return (joinPoint.getType() == matchingJoinPoint
+		if (!joinPoint) return false;
+		if (matchingJoinPointType == null) {
+			return joinPoint.matches(getJoinPointPattern());
+		}
+		return (joinPoint.getType() == matchingJoinPointType
 					&& joinPoint.matches(getJoinPointPattern()));
 	}
 	
