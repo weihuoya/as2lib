@@ -70,12 +70,21 @@ h5 {
   padding: 0.3em;
   display: block;
 }
+p {
+  font-family: Verdana, Arial, Helvetica, sans, serif;
+  font-stretch: normal;
+  text-align: left;
+}
 pre {
   font-family: Courier, Courier New;
   font-size: 11px;
   margin-top: 0.2em;
   margin-bottom: 0.2em;
   display: block;
+}
+li {
+  font-family: Verdana, Arial, Helvetica, sans, serif;
+  font-stretch: normal;
 }
 ul ul, ol ul {
   margin: 0em;
@@ -90,6 +99,7 @@ ol{
   margin-left: 2.3em;
 }
 .mainTable {
+  text-align: left;
 }
 
 .contentBorder {
@@ -111,6 +121,7 @@ ol{
 }
 .content {
   width: 38.06em;
+  text-align: left;
   background-color: #F0F0F0;
 }
 .menu {
@@ -124,12 +135,11 @@ ol{
 }
 .menu a {
   text-decoration: none;
-  display: block;
+  display: inline;
 	border: none;
   white-space:nowrap;
   text-align: left;
   padding-left: 1.25em;
-  padding-right: 3.5625em;
   color: #444444;
   border: none;
 }
@@ -137,13 +147,46 @@ ol{
   color: #FF8711;
 	border: none;
 }
+.menu ul {
+  list-style-type: none;
+  margin: 0em;
+  padding: 0em;
+  padding-left: 1.2em;
+  padding-bottom: 0.75em;
+  font-family: Verdana, Arial, Helvetica, sans, serif;
+  font-size: 1em;
+}
+.menu ul li ul {
+  padding: 0em;
+  margin: 0em;
+}
+.menu ul li ul li {
+  padding: 0em;
+  font-weight: normal;
+  margin: 0em;
+}
+.menu ul li {
+  font-weight: bold;
+  padding: 0em;
+  margin: 0em;
+  font-size: 1em;
+}
+.menu ul li a {
+  font-weight: normal;
+  font-size: 1em;
+  padding: 0em;
+  margin: 0em;
+}
 .menu b {
   font-family: Verdana, Arial, Helvetica, sans, serif;
   display: block;
   white-space: nowrap;
   text-align: left;
+  font-size: 0.85em;
+  font-weight: normal;
   padding-left: 1.25em;
-  padding-right: 3.5625em;
+  background-color: #FFFFFF;
+  color: #666666;
   cursor: default;
 }
 .contentTd {
@@ -264,4 +307,111 @@ table .example .bad {
   font-size: 0.625em;
   color: #880000;
   vertical-align: top;
+}
+input{
+  font-size: 1em;
+  font-family: Verdana, Arial, Helvetica, sans;
+}
+.submit {
+  background-color: #FFFFFF;
+}
+.blogCalendar {
+  display: block;
+  margin-top: 1.2em;
+  margin-left: 1.2em;
+  text-align: left;
+}
+.blogCalendar a {
+  margin: 0em;
+  display: block;
+  padding: 0em;
+}
+#wp-calendar {
+  border: 1px solid #999999;
+  border-top: none;
+  background-color: #FFFFFF;
+  padding-bottom: 0em;
+}
+#wp-calendar caption {
+  color: #666666;
+  font-size: 0.75em;
+  font-weight: bold;
+  background-color: #FFFFFF;
+  border: 1px solid #999999;
+  border-bottom: 1px dotted #F0F0F0;
+}
+#wp-calendar thead {
+}
+#wp-calendar thead th {
+  font-size: 0.625em;
+  cursor: default;
+}
+#wp-calendar tfoot td {
+  background-color: #FF0000;
+  display: none;
+}
+#wp-calendar tbody td {
+  font-size: 0.625em;
+  cursor: default;
+}
+#wp-calendar tbody td a {
+  padding-left: 0em;
+  display: inline;
+  padding: 0em;
+}
+#wp-calendar #today {
+  background-color: #F0F0F0;
+  border: 1 px solid #FFFFFF;
+}
+#searchform {
+  margin: 0em;
+  padding: 0em;
+  margin-left: 1.2em;
+  margin-bottom: 1em;
+}
+#searchform #submit {
+  border: 1px solid #000000;
+}
+#blogContent {
+  width: 100%;
+  vertical-align: top;
+  padding: 1.25em;
+  padding-top: 3.5em;
+  font-size: 0.625em;
+  color: #444444;
+  font-family: Verdana, Arial, Helvetica, sans, serif;
+  text-align: left;
+}
+.storytitle {
+  margin-top: 10px;
+  color: #FF9F07;
+  text-align: left;
+}
+.storytitle a {
+  color: #FF9F01;
+  display: inline;
+}
+.meta {
+  font-size: 0.9em;
+  text-align: right;
+}
+.post-categories li{
+  font-size: 1em;
+  color: #FF9F01;
+}
+.storycontent {
+  text-align: left;
+  font-size: 1.2em;
+  font-family: Verdana, Arial, Helvetica, sans, serif;
+  font-stretch: normal;
+}
+#comment {
+  width: 300px;
+}
+#blogContent code {
+  font-family: Courier, Courier New, fixed;
+  font-size: 1em;
+}
+#commentlist {
+  font-size: 1.2em;
 }
