@@ -22,7 +22,7 @@ import org.as2lib.env.except.StackTraceElement;
  */
 class test.unit.org.as2lib.env.except.AbstractTStackTraceElement extends TestCase {
 	
-	private var message:String;
+	private var method:Function;
 	private var args:FunctionArguments;
 	private var thrower:Object;
 	private var callee:Function;
@@ -39,7 +39,7 @@ class test.unit.org.as2lib.env.except.AbstractTStackTraceElement extends TestCas
 	/**
 	 * Template Method to get the specific StackTraceElement implementation.
 	 */
-	public function getStackTraceElement (thrower:Object, message:String, args:FunctionArguments):StackTraceElement {
+	public function getStackTraceElement (thrower:Object, method:Function, args:FunctionArguments):StackTraceElement {
 		return null;
 	}
 	
@@ -48,7 +48,7 @@ class test.unit.org.as2lib.env.except.AbstractTStackTraceElement extends TestCas
 	 * This method will get called before executing each test
 	 */
 	public function setUp (Void):Void{
-		message = "Test";
+		method = function(){};
 		callee = function(){};
 		caller = function(){};
 		args = new FunctionArguments();
@@ -63,7 +63,7 @@ class test.unit.org.as2lib.env.except.AbstractTStackTraceElement extends TestCas
 	 * This method will get called after executing each test
 	 */
 	public function tearDown (Void):Void{
-		message = null;
+		method = null;
 		callee = null;
 		caller = null;
 		args = null;
@@ -76,7 +76,7 @@ class test.unit.org.as2lib.env.except.AbstractTStackTraceElement extends TestCas
 	 */
 	
 	public function testGetThrower (){
-		var stackTraceElement = getStackTraceElement (thrower, message, args);
+		var stackTraceElement = getStackTraceElement (thrower, method, args);
 		
 		//Validates that the thrower passed in was properly returned
 		assertEquals ("stackTraceElement.getThrower() should return thrower Object.", stackTraceElement.getThrower(), thrower);
@@ -86,17 +86,17 @@ class test.unit.org.as2lib.env.except.AbstractTStackTraceElement extends TestCas
 	 * Test if the method name is returned properly
 	 */
 	public function testGetMethod (){
-		var stackTraceElement = getStackTraceElement (thrower, message, args);
+		var stackTraceElement = getStackTraceElement (thrower, method, args);
 		
 		//Validates that the method called was properly returned
-		assertEquals ("stackTraceElement.getMethod() should return message string.", stackTraceElement.getMethod().getName(), message);
+		assertEquals ("stackTraceElement.getMethod() should return same method.", stackTraceElement.getMethod().getMethod(), method);
 	}
 	
 	/**
 	 * Test if the arguments are returned properly
 	 */
 	public function testGetArguments (){
-		var stackTraceElement = getStackTraceElement (thrower, message, args);
+		var stackTraceElement = getStackTraceElement (thrower, method, args);
 		
 		//Validates that the thrower passed in was properly returned
 		assertEquals ("stackTraceElement.getArguments() should return the args object.", stackTraceElement.getArguments(), args);
