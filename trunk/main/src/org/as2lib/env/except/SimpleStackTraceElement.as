@@ -81,10 +81,7 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 			if (tempMethod.getMethod() == concreteMethod) {
 				return (method = tempMethod);
 			}
-			try {
-				tempMethod = getThrower().getMethod(concreteMethod);
-			} catch (e:org.as2lib.env.reflect.NoSuchTypeMemberException) {
-			}
+			tempMethod = getThrower().getMethod(concreteMethod);
 			if (tempMethod.getMethod() == concreteMethod) {
 				return (method = tempMethod);
 			}
