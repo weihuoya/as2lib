@@ -1,4 +1,6 @@
 ﻿import org.as2lib.test.speed.TestCase;
+import org.as2lib.util.ReflectUtil;
+
 /**
  * Wrapper arround a Testcase that evaluates all informations.
  * This class wrapps additional Informations around a TestCase.
@@ -65,6 +67,6 @@ class org.as2lib.test.speed.TestCaseInformation {
 	 * @return name from the wrapped object.
 	 */
 	public function getName(Void):String {
-		return this.testCase.getName();
+		return ReflectUtil.getClassInfo(Object(this.testCase)).getName();
 	}
 }
