@@ -57,6 +57,9 @@ class org.as2lib.tool.changelog.node.EntryNode extends BasicClass {
 	/** Internal holder for the variable */
 	private var variable:String;
 	
+	/** Internal holder for the throws content */
+	private var throws:String;
+	
 	/** Internal holder for the linkURI */
 	private var link:String;
 	
@@ -105,6 +108,7 @@ class org.as2lib.tool.changelog.node.EntryNode extends BasicClass {
 		package = node.attributes.package;
 		clazz = node.attributes["class"];
 		method = node.attributes.method;
+		throws = node.attributes.throws;
 		link = node.attributes.link;
 		variable = node.attributes.variable;
 		content = createContent(node.childNodes);
@@ -180,6 +184,15 @@ class org.as2lib.tool.changelog.node.EntryNode extends BasicClass {
 	 */
 	public function getVariable(Void):String {
 		return variable;
+	}
+	
+	/**
+	 * Getter for the throws attribute of the entry.
+	 * 
+	 * @return Throws attribute of the entry.
+	 */
+	public function getThrows(Void):String {
+		return throws;
 	}
 	
 	/**

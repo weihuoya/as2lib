@@ -17,6 +17,7 @@
 					<entry type="add" package="stuff">Something added.</entry>
 					<entry type="add" package="stuff" class="MyClass">Something added.</entry>
 					<entry type="add" package="stuff" class="MyClass1" method="myMethod()">Something added.</entry>
+					<entry type="add" package="stuff" class="MyClass1" method="myMethod()" throws="SpecialException">Something added.</entry>
 				</day>
 				<day value="10">
 					<entry type="bugfix" package="stuff" class="MyClass4" method="myMethod3()">Some important bug fixed.</entry>
@@ -26,13 +27,20 @@
 This is some stupid dummie test, lets see what it does.</entry>
 				</day>
 				<day value="12">
-					<entry type="documentation" link="http://www.google.de">Hello<change-arguments from="a" to="b">Hello</change-arguments></entry>
-					<entry type="documentation" link="http://www.amazon.de">Hello<change-move from="a" to="b">Hello</change-move></entry>
-					<entry type="documentation" link="http://www.gmx.de">Hello<change-rename from="a" to="b">Hello</change-rename></entry>
-					<entry type="documentation" link="http://www.hotmail.de">Hello<change-returnType from="a" to="b">Hello</change-returnType></entry>
-					<entry type="documentation" link="http://www.yahoo.de">Hello<change-returnValue from="a" to="b">Hello</change-returnValue></entry>
-					<entry type="documentation" link="http://www.gmail.com">Hello<change-throws from="a" to="b">Hello</change-throws></entry>
-					<entry type="documentation" link="http://www.macromedia.com">Hello<change-type from="a" to="b">Hello</change-type></entry>
+					<entry type="documentation" link="http://www.google.de">Hello<change-arguments from="a" to="b">Hello</change-arguments>
+					</entry>
+					<entry type="documentation" link="http://www.amazon.de">Hello<change-move from="a" to="b">Hello</change-move>
+					</entry>
+					<entry type="documentation" link="http://www.gmx.de">Hello<change-rename from="a" to="b">Hello</change-rename>
+					</entry>
+					<entry type="documentation" link="http://www.hotmail.de">Hello<change-returnType from="a" to="b">Hello</change-returnType>
+					</entry>
+					<entry type="documentation" link="http://www.yahoo.de">Hello<change-returnValue from="a" to="b">Hello</change-returnValue>
+					</entry>
+					<entry type="documentation" link="http://www.gmail.com">Hello<change-throws from="a" to="b">Hello</change-throws>
+					</entry>
+					<entry type="documentation" link="http://www.macromedia.com">Hello<change-type from="a" to="b">Hello</change-type>
+					</entry>
 				</day>
 				<day value="9">
 					<entry type="change">More entries with more content</entry>

@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by m (w) -->
 <!--
 
   LICENSE
@@ -37,7 +38,7 @@
   </changelog>
   
 -->
-<xs:schema targetNamespace="as2lib" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="as2lib" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.91">
+<xs:schema targetNamespace="as2lib" xmlns="as2lib" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.91">
 	<!-- possible types of a entry -->
 	<xs:simpleType name="entryType">
 		<xs:restriction base="xs:string">
@@ -167,6 +168,7 @@
 																		<xs:attribute name="variable" type="xs:string" use="optional"/>
 																		<xs:attribute name="link" type="xs:anyURI" use="optional"/>
 																		<xs:attribute name="type" type="entryType" use="required"/>
+																		<xs:attribute name="throws" type="xs:string" use="optional"/>
 																	</xs:complexType>
 																</xs:element>
 																<!-- entry node -->

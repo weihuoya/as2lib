@@ -166,6 +166,7 @@ class org.as2lib.tool.changelog.StandardView extends BasicClass implements Chang
 	    var clazz:String = entry.getClass();
 	    var method:String = entry.getMethod();
 		var variable:String = entry.getVariable();
+	    var throws:String = entry.getThrows();
 		var somethingWrittenBeforeDate = false;
 		var link:String = entry.getLink();
 		var content:String = "";
@@ -196,6 +197,9 @@ class org.as2lib.tool.changelog.StandardView extends BasicClass implements Chang
 			}
 			content += variable();
 			somethingWrittenBeforeDate = true;
+		}
+		if(throws) {
+			content += " throws "+throws;
 		}
 		var date:Date = entry.getDate();
 		content += "</b>"
