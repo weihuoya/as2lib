@@ -7,6 +7,6 @@ class org.as2lib.util.ExceptUtil extends BasicClass {
 	}
 
 	public static function stringify(throwable:Throwable):String {
-		return ExceptConfig.getStringifier().execute(Object(throwable));
+		return ExceptConfig.getStringifier().execute(throwable);
 	}
 }

@@ -38,7 +38,7 @@ class org.as2lib.except.AbstractException extends Error {
 	}
 	
 	public function initCause(aCause:Throwable):Void {
-		if (ObjectUtil.isAvailable(Object(cause))) {
+		if (ObjectUtil.isAvailable(cause)) {
 			throw new Error("The cause has already been set.");
 		}
 		cause = aCause;
