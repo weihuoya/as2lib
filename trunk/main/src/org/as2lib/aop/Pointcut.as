@@ -1,6 +1,5 @@
 ﻿import org.as2lib.core.BasicInterface;
 import org.as2lib.aop.JoinPoint;
-import org.as2lib.aop.joinpoint.JoinPointDescription;
 
 /**
  * @author Simon Wacker
