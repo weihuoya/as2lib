@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Weaver</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>Weaver</h1>
+        <div class="classProperties">
+          <div class="kindOfClass"><span class="value">
+Interface
+</span>
+          </div>
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.aop.Weaver</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Wednesday, 15 September 2004, 12:22:47</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">A Weaver is responsible for weaving the aspect-oriented code
+
+ into the affected classes.
+ </div>
+ Refer to <a href="http://www.simonwacker.com/blog/archives/000040.php">http://www.simonwacker.com/blog/archives/000040.php</a> for
+
+ a short explanation of what a weaver is all about.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#weave">weave</a>
+                </li>
+                <li>
+                  <a href="#weaveByVoid">weaveByVoid</a>
+                </li>
+                <li>
+                  <a href="#weaveByClass">weaveByClass</a>
+                </li>
+                <li>
+                  <a href="#weaveByClassAndAspect">weaveByClassAndAspect</a>
+                </li>
+                <li>
+                  <a href="#weaveByObject">weaveByObject</a>
+                </li>
+                <li>
+                  <a href="#weaveByObjectAndAspect">weaveByObjectAndAspect</a>
+                </li>
+                <li>
+                  <a href="#addAspect">addAspect</a>
+                </li>
+                <li>
+                  <a href="#addAspectByAspect">addAspectByAspect</a>
+                </li>
+                <li>
+                  <a href="#addAspectByAspectAndAffectedTypes">addAspectByAspectAndAffectedTypes</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicInterface.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="addAspect" id="addAspect"></a>
+          <div class="method hasBottomDivider">
+            <h3>addAspect</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addAspect</b> (
+</div>
+                <div class="code">) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading</span>
+                  <div class="item"><a href="org_as2lib_aop_Weaver.html#addAspectByAspect">addAspectByAspect</a> (aspect:Aspect) : Void<br /><a href="org_as2lib_aop_Weaver.html#addAspectByAspectAndAffectedTypes">addAspectByAspectAndAffectedTypes</a> (aspect:Aspect, affectedTypes:Array) : Void</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="addAspectByAspect" id="addAspectByAspect"></a>
+          <div class="method hasBottomDivider">
+            <h3>addAspectByAspect</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addAspectByAspect</b> (
+</div>
+                <div class="code">aspect:Aspect) : Void</div>
+              </div>
+            </div>
+            <div class="description">Adds an aspect to the list. The weaver will try to weave this aspect
+
+ into any class.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">aspect<span class="separator">:</span></div>
+                    <div>the aspect to be added</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="addAspectByAspectAndAffectedTypes" id="addAspectByAspectAndAffectedTypes"></a>
+          <div class="method hasBottomDivider">
+            <h3>addAspectByAspectAndAffectedTypes</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addAspectByAspectAndAffectedTypes</b> (
+
+</div>
+                <div class="code">aspect:Aspect,
+affectedTypes:Array) : Void</div>
+              </div>
+            </div>
+            <div class="description">Adds an aspect to the list. The weaver will only try to weave this
+
+ aspect into any of the given affected types. This improves the overall
+
+ performance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">aspect       <span class="separator">:</span></div>
+                    <div>the aspect to be added</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">affectedTypes<span class="separator">:</span></div>
+                    <div>the types that shall be considered during the weaving process</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weave" id="weave"></a>
+          <div class="method hasBottomDivider">
+            <h3>weave</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>weave</b> (
+</div>
+                <div class="code">) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading</span>
+                  <div class="item"><a href="org_as2lib_aop_Weaver.html#weaveByVoid">weaveByVoid</a> (Void) : Void<br /><a href="org_as2lib_aop_Weaver.html#weaveByClass">weaveByClass</a> (clazz:Function) : Void<br /><a href="org_as2lib_aop_Weaver.html#weaveByClassAndAspect">weaveByClassAndAspect</a> (clazz:Function, aspect:Aspect) : Void<br /><a href="org_as2lib_aop_Weaver.html#weaveByObject">weaveByObject</a> (object:Object) : Void<br /><a href="org_as2lib_aop_Weaver.html#weaveByObjectAndAspect">weaveByObjectAndAspect</a> (object:Object, aspect:Aspect) : Void</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByClass" id="weaveByClass"></a>
+          <div class="method hasBottomDivider">
+            <h3>weaveByClass</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>weaveByClass</b> (
+</div>
+                <div class="code">clazz:Function) : Void</div>
+              </div>
+            </div>
+            <div class="description">Weaves advices that capture any type member of the given class.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">clazz<span class="separator">:</span></div>
+                    <div>the class to weave in</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByClassAndAspect" id="weaveByClassAndAspect"></a>
+          <div class="method hasBottomDivider">
+            <h3>weaveByClassAndAspect</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>weaveByClassAndAspect</b> (
+
+</div>
+                <div class="code">clazz:Function,
+aspect:Aspect) : Void</div>
+              </div>
+            </div>
+            <div class="description">Weaves the given aspect into the class.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">clazz <span class="separator">:</span></div>
+                    <div>the class to weave logic in</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">aspect<span class="separator">:</span></div>
+                    <div>the aspect to obtain the advices to weave in from</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByObject" id="weaveByObject"></a>
+          <div class="method hasBottomDivider">
+            <h3>weaveByObject</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>weaveByObject</b> (
+</div>
+                <div class="code">object:Object) : Void</div>
+              </div>
+            </div>
+            <div class="description">Weaves the contents of all added aspects into the given object.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
+                    <div>the object to weave logic in</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByObjectAndAspect" id="weaveByObjectAndAspect"></a>
+          <div class="method hasBottomDivider">
+            <h3>weaveByObjectAndAspect</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>weaveByObjectAndAspect</b> (
+
+</div>
+                <div class="code">object:Object,
+aspect:Aspect) : Void</div>
+              </div>
+            </div>
+            <div class="description">Weaves the given aspect into the object.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
+                    <div>the affected object to weave logic in</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">aspect<span class="separator">:</span></div>
+                    <div>the aspect to obtain advices to weave in from</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByVoid" id="weaveByVoid"></a>
+          <div class="method hasBottomDivider">
+            <h3>weaveByVoid</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>weaveByVoid</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Weaves the contents of all added aspects into the appropriate
+
+ affected types.</div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:36:19
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

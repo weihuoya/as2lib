@@ -1,0 +1,496 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>SimpleWeaver</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>SimpleWeaver</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_aop_Weaver.html">Weaver</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.aop.weaver.SimpleWeaver</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Friday, 11 February 2005, 08:32:22</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"> </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#SimpleWeaver">SimpleWeaver</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#z">z</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#y">y</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#weave">weave</a>
+                </li>
+                <li>
+                  <a href="#weaveByVoid">weaveByVoid</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#weaveByPackage">weaveByPackage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#weaveByClassInfo">weaveByClassInfo</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#weaveByClassInfoAndAspect">weaveByClassInfoAndAspect</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#weaveByJoinPointAndAdvices">weaveByJoinPointAndAdvices</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#weaveByJoinPointAndAdvice">weaveByJoinPointAndAdvice</a>
+                </li>
+                <li>
+                  <a href="#weaveByClass">weaveByClass</a>
+                </li>
+                <li>
+                  <a href="#weaveByClassAndAspect">weaveByClassAndAspect</a>
+                </li>
+                <li>
+                  <a href="#weaveByObject">weaveByObject</a>
+                </li>
+                <li>
+                  <a href="#weaveByObjectAndAspect">weaveByObjectAndAspect</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#weaveByJoinPointAndAdvicesAndObject">weaveByJoinPointAndAdvicesAndObject</a>
+                </li>
+                <li>
+                  <a href="#addAspect">addAspect</a>
+                </li>
+                <li>
+                  <a href="#addAspectByAspect">addAspectByAspect</a>
+                </li>
+                <li>
+                  <a href="#addAspectByAspectAndAffectedTypes">addAspectByAspectAndAffectedTypes</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="SimpleWeaver" id="SimpleWeaver"></a>
+          <div class="method hasBottomDivider">
+            <h3>SimpleWeaver</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>SimpleWeaver</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new SimpleWeaver instance.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="y" id="y"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>y</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>y</b>:Array
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Stores the added affected types.</div>
+          </div>
+          <a name="z" id="z"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>z</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>z</b>:Array
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Stores all added aspects.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="addAspect" id="addAspect"></a>
+          <div class="method hasBottomDivider">
+            <h3>addAspect</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addAspect</b> (
+</div>
+                <div class="code">) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_aop_Weaver.html#addAspect">:Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="addAspectByAspect" id="addAspectByAspect"></a>
+          <div class="method hasBottomDivider">
+            <h3>addAspectByAspect</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addAspectByAspect</b> (
+</div>
+                <div class="code">a:Aspect) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_aop_Weaver.html#addAspectByAspect">:Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="addAspectByAspectAndAffectedTypes" id="addAspectByAspectAndAffectedTypes"></a>
+          <div class="method hasBottomDivider">
+            <h3>addAspectByAspectAndAffectedTypes</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addAspectByAspectAndAffectedTypes</b> (
+
+</div>
+                <div class="code">a:Aspect,
+b:Array) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_aop_Weaver.html#addAspectByAspectAndAffectedTypes">, Array):Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weave" id="weave"></a>
+          <div class="method hasBottomDivider">
+            <h3>weave</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>weave</b> (
+</div>
+                <div class="code">) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_aop_Weaver.html#weave">:Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByClass" id="weaveByClass"></a>
+          <div class="method hasBottomDivider">
+            <h3>weaveByClass</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>weaveByClass</b> (
+</div>
+                <div class="code">a:Function) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_aop_Weaver.html#weaveByClass">:Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByClassAndAspect" id="weaveByClassAndAspect"></a>
+          <div class="method hasBottomDivider">
+            <h3>weaveByClassAndAspect</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>weaveByClassAndAspect</b> (
+
+</div>
+                <div class="code">a:Function,
+b:Aspect) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_aop_Weaver.html#weaveByClass">, Aspect):Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByClassInfo" id="weaveByClassInfo"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>weaveByClassInfo</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>weaveByClassInfo</b> (
+</div>
+                <div class="code">a:ClassInfo) : Void</div>
+              </div>
+            </div>
+            <div class="description">Iterates through all added aspects and weaves them into the
+
+ provided class represented by a ClassInfo.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">a<span class="separator">:</span></div>
+                    <div>the ClassInfo instance that represents the class to weave all added aspects in</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByClassInfoAndAspect" id="weaveByClassInfoAndAspect"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>weaveByClassInfoAndAspect</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>weaveByClassInfoAndAspect</b> (
+
+</div>
+                <div class="code">a:ClassInfo,
+b:Aspect) : Void</div>
+              </div>
+            </div>
+            <div class="description">Weaves the passed Aspect into the class represented by the
+
+ passed ClassInfo.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">a<span class="separator">:</span></div>
+                    <div>the ClassInfo instance that represents the class to weave the aspect in</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">b<span class="separator">:</span></div>
+                    <div>the Aspect to be woven into the class</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByJoinPointAndAdvice" id="weaveByJoinPointAndAdvice"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>weaveByJoinPointAndAdvice</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>weaveByJoinPointAndAdvice</b> (
+
+</div>
+                <div class="code">a:JoinPoint,
+b:Advice)</div>
+              </div>
+            </div>
+            <div class="description">Weaves the advice into the join point.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">a<span class="separator">:</span></div>
+                    <div>the join point to weave into</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">b<span class="separator">:</span></div>
+                    <div>the advice to be woven in</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByJoinPointAndAdvices" id="weaveByJoinPointAndAdvices"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>weaveByJoinPointAndAdvices</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>weaveByJoinPointAndAdvices</b> (
+
+</div>
+                <div class="code">a:JoinPoint,
+b:Array) : Void</div>
+              </div>
+            </div>
+            <div class="description">Iterates through the passed advice array weaving into the 
+
+ join point.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">a<span class="separator">:</span></div>
+                    <div>the JoinPoint that shall be woven into</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">b<span class="separator">:</span></div>
+                    <div>the Array of advices</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByJoinPointAndAdvicesAndObject" id="weaveByJoinPointAndAdvicesAndObject"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>weaveByJoinPointAndAdvicesAndObject</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>weaveByJoinPointAndAdvicesAndObject</b> (
+
+
+</div>
+                <div class="code">a:JoinPoint,
+b:Array,
+c:Object) : Void</div>
+              </div>
+            </div>
+            <div class="description">Weaves the passed advices at the given join point directly into
+
+ the specific object.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">a<span class="separator">:</span></div>
+                    <div>the join point that is affected</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">b<span class="separator">:</span></div>
+                    <div>the array of advices to be woven in</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">c<span class="separator">:</span></div>
+                    <div>the object to weave into</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByObject" id="weaveByObject"></a>
+          <div class="method hasBottomDivider">
+            <h3>weaveByObject</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>weaveByObject</b> (
+</div>
+                <div class="code">a:Object) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_aop_Weaver.html#weaveByClass">:Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByObjectAndAspect" id="weaveByObjectAndAspect"></a>
+          <div class="method hasBottomDivider">
+            <h3>weaveByObjectAndAspect</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>weaveByObjectAndAspect</b> (
+
+</div>
+                <div class="code">a:Object,
+b:Aspect) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_aop_Weaver.html#weaveByClass">, Aspect):Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="weaveByPackage" id="weaveByPackage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>weaveByPackage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>weaveByPackage</b> (
+</div>
+                <div class="code">a:PackageInfo) : Void</div>
+              </div>
+            </div>
+            <div class="description">Iterates throught all sub-packages and weaves the added aspects
+
+ in.</div>
+          </div>
+          <a name="weaveByVoid" id="weaveByVoid"></a>
+          <div class="method hasBottomDivider">
+            <h3>weaveByVoid</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>weaveByVoid</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_aop_Weaver.html#weaveByVoid">:Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:36:33
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

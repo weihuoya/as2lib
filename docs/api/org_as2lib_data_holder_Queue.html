@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Queue</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>Queue</h1>
+        <div class="classProperties">
+          <div class="kindOfClass"><span class="value">
+Interface
+</span>
+          </div>
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.data.holder.Queue</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 22 January 2005, 06:30:36</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"> </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#enqueue">enqueue</a>
+                </li>
+                <li>
+                  <a href="#dequeue">dequeue</a>
+                </li>
+                <li>
+                  <a href="#peek">peek</a>
+                </li>
+                <li>
+                  <a href="#iterator">iterator</a>
+                </li>
+                <li>
+                  <a href="#isEmpty">isEmpty</a>
+                </li>
+                <li>
+                  <a href="#size">size</a>
+                </li>
+                <li>
+                  <a href="#toArray">toArray</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicInterface.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="dequeue" id="dequeue"></a>
+          <div class="method hasBottomDivider">
+            <h3>dequeue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>dequeue</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Removes the firstly inserted value.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the firstly inserted value</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws</span>
+                  <div class="item"><a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if the Queue is empty</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="enqueue" id="enqueue"></a>
+          <div class="method hasBottomDivider">
+            <h3>enqueue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>enqueue</b> (
+</div>
+                <div class="code">value) : Void</div>
+              </div>
+            </div>
+            <div class="description">Inserts the value into the queue.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">value<span class="separator">:</span></div>
+                    <div>the value to be inserted</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isEmpty" id="isEmpty"></a>
+          <div class="method hasBottomDivider">
+            <h3>isEmpty</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isEmpty</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Returns whether the queue contains no values.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the queue contains no values else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="iterator" id="iterator"></a>
+          <div class="method hasBottomDivider">
+            <h3>iterator</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>iterator</b> (
+</div>
+                <div class="code">Void) : Iterator</div>
+              </div>
+            </div>
+            <div class="description">Returns an Iterator that can be used to iterate over the elements fo this
+
+ Queue.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">an Iterator to iterate over this queue</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_data_holder_Iterator.html">Iterator</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="peek" id="peek"></a>
+          <div class="method hasBottomDivider">
+            <h3>peek</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>peek</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Returns the firstly inserted value.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the firstly inserted value</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws</span>
+                  <div class="item"><a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if the Queue is empty</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="size" id="size"></a>
+          <div class="method hasBottomDivider">
+            <h3>size</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>size</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Returns the number of enqueued elements.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the number of enqueued elements</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_data_holder_Queue.html#enqueue">*):Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="toArray" id="toArray"></a>
+          <div class="method hasBottomDivider">
+            <h3>toArray</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>toArray</b> (
+</div>
+                <div class="code">Void) : Array</div>
+              </div>
+            </div>
+            <div class="description">Returns an array representation of this queue.<p>The elements are copied onto the array in a first-in-first-out
+
+ order, similar to the order of the elements returned by a succession 
+
+ of calls to #dequeue().</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the stack's array representation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:43:37
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

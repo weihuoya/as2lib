@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>TestListener</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>TestListener</h1>
+        <div class="classProperties">
+          <div class="kindOfClass"><span class="value">
+Interface
+</span>
+          </div>
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_env_event_EventListener.html">EventListener</a> &lt; <a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Martin Heidegger</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.unit.TestListener</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Sunday, 29 August 2004, 23:54:15</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">Listener definition for all Events available within @see org.as2lib.test.unit.TestRunner.
+ </div>
+ A Implementation of this interface can be added to a TestRunner instance.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicInterface.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="methodSummaryPart"><span class="title">(null)</span>
+              <ul>
+                <li>
+                  <a href="#onStart">onStart</a>
+                </li>
+                <li>
+                  <a href="#onProgress">onProgress</a>
+                </li>
+                <li>
+                  <a href="#onFinish">onFinish</a>
+                </li>
+                <li>
+                  <a href="#onPause">onPause</a>
+                </li>
+                <li>
+                  <a href="#onResume">onResume</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">(null)</h2>
+          <a name="onFinish" id="onFinish"></a>
+          <div class="method hasBottomDivider">
+            <h3>onFinish</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>onFinish</b> (
+</div>
+                <div class="code">finishInfo:FinishInfo) : Void</div>
+              </div>
+            </div>
+            <div class="description">Finish event, fired after the execution of a TestRunner.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">finishInfo<span class="separator">:</span></div>
+                    <div>Informations about the TestRunner that finished.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="onPause" id="onPause"></a>
+          <div class="method hasBottomDivider">
+            <h3>onPause</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>onPause</b> (
+</div>
+                <div class="code">pauseInfo:PauseInfo) : Void</div>
+              </div>
+            </div>
+            <div class="description">Pause event, fired after by pausing the execution of a TestRunner.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">pauseInfo<span class="separator">:</span></div>
+                    <div>Informations about the TestRunner that paused.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="onProgress" id="onProgress"></a>
+          <div class="method hasBottomDivider">
+            <h3>onProgress</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>onProgress</b> (
+</div>
+                <div class="code">progressInfo:ProgressInfo) : Void</div>
+              </div>
+            </div>
+            <div class="description">Progress event, fired after each executed method within a TestRunner.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">progressInfo<span class="separator">:</span></div>
+                    <div>Extended informations the current progress.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="onResume" id="onResume"></a>
+          <div class="method hasBottomDivider">
+            <h3>onResume</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>onResume</b> (
+</div>
+                <div class="code">resumeInfo:ResumeInfo) : Void</div>
+              </div>
+            </div>
+            <div class="description">Pause event, fired after by resuming the execution of a TestRunner.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">resumeInfo<span class="separator">:</span></div>
+                    <div>Informations about the TestRunner that resumed working.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="onStart" id="onStart"></a>
+          <div class="method hasBottomDivider">
+            <h3>onStart</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>onStart</b> (
+</div>
+                <div class="code">startInfo:StartInfo) : Void</div>
+              </div>
+            </div>
+            <div class="description">Start event, fired by start of a TestRunner.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">startInfo<span class="separator">:</span></div>
+                    <div>Informations about the TestRunner that started.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:34:09
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

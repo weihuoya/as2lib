@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>TestSuiteResult</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>TestSuiteResult</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_test_unit_TestResult.html">TestResult</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.unit.TestSuiteResult</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Monday, 24 January 2005, 06:04:18</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">Wrapper for a TestSuite with extended Informations about the run of the TestSuite. </div><div class="classFields"><div class="boxWithBorder"><div class="boxedElem"><div class="contentHolder"><span class="title">See also: </span><div class="item"><a href="org_as2lib_test_unit_TestSuite.html">@autor Martin Heidegger</a></div></div></div></div></div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#TestSuiteResult">TestSuiteResult</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#testSuite">testSuite</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#testResults">testResults</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#getTests">getTests</a>
+                </li>
+                <li>
+                  <a href="#getPercentage">getPercentage</a>
+                </li>
+                <li>
+                  <a href="#isFinished">isFinished</a>
+                </li>
+                <li>
+                  <a href="#isStarted">isStarted</a>
+                </li>
+                <li>
+                  <a href="#getTestCaseResults">getTestCaseResults</a>
+                </li>
+                <li>
+                  <a href="#getTestResults">getTestResults</a>
+                </li>
+                <li>
+                  <a href="#getName">getName</a>
+                </li>
+                <li>
+                  <a href="#getOperationTime">getOperationTime</a>
+                </li>
+                <li>
+                  <a href="#hasErrors">hasErrors</a>
+                </li>
+                <li>
+                  <a href="#getTestSuite">getTestSuite</a>
+                </li>
+                <li>
+                  <a href="#toString">toString</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="TestSuiteResult" id="TestSuiteResult"></a>
+          <div class="method hasBottomDivider">
+            <h3>TestSuiteResult</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>TestSuiteResult</b> (
+
+</div>
+                <div class="code">testSuite:TestSuite,
+testRunner:TestRunner)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new TestSuiteResult.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">testSuite <span class="separator">:</span></div>
+                    <div>TestSuite to be wrapped</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">testRunner<span class="separator">:</span></div>
+                    <div>TestRunner that created this Result.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="testResults" id="testResults"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>testResults</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>testResults</b>:TypedArray
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">TestResults related to the tests.</div>
+          </div>
+          <a name="testSuite" id="testSuite"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>testSuite</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>testSuite</b>:TestSuite
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">TestSuite that gets wrapped.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="getName" id="getName"></a>
+          <div class="method hasBottomDivider">
+            <h3>getName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getName</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="description">Getter for the Name of the TestSuite.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Name of the TestSuite.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getOperationTime" id="getOperationTime"></a>
+          <div class="method hasBottomDivider">
+            <h3>getOperationTime</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getOperationTime</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Getter for the total Operation time of the TestSuite.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Operation Time of the TestSuite in milliseconds..</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getPercentage" id="getPercentage"></a>
+          <div class="method hasBottomDivider">
+            <h3>getPercentage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getPercentage</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Getter for the Percentage of the execution.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Percentage of execution.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getTestCaseResults" id="getTestCaseResults"></a>
+          <div class="method hasBottomDivider">
+            <h3>getTestCaseResults</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getTestCaseResults</b> (
+</div>
+                <div class="code">Void) : TypedArray</div>
+              </div>
+            </div>
+            <div class="description">Getter for all TestCaseResults (flatten) contained in the TestSuite.
+
+ Returns flatten all TestCaseResults.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">TestCaseResults containted in the TestSuite and all SubSuites.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getTestResults" id="getTestResults"></a>
+          <div class="method hasBottomDivider">
+            <h3>getTestResults</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getTestResults</b> (
+</div>
+                <div class="code">Void) : TypedArray</div>
+              </div>
+            </div>
+            <div class="description">Getter for all TestResults (flatten) contained in the TestSuite.
+
+ Returns flatten all TestResults.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">TestResults containted in the TestSuite and all SubSuites.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getTests" id="getTests"></a>
+          <div class="method hasBottomDivider">
+            <h3>getTests</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getTests</b> (
+</div>
+                <div class="code">Void) : TypedArray</div>
+              </div>
+            </div>
+            <div class="description">Getter for all Test(Results) contained in the TestSuite</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">List of all TestResults.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getTestSuite" id="getTestSuite"></a>
+          <div class="method hasBottomDivider">
+            <h3>getTestSuite</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getTestSuite</b> (
+</div>
+                <div class="code">Void) : TestSuite</div>
+              </div>
+            </div>
+            <div class="description">Getter for the wrapped TestSuite.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">wrapped TestSuite.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="hasErrors" id="hasErrors"></a>
+          <div class="method hasBottomDivider">
+            <h3>hasErrors</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>hasErrors</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">True if the TestSuite contains errors.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isFinished" id="isFinished"></a>
+          <div class="method hasBottomDivider">
+            <h3>isFinished</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isFinished</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">True if the TestSuite is finished.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isStarted" id="isStarted"></a>
+          <div class="method hasBottomDivider">
+            <h3>isStarted</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isStarted</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">True if the TestSuite is started.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="toString" id="toString"></a>
+          <div class="method hasBottomDivider">
+            <h3>toString</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>toString</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="description">Extended .toString implementation.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">TestSuiteResult as well formated String.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:35:40
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>ClassInfo</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>ClassInfo</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_reflect_TypeInfo.html">TypeInfo</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.reflect.ClassInfo</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 19 February 2005, 10:46:41</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">ClassInfo reflects a real class in the Flash environment.  </div>This class
+
+ is used to get information about the class it represents.<p>You can use the static search methods #forName, #forObject, #forInstance
+
+ and #forClass to get class infos for specific cocrete classes.<p>If you for example have an instance you wanna get information about
+
+ you first must retrieve the appropriate ClassInfo instance and you
+
+ can then use its methods to get the wanted information.<pre><span class="codeKeyword">var</span> myInstance:MyClass = <span class="codeKeyword">new</span> MyClass();
+
+ <span class="codeKeyword">var</span> classInfo:ClassInfo = ClassInfo.forInstance(myInstance);
+
+ <span class="codeIdentifier">trace</span>(<span class="codeString">"Class name: "</span> + classInfo.getFullName());
+
+ <span class="codeIdentifier">trace</span>(<span class="codeString">"Super class name: "</span> + classInfo.getSuperType().getFullName());
+
+ <span class="codeIdentifier">trace</span>(<span class="codeString">"Declared methods: "</span> + classInfo.getMethods(<span class="codeIdentifier">true</span>));
+
+ <span class="codeIdentifier">trace</span>(<span class="codeString">"Declared properties: "</span> + classInfo.getProperties(<span class="codeIdentifier">true</span>));</pre><p>Note that it is not possible right now to distinguish between
+
+ interfaces and classes at run-time. Therefore are both classes and
+
+ interfaces represented by ClassInfo instances. This is going to
+
+ change as soon is a differentiation is possible.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#ClassInfo">ClassInfo</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#name">name</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#fullName">fullName</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#clazz">clazz</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#superClass">superClass</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#package">package</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#methods">methods</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#properties">properties</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#classConstructor">classConstructor</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#classAlgorithm">classAlgorithm</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#methodAlgorithm">methodAlgorithm</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#propertyAlgorithm">propertyAlgorithm</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span>
+              <ul>
+                <li>
+                  <a href="#forName">forName</a>
+                </li>
+                <li>
+                  <a href="#forObject">forObject</a>
+                </li>
+                <li>
+                  <a href="#forInstance">forInstance</a>
+                </li>
+                <li>
+                  <a href="#forClass">forClass</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#setClassAlgorithm">setClassAlgorithm</a>
+                </li>
+                <li>
+                  <a href="#getClassAlgorithm">getClassAlgorithm</a>
+                </li>
+                <li>
+                  <a href="#setMethodAlgorithm">setMethodAlgorithm</a>
+                </li>
+                <li>
+                  <a href="#getMethodAlgorithm">getMethodAlgorithm</a>
+                </li>
+                <li>
+                  <a href="#setPropertyAlgorithm">setPropertyAlgorithm</a>
+                </li>
+                <li>
+                  <a href="#getPropertyAlgorithm">getPropertyAlgorithm</a>
+                </li>
+                <li>
+                  <a href="#getName">getName</a>
+                </li>
+                <li>
+                  <a href="#getFullName">getFullName</a>
+                </li>
+                <li>
+                  <a href="#getType">getType</a>
+                </li>
+                <li>
+                  <a href="#getConstructor">getConstructor</a>
+                </li>
+                <li>
+                  <a href="#getSuperType">getSuperType</a>
+                </li>
+                <li>
+                  <a href="#newInstance">newInstance</a>
+                </li>
+                <li>
+                  <a href="#getPackage">getPackage</a>
+                </li>
+                <li>
+                  <a href="#getMethods">getMethods</a>
+                </li>
+                <li>
+                  <a href="#getMethodsByFlag">getMethodsByFlag</a>
+                </li>
+                <li>
+                  <a href="#getMethodsByFilter">getMethodsByFilter</a>
+                </li>
+                <li>
+                  <a href="#getMethod">getMethod</a>
+                </li>
+                <li>
+                  <a href="#getMethodByName">getMethodByName</a>
+                </li>
+                <li>
+                  <a href="#getMethodByMethod">getMethodByMethod</a>
+                </li>
+                <li>
+                  <a href="#getProperties">getProperties</a>
+                </li>
+                <li>
+                  <a href="#getPropertiesByFlag">getPropertiesByFlag</a>
+                </li>
+                <li>
+                  <a href="#getPropertiesByFilter">getPropertiesByFilter</a>
+                </li>
+                <li>
+                  <a href="#getProperty">getProperty</a>
+                </li>
+                <li>
+                  <a href="#getPropertyByName">getPropertyByName</a>
+                </li>
+                <li>
+                  <a href="#getPropertyByProperty">getPropertyByProperty</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="ClassInfo" id="ClassInfo"></a>
+          <div class="method hasBottomDivider">
+            <h3>ClassInfo</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>ClassInfo</b> (
+
+
+</div>
+                <div class="code">name:String,
+clazz:Function,
+package:PackageInfo)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new ClassInfo instance.<p>All arguments are allowed to be null, but keep in mind that not
+
+ all methods will function if one is.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name   <span class="separator">:</span></div>
+                    <div>the name of the class</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">class  <span class="separator">:</span></div>
+                    <div>the class the newly created ClassInfo represents</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">package<span class="separator">:</span></div>
+                    <div>the package in which the class is declared</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="classAlgorithm" id="classAlgorithm"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>classAlgorithm</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>classAlgorithm</b>:ClassAlgorithm
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Stores the algorithm to find classes.</div>
+          </div>
+          <a name="classConstructor" id="classConstructor"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>classConstructor</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>classConstructor</b>:ConstructorInfo
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The class's constructor.</div>
+          </div>
+          <a name="clazz" id="clazz"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>clazz</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>clazz</b>:Function
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The class this ClassInfo represents.</div>
+          </div>
+          <a name="fullName" id="fullName"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>fullName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>fullName</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The full name of the class. This means the name with the whole path.</div>
+          </div>
+          <a name="methodAlgorithm" id="methodAlgorithm"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>methodAlgorithm</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>methodAlgorithm</b>:MethodAlgorithm
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Stores the algorithm to find methods of this class.</div>
+          </div>
+          <a name="methods" id="methods"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>methods</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>methods</b>:Array
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The methods the class has.</div>
+          </div>
+          <a name="name" id="name"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>name</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>name</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The name of the class.</div>
+          </div>
+          <a name="package" id="package"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>package</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>package</b>:PackageInfo
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The package that contains the class.</div>
+          </div>
+          <a name="properties" id="properties"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>properties</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>properties</b>:Array
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The properties of the class.</div>
+          </div>
+          <a name="propertyAlgorithm" id="propertyAlgorithm"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>propertyAlgorithm</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>propertyAlgorithm</b>:PropertyAlgorithm
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Stores the algorithm to find properties of this class.</div>
+          </div>
+          <a name="superClass" id="superClass"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>superClass</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>superClass</b>:ClassInfo
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The super class's ClassInfo of the class.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class methods</h2>
+          <a name="forClass" id="forClass"></a>
+          <div class="method hasBottomDivider">
+            <h3>forClass</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>forClass</b> (
+</div>
+                <div class="code">clazz:Function) : ClassInfo</div>
+              </div>
+            </div>
+            <div class="description">This method does the same as the #forObject(*):ClassInfo method.
+
+ It is planned to separate the class algorithm into two. One that
+
+ searches specifically for instances and one that searches for
+
+ classes to gain performance improvements.</div>
+          </div>
+          <a name="forInstance" id="forInstance"></a>
+          <div class="method hasBottomDivider">
+            <h3>forInstance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>forInstance</b> (
+</div>
+                <div class="code">instance) : ClassInfo</div>
+              </div>
+            </div>
+            <div class="description">This method does the same as the #forObject(*):ClassInfo method.
+
+ It is planned to separate the class algorithm into two. One that
+
+ searches specifically for instances and one that searches for
+
+ classes to gain performance improvements.</div>
+          </div>
+          <a name="forName" id="forName"></a>
+          <div class="method hasBottomDivider">
+            <h3>forName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>forName</b> (
+</div>
+                <div class="code">className:String) : ClassInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the class info corresponding to the passed-in name.<p>The name must be full qualified, that means it muste be composed
+
+ of the class's path (namespace) as well as its name. For example
+
+ 'org.as2lib.core.BasicClass'.<p>Null will be returned if:<ul><li>The passed-in name is null, undefined or a blank string.</li><li>There is no class with the given name.</li><li>The object corresponding to the name is not of type function.</li><li>The ReflectConfig.getClassAlgorithm()#executeForName method returns null.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">className<span class="separator">:</span></div>
+                    <div>the full qualified class name</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">a class info representing the class corresponding to the name</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="forObject" id="forObject"></a>
+          <div class="method hasBottomDivider">
+            <h3>forObject</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>forObject</b> (
+</div>
+                <div class="code">object) : ClassInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the class info corresponding to the passed-in object.<p>If the passed-in object is of type function it is supposed
+
+ that this is the class you wanna get the class info for.
+
+ Otherwise it is supposed that the object is an instance of a
+
+ specific class you wanna get the class info for.<p>This method first checks whether the class is already contained
+
+ in the cache.<p>Null will be returned if:<ul><li>The object is null or undefined.</li><li>The class info corresponding to the object could not be generated.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
+                    <div>the object you wanna get a class info for</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the class info corresponding to the object</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="getClassAlgorithm" id="getClassAlgorithm"></a>
+          <div class="method hasBottomDivider">
+            <h3>getClassAlgorithm</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getClassAlgorithm</b> (
+</div>
+                <div class="code">Void) : ClassAlgorithm</div>
+              </div>
+            </div>
+            <div class="description">Returns the class algorithm used to find classes.<p>Either the algorithm set via #setClassAlgorithm() will be
+
+ returned or the default class algorithm returned by the
+
+ ReflectConfig#getClassAlgorithm() method.<p>If you set an algorithm of value null or undefined the default
+
+ one will be used.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the currently used class algorithm</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ClassInfo.html#setClassAlgorithm">:Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getConstructor" id="getConstructor"></a>
+          <div class="method hasBottomDivider">
+            <h3>getConstructor</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getConstructor</b> (
+</div>
+                <div class="code">Void) : ConstructorInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the class's constructor representation.<p>If the #getType method returns null or undefined, null will be
+
+ returned.<p>You can use the returned ConstructorInfo instance to get the actual
+
+ constructor. Note that the constructor in Flash is the same as the
+
+ class. Thus #getType() and #getConstructor()#getMethod() return the
+
+ same.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the constructor of the class.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getFullName" id="getFullName"></a>
+          <div class="method hasBottomDivider">
+            <h3>getFullName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getFullName</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="description">Returns the full name of the represented class. That means the name
+
+ of the class plus its package path, namespace.<p>The path will not be included if:<ul><li>The #getPackage method returns null or undefined.</li><li>The #getPackage method returns a package whose #isRoot method returns true.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the full name of the represented class</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ClassInfo.html#getName">:String</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMethod" id="getMethod"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethod</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMethod</b> (
+</div>
+                <div class="code">) : MethodInfo</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ClassInfo.html#getMethodByName">:MethodInfo</a> (methodName:String) : MethodInfo<br /><a href="org_as2lib_env_reflect_ClassInfo.html#getMethodByMethod">:MethodInfo</a> (concreteMethod:Function) : MethodInfo</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMethodAlgorithm" id="getMethodAlgorithm"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethodAlgorithm</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMethodAlgorithm</b> (
+</div>
+                <div class="code">Void) : MethodAlgorithm</div>
+              </div>
+            </div>
+            <div class="description">Returns the method algorithm used to find methods.<p>Either the algorithm set via #setMethodAlgorithm() will be
+
+ returned or the default method algorithm returned by the
+
+ ReflectConfig#getMethodAlgorithm() method.<p>If you set an algorithm of value null or undefined the default
+
+ one will be used.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the currently used method algorithm</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ClassInfo.html#setMethodAlgorithm">:Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMethodByMethod" id="getMethodByMethod"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethodByMethod</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMethodByMethod</b> (
+</div>
+                <div class="code">concreteMethod:Function) : MethodInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns teh method info corresponding to the passed-in concrete method.
+
+
+
+ Null will be returned if:<ul><li>The passed-in method is null or undefined.</li><li>A method matching the given method cannot be found on the represented class or any super class.</li></ul><p>The declaring type of the returned method info is not always the
+
+ one represented by this class. It can also be a super class of it.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">concreteMethod<span class="separator">:</span></div>
+                    <div>the concrete method the method info shall be returned for</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the method info thate represents the passed-in concrete method</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMethodByName" id="getMethodByName"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethodByName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMethodByName</b> (
+</div>
+                <div class="code">methodName:String) : MethodInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the method info corresponding to the passed-in method name.
+
+
+
+ Null will be returned if:<ul><li>The passed-in method name is null or undefined.</li><li>A method with the given name is not declared in the represented class or any super class.</li></ul><p>If this class overwrites a method of any super class the, MethodInfo
+
+ instance of the overwriting method will be returned.<p>The declaring type of the returned method info is not always the
+
+ one represented by this class. It can also be a super class of it.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodName<span class="separator">:</span></div>
+                    <div>the name of the method to return</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">a method info representing the method corresponding to the name</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMethods" id="getMethods"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethods</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMethods</b> (
+</div>
+                <div class="code">) : Array</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ClassInfo.html#getMethodsByFlag">:Array</a> (filterSuperTypes:Boolean) : Array<br /><a href="org_as2lib_env_reflect_ClassInfo.html#getMethodsByFilter">:Array</a> (methodFilter:TypeMemberFilter) : Array</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMethodsByFilter" id="getMethodsByFilter"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethodsByFilter</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMethodsByFilter</b> (
+</div>
+                <div class="code">methodFilter:TypeMemberFilter) : Array</div>
+              </div>
+            </div>
+            <div class="description">Returns an array containing the methods represented by MethodInfos
+
+ this type and super types' declare that do not get filtered/excluded.<p>The TypeMemberFilter#filter(TypeMemberInfo):Boolean method gets invoked
+
+ for every method to determine whether it shall be contained in the 
+
+ result.<p>If the passed-in method filter is null or undefined the result of
+
+ the invocation of #getMethodsByFlag(Boolean):Array with argument 
+
+ 'false' gets returned.<p>Null gets returned if:<ul><li>The #getType method returns null or undefined.</li><li>The method algorithm returns null or undefined.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodFilter<span class="separator">:</span></div>
+                    <div>the filter that filters unwanted methods out</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">an array containing the remaining methods</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMethodsByFlag" id="getMethodsByFlag"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethodsByFlag</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMethodsByFlag</b> (
+</div>
+                <div class="code">filterSuperTypes:Boolean) : Array</div>
+              </div>
+            </div>
+            <div class="description">Returns an array containing the methods represented by MethodInfos
+
+ this type declares and maybe the ones of the super types.<p>The super types' methods are included if you pass-in false, null
+
+ or undefined and excluded/filtered if you pass-in true.<p>Null gets returned if:<ul><li>The #getType method returns null or undefined.</li><li>The method algorithm returns null or undefined.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">filterSuperTypes<span class="separator">:</span></div>
+                    <div>(optional) determines whether the super types'
+
+ methods shall be excluded, that means filtered (true) or included (false)</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">an array containing the methods</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getName" id="getName"></a>
+          <div class="method hasBottomDivider">
+            <h3>getName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getName</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="description">Returns the name of the class without its namespace.<p>The namespace is the package path to the class. The namespace of
+
+ the class 'org.as2lib.core.BasicClass' is 'org.as2lib.core'. In this
+
+ example this method would only return 'BasicClass'.
+
+
+
+ @reutrn the name of the class</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ClassInfo.html#getFullName">:String</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getPackage" id="getPackage"></a>
+          <div class="method hasBottomDivider">
+            <h3>getPackage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getPackage</b> (
+</div>
+                <div class="code">Void) : PackageInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the package the represented class is declared in / resides
+
+ in.<p>The package of the class org.as2lib.core.BasicClass is org.as2lib.core.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the package the represented class is declared in / resides in</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getProperties" id="getProperties"></a>
+          <div class="method hasBottomDivider">
+            <h3>getProperties</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getProperties</b> (
+</div>
+                <div class="code">) : Array</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ClassInfo.html#getPropertiesByFlag">:Array</a> (filterSuperTypes:Boolean) : Array<br /><a href="org_as2lib_env_reflect_ClassInfo.html#getPropertiesByFilter">:Array</a> (propertyFilter:TypeMemberFilter) : Array</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getPropertiesByFilter" id="getPropertiesByFilter"></a>
+          <div class="method hasBottomDivider">
+            <h3>getPropertiesByFilter</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getPropertiesByFilter</b> (
+</div>
+                <div class="code">propertyFilter:TypeMemberFilter) : Array</div>
+              </div>
+            </div>
+            <div class="description">Returns an array containing the properties represented by PropertyInfos
+
+ this type and super types' declare that do not get filtered/excluded.<p>The TypeMemberFilter#filter(TypeMemberInfo):Boolean gets invoked
+
+ for every property to determine whether it shall be contained in the 
+
+ result.<p>If the passed-in method filter is null or undefined the result of
+
+ the invocation of #getPropertiesByFlag(Boolean):Array with argument 
+
+ 'false' gets returned.<p>Null gets returned if:<ul><li>The #getType method returns null or undefined.</li><li>The property algorithm returns null or undefined.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">propertyFilter<span class="separator">:</span></div>
+                    <div>the filter that filters unwanted properties out</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">an array containing the remaining properties</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getPropertiesByFlag" id="getPropertiesByFlag"></a>
+          <div class="method hasBottomDivider">
+            <h3>getPropertiesByFlag</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getPropertiesByFlag</b> (
+</div>
+                <div class="code">filterSuperTypes:Boolean) : Array</div>
+              </div>
+            </div>
+            <div class="description">Returns an array containing the properties represented by PropertyInfos
+
+ this type declares and maybe the ones of the super types.<p>The super types' properties are included if you pass-in false, null
+
+ or undefined and excluded/filtered if you pass-in true.<p>Null gets returned if:<ul><li>The #getType method returns null or undefined.</li><li>The property algorithm returns null or undefined.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">filterSuperTypes<span class="separator">:</span></div>
+                    <div>(optional) determines whether the super types'
+
+ properties shall be excluded, that means filtered (true) or included (false)</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">an array containing the properties</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getProperty" id="getProperty"></a>
+          <div class="method hasBottomDivider">
+            <h3>getProperty</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getProperty</b> (
+</div>
+                <div class="code">) : PropertyInfo</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ClassInfo.html#getPropertyByName">:PropertyInfo</a> (propertyName:String) : PropertyInfo<br /><a href="org_as2lib_env_reflect_ClassInfo.html#getPropertyByProperty">:PropertyInfo</a> (concreteProperty:Function) : PropertyInfo</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getPropertyAlgorithm" id="getPropertyAlgorithm"></a>
+          <div class="method hasBottomDivider">
+            <h3>getPropertyAlgorithm</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getPropertyAlgorithm</b> (
+</div>
+                <div class="code">Void) : PropertyAlgorithm</div>
+              </div>
+            </div>
+            <div class="description">Returns the property algorithm used to find properties.<p>Either the algorithm set via #setPropertyAlgorithm() will be
+
+ returned or the default property algorithm returned by the
+
+ ReflectConfig#getPropertyAlgorithm() method.<p>If you set an algorithm of value null or undefined the default
+
+ one will be used.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the currently used property algorithm</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ClassInfo.html#setPropertyAlgorithm">:Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getPropertyByName" id="getPropertyByName"></a>
+          <div class="method hasBottomDivider">
+            <h3>getPropertyByName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getPropertyByName</b> (
+</div>
+                <div class="code">propertyName:String) : PropertyInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the property info corresponding to the passed-in property 
+
+ name.<p>Null will be returned if:<ul><li>The passed-in name is null or undefined.</li><li>A property with the given name does not exist on the represented class or any super class.</li></ul><p>If this class overwrites a property of any super class the, PropertyInfo
+
+ instance of the overwriting property will be returned.<p>The declaring type of the returned property info is not always the
+
+ one represented by this class. It can also be a super class of it.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">propertyName<span class="separator">:</span></div>
+                    <div>the name of the property you wanna obtain</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the property info correspoinding to the property's name</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getPropertyByProperty" id="getPropertyByProperty"></a>
+          <div class="method hasBottomDivider">
+            <h3>getPropertyByProperty</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getPropertyByProperty</b> (
+</div>
+                <div class="code">concreteProperty:Function) : PropertyInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the property info corresponding to the passed-in property.<p>Null will be returned if:<ul><li>The passed-in concrete property is null or undefined.</li><li>A property with the given name cannot be found on the represented class or any super class.</li></ul><p>The declaring type of the returned property info is not always the
+
+ one represented by this class. It can also be a super class of it.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">property<span class="separator">:</span></div>
+                    <div>the property the corresponding property info shall be returned</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the property info correspoinding to the property</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getSuperType" id="getSuperType"></a>
+          <div class="method hasBottomDivider">
+            <h3>getSuperType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getSuperType</b> (
+</div>
+                <div class="code">Void) : TypeInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the super class of the class this class info instance
+
+ represents.<p>The returned instance is of type ClassInfo and can thus be
+
+ casted to ClassInfo.<p>Null will be returned if:<ul><li>The represented type is Object.</li><li>The represented type has no prototype.</li><li>The super type could not be found.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the super class of the class this info represents</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ClassInfo.html#setClassAlgorithm">:Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getType" id="getType"></a>
+          <div class="method hasBottomDivider">
+            <h3>getType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getType</b> (
+</div>
+                <div class="code">Void) : Function</div>
+              </div>
+            </div>
+            <div class="description">Returns the actual class this class info represents.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the represented class</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="newInstance" id="newInstance"></a>
+          <div class="method hasBottomDivider">
+            <h3>newInstance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>newInstance</b> (
+</div>
+                <div class="code">args:Array)</div>
+              </div>
+            </div>
+            <div class="description">Creates a new instance of the class passing the constructor arguments.<p>Null will be returned if the #getType method returns null or
+
+ undefined.<p>The passed-in args are allowed to be null or undefined. This gets
+
+ interpreted as 'pass no arguments'.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args<span class="separator">:</span></div>
+                    <div>the arguments to pass-in to the constructor on creation</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">a new instance of the class</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setClassAlgorithm" id="setClassAlgorithm"></a>
+          <div class="method hasBottomDivider">
+            <h3>setClassAlgorithm</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>setClassAlgorithm</b> (
+</div>
+                <div class="code">classAlgorithm:ClassAlgorithm) : Void</div>
+              </div>
+            </div>
+            <div class="description">Sets the algorithm used to find classes.<p>If you pass an algorithm of value null or undefined,
+
+ #getClassAlgorithm() will return the default one.<p>This algorithm is used by the #getSuperType() method.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">classAlgorithm<span class="separator">:</span></div>
+                    <div>the new class algorithm to find classes</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ClassInfo.html#getClassAlgorithm">:ClassAlgorithm</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setMethodAlgorithm" id="setMethodAlgorithm"></a>
+          <div class="method hasBottomDivider">
+            <h3>setMethodAlgorithm</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>setMethodAlgorithm</b> (
+</div>
+                <div class="code">methodAlgorithm:MethodAlgorithm) : Void</div>
+              </div>
+            </div>
+            <div class="description">Sets the algorithm used to find methods.<p>If you pass an algorithm of value null or undefined,
+
+ #getMethodAlgorithm() will return the default one.<p>This algorithm is used by the #getMethods() method.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodAlgorithm<span class="separator">:</span></div>
+                    <div>the new method algorithm to find methods</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ClassInfo.html#getMethodAlgorithm">:MethodAlgorithm</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setPropertyAlgorithm" id="setPropertyAlgorithm"></a>
+          <div class="method hasBottomDivider">
+            <h3>setPropertyAlgorithm</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>setPropertyAlgorithm</b> (
+</div>
+                <div class="code">propertyAlgorithm:PropertyAlgorithm) : Void</div>
+              </div>
+            </div>
+            <div class="description">Sets the algorithm used to find properties.<p>If you pass an algorithm of value null or undefined,
+
+ #getPropertyAlgorithm() will return the default one.<p>This algorithm is used by the #getProperties() method.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">propertyAlgorithm<span class="separator">:</span></div>
+                    <div>the new property algorithm to find properties</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ClassInfo.html#getPropertyAlgorithm">:PropertyAlgorithm</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:07:17
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

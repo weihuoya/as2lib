@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>LocalConfig</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>LocalConfig</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.io.conn.local.LocalConfig</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Sunday, 20 February 2005, 09:19:03</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">LocalConfig is the basic configuration class for the local connection
+
+ api.<p>It can be used to configure static parts, that means parts that
+
+ get globally used. </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#LocalConfig">LocalConfig</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#serverRegistry">serverRegistry</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span>
+              <ul>
+                <li>
+                  <a href="#getServerRegistry">getServerRegistry</a>
+                </li>
+                <li>
+                  <a href="#setServerRegistry">setServerRegistry</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="LocalConfig" id="LocalConfig"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>LocalConfig</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>LocalConfig</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Private constructor.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <a name="serverRegistry" id="serverRegistry"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>serverRegistry</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>serverRegistry</b>:ServerRegistry
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Stores the server registry.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class methods</h2>
+          <a name="getServerRegistry" id="getServerRegistry"></a>
+          <div class="method hasBottomDivider">
+            <h3>getServerRegistry</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>getServerRegistry</b> (
+</div>
+                <div class="code">Void) : ServerRegistry</div>
+              </div>
+            </div>
+            <div class="description">Returns the currently used server registry.<p>That is either the server registry set via #setServerRegistry or
+
+ the default LocalServerRegistry instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the currenlty used server registry</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_conn_local_LocalConfig.html#setServerRegistry">setServerRegistry</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setServerRegistry" id="setServerRegistry"></a>
+          <div class="method hasBottomDivider">
+            <h3>setServerRegistry</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>setServerRegistry</b> (
+</div>
+                <div class="code">newServerRegistry:ServerRegistry) : Void</div>
+              </div>
+            </div>
+            <div class="description">Sets a new server registry.<p>If you set a server registry of value null or undefined
+
+ #getServerRegistry will return the default server registry.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">newServerRegistry<span class="separator">:</span></div>
+                    <div>the new server registry</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_conn_local_LocalConfig.html#getServerRegistry">getServerRegistry</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:16:49
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

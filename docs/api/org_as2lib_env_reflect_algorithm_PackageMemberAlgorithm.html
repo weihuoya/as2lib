@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>PackageMemberAlgorithm</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>PackageMemberAlgorithm</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Friday, 11 February 2005, 15:01:44</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">Searches for members, that means types and packages, of a specific
+
+ package.  </div>Sub-packages are not searched through.<p>This class is mostly used internally. If you wanna obtain the members
+
+ of a package you need its representing PackageInfo. You can then also
+
+ use the PackageInfo#getMembers, PackageInfo#getMemberClasses and
+
+ PackageInfo#getMemberPackages methods directly and do not have to make
+
+ the detour over this method. The PackageInfo's methods are also easier
+
+ to use and offer some extra functionalities.<p>If you nevertheless want to use this class here is how it works.<pre><span class="codeKeyword">var</span> packageInfo:PackageInfo = PackageInfo.forPackage(org.as2lib.core);
+
+ <span class="codeKeyword">var</span> packageMemberAlgorithm:PackageMemberAlgorithm = <span class="codeKeyword">new</span> PackageMemberAlgorithm();
+
+ <span class="codeKeyword">var</span> members:<span class="codeIdentifier">Array</span> = packageMemberAlgorithm.execute(packageInfo);</pre><p>Refer to the #execute methods documentation for details on how to
+
+ get data from the members array appropriately.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#PackageMemberAlgorithm">PackageMemberAlgorithm</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#c">c</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#setCache">setCache</a>
+                </li>
+                <li>
+                  <a href="#getCache">getCache</a>
+                </li>
+                <li>
+                  <a href="#execute">execute</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="PackageMemberAlgorithm" id="PackageMemberAlgorithm"></a>
+          <div class="method hasBottomDivider">
+            <h3>PackageMemberAlgorithm</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>PackageMemberAlgorithm</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new instance.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="c" id="c"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>c</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>c</b>:Cache
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="execute" id="execute"></a>
+          <div class="method hasBottomDivider">
+            <h3>execute</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>execute</b> (
+</div>
+                <div class="code">p:PackageInfo) : Array</div>
+              </div>
+            </div>
+            <div class="description">Executes the search for the members, that means member types and
+
+ packages, in the passed-in package.<p>The resulting array contains instances of type PackageMemberInfo,
+
+ that is either of type ClassInfo or PackageInfo.<p>The specific members can be either referenced by index or by name.
+
+ <dl>
+
+   <dt>Reference member by index; can be class or package.</dt>
+
+   <dd><code>myMembers[<span class="codeNumber">0</span>];</code></dd>
+
+   <dt>Reference class by index.</dt>
+
+   <dd><code>myMembers.classes[<span class="codeNumber">0</span>];</code></dd>
+
+   <dt>Reference package by index.</dt>
+
+   <dd><code>myMembers.packages[<span class="codeNumber">0</span>];</code></dd>
+
+   <dt>Reference member by index; can be class or package.</dt>
+
+   <dd><code>myMembers.MyClass;</code> or <code>myMembers.mypackage</code></dd>
+
+   <dt>Reference class by name; use only the name of the class, excluding the namespace.</dt>
+
+   <dd><code>myMembers.classes.MyClass;</code></dd>
+
+   <dt>Reference package by name; use only the package name, excluding the namespace.</dt>
+
+   <dd><code>myMembers.packages.mypackage;</code></dd>
+
+ </dl><p>This method will return null if:<ul><li>The argument is null or undefined.</li><li>The argument's getPackage() method returns null or undefined.</li></ul><p>Only the passed-in package will be searched through.<p>In case the cache already contains a specific member class or package
+
+ info it will be added to the members array.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">g<span class="separator">:</span></div>
+                    <div>the PackageInfo instance representing the package to search through</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the members of the package, a blank array or null</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getCache" id="getCache"></a>
+          <div class="method hasBottomDivider">
+            <h3>getCache</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getCache</b> (
+</div>
+                <div class="code">Void) : Cache</div>
+              </div>
+            </div>
+            <div class="description">Returns the cache set via the #setCache(Cache) method or the default
+
+ cache that gets returned by the ReflectConfig#getCache method.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the currently used cache</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setCache" id="setCache"></a>
+          <div class="method hasBottomDivider">
+            <h3>setCache</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>setCache</b> (
+</div>
+                <div class="code">cache:Cache) : Void</div>
+              </div>
+            </div>
+            <div class="description">Sets the cache that gets used by the #execute method to
+
+ look whether the member package or class is already stored.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">cache<span class="separator">:</span></div>
+                    <div>the new cache</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:06:27
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

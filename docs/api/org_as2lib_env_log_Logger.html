@@ -1,0 +1,520 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Logger</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>Logger</h1>
+        <div class="classProperties">
+          <div class="kindOfClass"><span class="value">
+Interface
+</span>
+          </div>
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.log.Logger</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Tuesday, 15 February 2005, 11:18:47</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">Logger declares all methods needed to write log messages in a well
+
+ defined and performant way.<p>The basic methods to write the log messages are #log, #debug,
+
+ #info, #warning and #fatal.<p>The first thing to note is that you can write log messages at
+
+ different levels.  </div>These levels are DEBUG, INFO, WARNING, ERROR and
+
+ FATAL. Depending on what level was set only messages at a given
+
+ level are logged.
+
+ The levels are organized in a hierarchical manner. That means if you
+
+ set you log level to ALL every messages get logged. If you set it
+
+ to ERROR only messages at ERROR and FATAL level get logged and so on.
+
+ It is also possible to define your own set of levels. You can therefor
+
+ use the #isEnabled(LogLevel):Boolean and log(*, LogLevel):Boolean
+
+ methods.<p>To do not waste unnecessary performance in constructing log messages
+
+ that do not get logged you can use the #isEnabled, #isDebugEnabled,
+
+ #isInfoEnabled, #isWarningEnabled, #isErrorEnabled and #isFatalEnabled
+
+ methods.<p>Note that the message does in neither case have to be a string.
+
+ That means you can pass-in messages and let the actual handler or logger
+
+ decide how to produce a string representation of the message. That is in
+
+ most cases done by using the toString method of the specific message.
+
+ You can use this method to do not lose performance in cases where
+
+ the message does not get logged.<p>The basic workflow of using loggers is as follows:<pre><span class="codeComment">// MyLogger is an implementation of this interface</span>
+
+ <span class="codeKeyword">var</span> logger:Logger = <span class="codeKeyword">new</span> MyLogger();
+
+ <span class="codeKeyword">if</span> (logger.isInfoEnabled()) {
+
+   logger.info(<span class="codeString">"This is an information message."</span>);
+
+ }</pre><p>Note that we are in the above example not setting a log level.
+
+ This depends on what methods the implementation of this interface
+
+ offers.
+
+ Note also that depending on the concrete implementation and the message
+
+ it may be faster to do not call any of the is*Enabled(..) methods.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#isEnabled">isEnabled</a>
+                </li>
+                <li>
+                  <a href="#isDebugEnabled">isDebugEnabled</a>
+                </li>
+                <li>
+                  <a href="#isInfoEnabled">isInfoEnabled</a>
+                </li>
+                <li>
+                  <a href="#isWarningEnabled">isWarningEnabled</a>
+                </li>
+                <li>
+                  <a href="#isErrorEnabled">isErrorEnabled</a>
+                </li>
+                <li>
+                  <a href="#isFatalEnabled">isFatalEnabled</a>
+                </li>
+                <li>
+                  <a href="#getLevel">getLevel</a>
+                </li>
+                <li>
+                  <a href="#log">log</a>
+                </li>
+                <li>
+                  <a href="#debug">debug</a>
+                </li>
+                <li>
+                  <a href="#info">info</a>
+                </li>
+                <li>
+                  <a href="#warning">warning</a>
+                </li>
+                <li>
+                  <a href="#error">error</a>
+                </li>
+                <li>
+                  <a href="#fatal">fatal</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicInterface.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="debug" id="debug"></a>
+          <div class="method hasBottomDivider">
+            <h3>debug</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>debug</b> (
+</div>
+                <div class="code">message) : Void</div>
+              </div>
+            </div>
+            <div class="description">Logs the message object at debug level.<p>The message gets only logged when the level is set to debug or
+
+ a level above.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>the message object to log</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#isDebugEnabled">:Boolean</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="error" id="error"></a>
+          <div class="method hasBottomDivider">
+            <h3>error</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>error</b> (
+</div>
+                <div class="code">message) : Void</div>
+              </div>
+            </div>
+            <div class="description">Logs the message object at error level.<p>The message gets only logged when the level is set to error or a
+
+ level above.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>the message object to log</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#isErrorEnabled">:Boolean</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="fatal" id="fatal"></a>
+          <div class="method hasBottomDivider">
+            <h3>fatal</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>fatal</b> (
+</div>
+                <div class="code">message) : Void</div>
+              </div>
+            </div>
+            <div class="description">Logs the message object at fatal level.<p>The message gets only logged when the level is set to fatal or a
+
+ level above.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>the message object to log</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#isFatalEnabled">:Boolean</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getLevel" id="getLevel"></a>
+          <div class="method hasBottomDivider">
+            <h3>getLevel</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getLevel</b> (
+</div>
+                <div class="code">Void) : LogLevel</div>
+              </div>
+            </div>
+            <div class="description">Returns the set level.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the set level</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="info" id="info"></a>
+          <div class="method hasBottomDivider">
+            <h3>info</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>info</b> (
+</div>
+                <div class="code">message) : Void</div>
+              </div>
+            </div>
+            <div class="description">Logs the message object at info level.<p>The message gets only logged when the level is set to info or
+
+ a level above.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>the message object to log</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#isInfoEnabled">:Boolean</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isDebugEnabled" id="isDebugEnabled"></a>
+          <div class="method hasBottomDivider">
+            <h3>isDebugEnabled</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isDebugEnabled</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks if this logger is enabled for debug level output.<p>Using this method as shown in the class documentation may improve
+
+ performance depending on how long the log message construction takes.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if debug output gets made</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#DEBUG">org.as2lib.env.log.level.AbstractLogLevel.DEBUG</a><br /><a href="org_as2lib_env_log_Logger.html#debug">*):Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isEnabled" id="isEnabled"></a>
+          <div class="method hasBottomDivider">
+            <h3>isEnabled</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isEnabled</b> (
+</div>
+                <div class="code">level:LogLevel) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks whether this logger is enabled for the passed-in log level.<p>Using this method as shown in the class documentation may improve
+
+ performance depending on how long the log message construction takes.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">level<span class="separator">:</span></div>
+                    <div>the level to make the check upon</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if this logger is enabled for the given level else false</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#log">*, LogLevel):Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isErrorEnabled" id="isErrorEnabled"></a>
+          <div class="method hasBottomDivider">
+            <h3>isErrorEnabled</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isErrorEnabled</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks if this logger is enabled for error level output.<p>Using this method as shown in the class documentation may improve
+
+ performance depending on how long the log message construction takes.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if error output gets made</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#ERROR">org.as2lib.env.log.level.AbstractLogLevel.ERROR</a><br /><a href="org_as2lib_env_log_Logger.html#error">*):Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isFatalEnabled" id="isFatalEnabled"></a>
+          <div class="method hasBottomDivider">
+            <h3>isFatalEnabled</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isFatalEnabled</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks if this logger is enabled for fatal level output.<p>Using this method as shown in the class documentation may improve
+
+ performance depending on how long the log message construction takes.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if fatal output gets made</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#FATAL">org.as2lib.env.log.level.AbstractLogLevel.FATAL</a><br /><a href="org_as2lib_env_log_Logger.html#fatal">*):Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isInfoEnabled" id="isInfoEnabled"></a>
+          <div class="method hasBottomDivider">
+            <h3>isInfoEnabled</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isInfoEnabled</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks if this logger is enabled for info level output.<p>Using this method as shown in the class documentation may improve
+
+ performance depending on how long the log message construction takes.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if info output gets made</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#INFO">org.as2lib.env.log.level.AbstractLogLevel.INFO</a><br /><a href="org_as2lib_env_log_Logger.html#info">*):Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isWarningEnabled" id="isWarningEnabled"></a>
+          <div class="method hasBottomDivider">
+            <h3>isWarningEnabled</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isWarningEnabled</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks if this logger is enabled for warning level output.<p>Using this method as shown in the class documentation may improve
+
+ performance depending on how long the log message construction takes.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if warning output gets made</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#WARNING">org.as2lib.env.log.level.AbstractLogLevel.WARNING</a><br /><a href="org_as2lib_env_log_Logger.html#warning">*):Void</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="log" id="log"></a>
+          <div class="method hasBottomDivider">
+            <h3>log</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>log</b> (
+
+</div>
+                <div class="code">message,
+level:LogLevel) : Void</div>
+              </div>
+            </div>
+            <div class="description">Logs the message object at the given level.<p>The message gets only logged when this logger is enabled for
+
+ the passed-in log level.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>the message object to log</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">level  <span class="separator">:</span></div>
+                    <div>the specific level at which the message shall be logged</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#isEnabled">:Boolean</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="warning" id="warning"></a>
+          <div class="method hasBottomDivider">
+            <h3>warning</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>warning</b> (
+</div>
+                <div class="code">message) : Void</div>
+              </div>
+            </div>
+            <div class="description">Logs the message object at warning level.<p>The message gets only logged when the level is set to warning or
+
+ a level above.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>the message object to log</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#isWarningEnabled">:Boolean</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:00:00
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
