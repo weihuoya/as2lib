@@ -2,7 +2,6 @@
 import org.as2lib.env.overload.SimpleOverloadHandler;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.UnknownOverloadHandlerException;
-import org.as2lib.env.overload.OverloadException;
 import org.as2lib.util.ArrayUtil;
 
 /**
@@ -18,9 +17,6 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	/** The list of registered handlers. */
 	private var handlers:Array;
 	
-	/** The arguments whose types shall be matched to a specific handler. */
-	private var args:Array;
-	
 	/** The target instance on which the operation will be invoked. */
 	private var target;
 	
@@ -30,10 +26,9 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * @param target the target on which the operation will be invoked
 	 * @param args the arguments whose types shall be matched to a specific handler
 	 */
-	public function Overload(target, args:Array) {
+	public function Overload(target) {
 		this.handlers = new Array();
 		this.target = target;
-		this.args = args;
 	}
 	
 	/**
@@ -79,17 +74,27 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * @return the return value of the called operation
 	 * @throws org.as2lib.env.overload.UnknownOverloadHandlerException if no adequate OverloadHandler could be found
 	 */
-	public function forward(Void) {
+	public function forward(args:Array) {
 		var handler:OverloadHandler;
+		var matchingHandlers:Array = new Array();
 		var l:Number = handlers.length;
 		for (var i:Number = 0; i < l; i++) {
 			handler = OverloadHandler(handlers[i]);
 			if (handler.matches(args)) {
-				return handler.execute(target, args);
+				matchingHandlers.push(handler);
 			}
 		}
-		throw new UnknownOverloadHandlerException("No appropriate OverloadHandler [" + handlers + "] for the arguments [" + args + "] could be found.",
-									 			  this,
-									 			  arguments);
+		if (matchingHandlers.length == 0) {
+			throw new UnknownOverloadHandlerException("No appropriate OverloadHandler [" + handlers + "] for the arguments [" + args + "] could be found.",
+									 			  	  this,
+									 			  	  arguments);
+		}
+		var currentHandler:OverloadHandler = OverloadHandler(matchingHandlers[0]);
+		for (var i:Number = 1; i < matchingHandlers.length; i++) {
+			if (!currentHandler.isMoreExplicitThan(OverloadHandler(matchingHandlers[i]))) {
+				currentHandler = OverloadHandler(matchingHandlers[i]);
+			}
+		}
+		return currentHandler.execute(target, args);
 	}
 }

@@ -1,6 +1,7 @@
 ﻿import org.as2lib.env.overload.OverloadHandler;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.overload.IllegalTypeException;
 
 /**
  * SimpleOverloadHandler is a default implementation of the OverloadHandler interface
@@ -48,5 +49,36 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	 */
 	public function execute(target, someArguments:Array) {
 		return func.apply(target, someArguments);
+	}
+	
+	/**
+	 * @see org.as2lib.env.overload.OverloadHandler
+	 */
+	public function isMoreExplicitThan(handler:OverloadHandler):Boolean {
+		var points:Number = 0;
+		var args2:Array = handler.getArguments();
+		var l:Number = args.length;
+		for (var i:Number = 0; i < l; i++) {
+			if (args[i] != args2[i]) {
+				if (ObjectUtil.isInstanceOf(args[i].prototype, args2[i])) {
+					points++;
+				} else {
+					points--;
+				}
+			}
+		}
+		if (points == 0) {
+			throw new IllegalTypeException("The two OverloadHandler [" + this + "] and [" + handler + "] have the same type signature.",
+										   this,
+										   arguments);
+		}
+		return (points > 0);
+	}
+	
+	/**
+	 * @see org.as2lib.env.overload.OverloadHandler
+	 */
+	public function getArguments(Void):Array {
+		return args;
 	}
 }
