@@ -76,16 +76,16 @@ class AssertTest extends TestCase {
 	}
 	
 	public function testEquals(Void):Void {
-		assertTrue ("NOT FAIL! 1 ", assertEquals("NOTFAIL!", undefined, undefined));
-		assertTrue ("NOT FAIL! 2 ", assertEquals("NOTFAIL!", undefined, null));
+		assertTrue ("NOT FAIL! 1 ", assertEquals("NOT FAIL!", undefined, undefined));
+		assertTrue ("NOT FAIL! 2 ", assertEquals("NOT FAIL!", undefined, null));
 		assertFalse("NOT FAIL! 3 ", assertEquals("fail", undefined, 1));
-		assertTrue ("NOT FAIL! 4 ", assertEquals("NOTFAIL!", null, undefined));
+		assertTrue ("NOT FAIL! 4 ", assertEquals("NOT FAIL!", null, undefined));
 		assertFalse("NOT FAIL! 5 ", assertEquals("fail", 1, undefined));
-		assertTrue ("NOT FAIL! 6 ", assertEquals("NOTFAIL!", undefined));
+		assertTrue ("NOT FAIL! 6 ", assertEquals("NOT FAIL!", undefined));
 		assertFalse("NOT FAIL! 7 ", assertEquals("fail", 1, 2));
-		assertTrue ("NOT FAIL! 8 ", assertEquals("NOTFAIL!", 1, 1));
+		assertTrue ("NOT FAIL! 8 ", assertEquals("NOT FAIL!", 1, 1));
 		assertFalse("NOT FAIL! 9 ", assertEquals("fail", 1));
-		assertTrue ("NOT FAIL! 10", assertEquals("NOT FAIL!", null));
+		assertFalse("NOT FAIL! 10", assertEquals("fail!", null));
 		assertTrue ("NOT FAIL! 11", assertEquals(undefined, undefined));
 		assertTrue ("NOT FAIL! 12", assertEquals(undefined, null));
 		assertFalse("NOT FAIL! 13", assertEquals(undefined, 1));
@@ -108,8 +108,8 @@ class AssertTest extends TestCase {
 		assertFalse("NOT FAIL! 6 ", assertNotEquals("fail", undefined));
 		assertTrue ("NOT FAIL! 7 ", assertNotEquals("NOT FAIL!", 1, 2));
 		assertFalse("NOT FAIL! 8 ", assertNotEquals("fail", 1, 1));
-		assertTrue ("NOT FAIL! 9 ", assertNotEquals("NOT FAIL!", 1));
-		assertFalse("NOT FAIL! 10", assertNotEquals("fail", null));
+		assertTrue ("NOT FAIL! 9 ", assertNotEquals("fail", 1));
+		assertTrue ("NOT FAIL! 10", assertNotEquals("fail", null));
 		assertFalse("NOT FAIL! 11", assertNotEquals(undefined, undefined));
 		assertFalse("NOT FAIL! 12", assertNotEquals(undefined, null));
 		assertTrue ("NOT FAIL! 13", assertNotEquals(undefined, 1));
