@@ -63,7 +63,10 @@ class org.as2lib.env.overload.SameTypeSignatureException extends OverloadExcepti
 		// won't be displayed).
 		if (!asString) {
 			asString = message;
-			asString += "\n  Overloaded Method: " + ReflectUtil.getClassInfo(overloadTarget).getMethodByMethod(overloadedMethod);
+			try {
+				asString += "\n  Overloaded Method: " + ReflectUtil.getClassInfo(overloadTarget).getMethodByMethod(overloadedMethod);
+			} catch (e) {
+			}
 			asString += "\n  Used Arguments["+overloadArguments.length+"]: ";
 			for(var i:Number = 0; i < overloadArguments.length; i++) {
 				if(i != 0) {
