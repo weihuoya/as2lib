@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicInterface;
+import org.as2lib.env.bean.factory.config.ConstructorArgumentValue;
 
 /**
  * @author Simon Wacker
@@ -22,7 +23,7 @@ import org.as2lib.core.BasicInterface;
 interface org.as2lib.env.bean.factory.config.ConstructorArgumentValueList extends BasicInterface {
 	
 	public function getArgumentCount(Void):Number;
-	public function getArgumentValue(index:Number);
+	public function getArgumentValue(index:Number):ConstructorArgumentValue;
 	public function getArgumentValues(Void):Array;
 	public function isEmpty(Void):Boolean;
 	

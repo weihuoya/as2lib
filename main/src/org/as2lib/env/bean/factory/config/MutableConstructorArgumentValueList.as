@@ -18,6 +18,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.util.ArrayUtil;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.bean.factory.config.ConstructorArgumentValueList;
+import org.as2lib.env.bean.factory.config.ConstructorArgumentValue;
 
 /**
  * @author Simon Wacker
@@ -32,27 +33,27 @@ class org.as2lib.env.bean.factory.config.MutableConstructorArgumentValueList ext
 	
 	public function addArgumentValue():Void {
 		var o:Overload = new Overload(this);
-		o.addHandler([Object], addArgumentValueByValue);
-		o.addHandler([Number, Object], addArgumentValueByIndexAndValue);
+		o.addHandler([ConstructorArgumentValue], addArgumentValueByValue);
+		o.addHandler([Number, ConstructorArgumentValue], addArgumentValueByIndexAndValue);
 		o.forward(arguments);
 	}
 	
-	public function addArgumentValueByValue(value):Void {
+	public function addArgumentValueByValue(value:ConstructorArgumentValue):Void {
 		argumentArray.push(value);
 	}
 	
-	public function addArgumentValueByIndexAndValue(index:Number, value):Void {
+	public function addArgumentValueByIndexAndValue(index:Number, value:ConstructorArgumentValue):Void {
 		argumentArray[index] = value;
 	}
 	
 	public function removeArgumentValue():Void {
 		var o:Overload = new Overload(this);
-		o.addHandler([Object], removeArgumentValueByValue);
+		o.addHandler([ConstructorArgumentValue], removeArgumentValueByValue);
 		o.addHandler([Number], removeArgumentValueByIndex);
 		o.forward(arguments);
 	}
 	
-	public function removeArgumentValueByValue(value):Void {
+	public function removeArgumentValueByValue(value:ConstructorArgumentValue):Void {
 		ArrayUtil.removeElement(argumentArray, value);
 	}
 	
@@ -64,7 +65,7 @@ class org.as2lib.env.bean.factory.config.MutableConstructorArgumentValueList ext
 		return argumentArray.length;
 	}
 	
-	public function getArgumentValue(index:Number) {
+	public function getArgumentValue(index:Number):ConstructorArgumentValue {
 		return argumentArray[index];
 	}
 	
