@@ -4,11 +4,26 @@ import org.as2lib.data.io.conn.local.SyntacticallyIncorrectMethodCallException;
 import org.as2lib.data.io.conn.local.ExtendedLocalConnection;
 import org.as2lib.env.overload.Overload;
 
-class org.as2lib.data.io.conn.local.LocalServerServiceProxy extends ExtendedLocalConnection {
+class org.as2lib.data.io.conn.local.LocalServerServiceProxy extends BasicClass {
 	private var service;
+	private var name:String;
+	private var host:String;
+	private var connection:ExtendedLocalConnection;
 	
-	public function LocalServerServiceProxy(service) {
+	public function LocalServerServiceProxy(service, name:String, host:String) {
 		this.service = service;
+		this.name = name;
+		this.host = host;
+		connection = new ExtendedLocalConnection(this);
+	}
+	
+	public function run(Void):Void {
+		// source out: 'host + "/" + key'
+		connection.connect(host + "/" + name);
+	}
+	
+	public function stop(Void):Void {
+		connection.close();
 	}
 	
 	public function remoteCall() {
