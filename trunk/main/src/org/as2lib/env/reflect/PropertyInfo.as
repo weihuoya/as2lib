@@ -70,7 +70,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements ClassMem
 	 */
 	private function setSetter(concreteSetter:Function):Void {
 		if (concreteSetter != undefined) {
-			setter = new MethodInfo("set " + getName(), concreteSetter, getDeclaringClass(), isStatic());
+			setter = new MethodInfo("__set__" + getName(), concreteSetter, getDeclaringClass(), isStatic());
 		}
 	}
 	
@@ -81,7 +81,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements ClassMem
 	 */
 	private function setGetter(concreteGetter:Function):Void {
 		if (concreteGetter != undefined) {
-			setter = new MethodInfo("get " + getName(), concreteGetter, getDeclaringClass(), isStatic());
+			setter = new MethodInfo("__get__" + getName(), concreteGetter, getDeclaringClass(), isStatic());
 		}
 	}
 	
