@@ -3,6 +3,14 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noSchemaLocation="changelog.xsd">
   <year value="2004">
+    <month value="9">
+      <day value="1">
+        <entry type="change" package="org.as2lib.env.out" class="OutAccess" method="*(message:String):Void"><change-arguments to="message" /></entry>
+        <entry type="change" package="org.as2lib.env.out" class="OutAccess" method="*(throwable:Throwable):Void"><change-arguments to="error" /></entry>
+        <entry type="change" package="org.as2lib.env.out" class="OutLevel" method="*(message:String, broadcaster:EventBroadcaster):Void"><change-arguments to="message, broadcaster:EventBroadcaster" /></entry>
+        <entry type="change" package="org.as2lib.env.out" class="OutLevel" method="*(throwable:Throwable, broadcaster:EventBroadcaster):Void"><change-arguments to="error, broadcaster:EventBroadcaster" /></entry>
+      </day>
+    </month>
     <month value="8">
       <day value="24">
         <entry type="change" package="org.as2lib.test.unit">Refactored the complete Testunit System (new API)</entry>
