@@ -104,7 +104,7 @@
 																					<xs:simpleContent>
 																						<xs:extension base="xs:string">
 																							<xs:attribute name="to" type="xs:string" use="required"/>
-																							<xs:attribute name="from" type="xs:string" use="required"/>
+																							<xs:attribute name="from" type="xs:string" use="optional"/>
 																						</xs:extension>
 																					</xs:simpleContent>
 																				</xs:complexType>
@@ -114,7 +114,7 @@
 																					<xs:simpleContent>
 																						<xs:extension base="xs:string">
 																							<xs:attribute name="to" type="xs:string" use="required"/>
-																							<xs:attribute name="from" type="xs:string" use="required"/>
+																							<xs:attribute name="from" type="xs:string" use="optional"/>
 																						</xs:extension>
 																					</xs:simpleContent>
 																				</xs:complexType>
