@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.iterator.Iterator;
-import org.as2lib.data.iterator.NoSuchElementException;
+import org.as2lib.data.holder.Iterator;
+import org.as2lib.data.holder.NoSuchElementException;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.core.BasicClass;
 
@@ -25,7 +25,7 @@ import org.as2lib.core.BasicClass;
  * @author Michael Herrmann
  * @author Simon Wacker
  */
-class org.as2lib.data.iterator.ArrayIterator extends BasicClass implements Iterator {
+class org.as2lib.data.holder.array.ArrayIterator extends BasicClass implements Iterator {
 	/** The target data holder. */
 	private var target:Array;
 	

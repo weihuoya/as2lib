@@ -14,22 +14,41 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.iterator.ArrayIterator;
+import org.as2lib.core.BasicClass;
+import org.as2lib.data.holder.Iterator;
 import org.as2lib.env.except.UnsupportedOperationException;
 
 /**
- * The ProtectedArrayIterator is used to iterate over an Array without being
+ * The ProtectedIterator is used to iterate over any data holder without being
  * able to remove elements.
  *
  * @author Michael Herrmann
  * @author Simon Wacker
  */
-class org.as2lib.data.iterator.ProtectedArrayIterator extends ArrayIterator {
+class org.as2lib.data.holder.ProtectedIterator extends BasicClass implements Iterator {
+	
+	/** Holds the iterator this protected iterator delegates to. */
+	private var iterator:Iterator;
+	
 	/**
-	 * @see org.as2lib.data.iterator.ArrayIterator#Constructor()
+	 * @see org.as2lib.data.iterator.ArrayIterator#new()
 	 */
-	public function ProtectedArrayIterator(newTarget:Array) {
-		super(newTarget);
+	public function ProtectedIterator(iterator:Iterator) {
+		this.iterator = iterator;
+	}
+	
+	/**
+	 * @see org.as2lib.data.iterator.Iterator#hasNext(Void):Boolean
+	 */
+	public function hasNext(Void):Boolean {
+		return iterator.hasNext();
+	}
+	
+	/**
+	 * @see org.as2lib.data.iterator.Iterator#next(Void)
+	 */
+	public function next(Void) {
+		return iterator.next();
 	}
 	
 	/**
@@ -38,4 +57,5 @@ class org.as2lib.data.iterator.ProtectedArrayIterator extends ArrayIterator {
 	public function remove(Void):Void {
 		throw new UnsupportedOperationException("This Iterator does not support the remove() method.", this, arguments);
 	}
+	
 }

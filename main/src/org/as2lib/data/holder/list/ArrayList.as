@@ -1,13 +1,13 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.List;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.data.iterator.Iterator;
-import org.as2lib.data.iterator.ArrayIterator;
+import org.as2lib.data.holder.Iterator;
+import org.as2lib.data.holder.array.ArrayIterator;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.data.holder.ArrayList extends BasicClass implements List {
+class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	private var data:Array;
 	
 	public function ArrayList(Void) {

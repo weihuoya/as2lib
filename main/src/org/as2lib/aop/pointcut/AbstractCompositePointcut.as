@@ -1,6 +1,6 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Stack;
-import org.as2lib.data.holder.SimpleStack;
+import org.as2lib.data.holder.stack.SimpleStack;
 import org.as2lib.aop.Pointcut;
 
 /**

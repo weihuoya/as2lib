@@ -22,7 +22,7 @@ import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
-import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.holder.Iterator;
 
 /**
  * Simple implementation of the StackTraceElement interface.

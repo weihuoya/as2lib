@@ -20,8 +20,8 @@ import org.as2lib.env.out.OutAccess;
 import org.as2lib.env.out.handler.TraceHandler;
 import org.as2lib.env.event.EventBroadcasterFactory;
 import org.as2lib.env.event.SimpleEventBroadcasterFactory;
-import org.as2lib.util.string.ObjectStringifier;
-import org.as2lib.util.string.Stringifier;
+import org.as2lib.core.ObjectStringifier;
+import org.as2lib.util.Stringifier;
 
 /**
  * Basic configuration class for all classes.

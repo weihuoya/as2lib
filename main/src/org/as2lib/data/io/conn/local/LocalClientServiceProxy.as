@@ -19,7 +19,7 @@ import org.as2lib.data.io.conn.ServiceProxy;
 import org.as2lib.util.Call;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.data.io.conn.local.ExtendedLocalConnection;
 
 /**

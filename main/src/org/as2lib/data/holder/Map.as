@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.holder.Iterator;
 import org.as2lib.core.BasicInterface;
 
 /**

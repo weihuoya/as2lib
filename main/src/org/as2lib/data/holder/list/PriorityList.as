@@ -1,13 +1,13 @@
 ﻿import org.as2lib.data.holder.AbstractPriority;
 import org.as2lib.data.holder.List;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.data.iterator.Iterator;
-import org.as2lib.data.iterator.ArrayIterator;
+import org.as2lib.data.holder.Iterator;
+import org.as2lib.data.holder.array.ArrayIterator;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.data.holder.PriorityList extends AbstractPriority implements List {
+class org.as2lib.data.holder.list.PriorityList extends AbstractPriority implements List {
 	private var list:List;
 	private var priorityArray:Array;
 	

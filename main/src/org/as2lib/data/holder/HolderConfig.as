@@ -15,10 +15,10 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.util.string.Stringifier;
-import org.as2lib.data.holder.string.MapStringifier;
-import org.as2lib.data.holder.string.StackStringifier;
-import org.as2lib.data.holder.string.QueueStringifier;
+import org.as2lib.util.Stringifier;
+import org.as2lib.data.holder.map.MapStringifier;
+import org.as2lib.data.holder.stack.StackStringifier;
+import org.as2lib.data.holder.queue.QueueStringifier;
 
 /**
  * HolderConfig is the fundamental configuration file for all classes residing

@@ -16,9 +16,9 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.ObjectUtil;
-import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.io.conn.local.LocalServer;
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.data.io.conn.local.ReservedHostException;
 import org.as2lib.data.io.conn.local.LocalConfig;
 import org.as2lib.data.io.conn.local.LocalServerServiceProxy;

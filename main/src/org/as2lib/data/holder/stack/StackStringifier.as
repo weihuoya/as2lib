@@ -15,33 +15,31 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.util.string.Stringifier;
-import org.as2lib.data.holder.Map;
-import org.as2lib.data.iterator.ArrayIterator;
-import org.as2lib.data.iterator.Iterator;
+import org.as2lib.util.Stringifier;
+import org.as2lib.data.holder.Stack;
+import org.as2lib.data.holder.Iterator;
 
 /**
- * MapStringifier is the default Stringifier used to stringify Maps.
+ * StackStringifier is the default Stringifier used to stringify Stacks.
  *
  * @author Simon Wacker
- * @see org.as2lib.data.holder.Map
+ * @see org.as2lib.data.holder.Stack
  */
-class org.as2lib.data.holder.string.MapStringifier extends BasicClass implements Stringifier {
+class org.as2lib.data.holder.stack.StackStringifier extends BasicClass implements Stringifier {
 	/**
 	 * @see org.as2lib.util.string.Stringifier
 	 */
 	public function execute(target):String {
-		var map:Map = Map(target);
-		var result:String = "{";
-		var valueIterator:Iterator = new ArrayIterator(map.getValues());
-		var keyIterator:Iterator = new ArrayIterator(map.getKeys())
-		while (keyIterator.hasNext()) {
-			result += keyIterator.next().toString() + "=" + valueIterator.next().toString();
-			if (keyIterator.hasNext()) {
+		var stack:Stack = Stack(target);
+		var result:String = "[";
+		var iterator:Iterator = stack.iterator();
+		while (iterator.hasNext()) {
+			result += iterator.next().toString();
+			if (iterator.hasNext()) {
 				result += ", ";
 			}
 		}
-		result += "}";
+		result += "]";
 		return result;
 	}
 }

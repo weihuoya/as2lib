@@ -1,6 +1,6 @@
 ﻿import org.as2lib.data.holder.Stack;
-import org.as2lib.data.holder.SimpleStack;
-import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.holder.stack.SimpleStack;
+import org.as2lib.data.holder.Iterator;
 import org.as2lib.aop.pointcut.CompositePointcut;
 import org.as2lib.aop.pointcut.AbstractCompositePointcut;
 import org.as2lib.aop.pointcut.PointcutConfig;

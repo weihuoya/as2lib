@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.util.string.Stringifier;
+import org.as2lib.util.Stringifier;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
@@ -26,7 +26,7 @@ import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
 import org.as2lib.env.reflect.algorithm.MethodAlgorithm;
 import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
 import org.as2lib.env.reflect.algorithm.ChildrenAlgorithm;
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.env.reflect.SimpleCache;
 import org.as2lib.env.reflect.string.MethodInfoStringifier;
 import org.as2lib.env.reflect.string.PropertyInfoStringifier;

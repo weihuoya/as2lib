@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.util.string.Stringifier;
+import org.as2lib.util.Stringifier;
 import org.as2lib.env.util.ReflectUtil;
 
 /**
@@ -24,7 +24,7 @@ import org.as2lib.env.util.ReflectUtil;
  *
  * @author Simon Wacker
  */
-class org.as2lib.util.string.ObjectStringifier extends BasicClass implements Stringifier {
+class org.as2lib.core.ObjectStringifier extends BasicClass implements Stringifier {
 	/**
 	 * @see org.as2lib.util.string.Stringifier
 	 */

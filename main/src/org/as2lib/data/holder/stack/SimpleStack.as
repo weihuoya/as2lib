@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.iterator.Iterator;
-import org.as2lib.data.iterator.ProtectedArrayIterator;
+import org.as2lib.data.holder.Iterator;
+import org.as2lib.data.holder.ProtectedIterator;
+import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.HolderConfig;
 import org.as2lib.data.holder.Stack;
@@ -26,7 +27,7 @@ import org.as2lib.data.holder.EmptyDataHolderException;
  *
  * @author Simon Wacker
  */
-class org.as2lib.data.holder.SimpleStack extends BasicClass implements Stack {
+class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Stack {
 	/** Contains the inserted values. */
 	private var values:Array;
 	
@@ -70,7 +71,7 @@ class org.as2lib.data.holder.SimpleStack extends BasicClass implements Stack {
 	public function iterator(Void):Iterator {
 		var reversedValues:Array = values.slice();
 		reversedValues.reverse();
-		return (new ProtectedArrayIterator(reversedValues));
+		return (new ProtectedIterator(new ArrayIterator(reversedValues)));
 	}
 	
 	/**

@@ -16,7 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Map;
-import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.holder.Iterator;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.PackageInfo;

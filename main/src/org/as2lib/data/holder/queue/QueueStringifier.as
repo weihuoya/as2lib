@@ -15,9 +15,9 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.util.string.Stringifier;
+import org.as2lib.util.Stringifier;
 import org.as2lib.data.holder.Queue;
-import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.holder.Iterator;
 
 /**
  * QueueStringifier is the default Stringifier used to stringify Queues.
@@ -25,7 +25,7 @@ import org.as2lib.data.iterator.Iterator;
  * @author Simon Wacker
  * @see org.as2lib.data.holder.Queue
  */
-class org.as2lib.data.holder.string.QueueStringifier extends BasicClass implements Stringifier {
+class org.as2lib.data.holder.queue.QueueStringifier extends BasicClass implements Stringifier {
 	/**
 	 * @see org.as2lib.util.string.Stringifier
 	 */

@@ -28,7 +28,7 @@ import org.as2lib.Config;
  * @author Simon Wacker
  * @author Martin Heidegger
  */
-class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface {
+class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInterface {
 	/** The type of values that can be added. */
 	private var type:Function;
 	

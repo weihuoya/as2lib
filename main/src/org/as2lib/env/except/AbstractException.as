@@ -24,7 +24,7 @@ import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.env.except.SimpleStackTraceElement;
 import org.as2lib.data.holder.Stack;
-import org.as2lib.data.holder.SimpleStack;
+import org.as2lib.data.holder.stack.SimpleStack;
 
 /**
  * AbstractException is an abstract class that contains rolled out functionalities

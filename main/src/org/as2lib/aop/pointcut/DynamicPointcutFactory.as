@@ -1,8 +1,8 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.HashMap;
-import org.as2lib.data.iterator.Iterator;
-import org.as2lib.data.iterator.ArrayIterator;
+import org.as2lib.data.holder.map.HashMap;
+import org.as2lib.data.holder.Iterator;
+import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.pointcut.OrCompositePointcut;
 import org.as2lib.aop.pointcut.AndCompositePointcut;

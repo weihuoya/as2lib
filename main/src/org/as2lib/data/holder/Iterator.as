@@ -22,7 +22,7 @@ import org.as2lib.core.BasicInterface;
  * @author Michael Herrmann
  * @author Simon Wacker
  */
-interface org.as2lib.data.iterator.Iterator extends BasicInterface {
+interface org.as2lib.data.holder.Iterator extends BasicInterface {
 	/**
 	 * Returns whether there exists another object to iterate over.
 	 *

@@ -19,7 +19,7 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.data.io.conn.local.ServerRegistry;
 import org.as2lib.data.io.conn.local.LocalServer;
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.data.io.conn.local.ReservedHostException;
 import org.as2lib.data.io.conn.local.ExtendedLocalConnection;
 
