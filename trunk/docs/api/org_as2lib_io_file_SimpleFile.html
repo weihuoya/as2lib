@@ -1,0 +1,691 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>SimpleFile</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>SimpleFile</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_io_file_File.html">File</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Martin Heidegger</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.io.file.SimpleFile</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Friday, 04 February 2005, 07:39:06</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">Default implementation of a file used within ActionScript.
+ </div>
+ Supports all common features without any advantages.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#SimpleFile">SimpleFile</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#helperXML">helperXML</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#data">data</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#url">url</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#loaded">loaded</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#loading">loading</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#doesExist">doesExist</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#bytesLoaded">bytesLoaded</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#bytesTotal">bytesTotal</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#lines">lines</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#eB">eB</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#reset">reset</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#sendDataEvent">sendDataEvent</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#sendProgressEvent">sendProgressEvent</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#updateByteInfo">updateByteInfo</a>
+                </li>
+                <li>
+                  <a href="#load">load</a>
+                </li>
+                <li>
+                  <a href="#isLoading">isLoading</a>
+                </li>
+                <li>
+                  <a href="#isLoaded">isLoaded</a>
+                </li>
+                <li>
+                  <a href="#exists">exists</a>
+                </li>
+                <li>
+                  <a href="#getBytesLoaded">getBytesLoaded</a>
+                </li>
+                <li>
+                  <a href="#getBytesTotal">getBytesTotal</a>
+                </li>
+                <li>
+                  <a href="#getLocation">getLocation</a>
+                </li>
+                <li>
+                  <a href="#getContent">getContent</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#evaluateLines">evaluateLines</a>
+                </li>
+                <li>
+                  <a href="#getLine">getLine</a>
+                </li>
+                <li>
+                  <a href="#countLines">countLines</a>
+                </li>
+                <li>
+                  <a href="#addListener">addListener</a>
+                </li>
+                <li>
+                  <a href="#toString">toString</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="SimpleFile" id="SimpleFile"></a>
+          <div class="method hasBottomDivider">
+            <h3>SimpleFile</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>SimpleFile</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new simple file.
+
+ It prepares the helperXML and resets all states.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="bytesLoaded" id="bytesLoaded"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>bytesLoaded</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>bytesLoaded</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Holder for the amount of bytes loaded</div>
+          </div>
+          <a name="bytesTotal" id="bytesTotal"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>bytesTotal</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>bytesTotal</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Holder for the amount of the total file size</div>
+          </div>
+          <a name="data" id="data"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>data</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>data</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Content of the file</div>
+          </div>
+          <a name="doesExist" id="doesExist"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>doesExist</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>doesExist</b>:Boolean
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Flag if the file does exist</div>
+          </div>
+          <a name="eB" id="eB"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>eB</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>eB</b>:EventBroadcaster
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Eventbroadcaster to broadcast events</div>
+          </div>
+          <a name="helperXML" id="helperXML"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>helperXML</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>helperXML</b>:XML
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Helper XML, rudimentary for the workaround to create a methology like a "file", supports different behaviours</div>
+          </div>
+          <a name="lines" id="lines"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>lines</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>lines</b>:Array
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Content seperated in lines</div>
+          </div>
+          <a name="loaded" id="loaded"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>loaded</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>loaded</b>:Boolean
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Flag if the file has been loaded</div>
+          </div>
+          <a name="loading" id="loading"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>loading</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>loading</b>:Boolean
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Flag if the file is currently loading</div>
+          </div>
+          <a name="url" id="url"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>url</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>url</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Location that has been loaded</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="addListener" id="addListener"></a>
+          <div class="method hasBottomDivider">
+            <h3>addListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addListener</b> (
+</div>
+                <div class="code">listener:FileListener) : Void</div>
+              </div>
+            </div>
+            <div class="description">Implementation of File.addListener.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">listener<span class="separator">:</span></div>
+                    <div>Listener to be added to the file.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_File.html#addListener">File.addListener</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="countLines" id="countLines"></a>
+          <div class="method hasBottomDivider">
+            <h3>countLines</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>countLines</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Implementation of File.countLines.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Total amount of lines in the content.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_File.html#countLines">File.countLines</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="evaluateLines" id="evaluateLines"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>evaluateLines</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>evaluateLines</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Method to create the lines from the content.</div>
+          </div>
+          <a name="exists" id="exists"></a>
+          <div class="method hasBottomDivider">
+            <h3>exists</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>exists</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Implementation of File.exists.
+
+ This is a low level implementation of .exists. It won't work properly if you didn't load a file before.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws</span>
+                  <div class="item"><a href="org_as2lib_io_file_FileNotLoadedException.html">FileNotLoadedException</a> if no file was loaded before. (Is related to the onLoad event.)</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the file exists.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_File.html#exists">File.exists</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getBytesLoaded" id="getBytesLoaded"></a>
+          <div class="method hasBottomDivider">
+            <h3>getBytesLoaded</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getBytesLoaded</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Implementation of File.getBytesLoaded.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Total amount of bytes loaded.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_File.html#getBytesLoaded">File.getBytesLoaded</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getBytesTotal" id="getBytesTotal"></a>
+          <div class="method hasBottomDivider">
+            <h3>getBytesTotal</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getBytesTotal</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Implementation of File.getBytesTotal.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Total file size in bytes.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_File.html#getBytesTotal">File.getBytesTotal</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getContent" id="getContent"></a>
+          <div class="method hasBottomDivider">
+            <h3>getContent</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getContent</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="description">Implementation of File.getContent.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Content of the File (if the file is loaded, else "null")</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_File.html#getContent">File.getContent</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getLine" id="getLine"></a>
+          <div class="method hasBottomDivider">
+            <h3>getLine</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getLine</b> (
+</div>
+                <div class="code">line:Number) : String</div>
+              </div>
+            </div>
+            <div class="description">Implementation of File.getLine.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Content of the requested line, "undefined" if the line doesn't exist.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_File.html#getLine">File.getLine</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getLocation" id="getLocation"></a>
+          <div class="method hasBottomDivider">
+            <h3>getLocation</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getLocation</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="description">Implementation of File.getLocation.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Recent loaded location.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_File.html#getLocation">File.getLocation</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isLoaded" id="isLoaded"></a>
+          <div class="method hasBottomDivider">
+            <h3>isLoaded</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isLoaded</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Implementation of File.isLoaded.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the File is already loaded.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_File.html#isLoaded">File.isLoaded</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isLoading" id="isLoading"></a>
+          <div class="method hasBottomDivider">
+            <h3>isLoading</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isLoading</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Implementation of File.isLoading.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the File is still loading.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_File.html#isLoading">File.isLoading</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="load" id="load"></a>
+          <div class="method hasBottomDivider">
+            <h3>load</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>load</b> (
+</div>
+                <div class="code">url:String) : Void</div>
+              </div>
+            </div>
+            <div class="description">Implementation of File.load.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">url<span class="separator">:</span></div>
+                    <div>URL to be loaded.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_File.html#load">File.load</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="reset" id="reset"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>reset</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>reset</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Resets all states of the Simple File</div>
+          </div>
+          <a name="sendDataEvent" id="sendDataEvent"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>sendDataEvent</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>sendDataEvent</b> (
+</div>
+                <div class="code">data:String) : Void</div>
+              </div>
+            </div>
+            <div class="description">Internal method to handle the helperXML's onData Event.
+
+ This method will send the onLoad event if the data is valid, else it will send the onFileNotFound event.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">data<span class="separator">:</span></div>
+                    <div>Content of the file</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="sendProgressEvent" id="sendProgressEvent"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>sendProgressEvent</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>sendProgressEvent</b> (
+</div>
+                <div class="code">newBytesLoaded:Number) : Void</div>
+              </div>
+            </div>
+            <div class="description">Internal method to handle changes in helperXML bytesLoaded event.
+
+ This method will send a onProgress event.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">newBytesLoaded<span class="separator"></span></div>
+                    <div>&nbsp;</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_SimpleFile.html#SimpleFile">SimpleFile</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="toString" id="toString"></a>
+          <div class="method hasBottomDivider">
+            <h3>toString</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>toString</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="description">Extended Stringifier
+
+ 
+
+ Example:
+
+  [type org.as2lib.io.file.SimpleFile | Location: MyFile.txt; Size: 12KB; ]</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">The file as string.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="updateByteInfo" id="updateByteInfo"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>updateByteInfo</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>updateByteInfo</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Internal method to keep the bytesLoaded and Bytes Total values up-to-date.
+
+ This method was used for sendProgressEvent that sets the status of bytesLoaded. 
+
+ Else it could be possible by simply setting getting the helperXML.getBytesLoaded/-Total value on request.</div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:19:36
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

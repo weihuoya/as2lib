@@ -1,0 +1,512 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>PropertyInfo</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>PropertyInfo</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_reflect_TypeMemberInfo.html">TypeMemberInfo</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.reflect.PropertyInfo</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 12 February 2005, 05:24:58</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">PropertyInfo represents a property.<p>The term property means only properties added via Object#addProperty(..)
+
+ or the ones added with the 'get' and 'set' keywords.
+ </div>
+ 'Normal' properties are not supported because at runtime you can only
+
+ evaluate them if they have been initialized. Therefore results could
+
+ vary dramatically.<p>PropertyInfo instances for specific properties can be obtained using
+
+ the ClassInfo#getProperties or ClassInfo#getProperty methods. That means
+
+ you first have to get a class info for the class that declares or
+
+ inherits the property. You can therefor use the ClassInfo#forObject,
+
+ ClassInfo#forClass, ClassInfo#forInstance or ClassInfo#forName methods.<p>When you have obtained the property info you can use it to get
+
+ information about the property.<pre><span class="codeIdentifier">trace</span>(<span class="codeString">"Property name: "</span> + propertyInfo.getName());
+
+ <span class="codeIdentifier">trace</span>(<span class="codeString">"Declaring type: "</span> + propertyInfo.getDeclaringType().getFullName());
+
+ <span class="codeIdentifier">trace</span>(<span class="codeString">"Is Static?: "</span> + propertyInfo.isStatic());
+
+ <span class="codeIdentifier">trace</span>(<span class="codeString">"Is Writable?: "</span> + propertyInfo.isWritable());
+
+ <span class="codeIdentifier">trace</span>(<span class="codeString">"Is Readable?: "</span> + propertyInfo.isReadable());</pre></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#PropertyInfo">PropertyInfo</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#stringifier">stringifier</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#name">name</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#setter">setter</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getter">getter</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#declaringType">declaringType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#staticFlag">staticFlag</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span>
+              <ul>
+                <li>
+                  <a href="#getStringifier">getStringifier</a>
+                </li>
+                <li>
+                  <a href="#setStringifier">setStringifier</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#getName">getName</a>
+                </li>
+                <li>
+                  <a href="#getSetter">getSetter</a>
+                </li>
+                <li>
+                  <a href="#getGetter">getGetter</a>
+                </li>
+                <li>
+                  <a href="#getDeclaringType">getDeclaringType</a>
+                </li>
+                <li>
+                  <a href="#isWritable">isWritable</a>
+                </li>
+                <li>
+                  <a href="#isReadable">isReadable</a>
+                </li>
+                <li>
+                  <a href="#isStatic">isStatic</a>
+                </li>
+                <li>
+                  <a href="#toString">toString</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="PropertyInfo" id="PropertyInfo"></a>
+          <div class="method hasBottomDivider">
+            <h3>PropertyInfo</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>PropertyInfo</b> (
+
+
+
+
+</div>
+                <div class="code">name:String,
+setter:Function,
+getter:Function,
+declaringType:TypeInfo,
+staticFlag:Boolean)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new PropertyInfo instance.<p>All arguments are allowed to be null. But keep in mind that not
+
+ all methods will function properly if one is.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name         <span class="separator">:</span></div>
+                    <div>the name of the property</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">setter       <span class="separator">:</span></div>
+                    <div>the setter method of the property</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">getter       <span class="separator">:</span></div>
+                    <div>the getter method of the property</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">declaringType<span class="separator">:</span></div>
+                    <div>the type declaring the property</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">static       <span class="separator">:</span></div>
+                    <div>a flag saying whether the property is static</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <a name="stringifier" id="stringifier"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>stringifier</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>stringifier</b>:Stringifier
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The property info stringifier.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="declaringType" id="declaringType"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>declaringType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>declaringType</b>:TypeInfo
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The type that declares the property.</div>
+          </div>
+          <a name="getter" id="getter"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>getter</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>getter</b>:MethodInfo
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The getter operation of the property.</div>
+          </div>
+          <a name="name" id="name"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>name</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>name</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The name of the property.</div>
+          </div>
+          <a name="setter" id="setter"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>setter</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>setter</b>:MethodInfo
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The setter operation of the property.</div>
+          </div>
+          <a name="staticFlag" id="staticFlag"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>staticFlag</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>staticFlag</b>:Boolean
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">A flag representing whether the operation is static.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class methods</h2>
+          <a name="getStringifier" id="getStringifier"></a>
+          <div class="method hasBottomDivider">
+            <h3>getStringifier</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>getStringifier</b> (
+</div>
+                <div class="code">Void) : Stringifier</div>
+              </div>
+            </div>
+            <div class="description">Returns the stringifier used to stringify property infos.<p>If no custom stringifier has been set via the #setStringifier
+
+ method, a instance of the default PropertyInfoStringifier gets returned.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the stringifier that stringifies property infos</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setStringifier" id="setStringifier"></a>
+          <div class="method hasBottomDivider">
+            <h3>setStringifier</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>setStringifier</b> (
+</div>
+                <div class="code">propertyInfoStringifier:PropertyInfoStringifier) : Void</div>
+              </div>
+            </div>
+            <div class="description">Sets the stringifier used to stringify property infos.<p>If you set a stringifier of value null or undefined #getStringifier
+
+ will return the default stringifier.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">propertyInfoStringifier<span class="separator">:</span></div>
+                    <div>the stringifier that stringifies property infos</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="getDeclaringType" id="getDeclaringType"></a>
+          <div class="method hasBottomDivider">
+            <h3>getDeclaringType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getDeclaringType</b> (
+</div>
+                <div class="code">Void) : TypeInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the type that declares the property.<p>At this time interfaces are not allowed to declare properties.
+
+ The declaring type is thus allways an instance of type ClassInfo,
+
+ a class.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the type that declares the property</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getGetter" id="getGetter"></a>
+          <div class="method hasBottomDivider">
+            <h3>getGetter</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getGetter</b> (
+</div>
+                <div class="code">Void) : MethodInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the getter method of the property.<p>The getter method of a property takes no arguments, but returns
+
+ the value of the property. You can invoke it the same as every other
+
+ method.<p>The name of a getter method is the prefix '__get__' plus the name
+
+ of the property.<p>Property get methods are also known under the name implicit
+
+ getters.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the getter method of the property</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getName" id="getName"></a>
+          <div class="method hasBottomDivider">
+            <h3>getName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getName</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="description">Returns the name of the property.<p>If you want the getter or setter methods' name you must use the
+
+ getGetter()#getName or getGetter()#getName method. The name of the
+
+ getter or setter method is the prefix '__set__' or '__get__' plus
+
+ the name of the property.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the name of the property</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getSetter" id="getSetter"></a>
+          <div class="method hasBottomDivider">
+            <h3>getSetter</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getSetter</b> (
+</div>
+                <div class="code">Void) : MethodInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the setter method of the property.<p>The setter method of a property takes one argument, that is the
+
+ new value that shall be assigned to the property. You can invoke
+
+ it the same as every other method.<p>The name of a setter method is the prefix '__set__' plus the name
+
+ of the property.<p>Property setter methods are also known under the name implicit
+
+ setters.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the setter method of the property</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isReadable" id="isReadable"></a>
+          <div class="method hasBottomDivider">
+            <h3>isReadable</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isReadable</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Returns whether the property is readable.<p>The property is readable when its getter is not null.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true when the property is readable else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isStatic" id="isStatic"></a>
+          <div class="method hasBottomDivider">
+            <h3>isStatic</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isStatic</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Returns whether the property is static or not.<p>Static properties are properties per type.<p>Non-Static properties are properties per instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true when the property is static else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isWritable" id="isWritable"></a>
+          <div class="method hasBottomDivider">
+            <h3>isWritable</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isWritable</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Returns whether the property is writable.<p>The property is writable when its setter is not null.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true when the property is writable else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="toString" id="toString"></a>
+          <div class="method hasBottomDivider">
+            <h3>toString</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>toString</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="description">Returns the string representation of this property.<p>The string representation is obtained via the stringifier returned
+
+ by the #getStringifier method.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the string representation of this property</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:09:49
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

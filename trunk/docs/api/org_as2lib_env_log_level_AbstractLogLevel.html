@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>AbstractLogLevel</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>AbstractLogLevel</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_log_LogLevel.html">LogLevel</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.log.level.AbstractLogLevel</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Friday, 18 February 2005, 12:47:20</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">AbstractLogLevel acts as a basic access point for the pre-defined levels
+
+ #ALL, #DEBUG, #INFO, #WARNING, #ERROR, #FATAL and #NONE. </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#AbstractLogLevel">AbstractLogLevel</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class properties</span>
+              <ul>
+                <li>
+                  <a href="#ALL">ALL</a>
+                </li>
+                <li>
+                  <a href="#DEBUG">DEBUG</a>
+                </li>
+                <li>
+                  <a href="#INFO">INFO</a>
+                </li>
+                <li>
+                  <a href="#WARNING">WARNING</a>
+                </li>
+                <li>
+                  <a href="#ERROR">ERROR</a>
+                </li>
+                <li>
+                  <a href="#FATAL">FATAL</a>
+                </li>
+                <li>
+                  <a href="#NONE">NONE</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#level">level</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#name">name</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#isGreaterOrEqual">isGreaterOrEqual</a>
+                </li>
+                <li>
+                  <a href="#toNumber">toNumber</a>
+                </li>
+                <li>
+                  <a href="#toString">toString</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="AbstractLogLevel" id="AbstractLogLevel"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>AbstractLogLevel</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>AbstractLogLevel</b> (
+
+</div>
+                <div class="code">level:Number,
+name:String)</div>
+              </div>
+            </div>
+            <div class="description">Private constructor.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">level<span class="separator">:</span></div>
+                    <div>the level represented by a number</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name <span class="separator">:</span></div>
+                    <div>the name of the level</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if passed-in level is null or undefined</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <a name="ALL" id="ALL"></a>
+          <div class="method hasBottomDivider">
+            <h3>ALL</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>ALL</b>:LogLevel
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">All log messages get logged.</div>
+          </div>
+          <a name="DEBUG" id="DEBUG"></a>
+          <div class="method hasBottomDivider">
+            <h3>DEBUG</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>DEBUG</b>:LogLevel
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">All log messages that are at a lower log level than debug get logged.</div>
+          </div>
+          <a name="ERROR" id="ERROR"></a>
+          <div class="method hasBottomDivider">
+            <h3>ERROR</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>ERROR</b>:LogLevel
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">All log messages that are at a lower log level than error get logged.</div>
+          </div>
+          <a name="FATAL" id="FATAL"></a>
+          <div class="method hasBottomDivider">
+            <h3>FATAL</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>FATAL</b>:LogLevel
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">All log messages that are at a lower log level than fatal get logged.</div>
+          </div>
+          <a name="INFO" id="INFO"></a>
+          <div class="method hasBottomDivider">
+            <h3>INFO</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>INFO</b>:LogLevel
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">All log messages that are at a lower log level than info get logged.</div>
+          </div>
+          <a name="NONE" id="NONE"></a>
+          <div class="method hasBottomDivider">
+            <h3>NONE</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>NONE</b>:LogLevel
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">No log messages get logged.</div>
+          </div>
+          <a name="WARNING" id="WARNING"></a>
+          <div class="method hasBottomDivider">
+            <h3>WARNING</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>WARNING</b>:LogLevel
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">All log messages that are at a lower log level than warning get logged.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="level" id="level"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>level</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>level</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Stores the level in form of a number.</div>
+          </div>
+          <a name="name" id="name"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>name</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>name</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The name of the level.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="isGreaterOrEqual" id="isGreaterOrEqual"></a>
+          <div class="method hasBottomDivider">
+            <h3>isGreaterOrEqual</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isGreaterOrEqual</b> (
+</div>
+                <div class="code">level:LogLevel) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Compares the number representation of this level with the one of the
+
+ passed-in level using the is greater or equal operator.
+
+
+
+ True will be returned if:<ul><li>This level is greater or equal than the passed-in one.</li><li>The passed-in level is null or undefined.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">level<span class="separator">:</span></div>
+                    <div>the level to compare this level with</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if this level is greater or equal than the passed-in one else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="toNumber" id="toNumber"></a>
+          <div class="method hasBottomDivider">
+            <h3>toNumber</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>toNumber</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Returns the number representation of this level.<p>The return value is never null or undefined.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the number representation of this level</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="toString" id="toString"></a>
+          <div class="method hasBottomDivider">
+            <h3>toString</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>toString</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="description">Returns the string representation of this level.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the string representation of this level</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:59:37
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>SpeedEventBroadcaster</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>SpeedEventBroadcaster</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_event_EventBroadcaster.html">EventBroadcaster</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.event.SpeedEventBroadcaster</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Monday, 24 January 2005, 06:03:21</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">SpeedEventBroadcaster is a speed optimized EventBroadcaster implementation.
+ </div>
+ To ensure high speed its not possible to set your own EventDispatcher.
+
+ Consumable events are also not supported.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#SpeedEventBroadcaster">SpeedEventBroadcaster</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#l">l</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#addListener">addListener</a>
+                </li>
+                <li>
+                  <a href="#addAllListener">addAllListener</a>
+                </li>
+                <li>
+                  <a href="#removeListener">removeListener</a>
+                </li>
+                <li>
+                  <a href="#removeAllListener">removeAllListener</a>
+                </li>
+                <li>
+                  <a href="#getAllListener">getAllListener</a>
+                </li>
+                <li>
+                  <a href="#dispatch">dispatch</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="SpeedEventBroadcaster" id="SpeedEventBroadcaster"></a>
+          <div class="method hasBottomDivider">
+            <h3>SpeedEventBroadcaster</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>SpeedEventBroadcaster</b> (
+</div>
+                <div class="code">listeners:Array)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new SpeedEventBroadcaster.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">listeners<span class="separator">:</span></div>
+                    <div>argument that can be used to configure the broadcaster</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="l" id="l"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>l</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>l</b>:Object
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Contains all registered EventListeners.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="addAllListener" id="addAllListener"></a>
+          <div class="method hasBottomDivider">
+            <h3>addAllListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addAllListener</b> (
+</div>
+                <div class="code">listeners:Array) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#addAllListener">EventBroadcaster.addAllListener()</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="addListener" id="addListener"></a>
+          <div class="method hasBottomDivider">
+            <h3>addListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addListener</b> (
+</div>
+                <div class="code">listener:EventListener) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#addListener">EventBroadcaster.addListener()</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="dispatch" id="dispatch"></a>
+          <div class="method hasBottomDivider">
+            <h3>dispatch</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>dispatch</b> (
+</div>
+                <div class="code">e:EventInfo) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#dispatch">EventBroadcaster.dispatch()</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getAllListener" id="getAllListener"></a>
+          <div class="method hasBottomDivider">
+            <h3>getAllListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getAllListener</b> (
+</div>
+                <div class="code">Void) : Array</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#getAllListener">EventBroadcaster.getAllListener()</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="removeAllListener" id="removeAllListener"></a>
+          <div class="method hasBottomDivider">
+            <h3>removeAllListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>removeAllListener</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#removeAllListener">EventBroadcaster.removeAllListener()</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="removeListener" id="removeListener"></a>
+          <div class="method hasBottomDivider">
+            <h3>removeListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>removeListener</b> (
+</div>
+                <div class="code">listener:EventListener) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#removeListener">EventBroadcaster.removeListener()</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:56:28
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

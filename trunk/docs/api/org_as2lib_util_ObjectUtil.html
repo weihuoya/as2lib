@@ -1,0 +1,740 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>ObjectUtil</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>ObjectUtil</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker, Martin Heidegger</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.util.ObjectUtil</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Sunday, 06 February 2005, 05:06:00</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">ObjectUtil contains fundamental operations to efficiently and easily work
+
+ with any type of object. </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#ObjectUtil">ObjectUtil</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class properties</span>
+              <ul>
+                <li>
+                  <a href="#TYPE_STRING">TYPE_STRING</a>
+                </li>
+                <li>
+                  <a href="#TYPE_NUMBER">TYPE_NUMBER</a>
+                </li>
+                <li>
+                  <a href="#TYPE_OBJECT">TYPE_OBJECT</a>
+                </li>
+                <li>
+                  <a href="#TYPE_BOOLEAN">TYPE_BOOLEAN</a>
+                </li>
+                <li>
+                  <a href="#TYPE_MOVIECLIP">TYPE_MOVIECLIP</a>
+                </li>
+                <li>
+                  <a href="#TYPE_FUNCTION">TYPE_FUNCTION</a>
+                </li>
+                <li>
+                  <a href="#TYPE_UNDEFINED">TYPE_UNDEFINED</a>
+                </li>
+                <li>
+                  <a href="#TYPE_NULL">TYPE_NULL</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#a">a</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#b">b</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#c">c</a>
+                </li>
+                <li>
+                  <a href="#call">call</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span>
+              <ul>
+                <li>
+                  <a href="#stringify">stringify</a>
+                </li>
+                <li>
+                  <a href="#getChildName">getChildName</a>
+                </li>
+                <li>
+                  <a href="#typesMatch">typesMatch</a>
+                </li>
+                <li>
+                  <a href="#compareTypeOf">compareTypeOf</a>
+                </li>
+                <li>
+                  <a href="#isPrimitiveType">isPrimitiveType</a>
+                </li>
+                <li>
+                  <a href="#isTypeOf">isTypeOf</a>
+                </li>
+                <li>
+                  <a href="#isInstanceOf">isInstanceOf</a>
+                </li>
+                <li>
+                  <a href="#isExplicitInstanceOf">isExplicitInstanceOf</a>
+                </li>
+                <li>
+                  <a href="#isEmpty">isEmpty</a>
+                </li>
+                <li>
+                  <a href="#isAvailable">isAvailable</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#MyClass">MyClass</a>
+                </li>
+                <li>
+                  <a href="#traceObject">traceObject</a>
+                </li>
+                <li>
+                  <a href="#listAll">listAll</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="ObjectUtil" id="ObjectUtil"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>ObjectUtil</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>ObjectUtil</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Private constructor.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <a name="TYPE_BOOLEAN" id="TYPE_BOOLEAN"></a>
+          <div class="method hasBottomDivider">
+            <h3>TYPE_BOOLEAN</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TYPE_BOOLEAN</b>
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">Constant for the type of boolean.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_util_ObjectUtil.html#isTypeOf">isTypeOf</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="TYPE_FUNCTION" id="TYPE_FUNCTION"></a>
+          <div class="method hasBottomDivider">
+            <h3>TYPE_FUNCTION</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TYPE_FUNCTION</b>
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">Constant for the type of function.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_util_ObjectUtil.html#isTypeOf">isTypeOf</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="TYPE_MOVIECLIP" id="TYPE_MOVIECLIP"></a>
+          <div class="method hasBottomDivider">
+            <h3>TYPE_MOVIECLIP</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TYPE_MOVIECLIP</b>
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">Constant for the type of movieclip.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_util_ObjectUtil.html#isTypeOf">isTypeOf</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="TYPE_NULL" id="TYPE_NULL"></a>
+          <div class="method hasBottomDivider">
+            <h3>TYPE_NULL</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TYPE_NULL</b>
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">Constant for the type of null.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_util_ObjectUtil.html#isTypeOf">isTypeOf</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="TYPE_NUMBER" id="TYPE_NUMBER"></a>
+          <div class="method hasBottomDivider">
+            <h3>TYPE_NUMBER</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TYPE_NUMBER</b>
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">Constant for the type of number.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_util_ObjectUtil.html#isTypeOf">isTypeOf</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="TYPE_OBJECT" id="TYPE_OBJECT"></a>
+          <div class="method hasBottomDivider">
+            <h3>TYPE_OBJECT</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TYPE_OBJECT</b>
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">Constant for the type of object.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_util_ObjectUtil.html#isTypeOf">isTypeOf</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="TYPE_STRING" id="TYPE_STRING"></a>
+          <div class="method hasBottomDivider">
+            <h3>TYPE_STRING</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TYPE_STRING</b>
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">Constant for the type of string.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_util_ObjectUtil.html#isTypeOf">isTypeOf</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="TYPE_UNDEFINED" id="TYPE_UNDEFINED"></a>
+          <div class="method hasBottomDivider">
+            <h3>TYPE_UNDEFINED</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TYPE_UNDEFINED</b>
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">Constant for the type of undefined.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_util_ObjectUtil.html#isTypeOf">isTypeOf</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="a" id="a"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>a</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>a</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+          </div>
+          <a name="b" id="b"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>b</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>b</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+          </div>
+          <a name="c" id="c"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>c</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>c</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+          </div>
+          <a name="call" id="call"></a>
+          <div class="method hasBottomDivider">
+            <h3>call</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><b>call</b>:Call
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class methods</h2>
+          <a name="compareTypeOf" id="compareTypeOf"></a>
+          <div class="method hasBottomDivider">
+            <h3>compareTypeOf</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>compareTypeOf</b> (
+
+</div>
+                <div class="code">firstObject,
+secondObject) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Compares the results of the #typeof() operation applied to both objects.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">firstObject <span class="separator">:</span></div>
+                    <div>the first object of the comparison</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">secondObject<span class="separator">:</span></div>
+                    <div>the second object of the comparison</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the call to the #typeof() operation returns the same else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getChildName" id="getChildName"></a>
+          <div class="method hasBottomDivider">
+            <h3>getChildName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>getChildName</b> (
+
+</div>
+                <div class="code">inObject,
+object) : String</div>
+              </div>
+            </div>
+            <div class="description">Evaluates if an object is a child of another object. It evaluates only
+
+ methods because properties could throw an exception.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>the parent object, where the method shall search in.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object  <span class="separator">:</span></div>
+                    <div>the object that shall be found.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the name if it could be found else null</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isAvailable" id="isAvailable"></a>
+          <div class="method hasBottomDivider">
+            <h3>isAvailable</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>isAvailable</b> (
+</div>
+                <div class="code">object) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks if the passed in object is not empty and thus available.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
+                    <div>the object that shall be checked for availability</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the object is available else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isEmpty" id="isEmpty"></a>
+          <div class="method hasBottomDivider">
+            <h3>isEmpty</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>isEmpty</b> (
+</div>
+                <div class="code">object) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks if the passed in object is empty. The object is classified as
+
+ empty when its value is either undefined or null.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
+                    <div>the object that shall be checked for emptyness</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the object is empty else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isExplicitInstanceOf" id="isExplicitInstanceOf"></a>
+          <div class="method hasBottomDivider">
+            <h3>isExplicitInstanceOf</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>isExplicitInstanceOf</b> (
+
+</div>
+                <div class="code">object,
+clazz:Function) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks if the object is an explicit instance of the class. That means
+
+ that true will only be returned if the object is instantiated from the
+
+ specified class.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object<span class="separator"></span></div>
+                    <div>&nbsp;</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">class <span class="separator"></span></div>
+                    <div>&nbsp;</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the object is an explicit instance of the class else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isInstanceOf" id="isInstanceOf"></a>
+          <div class="method hasBottomDivider">
+            <h3>isInstanceOf</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>isInstanceOf</b> (
+
+</div>
+                <div class="code">anObject,
+aClass:Function) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks if an object is an instance of a class.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
+                    <div>the object that shall be checked</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">class <span class="separator">:</span></div>
+                    <div>the class that shall be used</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the object is an instance of the class otherwise false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isPrimitiveType" id="isPrimitiveType"></a>
+          <div class="method hasBottomDivider">
+            <h3>isPrimitiveType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>isPrimitiveType</b> (
+</div>
+                <div class="code">anObject) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks if the object is of primitive type. Primitive types are String,
+
+ Number and Boolean that are not created via the new operator.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
+                    <div>the possible primitive type</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the object is of primitive type else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isTypeOf" id="isTypeOf"></a>
+          <div class="method hasBottomDivider">
+            <h3>isTypeOf</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>isTypeOf</b> (
+
+</div>
+                <div class="code">object,
+expression:String) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks if the result of the typeof execution on the passed in object
+
+ matches the expression.
+
+ 
+
+ All possible types are available as static constant.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object    <span class="separator">:</span></div>
+                    <div>the object whose type shall be checked</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">expression<span class="separator">:</span></div>
+                    <div>a string representing the type</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the object is of type expression</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_util_ObjectUtil.html#TYPE_STRING">TYPE_STRING</a><br /><a href="org_as2lib_util_ObjectUtil.html#TYPE_NUMBER">TYPE_NUMBER</a><br /><a href="org_as2lib_util_ObjectUtil.html#TYPE_OBJECT">TYPE_OBJECT</a><br /><a href="org_as2lib_util_ObjectUtil.html#TYPE_BOOLEAN">TYPE_BOOLEAN</a><br /><a href="org_as2lib_util_ObjectUtil.html#TYPE_MOVIECLIP">TYPE_MOVIECLIP</a><br /><a href="org_as2lib_util_ObjectUtil.html#TYPE_NULL">TYPE_NULL</a><br /><a href="org_as2lib_util_ObjectUtil.html#TYPE_UNDEFINED">TYPE_UNDEFINED</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="stringify" id="stringify"></a>
+          <div class="method hasBottomDivider">
+            <h3>stringify</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>stringify</b> (
+</div>
+                <div class="code">object) : String</div>
+              </div>
+            </div>
+            <div class="description">Stringifies the passed Object using the Stringifier returned by Config#getObjectStringifier().</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
+                    <div>the Object to be stringified</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">a String representation of the object</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="typesMatch" id="typesMatch"></a>
+          <div class="method hasBottomDivider">
+            <h3>typesMatch</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>typesMatch</b> (
+
+</div>
+                <div class="code">anObject,
+aType:Function) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks if the type of object matches the given type.
+
+ Every value (even "null" & "undefined") matches type "Object".</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">aObject<span class="separator">:</span></div>
+                    <div>the object whose type shall be compared with the type</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">aType  <span class="separator">:</span></div>
+                    <div>the type that shall be used for the comparison</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the type of the object matches else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="listAll" id="listAll"></a>
+          <div class="method hasBottomDivider">
+            <h3>listAll</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>listAll</b> (
+</div>
+                <div class="code">)</div>
+              </div>
+            </div>
+          </div>
+          <a name="MyClass" id="MyClass"></a>
+          <div class="method hasBottomDivider">
+            <h3>MyClass</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>MyClass</b> (
+</div>
+                <div class="code">)</div>
+              </div>
+            </div>
+          </div>
+          <a name="traceObject" id="traceObject"></a>
+          <div class="method hasBottomDivider">
+            <h3>traceObject</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>traceObject</b> (
+
+</div>
+                <div class="code">value,
+name:String) : Void</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:37:31
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

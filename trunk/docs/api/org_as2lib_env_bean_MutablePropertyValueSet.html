@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>MutablePropertyValueSet</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>MutablePropertyValueSet</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_bean_PropertyValueSet.html">PropertyValueSet</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.bean.MutablePropertyValueSet</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Wednesday, 01 December 2004, 09:41:48</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"> </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#MutablePropertyValueSet">MutablePropertyValueSet</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#propertyArray">propertyArray</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#addPropertyValue">addPropertyValue</a>
+                </li>
+                <li>
+                  <a href="#addPropertyValueByPropertyValue">addPropertyValueByPropertyValue</a>
+                </li>
+                <li>
+                  <a href="#addPropertyValueByNameAndValue">addPropertyValueByNameAndValue</a>
+                </li>
+                <li>
+                  <a href="#removePropertyValue">removePropertyValue</a>
+                </li>
+                <li>
+                  <a href="#removePropertyValueByPropertyValue">removePropertyValueByPropertyValue</a>
+                </li>
+                <li>
+                  <a href="#removePropertyValueByName">removePropertyValueByName</a>
+                </li>
+                <li>
+                  <a href="#contains">contains</a>
+                </li>
+                <li>
+                  <a href="#getPropertyValue">getPropertyValue</a>
+                </li>
+                <li>
+                  <a href="#getPropertyValues">getPropertyValues</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="MutablePropertyValueSet" id="MutablePropertyValueSet"></a>
+          <div class="method hasBottomDivider">
+            <h3>MutablePropertyValueSet</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>MutablePropertyValueSet</b> (
+</div>
+                <div class="code">propertyValueMap:Map)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">propertyValueMap<span class="separator">:</span></div>
+                    <div>(optional) map containing property value names and values to populate the set with</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="propertyArray" id="propertyArray"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>propertyArray</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>propertyArray</b>:Array
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Stores added properties.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="addPropertyValue" id="addPropertyValue"></a>
+          <div class="method hasBottomDivider">
+            <h3>addPropertyValue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addPropertyValue</b> (
+</div>
+                <div class="code">) : Void</div>
+              </div>
+            </div>
+          </div>
+          <a name="addPropertyValueByNameAndValue" id="addPropertyValueByNameAndValue"></a>
+          <div class="method hasBottomDivider">
+            <h3>addPropertyValueByNameAndValue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addPropertyValueByNameAndValue</b> (
+
+</div>
+                <div class="code">propertyName:String,
+propertyValue) : Void</div>
+              </div>
+            </div>
+          </div>
+          <a name="addPropertyValueByPropertyValue" id="addPropertyValueByPropertyValue"></a>
+          <div class="method hasBottomDivider">
+            <h3>addPropertyValueByPropertyValue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addPropertyValueByPropertyValue</b> (
+</div>
+                <div class="code">propertyValue:PropertyValue) : Void</div>
+              </div>
+            </div>
+          </div>
+          <a name="contains" id="contains"></a>
+          <div class="method hasBottomDivider">
+            <h3>contains</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>contains</b> (
+</div>
+                <div class="code">propertyName:String) : Boolean</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_bean_MutablePropertyValueSet.html#contains">:Boolean</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getPropertyValue" id="getPropertyValue"></a>
+          <div class="method hasBottomDivider">
+            <h3>getPropertyValue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getPropertyValue</b> (
+</div>
+                <div class="code">propertyName:String) : PropertyValue</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_bean_MutablePropertyValueSet.html#getPropertyValue">:PropertyValue</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getPropertyValues" id="getPropertyValues"></a>
+          <div class="method hasBottomDivider">
+            <h3>getPropertyValues</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getPropertyValues</b> (
+</div>
+                <div class="code">Void) : Array</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_bean_MutablePropertyValueSet.html#getPropertyValues">:Array</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="removePropertyValue" id="removePropertyValue"></a>
+          <div class="method hasBottomDivider">
+            <h3>removePropertyValue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>removePropertyValue</b> (
+</div>
+                <div class="code">) : Void</div>
+              </div>
+            </div>
+          </div>
+          <a name="removePropertyValueByName" id="removePropertyValueByName"></a>
+          <div class="method hasBottomDivider">
+            <h3>removePropertyValueByName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>removePropertyValueByName</b> (
+</div>
+                <div class="code">propertyName:String) : Void</div>
+              </div>
+            </div>
+          </div>
+          <a name="removePropertyValueByPropertyValue" id="removePropertyValueByPropertyValue"></a>
+          <div class="method hasBottomDivider">
+            <h3>removePropertyValueByPropertyValue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>removePropertyValueByPropertyValue</b> (
+</div>
+                <div class="code">propertyValue:PropertyValue) : Void</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:53:07
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

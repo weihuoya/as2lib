@@ -1,0 +1,753 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>BitFormat</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>BitFormat</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Martin Heidegger</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.io.file.BitFormat</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 30 October 2004, 03:34:27</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">Formater for bit.
+ </div>
+ This class gets used for formatting bits in Kilo/Mega/Giga/Tera bits.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#BitFormat">BitFormat</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#DEFAULT_FLOATING_POINTS">DEFAULT_FLOATING_POINTS</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#KILO">KILO</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#KILO_BIT">KILO_BIT</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#MEGA_BIT">MEGA_BIT</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#GIGA_BIT">GIGA_BIT</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#TERA_BIT">TERA_BIT</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#BYTE">BYTE</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#KILO_BYTE">KILO_BYTE</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#MEGA_BYTE">MEGA_BYTE</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#GIGA_BYTE">GIGA_BYTE</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#TERA_BYTE">TERA_BYTE</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#SHORT_BIT">SHORT_BIT</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#SHORT_KILO_BIT">SHORT_KILO_BIT</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#SHORT_MEGA_BIT">SHORT_MEGA_BIT</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#SHORT_GIGA_BIT">SHORT_GIGA_BIT</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#SHORT_TERA_BIT">SHORT_TERA_BIT</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#bit">bit</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#comma">comma</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#setFloatingPoints">setFloatingPoints</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#round">round</a>
+                </li>
+                <li>
+                  <a href="#getBit">getBit</a>
+                </li>
+                <li>
+                  <a href="#getBytes">getBytes</a>
+                </li>
+                <li>
+                  <a href="#getKiloBit">getKiloBit</a>
+                </li>
+                <li>
+                  <a href="#getKiloBytes">getKiloBytes</a>
+                </li>
+                <li>
+                  <a href="#getMegaBit">getMegaBit</a>
+                </li>
+                <li>
+                  <a href="#getMegaBytes">getMegaBytes</a>
+                </li>
+                <li>
+                  <a href="#getGigaBit">getGigaBit</a>
+                </li>
+                <li>
+                  <a href="#getGigaBytes">getGigaBytes</a>
+                </li>
+                <li>
+                  <a href="#getTeraBit">getTeraBit</a>
+                </li>
+                <li>
+                  <a href="#getTeraBytes">getTeraBytes</a>
+                </li>
+                <li>
+                  <a href="#toString">toString</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="BitFormat" id="BitFormat"></a>
+          <div class="method hasBottomDivider">
+            <h3>BitFormat</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>BitFormat</b> (
+</div>
+                <div class="code">bit:Number)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new BitFormat</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">bit<span class="separator">:</span></div>
+                    <div>Bit to be formatted.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <a name="BYTE" id="BYTE"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>BYTE</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>BYTE</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Size of a byte</div>
+          </div>
+          <a name="DEFAULT_FLOATING_POINTS" id="DEFAULT_FLOATING_POINTS"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>DEFAULT_FLOATING_POINTS</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>DEFAULT_FLOATING_POINTS</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Default floating points used</div>
+          </div>
+          <a name="GIGA_BIT" id="GIGA_BIT"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>GIGA_BIT</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>GIGA_BIT</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Size of a gigabit</div>
+          </div>
+          <a name="GIGA_BYTE" id="GIGA_BYTE"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>GIGA_BYTE</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>GIGA_BYTE</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Size of a gigabyte</div>
+          </div>
+          <a name="KILO" id="KILO"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>KILO</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>KILO</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Size of a kilo</div>
+          </div>
+          <a name="KILO_BIT" id="KILO_BIT"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>KILO_BIT</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>KILO_BIT</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Size of a kilobit</div>
+          </div>
+          <a name="KILO_BYTE" id="KILO_BYTE"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>KILO_BYTE</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>KILO_BYTE</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Size of a kilobyte</div>
+          </div>
+          <a name="MEGA_BIT" id="MEGA_BIT"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>MEGA_BIT</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>MEGA_BIT</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Size of a megabit</div>
+          </div>
+          <a name="MEGA_BYTE" id="MEGA_BYTE"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>MEGA_BYTE</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>MEGA_BYTE</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Size of a megabyte</div>
+          </div>
+          <a name="SHORT_BIT" id="SHORT_BIT"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>SHORT_BIT</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>SHORT_BIT</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Shortname of bit</div>
+          </div>
+          <a name="SHORT_GIGA_BIT" id="SHORT_GIGA_BIT"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>SHORT_GIGA_BIT</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>SHORT_GIGA_BIT</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Shortname of gigabit</div>
+          </div>
+          <a name="SHORT_KILO_BIT" id="SHORT_KILO_BIT"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>SHORT_KILO_BIT</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>SHORT_KILO_BIT</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Shortname of kilobit</div>
+          </div>
+          <a name="SHORT_MEGA_BIT" id="SHORT_MEGA_BIT"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>SHORT_MEGA_BIT</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>SHORT_MEGA_BIT</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Shortname of megabit</div>
+          </div>
+          <a name="SHORT_TERA_BIT" id="SHORT_TERA_BIT"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>SHORT_TERA_BIT</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>SHORT_TERA_BIT</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Shortname of terabit</div>
+          </div>
+          <a name="TERA_BIT" id="TERA_BIT"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>TERA_BIT</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>TERA_BIT</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Size of a terabit</div>
+          </div>
+          <a name="TERA_BYTE" id="TERA_BYTE"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>TERA_BYTE</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>TERA_BYTE</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Size of a terabyte</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="bit" id="bit"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>bit</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>bit</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Holder for the amount of bits</div>
+          </div>
+          <a name="comma" id="comma"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>comma</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>comma</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Holder for the comma seperation</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="getBit" id="getBit"></a>
+          <div class="method hasBottomDivider">
+            <h3>getBit</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getBit</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Getter for the value in bit.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Value in bit.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_BitFormat.html#BitFormat">BitFormat</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getBytes" id="getBytes"></a>
+          <div class="method hasBottomDivider">
+            <h3>getBytes</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getBytes</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Getter for the value in bytes.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Value in bytes.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_BitFormat.html#BitFormat">BitFormat</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getGigaBit" id="getGigaBit"></a>
+          <div class="method hasBottomDivider">
+            <h3>getGigaBit</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getGigaBit</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Getter for the value in gigabit.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Value in gigabit.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_BitFormat.html#BitFormat">BitFormat</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getGigaBytes" id="getGigaBytes"></a>
+          <div class="method hasBottomDivider">
+            <h3>getGigaBytes</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getGigaBytes</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Getter for the value in gigabytes.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Value in gigabytes.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_BitFormat.html#BitFormat">BitFormat</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getKiloBit" id="getKiloBit"></a>
+          <div class="method hasBottomDivider">
+            <h3>getKiloBit</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getKiloBit</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Getter for the value in kilobit.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Value in kilobit.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_BitFormat.html#BitFormat">BitFormat</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getKiloBytes" id="getKiloBytes"></a>
+          <div class="method hasBottomDivider">
+            <h3>getKiloBytes</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getKiloBytes</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Getter for the value in kilobytes.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Value in kilobytes.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_BitFormat.html#BitFormat">BitFormat</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMegaBit" id="getMegaBit"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMegaBit</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMegaBit</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Getter for the value in megabit.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Value in megabit.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_BitFormat.html#BitFormat">BitFormat</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMegaBytes" id="getMegaBytes"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMegaBytes</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMegaBytes</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Getter for the value in megabytes.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Value in megabytes.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_BitFormat.html#BitFormat">BitFormat</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getTeraBit" id="getTeraBit"></a>
+          <div class="method hasBottomDivider">
+            <h3>getTeraBit</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getTeraBit</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Getter for the value in terabit.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Value in terabit.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_BitFormat.html#BitFormat">BitFormat</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getTeraBytes" id="getTeraBytes"></a>
+          <div class="method hasBottomDivider">
+            <h3>getTeraBytes</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getTeraBytes</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Getter for the value in terabytes.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Value in terabytes.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_io_file_BitFormat.html#BitFormat">BitFormat</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="round" id="round"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>round</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>round</b> (
+
+</div>
+                <div class="code">num:Number,
+fp:Number) : Number</div>
+              </div>
+            </div>
+            <div class="description">Rounds a number by a count of floating points.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">num<span class="separator">:</span></div>
+                    <div>Number to be rounded.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">fp <span class="separator">:</span></div>
+                    <div>Amount of characters after the floating point.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setFloatingPoints" id="setFloatingPoints"></a>
+          <div class="method hasBottomDivider">
+            <h3>setFloatingPoints</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>setFloatingPoints</b> (
+</div>
+                <div class="code">fp:Number) : BitFormat</div>
+              </div>
+            </div>
+            <div class="description">Sets the used amount of values after the comma.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">fp<span class="separator">:</span></div>
+                    <div>Amount of characters after the floating point.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">The current instance for faster access.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if you pass</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="toString" id="toString"></a>
+          <div class="method hasBottomDivider">
+            <h3>toString</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>toString</b> (
+</div>
+                <div class="code">) : String</div>
+              </div>
+            </div>
+            <div class="description">Extended toString method for a well formatted bitvalue.
+
+ This method uses the next matching size and adds the matching Shortname for it.
+
+ 
+
+ Examples:
+
+   new BitFormat(1).toString(); // 1b
+
+   new BitFormat(1234).toString(); // 1.21Kb
+
+   new BitFormat(15002344).toString(); // 14.31Mb</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">bits as string with correct ending.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item">DEFAULT_FLOATING_POINTS</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:18:11
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

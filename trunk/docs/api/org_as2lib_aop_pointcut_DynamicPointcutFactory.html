@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>DynamicPointcutFactory</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>DynamicPointcutFactory</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_aop_pointcut_PointcutFactory.html">PointcutFactory</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.aop.pointcut.DynamicPointcutFactory</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 29 January 2005, 02:17:11</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"> </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#DynamicPointcutFactory">DynamicPointcutFactory</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#factoryMap">factoryMap</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#getBlankPointcutRule">getBlankPointcutRule</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getBlankPointcutFactory">getBlankPointcutFactory</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#bindOrCompositePointcut">bindOrCompositePointcut</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#bindAndCompositePointcut">bindAndCompositePointcut</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#bindMethodPointcut">bindMethodPointcut</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#bindSetPropertyPointcut">bindSetPropertyPointcut</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#bindGetPropertyPointcut">bindGetPropertyPointcut</a>
+                </li>
+                <li>
+                  <a href="#getPointcut">getPointcut</a>
+                </li>
+                <li>
+                  <a href="#bindPointcutFactory">bindPointcutFactory</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="DynamicPointcutFactory" id="DynamicPointcutFactory"></a>
+          <div class="method hasBottomDivider">
+            <h3>DynamicPointcutFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>DynamicPointcutFactory</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new DynamicPointcutFactory.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="factoryMap" id="factoryMap"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>factoryMap</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>factoryMap</b>:Map
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Contains all bound factories.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="bindAndCompositePointcut" id="bindAndCompositePointcut"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>bindAndCompositePointcut</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>bindAndCompositePointcut</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">TODO: Documentation</div>
+          </div>
+          <a name="bindGetPropertyPointcut" id="bindGetPropertyPointcut"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>bindGetPropertyPointcut</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>bindGetPropertyPointcut</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">TODO: Documentation</div>
+          </div>
+          <a name="bindMethodPointcut" id="bindMethodPointcut"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>bindMethodPointcut</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>bindMethodPointcut</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">TODO: Documentation</div>
+          </div>
+          <a name="bindOrCompositePointcut" id="bindOrCompositePointcut"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>bindOrCompositePointcut</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>bindOrCompositePointcut</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">TODO: Documentation</div>
+          </div>
+          <a name="bindPointcutFactory" id="bindPointcutFactory"></a>
+          <div class="method hasBottomDivider">
+            <h3>bindPointcutFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>bindPointcutFactory</b> (
+
+</div>
+                <div class="code">rule:PointcutRule,
+factory:PointcutFactory) : Void</div>
+              </div>
+            </div>
+            <div class="description">Binds a new factory.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">rule   <span class="separator">:</span></div>
+                    <div>the rule that must evaluate to true to indicate the right factory</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">factory<span class="separator">:</span></div>
+                    <div>the factory to be added</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if rule is null or undefined or
+
+                                  if factory is null or undefined</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="bindSetPropertyPointcut" id="bindSetPropertyPointcut"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>bindSetPropertyPointcut</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>bindSetPropertyPointcut</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">TODO: Documentation</div>
+          </div>
+          <a name="getBlankPointcutFactory" id="getBlankPointcutFactory"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>getBlankPointcutFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getBlankPointcutFactory</b> (
+</div>
+                <div class="code">Void) : PointcutFactory</div>
+              </div>
+            </div>
+            <div class="description">Returns a blank pointcut factory. That is a factory with no initialized
+
+ methods.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">a blank pointcut factory</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getBlankPointcutRule" id="getBlankPointcutRule"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>getBlankPointcutRule</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getBlankPointcutRule</b> (
+</div>
+                <div class="code">Void) : PointcutRule</div>
+              </div>
+            </div>
+            <div class="description">Returns a blank pointcut rule. That is a rule with no initialized
+
+ methods.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">a blank pointcut rule</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getPointcut" id="getPointcut"></a>
+          <div class="method hasBottomDivider">
+            <h3>getPointcut</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getPointcut</b> (
+</div>
+                <div class="code">pattern:String) : Pointcut</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_aop_pointcut_PointcutFactory.html#getPointcut">:Pointcut</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:35:36
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>JoinPoint</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>JoinPoint</h1>
+        <div class="classProperties">
+          <div class="kindOfClass"><span class="value">
+Interface
+</span>
+          </div>
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.aop.JoinPoint</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Thursday, 16 September 2004, 09:14:49</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">JoinPoint represents an identifiable point in a program.  </div>Although
+
+ this points could also be try..catch blocks the join points offered
+
+ by this framework are limited to members of classes or interfaces.
+
+ Refer to <a href="http://www.simonwacker.com/blog/archives/000041.php">http://www.simonwacker.com/blog/archives/000041.php</a> for a
+
+ description of join points in AOP terms.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#getInfo">getInfo</a>
+                </li>
+                <li>
+                  <a href="#proceed">proceed</a>
+                </li>
+                <li>
+                  <a href="#getThis">getThis</a>
+                </li>
+                <li>
+                  <a href="#clone">clone</a>
+                </li>
+                <li>
+                  <a href="#getType">getType</a>
+                </li>
+                <li>
+                  <a href="#matches">matches</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicInterface.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="clone" id="clone"></a>
+          <div class="method hasBottomDivider">
+            <h3>clone</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>clone</b> (
+</div>
+                <div class="code">Void) : JoinPoint</div>
+              </div>
+            </div>
+            <div class="description">Returns a clone of this JoinPoint with the up-to-date type
+
+ member.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">a clone of this JoinPoint with a up-to-date type member</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getInfo" id="getInfo"></a>
+          <div class="method hasBottomDivider">
+            <h3>getInfo</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getInfo</b> (
+</div>
+                <div class="code">Void) : TypeMemberInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the TypeMemberInfo instance, that represents the join
+
+ point. The TypeMemberInfo class is part of the as2libs Reflection
+
+ API.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the TypeMemberInfo representing the static part of the join point</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getThis" id="getThis"></a>
+          <div class="method hasBottomDivider">
+            <h3>getThis</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getThis</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Returns the logical this of the interception. That means if the join
+
+ point is part of a call-pointcut the result will refer to the object
+
+ where the call is made from. If the join point is part of an execution-
+
+ pointcut the result will refer to the object the represented method
+
+ resides in.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the logical this of the join point depending on the wrapping pointcut</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getType" id="getType"></a>
+          <div class="method hasBottomDivider">
+            <h3>getType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getType</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="description">Returns the type of the join point. This can for example be
+
+ AbstractJoinPoint.TYPE_METHOD.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the type of the join point represented by a number</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="matches" id="matches"></a>
+          <div class="method hasBottomDivider">
+            <h3>matches</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>matches</b> (
+</div>
+                <div class="code">pattern:String) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks if the join point matches the given pattern. The pattern
+
+ can contain wildcards like '*' or '..'. A pattern could for example
+
+ be 'org..BasicClass.*'.
+
+ Refer to <a href="http://www.simonwacker.com/blog/archives/000053.php">http://www.simonwacker.com/blog/archives/000053.php</a> for
+
+ an explanation of possible wildcards. Note the the '?' wildcard is
+
+ not supported.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">pattern<span class="separator">:</span></div>
+                    <div>the pattern to be matched against this join point</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="proceed" id="proceed"></a>
+          <div class="method hasBottomDivider">
+            <h3>proceed</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>proceed</b> (
+</div>
+                <div class="code">args:Array)</div>
+              </div>
+            </div>
+            <div class="description">Executes the type member represented by this join point, passing the
+
+ arguments and returns the result.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args<span class="separator">:</span></div>
+                    <div>the arguments to be passed with the method call</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the result of the method execution</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:33:43
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,3626 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>TestCase</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>TestCase</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_test_unit_Test.html">Test</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Martin Heidegger</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.unit.TestCase</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Tuesday, 25 January 2005, 11:49:33</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">Basic Testcase class to be extended.
+ </div>
+ A Testcase defines the Access to all parts of the TestUnit System of as2lib.
+
+ 
+
+ It is handled as an abstract class this means you have to extend it if you 
+
+ want to work with the system (similar to the most other testunit systems).
+
+ [CODE]
+
+ import org.as2lib.test.unit.TestCase;
+
+ 
+
+ class MyTestCase extends TestCase {
+
+ }
+
+ [/CODE]
+
+ 
+
+ A testcase usually gets processed by <a href="org_as2lib_test_unit_TestCase.html#run">run</a>. 
+
+ The System will fetch all Methods starting with "test" and execute them in
+
+ a new, isolated instance. Before each method call the methods <a href="org_as2lib_test_unit_TestCase.html#setUp">setUp</a> and
+
+ <a href="org_as2lib_test_unit_TestCase.html#tearDown">tearDown</a> will get called.
+
+
+
+ Example:
+
+   Testcase:
+
+   [CODE]
+
+ import org.as2lib.test.unit.TestCase;
+
+ 
+
+ class MyTestCase extends TestCase {
+
+   public function TestCase(Void) {
+
+     trace('new instance');
+
+   }
+
+   public function setUp(Void){
+
+     trace('set up');
+
+   }
+
+   public function testMyFirstTest(Void) {
+
+     trace('myFirstTest');
+
+   }
+
+   public function testMySecondTest(Void) {
+
+     trace('mySecondTest');
+
+   }
+
+   public function tearDown(Void){
+
+     trace('tear down');
+
+   }
+
+ }
+
+   [/CODE]
+
+   Call:
+
+   [CODE]
+
+ new MyTestCase().run(true);
+
+   [/CODE]
+
+   Result:
+
+   [CODE]
+
+ new instance
+
+ set up
+
+ myFirstTest
+
+ tear down
+
+ new instance
+
+ set up
+
+ mySecondTest
+
+ tear down
+
+   [/CODE]
+
+ 
+
+ Within the "test"-methods you have access to different assert methods:<table><thead><tr><th>Methodname</th><th>Checks</th></tr></thead>
+
+   <tbody><tr><th>assertTrue</th><td><i>value</i> === true</td></tr><tr><th>assertFalse</th><td><i>value</i> === false</td></tr><tr><th>assertEquals</th><td><i>a</i> == <i>b</i></td></tr><tr><th>assertAlmostEquals</th><td>(<i>a</i> < <i>b</i> && <i>a</i>+x > <i>b</i>) || (<i>a</i> > <i>b</i> && <i>a</i>-x < <i>b</i>)</td></tr><tr><th>assertNotEquals</th><td><i>a</i> != <i>b</i></td></tr><tr><th>assertSame</th><td><i>a</i> === <i>b</i></td></tr><tr><th>assertNotSame</th><td><i>a</i> !== <i>b</i></td></tr><tr><th>assertNull</th><td><i>value</i> === null</td></tr><tr><th>assertNotNull</th><td><i>value</i> !== null</td></tr><tr><th>assertUndefined</th><td><i>value</i> === undefined</td></tr><tr><th>assertNotUndefined</th><td><i>value</i> !== undefined</td></tr><tr><th>assertEmpty</th><td><i>value</i> == null (equals == undefined)</td></tr><tr><th>assertNotEmpty</th><td><i>value</i> != null (equals != undefined)</td></tr><tr><th>assertInfinity</th><td><i>value</i> === Infinity</td></tr><tr><th>assertNotInfinity</th><td><i>value</i> !== Infinity</td></tr><tr><th>assertThrows</th><td><i>call</i>(<i>arguments</i>) throws <i>exception</i></td></tr><tr><th>assertNotThrows</th><td><i>call</i>(<i>arguments</i>) doesnt throw <i>exception</i></td></tr><tr><th>assertTypeOf</th><td><i>value</i> typeof <i>type</i></td></tr><tr><th>assertInstanceOf</th><td><i>value</i> instanceof <i>type</i></td></tr></tbody></table>You have also got the possibility to simple fail the Testcase by @see #fail.<div class="classFields"><div class="boxWithBorder"><div class="boxedElem"><div class="contentHolder"><span class="title">See also: </span><div class="item"><a href="org_as2lib_test_unit_TestSuite.html">TestSuite</a><br /><a href="org_as2lib_test_unit_Test.html">Test</a><br />org.as2lib.test.unit.Assert<br />org.as2lib.test.unit.TestResults</div></div></div></div></div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#TestCase">TestCase</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class properties</span>
+              <ul>
+                <li>
+                  <a href="#DEFAULT_MAX_DIFF">DEFAULT_MAX_DIFF</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#testRunner">testRunner</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#setUp">setUp</a>
+                </li>
+                <li>
+                  <a href="#tearDown">tearDown</a>
+                </li>
+                <li>
+                  <a href="#run">run</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#pause">pause</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#resume">resume</a>
+                </li>
+                <li>
+                  <a href="#setTestRunner">setTestRunner</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getTestRunner">getTestRunner</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getMethodInformation">getMethodInformation</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#fail">fail</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertTrue">assertTrue</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertTrueWithoutMessage">assertTrueWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertTrueWithMessage">assertTrueWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertFalse">assertFalse</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertFalseWithoutMessage">assertFalseWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertFalseWithMessage">assertFalseWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertEquals">assertEquals</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertEqualsWithoutMessage">assertEqualsWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertEqualsWithMessage">assertEqualsWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertAlmostEquals">assertAlmostEquals</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertAlmostEqualsWithoutMessageWithoutMaxDiff">assertAlmostEqualsWithoutMessageWithoutMaxDiff</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertAlmostEqualsWithMessageWithoutMaxDiff">assertAlmostEqualsWithMessageWithoutMaxDiff</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertAlmostEqualsWithoutMessageWithMaxDiff">assertAlmostEqualsWithoutMessageWithMaxDiff</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertAlmostEqualsWithMessageWithMaxDiff">assertAlmostEqualsWithMessageWithMaxDiff</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotEquals">assertNotEquals</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotEqualsWithoutMessage">assertNotEqualsWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotEqualsWithMessage">assertNotEqualsWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertSame">assertSame</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertSameWithoutMessage">assertSameWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertSameWithMessage">assertSameWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotSame">assertNotSame</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotSameWithoutMessage">assertNotSameWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotSameWithMessage">assertNotSameWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNull">assertNull</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNullWithoutMessage">assertNullWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNullWithMessage">assertNullWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotNull">assertNotNull</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotNullWithoutMessage">assertNotNullWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotNullWithMessage">assertNotNullWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertUndefined">assertUndefined</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertUndefinedWithoutMessage">assertUndefinedWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertUndefinedWithMessage">assertUndefinedWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotUndefined">assertNotUndefined</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotUndefinedWithoutMessage">assertNotUndefinedWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotUndefinedWithMessage">assertNotUndefinedWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertInfinity">assertInfinity</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertInfinityWithoutMessage">assertInfinityWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertInfinityWithMessage">assertInfinityWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotInfinity">assertNotInfinity</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotInfinityWithoutMessage">assertNotInfinityWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotInfinityWithMessage">assertNotInfinityWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertEmpty">assertEmpty</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertEmptyWithoutMessage">assertEmptyWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertEmptyWithMessage">assertEmptyWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotEmpty">assertNotEmpty</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotEmptyWithoutMessage">assertNotEmptyWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotEmptyWithMessage">assertNotEmptyWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertThrows">assertThrows</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertThrowsWithCall">assertThrowsWithCall</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertThrowsWithCallAndType">assertThrowsWithCallAndType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertThrowsWithString">assertThrowsWithString</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertThrowsWithStringAndType">assertThrowsWithStringAndType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertThrowsWithFunction">assertThrowsWithFunction</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertThrowsWithFunctionAndType">assertThrowsWithFunctionAndType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertThrowsWithCallAndMessage">assertThrowsWithCallAndMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertThrowsWithCallAndMessageAndType">assertThrowsWithCallAndMessageAndType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertThrowsWithStringAndMessage">assertThrowsWithStringAndMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertThrowsWithStringAndMessageAndType">assertThrowsWithStringAndMessageAndType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertThrowsWithFunctionAndMessage">assertThrowsWithFunctionAndMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertThrowsWithFunctionAndMessageAndType">assertThrowsWithFunctionAndMessageAndType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotThrows">assertNotThrows</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotThrowsWithCall">assertNotThrowsWithCall</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotThrowsWithCallAndType">assertNotThrowsWithCallAndType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotThrowsWithString">assertNotThrowsWithString</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotThrowsWithStringAndType">assertNotThrowsWithStringAndType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotThrowsWithFunction">assertNotThrowsWithFunction</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotThrowsWithFunctionAndType">assertNotThrowsWithFunctionAndType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotThrowsWithCallAndMessage">assertNotThrowsWithCallAndMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotThrowsWithCallAndMessageAndType">assertNotThrowsWithCallAndMessageAndType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotThrowsWithStringAndMessage">assertNotThrowsWithStringAndMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotThrowsWithStringAndMessageAndType">assertNotThrowsWithStringAndMessageAndType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotThrowsWithFunctionAndMessage">assertNotThrowsWithFunctionAndMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertNotThrowsWithFunctionAndMessageAndType">assertNotThrowsWithFunctionAndMessageAndType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertTypeOf">assertTypeOf</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertTypeOfWithoutMessage">assertTypeOfWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertTypeOfWithMessage">assertTypeOfWithMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertInstanceOf">assertInstanceOf</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertInstanceOfWithoutMessage">assertInstanceOfWithoutMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#assertInstanceOfWithMessage">assertInstanceOfWithMessage</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="TestCase" id="TestCase"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>TestCase</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>TestCase</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Abstract constructor. You should extend this class to use the API.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <a name="DEFAULT_MAX_DIFF" id="DEFAULT_MAX_DIFF"></a>
+          <div class="method hasBottomDivider">
+            <h3>DEFAULT_MAX_DIFF</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>DEFAULT_MAX_DIFF</b>:Number
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="testRunner" id="testRunner"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>testRunner</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>testRunner</b>:TestRunner
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="assertAlmostEquals" id="assertAlmostEquals"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertAlmostEquals</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertAlmostEquals</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertAlmostEqualsWithMessageWithMaxDiff">assertAlmostEqualsWithMessageWithMaxDiff</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertAlmostEqualsWithoutMessageWithMaxDiff">assertAlmostEqualsWithoutMessageWithMaxDiff</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertAlmostEqualsWithMessageWithoutMaxDiff">assertAlmostEqualsWithMessageWithoutMaxDiff</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertAlmostEqualsWithoutMessageWithoutMaxDiff">assertAlmostEqualsWithoutMessageWithoutMaxDiff</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertAlmostEqualsWithMessageWithMaxDiff" id="assertAlmostEqualsWithMessageWithMaxDiff"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertAlmostEqualsWithMessageWithMaxDiff</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertAlmostEqualsWithMessageWithMaxDiff</b> (
+
+
+
+</div>
+                <div class="code">message:String,
+val:Number,
+compareTo:Number,
+maxDiff:Number) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that two number are the same with some difference value.
+
+ This method asserts the same like <a href="org_as2lib_test_unit_TestCase.html#assertAlmostEqualsWithoutMessageWithMaxDiff">assertAlmostEqualsWithoutMessageWithMaxDiff</a>
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message  <span class="separator">:</span></div>
+                    <div>Message to be applied if a failure occurs</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val      <span class="separator">:</span></div>
+                    <div>number1 to be compared.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">compareTo<span class="separator">:</span></div>
+                    <div>number2 to compare with val.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">maxDiff  <span class="separator">:</span></div>
+                    <div>max. difference between those two numbers.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertSame">assertSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEquals">assertEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertAlmostEquals">assertAlmostEquals</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertAlmostEqualsWithMessageWithoutMaxDiff" id="assertAlmostEqualsWithMessageWithoutMaxDiff"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertAlmostEqualsWithMessageWithoutMaxDiff</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertAlmostEqualsWithMessageWithoutMaxDiff</b> (
+
+
+</div>
+                <div class="code">message:String,
+val:Number,
+compareTo:Number) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that two number are the same with some difference value.
+
+ This method asserts the same like <a href="org_as2lib_test_unit_TestCase.html#assertAlmostEqualsWithoutMessageWithoutMaxDiff">assertAlmostEqualsWithoutMessageWithoutMaxDiff</a>
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message  <span class="separator">:</span></div>
+                    <div>message to be added to the failure.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val      <span class="separator">:</span></div>
+                    <div>number1 to be compared.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">compareTo<span class="separator">:</span></div>
+                    <div>number2 to compare with val.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertSame">assertSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEquals">assertEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertAlmostEquals">assertAlmostEquals</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertAlmostEqualsWithoutMessageWithMaxDiff" id="assertAlmostEqualsWithoutMessageWithMaxDiff"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertAlmostEqualsWithoutMessageWithMaxDiff</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertAlmostEqualsWithoutMessageWithMaxDiff</b> (
+
+
+</div>
+                <div class="code">val:Number,
+compareTo:Number,
+maxDiff:Number) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that two number are the same with some difference value.
+
+ This method compares two number if they are almost the same.
+
+ It compares the two numbers by including a unsharpning buffer (applied as argument).</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val      <span class="separator">:</span></div>
+                    <div>number1 to be compared.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">compareTo<span class="separator">:</span></div>
+                    <div>number2 to compare with val.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">maxDiff  <span class="separator">:</span></div>
+                    <div>max. difference between those two numbers.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertSame">assertSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEquals">assertEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertAlmostEquals">assertAlmostEquals</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertAlmostEqualsWithoutMessageWithoutMaxDiff" id="assertAlmostEqualsWithoutMessageWithoutMaxDiff"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertAlmostEqualsWithoutMessageWithoutMaxDiff</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertAlmostEqualsWithoutMessageWithoutMaxDiff</b> (
+
+</div>
+                <div class="code">val:Number,
+compareTo:Number) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that two number are the same with some difference value.
+
+ This method compares two number if they are almost the same.
+
+ It compares the two numbers by including a unsharpning buffer <a href="org_as2lib_test_unit_TestCase.html#DEFAULT_MAX_DIFF">DEFAULT_MAX_DIFF</a>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val      <span class="separator">:</span></div>
+                    <div>number1 to be compared.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">compareTo<span class="separator">:</span></div>
+                    <div>number2 to compare with val.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertSame">assertSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEquals">assertEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertAlmostEquals">assertAlmostEquals</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertEmpty" id="assertEmpty"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertEmpty</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertEmpty</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertEmptyWithMessage">assertEmptyWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEmptyWithoutMessage">assertEmptyWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertEmptyWithMessage" id="assertEmptyWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertEmptyWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertEmptyWithMessage</b> (
+
+</div>
+                <div class="code">message:String,
+val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that a value is empty else it fails.
+
+ This method asserts the same like @see #assertEmptyWithoutMessage
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message that should be provided if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val    <span class="separator">:</span></div>
+                    <div>Object that should be empty.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNull">assertNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertUndefined">assertUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEmpty">assertNotEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEmpty">assertEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEmptyWithoutMessage">assertEmptyWithoutMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertEmptyWithoutMessage" id="assertEmptyWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertEmptyWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertEmptyWithoutMessage</b> (
+</div>
+                <div class="code">val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that a value is empty else it fails.
+
+ Method to assert that a value is empty, in sense of
+
+ is null or undefined. (== null || == undefined)</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val<span class="separator">:</span></div>
+                    <div>Object that should be empty.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNull">assertNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertUndefined">assertUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEmpty">assertNotEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEmpty">assertEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEmptyWithMessage">assertEmptyWithMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertEquals" id="assertEquals"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertEquals</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertEquals</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertEqualsWithMessage">assertEqualsWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEqualsWithoutMessage">assertEqualsWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertEqualsWithMessage" id="assertEqualsWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertEqualsWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertEqualsWithMessage</b> (
+
+
+</div>
+                <div class="code">message:String,
+val,
+compareTo) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that two variables contain the same value else it fails.
+
+ This method asserts the same like @see #assertEqualsWithoutMessage
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message  <span class="separator">:</span></div>
+                    <div>Message that should be provided if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val      <span class="separator">:</span></div>
+                    <div>Object that should be compared.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">compareTo<span class="separator">:</span></div>
+                    <div>Object to compare with val.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertSame">assertSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEquals">assertNotEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEquals">assertEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEqualsWithoutMessage">assertEqualsWithoutMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertEqualsWithoutMessage" id="assertEqualsWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertEqualsWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertEqualsWithoutMessage</b> (
+
+</div>
+                <div class="code">val,
+compareTo) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that two variables contain the same value else it fails.
+
+ This method compares two variables if they contain the same value.
+
+ It compares the two variables with "==". @see #assertSame compares
+
+ two variables with "===" as exact reference match.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val      <span class="separator">:</span></div>
+                    <div>Object that should be compared.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">compareTo<span class="separator">:</span></div>
+                    <div>Object to compare with val.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertSame">assertSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEquals">assertNotEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEquals">assertEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEqualsWithMessage">assertEqualsWithMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertFalse" id="assertFalse"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertFalse</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertFalse</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertFalseWithMessage">assertFalseWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertFalseWithoutMessage">assertFalseWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertFalseWithMessage" id="assertFalseWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertFalseWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertFalseWithMessage</b> (
+
+</div>
+                <div class="code">message:String,
+val:Boolean) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts if a valueis false or fails.
+
+ This method asserts the same like @see #assertFalseWithoutMessage
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message that should be provided if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val    <span class="separator">:</span></div>
+                    <div>Boolean that should be "false".</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertTrue">assertTrue</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertFalse">assertFalse</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertFalseWithoutMessage">assertFalseWithoutMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertFalseWithoutMessage" id="assertFalseWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertFalseWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertFalseWithoutMessage</b> (
+</div>
+                <div class="code">val:Boolean) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts if a value is false else it fails.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val<span class="separator">:</span></div>
+                    <div>Boolean that should be "false".</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertTrue">assertTrue</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertFalse">assertFalse</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertFalseWithMessage">assertFalseWithMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertInfinity" id="assertInfinity"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertInfinity</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertInfinity</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertInfinityWithMessage">assertInfinityWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertInfinityWithoutMessage">assertInfinityWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertInfinityWithMessage" id="assertInfinityWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertInfinityWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertInfinityWithMessage</b> (
+
+</div>
+                <div class="code">message:String,
+val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that a value is infinity else it fails.
+
+ This method asserts the same like @see #assertInfinityWithoutMessage
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message that should be provided if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val    <span class="separator">:</span></div>
+                    <div>Object that should be Infinity.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotInfinity">assertNotInfinity</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertInfinity">assertInfinity</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertInfinityWithoutMessage">assertInfinityWithoutMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertInfinityWithoutMessage" id="assertInfinityWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertInfinityWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertInfinityWithoutMessage</b> (
+</div>
+                <div class="code">val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that a value is infinity else it fails.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val<span class="separator">:</span></div>
+                    <div>Object that should be Infinity.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotInfinity">assertNotInfinity</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertInfinity">assertInfinity</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertInfinityWithMessage">assertInfinityWithMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertInstanceOf" id="assertInstanceOf"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertInstanceOf</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertInstanceOf</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertInstanceOfWithMessage">assertInstanceOfWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertInstanceOfWithoutMessage">assertInstanceOfWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertInstanceOfWithMessage" id="assertInstanceOfWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertInstanceOfWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertInstanceOfWithMessage</b> (
+
+
+</div>
+                <div class="code">message:String,
+val,
+type:Function) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that a value is a instance of a special type and adds a message if the assertion fails.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message to be appended if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val    <span class="separator">:</span></div>
+                    <div>Value to be validated.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type   <span class="separator">:</span></div>
+                    <div>Expected type of the value.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertInstanceOfWithoutMessage">assertInstanceOfWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertInstanceOfWithoutMessage" id="assertInstanceOfWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertInstanceOfWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertInstanceOfWithoutMessage</b> (
+
+</div>
+                <div class="code">val,
+type:Function) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that a value is a instance of a special type.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val <span class="separator">:</span></div>
+                    <div>Value to be validated.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type<span class="separator">:</span></div>
+                    <div>Expected type of the value.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertInstanceOfWithoutMessage">assertInstanceOfWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotEmpty" id="assertNotEmpty"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotEmpty</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotEmpty</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotEmptyWithMessage">assertNotEmptyWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEmptyWithoutMessage">assertNotEmptyWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotEmptyWithMessage" id="assertNotEmptyWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotEmptyWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotEmptyWithMessage</b> (
+
+</div>
+                <div class="code">message:String,
+val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that a value is not empty else it fails.
+
+ This method asserts the same like @see #assertNotEmptyWithoutMessage
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message that should be provided if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val    <span class="separator">:</span></div>
+                    <div>Object that should not be empty.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotNull">assertNotNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotUndefined">assertNotUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEmpty">assertEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEmpty">assertNotEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEmptyWithoutMessage">assertNotEmptyWithoutMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotEmptyWithoutMessage" id="assertNotEmptyWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotEmptyWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotEmptyWithoutMessage</b> (
+</div>
+                <div class="code">val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that a value is not empty else it fails.
+
+ Method to assert that a value is not empty, in sense of
+
+ neither null or undefined. (!= null || != undefined)</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val<span class="separator">:</span></div>
+                    <div>Object that should not be empty.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotNull">assertNotNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotUndefined">assertNotUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEmpty">assertEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEmpty">assertNotEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEmptyWithMessage">assertNotEmptyWithMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotEquals" id="assertNotEquals"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotEquals</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotEquals</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotEqualsWithMessage">assertNotEqualsWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEqualsWithoutMessage">assertNotEqualsWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotEqualsWithMessage" id="assertNotEqualsWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotEqualsWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotEqualsWithMessage</b> (
+
+
+</div>
+                <div class="code">message:String,
+val,
+compareTo) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that two variables do not contain the same value else it fails.
+
+ This method asserts the same like <a href="org_as2lib_test_unit_TestCase.html#assertNotEqualsWithoutMessage">assertNotEqualsWithoutMessage</a>
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message  <span class="separator">:</span></div>
+                    <div>Message that should be provided if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val      <span class="separator">:</span></div>
+                    <div>Object that should be compared.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">compareTo<span class="separator">:</span></div>
+                    <div>Object to compare with val.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotSame">assertNotSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEquals">assertEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEquals">assertNotEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEqualsWithoutMessage">assertNotEqualsWithoutMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotEqualsWithoutMessage" id="assertNotEqualsWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotEqualsWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotEqualsWithoutMessage</b> (
+
+</div>
+                <div class="code">val,
+compareTo) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that two variables do not contain the same value else it fails.
+
+ This method compares two variables if they do not contain the same value.
+
+ It compares the two variables with "!=". @see #assertNotSame compares
+
+ two variables with "!==" as exact reference match.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val      <span class="separator">:</span></div>
+                    <div>Object that should be compared.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">compareTo<span class="separator">:</span></div>
+                    <div>Object to compare with val.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotSame">assertNotSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEquals">assertEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEquals">assertNotEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEqualsWithMessage">assertNotEqualsWithMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotInfinity" id="assertNotInfinity"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotInfinity</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotInfinity</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotInfinityWithMessage">assertNotInfinityWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotInfinityWithoutMessage">assertNotInfinityWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotInfinityWithMessage" id="assertNotInfinityWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotInfinityWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotInfinityWithMessage</b> (
+
+</div>
+                <div class="code">message:String,
+val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that a value is not infinity else it fails.
+
+ This method asserts the same like @see #assertInfinityWithoutMessage
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message that should be provided if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val    <span class="separator">:</span></div>
+                    <div>Object that should not be Infinity.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertInfinity">assertInfinity</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotInfinity">assertNotInfinity</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotInfinityWithoutMessage">assertNotInfinityWithoutMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotInfinityWithoutMessage" id="assertNotInfinityWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotInfinityWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotInfinityWithoutMessage</b> (
+</div>
+                <div class="code">val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that a value is not Infinity else it fails.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val<span class="separator">:</span></div>
+                    <div>Object that should not be Infinity.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertInfinity">assertInfinity</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotInfinity">assertNotInfinity</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotInfinityWithMessage">assertNotInfinityWithMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotNull" id="assertNotNull"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotNull</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotNull</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotNullWithMessage">assertNotNullWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotNullWithoutMessage">assertNotNullWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotNullWithMessage" id="assertNotNullWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotNullWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotNullWithMessage</b> (
+
+</div>
+                <div class="code">message:String,
+val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts if a value is not (!==) null else it fails.
+
+ This method asserts the same like @see #assertNotNullWithoutMessage
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message that should be provided if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val    <span class="separator">:</span></div>
+                    <div>Object that should not be null.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNull">assertNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotUndefined">assertNotUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEmpty">assertNotEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotNull">assertNotNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotNullWithoutMessage">assertNotNullWithoutMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotNullWithoutMessage" id="assertNotNullWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotNullWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotNullWithoutMessage</b> (
+</div>
+                <div class="code">val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts if a value is not (!==) null else it fails.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val<span class="separator">:</span></div>
+                    <div>Object that should not be null.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNull">assertNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotUndefined">assertNotUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEmpty">assertNotEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotNull">assertNotNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotNullWithMessage">assertNotNullWithMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotSame" id="assertNotSame"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotSame</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotSame</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotSameWithMessage">assertNotSameWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotSameWithoutMessage">assertNotSameWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotSameWithMessage" id="assertNotSameWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotSameWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotSameWithMessage</b> (
+
+
+</div>
+                <div class="code">message:String,
+val,
+compareTo) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that two variables do not contain the same object reference else it fails.
+
+ This method asserts the same like @see #assertNotSameWithoutMessage
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message  <span class="separator">:</span></div>
+                    <div>Message that should be provided if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val      <span class="separator">:</span></div>
+                    <div>Object that should be compared.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">compareTo<span class="separator">:</span></div>
+                    <div>Object to compare with val.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertSame">assertSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEquals">assertNotEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotSame">assertNotSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotSameWithoutMessage">assertNotSameWithoutMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotSameWithoutMessage" id="assertNotSameWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotSameWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotSameWithoutMessage</b> (
+
+</div>
+                <div class="code">val,
+compareTo) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that two variables do not contain the same object reference else it fails.
+
+ This method compares two variables if they do not contain the same object reference.
+
+ It compares the two variables with "!==". @see #assertNotEquals compares
+
+ two variables with "!=" as value match.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val      <span class="separator">:</span></div>
+                    <div>Object that should be compared.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">compareTo<span class="separator">:</span></div>
+                    <div>Object to compare with val.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertSame">assertSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEquals">assertNotEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotSame">assertNotSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotSameWithMessage">assertNotSameWithMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotThrows" id="assertNotThrows"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotThrows</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotThrows</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithCall">assertNotThrowsWithCall</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithCallAndType">assertNotThrowsWithCallAndType</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithCallAndMessage">assertNotThrowsWithCallAndMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithCallAndMessageAndType">assertNotThrowsWithCallAndMessageAndType</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithString">assertNotThrowsWithString</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithStringAndType">assertNotThrowsWithStringAndType</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithStringAndMessage">assertNotThrowsWithStringAndMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithStringAndMessageAndType">assertNotThrowsWithStringAndMessageAndType</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithFunction">assertNotThrowsWithFunction</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithFunctionAndType">assertNotThrowsWithFunctionAndType</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithFunctionAndMessage">assertNotThrowsWithFunctionAndMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithFunctionAndMessageAndType">assertNotThrowsWithFunctionAndMessageAndType</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotThrowsWithCall" id="assertNotThrowsWithCall"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotThrowsWithCall</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotThrowsWithCall</b> (
+
+</div>
+                <div class="code">call:Call,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that the execution of a call doesn't throw any exception.
+
+ This method executes the given Call with arguments and checks if it doesn't throw any exception.
+
+ 
+
+ The assertion adds a error to the result if the method did throw any exception.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">call<span class="separator">:</span></div>
+                    <div>Call that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args<span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithCallAndMessage">assertNotThrowsWithCallAndMessage</a><br />#assertNotThrowsWithCallAndTypeAndMessage</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotThrowsWithCallAndMessage" id="assertNotThrowsWithCallAndMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotThrowsWithCallAndMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotThrowsWithCallAndMessage</b> (
+
+
+</div>
+                <div class="code">message:String,
+call:Call,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts the same like @see #assertNotThrowsWithCall but adds a message to the failure (if necessary).</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message that should be used by fail.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">call   <span class="separator">:</span></div>
+                    <div>Call that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args   <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithCall">assertNotThrowsWithCall</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotThrowsWithCallAndMessageAndType" id="assertNotThrowsWithCallAndMessageAndType"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotThrowsWithCallAndMessageAndType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotThrowsWithCallAndMessageAndType</b> (
+
+
+
+</div>
+                <div class="code">message:String,
+type,
+call:Call,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts the same like @see #assertNotThrowsWithCallAndType but adds a message to the failure (if necessary).</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message that should be used by fail.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type   <span class="separator">:</span></div>
+                    <div>Type of the Exception that should not be thrown.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">call   <span class="separator">:</span></div>
+                    <div>Call that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args   <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithCallAndType">assertNotThrowsWithCallAndType</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotThrowsWithCallAndType" id="assertNotThrowsWithCallAndType"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotThrowsWithCallAndType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotThrowsWithCallAndType</b> (
+
+
+</div>
+                <div class="code">type,
+call:Call,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that the execution of a call doesn't throw a exception.
+
+ This method executes the given Call with arguments and checks if it doesn't throw a expected exception.
+
+ 
+
+ The assertion adds a error to the result if the method did throw the expected exception.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type<span class="separator">:</span></div>
+                    <div>Type of the Exception that should not be thrown.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">call<span class="separator">:</span></div>
+                    <div>Call that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args<span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item">#assertNotThrowsWithCallAndTypeAndMessage</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotThrowsWithFunction" id="assertNotThrowsWithFunction"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotThrowsWithFunction</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotThrowsWithFunction</b> (
+
+
+</div>
+                <div class="code">inObject,
+func:Function,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that the execution of a method doesn't throw any exception.
+
+ This method takes a given method and excutes it within a given object. It checks if it doesn't throw any exception by execution.
+
+ 
+
+ The assertion adds a error to the result if the method did throw any exception.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">func    <span class="separator">:</span></div>
+                    <div>Function that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithFunctionAndMessage">assertNotThrowsWithFunctionAndMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotThrowsWithFunctionAndMessage" id="assertNotThrowsWithFunctionAndMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotThrowsWithFunctionAndMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotThrowsWithFunctionAndMessage</b> (
+
+
+
+</div>
+                <div class="code">message:String,
+inObject,
+func:Function,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts the same like @see #assertNotThrowsWithFunction but adds a message to the failure (if necessary).</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message <span class="separator">:</span></div>
+                    <div>Message that should be used by fail.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">func    <span class="separator">:</span></div>
+                    <div>Function that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithFunction">assertNotThrowsWithFunction</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotThrowsWithFunctionAndMessageAndType" id="assertNotThrowsWithFunctionAndMessageAndType"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotThrowsWithFunctionAndMessageAndType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotThrowsWithFunctionAndMessageAndType</b> (
+
+
+
+
+</div>
+                <div class="code">message:String,
+type,
+inObject,
+func:Function,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts the same like @see #assertNotThrowsWithFunctionAndType but adds a message to the failure (if necessary).</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message <span class="separator">:</span></div>
+                    <div>Message that should be used by fail.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type    <span class="separator">:</span></div>
+                    <div>Type of the Exception that should not be thrown.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">func    <span class="separator">:</span></div>
+                    <div>Function that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithFunctionAndType">assertNotThrowsWithFunctionAndType</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotThrowsWithFunctionAndType" id="assertNotThrowsWithFunctionAndType"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotThrowsWithFunctionAndType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotThrowsWithFunctionAndType</b> (
+
+
+
+</div>
+                <div class="code">type,
+inObject,
+func:Function,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that the execution of a method doesn't throw a exception.
+
+ This method takes a given method and excutes it within a given object. It checks if it doesn't throw a expected exception by execution.
+
+ 
+
+ The assertion adds a error to the result if the method did throw the expected exception.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type    <span class="separator">:</span></div>
+                    <div>Type of the Exception that should not be thrown.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">func    <span class="separator">:</span></div>
+                    <div>Function that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithFunctionAndMessage">assertNotThrowsWithFunctionAndMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotThrowsWithString" id="assertNotThrowsWithString"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotThrowsWithString</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotThrowsWithString</b> (
+
+
+</div>
+                <div class="code">inObject,
+name:String,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that the execution of a method doesn't throw any exception.
+
+ This method takes a method of the given object(inObject) by a given name and checks if it doesn't throw any exception by execution.
+
+ 
+
+ The assertion adds a error to the result if the method did throw any exception or if the method was not available.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name    <span class="separator">:</span></div>
+                    <div>Name of the method that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithStringAndMessage">assertNotThrowsWithStringAndMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotThrowsWithStringAndMessage" id="assertNotThrowsWithStringAndMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotThrowsWithStringAndMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotThrowsWithStringAndMessage</b> (
+
+
+
+</div>
+                <div class="code">message:String,
+inObject,
+name:String,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts the same like @see #assertNotThrowsWithString but adds a message to the failure (if necessary).</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message <span class="separator">:</span></div>
+                    <div>Message that should be used by fail.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name    <span class="separator">:</span></div>
+                    <div>Name of the method that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithString">assertNotThrowsWithString</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotThrowsWithStringAndMessageAndType" id="assertNotThrowsWithStringAndMessageAndType"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotThrowsWithStringAndMessageAndType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotThrowsWithStringAndMessageAndType</b> (
+
+
+
+
+</div>
+                <div class="code">message:String,
+type,
+inObject,
+name:String,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts the same like @see #assertNotThrowsWithStringAndType but adds a message to the failure (if necessary).</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message <span class="separator">:</span></div>
+                    <div>Message that should be used by fail.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type    <span class="separator">:</span></div>
+                    <div>Type of the Exception that should not be thrown.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name    <span class="separator">:</span></div>
+                    <div>Name of the method that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithString">assertNotThrowsWithString</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotThrowsWithStringAndType" id="assertNotThrowsWithStringAndType"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotThrowsWithStringAndType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotThrowsWithStringAndType</b> (
+
+
+
+</div>
+                <div class="code">type,
+inObject,
+name:String,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that the execution of a method doesn't throw a exception.
+
+ This method takes a method of the given object(inObject) by a given name and checks if it doesn't throw a expected exception by execution.
+
+ 
+
+ The assertion adds a error to the result if the method did throw the expected exception or if the method was not available.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type    <span class="separator">:</span></div>
+                    <div>Type of the Exception that should not be thrown.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name    <span class="separator">:</span></div>
+                    <div>Name of the method that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotThrowsWithStringAndMessageAndType">assertNotThrowsWithStringAndMessageAndType</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotUndefined" id="assertNotUndefined"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotUndefined</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotUndefined</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotUndefinedWithMessage">assertNotUndefinedWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotUndefinedWithoutMessage">assertNotUndefinedWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotUndefinedWithMessage" id="assertNotUndefinedWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotUndefinedWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotUndefinedWithMessage</b> (
+
+</div>
+                <div class="code">message:String,
+val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts if a value is not undefined else it fails.
+
+ This method asserts the same like @see #assertNotUndefinedWithoutMessage
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message that should be provided if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val    <span class="separator">:</span></div>
+                    <div>Object that should not be null.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertUndefined">assertUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotNull">assertNotNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEmpty">assertNotEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotUndefined">assertNotUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotUndefinedWithoutMessage">assertNotUndefinedWithoutMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNotUndefinedWithoutMessage" id="assertNotUndefinedWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNotUndefinedWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNotUndefinedWithoutMessage</b> (
+</div>
+                <div class="code">val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts if a value is not undefined else it fails.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val<span class="separator">:</span></div>
+                    <div>Object that should not be undefined.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertUndefined">assertUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotNull">assertNotNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotEmpty">assertNotEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotUndefined">assertNotUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNotUndefinedWithMessage">assertNotUndefinedWithMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNull" id="assertNull"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNull</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNull</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNullWithMessage">assertNullWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNullWithoutMessage">assertNullWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNullWithMessage" id="assertNullWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNullWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNullWithMessage</b> (
+
+</div>
+                <div class="code">message:String,
+val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts if a value is (===) null else it fails.
+
+ This method asserts the same like @see #assertNullWithoutMessage
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message that should be provided if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val    <span class="separator">:</span></div>
+                    <div>Object that should be null.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotNull">assertNotNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertUndefined">assertUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEmpty">assertEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNull">assertNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNullWithoutMessage">assertNullWithoutMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertNullWithoutMessage" id="assertNullWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertNullWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertNullWithoutMessage</b> (
+</div>
+                <div class="code">val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts if a value is (===) null else it fails.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val<span class="separator">:</span></div>
+                    <div>Object that should be null.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotNull">assertNotNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertUndefined">assertUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEmpty">assertEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNull">assertNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNullWithMessage">assertNullWithMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertSame" id="assertSame"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertSame</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertSame</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertSameWithMessage">assertSameWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertSameWithoutMessage">assertSameWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertSameWithMessage" id="assertSameWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertSameWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertSameWithMessage</b> (
+
+
+</div>
+                <div class="code">message:String,
+val,
+compareTo) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that two variables contain the same object reference else it fails.
+
+ This method asserts the same like @see #assertSameWithoutMessage
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message  <span class="separator">:</span></div>
+                    <div>Message that should be provided if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val      <span class="separator">:</span></div>
+                    <div>Object that should be compared.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">compareTo<span class="separator">:</span></div>
+                    <div>Object to compare with val.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotSame">assertNotSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEquals">assertEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertSame">assertSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertSameWithoutMessage">assertSameWithoutMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertSameWithoutMessage" id="assertSameWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertSameWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertSameWithoutMessage</b> (
+
+</div>
+                <div class="code">val,
+compareTo) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that two variables contain the same object reference else it fails.
+
+ This method compares two variables if they contain the same object reference.
+
+ It compares the two variables with "===". @see #assertEquals compares
+
+ two variables with "==" as value match.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val      <span class="separator">:</span></div>
+                    <div>Object that should be compared.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">compareTo<span class="separator">:</span></div>
+                    <div>Object to compare with val.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotSame">assertNotSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEquals">assertEquals</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertSame">assertSame</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertSameWithMessage">assertSameWithMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertThrows" id="assertThrows"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertThrows</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertThrows</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithCall">assertThrowsWithCall</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithCallAndType">assertThrowsWithCallAndType</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithCallAndMessage">assertThrowsWithCallAndMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithCallAndMessageAndType">assertThrowsWithCallAndMessageAndType</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithString">assertThrowsWithString</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithStringAndType">assertThrowsWithStringAndType</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithStringAndMessage">assertThrowsWithStringAndMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithStringAndMessageAndType">assertThrowsWithStringAndMessageAndType</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithFunction">assertThrowsWithFunction</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithFunctionAndType">assertThrowsWithFunctionAndType</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithFunctionAndMessage">assertThrowsWithFunctionAndMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithFunctionAndMessageAndType">assertThrowsWithFunctionAndMessageAndType</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertThrowsWithCall" id="assertThrowsWithCall"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertThrowsWithCall</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertThrowsWithCall</b> (
+
+</div>
+                <div class="code">call:Call,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that the execution of a call throws any exception.
+
+ This method executes the given Call with arguments and checks if it throws any Exception.
+
+ 
+
+ The assertion adds a error to the result if the method didn't throw a exception.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">call<span class="separator">:</span></div>
+                    <div>Call that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args<span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithCallAndMessage">assertThrowsWithCallAndMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertThrowsWithCallAndMessage" id="assertThrowsWithCallAndMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertThrowsWithCallAndMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertThrowsWithCallAndMessage</b> (
+
+
+</div>
+                <div class="code">message:String,
+call:Call,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts the same like @see #assertThrowsWithCall but adds a message to the failure (if necessary).</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message that should be used by fail.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">call   <span class="separator">:</span></div>
+                    <div>Call that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args   <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithCall">assertThrowsWithCall</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertThrowsWithCallAndMessageAndType" id="assertThrowsWithCallAndMessageAndType"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertThrowsWithCallAndMessageAndType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertThrowsWithCallAndMessageAndType</b> (
+
+
+
+</div>
+                <div class="code">message:String,
+type,
+call:Call,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts the same like @see #assertThrowsWithCallAndType but adds a message to the failure (if necessary).</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message that should be used by fail.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type   <span class="separator">:</span></div>
+                    <div>Type of the Exception that should be thrown.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">call   <span class="separator">:</span></div>
+                    <div>Call that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args   <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithCallAndType">assertThrowsWithCallAndType</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertThrowsWithCallAndType" id="assertThrowsWithCallAndType"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertThrowsWithCallAndType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertThrowsWithCallAndType</b> (
+
+
+</div>
+                <div class="code">type,
+call:Call,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that the execution of a call throws any exception.
+
+ This method executes the given Call with arguments and checks if it throws any Exception.
+
+ 
+
+ The assertion adds a error to the result if the method didn't throw a exception or throw a 
+
+ exception with the wrong type.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type<span class="separator">:</span></div>
+                    <div>Type of the Exception that should be thrown.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">call<span class="separator">:</span></div>
+                    <div>Call that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args<span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithCallAndMessageAndType">assertThrowsWithCallAndMessageAndType</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertThrowsWithFunction" id="assertThrowsWithFunction"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertThrowsWithFunction</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertThrowsWithFunction</b> (
+
+
+</div>
+                <div class="code">inObject,
+func:Function,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that the execution of a method throws any exception.
+
+ This method takes a given method and excutes it within a given object. It checks if it throws any exception by execution.
+
+ 
+
+ The assertion adds a error to the result if the method didn't throw any exception.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">func    <span class="separator">:</span></div>
+                    <div>Function that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithFunctionAndMessage">assertThrowsWithFunctionAndMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertThrowsWithFunctionAndMessage" id="assertThrowsWithFunctionAndMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertThrowsWithFunctionAndMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertThrowsWithFunctionAndMessage</b> (
+
+
+
+</div>
+                <div class="code">message:String,
+inObject,
+func:Function,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts the same like @see #assertThrowsWithFunction but adds a message to the failure (if necessary).</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message <span class="separator">:</span></div>
+                    <div>Message that should be used by fail.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">func    <span class="separator">:</span></div>
+                    <div>Function that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item">assertThrowsWithFunction</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertThrowsWithFunctionAndMessageAndType" id="assertThrowsWithFunctionAndMessageAndType"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertThrowsWithFunctionAndMessageAndType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertThrowsWithFunctionAndMessageAndType</b> (
+
+
+
+
+</div>
+                <div class="code">message:String,
+type,
+inObject,
+func:Function,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts the same like @see #assertThrowsWithFunctionAndType but adds a message to the failure (if necessary).</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message <span class="separator">:</span></div>
+                    <div>Message that should be used by fail.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type    <span class="separator">:</span></div>
+                    <div>Type of the Exception that should be thrown.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">func    <span class="separator">:</span></div>
+                    <div>Function that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithFunctionAndType">assertThrowsWithFunctionAndType</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertThrowsWithFunctionAndType" id="assertThrowsWithFunctionAndType"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertThrowsWithFunctionAndType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertThrowsWithFunctionAndType</b> (
+
+
+
+</div>
+                <div class="code">type,
+inObject,
+func:Function,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that the execution of a method throws a exception.
+
+ This method takes a given method and excutes it within a given object. It checks if it throws a expected exception by execution.
+
+ 
+
+ The assertion adds a error to the result if the method didn't throw a exception or throw a exception with the wrong type.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">func    <span class="separator">:</span></div>
+                    <div>Function that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithFunctionAndMessageAndType">assertThrowsWithFunctionAndMessageAndType</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertThrowsWithString" id="assertThrowsWithString"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertThrowsWithString</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertThrowsWithString</b> (
+
+
+</div>
+                <div class="code">inObject,
+name:String,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that the execution of a method throws any exception.
+
+ This method takes a method of the given object(inObject) by a given name and checks if it throws any expected exception by execution.
+
+ 
+
+ The assertion adds a error to the result if the method didn't throw a exception or if the method was not available.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name    <span class="separator">:</span></div>
+                    <div>Name of the method that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithStringAndMessage">assertThrowsWithStringAndMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertThrowsWithStringAndMessage" id="assertThrowsWithStringAndMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertThrowsWithStringAndMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertThrowsWithStringAndMessage</b> (
+
+
+
+</div>
+                <div class="code">message:String,
+inObject,
+name:String,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts the same like @see #assertThrowsWithString but adds a message to the failure (if necessary).</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message <span class="separator">:</span></div>
+                    <div>Message that should be used by fail.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name    <span class="separator">:</span></div>
+                    <div>Name of the method that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithString">assertThrowsWithString</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertThrowsWithStringAndMessageAndType" id="assertThrowsWithStringAndMessageAndType"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertThrowsWithStringAndMessageAndType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertThrowsWithStringAndMessageAndType</b> (
+
+
+
+
+</div>
+                <div class="code">message:String,
+type,
+inObject,
+name:String,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts the same like @see #assertThrowsWithStringAndType but adds a message to the failure (if necessary).</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message <span class="separator">:</span></div>
+                    <div>Message that should be used by fail.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type    <span class="separator">:</span></div>
+                    <div>Type of the Exception that should be thrown.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name    <span class="separator">:</span></div>
+                    <div>Name of the method that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithStringAndType">assertThrowsWithStringAndType</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertThrowsWithStringAndType" id="assertThrowsWithStringAndType"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertThrowsWithStringAndType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertThrowsWithStringAndType</b> (
+
+
+
+</div>
+                <div class="code">type,
+inObject,
+name:String,
+args:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that the execution of a method throws a exception.
+
+ This method takes a method of the given object(inObject) by a given name and checks if it throws a expected exception by execution.
+
+ 
+
+ The assertion adds a error to the result if the method didn't throw a exception or throw a 
+
+ exception with the wrong type or if the method was not available.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type    <span class="separator">:</span></div>
+                    <div>Type of the Exception that should be thrown.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">inObject<span class="separator">:</span></div>
+                    <div>Object that should be used as scope.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name    <span class="separator">:</span></div>
+                    <div>Name of the method that should be executed.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments that should be used by executing.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertThrowsWithStringAndMessageAndType">assertThrowsWithStringAndMessageAndType</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertTrue" id="assertTrue"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertTrue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertTrue</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertTrueWithMessage">assertTrueWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertTrueWithoutMessage">assertTrueWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertTrueWithMessage" id="assertTrueWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertTrueWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertTrueWithMessage</b> (
+
+</div>
+                <div class="code">message:String,
+val:Boolean) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts if a value is true or fails with a message.
+
+ This methods asserts the same like @see #assertTrueWithoutMessage
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message that should be provided if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val    <span class="separator">:</span></div>
+                    <div>Boolean that should be "true".</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertFalse">assertFalse</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertTrue">assertTrue</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertTrueWithoutMessage">assertTrueWithoutMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertTrueWithoutMessage" id="assertTrueWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertTrueWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertTrueWithoutMessage</b> (
+</div>
+                <div class="code">val:Boolean) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts if a value is true.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val<span class="separator">:</span></div>
+                    <div>Boolean that should be "true".</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertFalse">assertFalse</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertTrue">assertTrue</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertTrueWithMessage">assertTrueWithMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertTypeOf" id="assertTypeOf"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertTypeOf</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertTypeOf</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertTypeOfWithMessage">assertTypeOfWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertTypeOfWithoutMessage">assertTypeOfWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertTypeOfWithMessage" id="assertTypeOfWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertTypeOfWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertTypeOfWithMessage</b> (
+
+
+</div>
+                <div class="code">message:String,
+val,
+type:String) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that the type of a value a special type and adds a exception if the assertion fails.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message to be appended if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val    <span class="separator">:</span></div>
+                    <div>Value to be validated.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type   <span class="separator">:</span></div>
+                    <div>Expected type of the value.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertTypeOfWithoutMessage">assertTypeOfWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertTypeOfWithoutMessage" id="assertTypeOfWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertTypeOfWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertTypeOfWithoutMessage</b> (
+
+</div>
+                <div class="code">val,
+type:String) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts that the type of a value a special type.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val <span class="separator">:</span></div>
+                    <div>Value to be validated.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type<span class="separator">:</span></div>
+                    <div>Expected type of the value.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertTypeOfWithMessage">assertTypeOfWithMessage</a><br /><a href="org_as2lib_util_ObjectUtil.html#isTypeOf">org.as2lib.util.ObjectUtil.isTypeOf</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertUndefined" id="assertUndefined"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertUndefined</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertUndefined</b> (
+</div>
+                <div class="code">) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertUndefinedWithMessage">assertUndefinedWithMessage</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertUndefinedWithoutMessage">assertUndefinedWithoutMessage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertUndefinedWithMessage" id="assertUndefinedWithMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertUndefinedWithMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertUndefinedWithMessage</b> (
+
+</div>
+                <div class="code">message:String,
+val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts if a value is undefined else it fails.
+
+ This method asserts the same like @see #assertUndefinedWithoutMessage
+
+ but it adds a message to the failure.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message that should be provided if the assertion fails.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val    <span class="separator">:</span></div>
+                    <div>Object that should not be null.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotUndefined">assertNotUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNull">assertNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEmpty">assertEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertUndefined">assertUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertUndefinedWithoutMessage">assertUndefinedWithoutMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="assertUndefinedWithoutMessage" id="assertUndefinedWithoutMessage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>assertUndefinedWithoutMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>assertUndefinedWithoutMessage</b> (
+</div>
+                <div class="code">val) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Asserts if a value is (===) undefined else it fails.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">val<span class="separator">:</span></div>
+                    <div>Object that should be undefined.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestCase.html#assertNotUndefined">assertNotUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertNull">assertNull</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertEmpty">assertEmpty</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertUndefined">assertUndefined</a><br /><a href="org_as2lib_test_unit_TestCase.html#assertUndefinedWithMessage">assertUndefinedWithMessage</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if no error occured else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="fail" id="fail"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>fail</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>fail</b> (
+</div>
+                <div class="code">message:String) : Void</div>
+              </div>
+            </div>
+            <div class="description">Simply fails the current Testcase.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>Message to the failing of the method.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMethodInformation" id="getMethodInformation"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>getMethodInformation</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getMethodInformation</b> (
+</div>
+                <div class="code">Void) : TestCaseMethodInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the methodinformation for the method that is currently executed.
+
+ The methodinformation represents the information holder for the current
+
+ method that is executed.
+
+ 
+
+ Usually only available during the execution of the testcase.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestRunner.html">TestRunner</a><br /><a href="org_as2lib_test_unit_TestCase.html#getTestRunner">getTestRunner</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Methodinformation for the current testcase method.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getTestRunner" id="getTestRunner"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>getTestRunner</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getTestRunner</b> (
+</div>
+                <div class="code">Void) : TestRunner</div>
+              </div>
+            </div>
+            <div class="description">Getter for the testrunner.
+
+ The testrunner represents the context of the actual method.
+
+ The testrunner is usually only available within a testunit run.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Current testrunner.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="pause" id="pause"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>pause</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>pause</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Pauses the execution of this testcase.
+
+ This method has been introduces to pause the execution of this method.
+
+ The run will not be completed if @see #resume will not get called!</div>
+          </div>
+          <a name="resume" id="resume"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>resume</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>resume</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Resumes the run of this method.
+
+ This method resumes the execution of the testcase.</div>
+          </div>
+          <a name="run" id="run"></a>
+          <div class="method hasBottomDivider">
+            <h3>run</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>run</b> (
+</div>
+                <div class="code">doNotPrintResult:Boolean) : TestRunner</div>
+              </div>
+            </div>
+            <div class="description">Runs this testcase.
+
+ Implementation of @see Test. 
+
+ Runs all methods of this testcase in an new container.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">doNotPrintResult<span class="separator">:</span></div>
+                    <div>Parameter to prevent immediately printing of the Result.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item">TestRunner.run</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Runner of the Testcases (containing all informations about the run)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setTestRunner" id="setTestRunner"></a>
+          <div class="method hasBottomDivider">
+            <h3>setTestRunner</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>setTestRunner</b> (
+</div>
+                <div class="code">testRunner:TestRunner) : Void</div>
+              </div>
+            </div>
+            <div class="description">Setter for the testrunner.
+
+ The testrunner represents the context of the actual method.
+
+ <a href="org_as2lib_test_unit_TestCase.html#getMethodInformation">getMethodInformation</a> is a referred to the informations that represent this
+
+ methods information. It will be automatically set by the testrunner, because
+
+ only it know who runs this test)</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">testRunner<span class="separator">:</span></div>
+                    <div>Used testrunner for this testcase.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setUp" id="setUp"></a>
+          <div class="method hasBottomDivider">
+            <h3>setUp</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>setUp</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Template method to set up the testcase before running a method.
+
+ This method will get called before executing each method in a clean,
+
+ new instance.</div>
+          </div>
+          <a name="tearDown" id="tearDown"></a>
+          <div class="method hasBottomDivider">
+            <h3>tearDown</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>tearDown</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Template method to tear down the testcase after running a method.
+
+ This method will get called after the execution of each method of this
+
+ testcase.</div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:31:20
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

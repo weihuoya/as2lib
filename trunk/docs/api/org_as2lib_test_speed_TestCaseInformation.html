@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>TestCaseInformation</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>TestCaseInformation</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items">none (TestCaseInformation is a root class)</span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Version: </span><span class="value">1.0</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.speed.TestCaseInformation</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Friday, 31 December 2004, 07:47:41</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">Wrapper arround a Testcase that evaluates all informations.
+ </div>
+ This class wrapps additional Informations around a TestCase.
+
+ It saves the time of the executing and provides various methods
+
+ to get informations.
+
+ 
+
+ @autor Martin Heidegger<div class="classFields"><div class="boxWithBorder"><div class="boxedElem"><div class="contentHolder"><span class="title">See also: </span><div class="item"><a href="org_as2lib_test_speed_Test.html">Test</a><br /><a href="org_as2lib_test_speed_TestCase.html">TestCase</a></div></div></div></div></div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#TestCaseInformation">TestCaseInformation</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#testCase">testCase</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#totalTime">totalTime</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#runs">runs</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#run">run</a>
+                </li>
+                <li>
+                  <a href="#getTotalTime">getTotalTime</a>
+                </li>
+                <li>
+                  <a href="#getRuns">getRuns</a>
+                </li>
+                <li>
+                  <a href="#getAverageTime">getAverageTime</a>
+                </li>
+                <li>
+                  <a href="#getMaxCallsPerSecond">getMaxCallsPerSecond</a>
+                </li>
+                <li>
+                  <a href="#getName">getName</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="TestCaseInformation" id="TestCaseInformation"></a>
+          <div class="method hasBottomDivider">
+            <h3>TestCaseInformation</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>TestCaseInformation</b> (
+</div>
+                <div class="code">testCase:TestCase)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a TestCaseInformation.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">Testcase<span class="separator">:</span></div>
+                    <div>that should get wrapped</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="runs" id="runs"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>runs</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>runs</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Times that run was executed</div>
+          </div>
+          <a name="testCase" id="testCase"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>testCase</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>testCase</b>:TestCase
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Internal testcaseholder</div>
+          </div>
+          <a name="totalTime" id="totalTime"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>totalTime</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>totalTime</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Total time executed</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="getAverageTime" id="getAverageTime"></a>
+          <div class="method hasBottomDivider">
+            <h3>getAverageTime</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getAverageTime</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Average executing time in ms.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMaxCallsPerSecond" id="getMaxCallsPerSecond"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMaxCallsPerSecond</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMaxCallsPerSecond</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Maximum calls that are possible within a second.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getName" id="getName"></a>
+          <div class="method hasBottomDivider">
+            <h3>getName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getName</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Name of the wrapped object.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getRuns" id="getRuns"></a>
+          <div class="method hasBottomDivider">
+            <h3>getRuns</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getRuns</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Times that this Testcase was run.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getTotalTime" id="getTotalTime"></a>
+          <div class="method hasBottomDivider">
+            <h3>getTotalTime</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getTotalTime</b> (
+</div>
+                <div class="code">Void) : Number</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Total execution time of all runs in ms.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="run" id="run"></a>
+          <div class="method hasBottomDivider">
+            <h3>run</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>run</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Runs the testcase and saves the executing time.</div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:24:33
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>AbstractLogger</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>AbstractLogger</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.log.logger.AbstractLogger</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Thursday, 17 February 2005, 06:06:26</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">AbstractLogger offers support for simple logger tasks.<p>Classes that extend this class are expected to / must implement the
+
+ Logger interface. </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#AbstractLogger">AbstractLogger</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class properties</span>
+              <ul>
+                <li>
+                  <a href="#ALL">ALL</a>
+                </li>
+                <li>
+                  <a href="#DEBUG">DEBUG</a>
+                </li>
+                <li>
+                  <a href="#INFO">INFO</a>
+                </li>
+                <li>
+                  <a href="#WARNING">WARNING</a>
+                </li>
+                <li>
+                  <a href="#ERROR">ERROR</a>
+                </li>
+                <li>
+                  <a href="#FATAL">FATAL</a>
+                </li>
+                <li>
+                  <a href="#NONE">NONE</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#debugLevel">debugLevel</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#debugLevelAsNumber">debugLevelAsNumber</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#infoLevel">infoLevel</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#infoLevelAsNumber">infoLevelAsNumber</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#warningLevel">warningLevel</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#warningLevelAsNumber">warningLevelAsNumber</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#errorLevel">errorLevel</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#errorLevelAsNumber">errorLevelAsNumber</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#fatalLevel">fatalLevel</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#fatalLevelAsNumber">fatalLevelAsNumber</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="AbstractLogger" id="AbstractLogger"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>AbstractLogger</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>AbstractLogger</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new AbstractLogger instance.<p>The AbstractLogger class cannot be instatiated directly. You must
+
+ sub-class it first.<p>This constructor initializes the level instance variables that
+
+ can be used for fast access. Static access is relatively slow in
+
+ comparison.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <a name="ALL" id="ALL"></a>
+          <div class="method hasBottomDivider">
+            <h3>ALL</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>ALL</b>:LogLevel
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">All log messages get logged.</div>
+          </div>
+          <a name="DEBUG" id="DEBUG"></a>
+          <div class="method hasBottomDivider">
+            <h3>DEBUG</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>DEBUG</b>:LogLevel
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">All log messages that are at a lower log level than debug get logged.</div>
+          </div>
+          <a name="ERROR" id="ERROR"></a>
+          <div class="method hasBottomDivider">
+            <h3>ERROR</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>ERROR</b>:LogLevel
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">All log messages that are at a lower log level than error get logged.</div>
+          </div>
+          <a name="FATAL" id="FATAL"></a>
+          <div class="method hasBottomDivider">
+            <h3>FATAL</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>FATAL</b>:LogLevel
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">All log messages that are at a lower log level than fatal get logged.</div>
+          </div>
+          <a name="INFO" id="INFO"></a>
+          <div class="method hasBottomDivider">
+            <h3>INFO</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>INFO</b>:LogLevel
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">All log messages that are at a lower log level than info get logged.</div>
+          </div>
+          <a name="NONE" id="NONE"></a>
+          <div class="method hasBottomDivider">
+            <h3>NONE</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>NONE</b>:LogLevel
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">No log messages get logged.</div>
+          </div>
+          <a name="WARNING" id="WARNING"></a>
+          <div class="method hasBottomDivider">
+            <h3>WARNING</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>WARNING</b>:LogLevel
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">All log messages that are at a lower log level than warning get logged.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="debugLevel" id="debugLevel"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>debugLevel</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>debugLevel</b>:LogLevel
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The debug level.</div>
+          </div>
+          <a name="debugLevelAsNumber" id="debugLevelAsNumber"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>debugLevelAsNumber</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>debugLevelAsNumber</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The debug level as number.</div>
+          </div>
+          <a name="errorLevel" id="errorLevel"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>errorLevel</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>errorLevel</b>:LogLevel
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The error level.</div>
+          </div>
+          <a name="errorLevelAsNumber" id="errorLevelAsNumber"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>errorLevelAsNumber</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>errorLevelAsNumber</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The error level as number.</div>
+          </div>
+          <a name="fatalLevel" id="fatalLevel"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>fatalLevel</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>fatalLevel</b>:LogLevel
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The fatal level.</div>
+          </div>
+          <a name="fatalLevelAsNumber" id="fatalLevelAsNumber"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>fatalLevelAsNumber</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>fatalLevelAsNumber</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The fatal level as number.</div>
+          </div>
+          <a name="infoLevel" id="infoLevel"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>infoLevel</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>infoLevel</b>:LogLevel
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The info level.</div>
+          </div>
+          <a name="infoLevelAsNumber" id="infoLevelAsNumber"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>infoLevelAsNumber</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>infoLevelAsNumber</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The info level as number.</div>
+          </div>
+          <a name="warningLevel" id="warningLevel"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>warningLevel</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>warningLevel</b>:LogLevel
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The warning level.</div>
+          </div>
+          <a name="warningLevelAsNumber" id="warningLevelAsNumber"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>warningLevelAsNumber</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>warningLevelAsNumber</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The warning level as number.</div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:00:24
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

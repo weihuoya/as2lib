@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>DefaultBehavior</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>DefaultBehavior</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_test_mock_MethodBehavior.html">MethodBehavior</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.mock.support.DefaultBehavior</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Friday, 28 January 2005, 10:45:59</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"> </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#DefaultBehavior">DefaultBehavior</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#methodBehaviors">methodBehaviors</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#methodBehaviorFactory">methodBehaviorFactory</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#lastMethodName">lastMethodName</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#getMethodBehaviorFactory">getMethodBehaviorFactory</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getDefaultMethodBehaviorFactory">getDefaultMethodBehaviorFactory</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getBlankMethodBehaviorFactory">getBlankMethodBehaviorFactory</a>
+                </li>
+                <li>
+                  <a href="#setMethodBehaviorFactory">setMethodBehaviorFactory</a>
+                </li>
+                <li>
+                  <a href="#addMethodBehavior">addMethodBehavior</a>
+                </li>
+                <li>
+                  <a href="#createMethodBehavior">createMethodBehavior</a>
+                </li>
+                <li>
+                  <a href="#getMethodBehavior">getMethodBehavior</a>
+                </li>
+                <li>
+                  <a href="#getLastMethodBehavior">getLastMethodBehavior</a>
+                </li>
+                <li>
+                  <a href="#removeAllBehavior">removeAllBehavior</a>
+                </li>
+                <li>
+                  <a href="#verify">verify</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="DefaultBehavior" id="DefaultBehavior"></a>
+          <div class="method hasBottomDivider">
+            <h3>DefaultBehavior</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>DefaultBehavior</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new instance.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="lastMethodName" id="lastMethodName"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>lastMethodName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>lastMethodName</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+          </div>
+          <a name="methodBehaviorFactory" id="methodBehaviorFactory"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>methodBehaviorFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>methodBehaviorFactory</b>:MethodBehaviorFactory
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Currently used factory to create method call behaviors.</div>
+          </div>
+          <a name="methodBehaviors" id="methodBehaviors"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>methodBehaviors</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>methodBehaviors</b>:Map
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Stores added method call behaviors.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="addMethodBehavior" id="addMethodBehavior"></a>
+          <div class="method hasBottomDivider">
+            <h3>addMethodBehavior</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addMethodBehavior</b> (
+
+</div>
+                <div class="code">methodName:String,
+methodBehavior:MethodBehavior) : Void</div>
+              </div>
+            </div>
+            <div class="description">If the method name is null, undefined or a blank string the one
+
+ returned by the method behaviour's expected method call will be used.
+
+ If this is also null, undefined or a blank string a '[unknown]' will
+
+ be used.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in method behavior is null or undefined</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_mock_Behavior.html#addMethodBehavior">org.as2lib.test.mock.Behavior.addMethodBehavior()</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="createMethodBehavior" id="createMethodBehavior"></a>
+          <div class="method hasBottomDivider">
+            <h3>createMethodBehavior</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>createMethodBehavior</b> (
+</div>
+                <div class="code">expectedMethodCall:MethodCall) : MethodBehavior</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_mock_Behavior.html#createMethodBehavior">org.as2lib.test.mock.Behavior.createMethodBehavior()</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getBlankMethodBehaviorFactory" id="getBlankMethodBehaviorFactory"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>getBlankMethodBehaviorFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getBlankMethodBehaviorFactory</b> (
+</div>
+                <div class="code">Void) : MethodBehaviorFactory</div>
+              </div>
+            </div>
+            <div class="description">Returns a blank method behavior factory. That is a factory
+
+ with no initialized methods.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">a blank method behavior factory</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getDefaultMethodBehaviorFactory" id="getDefaultMethodBehaviorFactory"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>getDefaultMethodBehaviorFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getDefaultMethodBehaviorFactory</b> (
+</div>
+                <div class="code">Void) : MethodBehaviorFactory</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the default method call behavior factory</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getLastMethodBehavior" id="getLastMethodBehavior"></a>
+          <div class="method hasBottomDivider">
+            <h3>getLastMethodBehavior</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getLastMethodBehavior</b> (
+</div>
+                <div class="code">Void) : MethodBehavior</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_mock_Behavior.html#getLastMethodBehavior">org.as2lib.test.mock.Behavior.getLastMethodBehavior()</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMethodBehavior" id="getMethodBehavior"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethodBehavior</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMethodBehavior</b> (
+</div>
+                <div class="code">actualMethodCall:MethodCall) : MethodBehavior</div>
+              </div>
+            </div>
+            <div class="description"><p>Null will be returned if:<ul><li>The actual method call is null or undefined.</li><li>There is no matching behavior registered.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_mock_Behavior.html#getMethodBehavior">org.as2lib.test.mock.Behavior.getMethodBehavior()</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMethodBehaviorFactory" id="getMethodBehaviorFactory"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethodBehaviorFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMethodBehaviorFactory</b> (
+</div>
+                <div class="code">Void) : MethodBehaviorFactory</div>
+              </div>
+            </div>
+            <div class="description">Returns either the factory set via #setMethodBehaviorFactory()
+
+ or the default one which returns an instance of DefaultMethodBehavior.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the currently used factory to obtain method call behaviors</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="removeAllBehavior" id="removeAllBehavior"></a>
+          <div class="method hasBottomDivider">
+            <h3>removeAllBehavior</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>removeAllBehavior</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_mock_Behavior.html#removeAllBehavior">org.as2lib.test.mock.Behavior.removeAllBehavior()</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setMethodBehaviorFactory" id="setMethodBehaviorFactory"></a>
+          <div class="method hasBottomDivider">
+            <h3>setMethodBehaviorFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>setMethodBehaviorFactory</b> (
+</div>
+                <div class="code">methodBehaviorFactory:MethodBehaviorFactory) : Void</div>
+              </div>
+            </div>
+            <div class="description">Sets the factory used to obtain method call behaviors to store state.<p>If you set a factory of null or undefined #getMethodBehaviorFactory(Void):MethodBehaviorFactory
+
+ returns the default one.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodBehaviorFactory<span class="separator">:</span></div>
+                    <div>the new factory</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="verify" id="verify"></a>
+          <div class="method hasBottomDivider">
+            <h3>verify</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>verify</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_mock_Behavior.html#verify">org.as2lib.test.mock.Behavior.verify()</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:22:59
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

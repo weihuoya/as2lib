@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>MethodInfo</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>MethodInfo</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_reflect_TypeMemberInfo.html">TypeMemberInfo</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.reflect.MethodInfo</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 12 February 2005, 05:09:45</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">MethodInfo represents a method.<p>MethodInfo instances for specific methods can be obtained using
+
+ the ClassInfo#getMethods or ClassInfo#getMethod methods.  </div>That means
+
+ you first have to get a class info for the class that declares or
+
+ inherits the method. You can therefor use the ClassInfo#forObject,
+
+ ClassInfo#forClass, ClassInfo#forInstance or ClassInfo#forName methods.<p>When you have obtained the method info you can use it to get
+
+ information about the method.<pre><span class="codeIdentifier">trace</span>(<span class="codeString">"Method name: "</span> + methodInfo.getName());
+
+ <span class="codeIdentifier">trace</span>(<span class="codeString">"Declaring type: "</span> + methodInfo.getDeclaringType().getFullName());
+
+ <span class="codeIdentifier">trace</span>(<span class="codeString">"Is Static?: "</span> + methodInfo.isStatic());</pre></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#MethodInfo">MethodInfo</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#stringifier">stringifier</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#name">name</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#method">method</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#declaringType">declaringType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#staticFlag">staticFlag</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span>
+              <ul>
+                <li>
+                  <a href="#getStringifier">getStringifier</a>
+                </li>
+                <li>
+                  <a href="#setStringifier">setStringifier</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#getName">getName</a>
+                </li>
+                <li>
+                  <a href="#getMethod">getMethod</a>
+                </li>
+                <li>
+                  <a href="#getDeclaringType">getDeclaringType</a>
+                </li>
+                <li>
+                  <a href="#invoke">invoke</a>
+                </li>
+                <li>
+                  <a href="#isStatic">isStatic</a>
+                </li>
+                <li>
+                  <a href="#toString">toString</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="MethodInfo" id="MethodInfo"></a>
+          <div class="method hasBottomDivider">
+            <h3>MethodInfo</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>MethodInfo</b> (
+
+
+
+</div>
+                <div class="code">name:String,
+method:Function,
+declaringType:TypeInfo,
+staticFlag:Boolean)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new MethodInfo instance.<p>All arguments are allowed to be null. But keep in mind that not
+
+ all methods will function properly if one is.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name         <span class="separator">:</span></div>
+                    <div>the name of the method</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">method       <span class="separator">:</span></div>
+                    <div>the actual method</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">declaringType<span class="separator">:</span></div>
+                    <div>the declaring type of the method</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">static       <span class="separator">:</span></div>
+                    <div>a flag representing whether the method is static</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <a name="stringifier" id="stringifier"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>stringifier</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>stringifier</b>:Stringifier
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The method info stringifier.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="declaringType" id="declaringType"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>declaringType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>declaringType</b>:TypeInfo
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The type that declares the method.</div>
+          </div>
+          <a name="method" id="method"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>method</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>method</b>:Function
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The actual method.</div>
+          </div>
+          <a name="name" id="name"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>name</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>name</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The name of the method.</div>
+          </div>
+          <a name="staticFlag" id="staticFlag"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>staticFlag</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>staticFlag</b>:Boolean
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">A flag representing whether the method is static or not.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class methods</h2>
+          <a name="getStringifier" id="getStringifier"></a>
+          <div class="method hasBottomDivider">
+            <h3>getStringifier</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>getStringifier</b> (
+</div>
+                <div class="code">Void) : Stringifier</div>
+              </div>
+            </div>
+            <div class="description">Returns the stringifier used to stringify method infos.<p>If no custom stringifier has been set via the #setStringifier
+
+ method, a instance of the default MethodInfoStringifier gets returned.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the stringifier that stringifies method infos</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setStringifier" id="setStringifier"></a>
+          <div class="method hasBottomDivider">
+            <h3>setStringifier</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>setStringifier</b> (
+</div>
+                <div class="code">methodInfoStringifier:MethodInfoStringifier) : Void</div>
+              </div>
+            </div>
+            <div class="description">Sets the stringifier used to stringify method infos.<p>If you set a stringifier of value null or undefined #getStringifier
+
+ will return the default stringifier.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodInfoStringifier<span class="separator">:</span></div>
+                    <div>the stringifier that stringifies method infos</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="getDeclaringType" id="getDeclaringType"></a>
+          <div class="method hasBottomDivider">
+            <h3>getDeclaringType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getDeclaringType</b> (
+</div>
+                <div class="code">Void) : TypeInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the type that declares the method.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the type that declares the method</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMethod" id="getMethod"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethod</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMethod</b> (
+</div>
+                <div class="code">Void) : Function</div>
+              </div>
+            </div>
+            <div class="description">Returns the actual method this instance represents.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the actual method</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getName" id="getName"></a>
+          <div class="method hasBottomDivider">
+            <h3>getName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getName</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="description">Returns the name of the method.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the name of the method</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="invoke" id="invoke"></a>
+          <div class="method hasBottomDivider">
+            <h3>invoke</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>invoke</b> (
+
+</div>
+                <div class="code">scope,
+args:Array)</div>
+              </div>
+            </div>
+            <div class="description">Invokes this method on a different scope that is on any object you
+
+ want, passing the specified arguments.<p>All methods the method calls get invoked on the new scope. The
+
+ object referenced by 'this' is the object this method gets invoked
+
+ on, its scope.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">scope<span class="separator">:</span></div>
+                    <div>'this'-scope for the method execution</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args <span class="separator">:</span></div>
+                    <div>arguments to be used for the method invocation</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the return value of the method execution</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isStatic" id="isStatic"></a>
+          <div class="method hasBottomDivider">
+            <h3>isStatic</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isStatic</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Returns whether the method is static or not.<p>Static methods are methods per type.<p>Non-Static methods are methods per instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true when the method is static else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="toString" id="toString"></a>
+          <div class="method hasBottomDivider">
+            <h3>toString</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>toString</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="description">Returns the string representation of this method.<p>The string representation is obtained via the stringifier returned
+
+ by the #getStringifier method.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the string representation of this method</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:08:30
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

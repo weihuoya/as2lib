@@ -1,0 +1,837 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>TestRunner</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>TestRunner</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Martin Heidegger</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.unit.TestRunner</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 29 January 2005, 03:55:48</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">Central TestSystem Class to run Testcases and TestSuites.
+ </div>
+ This is the heart of the TestSystem. All Tests get executed here.
+
+ It contains a execution service for TestSuites and TestCase.
+
+ 
+
+ To use the TestRunner you simple have to instanciate it and run some<div class="classFields"><div class="boxWithBorder"><div class="boxedElem"><div class="contentHolder"><span class="title">See also: </span><div class="item"><a href="org_as2lib_test_unit_TestCase.html">to it.
+
+ 
+
+ Example:<pre><span class="codeKeyword">import</span> org.as2lib.test.unit.TestRunner;
+
+<span class="codeKeyword">import</span> org.as2lib.test.unit.LoggerTestListener;
+
+
+
+<span class="codeKeyword">var</span> testRunner:TestRunner = <span class="codeKeyword">new</span> TestRunner();
+
+testRunner.<span class="codeIdentifier">addListener</span>(<span class="codeKeyword">new</span> LoggerTestListener());
+
+testRunner.run(<span class="codeKeyword">new</span> MyTestCase()); <span class="codeComment">// alternativly you have a faster .runTestCase</span></pre>
+
+ 
+
+ You can get the result of the running testcase(s) by @see #getTestResult.
+
+ It contains all Informations about the resulted testcases.
+
+ 
+
+ It is also possible to add Listener to the TestRunner by @see #addListener.
+
+ In this way it is possible to build a graphical view to the TestRunner
+
+ (TestRunner is the Controller and TestResult the Model -> MVC). The Listener
+
+ definition is made with @see org.as2lib.test.unit.TestListener.
+
+ 
+
+ The current State of the testrunner can be evaluated by:</a><br /><a href="org_as2lib_test_unit_TestRunner.html#isRunning">isRunning</a><br /><a href="org_as2lib_test_unit_TestRunner.html#isPaused">isPaused</a><br /><a href="org_as2lib_test_unit_TestRunner.html#isStarted">isStarted</a><br /><a href="org_as2lib_test_unit_TestRunner.html#isFinished">Note: There is currently no better abstraction Level Possible so we have to differ
+
+       between TestCase & TestSuite. The current implementation of .run allows only those
+
+       two classes.</a></div></div></div></div></div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#TestRunner">TestRunner</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#eB">eB</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#testResult">testResult</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#testCases">testCases</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#testCaseIterator">testCaseIterator</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#methodInfo">methodInfo</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#processedTestCaseMethods">processedTestCaseMethods</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#currentTestCase">currentTestCase</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#currentTestCaseMethodIterator">currentTestCaseMethodIterator</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#finished">finished</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#paused">paused</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#started">started</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#testCaseInstance">testCaseInstance</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#pauseAllowed">pauseAllowed</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#addListener">addListener</a>
+                </li>
+                <li>
+                  <a href="#removeListener">removeListener</a>
+                </li>
+                <li>
+                  <a href="#getTestResult">getTestResult</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#setTestResult">setTestResult</a>
+                </li>
+                <li>
+                  <a href="#run">run</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#prepareRun">prepareRun</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#startRun">startRun</a>
+                </li>
+                <li>
+                  <a href="#runTestCase">runTestCase</a>
+                </li>
+                <li>
+                  <a href="#runTestSuite">runTestSuite</a>
+                </li>
+                <li>
+                  <a href="#isFinished">isFinished</a>
+                </li>
+                <li>
+                  <a href="#isPaused">isPaused</a>
+                </li>
+                <li>
+                  <a href="#isStarted">isStarted</a>
+                </li>
+                <li>
+                  <a href="#isRunning">isRunning</a>
+                </li>
+                <li>
+                  <a href="#pause">pause</a>
+                </li>
+                <li>
+                  <a href="#resume">resume</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#processQueue">processQueue</a>
+                </li>
+                <li>
+                  <a href="#isTestCaseMethodFinished">isTestCaseMethodFinished</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#startTestCase">startTestCase</a>
+                </li>
+                <li>
+                  <a href="#getCurrentTestCase">getCurrentTestCase</a>
+                </li>
+                <li>
+                  <a href="#getCurrentTestCaseMethodInfo">getCurrentTestCaseMethodInfo</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#processMethodQueue">processMethodQueue</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#finishMethod">finishMethod</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#finish">finish</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="TestRunner" id="TestRunner"></a>
+          <div class="method hasBottomDivider">
+            <h3>TestRunner</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>TestRunner</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new Testrunner</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="currentTestCase" id="currentTestCase"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>currentTestCase</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>currentTestCase</b>:TestCaseResult
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Holder of the currently running Testcase.</div>
+          </div>
+          <a name="currentTestCaseMethodIterator" id="currentTestCaseMethodIterator"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>currentTestCaseMethodIterator</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>currentTestCaseMethodIterator</b>:Iterator
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Interator for the methods of the current Testcase.</div>
+          </div>
+          <a name="eB" id="eB"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>eB</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>eB</b>:EventBroadcaster
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Internal EventBroadcaster holder.</div>
+          </div>
+          <a name="finished" id="finished"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>finished</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>finished</b>:Boolean
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Boolean flag if the Testrunner has already finished work.</div>
+          </div>
+          <a name="methodInfo" id="methodInfo"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>methodInfo</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>methodInfo</b>:TestCaseMethodInfo
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Information for the current processing method.</div>
+          </div>
+          <a name="pauseAllowed" id="pauseAllowed"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>pauseAllowed</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>pauseAllowed</b>:Boolean
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Pause Flag (if pause is allowed or not.</div>
+          </div>
+          <a name="paused" id="paused"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>paused</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>paused</b>:Boolean
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Boolean flag if the instance is currently paused.</div>
+          </div>
+          <a name="processedTestCaseMethods" id="processedTestCaseMethods"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>processedTestCaseMethods</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>processedTestCaseMethods</b>:TypedArray
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Internal holder of the processed Testcasesmethods.</div>
+          </div>
+          <a name="started" id="started"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>started</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>started</b>:Boolean
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Boolean flag if the Testrunner started work.</div>
+          </div>
+          <a name="testCaseInstance" id="testCaseInstance"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>testCaseInstance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>testCaseInstance</b>:TestCase
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Holder for the methodscope of the current Method.</div>
+          </div>
+          <a name="testCaseIterator" id="testCaseIterator"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>testCaseIterator</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>testCaseIterator</b>:Iterator
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Iterator over all Testcases. Holds the current position.</div>
+          </div>
+          <a name="testCases" id="testCases"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>testCases</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>testCases</b>:TypedArray
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Internal List of Testcases to process.</div>
+          </div>
+          <a name="testResult" id="testResult"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>testResult</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>testResult</b>:TestResult
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Result Holder for a TestResult.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="addListener" id="addListener"></a>
+          <div class="method hasBottomDivider">
+            <h3>addListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addListener</b> (
+</div>
+                <div class="code">l:TestListener)</div>
+              </div>
+            </div>
+            <div class="description">Adds a listener to the TestRunner instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">l<span class="separator">:</span></div>
+                    <div>Listener to be added.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="finish" id="finish"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>finish</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>finish</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Internal Method to finish the Test.</div>
+          </div>
+          <a name="finishMethod" id="finishMethod"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>finishMethod</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>finishMethod</b> (
+</div>
+                <div class="code">) : Void</div>
+              </div>
+            </div>
+            <div class="description">Finishes the last MethodInfo.
+
+ 
+
+ Note: It is necessary for pause() to finish it later.</div>
+          </div>
+          <a name="getCurrentTestCase" id="getCurrentTestCase"></a>
+          <div class="method hasBottomDivider">
+            <h3>getCurrentTestCase</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getCurrentTestCase</b> (
+</div>
+                <div class="code">Void) : TestCaseResult</div>
+              </div>
+            </div>
+            <div class="description">Getter for the current executing TestCase.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">TestCaseResult Result to the current executing TestCase.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getCurrentTestCaseMethodInfo" id="getCurrentTestCaseMethodInfo"></a>
+          <div class="method hasBottomDivider">
+            <h3>getCurrentTestCaseMethodInfo</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getCurrentTestCaseMethodInfo</b> (
+</div>
+                <div class="code">Void) : TestCaseMethodInfo</div>
+              </div>
+            </div>
+            <div class="description">Getter for the current executing TestCaseMethod.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">TestCaseMethodInfo Information about the current executing TestCaseMethod</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getTestResult" id="getTestResult"></a>
+          <div class="method hasBottomDivider">
+            <h3>getTestResult</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getTestResult</b> (
+</div>
+                <div class="code">Void) : TestResult</div>
+              </div>
+            </div>
+            <div class="description">Getter for the Testresult.
+
+ The Testresult contains all informations about the process.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">Result of the TestRunner.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isFinished" id="isFinished"></a>
+          <div class="method hasBottomDivider">
+            <h3>isFinished</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isFinished</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the process has finished. (false if the process hasn't started yet)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isPaused" id="isPaused"></a>
+          <div class="method hasBottomDivider">
+            <h3>isPaused</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isPaused</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the process is paused.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isRunning" id="isRunning"></a>
+          <div class="method hasBottomDivider">
+            <h3>isRunning</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isRunning</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the process is running.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isStarted" id="isStarted"></a>
+          <div class="method hasBottomDivider">
+            <h3>isStarted</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isStarted</b> (
+</div>
+                <div class="code">Void) : Boolean</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the process has started.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isTestCaseMethodFinished" id="isTestCaseMethodFinished"></a>
+          <div class="method hasBottomDivider">
+            <h3>isTestCaseMethodFinished</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>isTestCaseMethodFinished</b> (
+</div>
+                <div class="code">testCaseMethodInfo:TestCaseMethodInfo) : Boolean</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">testCaseMethodInfo<span class="separator">:</span></div>
+                    <div>Information about a TestCaseMethod that should be checked if it was run already or not.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if a testcasemethod has already been processed.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="pause" id="pause"></a>
+          <div class="method hasBottomDivider">
+            <h3>pause</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>pause</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Pauses the process.
+
+ This is only possible during the execution of a testmethod (not before, not after).
+
+ Else it will add a error to the methodInfo.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestRunner.html#resume">resume</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="prepareRun" id="prepareRun"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>prepareRun</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>prepareRun</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Prepares the Testcase to run the TestCase/TestSuite.</div>
+          </div>
+          <a name="processMethodQueue" id="processMethodQueue"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>processMethodQueue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>processMethodQueue</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Processes all methods of the current Testcase.</div>
+          </div>
+          <a name="processQueue" id="processQueue"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>processQueue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>processQueue</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Starts or resumes the TestCase Queue.</div>
+          </div>
+          <a name="removeListener" id="removeListener"></a>
+          <div class="method hasBottomDivider">
+            <h3>removeListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>removeListener</b> (
+</div>
+                <div class="code">l:TestListener)</div>
+              </div>
+            </div>
+            <div class="description">Removes a listener from the TestRunner instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">l<span class="separator">:</span></div>
+                    <div>Listener to be removed.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="resume" id="resume"></a>
+          <div class="method hasBottomDivider">
+            <h3>resume</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>resume</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Resumes the process.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestRunner.html#pause">pause</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="run" id="run"></a>
+          <div class="method hasBottomDivider">
+            <h3>run</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>run</b> (
+</div>
+                <div class="code">) : TestRunner</div>
+              </div>
+            </div>
+            <div class="description">overload</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestRunner.html#runTestCase">runTestCase</a><br /><a href="org_as2lib_test_unit_TestRunner.html#runTestSuite">runTestSuite</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="runTestCase" id="runTestCase"></a>
+          <div class="method hasBottomDivider">
+            <h3>runTestCase</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>runTestCase</b> (
+</div>
+                <div class="code">test:TestCase) : TestRunner</div>
+              </div>
+            </div>
+            <div class="description">Runs a TestCase.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">test<span class="separator">:</span></div>
+                    <div>Test that should get run.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">The current TestRunner (contains all informations about the process).</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="runTestSuite" id="runTestSuite"></a>
+          <div class="method hasBottomDivider">
+            <h3>runTestSuite</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>runTestSuite</b> (
+</div>
+                <div class="code">test:TestSuite) : TestRunner</div>
+              </div>
+            </div>
+            <div class="description">Runs a TestSuite.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">test<span class="separator">:</span></div>
+                    <div>TestSuite that should get run.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">The current TestRunner (contains all informations about the process).</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setTestResult" id="setTestResult"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>setTestResult</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>setTestResult</b> (
+</div>
+                <div class="code">result:TestResult) : Void</div>
+              </div>
+            </div>
+            <div class="description">Setter for the Testresult.
+
+ Only private used for a possible instanciation of the TestCase.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">result<span class="separator">:</span></div>
+                    <div>TestResult for the runner.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="startRun" id="startRun"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>startRun</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>startRun</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Starts the Test.</div>
+          </div>
+          <a name="startTestCase" id="startTestCase"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>startTestCase</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>startTestCase</b> (
+</div>
+                <div class="code">testCase:TestCaseResult) : Void</div>
+              </div>
+            </div>
+            <div class="description">Starts the execution of a TestCase.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">testCase<span class="separator">:</span></div>
+                    <div>TestCase that should be executed.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:34:39
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>SimpleCache</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>SimpleCache</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_reflect_Cache.html">Cache</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.reflect.SimpleCache</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Sunday, 20 February 2005, 09:02:48</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">SimpleCache is a simple and performant implementation of the Cache
+
+ interface.<p>The caching of classes and packages leads to higher performance.  </div>
+
+ You also must cache them because for example the parent of two classes 
+
+ residing in the same package should be the same PackageInfo instance.<p>The cache is mostly used internally. But you can also use it to
+
+ add ClassInfo or PackageInfo instances directly so that they do not
+
+ have to be searched for. This can improve the performance dramatically
+
+ with classes or packages that are needed quite often.<p>This implementation sets a property with name '__as2lib__hashCode'
+
+ on every cached class and package to offer high performance. Do not
+
+ delete this property.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#SimpleCache">SimpleCache</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#hashCodeCounter">hashCodeCounter</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#cache">cache</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#root">root</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#getClass">getClass</a>
+                </li>
+                <li>
+                  <a href="#addClass">addClass</a>
+                </li>
+                <li>
+                  <a href="#getPackage">getPackage</a>
+                </li>
+                <li>
+                  <a href="#addPackage">addPackage</a>
+                </li>
+                <li>
+                  <a href="#getRoot">getRoot</a>
+                </li>
+                <li>
+                  <a href="#releaseAll">releaseAll</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="SimpleCache" id="SimpleCache"></a>
+          <div class="method hasBottomDivider">
+            <h3>SimpleCache</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>SimpleCache</b> (
+</div>
+                <div class="code">root:PackageInfo)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new SimpleCache instance.<p>The root/default package determines where the ClassAlgorithm
+
+ and PackageAlgorithm start their search.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">root<span class="separator">:</span></div>
+                    <div>the root/default package of the hierarchy</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <a name="hashCodeCounter" id="hashCodeCounter"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>hashCodeCounter</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>hashCodeCounter</b>:Number
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Stores the amount of generated hash codes.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="cache" id="cache"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>cache</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>cache</b>:Array
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Stores added infos.</div>
+          </div>
+          <a name="root" id="root"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>root</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>root</b>:PackageInfo
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The root represented by a PackageInfo instance.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="addClass" id="addClass"></a>
+          <div class="method hasBottomDivider">
+            <h3>addClass</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addClass</b> (
+</div>
+                <div class="code">info:ClassInfo) : ClassInfo</div>
+              </div>
+            </div>
+            <div class="description">Adds a class info to the list of cached class infos and returns the
+
+ added class info.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">info<span class="separator">:</span></div>
+                    <div>the class info to add</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the added class info</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="addPackage" id="addPackage"></a>
+          <div class="method hasBottomDivider">
+            <h3>addPackage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addPackage</b> (
+</div>
+                <div class="code">info:PackageInfo) : PackageInfo</div>
+              </div>
+            </div>
+            <div class="description">Adds a package info to the cache and returns the added package info.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">info<span class="separator">:</span></div>
+                    <div>the package info to add</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the added package info</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getClass" id="getClass"></a>
+          <div class="method hasBottomDivider">
+            <h3>getClass</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getClass</b> (
+</div>
+                <div class="code">object) : ClassInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the class info representing either the class the object was
+
+ instantiated of or the class that was passed in.<p>Null will be returned if:<ul><li>There is no corresponding ClassInfo instance cached.</li><li>The passed-in object is null or undefined.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
+                    <div>the instance or class the appropriate class info shall be returned</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the class info representing the class</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getPackage" id="getPackage"></a>
+          <div class="method hasBottomDivider">
+            <h3>getPackage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getPackage</b> (
+</div>
+                <div class="code">package) : PackageInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the package info representing the package.<p>Null will be returned if:<ul><li>There is no corresponding PackageInfo instance cached.</li><li>The passed-in package is null or undefined.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">package<span class="separator">:</span></div>
+                    <div>the package the appropriate package info shall be returned</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the pakcage info representing the passed-in package</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getRoot" id="getRoot"></a>
+          <div class="method hasBottomDivider">
+            <h3>getRoot</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getRoot</b> (
+</div>
+                <div class="code">Void) : PackageInfo</div>
+              </div>
+            </div>
+            <div class="description">Returns the root package of the whole package hierarchy.<p>The root package is also refered to as the default package.<p>The root/default package determines where the ClassAlgorithm
+
+ and PackageAlgorithm start their search.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the root/default package</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="releaseAll" id="releaseAll"></a>
+          <div class="method hasBottomDivider">
+            <h3>releaseAll</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>releaseAll</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Releases all cached class and package infos.<p>Note that their __as2lib__hashCode property stays the same.</div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:10:55
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

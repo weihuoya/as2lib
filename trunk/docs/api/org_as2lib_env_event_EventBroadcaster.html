@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>EventBroadcaster</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>EventBroadcaster</h1>
+        <div class="classProperties">
+          <div class="kindOfClass"><span class="value">
+Interface
+</span>
+          </div>
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Martin Heidegger</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.event.EventBroadcaster</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Thursday, 23 December 2004, 04:47:44</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">Interface for standardized broadcasting. </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#addListener">addListener</a>
+                </li>
+                <li>
+                  <a href="#addAllListener">addAllListener</a>
+                </li>
+                <li>
+                  <a href="#removeListener">removeListener</a>
+                </li>
+                <li>
+                  <a href="#removeAllListener">removeAllListener</a>
+                </li>
+                <li>
+                  <a href="#getAllListener">getAllListener</a>
+                </li>
+                <li>
+                  <a href="#dispatch">dispatch</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicInterface.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="addAllListener" id="addAllListener"></a>
+          <div class="method hasBottomDivider">
+            <h3>addAllListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addAllListener</b> (
+</div>
+                <div class="code">listeners:Array) : Void</div>
+              </div>
+            </div>
+            <div class="description">Adds all listeners to the pool of listeners.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">listeners<span class="separator">:</span></div>
+                    <div>the listeners to be added</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="addListener" id="addListener"></a>
+          <div class="method hasBottomDivider">
+            <h3>addListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>addListener</b> (
+</div>
+                <div class="code">listener:EventListener) : Void</div>
+              </div>
+            </div>
+            <div class="description">Adds a listener to the pool of listeners.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">listener<span class="separator">:</span></div>
+                    <div>the EventListener to be added to the pool</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="dispatch" id="dispatch"></a>
+          <div class="method hasBottomDivider">
+            <h3>dispatch</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>dispatch</b> (
+</div>
+                <div class="code">event:EventInfo) : Void</div>
+              </div>
+            </div>
+            <div class="description">Dispatches the events associated with the name cotained in the
+
+ EventInfo instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">event<span class="separator">:</span></div>
+                    <div>the EventInfo to be passed to the operation of the EventListeners</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getAllListener" id="getAllListener"></a>
+          <div class="method hasBottomDivider">
+            <h3>getAllListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getAllListener</b> (
+</div>
+                <div class="code">Void) : Array</div>
+              </div>
+            </div>
+            <div class="description">Returns a copy of the listener pool.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">a copy of the listener pool</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="removeAllListener" id="removeAllListener"></a>
+          <div class="method hasBottomDivider">
+            <h3>removeAllListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>removeAllListener</b> (
+</div>
+                <div class="code">Void) : Void</div>
+              </div>
+            </div>
+            <div class="description">Removes all registered listeners.</div>
+          </div>
+          <a name="removeListener" id="removeListener"></a>
+          <div class="method hasBottomDivider">
+            <h3>removeListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>removeListener</b> (
+</div>
+                <div class="code">listener:EventListener) : Void</div>
+              </div>
+            </div>
+            <div class="description">Removes a listener from the pool of listeners.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">listener<span class="separator">:</span></div>
+                    <div>the EventListener to be removed</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:55:22
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

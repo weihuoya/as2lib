@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>ReflectUtil</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>ReflectUtil</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.reflect.ReflectUtil</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Friday, 04 February 2005, 07:48:05</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">ReflectUtil gets used to obtain simple information about every members.<p>It is independent on any module of the as2lib.  </div>And thus does not
+
+ include them and does not increase the file size.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#ReflectUtil">ReflectUtil</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span>
+              <ul>
+                <li>
+                  <a href="#getTypeName">getTypeName</a>
+                </li>
+                <li>
+                  <a href="#getTypeNameForInstance">getTypeNameForInstance</a>
+                </li>
+                <li>
+                  <a href="#getTypeNameForType">getTypeNameForType</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getTypeNameForTypeByPackage">getTypeNameForTypeByPackage</a>
+                </li>
+                <li>
+                  <a href="#getMethodName">getMethodName</a>
+                </li>
+                <li>
+                  <a href="#getMethodNameByInstance">getMethodNameByInstance</a>
+                </li>
+                <li>
+                  <a href="#getMethodNameByType">getMethodNameByType</a>
+                </li>
+                <li>
+                  <a href="#isMethodStatic">isMethodStatic</a>
+                </li>
+                <li>
+                  <a href="#isMethodStaticByInstance">isMethodStaticByInstance</a>
+                </li>
+                <li>
+                  <a href="#isMethodStaticByType">isMethodStaticByType</a>
+                </li>
+                <li>
+                  <a href="#isConstructor">isConstructor</a>
+                </li>
+                <li>
+                  <a href="#isConstructorByInstance">isConstructorByInstance</a>
+                </li>
+                <li>
+                  <a href="#isConstructorByType">isConstructorByType</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="ReflectUtil" id="ReflectUtil"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>ReflectUtil</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>ReflectUtil</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Private constructor.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class methods</h2>
+          <a name="getMethodName" id="getMethodName"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethodName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>getMethodName</b> (
+
+</div>
+                <div class="code">method:Function,
+object) : String</div>
+              </div>
+            </div>
+          </div>
+          <a name="getMethodNameByInstance" id="getMethodNameByInstance"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethodNameByInstance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>getMethodNameByInstance</b> (
+
+</div>
+                <div class="code">method:Function,
+instance) : String</div>
+              </div>
+            </div>
+          </div>
+          <a name="getMethodNameByType" id="getMethodNameByType"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethodNameByType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>getMethodNameByType</b> (
+
+</div>
+                <div class="code">method:Function,
+type:Function) : String</div>
+              </div>
+            </div>
+          </div>
+          <a name="getTypeName" id="getTypeName"></a>
+          <div class="method hasBottomDivider">
+            <h3>getTypeName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>getTypeName</b> (
+</div>
+                <div class="code">object) : String</div>
+              </div>
+            </div>
+          </div>
+          <a name="getTypeNameForInstance" id="getTypeNameForInstance"></a>
+          <div class="method hasBottomDivider">
+            <h3>getTypeNameForInstance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>getTypeNameForInstance</b> (
+</div>
+                <div class="code">instance) : String</div>
+              </div>
+            </div>
+          </div>
+          <a name="getTypeNameForType" id="getTypeNameForType"></a>
+          <div class="method hasBottomDivider">
+            <h3>getTypeNameForType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>getTypeNameForType</b> (
+</div>
+                <div class="code">type:Function) : String</div>
+              </div>
+            </div>
+          </div>
+          <a name="getTypeNameForTypeByPackage" id="getTypeNameForTypeByPackage"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>getTypeNameForTypeByPackage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static function <b>getTypeNameForTypeByPackage</b> (
+
+
+</div>
+                <div class="code">c:Function,
+p,
+n:String) : String</div>
+              </div>
+            </div>
+          </div>
+          <a name="isConstructor" id="isConstructor"></a>
+          <div class="method hasBottomDivider">
+            <h3>isConstructor</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>isConstructor</b> (
+
+</div>
+                <div class="code">constructor:Function,
+object) : Boolean</div>
+              </div>
+            </div>
+          </div>
+          <a name="isConstructorByInstance" id="isConstructorByInstance"></a>
+          <div class="method hasBottomDivider">
+            <h3>isConstructorByInstance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>isConstructorByInstance</b> (
+
+</div>
+                <div class="code">constructor:Function,
+instance) : Boolean</div>
+              </div>
+            </div>
+          </div>
+          <a name="isConstructorByType" id="isConstructorByType"></a>
+          <div class="method hasBottomDivider">
+            <h3>isConstructorByType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>isConstructorByType</b> (
+
+</div>
+                <div class="code">constructor:Function,
+type:Function) : Boolean</div>
+              </div>
+            </div>
+          </div>
+          <a name="isMethodStatic" id="isMethodStatic"></a>
+          <div class="method hasBottomDivider">
+            <h3>isMethodStatic</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>isMethodStatic</b> (
+
+</div>
+                <div class="code">methodName:String,
+object) : Boolean</div>
+              </div>
+            </div>
+          </div>
+          <a name="isMethodStaticByInstance" id="isMethodStaticByInstance"></a>
+          <div class="method hasBottomDivider">
+            <h3>isMethodStaticByInstance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>isMethodStaticByInstance</b> (
+
+</div>
+                <div class="code">methodName:String,
+instance) : Boolean</div>
+              </div>
+            </div>
+          </div>
+          <a name="isMethodStaticByType" id="isMethodStaticByType"></a>
+          <div class="method hasBottomDivider">
+            <h3>isMethodStaticByType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>isMethodStaticByType</b> (
+
+</div>
+                <div class="code">methodName:String,
+type:Function) : Boolean</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:10:37
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

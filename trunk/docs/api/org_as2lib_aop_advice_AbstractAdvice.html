@@ -1,0 +1,377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>AbstractAdvice</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>AbstractAdvice</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.aop.advice.AbstractAdvice</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Wednesday, 29 December 2004, 08:49:42</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"> </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#AbstractAdvice">AbstractAdvice</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class properties</span>
+              <ul>
+                <li>
+                  <a href="#TYPE_BEFORE">TYPE_BEFORE</a>
+                </li>
+                <li>
+                  <a href="#TYPE_AROUND">TYPE_AROUND</a>
+                </li>
+                <li>
+                  <a href="#TYPE_AFTER">TYPE_AFTER</a>
+                </li>
+                <li>
+                  <a href="#TYPE_AFTER_RETURNING">TYPE_AFTER_RETURNING</a>
+                </li>
+                <li>
+                  <a href="#TYPE_AFTER_THROWING">TYPE_AFTER_THROWING</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#pointcut">pointcut</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#aspect">aspect</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#setAspect">setAspect</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getAspect">getAspect</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#setPointcut">setPointcut</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#setPointcutByPointcut">setPointcutByPointcut</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#setPointcutByString">setPointcutByString</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getPointcut">getPointcut</a>
+                </li>
+                <li>
+                  <a href="#captures">captures</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="AbstractAdvice" id="AbstractAdvice"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>AbstractAdvice</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>AbstractAdvice</b> (
+</div>
+                <div class="code">aspect:Aspect)</div>
+              </div>
+            </div>
+            <div class="description">Private constrcutor to prevent direct instantiation.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">aspect<span class="separator">:</span></div>
+                    <div>the aspect that contains the advice</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <a name="TYPE_AFTER" id="TYPE_AFTER"></a>
+          <div class="method hasBottomDivider">
+            <h3>TYPE_AFTER</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TYPE_AFTER</b>:Number
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">Number value indicating an after advice.</div>
+          </div>
+          <a name="TYPE_AFTER_RETURNING" id="TYPE_AFTER_RETURNING"></a>
+          <div class="method hasBottomDivider">
+            <h3>TYPE_AFTER_RETURNING</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TYPE_AFTER_RETURNING</b>:Number
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">Number value indicating an after returning advice.</div>
+          </div>
+          <a name="TYPE_AFTER_THROWING" id="TYPE_AFTER_THROWING"></a>
+          <div class="method hasBottomDivider">
+            <h3>TYPE_AFTER_THROWING</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TYPE_AFTER_THROWING</b>:Number
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">Number value indicating an after throwing advice.</div>
+          </div>
+          <a name="TYPE_AROUND" id="TYPE_AROUND"></a>
+          <div class="method hasBottomDivider">
+            <h3>TYPE_AROUND</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TYPE_AROUND</b>:Number
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">Number value indicating an around advice.</div>
+          </div>
+          <a name="TYPE_BEFORE" id="TYPE_BEFORE"></a>
+          <div class="method hasBottomDivider">
+            <h3>TYPE_BEFORE</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TYPE_BEFORE</b>:Number
+</div>
+                <div class="code"></div><span class="access">(read,write)</span>
+              </div>
+            </div>
+            <div class="description">Number value indicating a before advice.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="aspect" id="aspect"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>aspect</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>aspect</b>:Aspect
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Stores the aspect that contains the advice.</div>
+          </div>
+          <a name="pointcut" id="pointcut"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>pointcut</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>pointcut</b>:Pointcut
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Stores the pointcut that is responsible for checking if a join point is captured by the advice.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="captures" id="captures"></a>
+          <div class="method hasBottomDivider">
+            <h3>captures</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>captures</b> (
+</div>
+                <div class="code">joinPoint:JoinPoint) : Boolean</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_aop_Advice.html#captures">:Boolean</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getAspect" id="getAspect"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>getAspect</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getAspect</b> (
+</div>
+                <div class="code">Void) : Aspect</div>
+              </div>
+            </div>
+            <div class="description">Returns the set aspect.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the set aspect</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getPointcut" id="getPointcut"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>getPointcut</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getPointcut</b> (
+</div>
+                <div class="code">Void) : Pointcut</div>
+              </div>
+            </div>
+            <div class="description">Returns the set pointcut.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the set pointcut</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setAspect" id="setAspect"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>setAspect</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>setAspect</b> (
+</div>
+                <div class="code">newAspect:Aspect) : Void</div>
+              </div>
+            </div>
+            <div class="description">Sets the new aspect.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">newAspect<span class="separator">:</span></div>
+                    <div>the new aspect to be set</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setPointcut" id="setPointcut"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>setPointcut</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>setPointcut</b> (
+</div>
+                <div class="code">pointcut)</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading</span>
+                  <div class="item"><a href="org_as2lib_aop_advice_AbstractAdvice.html#setPointcutByPointcut">setPointcutByPointcut()</a> (newPointcut:Pointcut) : Void<br /><a href="org_as2lib_aop_advice_AbstractAdvice.html#setPointcutByString">setPointcutByString()</a> (pointcutString:String) : Pointcut</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setPointcutByPointcut" id="setPointcutByPointcut"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>setPointcutByPointcut</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>setPointcutByPointcut</b> (
+</div>
+                <div class="code">newPointcut:Pointcut) : Void</div>
+              </div>
+            </div>
+            <div class="description">Sets the new pointcut.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">newPointcut<span class="separator">:</span></div>
+                    <div>the new pointcut to be set</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="setPointcutByString" id="setPointcutByString"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>setPointcutByString</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>setPointcutByString</b> (
+</div>
+                <div class="code">pointcutString:String) : Pointcut</div>
+              </div>
+            </div>
+            <div class="description">Sets the new pointcut.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">pointcutString<span class="separator">:</span></div>
+                    <div>a string representation of the pointcut to set</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the evaluated pointcut</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:30:22
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

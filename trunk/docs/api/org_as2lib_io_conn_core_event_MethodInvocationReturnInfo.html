@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>MethodInvocationReturnInfo</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>MethodInvocationReturnInfo</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_event_EventInfo.html">EventInfo</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.io.conn.core.event.MethodInvocationReturnInfo</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Friday, 07 January 2005, 02:18:44</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">MethodInvocationReturnInfo gets used to inform clients that the method
+
+ invocation completed successfully.<p>This class gets used in conjunction with the MethodInvocationCallback
+
+ and MethodInvocationReturnListener classes. </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#MethodInvocationReturnInfo">MethodInvocationReturnInfo</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#returnValue">returnValue</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#serviceUrl">serviceUrl</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#methodName">methodName</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#methodArguments">methodArguments</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#getServiceUrl">getServiceUrl</a>
+                </li>
+                <li>
+                  <a href="#getMethodName">getMethodName</a>
+                </li>
+                <li>
+                  <a href="#getMethodArguments">getMethodArguments</a>
+                </li>
+                <li>
+                  <a href="#getReturnValue">getReturnValue</a>
+                </li>
+                <li>
+                  <a href="#getName">getName</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="MethodInvocationReturnInfo" id="MethodInvocationReturnInfo"></a>
+          <div class="method hasBottomDivider">
+            <h3>MethodInvocationReturnInfo</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>MethodInvocationReturnInfo</b> (
+
+
+
+</div>
+                <div class="code">serviceUrl:String,
+methodName:String,
+methodArguments:Array,
+returnValue)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new MethodInvocationReturnInfo instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">serviceUrl     <span class="separator">:</span></div>
+                    <div>the url to the service the method should be or was invoked on</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodName     <span class="separator">:</span></div>
+                    <div>the name of the method to be executed</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodArguments<span class="separator">:</span></div>
+                    <div>the arguments used as parameters for the method invocation</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">returnValue    <span class="separator">:</span></div>
+                    <div>the result of the invoked method</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="methodArguments" id="methodArguments"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>methodArguments</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>methodArguments</b>:Array
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The arguments used for the invocation.</div>
+          </div>
+          <a name="methodName" id="methodName"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>methodName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>methodName</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The name of the method to be executed.</div>
+          </div>
+          <a name="returnValue" id="returnValue"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>returnValue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>returnValue</b>
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">The return value returned by the invoked method.</div>
+          </div>
+          <a name="serviceUrl" id="serviceUrl"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>serviceUrl</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>serviceUrl</b>:String
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Url of the service the method should have been invoked on.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="getMethodArguments" id="getMethodArguments"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethodArguments</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMethodArguments</b> (
+</div>
+                <div class="code">Void) : Array</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the arguments used as parameters for the method invocation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getMethodName" id="getMethodName"></a>
+          <div class="method hasBottomDivider">
+            <h3>getMethodName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getMethodName</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the name of the method that should be or was executed on the service</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getName" id="getName"></a>
+          <div class="method hasBottomDivider">
+            <h3>getName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getName</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventInfo.html">org.as2lib.env.event.EventInfo</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getReturnValue" id="getReturnValue"></a>
+          <div class="method hasBottomDivider">
+            <h3>getReturnValue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getReturnValue</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+          </div>
+          <a name="getServiceUrl" id="getServiceUrl"></a>
+          <div class="method hasBottomDivider">
+            <h3>getServiceUrl</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getServiceUrl</b> (
+</div>
+                <div class="code">Void) : String</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the url to the service the method should be or was executed on</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:13:52
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>SimpleAdviceFactory</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>SimpleAdviceFactory</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_aop_advice_AdviceFactory.html">AdviceFactory</a></li></ul></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.aop.advice.SimpleAdviceFactory</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Thursday, 16 September 2004, 11:18:09</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"> </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#SimpleAdviceFactory">SimpleAdviceFactory</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#advice">advice</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#getAdvice">getAdvice</a>
+                </li>
+                <li>
+                  <a href="#getAdviceByStringAndCall">getAdviceByStringAndCall</a>
+                </li>
+                <li>
+                  <a href="#getAdviceByPointcutAndCall">getAdviceByPointcutAndCall</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="SimpleAdviceFactory" id="SimpleAdviceFactory"></a>
+          <div class="method hasBottomDivider">
+            <h3>SimpleAdviceFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>SimpleAdviceFactory</b> (
+</div>
+                <div class="code">advice:Function)</div>
+              </div>
+            </div>
+            <div class="description">Constructs a new SimpleAdviceFactory.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">advice<span class="separator">:</span></div>
+                    <div>the actual advice to return a instance of</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <a name="advice" id="advice"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>advice</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>advice</b>:Function
+</div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <div class="description">Stores the advice.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <a name="getAdvice" id="getAdvice"></a>
+          <div class="method hasBottomDivider">
+            <h3>getAdvice</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getAdvice</b> (
+</div>
+                <div class="code">) : Advice</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_aop_advice_AdviceFactory.html#getAdvice">:Advice</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getAdviceByPointcutAndCall" id="getAdviceByPointcutAndCall"></a>
+          <div class="method hasBottomDivider">
+            <h3>getAdviceByPointcutAndCall</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getAdviceByPointcutAndCall</b> (
+
+</div>
+                <div class="code">pointcut:Pointcut,
+callback:Call) : Advice</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_aop_advice_AdviceFactory.html#getAdviceByPointcutAndCall">, Call):Advice</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="getAdviceByStringAndCall" id="getAdviceByStringAndCall"></a>
+          <div class="method hasBottomDivider">
+            <h3>getAdviceByStringAndCall</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public function <b>getAdviceByStringAndCall</b> (
+
+</div>
+                <div class="code">pointcut:String,
+callback:Call) : Advice</div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also</span>
+                  <div class="item"><a href="org_as2lib_aop_advice_AdviceFactory.html#getAdviceByStringAndCall">, Call):Advice</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:32:47
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

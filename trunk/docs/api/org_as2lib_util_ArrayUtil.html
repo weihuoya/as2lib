@@ -1,0 +1,458 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>ArrayUtil</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>ArrayUtil</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker, Martin Heidegger, Christophe Herreman</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.util.ArrayUtil</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Monday, 07 February 2005, 11:04:34</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">ArrayUtil contains fundamental operations to manipulate Arrays. </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#ArrayUtil">ArrayUtil</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span>
+              <ul>
+                <li>
+                  <a href="#clone">clone</a>
+                </li>
+                <li>
+                  <a href="#removeElement">removeElement</a>
+                </li>
+                <li>
+                  <a href="#removeAllOccurances">removeAllOccurances</a>
+                </li>
+                <li>
+                  <a href="#removeLastOccurance">removeLastOccurance</a>
+                </li>
+                <li>
+                  <a href="#removeFirstOccurance">removeFirstOccurance</a>
+                </li>
+                <li>
+                  <a href="#contains">contains</a>
+                </li>
+                <li>
+                  <a href="#indexOf">indexOf</a>
+                </li>
+                <li>
+                  <a href="#shuffle">shuffle</a>
+                </li>
+                <li>
+                  <a href="#swap">swap</a>
+                </li>
+                <li>
+                  <a href="#isSame">isSame</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <a name="ArrayUtil" id="ArrayUtil"></a>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3>ArrayUtil</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>ArrayUtil</b> (
+</div>
+                <div class="code">Void)</div>
+              </div>
+            </div>
+            <div class="description">Private constructor.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class methods</h2>
+          <a name="clone" id="clone"></a>
+          <div class="method hasBottomDivider">
+            <h3>clone</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>clone</b> (
+</div>
+                <div class="code">array:Array) : Array</div>
+              </div>
+            </div>
+            <div class="description">Clones an Array.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">array<span class="separator">:</span></div>
+                    <div>the Array to be cloned</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">a clone of the passed in Array</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="contains" id="contains"></a>
+          <div class="method hasBottomDivider">
+            <h3>contains</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>contains</b> (
+
+</div>
+                <div class="code">array:Array,
+object) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Checks if the array already contains the passed object.
+
+ It checks the content with a for-in loop. In this way all arrays can
+
+ be passed in.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">array <span class="separator">:</span></div>
+                    <div>The array that shall contain the object.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
+                    <div>The object that shall be checked for availability.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the array contains the object else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="indexOf" id="indexOf"></a>
+          <div class="method hasBottomDivider">
+            <h3>indexOf</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>indexOf</b> (
+
+</div>
+                <div class="code">array:Array,
+object) : Number</div>
+              </div>
+            </div>
+            <div class="description">Checks the index of a object within a array.
+
+ It checks the content of a array by counting to the array length.
+
+ It will return the first occurency of the object within the array.
+
+ If the object wasn't found -1 will be returned.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">array <span class="separator">:</span></div>
+                    <div>The array that shall contain the object.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
+                    <div>The object to get the position from.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">The number of the object within the array (if it was not found -1)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="isSame" id="isSame"></a>
+          <div class="method hasBottomDivider">
+            <h3>isSame</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>isSame</b> (
+
+</div>
+                <div class="code">array1:Array,
+array2:Array) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Compares two arrays if they contain the same values at the same positions.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">a<span class="separator">:</span></div>
+                    <div>The first array to be compared</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">b<span class="separator">:</span></div>
+                    <div>The second array to be compared</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the two arrays contain the same values at the same positions.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="removeAllOccurances" id="removeAllOccurances"></a>
+          <div class="method hasBottomDivider">
+            <h3>removeAllOccurances</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>removeAllOccurances</b> (
+
+</div>
+                <div class="code">array:Array,
+element) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Removes all occurances of a specific element out of a array.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">array  <span class="separator">:</span></div>
+                    <div>the array to remove the element out of</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">element<span class="separator">:</span></div>
+                    <div>the element to be removed</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the element was removed. false if the element was not available</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="removeElement" id="removeElement"></a>
+          <div class="method hasBottomDivider">
+            <h3>removeElement</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>removeElement</b> (
+
+</div>
+                <div class="code">array:Array,
+element) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Removes a specific element out of a array.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">array  <span class="separator">:</span></div>
+                    <div>the array to remove the element out of</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">element<span class="separator">:</span></div>
+                    <div>the element to be removed</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the element was removed. false if the element was not available</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="removeFirstOccurance" id="removeFirstOccurance"></a>
+          <div class="method hasBottomDivider">
+            <h3>removeFirstOccurance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>removeFirstOccurance</b> (
+
+</div>
+                <div class="code">array:Array,
+element) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Removes the first occurance a specific element out of the array.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">array  <span class="separator">:</span></div>
+                    <div>the array to remove the element out of</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">element<span class="separator">:</span></div>
+                    <div>the element to be removed</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the element was removed. false if the element was not available</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="removeLastOccurance" id="removeLastOccurance"></a>
+          <div class="method hasBottomDivider">
+            <h3>removeLastOccurance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>removeLastOccurance</b> (
+
+</div>
+                <div class="code">array:Array,
+element) : Boolean</div>
+              </div>
+            </div>
+            <div class="description">Removes the last occurance of a specific element out of a array.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">array  <span class="separator">:</span></div>
+                    <div>the array to remove the element out of</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">element<span class="separator">:</span></div>
+                    <div>the element to be removed</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">true if the element was removed. false if the element was not available</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="shuffle" id="shuffle"></a>
+          <div class="method hasBottomDivider">
+            <h3>shuffle</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>shuffle</b> (
+</div>
+                <div class="code">array:Array) : Void</div>
+              </div>
+            </div>
+            <div class="description">Converts the passed Array to a Stack. The Boolean determines whether
+
+ the Array shall be converted in asceding or descending order. Pass true
+
+ for ascending and false for descending order.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">array<span class="separator">:</span></div>
+                    <div>the Array to be converted</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">order<span class="separator">:</span></div>
+                    <div>Boolean value specifying the convertion order</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">the Stack representation of the Array</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a name="swap" id="swap"></a>
+          <div class="method hasBottomDivider">
+            <h3>swap</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">public static function <b>swap</b> (
+
+
+</div>
+                <div class="code">array:Array,
+i:Number,
+j:Number) : Array</div>
+              </div>
+            </div>
+            <div class="description">Swaps 2 values of an array.
+
+ The modifications are directly made to the array.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">array<span class="separator">:</span></div>
+                    <div>The array to swap its values from.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">i    <span class="separator">:</span></div>
+                    <div>The index of the first value.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">j    <span class="separator">:</span></div>
+                    <div>The index of the second value.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns</span>
+                  <div class="item">array The same instance as applied.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:36:21
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
