@@ -35,7 +35,13 @@ class org.as2lib.test.mock.support.DefaultArgumentsMatcher extends BasicClass im
 		if (expectedArguments.length != actualArguments.length) return false;
 		for (var i:Number = 0; i < expectedArguments.length; i++) {
 			if (expectedArguments[i] != actualArguments[i]) {
-				return false;
+				if (expectedArguments[i] instanceof Array) {
+					if (!matchArguments(expectedArguments[i], actualArguments[i])) {
+						return false;
+					}
+				} else {
+					return false;
+				}
 			}
 		}
 		return true;
