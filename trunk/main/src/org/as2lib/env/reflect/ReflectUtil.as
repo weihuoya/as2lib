@@ -49,7 +49,10 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	private static function getClassNameForClassByPackage(c:Function, p, n:String):String {
 		for (var r:String in p) {
 			try {
-				if (p[r] == c) return (n + r);
+				// flex stores every class in _global and in its actual package
+				// e.g. org.as2lib.core.BasicClass is stored in _global with name org_as2lib_core_BasicClass
+				// the first part of the if-clause excludes these extra stored classes
+				if ((!eval("_global." + r.split("_").join(".")) || r.indexOf("_") < 0) && p[r] == c) return (n + r);
 				if (p[r].__constructor__ == Object) {
 					r = getClassNameForClassByPackage(c, p[r], n + r + ".");
 					if (r) return r;
