@@ -184,3 +184,9 @@
           * org.as2lib.data.holder.HolderConfig
           * org.as2lib.env.except.ExceptConfig
           * org.as2lib.env.reflect.RootInfo
+
+
+
+    :: 07/02/04 :: Simon Wacker ::
+
+        > changed '!message' in org.as2lib.env.except.AbstractException.new() to '(message == undefined)' because passing a blank String resulted in a failure
