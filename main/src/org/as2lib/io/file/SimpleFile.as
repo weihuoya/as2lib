@@ -296,7 +296,7 @@ class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
 	 */
 	public function toString(Void):String {
 		var result:String;
-		result = "[type " + ReflectUtil.getClassNameForInstance(this)
+		result = "[type " + ReflectUtil.getTypeNameForInstance(this)
 				 + " | Location: " + getLocation()
 				 + "; Size: " + new ByteFormat(getBytesTotal()).toString(false, 2)
 				 + "; ]";
