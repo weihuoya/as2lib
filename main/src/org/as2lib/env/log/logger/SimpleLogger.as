@@ -100,7 +100,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 * @see Logger#getLevel()
 	 */
 	public function getLevel(Void):LogLevel {
-		if (!level) return getParent().getLevel();
+		if (level === undefined) return getParent().getLevel();
 		return level;
 	}
 	
