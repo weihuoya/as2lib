@@ -99,7 +99,7 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	 */
 	private function validate(object):Void {
 		if (ObjectUtil.isInstanceOf(object, Array)) {
-			var l:Number = Array(object).length;
+			var l:Number = object.length;
 			for (var i:Number = 0; i < l; i++) {
 				validate(object[i]);
 			}
