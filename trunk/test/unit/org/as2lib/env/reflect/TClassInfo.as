@@ -31,7 +31,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var i:ClassInfo = new ClassInfo(null, null, null);
 		assertNull("name not null", i.getName());
 		assertNull("type not null", i.getType());
-		assertNull("parent not null", i.getParent());
+		assertNull("package not null", i.getPackage());
 	}
 	
 	public function testNewWithRealArguments(Void):Void {
@@ -43,7 +43,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var i:ClassInfo = new ClassInfo("MyClass", MyClass, p);
 		assertSame("wrong name", i.getName(), "MyClass");
 		assertSame("wrong type", i.getType(), MyClass);
-		assertSame("wrong parent", i.getParent(), p);
+		assertSame("wrong package", i.getPackage(), p);
 		
 		pc.verify();
 	}
