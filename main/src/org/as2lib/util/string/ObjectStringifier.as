@@ -29,6 +29,6 @@ class org.as2lib.util.string.ObjectStringifier extends BasicClass implements Str
 	 * @see org.as2lib.util.string.Stringifier
 	 */
 	public function execute(target):String {
-		return ReflectUtil.getClassInfo(target).getName();
+		return "[type "+ReflectUtil.getClassInfo(target).getFullName()+"]";
 	}
 }
