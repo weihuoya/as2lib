@@ -22,8 +22,8 @@ class org.as2lib.env.event.dispatcher.NormalEventDispatcher extends BasicClass i
 	public function dispatchConsumeable(event:EventInfo, listeners:ListenerArray):Void {
 		var name:String = event.getName();
 		var l:Number = listeners.length;
-		for (var i:Number = 0; i < l; i++) {
-			listeners.get(i)[name](event);
+		for (var i:Number = l; i >= 0;) {
+			listeners.get(i--)[name](event);
 			if (Consumeable(event).isConsumed()) {
 				return;
 			}
