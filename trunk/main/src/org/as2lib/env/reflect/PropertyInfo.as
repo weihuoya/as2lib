@@ -147,6 +147,6 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
 	public function toString(Void):String {
-		return ReflectConfig.getPropertyInfoStringifier().execute();
+		return ReflectConfig.getPropertyInfoStringifier().execute(this);
 	}
 }
