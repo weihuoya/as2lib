@@ -18,8 +18,8 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.event.EventInfo;
 
 /**
- * MethodInvocationErrorInfo is a data transfer object used to inform
- * the client of an error that occured during a 'remote' method invocation.
+ * MethodInvocationErrorInfo gets used to inform the client of an error
+ * that occured during a method invocation.
  *
  * <p>It defines constants, that can be used to identify what kind of
  * error occured.
