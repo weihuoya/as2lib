@@ -28,7 +28,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition extends 
 	
 	public function testGetBeanWithNoValuesForCorrectBeanType(Void):Void {
 		var definition:RootBeanDefinition = new RootBeanDefinition(TestCase);
-		var bean:TestCase = definition.getBean();
+		var bean:TestCase = definition.createBean();
 		assertTrue("Returned bean should be of type TestCase.", bean instanceof TestCase);
 	}
 	
