@@ -49,7 +49,7 @@
                       </td>
                       <td><img src="../images/seperatorVertical.gif" class="imageSeparatorVertical" alt=""></td>
                       <td class="contentTd">
-                        <h1>Basic Classes (worksheet 0.5)</h1>
+                        <h1>Basic Classes (worksheet 0.6)</h1>
                         For the success of a project with ActionScript 2.0 it is necessary to integrate additional functions that are low-level in Flash.<br>
                         <br>
                         Low-level called in this connection means that many features work in a "usually not suggested" way to handle operations so that other features don't have to use these techniques.<br>
@@ -65,25 +65,25 @@
                             <td><a href="#Exception" title="Better Handling for Exceptions">Exception handling</a></td>
                           </tr>
                           <tr>
-                            <td><a href="#ReflectionHandling" title="Handling of Reflections within Classes">Reflection handling</a></td>
-                          </tr>
-                          <tr>
                             <td><a href="#EventHandling" title="Handling Events from classes">Event Handling</a></td>
                           </tr>
                           <tr>
                             <td><a href="#TypedArray" title="To make sure all contents are from the same type">Typed Array</a></td>
                           </tr>
                           <tr>
+                            <td><a href="#TestCases" title="System testing with TestCases">Test Cases</td>
+                          </tr>
+                          <tr>
+                            <td><a href="#BasicClass" title="Basic class to extend">Basic Class</td>
+                          </tr>
+                          <tr>
+                            <td><a href="#ReflectionHandling" title="Handling of Reflections within Classes">Reflection handling</a></td>
+                          </tr>
+                          <tr>
                             <td><a href="#Cloning" title="Cloning of Objects">Cloning</a></td>
                           </tr>
                           <tr>
                             <td><a href="#Overloading" title="Overloading Support for Methods">Overloading</a></td>
-                          </tr>
-                          <tr>
-                            <td><a href="#TestCases" title="System testing with TestCases">Test Cases</td>
-                          </tr>
-                          <tr>
-                            <td><a href="#RegExp" title="Regular Expression Handling within as2">Regular Expressions</a></td>
                           </tr>
                         </table>
                         <ol class="conceptList">
@@ -104,19 +104,21 @@
                                 All functions will be accessible through the org.as2lib.basic.Out class with the following static functions:
                                 <codeorg.as2lib.basic.Out</code>
                                 <ul>
-                                  <li><h4>.write([String]):Void</h4>
-                                    Simple string output to the standard device (comparable with trace).
+                                  <li><a name="OutputHandlerAPIWrite"></a><h4>.write([String]):Void</h4>
+                                    Simple string output to the standard device (comparable with <a href="http://livedocs.macromedia.com/flash/mx2004/main/03_wri29.htm" target="_blank" title="Macromedia Documentation for accessing the Output Panel">trace</a>).
                                   </li>
-                                  <li><a name="OutputHandling.error"></a><h4>.error([Exception]):Void</h4>
+                                  <li><a name="OutputHandlerAPIException"></a><h4>.error([Exception]):Void</h4>
                                     Exceptions are usually not visible within a .swf (except in the Flash MX 2004 testing environment), this method should print exceptions in a better way.
+                                    <p class="note">Note: The <a href="#Exception" title="Better Handling for Exceptions">Exception handling Chapter</a> will use this functionality by standard.</p>
                                   </li>
-                                  <li><h4>.log([String]):Void</h4>
+                                  <li><a name="OutputHandlerAPILog"></a><h4>.log([String]):Void</h4>
                                     Logging often works with files and is more strict, the implementation of the Handler should choose how.
+                                    <p class="note">Note: Outsourcing this code to a seperate Logwriter would be oversized.</p>
                                   </li>
-                                  <li><h4>.setOutputHandler([OutputHandler]):Void</h4>
+                                  <li><a name="OutputHandlerAPISetOutputHandler"></a><h4>.setOutputHandler([OutputHandler]):Void</h4>
                                     Usually the "StandardOutputHandler"(which is itself implementing the OutputHandlerInterface) should process all actions, but it will be possible to write custom output handlers for specific needs/various systems.
                                   </li>
-                                  <li><h4>.setOutputLevel([Number]):Void</h4>
+                                  <li><a name="OutputHandlerAPISetOutputLevel"></a><h4>.setOutputLevel([Number]):Void</h4>
                                     The Outputlevel defines which actions are processed and which not. It is designed as a binary flag, you may set it to:                                <pre>0 = 000 = No output.
 1 = 001 = processing only exceptions.
 2 = 010 = processing only logs.
@@ -148,10 +150,10 @@ and each combination:
                             </ul>
                           </li>
                           <li><a name="Exception"></a><h2>Exception handling</h2>
-                            Uncaught exceptions are usually displayed by <code>trace(Error.toString());</code>The result is very minimalistic (if toString is not overridden by the exception's class, only: "Error occured" is displayed). This blocks viewing informations about uncaught exceptions within another than the Flash MX 2004 testing environment.
+                            Uncaught exceptions are usually displayed by <code>trace(Error.toString());</code> (<a href="http://livedocs.macromedia.com/flash/mx2004/main/12_as217.htm" target="_blank" title="How Macromedia understands an Exception">link to Macromedia's Error Class</a>). The result is very minimalistic (if toString is not overridden by the exception's class, only: "Error occured" is displayed). This blocks viewing informations about uncaught exceptions within another than the Flash MX 2004 testing environment.
                             <ul>
                               <li><a name="ExceptionReason"></a><h3>Reason</h3>
-                                The Error class provided by AS 2.0 is not really helpful. It doesn't allow you to find an error.
+                                The Error class provided by Flash is not really helpful. It doesn't allow you to find an error by simple viewing any stack or even the exception name.
                               </li>
                               <li><a name="ExceptionSolution"></a><h3>Solution</h3>
                                 We will provide a class that extends the basic Error class (to keep in mind that it will be better in future), with an extended functionality.
@@ -196,7 +198,7 @@ and each combination:
   message: You did something wrong.
   by: org.as2lib.basic.StringUtil.trim([String 'home'], [Array 'my', 'yours', 'them']);
       org.as2lib.basic.StringUtil.trimLeft(&lt;unknown&gt;);</pre>
-                                    This function also provides itself to <a href="#OutputHandlerAPIexception" title="Output handling for exceptions.">Out.exception()</a>.
+                                    This function also provides itself to <a href="#OutputHandlerAPIException" title="Output handling for exceptions.">Out.exception()</a>.
                                   </li>
                                   <li><a name="ExceptionAPIconvertTo"></a><h4>.convertTo([Function]):Exception</h4>
                                     Returns a new class filled with the new and old informations. (also see here)
@@ -222,89 +224,6 @@ and each combination:
                                     <code>class org.as2lib.basic.exceptions.WrongArgumentsException extends Exception {
 }</code>
                                   </li>
-                                </ul>
-                              </li>
-                            </ul>
-                          </li>
-                          <li><h2>Basic Class</h2>
-                            <ul>
-                              <li><a name="BasicReason"></a><h3>Reason</h3>
-                                Some functionalities simple work faster when you only have to access it.
-                              </li>
-                              <li><a name="BasicSolution"></a><h3>Solution</h3>
-                                The Solution is a basic class that everyone can extend. So access these would make it simpler to use. But this class will only be provided as bridge to other functionalities. To guarantee that if you have no possibility to extend this class(easy possible) you can still use the util.
-                              </li>
-                              <li><a name="BasicContent"></a><h3>Content</h3>
-                                <ul>
-                                  <li><a href="#Reflections">Reflections</a>
-                                    <code>.getClass():ClassInfo;</code>
-                                  </li>
-                                  <li><a href="#Cloning">Cloning</a>
-                                    <code>.clone():Object;</code>
-                                  </li>
-                                  <li><a href="#Overloading">Overloading</a>
-                                    <code>.overload([arguments], [OverloadHandler1],...[OverloadHandlerN]);
-.createOverloadHandler([Array], [String]);
-                                    </code>
-                                  </li>
-                                </ul>
-                              </li>
-                            </ul>
-                          </li>
-                          <li><a name="Reflections"></a><h2>Reflection handling</h2>
-                            Java has a functionality for getting a classes name, methods and properties. This is mighty for getting more informations about an instance you've got.<br>
-                            <ul>
-                              <li><a name="ReflectionsReason"></a><h3>Reason</h3>
-                                Actually it's inbuilt in Java. Flash hasn't got something like that "inbuilt". This is a serious problem, so to solve this is not far away.
-                              </li>
-                              <li><a name="ReflectionsSolution"></a><h3>Solution</h3>
-                                We will provide a Util that handles all matter of reflections. This util will be found at <pre>org.as2lib.basic.Reflections</pre>.
-                                <h4>Logical Description</h4>
-                                The question i've heard most about this is "How the hell should this work?". There is a simple Answer: I use all scopeable areas that are available (starting with _level0 and _global), then i save all informations and step the name throught until i find the first instance, from there i will get the path. With the path and "eval" i'm able to fetch everything else.
-                              </li>
-                              <li><a name="ReflectionsAPI"></a><h3>API</h3>
-                                <ul>
-                                  <li><h4>.getClass([function]):ClassInfo</h4>
-                                    This single Accesspoint returns all informations within a ClassInfo object. 
-                                  </li>
-                                </ul>
-                              </li>
-                              <li><a name="ReflectionsClassInfo"></a><h3>ClassInfo</h3>
-                                <ul>
-                                  <li><a name="ReflectionClassInfoDescription"></a><h4>Description</h4>
-                                    This Class will do the main part instead of the reflections. It will access the 
-                                  </li>
-                                  <li><a name="ReflectionClassInfoAPI"></a><h4>API</h4>
-                                    <p class="note">Note: All functions use "lacy creation" so that no performance won't be lost.</p>
-                                    <ul>
-                                      <li><a name="ReflectionClassInfoAPIgetExtendedClass"></a><h5>.getExtendedClass():ClassInfo</h5>
-                                        Returns the informations about the class that's been extended. 
-                                      </li>
-                                      <li><a name="ReflectionClassInfoAPIgetMethods"></a><h5>.getMethods():TypedArray(String)</h5>
-                                        Returns the names from all (not startic) methods.
-                                      </li>
-                                      <li><a name="ReflectionClassInfoAPIgetName"></a><h5>.getName():String</h5>
-                                        Returns the Name from the class (without "_global.").
-                                      </li>
-                                      <li><a name="ReflectionClassInfoAPIgetStaticMethods"></a><h5>.getStaticMethods():String</h5>
-                                        Returns the names from all static methods.
-                                      </li>
-                                      <li><a name="ReflectionClassInfoAPIgetStaticVars"></a><h5>.getStaticVars():TypedArray(String)</h5>
-                                        Returns the names from all static vars.
-                                      </li>
-                                      <li><a name="ReflectionClassInfoAPIgetVars"></a><h5>.getVars():TypedArray(String)</h5>
-                                        Returns the names from all (not static) vars.
-                                      </li>
-                                    </ul>
-                                    This Class will do the main part instead of the reflections. It will access the 
-                                  </li>
-                                </ul>
-                              </li>
-                              <li><a name="ReflectionExceptions"></a><h3>Exceptions</h3>
-                                Exceptions will be thrown if ...
-                                <ul>
-                                  <li>no class(function) has been given</li>
-                                  <li>the class was outside the scopeable area</li>
                                 </ul>
                               </li>
                             </ul>
@@ -499,6 +418,89 @@ a["monkey"] = "true";
                                     To prevent this we will not extend the Array, this class will be an bridge to the array.
                                   </li>
                                 </ol>
+                              </li>
+                            </ul>
+                          </li>
+                          <li><a name="BasicClass"></a><h2>Basic Class</h2>
+                            <ul>
+                              <li><a name="BasicClassReason"></a><h3>Reason</h3>
+                                Some functionalities simple work faster when you only have to access it.
+                              </li>
+                              <li><a name="BasicClassSolution"></a><h3>Solution</h3>
+                                The Solution is a basic class that everyone can extend. So access these would make it simpler to use. But this class will only be provided as bridge to other functionalities. To guarantee that if you have no possibility to extend this class(easy possible) you can still use the util.
+                              </li>
+                              <li><a name="BasicClassContent"></a><h3>Content</h3>
+                                <ul>
+                                  <li><a href="#Reflections">Reflections</a>
+                                    <code>.getClass():ClassInfo;</code>
+                                  </li>
+                                  <li><a href="#Cloning">Cloning</a>
+                                    <code>.clone():Object;</code>
+                                  </li>
+                                  <li><a href="#Overloading">Overloading</a>
+                                    <code>.overload([arguments], [OverloadHandler1],...[OverloadHandlerN]);
+.createOverloadHandler([Array], [String]);
+                                    </code>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                          <li><a name="Reflections"></a><h2>Reflection handling</h2>
+                            Java has a functionality for getting a classes name, methods and properties. This is mighty for getting more informations about an instance you've got.<br>
+                            <ul>
+                              <li><a name="ReflectionsReason"></a><h3>Reason</h3>
+                                Actually it's inbuilt in Java. Flash hasn't got something like that "inbuilt". This is a serious problem, so to solve this is not far away.
+                              </li>
+                              <li><a name="ReflectionsSolution"></a><h3>Solution</h3>
+                                We will provide a Util that handles all matter of reflections. This util will be found at <pre>org.as2lib.basic.Reflections</pre>.
+                                <h4>Logical Description</h4>
+                                The question i've heard most about this is "How the hell should this work?". There is a simple Answer: I use all scopeable areas that are available (starting with _level0 and _global), then i save all informations and step the name throught until i find the first instance, from there i will get the path. With the path and "eval" i'm able to fetch everything else.
+                              </li>
+                              <li><a name="ReflectionsAPI"></a><h3>API</h3>
+                                <ul>
+                                  <li><h4>.getClass([function]):ClassInfo</h4>
+                                    This single Accesspoint returns all informations within a ClassInfo object. 
+                                  </li>
+                                </ul>
+                              </li>
+                              <li><a name="ReflectionsClassInfo"></a><h3>ClassInfo</h3>
+                                <ul>
+                                  <li><a name="ReflectionClassInfoDescription"></a><h4>Description</h4>
+                                    This Class will do the main part instead of the reflections. It will access the 
+                                  </li>
+                                  <li><a name="ReflectionClassInfoAPI"></a><h4>API</h4>
+                                    <p class="note">Note: All functions use "lacy creation" so that no performance won't be lost.</p>
+                                    <ul>
+                                      <li><a name="ReflectionClassInfoAPIgetExtendedClass"></a><h5>.getExtendedClass():ClassInfo</h5>
+                                        Returns the informations about the class that's been extended. 
+                                      </li>
+                                      <li><a name="ReflectionClassInfoAPIgetMethods"></a><h5>.getMethods():TypedArray(String)</h5>
+                                        Returns the names from all (not startic) methods.
+                                      </li>
+                                      <li><a name="ReflectionClassInfoAPIgetName"></a><h5>.getName():String</h5>
+                                        Returns the Name from the class (without "_global.").
+                                      </li>
+                                      <li><a name="ReflectionClassInfoAPIgetStaticMethods"></a><h5>.getStaticMethods():String</h5>
+                                        Returns the names from all static methods.
+                                      </li>
+                                      <li><a name="ReflectionClassInfoAPIgetStaticVars"></a><h5>.getStaticVars():TypedArray(String)</h5>
+                                        Returns the names from all static vars.
+                                      </li>
+                                      <li><a name="ReflectionClassInfoAPIgetVars"></a><h5>.getVars():TypedArray(String)</h5>
+                                        Returns the names from all (not static) vars.
+                                      </li>
+                                    </ul>
+                                    This Class will do the main part instead of the reflections. It will access the 
+                                  </li>
+                                </ul>
+                              </li>
+                              <li><a name="ReflectionExceptions"></a><h3>Exceptions</h3>
+                                Exceptions will be thrown if ...
+                                <ul>
+                                  <li>no class(function) has been given</li>
+                                  <li>the class was outside the scopeable area</li>
+                                </ul>
                               </li>
                             </ul>
                           </li>
