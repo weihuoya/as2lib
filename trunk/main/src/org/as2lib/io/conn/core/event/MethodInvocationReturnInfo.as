@@ -18,8 +18,8 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.event.EventInfo;
 
 /**
- * MethodInvocationReturnInfo is a data transfer object used to inform
- * clients that the method invocation completed successfully.
+ * MethodInvocationReturnInfo gets used to inform clients that the method
+ * invocation completed successfully.
  *
  * <p>This class gets used in conjunction with the MethodInvocationCallback
  * and MethodInvocationReturnListener classes.
