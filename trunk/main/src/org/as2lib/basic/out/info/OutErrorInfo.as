@@ -7,21 +7,21 @@ import org.as2lib.basic.BasicClass;
  * @author Simon Wacker
  * @version 1.0
  */
-class org.as2lib.basic.out.OutWriteInfo extends BasicClass implements EventInfo {
+class org.as2lib.basic.out.info.OutErrorInfo extends BasicClass implements EventInfo {
 	/** The name of the event. */
 	private var name:String;
 	
-	/** The message. */
-	private var message:String;
+	/** The exception. */
+	private var throwable:Throwable;
 	
 	private var level:OutLevel;
 	
 	/**
 	 * Constructs a new OutInfo instance.
 	 */
-	public function OutWriteInfo(aName:String, aMessage:String, aLevel:OutLevel) {
+	public function OutErrorInfo(aName:String, aThrowable:Throwable, aLevel:OutLevel) {
 		name = aName;
-		message = aMessage;
+		throwable = aThrowable;
 		level = aLevel;
 	}
 	
@@ -30,10 +30,10 @@ class org.as2lib.basic.out.OutWriteInfo extends BasicClass implements EventInfo 
 	}
 	
 	/**
-	 * @return the message
+	 * @return the exception
 	 */
-	public function getMessage(Void):String {
-		return message;
+	public function getThrowable(Void):Throwable {
+		return throwable;
 	}
 	
 	/**

@@ -34,6 +34,6 @@ class org.as2lib.basic.BasicClass implements BasicInterface, Overload {
 	}
 	
 	public function toString(Void):String {
-		return StringifyUtil.stringifyObject(this);
+		return ObjectUtil.stringify(this);
 	}
 }
