@@ -23,15 +23,15 @@ import org.as2lib.data.io.conn.local.ReservedConnectionException;
 import org.as2lib.data.io.conn.local.MissingClientsException;
 import org.as2lib.data.io.conn.local.MissingClientException;
 import org.as2lib.data.io.conn.local.NotAllowedDomainException;
+import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.iterator.Iterator;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.EventInfo;
-import org.as2lib.Config;
-import org.as2lib.env.out.OutAccess;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.out.OutAccess;
 import org.as2lib.util.ObjectUtil;
-import org.as2lib.data.holder.TypedArray;
-import org.as2lib.data.iterator.ArrayIterator;
+import org.as2lib.Config;
 
 /**
  * LocalServer is a LocalConnection server, who is able to add clients and broadcast
@@ -64,7 +64,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	 * String, which method on the clients is accessed 
 	 * @see LocalServer constructor
 	 */
-	private var clientMethod:String;
+	private static var CLIENT_METHOD:String = "clientMethod";
 	
 	/* LocalConnection object for broadcasting messages */
 	private var sender:LocalConnection;
@@ -72,8 +72,8 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	/* Stores domain, used by allowDomain, for security */
 	//private var domain:String;
 
-	/* List of clients */
-	private var clients:TypedArray;
+	/* List of clients and their StatusListener Objects*/
+	private var clients:HashMap;
 	
 	/* Standard debug output */
 	private var aOut:OutAccess;
@@ -94,8 +94,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		
 		eventBroadcaster = Config.getEventBroadcasterFactory().createEventBroadcaster();
 		params = new Array();
-		clients = new TypedArray(String);
-		clientMethod = "clientMethod";
+		clients = new HashMap();
 	}
 	
 	/**
@@ -105,7 +104,6 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	public function initConnection(Void):Void {
 		aOut.debug(getClass().getName()+".initConnection");
 		if(!connect("register")){
-			//eventBroadcaster.dispatch(new ConnectorError("Connection name 'register' is already used by another LocalConnection",this,arguments,true,false));
 			eventBroadcaster.dispatch(new ConnectorError(new ReservedConnectionException("Connection name 'register' is already used by another LocalConnection",this,arguments)));
 		}
 	}
@@ -119,10 +117,10 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	public function addClient(id:String):Void{
 		aOut.debug(getClass().getName()+".addClient: "+id);
 		
-		if(clients.contains(id)) return;
-		
-    	clients.push(id);
-		eventBroadcaster.dispatch(new ConnectorResponse(getClass().getName()+".addClient on "+(clients.length-1)+" with "+clients.getValue(clients.length-1)));
+		if(clients.containsKey(id)) return;
+
+		clients.put(id,new Object());
+		eventBroadcaster.dispatch(new ConnectorResponse(getClass().getName()+".addClient on "+id+" with an Object"));
 	}
 	
 	/**
@@ -132,27 +130,28 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	private function dispatch(Void):Void{
 		aOut.debug(getClass().getName()+".dispatch");
 		
-		var l:Number = clients.length;
-		
-		if(l==0){
+		if(clients.isEmpty()){
 			eventBroadcaster.dispatch(new ConnectorError(new MissingClientsException("LocalServer has no clients to broadcast !",this,arguments)));
-			//eventBroadcaster.dispatch(new ConnectorError("No clients added!",this,arguments,false,true));
 			return;
 		}
 		
 		var args:Array = new Array();
 		sender = new LocalConnection();
 		
-		aOut.debug(getClass().getName()+".clients.length:"+l);
+		aOut.debug(getClass().getName()+".clients.length:"+clients.size());
 		
-		args.push(clientMethod);
+		args.push(CLIENT_METHOD);
 		args.push(method);
 		args = args.concat(params);
 		
-		while(l--){
-			aOut.debug(getClass().getName()+".dispatch: "+clients.getValue(l));
-			sender.send.apply(this,[clients.getValue(l)].concat(args));
-			//currClient = clients.getValue(l);
+		var keys:Array = clients.getKeys();
+		var it:Iterator = clients.iterator();
+		
+		while(it.hasNext()){
+			var obj:Object = it.next();
+			var key:String = String(keys.shift());
+			aOut.debug(getClass().getName()+".dispatch: "+obj+" @ "+key);
+			sender.send.apply(this,[key].concat(args));
 		}
 	}
 	
@@ -241,7 +240,6 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	public function onStatus(infoObj){
 		aOut.debug(getClass().getName()+".onStatus: "+infoObj.level);
 		if(infoObj.level == "error") {
-			//eventBroadcaster.dispatch(new ConnectorError("One client doesn´t exist anymore",this,arguments,true,false));
 			eventBroadcaster.dispatch(new ConnectorError(new MissingClientException("One client doesn´t exist anymore !",this,arguments)));
 		}
 		if(infoObj.level == "status") {
@@ -263,7 +261,6 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 				return true;
 			}
 			else{
-				//eventBroadcaster.dispatch(new ConnectorError("Clientdomain "+clientDomain+" is not allowed !",this,arguments,false,true));
 				eventBroadcaster.dispatch(new ConnectorError(new NotAllowedDomainException("Clientdomain "+clientDomain+" is not allowed !",this,arguments)));
 				return false;
 			}
