@@ -76,7 +76,7 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	 * @see org.as2lib.data.holder.Queue#iterator()
 	 */
 	public function iterator(Void):Iterator {
-		return (new ArrayIterator(data));
+		return (new ArrayIterator(data.concat()));
 	}
 	
 	/**
