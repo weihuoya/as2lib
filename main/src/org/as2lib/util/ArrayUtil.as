@@ -58,4 +58,23 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 											eval("th" + "is"),
 											arguments);
 	}
+	
+	/**
+	 * Checks if the array already contains the passed object.
+	 *
+	 * @param array the Array that contains the elements
+	 * @param object the object that shall be checked for availability
+	 * @return true if the array contains the object else false
+	 */
+	public static function contains(array:Array, object):Boolean {
+		var l:Number = array.length;
+		for (var i:Number = 0; i < l; i++) {
+			if (array[i] === object) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 }

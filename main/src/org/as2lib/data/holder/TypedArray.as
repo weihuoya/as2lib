@@ -69,49 +69,6 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	}
 	
 	/**
-	 * Checks if the array already contains the passed object.
-	 *
-	 * @param object the object that shall be checked for availability
-	 * @return true if the array contains the object else false
-	 */
-	/*public function contains(object):Boolean {
-		var l:Number = array.length;
-		for (var i:Number = 0; i < l; i++) {
-			if (array[i] === object) {
-				return true;
-			}
-		}
-		return false;
-	}*/
-	
-	/**
-	 * Removes all content out of the TypedArray.
-	 *
-	 * @param 
-	 */
-	/*public function clear(Void):Void {
-		array = new Array();
-	}*/
-	
-	/**
-	 * Sets the new value at the given position.
-	 * @param number
-	 * @param value
-	 */
-	/*public function setValue(number:Number, value):Void {
-		this.array[number] = value;
-	}*/
-	
-	/**
-	 * Gets the value associated with the given number.
-	 * @param number
-	 * @return the value
-	 */
-	/*public function getValue(number:Number) {
-		return this.array[number];
-	}*/
-	
-	/**
 	 * @see Array
 	 */
 	public function join(seperator:String):String {
@@ -178,25 +135,11 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	}
 	
 	/**
-	 * @return the type of the array
-	 */
-	/*public function getType(Void):Function {
-		return this.type;
-	}*/
-	
-	/**
 	 * @see Array
 	 */
 	public function get length():Number {
 		return this.array.length;
 	}
-	
-	/**
-	 * @see #length
-	 */
-	/*public function getLength():Number {
-		return this.length;
-	}*/
 	
 	public function getClass(Void):ClassInfo {
 		return ReflectUtil.getClassInfo(this);
@@ -205,13 +148,7 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	public function toString(Void):String {
 		return "";
 	}
-	
-	/**
-	 * Checks if the object is of correct type.
-	 *
-	 * @param object the object that shall be type checked
-	 * @throws 
-	 */
+
 	/**
 	 * Validates the passed object based on its type.
 	 *
