@@ -39,6 +39,10 @@ class AssertTest extends TestCase {
 		// throw "My Error @ constructor";
 	}
 	
+	public function dontTestMe(Void):Void {
+		fail("NOT FAIL!, this method should not be called");
+	}
+	
     public function setUp(Void):Void {
 		// Only for a test
 		// Strings thrown to evaluate how it acts with unexcepted Exceptiontypes.
@@ -56,11 +60,11 @@ class AssertTest extends TestCase {
 	}
 	
 	public function testTrue(Void):Void {
-		assertFalse("NOT Fail! 1 ", assertTrue(false));
-		assertFalse("NOT Fail! 2 ", assertTrue("fail", false));
-		assertFalse("NOT Fail! 3 ", assertTrue());
-		assertTrue ("NOT Fail! 4 ", assertTrue("NOT FAIL!", true));
-		assertTrue ("NOT Fail! 5 ", assertTrue(true));
+		assertFalse("NOT FAIL! 1 ", assertTrue(false));
+		assertFalse("NOT FAIL! 2 ", assertTrue("fail", false));
+		assertFalse("NOT FAIL! 3 ", assertTrue());
+		assertTrue ("NOT FAIL! 4 ", assertTrue("NOT FAIL!", true));
+		assertTrue ("NOT FAIL! 5 ", assertTrue(true));
 	}
 	
     public function testFalse(Void):Void {
@@ -271,6 +275,14 @@ class AssertTest extends TestCase {
 		assertFalse("NOT FAIL! 15", assertThrows("fail", Throwable, this, throwSomethingByNoParams, [{a:""},"b"]));
 		assertFalse("NOT FAIL! 16", assertThrows("fail", Throwable, this, "here", []))
 		assertFalse("NOT FAIL! 17", assertThrows("fail", String, this, throwIllegalArgumentException, []))
+		
+		// Tests without Type
+		assertTrue ("NOT FAIL! 18", assertThrows("NOT FAIL!", this, "throwIllegalArgumentException", []));
+		assertTrue ("NOT FAIL! 19", assertThrows("NOT FAIL!", this, throwIllegalArgumentException, []));
+		assertTrue ("NOT FAIL! 20", assertThrows("NOT FAIL!", new Call(this, throwIllegalArgumentException), []));
+		assertTrue ("NOT FAIL! 21", assertThrows(this, "throwIllegalArgumentException", []));
+		assertTrue ("NOT FAIL! 22", assertThrows(this, throwIllegalArgumentException, []));
+		assertTrue ("NOT FAIL! 23", assertThrows(new Call(this, throwIllegalArgumentException), []));
 	}
 	
 	public function testNotThrows(Void):Void {
@@ -296,6 +308,14 @@ class AssertTest extends TestCase {
 		assertTrue ("NOT FAIL! 15", assertNotThrows("NOT FAIL!", Throwable, this, throwSomethingByNoParams, [{a:""},"b"]));
 		assertFalse("NOT FAIL! 16", assertNotThrows("fail", Throwable, this, "here", []))
 		assertTrue ("NOT FAIL! 17", assertNotThrows("fail", String, this, throwIllegalArgumentException, []))
+		
+		// Tests without Type
+		assertFalse("NOT FAIL! 18", assertNotThrows("fail", this, "throwIllegalArgumentException", []));
+		assertFalse("NOT FAIL! 19", assertNotThrows("fail", this, throwIllegalArgumentException, []));
+		assertFalse("NOT FAIL! 20", assertNotThrows("fail", new Call(this, throwIllegalArgumentException), []));
+		assertFalse("NOT FAIL! 21", assertNotThrows(this, "throwIllegalArgumentException", []));
+		assertFalse("NOT FAIL! 22", assertNotThrows(this, throwIllegalArgumentException, []));
+		assertFalse("NOT FAIL! 23", assertNotThrows(new Call(this, throwIllegalArgumentException), []));
 	}
 	
 	/**
