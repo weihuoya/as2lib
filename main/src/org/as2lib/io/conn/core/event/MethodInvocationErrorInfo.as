@@ -24,8 +24,8 @@ import org.as2lib.env.event.EventInfo;
  * <p>It defines constants, that can be used to identify what kind of
  * error occured.
  *
- * <p>This class gets used in conjunction with the MethodInvocationCallback
- * and MethodInvocationErrorListener classes.
+ * <p>This class gets used in conjunction with the {@link MethodInvocationCallback}
+ * and {@link MethodInvocationErrorListener} classes.
  *
  * @author Simon Wacker
  */
@@ -79,20 +79,30 @@ class org.as2lib.io.conn.core.event.MethodInvocationErrorInfo extends BasicClass
 	}
 	
 	/**
-	 * @return the url to the service the method should be or was executed on
+	 * Returns the url to the service the method should be or was executed
+	 * on.
+	 *
+	 * @return the url to the service the method should be or was executed
+	 * on
 	 */
 	public function getServiceUrl(Void):String {
 		return serviceUrl;
 	}
 	
 	/**
-	 * @return the name of the method that should be or was executed on the service
+	 * Returns the name of the method that caused this error.
+	 *
+	 * @return the name of the method that should be or was executed on the
+	 * service
 	 */
 	public function getMethodName(Void):String {
 		return methodName;
 	}
 	
 	/**
+	 * Returns the arguments used as parameters for the method invocaton
+	 * that caused this error.
+	 *
 	 * @return the arguments used as parameters for the method invocation
 	 */
 	public function getMethodArguments(Void):Array {
@@ -100,22 +110,27 @@ class org.as2lib.io.conn.core.event.MethodInvocationErrorInfo extends BasicClass
 	}
 	
 	/**
-	 * @return the error code that describes the type of the error
+	 * Returns the error code that describes this error.
+	 *
+	 * @return the error code that describes the type of this error
 	 */
 	public function getErrorCode(Void):Number {
 		return errorCode;
 	}
 	
 	/**
-	 * @return the exception that caused the error
+	 * Returns the exception that caused this error.
+	 *
+	 * @return the exception that caused this error
 	 */
 	public function getException(Void) {
 		return exception;
 	}
 	
 	/**
+	 * Returns the name of the event 'onError'.
+	 *
 	 * @return 'onError'
-	 * @see EventInfo#getName(Void):String
 	 */
 	public function getName(Void):String {
 		return "onError";

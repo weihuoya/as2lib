@@ -70,8 +70,8 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	/**
 	 * Returns the currently used server registry.
 	 *
-	 * <p>That is either the server registry set via #setServerRegistry(ServerRegistry):Void
-	 * or the default registry returned by the LocalConfig#getServerRegistry(Void):ServerRegistry
+	 * <p>That is either the server registry set via {@link #setServerRegistry}
+	 * or the default registry returned by the {@link LocalConfig#getServerRegistry}
 	 * method.
 	 *
 	 * @return the currently used server registry
@@ -84,7 +84,7 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	/**
 	 * Sets a new server registry.
 	 *
-	 * <p>If the new server registry is null or undefined the getServerRegistry(Void):ServerRegistry
+	 * <p>If the new server registry is null or undefined the {@link #getServerRegistry}
 	 * method will return the default server registry.
 	 *
 	 * @param serverRegistry the new server registry
@@ -99,8 +99,6 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	 *
 	 * <p>If the server is already running a restart will be made. That means
 	 * it will be stopped and run again.
-	 *
-	 * @see Server#run(Void):Void
 	 */
 	public function run(Void):Void {
 		if (isRunning()) this.stop();
@@ -116,8 +114,6 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	
 	/**
 	 * Stops all services and removes itself from the server registry.
-	 *
-	 * @see Server#stop()
 	 */
 	public function stop(Void):Void {
 		if (services.size() > 0) {
@@ -135,15 +131,14 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	/**
 	 * Adds the service for the passed-in path.
 	 *
-	 * <p>Service and path get wrapped in a ServerServiceProxy instance.
-	 * This service proxy may throw an IllegalArgumentException if the
+	 * <p>Service and path get wrapped in a {@link ServerServiceProxy} instance.
+	 * This service proxy may throw an {@link IllegalArgumentException} if the
 	 * service is null.
 	 *
 	 * @param path that path to the service on the host
 	 * @param service the service to make locally available
 	 * @return the newly created server service proxy that wraps the service and the path
 	 * @throws IllegalArgumentException if the passed-in path is null, undefined or an empty string
-	 * @see Server#putService(String, *):ServerServiceProxy
 	 */
 	public function putService(path:String, service):ServerServiceProxy {
 		// source out instantiation
@@ -161,7 +156,6 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	 * @throws IllegalArgumentException if the passed-in service proxy is null or undefined
 	 *                                  if the path of the passed-in service proxy is null, undefined or a blank string
 	 *                                  if the path of the passed-in service proxy is already in use
-	 * @see Server#addService(ServerServiceProxy):Void
 	 */
 	public function addService(serviceProxy:ServerServiceProxy):Void {
 		if (!serviceProxy) throw new IllegalArgumentException("Service proxy must not be null or undefined.", this, arguments);
@@ -187,7 +181,6 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	 *
 	 * @param path the path of the service to remove
 	 * @return the removed server service proxy wrapping the actual service
-	 * @see Server#removeService(String):ServerServiceProxy
 	 */
 	public function removeService(path:String):ServerServiceProxy {
 		if (!path) return null;
@@ -207,7 +200,6 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	 *
 	 * @param path the path of the service that gets returned
 	 * @return the server service proxy wrapping the actual service
-	 * @see Server#getService(String):ServerServiceProxy
 	 */
 	public function getService(path:String):ServerServiceProxy {
 		if (!path) return null;
@@ -218,11 +210,10 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	 * Returns whether the server is running.
 	 *
 	 * <p>The server is by default not running. It runs as soon as you call
-	 * the #run(Void):Void method. And stops when you call the #stop(Void):Void
+	 * the {@link #run} method. And stops when you call the {@ink #stop}
 	 * method.
 	 *
 	 * @return true if the server runs else false
-	 * @see Server#isRunning(Void):Boolean
 	 */
 	public function isRunning(Void):Boolean {
 		return running;
@@ -232,7 +223,6 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	 * Returns the host of this server.
 	 *
 	 * @return this server's host
-	 * @see Server#getHost(Void):String
 	 */
 	public function getHost(Void):String {
 		return host;

@@ -60,7 +60,7 @@ interface org.as2lib.io.conn.core.event.MethodInvocationErrorListener extends Ev
 	 * <p>Remember that not all clients support this functionalities.
 	 *
 	 * @param errorInfo contains information about the error and some useful
-	 *                  information about the 'invoked' method
+	 * information about the 'invoked' method
 	 */
 	public function onError(errorInfo:MethodInvocationErrorInfo):Void;
 	

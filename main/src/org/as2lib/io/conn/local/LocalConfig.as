@@ -41,8 +41,8 @@ class org.as2lib.io.conn.local.LocalConfig extends BasicClass {
 	/**
 	 * Returns the currently used server registry.
 	 *
-	 * <p>That is either the server registry set via #setServerRegistry or
-	 * the default LocalServerRegistry instance.
+	 * <p>That is either the server registry set via {@link #setServerRegistry}
+	 * or a default {@link LocalServerRegistry} instance.
 	 *
 	 * @return the currenlty used server registry
 	 * @see #setServerRegistry
@@ -56,7 +56,7 @@ class org.as2lib.io.conn.local.LocalConfig extends BasicClass {
 	 * Sets a new server registry.
 	 *
 	 * <p>If you set a server registry of value null or undefined
-	 * #getServerRegistry will return the default server registry.
+	 * {@link #getServerRegistry} will return the default server registry.
 	 *
 	 * @param newServerRegistry the new server registry
 	 * @see #getServerRegistry

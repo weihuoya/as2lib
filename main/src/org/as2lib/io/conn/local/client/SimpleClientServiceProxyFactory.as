@@ -23,8 +23,8 @@ import org.as2lib.io.conn.local.client.LocalClientServiceProxy;
  * SimpleClientServiceProxyFactory is the simplest implementation of
  * a client service proxy factory.
  *
- * <p>It allows only for the getClientServiceProxyByUrl(String):ClientServiceProxy 
- * method to be used and not for the getClientServiceProxyByUrlAndType(String, Function)
+ * <p>It allows only for the {@link #getClientServiceProxyByUrl} method
+ * to be used and not for the {@link #getClientServiceProxyByUrlAndType}
  * method.
  * <code>
  * var clientFactory:SimpleClientServiceProxyFactory = new SimpleClientServiceProxyFactory();
@@ -45,11 +45,11 @@ class org.as2lib.io.conn.local.client.SimpleClientServiceProxyFactory extends Ab
 	 * Returns a client service proxy for the service specified by the url.
 	 *
 	 * <p>You can use this proxy to invoke methods on the 'remote' service
-	 * and to handle responses.
+	 * and to handle responses. The client service proxy is an instance of
+	 * the class {@link LocalClientServiceProxy}.
 	 *
 	 * @param url the url of teh 'remote' service
 	 * @return a client service proxy used to call methods on the 'remote' service
-	 * @see ClientServiceProxyFactory#getClientServiceProxyByUrl(String):ClientServiceProxy
 	 */
 	public function getClientServiceProxyByUrl(url:String):ClientServiceProxy {
 		return new LocalClientServiceProxy(url);

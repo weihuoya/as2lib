@@ -22,7 +22,7 @@ import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
 
 /**
  * Offers default implementations of some methods needed when implemnting
- * the ClientServiceProxy interface.
+ * the {@link ClientServiceProxy} interface.
  *
  * @author Simon Wacker
  */
@@ -32,7 +32,7 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicCla
 	 * Generates the response url for a service.
 	 *
 	 * <p>The response url gets composed as follows:
-	 * [serviceUrl].[methodName]_Return_[index]
+	 * <pre>[serviceUrl].[methodName]_Return_[index]</pre>
 	 *
 	 * <p>If the methodName is null, undefined or an empty string it will
 	 * be composed as follows:
@@ -72,11 +72,10 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicCla
 	}
 	
 	/**
-	 * @overload #invokeByName(String):MethodInvocationCallback
-	 * @overload #invokeByNameAndArguments(String, Array):MethodInvocationCallback
-	 * @overload #invokeByNameAndCallback(String, MethodInvocationCallback):MethodInvocationCallback
-	 * @overload #invokeByNameAndArgumentsAndCallback(String, Array, MethodInvocationCallback):MethodInvocationCallback
-	 * @see ClientServiceProxy#invoke():MethodInvocationCallback
+	 * @overload #invokeByName
+	 * @overload #invokeByNameAndArguments
+	 * @overload #invokeByNameAndCallback
+	 * @overload #invokeByNameAndArgumentsAndCallback
 	 */
 	public function invoke():MethodInvocationCallback {
 		var o:Overload = new Overload(this);
@@ -88,20 +87,33 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicCla
 	}
 	
 	/**
-	 * Forwards to the invokeByNameAndArguments-method passing an empty
-	 * argumetns array.
+	 * Invokes the passed-in method on the service.
 	 *
-	 * @see ClientServiceProxy#invokeByName(String):MethodInvocationCallback
+	 * <p>The invocation is done by forwardning to the {@link #invokeByNameAndArguments}
+	 * method passing an empty arguments array.
+	 *
+	 * @param methodName the name of the method to invoke
+	 * @return a callback that can be used to get informed of the response
 	 */
 	public function invokeByName(methodName:String):MethodInvocationCallback {
 		return this["invokeByNameAndArguments"](methodName, []);
 	}
 	
 	/**
-	 * Forwards to the invokeByNameAndArgumentsAndCallback-method passing an
-	 * empty argumetns array.
+	 * Invokes the passed-in method on the service.
 	 *
-	 * @see ClientServiceProxy#invokeByNameAndCallback(String, MethodInvocationCallback):MethodInvocationCallback
+	 * <p>When the response arrives the appropriate callback method gets
+	 * invoked.
+	 *
+	 * <p>If the passed-in callback is not null, the returned callback
+	 * should be the same.
+	 *
+	 * <p>The invocation is done by forwardning to the {@link #invokeByNameAndArgumentsAndCallback}
+	 * method passing an empty arguments array.
+	 *
+	 * @param methodName the name of the method to invoke
+	 * @param callback the callback that receives the return value or errors
+	 * @return a callback that can be used to get informed of the response
 	 */
 	public function invokeByNameAndCallback(methodName:String, callback:MethodInvocationCallback):MethodInvocationCallback {
 		return this["invokeByNameAndArgumentsAndCallback"](methodName, [], callback);
