@@ -178,7 +178,7 @@ class org.as2lib.test.unit.TestCaseMethodInfo extends BasicClass {
 	 * @return TestCaseMethodInfo as well formated String.
 	 */
 	public function toString(Void):String {
-		var result:String = getMethodInfo().toString()+" ["+getStopWatch().getTimeInMilliSeconds()+"ms]";
+		var result:String = getMethodInfo().getName()+"() ["+getStopWatch().getTimeInMilliSeconds()+"ms]";
 		var errors:Array = getErrors();
 		if(errors.length > 1) {
 			result += " "+getErrors().length+" errors occured";

@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.test.unit.AbstractAssertInfo;
+import org.as2lib.util.StringUtil;
 
 /**
  * Information holder and examiner of a assertInfinity call.
@@ -57,7 +58,7 @@ class org.as2lib.test.unit.info.AssertInfinityInfo extends AbstractAssertInfo {
 			result += " with message: "+message;
 		}
 		result += "!\n"
-				+ "  "+val+" !== Infinity";
+				+ StringUtil.addSpaceIndent(val+" !== Infinity", 2);
 		return result;
 	}
 	
