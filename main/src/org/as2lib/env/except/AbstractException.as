@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.env.except.Throwable;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
@@ -49,6 +50,11 @@ class org.as2lib.env.except.AbstractException extends Error {
 	 * @param args the arguments of the throwing operation
 	 */
 	private function AbstractException(message:String, thrower, args:FunctionArguments) {
+		if (!message || !thrower || !args) {
+			throw new IllegalArgumentException("All three specified arguments [message:String, thrower, args:FunctionArguments] must be passed.",
+											   this,
+											   arguments);
+		}
 		stackTrace = new SimpleStack();
 		this.message = message;
 		addStackTraceElement(thrower, args.callee, args);

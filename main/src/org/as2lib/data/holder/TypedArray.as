@@ -104,7 +104,9 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	 */
 	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].");
+			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].",
+											   this,
+											   arguments);
 		}
 	}
 }

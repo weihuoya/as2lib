@@ -99,7 +99,9 @@ class org.as2lib.data.holder.TypedQueue extends BasicClass implements Queue {
 	 */
 	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].");
+			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].",
+											   this,
+											   arguments);
 		}
 	}
 }

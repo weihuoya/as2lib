@@ -27,13 +27,6 @@ import org.as2lib.data.holder.Map;
  */
 interface org.as2lib.env.reflect.CompositeMemberInfo extends MemberInfo {
 	/**
-	 * Returns the name of the entity this CompositeMemberInfo represents.
-	 *
-	 * @return the name of the entity
-	 */
-	public function getName(Void):String;
-	
-	/**
 	 * Returns the full name of the entity this CompositeMemberInfo represents. The full
 	 * name includes the name as well as the path.
 	 *
