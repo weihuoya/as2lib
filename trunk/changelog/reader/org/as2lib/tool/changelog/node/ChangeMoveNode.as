@@ -50,7 +50,11 @@ class org.as2lib.tool.changelog.node.ChangeMoveNode extends BasicClass {
 	 */
 	public function toString(Void):String {
 		var result:String;
-		result = "Moved "+from+" to "+to;
+		result = "Moved ";
+		if(from) {
+			result += from+" ";
+		}
+		result += " to "+to;
 		if(annotation.length > 0) {
 			result += "("+annotation+")";
 		}
