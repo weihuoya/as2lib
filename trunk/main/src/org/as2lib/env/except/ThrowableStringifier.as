@@ -92,7 +92,7 @@ class org.as2lib.env.except.ThrowableStringifier extends BasicClass implements S
 		if (stackTrace && stackTrace.length > 0) {
 			result += "\n" + stringifyStackTrace(throwable.getStackTrace());
 		}
-		var cause:Throwable = throwable.getCause();
+		var cause = throwable.getCause();
 		if (cause) {
 			result += "\nCaused by: " + cause;
 		}

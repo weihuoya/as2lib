@@ -14,24 +14,25 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.except.WrapperException;
+import org.as2lib.env.except.Exception;
 
 /**
  * Exception as Wrapper for a exception thrown during execution of a event.
  *
  * @author Martin Heidegger
  */
-class org.as2lib.env.event.EventExecutionException extends WrapperException {
+class org.as2lib.env.event.EventExecutionException extends Exception {
 	
 	/**
 	 * Constructs a new EventExecutionExceptions
 	 *
-	 * @param e Generic error to be wrapped
+	 * @param error Generic error to wrap
 	 * @param message Message to the exception.
 	 * @param scope Scope where the exception was thrown.
 	 * @param args Arguments of the scope.
 	 */
-	public function EventExecutionException(e, message:String, scope, args:FunctionArguments) {
-		super(e, message, scope, args);
+	public function EventExecutionException(error, message:String, scope, args:FunctionArguments) {
+		super (message, scope, args);
+		initCause(error);
 	}
 }

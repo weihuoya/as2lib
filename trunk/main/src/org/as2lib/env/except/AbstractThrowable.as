@@ -50,7 +50,7 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	private var stackTrace:Array;
 	
 	/** The Throwable that caused this Throwable to be thrown. */
-	private var cause:Throwable;
+	private var cause;
 	
 	/** The message describing what was wrong. */
 	private var message:String;
@@ -166,7 +166,7 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	 * @return the initialized cause
 	 * @see #initCause
 	 */
-	public function getCause(Void):Throwable {
+	public function getCause(Void) {
 		return cause;
 	}
 	
@@ -193,7 +193,7 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	 * @throws org.as2lib.env.except.IllegalStateException if the cause has already been initialized
 	 * @see #getCause
 	 */
-	public function initCause(newCause:Throwable):Throwable {
+	public function initCause(newCause):Throwable {
 		if (!newCause) throw new IllegalArgumentException("Cause must not be null or undefined.", this, arguments);
 		if (cause) throw new IllegalStateException("The cause [" + cause + "] has already been initialized.", this, arguments);
 		cause = newCause;
