@@ -30,9 +30,9 @@ class test.org.as2lib.data.io.conn.local.ServerListener extends BasicClass imple
 	public function onError(error:ConnectorError):Void{
 		aOut.debug(getClass().getName()+".onError");
 		aOut.debug(getClass().getName()+".cnt = "+cnt);
-		aOut.error(error);
-		flashOutput.htmlText += "<b><font color='#FF0000'>"+error.getClass().getFullName()+"</font></b><br>";
-		flashOutput.htmlText += "<font color='#FF0000'>"+error.getMessage()+"</font>";
+		aOut.error(error.getException());
+		flashOutput.htmlText += "<b><font color='#FF0000'>"+error.getException().getClass().getFullName()+"</font></b><br>";
+		flashOutput.htmlText += "<font color='#FF0000'>"+error.getException().getMessage()+"</font>";
 	}
 	
 	public function onResponse(response:ConnectorResponse):Void{
