@@ -32,7 +32,7 @@ class org.as2lib.env.except.Exception extends AbstractException implements Throw
 	public function toString(Void):String {
 		if (ObjectUtil.isEmpty(arguments.caller)) {
 			ExceptConfig.getOut().error(this);
-			return;
+			return "";
 		}
 		return ExceptConfig.getThrowableStringifier().execute(this);
 	}
