@@ -151,12 +151,26 @@ class org.as2lib.basic.TypedArray {
 	}
 	
 	/**
+	 * Checks if the array already contains the object.
+	 * @param object
+	 * @return True if the array contains the object else false
+	 */
+	public function contains(object:Object):Boolean {
+		var l:Number = array.length;
+		for (var i:Number = 0; i < l; i++) {
+			if (array[i] === object) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * Checks if the instance variable type does not match the type of the object.
 	 * @param object
 	 * @return true if the types do not match otherwise false
 	 */
-
-	public function validate(object:Object):Void {
+	private function validate(object:Object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
 			throw new Error();
 		}
