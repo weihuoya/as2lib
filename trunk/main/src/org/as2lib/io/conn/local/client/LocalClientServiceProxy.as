@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.env.overload.Overload;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.conn.core.client.ClientServiceProxy;
 import org.as2lib.io.conn.core.client.AbstractClientServiceProxy;
 import org.as2lib.io.conn.core.client.UnknownServiceException;
@@ -29,8 +30,8 @@ import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
  * Proxy handles client request to a certain service and its response.
  * services, which are availiable after server is started.
  *
- * @author Christoph Atteneder
  * @author Simon Wacker
+ * @author Christoph Atteneder
  */
 class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractClientServiceProxy implements ClientServiceProxy {
 	
@@ -49,16 +50,28 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	 * @param url the url to the service
 	 */
 	public function LocalClientServiceProxy(url:String) {
+		if (!url) throw new IllegalArgumentException("Url must not be null, undefined or an empty string.", this, arguments);
 		this.url = url;
 		connection = new EnhancedLocalConnection();
 		responseServices = new Array();
 	}
 	
 	/**
+	 * Returns the url of the service this proxy connects to.
+	 *
+	 * <p>The url is never null, undefined or an empty string.
+	 *
+	 * @return the url of the service to connect to
+	 */
+	public function getUrl(Void):String {
+		return url;
+	}
+	
+	/**
 	 * @see ClientServiceProxy#invokeByNameAndArguments()
 	 */
 	public function invokeByNameAndArguments(name:String, args:Array):MethodInvocationCallback {
-		return invokeByNameAndArgumentsAndCallback(name, args, new MethodInvocationCallback());
+		return invokeByNameAndArgumentsAndCallback(name, args, null);
 		/*try {
 			connection.send(url, "invokeMethod", [name, args]);
 		} catch (exception:org.as2lib.io.conn.local.core.UnknownConnectionException) {
@@ -70,6 +83,10 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	 * @see ClientServiceProxy#invokeByNameAndArgumentsAndCallback()
 	 */
 	public function invokeByNameAndArgumentsAndCallback(name:String, args:Array, callback:MethodInvocationCallback):MethodInvocationCallback {
+		if (!name) throw new IllegalArgumentException("Method name must not be null, undefined or an empty string.", this, arguments);
+		if (!args) args = new Array();
+		if (!callback) callback = new MethodInvocationCallback();
+		
 		var responseUrl:String = generateResponseServiceUrl(url, name);
 		
 		var responseService:EnhancedLocalConnection = new EnhancedLocalConnection();
@@ -117,7 +134,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 			if (arguments[arguments.length] instanceof MethodInvocationCallback) {
 				owner.invokeByNameAndArgumentsAndCallback(methodName, arguments, MethodInvocationCallback(arguments.pop()));
 			} else {
-				owner.invokeByNameAndArguments(methodName, arguments);
+				owner.invokeByNameAndArgumentsAndCallback(methodName, arguments, null);
 			}
 		});
 	}

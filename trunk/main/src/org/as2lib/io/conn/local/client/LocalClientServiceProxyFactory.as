@@ -13,24 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-import org.as2lib.core.BasicClass;
-import org.as2lib.env.overload.Overload;
+
 import org.as2lib.env.reflect.ProxyFactory;
 import org.as2lib.env.reflect.ResolveProxyFactory;
 import org.as2lib.env.reflect.InvocationHandler;
 import org.as2lib.io.conn.core.client.ClientServiceProxy;
 import org.as2lib.io.conn.core.client.ClientServiceProxyFactory;
+import org.as2lib.io.conn.core.client.AbstractClientServiceProxyFactory;
 import org.as2lib.io.conn.local.client.LocalClientServiceProxy;
+import org.as2lib.io.conn.local.client.SimpleClientServiceProxyFactory;
 import org.as2lib.io.conn.core.event.MethodInvocationCallback;
+
 /**
- * @author Christoph Atteneder
  * @author Simon Wacker
+ * @author Christoph Atteneder
  */
-class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends BasicClass implements ClientServiceProxyFactory {
+class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends AbstractClientServiceProxyFactory implements ClientServiceProxyFactory {
 	
-	/** The currently used proxy factory. */
-	private var proxyFactory:ProxyFactory;
+	/** The currently used proxy factory to create proxies for a specific type. */
+	private var typeProxyFactory:ProxyFactory;
+	
+	/** Stores the client service proxy factory used to get client service proxy instances. */
+	private var clientServiceProxyFactory:ClientServiceProxyFactory;
 	
 	/**
 	 * Constructs a new LocalClientServiceProxyFactory.
@@ -44,9 +48,9 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Bas
 	 *
 	 * @return the currently used service proxy factory
 	 */
-	public function getServiceProxyFactory(Void):ProxyFactory {
-		if (!proxyFactory) proxyFactory = new ResolveProxyFactory();
-		return proxyFactory;
+	public function getTypeProxyFactory(Void):ProxyFactory {
+		if (!typeProxyFactory) typeProxyFactory = new ResolveProxyFactory();
+		return typeProxyFactory;
 	}
 	
 	/**
@@ -54,42 +58,60 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Bas
 	 *
 	 * @param proxyFactory the new service proxy factory
 	 */
-	public function setServiceProxyFactory(proxyFactory:ProxyFactory):Void {
-		this.proxyFactory = proxyFactory;
+	public function setTypeProxyFactory(typeServiceProxyFactory:ProxyFactory):Void {
+		this.typeProxyFactory = typeServiceProxyFactory;
 	}
 	
 	/**
-	 * @see ClientServiceProxyFactory#getServiceProxy()
+	 * Returns the client service proxy factory used to get client service proxy
+	 * instances.
+	 *
+	 * <p>The returned factory is either the one set via setClientServiceProxyFactory(ClientServiceProxyFactory):Void
+	 * or the default one which is an instance of SimpleClientServiceProxyFactory.
+	 *
+	 * @return the currently used client service proxy factory
 	 */
-	public function getServiceProxy() {
-		var o:Overload = new Overload(this);
-		o.addHandler([String], getServiceProxyByUrl);
-		o.addHandler([String, Function], getServiceProxyByUrlAndType);
-		return o.forward(arguments);
+	public function getClientServiceProxyFactory(Void):ClientServiceProxyFactory {
+		if (!clientServiceProxyFactory) clientServiceProxyFactory = new SimpleClientServiceProxyFactory();
+		return clientServiceProxyFactory;
 	}
 	
 	/**
-	 * @see ClientServiceProxyFactory#getServiceProxyByUrl()
+	 * Sets a new client service proxy factory used to get client service proxy
+	 * instances.
+	 *
+	 * <p>If you set a new factory of value null or undefined getClientServiceProxyFactory(Void):ClientServiceProxyFactory
+	 * will return the default factory.
+	 *
+	 * @param clientServiceProxyFactory the new client service proxy factory
 	 */
-	public function getServiceProxyByUrl(url:String):ClientServiceProxy {
-		return new LocalClientServiceProxy(url);
+	public function setClientServiceProxyFactory(clientServiceProxyFactory:ClientServiceProxyFactory):Void {
+		this.clientServiceProxyFactory = clientServiceProxyFactory;
 	}
 	
 	/**
-	 * @see ClientServiceProxyFactory#getServiceProxyByUrlAndType()
+	 * @see ClientServiceProxyFactory#getClientServiceProxyByUrl()
 	 */
-	public function getServiceProxyByUrlAndType(url:String, type:Function) {
-		var proxy:ClientServiceProxy = new LocalClientServiceProxy(url);
+	public function getClientServiceProxyByUrl(url:String):ClientServiceProxy {
+		return getClientServiceProxyFactory().getClientServiceProxy(url);
+	}
+	
+	/**
+	 * @see ClientServiceProxyFactory#getClientServiceProxyByUrlAndType()
+	 */
+	public function getClientServiceProxyByUrlAndType(url:String, type:Function) {
+		var serviceProxy:ClientServiceProxy = getClientServiceProxyByUrl(url);
+		if (!type) return serviceProxy;
 		var handler:InvocationHandler = new InvocationHandler();
 		handler.invoke = function(proxy, methodName:String, args:FunctionArguments) {
 			if (args[args.length-1] instanceof MethodInvocationCallback) {
-				var callback:MethodInvocationCallback = args[args.length-1];
-				proxy.invoke(methodName, args, callback);
+				var callback:MethodInvocationCallback = MethodInvocationCallback(args.pop());
+				return serviceProxy.invokeByNameAndArgumentsAndCallback(methodName, args, callback);
 			} else {
-				proxy.invoke(methodName, args);
+				return serviceProxy.invokeByNameAndArguments(methodName, args);
 			}
 		}
-		return getServiceProxyFactory().createProxy(type, handler);
+		return getTypeProxyFactory().createProxy(type, handler);
 	}
 	
 }

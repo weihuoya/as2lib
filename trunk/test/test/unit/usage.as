@@ -98,6 +98,10 @@ test.unit.org.as2lib.io.conn.local.server.TLocalServer;
 test.unit.org.as2lib.io.conn.local.server.TLocalServerRegistry;
 test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy;
 
+// org.as2lib.io.conn.local.client
+test.unit.org.as2lib.io.conn.local.client.TLocalClientServiceProxy;
+test.unit.org.as2lib.io.conn.local.client.TLocalClientServiceProxyFactory;
+
 // org.as2lib.env.reflect
 test.unit.org.as2lib.env.reflect.TSimpleCache;
 test.unit.org.as2lib.env.reflect.TClassInfo;
