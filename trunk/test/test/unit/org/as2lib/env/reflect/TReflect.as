@@ -30,6 +30,7 @@ class test.unit.org.as2lib.env.reflect.TReflect extends TestCase {
 	public function TReflect(Void) {}
 	
 	public function setUp(Void):Void {
+		
 		subClass = new SubClass();
 		superClass = new SuperClass();
 		
@@ -46,6 +47,17 @@ class test.unit.org.as2lib.env.reflect.TReflect extends TestCase {
 		
 		Package0Class;
 		Package1Class;
+	}
+	
+	public function testGlobalContent(Void):Void {
+		_global.a = "";
+		_global.b = [[1,2],[1,3]];
+		_global.c = new XML();
+		_global.c.parseXML("<a><b></b></a>");
+		
+		var subName:String = subInfo.getFullName();
+		var superName:String = superInfo.getFullName();
+		var packageName:String = subPackageInfo.getFullName();		
 	}
 	
 	public function testGetClassInfo(Void):Void {
