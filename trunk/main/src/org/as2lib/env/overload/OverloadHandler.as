@@ -3,10 +3,9 @@
 /**
  * OverloadHandler is the interface for all OverloadHandlers. OverloadHandlers
  * are used by the Overload class to identify the corresponding operation for
- * arguments.
+ * a specific list of arguments.
  *
- * @author: Simon Wacker
- * @see org.as2lib.core.BasicInterface
+ * @author Simon Wacker
  */
 interface org.as2lib.env.overload.OverloadHandler extends BasicInterface {
 	/**

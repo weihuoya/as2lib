@@ -5,7 +5,7 @@
  * with any class. All methods here are supposed to be used with functions treated
  * as classes.
  *
- * @author: Martin heidegger
+ * @author Martin heidegger
  */
 class org.as2lib.util.ClassUtil extends BasicClass {
 	/** Private constructor. */

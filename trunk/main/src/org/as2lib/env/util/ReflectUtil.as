@@ -11,7 +11,6 @@ import org.as2lib.env.reflect.ReflectConfig;
  * the class due to its private constructor.
  *
  * @author Simon Wacker
- * @see org.as2lib.core.BasicClass
  */
 class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	/**
@@ -63,25 +62,23 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	}
 	
 	/**
-	 * This operation returns a HashMap containing the MethodInfo instances
-	 * representing the methods. Public and private methods are not distinguished.
-	 * This is due to the impossibility of finding out (at runtime) whether the
-	 * method is private or public.
+	 * This operation returns a Map containing the MethodInfo instances
+	 * representing the methods.
 	 *
 	 * @param info the ClassInfo instance representing the class the methods shall be searched for.
-	 * @return a HashMap holding MethodInfos for each method.
+	 * @return a Map holding MethodInfos for each method.
 	 */
 	public static function getMethods(info:ClassInfo):Map {
 		return ReflectConfig.getMethodAlgorythm().execute(info);
 	}
 	
 	/** 
-	 * This operation returns a HashMap containing the PropertyInfo instance
+	 * This operation returns a Map containing the PropertyInfo instance
 	 * representing the Properties. Properties are set in Flash MX 2004 via the
 	 * set and get keyword.
 	 *
 	 * @param info the ClassInfo instance representing the class the properties shall be searched for.
-	 * @return a HashMap holding PropertyInfos for each property.
+	 * @return a Map holding PropertyInfos for each property.
 	 */
 	public static function getProperties(info:ClassInfo):Map {
 		return ReflectConfig.getPropertyAlgorythm().execute(info);
@@ -92,7 +89,7 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 * type CacheInfo.
 	 *
 	 * @param info a PackageInfo instance representing the package the children shall be returned for
-	 * @return a HashMap containing all children of the appropriate package
+	 * @return a Map containing all children of the appropriate package
 	 */
 	public static function getChildren(info:PackageInfo):Map {
 		return ReflectConfig.getChildrenAlgorythm().execute(info);

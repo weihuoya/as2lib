@@ -4,11 +4,9 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.SameTypeSignatureException;
 
 /**
- * SimpleOverloadHandler is a default implementation of the OverloadHandler interface
+ * SimpleOverloadHandler is a default implementation of the OverloadHandler interface.
  *
- * @author: Simon Wacker
- * @see org.as2lib.core.BasicClass
- * @see org.as2lib.env.overload.OverloadHandler
+ * @author Simon Wacker
  */
 class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implements OverloadHandler {
 	/** Contains the arguments types of the operation. */
@@ -29,7 +27,7 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	}
 	
 	/**
-	 * @see org.as2lib.env.overload.OverloadHandler
+	 * @see org.as2lib.env.overload.OverloadHandler#matches()
 	 */
 	public function matches(someArguments:Array):Boolean {
 		var l:Number = someArguments.length;
@@ -45,14 +43,14 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	}
 	
 	/**
-	 * @see org.as2lib.env.overload.OverloadHandler
+	 * @see org.as2lib.env.overload.OverloadHandler#execute()
 	 */
 	public function execute(target, someArguments:Array) {
 		return func.apply(target, someArguments);
 	}
 	
 	/**
-	 * @see org.as2lib.env.overload.OverloadHandler
+	 * @see org.as2lib.env.overload.OverloadHandler#isMoreExplicitThan()
 	 */
 	public function isMoreExplicitThan(handler:OverloadHandler):Boolean {
 		var points:Number = 0;
@@ -76,7 +74,7 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	}
 	
 	/**
-	 * @see org.as2lib.env.overload.OverloadHandler
+	 * @see org.as2lib.env.overload.OverloadHandler#getArguments()
 	 */
 	public function getArguments(Void):Array {
 		return args;
