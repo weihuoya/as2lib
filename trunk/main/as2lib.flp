@@ -1,49 +1,71 @@
-﻿<flash_project name="as2lib" version="1">
+﻿<flash_project name="as2lib - Project" version="1">
     <project_folder name="org" expanded="true">
         <project_folder name="as2lib" expanded="true">
-            <project_folder name="basic" expanded="false">
-                <project_folder name="exceptions" expanded="false">
-                    <project_file path="./ORG/AS2LIB/BASIC/exceptions/ObjectNotFoundException.as" filetype="as" />
-                    <project_file path="./ORG/AS2LIB/BASIC/exceptions/ObjectNotDefinedException.as" filetype="as" />
-                    <project_file path="./ORG/AS2LIB/BASIC/exceptions/ObjectAllreadyDefinedException.as" filetype="as" />
-                    <project_file path="./ORG/AS2LIB/BASIC/exceptions/WrongArgumentException.as" filetype="as" />
-                    <project_file path="./org/as2lib/basic/exceptions/info.txt" filetype="txt" />
-                    <project_file path="./org/as2lib/basic/exceptions/MissingArgumentsException.as" filetype="as" />
+            <project_folder name="basic" expanded="true">
+                <project_folder name="reflect" expanded="true">
+                    <project_folder name="algorythm" expanded="true">
+                        <project_file path="./org/as2lib/basic/reflect/algorythm/StaticMethodAlgorythm.as" filetype="as" />
+                        <project_file path="./org/as2lib/basic/reflect/algorythm/AbstractMethodAlgorythm.as" filetype="as" />
+                        <project_file path="./org/as2lib/basic/reflect/algorythm/CacheAlgorythm.as" filetype="as" />
+                        <project_file path="./org/as2lib/basic/reflect/algorythm/ChildrenAlgorythm.as" filetype="as" />
+                        <project_file path="./org/as2lib/basic/reflect/algorythm/ClassAlgorythm.as" filetype="as" />
+                        <project_file path="./org/as2lib/basic/reflect/algorythm/MethodAlgorythm.as" filetype="as" />
+                        <project_file path="./org/as2lib/basic/reflect/algorythm/PackageAlgorythm.as" filetype="as" />
+                    </project_folder>
+                    <project_file path="./org/as2lib/basic/reflect/VarInfo.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/reflect/Cache.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/reflect/ClassInfo.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/reflect/MethodInfo.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/reflect/PackageInfo.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/reflect/ReflectInfo.as" filetype="as" />
                 </project_folder>
-                <project_folder name="interfaces" expanded="false">
-                    <project_file path="./org/as2lib/basic/interfaces/Classifiable.as" filetype="as" />
-                    <project_file path="./org/as2lib/basic/interfaces/Cloneable.as" filetype="as" />
-                    <project_file path="./org/as2lib/basic/interfaces/Comparable.as" filetype="as" />
+                <project_folder name="event" expanded="true">
+                    <project_folder name="dispatcher" expanded="false">
+                        <project_file path="./org/as2lib/basic/event/dispatcher/NormalEventDispatcher.as" filetype="as" />
+                        <project_file path="./org/as2lib/basic/event/dispatcher/LogEventDispatcher.as" filetype="as" />
+                    </project_folder>
+                    <project_file path="./org/as2lib/basic/event/EventBroadcaster.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/event/EventDispatcher.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/event/EventInfo.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/event/EventListener.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/event/SimpleEventInfo.as" filetype="as" />
                 </project_folder>
-                <project_file path="./ORG/AS2LIB/BASIC/Out.as" filetype="as" />
-                <project_file path="./ORG/AS2LIB/BASIC/Exception.as" filetype="as" />
-                <project_file path="./ORG/AS2LIB/BASIC/EventableElement.as" filetype="as" />
-                <project_file path="./ORG/AS2LIB/BASIC/VisibleElement.as" filetype="as" />
-                <project_file path="./org/as2lib/basic/info.txt" filetype="txt" />
-                <project_file path="./org/as2lib/basic/Reflections.as" filetype="as" />
-                <project_file path="./org/as2lib/basic/ReflectionObject.as" filetype="as" />
-                <project_file path="./org/as2lib/basic/ReflectionReference.as" filetype="as" />
-            </project_folder>
-            <project_folder name="math" expanded="false">
-            </project_folder>
-            <project_folder name="comp" expanded="false">
-            </project_folder>
-            <project_folder name="patterns" expanded="false">
-            </project_folder>
-            <project_folder name="graphic" expanded="false">
-            </project_folder>
-            <project_folder name="util" expanded="false">
-                <project_folder name="project" expanded="false">
+                <project_folder name="overload" expanded="true">
+                    <project_file path="./org/as2lib/basic/overload/OverloadHandler.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/overload/SimpleOverloadHandler.as" filetype="as" />
                 </project_folder>
-                <project_file path="./org/as2lib/util/List.as" filetype="as" />
-                <project_file path="./org/as2lib/util/Enumeration.as" filetype="as" />
-                <project_file path="./org/as2lib/util/info.txt" filetype="txt" />
+                <project_folder name="out" expanded="true">
+                    <project_folder name="handler" expanded="true">
+                        <project_file path="./org/as2lib/basic/out/handler/TraceHandler.as" filetype="as" />
+                    </project_folder>
+                    <project_folder name="level" expanded="true">
+                        <project_file path="./org/as2lib/basic/out/level/Warning.as" filetype="as" />
+                        <project_file path="./org/as2lib/basic/out/level/All.as" filetype="as" />
+                        <project_file path="./org/as2lib/basic/out/level/Debug.as" filetype="as" />
+                        <project_file path="./org/as2lib/basic/out/level/Error.as" filetype="as" />
+                        <project_file path="./org/as2lib/basic/out/level/Fatal.as" filetype="as" />
+                        <project_file path="./org/as2lib/basic/out/level/Info.as" filetype="as" />
+                        <project_file path="./org/as2lib/basic/out/level/None.as" filetype="as" />
+                    </project_folder>
+                    <project_file path="./org/as2lib/basic/out/OutLevel.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/out/OutHandler.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/out/OutInfo.as" filetype="as" />
+                </project_folder>
+                <project_file path="./org/as2lib/basic/BasicClass.as" filetype="as" />
+                <project_file path="./org/as2lib/basic/BasicInterface.as" filetype="as" />
+                <project_file path="./org/as2lib/basic/Exception.as" filetype="as" />
+                <project_file path="./org/as2lib/basic/Out.as" filetype="as" />
+                <project_file path="./org/as2lib/basic/OutAccess.as" filetype="as" />
+                <project_file path="./org/as2lib/basic/Overload.as" filetype="as" />
+                <project_file path="./org/as2lib/basic/Throwable.as" filetype="as" />
+                <project_file path="./org/as2lib/basic/TypedArray.as" filetype="as" />
             </project_folder>
-            <project_folder name="geom" expanded="true">
-                <project_file path="./org/as2lib/geom/Dimension2D.as" filetype="as" />
-                <project_file path="./org/as2lib/geom/Point2D.as" filetype="as" />
-                <project_file path="./org/as2lib/geom/Rectangle2D.as" filetype="as" />
+            <project_folder name="util" expanded="true">
+                <project_file path="./org/as2lib/util/ObjectUtil.as" filetype="as" />
+                <project_file path="./org/as2lib/util/OverloadUtil.as" filetype="as" />
+                <project_file path="./org/as2lib/util/ReflectUtil.as" filetype="as" />
             </project_folder>
+            <project_file path="./org/Config.as" filetype="as" />
         </project_folder>
     </project_folder>
     <project_folder name="test" expanded="true">
@@ -54,11 +76,19 @@
                 </project_folder>
             </project_folder>
         </project_folder>
-        <project_file path="./TEST/Test.as" filetype="as" />
-        <project_file path="./TEST/Failure.as" filetype="as" />
+        <project_folder name="speed" expanded="true">
+            <project_folder name="broadcasting" expanded="true">
+                <project_file path="./test/speed/broadcasting/ArrayTest.as" filetype="as" />
+                <project_file path="./test/speed/broadcasting/ASBroadcasterTest.as" filetype="as" />
+                <project_file path="./test/speed/broadcasting/EventBroadcasterListener.as" filetype="as" />
+                <project_file path="./test/speed/broadcasting/EventBroadcasterTest.as" filetype="as" />
+                <project_file path="./test/speed/broadcasting/EventDispatcherTest.as" filetype="as" />
+                <project_file path="./test/speed/broadcasting/ExampleCall.as" filetype="as" />
+            </project_folder>
+            <project_file path="./test/speed/broadcasting.swf" filetype="swf" />
+            <project_file path="./test/speed/broadcasting.fla" filetype="fla" profile="" />
+        </project_folder>
+        <project_file path="./test/Failure.as" filetype="as" />
+        <project_file path="./test/Test.as" filetype="as" />
     </project_folder>
-    <project_folder name="example" expanded="false">
-    </project_folder>
-    <project_file path="./license.txt" filetype="txt" />
-    <project_file path="./Tests.fla" filetype="fla" profile="" def_file="true" />
 </flash_project>
