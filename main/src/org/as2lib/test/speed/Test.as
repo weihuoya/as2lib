@@ -116,7 +116,7 @@ class org.as2lib.test.speed.Test {
 	 */
 	public function resultAsString(Void):String {
 		var fastest:TestCaseInformation = this.getFastestTestCase();
-		var result:String = "          -- Testresult ["+this.calls+" calls] -- \n";
+		var result:String = "\n          -- Testresult ["+this.calls+" calls] -- \n";
 		for(var i:Number=0; i<this.speedTestCases.length; i++) {
 			var obj:TestCaseInformation = TestCaseInformation(this.speedTestCases.getValue(i));
 			if(fastest == obj) {
