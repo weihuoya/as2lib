@@ -18,6 +18,7 @@ import org.as2lib.env.out.OutAccess;
 import org.as2lib.data.holder.TypedArray;
 import org.as2lib.test.speed.TestCaseInformation;
 import org.as2lib.test.speed.TestCase;
+import org.as2lib.env.except.IllegalArgumentException;
 
 /**
  * Main class to run speedtests.
@@ -72,7 +73,9 @@ class org.as2lib.test.speed.Test {
 	 */
 	public function addTestCase(obj:TestCase):Void {
 		if (!obj) {
-			throw new Error("Muh");
+			throw new IllegalArgumentException("The passed TestCase [" + obj + "] is undefined.",
+											   this,
+											   arguments);
 		}
 		this.speedTestCases.push(new TestCaseInformation(obj));
 	}
