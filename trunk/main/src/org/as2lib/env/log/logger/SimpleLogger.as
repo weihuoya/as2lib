@@ -27,53 +27,55 @@ import org.as2lib.env.log.logger.AbstractLogger;
  * SimpleLogger is a simple implementation of the ConfigurableLogger
  * interface.
  *
- * <p>The basic methods to write the log messages are {@link #log}, {@link #debug},
- * {@link #info}, {@link #warning} and {@link #fatal}.
+ * <p>The basic methods to write the log messages are {@link #log},
+ * {@link #debug}, {@link #info}, {@link #warning} and {@link #fatal}.
  *
- * <p>The first thing to note is that you can write log messages at
- * different levels. These levels are {@link #DEBUG}, {@link #INFO}, {@link #WARNING}, {@link #ERROR} and
- * {@link #FATAL}. Depending on what level was set only messages at a given
- * level are logged.
- * The levels are organized in a hierarchical manner. That means if you
- * set you log level to ALL every messages get logged. If you set it
- * to ERROR only messages at ERROR and FATAL level get logged and so on.
+ * <p>The first thing to note is that you can log messages at different
+ * levels. These levels are {@link #DEBUG}, {@link #INFO}, {@link #WARNING},
+ * {@link #ERROR} and {@link #FATAL}. Depending on what level has been
+ * set only messages at a given level are logged. The levels are organized
+ * in a hierarchical manner. That means if you set the log level to {@link #ALL}
+ * every messages is logged. If you set it to {@link #ERROR} only messages
+ * at {@link #ERROR} and {@link #FATAL} level are logged and so on.
  * It is also possible to define your own set of levels. You can therefor
  * use the {@link #isEnabled} and {@link #log} methods.
  *
  * <p>To do not waste unnecessary performance in constructing log messages
- * that do not get logged you can use the {@link #isEnabled}, {@link #isDebugEnabled},
- * {@link #isInfoEnabled}, {@link #isWarningEnabled}, {@link #isErrorEnabled} and {@link #isFatalEnabled}
- * methods.
+ * that are not logged you can use the {@link #isEnabled}, {@link #isDebugEnabled},
+ * {@link #isInfoEnabled}, {@link #isWarningEnabled}, {@link #isErrorEnabled}
+ * and {@link #isFatalEnabled} methods.
  *
  * <p>Note that the message does in neither case have to be a string.
- * That means you can pass-in messages and let the actual handler or logger
- * decide how to produce a string representation of the message. That is in
- * most cases done by using the toString method of the specific message.
- * You can use this method to do not lose performance in cases where
- * the message does not get logged.
+ * That means you can pass-in messages and let the actual log handler
+ * decide how to produce a string representation of the message. This
+ * is in most cases done by using the {@code toString} method of the
+ * specific message. You can use this method to do not lose performance
+ * in cases where the message is not logged.
  *
- * <p>The actaul log output gets made by log handlers. To configure and
+ * <p>The actaul log output is made by log handlers. To configure and
  * access the handlers of this logger you can use the methods {@link #addHandler},
- * {@link #removeHandler}, {@link #removeAllHandlers} and {@link #getAllHandlers}. There are a
- * few pre-defined handlers for different output devices. Take a look
- * at the org.as2lib.env.log.handler package for these.
+ * {@link #removeHandler}, {@link #removeAllHandlers} and {@link #getAllHandlers}.
+ * There are a few pre-defined handlers for different output devices.
+ * Take a look at the {@code org.as2lib.env.log.handler} package for these.
  *
  * <p>This logger can simply be used as follows:
- * <code>var logger:SimpleLogger = new SimpleLogger("mySimpleLogger");
- * // adds a trace handler that is responsible for making the output
- * logger.addHandler(new TraceHandler());
- * // checks if the output gets actually made
- * if (logger.isInfoEnabled()) {
-	 // log the message at the info level
- *   logger.info("This is a informative log message.");
- * }</code>
+ * <code>
+ *   var logger:SimpleLogger = new SimpleLogger("mySimpleLogger");
+ *   // adds a trace handler that is responsible for making the output
+ *   logger.addHandler(new TraceHandler());
+ *   // checks if the output gets actually made
+ *   if (logger.isInfoEnabled()) {
+ *	     // log the message at the info level
+ *       logger.info("This is an informative log message.");
+ *   }
+ * </code>
  *
- * <p>It cannot be used with the LoggerHierarchy because it does not
- * offer hierarchy support. If you want to use your logger in a hierarchy
- * use the SimpleHierarchicalLogger instead.
+ * <p>This logger cannot be used with the {@code LoggerHierarchy} because
+ * it does not offer hierarchy support. If you want to use your logger
+ * in a hierarchy use the {@link #SimpleHierarchicalLogger} instead.
  *
  * @author Simon Wacker
- * @see org.as2lib.env.log.Logger
+ * @see org.as2lib.env.log.repository.LoggerHierarchy
  */
 class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements ConfigurableLogger {
 	

@@ -28,29 +28,29 @@ import org.as2lib.env.log.logger.AbstractLogger;
 
 /**
  * SimpleHierarchicalLogger is a simple implementation of the
- * ConfigurableLogger and ConfigurableHierarchicalLogger interfaces.
+ * {@code ConfigurableLogger} and {@code ConfigurableHierarchicalLogger}
+ * interfaces.
  *
  * <p>This logger is thus capable of functioning correctly in a hierarchy.
- * It gets normally used within the {@link LoggerHierarchy} repository.
+ * It is normally used with the {@code LoggerHierarchy} repository.
  *
  * <p>The basic methods to write log messages are {@link #log}, {@link #debug},
  * {@link #info}, {@link #warning} and {@link #fatal}.
  *
- * <p>The first thing to note is that you can write log messages at
- * different levels. These levels are {@link #DEBUG}, {@link #INFO}, 
- * {@link #WARNING}, {@link #ERROR} andv{@link #FATAL}. Depending on what
- * level has been set only messages at a given level are logged.
- * The levels are organized in a hierarchical manner. That means if you
- * set you log level to {@link ALL} all messages get logged. If you set
- * it to {@link ERROR} only messages at {@link ERROR} and {@link FATAL}
- * level get logged and so on.
+ * <p>The first thing to note is that you can log messages at different
+ * levels. These levels are {@link #DEBUG}, {@link #INFO}, {@link #WARNING},
+ * {@link #ERROR} and {@link #FATAL}. Depending on what level has been
+ * set only messages at a given level are logged. The levels are organized
+ * in a hierarchical manner. That means if you set the log level to {@link #ALL}
+ * every messages is logged. If you set it to {@link #ERROR} only messages
+ * at {@link #ERROR} and {@link #FATAL} level are logged and so on.
  * It is also possible to define your own set of levels. You can therefor
- * use the {@link #isEnabled} and {@link log} methods.
- * If you do not set a log level the level of its parent gets used to
+ * use the {@link #isEnabled} and {@link #log} methods.
+ * If you do not set a log level the level of its parent is used to
  * decide whether the message shall be logged.
  *
  * <p>To do not waste unnecessary performance in constructing log messages
- * that do not get logged you can use the {@link #isEnabled}, {@link #isDebugEnabled},
+ * that are not logged you can use the {@link #isEnabled}, {@link #isDebugEnabled},
  * {@link #isInfoEnabled}, {@link #isWarningEnabled}, {@link #isErrorEnabled}
  * and {@link #isFatalEnabled} methods.
  *
@@ -59,27 +59,30 @@ import org.as2lib.env.log.logger.AbstractLogger;
  * logger decide how to produce a string representation of the message.
  * That is in most cases done by using the toString method of the specific
  * message. You can use this method to do not lose performance in cases
- * where the message does not get logged.
+ * where the message is not logged.
  *
- * <p>The actual log output gets made by log handlers. To configure and
- * access the handlers of this logger you can use the methods {@link #addHandler},
+ * <p>The actual logging is made by log handlers. To configure and access
+ * the handlers of this logger you can use the methods {@link #addHandler},
  * {@link #removeHandler}, {@link #removeAllHandlers} and {@link #getAllHandlers}.
  * There are a few pre-defined handlers for different output devices. Take a look
- * at the org.as2lib.env.log.handler package for these.
+ * at the {@code org.as2lib.env.log.handler} package for these.
  * This logger does not only use the handlers of itself but also the
  * ones of its parents.
  *
+ * <p>Note that advantage of this class's hierarchical support is not
+ * taken in the following example. Take a look at the class documentation
+ * of the {@code LoggerHierarchy} for an example that uses this support.
  * <code>
  *   var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("myLogger");
  *   logger.setLevel(SimpleHierarchicalLogger.ALL);
  *   logger.addHandler(new TraceHandler());
  *   if (logger.isInfoEnabled()) {
- *     logger.info("This is an information message.");
+ *       logger.info("This is an information message.");
  *   }
  * </code>
  *
  * @author Simon Wacker
- * @since 05.03.2005
+ * @see org.as2lib.env.log.repository.LoggerHierarchy
  */
 class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger implements ConfigurableLogger, ConfigurableHierarchicalLogger {
 	
