@@ -7,12 +7,13 @@ A \emph{Test Case} is a class/method that verifies the correct behaviour of a sp
 Although a testing API already exists for {\sl Actionscript 2}, as2unit\footnote{\href{http://www.as2unit.org}{www.as2unit.org}}, our own testing API was created because the following reasons:
 
 \begin{itemize}
-	\item {\sl As2unit} supports only few functionalities (as2unit 7 test methods - as2lib 15 test methods).
+	\item {\sl As2unit} supports only few functionalities (as2unit 7 test methods - as2lib 17 test methods).
 	\item {\sl As2unit} is in spite of the disclosure of the source code still not open source.
 	\item Official documentation of {\sl as2unit} is still not available.
 	\item {\sl As2unit} is only available as a component.
 	\item {\sl As2unit} can always test only one class.
-	\item {\sl As2unit} permits output only through trace.
+	\item {\s1 As2unit} is not build to support different views. 
+	\item {\s1 As2unit} does not support pause() and resume() during TestCases (Tests that have a time delay like using onEnterframe). 
 \end{itemize}
 
 \paragraph{Solution:}
