@@ -21,8 +21,22 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.ReflectConfig;
 
 /**
- * ClassAlgorithm searches for the class of a specific instance and returns a
- * ClassInfo instance representing the found class.
+ * ClassAlgorithm searches for the class of a specific instance and returns
+ * a ClassInfo instance representing the found class.
+ *
+ * <p>To obtain the class info corresponding to an instance or a class 
+ * you use the ClassAlgorithm class as follows.
+ *
+ * <code>var myInstance:MyClass = new MyClass();
+ * var classAlgorithm:ClassAlgorithm = new ClassAlgorithm();
+ * var classInfoByInstance:ClassInfo = classAlgorithm.execute(myInstance);
+ * var classInfoByClass:ClassInfo = classAlgorithm.execute(MyClass);</code>
+ *
+ * <p>Already retrieved class infos are stored in a cache. There thus 
+ * exists only one ClassInfo instance of a class. The following returns
+ * true.
+ *
+ * <code>trace(classInfoByInstance == classInfoByClass)</code>
  *
  * @author Simon Wacker
  */
@@ -94,8 +108,9 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 		for (i in p) {
 			var f = p[i];
 			if (typeof(f) == "function") {
-				if (typeof(d) == "function" && d.prototype === f.prototype
-						|| d.__proto__ === f.prototype) {
+				if (d == f || d.__proto__ === f.prototype) {
+				/*if (typeof(d) == "function" && d.prototype === f.prototype
+						|| d.__proto__ === f.prototype) {*/
 					// flex stores every class in _global and in its actual package
 					// e.g. org.as2lib.core.BasicClass is stored in _global with name org_as2lib_core_BasicClass
 					// this if-clause excludes these extra stored classes
@@ -121,19 +136,39 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 		return false;
 	}
 	
+	/**
+	 * Returns the class info representing the class corresponding to the
+	 * passed-in class name.
+	 *
+	 * <p>The class name must be fully qualified, that means it must consist
+	 * of the class's path (namespace) as well as its name. For example
+	 * 'org.as2lib.core.BasicClass'.
+	 *
+	 * <p>Null gets returned if:
+	 * <ul>
+	 *   <li>The passed-in name is null, undefined or a blank string.</li>
+	 *   <li>There is no class with the given name, starting from the root 'package' that is by default _global.</li>
+	 *   <li>The object corresponding to the name is not of type function.</li>
+	 * </ul>
+	 *
+	 * @param n the fully qualified name of the class
+	 * @return the class info representing the class corresponding to the name
+	 */
 	public function executeByName(n:String):ClassInfo {
 		if (!n) return null;
-		var f:Function = eval("_global." + n);
+		var p:PackageInfo = getCache().getRoot();
+		var f:Function = eval(p.getFullName() + "." + n);
 		if (!f) return null;
+		var r:ClassInfo = c.getClass(f);
+		if (r) return r;
 		if (typeof(f) != "function") return null;
 		var a:Array = n.split(".");
-		var p:PackageInfo = getCache().getRoot();
 		var g:Object = p.getPackage();
 		for (var i:Number = 0; i < a.length; i++) {
 			if (i == a.length-1) {
 				return c.addClass(new ClassInfo(a[i], f, p));
 			} else {
-				g = g[i];
+				g = g[a[i]];
 				p = c.addPackage(new PackageInfo(a[i], g, p));
 			}
 		}

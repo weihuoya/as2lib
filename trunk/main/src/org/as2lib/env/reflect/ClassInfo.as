@@ -85,27 +85,24 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	/**
 	 * Returns the class info corresponding to the passed-in name.
 	 *
-	 * <p>The name is composed of the class's path as well as its name.
+	 * <p>The name must be full qualified, that means it muste be composed
+	 * of the class's path (namespace) as well as its name. For example
+	 * 'org.as2lib.core.BasicClass'.
 	 *
 	 * <p>Null will be returned if:
 	 * <ul>
 	 *   <li>The passed-in name is null, undefined or a blank string.</li>
 	 *   <li>There is no class with the given name.</li>
 	 *   <li>The object corresponding to the name is not of type function.</li>
+	 *   <li>The ReflectConfig.getClassAlgorithm()#executeForName method returns null.</li>
 	 * </ul>
 	 *
-	 * @param className the full name of the class
+	 * @param className the full qualified class name
 	 * @return a class info representing the class corresponding to the name
 	 */
 	public static function forName(className:String):ClassInfo {
 		if (!className) return null;
-		var c:Function = eval("_global." + className);
-		if (c) {
-			if (typeof(c) == "function") {
-				return forClass(c);
-			}
-		}
-		return null;
+		return ReflectConfig.getClassAlgorithm().executeByName(className);
 	}
 	
 	/**
@@ -142,7 +139,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * This method does the same as the #forObject(*):ClassInfo method.
 	 * It is planned to separate the class algorithm into two. One that
 	 * searches specifically for instances and one that searches for
-	 * classes to gain performance.
+	 * classes to gain performance improvements.
 	 */
 	public static function forInstance(instance):ClassInfo {
 		// not '!instance' because parameter 'instance' could be a blank string
@@ -154,7 +151,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * This method does the same as the #forObject(*):ClassInfo method.
 	 * It is planned to separate the class algorithm into two. One that
 	 * searches specifically for instances and one that searches for
-	 * classes to gain performance.
+	 * classes to gain performance improvements.
 	 */
 	public static function forClass(clazz:Function):ClassInfo {
 		if (!clazz) return null;
