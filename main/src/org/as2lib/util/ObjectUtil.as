@@ -6,11 +6,47 @@ import org.as2lib.core.string.Stringifier;
  * ObjectUtil contains fundamental operations to efficiently and easily work
  * with any type of object.
  *
- * @author: Simon Wacker
+ * @author: Simon Wacker, Martin Heidegger
  * @see org.as2lib.core.BasicClass
  */
 class org.as2lib.util.ObjectUtil extends BasicClass{
+	/** Private holder for a Stringifier for objects */
 	private static var stringifier:Stringifier = new ObjectStringifier();
+	
+	/**
+	 * Constant for hiding a object from for-in loops.
+	 * 
+	 * @see #setStatus()
+       */
+	public static var STATUS_IS_HIDDEN = 1
+	
+	/**
+	 * Constant for setting an object deletable.
+	 * 
+	 * @see #setStatus()
+       */
+	public static var STATUS_CAN_DELETE = 2;
+	
+	/**
+	 * Constant for setting an object overwritable.
+	 * 
+	 * @see #setStatus()
+       */
+	public static var STATUS_CAN_OVER_WRITE = 4;
+	
+	/**
+	 * Constant for allowing everything to an object.
+	 * 
+	 * @see #setStatus()
+       */
+	public static var STATUS_ALL_ALLOWED = STATUS_CAN_DELETE | STATUS_CAN_OVER_WRITE;
+	
+	/**
+	 * Constant for allowing nothing..
+	 * 
+	 * @see #setStatus()
+       */
+	public static var STATUS_NOTHING_ALLOWED = STATUS_IS_HIDDEN;
 	
 	/**
 	 * Private constructor.
@@ -27,10 +63,70 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	}
 	
 	/**
+	 * Evaluates if a object is a child of another object.
+	 * It evaluates only methods because parameters could throw an exception.
+	 * 
+	 * @param inObject The parent-object, where the method should search in.
+	 * @param object The object that should be found.
+	 * @return The name if it was found. Null if it wasn't found.
+	 */
+	public static function isChild(inObject, object:Function):String {
+		for(var i:String in inObject) {
+			try {
+				if(inObject[i] == object) {
+					return i;
+				}
+			} catch(e) {
+				// Catching if an getter throws an exception
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Sets the Status of a Object to a status-value.
+	 * Uses ASSetPropFlags to set the Status of the Object.
+	 * You Can apply the static values:
+	 * <table>
+	 *   <tr>
+	 *     <th>#STATUS_IS_HIDDEN</th>
+	 *     <td>Hides Object from for-in loops.</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <th>#STATUS_CAN_DELETE</th>
+	 *     <td>Marks the Object as Deleteable</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <td>#STATUS_CAN_OVER_WRITE</th>
+	 *     <td>Marks the Object as Overwriteable</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <th>#STATUS_ALL_ALLOWED</th>
+	 *     <td>Allows everything (reading, deleting, over-writing)</td>
+	 *   </tr>
+	 *   <tr>
+	 *     <th>#STATUS_NOTHING_ALLOWED</th>
+	 *     <td>Allows nothing (reading, deleting, over-writing)</td>
+	 *   </tr>
+	 * </table>
+	 * as fast references.
+	 * 
+	 * You can combine this values for proper uses binary with:
+	 * #STATUS_CAN_DELETE | #STATUS_CAN_OVER_WRITE
+	 * to apply only two status.
+	 * 
+	 * @param object The object that should be modified.
+	 * @param status Status that should apply.
+	 */
+	public static function setStatus(object, status:Number):Void {
+		_global.ASSetPropFlags(object, null, status, true);
+	}
+	
+	/**
 	 * Checks if the type of object matches the given type.
 	 *
-	 * @param object the object whose type shall be compared with the type
-	 * @param type the type that shall be used for the comparison
+	 * @param aObject the object whose type shall be compared with the type
+	 * @param aType the type that shall be used for the comparison
 	 * @return true if the type of the object matches else false
 	 */
 	public static function typesMatch(anObject, aType:Function):Boolean {
