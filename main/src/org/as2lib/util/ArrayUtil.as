@@ -5,7 +5,6 @@ import org.as2lib.env.except.IllegalArgumentException;
  * ArrayUtil contains fundamental operations to manipulate Arrays.
  *
  * @author Simon Wacker
- * @see org.as2lib.core.BasicClass
  */
 class org.as2lib.util.ArrayUtil extends BasicClass {
 	/**
