@@ -71,6 +71,7 @@ class org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCase {
 		cc.verify();
 	}
 	
+	// crashes flex
 	public function testExecute(Void):Void {
 		ReflectConfig.getCache().releaseAll();
 		

@@ -68,19 +68,19 @@ class org.as2lib.env.reflect.algorithm.TMethodAlgorithm extends TestCase {
 		for (var i:Number = 0; i < c.length; i++) {
 			var k:MethodInfo = c[i];
 			if (k.getName() == "publicMethod") {
-				assertSame("publicMethod", k.getMethod(),org.as2lib.env.reflect.treflect.SubClass.prototype.publicMethod);
+				assertSame("publicMethod", k.getMethod(), org.as2lib.env.reflect.treflect.SubClass.prototype.publicMethod);
 				assertFalse("publicMethod", k.isStatic());
 				assertSame("publicMethod", k.getDeclaringType(), p);
 			} else if (k.getName() == "privateMethod") {
-				assertSame("privateMethod", k.getMethod(),org.as2lib.env.reflect.treflect.SubClass.prototype["private" + "Method"]);
+				assertSame("privateMethod", k.getMethod(), org.as2lib.env.reflect.treflect.SubClass.prototype["private" + "Method"]);
 				assertFalse("privateMethod", k.isStatic());
 				assertSame("privateMethod", k.getDeclaringType(), p);
 			} else if (k.getName() == "publicStaticMethod") {
-				assertSame("publicStaticMethod", k.getMethod(),org.as2lib.env.reflect.treflect.SubClass.publicStaticMethod);
+				assertSame("publicStaticMethod", k.getMethod(), org.as2lib.env.reflect.treflect.SubClass.publicStaticMethod);
 				assertTrue("publicStaticMethod", k.isStatic());
 				assertSame("publicStaticMethod", k.getDeclaringType(), p);
 			} else if (k.getName() == "privateStaticMethod") {
-				assertSame("privateStaticMethod", k.getMethod(),org.as2lib.env.reflect.treflect.SubClass["private" + "StaticMethod"]);
+				assertSame("privateStaticMethod", k.getMethod(), org.as2lib.env.reflect.treflect.SubClass["private" + "StaticMethod"]);
 				assertTrue("privateStaticMethod", k.isStatic());
 				assertSame("privateStaticMethod", k.getDeclaringType(), p);
 			} else {
@@ -100,8 +100,8 @@ class org.as2lib.env.reflect.algorithm.TMethodAlgorithm extends TestCase {
 		
 		var a:MethodAlgorithm = new MethodAlgorithm();
 		var c:Array = a.execute(p);
-		assertNotNull("children array should not be null", c);
-		assertSame("there should be no children", c.length, 0);
+		assertNotNull("method array should not be null", c);
+		assertSame("there should be no methods", c.length, 0);
 		
 		pc.verify();
 	}

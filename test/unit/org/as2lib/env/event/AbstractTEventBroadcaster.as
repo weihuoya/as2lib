@@ -49,6 +49,7 @@ class org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase {
 		lc.verify();
 	}
 	
+	// error with simple event broadcaster
 	public function testDispatchWithNullName(Void):Void {
 		var ec:MockControl = new MockControl(EventInfo);
 		var e:EventInfo = ec.getMock();
@@ -70,6 +71,7 @@ class org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase {
 		ec.verify();
 	}
 	
+	// error with simple event broadcaster
 	public function testDispatchWithMultipleListeners(Void):Void {
 		var ec:MockControl = new MockControl(EventInfo);
 		var e:EventInfo = ec.getMock();

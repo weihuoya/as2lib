@@ -87,11 +87,16 @@ class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass {
 		var i:String;
 		for (i in t) {
 			if (typeof(t[i]) == "function") {
-				var b:ClassInfo = c.getClass(t[i]);
-				if (!b) {
-					b = c.addClass(new ClassInfo(i, t[i], p));
+				// flex stores every class in _global and in its actual package
+				// e.g. org.as2lib.core.BasicClass is stored in _global with name org_as2lib_core_BasicClass
+				// this if-clause excludes these extra stored classes
+				if (!eval("_global." + i.split("_").join(".")) || i.indexOf("_") < 0) {
+					var b:ClassInfo = c.getClass(t[i]);
+					if (!b) {
+						b = c.addClass(new ClassInfo(i, t[i], p));
+					}
+					r[r.length] = b;
 				}
-				r[r.length] = b;
 			} else if (typeof(t[i]) == "object") {
 				var a:PackageInfo = c.getPackage(t[i]);
 				if (!a) {
