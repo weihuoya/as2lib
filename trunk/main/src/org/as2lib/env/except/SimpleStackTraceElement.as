@@ -3,7 +3,10 @@ import org.as2lib.env.except.ExceptConfig;
 import org.as2lib.env.except.StackTraceElement;
 
 /**
- * @author Simon Wacker, Martin Heidegger
+ * Simple implementation of the StackTraceElement interface.
+ *
+ * @author Simon Wacker
+ * @author Martin Heidegger
  */
 class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implements StackTraceElement {
 	private var thrower;

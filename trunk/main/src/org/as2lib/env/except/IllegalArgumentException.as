@@ -5,7 +5,6 @@
  * an illegal or inappropriate argument.
  *
  * @author Simon Wacker
- * @see org.as2lib.env.except.Exception
  */
 class org.as2lib.env.except.IllegalArgumentException extends FatalException {
 	/**

@@ -8,8 +8,6 @@ import org.as2lib.util.ObjectUtil;
  * Exception is a normal default implementation of the Throwable interface.
  *
  * @author Simon Wacker
- * @see org.as2lib.env.except.AbstractException
- * @see org.as2lib.env.except.Throwable
  */
 class org.as2lib.env.except.Exception extends AbstractException implements Throwable {
 	/**
@@ -22,12 +20,13 @@ class org.as2lib.env.except.Exception extends AbstractException implements Throw
 	}
 	
 	/**
-	 * Returns a blank String. This operation should only be called by the virtual
-	 * machine. We use it to determine when the Exception has reached the final
-	 * level and now terminates the current thread. It then uses the
-	 * ExceptConfig#getOut()#error() operation to write out the Throwable.
+	 * Returns a blank String if the operation is not called out of an operation.
+	 * This operation should only be called by the virtual machine. We use it to
+	 * determine when the Exception has reached the final level and now terminates
+	 * the current thread. It then uses the ExceptConfig#getOut()#error() operation
+	 * to write out the Throwable.
 	 *
-	 * @return a blank String
+	 * @return a blank String if the operation is not called out of an operation, otherwise the result of ExceptConfig#getThrowableStringifier()#execute(this) will be returned
 	 */
 	public function toString(Void):String {
 		if (ObjectUtil.isEmpty(arguments.caller)) {
