@@ -4,6 +4,7 @@ import org.as2lib.data.io.conn.ConnectorRequest;
 import org.as2lib.data.io.conn.ConnectorError;
 import org.as2lib.data.io.conn.ConnectorResponse;
 import org.as2lib.env.event.EventBroadcaster;
+import org.as2lib.env.event.SimpleEventBroadcaster;
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.core.BasicClass;
 
@@ -49,7 +50,7 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 	private var domain:String;
 	
 	public function LocalConnector(Void) {
-		eventBroadcaster = new EventBroadcaster();
+		eventBroadcaster = new SimpleEventBroadcaster();
 		loc = new LocalConnection();
 		params = new Array();
 	}

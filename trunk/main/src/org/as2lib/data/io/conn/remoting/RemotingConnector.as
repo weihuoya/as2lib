@@ -5,6 +5,7 @@ import org.as2lib.data.io.conn.remoting.RemotingRequest;
 import org.as2lib.data.io.conn.ConnectorError;
 import org.as2lib.data.io.conn.ConnectorResponse;
 import org.as2lib.env.event.EventBroadcaster;
+import org.as2lib.env.event.SimpleEventBroadcaster;
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.io.conn.remoting.Wrapper;
@@ -17,7 +18,7 @@ class org.as2lib.data.io.conn.remoting.RemotingConnector extends BasicClass impl
 	//private var serviceLoc:ServiceLocator;
 	
 	public function RemotingConnector(Void) {
-		eventBroadcaster = new EventBroadcaster();
+		eventBroadcaster = new SimpleEventBroadcaster();
 		/* to load "NetServices.as" and "NetDebug.as" */
 		Wrapper.getInstance();
 		//serviceLoc = ServiceLocator.getInstance(gatewayUrl,this);

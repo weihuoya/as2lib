@@ -1,94 +1,50 @@
-﻿import org.as2lib.env.event.EventDispatcher;
-import org.as2lib.env.event.dispatcher.NormalEventDispatcher;
-import org.as2lib.env.event.dispatcher.LogEventDispatcher;
-import org.as2lib.env.event.EventListener;
+﻿import org.as2lib.env.event.EventListener;
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.event.ListenerArray;
-import org.as2lib.env.event.Consumeable;
-import org.as2lib.core.BasicClass;
+import org.as2lib.core.BasicInterface;
 
 /**
- * @author Simon Wacker
+ * Interface for standardized Broadcasting.
+ * This interface represents the basic pillar for broadcasting events.
+ * The EventBroadcaster allows to add(@see #addListener)/remove(@see #removeListener) listener(@see EventListener) to a pool of listeners(@see ListenerArray); 
+ * You can dispatch an Eventinfo(@see EventInfo) to all listener in the pool. This allows multiple informations
+ * like ASBroadcaster oder EventBroadcaster. The big advantage in the EventBroadcaster is in the fact that you
+ * have implement at least EventInfo and EventListener. If you want use the EventBroadcaster-System in the best way
+ * you should extend EventInfo and EventListener for own purpose to define your access to the events.
+ * 
+ * @version 1.0
+ * @autor Martin Heidegger
  */
-class org.as2lib.env.event.EventBroadcaster extends BasicClass {
-	/** A reference to the NormalEventDispatcher. */
-	public static var normalDispatcher:EventDispatcher = new NormalEventDispatcher();
-	
-	/** A reference to the LogEventDispatcher. */
-	public static var logDispatcher:EventDispatcher = new LogEventDispatcher();
-	
-	/** Contains all registered listeners. */
-	private var listeners:ListenerArray;
-	
-	/** The used EventDispatcher */
-	private var dispatcher:EventDispatcher;
+interface org.as2lib.env.event.EventBroadcaster extends BasicInterface {
 	
 	/**
-	 * Constructs a new EventBroadcaster instance.
+	 * Adds a listener to the listener pool.
+	 * 
+	 * @param listener
 	 */
-	public function EventBroadcaster(Void) {
-		dispatcher = normalDispatcher;
-		listeners = new ListenerArray();
-	}
+	public function addListener(listener:EventListener):Void;
 	
 	/**
-	 * Sets a new dispatcher to be used by the dispatch method.
-	 *
-	 * @param dispatcher the new dispatcher to be used
+	 * Removes a listener from the listenerpool.
+	 * 
+	 * @param listener
 	 */
-	public function setDispatcher(newDispatcher:EventDispatcher):Void {
-		dispatcher = newDispatcher;
-	}
+	public function removeListener(listener:EventListener):Void;
 	
 	/**
-	 * Adds a new listener to the list of listeners.
-	 *
-	 * @param listener the new listener
+	 * Removes all registered listener.
 	 */
-	public function addListener(listener:EventListener):Void {
-		listeners.push(listener);
-	}
+	public function removeAllListener(Void):Void;
 	
 	/**
-	 * Removes a listener from the list of listeners.
-	 *
-	 * @param listener the listener that shall be removed
+	 * @return A copy of the listenerpool.
 	 */
-	public function removeListener(listener:EventListener):Void {
-		listeners.remove(listener);
-	}
+	public function getAllListener(Void):ListenerArray;
 	
 	/**
-	 * Removes all registered listeners.
+	 * Dispatches the events associated with the name cotained in the EventInfo instance.
+	 * 
+	 * @param event
 	 */
-	public function removeAllListener(Void):Void {
-		listeners.clear();
-	}
-	
-	/**
-	 * Returns a copy of all registered listeners.
-	 *
-	 * @return a copy of the ListenerArray
-	 */
-	public function getAllListener(Void):ListenerArray {
-		var result:ListenerArray = new ListenerArray();
-		var l:Number = listeners.length;
-		for (var i:Number = 0; i < l; i++) {
-			result.push(listeners.get(i));
-		}
-		return result;
-	}
-	
-	/**
-	 * Dispatches to all registered EventListeners.
-	 *
-	 * @param event the EventInfo to be passed to the operation of the EventListeners
-	 */
-	public function dispatch(event:EventInfo):Void {
-		if (event instanceof Consumeable) {
-			dispatcher.dispatchConsumeable(event, listeners);
-			return;
-		}
-		dispatcher.dispatch(event, listeners);
-	}
+	public function dispatch(event:EventInfo):Void;
 }

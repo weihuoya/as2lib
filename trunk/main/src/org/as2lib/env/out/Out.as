@@ -1,9 +1,11 @@
 ﻿import org.as2lib.env.out.OutAccess;
 import org.as2lib.env.out.OutLevel;
 import org.as2lib.env.out.OutHandler;
+import org.as2lib.env.out.OutConfig;
 import org.as2lib.env.out.handler.TraceHandler;
 import org.as2lib.env.out.level.*;
 import org.as2lib.env.event.EventBroadcaster;
+import org.as2lib.env.event.SimpleEventBroadcaster;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.ObjectUtil;
@@ -56,8 +58,7 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	 */
 	public function Out(Void) {
 		level = ALL;
-		broadcaster = new EventBroadcaster();
-		addHandler(new TraceHandler());
+		broadcaster = OutConfig.getEventBroadcasterFactory().createEventBroadcaster();
 	}
 	
 	/**

@@ -1,9 +1,10 @@
 ﻿import org.as2lib.data.io.conn.Connector;
 import org.as2lib.data.io.conn.ConnectionListener;
+import org.as2lib.env.event.SimpleEventBroadcaster;
 import org.as2lib.data.io.conn.ConnectionRequest;
 
 class org.as2lib.data.io.conn.WebserviceConnector implements Connector {
-	//private var eventBroadcaster:EventBroadcaster = new EventBroadcaster();
+	//private var eventBroadcaster:EventBroadcaster = new SimpleEventBroadcaster();
 	
 	/*public function addListener(l:ConnectionListener):Void {
 		eventBroadcaster.addListener(l);
