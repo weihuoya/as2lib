@@ -21,8 +21,8 @@ import org.as2lib.env.out.info.OutErrorInfo;
 import org.as2lib.env.out.OutConfig;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.io.conn.local.LocalClient;
-import org.as2lib.data.io.conn.local.SimpleListener;
-import org.as2lib.data.io.ConnectorRequest;
+import org.as2lib.data.io.conn.listener.SimpleListener;
+import org.as2lib.data.io.conn.ConnectorRequest;
 
 /**
  * ExternalConsoleHandler is a concrete instance of the OutHandler interface. It uses e.g. the
