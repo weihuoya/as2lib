@@ -20,19 +20,20 @@ import org.as2lib.env.reflect.TypeMemberInfo;
 import org.as2lib.env.reflect.ReflectConfig;
 
 /**
- * MethodInfo represents an operation.
+ * MethodInfo represents a method.
  *
  * @author Simon Wacker
  * @see org.as2lib.core.BasicClass
  */
 class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMemberInfo {
-	/** The name of the operation. */
+	
+	/** The name of the method. */
 	private var name:String;
 	
-	/** The actual operation. */
+	/** The actual method. */
 	private var method:Function;
 	
-	/** The type that declares the operation. */
+	/** The type that declares the method. */
 	private var declaringType:TypeInfo;
 	
 	/** A flag representing whether the operaion is static of not. */
@@ -41,10 +42,10 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	/**
 	 * Constructs a new MethodInfo.
 	 *
-	 * @param name the name of the operation
-	 * @param method the actual operation
-	 * @param declaringType the declaring type of the operation
-	 * @param static a flag representing whether the operation is static
+	 * @param name the name of the method
+	 * @param method the actual method
+	 * @param declaringType the declaring type of the method
+	 * @param static a flag representing whether the method is static
 	 */
 	public function MethodInfo(name:String,
 							   method:Function,
@@ -64,9 +65,9 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	}
 	
 	/**
-	 * Returns the actual operation this MethodInfo represents.
+	 * Returns the actual method this MethodInfo represents.
 	 *
-	 * @return the actual operation
+	 * @return the actual method
 	 */
 	public function getMethod(Void):Function {
 		return method;
@@ -80,15 +81,15 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	}
 	
 	/**
-	 * Possibility to call this method to a different scope.
-	 * Allows fast executiont to a Object.
+	 * Allows you to call this method on a different scope that is on any
+	 * object you want.
 	 * 
-	 * @param scope "this"-Scope for the Method call.
-	 * @param arguments Arguments to be applied with this method call.
-	 * @return Returnvalue of the method.
+	 * @param scope 'this'-scope for the method execution
+	 * @param args arguments to be used for the method invocation
+	 * @return the return value of the method execution
 	 */
-	public function applyTo(scope, arguments:Array) {
-		method.apply(scope, arguments);
+	public function applyTo(scope, args:Array) {
+		return method.apply(scope, args);
 	}
 	
 	/**
@@ -104,4 +105,5 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	public function toString(Void):String {
 		return ReflectConfig.getMethodInfoStringifier().execute(this);
 	}
+	
 }

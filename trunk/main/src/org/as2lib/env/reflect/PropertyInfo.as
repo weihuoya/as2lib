@@ -17,7 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.TypeInfo;
 import org.as2lib.env.reflect.MethodInfo;
-import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.reflect.TypeMemberInfo;
 import org.as2lib.env.reflect.ReflectConfig;
 
@@ -25,9 +24,9 @@ import org.as2lib.env.reflect.ReflectConfig;
  * PropertyInfo represents a property.
  *
  * @author Simon Wacker
- * @see org.as2lib.core.BasicClass
  */
 class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemberInfo {
+	
 	/** The name of the property. */
 	private var name:String;
 	
@@ -70,7 +69,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * @param getter the property's setter
 	 */
 	private function setSetter(concreteSetter:Function):Void {
-		if (concreteSetter != undefined) {
+		if (concreteSetter) {
 			setter = new MethodInfo("__set__" + getName(), concreteSetter, getDeclaringType(), isStatic());
 		}
 	}
@@ -81,7 +80,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * @param getter the property's getter
 	 */
 	private function setGetter(concreteGetter:Function):Void {
-		if (concreteGetter != undefined) {
+		if (concreteGetter) {
 			getter = new MethodInfo("__get__" + getName(), concreteGetter, getDeclaringType(), isStatic());
 		}
 	}
@@ -119,12 +118,12 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	}
 	
 	/**
-	 * Returns whether the property is writeable.
+	 * Returns whether the property is writable.
 	 *
 	 * @return true when the property is writeable else false
 	 */
 	public function isWritable(Void):Boolean {
-		return ObjectUtil.isAvailable(setter);
+		return setter != null;
 	}
 	
 	/**
@@ -133,7 +132,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * @return true when the property is readable else false
 	 */
 	public function isReadable(Void):Boolean {
-		return ObjectUtil.isAvailable(getter);
+		return getter != null;
 	}
 	
 	/**
@@ -149,4 +148,5 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	public function toString(Void):String {
 		return ReflectConfig.getPropertyInfoStringifier().execute(this);
 	}
+	
 }
