@@ -16,7 +16,7 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.env.except.StackTraceElement;
-import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.ClassInfo;
 
 /**
  * @author Jayaprakash A
@@ -82,7 +82,7 @@ class test.unit.org.as2lib.env.except.AbstractTStackTraceElement extends TestCas
 		var stackTraceElement:StackTraceElement = getStackTraceElement (thrower, method, args);
 
 		//Validates that the thrower passed in was properly returned
-		assertEquals ("stackTraceElement.getThrower() should return thrower Object.", stackTraceElement.getThrower(), ReflectUtil.getClassInfo(thrower));
+		assertEquals ("stackTraceElement.getThrower() should return thrower Object.", stackTraceElement.getThrower(), ClassInfo.forObject(thrower));
 	}
 	
 	/**

@@ -68,6 +68,85 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	private var propertyAlgorithm:PropertyAlgorithm;
 	
 	/**
+	 * Returns the class info corresponding to the passed-in name.
+	 *
+	 * <p>The name is composed of the class's path as well as its name.
+	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in name is null, undefined or a blank string.</li>
+	 *   <li>There is no class with the given name.</li>
+	 *   <li>The object corresponding to the name is not of type function.</li>
+	 * </ul>
+	 *
+	 * @param className the full name of the class
+	 * @return a class info representing the class corresponding to the name
+	 */
+	public static function forName(className:String):ClassInfo {
+		if (!className) return null;
+		var c:Function = eval("_global." + className);
+		if (c) {
+			if (typeof(c) == "function") {
+				return forClass(c);
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the class info corresponding to the passed-in object.
+	 *
+	 * <p>If the passed-in object is of type function it is supposed
+	 * that this is the class you wanna get the class info for.
+	 * Otherwise it is supposed that the object is an instance of a
+	 * specific class you wanna get the class info for.
+	 *
+	 * <p>This method first checks whether the class is already contained
+	 * in the cache.
+	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The object is null or undefined.</li>
+	 *   <li>The class info corresponding to the object could not be generated.</li>
+	 * </ul>
+	 *
+	 * @param object the object you wanna get a class info for
+	 * @return the class info corresponding to the object
+	 */
+	public static function forObject(object):ClassInfo {
+		// not '!object' because parameter 'object' could be a blank string
+		if (object == null) return null;
+		var info:ClassInfo = ReflectConfig.getCache().getClass(object);
+		if (!info) {
+			info = ReflectConfig.getClassAlgorithm().execute(object);
+		}
+		return info;
+	}
+	
+	/**
+	 * This method does the same as the #forObject(*):ClassInfo method.
+	 * It is planned to separate the class algorithm into two. One that
+	 * searches specifically for instances and one that searches for
+	 * classes to gain performance.
+	 */
+	public static function forInstance(instance):ClassInfo {
+		// not '!instance' because parameter 'instance' could be a blank string
+		if (instance == null) return null;
+		return forObject(instance);
+	}
+	
+	/**
+	 * This method does the same as the #forObject(*):ClassInfo method.
+	 * It is planned to separate the class algorithm into two. One that
+	 * searches specifically for instances and one that searches for
+	 * classes to gain performance.
+	 */
+	public static function forClass(clazz:Function):ClassInfo {
+		if (!clazz) return null;
+		return forObject(clazz);
+	}
+	
+	/**
 	 * Constructs a new ClassInfo.
 	 *
 	 * <p>All arguments are allowed to be null, but keep in mind that not

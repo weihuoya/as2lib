@@ -15,9 +15,9 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.reflect.RootInfo;
 import org.as2lib.env.reflect.Cache;
 
 /**
@@ -37,13 +37,15 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	private var hashCodeCounter:Number;
 	
 	/** The root represented by a RootInfo. */
-	private var root:RootInfo;
+	private var root:PackageInfo;
 	
 	/**
-	 * Constructs a new Cache instance.
+	 * Constructs a new SimpleCache instance.
+	 *
+	 * @param root the root package of the hierarchy
 	 */
-	public function SimpleCache(Void) {
-		root = RootInfo.getInstance();
+	public function SimpleCache(root:PackageInfo) {
+		this.root = root;
 		releaseAll();
 	}
 	
@@ -143,7 +145,7 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 *
 	 * @return the root
 	 */
-	public function getRoot(Void):RootInfo {
+	public function getRoot(Void):PackageInfo {
 		return root;
 	}
 	

@@ -15,9 +15,9 @@
  */
 
 import org.as2lib.test.unit.AbstractAssertInfo;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.StringUtil;
+import org.as2lib.env.reflect.ClassInfo;
 
 /**
  * Information holder and examiner of a assertInstanceOf call.
@@ -64,7 +64,7 @@ class org.as2lib.test.unit.info.AssertInstanceOfInfo extends AbstractAssertInfo 
 		if(hasMessage()) {
 			result += " with message: "+message;
 		}
-		result += "!\n"+StringUtil.addSpaceIndent("'"+val+"' is not a instance of '"+ReflectUtil.getClassInfo(type).getFullName()+"'", 2);
+		result += "!\n"+StringUtil.addSpaceIndent("'"+val+"' is not a instance of '"+ClassInfo.forClass(type).getFullName()+"'", 2);
 		return result;
 	}
 	
@@ -75,6 +75,6 @@ class org.as2lib.test.unit.info.AssertInstanceOfInfo extends AbstractAssertInfo 
 	 * @return Message on success
 	 */
 	private function getSuccessMessage(Void):String {
-		return ("assertInstanceOf executed.\n"+StringUtil.addSpaceIndent("'"+val+"' is a instance of '"+ReflectUtil.getClassInfo(type).getFullName()+"'.", 2));
+		return ("assertInstanceOf executed.\n"+StringUtil.addSpaceIndent("'"+val+"' is a instance of '"+ClassInfo.forClass(type).getFullName()+"'.", 2));
 	}
 }

@@ -16,7 +16,6 @@
 
 import org.as2lib.data.type.Angle;
 import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 
 /**
@@ -71,7 +70,7 @@ class org.as2lib.data.type.Radian extends Number implements Angle {
 	 * @see org.as2lib.core.BasicInterface#getClass()
 	 */
 	public function getClass(Void):ClassInfo {
-		return ReflectUtil.getClassInfo(this);
+		return ClassInfo.forInstance(this);
 	}
 	
 	/**

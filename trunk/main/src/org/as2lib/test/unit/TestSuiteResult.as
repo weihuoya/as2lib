@@ -17,7 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.data.holder.Stack;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.ArrayUtil;
 import org.as2lib.util.StringUtil;
@@ -31,6 +30,7 @@ import org.as2lib.test.unit.TestConfig;
 import org.as2lib.env.out.OutAccess;
 import org.as2lib.env.out.Out;
 import org.as2lib.env.out.handler.TraceHandler;
+import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
@@ -65,7 +65,7 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 			} else if(tests[i] instanceof TestSuite) {
 				testResults.unshift(new TestSuiteResult(tests[i], testRunner));
 			} else {
-				throw new IllegalArgumentException("Type "+ReflectUtil.getClassInfo(tests[i]).getFullName()+" not supported!", this, arguments);
+				throw new IllegalArgumentException("Type " + ClassInfo.forInstance(tests[i]).getFullName()+" not supported!", this, arguments);
 			}
 		}
 	}

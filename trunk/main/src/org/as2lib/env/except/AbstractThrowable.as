@@ -17,7 +17,6 @@
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.except.ExceptConfig;
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.StackTraceElement;
@@ -106,7 +105,7 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	 * @see org.as2lib.core.BasicInterface#getClass()
 	 */
 	public function getClass(Void):ClassInfo {
-		return ReflectUtil.getClassInfo(this);
+		return ClassInfo.forInstance(this);
 	}
 	
 }

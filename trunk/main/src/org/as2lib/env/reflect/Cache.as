@@ -18,7 +18,6 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.reflect.RootInfo;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.util.ObjectUtil;
 
@@ -81,6 +80,6 @@ interface org.as2lib.env.reflect.Cache extends BasicInterface {
 	 *
 	 * @return the root
 	 */
-	public function getRoot(Void):RootInfo;
+	public function getRoot(Void):PackageInfo;
 	
 }

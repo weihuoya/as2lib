@@ -17,7 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
 import org.as2lib.env.except.StackTraceElement;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.StringUtil;
 import org.as2lib.env.reflect.ClassInfo;

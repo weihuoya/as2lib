@@ -16,7 +16,6 @@
 
 import org.as2lib.core.BasicInterface;
 import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.Config;
 
@@ -28,13 +27,14 @@ import org.as2lib.Config;
  * @author Martin Heidegger
  */
 class org.as2lib.core.BasicMovieClip extends MovieClip implements BasicInterface {
+	
 	/**
 	 * Uses the ReflectUtil#getClassInfo() operation to fulfill the task.
 	 *
 	 * @see org.as2lib.core.BasicInterface#getClass()
 	 */
 	public function getClass(Void):ClassInfo {
-		return ReflectUtil.getClassInfo(this);
+		return ClassInfo.forInstance(this);
 	}
 
 	/**
@@ -46,4 +46,5 @@ class org.as2lib.core.BasicMovieClip extends MovieClip implements BasicInterface
 	public function toString(Void):String {
 		return ObjectUtil.stringify(this);
 	}
+	
 }

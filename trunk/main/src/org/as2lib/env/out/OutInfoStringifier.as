@@ -16,9 +16,9 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.out.OutInfo;
 import org.as2lib.env.out.OutLevel;
+import org.as2lib.env.reflect.ClassInfo;
 
 /**
  * OutInfoStringifier is the default Stringifier used to Stringify OutInfos.
@@ -26,6 +26,7 @@ import org.as2lib.env.out.OutLevel;
  * @author Simon Wacker
  */
 class org.as2lib.env.out.OutInfoStringifier extends BasicClass implements Stringifier {
+	
 	/**
 	 * @see org.as2lib.util.string.Stringifier
 	 */
@@ -36,6 +37,7 @@ class org.as2lib.env.out.OutInfoStringifier extends BasicClass implements String
 	}
 	
 	private function getLevelName(level:OutLevel):String {
-		return ReflectUtil.getClassInfo(level).getName();
+		return ClassInfo.forInstance(level).getName();
 	}
+	
 }

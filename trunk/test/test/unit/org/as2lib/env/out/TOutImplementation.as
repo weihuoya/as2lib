@@ -1,11 +1,11 @@
 ﻿import org.as2lib.test.unit.TestCase ;
 import org.as2lib.env.out.Out;
 import org.as2lib.env.out.OutInfo;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.except.Exception;
 import org.as2lib.env.except.FatalException;
 import test.unit.org.as2lib.env.out.handler.TOutHandler;
 import test.unit.org.as2lib.env.out.handler.UIAlertHandler;
+import org.as2lib.env.reflect.ClassInfo;
 
 class test.unit.org.as2lib.env.out.TOutImplementation extends TestCase {
 	
@@ -24,129 +24,129 @@ class test.unit.org.as2lib.env.out.TOutImplementation extends TestCase {
 		
 		aOut.setLevel(Out.ALL);
 		aOut.log(1);
- 		assertEquals("log not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
+ 		assertEquals("log not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
 		aOut.debug(2);
- 		assertEquals("debug not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
+ 		assertEquals("debug not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
 		aOut.info(3);
- 		assertEquals("info not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
+ 		assertEquals("info not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
 		aOut.warning(4);
- 		assertEquals("warning not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
+ 		assertEquals("warning not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
 		aOut.error(5);
- 		assertEquals("error not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
+ 		assertEquals("error not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
 		aOut.fatal(6);
- 		assertEquals("fatal not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
+ 		assertEquals("fatal not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
 		
 		oH.write(new OutInfo("x", Out.FATAL));
 		
 		aOut.setLevel(Out.DEBUG);
 		aOut.log(1);
- 		assertNotEquals("log called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
+ 		assertNotEquals("log called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
 		aOut.debug(2);
- 		assertEquals("debug not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
+ 		assertEquals("debug not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
 		aOut.info(3);
- 		assertEquals("info not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
+ 		assertEquals("info not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
 		aOut.warning(4);
- 		assertEquals("warning not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
+ 		assertEquals("warning not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
 		aOut.error(5);
- 		assertEquals("error not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
+ 		assertEquals("error not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
 		aOut.fatal(6);
- 		assertEquals("fatal not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
+ 		assertEquals("fatal not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
 		
 		oH.write(new OutInfo("x", Out.FATAL));
 		
 		aOut.setLevel(Out.INFO);
 		aOut.log(1);
- 		assertNotEquals("log called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
+ 		assertNotEquals("log called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
 		aOut.debug(2);
- 		assertNotEquals("debug called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
+ 		assertNotEquals("debug called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
 		aOut.info(3);
- 		assertEquals("info not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
+ 		assertEquals("info not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
 		aOut.warning(4);
- 		assertEquals("warning not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
+ 		assertEquals("warning not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
 		aOut.error(5);
- 		assertEquals("error not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
+ 		assertEquals("error not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
 		aOut.fatal(6);
- 		assertEquals("fatal not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
+ 		assertEquals("fatal not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
 		
 		oH.write(new OutInfo("x", Out.FATAL));
 		
 		aOut.setLevel(Out.WARNING);
 		aOut.log(1);
- 		assertNotEquals("log called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
+ 		assertNotEquals("log called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
 		aOut.debug(2);
- 		assertNotEquals("debug called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
+ 		assertNotEquals("debug called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
 		aOut.info(3);
- 		assertNotEquals("info called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
+ 		assertNotEquals("info called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
 		aOut.warning(4);
- 		assertEquals("warning not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
+ 		assertEquals("warning not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
 		aOut.error(5);
- 		assertEquals("error not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
+ 		assertEquals("error not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
 		aOut.fatal(6);
- 		assertEquals("fatal not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
+ 		assertEquals("fatal not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
 		
 		oH.write(new OutInfo("x", Out.FATAL)); 
 		
 		aOut.setLevel(Out.WARNING);
 		aOut.log(1);
- 		assertNotEquals("log called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
+ 		assertNotEquals("log called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
 		aOut.debug(2);
- 		assertNotEquals("debug called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
+ 		assertNotEquals("debug called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
 		aOut.info(3);
- 		assertNotEquals("info called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
+ 		assertNotEquals("info called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
 		aOut.warning(4);
- 		assertEquals("warning not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
+ 		assertEquals("warning not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
 		aOut.error(5);
- 		assertEquals("error not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
+ 		assertEquals("error not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
 		aOut.fatal(6);
- 		assertEquals("fatal not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
+ 		assertEquals("fatal not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
 		
 		oH.write(new OutInfo("x", Out.FATAL));
 		
 		aOut.setLevel(Out.ERROR);
 		aOut.log(1);
- 		assertNotEquals("log called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
+ 		assertNotEquals("log called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
 		aOut.debug(2);
- 		assertNotEquals("debug called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
+ 		assertNotEquals("debug called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
 		aOut.info(3);
- 		assertNotEquals("info called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
+ 		assertNotEquals("info called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
 		aOut.warning(4);
- 		assertNotEquals("warning called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
+ 		assertNotEquals("warning called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
 		aOut.error(5);
- 		assertEquals("error not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
+ 		assertEquals("error not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
 		aOut.fatal(6);
- 		assertEquals("fatal not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
+ 		assertEquals("fatal not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
 		
 		oH.write(new OutInfo("x", Out.FATAL));
 		
 		aOut.setLevel(Out.FATAL);
 		aOut.log(1);
- 		assertNotEquals("log called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
+ 		assertNotEquals("log called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
 		aOut.debug(2);
- 		assertNotEquals("debug called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
+ 		assertNotEquals("debug called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
 		aOut.info(3);
- 		assertNotEquals("info called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
+ 		assertNotEquals("info called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
 		aOut.warning(4);
- 		assertNotEquals("warning called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
+ 		assertNotEquals("warning called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
 		aOut.error(5);
- 		assertNotEquals("error called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
+ 		assertNotEquals("error called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
 		aOut.fatal(6);
- 		assertEquals("fatal not called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
+ 		assertEquals("fatal not called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
 		
 		oH.write(new OutInfo("x", Out.FATAL));
 		
 		aOut.setLevel(Out.NONE);
 		aOut.log(1);
- 		assertNotEquals("log called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
+ 		assertNotEquals("log called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 1);		
 		aOut.debug(2);
- 		assertNotEquals("debug called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
+ 		assertNotEquals("debug called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 2);
 		aOut.info(3);
- 		assertNotEquals("info called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
+ 		assertNotEquals("info called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 3);		
 		aOut.warning(4);
- 		assertNotEquals("warning called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
+ 		assertNotEquals("warning called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 4);
 		aOut.error(5);
- 		assertNotEquals("error called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
+ 		assertNotEquals("error called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 5);
 		aOut.fatal(6);
- 		assertNotEquals("fatal called. "+ReflectUtil.getClassInfo(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
+ 		assertNotEquals("fatal called. "+ClassInfo.forObject(aOut.getLevel()).getName()+" activated.",oH.getLastMessage(), 6);
 		
 	}
 	

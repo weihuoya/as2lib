@@ -15,8 +15,6 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ClassUtil;
 import org.as2lib.util.Call;
 
@@ -38,7 +36,7 @@ class org.as2lib.util.ConstructorCall extends Call {
 	 * @param clazz Class to be constructed.
 	 */
 	public function ConstructorCall(clazz:Function) {
-		super(this, clazz);
+		super (this, clazz);
 		this.clazz = clazz;
 	}
 	
@@ -53,4 +51,5 @@ class org.as2lib.util.ConstructorCall extends Call {
 		var instance = ClassUtil.createCleanInstance(clazz);
 		return clazz.apply(instance, args);
 	}
+	
 }

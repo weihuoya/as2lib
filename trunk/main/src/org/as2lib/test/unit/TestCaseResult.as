@@ -25,7 +25,6 @@ import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.test.unit.TestConfig;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.MethodInfo;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.StringUtil;
 
 /**
@@ -86,7 +85,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	 */
 	private function fetchTestCaseMethodInfos(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestCaseMethodInfo);
-		var methods:Array = ReflectUtil.getClassInfo(testCase).getMethods();
+		var methods:Array = ClassInfo.forInstance(testCase).getMethods();
 		for (var i:Number = methods.length-1; i >= 0; i--) {
 			var method:MethodInfo = methods[i];
 			if (StringUtil.startsWith(method.getName(), 'test')) {
@@ -120,7 +119,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	 * @return name of the TestCase.
 	 */
 	public function getName(Void):String {
-		return ReflectUtil.getClassInfo(getTestCase()).getFullName();
+		return ClassInfo.forInstance(getTestCase()).getFullName();
 	}
 	
 	/**

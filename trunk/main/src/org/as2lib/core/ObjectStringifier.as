@@ -16,7 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
-import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.ClassInfo;
 
 /**
  * ObjectStringifier is the most basic form of Stringifiers. It stringifies all
@@ -25,10 +25,12 @@ import org.as2lib.env.util.ReflectUtil;
  * @author Simon Wacker
  */
 class org.as2lib.core.ObjectStringifier extends BasicClass implements Stringifier {
+	
 	/**
 	 * @see org.as2lib.util.string.Stringifier
 	 */
 	public function execute(target):String {
-		return "[type "+ReflectUtil.getClassInfo(target).getFullName()+"]";
+		return "[type " + ClassInfo.forObject(target).getFullName() + "]";
 	}
+	
 }

@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.test.speed.TestCase;
-import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.ClassInfo;
 
 /**
  * Wrapper arround a Testcase that evaluates all informations.
@@ -29,6 +29,7 @@ import org.as2lib.env.util.ReflectUtil;
  * @see org.as2lib.test.speed.TestCase
  */
 class org.as2lib.test.speed.TestCaseInformation {
+	
 	/** Internal testcaseholder */
 	private var testCase:TestCase;
 	/** Total time executed */
@@ -90,6 +91,7 @@ class org.as2lib.test.speed.TestCaseInformation {
 	 * @return Name of the wrapped object.
 	 */
 	public function getName(Void):String {
-		return ReflectUtil.getClassInfo(this.testCase).getName();
+		return ClassInfo.forInstance(this.testCase).getName();
 	}
+	
 }

@@ -20,7 +20,6 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.PropertyInfo;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.algorithm.ClassAlgorithm;
 import org.as2lib.env.reflect.algorithm.MethodAlgorithm;
 import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
