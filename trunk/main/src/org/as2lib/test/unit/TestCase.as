@@ -40,10 +40,10 @@ import org.as2lib.util.ObjectUtil;
  * }
  * [/CODE]
  * 
- * A testcase usually gets processed by @see #run. 
+ * A testcase usually gets processed by {@link #run}. 
  * The System will fetch all Methods starting with "test" and execute them in
- * a new, isolated instance. Before each method call the methods @see #setUp and
- * @see #tearDown will get called.
+ * a new, isolated instance. Before each method call the methods {@link #setUp} and
+ * {@link #tearDown} will get called.
  *
  * Example:
  *   Testcase:
@@ -104,6 +104,10 @@ import org.as2lib.util.ObjectUtil;
  *     <tr>
  *       <th>assertEquals</th>
  *       <td><i>a</i> == <i>b</i></td>
+ *     </tr>
+ *     <tr>
+ *       <th>assertAlmostEquals</th>
+ *       <td>(<i>a</i> < <i>b</i> && <i>a</i>+x > <i>b</i>) || (<i>a</i> > <i>b</i> && <i>a</i>-x < <i>b</i>)</td>
  *     </tr>
  *     <tr>
  *       <th>assertNotEquals</th>
@@ -179,8 +183,12 @@ import org.as2lib.util.ObjectUtil;
 
 class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	
+	// Defaut maximal difference used in assertAlmostEquals
+	public static var DEFAULT_MAX_DIFF:Number = 0.0000001;
+	
 	// Internal Holder for the TestRunner context the method is running in.
 	private var testRunner:TestRunner;
+	
 	
 	/**
 	 * Abstract constructor. You should extend this class to use the API.
@@ -237,7 +245,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	/**
 	 * Setter for the testrunner.
 	 * The testrunner represents the context of the actual method.
-	 * @see #getMethodInformation is a referred to the informations that represent this
+	 * {@link #getMethodInformation} is a referred to the informations that represent this
 	 * methods information. It will be automatically set by the testrunner, because
 	 * only it know who runs this test)
 	 * 
@@ -382,7 +390,10 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertEquals():Boolean {
 		var overload:Overload = new Overload(this);
+		overload.addHandler([String, Object, undefined], assertEqualsWithMessage);
+		overload.addHandler([String, undefined, Object], assertEqualsWithMessage);
 		overload.addHandler([String, Object, Object], assertEqualsWithMessage);
+		overload.addHandler([String, undefined], assertEqualsWithMessage);
 		overload.addHandler([String, Object], assertEqualsWithMessage);
 		overload.addHandler([undefined, undefined], assertEqualsWithoutMessage);
 		overload.addHandler([undefined, Object], assertEqualsWithoutMessage);
@@ -435,6 +446,96 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	
 	/**
 	 * overload
+	 * @see #assertAlmostEqualsWithMessageWithMaxDiff
+	 * @see #assertAlmostEqualsWithoutMessageWithMaxDiff
+	 * @see #assertAlmostEqualsWithMessageWithoutMaxDiff
+	 * @see #assertAlmostEqualsWithoutMessageWithoutMaxDiff
+	 */
+	private function assertAlmostEquals():Boolean {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String, Number, Number, Number], assertAlmostEqualsWithMessageWithMaxDiff);
+		overload.addHandler([String, Number, Number], assertAlmostEqualsWithMessageWithoutMaxDiff);
+		overload.addHandler([Number, Number, Number], assertAlmostEqualsWithoutMessageWithMaxDiff);
+		overload.addHandler([Number, Number], assertAlmostEqualsWithoutMessageWithoutMaxDiff);
+		return overload.forward(arguments);
+	}
+	
+	/**
+	 * Asserts that two number are the same with some difference value.
+	 * This method compares two number if they are almost the same.
+	 * It compares the two numbers by including a unsharpning buffer {@link #DEFAULT_MAX_DIFF}.
+	 * 
+	 * @see #assertSame
+	 * @see #assertEquals
+	 * @see #assertAlmostEquals
+	 * 
+	 * @param val number1 to be compared.
+	 * @param compareTo number2 to compare with val.
+	 * @return true if no error occured else false.
+	 */
+	private function assertAlmostEqualsWithoutMessageWithoutMaxDiff(val:Number, compareTo:Number):Boolean {
+		return assertAlmostEqualsWithMessageWithMaxDiff("", val, compareTo, DEFAULT_MAX_DIFF);
+	}
+	
+	/**
+	 * Asserts that two number are the same with some difference value.
+	 * This method asserts the same like {@link #assertAlmostEqualsWithoutMessageWithoutMaxDiff}
+	 * but it adds a message to the failure.
+	 * 
+	 * @see #assertSame
+	 * @see #assertEquals
+	 * @see #assertAlmostEquals
+	 * 
+	 * @param message message to be added to the failure.
+	 * @param val number1 to be compared.
+	 * @param compareTo number2 to compare with val.
+	 * @return true if no error occured else false.
+	 */
+	private function assertAlmostEqualsWithMessageWithoutMaxDiff(message:String, val:Number, compareTo:Number):Boolean {
+		return assertAlmostEqualsWithMessageWithMaxDiff(message, val, compareTo, DEFAULT_MAX_DIFF);
+	}
+	
+	/**
+	 * Asserts that two number are the same with some difference value.
+	 * This method compares two number if they are almost the same.
+	 * It compares the two numbers by including a unsharpning buffer (applied as argument).
+	 * 
+	 * @see #assertSame
+	 * @see #assertEquals
+	 * @see #assertAlmostEquals
+	 * 
+	 * @param val number1 to be compared.
+	 * @param compareTo number2 to compare with val.
+	 * @param maxDiff max. difference between those two numbers.
+	 * @return true if no error occured else false.
+	 */
+	private function assertAlmostEqualsWithoutMessageWithMaxDiff(val:Number, compareTo:Number, maxDiff:Number):Boolean {
+		return assertAlmostEqualsWithMessageWithMaxDiff("", val, compareTo, maxDiff);
+	}
+	
+	/**
+	 * Asserts that two number are the same with some difference value.
+	 * This method asserts the same like {@link #assertAlmostEqualsWithoutMessageWithMaxDiff}
+	 * but it adds a message to the failure.
+	 * 
+	 * @see #assertSame
+	 * @see #assertEquals
+	 * @see #assertAlmostEquals
+	 * 
+	 * @param message Message to be applied if a failure occurs
+	 * @param val number1 to be compared.
+	 * @param compareTo number2 to compare with val.
+	 * @param maxDiff max. difference between those two numbers.
+	 * @return true if no error occured else false.
+	 */
+	private function assertAlmostEqualsWithMessageWithMaxDiff(message:String, val:Number, compareTo:Number, maxDiff:Number):Boolean {
+		var info:ExecutionInfo = new AssertAlmostEqualsInfo(message, val, compareTo, maxDiff);
+		getMethodInformation().addInfo(info);
+		return !info.isFailed();
+	}
+	
+	/**
+	 * overload
 	 * @see #assertNotEqualsWithMessage
 	 * @see #assertNotEqualsWithoutMessage
 	 */
@@ -476,7 +577,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	
 	/**
 	 * Asserts that two variables do not contain the same value else it fails.
-	 * This method asserts the same like @see #assertNotEqualsWithoutMessage
+	 * This method asserts the same like {@link #assertNotEqualsWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
 	 * @see #assertNotSame
