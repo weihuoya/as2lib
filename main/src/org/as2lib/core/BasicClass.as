@@ -17,10 +17,6 @@ class org.as2lib.core.BasicClass implements BasicInterface {
 		return ReflectUtil.getClassInfo(this);
 	}
 	
-	public function newOverloadHandler(args:Array, func:Function):OverloadHandler {
-		return (new SimpleOverloadHandler(args, func));
-	}
-	
 	public function toString(Void):String {
 		return ObjectUtil.stringify(this);
 	}

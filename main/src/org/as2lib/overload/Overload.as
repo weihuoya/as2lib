@@ -1,4 +1,5 @@
 ﻿import org.as2lib.overload.OverloadHandler;
+import org.as2lib.overload.SimpleOverloadHandler;
 import org.as2lib.core.BasicClass;
 import org.as2lib.overload.UnknownOverloadHandlerException;
 import org.as2lib.overload.OverloadException;
@@ -19,6 +20,12 @@ class org.as2lib.overload.Overload extends BasicClass {
 	
 	public function addHandler(handler:OverloadHandler):Void {
 		handlers.push(handler);
+	}
+	
+	public function addHandlerByValue(args:Array, func:Function):OverloadHandler {
+		var handler:OverloadHandler = new SimpleOverloadHandler(args, func); 
+		handlers.push(handler);
+		return handler;
 	}
 	
 	public function removeHandler(handler:OverloadHandler):Void {
