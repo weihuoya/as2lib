@@ -16,7 +16,7 @@
  
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.string.Stringifier;
-import org.as2lib.test.unit.error.AssertIsEqualException;
+import org.as2lib.test.unit.error.AssertIsSameException;
 
 /**
  * Stringifier for a normal Failure.
@@ -24,7 +24,7 @@ import org.as2lib.test.unit.error.AssertIsEqualException;
  * @see Failure
  * @author Martin Heidegger
  */
-class org.as2lib.test.unit.stringifier.AssertIsEqualStringifier extends BasicClass implements Stringifier {
+class org.as2lib.test.unit.stringifier.AssertIsSameStringifier extends BasicClass implements Stringifier {
 	
 	/**
 	 * Returns a Failure as string.
@@ -32,12 +32,12 @@ class org.as2lib.test.unit.stringifier.AssertIsEqualStringifier extends BasicCla
 	 * @return Failure as string.
 	 */
 	public function execute (object):String {
-		var exception:AssertIsEqualException = AssertIsEqualException(object);
-		var result:String = "assertIsEqual failed";
+		var exception:AssertIsSameException = AssertIsSameException(object);
+		var result:String = "assertIsSame failed";
 		if(exception.getMessage().length > 0) {
 			result += " with message: "+exception.getMessage();
 		}
-		result += "\n  "+exception.getMainVariable()+" != "+exception.getComparedVariable();
+		result += "\n  "+exception.getMainVariable()+" !== "+exception.getComparedVariable();
 		return(result);
 	}
 }

@@ -14,14 +14,8 @@
  * limitations under the License.
  */
  
-import org.as2lib.core.BasicClass;
-import org.as2lib.env.except.Throwable;
-import org.as2lib.data.holder.Stack;
-import org.as2lib.data.holder.SimpleStack;
-import org.as2lib.test.unit.Assert;
+import org.as2lib.env.except.Exception;
 import org.as2lib.test.unit.AssertException;
-import org.as2lib.test.unit.TestCaseInformation;
-import org.as2lib.test.unit.TestCaseError;
 import org.as2lib.test.unit.stringifier.AssertIsFalseStringifier;
 import org.as2lib.util.string.Stringifier;
 
@@ -32,27 +26,24 @@ import org.as2lib.util.string.Stringifier;
  * 
  * @autor Martin Heidegger.
  */
-class org.as2lib.test.unit.error.AssertIsFalseException extends BasicClass implements AssertException {
+class org.as2lib.test.unit.error.AssertIsFalseException extends Exception implements AssertException {
 	/** Stringifier for the TestCase */
 	private static var stringifier:Stringifier = new AssertIsFalseStringifier();
 	
 	/** Error Holder */
 	private var wrongVar;
 	
-	/** Message related to the Failure */
-	private var message:String;
-
-	private var cause:Throwable;	
-	
 	/**
-	 * Constructs a new AssertThows exception.
+	 * Constructs a new AssertIsFalseException.
 	 * 
-	 * @param inTest	TestCase where the Failure occured.
 	 * @param message	Message appended to the Failure.
+	 * @param wrongVar	Variable that failed.
+	 * @param thrower	Thrower of the exception.
+	 * @param arguments	Arguments of the thrower.
 	 */
-	public function AssertIsFalseException (message:String, wrongVar) {
+	public function AssertIsFalseException (message:String, wrongVar, thrower, arguments) {
+		super(message, thrower, arguments);
 		this.wrongVar = wrongVar;
-		this.message = message;
 	}
 	
 	/**
@@ -86,16 +77,7 @@ class org.as2lib.test.unit.error.AssertIsFalseException extends BasicClass imple
 	public function getWrongVariable(Void) {
 		return this.wrongVar;
 	}
-	
-	/**
-	 * Returns the Message of the Failure.
-	 *  
-	 * @return Message of the Failure.
-	 */
-	public function getMessage(Void):String {
-		return this.message;
-	}
-	
+
 	/**
 	 * Executes the static stringifier and returns the result.
 	 * 
@@ -103,17 +85,5 @@ class org.as2lib.test.unit.error.AssertIsFalseException extends BasicClass imple
 	 */
 	public function toString (Void):String {
 		return getStringifier().execute(this);
-	}	
-	public function initCause(cause:Throwable):Throwable {
-		this.cause = cause;
-		return this;
-	}
-	
-	public function getCause(Void):Throwable {
-		return this.cause;
-	}
-	
-	public function getStackTrace(Void):Stack {
-		return new SimpleStack;
 	}
 }

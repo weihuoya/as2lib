@@ -14,15 +14,8 @@
  * limitations under the License.
  */
  
-import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.Stack;
-import org.as2lib.data.holder.SimpleStack;
-import org.as2lib.env.except.Throwable;
 import org.as2lib.env.except.Exception;
-import org.as2lib.test.unit.Assert;
 import org.as2lib.test.unit.AssertException;
-import org.as2lib.test.unit.TestCaseInformation;
-import org.as2lib.test.unit.TestCaseError;
 import org.as2lib.test.unit.stringifier.AssertIsEqualStringifier;
 import org.as2lib.util.string.Stringifier;
 
@@ -41,9 +34,6 @@ class org.as2lib.test.unit.error.AssertIsEqualException extends Exception implem
 	
 	/** Error Holder */
 	private var mainVar;
-	
-	/** Message related to the Failure */
-	private var message:String;
 
 	/**
 	 * Constructs a new AssertIsEqualException.
@@ -58,7 +48,6 @@ class org.as2lib.test.unit.error.AssertIsEqualException extends Exception implem
 		super(message, thrower, args);
 		this.mainVar = mainVar;
 		this.comparedVar = comparedVar;
-		this.message = message;
 	}
 	
 	/**
@@ -97,15 +86,6 @@ class org.as2lib.test.unit.error.AssertIsEqualException extends Exception implem
 	 */
 	public function getComparedVariable(Void) {
 		return comparedVar;
-	}
-	
-	/**
-	 * Returns the Message of the Failure.
-	 *  
-	 * @return Message of the Failure.
-	 */
-	public function getMessage(Void):String {
-		return message;
 	}
 	
 	/**
