@@ -16,12 +16,16 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Map;
+import org.as2lib.data.holder.HashMap;
 import org.as2lib.env.reflect.CacheInfo;
+import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.NoSuchChildException;
 import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.data.iterator.Iterator;
+import org.as2lib.env.overload.Overload;
+import org.as2lib.env.except.IllegalArgumentException;
 
 /**
  * PackageInfo represents a real package in the Flash environment. This class is
@@ -120,22 +124,188 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CacheInfo
 	}
 	
 	/**
+	 * Returns a Map containing ClassInfos representing the classes contained
+	 * in this package.
+	 *
+	 * @return a Map containing the classes
+	 */
+	public function getChildClasses(Void):Map {
+		var result:Map = new HashMap();
+		var iterator:Iterator = getChildren().iterator();
+		var child:CacheInfo;
+		while (iterator.hasNext()) {
+			child = CacheInfo(iterator.next());
+			if (ObjectUtil.isInstanceOf(child, ClassInfo)) {
+				result.put(child.getName(), child);
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Returns a Map containing PackageInfos representing the packages contained
+	 * in this package.
+	 *
+	 * @return a Map containing the packages
+	 */
+	public function getChildPackages(Void):Map {
+		var result:Map = new HashMap();
+		var iterator:Iterator = getChildren().iterator();
+		var child:CacheInfo;
+		while (iterator.hasNext()) {
+			child = CacheInfo(iterator.next());
+			if (ObjectUtil.isInstanceOf(child, PackageInfo)) {
+				result.put(child.getName(), child);
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Overload
+	 * #getChildByName()
+	 * #getChildByChild()
+	 */
+	public function getChild(child):CacheInfo {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String], getChildByName);
+		overload.addHandler([Object], getChildByChild);
+		return CacheInfo(overload.forward(arguments));
+	}
+	
+	/**
 	 * Returns the CacheInfo corresponding to the name of the child.
 	 *
 	 * @param childName the name of the child
 	 * @return the CacheInfo corresponding to the child's name
 	 * @throws org.as2lib.env.reflect.NoSuchChildException if there is no child with the passed name
 	 */
-	public function getChild(childName:String):CacheInfo {
-		var iterator:Iterator = getChildren().iterator();
-		var child:CacheInfo;
-		while (iterator.hasNext()) {
-			child = CacheInfo(iterator.next());
-			if (child.getName() == childName) {
-				return child;
-			}
+	public function getChildByName(childName:String):CacheInfo {
+		var child:CacheInfo = getChildren().get(childName);
+		if (ObjectUtil.isAvailable(child)) {
+			return child;
 		}
 		throw new NoSuchChildException("The child with the name [" + childName + "] you tried to obtain does not exist.",
+									   this,
+									   arguments);
+	}
+	
+	/**
+	 * Returns the CacheInfo corresponding to the child.
+	 *
+	 * @param child the concrete child you want the CacheInfo for
+	 * @return the CacheInfo corresponding to the child
+	 * @throws org.as2lib.env.reflect.NoSuchChildException if the child does not exist in this package
+	 * @throws org.as2lib.env.except.IllegalArgumentException if the child is neither of type function nor object
+	 */
+	public function getChildByChild(concreteChild):CacheInfo {
+		if (ObjectUtil.isTypeOf(concreteChild, "function")) {
+			return getChildClassByClass(concreteChild);
+		}
+		if (ObjectUtil.isTypeOf(concreteChild, "object")) {
+			return getChildPackageByPackage(concreteChild);
+		}
+		throw new IllegalArgumentException("The passed child [" + concreteChild + "] must be either of type function or object.",
+										   this,
+										   arguments);
+	}
+	
+	/**
+	 * Overlaod
+	 * #getChildClassByName()
+	 * #getChildClassByClass()
+	 */
+	public function getChildClass(clazz):ClassInfo {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String], getChildClassByName);
+		overload.addHandler([Function], getChildClassByClass);
+		return ClassInfo(overload.forward(arguments));
+	}
+	
+	/**
+	 * Returns a ClassInfo corresponding to the name of the class.
+	 *
+	 * @param class the name of the class
+	 * @return a ClassInfo corresponding to the passed name
+	 * @throws org.as2lib.env.reflect.NoSuchChildException if the class does not exist in this package
+	 */
+	public function getChildClassByName(clazz:String):ClassInfo {
+		var result:ClassInfo = ClassInfo(getChildClasses().get(clazz));
+		if (ObjectUtil.isAvailable(result)) {
+			return result;
+		}
+		throw new NoSuchChildException("The class with the name [" + clazz + "] you tried to obtain does not exist.",
+									   this,
+									   arguments);
+	}
+	
+	/**
+	 * Returns a ClassInfo corresponding to the passed concrete class.
+	 *
+	 * @param class the concrete class a corresponding ClassInfo shall be returned
+	 * @return the ClassInfo corresponding to the passed class
+	 * @throws org.as2lib.env.reflect.NoSuchChildException if the class does not exist in this package
+	 */
+	public function getChildClassByClass(clazz:Function):ClassInfo {
+		var result:ClassInfo;
+		var iterator:Iterator = getChildClasses().iterator();
+		while (iterator.hasNext()) {
+			result = ClassInfo(iterator.next());
+			if (result.getClass() == clazz) {
+				return result;
+			}
+		}
+		throw new NoSuchChildException("The class [" + clazz + "] you tried to obtain does not exist in this package.",
+									   this,
+									   arguments);
+	}
+	
+	/**
+	 * Overlaod
+	 * #getChildPackageByName()
+	 * #getChildPackageByPackage()
+	 */
+	public function getChildPackage(package):PackageInfo {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String], getChildPackageByName);
+		overload.addHandler([Object], getChildPackageByPackage);
+		return PackageInfo(overload.forward(arguments));
+	}
+	
+	/**
+	 * Returns a PackageInfo corresponding to the name of the package.
+	 *
+	 * @param package the name of the package
+	 * @return a PackageInfo corresponding to the passed name
+	 * @throws org.as2lib.env.reflect.NoSuchChildException if the package does not exist in this package
+	 */
+	public function getChildPackageByName(package:String):PackageInfo {
+		var result:PackageInfo = PackageInfo(getChildPackages().get(package));
+		if (ObjectUtil.isAvailable(result)) {
+			return result;
+		}
+		throw new NoSuchChildException("The package with the name [" + package + "] you tried to obtain does not exist.",
+									   this,
+									   arguments);
+	}
+	
+	/**
+	 * Returns a PackageInfo corresponding to the passed concrete package.
+	 *
+	 * @param package the concrete package a corresponding PackageInfo shall be returned
+	 * @return the PackageInfo corresponding to the passed package
+	 * @throws org.as2lib.env.reflect.NoSuchChildException if the package does not exist in this package
+	 */
+	public function getChildPackageByPackage(package:Function):PackageInfo {
+		var result:PackageInfo;
+		var iterator:Iterator = getChildPackages().iterator();
+		while (iterator.hasNext()) {
+			result = PackageInfo(iterator.next());
+			if (result.getPackage() == package) {
+				return result;
+			}
+		}
+		throw new NoSuchChildException("The package [" + package + "] you tried to obtain does not exist in this package.",
 									   this,
 									   arguments);
 	}
