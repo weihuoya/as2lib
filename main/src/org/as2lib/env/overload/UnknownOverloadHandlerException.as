@@ -16,6 +16,7 @@
 
 import org.as2lib.env.overload.OverloadException;
 import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.ClassInfo;
 
 /**
  * UnknownOverloadHandlerException will be thrown if no appropriate OverloadHandler
@@ -73,8 +74,12 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 		if (!asString) {
 			asString = getMessage();
 			try {
-				asString += "\n  Overloaded Method: " + ReflectUtil.getClassInfo(overloadTarget).getMethodByMethod(overloadedMethod);
+				var classInfo:ClassInfo = ReflectUtil.getClassInfo(overloadTarget);
+				asString += "\n  Overloaded Method: " + classInfo.getMethodByMethod(overloadedMethod);
 			} catch (e) {
+				if (classInfo.getConstructor().getMethod() == overloadedMethod) {
+					asString += "\n  Overloaded Method: " + classInfo.getConstructor();
+				}
 			}
 			asString += "\n  Used Arguments["+overloadArguments.length+"]: ";
 			for (var i:Number = 0; i < overloadArguments.length; i++) {
