@@ -124,11 +124,8 @@ class test.unit.org.as2lib.data.holder.map.TPrimitiveTypeMap extends TestCase {
 	public function testRemove(Void):Void {
 		var map:Map = getMap();
 		fillMap(map);
-		trace('1');
 		assertEquals("Map.remove should return former value: 'stringKey'", map.remove("key"), "stringKey");
-		trace('2');
 		assertEquals("Map.remove should return former value: 15", map.remove(12), 15);
-		trace('3');
 		assertUndefined("Map.remove should return 'undefined' if it was not available", map.remove("a"));
 		assertFalse("Map.containsKey('key') should return false.", map.containsKey("key"));
 		assertFalse("Map.containsKey(12) should return false.", map.containsKey(12));
