@@ -24,16 +24,16 @@ import org.as2lib.env.log.repository.LoggerFactory;
  *
  * <p>The actual class of these loggers is determined by you at runtime.
  * You can therefor either use the constructors logger class argument or
- * the #setLoggerFactory method.
+ * the {@link #setLoggerFactory} method.
  *
  * <p>This repository is very performant. What it does is quite simple.
  * It only instantiates logger instances passing-in the given name, stores
  * these instances by name for retrieval later on and returns them.
  *
  * <p>When working with logger repositories you normally store them
- * in the log manager using the static LogManager#setLoggerRepository
+ * in the log manager using the static {@link LogManager#setLoggerRepository}
  * method.
- * You can then use the static LogManager#getLogger method to obtain
+ * You can then use the static {@link LogManager#getLogger} method to obtain
  * loggers from the set repository.
  *
  * <p>Here is how you could use it:
@@ -60,12 +60,12 @@ class org.as2lib.env.log.repository.DynamicLoggerRepository extends BasicClass i
 	 * Constructs a new DynamicLoggerRepository instance.
 	 *
 	 * <p>If you do not pass a logger class you must set the logger factory
-	 * via the #setLoggerFactory method. Otherwise the logger returned by
-	 * #getLogger will always be null.
+	 * via the {@link #setLoggerFactory} method. Otherwise the logger returned by
+	 * {@link #getLogger} will always be null.
 	 *
 	 * <p>The logger gets wrapped into a factory and the factory gets set.
 	 * The factory then instantiates the logger class passing-in the name
-	 * of the logger on calls to #getLogger.
+	 * of the logger on calls to {@link #getLogger}.
 	 *
 	 * <p>Already received loggers get cached by name. Thus there exists
 	 * only one logger instance per name.
@@ -124,7 +124,7 @@ class org.as2lib.env.log.repository.DynamicLoggerRepository extends BasicClass i
 	 * Sets a new logger factory.
 	 *
 	 * <p>This logger factory gets used to create loggers for given names,
-	 * that get returned by the #getLogger method.
+	 * that get returned by the {@link #getLogger} method.
 	 *
 	 * @param loggerFactory the new logger factory
 	 */

@@ -24,27 +24,26 @@ import org.as2lib.env.log.logger.AbstractLogger;
  * TraceLogger is a simple implementation of the Logger interface.
  *
  * <p>The actual log output is always made using trace. No other output
- * devices are supported. Use the SimpleLogger to be able to add log
+ * devices are supported. Use the {@link SimpleLogger} to be able to add log
  * handlers as you please which allows you to log to every device you
  * want.
  *
- * <p>The basic methods to write the log messages are #log, #debug,
- * #info, #warning and #fatal.
+ * <p>The basic methods to write the log messages are {@link #log}, {@link #debug},
+ * {@link #info}, {@link #warning} and {@link #fatal}.
  *
  * <p>The first thing to note is that you can write log messages at
- * different levels. These levels are DEBUG, INFO, WARNING, ERROR and
- * FATAL. Depending on what level was set only messages at a given
+ * different levels. These levels are {@link #DEBUG}, {@link #INFO}, {@link #WARNING}, {@link #ERROR} and
+ * {@link #FATAL}. Depending on what level was set only messages at a given
  * level are logged.
  * The levels are organized in a hierarchical manner. That means if you
  * set you log level to ALL every messages get logged. If you set it
  * to ERROR only messages at ERROR and FATAL level get logged and so on.
  * It is also possible to define your own set of levels. You can therefor
- * use the #isEnabled(LogLevel):Boolean and log(*, LogLevel):Boolean
- * methods.
+ * use the {@link #isEnabled} and {@link #log} methods.
  *
  * <p>To do not waste unnecessary performance in constructing log messages
- * that do not get logged you can use the #isEnabled, #isDebugEnabled,
- * #isInfoEnabled, #isWarningEnabled, #isErrorEnabled and #isFatalEnabled
+ * that do not get logged you can use the {@link #isEnabled}, {@link #isDebugEnabled},
+ * {@link #isInfoEnabled}, {@link #isWarningEnabled}, {@link #isErrorEnabled} and {@link #isFatalEnabled}
  * methods.
  *
  * <p>Note that the message does in neither case have to be a string.
@@ -103,7 +102,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 * Returns the name of this logger.
 	 *
 	 * <p>This method returns null if no name has been set via the
-	 * #setName method.
+	 * {@link #setName} method.
 	 *
 	 * @return the name of this logger
 	 */
@@ -166,7 +165,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 *
 	 * @param level the level to make the check upon
 	 * @return true if this logger is enabled for the given level else false
-	 * @see #log(*, LogLevel):Void
+	 * @see #log
 	 */
 	public function isEnabled(level:LogLevel):Boolean {
 		if (!level) return false;
@@ -181,7 +180,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 *
 	 * @return true if debug output gets made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#DEBUG
-	 * @see #debug(*):Void
+	 * @see #debug
 	 */
 	public function isDebugEnabled(Void):Boolean {
 		return (levelAsNumber >= debugLevelAsNumber);
@@ -195,7 +194,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 *
 	 * @return true if info output gets made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#INFO
-	 * @see #info(*):Void
+	 * @see #info
 	 */
 	public function isInfoEnabled(Void):Boolean {
 		return (levelAsNumber >= infoLevelAsNumber);
@@ -209,7 +208,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 *
 	 * @return true if warning output gets made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#WARNING
-	 * @see #warning(*):Void
+	 * @see #warning
 	 */
 	public function isWarningEnabled(Void):Boolean {
 		return (levelAsNumber >= warningLevelAsNumber);
@@ -223,7 +222,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 *
 	 * @return true if error output gets made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#ERROR
-	 * @see #error(*):Void
+	 * @see #error
 	 */
 	public function isErrorEnabled(Void):Boolean {
 		return (levelAsNumber >= errorLevelAsNumber);
@@ -237,7 +236,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 *
 	 * @return true if fatal output gets made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#FATAL
-	 * @see #fatal(*):Void
+	 * @see #fatal
 	 */
 	public function isFatalEnabled(Void):Boolean {
 		return (levelAsNumber >= fatalLevelAsNumber);
@@ -253,7 +252,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 *
 	 * @param message the message object to log
 	 * @param level the specific level at which the message shall be logged
-	 * @see #isEnabled(LogLevel):Boolean
+	 * @see #isEnabled
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
@@ -270,7 +269,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 * <p>The message gets always logged using trace.
 	 *
 	 * @param message the message object to log
-	 * @see #isDebugEnabled(Void):Boolean
+	 * @see #isDebugEnabled
 	 */
 	public function debug(message):Void {
 		if (isDebugEnabled()) {
@@ -287,7 +286,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 * <p>The message gets always logged using trace.
 	 *
 	 * @param message the message object to log
-	 * @see #isInfoEnabled(Void):Boolean
+	 * @see #isInfoEnabled
 	 */
 	public function info(message):Void {
 		if (isInfoEnabled()) {
@@ -304,7 +303,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 * <p>The message gets always logged using trace.
 	 *
 	 * @param message the message object to log
-	 * @see #isWarningEnabled(Void):Boolean
+	 * @see #isWarningEnabled
 	 */
 	public function warning(message):Void {
 		if (isWarningEnabled()) {
@@ -321,7 +320,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 * <p>The message gets always logged using trace.
 	 *
 	 * @param message the message object to log
-	 * @see #isErrorEnabled(Void):Boolean
+	 * @see #isErrorEnabled
 	 */
 	public function error(message):Void {
 		if (isErrorEnabled()) {
@@ -338,7 +337,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 * <p>The message gets always logged using trace.
 	 *
 	 * @param message the message object to log
-	 * @see #isFatalEnabled(Void):Boolean
+	 * @see #isFatalEnabled
 	 */
 	public function fatal(message):Void {
 		if (isFatalEnabled()) {

@@ -27,9 +27,9 @@ import org.as2lib.env.log.LogMessageStringifier;
  * <p>These information are the the message to log, its level and the
  * name of the logger that is responsible for logging the message.
  *
- * <p>The LogMessage#toString method uses the set stringifier to obtain
+ * <p>The {@link #toString} method uses the set stringifier to obtain
  * its string representation. If you want a different appearance of the
- * log message you can use the static #setStringifier method to set your
+ * log message you can use the static {@link #setStringifier} method to set your
  * custom stringifier.
  *
  * <p>The LogMessageStringifier supports different presentation styles.
@@ -56,7 +56,7 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	private var timeStamp:Number;
 	
 	/**
-	 * Returns either the stringifier set via #setStringifier() or the
+	 * Returns either the stringifier set via {@link #setStringifier} or the
 	 * default one.
 	 *
 	 * @return the currently used stringifier
@@ -67,7 +67,7 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	}
 	
 	/**
-	 * Sets a new stringifier to be used by the #toString() operation.
+	 * Sets a new stringifier to be used by the {@link #toString} operation.
 	 *
 	 * @param newStringifier the new stringifier to be used
 	 */
@@ -143,7 +143,7 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	}
 	
 	/**
-	 * Uses the stringifier returned by #getStringifier() to stringify
+	 * Uses the stringifier returned by {@link #getStringifier} to stringify
 	 * this instance.
 	 *
 	 * @return the string representation of this log message

@@ -20,8 +20,9 @@ import org.as2lib.env.log.level.AbstractLogLevel;
 /**
  * DynamicLogLevel lets you dynamically create your own levels.
  *
- * <p>The default levels All, Debug, Info, Warning, Error, Fatal and
- * None normally meet all requirements.
+ * <p>The default levels {@link #ALL}, {@link #DEBUG, {@link #INFO},
+ * {@link #WARNING}, {@link #ERROR, {@link #FATAL and {@link #NONE} normally
+ * meet all requirements.
  *
  * @author Simon Wacker
  */

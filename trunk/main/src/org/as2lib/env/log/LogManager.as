@@ -46,7 +46,7 @@ import org.as2lib.env.log.level.AbstractLogLevel;
  * }</code>
  *
  * <p>If you have one logger that shall always get returned you can use
- * the convenience method #setLogger that does all the work with the
+ * the convenience method {@link #setLogger} that does all the work with the
  * repository for you.
  *
  * <code>// configuration: when setting everything up
@@ -85,16 +85,16 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 	}
 	
 	/**
-	 * Sets the logger that gets returned on calls to the #getLogger method.
+	 * Sets the logger that gets returned on calls to the {@link #getLogger} method.
 	 *
-	 * <p>This method actually sets a singleton repository via #setLoggerRepository
+	 * <p>This method actually sets a singleton repository via {@link #setLoggerRepository}
 	 * that always returns the passed-in logger and ignores the name passed
 	 * to its getLogger method.
 	 *
 	 * <p>You could also set the repository by hand, this is just an easier
 	 * way of doing it if you always want the same logger to be returned.
 	 *
-	 * @param logger the logger to return on calls to the #getLogger method
+	 * @param logger the logger to return on calls to the {@link #getLogger} method
 	 */
 	public static function setLogger(logger:Logger):Void {
 		repository = getBlankLoggerRepository();
@@ -118,7 +118,7 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 	}
 	
 	/**
-	 * Reutrns the logger repository set via #setLoggerRepository(LoggerRepository):Void.
+	 * Reutrns the logger repository set via {@link #setLoggerRepository}.
 	 *
 	 * <p>There is no default logger repository, so you must set it before
 	 * anything else.
@@ -130,9 +130,9 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 	}
 	
 	/**
-	 * Sets a new repositroy returned by #getLoggerRepositroy(Void):LoggerRepository.
+	 * Sets a new repositroy returned by {@link #getLoggerRepositroy}.
 	 *
-	 * <p>The #getLogger method uses this repository to obtain the logger
+	 * <p>The {@link #getLogger} method uses this repository to obtain the logger
 	 * for the passed-in name.
 	 *
 	 * @param loggerRepository the new logger repository

@@ -45,7 +45,7 @@ class org.as2lib.env.log.handler.TraceHandler extends BasicClass implements LogH
 	 * Constructs a new TraceHandler instance.
 	 *
 	 * <p>You can use one and the same instance for multiple loggers. So
-	 * think about using the handler returned by the static #getInstance
+	 * think about using the handler returned by the static {@link #getInstance}
 	 * method.
 	 * Using this instance prevents the instantiation of unnecessary trace
 	 * handlers and and saves storage.
@@ -56,7 +56,7 @@ class org.as2lib.env.log.handler.TraceHandler extends BasicClass implements LogH
 	/**
 	 * Uses trace to write the log message out.
 	 *
-	 * <p>Uses the LogMessage#toString method to obtain the string that
+	 * <p>Uses the {@link LogMessage#toString} method to obtain the string that
 	 * gets written out.
 	 *
 	 * @param message the log message to write out

@@ -91,10 +91,10 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	}
 	
 	/**
-	 * Returns either the factory set via #setDefaultLoggerFactory() or the
+	 * Returns either the factory set via {@link #setDefaultLoggerFactory} or the
 	 * default one.
 	 *
-	 * <p>The default factory returns instances of type SimpleHierarchicalLogger.
+	 * <p>The default factory returns instances of type {@link SimpleHierarchicalLogger}.
 	 *
 	 * @return the factory used as default
 	 */

@@ -24,12 +24,12 @@ import org.as2lib.core.BasicInterface;
  *
  * <p>The default levels offered by the as2lib in a descending order are
  * All, Debug, Info, Warning, Error, Fatal and None. All these levels
- * are defined as constants in the AbstractLogLevel class. Use this class
+ * are defined as constants in the {@link AbstractLogLevel} class. Use this class
  * to reference them.
  *
  * <p>It is also possible to create your own log levels. You just must
  * implement this interface or just instantiate one using the
- * DynamicLogLevel class.
+ * {@link DynamicLogLevel} class.
  *
  * @author Simon Wacker
  * @author Martin Heidegger

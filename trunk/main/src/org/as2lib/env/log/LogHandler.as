@@ -45,7 +45,7 @@ interface org.as2lib.env.log.LogHandler extends EventListener {
 	 * <p>It is not prescribed which information will be written. Hence it
 	 * depends on the concrete handler.
 	 *
-	 * <p>Most handlers simply use the LogMessage#toString method to obtain
+	 * <p>Most handlers simply use the {@link LogMessage#toString} method to obtain
 	 * the string representation to output.
 	 *
 	 * @param message the message containing the basic information to output

@@ -18,9 +18,9 @@ import org.as2lib.env.log.Logger;
 
 /**
  * HierarchicalLogger gets implemented to enable to logger to take part
- * in a Hierarchy.
+ * in a hierarchy.
  *
- * <p>This functionality is needed by the LoggerHierarchy, a repository
+ * <p>This functionality is needed by the {@link LoggerHierarchy}, a repository
  * that stores loggers hierarchical.
  *
  * @author Simon Wacker
