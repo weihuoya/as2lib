@@ -96,7 +96,9 @@ class org.as2lib.data.holder.TypedStack extends BasicClass implements Stack {
 	 */
 	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].");
+			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].",
+											   this,
+											   arguments);
 		}
 	}
 }

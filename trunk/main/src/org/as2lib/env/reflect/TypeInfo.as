@@ -42,14 +42,6 @@ interface org.as2lib.env.reflect.TypeInfo extends CompositeMemberInfo {
 	public function getSuperType(Void):TypeInfo;
 	
 	/**
-	 * Returns the parent of the type. The parent is the package represented
-	 * by a PackageInfo the type resides in.
-	 *
-	 * @return the parent of the type
-	 */
-	public function getParent(Void):PackageInfo;
-	
-	/**
 	 * Returns a Map containing the operations represented by MethodInfos
 	 * the type has.
 	 *
