@@ -18,7 +18,10 @@ import org.as2lib.aop.joinpoint.MethodJoinPoint;
 import org.as2lib.aop.joinpoint.GetPropertyJoinPoint;
 import org.as2lib.aop.joinpoint.SetPropertyJoinPoint;
 import org.as2lib.aop.Pointcut;
+import org.as2lib.aop.pointcut.PointcutConfig;
 import org.as2lib.aop.aspect.AspectConfig;
+import org.as2lib.util.Call;
+import org.as2lib.aop.advice.AdviceConfig;
 
 /**
  * @author Simon Wacker
@@ -42,8 +45,8 @@ class org.as2lib.aop.aspect.AbstractAspect extends BasicClass {
 	private function addAdvice() {
 		var o:Overload = new Overload(this);
 		o.addHandler([Advice], addAdviceByAdvice);
-		//o.addHandler([Number, String, Function], addAdviceByTypeAndStringAndMethod);
-		//o.addHandler([Number, Pointcut, Function], addAdviceByTypeAndPointcutAndMethod);
+		o.addHandler([Number, String, Function], addAdviceByTypeAndStringAndMethod);
+		o.addHandler([Number, Pointcut, Function], addAdviceByTypeAndPointcutAndMethod);
 		return o.forward(arguments);
 	}
 	
@@ -51,13 +54,19 @@ class org.as2lib.aop.aspect.AbstractAspect extends BasicClass {
 		adviceStack.push(advice);
 	}
 	
-	/*private function addAdviceByTypeAndStringAndMethod(type:Number, pointcut:String, method:Function):Advice {
-		
+	private function addAdviceByTypeAndStringAndMethod(type:Number, pointcut:String, method:Function):Advice {
+		var callback:Call = new Call(this, method);
+		var result:Advice = AdviceConfig.getDynamicAdviceFactory().getAdvice(type, pointcut, callback);
+		addAdviceByAdvice(result);
+		return result;
 	}
 	
 	private function addAdviceByTypeAndPointcutAndMethod(type:Number, pointcut:Pointcut, method:Function):Advice {
-		
-	}*/
+		var callback:Call = new Call(this, method);
+		var result:Advice = AdviceConfig.getDynamicAdviceFactory().getAdvice(type, pointcut, callback);
+		addAdviceByAdvice(result);
+		return result;
+	}
 	
 	public function weave(Void):Void {
 		var iterator:Iterator = affectedTypeStack.iterator();
