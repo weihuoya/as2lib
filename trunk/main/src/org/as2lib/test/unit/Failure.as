@@ -1,4 +1,5 @@
 ﻿import org.as2lib.util.ReflectUtil;
+import org.as2lib.core.BasicClass;
 
 /**
  * Failure Class if an Failure was caused by an Testcase.
@@ -7,7 +8,7 @@
  * @date 16.11.2003
  */
 
-class org.as2lib.test.unit.Failure {
+class org.as2lib.test.unit.Failure extends BasicClass {
 	
 	// Function where the Failure occured
 	private var atFunction:String;
