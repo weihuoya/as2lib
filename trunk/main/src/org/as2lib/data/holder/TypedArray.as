@@ -49,13 +49,18 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 		for (var i:Number = 0; i < length; i++) {
 			result.push(this[i]);
 		}
-		for (var i:Number = 0; i < arguments.length; i++) {
-			if (ObjectUtil.isInstanceOf(arguments[i], Array)) {
-				for (var k:Number = 0; k < arguments[i].length; k++) {
-					result.push(arguments[i][k]);
+		// Performance Speed up - so the getter for the length isn't always used (useful with big arrays)
+		var l:Number = arguments.length;
+		for (var i:Number = 0; i < l; i++) {
+			var content = arguments[i];
+			if (ObjectUtil.isInstanceOf(content, Array)) {
+				// Performance Speed up - so the getter for the length isn't always used (useful with big arrays)
+				var l2:Number = content.length;
+				for (var k:Number = 0; k < l2; k++) {
+					result.push(content[k]);
 				}
 			} else {
-				result.push(arguments[i]);
+				result.push(content);
 			}
 		}
 		return result;
