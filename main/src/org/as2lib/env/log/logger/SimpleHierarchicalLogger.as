@@ -33,25 +33,24 @@ import org.as2lib.env.log.logger.AbstractLogger;
  * <p>This logger is thus capable of functioning correctly in a hierarchy.
  * It gets normally used within the LoggerHierarchy repository.
  *
- * <p>The basic methods to write the log messages are #log, #debug,
- * #info, #warning and #fatal.
+ * <p>The basic methods to write the log messages are {@link #log}, {@link #debug},
+ * {@link #info}, {@link #warning} and {@link #fatal}.
  *
  * <p>The first thing to note is that you can write log messages at
- * different levels. These levels are DEBUG, INFO, WARNING, ERROR and
- * FATAL. Depending on what level was set only messages at a given
+ * different levels. These levels are {@link #DEBUG}, {@link #INFO}, {@link #WARNING}, {@link #ERROR} and
+ * {@link #FATAL}. Depending on what level was set only messages at a given
  * level are logged.
  * The levels are organized in a hierarchical manner. That means if you
  * set you log level to ALL every messages get logged. If you set it
  * to ERROR only messages at ERROR and FATAL level get logged and so on.
  * It is also possible to define your own set of levels. You can therefor
- * use the #isEnabled(LogLevel):Boolean and log(*, LogLevel):Boolean
- * methods.
+ * use the {@link #isEnabled} and {@link log} methods.
  * If you do not set a log level the level of its parent gets used to
  * decide whether the message shall be logged.
  *
  * <p>To do not waste unnecessary performance in constructing log messages
- * that do not get logged you can use the #isEnabled, #isDebugEnabled,
- * #isInfoEnabled, #isWarningEnabled, #isErrorEnabled and #isFatalEnabled
+ * that do not get logged you can use the {@link #isEnabled}, {@link #isDebugEnabled},
+ * {@link #isInfoEnabled}, {@link #isWarningEnabled}, {@link #isErrorEnabled} and {@link #isFatalEnabled}
  * methods.
  *
  * <p>Note that the message does in neither case have to be a string.
@@ -62,8 +61,8 @@ import org.as2lib.env.log.logger.AbstractLogger;
  * the message does not get logged.
  *
  * <p>The actaul log output gets made by log handlers. To configure and
- * access the handlers of this logger you can use the methods #addHandler,
- * #removeHandler, #removeAllHandler and #getAllHandler. There are a
+ * access the handlers of this logger you can use the methods {@link #addHandler},
+ * {@link #removeHandler}, {@link #removeAllHandler} and {@link #getAllHandler}. There are a
  * few pre-defined handlers for different output devices. Take a look
  * at the org.as2lib.env.log.handler package for these.
  * This logger does not only use the handlers of itself but also the
@@ -166,10 +165,10 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 * not.
 	 *
 	 * <p>The level is allowed to be set to null or undefined. If you do
-	 * so the #getLevel method returns the level of the parent.
+	 * so the {@link #getLevel} method returns the level of the parent.
 	 *
 	 * @param level the new level to control the output
-	 * @see #getLevel(Void):LogLevel
+	 * @see #getLevel
 	 */
 	public function setLevel(level:LogLevel):Void {
 		this.level = level;
@@ -282,7 +281,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * @param level the level to make the check upon
 	 * @return true if this logger is enabled for the given level else false
-	 * @see #log(*, LogLevel):Void
+	 * @see #log
 	 */
 	public function isEnabled(level:LogLevel):Boolean {
 		if (!level) return false;
@@ -297,7 +296,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * @return true if debug output gets made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#DEBUG
-	 * @see #debug(*):Void
+	 * @see #debug
 	 */
 	public function isDebugEnabled(Void):Boolean {
 		return (getLevel().toNumber() >= debugLevelAsNumber);
@@ -311,7 +310,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * @return true if info output gets made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#INFO
-	 * @see #info(*):Void
+	 * @see #info
 	 */
 	public function isInfoEnabled(Void):Boolean {
 		return (getLevel().toNumber() >= infoLevelAsNumber);
@@ -325,7 +324,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * @return true if warning output gets made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#WARNING
-	 * @see #warning(*):Void
+	 * @see #warning
 	 */
 	public function isWarningEnabled(Void):Boolean {
 		return (getLevel().toNumber() >= warningLevelAsNumber);
@@ -339,7 +338,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * @return true if error output gets made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#ERROR
-	 * @see #error(*):Void
+	 * @see #error
 	 */
 	public function isErrorEnabled(Void):Boolean {
 		return (getLevel().toNumber() >= errorLevelAsNumber);
@@ -353,7 +352,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * @return true if fatal output gets made
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#FATAL
-	 * @see #fatal(*):Void
+	 * @see #fatal
 	 */
 	public function isFatalEnabled(Void):Boolean {
 		return (getLevel().toNumber() >= fatalLevelAsNumber);
@@ -376,7 +375,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * @param message the message object to log
 	 * @param level the specific level at which the message shall be logged
-	 * @see #isEnabled(LogLevel):Boolean
+	 * @see #isEnabled
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
@@ -398,7 +397,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 * returns the handlers of its parents and so on.
 	 *
 	 * @param message the message object to log
-	 * @see #isDebugEnabled(Void):Boolean
+	 * @see #isDebugEnabled
 	 */
 	public function debug(message):Void {
 		log(message, debugLevel);
@@ -416,7 +415,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 * returns the handlers of its parents and so on.
 	 *
 	 * @param message the message object to log
-	 * @see #isInfoEnabled(Void):Boolean
+	 * @see #isInfoEnabled
 	 */
 	public function info(message):Void {
 		log(message, infoLevel);
@@ -434,7 +433,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 * returns the handlers of its parents and so on.
 	 *
 	 * @param message the message object to log
-	 * @see #isWarningEnabled(Void):Boolean
+	 * @see #isWarningEnabled
 	 */
 	public function warning(message):Void {
 		log(message, warningLevel);
@@ -452,7 +451,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 * returns the handlers of its parents and so on.
 	 *
 	 * @param message the message object to log
-	 * @see #isErrorEnabled(Void):Boolean
+	 * @see #isErrorEnabled
 	 */
 	public function error(message):Void {
 		log(message, errorLevel);
@@ -470,7 +469,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 * returns the handlers of its parents and so on.
 	 *
 	 * @param message the message object to log
-	 * @see #isFatalEnabled(Void):Boolean
+	 * @see #isFatalEnabled
 	 */
 	public function fatal(message):Void {
 		log(message, fatalLevel);

@@ -35,9 +35,9 @@ import org.as2lib.env.log.Logger;
  * package on what logger repositories are supported.
  *
  * <p>When working with logger repositories you normally store them
- * in the log manager using the static LogManager#setLoggerRepository
+ * in the log manager using the static {@link LogManager#setLoggerRepository}
  * method.
- * You can then use the static LogManager#getLogger method to obtain
+ * You can then use the static {@link LogManager#getLogger} method to obtain
  * loggers from the set repository.
  *
  * @author Simon Wacker

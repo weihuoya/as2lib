@@ -20,7 +20,8 @@ import org.as2lib.env.except.IllegalArgumentException;
 
 /**
  * AbstractLogLevel acts as a basic access point for the pre-defined levels
- * #ALL, #DEBUG, #INFO, #WARNING, #ERROR, #FATAL and #NONE.
+ * {@link #ALL}, {@link #DEBUG}, {@link #INFO}, {@link #WARNING}, {@link #ERROR},
+ * {@link #FATAL} and {@link #NONE}.
  *
  * @author Simon Wacker
  */

@@ -21,9 +21,9 @@ import org.as2lib.env.log.LogHandler;
 /**
  * ConfigurableLogger declares methods needed to configure most loggers.
  *
- * <p>These is first the method to set the level #setLevel and second
- * the methods to add, remove and access handlers #addHandler, #removeHandler,
- * #removeAllHandler and #getAllHandler.
+ * <p>These is first the method to set the level {@link #setLevel} and second
+ * the methods to add, remove and access handlers {@link #addHandler}, {@link #removeHandler},
+ * {@link #removeAllHandler} and {@link #getAllHandler}.
  *
  * <p>Log handlers are responsible for making the actual output. There
  * are a few pre-defined handlers the can be used to log to different
@@ -43,7 +43,7 @@ interface org.as2lib.env.log.ConfigurableLogger extends Logger {
 	 * not.
 	 *
 	 * @param level the new level to control the output
-	 * @see Logger#getLevel(Void):LogLevel
+	 * @see Logger#getLevel
 	 */
 	public function setLevel(level:LogLevel):Void;
 	

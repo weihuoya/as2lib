@@ -46,7 +46,7 @@ class org.as2lib.env.log.handler.XmlSocketHandler extends BasicClass implements 
 	/**
 	 * Uses the xml socket connection to log the passed-in message.
 	 *
-	 * <p>Uses the LogMessage#toString method to obtain the string to
+	 * <p>Uses the {@link LogMessage#toString} method to obtain the string to
 	 * log.
 	 *
 	 * @param message the message to log
