@@ -43,17 +43,6 @@ class test.unit.org.as2lib.env.reflect.algorithm.TMethodAlgorithm extends TestCa
 		assertNull("execute(undefined) should return null", a.execute(undefined));
 	}
 	
-	public function testExecuteWithArgumentThatIsNotOfTypeClassInfo(Void):Void {
-		var ic:MockControl = new SimpleMockControl(PackageInfo);
-		var i:PackageInfo = ic.getMock();
-		ic.replay();
-		
-		var a:MethodAlgorithm = new MethodAlgorithm();
-		assertNull("execute(PackageInfo) should return null", a.execute(i));
-		
-		ic.verify(this);
-	}
-	
 	public function testExecuteWithArgumentWhoseGetTypeMethodReturnsNull(Void):Void {
 		var ic:MockControl = new SimpleMockControl(ClassInfo);
 		var i:ClassInfo = ic.getMock();

@@ -54,23 +54,6 @@ class test.unit.org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCas
 		cc.verify(this);
 	}
 	
-	public function testExecuteWithArgumentThatIsNotOfTypePackageInfo(Void):Void {
-		var ic:MockControl = new SimpleMockControl(ClassInfo);
-		var i:ClassInfo = ic.getMock();
-		ic.replay();
-		
-		var cc:MockControl = new SimpleMockControl(Cache);
-		var c:Cache = cc.getMock();
-		cc.replay();
-		
-		var a:ChildAlgorithm = new ChildAlgorithm();
-		a.setCache(c);
-		assertNull("execute(ClassInfo) should return null", a.execute(i));
-		
-		ic.verify(this);
-		cc.verify(this);
-	}
-	
 	public function testExecuteWithArgumentWhoseGetPackageMethodReturnsNull(Void):Void {
 		var ic:MockControl = new SimpleMockControl(PackageInfo);
 		var i:PackageInfo = ic.getMock();

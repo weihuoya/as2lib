@@ -18,7 +18,6 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.support.SimpleMockControl;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.algorithm.ChildAlgorithm;
 
 /**

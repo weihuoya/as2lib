@@ -52,7 +52,6 @@ test.unit.org.as2lib.io.file.TBitAndByteFormat;
 test.unit.org.as2lib.env.out.TOutImplementation;
 //test.unit.org.as2lib.env.log.repository.TLoggerHierarchy; // causes the player to break up
 test.unit.org.as2lib.env.log.logger.TSimpleLogger;
-test.unit.org.as2lib.env.reflect.TResolveProxyFactory;
 
 // org.as2lib.env.overload
 test.unit.org.as2lib.env.overload.TOverload;
@@ -78,7 +77,7 @@ test.unit.org.as2lib.util.TMathUtil;
 // org.as2lib.env.reflect.algorithm
 test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm;
 test.unit.org.as2lib.env.reflect.algorithm.TPackageAlgorithm;
-test.unit.org.as2lib.env.reflect.algorithm.TChildrenAlgorithm;
+test.unit.org.as2lib.env.reflect.algorithm.TChildAlgorithm;
 test.unit.org.as2lib.env.reflect.algorithm.TMethodAlgorithm;
 test.unit.org.as2lib.env.reflect.algorithm.TPropertyAlgorithm;
 
@@ -86,6 +85,7 @@ test.unit.org.as2lib.env.reflect.algorithm.TPropertyAlgorithm;
 test.unit.org.as2lib.env.reflect.TSimpleCache;
 test.unit.org.as2lib.env.reflect.TClassInfo;
 test.unit.org.as2lib.env.reflect.TPackageInfo;
+test.unit.org.as2lib.env.reflect.TResolveProxyFactory;
 
 // org.as2lib.env.bean
 test.unit.org.as2lib.env.bean.TMutablePropertyValueSet;
