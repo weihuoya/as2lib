@@ -180,30 +180,30 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	public function isMoreExplicit(handler:OverloadHandler):Boolean {
 		// explicity range: null, undefined -> Object -> Number -> ...
 		if (!handler) return true;
-		var scores:Number = 0;
-		var argumentsTypes2:Array = handler.getArgumentsTypes();
-		if (!argumentsTypes2) argumentsTypes2 = [];
+		var s:Number = 0;
+		var t:Array = handler.getArgumentsTypes();
+		if (!t) t = [];
 		var i:Number = argumentsTypes.length;
-		if (i != argumentsTypes2.length) return true;
+		if (i != t.length) return true;
 		while (--i-(-1)) {
-			if (argumentsTypes[i] != argumentsTypes2[i]) {
-				var object = new Object();
-				object.__proto__ = argumentsTypes[i].prototype;
+			if (argumentsTypes[i] != t[i]) {
+				var o = new Object();
+				o.__proto__ = argumentsTypes[i].prototype;
 				if (!argumentsTypes[i]) {
-					scores--;
-				} else if (!argumentsTypes2[i]) {
-					scores -= -1;
-				} else if (ObjectUtil.isInstanceOf(object, argumentsTypes2[i])) {
-					scores -= -1;
+					s--;
+				} else if (!t[i]) {
+					s -= -1;
+				} else if (ObjectUtil.isInstanceOf(o, t[i])) {
+					s -= -1;
 				} else {
-					scores--;
+					s--;
 				}
 			}
 		}
-		if (scores == 0) {
+		if (s == 0) {
 			return null;
 		}
-		return (scores > 0);
+		return (s > 0);
 	}
 	
 	/**
