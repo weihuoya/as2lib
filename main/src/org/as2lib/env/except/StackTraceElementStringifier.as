@@ -17,10 +17,9 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
 import org.as2lib.env.except.StackTraceElement;
-import org.as2lib.util.ObjectUtil;
-import org.as2lib.util.StringUtil;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.MethodInfo;
+import org.as2lib.env.reflect.PropertyInfo;
 
 /**
  * StackTraceElementStringifier is used to stringify StackTraceElements.
@@ -34,32 +33,47 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 	 * @see org.as2lib.util.string.Stringifier#execute()
 	 */
 	public function execute(target):String {
+		var element:StackTraceElement = target;
 		var result:String = "";
-		var element:StackTraceElement = StackTraceElement(target);
 		
-		var throwerName:String = element.getThrower().getName();
+		var thrower:ClassInfo = ClassInfo.forObject(element.getThrower());
+		var throwerName:String = thrower.getFullName();
 		if (throwerName == undefined) {
-			throwerName = "[not evaluateable]";
+			throwerName = "[unknown]";
 		}
 		
-		try {
-			var method:MethodInfo = element.getMethod();
-			
-			var methodName:String = method.getName();
-			if (methodName == undefined) {
-				methodName = "[not evaluateable]";
-			}
-			result += method.isStatic() ? "[static] " : "";
-			
-		} catch(e:org.as2lib.env.except.IllegalArgumentException) {
-			var methodName:String = "["+method+"]";
+		var method:MethodInfo = getMethod(thrower, element.getMethod());
+		
+		var methodName:String = method.getName();
+		if (methodName == undefined) {
+			methodName = "[unknown]";
 		}
+		result += method.isStatic() ? "static " : "";
 		
 		result += throwerName;
 		result += "." + methodName;
-		result += "(" + element.getArguments() + ")";
+		result += "(" + (element.getArguments() ? element.getArguments() : "[unknown]") + ")";
 	
 		return result;
+	}
+	
+	private function getMethod(thrower:ClassInfo, method:Function) {
+		if (!thrower || !method) return null;
+		if (thrower.getConstructor().getMethod() == method) {
+			return thrower.getConstructor();
+		}
+		var tempMethod:MethodInfo = thrower.getMethod(method);
+		if (tempMethod) return tempMethod;
+		var tempProperty:PropertyInfo = thrower.getProperty(method);
+		if (tempProperty) {
+			if (tempProperty.getGetter().getMethod() == method) {
+				return tempProperty.getGetter().getMethod();
+			}
+			if (tempProperty.getSetter().getMethod() == method) {
+				return tempProperty.getSetter().getMethod()
+			}
+		}
+		return null;
 	}
 	
 }

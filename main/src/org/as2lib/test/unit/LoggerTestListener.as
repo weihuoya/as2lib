@@ -36,8 +36,16 @@ import org.as2lib.test.unit.ResumeInfo;
  */
 class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements TestListener {
 	
-	/** Logger used to output this exception. */
-	private static var logger:Logger = LoggerRepositoryManager.getRepository().getLogger("org.as2lib.test.util.TraceTestListener");
+	/** Stores the logger used to do the output. */
+	private static var logger:Logger;
+	
+	/**
+	 * @return the logger used to do the output
+	 */
+	private static function getLogger(Void):Logger {
+		if (!logger) logger = LoggerRepositoryManager.getRepository().getLogger("org.as2lib.test.util.LoggerTestListener");
+		return logger;
+	}
 	
 	/**
 	 * Start event, fired by start of a TestRunner.
@@ -62,7 +70,7 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Test
 	 */
 	public function onFinish(finishInfo:FinishInfo):Void {
 		var testRunner:TestRunner = finishInfo.getTestRunner();
-	    logger.info(testRunner.getTestResult().toString());
+	    getLogger().info(testRunner.getTestResult().toString());
 	}
 	
 	/**

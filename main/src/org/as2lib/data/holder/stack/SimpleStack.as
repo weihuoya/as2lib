@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
+import org.as2lib.data.holder.Stack;
 import org.as2lib.data.holder.Iterator;
+import org.as2lib.data.holder.HolderConfig;
 import org.as2lib.data.holder.ProtectedIterator;
 import org.as2lib.data.holder.array.ArrayIterator;
-import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.HolderConfig;
-import org.as2lib.data.holder.Stack;
 import org.as2lib.data.holder.EmptyDataHolderException;
 
 /**
