@@ -98,14 +98,14 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass impleme
 			var f = p[i];
 			if (typeof(f) == "function") {
 				if (typeof(d) == "function" && d.prototype === f.prototype
-						|| /*(d instanceof Object) typeof(d) == "object" &&*/ d.__proto__ === f.prototype) {
+						|| d.__proto__ === f.prototype) {
 					r = new ClassInfo(i, f, a);
+					c.addClass(r);
 					return true;
 				}
 			} else if (typeof(f) == "object") {
 				var e:PackageInfo = c.getPackage(f);
 				if (!e) {
-					// Shall we really add all found packages?
 					e = c.addPackage(new PackageInfo(i, f, a));
 				}
 				if (!a.isParentPackage(e)) {

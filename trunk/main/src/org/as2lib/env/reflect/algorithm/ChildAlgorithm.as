@@ -19,9 +19,8 @@ import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
-import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ReflectConfig;
+import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
 
 /**
  * Searches for children, that means classes and packages, of a specific
@@ -29,14 +28,14 @@ import org.as2lib.env.reflect.ReflectConfig;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorithm.ChildrenAlgorithm extends BasicClass implements ContentAlgorithm {
+class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass implements ContentAlgorithm {
 	
 	private var c:Cache;
 	
 	/**
 	 * Constructs a new instance.
 	 */
-	public function ChildrenAlgorithm(Void) {
+	public function ChildAlgorithm(Void) {
 	}
 	
 	/**
@@ -71,6 +70,7 @@ class org.as2lib.env.reflect.algorithm.ChildrenAlgorithm extends BasicClass impl
 	 * <ul>
 	 *   <li>The argument is null or undefined.</li>
 	 *   <li>The argument is not of type PackageInfo.</li>
+	 *   <li>The argument's getPackage() method returns null or undefined.</li>
 	 * </ul>
 	 *
 	 * <p>Only the passed-in package will be searched through.
@@ -85,9 +85,10 @@ class org.as2lib.env.reflect.algorithm.ChildrenAlgorithm extends BasicClass impl
 		if (g == null) return null;
 		var p:PackageInfo = PackageInfo(g);
 		if (p == null) return null;
+		var t:Object = p.getPackage();
+		if (!t) return null;
 		getCache();
 		var r:Array = new Array();
-		var t:Object = p.getPackage();
 		var i:String;
 		for (i in t) {
 			if (typeof(t[i]) == "function") {

@@ -52,6 +52,7 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass impl
 	 * <ul>
 	 *   <li>The argument is null.</li>
 	 *   <li>The argument is not of type ClassInfo.</li>
+	 *   <li>The argument's getType() method returns null or undefined.</li>
 	 * </ul>
 	 *
 	 * <p>Only the passed in class will be searched through, no
@@ -64,12 +65,13 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass impl
 		if (c == null) return null;
 		this.c = ClassInfo(c);
 		if (this.c == null) return null;
+		var b:Function = this.c.getType();
+		if (!b) return null;
 		this.r = new Array();
 		this.g = new Object();
 		this.s = new Object();
 		
 		this.a = true;
-		var b:Function = this.c.getType();
 		search(b);
 		
 		this.a = false;
