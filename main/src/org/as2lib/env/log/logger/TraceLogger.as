@@ -28,42 +28,44 @@ import org.as2lib.env.log.logger.AbstractLogger;
  * handlers as you please which allows you to log to every device you
  * want.
  *
- * <p>The basic methods to write the log messages are {@link #log}, {@link #debug},
- * {@link #info}, {@link #warning} and {@link #fatal}.
+ * <p>The basic methods to write the log messages are {@link #log},
+ * {@link #debug}, {@link #info}, {@link #warning} and {@link #fatal}.
  *
- * <p>The first thing to note is that you can write log messages at
- * different levels. These levels are {@link #DEBUG}, {@link #INFO}, {@link #WARNING}, {@link #ERROR} and
- * {@link #FATAL}. Depending on what level was set only messages at a given
- * level are logged.
- * The levels are organized in a hierarchical manner. That means if you
- * set you log level to ALL every messages get logged. If you set it
- * to ERROR only messages at ERROR and FATAL level get logged and so on.
+ * <p>The first thing to note is that you can log messages at different
+ * levels. These levels are {@link #DEBUG}, {@link #INFO}, {@link #WARNING},
+ * {@link #ERROR} and {@link #FATAL}. Depending on what level has been
+ * set only messages at a given level are logged. The levels are organized
+ * in a hierarchical manner. That means if you set the log level to {@link #ALL}
+ * every messages is logged. If you set it to {@link #ERROR} only messages
+ * at {@link #ERROR} and {@link #FATAL} level are logged and so on.
  * It is also possible to define your own set of levels. You can therefor
  * use the {@link #isEnabled} and {@link #log} methods.
  *
  * <p>To do not waste unnecessary performance in constructing log messages
- * that do not get logged you can use the {@link #isEnabled}, {@link #isDebugEnabled},
- * {@link #isInfoEnabled}, {@link #isWarningEnabled}, {@link #isErrorEnabled} and {@link #isFatalEnabled}
- * methods.
+ * that are not logged you can use the {@link #isEnabled}, {@link #isDebugEnabled},
+ * {@link #isInfoEnabled}, {@link #isWarningEnabled}, {@link #isErrorEnabled}
+ * and {@link #isFatalEnabled} methods.
  *
  * <p>Note that the message does in neither case have to be a string.
- * That means you can pass-in messages as objects, that get stringified
+ * That means you can pass-in messages as objects, that is stringified
  * by the stringifier of the LogMessage class. The stringifier uses by
- * default the toString method of the message.
+ * default the {@code toString} method of the message.
  * You can use this method to do not lose performance in cases where
- * the message does not get logged.
+ * the message is not logged.
  *
  * <p>This logger can simply be used as follows:
- * <code>var logger:TraceLogger = new TraceLogger("myTraceLogger");
- * // checks if the output gets actually made
- * if (logger.isInfoEnabled()) {
-	 // log the message at the info level
- *   logger.info("This is a informative log message.");
- * }</code>
+ * <code>
+ *   var logger:TraceLogger = new TraceLogger("myTraceLogger");
+ *   // checks if the output gets actually made
+ *   if (logger.isInfoEnabled()) {
+	     // log the message at the info level
+ *       logger.info("This is a informative log message.");
+ *   }
+ * </code>
  *
- * <p>It cannot be used with the LoggerHierarchy because it does not
- * offer hierarchy support. If you want to use your logger in a hierarchy
- * use the SimpleHierarchicalLogger instead.
+ * <p>This logger cannot be used with the LoggerHierarchy because it does
+ * not offer hierarchy support. If you want to use your logger in a hierarchy
+ * use the {@code SimpleHierarchicalLogger} instead.
  *
  * @author Simon Wacker
  */

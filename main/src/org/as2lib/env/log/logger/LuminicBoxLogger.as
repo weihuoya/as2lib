@@ -15,11 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.log.Logger;
-import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.logger.AbstractLogger;
-import org.as2lib.env.log.level.DynamicLogLevel;
 
 import LuminicBox.Log.Level;
 import LuminicBox.Log.IPublisher;
@@ -28,44 +24,41 @@ import LuminicBox.Log.IPublisher;
  * LuminicBoxLogger acts as a wrapper for a {@code Logger} instance of
  * the LuminicBox Logging API.
  *
+ * <p>Configure the LuminicBox Logging API as normally and just use this
+ * class in your application to log messages or objects. This enables
+ * you to switch between almost every available logging API without
+ * having to change the logs in your application, but just the underlying
+ * configuration on startup.
+ *
  * <p>All functionalities that the LuminicBox Logging API offers are
  * delegated to it. Other functionalities are performed by this class
  * directly.
  *
- * <p>Note that custom levels, others than the one declared by LuminicBox
- * and the As2lib's equivalents, are not supported right now.
- *
  * @author Simon Wacker
  * @see <a href="http://www.luminicbox.com/dev/flash/log">LuminicBox Logging API</a>
  */
-class org.as2lib.env.log.logger.LuminicBoxLogger extends AbstractLogger implements Logger {
+class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements Logger {
 	
-	/** Makes the static variables of the super-class accessible through this class. */
-	private static var __proto__:Function = AbstractLogger;
-	
-	/** This level is between {@code ALL} and {@code DEBUG}. */
-	public static var LOG:LogLevel = new DynamicLogLevel(55, "LOG");
-	
-	/** The Logger instance of LuminicBox everything is delegated to. */
+	/** The Logger instance of LuminicBox every task is delegated to. */
 	private var logger:LuminicBox.Log.Logger;
-	
-	/** The set level. */
-	private var level:LogLevel;
 	
 	/** The set level as number. */
 	private var levelAsNumber:Number;
 	
-	/** Level {@code ALL}. */
-	private var allLevel:LogLevel;
+	/** Debug level as number. */
+	private var debugLevelAsNumber:Number;
 	
-	/** Level {@code LOG}. */
-	private var logLevel:LogLevel;
+	/** Info level as number. */
+	private var infoLevelAsNumber:Number;
 	
-	/** Level {@code LOG} as number. */
-	private var logLevelAsNumber:Number;
+	/** Warning level as number. */
+	private var warningLevelAsNumber:Number;
 	
-	/** Level {@code NONE}. */
-	private var noneLevel:LogLevel;
+	/** Error level as number. */
+	private var errorLevelAsNumber:Number;
+	
+	/** Fatal level as number. */
+	private var fatalLevelAsNumber:Number;
 	
 	/**
 	 * Constructs a new {@code LuminicBoxLogger} instance.
@@ -73,13 +66,13 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends AbstractLogger implemen
 	 * @param name (optional) the name of this logger
 	 */
 	public function LuminicBoxLogger(name:String) {
-		logger = new LuminicBox.Log.Logger(name);
-		// todo: ask pablo to implement a getLevel method
-		setLevel(logger["_level"]);
-		allLevel = DynamicLogLevel.ALL;
-		logLevel = LOG;
-		logLevelAsNumber = LOG.toNumber();
-		noneLevel = DynamicLogLevel.NONE;
+		this.logger = new LuminicBox.Log.Logger(name);
+		this.levelAsNumber = getLevel().getValue();
+		this.debugLevelAsNumber = Level.DEBUG.getValue();
+		this.infoLevelAsNumber = Level.INFO.getValue();
+		this.warningLevelAsNumber = Level.WARN.getValue();
+		this.errorLevelAsNumber = Level.ERROR.getValue();
+		this.fatalLevelAsNumber = Level.FATAL.getValue();
 	}
 	
 	/**
@@ -89,7 +82,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends AbstractLogger implemen
 	 */
 	public function getName(Void):String {
 		// todo: ask pablo to implement a getLoggerId method
-		return logger["_loggerId"];
+		return this.logger["_loggerId"];
 	}
 	
 	/**
@@ -100,46 +93,18 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends AbstractLogger implemen
 	 * @param newLevel the new level
 	 */
 	public function setLevel(newLevel:Level):Void {
-		switch (newLevel) {
-			case Level.ALL:
-				level = allLevel;
-				break;
-			case Level.LOG:
-				level = logLevel;
-				break;
-			case Level.DEBUG:
-				level = debugLevel;
-				break;
-			case Level.INFO:
-				level = infoLevel;
-				break;
-			case Level.WARN:
-				level = warningLevel;
-				break;
-			case Level.ERROR:
-				level = errorLevel;
-				break;
-			case Level.FATAL:
-				level = fatalLevel;
-				break;
-			case Level.NONE:
-				level = noneLevel;
-				break;
-			default:
-				throw new IllegalArgumentException("Unknown log level [" + newLevel + "].", this, arguments);
-				break;
-		}
-		logger.setLevel(newLevel);
-		levelAsNumber = level.toNumber();
+		this.logger.setLevel(newLevel);
+		this.levelAsNumber = newLevel.getValue();
 	}
 	
 	/**
-	 * Returns the log level.
+	 * Returns the set or default level.
 	 *
-	 * @return the log level
+	 * @return the set or default level
 	 */
-	public function getLevel(Void):LogLevel {
-		return level;
+	public function getLevel(Void):Level {
+		// todo: ask pablo to implement a getLevel method
+		return this.logger["_level"];
 	}
 	
 	/**
@@ -171,31 +136,13 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends AbstractLogger implemen
 	}
 	
 	/**
-	 * Checks whether this logger is enabled for the passed-in log level.
-	 *
-	 * <p>False will be returned if:
-	 * <ul>
-	 *   <li>This logger is not enabled for the passed-in level.</li>
-	 *   <li>The passed-in level is null or undefined.</li>
-	 * </ul>
-	 *
-	 * @param level the level to make the check upon
-	 * @return true if this logger is enabled for the given level else false
-	 * @see #log
-	 */
-	public function isEnabled(level:LogLevel):Boolean {
-		if (!level) return false;
-		return (levelAsNumber >= level.toNumber());
-	}
-	
-	/**
 	 * Checks if this logger is enabled for debug level log messages.
 	 *
 	 * @return true if debug messages are logged
 	 * @see #debug
 	 */
 	public function isDebugEnabled(Void):Boolean {
-		return (levelAsNumber >= debugLevelAsNumber);
+		return (levelAsNumber <= debugLevelAsNumber);
 	}
 	
 	/**
@@ -205,7 +152,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends AbstractLogger implemen
 	 * @see #info
 	 */
 	public function isInfoEnabled(Void):Boolean {
-		return (levelAsNumber >= infoLevelAsNumber);
+		return (levelAsNumber <= infoLevelAsNumber);
 	}
 	
 	/**
@@ -215,7 +162,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends AbstractLogger implemen
 	 * @see #warning
 	 */
 	public function isWarningEnabled(Void):Boolean {
-		return (levelAsNumber >= warningLevelAsNumber);
+		return (levelAsNumber <= warningLevelAsNumber);
 	}
 	
 	/**
@@ -225,7 +172,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends AbstractLogger implemen
 	 * @see #error
 	 */
 	public function isErrorEnabled(Void):Boolean {
-		return (levelAsNumber >= errorLevelAsNumber);
+		return (levelAsNumber <= errorLevelAsNumber);
 	}
 	
 	/**
@@ -235,54 +182,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends AbstractLogger implemen
 	 * @see #fatal
 	 */
 	public function isFatalEnabled(Void):Boolean {
-		return (levelAsNumber >= fatalLevelAsNumber);
-	}
-	
-	/**
-	 * Logs the message object to LuminicBox {@code Logger} at the given
-	 * level.
-	 *
-	 * <p>If the passed-in {@code level} is {@code null} or if it was not
-	 * passed-in, the {@code log} method on the Logger of LuminicBox Logging
-	 * API is invoked.
-	 *
-	 * <p>If the passed-in {@code level} is a real level, the log message
-	 * is delegated to the appropriate method on the wrapped logger.
-	 *
-	 * @param message the message object to log
-	 * @param level (optional) the specific level at which the message shall
-	 * be logged
-	 * @throws IllegalArgumentException if the passed-in {@code level} is
-	 * a custom one
-	 * @see #isEnabled
-	 */
-	public function log(message, level:LogLevel):Void {
-		if (!level) {
-			logger.log(message);
-		} else {
-			switch (levelAsNumber) {
-				case logLevelAsNumber:
-					logger.log(message);
-					break;
-				case debugLevelAsNumber:
-					logger.debug(message);
-					break;
-				case infoLevelAsNumber:
-					logger.info(message);
-					break;
-				case warningLevelAsNumber:
-					logger.warn(message);
-					break;
-				case errorLevelAsNumber:
-					logger.error(message);
-					break;
-				case fatalLevelAsNumber:
-					logger.fatal(message);
-					break;
-				default:
-					throw new IllegalArgumentException("Custom levels [" + level + "] are not supported by the 'Logger' class of the LuminicBox Logging API.", this, arguments);
-			}
-		}
+		return (levelAsNumber <= fatalLevelAsNumber);
 	}
 	
 	/**
