@@ -4,7 +4,7 @@ import org.as2lib.basic.Throwable;
 import org.as2lib.util.ReflectUtil;
 import org.as2lib.basic.reflect.ClassInfo;
 
-class org.as2lib.basic.string.ThrowableStringifier extends BasicClass implements Stringifier {
+class org.as2lib.basic.except.ThrowableStringifier extends BasicClass implements Stringifier {
 	public function execute(target:Object):String {
 		var info:ClassInfo = ReflectUtil.getClassInfo(target);
 		var throwable:Throwable = Throwable(target);

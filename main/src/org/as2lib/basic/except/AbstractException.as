@@ -4,7 +4,7 @@ import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.ReflectUtil;
 import org.as2lib.basic.reflect.ClassInfo;
 
-class org.as2lib.basic.AbstractException extends Error {
+class org.as2lib.basic.except.AbstractException extends Error {
 	private var stack:Stack;
 	private var cause:Throwable;
 	private var message:String;
