@@ -34,11 +34,13 @@ class org.as2lib.env.except.AbstractException extends Error {
 	private function AbstractException(message:String, thrower, args:FunctionArguments) {
 		stackTrace = new Stack();
 		this.message = message;
-		addStackTraceElement(thrower, args.callee);
+		addStackTraceElement(thrower, args.callee, args);
+		// TODO: Implement findMethod to display the next line correctly.
+		// addStackTraceElement(undefined, args.caller, new FunctionArguments());
 	}
 	
-	private function addStackTraceElement(thrower, method:Function):Void {
-		var element:StackTraceElement = new SimpleStackTraceElement(thrower, method);
+	private function addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void {
+		var element:StackTraceElement = new SimpleStackTraceElement(thrower, method, args);
 		stackTrace.push(element);
 	}
 	
