@@ -30,6 +30,7 @@ import org.as2lib.env.except.IllegalArgumentException;
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queue {
+	
 	/** The Queue the TypedQueue wraps. */
 	private var queue:Queue;
 	
@@ -71,6 +72,13 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	}
 	
 	/**
+	 * @see org.as2lib.data.holder.Queue#iterator()
+	 */
+	public function iterator(Void):Iterator {
+		return queue.iterator();
+	}
+	
+	/**
 	 * @see org.as2lib.data.holder.Queue#isEmpty()
 	 */
 	public function isEmpty(Void):Boolean {
@@ -78,10 +86,10 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#iterator()
+	 * @see org.as2lib.data.holder.Queue#toArray()
 	 */
-	public function iterator(Void):Iterator {
-		return queue.iterator();
+	public function toArray(Void):Array {
+		return queue.toArray();
 	}
 	
 	/**
@@ -99,9 +107,8 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	 */
 	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].",
-											   this,
-											   arguments);
+			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].", this, arguments);
 		}
 	}
+	
 }

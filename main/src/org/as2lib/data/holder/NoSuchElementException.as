@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.except.Exception;
+import org.as2lib.data.holder.DataHolderException;
 
 /**
  * NoSuchElementException will be thrown if the element you tried to obtain does
@@ -22,11 +22,13 @@ import org.as2lib.env.except.Exception;
  *
  * @author Simon Wacker
  */
-class org.as2lib.data.holder.NoSuchElementException extends Exception {
+class org.as2lib.data.holder.NoSuchElementException extends DataHolderException {
+	
 	/**
-	 * @see org.as2lib.env.except.Exception#Constructor()
+	 * @see DataHolderException#new()
 	 */
 	public function NoSuchElementException(message:String, thrower, args:FunctionArguments) {
 		super (message, thrower, args);
 	}
+	
 }

@@ -46,13 +46,6 @@ interface org.as2lib.data.holder.Queue extends BasicInterface {
 	public function peek(Void);
 	
 	/**
-	 * Returns whether the queue contains no values.
-	 *
-	 * @return true if the queue contains no values else false
-	 */
-	public function isEmpty(Void):Boolean;
-	
-	/**
 	 * Returns an Iterator that can be used to iterate over the elements fo this
 	 * Queue.
 	 *
@@ -60,5 +53,23 @@ interface org.as2lib.data.holder.Queue extends BasicInterface {
 	 * @see org.as2lib.data.holder.Iterator
 	 */
 	public function iterator(Void):Iterator;
+	
+	/**
+	 * Returns whether the queue contains no values.
+	 *
+	 * @return true if the queue contains no values else false
+	 */
+	public function isEmpty(Void):Boolean;
+	
+	/**
+	 * Returns an array representation of this queue.
+	 *
+	 * <p>The elements are copied onto the array in a first-in-first-out
+	 * order, similar to the order of the elements returned by a succession 
+	 * of calls to #dequeue().
+	 *
+	 * @return the stack's array representation
+	 */
+	public function toArray(Void):Array;
 	
 }

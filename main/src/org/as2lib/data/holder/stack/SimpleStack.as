@@ -28,6 +28,7 @@ import org.as2lib.data.holder.EmptyDataHolderException;
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Stack {
+	
 	/** Contains the inserted values. */
 	private var values:Array;
 	
@@ -82,9 +83,19 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	}
 	
 	/**
+	 * @see org.as2lib.data.holder.Stack#toArray()
+	 */
+	public function toArray(Void):Array {
+		var result:Array = values.concat();
+		result.reverse();
+		return result;
+	}
+	
+	/**
 	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
 	public function toString(Void):String {
 		return HolderConfig.getStackStringifier().execute(this);
 	}
+	
 }

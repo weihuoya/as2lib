@@ -5,6 +5,11 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2004">
       <month value="12">
+        <day value="31">
+          <entry type="add" package="org.as2lib.data.holder" class="Stack" method="toArray(Void):Array"></entry>
+          <entry type="add" package="org.as2lib.data.holder" class="Queue" method="toArray(Void):Array"></entry>
+          <entry type="add" package="org.as2lib.data.holder" class="List" method="toArray(Void):Array"></entry>
+        </day>
         <day value="29">
           <entry type="remove" package="org.as2lib.aop.matcher" class="Matcher"></entry>
           <entry type="add" package="org.as2lib.aop.matcher" class="DefaultMatcher">The old org.as2lib.aop.matcher.Matcher class but with non-static methods.</entry>
