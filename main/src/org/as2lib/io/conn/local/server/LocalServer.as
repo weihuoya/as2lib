@@ -26,11 +26,19 @@ import org.as2lib.io.conn.local.server.LocalServerServiceProxy;
 import org.as2lib.io.conn.local.LocalConfig;
 
 /**
- * Provides functionalities for adding services,
- * which are availiable after the server is started.
+ * LocalServer acts as a composite for for many services that all get
+ * combined in one domain.
  *
- * @author Christoph Atteneder
+ * <p>The general use case looks as follows:
+ * <code>
+ * var server:LocalServer = new LocalServer("local.as2lib.org");
+ * server.putService("myServiceOne", new MyServiceOne());
+ * server.putService("myServiceTwo", new MyServiceTwo());
+ * server.run();
+ * </code>
+ *
  * @author Simon Wacker
+ * @author Christoph Atteneder
  */
 class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements Server {
 	
@@ -50,7 +58,7 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	 * Constructs a new LocalServer instance.
 	 *
 	 * @param host the name of server
-	 * @throws IllegalArgumentException if the passed-in host is null, undefined or a blank string
+	 * @throws IllegalArgumentException if the passed-in host is null, undefined or an empty string
 	 */
 	public function LocalServer(host:String) {
 		if (!host) throw new IllegalArgumentException("Host must not be null, undefined or a blank string.", this, arguments);
@@ -63,7 +71,7 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	 * Returns the currently used server registry.
 	 *
 	 * <p>That is either the server registry set via #setServerRegistry(ServerRegistry):Void
-	 * or the default registry returned by the LocalConfig#getServerRegistry
+	 * or the default registry returned by the LocalConfig#getServerRegistry(Void):ServerRegistry
 	 * method.
 	 *
 	 * @return the currently used server registry
@@ -86,12 +94,13 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	}
 	
 	/**
-	 * Registers itself at the server registry and runs all added services.
+	 * Registers itself at the server registry and runs all added services
+	 * with the host.
 	 *
 	 * <p>If the server is already running a restart will be made. That means
 	 * it will be stopped and run again.
 	 *
-	 * @see Server#run()
+	 * @see Server#run(Void):Void
 	 */
 	public function run(Void):Void {
 		if (isRunning()) this.stop();
@@ -124,16 +133,31 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	}
 	
 	/**
-	 * @see Server#putService()
+	 * Adds the service for the passed-in path.
+	 *
+	 * <p>Service and path get wrapped in a ServerServiceProxy instance.
+	 * This service proxy may throw an IllegalArgumentException if the
+	 * service is null.
+	 *
+	 * @param path that path to the service on the host
+	 * @param service the service to make locally available
+	 * @return the newly created server service proxy that wraps the service and the path
+	 * @throws IllegalArgumentException if the passed-in path is null, undefined or an empty string
+	 * @see Server#putService(String, *):ServerServiceProxy
 	 */
-	public function putService(path:String, service):Void {
+	public function putService(path:String, service):ServerServiceProxy {
 		// source out instantiation
-		addService(new LocalServerServiceProxy(path, service));
+		var proxy:ServerServiceProxy = new LocalServerServiceProxy(path, service);
+		addService(proxy);
+		return proxy;
 	}
 	
 	/**
-	 * If the server is running, the service proxy will be run too.
+	 * Adds the passed-in service.
 	 *
+	 * <p>If the server is running, the service proxy will be run too.
+	 *
+	 * @param proxy the proxy that wraps the actual service
 	 * @throws IllegalArgumentException if the passed-in service proxy is null or undefined
 	 *                                  if the path of the passed-in service proxy is null, undefined or a blank string
 	 *                                  if the path of the passed-in service proxy is already in use
@@ -151,9 +175,19 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	}
 	
 	/**
-	 * If the service is running it will be stopped.
+	 * Removes the service registered for the passed-in path.
 	 *
-	 * @see Server#removeService()
+	 * <p>If the service is running it will be stopped.
+	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in path is null or and empty string.</li>
+	 *   <li>There is no registered service for the passed-in path.</li>
+	 * </ul>
+	 *
+	 * @param path the path of the service to remove
+	 * @return the removed server service proxy wrapping the actual service
+	 * @see Server#removeService(String):ServerServiceProxy
 	 */
 	public function removeService(path:String):ServerServiceProxy {
 		if (!path) return null;
@@ -163,7 +197,17 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	}
 	
 	/**
-	 * @see Server#getService()
+	 * Returns the service registered for the passed-in path.
+	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in path is null or an empty string.</li>
+	 *   <li>There is no service registered for the passed-in path.</li>
+	 * </ul>
+	 *
+	 * @param path the path of the service that gets returned
+	 * @return the server service proxy wrapping the actual service
+	 * @see Server#getService(String):ServerServiceProxy
 	 */
 	public function getService(path:String):ServerServiceProxy {
 		if (!path) return null;
@@ -171,14 +215,24 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	}
 	
 	/**
-	 * @see Server#isRunning()
+	 * Returns whether the server is running.
+	 *
+	 * <p>The server is by default not running. It runs as soon as you call
+	 * the #run(Void):Void method. And stops when you call the #stop(Void):Void
+	 * method.
+	 *
+	 * @return true if the server runs else false
+	 * @see Server#isRunning(Void):Boolean
 	 */
 	public function isRunning(Void):Boolean {
 		return running;
 	}
 	
 	/**
-	 * @see Server#getHost()
+	 * Returns the host of this server.
+	 *
+	 * @return this server's host
+	 * @see Server#getHost(Void):String
 	 */
 	public function getHost(Void):String {
 		return host;

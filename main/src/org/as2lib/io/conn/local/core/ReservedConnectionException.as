@@ -17,13 +17,16 @@
 import org.as2lib.io.conn.ConnectionException;
 
 /**
- * @author Christoph Atteneder
+ * Gets thrown if you try to open a connection with a connection name
+ * that is already in use.
+ 
  * @author Simon Wacker
+ * @author Christoph Atteneder
  */
 class org.as2lib.io.conn.local.core.ReservedConnectionException extends ConnectionException {
 	
 	/**
-	 * @see org.as2lib.io.conn.ConnectionException#new()
+	 * @see org.as2lib.io.conn.ConnectionException#new(String, *, FunctionArguments)
 	 */
 	public function ReservedConnectionException(message:String, thrower, args:FunctionArguments) {
 		super (message, thrower, args);

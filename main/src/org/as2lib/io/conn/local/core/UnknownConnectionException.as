@@ -17,13 +17,16 @@
 import org.as2lib.io.conn.ConnectionException;
 
 /**
- * @author Christoph Atteneder
+ * Gets thrown if you try to invoke a method on a connection that does
+ * not exist.
+ *
  * @author Simon Wacker
+ * @author Christoph Atteneder
  */
 class org.as2lib.io.conn.local.core.UnknownConnectionException extends ConnectionException {
 	
 	/**
-	 * @see org.as2lib.io.conn.ConnectionException#new()
+	 * @see org.as2lib.io.conn.ConnectionException#new(String, *, FunctionArguments)
 	 */
 	public function UnknownConnectionException(message:String, thrower, args:FunctionArguments) {
 		super (message, thrower, args);
