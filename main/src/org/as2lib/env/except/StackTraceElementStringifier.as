@@ -10,8 +10,6 @@ import org.as2lib.util.StringUtil;
  * StackTraceElementStringifier is used to stringify StackTraceElements.
  *
  * @author Simon Wacker
- * @see org.as2lib.core.BasicClass
- * @see org.as2lib.core.string.Stringifier
  */
 class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass implements Stringifier {
 	/**

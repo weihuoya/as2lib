@@ -13,14 +13,15 @@ import org.as2lib.env.EnvConfig;
  * to configure key parts of the whole exception handling process.
  *
  * @author Simon Wacker
- * @see org.as2lib.core.BasicClass
  */
 class org.as2lib.env.except.ExceptConfig extends BasicClass {
 	/** The Stringifier used to stringify a Throwable */
 	private static var throwableStringifier:Stringifier = new ThrowableStringifier();
 	
+	/** Used to stringify a StackTraceElement */
 	private static var stackTraceElementStringifier:Stringifier = new StackTraceElementStringifier();
 	
+	/** Used to stringify the StackTrace returned by Throwable#getStackTrace(). */
 	private static var stackTraceStringifier:Stringifier = new StackTraceStringifier();
 	
 	/** The OutAccess that is used by the Throwables toString() operation. */
@@ -73,10 +74,20 @@ class org.as2lib.env.except.ExceptConfig extends BasicClass {
 		return throwableStringifier;
 	}
 	
+	/**
+	 * Sets a new Stringifier that shall be used to stringify StackTraceElements.
+	 *
+	 * @param stringifier the new Stringifier used to stringify StackTraceElements
+	 */
 	public static function setStackTraceElementStringifier(newStringifier:Stringifier):Void {
 		stackTraceElementStringifier = newStringifier;
 	}
 	
+	/**
+	 * Returns the Stringifier used to stringify StackTraceElements.
+	 *
+	 * @return the Stringifier that stringifies StackTraceElements
+	 */
 	public static function getStackTraceElementStringifier(Void):Stringifier {
 		return stackTraceElementStringifier;
 	}
@@ -85,6 +96,12 @@ class org.as2lib.env.except.ExceptConfig extends BasicClass {
 		stackTraceStringifier = newStringifier;
 	}
 	
+	/**
+	 * Returns the Stringifier used to stringify StackTraces. A StackTrace is
+	 * a Stack that is returned from the Throwable#getStackTrace() operation.
+	 *
+	 * @return the Stringifier that stringifies StackTraceElements
+	 */
 	public static function getStackTraceStringifier(Void):Stringifier {
 		return stackTraceStringifier;
 	}

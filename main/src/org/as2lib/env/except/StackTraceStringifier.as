@@ -6,13 +6,12 @@ import org.as2lib.data.iterator.Iterator;
 import org.as2lib.env.except.StackTraceElement;
 
 /**
+ * StackTraceStringifier is used to stringify stack traces returned by Throwable#getStackTrace().
+ *
  * @author Simon Wacker
  */
 class org.as2lib.env.except.StackTraceStringifier extends BasicClass implements Stringifier {
 	/**
-	 * TODO: Good documentation when the working on the stringify process has 
-	 * been finished.
-	 *
 	 * @see org.as2lib.core.string.Stringifier#execute()
 	 */
 	public function execute(target):String {

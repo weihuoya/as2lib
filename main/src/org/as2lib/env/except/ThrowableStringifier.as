@@ -12,14 +12,9 @@ import org.as2lib.env.except.ExceptConfig;
  * ThrowableStringifier is used to stringify a Throwable.
  *
  * @author Simon Wacker
- * @see org.as2lib.core.BasicClass
- * @see org.as2lib.core.string.Stringifier
  */
 class org.as2lib.env.except.ThrowableStringifier extends BasicClass implements Stringifier {
 	/**
-	 * TODO: Good documentation when the working on the stringify process has 
-	 * been finished.
-	 *
 	 * @see org.as2lib.core.string.Stringifier#execute()
 	 */
 	public function execute(target):String {
