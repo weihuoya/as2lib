@@ -1,7 +1,6 @@
 ﻿import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.out.OutHandler;
-import org.as2lib.env.out.info.OutWriteInfo;
-import org.as2lib.env.out.info.OutErrorInfo;
+import org.as2lib.env.out.OutInfo;
 import org.as2lib.env.out.OutConfig;
 import org.as2lib.core.BasicClass;
 import mx.controls.Alert;
@@ -16,14 +15,14 @@ class test.unit.org.as2lib.env.out.handler.UIAlertHandler extends BasicClass imp
 	/**
 	 * @see org.as2lib.env.out.OutHandler
 	 */
-	public function write(info:OutWriteInfo):Void {
+	public function write(info:OutInfo):Void {
 		Alert.show(info.getMessage(), getClass().getName());
 	}
 	
 	/**
 	 * @see org.as2lib.env.out.OutHandler
 	 */
-	public function error(info:OutErrorInfo):Void {
-		Alert.show(OutConfig.getErrorStringifier().execute(info), getClass().getName());
+	public function error(info:OutInfo):Void {
+		Alert.show(info.getMessage(), getClass().getName());
 	}
 }
