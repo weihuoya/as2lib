@@ -65,7 +65,7 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 	 * 
 	 * @return Exception as string.
 	 */
-	public function toString():String {
+	public function toString(Void):String {
 		// Lazy construction of the string,
 		// Because it takes pretty much time to construct it (using Reflections)
 		// it would take unnecessary much time to construct it if you catch it (and it
