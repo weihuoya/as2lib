@@ -120,9 +120,10 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	public function forward(args:Array) {
 		var matchingHandlers:Array = getMatchingHandlers(args);
 		if (matchingHandlers.length == 0) {
-			throw new UnknownOverloadHandlerException("No appropriate OverloadHandler [" + handlers + "] for the arguments [" + args + "] could be found.",
+			throw new UnknownOverloadHandlerException("No appropriate OverloadHandler found.",
 									 			  	  this,
-									 			  	  arguments);
+									 			  	  arguments,
+													  handlers);
 		}
 		return getMatchingHandler(matchingHandlers).execute(target, args);
 	}
