@@ -1,7 +1,6 @@
 ﻿import org.as2lib.basic.BasicClass;
 import org.as2lib.basic.overload.OverloadHandler;
 import org.as2lib.basic.overload.SimpleOverloadHandler;
-import org.as2lib.data.TypedArray;
 import org.as2lib.basic.overload.OverloadException;
 
 /**
