@@ -5,6 +5,6 @@ import org.as2lib.out.info.OutErrorInfo;
 
 class org.as2lib.out.string.ErrorStringifier extends BasicClass implements Stringifier {
 	public function execute(target:Object):String {
-		return "Error: " + ReflectUtil.getClassInfo(Object(OutErrorInfo(target).getThrowable())).getName();
+		return "** "+OutErrorInfo(target).getLevel().getClass().getName()+" **" + ReflectUtil.getClassInfo(Object(OutErrorInfo(target).getThrowable())).getName();
 	}
 }
