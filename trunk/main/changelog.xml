@@ -6,13 +6,15 @@
     <year value="2005">
        <month value="1">
          <day value="24">
+           <entry type="change" package="org.as2lib.env.except" class="StackTraceElement" method="getThrower(Void):ClassInfo">Changed return type to *.</entry>
+           <entry type="change" package="org.as2lib.env.except" class="StackTraceElement" method="getMethod(Void):MethodInfo">Changed return type to Function.</entry>
            <entry type="add">Introduction of a configfile: as2lib.config.as</entry>
            <entry type="change" package="org.as2lib.test.unit" class="TestRunner" method="run(TestCase/TestSuite)">Removed doNotPrintResult because its not necessary with config</entry>
            <entry type="remove" package="org.as2lib.test.unit" class="TestResult" method="print()">Print removed due to Configuration change</entry>
            <entry type="remove" package="org.as2lib.test.unit" class="TestConfig">Removed due to Configuration</entry>
            <entry type="add" package="org.as2lib.test.unit" class="LoggerTestListener">Default listener to be used with the TestSuite</entry>
            <entry type="add" package="org.as2lib.env.event" class="ConsumableEventInfo">SimpleEventInfo that is consumable</entry>
-           <entry type="change" package="org.as2lib.env.log.handler" class="TraceHandler">Used abstract contstructor and added singleton methods</entry>
+           <entry type="add" package="org.as2lib.env.log.handler" class="TraceHandler" method="getInstance(Void):TraceHandler>Added method for singleton access.</entry>
            <entry type="add" package="org.as2lib.env.log.logger" class="TraceLogger">Introduced simple logger that redirects to the output console</entry>
            <entry type="add" package="org.as2lib.env.log.logger" class="VoidLogger">Introduces logger that dismisses all messages</entry>
          </day>
