@@ -15,9 +15,9 @@ import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
 import edu.test.TestClass;
 
-var aClass:TestClass = new TestClass();
-var aClassInfo:ClassInfo = ReflectUtil.getClassInfo(
-				aClass);
+var test:TestClass = new TestClass();
+var info:ClassInfo = ReflectUtil.getClassInfo(
+				test);
 \end{lstlisting}
 Das erzeugte Objekt vom Typ \emph{ClassInfo} beinhaltet Methoden um genauere Informationen der Klasse zu erhalten.
 Seine Methoden sind:
@@ -25,15 +25,15 @@ Seine Methoden sind:
 \begin{itemize}
 	\item \textbf{getName(}):\textit{String} - Name der Klasse z.B.: "`TestClass"'.
 	\item \textbf{getFullName()}:\textit{String} - Name der Klasse inklusive Packageinformationen z.B.: "`edu.test.TestClass"'.
-	\item \textbf{getRepresentedClass()}:\textit{Function} - Klasse zu der die Klasseninformation erstellt wurde.
+	\item \textbf{getType()}:\textit{Function} - Klasse zu der die Klasseninformation erstellt wurde.
 	\item \textbf{getConstructor()}: \textit{ConstructorInfo} - Gibt Konstruktor der Klasse als ConstructorInfo zurück.
-	\item \textbf{getSuperClass(}):\textit{ClassInfo} - Informationen zur Vaterklasse, falls vorhanden.
-	\item \textbf{newInstance(}) - Neue Instanz der Klasse zu der die Klasseninformation erstellt wurde.
+	\item \textbf{getSuperType(}):\textit{ClassInfo} - Informationen zur Vaterklasse, falls vorhanden.
+	\item \textbf{newInstance(args:Array)} - Neue Instanz der Klasse zu der die Klasseninformation erstellt wurde.
 	\item \textbf{getParent()}:\textit{PackageInfo} - Informationen zum Package in dem sich die Klasse befindet.
-	\item \textbf{getMethods()}:\textit{Map} - Map, siehe Kapitel \ref{sec:DataHolding}, die Informationen zu den einzelnen Methoden der Klasse beinhaltet.
+	\item \textbf{getMethods()}:\textit{Array} - Array, siehe Kapitel \ref{sec:DataHolding}, die Informationen zu den einzelnen Methoden der Klasse beinhaltet.
 	\item \textbf{getMethod(methodName:String)}:\textit{MethodInfo} - Gibt Information zur Methode dessen Name übergeben wurde als MethodInfo zurück.
 	\item \textbf{getMethod(concreteMethod:Function)}:\textit{MethodInfo} - Gibt Information zur Methode die übergeben wurde als MethodInfo zurück.
-	\item \textbf{getProperties()}:\textit{HashMap} - HashMap, die Informationen zu den einzelnen Eigenschaften, falls sie eine get set Methode besitzen zurückliefert.
+	\item \textbf{getProperties()}:\textit{Array} - Array, die Informationen zu den einzelnen Eigenschaften, falls sie eine get set Methode besitzen zurückliefert.
 	\item \textbf{getProperty(propertyName:String)}:\textit{PropertyInfo} - Gibt Information zur Eigenschaft dessen Name übergeben wurde als PropertyInfo zurück.
 	\item \textbf{getProperty(concreteProperty:Function)}:\textit{PropertyInfo} - Gibt Information zur Eigenschaft die übergeben wurde als PropertyInfo zurück.
 \end{itemize}

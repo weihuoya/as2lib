@@ -23,13 +23,12 @@ Ein einfacher Anwendungsfall des {\sl as2lib} Output Handling wird in Abbildung 
 \end{center}
 \end{figure}
 
-Es kann wie in Abbildung \ref{fig:outHandling} auf bereits definierte Ausgaben wie den \emph{TraceHandler} oder \emph{ExternalConsoleHandler}\footnote{org.as2lib.env.out.handler.ExternalConsoleHandler} zugegriffen oder ein eigener \emph{OutHandler} erstellt werden(z.B.: eine Ausgabe über die {\sl Macromedia} Alert Komponente)\footnote{Die Macromedia Alert Komponente muss sich in der Bibliothek befinden und Sie müssen Flash MX 2004 Professional besitzen, um über die Alert Klasse darauf zugreifen zu können.}:
+Es kann wie in Abbildung \ref{fig:outHandling} auf bereits definierte Ausgaben wie den \emph{TraceHandler} zugegriffen oder ein eigener \emph{OutHandler} erstellt werden(z.B.: eine Ausgabe über die {\sl Macromedia} Alert Komponente)\footnote{Die Macromedia Alert Komponente muss sich in der Bibliothek befinden und Sie müssen Flash MX 2004 Professional besitzen, um über die Alert Klasse darauf zugreifen zu können.}:
 
 \begin{lstlisting}[frame=single]
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.out.OutHandler;
-import org.as2lib.env.out.info.OutWriteInfo;
-import org.as2lib.env.out.info.OutErrorInfo;
+import org.as2lib.env.out.OutInfo;
 import org.as2lib.env.out.OutConfig;
 import org.as2lib.core.BasicClass;
 import mx.controls.Alert;
@@ -37,21 +36,15 @@ import mx.controls.Alert;
 class test.org.as2lib.env.out.handler.UIAlertHandler 
 	extends BasicClass implements OutHandler {
 
-	public function write(info:OutWriteInfo):Void {
+	public function write(info:OutInfo):Void {
 		Alert.show(info.getMessage(), 
 			getClass().getName());
 	}
-	
-	public function error(info:OutErrorInfo):Void {
-		Alert.show(
-			OutConfig.getErrorStringifier().execute(info),
-			getClass().getName()
-		);
-	}
+
 }
 \end{lstlisting}
 
-Durch die Festlegung von Ausgabe Levels(z.B.: \emph{aOut.setLevel(Out.DEBUG)}) kann die Ausgabe bestimmter Informationen verhindert werden und unterschiedliche Ausgabe Levels verwenden.
+Durch die Festlegung von Ausgabe Levels(z.B.: \emph{out.setLevel(Out.DEBUG)}) kann die Ausgabe bestimmter Informationen verhindert werden und unterschiedliche Ausgabe Levels verwenden.
 Die möglichen Ausgabe Levels sind:
 \begin{itemize}
 	\item Out.ALL
@@ -68,17 +61,19 @@ Verwendet man bei der Entwicklung z.B.: \emph{Out.DEBUG} werden bei dieser Konfi
 Nur die \textit{LOG} Ausgabe wird unterdrückt.
 
 \begin{lstlisting}[frame=single]
-var aOut = new Out();
+var out:Out = new Out();
+out.addHandler(new TraceHandler());
 
-aOut.setLevel(Out.DEBUG);
+out.setLevel(Out.DEBUG);
 
-aOut.log("log mich bitte!");
-aOut.debug("debug mich bitte!");
-aOut.info("informiere mich bitte!");
-aOut.warning("warne mich bitte!");
-aOut.error(new Exception("Output Error", this));
-aOut.fatal(new FatalException("Fatal Output Error",
-	this));
+out.log("log mich bitte!");
+out.debug("debug mich bitte!");
+out.info("informiere mich bitte!");
+out.warning("warne mich bitte!");
+out.error(new Exception("Output Error", this,
+  arguments));
+out.fatal(new FatalException("Fatal Output Error",
+	this, arguments));
 \end{lstlisting}
 
 Möchte man in der fertigen Applikation nur die schwerwiegenden Fehler ausgeben, lässt sich das durch eine einfache Zeile in der Applikation bewerkstelligen.

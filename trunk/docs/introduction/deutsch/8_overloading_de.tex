@@ -18,8 +18,8 @@ Die {\sl as2lib} ermöglicht das Overloading in {\sl ActionScript 2} durch das \e
 import org.as2lib.env.overload.Overload;
 
 class TryOverload {
-	private var aString:String;
-	private var aNumber:Number;
+	private var string:String;
+	private var number:Number;
 	
 	public function TryOverload(){
 		var overload:Overload = new Overload(this);
@@ -29,11 +29,11 @@ class TryOverload {
 		setString);
 		overload.forward(arguments);
 	}
-	public function setNumber(aNumber:Number){
-		this.aNumber = aNumber;
+	public function setNumber(number:Number){
+		this.number = number;
 	}
-	public function setString(aString:String){
-		this.aString = aString;
+	public function setString(string:String){
+		this.string = string;
 	}
 }
 \end{lstlisting}
@@ -42,6 +42,6 @@ In diesem Codebeispiel wird in der Klasse \emph{TryOverload} ein Konstruktor ers
 Ein Test der TryOverload Klasse würde wie folgt aussehen:
 
 \begin{lstlisting}[frame=single]
-var aOverload:TryOverload = new TryOverload("Hallo");
-var bOverload:TryOverload = new TryOverload(6);
+var overload1:TryOverload = new TryOverload("Hallo");
+var overload2:TryOverload = new TryOverload(6);
 \end{lstlisting}

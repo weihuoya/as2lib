@@ -18,8 +18,8 @@ As method overloading is supported in Java, a class can have one or more constru
 import org.as2lib.env.overload.Overload;
 
 class TryOverload {
-	private var aString:String;
-	private var aNumber:Number;
+	private var string:String;
+	private var number:Number;
 	
 	public function TryOverload(){
 		var overload:Overload = new Overload(this);
@@ -32,16 +32,16 @@ class TryOverload {
 		setString);
 		overload.forward(arguments);
 	}
-	public function setValues(aNumber:Number, 
-	aString:String){
-		this.aNumber = aNumber;
-		this.aString = aString;
+	public function setValues(number:Number, 
+	string:String){
+		this.number = number;
+		this.string = string;
 	}
-	public function setNumber(aNumber:Number){
-		this.aNumber = aNumber;
+	public function setNumber(number:Number){
+		this.number = number;
 	}
-	public function setString(aString:String){
-		this.aString = aString;
+	public function setString(string:String){
+		this.string = string;
 	}
 }
 \end{lstlisting}
@@ -51,7 +51,7 @@ In the \emph{TryOverload} class a constructor is created that doesn't define spe
 A test of the \emph{TryOverload} class would look like the following:
 
 \begin{lstlisting}[frame=single]
-var aOverload:TryOverload = new TryOverload("Hallo");
-var bOverload:TryOverload = new TryOverload(6);
-var cOverload:TryOverload = new TryOverload(6,"y");
+var overload1:TryOverload = new TryOverload("Hallo");
+var overload2:TryOverload = new TryOverload(6);
+var overload3:TryOverload = new TryOverload(6, "y");
 \end{lstlisting}

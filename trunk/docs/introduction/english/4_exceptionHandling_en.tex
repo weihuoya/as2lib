@@ -2,7 +2,7 @@
 \label{sec:ExceptionHandling}
 
 \paragraph{Motivation:}
-Uncaught failure messages are output with\footnote{Online documentation on \href{http://livedocs.macromedia.com/flash/mx2004/main/12_as217.htm}{livedocs.macromedia.com/flash/mx2004/main/12\_as217.htm}}:
+Uncaught failure messages are put out with\footnote{Online documentation on \href{http://livedocs.macromedia.com/flash/mx2004/main/12_as217.htm}{livedocs.macromedia.com/flash/mx2004/main/12\_as217.htm}}:
 \begin{lstlisting}[frame=single]
 trace(Error.toString());
 \end{lstlisting}
@@ -17,7 +17,7 @@ Besides the fact that the printed out information is only little or not at all i
 \end{figure}
 
 \paragraph{Solution:}
-{\sl As2lib} contains classes based on the {\sl Macromedia} native {\sl Error} class, which implement the methods of the \emph{Throwable}\footnote{org.as2lib.env.except.Throwable} interface.
+{\sl As2lib} contains classes based on the {\sl Macromedia} native {\sl Error} class, which implements the methods of the \emph{Throwable}\footnote{org.as2lib.env.except.Throwable} interface.
 The new functionalities of Exception Handling are:
 
 \begin{itemize}
@@ -76,10 +76,12 @@ A thrown IllegalArgumentException can be caught in the calling code with a \emph
 \begin{lstlisting}[frame=single]
 import org.diplomarbeit.ExceptionTest;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.out.handler.TraceHandler;
 import org.as2lib.env.out.Out;
 
 try {
 	var myOut:Out = new Out();
+	myOut.addHandler(new TraceHandler());
 	var myET:ExceptionTest = new ExceptionTest();
 	myOut.info(myET.getString());
 }
@@ -88,7 +90,7 @@ catch(e:IllegalArgumentException){
 }
 \end{lstlisting}
 
-You can define as many of your own exceptions as you want. If you for example want to throw an OutOfTimeException you must do the following implementation:
+You can define as many of your own exceptions as you want. If you for example want to throw an OutOfTimeException you must do the following:
 \clearpage
 \begin{lstlisting}[frame=single]
 import org.as2lib.env.except.Exception;
