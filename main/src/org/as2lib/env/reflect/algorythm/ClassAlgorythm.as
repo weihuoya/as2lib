@@ -68,13 +68,17 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 	}
 	
 	private function validateAndStoreClass(name:String, clazz:Function, parent:PackageInfo, object):Boolean {
-		if (object.__proto__ == clazz.prototype) {
-			storeClass(name, clazz, parent);
-			return true;
+		if (ObjectUtil.isTypeOf(object, "object")) {
+			if (object.__proto__ == clazz.prototype) {
+				storeClass(name, clazz, parent);
+				return true;
+			}
 		}
-		if (object.prototype == clazz.prototype) {
-			storeClass(name, clazz, parent);
-			return true;
+		if (ObjectUtil.isTypeOf(object, "function")) {
+			if (object.prototype == clazz.prototype) {
+				storeClass(name, clazz, parent);
+				return true;
+			}
 		}
 		return false;
 	}
