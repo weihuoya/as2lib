@@ -71,8 +71,8 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 	 * @see org.as2lib.env.except.StackTraceElement#getMethod()
 	 */
 	public function getMethod(Void):MethodInfo {
-		if (ObjectUtil.isEmpty(method)) {
-			if (ObjectUtil.isEmpty(getThrower())) {
+		if (!method) {
+			if (!getThrower()) {
 				break;
 			}
 			var tempMethod:MethodInfo = getThrower().getConstructor();
@@ -97,6 +97,9 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 				}
 			}
 		}
+		if(!method) {
+			return null;
+		}
 		return method;
 	}
 	
@@ -104,7 +107,10 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 	 * @see org.as2lib.env.except.StackTraceElement#getArguments()
 	 */
 	public function getArguments(Void):Array {
-		return this.args;
+		if(!args) {
+			return null;
+		}
+		return args;
 	}
 	
 	/**
