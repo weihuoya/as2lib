@@ -10,8 +10,9 @@ class org.as2lib.data.io.conn.listener.SimpleListener extends BasicClass impleme
 	/* Standard debug output */
 	private var aOut:OutAccess;
 	
-	public function ClientListener(Void) {
+	public function SimpleListener(Void) {
 		aOut = Config.getOut();
+		aOut.debug(getClass().getName()+" - Constructor");
 	}
 	
 	/**

@@ -98,7 +98,7 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 		sender.send.apply(this,args);
 		if(!connect(connID)){
 			eventBroadcaster.dispatch(new ConnectorError(new ReservedConnectionException("Connection name '"+connID+"' is already used by another LocalConnection",this,arguments)));
-			initConnection();
+			//initConnection();
 		}
 	}
 	
