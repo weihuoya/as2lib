@@ -52,7 +52,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TMethodAlgorithm extends TestCa
 		var a:MethodAlgorithm = new MethodAlgorithm();
 		assertNull(a.execute(i));
 		
-		ic.verify(this);
+		ic.verify();
 	}
 	
 	public function testExecute(Void):Void {
@@ -89,7 +89,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TMethodAlgorithm extends TestCa
 			}
 		}
 		
-		pc.verify(this);
+		pc.verify();
 	}
 	
 	public function testExecuteByClassWithoutMethods(Void):Void {
@@ -104,7 +104,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TMethodAlgorithm extends TestCa
 		assertNotNull("children array should not be null", c);
 		assertSame("there should be no children", c.length, 0);
 		
-		pc.verify(this);
+		pc.verify();
 	}
 	
 }

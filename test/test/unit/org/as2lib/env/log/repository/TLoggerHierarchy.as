@@ -48,7 +48,7 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		var h:LoggerHierarchy = new LoggerHierarchy(r);
 		assertSame(h.getLogger("root"), r);
 		
-		rc.verify(this);
+		rc.verify();
 	}
 	
 	public function testNewWithRealArgumentViaGetLogger(Void):Void {
@@ -61,7 +61,7 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		var h:LoggerHierarchy = new LoggerHierarchy(r);
 		assertSame(h.getLogger("loggerName"), r);
 		
-		rc.verify(this);
+		rc.verify();
 	}
 	
 	public function testGetRootLogger(Void):Void {
@@ -74,7 +74,7 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		var h:LoggerHierarchy = new LoggerHierarchy(r);
 		assertSame(h.getRootLogger(), r);
 		
-		rc.verify(this);
+		rc.verify();
 	}
 	
 	public function testPutLoggerWithNullLogger(Void):Void {
@@ -91,7 +91,7 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
 		
-		rc.verify(this);
+		rc.verify();
 	}
 	
 	public function testPutLoggerWithNullName(Void):Void {
@@ -114,8 +114,8 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
 		
-		rc.verify(this);
-		lc.verify(this);
+		rc.verify();
+		lc.verify();
 	}
 	
 	public function testPutLoggerWithBlankStringName(Void):Void {
@@ -138,8 +138,8 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
 		
-		rc.verify(this);
-		lc.verify(this);
+		rc.verify();
+		lc.verify();
 	}
 	
 	public function testPutLoggerWithReservedName(Void):Void {
@@ -168,8 +168,8 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
 		
-		rc.verify(this);
-		lc.verify(this);
+		rc.verify();
+		lc.verify();
 	}
 	
 	public function testPutLoggerWithAllRealValues(Void):Void {
@@ -193,8 +193,8 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		h.putLogger(l);
 		assertSame(h.getLogger("MyLogger"), l);
 		
-		rc.verify(this);
-		lc.verify(this);
+		rc.verify();
+		lc.verify();
 	}
 	
 	public function testPutLoggerWithParent(Void):Void {
@@ -230,9 +230,9 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		assertSame(h.getLogger("org.as2lib"), p);
 		assertSame(h.getLogger("org.as2lib.core.test.t2.MyLogger"), l);
 		
-		rc.verify(this);
-		pc.verify(this);
-		lc.verify(this);
+		rc.verify();
+		pc.verify();
+		lc.verify();
 	}
 	
 	public function testPutLoggerWithChildren(Void):Void {
@@ -288,10 +288,10 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		assertSame(h.getLogger("org.as2lib.SecondLogger"), l2);
 		assertSame(h.getLogger("org.as2lib"), p);
 		
-		rc.verify(this);
-		pc.verify(this);
-		lc.verify(this);
-		l2c.verify(this);
+		rc.verify();
+		pc.verify();
+		lc.verify();
+		l2c.verify();
 	}
 	
 	public function testGetLoggerWithNullName(Void):Void {
@@ -304,7 +304,7 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		var h:LoggerHierarchy = new LoggerHierarchy(r);
 		assertNull(h.getLogger(null));
 		
-		rc.verify(this);
+		rc.verify();
 	}
 	
 	public function testGetLoggerByFactoryWithNullName(Void):Void {
@@ -321,8 +321,8 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		var h:LoggerHierarchy = new LoggerHierarchy(r);
 		assertNull(h.getLoggerByFactory(null, f));
 		
-		rc.verify(this);
-		fc.verify(this);
+		rc.verify();
+		fc.verify();
 	}
 	
 	public function testGetLoggerByFactoryWithNullFactory(Void):Void {
@@ -352,9 +352,9 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		h.setDefaultLoggerFactory(f);
 		assertSame(h.getLoggerByFactory("MyLogger", null), l);
 		
-		rc.verify(this);
-		fc.verify(this);
-		lc.verify(this);
+		rc.verify();
+		fc.verify();
+		lc.verify();
 	}
 	
 	public function testGetLoggerByFactory(Void):Void {
@@ -383,9 +383,9 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		var h:LoggerHierarchy = new LoggerHierarchy(r);
 		assertSame(h.getLoggerByFactory("MyLogger", f), l);
 		
-		rc.verify(this);
-		fc.verify(this);
-		lc.verify(this);
+		rc.verify();
+		fc.verify();
+		lc.verify();
 	}
 	
 	/*public function testGetLoggerByFactoryWithParent(Void):Void {
@@ -407,8 +407,8 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		var returnedLogger:HierarchicalLogger = HierarchicalLogger(repository.getLoggerByFactory("any.name", factoryMock));
 		assertSame("The returned logger [" + returnedLogger + "] and expected logger [" + loggerMock + "] should be the same.", loggerMock, returnedLogger);
 		
-		loggerControl.verify(this);
-		factoryControl.verify(this);
+		loggerControl.verify();
+		factoryControl.verify();
 	}
 	
 	public function testGetLoggerByFactoryWithChildren(Void):Void {
@@ -444,10 +444,10 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		var returnedLogger:HierarchicalLogger = HierarchicalLogger(repository.getLoggerByFactory("any.name", factoryMock));
 		assertSame("The returned logger [" + returnedLogger + "] and expected logger [" + loggerMock + "] should be the same.", loggerMock, returnedLogger);
 		
-		loggerControl.verify(this);
-		child1Control.verify(this);
-		child2Control.verify(this);
-		factoryControl.verify(this);
+		loggerControl.verify();
+		child1Control.verify();
+		child2Control.verify();
+		factoryControl.verify();
 	}
 	
 	public function testPutLoggerWithReservedName(Void):Void {
@@ -474,7 +474,7 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		repository.setDefaultFactory(mockFactory);
 		assertSame(logger, repository.getLogger("any.name"));
 		
-		control.verify(this);
+		control.verify();
 	}
 	
 	public function testGetLoggerByName(Void):Void {

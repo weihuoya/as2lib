@@ -35,7 +35,7 @@ class test.unit.org.as2lib.env.event.TSpeedEventBroadcaster extends TestCase {
 		b.addListener(l);
 		b.dispatch(null);
 		
-		lc.verify(this);
+		lc.verify();
 	}
 	
 	public function testDispatchWithNullName(Void):Void {
@@ -55,8 +55,8 @@ class test.unit.org.as2lib.env.event.TSpeedEventBroadcaster extends TestCase {
 		b.addListener(l);
 		b.dispatch(e);
 		
-		lc.verify(this);
-		ec.verify(this);
+		lc.verify();
+		ec.verify();
 	}
 	
 	public function testDispatchWithMultipleListeners(Void):Void {
@@ -78,8 +78,8 @@ class test.unit.org.as2lib.env.event.TSpeedEventBroadcaster extends TestCase {
 		b.addListener(l);
 		b.dispatch(e);
 		
-		lc.verify(this);
-		ec.verify(this);
+		lc.verify();
+		ec.verify();
 	}
 	
 	public function testAddListenerWithNullArgument(Void):Void {

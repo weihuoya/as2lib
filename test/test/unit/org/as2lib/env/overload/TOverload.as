@@ -88,10 +88,10 @@ class test.unit.org.as2lib.env.overload.TOverload extends TestCase {
 		o.addHandler(h4);
 		o.forward(args);
 		
-		hc1.verify(this);
-		hc2.verify(this);
-		hc3.verify(this);
-		hc4.verify(this);
+		hc1.verify();
+		hc2.verify();
+		hc3.verify();
+		hc4.verify();
 	}
 	
 	public function testForwardWithNoMatchingOverloadHandler(Void):Void {
@@ -114,8 +114,8 @@ class test.unit.org.as2lib.env.overload.TOverload extends TestCase {
 		o.addHandler(h2);
 		assertThrows(UnknownOverloadHandlerException, o, o.forward, [args]);
 		
-		hc1.verify(this);
-		hc2.verify(this);
+		hc1.verify();
+		hc2.verify();
 	}
 	
 	public function testForwardWithTwoOverloadHandlersWithTheSameTypeSignature(Void):Void {
@@ -140,8 +140,8 @@ class test.unit.org.as2lib.env.overload.TOverload extends TestCase {
 		o.addHandler(h3);
 		assertThrows(SameTypeSignatureException, o, o.forward, [args]);
 		
-		hc1.verify(this);
-		hc3.verify(this);
+		hc1.verify();
+		hc3.verify();
 	}
 	
 	// old tests

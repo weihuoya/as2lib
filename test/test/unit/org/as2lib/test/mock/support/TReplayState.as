@@ -45,22 +45,22 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 	
 	public function testVerifyWithNullArgument(Void):Void {
 		var b:BehaviourMock = new BehaviourMock(this);
-		b.verify(null);
+		b.verify();
 		b.replay();
 		
 		var s:ReplayState = new ReplayState(b);
-		s.verify(null);
+		s.verify();
 		
 		b.doVerify();
 	}
 	
 	public function testVerifyWithRealArgument(Void):Void {
 		var b:BehaviourMock = new BehaviourMock(this);
-		b.verify(this);
+		b.verify();
 		b.replay();
 		
 		var s:ReplayState = new ReplayState(b);
-		s.verify(this);
+		s.verify();
 		
 		b.doVerify();
 	}

@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.support.MockControl;
+import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.reflect.SimpleCache;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
@@ -58,7 +58,7 @@ class test.unit.org.as2lib.env.reflect.TSimpleCache extends TestCase {
 		assertSame("returned ClassInfo should match the added one: c.getClass(new Type())", c.getClass(new Type()), i);
 		assertSame("returned ClassInfo should match the added one: c.getClass(Type)", c.getClass(Type), i);
 		
-		ic.verify(this);
+		ic.verify();
 	}
 	
 	public function testGetClassWithCachedSuperClassInfo(Void):Void {
@@ -79,7 +79,7 @@ class test.unit.org.as2lib.env.reflect.TSimpleCache extends TestCase {
 		assertNull("class info is only registerd for super class: c.getClass(new SubType())", c.getClass(new SubType()));
 		assertNull("class info is only registerd for super class: c.getClass(SubType)", c.getClass(SubType));
 		
-		ic.verify(this);
+		ic.verify();
 	}
 	
 	public function testGetPackageWithNullAndUndefinedArgument(Void):Void {
@@ -107,7 +107,7 @@ class test.unit.org.as2lib.env.reflect.TSimpleCache extends TestCase {
 		assertEmpty("not package info registered for this package", c.getPackage(new Object()));
 		assertSame("returned package info should match added one", c.getPackage(p), i);
 		
-		ic.verify(this);
+		ic.verify();
 	}
 	
 	public function testAddClassWithNullAndUndefinedArgument(Void):Void {
@@ -143,7 +143,7 @@ class test.unit.org.as2lib.env.reflect.TSimpleCache extends TestCase {
 		c.addPackage(i);
 		assertSame("returned package info should match added one", c.getPackage(p), i);
 		
-		ic.verify(this);
+		ic.verify();
 	}
 	
 	public function testReleaseAllForClasses(Void):Void {
@@ -172,7 +172,7 @@ class test.unit.org.as2lib.env.reflect.TSimpleCache extends TestCase {
 		assertSame("returned ClassInfo should match the added one: c.getClass(new Type())", c.getClass(new Type()), i);
 		assertSame("returned ClassInfo should match the added one: c.getClass(Type)", c.getClass(Type), i);
 		
-		ic.verify(this);
+		ic.verify();
 	}
 	
 }

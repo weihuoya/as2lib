@@ -40,39 +40,39 @@ class test.unit.org.as2lib.test.mock.support.TDefaultBehaviour extends TestCase 
 	
 	public function testVerify(Void):Void {
 		var m1:MethodBehaviourMock = new MethodBehaviourMock(this);
-		m1.verify(this);
+		m1.verify();
 		m1.replay();
 		
 		var m2:MethodBehaviourMock = new MethodBehaviourMock(this);
-		m2.verify(this);
+		m2.verify();
 		m2.replay();
 		
 		var m3:MethodBehaviourMock = new MethodBehaviourMock(this);
-		m3.verify(this);
+		m3.verify();
 		m3.replay();
 		
 		var m4:MethodBehaviourMock = new MethodBehaviourMock(this);
-		m4.verify(this);
+		m4.verify();
 		m4.replay();
 		
 		var m5:MethodBehaviourMock = new MethodBehaviourMock(this);
-		m5.verify(this);
+		m5.verify();
 		m5.replay();
 		
 		var m6:MethodBehaviourMock = new MethodBehaviourMock(this);
-		m6.verify(this);
+		m6.verify();
 		m6.replay();
 		
 		var m7:MethodBehaviourMock = new MethodBehaviourMock(this);
-		m7.verify(this);
+		m7.verify();
 		m7.replay();
 		
 		var m8:MethodBehaviourMock = new MethodBehaviourMock(this);
-		m8.verify(this);
+		m8.verify();
 		m8.replay();
 		
 		var m9:MethodBehaviourMock = new MethodBehaviourMock(this);
-		m9.verify(this);
+		m9.verify();
 		m9.replay();
 		
 		var b:DefaultBehaviour = new DefaultBehaviour();
@@ -85,7 +85,7 @@ class test.unit.org.as2lib.test.mock.support.TDefaultBehaviour extends TestCase 
 		b.addMethodBehaviour("m3", m7);
 		b.addMethodBehaviour("m3", m8);
 		b.addMethodBehaviour("m5", m9);
-		b.verify(this);
+		b.verify();
 		
 		m1.doVerify();
 		m2.doVerify();

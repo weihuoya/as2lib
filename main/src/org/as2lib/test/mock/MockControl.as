@@ -22,7 +22,6 @@ import org.as2lib.data.holder.map.PrimitiveTypeMap;
 import org.as2lib.env.reflect.ProxyFactory;
 import org.as2lib.env.reflect.ResolveProxyFactory;
 import org.as2lib.env.reflect.InvocationHandler;
-import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.ArgumentsMatcher;
 import org.as2lib.test.mock.MethodBehaviour;
 import org.as2lib.test.mock.Behaviour;
@@ -416,11 +415,10 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Verifies that all expectations have been met.
 	 *
-	 * @param testCase test case to call assert methods on
 	 * @throws org.as2lib.env.except.IllegalStateException if the mock object is in record state
 	 */
-	public function verify(testCase:TestCase):Void {
-		state.verify(testCase);
+	public function verify(Void):Void {
+		state.verify();
 	}
 	
 }

@@ -14,25 +14,15 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicInterface;
-import org.as2lib.test.mock.MethodBehaviour;
-import org.as2lib.test.mock.MethodCall;
+import org.as2lib.env.except.FatalException;
 
 /**
  * @author Simon Wacker
  */
-interface org.as2lib.test.mock.Behaviour extends BasicInterface {
+class org.as2lib.test.mock.AssertionFailedError extends FatalException {
 	
-	public function addMethodBehaviour(methodName:String, methodBehaviour:MethodBehaviour):Void;
-	
-	public function createMethodBehaviour(expectedMethodCall:MethodCall):MethodBehaviour;
-	
-	public function getMethodBehaviour(actualMethodCall:MethodCall):MethodBehaviour;
-	
-	public function getLastMethodBehaviour(Void):MethodBehaviour;
-	
-	public function removeAllBehaviour(Void):Void;
-	
-	public function verify(Void):Void;
+	public function AssertionFailedError(message:String, thrower, args:FunctionArguments) {
+		super(message, thrower, args);
+	}
 	
 }

@@ -144,14 +144,12 @@ class test.unit.org.as2lib.test.mock.BehaviourMock extends BasicClass implements
 		}
 	}
 	
-	public function verify(testCase:TestCase):Void {
+	public function verify(Void):Void {
 		if (state == RECORD) {
 			__verify.callExpected = true;
-			__verify.testCase = testCase;
 		} else {
 			if (__verify.callExpected) {
 				__verify.called = true;
-				testCase["assertSame"]("Wrong test case.", __verify.testCase, testCase);
 			} else {
 				testCase["fail"]("verify(..): Unexpected call.");
 			}

@@ -48,7 +48,7 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		assertSame("wrong type", i.getType(), MyClass);
 		assertSame("wrong parent", i.getParent(), p);
 		
-		pc.verify(this);
+		pc.verify();
 	}
 	
 	public function testGetFullNameWithNullName(Void):Void {
@@ -72,7 +72,7 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var i:ClassInfo = new ClassInfo("MyClass", null, r);
 		assertSame(i.getFullName(), "MyClass");
 		
-		rc.verify(this);
+		rc.verify();
 	}
 	
 	public function testGetFullNameWithNormalParent(Void):Void {
@@ -87,7 +87,7 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var i:ClassInfo = new ClassInfo("MyClass", null, r);
 		assertSame(i.getFullName(), "org.as2lib.mypackage.MyClass");
 		
-		rc.verify(this);
+		rc.verify();
 	}
 	
 	public function testGetConstructorWithNullType(Void):Void {
@@ -137,8 +137,8 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		o.setClassAlgorithm(a);
 		assertSame(o.getSuperType(), i);
 		
-		ic.verify(this);
-		ac.verify(this);
+		ic.verify();
+		ac.verify();
 	}
 	
 	public function testNewInstanceWithNotDefinedClass(Void):Void {
@@ -218,8 +218,8 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		assertSame(m[4], "method5");
 		assertSame(m[5], "method6");
 		
-		mac.verify(this);
-		cac.verify(this);
+		mac.verify();
+		cac.verify();
 	}
 	
 	public function testGetMethodsWithTypeAndSuperType(Void):Void {
@@ -255,9 +255,9 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		assertSame(m[4], "method5");
 		assertSame(m[5], "method6");
 		
-		mac.verify(this);
-		cac.verify(this);
-		sic.verify(this);
+		mac.verify();
+		cac.verify();
+		sic.verify();
 	}
 	
 	public function testGetMethodByNameForClassWithUnknownMethods(Void):Void {
@@ -308,11 +308,11 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		i.setClassAlgorithm(ca);
 		assertNull(i.getMethodByName("unkownMethod"));
 		
-		mac.verify(this);
-		cac.verify(this);
-		m1c.verify(this);
-		m2c.verify(this);
-		m3c.verify(this);
+		mac.verify();
+		cac.verify();
+		m1c.verify();
+		m2c.verify();
+		m3c.verify();
 	}
 	
 	public function testGetMethodByNameForExistingMethod(Void):Void {
@@ -355,11 +355,11 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		assertSame(i.getMethodByName("method3"), m3);
 		assertSame(i.getMethodByName("method1"), m1);
 		
-		mac.verify(this);
-		cac.verify(this);
-		m1c.verify(this);
-		m2c.verify(this);
-		m3c.verify(this);
+		mac.verify();
+		cac.verify();
+		m1c.verify();
+		m2c.verify();
+		m3c.verify();
 	}
 	
 	public function testGetMethodByNameForSubClassMethodOverwritingSuperClassMethod(Void):Void {
@@ -412,13 +412,13 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		i.setClassAlgorithm(ca);
 		assertSame(i.getMethodByName("method2"), m2);
 		
-		mac.verify(this);
-		cac.verify(this);
-		m1c.verify(this);
-		m2c.verify(this);
-		m3c.verify(this);
-		scc.verify(this);
-		sm2c.verify(this);
+		mac.verify();
+		cac.verify();
+		m1c.verify();
+		m2c.verify();
+		m3c.verify();
+		scc.verify();
+		sm2c.verify();
 	}
 	
 	public function testGetMethodByMethodWithNullMethod(Void):Void {
@@ -469,11 +469,11 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		i.setClassAlgorithm(ca);
 		assertNull(i.getMethodByMethod(function() {}));
 		
-		mac.verify(this);
-		cac.verify(this);
-		m1c.verify(this);
-		m2c.verify(this);
-		m3c.verify(this);
+		mac.verify();
+		cac.verify();
+		m1c.verify();
+		m2c.verify();
+		m3c.verify();
 	}
 	
 	public function testGetMethodByMethodWithExistingMethod(Void):Void {
@@ -520,11 +520,11 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		assertSame(i.getMethodByMethod(cm1), m1);
 		assertSame(i.getMethodByMethod(cm2), m2);
 		
-		mac.verify(this);
-		cac.verify(this);
-		m1c.verify(this);
-		m2c.verify(this);
-		m3c.verify(this);
+		mac.verify();
+		cac.verify();
+		m1c.verify();
+		m2c.verify();
+		m3c.verify();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -561,8 +561,8 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		assertSame(m[4], "property5");
 		assertSame(m[5], "property6");
 		
-		mac.verify(this);
-		cac.verify(this);
+		mac.verify();
+		cac.verify();
 	}
 	
 	public function testGetPropertiesWithTypeAndSuperType(Void):Void {
@@ -598,9 +598,9 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		assertSame(m[4], "property5");
 		assertSame(m[5], "property6");
 		
-		mac.verify(this);
-		cac.verify(this);
-		sic.verify(this);
+		mac.verify();
+		cac.verify();
+		sic.verify();
 	}
 	
 	public function testGetPropertiesByNameForClassWithUnknownProperties(Void):Void {
@@ -651,11 +651,11 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		i.setClassAlgorithm(ca);
 		assertNull(i.getPropertyByName("unkownProperty"));
 		
-		mac.verify(this);
-		cac.verify(this);
-		m1c.verify(this);
-		m2c.verify(this);
-		m3c.verify(this);
+		mac.verify();
+		cac.verify();
+		m1c.verify();
+		m2c.verify();
+		m3c.verify();
 	}
 	
 	public function testGetPropertyByNameForExistingProperty(Void):Void {
@@ -698,11 +698,11 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		assertSame(i.getPropertyByName("property3"), m3);
 		assertSame(i.getPropertyByName("property1"), m1);
 		
-		mac.verify(this);
-		cac.verify(this);
-		m1c.verify(this);
-		m2c.verify(this);
-		m3c.verify(this);
+		mac.verify();
+		cac.verify();
+		m1c.verify();
+		m2c.verify();
+		m3c.verify();
 	}
 	
 	public function testGetPropertyByNameForSubClassMethodOverwritingSuperClassProperty(Void):Void {
@@ -755,13 +755,13 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		i.setClassAlgorithm(ca);
 		assertSame(i.getPropertyByName("property2"), m2);
 		
-		mac.verify(this);
-		cac.verify(this);
-		m1c.verify(this);
-		m2c.verify(this);
-		m3c.verify(this);
-		scc.verify(this);
-		sm2c.verify(this);
+		mac.verify();
+		cac.verify();
+		m1c.verify();
+		m2c.verify();
+		m3c.verify();
+		scc.verify();
+		sm2c.verify();
 	}
 	
 	public function testGetPropertyByPropertyWithNullProperty(Void):Void {
@@ -818,11 +818,11 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		i.setClassAlgorithm(ca);
 		assertNull(i.getPropertyByProperty(function() {}));
 		
-		mac.verify(this);
-		cac.verify(this);
-		m1c.verify(this);
-		m2c.verify(this);
-		m3c.verify(this);
+		mac.verify();
+		cac.verify();
+		m1c.verify();
+		m2c.verify();
+		m3c.verify();
 	}
 	
 	public function testGetPropertyByPropertyWithExistingProperty(Void):Void {
@@ -875,11 +875,11 @@ class test.unit.org.as2lib.env.reflect.TClassInfo extends TestCase {
 		assertSame(i.getPropertyByProperty(cm1), m1);
 		assertSame(i.getPropertyByProperty(cm2), m2);
 		
-		mac.verify(this);
-		cac.verify(this);
-		m1c.verify(this);
-		m2c.verify(this);
-		m3c.verify(this);
+		mac.verify();
+		cac.verify();
+		m1c.verify();
+		m2c.verify();
+		m3c.verify();
 	}
 	
 }

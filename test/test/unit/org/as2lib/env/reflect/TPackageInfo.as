@@ -45,7 +45,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		var p:PackageInfo = new PackageInfo(null, null, null);
 		assertFalse(p.isParentPackage(pp));
 		
-		ppc.verify(this);
+		ppc.verify();
 	}
 	
 	public function testIsParentPackageWithPackageArgumentWhoseGetParentMethodReturnsNull(Void):Void {
@@ -60,7 +60,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		var p:PackageInfo = new PackageInfo(null, null, null);
 		assertFalse(p.isParentPackage(pp));
 		
-		ppc.verify(this);
+		ppc.verify();
 	}
 	
 	public function testIsParentPackageWithDirectParentPackageMatch(Void):Void {
@@ -76,7 +76,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		
 		assertTrue(p.isParentPackage(pp));
 		
-		ppc.verify(this);
+		ppc.verify();
 	}
 	
 	public function testIsParentPackageWithMultipleLevels(Void):Void {
@@ -108,9 +108,9 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		
 		assertTrue(p.isParentPackage(pp1));
 		
-		pp1c.verify(this);
-		pp2c.verify(this);
-		pp3c.verify(this);
+		pp1c.verify();
+		pp2c.verify();
+		pp3c.verify();
 	}
 	
 	public function testIsParentPackageWithMultipleLevelsAndNoMatch(Void):Void {
@@ -140,9 +140,9 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		
 		assertFalse(p.isParentPackage(pp1));
 		
-		pp1c.verify(this);
-		pp2c.verify(this);
-		pp3c.verify(this);
+		pp1c.verify();
+		pp2c.verify();
+		pp3c.verify();
 	}
 	
 	public function testNewWithNullArguments(Void):Void {
@@ -182,7 +182,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		var i:PackageInfo = new PackageInfo("MyClass", null, r);
 		assertSame(i.getFullName(), "MyClass");
 		
-		rc.verify(this);
+		rc.verify();
 	}
 	
 	public function testGetFullNameWithNormalParent(Void):Void {
@@ -197,7 +197,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		var i:PackageInfo = new PackageInfo("MyClass", null, r);
 		assertSame(i.getFullName(), "org.as2lib.mypackage.MyClass");
 		
-		rc.verify(this);
+		rc.verify();
 	}
 	
 	public function testGetChildrenWithNullPackage(Void):Void {
@@ -208,7 +208,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		var i:PackageInfo = new PackageInfo(null, null, null);
 		assertNull(i.getChildren());
 		
-		ac.verify(this);
+		ac.verify();
 	}
 	
 	public function testGetChildrenWithRealPackage(Void):Void {
@@ -229,7 +229,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertSame(children[1], "child2");
 		assertSame(children[2], "child3");
 		
-		ac.verify(this);
+		ac.verify();
 	}
 	
 	public function testGetChildClassesWithNullChildren(Void):Void {
@@ -279,13 +279,13 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertSame(children[1], c2);
 		assertSame(children[2], c3);
 		
-		ac.verify(this);
-		c1c.verify(this);
-		c2c.verify(this);
-		c3c.verify(this);
-		p1c.verify(this);
-		p2c.verify(this);
-		p3c.verify(this);
+		ac.verify();
+		c1c.verify();
+		c2c.verify();
+		c3c.verify();
+		p1c.verify();
+		p2c.verify();
+		p3c.verify();
 	}
 	
 	public function testGetChildPackagesWithNullChildren(Void):Void {
@@ -335,13 +335,13 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertSame(children[1], p2);
 		assertSame(children[2], p3);
 		
-		ac.verify(this);
-		c1c.verify(this);
-		c2c.verify(this);
-		c3c.verify(this);
-		p1c.verify(this);
-		p2c.verify(this);
-		p3c.verify(this);
+		ac.verify();
+		c1c.verify();
+		c2c.verify();
+		c3c.verify();
+		p1c.verify();
+		p2c.verify();
+		p3c.verify();
 	}
 	
 	public function testGetChildByNameWithNullName(Void):Void {
@@ -354,7 +354,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertNull(i.getChildByName(null));
 		assertNull(i.getChildByName(undefined));
 		
-		ac.verify(this);
+		ac.verify();
 	}
 	
 	public function testGetChildByNameWithNullChildren(Void):Void {
@@ -417,13 +417,13 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertSame(i.getChildByName("package2"), p2);
 		assertSame(i.getChildByName("package3"), p3);
 		
-		ac.verify(this);
-		c1c.verify(this);
-		c2c.verify(this);
-		c3c.verify(this);
-		p1c.verify(this);
-		p2c.verify(this);
-		p3c.verify(this);
+		ac.verify();
+		c1c.verify();
+		c2c.verify();
+		c3c.verify();
+		p1c.verify();
+		p2c.verify();
+		p3c.verify();
 	}
 	
 	public function testGetChildByChildWithNullAndUndefinedArgument(Void):Void {
@@ -436,7 +436,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertNull(i.getChildByChild(null));
 		assertNull(i.getChildByChild(undefined));
 		
-		ac.verify(this);
+		ac.verify();
 	}
 	
 	public function testGetChildByChildWithNullChildren(Void):Void {
@@ -506,13 +506,13 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertSame(i.getChildByChild(cp2), p2);
 		assertSame(i.getChildByChild(cp3), p3);
 		
-		ac.verify(this);
-		c1c.verify(this);
-		c2c.verify(this);
-		c3c.verify(this);
-		p1c.verify(this);
-		p2c.verify(this);
-		p3c.verify(this);
+		ac.verify();
+		c1c.verify();
+		c2c.verify();
+		c3c.verify();
+		p1c.verify();
+		p2c.verify();
+		p3c.verify();
 	}
 	
 	public function testGetChildClassByNameWithNullName(Void):Void {
@@ -525,7 +525,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertNull(i.getChildClassByName(null));
 		assertNull(i.getChildClassByName(undefined));
 		
-		ac.verify(this);
+		ac.verify();
 	}
 	
 	public function testGetChildClassByNameWithNullChildClasses(Void):Void {
@@ -582,13 +582,13 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertNull(i.getChildClassByName("package2"));
 		assertNull(i.getChildClassByName("package3"));
 		
-		ac.verify(this);
-		c1c.verify(this);
-		c2c.verify(this);
-		c3c.verify(this);
-		p1c.verify(this);
-		p2c.verify(this);
-		p3c.verify(this);
+		ac.verify();
+		c1c.verify();
+		c2c.verify();
+		c3c.verify();
+		p1c.verify();
+		p2c.verify();
+		p3c.verify();
 	}
 	
 	public function testGetChildClassByClassWithNullAndUndefinedArgument(Void):Void {
@@ -601,7 +601,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertNull(i.getChildClassByClass(null));
 		assertNull(i.getChildClassByClass(undefined));
 		
-		ac.verify(this);
+		ac.verify();
 	}
 	
 	public function testGetChildClassByClassWithNullChildClasses(Void):Void {
@@ -669,13 +669,13 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertSame(i.getChildClassByClass(T3), c3);
 		assertNull(i.getChildClassByClass(function() {}));
 		
-		ac.verify(this);
-		c1c.verify(this);
-		c2c.verify(this);
-		c3c.verify(this);
-		p1c.verify(this);
-		p2c.verify(this);
-		p3c.verify(this);
+		ac.verify();
+		c1c.verify();
+		c2c.verify();
+		c3c.verify();
+		p1c.verify();
+		p2c.verify();
+		p3c.verify();
 	}
 	
 	public function testGetChildPackageByNameWithNullName(Void):Void {
@@ -688,7 +688,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertNull(i.getChildPackageByName(null));
 		assertNull(i.getChildPackageByName(undefined));
 		
-		ac.verify(this);
+		ac.verify();
 	}
 	
 	public function testGetChildPackageByNameWithNullChildPackages(Void):Void {
@@ -745,13 +745,13 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertSame(i.getChildPackageByName("package2"), p2);
 		assertSame(i.getChildPackageByName("package3"), p3);
 		
-		ac.verify(this);
-		c1c.verify(this);
-		c2c.verify(this);
-		c3c.verify(this);
-		p1c.verify(this);
-		p2c.verify(this);
-		p3c.verify(this);
+		ac.verify();
+		c1c.verify();
+		c2c.verify();
+		c3c.verify();
+		p1c.verify();
+		p2c.verify();
+		p3c.verify();
 	}
 	
 	public function testGetChildPackageByPackageWithNullAndUndefinedArgument(Void):Void {
@@ -764,7 +764,7 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertNull(i.getChildPackageByPackage(null));
 		assertNull(i.getChildPackageByPackage(undefined));
 		
-		ac.verify(this);
+		ac.verify();
 	}
 	
 	public function testGetChildPackageByPackageWithNullChildPackages(Void):Void {
@@ -832,13 +832,13 @@ class test.unit.org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		assertSame(i.getChildPackageByPackage(cp3), p3);
 		assertNull(i.getChildPackageByPackage(new Object()));
 		
-		ac.verify(this);
-		c1c.verify(this);
-		c2c.verify(this);
-		c3c.verify(this);
-		p1c.verify(this);
-		p2c.verify(this);
-		p3c.verify(this);
+		ac.verify();
+		c1c.verify();
+		c2c.verify();
+		c3c.verify();
+		p1c.verify();
+		p2c.verify();
+		p3c.verify();
 	}
 	
 }

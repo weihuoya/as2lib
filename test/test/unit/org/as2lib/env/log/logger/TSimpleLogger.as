@@ -99,9 +99,9 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		assertSame(logger.getAllHandler()[1], h3);
 		assertSame(logger.getAllHandler()[2], h4);
 		
-		h1c.verify(this);
-		h3c.verify(this);
-		h4c.verify(this);
+		h1c.verify();
+		h3c.verify();
+		h4c.verify();
 	}
 	
 	public function testAddHandlerWithNullArgumentViaGetAllHandler(Void):Void {
@@ -187,7 +187,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		logger.setLevel(l);
 		assertFalse(logger.isEnabled(null));
 		
-		lc.verify(this);
+		lc.verify();
 	}
 	
 	public function testIsEnabledWithTrueReturningLogLevel(Void):Void {
@@ -203,7 +203,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		logger.setLevel(l);
 		assertTrue(logger.isEnabled(a));
 		
-		lc.verify(this);
+		lc.verify();
 	}
 	
 	public function testIsEnabledWithFalseReturningLogLevel(Void):Void {
@@ -219,7 +219,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		logger.setLevel(l);
 		assertFalse(logger.isEnabled(a));
 		
-		lc.verify(this);
+		lc.verify();
 	}
 	
 	public function testLogWithNullLevel(Void):Void {
@@ -231,7 +231,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		logger.setBroadcaster(b);
 		logger.log("message", null);
 		
-		bc.verify(this);
+		bc.verify();
 	}
 	
 	public function testLogWithDisabledLevel(Void):Void {
@@ -252,8 +252,8 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		logger.setLevel(l);
 		logger.log("message", a);
 		
-		bc.verify(this);
-		lc.verify(this);
+		bc.verify();
+		lc.verify();
 	}
 	
 	public function testLogWithEnabledLevelNoHandlersAndNullParent(Void):Void {
@@ -280,8 +280,8 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		logger.setLevel(l);
 		logger.log(m, a);
 		
-		bc.verify(this);
-		lc.verify(this);
+		bc.verify();
+		lc.verify();
 	}
 	
 	public function testLogWithEnabledLevelAndHandlersAndNullParent(Void):Void {
@@ -317,8 +317,8 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		logger.addHandler(h3);
 		logger.log(m, a);
 		
-		bc.verify(this);
-		lc.verify(this);
+		bc.verify();
+		lc.verify();
 	}
 	
 	public function testLogWithEnabledLevelNoHandlersAndDefinedParents(Void):Void {
@@ -368,10 +368,10 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		logger.setParent(lo);
 		logger.log(m, a);
 		
-		bc.verify(this);
-		lc.verify(this);
-		loc.verify(this);
-		loc.verify(this);
+		bc.verify();
+		lc.verify();
+		loc.verify();
+		loc.verify();
 	}
 	
 	public function testLogWithEnabledLevelHandlersAndDefinedParents(Void):Void {
@@ -424,10 +424,10 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		logger.addHandler(h3);
 		logger.log(m, a);
 		
-		bc.verify(this);
-		lc.verify(this);
-		loc.verify(this);
-		loc.verify(this);
+		bc.verify();
+		lc.verify();
+		loc.verify();
+		loc.verify();
 	}
 	
 }

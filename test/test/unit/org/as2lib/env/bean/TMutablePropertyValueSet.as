@@ -39,7 +39,7 @@ class test.unit.org.as2lib.env.bean.TMutablePropertyValueSet extends TestCase {
 		valueSet.addPropertyValue(value);
 		valueSet.apply(bean);
 		
-		valueControl.verify(this);
+		valueControl.verify();
 	}*/
 	
 }

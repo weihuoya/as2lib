@@ -24,15 +24,25 @@ import test.unit.org.as2lib.test.mock.ArgumentsMatcherMock;
 class test.unit.org.as2lib.test.mock.TMethodCall extends TestCase {
 	
 	public function testMatchesWithNullArgument(Void):Void {
+		var a:ArgumentsMatcherMock = new ArgumentsMatcherMock(this);
+		a.replay();
+		
 		var c:MethodCall = new MethodCall("name", []);
-		c.setArgumentsMatcher(new ArgumentsMatcherMock(this));
+		c.setArgumentsMatcher(a);
 		assertFalse(c.matches(null));
+		
+		a.doVerify();
 	}
 	
 	public function testMatchesWithDifferentMethodNames(Void):Void {
+		var a:ArgumentsMatcherMock = new ArgumentsMatcherMock(this);
+		a.replay();
+		
 		var c:MethodCall = new MethodCall("name", []);
-		c.setArgumentsMatcher(new ArgumentsMatcherMock(this));
+		c.setArgumentsMatcher(a);
 		assertFalse(c.matches(new MethodCall("anotherName", [])));
+		
+		a.doVerify();
 	}
 	
 	public function testMatchesWithNullReturningGetArgumentsMethodOfPassedInMethodCall(Void):Void {
@@ -44,14 +54,15 @@ class test.unit.org.as2lib.test.mock.TMethodCall extends TestCase {
 		var args2:Array = [new Object(), new Array(), true, "lol"];
 		
 		var a:ArgumentsMatcherMock = new ArgumentsMatcherMock(this);
-		a.setExpectedCallToMatchArguments();
-		a.setReturnValueForMatchArguments(true);
-		a.setExpectedExpectedArguments(args1);
-		a.setExpectedActualArguments(args2);
+		a.matchArguments(args1, args2);
+		a.setMatchArgumentsReturnValue(true);
+		a.replay();
 		
 		var c:MethodCall = new MethodCall("name", args1);
 		c.setArgumentsMatcher(a);
 		assertTrue(c.matches(new MethodCall("name", args2)));
+		
+		a.doVerify();
 	}
 	
 	public function testMatchesWithDifferentArguments(Void):Void {
@@ -59,14 +70,15 @@ class test.unit.org.as2lib.test.mock.TMethodCall extends TestCase {
 		var args2:Array = [new Object(), new Array(), true, "lol"];
 		
 		var a:ArgumentsMatcherMock = new ArgumentsMatcherMock(this);
-		a.setExpectedCallToMatchArguments();
-		a.setReturnValueForMatchArguments(false);
-		a.setExpectedExpectedArguments(args1);
-		a.setExpectedActualArguments(args2);
+		a.matchArguments(args1, args2);
+		a.setMatchArgumentsReturnValue(false);
+		a.replay();
 		
 		var c:MethodCall = new MethodCall("name", args1);
 		c.setArgumentsMatcher(a);
 		assertFalse(c.matches(new MethodCall("name", args2)));
+		
+		a.doVerify();
 	}
 	
 }

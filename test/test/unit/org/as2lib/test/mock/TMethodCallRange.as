@@ -24,8 +24,8 @@ class test.unit.org.as2lib.test.mock.TMethodCallRange extends TestCase {
 	
 	public function testNewWithoutArguments(Void):Void {
 		var r:MethodCallRange = new MethodCallRange();
-		assertSame(r.getMinimum(), MethodCallRange.ANY_QUANTITY);
-		assertSame(r.getMaximum(), MethodCallRange.ANY_QUANTITY);
+		assertSame(r.getMinimum(), MethodCallRange.DEFAULT_MINIMUM);
+		assertSame(r.getMaximum(), MethodCallRange.DEFAULT_MAXIMUM);
 	}
 	
 	public function testNewWithOneArgument(Void):Void {
@@ -36,26 +36,26 @@ class test.unit.org.as2lib.test.mock.TMethodCallRange extends TestCase {
 	
 	public function testNewWithOneNullArgument(Void):Void {
 		var r:MethodCallRange = new MethodCallRange(null);
-		assertSame(r.getMinimum(), MethodCallRange.ANY_QUANTITY);
-		assertSame(r.getMaximum(), MethodCallRange.ANY_QUANTITY);
+		assertSame(r.getMinimum(), MethodCallRange.DEFAULT_MINIMUM);
+		assertSame(r.getMaximum(), MethodCallRange.DEFAULT_MAXIMUM);
 	}
 	
 	public function testNewWithTwoNullArguments(Void):Void {
 		var r:MethodCallRange = new MethodCallRange(null, null);
-		assertSame(r.getMinimum(), MethodCallRange.ANY_QUANTITY);
-		assertSame(r.getMaximum(), MethodCallRange.ANY_QUANTITY);
+		assertSame(r.getMinimum(), MethodCallRange.DEFAULT_MINIMUM);
+		assertSame(r.getMaximum(), MethodCallRange.DEFAULT_MAXIMUM);
 	}
 	
 	public function testNewWithNullMinimum(Void):Void {
 		var r:MethodCallRange = new MethodCallRange(null, 32);
-		assertSame(r.getMinimum(), 32);
-		assertSame(r.getMaximum(), MethodCallRange.ANY_QUANTITY);
+		assertSame(r.getMinimum(), MethodCallRange.DEFAULT_MINIMUM);
+		assertSame(r.getMaximum(), 32);
 	}
 	
 	public function testNewWithNullMaximum(Void):Void {
 		var r:MethodCallRange = new MethodCallRange(32, null);
 		assertSame(r.getMinimum(), 32);
-		assertSame(r.getMaximum(), MethodCallRange.ANY_QUANTITY);
+		assertSame(r.getMaximum(), MethodCallRange.DEFAULT_MAXIMUM);
 	}
 	
 	public function testNewWithTwoSameArguments(Void):Void {

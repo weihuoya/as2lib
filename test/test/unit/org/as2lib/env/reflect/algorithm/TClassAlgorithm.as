@@ -16,7 +16,6 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.MockControl;
 import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.reflect.algorithm.ClassAlgorithm;
 import org.as2lib.env.reflect.ClassInfo;
@@ -42,7 +41,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		
 		assertNull(a.execute(null));
 		assertNull(a.execute(undefined));
-		cc.verify(this);
+		cc.verify();
 	}
 	
 	public function testExecuteWithCachedClassInfo(Void):Void {
@@ -58,7 +57,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		a.setCache(c);
 		
 		assertSame(a.execute(TClassAlgorithm), info);
-		cc.verify(this);
+		cc.verify();
 	}
 	
 	public function testExecuteWihtUnkownClass(Void):Void {
@@ -83,7 +82,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		a.setCache(c);
 		
 		assertNull(a.execute(o));
-		cc.verify(this);
+		cc.verify();
 	}
 	
 	public function testExecuteByClass(Void):Void {
@@ -111,7 +110,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		assertSame("Parent package is wrong.", package.getPackage(), _global.test.unit.org.as2lib.env.reflect.algorithm);
 		assertSame("Parent package name is not core.", package.getName(), "algorithm");
 		
-		//cc.verify(this);
+		//cc.verify();
 	}
 	
 	public function testExecuteByInterface(Void):Void {
@@ -139,7 +138,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		assertSame("Parent package is wrong.", package.getPackage(), _global.org.as2lib.core);
 		assertSame("Parent package name is not core.", package.getName(), "core");
 		
-		//cc.verify(this);
+		//cc.verify();
 	}
 	
 	public function testExecuteByObject(Void):Void {
@@ -169,7 +168,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		assertSame("Parent package is wrong.", package.getPackage(), _global.org.as2lib.core);
 		assertSame("Parent package name is not core.", package.getName(), "core");
 		
-		//cc.verify(this);
+		//cc.verify();
 	}
 	
 	public function testExecuteByString(Void):Void {
@@ -201,7 +200,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		assertSame("Containing package is not root package.", stringInfo.getParent(), ReflectUtil.getRootInfo());
 		assertSame("Name of class is not 'String'.", stringInfo.getName(), "String");
 		
-		cc.verify(this);
+		cc.verify();
 	}
 	
 	public function testExecuteByNumber(Void):Void {
@@ -233,7 +232,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		assertSame("Containing package is not root package.", numberInfo.getParent(), ReflectUtil.getRootInfo());
 		assertSame("Name of class is not 'Number'.", numberInfo.getName(), "Number");
 		
-		cc.verify(this);
+		cc.verify();
 	}
 	
 	public function testExecuteByBoolean(Void):Void {
@@ -265,7 +264,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		assertSame("Containing package is not root package.", booleanInfo.getParent(), ReflectUtil.getRootInfo());
 		assertSame("Name of class is not 'Boolean'.", booleanInfo.getName(), "Boolean");
 		
-		cc.verify(this);
+		cc.verify();
 	}
 	
 	public function testExecuteByFunction(Void):Void {
@@ -299,7 +298,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		assertSame("Containing package is not root package.", functionInfo.getParent(), ReflectUtil.getRootInfo());
 		assertSame("Name of class is not 'Function'.", functionInfo.getName(), "Function");
 		
-		cc.verify(this);
+		cc.verify();
 	}
 	
 	public function testExecuteByMovieClip(Void):Void {
@@ -333,7 +332,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		assertSame("Containing package is not root package.", movieClipInfo.getParent(), ReflectUtil.getRootInfo());
 		assertSame("Name of class is not 'MovieClip'.", movieClipInfo.getName(), "MovieClip");
 		
-		cc.verify(this);
+		cc.verify();
 		_root.testExecuteByMovieClip_mc.removeMovieClip();
 	}
 	
@@ -368,7 +367,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		assertSame("Containing package is not root package.", movieClipInfo.getParent(), ReflectUtil.getRootInfo());
 		assertSame("Name of class is not 'TextField'.", movieClipInfo.getName(), "TextField");
 		
-		cc.verify(this);
+		cc.verify();
 		_root.testExecuteByTextField_txt.removeTextField();
 	}
 	

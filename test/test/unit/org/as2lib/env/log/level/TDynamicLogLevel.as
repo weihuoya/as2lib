@@ -54,7 +54,7 @@ class test.unit.org.as2lib.env.log.level.TDynamicLogLevel extends TestCase {
 		var l:DynamicLogLevel = new DynamicLogLevel(2, "name");
 		assertTrue(l.isGreaterOrEqual(a));
 		
-		ac.verify(this);
+		ac.verify();
 	}
 	
 	public function testIGreaterOfEqualWithEqualLevel(Void):Void {
@@ -67,7 +67,7 @@ class test.unit.org.as2lib.env.log.level.TDynamicLogLevel extends TestCase {
 		var l:DynamicLogLevel = new DynamicLogLevel(2, "name");
 		assertTrue(l.isGreaterOrEqual(a));
 		
-		ac.verify(this);
+		ac.verify();
 	}
 	
 	public function testIsGreaterOrEqualWithGreaterLevel(Void):Void {
@@ -80,7 +80,7 @@ class test.unit.org.as2lib.env.log.level.TDynamicLogLevel extends TestCase {
 		var l:DynamicLogLevel = new DynamicLogLevel(2, "name");
 		assertFalse(l.isGreaterOrEqual(a));
 		
-		ac.verify(this);
+		ac.verify();
 	}
 	
 	public function testIGreaterOfEqualWithSmallerLevel(Void):Void {
@@ -93,7 +93,7 @@ class test.unit.org.as2lib.env.log.level.TDynamicLogLevel extends TestCase {
 		var l:DynamicLogLevel = new DynamicLogLevel(2, "name");
 		assertTrue(l.isGreaterOrEqual(a));
 		
-		ac.verify(this);
+		ac.verify();
 	}
 	
 }

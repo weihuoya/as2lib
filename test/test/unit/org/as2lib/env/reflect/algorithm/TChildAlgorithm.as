@@ -50,7 +50,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCas
 		assertNull("execute(null) should return null", a.execute(null));
 		assertNull("execute(undefined) should return null", a.execute(undefined));
 		
-		cc.verify(this);
+		cc.verify();
 	}
 	
 	public function testExecuteWithArgumentWhoseGetPackageMethodReturnsNull(Void):Void {
@@ -68,8 +68,8 @@ class test.unit.org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCas
 		a.setCache(c);
 		assertNull(a.execute(i));
 		
-		ic.verify(this);
-		cc.verify(this);
+		ic.verify();
+		cc.verify();
 	}
 	
 	public function testExecute(Void):Void {
@@ -112,7 +112,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCas
 			}
 		}
 		
-		pc.verify(this);
+		pc.verify();
 	}
 	
 	public function testExecuteWithEmptyPackage(Void):Void {
@@ -130,7 +130,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCas
 		assertNotNull("children array should not be null", c);
 		assertSame("there should be no children", c.length, 0);
 		
-		pc.verify(this);
+		pc.verify();
 	}
 	
 }

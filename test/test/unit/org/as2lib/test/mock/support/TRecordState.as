@@ -214,7 +214,7 @@ class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 	public function testVerify(Void):Void {
 		var s:RecordState = new RecordState(new Behaviour());
 		try {
-			s.verify(null);
+			s.verify();
 			fail("exception should be thrown");
 		} catch (e:org.as2lib.env.except.IllegalStateException) {
 		}
