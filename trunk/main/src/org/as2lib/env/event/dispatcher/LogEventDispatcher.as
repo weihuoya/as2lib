@@ -30,7 +30,15 @@ import org.as2lib.env.event.Consumable;
 class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass implements EventDispatcher {
 	
 	/** Logger to log forwarded events. */
-	private static var logger:Logger = LoggerRepositoryManager.getRepository().getLogger("org.as2lib.env.event.dispatcher.LogEventDispatcher");
+	private static var logger:Logger;
+	
+	/**
+	 * @return logger to log forwared events
+	 */
+	private static function getLogger(Void):Logger {
+		if (!logger) logger = LoggerRepositoryManager.getRepository().getLogger("org.as2lib.env.event.dispatcher.LogEventDispatcher");
+		return logger;
+	}
 	
 	/**
 	 * @see org.as2lib.env.event.EventDispatcher#dispatch()
@@ -39,7 +47,7 @@ class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass impl
 		var name:String = event.getName();
 		var l:Number = listeners.length;
 		for (var i:Number = 0; i < l; i++) {
-			logger.log("Forwarding event #" + i + " with name " + name);
+			getLogger().log("Forwarding event #" + i + " with name " + name);
 			listeners[i][name](event);
 		}
 	}
@@ -51,7 +59,7 @@ class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass impl
 		var name:String = event.getName();
 		var l:Number = listeners.length;
 		for (var i:Number = 0; i < l; i++) {
-			logger.log("Forwarding event #" + i + " with name " + name);
+			getLogger().log("Forwarding event #" + i + " with name " + name);
 			listeners[i][name](event);
 			if (Consumable(event).isConsumed()) {
 				return;
