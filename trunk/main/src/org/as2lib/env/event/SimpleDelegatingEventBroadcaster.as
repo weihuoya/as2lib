@@ -30,7 +30,7 @@ import org.as2lib.env.event.EventListener;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.event.SimpleEventBroadcaster extends BasicClass implements DelegatingEventBroadcaster {
+class org.as2lib.env.event.SimpleDelegatingEventBroadcaster extends BasicClass implements DelegatingEventBroadcaster {
 	
 	/** A reference to the NormalEventDispatcher. */
 	public static var NORMAL_DISPATCHER:EventDispatcher = new NormalEventDispatcher();
@@ -47,7 +47,7 @@ class org.as2lib.env.event.SimpleEventBroadcaster extends BasicClass implements 
 	/**
 	 * Constructs a new EventBroadcaster instance.
 	 */
-	public function SimpleEventBroadcaster(Void) {
+	public function SimpleDelegatingEventBroadcaster(Void) {
 		dispatcher = NORMAL_DISPATCHER;
 		listeners = new Array();
 	}
@@ -124,11 +124,7 @@ class org.as2lib.env.event.SimpleEventBroadcaster extends BasicClass implements 
 	 * @see org.as2lib.env.event.EventBroadcaster#dispatch()
 	 */
 	public function dispatch(event:EventInfo):Void {
-		if (event instanceof Consumable) {
-			dispatcher.dispatchConsumable(event, listeners);
-		} else {
-			dispatcher.dispatch(event, listeners);
-		}
+		dispatcher.dispatch(event, listeners);
 	}
 	
 }

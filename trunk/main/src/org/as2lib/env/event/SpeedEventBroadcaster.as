@@ -18,13 +18,16 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.event.EventListener;
+import org.as2lib.env.event.EventExecutionException;
 
 /**
- * SpeedEventBroadcaster is a speed optimized EventBroadcaster implementation.
- * To ensure high speed its not possible to set your own EventDispatcher.
- * Consumable events are also not supported.
- *
+ * SimpleEventBroadcaster is an EventBroadcaster implementation that supports
+ * every broadcaster functionalities. It allows fast broadcasting of events in the
+ * as2lib eventhandling system.
+ * 
+ * @author Martin Heidegger
  * @author Simon Wacker
+ * @see org.as2lib.env.event.EventBroadcaster
  */
 class org.as2lib.env.event.SpeedEventBroadcaster extends BasicClass implements EventBroadcaster {	
 
@@ -32,7 +35,7 @@ class org.as2lib.env.event.SpeedEventBroadcaster extends BasicClass implements E
 	private var l:Object;
 	
 	/**
-	 * Constructs a new SpeedEventBroadcaster.
+	 * Constructs a new SimpleEventBroadcaster.
 	 *
 	 * @param listeners argument that can be used to configure the broadcaster
 	 */
@@ -92,9 +95,12 @@ class org.as2lib.env.event.SpeedEventBroadcaster extends BasicClass implements E
 		if (e) {
 			if (l._listeners.length > 0) {
 				var n:String = e.getName();
-				if (n) l.broadcastMessage(n, e);
+				try {
+					if (n) l.broadcastMessage(n, e);
+				} catch(e) {
+					throw new EventExecutionException(e, "Unexpected Exception thrown during broadcast of "+n, this, arguments);
+				}
 			}
 		}
 	}
-	
 }

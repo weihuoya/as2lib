@@ -15,8 +15,8 @@
  */
 
 import org.as2lib.env.event.EventInfo;
-import org.as2lib.env.event.EventDispatcher;
-import org.as2lib.env.event.Consumable;
+import org.as2lib.env.event.ConsumableEventInfo;
+import org.as2lib.env.event.ConsumableEventDispatcher;
 import org.as2lib.core.BasicClass;
 
 /**
@@ -24,7 +24,7 @@ import org.as2lib.core.BasicClass;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.event.dispatcher.NormalEventDispatcher extends BasicClass implements EventDispatcher {
+class org.as2lib.env.event.dispatcher.NormalEventDispatcher extends BasicClass implements ConsumableEventDispatcher {
 	/**
 	 * @see org.as2lib.env.event.EventDispatcher#dispatch()
 	 */
@@ -41,15 +41,12 @@ class org.as2lib.env.event.dispatcher.NormalEventDispatcher extends BasicClass i
 	/**
 	 * @see org.as2lib.env.event.EventDispatcher#dispatchConsumable()
 	 */
-	public function dispatchConsumable(event:EventInfo, listeners:Array):Void {
-		var name:String = event.getName();
+	public function dispatchConsumable(e:ConsumableEventInfo, listeners:Array):Void {
+		var name:String = e.getName();
 		var l:Number = listeners.length;
 		if(name != null) {
-			for (var i:Number = 0; i < l; i++) {
-				listeners[i][name](event);
-				if (Consumable(event).isConsumed()) {
-					return;
-				}
+			for (var i:Number = 0; i < l && !e.isConsumed(); i++) {
+				listeners[i][name](e);
 			}
 		}
 	}
