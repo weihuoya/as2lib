@@ -1,0 +1,57 @@
+\chapter{Overloading}
+\label{sec:Overloading}
+
+\paragraph{Motivation:}
+
+As method overloading is supported in Java, a class can have one or more constructors whose only differences are the parameters passed to them. Trying to implement more than one constructor or method with the same name but different parameters in \emph{Actionscript 2} results in the following error:
+\begin{quote}
+	``A class must have only one constructor.''\\
+	or as the case may be \\
+	``The same member name may not be repeated more than once.''
+\end{quote}
+
+\paragraph{Solution:}
+
+{\sl As2lib} enables overloading in ActionScript 2 via the \emph{Overload}\footnote{org.as2lib.env.overload} package. If a class needs three constructors, for example, {\sl as2lib} provides a simple solution.
+
+\begin{lstlisting}[frame=single]
+import org.as2lib.env.overload.Overload;
+
+class TryOverload {
+	private var aString:String;
+	private var aNumber:Number;
+	
+	public function TryOverload(){
+		var overload:Overload = new Overload(this);
+		overload.addHandler([Number, 
+		String], 
+		setValues);
+		overload.addHandler([Number], 
+		setNumber);
+		overload.addHandler([String],
+		setString);
+		overload.forward(arguments);
+	}
+	public function setValues(aNumber:Number, 
+	aString:String){
+		this.aNumber = aNumber;
+		this.aString = aString;
+	}
+	public function setNumber(aNumber:Number){
+		this.aNumber = aNumber;
+	}
+	public function setString(aString:String){
+		this.aString = aString;
+	}
+}
+\end{lstlisting}
+
+In the \emph{TryOverload} class a constructor is created that doesn't define specific parameters. Creating an instance of the class \emph{TryOverload} also creates an Overload object that receives a handler for each additional constructor that is required. In this specific case there is a constructor for Number and String, a constructor for a number and another one for a string. Finally the arguments are passed to the Overload object which calls the appropriate function.
+
+A test of the \emph{TryOverload} class would look like the following:
+
+\begin{lstlisting}[frame=single]
+var aOverload:TryOverload = new TryOverload("Hallo");
+var bOverload:TryOverload = new TryOverload(6);
+var cOverload:TryOverload = new TryOverload(6,"y");
+\end{lstlisting}

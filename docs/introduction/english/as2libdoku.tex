@@ -1,0 +1,43 @@
+\documentclass[a4paper,11pt,oneside]{book}
+\usepackage[latin1]{inputenc}
+\usepackage[dvips]{graphicx}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc} 
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage[dvips]{hyperref}
+\hypersetup{backref,  
+pdfpagemode=UseOutlines,  
+colorlinks=true}
+\usepackage[usenames,dvips]{color}
+\usepackage{multicol}
+\lstset{tabsize=2}
+\lstset{morecomment=[s][\color{LimeGreen}]{/*}{*/},morecomment=[l][\color{LimeGreen}]{//}}
+\lstset{morestring=[b][\color{RoyalBlue}]"}
+\lstset{emph={[26]class,extends,var,private,public,throw,new,try,catch,import,function,static,trace,interface,arguments,this,Codepage,true,send,else,if,target,connect,data,flush,addEventListener}, emphstyle={[26]\color{MidnightBlue}},
+emph={[12]MovieClip,Object,Array,LocalConnection,XMLSocket,String,Void,Error,SharedObject,Boolean,Number,System},emphstyle={[12]\color{blue}}}
+\graphicspath{{images/}} 
+
+\date{1. June 2004}
+\author{Christoph Atteneder, Martin Heidegger,\\Michael Herrmann, Alexander Schliebner and Simon Wacker.\\ Special thanks to Vera Fleischer\footnote{\href{http://www.mediasparkles.com}{www.mediasparkles.com}} for support in translation.}
+\title{as2lib - a little introduction}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\input{1_foundinghistory_en.tex}
+\input{2_corePackage_en.tex}
+\input{3_ouputHandling_en.tex}
+\input{4_exceptionHandling_en.tex}
+\input{5_eventHandling_en.tex}
+\input{6_reflectionHandling_en.tex}
+\input{7_dataHolding_en.tex}
+\input{8_overloading_en.tex}
+\input{9_testcases_en.tex}
+\input{10_speedtests_en.tex}
+\input{11_preview_en.tex}
+
+\end{document}

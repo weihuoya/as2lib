@@ -1,0 +1,86 @@
+\chapter{Output Handling}
+\label{sec:OutputHandling}
+
+\paragraph{Motivation:}
+The normal output of applications in Flash is done via the native operation
+\begin{lstlisting}[frame=single]
+trace(expression);
+\end{lstlisting}
+The trace output is nevertheless only visible inside the development environment that supports the operation. In all other cases (e.g.: in a web application) no standard output is defined. A library should provide a standardized output for users as well as for the developer that is possible everywhere.
+
+\paragraph{Solution:}
+To have multiple output possibilities in every runtime environment\footnote{Flash can run in a Browser, Flash Player, in {\sl Macromedia Central}, in a compiled application(*.exe),...}, the \emph{Out}\footnote{org.as2lib.env.out.Out} class is used. Given this, it is possible to e.g.: save error messages on the server side, to ensure that failures are not only perceptible to the client but also to the developer. The \emph{Out} class deals with all incoming requests and forwards them depending on the configuration to one or more \emph{OutputHandler}\footnote{org.as2lib.env.out.OutputHandler, org.as2lib.env.out.handler.*}. {\sl As2lib} offers a standardized output possibility for unlimited interfaces.
+
+\paragraph{Usage:}
+
+A simpler use case of the {\sl as2lib} Output Handling is visualized in figure \ref{fig:outHandling} on page \pageref{fig:outHandling}. After an instance of the \emph{Out} class is created and the provided TraceHandler\footnote{org.as2lib.env.out.handler.TraceHandler} added, an output can take place. The sequence of the single actions matches the order in which they are numbered.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics{uml/as2lib/out.eps}
+\caption{Use case of the {\sl as2lib} Output Handling}
+\label{fig:outHandling}
+\end{center}
+\end{figure}
+
+It can as in figure \ref{fig:outHandling} on page \pageref{fig:outHandling} access an already defined output like the \emph{TraceHandler} or \emph{ExternalConsoleHandler}\footnote{org.as2lib.env.out.handler.ExternalConsoleHandler} or its own implementation of the \emph{OutHandler} (e.g.: an output in the {\sl Macromedia} Alert Component)\footnote{The Macromedia Alert Component must be in the library and you must own Flash MX Professional 2004, to access it via the Alert class.}:
+
+\begin{lstlisting}[frame=single]
+import org.as2lib.env.event.EventInfo;
+import org.as2lib.env.out.OutHandler;
+import org.as2lib.env.out.info.OutWriteInfo;
+import org.as2lib.env.out.info.OutErrorInfo;
+import org.as2lib.env.out.OutConfig;
+import org.as2lib.core.BasicClass;
+import mx.controls.Alert;
+
+class test.org.as2lib.env.out.handler.UIAlertHandler 
+	extends BasicClass implements OutHandler {
+
+	public function write(info:OutWriteInfo):Void {
+		Alert.show(info.getMessage(), 
+			getClass().getName());
+	}
+	
+	public function error(info:OutErrorInfo):Void {
+		Alert.show(
+			OutConfig.getErrorStringifier().execute(info),
+			getClass().getName()
+		);
+	}
+}
+\end{lstlisting}
+
+The definition of the output levels (e.g.: \emph{aOut.setLevel(Out.DEBUG)}) makes it possible to prohibit the output of certain information.
+The possible output levels are:
+\begin{itemize}
+	\item Out.ALL
+	\item Out.DEBUG
+	\item Out.INFO
+	\item Out.WARNING
+	\item Out.ERROR
+	\item Out.FATAL
+	\item Out.NONE
+\end{itemize}
+
+This graduation allows for clear debugging during the development as well as fast rewriting of the output in one finished application.
+If during development e.g.: \emph{Out.DEBUG} is used, all information from a lower or equal level than the specified (\textit{DEBUG}) is output: \textit{DEBUG}, \textit{INFO}, \textit{WARNING}, \textit{ERROR} and \textit{FATAL}. Only the \textit{LOG} output is suppressed.
+\begin{lstlisting}[frame=single]
+var aOut = new Out();
+
+aOut.setLevel(Out.DEBUG);
+
+aOut.log("log me Please!");
+aOut.debug("debug me Please!");
+aOut.info("inform me Please!");
+aOut.warning("warn me Please!");
+aOut.error(new Exception("Output Error", this));
+aOut.fatal(new FatalException("Fatal Output Error",
+	this));
+\end{lstlisting}
+
+Should you choose in your finished application to only write out fatal failures, this can be done with a single line in the application.
+
+\begin{lstlisting}[frame=single]
+aOut.setLevel(Out.FATAL);
+\end{lstlisting}

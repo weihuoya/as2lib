@@ -1,0 +1,408 @@
+%% hagenberg.sty
+%% einige sparsame Ergaenzungen fuer Diplomarbeiten
+%% 
+%% wilbur@fh-hagenberg.at
+%% 
+%% 
+%% 
+%% Changes:
+%% 07.01.2002 \newfloat{program} repariert (auch ohne Chapter)
+%%            Dank an Werner Bailer!
+%% 06.03.2002 Copyright-Notice an internat. Standard angepasst
+%%            Dank an Karin Kosina!
+%% 28.07.2002 Studiengang -> Diplomstudiengang
+%%
+%% 24.08.2003 Neuer Macro: \Messbox{breite}{hoehe} - zur Kontrolle der Druckgroesse ohne PS-Datei
+%%            Erweiterungen für Bakkalaureatsarbeiten
+
+
+\ProvidesPackage{hagenberg}[]
+\def\daVersion{3.00} %Versionsnummer
+\typeout{Package: hagenberg v\daVersion, <2003/08/24> (Wilhelm Burger, FH Hagenberg)}
+
+%% ------------------ Required Packages ----------------------
+\RequirePackage{ngerman}
+\RequirePackage{bibgerm}
+\selectlanguage{german} % Noetig fuer Trennhilfe?!
+
+\RequirePackage{url}
+\urlstyle{sf}
+
+\RequirePackage{verbatim}
+\RequirePackage{cite}
+
+\RequirePackage{float}
+%\floatplacement{figure}{tbp}
+%\floatplacement{table}{tbp}
+\floatstyle{plain}
+%\newfloat{program}{tbp}{lop}[chapter]
+\ifx \undefined \chapter
+   \newfloat{program}{tbp}{lop}
+\else
+   \newfloat{program}{tbp}{lop}[chapter]
+\fi
+\floatname{program}{Programm}
+
+
+\RequirePackage[small,rm]{subfigure}
+
+% Captions mit Fontgroesse "small" und Abstand vom Seitenrand
+\RequirePackage[small,bf]{caption2}
+\setlength{\captionmargin}{5mm}
+\setlength{\abovecaptionskip}{2mm}
+\setlength{\belowcaptionskip}{2mm}
+
+
+
+\RequirePackage{exscale}
+% Skaliert Mathe-Modus Ausgaben in allen Umgebungen richtig.
+
+\RequirePackage{upquote}
+% Setzt "richtige" Quotes in verbatim-Umgebung
+
+%% ---------------------- Environments -------------------------
+
+\newenvironment{sourcecode}%
+{\begin{minipage}{0.95\textwidth}%
+   \hrule%
+   \bigskip%
+   \begin{footnotesize}%
+}%
+{\end{footnotesize}
+   \hrule\end{minipage}%
+}
+
+% Umschalten von Deutsch auf Englisch - funktioniert das??
+\newenvironment{english}%
+{\selectlanguage{english}}%
+{\selectlanguage{german}}
+
+
+%% --------------------- Makros --------------------------------
+
+%\newcommand{\latex}{{\rm \LaTeX}\xspace} % aus Bequemlichkeit
+\newcommand{\latex}{{\sl La\-TeX}\xspace} % kein schnoerkeliges LaTeX mehr
+\newcommand{\tex}{{\sl TeX}\xspace}     % kein schnoerkeliges TeX mehr
+
+\newcommand{\bs}{\char '134} % Backslash character
+
+%inline fractions
+\def\fraction#1/#2{\leavevmode\kern.0em
+  \raise.5ex\hbox{\the\scriptfont0 #1}\kern-.1em
+  /\kern-.15em\lower.25ex\hbox{\the\scriptfont0 #2}}
+
+\newcommand\trennstrich{%
+  \nopagebreak[4]
+  \vskip 1.5ex %
+%  \nopagebreak[4]
+  \noindent\makebox[\textwidth]{\rule{4cm}{0.4pt}}
+  \vskip 2.5ex}
+  
+%Div. Abkürzungen (in Anlehnung an Jochen Küpper, jkthesis):
+%\usepackage{xspace}
+\RequirePackage{xspace}
+
+\newcommand{\bzw}{bzw.\@\xspace}
+\newcommand{\bzgl}{bzgl.\@\xspace}
+\newcommand{\ca}{ca.\@\xspace}
+\newcommand{\dah}{d.\thinspace{}h.\@\xspace}
+\newcommand{\Dah}{D.\thinspace{}h.\@\xspace}
+\newcommand{\ds}{d.\thinspace{}s.\@\xspace}
+\newcommand{\evtl}{evtl.\@\xspace}
+\newcommand{\ua}{u.\thinspace{}a.\@\xspace}
+\newcommand{\Ua}{U.\thinspace{}a.\@\xspace}
+\newcommand{\usw}{usw.\@\xspace}
+\newcommand{\va}{v.\thinspace{}a.\@\xspace}
+\newcommand{\vgl}{vgl.\@\xspace}
+\newcommand{\zB}{z.\thinspace{}B.\@\xspace}
+\newcommand{\ZB}{Zum Beispiel\xspace}
+\newcommand{\sa}{s.\thinspace{}a.\@\xspace}
+\newcommand{\ia}{i.\thinspace{}a.\@\xspace}
+\newcommand{\su}{s.\thinspace{}u.\@\xspace}
+
+
+\RequirePackage{amsfonts}
+%Zeichen fuer die reellen, komplexen ... Zahlen (AMS Blackboard)
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+
+\newcommand{\Messbox}[2]{% Parameters: #1=Breite, #2=Hoehe
+\setlength{\unitlength}{1.0mm}%
+\begin{picture}(#1,#2)%
+\linethickness{0.05mm}%
+\put(0,0){\dashbox{0.2}(#1,#2)%
+{\parbox{#1mm}{%
+\centering\footnotesize 
+%{\bf MESSBOX}\\ 
+Breite $ = #1 {\rm\ mm}$\\
+H\"ohe $ = #2 {\rm\ mm}$
+}}}\end{picture}
+}
+
+%% ------------- Einstellungen fuer's Layout --------------
+
+\nonfrenchspacing     % liefert extra space zwischen Sätzen
+\pagestyle{headings}  % Normale Kopfzeilen
+
+%% div. Parameter: nur dann ändern, wenn man genau weiss was man tut!
+%\setlength{\hoffset}{-1in}
+%\setlength{\voffset}{-1in}
+%\setlength{\oddsidemargin}{3cm}
+%\setlength{\evensidemargin}{2.5cm}
+%\setlength{\textwidth}{15.5cm}
+%\setlength{\textheight}{22.8cm}
+%\setlength{\topmargin}{2.54cm}
+%\setlength{\headheight}{1ex}
+%\setlength{\headsep}{1cm}
+%\parindent0pt
+%\parskip1.5ex plus0.5ex minus0.5ex % flexibler Absatzabstand
+
+% Make float placement easier    
+\renewcommand{\floatpagefraction}{.75} % vorher: .5
+\renewcommand{\textfraction}{.1}       % vorher: .2
+\renewcommand{\topfraction}{.8}        % vorher: .7
+\renewcommand{\bottomfraction}{.5}     % vorher: .3
+\setcounter{topnumber}{3}              % vorher: 2
+\setcounter{bottomnumber}{2}           % vorher: 1
+\setcounter{totalnumber}{5}            % vorher: 3
+
+%\sloppy  % etwas laxere Abstandskontrolle (weniger Fehlermeldungen)
+
+
+%-------------- Setup für Titelseite/Copyright-Seite --------------------
+
+\newcommand{\@stgng}{Studiengang??}
+\newcommand{\studiengang}[1]{%
+\renewcommand{\@stgng}{#1}
+}
+
+\newcommand{\@stdort}{Studienort??}
+\newcommand{\studienort}[1]{%
+\renewcommand{\@stdort}{#1}
+}
+
+\newcommand{\@betreu}{Betreuer??}
+\newcommand{\betreuer}[1]{%
+\renewcommand{\@betreu}{#1}
+}
+
+\newcommand{\@arbnum}{Arbeit Nummer??}
+\newcommand{\nummer}[1]{%
+\renewcommand{\@arbnum}{#1}
+}
+
+\newcommand{\@gegenstd}{Gegenstand??}
+\newcommand{\gegenstand}[1]{%
+\renewcommand{\@gegenstd}{#1}
+}
+
+\newcommand{\@semestr}{Semester??}
+\newcommand{\semester}[1]{%
+\renewcommand{\@semestr}{#1}
+}
+
+\newcommand{\@damnt}{Monat??}
+\newcommand{\damonat}[1]{%
+\renewcommand{\@damnt}{#1}
+}
+\newcommand{\abgabemonat}[1]{%
+\renewcommand{\@damnt}{#1}
+}
+
+\newcommand{\@dajhr}{Jahr??}
+\newcommand{\dajahr}[1]{%
+\renewcommand{\@dajhr}{#1}
+}
+\newcommand{\abgabejahr}[1]{%
+\renewcommand{\@dajhr}{#1}
+}
+
+\newcommand{\@batitel}{%
+\begin{titlepage}%
+\rule{0mm}{1mm}
+\vspace*{20mm}
+%\noindent Left side \hfill right side\\
+\begin{center}%
+  \setlength{\unitlength}{1cm}
+  \begin{picture}(12,4)
+  %\thinlines\put(0,0){\framebox(12,4){}}
+  \put(0,1.8){\parbox{12cm}{\centering\LARGE\bf%
+    \setlength{\baselineskip}{20pt}%
+    \@title}}
+  \end{picture}
+    \vskip 10mm%
+    {\large\sc\@author}
+    \vskip 40mm%
+    {\Large B\,A\,K\,K\,A\,L\,A\,U\,R\,E\,A\,T\,S\,A\,R\,B\,E\,I\,T}%
+    \vskip 8mm%
+    {\large\sf Nr.~\@arbnum}
+    \vskip 8mm%
+    {\large eingereicht am} \vskip 1mm {Fachhochschul-Bakkalaureatsstudiengang}%
+    \vskip 4mm%
+    {\large\sc\@stgng}%
+    \vskip 4mm%
+    {\large in \@stdort}%
+    \vskip 16mm%
+    {\large im \@damnt\ \@dajhr}%
+\end{center}\par
+  \vfil\null
+\end{titlepage}%
+}
+
+\newcommand{\@datitel}{%
+\begin{titlepage}%
+\rule{0mm}{1mm}
+\vspace*{20mm}
+%\noindent Left side \hfill right side\\
+\begin{center}%
+  \setlength{\unitlength}{1cm}
+  \begin{picture}(12,4)
+  %\thinlines\put(0,0){\framebox(12,4){}}
+  \put(0,1.8){\parbox{12cm}{\centering\LARGE\bf%
+    \setlength{\baselineskip}{20pt}%
+    \@title}}
+  \end{picture}
+    \vskip 10mm%
+    {\large\sc\@author}
+    \vskip 40mm%
+    {\Large D\,I\,P\,L\,O\,M\,A\,R\,B\,E\,I\,T}%
+    \vskip 20mm%
+    {\large eingereicht am} \vskip 1mm {Fachhochschul-Diplomstudiengang}%
+    \vskip 4mm%
+    {\large\sc\@stgng}%
+    \vskip 4mm%
+    {\large in \@stdort}%
+    \vskip 16mm%
+    {\large im \@damnt\ \@dajhr}%
+\end{center}\par
+  \vfil\null
+\end{titlepage}%
+}
+
+
+\newcommand{\@copyrightseite}{%
+\newpage
+\setcounter{page}{2}
+\thispagestyle{plain}
+\rule{0mm}{1mm}
+\begin{center}
+%\vspace{75mm} \copyright\ Copyright\ \@author\ \@dajhr\\
+\vspace{75mm} \copyright\ Copyright\ \@dajhr\ \@author\\
+\vspace{3mm} Alle Rechte vorbehalten
+\end{center}
+}
+
+
+\newcommand{\@erklaerung}{%
+\chapter{Erklärung}
+%\thispagestyle{empty}
+
+\noindent
+Hiermit erkläre ich an Eides statt, dass ich die vorliegende Arbeit
+selbst\-ständig und ohne fremde Hilfe verfasst, andere als die
+angegebenen Quellen und Hilfsmittel nicht benutzt und die aus anderen
+Quellen entnommenen Stellen als solche gekennzeichnet habe.
+
+\vspace{10mm}
+\noindent
+\@stdort, am \today\\
+
+\vspace{12mm}
+\noindent
+\@author
+}
+
+\newcommand{\@babetreuerseite}{%
+\newpage
+\setcounter{page}{2}
+\thispagestyle{plain}
+\rule{0mm}{1mm}
+\begin{center}
+%
+\vspace{40mm} 
+{Diese Arbeit entstand im Rahmen des Gegenstands}\\
+\vspace{6mm} 
+{\Large\sf \@gegenstd}\\
+\bigskip
+im\\
+\bigskip
+{\@semestr}\\
+%
+\vspace{45mm} 
+{Betreuer:}\\
+\vspace{3mm} 
+{\Large\sf \@betreu}
+\end{center}
+}
+
+\newcommand{\@datitelseite}{
+\@datitel
+\@copyrightseite
+\@erklaerung
+}
+
+\newcommand{\@batitelseite}{
+\@batitel
+\@babetreuerseite
+\@erklaerung
+}
+
+\newcommand{\titelseite}{
+\@datitelseite
+}
+
+\newcommand{\bakkarbeit}{%
+\renewcommand{\titelseite}{\@batitelseite}
+}
+
+\newcommand{\diplomarbeit}{%
+\renewcommand{\titelseite}{\@datitelseite}
+}
+
+
+
+%% ------------- Experimental --------------
+
+\newenvironment{NarrowList}%
+{\begin{list}{}%
+{\setlength{\leftmargin}{2.5em}
+ \setlength{\labelwidth}{1em}
+ \setlength{\labelsep}{0.5em}
+ \setlength{\itemsep}{0.5ex}
+ \setlength{\parsep}{0ex}
+ \setlength{\topsep}{0ex}
+\raggedright
+}}%
+{\end{list}}
+
+\newenvironment{FileList}[1]%
+{\paragraph{Pfad:} \url{#1}
+ \begin{list}{}%
+{\setlength{\leftmargin}{5cm}
+ \setlength{\labelwidth}{4cm}
+ \setlength{\labelsep}{0.25cm}
+ \setlength{\rightmargin}{0cm}
+ \setlength{\itemindent}{0cm}
+ \setlength{\itemsep}{0.5ex}
+ \setlength{\parsep}{0ex}
+ \setlength{\topsep}{1ex}
+\raggedright
+}}%
+{\end{list}}
+
+\def\widedotfill{\leaders\hbox to 8pt{\hfil.\hfil}\hfill}
+
+\newcommand{\fitem}[1]{%
+%\item[\url{#1}\hfill]
+%\item[\url{#1}\dotfill]
+\item[\url{#1}\widedotfill]
+}
+
+\newcommand{\Frametext}[1]{%
+\setlength{\fboxrule}{0.05mm}%
+\setlength{\fboxsep}{0.5mm}%
+\fbox{\vphantom{Ag}#1}%
+}

@@ -1,0 +1,53 @@
+\chapter{Event Handling}
+\label{sec:EventHandling}
+
+\paragraph{Motivation:}
+Events are pretty performance intensive in {\sl Flash} and are a fundamental part of user interface development.
+Most developers use the intrinsic \emph{AsBroadcaster}(an undocumented feature of Flash) or \emph{EventDispatcher}\footnote{mx.events.EventDispatcher} classes of {\sl Macromedia} for this functionality. Exact definitions aren't available for \emph{EventListener} nor for single events or for arguments. Some information and definitions of listeners for developers are also missing.
+
+\paragraph{Solution:}
+
+Problems to cope with:
+
+\begin{itemize}
+	\item Object developer has to define which events can be caught.
+	\item Listener developer has to implement all events.
+	\item Object developer has to be able to dispatch events.
+	\item Object developer should be able to add information to a specific event.
+\end{itemize}
+
+The {\sl as2lib} supports \emph{Event Handling} because it´s a core part of application development. If you use the Flash intrinsic \emph{AsBroadcaster} it can result in an inefficient implementation. The {\sl Macromedia} \emph{EventDispatcher} isn´t free, i.e. is only available when you have purchased Macromedia Flash, and doesn´t support all of the required functionality.
+
+The most important interface of the \emph{event} packages a developer gets in touch with is the \emph{EventBroadcaster}\footnote{org.as2lib.env.event.EventBroadcaster}. You can add as many listeners as you like,
+\begin{lstlisting}[frame=single]
+addListener(listener:EventListener)
+\end{lstlisting}
+and remove them if you wish to.
+\begin{lstlisting}[frame=single]
+removeListener(listener:EventListener)
+\end{lstlisting}
+
+Listener objects have to implement the {\sl EventListener} Interface. For your own projects it is recommended to implement and use your own EventListener interface.
+
+If you like to use the \emph{EventBroadcaster} just do it the following way. The figure \ref{fig:as2libeventhandling} on page \pageref{fig:as2libeventhandling} shows a simple example application of {\sl as2lib} Event Handling. Aside from the SimpleEventListener only {\sl as2lib} classes are used.
+
+\begin{lstlisting}[frame=single][caption=SimpleEventListener]
+import org.as2lib.env.event.EventListener;
+import org.as2lib.core.BasicClass;
+
+class com.myproject.SimpleEventListener 
+	extends BasicClass implements EventListener {
+	
+	public function onTest(){
+		trace("onTest");
+	}
+}
+\end{lstlisting}
+
+\begin{figure}
+\begin{center}
+\includegraphics{uml/as2lib/eventhandling.eps}
+\caption{Process of an {\sl as2lib} Event Handling example.}
+\label{fig:as2libeventhandling}
+\end{center}
+\end{figure}
