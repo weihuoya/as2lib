@@ -44,25 +44,6 @@ class org.as2lib.tool.changelog.node.ChangeArgumentsNode extends BasicClass {
 	}
 	
 	/**
-	 * Method to get the Content as HTML
-	 *
-	 * @return Entry as html.
-	 */
-	public function toHTML(Void):String {
-		var result:String;
-		if(from) {
-			result = "<b>Changed arguments</b> from <i>"+from+"</i> to <i>"+to+"</i>";
-		} else {
-			result = "<b>Changed arguments</b> to <i>"+to+"</i>";
-		}
-		if(annotation.length > 0) {
-			result += "("+annotation+")";
-		}
-		result += ".";
-		return result;
-	}
-	
-	/**
 	 * Extended .toString method.
 	 *
 	 * @return Entry as string.

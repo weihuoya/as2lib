@@ -36,15 +36,6 @@ class org.as2lib.tool.changelog.node.ContentNode extends BasicClass {
 	}
 	
 	/**
-	 * Method to get the Content as HTML
-	 *
-	 * @return Entry as html.
-	 */
-	public function toHTML(Void):String {
-		return toString();
-	}
-	
-	/**
 	 * Extended .toString method.
 	 *
 	 * @return Entry as string.

@@ -256,12 +256,7 @@ class org.as2lib.tool.changelog.node.EntryNode extends BasicClass {
 		return result;
 	}
 	
-	/**
-	 * Method to get the Content as HTML
-	 *
-	 * @return Entry as html.
-	 */
-	public function toHTML(Void):String {
+	public function contentToString(Void) {
 		var result:String = "";
 		var l:Number = content.length;
 		var i:Number;
@@ -269,7 +264,7 @@ class org.as2lib.tool.changelog.node.EntryNode extends BasicClass {
 			if(i!=0) {
 				result += " ";
 			}
-			result += content[i].toHTML();
+			result += content[i].toString();
 		}
 		return result;
 	}
@@ -280,15 +275,6 @@ class org.as2lib.tool.changelog.node.EntryNode extends BasicClass {
 	 * @return Entry as string.
 	 */
 	public function toString(Void):String {
-		var result:String = date+"["+package+"] ";
-		var l:Number = content.length;
-		var i:Number;
-		for(i=0; i<l; i-=-1) {
-			if(i!=0) {
-				result += " ";
-			}
-			result += content[i].toString();
-		}
-		return result;
+		return date+"["+package+"] "+contentToString();
 	}
 }

@@ -206,7 +206,7 @@ class org.as2lib.tool.changelog.StandardView extends BasicClass implements Chang
 		if(somethingWrittenBeforeDate) {
 			content += " ";
 		}
-		content += "("+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+")<br />"+entry.toHTML();
+		content += "("+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+")<br />"+entry.contentToString();
 		if(link.length > 0) {
 			content += "</a>";
 		}
