@@ -21,7 +21,7 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
 import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.PrimitiveTypeMap;
 
 /**
  * @author Simon Wacker
@@ -38,9 +38,9 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass impl
 	
 	public function execute(c:CompositeMemberInfo):Map {
 		this.c = ClassInfo(c);
-		this.r = new HashMap();
-		this.g = new HashMap();
-		this.s = new HashMap();
+		this.r = new PrimitiveTypeMap();
+		this.g = new PrimitiveTypeMap();
+		this.s = new PrimitiveTypeMap();
 		
 		this.a = true;
 		var b:Function = this.c.getType();
