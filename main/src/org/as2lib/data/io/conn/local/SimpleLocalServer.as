@@ -1,8 +1,9 @@
 ﻿import org.as2lib.core.BasicClass;
+import org.as2lib.data.io.conn.local.LocalServer;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.data.io.conn.local.ReservedHostException;
 
-class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass {
+class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass implements LocalServer {
 	
 	private var conn:LocalConnection;
 	private var host:String;
