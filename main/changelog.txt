@@ -235,3 +235,10 @@
     :: 07/12/04 :: Simon Wacker ::
 
         > changed org.as2lib.env.overload.Overload.matches() it returns true now if you check null against any type as expected
+
+
+
+    :: 07/23/04 :: Simon Wacker ::
+
+        > added addStackTraceElement() to org.as2lib.env.except.Throwable
+        + changed the addStackTraceElement() access specifier in org.as2lib.env.except.AbstractException from private to public

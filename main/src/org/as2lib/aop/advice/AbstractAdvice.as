@@ -10,6 +10,12 @@ import org.as2lib.aop.pointcut.PointcutConfig;
  * @author Simon Wacker
  */
 class org.as2lib.aop.advice.AbstractAdvice extends BasicClass {
+	public static var TYPE_BEFORE:Number = 0;
+	public static var TYPE_AROUND:Number = 1;
+	public static var TYPE_AFTER:Number = 2;
+	public static var TYPE_AFTER_RETURNING:Number = 3;
+	public static var TYPE_AFTER_THROWING:Number = 4;
+	
 	private var pointcut:Pointcut;
 	private var aspect:Aspect;
 	

@@ -35,6 +35,15 @@ interface org.as2lib.env.except.Throwable extends BasicInterface {
 	public function getStackTrace(Void):Stack;
 	
 	/**
+	 * Adds a StackTraceElement to the Stack trace.
+	 *
+	 * @param thrower the object that threw the Throwable
+	 * @param method the operation that thew the Throwable
+	 * @param args the arguments that caused the operation to throw the Throwable
+	 */
+	public function addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void;
+	
+	/**
 	 * Initializes the cause of the Throwable. The cause can only be initialized
 	 * once. You normally initialize a cause if you throw a Throwable due to
 	 * the throw of another Throwable. Thereby you will not lose the information
