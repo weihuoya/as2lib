@@ -7,10 +7,10 @@ In Java it is possible to obtain information about the name of a class, its meth
 
 \paragraph{Solution:}
 To use these functionalities in {\sl Flash} the reflections were implemented after the following schema.
-Starting from the "`root package"' \emph{\_global} the ActionScript classes are searched through. Is an object found, it is recognized as a package. A sub-object of type function is marked as a class. 
+Starting from the "`root package"' \emph{\_global} the ActionScript classes are searched through. If an object is found, it is recognized as a package. A sub-object of type function is marked as a class. 
 
 
-One usage among many of \emph{Reflections} in {\sl as2lib} is for instance the BasicClass, see chapter \ref{sec:CorePackage}. The \emph{getClass} method of the \emph{BasicClass} uses the \emph{getClassInfo} method of the \emph{ReflectUtil}\footnote{org.as2lib.env.util.ReflectUtil} class and returns a \emph{ClassInfo} instance that provides all important information about the class. The \emph{reflect}\footnote{org.as2lib.env.reflect} package uses different algorithms to get the information about the class. The collection containing all algorithms is located in the \emph{algorythm}\footnote{org.as2lib.env.reflect.algorythm} package of the \emph{as2lib}. The functionality can, of course, also be accessed directly through the \emph{ReflectUtil} class.
+One usage among many of \emph{Reflections} in {\sl as2lib} is for instance the BasicClass, see chapter \ref{sec:CorePackage}. The \emph{getClass} method of the \emph{BasicClass} uses the \emph{getClassInfo} method of the \emph{ReflectUtil}\footnote{org.as2lib.env.util.ReflectUtil} class and returns a \emph{ClassInfo} instance that provides all important information about the class. The \emph{reflect}\footnote{org.as2lib.env.reflect} package uses different algorithms to get the information about the class. The collection containing all algorithms is located in the \emph{algorithm}\footnote{org.as2lib.env.reflect.algorithm} package of the \emph{as2lib}. The functionality can, of course, also be accessed directly through the \emph{ReflectUtil} class.
 \begin{lstlisting}[frame=single]
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
@@ -25,10 +25,10 @@ Its methods are:
 
 \begin{itemize}
 	\item \textbf{getName(}):\textit{String} - Name of the class e.g.: "`TestClass"'.
-	\item \textbf{getFullName()}:\textit{String} - Name of the class including information about the package e.g.: "`edu.test.TestClass"'.
+	\item \textbf{getFullName()}:\textit{String} - Fully qualified name of the class including information about the package e.g.: "`edu.test.TestClass"'.
 	\item \textbf{getType()}:\textit{Function} - Reference to the class the information is about.
 	\item \textbf{getConstructor()}: \textit{ConstructorInfo} - Returns the constructor of the class wrapped into a ConstructorInfo instance.
-	\item \textbf{getSuperType(}):\textit{ClassInfo} - Informaction about the superclass, if existing.
+	\item \textbf{getSuperType(}):\textit{ClassInfo} - Information about the superclass, if existing.
 	\item \textbf{newInstance(args:Array)} - Creates a new instance of the class the information is about.
 	\item \textbf{getParent()}:\textit{PackageInfo} - Information about the package the class is located in.
 	\item \textbf{getMethods()}:\textit{Array} - Array, see chapter \ref{sec:DataHolding}, containing information about every single method of the class.

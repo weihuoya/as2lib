@@ -56,8 +56,8 @@ The possible output levels are:
 	\item Out.NONE
 \end{itemize}
 
-This graduation allows clear debugging during the development as well as fast rewriting of the output in one finished application.
-If during development e.g.: \emph{Out.DEBUG} is used, all information from a lower or equal level than the specified (\textit{DEBUG}) is put out: \textit{DEBUG}, \textit{INFO}, \textit{WARNING}, \textit{ERROR} and \textit{FATAL}. Only the \textit{LOG} output is suppressed.
+These levels allow for easy debugging during development as well as fast rewriting of the output in the finished application.
+If during development, e.g.: \emph{Out.DEBUG} is used, all information from a lower or equal level than the specified (\textit{DEBUG}) is output: \textit{DEBUG}, \textit{INFO}, \textit{WARNING}, \textit{ERROR} and \textit{FATAL}. Only the \textit{LOG} output is suppressed.
 \begin{lstlisting}[frame=single]
 var out:Out = new Out();
 out.addHandler(new TraceHandler());
@@ -74,7 +74,7 @@ out.fatal(new FatalException("Fatal Output Error",
 	this, arguments));
 \end{lstlisting}
 
-Should you choose to only write out fatal failures in your finished application, this can be done with a single line.
+Should you choose to write out only fatal failures in your finished application, this can be done with a single line.
 
 \begin{lstlisting}[frame=single]
 aOut.setLevel(Out.FATAL);

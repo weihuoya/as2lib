@@ -21,7 +21,7 @@ Besides the fact that the printed out information is only little or not at all i
 The new functionalities of Exception Handling are:
 
 \begin{itemize}
-	\item All operations that are called before the exception is thrown are saved in a Stack to accelerate the search for failures. With the help of \emph{Reflections}, see chapter \ref{sec:Reflections}, the name of the failure message is automatically generated.
+	\item All operations that are called before the exception is thrown are saved in a Stack to help easily identify the points of failure. With the help of \emph{Reflections}, see chapter \ref{sec:Reflections}, the name of the failure message is automatically generated.
 	\item Exceptions can be easily wrapped into other exceptions.
 \end{itemize}
 
@@ -90,7 +90,7 @@ catch(e:IllegalArgumentException){
 }
 \end{lstlisting}
 
-You can define as many of your own exceptions as you want. If you for example want to throw an OutOfTimeException you must do the following:
+You can define as many of your own exceptions as you want. If you for example want to create an OutOfTimeException class you must do the following:
 \clearpage
 \begin{lstlisting}[frame=single]
 import org.as2lib.env.except.Exception;
