@@ -16,6 +16,7 @@
 					<entry type="add">Something added.</entry>
 					<entry type="add" package="stuff">Something added.</entry>
 					<entry type="add" package="stuff" class="MyClass">Something added.</entry>
+					<entry type="add" package="stuff" class="MyClass" variable="myVariable">Something added.</entry>
 					<entry type="add" package="stuff" class="MyClass1" method="myMethod()">Something added.</entry>
 					<entry type="add" package="stuff" class="MyClass1" method="myMethod()" throws="SpecialException">Something added.</entry>
 				</day>

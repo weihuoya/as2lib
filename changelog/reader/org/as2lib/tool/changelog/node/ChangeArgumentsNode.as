@@ -49,12 +49,11 @@ class org.as2lib.tool.changelog.node.ChangeArgumentsNode extends BasicClass {
 	 * @return Entry as string.
 	 */
 	public function toString(Void):String {
-		var result:String;
+		var result:String = "Changed arguments";
 		if(from) {
-			result = "Changed arguments from "+from+" to "+to+"";
-		} else {
-			result = "Set arguments to "+to+"";
+			result += " from "+from;
 		}
+		result += " to "+to;
 		if(annotation.length > 0) {
 			result += "("+annotation+")";
 		}

@@ -49,12 +49,11 @@ class org.as2lib.tool.changelog.node.ChangeReturnValueNode extends BasicClass {
 	 * @return Entry as string.
 	 */
 	public function toString(Void):String {
-		var result:String;
+		var result:String = "Changed return value";
 		if(from) {
-			result = "Changed return value from "+from+" to "+to;
-		} else {
-			result = "Changed return value to "+to;
+			result += " from "+from;
 		}
+		result += " to "+to;
 		if(annotation.length > 0) {
 			result += "("+annotation+")";
 		}
