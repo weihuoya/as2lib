@@ -7,6 +7,7 @@ import org.as2lib.env.reflect.algorythm.AbstractContentAlgorythm;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.util.StringUtil;
 
 /**
  * @author Simon Wacker
@@ -28,19 +29,18 @@ class org.as2lib.env.reflect.algorythm.MethodAlgorythm extends AbstractContentAl
 		search(clazz);
 		
 		this.staticFlag = false;
-		var prototype = clazz.prototype;
-		_global.ASSetPropFlags(prototype, null, 6, true);
-		_global.ASSetPropFlags(prototype, ["__proto__", "constructor", "__constructor__"], 1, true);
-		search(prototype);
-		_global.ASSetPropFlags(prototype, null, 1, true);
+		ObjectUtil.setAccessPermission(clazz.prototype, ObjectUtil.ACCESS_ALL_ALLOWED);
+		_global.ASSetPropFlags(clazz.prototype, ["__proto__", "constructor", "__constructor__"], 1, true);
+		search(clazz.prototype);
+		_global.ASSetPropFlags(clazz.prototype, null, 1, true);
 		
 		return data;
 	}
 	
 	private function validate(target, name:String):Boolean {
 		if (ObjectUtil.isTypeOf(target[name], "function")) {
-			if (name.indexOf("__get__") != 0
-					&& name.indexOf("__set__") != 0) {
+			if (!StringUtil.startsWith(name, "__get__")
+					&& !StringUtil.startsWith(name, "__set__")) {
 				return true;
 			}
 		}

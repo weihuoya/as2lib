@@ -14,8 +14,6 @@ import org.as2lib.env.reflect.ReferenceNotFoundException;
  * ClassInfo representing the found class.
  *
  * @author Simon Wacker
- * @see org.as2lib.core.BasicClass
- * @see org.as2lib.env.reflect.algorythm.CacheAlgorythm
  */
 class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass implements CacheAlgorythm {
 	private var cache:Cache;
@@ -40,11 +38,11 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 		var package = info.getPackage();
 		var i:String;
 		for (i in package) {
-			if (typeof(package[i]) == "function") {
+			if (ObjectUtil.isTypeOf(package[i], "function")) {
 				if (executeClassLogic(i, package[i], info, object)) {
 					return true;
 				}
-			} else if (typeof(package[i]) == "object") {
+			} else if (ObjectUtil.isTypeOf(package[i], "object")) {
 				if (executePackageLogic(i, package[i], info, object)) {
 					return true;
 				}

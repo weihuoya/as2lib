@@ -29,11 +29,11 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 		
 		var clazz = (ObjectUtil.isTypeOf(thrower, "function")) ? thrower : thrower.__proto__; 
 
-		ObjectUtil.setAccessPermissions(thrower, ObjectUtil.ACCESS_ALL_ALLOWED);
+		ObjectUtil.setAccessPermission(thrower, ObjectUtil.ACCESS_ALL_ALLOWED);
 		methodName = ObjectUtil.getChildName(thrower, method);
 
 		if(methodName == null) {
-			ObjectUtil.setAccessPermissions(clazz, ObjectUtil.ACCESS_ALL_ALLOWED);
+			ObjectUtil.setAccessPermission(clazz, ObjectUtil.ACCESS_ALL_ALLOWED);
 			methodName = ObjectUtil.getChildName(clazz, method);
 
 			if(methodName == null) {

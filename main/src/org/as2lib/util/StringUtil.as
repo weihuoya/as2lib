@@ -5,11 +5,13 @@ import org.as2lib.core.BasicClass;
 /**
  * Basic String Util Class, should have the Same Functionality like the base FString Class (flashforum.de Teamwork)
  *
- * @autor Martin Heidegger, Simon Wacker, Flashforum.de Community
+ * @author Martin Heidegger
+ * @author Simon Wacker
+ * @author Flashforum.de Community
  */
 class org.as2lib.util.StringUtil extends BasicClass {
 	/**
-	 * Private Constructor. (not instanceable)
+	 * Private Constructor. (not instantiateable)
 	 */
 	private function StringUtil(Void) {
 	}
