@@ -74,26 +74,36 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 	 */
 	public function getMethod(Void):MethodInfo {
 		if (ObjectUtil.isEmpty(method)) {
-			var tempMethod:MethodInfo = getThrower().getConstructor();
-			if (tempMethod.getMethod() == concreteMethod) {
-				return (method = tempMethod);
-			}
-			tempMethod = getThrower().getMethod(concreteMethod);
-			if (tempMethod.getMethod() == concreteMethod) {
-				return (method = tempMethod);
-			}
-			var property:PropertyInfo;
-			var iterator:Iterator = getThrower().getProperties().iterator();
-			while (iterator.hasNext()) {
-				property = PropertyInfo(iterator.next());
-				tempMethod = property.getGetter();
+			var clazz:ClassInfo = getThrower();
+			while (ObjectUtil.isEmpty(method)) {
+				if (ObjectUtil.isEmpty(clazz)) {
+					break;
+				}
+				var tempMethod:MethodInfo = clazz.getConstructor();
 				if (tempMethod.getMethod() == concreteMethod) {
 					return (method = tempMethod);
 				}
-				tempMethod = property.getSetter();
+				try {
+					tempMethod = clazz.getMethod(concreteMethod);
+				} catch (e:org.as2lib.env.reflect.NoSuchTypeMemberException) {
+				}
 				if (tempMethod.getMethod() == concreteMethod) {
 					return (method = tempMethod);
 				}
+				var property:PropertyInfo;
+				var iterator:Iterator = clazz.getProperties().iterator();
+				while (iterator.hasNext()) {
+					property = PropertyInfo(iterator.next());
+					tempMethod = property.getGetter();
+					if (tempMethod.getMethod() == concreteMethod) {
+						return (method = tempMethod);
+					}
+					tempMethod = property.getSetter();
+					if (tempMethod.getMethod() == concreteMethod) {
+						return (method = tempMethod);
+					}
+				}
+				clazz = ClassInfo(clazz.getSuperType());
 			}
 		}
 		return method;

@@ -117,3 +117,12 @@
       >> org.as2lib.env.out.handler
 
         > added class SocketOutputServerHandler
+
+
+
+    :: 06/05/04 :: Simon Wacker ::
+
+
+      >> org.as2lib.env.except
+
+        > fixed serious bug in SimpleStackTraceElement.getMethod() that broke the whole program if a Throwable was thrown by an operation of the superclass (the operation couldn't be found in the throwing subclass and a Throwable was thus being thrown)
