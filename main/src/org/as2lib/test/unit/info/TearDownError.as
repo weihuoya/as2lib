@@ -16,8 +16,18 @@
 
 import org.as2lib.test.unit.AbstractAssertInfo;
 
+/**
+ * Failure to be appended if calling the tearDown method of a testcase fails.
+ * 
+ * @author Martin Heidegger.
+ */
 class org.as2lib.test.unit.info.TearDownError extends AbstractAssertInfo {
 	
+	/**
+	 * Constructs a new TearDownError.
+	 * 
+	 * @param message Message to the error.
+	 */
 	public function TearDownError(message:String) {
 		super(message);
 	}

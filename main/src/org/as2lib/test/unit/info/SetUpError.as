@@ -16,8 +16,18 @@
 
 import org.as2lib.test.unit.AbstractAssertInfo;
 
+/**
+ * Failure to be appended if calling the setUp method of a testcase fails.
+ * 
+ * @author Martin Heidegger.
+ */
 class org.as2lib.test.unit.info.SetUpError extends AbstractAssertInfo {
 	
+	/**
+	 * Constructs a new SetUpError.
+	 * 
+	 * @param message Message to the error.
+	 */
 	public function SetUpError(message:String) {
 		super(message);
 	}

@@ -16,8 +16,18 @@
 
 import org.as2lib.test.unit.AbstractAssertInfo;
 
+/**
+ * Failure to be appended if the instanciation of a testcase fails.
+ * 
+ * @author Martin Heidegger.
+ */
 class org.as2lib.test.unit.info.InstanciationError extends AbstractAssertInfo {
 	
+	/**
+	 * Constructs a new InstanciationError.
+	 * 
+	 * @param message Message to the error.
+	 */
 	public function InstanciationError(message:String) {
 		super(message);
 	}
