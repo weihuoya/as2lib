@@ -18,7 +18,7 @@ class org.as2lib.env.except.StackTraceStringifier extends BasicClass implements 
 	public function execute(target):String {
 		var stack:Stack = Stack(target);
 		var result:String = "";
-		var iterator:Iterator = stack.getIterator();
+		var iterator:Iterator = stack.iterator();
 		var element:StackTraceElement;
 		while (iterator.hasNext()) {
 			element = StackTraceElement(iterator.next());
