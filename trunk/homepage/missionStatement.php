@@ -1,7 +1,7 @@
 <?
   require('class.inc.php');
   $homepageInfo = new HomepageInfo;
-  $homepageInfo->title = "About";
+  $homepageInfo->title = "Mission Statement";
   $homepageInfo->page = "about";
   $homepageInfo->path = "";
   include('header.inc.php');
@@ -37,20 +37,27 @@
       </div>
       <div id="content">
         <div class="contentArea">
-          <h2>About the as2lib</h2>
+          <h2>Mission Statement</h2>
           <div class="hr"></div>
           <div class="text">
-            <h3>About the as2lib</h3>
-            The as2lib is an opensource framework targeted to Macromedia Flash MX 2004+ developers. It offers support for basic idioms like event-handling, exception-handling, output-handling and reflections as well as different kinds of data holders and iterators. Also contained is a comprehensive set of IO classes.
-            Our target is to offer support for almost every problem domain in future releases including connection-handling, file access, aop, regular expressions, ...<br />
+            <h3>We believe that</h3>
+            <ul>
+              <li>ActionScript 2 should be easier to use.</li>
+              <li>It is best to program to interfaces, rather than classes.</li>
+              <li>Good documentation is needed in every project.</li>
+              <li>Strict typing is a key part of every OO language.</li>
+              <li>Maximum flexibility should be gained.</li>
+              <li>ActionScript 2 is a strong language but needs a broad background of classes to efficiently work with it.</li>
+              <li>Testcases keep our software strict bundled and ensures quality.</li>
+            </ul>
             <br />
-            <a href="download.php" title="Latest version of as2lib">Download our latest version</a>
+            <h3>We aim that:</h3>
+            <ul>
+              <li>The as2lib should be a pleasure to use.</li>
+              <li>You have maximum flexibility in configuring the as2lib to fit your needs.</li>
+              <li>The as2lib helps you in your daily life.</li>
+            </ul>
           </div>
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
       </div>
 <? include('footer.inc.php') ?>

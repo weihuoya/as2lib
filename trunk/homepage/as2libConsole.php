@@ -1,7 +1,7 @@
 <?
   require('class.inc.php');
   $homepageInfo = new HomepageInfo;
-  $homepageInfo->title = "About";
+  $homepageInfo->title = "Console";
   $homepageInfo->page = "about";
   $homepageInfo->path = "";
   include('header.inc.php');
@@ -37,16 +37,15 @@
       </div>
       <div id="content">
         <div class="contentArea">
-          <h2>About the as2lib</h2>
+          <h2>as2lib Console</h2>
           <div class="hr"></div>
           <div class="text">
-            <h3>About the as2lib</h3>
-            The as2lib is an opensource framework targeted to Macromedia Flash MX 2004+ developers. It offers support for basic idioms like event-handling, exception-handling, output-handling and reflections as well as different kinds of data holders and iterators. Also contained is a comprehensive set of IO classes.
-            Our target is to offer support for almost every problem domain in future releases including connection-handling, file access, aop, regular expressions, ...<br />
+            The as2lib console is a application that works as a output device and as extended information handler.<br />
             <br />
-            <a href="download.php" title="Latest version of as2lib">Download our latest version</a>
+            Actually it is in pre-alpha state. There will be more informations during the next weeks.
           </div>
         </div>
+        <br />
         <br />
         <br />
         <br />

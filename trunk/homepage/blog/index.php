@@ -50,7 +50,15 @@
             <div class="hr"></div>
             <ul class="links">
               <?php get_archives('monthly'); ?>
-            </li>
+            </ul>
+          </div>
+          <div class="contentArea">
+            <h2>Syndicate</h2>
+            <div class="hr"></div>
+            <ul class="links">
+              <li><a href="wp-rss.php">RSS</a></li>
+              <li><a href="wp-rss2.php">RSS 2.0</a></li>
+            </ul>
           </div>
         </div>
       </div>

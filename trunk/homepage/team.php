@@ -37,20 +37,44 @@
       </div>
       <div id="content">
         <div class="contentArea">
-          <h2>About the as2lib</h2>
+          <h2>as2lib - team</h2>
           <div class="hr"></div>
           <div class="text">
-            <h3>About the as2lib</h3>
-            The as2lib is an opensource framework targeted to Macromedia Flash MX 2004+ developers. It offers support for basic idioms like event-handling, exception-handling, output-handling and reflections as well as different kinds of data holders and iterators. Also contained is a comprehensive set of IO classes.
-            Our target is to offer support for almost every problem domain in future releases including connection-handling, file access, aop, regular expressions, ...<br />
+            <h3>Core Members</h3>
+            <table class="members">
+              <tbody>
+                <tr>
+                  <th>Martin Heidegger</th>
+                  <td>Project Management / Development</td>
+                  <td>mastakaneda [at] sourceforge.net</td>
+                  <td>Austria</td>
+                </tr>
+                <tr>
+                  <th>Simon Wacker</th>
+                  <td>Chief Developer</td>
+                  <td>simonwacker [at] sourceforge.net</td>
+                  <td>Germany</td>
+                </tr>
+                <tr>
+                  <th>Christoph Atteneder</th>
+                  <td>Developer</td>
+                  <td>ripcurlx [at] sourceforge.net</td>
+                  <td>Austria</td>
+                </tr>
+                <tr>
+                  <th>Michael Herrman</th>
+                  <td>Developer</td>
+                  <td>hamster2k [at] sourceforge.net</td>
+                  <td>Austria</td>
+                </tr>
+              </tbody>
+            </table>
             <br />
-            <a href="download.php" title="Latest version of as2lib">Download our latest version</a>
+            <h3>New members</h3>
+            There are many open tasks to be delegated to free volunteers in the as2lib.
+            If your are interested in supporting the as2lib send us a mail
+            or post a thread in the as2lib forum.
           </div>
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
       </div>
 <? include('footer.inc.php') ?>
