@@ -1,0 +1,15 @@
+# Commenting
+ # Commenting again.
+# comment.valid.entry=Entry
+# Next line is a empty line
+
+using.normal=Answer
+using.normal.with.spaces = Answer.  
+using.one.argument=Answer {0} is 2
+using.more.arguments=Answer {0} is {1}
+using.special.characters=Ich komme aus Österreich.
+using.escaping.1=This is a '{0} escaped entry.
+using.escaping.2=This is a ''escaped'' entry.
+using.escaping.3=This is a ''' invalid entry.
+using.double.names=This may not be available.
+using.double.names=This should be avaialble.
