@@ -9,6 +9,8 @@ class org.as2lib.data.io.conn.local.LocalClientServiceProxy extends BasicClass i
 	private var connection:LocalConnection;
 	private var listenerMap:Map;
 	
+	private var responseServer;
+	
 	public function LocalClientServiceProxy(target:String) {
 		this.target = target;
 		connection = new LocalConnection();
@@ -21,7 +23,7 @@ class org.as2lib.data.io.conn.local.LocalClientServiceProxy extends BasicClass i
 	
 	public function invoke(method:String, args:Array):Void {
 		if (listenerMap.containsKey(method)) {
-			var responseServer = new LocalConnection();
+			responseServer = new LocalConnection();
 			responseServer.listener = listenerMap.get(method);
 			responseServer.onResponse = function(response):Void {
 				this.listener.execute([response]);
