@@ -6,6 +6,8 @@
     <year value="2005">
        <month value="2">
          <day value="6">
+           <entry type="add" package="org.as2lib.env.log.logger" class="SimpleLogger">Cannot be used in a hierarchy. Simple implementation of Logger interface.</entry>
+           <entry type="change" package="org.as2lib.env.log.logger" class="SimpleLogger"><change-rename to="SimpleHierarchicalLogger" /></entry>
            <entry type="change" package="org.as2lib.util" class="ObjectUtil" method="setAccessPermission(..)">Moved and renamed to AccessPermission.set(..).</entry>
            <entry type="change" package="org.as2lib.util" class="ObjectUtil" method="getAccessPermission(..)">Moved and renamed to AccessPermission.get(..).</entry>
            <entry type="change" package="org.as2lib.util" class="ObjectUtil" method="isEnumerable(..)"><change-move to="AccessPermission" /></entry>

@@ -23,7 +23,7 @@ import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.TestSuite;
 import org.as2lib.util.ClassUtil;
-import org.as2lib.util.ObjectUtil;
+import org.as2lib.util.AccessPermission;
 
 /**
  * Factory to create TestSuites.
@@ -57,7 +57,7 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 	 */
 	public function collectTestCases(package, recursive:Boolean):TestSuite {
 		var result:TestSuite = new TestSuite("<Generated TestSuite>");
-		ObjectUtil.setAccessPermission(package, null, ObjectUtil.ACCESS_ALL_ALLOWED);
+		AccessPermission.set(package, null, AccessPermission.ALL_ALLOWED);
 		collectAgent(package, result, recursive);
 		return result;
 	}

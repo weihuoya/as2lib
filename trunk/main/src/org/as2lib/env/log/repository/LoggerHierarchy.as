@@ -24,7 +24,7 @@ import org.as2lib.env.log.LoggerRepository;
 import org.as2lib.env.log.ConfigurableHierarchicalLogger;
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.repository.ConfigurableHierarchicalLoggerFactory;
-import org.as2lib.env.log.logger.SimpleLogger;
+import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
 
 /**
  * @author Simon Wacker
@@ -77,7 +77,7 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	private function getNormalLoggerFactory(Void):ConfigurableHierarchicalLoggerFactory {
 		var result:ConfigurableHierarchicalLoggerFactory = getBlankConfigurableHierarchicalLoggerFactory();
 		result.getLogger = function(Void):ConfigurableHierarchicalLogger {
-			return new SimpleLogger();
+			return new SimpleHierarchicalLogger();
 		}
 		return result;
 	}
