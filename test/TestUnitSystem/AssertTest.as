@@ -249,28 +249,53 @@ class AssertTest extends TestCase {
 	}
 	
 	public function testThrows(Void):Void {
-		assertTrue ("NOT FAIL! 1 ", assertThrows("NOT FAIL!", IllegalArgumentException, "throwIllegalArgumentException", []));
-		assertTrue ("NOT FAIL! 2 ", assertThrows("NOT FAIL!", IllegalArgumentException, throwIllegalArgumentException, []));
+		// All tests with a example exception
+		assertTrue ("NOT FAIL! 1 ", assertThrows("NOT FAIL!", IllegalArgumentException, this, "throwIllegalArgumentException", []));
+		assertTrue ("NOT FAIL! 2 ", assertThrows("NOT FAIL!", IllegalArgumentException, this, throwIllegalArgumentException, []));
 		assertTrue ("NOT FAIL! 3 ", assertThrows("NOT FAIL!", IllegalArgumentException, new Call(this, throwIllegalArgumentException), []));
-		assertTrue ("NOT FAIL! 4 ", assertThrows(IllegalArgumentException, "throwIllegalArgumentException", []));
-		assertTrue ("NOT FAIL! 5 ", assertThrows(IllegalArgumentException, throwIllegalArgumentException, []));
+		assertTrue ("NOT FAIL! 4 ", assertThrows(IllegalArgumentException, this, "throwIllegalArgumentException", []));
+		assertTrue ("NOT FAIL! 5 ", assertThrows(IllegalArgumentException, this, throwIllegalArgumentException, []));
 		assertTrue ("NOT FAIL! 6 ", assertThrows(IllegalArgumentException, new Call(this, throwIllegalArgumentException), []));
 		
-		assertTrue ("NOT FAIL! 7 ", assertThrows("NOT FAIL!", Throwable, "throwIllegalArgumentException", []));
-		assertTrue ("NOT FAIL! 8 ", assertThrows("NOT FAIL!", Throwable, throwIllegalArgumentException, []));
+		// Tests with an interface
+		assertTrue ("NOT FAIL! 7 ", assertThrows("NOT FAIL!", Throwable, this, "throwIllegalArgumentException", []));
+		assertTrue ("NOT FAIL! 8 ", assertThrows("NOT FAIL!", Throwable, this, throwIllegalArgumentException, []));
 		assertTrue ("NOT FAIL! 9 ", assertThrows("NOT FAIL!", Throwable, new Call(this, throwIllegalArgumentException), []));
-		assertTrue ("NOT FAIL! 10", assertThrows(Throwable, "throwIllegalArgumentException", []));
-		assertTrue ("NOT FAIL! 11", assertThrows(Throwable, throwIllegalArgumentException, []));
+		assertTrue ("NOT FAIL! 10", assertThrows(Throwable, this, "throwIllegalArgumentException", []));
+		assertTrue ("NOT FAIL! 11", assertThrows(Throwable, this, throwIllegalArgumentException, []));
 		assertTrue ("NOT FAIL! 12", assertThrows(Throwable, new Call(this, throwIllegalArgumentException), []));
 		
-		assertFalse("NOT FAIL! 13", assertThrows("fail", Throwable, throwNothing, []));
-		assertTrue ("NOT FAIL! 14", assertThrows("fail", Throwable, throwSomethingByNoParams, []));
-		assertFalse("NOT FAIL! 15", assertThrows("fail", Throwable, throwSomethingByNoParams, [{a:""},"b"]));
-		assertFalse("NOT FAIL! 16", assertThrows("fail", Throwable, "here", []))
-		assertFalse("NOT FAIL! 17", assertThrows("fail", String, throwIllegalArgumentException, []))
+		// Additional Tests
+		assertFalse("NOT FAIL! 13", assertThrows("fail", Throwable, this, throwNothing, []));
+		assertTrue ("NOT FAIL! 14", assertThrows("fail", Throwable, this, throwSomethingByNoParams, []));
+		assertFalse("NOT FAIL! 15", assertThrows("fail", Throwable, this, throwSomethingByNoParams, [{a:""},"b"]));
+		assertFalse("NOT FAIL! 16", assertThrows("fail", Throwable, this, "here", []))
+		assertFalse("NOT FAIL! 17", assertThrows("fail", String, this, throwIllegalArgumentException, []))
 	}
 	
 	public function testNotThrows(Void):Void {
+		// All tests with a example exception
+		assertTrue ("NOT FAIL! 1 ", assertNotThrows("NOT FAIL!", IllegalArgumentException, this, "throwNothing", []));
+		assertTrue ("NOT FAIL! 2 ", assertNotThrows("NOT FAIL!", IllegalArgumentException, this, throwNothing, []));
+		assertTrue ("NOT FAIL! 3 ", assertNotThrows("NOT FAIL!", IllegalArgumentException, new Call(this, throwNothing), []));
+		assertTrue ("NOT FAIL! 4 ", assertNotThrows(IllegalArgumentException, this, "throwNothing", []));
+		assertTrue ("NOT FAIL! 5 ", assertNotThrows(IllegalArgumentException, this, throwNothing, []));
+		assertTrue ("NOT FAIL! 6 ", assertNotThrows(IllegalArgumentException, new Call(this, throwNothing), []));
+		
+		// Tests with an interface
+		assertFalse("NOT FAIL! 7 ", assertNotThrows("fail", Throwable, this, "throwIllegalArgumentException", []));
+		assertFalse("NOT FAIL! 8 ", assertNotThrows("fail", Throwable, this, throwIllegalArgumentException, []));
+		assertFalse("NOT FAIL! 9 ", assertNotThrows("fail", Throwable, new Call(this, throwIllegalArgumentException), []));
+		assertFalse("NOT FAIL! 10", assertNotThrows(Throwable, this, "throwIllegalArgumentException", []));
+		assertFalse("NOT FAIL! 11", assertNotThrows(Throwable, this, throwIllegalArgumentException, []));
+		assertFalse("NOT FAIL! 12", assertNotThrows(Throwable, new Call(this, throwIllegalArgumentException), []));
+		
+		// Additional Tests
+		assertTrue ("NOT FAIL! 13", assertNotThrows("NOT FAIL!", Throwable, this, throwNothing, []));
+		assertFalse("NOT FAIL! 14", assertNotThrows("fail", Throwable, this, throwSomethingByNoParams, []));
+		assertTrue ("NOT FAIL! 15", assertNotThrows("NOT FAIL!", Throwable, this, throwSomethingByNoParams, [{a:""},"b"]));
+		assertFalse("NOT FAIL! 16", assertNotThrows("fail", Throwable, this, "here", []))
+		assertTrue ("NOT FAIL! 17", assertNotThrows("fail", String, this, throwIllegalArgumentException, []))
 	}
 	
 	/**
