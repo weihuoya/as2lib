@@ -18,7 +18,7 @@ class org.as2lib.core.BasicClass implements BasicInterface {
 	/**
 	 * Uses the ReflectUtil#getClassInfo() operation to fulfill the task.
 	 *
-	 * @see org.as2lib.core.BasicInterface
+	 * @see org.as2lib.core.BasicInterface#getClass()
 	 */
 	public function getClass(Void):ClassInfo {
 		return ReflectUtil.getClassInfo(this);

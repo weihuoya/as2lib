@@ -2,32 +2,60 @@
 import org.as2lib.core.BasicInterface;
 
 /**
+ * Throwable is the basic interface for every class that will be thrown. You can
+ * actually throw every class even if it does not implement this interface but it
+ * is recommended to strictly use this interface for every Throwable. It produces 
+ * clarity and builds a standard.
+ *
  * @author Simon Wacker
- * @version 1.0
+ * @see org.as2lib.core.BasicInterface
  */
 interface org.as2lib.env.except.Throwable extends BasicInterface {
 	/**
-	 * @return The saved stack of method calls.
+	 * Returns a Stack of the operations that were called before this Throwable
+	 * was thrown.
+	 *
+	 * @return a Stack containing the called operations
 	 */
 	public function getStack(Void):Stack;
 	
 	/**
-	 * Initializes the cause. A cause can only be initialized once.
-	 * @param cause
+	 * Initializes the cause of the Throwable. The cause can only be initialized
+	 * once. You normally initialize a cause if you throw a Throwable due to
+	 * the throw of another Throwable. Thereby you will not lose the information
+	 * the cause offers.
+	 *
+	 * @param a Throwable representing the cause of the new Throwable
+	 * @throws org.as2lib.env.except.IllegalStateException
 	 */
 	public function initCause(cause:Throwable):Void;
 	
 	/**
-	 * @return The initialized cause.
+	 * Returns the initialized cause.
+	 *
+	 * @return the initialized cause
 	 */
 	public function getCause(Void):Throwable;
 	
 	/**
-	 * @return The message that has been set by the thrower.
+	 * Returns the message that has been set via the constructor. The message
+	 * should describe detailed what went wrong.
+	 *
+	 * @return the message set via the constructor
 	 */
 	public function getMessage(Void):String;
 	
+	/**
+	 * Returns the instance that has thrown the Throwable.
+	 *
+	 * @return the throwing instance
+	 */
 	public function getThrower(Void);
 	
+	/**
+	 * Returns the arguments of the operation that has thrown the Throwable.
+	 *
+	 * @return the arguments of the throwing operation
+	 */
 	public function getArguments(Void):FunctionArguments;
 }
