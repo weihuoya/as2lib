@@ -12,6 +12,7 @@
           <entry type="documentation" package="org.as2lib.aop.weaver" class="*">Added documentation.</entry>
           <entry type="documentation" package="org.as2lib.aop.matcher" class="*">Added documentation.</entry>
           <entry type="documentation" package="org.as2lib.aop.advice" class="*">Added documentation.</entry>
+          <entry type="add" package="org.as2lib.aop.advice" class="AdviceConfig" method="setDynamicAdviceFactory(factory:DynamicAdviceFactory):Void"></entry>
 	    </day>
         <day value="15">
           <entry type="documentation" package="org.as2lib.aop" class="*">Added documentation.</entry>
