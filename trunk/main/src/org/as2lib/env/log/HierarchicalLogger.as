@@ -51,9 +51,16 @@ interface org.as2lib.env.log.HierarchicalLogger extends Logger {
 	public function getName(Void):String;
 	
 	/**
-	 * Returns all handlers that are directly registered at this logger.
+	 * Returns all handlers this logger broadcasts to when logging a message.
 	 *
-	 * @return all registered log handlers
+	 * <p>These handlers are the once directly added to this logger and thes
+	 * once of the parents.
+	 *
+	 * <p>Note that this is no basic rule but rather the normal functionality.
+	 * There are also hierarchical loggers that do not return the handlers
+	 * of parents or do not return any handlers at all.
+	 *
+	 * @return all added log handlers and the ones of the parents
 	 */
 	public function getAllHandler(Void):Array;
 	

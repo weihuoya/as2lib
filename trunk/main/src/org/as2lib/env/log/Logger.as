@@ -25,12 +25,12 @@ import org.as2lib.env.log.LogLevel;
  * #info, #warning and #fatal.
  *
  * <p>The first thing to note is that you can write log messages at
- * different levels. These levels are Debug, Info, Warning, Error and
- * Fatal. Depending on what level was set only messages at a given
+ * different levels. These levels are DEBUG, INFO, WARNING, ERROR and
+ * FATAL. Depending on what level was set only messages at a given
  * level are logged.
  * The levels are organized in a hierarchical manner. That means if you
- * set you log level to All every messages get logged. If you set it
- * to Error only messages at Error and Fatal level get logged and so on.
+ * set you log level to ALL every messages get logged. If you set it
+ * to ERROR only messages at ERROR and FATAL level get logged and so on.
  * It is also possible to define your own set of levels. You can therefor
  * use the #isEnabled(LogLevel):Boolean and log(*, LogLevel):Boolean
  * methods.
@@ -203,7 +203,7 @@ interface org.as2lib.env.log.Logger extends BasicInterface {
 	 * Logs the message object at fatal level.
 	 *
 	 * <p>The message gets only logged when the level is set to fatal or a
-	 * above level.
+	 * level above.
 	 *
 	 * @param message the message object to log
 	 * @see #isFatalEnabled(Void):Boolean

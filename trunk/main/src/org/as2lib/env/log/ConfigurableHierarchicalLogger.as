@@ -41,7 +41,7 @@ interface org.as2lib.env.log.ConfigurableHierarchicalLogger extends Hierarchical
 	 * Sets the name of this logger.
 	 *
 	 * <p>The name normally exists of the path as well as the actual identifier.
-	 * That means it is fully qualified.
+	 * That means it must be fully qualified.
 	 * 
 	 * <p>The LoggerHierarchy prescribes that the different parts of the
 	 * name must be separated by periods. If you do not want to use it

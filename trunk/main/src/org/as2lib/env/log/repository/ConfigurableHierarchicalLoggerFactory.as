@@ -18,11 +18,16 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.env.log.ConfigurableHierarchicalLogger;
 
 /**
+ * ConfigurableHierarchicalLoggerFactory gets used by the LoggerHierarchy
+ * repository to get ConfigurableHierarchicalLogger instances.
+ *
  * @author Simon Wacker
  */
 interface org.as2lib.env.log.repository.ConfigurableHierarchicalLoggerFactory extends BasicInterface {
 	
 	/**
+	 * Returns a logger.
+	 *
 	 * @return a logger
 	 */
 	public function getLogger(Void):ConfigurableHierarchicalLogger;
