@@ -3,18 +3,20 @@
 /**
  * Basic Enumeration Class for an Array.
  *
- * @autor Michael Herrmann
+ * @author						Michael Herrmann
+ * 
+ * @date						18.11.03
  */
 
 class org.as2lib.util.Enumeration {
 	
-	// Current selected Element
+	/**Currently selected Element*/
 	private var currentElement:Number;
-	// Private Array to work within this Class.
+	/**Private Array to work within this Class*/
 	private var targetArray:Array;
 	
 	/**
-	 * @param [targetArray]	Array that should be listened to
+	 * @param targetArray		Array that should be listened to
 	 */
 	public function Enumeration(targetArray:Array) {
 		this.currentElement = 0;
@@ -26,7 +28,7 @@ class org.as2lib.util.Enumeration {
 	}
 	
 	/**
-	 * @return	true if more Elements are available
+	 * @return					true if more Elements are available
 	 */
 	public function hasMoreElements():Boolean {
 		return(this.currentElement<this.targetArray.length);
@@ -35,7 +37,7 @@ class org.as2lib.util.Enumeration {
 	/**
 	 * Sets the Index one Step further. 
 	 *
-	 * @return	Next Element
+	 * @return					The next Element
 	 */
 	public function getNextElement():Object {
 		return this.hasMoreElements() ? this.getElement(this.currentElement++) : null;
@@ -45,9 +47,9 @@ class org.as2lib.util.Enumeration {
 	/**
 	 * Method to get the Element registered at an Index
 	 *
-	 * @param index		Position from the Element
+	 * @param index				Position from the Element
 	 * 
-	 * @return	Content @ Position from Index
+	 * @return					Content @ Position from Index
 	 */
 	private function getElement(index:Number):Object {
 		return this.targetArray[index];
