@@ -513,15 +513,10 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 */
 	public function getMethodByName(methodName:String):MethodInfo {
 		if (methodName == null) return null;
-		var methodArray:Array = getMethodsByFlag(false);
-		if (!methodArray) return null;
-		var l:Number = methodArray.length;
-		for (var i:Number = 0; i < l; i = i-(-1)) {
-			var method:MethodInfo = methodArray[i];
-			if (method.getName() == methodName) {
-				return method;
-			}
+		if (getMethodsByFlag(true)) {
+			if (methods[methodName]) return methods[methodName];
 		}
+		if (getSuperType()) return getSuperType().getMethodByName(methodName);
 		return null;
 	}
 	
@@ -542,15 +537,17 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 */
 	public function getMethodByMethod(concreteMethod:Function):MethodInfo {
 		if (!concreteMethod) return null;
-		var methodArray:Array = getMethodsByFlag(false);
-		if (!methodArray) return null;
-		var l:Number = methodArray.length;
-		for (var i:Number = 0; i < l; i = i-(-1)) {
-			var method:MethodInfo = methodArray[i];
-			if (method.getMethod() == concreteMethod) {
-				return method;
+		var methodArray:Array = getMethodsByFlag(true);
+		if (methodArray) {
+			var l:Number = methodArray.length;
+			for (var i:Number = 0; i < l; i = i-(-1)) {
+				var method:MethodInfo = methodArray[i];
+				if (method.getMethod() == concreteMethod) {
+					return method;
+				}
 			}
 		}
+		if (getSuperType()) return getSuperType().getMethodByMethod(concreteMethod);
 		return null;
 	}
 	
@@ -606,7 +603,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * result.
 	 *
 	 * <p>If the passed-in method filter is null or undefined the result of
-	 * the invocation of #getMethodsByFlag(Boolean):Array with argument 
+	 * the invocation of #getPropertiesByFlag(Boolean):Array with argument 
 	 * 'false' gets returned.
 	 *
 	 * <p>Null gets returned if:
@@ -663,15 +660,10 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 */
 	public function getPropertyByName(propertyName:String):PropertyInfo {
 		if (propertyName == null) return null;
-		var propertyArray:Array = getPropertiesByFlag(false);
-		if (!propertyArray) return null;
-		var l:Number = propertyArray.length;
-		for (var i:Number = 0; i < l; i = i-(-1)) {
-			var property:PropertyInfo = propertyArray[i];
-			if (property.getName() == propertyName) {
-				return property;
-			}
+		if (getPropertiesByFlag(true)) {
+			if (properties[propertyName]) return properties[propertyName];
 		}
+		if (getSuperType()) return ClassInfo(getSuperType()).getPropertyByName(propertyName);
 		return null;
 	}
 	
@@ -692,16 +684,18 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 */
 	public function getPropertyByProperty(concreteProperty:Function):PropertyInfo {
 		if (concreteProperty == null) return null;
-		var propertyArray:Array = getPropertiesByFlag(false);
-		if (!propertyArray) return null;
-		var l:Number = propertyArray.length;
-		for (var i:Number = 0; i < l; i = i-(-1)) {
-			var property:PropertyInfo = propertyArray[i];
-			if (property.getGetter() == concreteProperty
-					|| property.getSetter() == concreteProperty) {
-				return property;
+		var propertyArray:Array = getPropertiesByFlag(true);
+		if (propertyArray) {
+			var l:Number = propertyArray.length;
+			for (var i:Number = 0; i < l; i = i-(-1)) {
+				var property:PropertyInfo = propertyArray[i];
+				if (property.getGetter() == concreteProperty
+						|| property.getSetter() == concreteProperty) {
+					return property;
+				}
 			}
 		}
+		if (getSuperType()) return ClassInfo(getSuperType()).getPropertyByProperty(concreteProperty);
 		return null;
 	}
 	
