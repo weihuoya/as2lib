@@ -1,6 +1,9 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.CacheInfo;
 
+/**
+ * @author Simon Wacker
+ */
 class org.as2lib.env.reflect.algorythm.AbstractContentAlgorythm extends BasicClass {
 	private function AbstractContentAlgorythm(Void) {
 	}

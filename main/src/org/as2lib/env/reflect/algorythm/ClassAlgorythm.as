@@ -7,6 +7,14 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 
+/**
+ * ClassAlgorythm searches for the class of a specific instance and returns a
+ * ClassInfo representing the found class.
+ *
+ * @author Simon Wacker
+ * @see org.as2lib.core.BasicClass
+ * @see org.as2lib.env.reflect.algorythm.CacheAlgorythm
+ */
 class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass implements CacheAlgorythm {
 	private var cache:Cache;
 	private var info:ClassInfo;

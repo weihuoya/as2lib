@@ -7,6 +7,9 @@ import org.as2lib.env.reflect.algorythm.AbstractContentAlgorythm;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.util.ObjectUtil;
 
+/**
+ * @author Simon Wacker
+ */
 class org.as2lib.env.reflect.algorythm.MethodAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
 	private var data:HashMap;
 	private var info:ClassInfo;
