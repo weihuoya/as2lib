@@ -1,5 +1,5 @@
 ﻿import org.as2lib.event.EventInfo;
-import org.as2lib.basic.BasicInterface;
+import org.as2lib.core.BasicInterface;
 import org.as2lib.event.ListenerArray;
 
 /**

@@ -1,6 +1,6 @@
-﻿import org.as2lib.basic.BasicClass;
-import org.as2lib.basic.string.ObjectStringifier;
-import org.as2lib.basic.string.Stringifier;
+﻿import org.as2lib.core.BasicClass;
+import org.as2lib.core.string.ObjectStringifier;
+import org.as2lib.core.string.Stringifier;
 
 /**
  * @author: Simon Wacker

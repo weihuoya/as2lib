@@ -1,7 +1,7 @@
-﻿import org.as2lib.basic.BasicClass;
-import org.as2lib.basic.overload.OverloadHandler;
-import org.as2lib.basic.overload.SimpleOverloadHandler;
-import org.as2lib.basic.overload.OverloadException;
+﻿import org.as2lib.core.BasicClass;
+import org.as2lib.core.overload.OverloadHandler;
+import org.as2lib.core.overload.SimpleOverloadHandler;
+import org.as2lib.core.overload.OverloadException;
 
 /**
  * @author: Simon Wacker

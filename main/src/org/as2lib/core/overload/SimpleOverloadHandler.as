@@ -1,12 +1,12 @@
-﻿import org.as2lib.basic.overload.OverloadHandler;
+﻿import org.as2lib.core.overload.OverloadHandler;
 import org.as2lib.util.ObjectUtil;
-import org.as2lib.basic.BasicClass;
+import org.as2lib.core.BasicClass;
 
 /**
  * @author: Simon Wacker
  * @version: 1.0
  */
-class org.as2lib.basic.overload.SimpleOverloadHandler extends BasicClass implements OverloadHandler {
+class org.as2lib.core.overload.SimpleOverloadHandler extends BasicClass implements OverloadHandler {
 	/**
 	 * Contains the arguments types of the function.
 	 */
@@ -28,7 +28,7 @@ class org.as2lib.basic.overload.SimpleOverloadHandler extends BasicClass impleme
 	}
 	
 	/**
-	 * @see org.as2lib.basic.overload.OverloadHandler
+	 * @see org.as2lib.core.overload.OverloadHandler
 	 */
 	public function matches(someArguments:Array):Boolean {
 		var l:Number = someArguments.length;
@@ -44,7 +44,7 @@ class org.as2lib.basic.overload.SimpleOverloadHandler extends BasicClass impleme
 	}
 	
 	/**
-	 * @see org.as2lib.basic.overload.OverloadHandler
+	 * @see org.as2lib.core.overload.OverloadHandler
 	 */
 	public function execute(anObject:Object, someArguments:Array):Object {
 		return func.apply(anObject, someArguments);

@@ -1,6 +1,6 @@
-﻿import org.as2lib.basic.BasicClass;
+﻿import org.as2lib.core.BasicClass;
 
-class test.org.as2lib.basic.overload.Dummy extends BasicClass {
+class test.org.as2lib.core.overload.Dummy extends BasicClass {
 	public function Dummy(Void) {
 	}
 	

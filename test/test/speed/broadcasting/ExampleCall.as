@@ -1,5 +1,5 @@
 ﻿import org.as2lib.event.EventListener;
-import org.as2lib.basic.BasicClass;
+import org.as2lib.core.BasicClass;
 /**
  * Smallest form of a Call (used by all Tests in this package).
  * 

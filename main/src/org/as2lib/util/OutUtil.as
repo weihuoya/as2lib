@@ -1,7 +1,7 @@
-﻿import org.as2lib.basic.BasicClass;
+﻿import org.as2lib.core.BasicClass;
 import org.as2lib.out.info.OutWriteInfo;
 import org.as2lib.out.info.OutErrorInfo;
-import org.as2lib.basic.string.Stringifier;
+import org.as2lib.core.string.Stringifier;
 import org.as2lib.out.string.WriteStringifier;
 import org.as2lib.out.string.ErrorStringifier;
 

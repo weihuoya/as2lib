@@ -1,5 +1,5 @@
 ﻿import org.as2lib.test.unit.Test;
-import org.as2lib.basic.BasicClass;
+import org.as2lib.core.BasicClass;
 import org.as2lib.reflect.ClassInfo;
 import org.as2lib.reflect.PackageInfo;
 import org.as2lib.reflect.MethodInfo;
@@ -10,17 +10,17 @@ import org.as2lib.reflect.ReflectInfo;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.ReflectUtil;
 import test.org.as2lib.reflect.*;
-import org.as2lib.basic.Out;
+import org.as2lib.core.Out;
 import org.as2lib.Config;
-import test.org.as2lib.basic.reflect.DummieClass;
-import test.org.as2lib.basic.reflect.AnotherDummie
+import test.org.as2lib.core.reflect.DummieClass;
+import test.org.as2lib.core.reflect.AnotherDummie
 
 /**
  * Testcase for Reflections.
  * @author Martin Heidegger
  */
  
-class test.org.as2lib.basic.TReflections extends Test {
+class test.org.as2lib.core.TReflections extends Test {
 	private var clazz:BasicClass;
 	
 	public function TReflections(Void) {
@@ -30,15 +30,18 @@ class test.org.as2lib.basic.TReflections extends Test {
 	}
 	
 	public function testGetClass(Void):Void {
+		trace (":: testGetClass");
 		var info:ClassInfo = clazz.getClass();
 		assertEqualsWithMessage("The name of the basic class changed", info.getName(), "BasicClass");
-		assertEqualsWithMessage("Problems evaluating the full name", info.getFullName(), "org.as2lib.basic.BasicClass");
+		assertEqualsWithMessage("Problems evaluating the full name", info.getFullName(), "org.as2lib.core.BasicClass");
 		assertEqualsWithMessage("getClass() does not return the correct class", info.getClass(), BasicClass);
-		assertEqualsWithMessage("The Root Package is not at the correct place", PackageInfo(info.getParent().getParent().getParent().getParent()).getPackage(), _global);		assertEqualsWithMessage("For a Strange reason the parent package isn't basic.", info.getParent().getName(), "basic");
+		assertEqualsWithMessage("The Root Package is not at the correct place", PackageInfo(info.getParent().getParent().getParent().getParent()).getPackage(), _global);
+		assertEqualsWithMessage("For a Strange reason the parent package isn't core.", info.getParent().getName(), "core");
 		trace ("----------------------------------------------");
 	}
 	
 	public function testGetPackage(Void):Void {
+		trace (":: testGetPackage");
 		var info:PackageInfo = ReflectUtil.getPackageInfo(_global.org.as2lib);
 		assertEqualsWithMessage("The name of the package isn't correct!", info.getName(), "as2lib");
 		assertEqualsWithMessage("The full name of the package isn't correct!", info.getFullName(), "org.as2lib");
@@ -49,7 +52,8 @@ class test.org.as2lib.basic.TReflections extends Test {
 	}
 	
 	public function testGetChildren(Void):Void {
-		var info = ReflectUtil.getPackageInfo(_global.test.org.as2lib.reflect);
+		trace (":: testGetChildren");
+		var info = ReflectUtil.getPackageInfo(_global.org.as2lib);
 		var children:HashMap = info.getChildren();
 		var iterator:Iterator = children.iterator();
 		while (iterator.hasNext()) {
@@ -61,6 +65,7 @@ class test.org.as2lib.basic.TReflections extends Test {
 	}
 	
 	public function testGetMethods(Void):Void {
+		trace (":: testGetMethods");
 		var info:ClassInfo = clazz.getClass();
 		var methods:HashMap = info.getMethods();
 		var iterator:Iterator = methods.iterator()
@@ -72,6 +77,7 @@ class test.org.as2lib.basic.TReflections extends Test {
 	}
 	
 	public function testGetProperties(Void):Void {
+		trace (":: testGetProperties");
 		var info:ClassInfo = (new DummieClass()).getClass();
 		var properties:HashMap = HashMap(info.getProperties());
 		var prop:PropertyInfo;

@@ -1,4 +1,4 @@
-﻿import org.as2lib.basic.BasicClass;
+﻿import org.as2lib.core.BasicClass;
 import org.as2lib.event.EventInfo;
 
 /**

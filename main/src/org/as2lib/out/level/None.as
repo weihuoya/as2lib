@@ -1,7 +1,7 @@
 ﻿import org.as2lib.out.OutLevel;
 import org.as2lib.event.EventBroadcaster;
 import org.as2lib.except.Throwable;
-import org.as2lib.basic.BasicClass;
+import org.as2lib.core.BasicClass;
 
 /**
  * @author Martin Heidegger, Simon Wacker

@@ -5,7 +5,7 @@ import org.as2lib.out.handler.TraceHandler;
 import org.as2lib.out.level.*;
 import org.as2lib.event.EventBroadcaster;
 import org.as2lib.except.Throwable;
-import org.as2lib.basic.BasicClass;
+import org.as2lib.core.BasicClass;
 
 /**
  * @author Simon Wacker
@@ -78,42 +78,42 @@ class org.as2lib.out.Out extends BasicClass implements OutAccess {
 	}
 	
 	/**
-	 * @see org.as2lib.basic.OutAccess
+	 * @see org.as2lib.core.OutAccess
 	 */
 	public function log(message:String):Void {
 		level.log(message, broadcaster);
 	}
 	
 	/**
-	 * @see org.as2lib.basic.OutAccess
+	 * @see org.as2lib.core.OutAccess
 	 */
 	public function debug(message:String):Void {
 		level.debug(message, broadcaster);
 	}
 	
 	/**
-	 * @see org.as2lib.basic.OutAccess
+	 * @see org.as2lib.core.OutAccess
 	 */
 	public function info(message:String):Void {
 		level.info(message, broadcaster);
 	}
 	
 	/**
-	 * @see org.as2lib.basic.OutAccess
+	 * @see org.as2lib.core.OutAccess
 	 */
 	public function warning(message:String):Void {
 		level.warning(message, broadcaster);
 	}
 	
 	/**
-	 * @see org.as2lib.basic.OutAccess
+	 * @see org.as2lib.core.OutAccess
 	 */
 	public function error(throwable:Throwable):Void {
 		level.error(throwable, broadcaster);
 	}
 	
 	/**
-	 * @see org.as2lib.basic.OutAccess
+	 * @see org.as2lib.core.OutAccess
 	 */
 	public function fatal(throwable:Throwable):Void {
 		level.fatal(throwable, broadcaster);

@@ -1,4 +1,4 @@
-﻿import org.as2lib.basic.BasicClass;
+﻿import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.reflect.ClassInfo;
 import org.as2lib.reflect.PackageInfo;
