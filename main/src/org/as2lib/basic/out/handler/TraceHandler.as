@@ -1,7 +1,7 @@
 ﻿import org.as2lib.basic.out.OutHandler;
 import org.as2lib.basic.out.info.OutWriteInfo;
 import org.as2lib.basic.out.info.OutErrorInfo;
-import org.as2lib.basic.event.EventInfo;
+import org.as2lib.event.EventInfo;
 import org.as2lib.util.OutUtil;
 import org.as2lib.basic.BasicClass;
 
