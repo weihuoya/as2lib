@@ -49,6 +49,13 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass {
 	 * <p>Only the passed in class will be searched through, no
 	 * super classes.
 	 *
+	 * <p>The found methods are stored in the resulting array by index as
+	 * well as by name. That means you can obtain MethodInfo instances either
+	 * by index:
+	 * <code>var myMethod:MethodInfo = myMethods[0];</code>
+	 * or by name:
+	 * <code>var myMethod:MethodInfo = myMethods["myMethodName"];</code>
+	 *
 	 * @param i the ClassInfo instance representing the class to search through
 	 * @return the found methods, a blank array or null
 	 */
@@ -70,7 +77,7 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass {
 		_global.ASSetPropFlags(p, ["__proto__", "constructor", "__constructor__"], 1, true);
 		search(p);
 		
-		// ASSetPropFlags must be restored because unexpected behaviours get caused otherwise
+		// ASSetPropFlags must be restored because unexpected behaviors get caused otherwise
 		_global.ASSetPropFlags(c, null, 1, true);
 		_global.ASSetPropFlags(p, null, 1, true);
 		
@@ -84,6 +91,7 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass {
 					&& k.indexOf("__get__") < 0
 					&& k.indexOf("__set__") < 0) {
 				r[r.length] = new MethodInfo(k, t[k], i, s);
+				r[k] = r[r.length];
 			}
 		}
 	}

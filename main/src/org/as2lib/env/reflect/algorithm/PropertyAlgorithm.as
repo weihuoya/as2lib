@@ -54,6 +54,13 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass {
 	 * <p>Only the passed in class will be searched through, no
 	 * super classes.
 	 *
+	 * <p>The found properties are stored in the resulting array by index as
+	 * well as by name. That means you can obtain PropertyInfo instances either
+	 * by index:
+	 * <code>var myProperty:PropertyInfo = myProperties[0];</code>
+	 * or by name:
+	 * <code>var myProperty:PropertyInfo = myProperties["myPropertyName"];</code>
+	 *
 	 * @param c the ClassInfo instance representing the class to search through
 	 * @return the found properties, a blank array or null
 	 */
@@ -89,11 +96,13 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass {
 					g[n] = true;
 					if (!s[n]) {
 						r[r.length] = new PropertyInfo(n, t["__set__" + n], t[i], c, a);
+						r[n] = r[r.length];
 					}
 				} else if (i.indexOf("__set__") == 0) {
 					s[n] = true;
 					if (!g[n]) {
 						r[r.length] = new PropertyInfo(n, t[i], t["__get__" + n], c, a);
+						r[n] = r[r.length];
 					}
 				}
 			}

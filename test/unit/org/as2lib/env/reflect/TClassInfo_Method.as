@@ -507,26 +507,24 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		
 		var m1c:MockControl = new MockControl(MethodInfo);
 		var m1:MethodInfo = m1c.getMock();
-		m1.getName();
-		m1c.setReturnValue("method1");
 		m1c.replay();
 		
 		var m2c:MockControl = new MockControl(MethodInfo);
 		var m2:MethodInfo = m2c.getMock();
-		m2.getName();
-		m2c.setReturnValue("method2");
 		m2c.replay();
 		
 		var m3c:MockControl = new MockControl(MethodInfo);
 		var m3:MethodInfo = m3c.getMock();
-		m3.getName();
-		m3c.setReturnValue("method3");
 		m3c.replay();
 		
 		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
 		ma.execute(i);
-		mac.setReturnValue([m1, m2, m3]);
+		var methods:Array = [m1, m2, m3];
+		methods["method1"] = m1;
+		methods["method2"] = m2;
+		methods["method3"] = m3;
+		mac.setReturnValue(methods);
 		mac.replay();
 		
 		var cac:MockControl = new MockControl(ClassAlgorithm);
@@ -552,32 +550,28 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		
 		var m1c:MockControl = new MockControl(MethodInfo);
 		var m1:MethodInfo = m1c.getMock();
-		m1.getName();
-		m1c.setDefaultReturnValue("method1");
 		m1c.replay();
 		
 		var m2c:MockControl = new MockControl(MethodInfo);
 		var m2:MethodInfo = m2c.getMock();
-		m2.getName();
-		m2c.setDefaultReturnValue("method2");
 		m2c.replay();
 		
 		var m3c:MockControl = new MockControl(MethodInfo);
 		var m3:MethodInfo = m3c.getMock();
-		m3.getName();
-		m3c.setDefaultReturnValue("method3");
 		m3c.replay();
 		
 		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
 		ma.execute(i);
-		mac.setReturnValue([m1, m2, m3]);
+		var methods:Array = [m1, m2, m3];
+		methods["method1"] = m1;
+		methods["method2"] = m2;
+		methods["method3"] = m3;
+		mac.setReturnValue(methods);
 		mac.replay();
 		
 		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
-		ca.execute(Type.prototype);
-		cac.setReturnValue(null);
 		cac.replay();
 		
 		i.setMethodAlgorithm(ma);
@@ -599,38 +593,38 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		
 		var m1c:MockControl = new MockControl(MethodInfo);
 		var m1:MethodInfo = m1c.getMock();
-		m1.getName();
-		m1c.setDefaultReturnValue("method1");
 		m1c.replay();
 		
 		var m2c:MockControl = new MockControl(MethodInfo);
 		var m2:MethodInfo = m2c.getMock();
-		m2.getName();
-		m2c.setDefaultReturnValue("method2");
 		m2c.replay();
 		
 		var m3c:MockControl = new MockControl(MethodInfo);
 		var m3:MethodInfo = m3c.getMock();
-		m3.getName();
-		m3c.setDefaultReturnValue("method3");
 		m3c.replay();
 		
 		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
 		ma.execute(i);
-		mac.setReturnValue([m1, m2, m3]);
+		var methods:Array = [m1, m2, m3];
+		methods["method1"] = m1;
+		methods["method2"] = m2;
+		methods["method3"] = m3;
+		mac.setReturnValue(methods);
 		mac.replay();
 		
 		var sm2c:MockControl = new MockControl(MethodInfo);
 		var sm2:MethodInfo = sm2c.getMock();
-		sm2.getName();
-		sm2c.setDefaultReturnValue("method2");
 		sm2c.replay();
+		
+		var sm5c:MockControl = new MockControl(MethodInfo);
+		var sm5:MethodInfo = sm5c.getMock();
+		sm5c.replay();
 		
 		var scc:MockControl = new MockControl(ClassInfo);
 		var sc:ClassInfo = scc.getMock();
-		sc.getMethodsByFlag(false);
-		scc.setReturnValue(sm2);
+		sc.getMethodByName("method5");
+		scc.setReturnValue(sm5);
 		scc.replay();
 		
 		var cac:MockControl = new MockControl(ClassAlgorithm);
@@ -642,6 +636,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		i.setMethodAlgorithm(ma);
 		i.setClassAlgorithm(ca);
 		assertSame(i.getMethodByName("method2"), m2);
+		assertSame(i.getMethodByName("method5"), sm5);
 		
 		mac.verify();
 		cac.verify();
@@ -650,6 +645,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		m3c.verify();
 		scc.verify();
 		sm2c.verify();
+		sm5c.verify();
 	}
 	
 	public function testGetMethodByMethodWithNullMethod(Void):Void {
@@ -711,6 +707,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		var cm1:Function = function() {};
 		var cm2:Function = function() {};
 		var cm3:Function = function() {};
+		var cm4:Function = function() {};
 		
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(null, Type, null);
@@ -739,18 +736,32 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		mac.setReturnValue([m1, m2, m3]);
 		mac.replay();
 		
+		var m4c:MockControl = new MockControl(MethodInfo);
+		var m4:MethodInfo = m4c.getMock();
+		m4.getMethod();
+		m4c.setDefaultReturnValue(cm4);
+		m4c.replay();
+		
+		var scc:MockControl = new MockControl(ClassInfo);
+		var sc:ClassInfo = scc.getMock();
+		sc.getMethodByMethod(cm4);
+		scc.setReturnValue(m4);
+		scc.replay();
+		
 		var cac:MockControl = new MockControl(ClassAlgorithm);
 		var ca:ClassAlgorithm = cac.getMock();
 		ca.execute(Type.prototype);
-		cac.setReturnValue(null);
+		cac.setReturnValue(sc);
 		cac.replay();
 		
 		i.setMethodAlgorithm(ma);
 		i.setClassAlgorithm(ca);
-		assertSame(i.getMethodByMethod(cm3), m3);
-		assertSame(i.getMethodByMethod(cm1), m1);
-		assertSame(i.getMethodByMethod(cm2), m2);
+		assertSame("m3", i.getMethodByMethod(cm3), m3);
+		assertSame("m1", i.getMethodByMethod(cm1), m1);
+		assertSame("m2", i.getMethodByMethod(cm2), m2);
+		assertSame("m4", i.getMethodByMethod(cm4), m4);
 		
+		scc.verify();
 		mac.verify();
 		cac.verify();
 		m1c.verify();

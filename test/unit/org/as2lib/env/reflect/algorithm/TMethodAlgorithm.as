@@ -102,6 +102,7 @@ class org.as2lib.env.reflect.algorithm.TMethodAlgorithm extends TestCase {
 		var c:Array = a.execute(p);
 		assertNotNull("method array should not be null", c);
 		assertSame("there should be no methods", c.length, 0);
+		trace(c[0].getName());
 		
 		pc.verify();
 	}
