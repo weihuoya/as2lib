@@ -46,8 +46,6 @@ interface org.as2lib.basic.reflect.ClassInfo {
       */ 
      public function getName(Void):String; 
      
-     public function setName(to:String):Void;
-     
      /** 
       *  
       */ 
@@ -63,28 +61,20 @@ interface org.as2lib.basic.reflect.ClassInfo {
       */ 
      public function getVars(Void):TypedArray; 
      
-     public function setVars(to:TypedArray):Void;
-     
      /** 
       * Returns a TypedArray from type MethodInfo containing all Methods that an Instance of this class has. 
       */ 
      public function getMethods(Void):TypedArray; 
-     
-     public function setMethods(to:TypedArray):Void;
       
      /** 
       * Returns a TypedArray from type String containing all Vars that the Class has. 
       */ 
      public function getStaticVars(Void):TypedArray; 
-     
-     public function setStaticVars(to:TypedArray):Void;
       
      /** 
       * Returns a TypedArray from type MethodInfo containing all Methods that the Class has. 
       */ 
      public function getStaticMethods(Void):TypedArray; 
-     
-     public function setStaticMethods(to:TypedArray):Void;
  
 } 
  
