@@ -1,10 +1,10 @@
 ﻿import org.as2lib.core.BasicClass;
-import org.as2lib.data.io.conn.ConnectionListener;
-import org.as2lib.data.io.conn.ConnectionError;
-import org.as2lib.data.io.conn.ConnectionResponse;
+import org.as2lib.data.io.conn.ConnectorListener;
+import org.as2lib.data.io.conn.ConnectorError;
+import org.as2lib.data.io.conn.ConnectorResponse;
 import org.as2lib.env.out.Out;
 
-class ExampleListener extends BasicClass implements ConnectionListener {
+class ExampleListener extends BasicClass implements ConnectorListener {
 	/** Internal counter (just to do something */
 	public static var counter:Number = 0;
 	private var myOut:Out;
@@ -17,11 +17,11 @@ class ExampleListener extends BasicClass implements ConnectionListener {
 	/**
 	 * Executes a call.
 	 */
-	public function onError(error:ConnectionError):Void{
+	public function onError(error:ConnectorError):Void{
 		myOut.error(error);
 	}
 	
-	public function onResponse(response:ConnectionResponse):Void{
+	public function onResponse(response:ConnectorResponse):Void{
 		myOut.info(response)
 	}
 }
