@@ -3,6 +3,7 @@ import org.as2lib.data.holder.List;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.array.ArrayIterator;
+import org.as2lib.data.holder.HolderConfig;
 
 /**
  * @author Simon Wacker
@@ -124,5 +125,12 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 		var l = data.length;
 		while (data[--l] != value && l>-1);
 		return l;
+	}
+	
+	/**
+	 * @see org.as2lib.core.BasicInterface#toString()
+	 */
+	public function toString(Void):String {
+		return HolderConfig.getListStringifier().execute(this);
 	}
 }
