@@ -26,11 +26,42 @@ import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
 import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
 
 /**
- * Proxy handles client request to a certain service and its response.
- * services, which are availiable after server is started.
+ * LocalServerServiceProxy handles client requests to a certain service
+ * and its response.
  *
- * @author Christoph Atteneder
+ * <p>This client requests normally come from a client service proxy
+ * because this class is designed to interact with this type of client.
+ *
+ * <p>You can setup your service proxy as follows to await client requests:
+ * <code>
+ * var service:LocalServerServiceProxy = new LocalServerServiceProxy("myService", new MyService());
+ * service.run();
+ * </code>
+ *
+ * <p>A client may then call the invoke method on this service proxy.
+ * <code>
+ * var client = new LocalClientServiceProxy("local.as2lib.org/myService");
+ * var callback:MethodInvocationCallback = client.myMethod("firstArgument", "secondArgument");
+ * </code>
+ *
+ * <p>You may choose to combine multiple services in one server for
+ * easier usage.
+ * <code>
+ * var server:LocalServer = new LocalServer("local.as2lib.org");
+ * server.addService(new LocalServerServiceProxy("myServiceOne", new MyServiceOne()));
+ * server.addService(new LocalServerServiceProxy("myServiceTwo", new MyServiceTwo()));
+ * server.run();
+ * </code>
+ *
+ * <p>A client would then need to prefix the service's name with the
+ * host of the server.
+ * <code>
+ * var client = new LocalClientServiceProxy("local.as2lib.org/myService");
+ * var callback:MethodInvocationCallback = client.myMethod("firstArgument", "secondArgument");
+ * </code>
+ *
  * @author Simon Wacker
+ * @author Christoph Atteneder
  */
 class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractServerServiceProxy implements ServerServiceProxy {
 	
@@ -40,17 +71,17 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	/** Service path. */
 	private var path:String;
 	
-	/** Used to set up the server. */
+	/** Used to set up the service. */
 	private var connection:EnhancedLocalConnection;
 	
-	/** Stores added MethodInvocationErrorListeners. */
+	/** Stores set error listener. */
 	private var errorBroadcaster:EventBroadcaster;
 	
-	/** Service status. */
+	/** Service's status. */
 	private var running:Boolean;
 	
 	/**
-	 * Constructs a new LocalServerServiceProxy.
+	 * Constructs a new LocalServerServiceProxy instance.
 	 *
 	 * @param path the path of the service
 	 * @param service object which provides the service operations
@@ -119,14 +150,17 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	}
 	
 	/**
+	 * Runs the service proxy on the passed-in host.
+	 *
 	 * <p>The service proxy will be restarted if it is already running. That
 	 * means it first stops itself and starts it again.
 	 *
 	 * <p>Only the path of the service proxy gets used to connect if the host
 	 * is null, undefined or a blank string.
 	 *
+	 * @param host the host to run the service on
 	 * @throws ReservedServiceException if a service on the passed-in host with the service's path is already in use
-	 * @see ServerServiceProxy#run()
+	 * @see ServerServiceProxy#run(String):Void
 	 */
 	public function run(host:String):Void {
 		if (isRunning()) this.stop();
@@ -139,7 +173,9 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	}
 	
 	/**
-	 * @see ServerServiceProxy#stop()
+	 * Stops the service.
+	 *
+	 * @see ServerServiceProxy#stop(Void):Void
 	 */
 	public function stop(Void):Void {
 		getConnection().close();
@@ -147,53 +183,102 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	}
 	
 	/**
-	 * @see ServerServiceProxy#invokeMethodByNameAndArguments()
+	 * Handles an incoming 'remote' method invocation to the service.
+	 *
+	 * <p>The method corresponding to the passed-in method name gets
+	 * executed on the service.
+	 *
+	 * <p>The error listeners will be informed of a failure if:
+	 * <ul>
+	 *   <li>A method with the passed-in name does not exist on the service.</li>
+	 *   <li>The service method threw an exception.</li>
+	 * </ul>
+	 *
+	 * @param methodName the name of the method to invoke on the service
+	 * @param args the arguments to be used as parameters when invoking the method
+	 * @see ServerServiceProxy#invokeMethodByNameAndArguments(String, Array):Void
 	 */
-	public function invokeMethodByNameAndArguments(name:String, args:Array):Void {
+	public function invokeMethodByNameAndArguments(methodName:String, args:Array):Void {
 		try {
-			if (service[name]) {
-				service[name].apply(service, args);
+			if (service[methodName]) {
+				service[methodName].apply(service, args);
 			} else {
-				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null));
+				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(path, methodName, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null));
 			}
 		} catch (exception) {
-			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, exception));
+			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(path, methodName, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, exception));
 		}
 	}
 	
 	/**
-	 * @see ServerServiceProxy#invokeMethodByNameAndArgumentsAndResponseService()
+	 * Handles incoming 'remote' method invocations to the service and
+	 * responses through the response service url.
+	 *
+	 * <p>The method corresponding to the passed-in method name gets
+	 * executed on the service and the response of this execution gets
+	 * passed though the response service's url to the client.
+	 *
+	 * <p>If the response service url is null or an empty string the
+	 * #invokeMethodByNameAndArguments(String, Array):Void method gets
+	 * invoked instead.
+	 *
+	 * <p>The response service is supposed to be of type MethodInvocationCallback.
+	 * And thus defines the two methods onReturn(MethodInvocationReturInfo):Void
+	 * and onError(MethodInvocationErrorInfo):Void.
+	 *
+	 * <p>The onReturn(..) method gets invoked on the response service if
+	 * the method executed successfully.
+	 *
+	 * <p>The onError(..) method gets invoked on the response service if:
+	 * <ul>
+	 *   <li>The method threw an exception.</li>
+	 *   <li>The method does not exist on the service.</li>
+	 * </ul>
+	 *
+	 * <p>The error listeners will be informed of a failure if:
+	 * <ul>
+	 *   <li>A method with the passed-in name does not exist on the service.</li>
+	 *   <li>The service method threw an exception.</li>
+	 *   <li>The response server with the given url does not exist.</li>
+	 *   <li>The return value is to big to send over a local connection.</li>
+	 *   <li>An unknown failure occured when trying to send the response.</li>
+	 * </ul>
+	 *
+	 * @param methodName the name of the method to invoke on the service
+	 * @param args the arguments to be used as parameters when invoking the method
+	 * @param responseServiceUrl the url to the service that handles the response
+	 * @see ServerServiceProxy#invokeMethodByNameAndArgumentsAndResponseService(String, Array, String):Void
 	 */
-	public function invokeMethodByNameAndArgumentsAndResponseService(name:String, args:Array, responseService:String):Void {
-		if (!responseService) {
-			invokeMethodByNameAndArguments(name, args);
+	public function invokeMethodByNameAndArgumentsAndResponseService(methodName:String, args:Array, responseServiceUrl:String):Void {
+		if (!responseServiceUrl) {
+			invokeMethodByNameAndArguments(methodName, args);
 			return;
 		}
 		var listener:MethodInvocationErrorListener = new MethodInvocationErrorListener();
 		var owner:LocalServerServiceProxy = this;
 		listener.onError = function(info:MethodInvocationErrorInfo):Void {
-			owner.getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(owner.getPath(), name, MethodInvocationErrorInfo.ERROR_UNKNOWN, null));
+			owner.getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(owner.getPath(), methodName, MethodInvocationErrorInfo.ERROR_UNKNOWN, null));
 		}
 		try {
-			if (service[name]) {
-				var returnValue = service[name].apply(service, args);
-				sendResponse(name, responseService, "onReturn", [new MethodInvocationReturnInfo(returnValue)], listener);
+			if (service[methodName]) {
+				var returnValue = service[methodName].apply(service, args);
+				sendResponse(methodName, responseServiceUrl, "onReturn", [new MethodInvocationReturnInfo(returnValue)], listener);
 			} else {
-				sendResponse(name, responseService, "onError", [new MethodInvocationErrorInfo(getPath(), name, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null)], listener);
-				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), name, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null));
+				sendResponse(methodName, responseServiceUrl, "onError", [new MethodInvocationErrorInfo(getPath(), methodName, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null)], listener);
+				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null));
 			}
 		} catch (serviceMethodException) {
-			sendResponse(name, responseService, "onError", [new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, serviceMethodException)], listener)
-			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), name, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, serviceMethodException));
+			sendResponse(methodName, responseServiceUrl, "onError", [new MethodInvocationErrorInfo(path, methodName, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, serviceMethodException)], listener)
+			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, serviceMethodException));
 		}
 	}
 	
 	/**
 	 * Sends a response to the client.
 	 */
-	private function sendResponse(methodName:String, responseService:String, responseMethod:String, responseArguments:Array, responseListener:MethodInvocationErrorListener):Void {
+	private function sendResponse(methodName:String, responseServiceUrl:String, responseMethod:String, responseArguments:Array, responseListener:MethodInvocationErrorListener):Void {
 		try {
-			getConnection().send(responseService, responseMethod, responseArguments, responseListener);
+			getConnection().send(responseServiceUrl, responseMethod, responseArguments, responseListener);
 		} catch (uce:org.as2lib.io.conn.local.core.UnknownConnectionException) {
 			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, MethodInvocationErrorInfo.ERROR_UNKNOWN_SERVICE, uce));
 		} catch (mie:org.as2lib.io.conn.core.client.MethodInvocationException) {
@@ -202,35 +287,55 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	}
 	
 	/**
-	 * @see ServerServiceProxy#getService()
+	 * Returns the wrapped service.
+	 *
+	 * @return the wrapped service
+	 * @see ServerServiceProxy#getService(Void)
 	 */
 	public function getService(Void) {
 		return service;
 	}
 	
 	/**
-	 * @see ServerServiceProxy#getPath()
+	 * Returns the path of this service.
+	 *
+	 * @see ServerServiceProxy#getPath(Void):String
 	 */
 	public function getPath(Void):String {
 		return path;
 	}
 	
 	/**
-	 * @see ServerServiceProxy#isRunning()
+	 * Returns whether this service is running or not.
+	 *
+	 * @return true if this service runs else false
+	 * @see ServerServiceProxy#isRunning(Void):Boolean
 	 */
 	public function isRunning(Void):Boolean {
 		return running;
 	}
 	
 	/**
-	 * @see ServerServiceProxy#addErrorListener()
+	 * Adds an error listener.
+	 * 
+	 * <p>Error listeners get notified when a client tried to invoke a method
+	 * on the service and something went wrong.
+	 *
+	 * @param listener the new error listener to add
+	 * @see ServerServiceProxy#addErrorListener(MethodInvocationErrorListener):Void
 	 */
 	public function addErrorListener(listener:MethodInvocationErrorListener):Void {
 		getErrorBroadcaster().addListener(listener);
 	}
 	
 	/**
-	 * @see ServerServiceProxy#removeErrorListener()
+	 * Removes an error listener.
+	 *
+	 * <p>Error listeners get notified when a client tried to invoke a method
+	 * on the service and something went wrong.
+	 *
+	 * @param listener the error listener to remove
+	 * @see ServerServiceProxy#removeErrorListener(MethodInvocationErrorListener):Void
 	 */
 	public function removeErrorListener(listener:MethodInvocationErrorListener):Void {
 		getErrorBroadcaster().removeListener(listener);

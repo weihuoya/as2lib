@@ -39,6 +39,7 @@ class org.as2lib.io.conn.local.LocalConfig extends BasicClass {
 	 * or the default LocalServerRegistry instance.
 	 *
 	 * @return the currenlty used server registry
+	 * @see #setServerRegistry(ServerRegistry):Void
 	 */
 	public static function getServerRegistry(Void):ServerRegistry {
 		if (!serverRegistry) serverRegistry = new LocalServerRegistry();
@@ -53,6 +54,7 @@ class org.as2lib.io.conn.local.LocalConfig extends BasicClass {
 	 * server registry.
 	 *
 	 * @param newServerRegistry the new server registry
+	 * @see #getServerRegistry(Void):ServerRegistry
 	 */
 	public static function setServerRegistry(newServerRegistry:ServerRegistry):Void {
 		serverRegistry = newServerRegistry;

@@ -27,11 +27,35 @@ import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
 import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
 
 /**
- * Proxy handles client request to a certain service and its response.
- * services, which are availiable after server is started.
+ * LocalClientServiceProxy handles client requests to a certain service
+ * and its response.
+ * 
+ * <p>You can use the proxy as follows:
+ * <code>
+ * var client:LocalClientServiceProxy = new LocalClientServiceProxy("local.as2lib.org/myService");
+ * var callback:MethodInvocationCallback = client.invoke("myMethod", ["firstArgument", "secondArgument"]);
+ * callback.onReturn = function(returnInfo:MethodInvocationReturnInfo):Void {
+ *   trace("myMethod - return value: " + returnInfo.getReturnValue());
+ * }
+ * callback.onError = function(errorInfo:MethodInvocationErrorInfo):Void {
+ *   trace("myMethod - error: " + errorInfo.getException());
+ * }
+ * </code>
+ *
+ * <p>It is also possible to call the method directly on the proxy. But you can't
+ * type the proxy then.
+ * <code>
+ * var client = new LocalClientServiceProxy("local.as2lib.org/myService");
+ * var callback:MethodInvocationCallback = client.myMethod("firstArgument", "secondArgument");
+ * </code>
+ *
+ * <p>The neatest way is to use LocalClientServiceProxyFactory to get a proxy
+ * for a service interface or class, which enables compiler checks.
+ * For more information on this refer to the LocalClientServiceProxyFactory class.
  *
  * @author Simon Wacker
  * @author Christoph Atteneder
+ * @see org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory
  */
 class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractClientServiceProxy implements ClientServiceProxy {
 	
@@ -45,9 +69,10 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	private var responseServices:Array;
 	
 	/**
-	 * Constructs a new LocalClientServiceProxy.
+	 * Constructs a new LocalClientServiceProxy instance.
 	 * 
 	 * @param url the url to the service
+	 * @throws IllegalArgumentException if the url is null, undefined or an empty string
 	 */
 	public function LocalClientServiceProxy(url:String) {
 		if (!url) throw new IllegalArgumentException("Url must not be null, undefined or an empty string.", this, arguments);
@@ -68,38 +93,62 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	}
 	
 	/**
-	 * @see ClientServiceProxy#invokeByNameAndArguments()
+	 * Invokes the method with the passed-in arguments on the 'remote'
+	 * service.
+	 *
+	 * <p>The response of the method invocation gets delegated to the
+	 * appropriate method on the returned callback. That is either the
+	 * onReturn-method when no error occured. Or the onError-method in
+	 * case something went wrong.
+	 *
+	 * @param methodName the name of the method to invoke on the 'remote' service
+	 * @param args the arguments that get passed to the method as parameters
+	 * @return the callback that handles the response
+	 * @throws IllegalArgumentException if the passed-in method name is null or an empty string
+	 * @see ClientServiceProxy#invokeByNameAndArguments(String, Array):MethodInvocationCallback
 	 */
 	public function invokeByNameAndArguments(name:String, args:Array):MethodInvocationCallback {
 		return invokeByNameAndArgumentsAndCallback(name, args, null);
-		/*try {
-			connection.send(url, "invokeMethod", [name, args]);
-		} catch (exception:org.as2lib.io.conn.local.core.UnknownConnectionException) {
-			throw new UnknownServiceException("Service with url [" + url + "] does not exist.", this, arguments).initCause(exception);
-		}*/
 	}
 	
 	/**
-	 * @see ClientServiceProxy#invokeByNameAndArgumentsAndCallback()
+	 * Invokes the method with the passed-in arguments on the 'remote'
+	 * service.
+	 * 
+	 * <p>The response of the method invocation gets delegated to the
+	 * appropriate method on the passed-in callback. That is either the
+	 * onReturn-method when no error occured. Or the onError-method in
+	 * case something went wrong.
+	 *
+	 * <p>If the passed-in callback is null a new MethodInvocationCallback
+	 * instance will be created and returned. It is possible to still set 
+	 * the callback methods there, after invoking this method.
+	 *
+	 * @param methodName the name of the method to invoke on the 'remote' service
+	 * @param args the arguments that get passed to the method as parameters
+	 * @param callback the callback that handles the response
+	 * @return either the passed-in callback or a new callback if null
+	 * @throws IllegalArgumentException if the passed-in method name is null or an empty string
+	 * @see ClientServiceProxy#invokeByNameAndArgumentsAndCallback(String, Array, MethodInvocationCallback):MethodInvocationCallback
 	 */
-	public function invokeByNameAndArgumentsAndCallback(name:String, args:Array, callback:MethodInvocationCallback):MethodInvocationCallback {
-		if (!name) throw new IllegalArgumentException("Method name must not be null, undefined or an empty string.", this, arguments);
+	public function invokeByNameAndArgumentsAndCallback(methodName:String, args:Array, callback:MethodInvocationCallback):MethodInvocationCallback {
+		if (!methodName) throw new IllegalArgumentException("Method name must not be null, undefined or an empty string.", this, arguments);
 		if (!args) args = new Array();
 		if (!callback) callback = new MethodInvocationCallback();
 		
-		var responseUrl:String = generateResponseServiceUrl(url, name);
+		var responseUrl:String = generateResponseServiceUrl(url, methodName);
 		
 		var responseService:EnhancedLocalConnection = new EnhancedLocalConnection();
 		var index:Number = responseServices.push(responseService) - 1;
 		var owner:LocalClientServiceProxy = this;
-		responseService["onReturn"] = function(returnValue):Void {
+		responseService["onReturn"] = function(returnInfo:MethodInvocationReturnInfo):Void {
 			owner.responseServices.splice(index, 1);
-			callback.onReturn(new MethodInvocationReturnInfo(returnValue));
+			callback.onReturn(returnInfo);
 			this.close();
 		}
-		responseService["onError"] = function(exception):Void {
+		responseService["onError"] = function(errorInfo:MethodInvocationErrorInfo):Void {
 			owner.responseServices.splice(index, 1);
-			callback.onError(new MethodInvocationErrorInfo(owner.url, name, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, exception));
+			callback.onError(errorInfo);
 		}
 		try {
 			responseService.connect(responseUrl);
@@ -113,7 +162,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 		}
 		
 		try {
-			connection.send(url, "invokeMethod", [name, args, responseUrl], errorListener);
+			connection.send(url, "invokeMethod", [methodName, args, responseUrl], errorListener);
 		} catch (exception:org.as2lib.io.conn.local.core.UnknownConnectionException) {
 			throw new UnknownServiceException("Service with url [" + url + "] does not exist.", this, arguments).initCause(exception);
 		}
@@ -122,19 +171,24 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	}
 	
 	/**
-	 * Enables us to use the proxy as follows:
+	 * Enables you to invoke the method to be invoked on the 'remote' service
+	 * directly on this proxy.
+	 *
+	 * <p>The usage is mostly the same.
+	 * <code>myProxy.myMethod("myArg1");</code>
 	 * <code>myProxy.myMethod("myArg1", myCallback);</code>
+	 * <code>var callback:MethodInvocationCallback = myProxy.myMethod("myArg1");</code>
 	 * 
-	 * @param methodName the name of the method to invoke on the remote service
+	 * @param methodName the name of the method to invoke on the 'remote' service
 	 * @return the function to execute as the actual method passing the actual arguments
 	 */
 	private function __resolve(methodName:String):Function {
 		var owner:ClientServiceProxy = this;
-		return (function():Void {
+		return (function():MethodInvocationCallback {
 			if (arguments[arguments.length] instanceof MethodInvocationCallback) {
-				owner.invokeByNameAndArgumentsAndCallback(methodName, arguments, MethodInvocationCallback(arguments.pop()));
+				return owner.invokeByNameAndArgumentsAndCallback(methodName, arguments, MethodInvocationCallback(arguments.pop()));
 			} else {
-				owner.invokeByNameAndArgumentsAndCallback(methodName, arguments, null);
+				return owner.invokeByNameAndArgumentsAndCallback(methodName, arguments, null);
 			}
 		});
 	}
