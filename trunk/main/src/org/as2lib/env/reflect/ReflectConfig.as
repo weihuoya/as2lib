@@ -15,12 +15,9 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.util.Stringifier;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.SimpleCache;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.reflect.string.MethodInfoStringifier;
-import org.as2lib.env.reflect.string.PropertyInfoStringifier;
 
 /**
  * ReflectConfig is the main config used to globally configure key parts of the
@@ -32,9 +29,6 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	
 	/** All ClassInfos and PackageInfos that have already been found will be cached here. */
 	private static var cache:Cache;
-	
-	/** Stores the root package of the hierarchy. */
-	private static var rootPackage:PackageInfo;
 	
 	/**
 	 * Private constructor to prevent instantiation.
@@ -49,7 +43,7 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 * @return the cache used to cache ClassInfos and PackageInfos
 	 */
 	public static function getCache(Void):Cache {
-		if (!cache) cache = new SimpleCache(getRootPackage());
+		if (!cache) cache = new SimpleCache(PackageInfo.getRootPackage());
 		return cache;
 	}
 	
@@ -60,23 +54,6 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 */
 	public static function setCache(newCache:Cache):Void {
 		cache = newCache;
-	}
-	
-	/**
-	 * @return the root package of the hierarchy.
-	 */
-	public static function getRootPackage(Void):PackageInfo {
-		if (!rootPackage) rootPackage = new PackageInfo(_global, "_global", null);
-		return rootPackage;
-	}
-	
-	/**
-	 * Sets the new root of the hierarchy.
-	 *
-	 * @param newRootPackage the new root package
-	 */
-	public static function setRootPackage(newRootPackage:PackageInfo):Void {
-		rootPackage = newRootPackage;
 	}
 	
 }

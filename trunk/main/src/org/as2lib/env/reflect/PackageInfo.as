@@ -51,20 +51,8 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	/** The algorithm to find members of packages, that are classes and packages. */
 	private static var packageMemberAlgorithm:PackageMemberAlgorithm;
 	
-	/** The name of the package. */
-	private var name:String;
-	
-	/** The full name of the package. This means the package name as well as the path. */
-	private var fullName:String;
-	
-	/** The actual package this PackageInfo represents. */
-	private var package;
-	
-	/** The parent of the package. This is the packge the package resides in. */
-	private var parent:PackageInfo;
-	
-	/** The members of the package. That means all classes, interfaces and packages contained in the package. */
-	private var members:Array;
+	/** Stores the root package of the package hierarchy. */
+	private static var rootPackage:PackageInfo;
 	
 	/**
 	 * Returns the package info corresponding to the passed-in name.
@@ -160,6 +148,48 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 		if (!packageMemberAlgorithm) packageMemberAlgorithm = new PackageMemberAlgorithm();
 		return packageMemberAlgorithm;
 	}
+	
+	/**
+	 * Returns the root package of the package hierarchy.
+	 *
+	 * <p>If you do not set a custom root package via the {@code #setRootPackage}
+	 * method, the default root package is returned that refers to {@code _global}.
+	 *
+	 * @return the root package of the package hierarchy.
+	 * @see #setRootPackage
+	 */
+	public static function getRootPackage(Void):PackageInfo {
+		if (!rootPackage) rootPackage = new PackageInfo(_global, "_global", null);
+		return rootPackage;
+	}
+	
+	/**
+	 * Sets the new root package of the package hierarchy.
+	 *
+	 * <p>If the passed-in {@code newRootPackage} argument is null or undefined
+	 * the {@code #getRootPackage} method will return the default root package.
+	 *
+	 * @param newRootPackage the new root package of the package hierarchy
+	 * @see #getRootPackage
+	 */
+	public static function setRootPackage(newRootPackage:PackageInfo):Void {
+		rootPackage = newRootPackage;
+	}
+	
+	/** The name of the package. */
+	private var name:String;
+	
+	/** The full name of the package. This means the package name as well as the path. */
+	private var fullName:String;
+	
+	/** The actual package this PackageInfo represents. */
+	private var package;
+	
+	/** The parent of the package. This is the packge the package resides in. */
+	private var parent:PackageInfo;
+	
+	/** The members of the package. That means all classes, interfaces and packages contained in the package. */
+	private var members:Array;
 	
 	/**
 	 * Constructs a new PackageInfo instance.
