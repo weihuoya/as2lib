@@ -16,6 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.ArrayUtil;
+import org.as2lib.data.holder.Map;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.bean.PropertyValueSet;
 import org.as2lib.env.bean.PropertyValue;
@@ -30,9 +31,14 @@ class org.as2lib.env.bean.MutablePropertyValueSet extends BasicClass implements 
 	
 	/**
 	 * Constructs a new instance.
+	 *
+	 * @param propertyValueMap (optional) map containing property value names and values to populate the set with
 	 */
-	public function MutablePropertyValueSet(Void) {
+	public function MutablePropertyValueSet(propertyValueMap:Map) {
 		propertyArray = new Array();
+		if (propertyValueMap) {
+			// populate...
+		}
 	}
 	
 	public function addPropertyValue():Void {
@@ -108,15 +114,6 @@ class org.as2lib.env.bean.MutablePropertyValueSet extends BasicClass implements 
 	 */
 	public function getPropertyValues(Void):Array {
 		return propertyArray.concat();
-	}
-	
-	/**
-	 * @see PropertyValueRepository#apply(bean):Void
-	 */
-	public function apply(bean):Void {
-		for (var i:Number = 0; i < propertyArray.length; i++) {
-			PropertyValue(propertyArray[i]).apply(bean);
-		}
 	}
 	
 }

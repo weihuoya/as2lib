@@ -24,7 +24,7 @@ import org.as2lib.env.bean.PropertyValue;
  */
 class test.unit.org.as2lib.env.bean.TPropertyValue extends TestCase {
 	
-	public function testApplyWithEmptyPrefix(Void):Void {
+	/*public function testApplyWithEmptyPrefix(Void):Void {
 		var value:Object = new Object();
 		var propertyValue:PropertyValue = new PropertyValue("test", value, "");
 		
@@ -67,6 +67,6 @@ class test.unit.org.as2lib.env.bean.TPropertyValue extends TestCase {
 		propertyValue.apply(bean);
 		
 		beanControl.verify(this);
-	}
+	}*/
 	
 }

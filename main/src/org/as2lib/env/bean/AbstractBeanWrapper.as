@@ -16,27 +16,25 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
+import org.as2lib.env.bean.AbstractPropertyAccessor;
+import org.as2lib.env.bean.PropertyValueConverter;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.env.bean.factory.support.AbstractBeanFactory extends BasicClass {
+class org.as2lib.env.bean.AbstractBeanWrapper extends AbstractPropertyAccessor {
 	
-	private function AbstractBeanFactory(Void) {
+	public static var METHOD_PREFIX:String = "?";
+	public static var PROPERTY_PREFIX:String = "&";
+	
+	private function AbstractBeanWrapper(Void) {
 	}
 	
-	public function getBean() {
+	public function registerPropertyValueConverter():Void {
 		var o:Overload = new Overload(this);
-		o.addHandler([String], this["getBeanByName"]);
-		o.addHandler([String, Function], this["getBeanByNameAndType"]);
-		return o.forward(arguments);
-	}
-	
-	public function getBeanDefinitionNames():Array {
-		var o:Overload = new Overload(this);
-		o.addHandler([], this["getBeanDefinitionNamesByVoid"]);
-		o.addHandler([Function], this["getBeanDefinitionNamesByType"]);
-		return o.forward(arguments);
+		o.addHandler([Function, PropertyValueConverter], this["registerPropertyValueConverterByTypeAndConverter"]);
+		o.addHandler([Function, String, PropertyValueConverter], this["registerPropertyValueConverterByTypeAndPathAndConverter"]);
+		o.forward(arguments);
 	}
 	
 }

@@ -14,16 +14,28 @@
  * limitations under the License.
  */
 
-import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
-import org.as2lib.env.bean.factory.support.RootBeanDefinition;
-import org.as2lib.env.bean.factory.config.ConstructorArgumentValueList;
+import org.as2lib.core.BasicInterface;
+import org.as2lib.data.holder.Map;
+import org.as2lib.env.bean.PropertyValue;
 import org.as2lib.env.bean.PropertyValueSet;
 
 /**
  * @author Simon Wacker
  */
-class test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition extends TestCase {
+interface org.as2lib.env.bean.PropertyAccessor extends BasicInterface {
+	
+	public function getPropertyValue(propertyName:String);
+	
+	public function setPropertyValue():Void;
+	
+	public function setPropertyValueByPropertyValue(propertyValue:PropertyValue):Void;
+	
+	public function setPropertyValueByNameAndValue(propertyName:String, value):Void;
+	
+	public function setPropertyValues():Void;
+	
+	public function setPropertyValuesByPropertyValueSet(propertyValues:PropertyValueSet):Void;
+	
+	public function setPropertyValuesByMap(propertyValues:Map):Void;
 	
 }

@@ -18,19 +18,14 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.bean.PropertyValueSet;
 import org.as2lib.env.bean.MutablePropertyValueSet;
-import org.as2lib.env.bean.factory.config.BeanDefinition;
+import org.as2lib.env.bean.factory.config.LifecycleCallbackBeanDefinition;
 import org.as2lib.env.bean.factory.config.ConstructorArgumentValueList;
 import org.as2lib.env.bean.factory.config.MutableConstructorArgumentValueList;
-import org.as2lib.env.bean.factory.BeanFactory;
-import org.as2lib.env.bean.factory.BeanNameAware;
-import org.as2lib.env.bean.factory.BeanFactoryAware;
-import org.as2lib.env.bean.factory.InitializingBean;
-import org.as2lib.env.bean.factory.DisposableBean;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.env.bean.factory.support.RootBeanDefinition extends BasicClass implements BeanDefinition {
+class org.as2lib.env.bean.factory.support.RootBeanDefinition extends BasicClass implements LifecycleCallbackBeanDefinition {
 	
 	private var beanClass:Function;
 	private var argumentValues:ConstructorArgumentValueList;
@@ -38,8 +33,6 @@ class org.as2lib.env.bean.factory.support.RootBeanDefinition extends BasicClass 
 	private var singleton:Boolean;
 	private var destroyMethodName:String;
 	private var initMethodName:String;
-	private var beanName:String;
-	private var beanFactory:BeanFactory;
 	
 	public function RootBeanDefinition() {
 		var o:Overload = new Overload(this);
@@ -61,6 +54,7 @@ class org.as2lib.env.bean.factory.support.RootBeanDefinition extends BasicClass 
 		this.beanClass = beanClass;
 		this.argumentValues = argumentValues;
 		this.propertyValues = propertyValues;
+		singleton = true;
 	}
 	
 	public function setSingleton(singleton:Boolean):Void {
@@ -105,35 +99,6 @@ class org.as2lib.env.bean.factory.support.RootBeanDefinition extends BasicClass 
 	
 	public function setInitMethodName(initMethodName:String):Void {
 		this.initMethodName = initMethodName;
-	}
-	
-	public function createBean(Void) {
-		var result = new Object();
-		result.__proto__ = beanClass.prototype;
-		beanClass.apply(result, argumentValues.getArgumentValues());
-		if (result instanceof BeanNameAware) {
-			BeanNameAware(result).setBeanName(beanName);
-		}
-		if (result instanceof BeanFactoryAware) {
-			BeanFactoryAware(result).setBeanFactory(beanFactory);
-		}
-		propertyValues.apply(result);
-		if (result instanceof InitializingBean) {
-			InitializingBean(result).afterPropertiesSet();
-		}
-		if (initMethodName) {
-			result[initMethodName]();
-		}
-		return result;
-	}
-	
-	public function destroyBean(bean):Void {
-		if (bean instanceof DisposableBean) {
-			DisposableBean(bean).destroy();
-		}
-		if (destroyMethodName) {
-			bean[destroyMethodName]();
-		}
 	}
 	
 }

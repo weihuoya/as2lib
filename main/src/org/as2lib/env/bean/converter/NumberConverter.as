@@ -14,16 +14,28 @@
  * limitations under the License.
  */
 
-import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
-import org.as2lib.env.bean.factory.support.RootBeanDefinition;
-import org.as2lib.env.bean.factory.config.ConstructorArgumentValueList;
-import org.as2lib.env.bean.PropertyValueSet;
+import org.as2lib.env.bean.AbstractPropertyValueConverter;
+import org.as2lib.env.bean.PropertyValueConverter;
 
 /**
  * @author Simon Wacker
  */
-class test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition extends TestCase {
+class org.as2lib.env.bean.converter.NumberConverter extends AbstractPropertyValueConverter implements PropertyValueConverter {
+	
+	public function NumberConverter(Void) {
+	}
+	
+	public function convertPropertyValueByStringValue(value:String) {
+		if (value == "true") return 1;
+		if (value == "false") return 0;
+		return Number(value);
+	}
+	
+	public function convertPropertyValueByStringValueAndType(value:String, type:Function) {
+		if (type && type != Number) {
+			return new [type](value);
+		}
+		return convertPropertyValueByStringValue(value);
+	}
 	
 }

@@ -14,16 +14,34 @@
  * limitations under the License.
  */
 
-import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
-import org.as2lib.env.bean.factory.support.RootBeanDefinition;
-import org.as2lib.env.bean.factory.config.ConstructorArgumentValueList;
-import org.as2lib.env.bean.PropertyValueSet;
+import org.as2lib.core.BasicClass;
+import org.as2lib.env.bean.factory.FactoryBean;
 
 /**
  * @author Simon Wacker
  */
-class test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition extends TestCase {
+class test.unit.org.as2lib.env.bean.factory.support.StubFactoryBean extends BasicClass implements FactoryBean {
+	
+	public static var object;
+	public static var objectType:Function;
+	
+	public var isSingletonCalled:Boolean;
+	
+	public function StubFactoryBean(Void) {
+		isSingletonCalled = false;
+	}
+	
+	public function isSingleton(Void):Boolean {
+		isSingletonCalled = true;
+		return true;
+	}
+	
+	public function getObject(Void) {
+		return object;
+	}
+	
+	public function getObjectType(Void):Function {
+		return objectType;
+	}
 	
 }

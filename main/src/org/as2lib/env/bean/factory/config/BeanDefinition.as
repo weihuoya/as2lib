@@ -27,7 +27,5 @@ interface org.as2lib.env.bean.factory.config.BeanDefinition extends BasicInterfa
 	public function getConstructorArgumentValues(Void):ConstructorArgumentValueList;
 	public function getPropertyValues(Void):PropertyValueSet;
 	public function isSingleton(Void):Boolean;
-	public function createBean(Void);
-	public function destroyBean(bean):Void;
 	
 }
