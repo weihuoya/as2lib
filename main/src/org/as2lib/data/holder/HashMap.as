@@ -1,9 +1,9 @@
 ﻿import org.as2lib.data.holder.Map;
-import org.as2lib.data.iterator.HashtableIterator;
+import org.as2lib.data.iterator.HashMapIterator;
 import org.as2lib.data.iterator.Iterator;
 import org.as2lib.data.iterator.ArrayIterator;
 
-class org.as2lib.data.holder.Hashtable implements Map {
+class org.as2lib.data.holder.HashMap implements Map {
 	private var keys:Array;
 	private var values:Array;
 	
@@ -67,7 +67,7 @@ class org.as2lib.data.holder.Hashtable implements Map {
 	}
 	
 	public function iterator(Void):Iterator {
-		return (new HashtableIterator(this));
+		return (new HashMapIterator(this));
 	}
 	
 	public function size(Void):Number {
