@@ -181,16 +181,16 @@ and each combination:
 }</code>, all the Rest will be done by the basic class.
                                 Methods:
                                 <ul>
-                                  <li><a name="ExceptionAPIgetName"/><h4>.getName():String</h4>
+                                  <li><a name="ExceptionAPIgetName"></a><h4>.getName():String</h4>
                                     Returns the name from the exception.
                                   </li>
-                                  <li><a name="ExceptionAPIgetStack"/><h4>.getStack():TypedArray(StackObject)</h4>
+                                  <li><a name="ExceptionAPIgetStack"></a><h4>.getStack():TypedArray(StackObject)</h4>
                                     Returns all stackinformations.
                                   </li>
-                                  <li><a name="ExceptionAPIgetMessage"/><h4>.getMessage():String</h4>on
+                                  <li><a name="ExceptionAPIgetMessage"></a><h4>.getMessage():String</h4>on
                                     Returns the provided message.
                                   </li>
-                                  <li><a name="ExceptionAPItoString"/><h4>.toString():String</h4>
+                                  <li><a name="ExceptionAPItoString"></a><h4>.toString():String</h4>
                                     Returns a simple descriptionoutput as ascii graphic.<pre>--- Exception Occured ---
   type: org.as2lib.basic.exceptions.WrongArgumentsException
   message: You did something wrong.
@@ -198,7 +198,7 @@ and each combination:
       org.as2lib.basic.StringUtil.trimLeft(&lt;unknown&gt;);</pre>
                                     This function also provides itself to <a href="#OutputHandlerAPIexception" title="Output handling for exceptions.">Out.exception()</a>.
                                   </li>
-                                  <li><a name="ExceptionAPIconvertTo"/><h4>.convertTo([Function]):Exception</h4>
+                                  <li><a name="ExceptionAPIconvertTo"></a><h4>.convertTo([Function]):Exception</h4>
                                     Returns a new class filled with the new and old informations. (also see here)
                                   </li>
                                 </ul>
@@ -310,59 +310,128 @@ and each combination:
                             </ul>
                           </li>
                           <li><a name="EventHandling"></a><h2>Event Handling</h2>
-                            Eventhandling within as2 should be a two sided sword. On the one hand it is necessary to have an easy handling for an event itself. On the other hand is generic eventhandling a problem because you can't guarantee that all event's fired reach the final client.<br>
-                            <h3>Generic Eventhandling</h3>
-                            For generic eventhandling there will be a (abstract) class <code>org.as2lib.basic.EventableElement extends BasicObject</code> to handle general events. This class will not have ANY public method. But this class should be based on the EventDispatcher by Macromedia.<br>
-                            <br>
-                            This class will provide the functionality to register and fire generic events by <code>.addEventListener(object, "event");
-.removeEventListener(object, "event");</code>
-                            <h3>Eventrule for Using</h3>
-                            For cute Handling of this code the Workflow will have to look like this:
-                            <ol>
-                              <li>The Classwriter should define an Interface where all Event's are defined (how should elseway be sure that you implement Events?)
-                                <code>interface MyEventInterface {
-  function onClick(e:MyEventObject):Void;
-  function onRelease(e:MyReleaseEventObject):Void;
-}</code>
+                            <ul>
+                              <li><a name="EventHandlingProblem"></a><h3>Problem</h3>
+                                Events within Flash can cost much performance and are within User-Interfaces existential. Most people use the inbuild ASBroadcaster or the Eventdispatcher from Macromedia for this solution.
+                                The problem within this solution is that you can't control, whether an Handler for an event exists or not. If you do it within a script you may loose a lot of performance.<br>
+                                <br>
+                                Several Problems:
+                                <ul>
+                                  <li>The Objectdeveloper has to define which events are supported to listen to.</li>
+                                  <li>The Listenerdeveloper has to define all events.</li>
+                                  <li>The Objectdeveloper must have a possibility to fire events.</li>
+                                  <li>The Objectdeveloper may add eventinformations to the event.</li>
+                                  <li>Support for Standardevents within an Object might be senseful (internal call)</li>
+                                  <li>Blocking standard events: In an Eventcase where you have only one listener and an standard-Action, the listener should be able (by returning false) to prevent that the standardaction will be used. <p class="note">Note: This may also be with more than one listener.</p></li>
+                                </ul>
                               </li>
-                              <li>The Classwriter will have to define methods to add an Object using this Events.
-                                <code>class MyClass {
-  public function addMyEventListener(obj:MyEventInterface) {
-    this.addEventListener(obj, "onClick");
-    this.addEventListener(obj, "onRelease");
-  }
-}</code>
+                              <li><a name="EventHandlingReason"></a><h3>Reason</h3>
+                                We support Eventhandling because its a Keyfeature. Using Macromedia's inbuild class (ASBroadcaster) is unstrict (that means open for good an bad usage). And the Eventdispatcher is not "free". You only may use it when you bought Flash and it doesn't fit into the needs from the developers.
                               </li>
-                              <li>The User from the Code will have to take a look at the Interface.
-                                <code>class MyEventListener implements MyEventInterface, AnotherEventInterface {
-  public function onClick(e:MyEventObject):Void {
-    // does something
+                              <li><a name="EventHandlingAPI"></a><h3>API</h3>
+                                We act at different fronts:
+                                <ul>
+                                  <li><a name="EventHandlingAPIAbstractClass"></a><h4>Basic Class</h3>
+                                    The basic class ist the main class for eventhandling. It will be provided within:
+                                    <pre>org.as2lib.basic.EventHandler</pre>
+                                    This class should be extended if you want to access all functionalities:
+                                    <ul>
+                                      <li><h5>.addListener([<a href="#EventHandlingAPIInterface" title="Implements the ListenerInterface">Listener</a>]);</h5>
+                                        Add's an Listener (to all event types) to the Object. 
+                                      </li>
+                                      <li><h5>.removeListener([<a href="#EventHandlingAPIInterface" title="Implements the ListenerInterface">Listener</a>]);</h5>
+                                        Remove's an added Listener.
+                                      </li>
+                                      <li><h5>.getListeners():TypedArray([<a href="#EventHandlingAPIInterface" title="Implements the ListenerInterface">Listener</a>]);</h5>
+                                        Returns all Listeners within an Typed Array.
+                                      </li>
+                                      <li><h5>.dispatchEvent([<a href="#EventHandlingAPIEventAbstractClass">Event</a>]);</h5>
+                                        Dispatches an Event for all Listeners.
+                                        <p class="note">Note: The Object itself will be an Listener too.</p>
+                                      </li>
+                                      <li><h5>[static] .logEvents([boolean]);</h5>
+                                        Defines whether all Events (from all Classes) should be logged or not.
+                                        <code>org.as2lib.basic.EventHandler.logEvents(true);</code>
+                                      </li>
+                                    </ul>
+                                    <p class="note">Note: This class is not specified as abstract class, to use it if you can't extend it.</p>
+                                    <code>import org.as2lib.basic.*
+
+class MyClass extends SomethingDifferent {
+  private var eventHandler:EventHandler;
+
+  function MyClass () {
+    eventHandler = new EventHandler();
   }
-  public function onRelease(e:MyEventObject):Void {
-    // does something different
-  }
-  // and other events
-}</code></li>
-                              <li>Then the user add's his Eventhandler to the Object
-                                <code>new MyClass().addMyEventListener(new MyEventListener());</code>
+}</code>
+                                  </li>
+                                  <li><a name="EventHandlingAPIEventAbstractClass"></a><h4>Event abstract class</h4>
+                                    There will be an Eventabstractclass to define which event has to be called.<br>
+                                    Each Event will have to extend this class!<br>
+                                    The only field from <pre>org.as2lib.basic.Event</pre> is [static] "eventName" that has to be set (which event is fired), different vars may be set too, but they will be specific for this event.
+                                  </li>
+                                  <li><a name="EventHandlingAPIInterface"></a><h4>Basic Interface</h3>
+                                    The only use from this Interface, found in <pre>org.as2lib.basic.EventListenerInterface</pre> is to make sure an Listener is used an not any object.
+                                  </li>
+                                  <li><a name="EventHandlingAPIGeneric"></a><h4>Generic EventHandling</h3>
+                                    We won't support generic eventhandling, the ASBroadcaster does this ugly job faster.
+                                  </li>
+                                </ul>
                               </li>
-                            </ol>
-                            <h3>Why so complicated?</h3>
-                            This is actually the best way to ensure that a function is really available and it finally reduces the operation speed of eventhandling by a better Code Handling.
-                            Of Course this way isn't perfect. It will maybe get changed within a future worksheet by a better idea, but actually i see no different possibility.
-                            <h3>Different access</h3>
-                            Well, first previewable Problem will be that one class is not able to extend this Eventhandler, because it has already extended on class.
-                            The simplest way to allow this way is to get an Eventhandler as instance.
-                            <code>function MyClass () {
-  this.eventHandler = new org.as2lib.basic.EventHandler();
-}</code>
-                            And the rest works as used only with "this.eventhandler.addEventListener()" instead of "this.addEventListener()". The only problem ist that we have already the abstract class, so this class has to be an own extension:<code>class org.as2lib.basic.EventHandlerUseable extends org.as2lib.basic.EventHandler /* Names not fixed */ {
-  public function addHandler( ... ) {
-    return(this.addEventHandler( ... ));
+                              <li><a name="EventHandlingExample"></a><h3>Example</h3>
+                                <ul>
+                                  <li><a name="EventHandlingExampleObjectDeveloper"></a><h4>ObjectDeveloper</h4>
+                                    <ol>
+                                     <li><h5>class</h5>
+                                       <code>import org.as2lib.basic.*
+class MyClass extends EventHandler {
+  private function onEnterframe (e:MyEventHandler) {
   }
-  ... // or similar
+  public function addListener (l:MyEventInterface) {
+    super.addListener(l);
+  }
 }</code>
-                            <p class="note">Note: this Issue might change a little. (naming and real functionality)</p>
+                                     </li>
+                                     <li><h5>eventclass</h5>
+                                       <code>import org.as2lib.basic.*
+class MyEventHandler extends EventHandler {
+  public var eventName:String = "onEnterFrame";
+  public var frameNumber:Number;
+  
+  public function MyEventHandler (frameNumber) {
+    this.frameNumber = frameNumber;
+  }
+}</code>
+                                     </li>
+                                     <li><h5>interface</h5>
+                                       <code>import org.as2lib.basic.*
+class MyEventInterface extends EventInterface {
+  public function onEnterframe (e:MyEventHandler):Void;
+}</code>
+                                     </li>
+                                    </ol>
+                                  </li>
+                                  <li><a name="EventHandlingExampleListenerDeveloper"></a><h4>ListenerDeveloper</h4>
+                                    <ol>
+                                      <li><h5>creating an listener</h5>
+                                       <code>import org.as2lib.basic.*
+class MyEventListener implements MyEventInterface {
+  public function onEnterframe (e:MyEventHandler){
+    Out.write('entered Frame number '+e.frameNumber);
+  }
+}</code>
+                                      </li>
+                                      <li><h5>adding the listener</h5>
+                                       <code>...
+  var myObject:MyClass = new MyClass();
+  myObject.addListener(new MyEventListener());
+...</code>
+                                      </li>
+                                    </ol>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ul>
                           </li>
                           <li><a name="TypedArray"></a><h2>Typed Array</h2>
                             A typical problem using as2 is that an Array might have one or more types within an Array, in most cases, this is very problematic, especially when you want to publish your classes (within a team or generally), because other people can easily create chaos when they don't watch. 
