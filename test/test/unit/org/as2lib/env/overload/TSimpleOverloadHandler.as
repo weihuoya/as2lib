@@ -175,7 +175,7 @@ class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase 
 		var hc:MockControl = new SimpleMockControl(OverloadHandler);
 		var mh:OverloadHandler = hc.getMock();
 		mh.getArguments();
-		hc.setReturnValue(null);
+		hc.setReturnValue(null, 2);
 		hc.replay();
 		
 		var h:SimpleOverloadHandler = new SimpleOverloadHandler([], function() {});
