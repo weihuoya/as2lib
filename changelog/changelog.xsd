@@ -37,8 +37,7 @@
   </changelog>
   
 -->
-<xs:schema elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-
+<xs:schema targetNamespace="as2lib" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.91" xmlns="as2lib" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 	<!-- possible types of a entry -->
 	<xs:simpleType name="entryType">
 		<xs:restriction base="xs:string">
@@ -50,7 +49,6 @@
 			<xs:enumeration value="enhancement"/>
 		</xs:restriction>
 	</xs:simpleType>
-	
 	<!-- available months -->
 	<xs:simpleType name="monthType">
 		<xs:restriction base="xs:integer">
@@ -58,7 +56,6 @@
 			<xs:maxInclusive value="12"/>
 		</xs:restriction>
 	</xs:simpleType>
-	
 	<!-- available days -->
 	<xs:simpleType name="dayType">
 		<xs:restriction base="xs:integer">
@@ -66,7 +63,6 @@
 			<xs:maxInclusive value="31"/>
 		</xs:restriction>
 	</xs:simpleType>
-	
 	<!-- available years -->
 	<xs:simpleType name="yearType">
 		<xs:restriction base="xs:integer">
@@ -74,78 +70,134 @@
 			<xs:maxInclusive value="9999"/>
 		</xs:restriction>
 	</xs:simpleType>
-	
 	<!-- root node (changelog) -->
 	<xs:element name="changelog">
 		<xs:complexType>
 			<xs:sequence maxOccurs="unbounded">
-			
 				<!-- release node -->
 				<xs:element name="release">
 					<xs:complexType>
 						<xs:sequence maxOccurs="unbounded">
-						
 							<!-- year node -->
 							<xs:element name="year">
 								<xs:complexType>
 									<xs:sequence maxOccurs="unbounded">
-									
 										<!-- month node -->
 										<xs:element name="month">
 											<xs:complexType>
 												<xs:sequence maxOccurs="unbounded">
-												
 													<!-- day node -->
 													<xs:element name="day">
 														<xs:complexType>
 															<xs:sequence maxOccurs="unbounded">
-															
 																<!-- entry node -->
-																<xs:element name="entry">
-																	<xs:complexType>
-																		<xs:simpleContent>
-																			<xs:extension base="xs:string">
-																				<xs:attribute name="type" type="entryType" use="required"/>
-																				<xs:attribute name="package" type="xs:string" use="optional"/>
-																				<xs:attribute name="class" type="xs:string" use="optional"/>
-																				<xs:attribute name="method" type="xs:string" use="optional"/>
-																				<xs:attribute name="keywords" type="xs:string" use="optional"/>
-																			</xs:extension>
-																			<!-- type for the entry -->
-																			<!-- list of keywords, for a detailed search, seperate with ';' -->
-																		</xs:simpleContent>
+																<xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+																	<xs:complexType mixed="true">
+																		<xs:sequence>
+																			<xs:element name="change-arguments" minOccurs="0" maxOccurs="unbounded">
+																				<xs:complexType>
+																					<xs:simpleContent>
+																						<xs:extension base="xs:string">
+																							<xs:attribute name="to" type="xs:string" use="required"/>
+																							<xs:attribute name="from" type="xs:string" use="optional"/>
+																						</xs:extension>
+																					</xs:simpleContent>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="change-move" minOccurs="0" maxOccurs="unbounded">
+																				<xs:complexType>
+																					<xs:simpleContent>
+																						<xs:extension base="xs:string">
+																							<xs:attribute name="to" type="xs:string" use="required"/>
+																							<xs:attribute name="from" type="xs:string" use="optional"/>
+																						</xs:extension>
+																					</xs:simpleContent>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="change-rename" minOccurs="0" maxOccurs="unbounded">
+																				<xs:complexType>
+																					<xs:simpleContent>
+																						<xs:extension base="xs:string">
+																							<xs:attribute name="to" type="xs:string" use="required"/>
+																							<xs:attribute name="from" type="xs:string" use="optional"/>
+																						</xs:extension>
+																					</xs:simpleContent>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="change-returnType" minOccurs="0" maxOccurs="unbounded">
+																				<xs:complexType>
+																					<xs:simpleContent>
+																						<xs:extension base="xs:string">
+																							<xs:attribute name="to" type="xs:string" use="required"/>
+																							<xs:attribute name="from" type="xs:string" use="optional"/>
+																						</xs:extension>
+																					</xs:simpleContent>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="change-returnValue" minOccurs="0" maxOccurs="unbounded">
+																				<xs:complexType>
+																					<xs:simpleContent>
+																						<xs:extension base="xs:string">
+																							<xs:attribute name="to" type="xs:string" use="required"/>
+																							<xs:attribute name="from" type="xs:string" use="optional"/>
+																						</xs:extension>
+																					</xs:simpleContent>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="change-throws" minOccurs="0" maxOccurs="unbounded">
+																				<xs:complexType>
+																					<xs:simpleContent>
+																						<xs:extension base="xs:string">
+																							<xs:attribute name="to" type="xs:string" use="required"/>
+																							<xs:attribute name="from" type="xs:string" use="optional"/>
+																						</xs:extension>
+																					</xs:simpleContent>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="change-type" minOccurs="0" maxOccurs="unbounded">
+																				<xs:complexType>
+																					<xs:simpleContent>
+																						<xs:extension base="xs:string">
+																							<xs:attribute name="to" type="xs:string" use="required"/>
+																							<xs:attribute name="from" type="xs:string" use="optional"/>
+																						</xs:extension>
+																					</xs:simpleContent>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																		<xs:attribute name="package" type="xs:string" use="optional"/>
+																		<xs:attribute name="class" type="xs:string" use="optional"/>
+																		<xs:attribute name="method" type="xs:string" use="optional"/>
+																		<xs:attribute name="keywords" type="xs:string" use="optional"/>
+																		<xs:attribute name="variable" type="xs:string" use="optional"/>
+																		<xs:attribute name="link" type="xs:anyURI" use="optional"/>
+																		<xs:attribute name="type" type="entryType" use="required"/>
 																	</xs:complexType>
 																</xs:element>
-																
 															</xs:sequence>
-															<!-- Attributes of the month node (using dayType definition) -->
 															<xs:attribute name="value" type="dayType" use="required"/>
+															<!-- Attributes of the month node (using dayType definition) -->
 														</xs:complexType>
 													</xs:element>
-													
 												</xs:sequence>
-												<!-- Attributes of the month node (using monthType definition) -->
 												<xs:attribute name="value" type="monthType" use="required"/>
+												<!-- Attributes of the month node (using monthType definition) -->
 											</xs:complexType>
 										</xs:element>
-										
 									</xs:sequence>
-									<!-- Attributes of the year node (using yearType definition) -->
 									<xs:attribute name="value" type="yearType" use="required"/>
+									<!-- Attributes of the year node (using yearType definition) -->
 								</xs:complexType>
 							</xs:element>
-							
-						</xs:sequence>						
-						<!-- Attributes of the release node -->
+						</xs:sequence>
 						<xs:attribute name="day" type="dayType" use="required"/>
 						<xs:attribute name="month" type="monthType" use="required"/>
 						<xs:attribute name="year" type="yearType" use="required"/>
 						<xs:attribute name="name" type="xs:string" use="required"/>
+						<!-- Attributes of the release node -->
 					</xs:complexType>
 				</xs:element>
-				
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
 </xs:schema>
