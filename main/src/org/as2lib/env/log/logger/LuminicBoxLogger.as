@@ -35,6 +35,7 @@ import LuminicBox.Log.IPublisher;
  * directly.
  *
  * @author Simon Wacker
+ * @see org.as2lib.env.log.handler.LuminicBoxHandler
  * @see <a href="http://www.luminicbox.com/dev/flash/log">LuminicBox Logging API</a>
  */
 class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements Logger {
