@@ -2,7 +2,7 @@
  * @author Martin Heidegger, Simon Wacker
  * @version 1.0
  */
-interface org.as2lib.basic.out.level.Level {
+interface org.as2lib.basic.out.Level {
 	/**
 	 * Log a message.
 	 * @param message The message to be logged.
