@@ -15,6 +15,9 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.util.ObjectUtil;
 
 /**
  * Call is used to enable another object to make a function call in another
@@ -51,5 +54,30 @@ class org.as2lib.util.Call extends BasicClass {
 	 */
 	public function execute(args:Array) {
 		return func.apply(object, args);
+	}
+	
+	/**
+	 * Extended Stringifier for this class.
+	 * 
+	 * @return Call as string.
+	 */
+	public function toString(Void):String {
+		// TODO: Refactor the code and outsource it.
+		var result:String="";
+		result += "[type "+ReflectUtil.getClassInfo(this).getName()+" -> ";
+		ObjectUtil.setAccessPermission(object, null, ObjectUtil.ACCESS_ALL_ALLOWED);
+		if(ObjectUtil.isEmpty(object)) {
+			result += object.toString()+"."+ObjectUtil.getChildName(object, func);
+		} else {
+			try {
+				var classInfo:ClassInfo = ReflectUtil.getClassInfo(object);
+				result += classInfo.getFullName();
+				result += "."+classInfo.getMethodByMethod(func).getName();
+			} catch(e:org.as2lib.env.reflect.ReferenceNotFoundException) {
+				result += object.toString()+"."+ObjectUtil.getChildName(object, func);
+			}
+		}
+		result += "() ]";
+		return result;
 	}
 }
