@@ -85,7 +85,6 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 				} catch (e) {
 				}
 			}
-			_global.ASSetPropFlags(p, null, 1, true);
 			p = p.__proto__;
 		}
 		for (var n:String in clazz) {
@@ -95,7 +94,6 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 				if (clazz[n] == method) return n;
 			} catch (e) {
 			}
-			_global.ASSetPropFlags(clazz, null, 1, true);
 		}
 		return null;
 	}

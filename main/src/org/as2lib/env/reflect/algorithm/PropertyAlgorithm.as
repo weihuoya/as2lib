@@ -74,7 +74,7 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass {
 		_global.ASSetPropFlags(d, null, 0, true);
 		_global.ASSetPropFlags(d, ["__proto__", "constructor", "__constructor__"], 7, true);
 		search(d);
-		_global.ASSetPropFlags(d, null, 1, true);
+		//_global.ASSetPropFlags(d, null, 1, true);
 		
 		return r;
 	}
