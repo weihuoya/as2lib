@@ -56,7 +56,7 @@ The possible output levels are:
 	\item Out.NONE
 \end{itemize}
 
-These levels allow developers to "switch on" display of debug messages during development or maintenance, these messages can then be easily "switched off" or "filter" these messages before publishing the final application. If during development, you wish to view all types of messages above \textit{DEBUG}, you would set the level to \emph{Out.DEBUG}, This way all messages of type \textit{DEBUG}, \textit{INFO}, \textit{WARNING}, \textit{ERROR} and \textit{FATAL} are displayed, while all \textit{LOG} messages are supressed. 
+These levels allow developers to "switch on" display of debug messages during development or maintenance, these messages can then be easily "switched off" or "filtered" before publishing the final application. If during development, you wish to view all types of messages above \textit{DEBUG}, you would set the level to \emph{Out.DEBUG}, This way all messages of type \textit{DEBUG}, \textit{INFO}, \textit{WARNING}, \textit{ERROR} and \textit{FATAL} are displayed, while all \textit{LOG} messages are supressed. 
 
 \begin{lstlisting}[frame=single]
 var out:Out = new Out();
@@ -74,7 +74,7 @@ out.fatal(new FatalException("Fatal Output Error",
 	this, arguments));
 \end{lstlisting}
 
-Should you choose to display on fatal failures in your finished application, this can be accomplished by changing a single line.
+Should you choose to display only fatal failures in your finished application, this can be accomplished by changing a single line.
 
 \begin{lstlisting}[frame=single]
 out.setLevel(Out.FATAL);
