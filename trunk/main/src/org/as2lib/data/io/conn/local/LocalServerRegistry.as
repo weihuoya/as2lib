@@ -16,15 +16,14 @@ class org.as2lib.data.io.conn.local.LocalServerRegistry extends BasicClass imple
 		if(serverMap.containsKey(host)) {
 			return serverMap.get(host);
 		}
-		else {
-			return new SimpleLocalServer(host);
-		}
+		return (new SimpleLocalServer(host));
 	}
 	
 	public function contains(host:String):Boolean {
 		return serverMap.containsKey(host);
 	}
+	
 	public function putServer(host:String, server:LocalServer):Void {
-		serverMap.put(host,server);
+		serverMap.put(host, server);
 	}
 }
