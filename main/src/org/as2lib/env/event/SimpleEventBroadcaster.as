@@ -25,6 +25,10 @@ import org.as2lib.env.event.EventListener;
 import org.as2lib.util.ArrayUtil;
 
 /**
+ * SimpleEventBroadcaster is an EventBroadcaster implementation that supports
+ * every broadcaster functionalities. These functionalities are setting your
+ * own EventDispatcher and consuming events.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.env.event.SimpleEventBroadcaster extends BasicClass implements DelegatingEventBroadcaster {
