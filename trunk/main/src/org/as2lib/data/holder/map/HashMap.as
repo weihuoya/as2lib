@@ -117,15 +117,14 @@ class org.as2lib.data.holder.map.HashMap extends BasicClass implements Map {
 	 * @see org.as2lib.data.holder.Map#remove()
 	 */
 	public function remove(key) {
-		var result;
 		var i:Number = findKey(key);
 		if(i > -1) {
-			result = values[i];
+			var result = values[i];
 			values.splice(i, 1);
 			keys.splice(i, 1);
 			return result;
 		}
-		return result;
+		return;
 	}
 	
 	/**
