@@ -8,23 +8,23 @@ import org.as2lib.data.io.conn.local.LocalConfig;
 
 class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass implements LocalServer {
 	private var host:String;
-	private var pathMap:HashMap;
+	private var serviceMap:HashMap;
 	private var running:Boolean;
 	
 	public function SimpleLocalServer(host:String) {
 		this.host = host;
-		pathMap = new HashMap();
+		serviceMap = new HashMap();
 		running = false;
 	}
 	
 	public function run(Void):Void {
-		var keys:Array = pathMap.getKeys();
-		var iterator:Iterator = pathMap.iterator();
+		var keys:Array = serviceMap.getKeys();
+		var iterator:Iterator = serviceMap.iterator();
 		while (iterator.hasNext()){
-			var path:Object = iterator.next();
+			var service:Object = iterator.next();
 			var key:String = String(keys.shift());
 			// source out: 'host + "/" + key'
-			if (!path.connect(host + "/" + key)){
+			if (!service.connect(host + "/" + key)){
 				throw new ReservedHostException("Connection with name [" + host + "/" + key + "] is already in use.", this, arguments);
 			}
 		}
@@ -37,16 +37,16 @@ class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass impleme
 		running = false;
 	}
 	
-	public function putPath(path:String, object):Void {
-		var localConnection:Object = new Object();
+	public function putService(service:String, object):Void {
+		var adapter:Object = new Object();
 		ObjectUtil.setAccessPermission(LocalConnection.prototype, null, ObjectUtil.ACCESS_PROTECT_OVERWRITE | ObjectUtil.ACCESS_PROTECT_DELETE);
 		ObjectUtil.setAccessPermission(LocalConnection.prototype, ["__proto__", "constructor"], ObjectUtil.ACCESS_NOTHING_ALLOWED);
 		var i:String;
 		for (i in LocalConnection.prototype) {
-			localConnection[i] = LocalConnection.prototype[i];
+			adapter[i] = LocalConnection.prototype[i];
 		}
-		localConnection.__proto__ = object;
-		pathMap.put(path, localConnection);
+		adapter.__proto__ = object;
+		serviceMap.put(service, adapter);
 	}
 	
 	public function isRunning(Void):Boolean {
