@@ -36,7 +36,7 @@ class org.as2lib.env.log.level.AbstractLogLevel extends BasicClass implements Lo
 	public static var INFO:LogLevel = new AbstractLogLevel(40, "INFO");
 	
 	/** All log messages that are at a lower log level than warning get logged. */
-	public static var WARNING:LogLevel = new AbstractLogLevel(30, "WARNINING");
+	public static var WARNING:LogLevel = new AbstractLogLevel(30, "WARNING");
 	
 	/** All log messages that are at a lower log level than error get logged. */
 	public static var ERROR:LogLevel = new AbstractLogLevel(20, "ERROR");

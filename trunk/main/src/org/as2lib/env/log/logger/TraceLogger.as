@@ -15,17 +15,18 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.event.EventBroadcaster;
-import org.as2lib.env.event.SpeedEventBroadcaster;
-import org.as2lib.env.log.LogHandler;
-import org.as2lib.env.log.ConfigurableLogger;
+import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.logger.AbstractLogger;
 
 /**
- * SimpleLogger is a simple implementation of the ConfigurableLogger
- * interface.
+ * TraceLogger is a simple implementation of the Logger interface.
+ *
+ * <p>The actual log output is always made using trace. No other output
+ * devices are supported. Use the SimpleLogger to be able to add log
+ * handlers as you please which allows you to log to every device you
+ * want.
  *
  * <p>The basic methods to write the log messages are #log, #debug,
  * #info, #warning and #fatal.
@@ -47,22 +48,14 @@ import org.as2lib.env.log.logger.AbstractLogger;
  * methods.
  *
  * <p>Note that the message does in neither case have to be a string.
- * That means you can pass-in messages and let the actual handler or logger
- * decide how to produce a string representation of the message. That is in
- * most cases done by using the toString method of the specific message.
+ * That means you can pass-in messages as objects, that get stringified
+ * by the stringifier of the LogMessage class. The stringifier uses by
+ * default the toString method of the message.
  * You can use this method to do not lose performance in cases where
  * the message does not get logged.
  *
- * <p>The actaul log output gets made by log handlers. To configure and
- * access the handlers of this logger you can use the methods #addHandler,
- * #removeHandler, #removeAllHandler and #getAllHandler. There are a
- * few pre-defined handlers for different output devices. Take a look
- * at the org.as2lib.env.log.handler package for these.
- *
  * <p>This logger can simply be used as follows:
- * <code>var logger:SimpleLogger = new SimpleLogger("mySimpleLogger");
- * // adds a trace handler that is responsible for making the output
- * logger.addHandler(new TraceHandler());
+ * <code>var logger:TraceLogger = new TraceLogger("myTraceLogger");
  * // checks if the output gets actually made
  * if (logger.isInfoEnabled()) {
 	 // log the message at the info level
@@ -74,9 +67,8 @@ import org.as2lib.env.log.logger.AbstractLogger;
  * use the SimpleHierarchicalLogger instead.
  *
  * @author Simon Wacker
- * @see org.as2lib.env.log.Logger
  */
-class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements ConfigurableLogger {
+class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Logger {
 	
 	/** Makes the static variables of the super-class accessible through this class. */
 	public static var __proto__:Function = AbstractLogger;
@@ -87,29 +79,22 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	/** The set level as number. */
 	private var levelAsNumber:Number;
 	
-	/** The broadcaster to dispatch the messages to all handlers. */
-	private var broadcaster:EventBroadcaster;
-	
 	/** The name of the logger. */
 	private var name:String;
 	
 	/**
-	 * Constructs a new SimpleLogger instance.
+	 * Constructs a new TraceLogger instance.
 	 *
 	 * <p>The default log level is ALL. This means all messages regardless
 	 * of their level get logged.
-	 *
-	 * <p>The default broadcaster is of type SpeedEventBroadcaster.
 	 *
 	 * <p>The logger name is by default shown in the log message to identify
 	 * where the message came from.
 	 *
 	 * @param name (optional) the name of this logger
-	 * @param broadcaster (optional) the broadcaster used to broadcast to the added handlers
 	 */
-	public function SimpleLogger(name:String, broadcaster:EventBroadcaster) {
+	public function TraceLogger(name:String) {
 		this.name = name;
-		this.broadcaster = broadcaster ? broadcaster : new SpeedEventBroadcaster();
 		level = ALL;
 		levelAsNumber = level.toNumber();
 	}
@@ -165,55 +150,6 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 */
 	public function getLevel(Void):LogLevel {
 		return level;
-	}
-	
-	/**
-	 * Adds a new log handler.
-	 *
-	 * <p>Log handlers get used to actually log the messages. They determine
-	 * what information to log and to which output device.
-	 *
-	 * <p>This method simply does nothing if the passed-in handler is null
-	 * or undefined.
-	 *
-	 * @param handler the new log handler to log messages
-	 */
-	public function addHandler(handler:LogHandler):Void {
-		if (handler) {
-			broadcaster.addListener(handler);
-		}
-	}
-	
-	/**
-	 * Removes all occerrences of the passed-in log handler.
-	 *
-	 * <p>If the passed-in handler is null or undefined the method invocation
-	 * simply gets ignored.
-	 *
-	 * @param handler the log handler to remove
-	 */
-	public function removeHandler(handler:LogHandler):Void {
-		if (handler) {
-			broadcaster.removeListener(handler);
-		}
-	}
-	
-	/**
-	 * Removes all added log handlers.
-	 */
-	public function removeAllHandler(Void):Void {
-		broadcaster.removeAllListener();
-	}
-	
-	/**
-	 * Returns all handlers that were directly added to this logger.
-	 *
-	 * <p>If there are no added handlers an empty array gets returned.
-	 *
-	 * @return all added log handlers
-	 */
-	public function getAllHandler(Void):Array {
-		return broadcaster.getAllListener();
 	}
 	
 	/**
@@ -313,13 +249,15 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * <p>The message gets only logged when this logger is enabled for
 	 * the passed-in log level.
 	 *
+	 * <p>The message gets always logged using trace.
+	 *
 	 * @param message the message object to log
 	 * @param level the specific level at which the message shall be logged
 	 * @see #isEnabled(LogLevel):Boolean
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			broadcaster.dispatch(new LogMessage(message, level, name));
+			trace(new LogMessage(message, level, name));
 		}
 	}
 	
@@ -329,12 +267,14 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * <p>The message gets only logged when the level is set to debug or
 	 * a level above.
 	 *
+	 * <p>The message gets always logged using trace.
+	 *
 	 * @param message the message object to log
 	 * @see #isDebugEnabled(Void):Boolean
 	 */
 	public function debug(message):Void {
 		if (isDebugEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, debugLevel, name));
+			trace(new LogMessage(message, debugLevel, name));
 		}
 	}
 	
@@ -344,12 +284,14 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * <p>The message gets only logged when the level is set to info or
 	 * a level above.
 	 *
+	 * <p>The message gets always logged using trace.
+	 *
 	 * @param message the message object to log
 	 * @see #isInfoEnabled(Void):Boolean
 	 */
 	public function info(message):Void {
 		if (isInfoEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, infoLevel, name));
+			trace(new LogMessage(message, infoLevel, name));
 		}
 	}
 	
@@ -359,12 +301,14 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * <p>The message gets only logged when the level is set to warning or
 	 * a level above.
 	 *
+	 * <p>The message gets always logged using trace.
+	 *
 	 * @param message the message object to log
 	 * @see #isWarningEnabled(Void):Boolean
 	 */
 	public function warning(message):Void {
 		if (isWarningEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, warningLevel, name));
+			trace(new LogMessage(message, warningLevel, name));
 		}
 	}
 	
@@ -374,12 +318,14 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * <p>The message gets only logged when the level is set to error or a
 	 * level above.
 	 *
+	 * <p>The message gets always logged using trace.
+	 *
 	 * @param message the message object to log
 	 * @see #isErrorEnabled(Void):Boolean
 	 */
 	public function error(message):Void {
 		if (isErrorEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, errorLevel, name));
+			trace(new LogMessage(message, errorLevel, name));
 		}
 	}
 	
@@ -389,12 +335,14 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * <p>The message gets only logged when the level is set to fatal or a
 	 * level above.
 	 *
+	 * <p>The message gets always logged using trace.
+	 *
 	 * @param message the message object to log
 	 * @see #isFatalEnabled(Void):Boolean
 	 */
 	public function fatal(message):Void {
 		if (isFatalEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, fatalLevel, name));
+			trace(new LogMessage(message, fatalLevel, name));
 		}
 	}
 	
