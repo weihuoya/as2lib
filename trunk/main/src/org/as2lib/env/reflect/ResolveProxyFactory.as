@@ -29,6 +29,19 @@ class org.as2lib.env.reflect.ResolveProxyFactory extends BasicClass implements P
 	public function createProxy(type:Function, handler:InvocationHandler) {
 		var result:Object = new Object();
 		result.__proto__ = type.prototype;
+		var prototype:Object = type.prototype;
+		while (prototype != Object.prototype) {
+			_global.ASSetPropFlags(prototype, null, 6, true);
+			for (var i:String in prototype) {
+				if (i != "__proto__" && i != "__constructor__" && i != "constructor") {
+					result[i] = function() {
+									return handler.invoke(this, arguments.callee.methodName, arguments);
+								};
+					result[i].methodName = i;
+				}
+			}
+			prototype = prototype.__proto__;
+		}
 		result.__resolve = function(methodName:String):Function {
 			return (function() {
 				return handler.invoke(this, methodName, arguments);

@@ -20,6 +20,7 @@ import org.as2lib.data.holder.map.PrimitiveTypeMap;
 import org.as2lib.env.bean.BeanWrapper;
 import org.as2lib.env.bean.SimpleBeanWrapper;
 import org.as2lib.env.bean.PropertyValue;
+import org.as2lib.env.bean.PropertyValueConverter;
 import org.as2lib.env.bean.factory.BeanFactory;
 import org.as2lib.env.bean.factory.FactoryBean;
 import org.as2lib.env.bean.factory.BeanDefinitionStoreException;
@@ -37,6 +38,7 @@ import org.as2lib.env.bean.factory.config.ConfigurableBeanFactory;
 import org.as2lib.env.bean.factory.config.ConfigurableListableBeanFactory;
 import org.as2lib.env.bean.factory.config.ConfigurableHierarchicalBeanFactory;
 import org.as2lib.env.bean.factory.config.RuntimeBeanReference;
+import org.as2lib.env.bean.factory.config.ConstructorArgumentValue;
 
 /**
  * @author Simon Wacker
@@ -83,7 +85,7 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	}
 	
 	public function getBeanWrapper(Void):BeanWrapper {
-		if (!beanWrapper) beanWrapper = new SimpleBeanWrapper();
+		if (!beanWrapper) beanWrapper = new SimpleBeanWrapper(null);
 		return beanWrapper;
 	}
 	
@@ -120,14 +122,30 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	private function createBean(beanName:String, beanDefinition:BeanDefinition) {
 		var result = new Object();
 		result.__proto__ = beanDefinition.getBeanClass().prototype;
-		beanDefinition.getBeanClass().apply(result, beanDefinition.getConstructorArgumentValues().getArgumentValues());
+		var constructorArguments:Array = beanDefinition.getConstructorArgumentValues().getArgumentValues();
+		for (var i:Number = 0; i < constructorArguments.length; i++) {
+			var argument:ConstructorArgumentValue = constructorArguments[i];
+			if ((typeof(argument.getValue()) == "string" || argument.getValue() instanceof String) && argument.getType()) {
+				var converter:PropertyValueConverter = getBeanWrapper().findPropertyValueConverter(argument.getType());
+				if (converter) {
+					constructorArguments[i] = converter.convertPropertyValueByStringValueAndType(argument.getValue(), argument.getType());
+				} else {
+					constructorArguments[i] = argument.getValue();
+				}
+			} else if (argument.getValue() instanceof RuntimeBeanReference) {
+				constructorArguments[i] = getBeanByName(RuntimeBeanReference(argument.getValue()).getBeanName());
+			} else {
+				constructorArguments[i] = argument.getValue();
+			}
+		}
+		beanDefinition.getBeanClass().apply(result, constructorArguments);
 		if (result instanceof BeanNameAware) {
 			BeanNameAware(result).setBeanName(beanName);
 		}
 		if (result instanceof BeanFactoryAware) {
 			BeanFactoryAware(result).setBeanFactory(this);
 		}
-		beanWrapper.setWrappedObject(result);
+		getBeanWrapper().setWrappedObject(result);
 		var propertyValues:Array = beanDefinition.getPropertyValues().getPropertyValues();
 		for (var i:Number = 0; i < propertyValues.length; i++) {
 			var propertyValue:PropertyValue = propertyValues[i];
@@ -135,7 +153,7 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 			if (value instanceof RuntimeBeanReference) {
 				value = getBeanByName(RuntimeBeanReference(value).getBeanName());
 			}
-			beanWrapper.setPropertyValueByPropertyValue(new PropertyValue(propertyValue.getName(), value, propertyValue.getType()));
+			getBeanWrapper().setPropertyValueByPropertyValue(new PropertyValue(propertyValue.getName(), value, propertyValue.getType()));
 		}
 		if (result instanceof InitializingBean) {
 			InitializingBean(result).afterPropertiesSet();
@@ -185,13 +203,14 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 				return getBeanByNameAndBean(name, createBean(beanName, beanDefinition));
 			}
 		} catch (exception:org.as2lib.env.bean.factory.NoSuchBeanDefinitionException) {
+			if (!getParentBeanFactory()) throw exception;
 			return getParentBeanFactory().getBeanByName(name);
 		}
 	}
 	
 	public function getBeanByNameAndType(name:String, requiredType:Function) {
 		var bean = getBeanByName(name);
-		if (!(bean instanceof requiredType)) {
+		if (requiredType && !(bean instanceof requiredType)) {
 			throw new BeanNotOfRequiredTypeException("Received bean is not of required type [" + requiredType + "].", this, arguments);
 		}
 		return bean;
@@ -248,6 +267,7 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	}
 	
 	public function getBeanDefinitionNamesByType(type:Function):Array {
+		if (!type) return getBeanDefinitionNamesByVoid();
 		var result:Array = new Array();
 		var beanDefinitionNames:Array = beanDefinitionMap.getKeys();
 		for (var i:Number = 0; i < beanDefinitionNames.length; i++) {

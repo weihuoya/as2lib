@@ -264,7 +264,7 @@ class org.as2lib.env.bean.SimpleBeanWrapper extends AbstractBeanWrapper implemen
 	}
 	
 	public function setWrappedObject(wrappedObject):Void {
-		if (!wrappedObject) throw new IllegalArgumentException("Wrapped object must not be null or undefined.", this, arguments);
+		//if (!wrappedObject) throw new IllegalArgumentException("Wrapped object must not be null or undefined.", this, arguments);
 		this.wrappedObject = wrappedObject;
 	}
 	

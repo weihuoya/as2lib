@@ -28,32 +28,37 @@ class test.unit.org.as2lib.env.bean.factory.support.StubBean extends BasicClass 
 	public var arg1:String;
 	public var arg2:Object;
 	public var arg3:Number;
+	public var arg4:Object;
 	public var property:Object;
-	public var properties:Array;
+	public var keyProperty:Object;
 	public var key:Object;
 	public var beanFactory:BeanFactory;
 	public var beanName:String;
+	public var referenceBean:Object;
 	
-	public var propertiesSetArg1:Boolean;
-	public var propertiesSetArg2:Boolean;
-	public var propertiesSetArg3:Boolean;
+	public var propertiesSetReferenceBean:Boolean;
+	public var propertiesSetConstructorInvoked:Boolean;
 	public var propertiesSetProperty:Boolean;
 	public var propertiesSetPropertiesKey:Boolean;
 	public var propertiesSetBeanName:Boolean;
 	public var propertiesSetBeanFactory:Boolean;
 	
+	public var setReferenceBeanCalled:Boolean;
 	public var setPropertyCalled:Boolean;
 	public var setKeyAndPropertyCalled:Boolean;
 	public var setBeanFactoryCalled:Boolean;
 	public var setBeanNameCalled:Boolean;
 	public var propertiesSetCalled:Boolean;
 	public var initCalled:Boolean;
+	public var constructorInvoked:Boolean = false;
 	
-	public function StubBean(arg1:String, arg2:Object, arg3:Number) {
+	public function StubBean(arg1:String, arg2:Object, arg3:Number, arg4:Object) {
+		constructorInvoked = true;
 		this.arg1 = arg1;
 		this.arg2 = arg2;
 		this.arg3 = arg3;
-		this.properties = new Array();
+		this.arg4 = arg4;
+		setReferenceBeanCalled = false;
 		setPropertyCalled = false;
 		setKeyAndPropertyCalled = false;
 		setBeanFactoryCalled = false;
@@ -70,7 +75,12 @@ class test.unit.org.as2lib.env.bean.factory.support.StubBean extends BasicClass 
 	public function setKeyAndProperty(key:Object, property:Object):Void {
 		setKeyAndPropertyCalled = true;
 		this.key = key;
-		properties[key] = property;
+		keyProperty = property;
+	}
+	
+	public function setReferenceBean(bean:Object):Void {
+		setReferenceBeanCalled = true;
+		this.referenceBean = bean;
 	}
 	
 	public function setBeanFactory(beanFactory:BeanFactory):Void {
@@ -85,13 +95,12 @@ class test.unit.org.as2lib.env.bean.factory.support.StubBean extends BasicClass 
 	
 	public function afterPropertiesSet(Void):Void {
 		propertiesSetCalled = true;
-		propertiesSetArg1 = arg1 !== undefined;
-		propertiesSetArg2 = arg2 !== undefined;
-		propertiesSetArg3 = arg3 !== undefined;
-		propertiesSetProperty = property !== undefined;
-		propertiesSetPropertiesKey = properties[key] !== undefined;
-		propertiesSetBeanName = beanName !== undefined;
-		propertiesSetBeanFactory = beanFactory !== undefined;
+		propertiesSetConstructorInvoked = constructorInvoked;
+		propertiesSetProperty = setPropertyCalled;
+		propertiesSetPropertiesKey = setKeyAndPropertyCalled;
+		propertiesSetBeanName = setBeanNameCalled;
+		propertiesSetBeanFactory = setBeanFactoryCalled;
+		propertiesSetReferenceBean = setReferenceBeanCalled;
 	}
 	
 	public function init(Void):Void {

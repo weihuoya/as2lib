@@ -22,7 +22,7 @@
  */
  
 // Data Holder tests
-/*test.unit.org.as2lib.data.holder.array.TArrayIterator;
+test.unit.org.as2lib.data.holder.array.TArrayIterator;
 test.unit.org.as2lib.data.holder.array.TTypedArray;
 test.unit.org.as2lib.data.holder.list.TPriorityList;
 test.unit.org.as2lib.data.holder.list.TArrayList;
@@ -77,6 +77,6 @@ test.unit.org.as2lib.env.bean.TMutablePropertyValueSet;
 test.unit.org.as2lib.env.bean.TPropertyValue;
 test.unit.org.as2lib.env.bean.TSimpleBeanWrapper;
 
-// Test org.as2lib.env.bean.factory.support*/
+// Test org.as2lib.env.bean.factory.support
 test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory;
-/*test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition;*/
+test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition;
