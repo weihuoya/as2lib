@@ -17,6 +17,8 @@
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.except.AbstractThrowable;
 import org.as2lib.env.except.ExceptConfig;
+import org.as2lib.env.log.LoggerRepositoryManager;
+import org.as2lib.env.log.Logger;
 
 /**
  * Exception is a normal default implementation of the Throwable interface.
@@ -24,6 +26,9 @@ import org.as2lib.env.except.ExceptConfig;
  * @author Simon Wacker
  */
 class org.as2lib.env.except.Exception extends AbstractThrowable implements Throwable {
+	
+	/** Logger used to output this exception. */
+	private static var logger:Logger = LoggerRepositoryManager.getRepository().getLogger("org.as2lib.env.except.Throwable");
 	
 	/**
 	 * Constructs a new Exception.
@@ -38,14 +43,13 @@ class org.as2lib.env.except.Exception extends AbstractThrowable implements Throw
 	 * Returns a blank String if the operation is not called out of an operation.
 	 * This operation should only be called by the virtual machine. We use it to
 	 * determine when the Exception has reached the final level and now terminates
-	 * the current thread. It then uses the ExceptConfig#getOut()#error() operation
-	 * to write out the Throwable.
+	 * the current thread.
 	 *
 	 * @return a blank String if the operation is not called out of an operation, otherwise the result of ExceptConfig#getThrowableStringifier()#execute(this) will be returned
 	 */
 	public function toString(Void):String {
 		if (!arguments.caller) {
-			ExceptConfig.getOut().error(this);
+			logger.error(this);
 			return "";
 		}
 		return ExceptConfig.getThrowableStringifier().execute(this);
