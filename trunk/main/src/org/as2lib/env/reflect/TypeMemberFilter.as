@@ -20,7 +20,7 @@ import org.as2lib.env.reflect.TypeMemberInfo;
 /**
  * TypeMemberFilter gets used to filter the result of type members' searches.
  *
- * <p>You can pass it for example in the ClassInfo.getMethods(TypeMemberInfo)
+ * <p>You can pass it for example in the {@link ClassInfo#getMethodsByFilter}
  * method to receive only methods that match your criteria.
  *
  * <p>Using this filter can mean a performance boost. Refer to the specific

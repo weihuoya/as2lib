@@ -26,8 +26,8 @@ import org.as2lib.env.reflect.ReflectConfig;
  *
  * <p>This class is mostly used internally. If you wanna obtain the members
  * of a package you need its representing PackageInfo. You can then also
- * use the PackageInfo#getMembers, PackageInfo#getMemberClasses and
- * PackageInfo#getMemberPackages methods directly and do not have to make
+ * use the {@link PackageInfo#getMembers}, {@link PackageInfo#getMemberClasses} and
+ * {@link PackageInfo#getMemberPackages} methods directly and do not have to make
  * the detour over this method. The PackageInfo's methods are also easier
  * to use and offer some extra functionalities.
  *
@@ -37,7 +37,7 @@ import org.as2lib.env.reflect.ReflectConfig;
  * var packageMemberAlgorithm:PackageMemberAlgorithm = new PackageMemberAlgorithm();
  * var members:Array = packageMemberAlgorithm.execute(packageInfo);</code>
  *
- * <p>Refer to the #execute methods documentation for details on how to
+ * <p>Refer to the {@link #execute} methods documentation for details on how to
  * get data from the members array appropriately.
  *
  * @author Simon Wacker
@@ -53,7 +53,7 @@ class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass
 	}
 	
 	/**
-	 * Sets the cache that gets used by the #execute method to
+	 * Sets the cache that gets used by the {@link #execute} method to
 	 * look whether the member package or class is already stored.
 	 *
 	 * @param cache the new cache
@@ -63,8 +63,8 @@ class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass
 	}
 	
 	/**
-	 * Returns the cache set via the #setCache(Cache) method or the default
-	 * cache that gets returned by the ReflectConfig#getCache method.
+	 * Returns the cache set via the {@link #setCache} method or the default
+	 * cache that gets returned by the {@link ReflectConfig#getCache} method.
 	 *
 	 * @return the currently used cache
 	 */

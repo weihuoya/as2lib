@@ -45,7 +45,7 @@ class org.as2lib.env.reflect.InterfaceProxyFactory extends BasicClass implements
 	 * @param interfaze the interface to create the proxy for
 	 * @param handler the handler to invoke on proxy method invocations
 	 * @return the created interface proxy
-	 * @see ProxyFactory#createProxy(Function, InvocationHandler)
+	 * @see ProxyFactory#createProxy
 	 */
 	public function createProxy(interfaze:Function, handler:InvocationHandler) {
 		if (!interfaze) return null;

@@ -27,8 +27,8 @@ import org.as2lib.env.reflect.ClassInfo;
  *
  * <p>This class is mostly used internally. If you wanna obtain the properties
  * of a class you need its representing ClassInfo. You can then also use
- * the ClassInfo#getProperties method directly and do not have to make the detour
- * over this class. The ClassInfo#getProperties method is also easier to use
+ * the {@link ClassInfo#getProperties} method directly and do not have to make the detour
+ * over this class. The {@link ClassInfo#getProperties} method is also easier to use
  * and offers some extra functionalities.
  *
  * <p>If you nevertheless want to use this class here is how it works.
@@ -37,7 +37,7 @@ import org.as2lib.env.reflect.ClassInfo;
  * var propertyAlgorithm:PropertyAlgorithm = new PropertyAlgorithm();
  * var properties:Array = propertyAlgorithm.execute(classInfo);</code>
  *
- * <p>Refer to the #execute methods documentation for details on how to
+ * <p>Refer to the {@link #execute} methods documentation for details on how to
  * get data from the properties array appropriately.
  *
  * @author Simon Wacker

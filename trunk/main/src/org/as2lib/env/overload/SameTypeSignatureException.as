@@ -22,7 +22,7 @@ import org.as2lib.env.reflect.ReflectUtil;
  * have the same type signature.
  *
  * <p>Compared are the arguments' types of two overload handlers. This
- * is mostly done using the OverloadHandler#isMoreExplicit method.
+ * is mostly done using the {@link OverloadHandler#isMoreExplicit} method.
  *
  * @author Simon Wacker
  */

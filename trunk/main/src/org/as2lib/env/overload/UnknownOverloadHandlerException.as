@@ -22,7 +22,7 @@ import org.as2lib.env.reflect.ReflectUtil;
  * overload handler for a list of real arguments could be found.
  *
  * <p>Whether an overload handler matches a given list of real arguments
- * is determined by the OverloadHandler#matches method.
+ * is determined by the {@link OverloadHandler#matches} method.
  *
  * @author Simon Wacker
  * @author Martin Heidegger

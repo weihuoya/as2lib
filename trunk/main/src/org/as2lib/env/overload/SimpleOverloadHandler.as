@@ -30,15 +30,15 @@ import org.as2lib.env.reflect.ReflectUtil;
  * of this method.
  *
  * <p>It also offers functionalities to match real arguments against the
- * expected arguments' types, #matches, and to determine which overload
+ * expected arguments' types, {@link #matches}, and to determine which overload
  * handler or rather which arguments' types of two handlers are more
- * explicit, #isMoreExplicit.
+ * explicit, {@link #isMoreExplicit}.
  *
  * <p>It also offers the ability to invoke/execute the target method
  * on a target scope passing-in a list of real arguments.
  *
  * <p>This class normally does not get used directly but indirectly via
- * the Overload#addHandler method.
+ * the {@link Overload#addHandler} method.
  *
  * <p>If you nevertheless want to instantiate it by hand and then use it
  * with the Overload class you can do this as follows:
@@ -73,7 +73,7 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	 * <p>The arguments' types are the types of arguments this handler expects
 	 * the real arguments to have. The arguments' types thus are also the
 	 * types of arguments the method, this handler forwards to, expects.
-	 * The #matches and #isMoreExplicit methods do their job based on the
+	 * The {@link #matches} and {@link #isMoreExplicit} methods do their job based on the
 	 * arguments' types.
 	 *
 	 * <p>An argument type is represented by a class, that is a Function in
@@ -87,8 +87,8 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	 * <p>The arguments' types determine what method call gets forwarded to
 	 * this handler which then invokes the passed-in method. The forwarding
 	 * to this handler normally takes place if it's matching the passed-in
-	 * real arguments, #matches, and if it is the most explicit overload
-	 * handler, #isMoreExplicit.
+	 * real arguments, {@link #matches}, and if it is the most explicit overload
+	 * handler, {@link #isMoreExplicit}.
 	 *
 	 * @param argumentsTypes the arguments' types of the method
 	 * @param method the actual method to be executed on the target if the argumetns types match
