@@ -18,6 +18,7 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.util.ArrayUtil;;
 import org.as2lib.data.holder.Stack;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.data.holder.NoSuchElementException;
 
 /**
  * Test of all methods in ArrayUtil.
@@ -194,11 +195,15 @@ class test.unit.org.as2lib.util.TArrayUtil extends TestCase {
 		}
 	}
 	
+	/**
+	 * Test different contents with indexOf
+	 */
 	public function testIndexOf(Void):Void {
 		var obj:Object = {};
 		var arr:Array = [];
 		var test:Array = [1,"2",obj,arr,null,undefined];
 		
+		// Test of indexOf for objects that are contained
 		assertEquals("Index of 1 should be 0", ArrayUtil.indexOf(test, 1), 0);
 		assertEquals("Index of '2' should be 1", ArrayUtil.indexOf(test, "2"), 1);
 		assertEquals("Index of [obj] should be 2", ArrayUtil.indexOf(test, obj), 2);
@@ -206,6 +211,7 @@ class test.unit.org.as2lib.util.TArrayUtil extends TestCase {
 		assertEquals("Index of null should be 4", ArrayUtil.indexOf(test, null), 4);
 		assertEquals("Index of undefined should be 5", ArrayUtil.indexOf(test, undefined), 5);
 		
+		// Test of indexOf for objects that are not contained
 		assertEquals("Index of 2 should be -1", ArrayUtil.indexOf(test, 2), -1);
 		assertEquals("Index of true should be -1", ArrayUtil.indexOf(test, true), -1);
 		assertEquals("Index of {} should be -1", ArrayUtil.indexOf(test, {}), -1);
@@ -238,5 +244,45 @@ class test.unit.org.as2lib.util.TArrayUtil extends TestCase {
 			}
 		}
 		assertFalse("The shuffled Array should not be the same as the source array", same);
+	}
+	
+	/**
+	 * Tests the swap method 
+	 */
+	public function testSwap(Void):Void {
+		var obj1:Object = {};
+		var obj2:Object = {};
+		
+		// Test usual case 
+		assertTrue("Swapping in [1,2,3] 0 and 2 should change the array to [3,2,1]", ArrayUtil.isSame(ArrayUtil.swap([1,2,3], 0, 2), [3,2,1]));
+		
+		// Test if really the references get switched
+		assertTrue("Swapping in [obj1,obj2] 1 and 0 should change the array to [obj2,obj1]", ArrayUtil.isSame(ArrayUtil.swap([obj1,obj2], 1, 0), [obj2,obj1]));
+		
+		// Test with wrong attributes
+		assertThrows("Swapping in [] 1 and 2 should throw a NoSuchElementException", NoSuchElementException, ArrayUtil, "swap", [[], 1, 2]);
+		assertThrows("Swapping in [1,2] 1 and 2 should throw a NoSuchElementException", NoSuchElementException, ArrayUtil, "swap", [[1,2], 1, 2]);
+		assertThrows("Swapping in null 1 and 2 should throw a IllegalArgumentException", IllegalArgumentException, ArrayUtil, "swap", [null, 1, 2]);
+	}
+	
+	/**
+	 * Validates different possibilities of usage of isSame.
+	 */
+	public function testIsSame(Void):Void {
+		var obj = {};
+		
+		// Positive Cases
+		assertTrue("[] is the same like []", ArrayUtil.isSame([], []));
+		assertTrue("[1] is the same like [1]", ArrayUtil.isSame([1], [1]));
+		assertTrue("[true] is the same like [true]", ArrayUtil.isSame([true], [true]));
+		assertTrue("[null] is the same like [null]", ArrayUtil.isSame([null], [null]));
+		assertTrue("[obj] is the same like [obj]", ArrayUtil.isSame([obj], [obj]));
+		
+		// Negative Cases
+		assertFalse("[undefined] is not the same as []", ArrayUtil.isSame([undefined], []));
+		assertFalse("[] is not the same as [undefined]", ArrayUtil.isSame([], [undefined]));
+		assertFalse("[1] is not the same as [1,0]", ArrayUtil.isSame([1], [1,0]));
+		assertFalse("[null] is not the same as [undefined]", ArrayUtil.isSame([null], [undefined]));
+		assertFalse("[undefined] is not the same as [null]", ArrayUtil.isSame([undefined], [null]));
 	}
 }
