@@ -128,14 +128,18 @@ class test.org.as2lib.data.holder.THashMap extends Test{
 	
 	public function testIterator(Void):Void {
 		var map:Map = new HashMap();
+		var iterator:Iterator = map.iterator();
+		assertFalse(iterator.hasNext());
 		map.put("key1", "value1");
 		map.put("key2", "value2");
-		var iterator:Iterator = map.iterator();
+		assertFalse(iterator.hasNext());
+		iterator = map.iterator();
 		assertEquals(iterator.next(), "value1");
 		assertTrue(iterator.hasNext());
 		assertEquals(iterator.next(), "value2");
 		iterator.remove();
 		assertEquals(map.size(), 1);
 		assertNull(map.get("key2"));
+		assertEquals(map.get("key1"), "value1");
 	}
 }
