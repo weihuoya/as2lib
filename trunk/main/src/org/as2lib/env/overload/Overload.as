@@ -6,7 +6,6 @@ import org.as2lib.env.overload.OverloadException;
 
 /**
  * @author: Simon Wacker
- * @version: 1.0
  */
 class org.as2lib.env.overload.Overload extends BasicClass {
 	private var handlers:Array;
@@ -14,6 +13,7 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	private var target:Object;
 	
 	public function Overload(target, args:Array) {
+		this.handlers = new Array();
 		this.target = target;
 		this.args = args;
 	}
@@ -51,7 +51,7 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 			}
 		}
 		throw new UnknownOverloadHandlerException("No appropriate OverloadHandler [" + handlers + "] for the arguments [" + args + "] could be found.",
-									 eval("th" + "is"),
-									 arguments);
+									 			  this,
+									 			  arguments);
 	}
 }
