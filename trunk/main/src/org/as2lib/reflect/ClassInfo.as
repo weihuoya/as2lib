@@ -6,7 +6,7 @@
  * all informations that are stored using reflections.
  */
 
-interface org.as2lib.basic.reflect.ClassInfo { 
+interface org.as2lib.reflect.ClassInfo { 
       
      /** 
       * @returns the name from the class

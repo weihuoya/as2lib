@@ -5,9 +5,18 @@
  * @version: 1.0
  */
 class org.as2lib.util.OverloadingUtil {
+	/**
+	 * private constructor.
+	 */
 	private function OverloadingUtil(Void) {
 	}
 	
+	/**
+	 * Handles the invocation of the appropriate OverloadHandler.
+	 * @param anObject
+	 * @param someArguments
+	 * @param someOverloadHandlers
+	 */
 	public static function overload(anObject:Object, someArguments:Array, someOverloadHandlers:Array):Void {
 		var oh:OverloadHandler;
 		var foundHandler = false;
@@ -27,6 +36,13 @@ class org.as2lib.util.OverloadingUtil {
 			}
 		}
 	}
+	
+	/**
+	 * Instantiates a new OverloadHandler.
+	 * @param someArguments
+	 * @param aFunction
+	 * @return an OverloadHandler instance
+	 */
 	public static function newOverloadHandler(someArguments:Array, aFunction:String):OverloadHandler {
 		return (new OverloadHandler(someArguments, aFunction));
 	}
