@@ -1,6 +1,6 @@
 ﻿import org.as2lib.basic.Throwable;
 import org.as2lib.basic.BasicInterface;
-import org.as2lib.basic.AbstractException;
+import org.as2lib.basic.except.AbstractException;
 import org.as2lib.Config;
 
 /**

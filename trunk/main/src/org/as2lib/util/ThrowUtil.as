@@ -14,6 +14,6 @@ class org.as2lib.util.ThrowUtil extends BasicClass {
 	}
 	
 	public static function stringify(throwable:Throwable):String {
-		return stringifier.execute(throwable);
+		return stringifier.execute(Object(throwable));
 	}
 }
