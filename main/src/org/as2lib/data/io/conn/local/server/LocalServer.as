@@ -19,8 +19,8 @@ import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.PrimitiveTypeMap;
 import org.as2lib.data.io.conn.core.server.Server;
 import org.as2lib.data.io.conn.core.server.ServerServiceProxy;
-import org.as2lib.data.io.conn.local.LocalConfig;
 import org.as2lib.data.io.conn.local.server.LocalServerServiceProxy;
+import org.as2lib.data.io.conn.local.server.LocalServerRegistry;
 
 /**
  * Provides functionalities for adding services,
@@ -55,7 +55,7 @@ class org.as2lib.data.io.conn.local.server.LocalServer extends BasicClass implem
 	 * @see Server#run()
 	 */
 	public function run(Void):Void {
-		LocalConfig.getServerRegistry().register(this);
+		LocalServerRegistry.getInstance().register(this);
 		var serviceArray:Array = services.getValues();
 		for (var i:Number = 0; i < serviceArray.length; i++) {
 			ServerServiceProxy(serviceArray[i]).run(host);
@@ -71,7 +71,7 @@ class org.as2lib.data.io.conn.local.server.LocalServer extends BasicClass implem
 		for (var i:Number = 0; i < serviceArray.length; i++) {
 			ServerServiceProxy(serviceArray[i]).stop();
 		}
-		LocalConfig.getServerRegistry().remove(this);
+		LocalServerRegistry.getInstance().remove(this);
 		running = false;
 	}
 	
