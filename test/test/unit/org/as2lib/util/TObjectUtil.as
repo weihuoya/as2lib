@@ -129,7 +129,7 @@ class test.unit.org.as2lib.util.TObjectUtil extends TestCase {
 		assertTrue("Validates as not protected of overwriting if it is protected", (ObjectUtil.getAccessPermission(inObject, "test") & ObjectUtil.ACCESS_PROTECT_OVERWRITE) == ObjectUtil.ACCESS_PROTECT_OVERWRITE);
 		
 		ObjectUtil.setAccessPermission(inObject, ["test"], ObjectUtil.ACCESS_ALL_ALLOWED);
-		assertFalse("Validates as hidden even if it is not hidden", (ObjectUtil.getAccessPermission(inObject, "test") & ObjectUtil.ACCESS_IS_HIDDEN) == ObjectUtil.ACCESS_IS_HIDDEN);
+		assertFalse("Validates 2nd time as hidden even if it is not hidden", (ObjectUtil.getAccessPermission(inObject, "test") & ObjectUtil.ACCESS_IS_HIDDEN) == ObjectUtil.ACCESS_IS_HIDDEN);
 		
 		/**
 		 * This has been inverted(!!!) due to a Macromedia Bug. 
