@@ -52,6 +52,19 @@ class test.unit.org.as2lib.env.reflect.algorithm.TPropertyAlgorithm extends Test
 		ic.verify(this);
 	}
 	
+	public function testExecuteWithArgumentWhoseGetTypeMethodReturnsNull(Void):Void {
+		var ic:MockControl = new SimpleMockControl(ClassInfo);
+		var i:ClassInfo = ic.getMock();
+		i.getType();
+		ic.setReturnValue(null);
+		ic.replay();
+		
+		var a:PropertyAlgorithm = new PropertyAlgorithm();
+		assertNull(a.execute(i));
+		
+		ic.verify(this);
+	}
+	
 	public function testExecute(Void):Void {
 		var pc:MockControl = new SimpleMockControl(ClassInfo);
 		var p:ClassInfo = pc.getMock();
