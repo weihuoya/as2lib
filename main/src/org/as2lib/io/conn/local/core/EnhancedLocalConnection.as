@@ -31,7 +31,7 @@ import org.as2lib.io.conn.local.core.UnknownConnectionException;
  * @author Christoph Atteneder
  * @author Simon Wacker
  */
-class org.as2lib.io.conn.local.core.LocalConnectionTemplate extends BasicClass {
+class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	
 	/** object for handling connection problems. In most cases set to ExtendedLocalConnection instance.*/
 	private var target:Object;
@@ -59,29 +59,29 @@ class org.as2lib.io.conn.local.core.LocalConnectionTemplate extends BasicClass {
 	}
 	
 	/**
-	 * @overload #LocalConnectionTemplateByVoid
-	 * @overload #LocalConnectionTemplateByTarget
+	 * @overload #EnhancedLocalConnectionByVoid
+	 * @overload #EnhancedLocalConnectionByTarget
 	 */
-	public function LocalConnectionTemplate() {
+	public function EnhancedLocalConnection() {
 		var o:Overload = new Overload(this);
-		o.addHandler([], LocalConnectionTemplateByVoid);
-		o.addHandler([Object], LocalConnectionTemplateByTarget);
+		o.addHandler([], EnhancedLocalConnectionByVoid);
+		o.addHandler([Object], EnhancedLocalConnectionByTarget);
 		o.forward(arguments);
 	}
 	
 	/**
-	 * Constructs a new LocalConnectionTemplateByVoid.
+	 * Constructs a new EnhancedLocalConnectionByVoid.
 	 */
-	private function LocalConnectionTemplateByVoid(Void):Void {
-		LocalConnectionTemplateByTarget(this);
+	private function EnhancedLocalConnectionByVoid(Void):Void {
+		EnhancedLocalConnectionByTarget(this);
 	}
 	
 	/**
-	 * Constructs a new LocalConnectionTemplateByTarget with target.
+	 * Constructs a new EnhancedLocalConnectionByTarget with target.
 	 * 
 	 * @param target to be used as server when creating a new connection
 	 */
-	private function LocalConnectionTemplateByTarget(target):Void {
+	private function EnhancedLocalConnectionByTarget(target):Void {
 		this.target = target;
 		connected = false;
 		errorBroadcaster = new SpeedEventBroadcaster();
@@ -89,7 +89,7 @@ class org.as2lib.io.conn.local.core.LocalConnectionTemplate extends BasicClass {
 	}
 	
 	/**
-	 * @see LocalConnectionTemplate#connect()
+	 * @see EnhancedLocalConnection#connect()
 	 */
 	public function connect(connectionName:String):Void {
 		if (connected) close();
@@ -99,7 +99,7 @@ class org.as2lib.io.conn.local.core.LocalConnectionTemplate extends BasicClass {
 	}
 	
 	/**
-	 * @see LocalConnectionTemplate#close()
+	 * @see EnhancedLocalConnection#close()
 	 */
 	public function close(Void):Void {
 		LocalConnection.prototype.close.apply(target);
@@ -107,7 +107,7 @@ class org.as2lib.io.conn.local.core.LocalConnectionTemplate extends BasicClass {
 	}
 	
 	/**
-	 * @see LocalConnectionTemplate#send()
+	 * @see EnhancedLocalConnection#send()
 	 */
 	public function send():Void {
 		var o:Overload = new Overload(this);
@@ -119,19 +119,19 @@ class org.as2lib.io.conn.local.core.LocalConnectionTemplate extends BasicClass {
 	}
 	
 	/**
-	 * @see LocalConnectionTemplate#sendByConnectionAndMethod()
+	 * @see EnhancedLocalConnection#sendByConnectionAndMethod()
 	 */
 	public function sendByConnectionAndMethod(connectionName:String, method:String):Void {
 		sendByConnectionAndMethodAndArguments(connectionName, method, []);
 	}
 	
 	/**
-	 * @see LocalConnectionTemplate#sendByConnectionAndMethodAndArguments()
+	 * @see EnhancedLocalConnection#sendByConnectionAndMethodAndArguments()
 	 */
 	public function sendByConnectionAndMethodAndArguments(connectionName:String, method:String, args:Array):Void {
 		if (!connectionExists(connectionName)) throw new UnknownConnectionException("Connection with name [" + connectionName + "] does not exist.", this, arguments);
 		var client:LocalConnection = new LocalConnection();
-		var owner:LocalConnectionTemplate = this;
+		var owner:EnhancedLocalConnection = this;
 		var index:Number = clientArray.push(client) - 1;
 		client.onStatus = function(info) {
 			owner.clientArray.splice(index, 1);
@@ -144,19 +144,19 @@ class org.as2lib.io.conn.local.core.LocalConnectionTemplate extends BasicClass {
 	}
 	
 	/**
-	 * @see LocalConnectionTemplate#sendByConnectionAndMethodAndListener()
+	 * @see EnhancedLocalConnection#sendByConnectionAndMethodAndListener()
 	 */
 	public function sendByConnectionAndMethodAndListener(connectionName:String, method:String, listener:MethodInvocationErrorListener):Void {
 		sendByConnectionAndMethodAndArgumentsAndListener(connectionName, method, [], listener);
 	}
 	
 	/**
-	 * @see LocalConnectionTemplate#sendByConnectionAndMethodAndArgumentsAndListener()
+	 * @see EnhancedLocalConnection#sendByConnectionAndMethodAndArgumentsAndListener()
 	 */
 	public function sendByConnectionAndMethodAndArgumentsAndListener(connectionName:String, method:String, args:Array, listener:MethodInvocationErrorListener):Void {
 		if (!connectionExists(connectionName)) throw new UnknownConnectionException("Connection with name [" + connectionName + "] does not exist.", this, arguments);
 		var client:LocalConnection = new LocalConnection();
-		var owner:LocalConnectionTemplate = this;
+		var owner:EnhancedLocalConnection = this;
 		var index:Number = clientArray.push(client) - 1;
 		client.onStatus = function(info) {
 			owner.clientArray.splice(index, 1);
@@ -179,14 +179,14 @@ class org.as2lib.io.conn.local.core.LocalConnectionTemplate extends BasicClass {
 	}
 	
 	/**
-	 * @see LocalConnectionTemplate#addErrorListener()
+	 * @see EnhancedLocalConnection#addErrorListener()
 	 */
 	public function addErrorListener(listener:MethodInvocationErrorListener):Void {
 		errorBroadcaster.addListener(listener);
 	}
 	
 	/**
-	 * @see LocalConnectionTemplate#removeErrorListener()
+	 * @see EnhancedLocalConnection#removeErrorListener()
 	 */
 	public function removeErrorListener(listener:MethodInvocationErrorListener):Void {
 		errorBroadcaster.removeListener(listener);

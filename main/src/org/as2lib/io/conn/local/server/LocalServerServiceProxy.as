@@ -23,7 +23,7 @@ import org.as2lib.io.conn.core.server.ReservedServiceException;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
 import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
-import org.as2lib.io.conn.local.core.LocalConnectionTemplate;
+import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
 
 /**
  * Proxy handles client request to a certain service and its response.
@@ -41,7 +41,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	private var path:String;
 	
 	/** Used to set up the server. */
-	private var connection:LocalConnectionTemplate;
+	private var connection:EnhancedLocalConnection;
 	
 	/** Stores added MethodInvocationErrorListeners. */
 	private var errorBroadcaster:EventBroadcaster;
@@ -67,13 +67,13 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	/**
 	 * Returns the currently used connection.
 	 *
-	 * <p>This is either the connection set via #setConnection(LocalConnectionTemplate):Void
-	 * of a default LocalConnectionTemplate instance.
+	 * <p>This is either the connection set via #setConnection(EnhancedLocalConnection):Void
+	 * of a default EnhancedLocalConnection instance.
 	 *
 	 * @return the currently used connection
 	 */
-	public function getConnection(Void):LocalConnectionTemplate {
-		if (!connection) connection = new LocalConnectionTemplate(this);
+	public function getConnection(Void):EnhancedLocalConnection {
+		if (!connection) connection = new EnhancedLocalConnection(this);
 		return connection;
 	}
 	
@@ -83,12 +83,12 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * <p>The target of the connection, that means the receiver of all remote
 	 * calls must be this instance. If it is not nothing will work properly.
 	 *
-	 * <p>If you set a connection of value null or undefined #getConnection(Void):LocalConnectionTemplate
+	 * <p>If you set a connection of value null or undefined #getConnection(Void):EnhancedLocalConnection
 	 * will return the default connection.
 	 *
 	 * @param connection the new connection to use
 	 */
-	public function setConnection(connection:LocalConnectionTemplate):Void {
+	public function setConnection(connection:EnhancedLocalConnection):Void {
 		this.connection = connection;
 	}
 	
