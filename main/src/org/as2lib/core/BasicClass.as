@@ -1,6 +1,6 @@
 ﻿import org.as2lib.core.BasicInterface;
-import org.as2lib.overload.Overload;
 import org.as2lib.overload.OverloadHandler;
+import org.as2lib.overload.SimpleOverloadHandler;
 import org.as2lib.reflect.ClassInfo;
 import org.as2lib.util.OverloadUtil;
 import org.as2lib.util.ReflectUtil;
@@ -15,6 +15,10 @@ class org.as2lib.core.BasicClass implements BasicInterface {
 	 */
 	public function getClass(Void):ClassInfo {
 		return ReflectUtil.getClassInfo(this);
+	}
+	
+	public function newOverloadHandler(args:Array, func:Function):OverloadHandler {
+		return (new SimpleOverloadHandler(args, func));
 	}
 	
 	public function toString(Void):String {
