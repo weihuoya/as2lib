@@ -72,7 +72,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * @param object the Object to be stringified
 	 * @return a String representation of the object
 	 */
-	public function stringify(object):String {
+	public static function stringify(object):String {
 		return Config.getObjectStringifier().execute(object);
 	}
 	
