@@ -88,6 +88,8 @@ class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass
 	 *   <dd><code>myMembers.classes[0];</code></dd>
 	 *   <dt>Reference package by index.</dt>
 	 *   <dd><code>myMembers.packages[0];</code></dd>
+	 *   <dt>Reference member by index; can be class or package.</dt>
+	 *   <dd><code>myMembers.MyClass;</code> or <code>myMembers.mypackage</code></dd>
 	 *   <dt>Reference class by name; use only the name of the class, excluding the namespace.</dt>
 	 *   <dd><code>myMembers.classes.MyClass;</code></dd>
 	 *   <dt>Reference package by name; use only the package name, excluding the namespace.</dt>
@@ -130,6 +132,7 @@ class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass
 						b = c.addClass(new ClassInfo(i, t[i], p));
 					}
 					r[r.length] = b;
+					r[i] = b;
 					n[n.length] = b;
 					n[i] = b;
 				}
@@ -139,6 +142,7 @@ class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass
 					a = c.addPackage(new PackageInfo(i, t[i], p));
 				}
 				r[r.length] = a;
+				r[i] = a;
 				m[m.length] = a;
 				m[i] = a;
 			}

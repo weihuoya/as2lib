@@ -258,7 +258,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 		if (!filterSubPackages) {
 			var subPackages:Array = members["packages"];
 			for (var i:Number = 0; i < subPackages.length; i++) {
-				result.concat(PackageInfo(subPackages[i]).getMembersByFlag(filterSubPackages));
+				result = result.concat(PackageInfo(subPackages[i]).getMembersByFlag(filterSubPackages));
 			}
 		}
 		return result;
@@ -342,7 +342,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 		if (!filterSubPackages) {
 			var subPackages:Array = members["packages"];
 			for (var i:Number = 0; i < subPackages.length; i++) {
-				result.concat(PackageInfo(subPackages[i]).getMemberClassesByFlag(filterSubPackages));
+				result = result.concat(PackageInfo(subPackages[i]).getMemberClassesByFlag(filterSubPackages));
 			}
 		}
 		return result;
@@ -423,7 +423,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 		if (!filterSubPackages) {
 			var subPackages:Array = members["packages"];
 			for (var i:Number = 0; i < subPackages.length; i++) {
-				result.concat(PackageInfo(subPackages[i]).getMemberPackagesByFlag(filterSubPackages));
+				result = result.concat(PackageInfo(subPackages[i]).getMemberPackagesByFlag(filterSubPackages));
 			}
 		}
 		return result;
@@ -494,8 +494,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	public function getMemberByName(memberName:String):PackageMemberInfo {
 		if (memberName == null) return null;
 		if (getMembersByFlag(true)) {
-			if (members["classes"][memberName]) return members["classes"][memberName];
-			if (members["packages"][memberName]) return members["packages"][memberName];
+			if (members[memberName]) return members[memberName];
 			var subPackages:Array = members["packages"];
 			for (var i:Number = 0; i < subPackages.length; i++) {
 				var member:PackageMemberInfo = PackageInfo(subPackages[i]).getMemberByName(memberName);

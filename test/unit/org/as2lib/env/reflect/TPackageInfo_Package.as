@@ -18,6 +18,7 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
+import org.as2lib.env.reflect.PackageMemberFilter;
 import org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm;
 
 /**
@@ -25,12 +26,14 @@ import org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm;
  */
 class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 	
-	public function testGetPackagesWithNullMembers(Void):Void {
+	public function testGetMemberPackagesByFlagWithNullMembers(Void):Void {
 		var i:PackageInfo = new PackageInfo(null, null, null);
 		assertNull(i.getMemberPackages());
+		assertNull(i.getMemberPackages(true));
+		assertNull(i.getMemberPackages(false));
 	}
 	
-	public function testGetPackagesWithMembersOfTypeClassInfoAndPackageInfo(Void):Void {
+	public function testGetMemberPackagesByFlagWithMembersOfTypeClassInfoAndPackageInfo(Void):Void {
 		var p:Object = new Object();
 		var i:PackageInfo = new PackageInfo(null, p, null);
 		
@@ -61,7 +64,9 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
 		var a:PackageMemberAlgorithm = ac.getMock();
 		a.execute(i);
-		ac.setReturnValue([c1, p1, c2, c3, p2, p3]);
+		var members:Array = [c1, p1, c2, c3, p2, p3];
+		members["packages"] = [p1, p2, p3];
+		ac.setReturnValue(members);
 		ac.replay();
 		
 		i.setPackageMemberAlgorithm(a);
@@ -81,25 +86,81 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		p3c.verify();
 	}
 	
-	public function testGetPackageByNameWithNullName(Void):Void {
+	public function testGetMemberPackagesByFlagWithMembersOfSubPackages(Void):Void {
+		var p:Object = new Object();
+		var i:PackageInfo = new PackageInfo(null, p, null);
+		
+		var c1c:MockControl = new MockControl(ClassInfo);
+		var c1:ClassInfo = c1c.getMock();
+		c1c.replay();
+		
+		var c2c:MockControl = new MockControl(ClassInfo);
+		var c2:ClassInfo = c2c.getMock();
+		c2c.replay();
+		
+		var p3c:MockControl = new MockControl(PackageInfo);
+		var p3:PackageInfo = p3c.getMock();
+		p3c.replay();
+		
+		var p4c:MockControl = new MockControl(PackageInfo);
+		var p4:PackageInfo = p4c.getMock();
+		p4c.replay();
+		
+		var p5c:MockControl = new MockControl(PackageInfo);
+		var p5:PackageInfo = p5c.getMock();
+		p5c.replay();
+		
+		var p1c:MockControl = new MockControl(PackageInfo);
+		var p1:PackageInfo = p1c.getMock();
+		p1.getMemberPackagesByFlag(false);
+		p1c.setReturnValue([p3]);
+		p1c.replay();
+		
+		var p2c:MockControl = new MockControl(PackageInfo);
+		var p2:PackageInfo = p2c.getMock();
+		p2.getMemberPackagesByFlag(false);
+		p2c.setReturnValue([p4, p5]);
+		p2c.replay();
+		
 		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
 		var a:PackageMemberAlgorithm = ac.getMock();
+		a.execute(i);
+		var members:Array = [c1, p1, c2, p2];
+		members["packages"] = [p1, p2];
+		ac.setReturnValue(members);
 		ac.replay();
 		
-		var i:PackageInfo = new PackageInfo(null, new Object(), null);
 		i.setPackageMemberAlgorithm(a);
-		assertNull(i.getMemberPackageByName(null));
-		assertNull(i.getMemberPackageByName(undefined));
+		
+		var members:Array = i.getMemberPackages(false);
+		assertSame(members.length, 5);
+		assertSame(members[0], p1);
+		assertSame(members[1], p2);
+		assertSame(members[2], p3);
+		assertSame(members[3], p4);
+		assertSame(members[4], p5);
 		
 		ac.verify();
+		c1c.verify();
+		c2c.verify();
+		p1c.verify();
+		p2c.verify();
+		p3c.verify();
 	}
 	
-	public function testGetPackageByNameWithNullMemberPackages(Void):Void {
+	public function testGetMemberPackagesByFilterWithNullMembers(Void):Void {
+		var fc:MockControl = new MockControl(PackageMemberFilter);
+		var f:PackageMemberFilter = fc.getMock();
+		fc.replay();
+		
 		var i:PackageInfo = new PackageInfo(null, null, null);
-		assertNull(i.getMemberPackageByName("package"));
+		assertNull(i.getMemberPackagesByFilter(null));
+		assertNull(i.getMemberPackages(f));
+		
+		fc.verify();
 	}
 	
-	public function testGetPackageByNameWithKnownMemberPackages(Void):Void {
+	public function testGetMemberPackagesByFilterWithNullFilter(Void):Void {
 		var p:Object = new Object();
 		var i:PackageInfo = new PackageInfo(null, p, null);
 		
@@ -117,36 +178,31 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		
 		var p1c:MockControl = new MockControl(PackageInfo);
 		var p1:PackageInfo = p1c.getMock();
-		p1.getName();
-		p1c.setDefaultReturnValue("package1");
 		p1c.replay();
 		
 		var p2c:MockControl = new MockControl(PackageInfo);
 		var p2:PackageInfo = p2c.getMock();
-		p2.getName();
-		p2c.setDefaultReturnValue("package2");
 		p2c.replay();
 		
 		var p3c:MockControl = new MockControl(PackageInfo);
 		var p3:PackageInfo = p3c.getMock();
-		p3.getName();
-		p3c.setDefaultReturnValue("package3");
 		p3c.replay();
 		
 		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
 		var a:PackageMemberAlgorithm = ac.getMock();
 		a.execute(i);
-		ac.setReturnValue([c1, p1, c2, c3, p2, p3]);
+		var members:Array = [c1, p1, c2, c3, p2, p3];
+		members["packages"] = [p1, p2, p3];
+		ac.setReturnValue(members);
 		ac.replay();
 		
 		i.setPackageMemberAlgorithm(a);
 		
-		assertNull(i.getMemberPackageByName("class1"));
-		assertNull(i.getMemberPackageByName("class2"));
-		assertNull(i.getMemberPackageByName("class3"));
-		assertSame(i.getMemberPackageByName("package1"), p1);
-		assertSame(i.getMemberPackageByName("package2"), p2);
-		assertSame(i.getMemberPackageByName("package3"), p3);
+		var members:Array = i.getMemberPackagesByFilter(null);
+		assertSame(members.length, 3);
+		assertSame(members[0], p1);
+		assertSame(members[1], p2);
+		assertSame(members[2], p3);
 		
 		ac.verify();
 		c1c.verify();
@@ -157,7 +213,363 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		p3c.verify();
 	}
 	
-	public function testGetPackageByPackageWithNullAndUndefinedArgument(Void):Void {
+	public function testGetMemberPackagesByFilterWithFilteredSubpackages(Void):Void {
+		var p:Object = new Object();
+		var i:PackageInfo = new PackageInfo(null, p, null);
+		
+		var c1c:MockControl = new MockControl(ClassInfo);
+		var c1:ClassInfo = c1c.getMock();
+		c1c.replay();
+		
+		var c2c:MockControl = new MockControl(ClassInfo);
+		var c2:ClassInfo = c2c.getMock();
+		c2c.replay();
+		
+		var c3c:MockControl = new MockControl(ClassInfo);
+		var c3:ClassInfo = c3c.getMock();
+		c3c.replay();
+		
+		var p1c:MockControl = new MockControl(PackageInfo);
+		var p1:PackageInfo = p1c.getMock();
+		p1c.replay();
+		
+		var p2c:MockControl = new MockControl(PackageInfo);
+		var p2:PackageInfo = p2c.getMock();
+		p2c.replay();
+		
+		var p3c:MockControl = new MockControl(PackageInfo);
+		var p3:PackageInfo = p3c.getMock();
+		p3c.replay();
+		
+		var p4c:MockControl = new MockControl(PackageInfo);
+		var p4:PackageInfo = p4c.getMock();
+		p4c.replay();
+		
+		var p5c:MockControl = new MockControl(PackageInfo);
+		var p5:PackageInfo = p5c.getMock();
+		p5c.replay();
+		
+		var p6c:MockControl = new MockControl(PackageInfo);
+		var p6:PackageInfo = p6c.getMock();
+		p6c.replay();
+		
+		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
+		var a:PackageMemberAlgorithm = ac.getMock();
+		a.execute(i);
+		var members:Array = [c1, p1, c2, c3, p2, p3, p4, p5, p6];
+		members["packages"] = [p1, p2, p3, p4, p5, p6];
+		ac.setReturnValue(members);
+		ac.replay();
+		
+		i.setPackageMemberAlgorithm(a);
+		
+		var fc:MockControl = new MockControl(PackageMemberFilter);
+		var f:PackageMemberFilter = fc.getMock();
+		f.filterSubPackages();
+		fc.setReturnValue(true);
+		f.filter(p1);
+		fc.setReturnValue(true);
+		f.filter(p2);
+		fc.setReturnValue(false);
+		f.filter(p3);
+		fc.setReturnValue(false);
+		f.filter(p4);
+		fc.setReturnValue(true);
+		f.filter(p5);
+		fc.setReturnValue(false);
+		f.filter(p6);
+		fc.setReturnValue(false);
+		fc.replay();
+		
+		var members:Array = i.getMemberPackages(f);
+		assertSame(members.length, 4);
+		assertSame(members[0], p2);
+		assertSame(members[1], p3);
+		assertSame(members[2], p5);
+		assertSame(members[3], p6);
+		
+		fc.verify();
+		ac.verify();
+		c1c.verify();
+		c2c.verify();
+		c3c.verify();
+		p1c.verify();
+		p2c.verify();
+		p3c.verify();
+		p4c.verify();
+		p5c.verify();
+		p6c.verify();
+	}
+	
+	public function testGetMemberPackagesByFilterWithMembersOfSubpackages(Void):Void {
+		var p:Object = new Object();
+		var i:PackageInfo = new PackageInfo(null, p, null);
+		
+		var c1c:MockControl = new MockControl(ClassInfo);
+		var c1:ClassInfo = c1c.getMock();
+		c1c.replay();
+		
+		var c2c:MockControl = new MockControl(ClassInfo);
+		var c2:ClassInfo = c2c.getMock();
+		c2c.replay();
+		
+		var c3c:MockControl = new MockControl(ClassInfo);
+		var c3:ClassInfo = c3c.getMock();
+		c3c.replay();
+		
+		var p4c:MockControl = new MockControl(PackageInfo);
+		var p4:PackageInfo = p4c.getMock();
+		p4c.replay();
+		
+		var p5c:MockControl = new MockControl(PackageInfo);
+		var p5:PackageInfo = p5c.getMock();
+		p5c.replay();
+		
+		var p6c:MockControl = new MockControl(PackageInfo);
+		var p6:PackageInfo = p6c.getMock();
+		p6c.replay();
+		
+		var p1c:MockControl = new MockControl(PackageInfo);
+		var p1:PackageInfo = p1c.getMock();
+		p1.getMemberPackagesByFlag(false);
+		p1c.setReturnValue([]);
+		p1c.replay();
+		
+		var p2c:MockControl = new MockControl(PackageInfo);
+		var p2:PackageInfo = p2c.getMock();
+		p2.getMemberPackagesByFlag(false);
+		p2c.setReturnValue([p4]);
+		p2c.replay();
+		
+		var p3c:MockControl = new MockControl(PackageInfo);
+		var p3:PackageInfo = p3c.getMock();
+		p3.getMemberPackagesByFlag(false);
+		p3c.setReturnValue([p5, p6]);
+		p3c.replay();
+		
+		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
+		var a:PackageMemberAlgorithm = ac.getMock();
+		a.execute(i);
+		var members:Array = [c1, p1, c2, c3, p2, p3, p4, p5, p6];
+		members["packages"] = [p1, p2, p3];
+		ac.setReturnValue(members);
+		ac.replay();
+		
+		i.setPackageMemberAlgorithm(a);
+		
+		var fc:MockControl = new MockControl(PackageMemberFilter);
+		var f:PackageMemberFilter = fc.getMock();
+		f.filterSubPackages();
+		fc.setReturnValue(false);
+		f.filter(p1);
+		fc.setReturnValue(false);
+		f.filter(p2);
+		fc.setReturnValue(false);
+		f.filter(p3);
+		fc.setReturnValue(false);
+		f.filter(p4);
+		fc.setReturnValue(true);
+		f.filter(p5);
+		fc.setReturnValue(false);
+		f.filter(p6);
+		fc.setReturnValue(true);
+		fc.replay();
+		
+		var members:Array = i.getMemberPackages(f);
+		assertSame(members.length, 4);
+		assertSame(members[0], p1);
+		assertSame(members[1], p2);
+		assertSame(members[2], p3);
+		assertSame(members[3], p5);
+		
+		fc.verify();
+		ac.verify();
+		c1c.verify();
+		c2c.verify();
+		c3c.verify();
+		p1c.verify();
+		p2c.verify();
+		p3c.verify();
+		p4c.verify();
+		p5c.verify();
+		p6c.verify();
+	}
+	
+	public function testGetMemberPackageByNameWithNullName(Void):Void {
+		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
+		var a:PackageMemberAlgorithm = ac.getMock();
+		ac.replay();
+		
+		var i:PackageInfo = new PackageInfo(null, new Object(), null);
+		i.setPackageMemberAlgorithm(a);
+		assertNull(i.getMemberPackageByName(null));
+		assertNull(i.getMemberPackageByName(undefined));
+		
+		ac.verify();
+	}
+	
+	public function testGetMemberPackageByNameWithNullMemberPackages(Void):Void {
+		var i:PackageInfo = new PackageInfo(null, null, null);
+		assertNull(i.getMemberPackageByName("package"));
+	}
+	
+	public function testGetMemberPackageByNameWithKnownMemberPackages(Void):Void {
+		var p:Object = new Object();
+		var i:PackageInfo = new PackageInfo(null, p, null);
+		
+		var c1c:MockControl = new MockControl(ClassInfo);
+		var c1:ClassInfo = c1c.getMock();
+		c1c.replay();
+		
+		var c2c:MockControl = new MockControl(ClassInfo);
+		var c2:ClassInfo = c2c.getMock();
+		c2c.replay();
+		
+		var p1c:MockControl = new MockControl(PackageInfo);
+		var p1:PackageInfo = p1c.getMock();
+		p1.getMemberPackageByName("class1");
+		p1c.setReturnValue(null);
+		p1.getMemberPackageByName("class2");
+		p1c.setReturnValue(null);
+		p1c.replay();
+		
+		var p2c:MockControl = new MockControl(PackageInfo);
+		var p2:PackageInfo = p2c.getMock();
+		p2.getMemberPackageByName("class1");
+		p2c.setReturnValue(null);
+		p2.getMemberPackageByName("class2");
+		p2c.setReturnValue(null);
+		p2c.replay();
+		
+		var p3c:MockControl = new MockControl(PackageInfo);
+		var p3:PackageInfo = p3c.getMock();
+		p3.getMemberPackageByName("class1");
+		p3c.setReturnValue(null);
+		p3.getMemberPackageByName("class2");
+		p3c.setReturnValue(null);
+		p3c.replay();
+		
+		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
+		var a:PackageMemberAlgorithm = ac.getMock();
+		a.execute(i);
+		var members:Array = [c1, p1, c2, p2, p3];
+		members["packages"] = [p1, p2, p3];
+		members["packages"]["package1"] = p1;
+		members["packages"]["package2"] = p2;
+		members["packages"]["package3"] = p3;
+		ac.setReturnValue(members);
+		ac.replay();
+		
+		i.setPackageMemberAlgorithm(a);
+		
+		assertNull(i.getMemberPackageByName("class1"));
+		assertNull(i.getMemberPackageByName("class2"));
+		assertSame(i.getMemberPackageByName("package1"), p1);
+		assertSame(i.getMemberPackageByName("package2"), p2);
+		assertSame(i.getMemberPackageByName("package3"), p3);
+		
+		ac.verify();
+		c1c.verify();
+		c2c.verify();
+		p1c.verify();
+		p2c.verify();
+		p3c.verify();
+	}
+	
+	public function testGetMemberPackageByNameWithMembersInSubPackages(Void):Void {
+		var p:Object = new Object();
+		var i:PackageInfo = new PackageInfo(null, p, null);
+		
+		var c1c:MockControl = new MockControl(ClassInfo);
+		var c1:ClassInfo = c1c.getMock();
+		c1c.replay();
+		
+		var c2c:MockControl = new MockControl(ClassInfo);
+		var c2:ClassInfo = c2c.getMock();
+		c2c.replay();
+		
+		var p4c:MockControl = new MockControl(PackageInfo);
+		var p4:PackageInfo = p4c.getMock();
+		p4c.replay();
+		
+		var p5c:MockControl = new MockControl(PackageInfo);
+		var p5:PackageInfo = p5c.getMock();
+		p5c.replay();
+		
+		var p6c:MockControl = new MockControl(PackageInfo);
+		var p6:PackageInfo = p6c.getMock();
+		p6c.replay();
+		
+		var p1c:MockControl = new MockControl(PackageInfo);
+		var p1:PackageInfo = p1c.getMock();
+		p1.getMemberPackageByName("class2");
+		p1c.setReturnValue(null);
+		p1.getMemberPackageByName("package4");
+		p1c.setReturnValue(null);
+		p1.getMemberPackageByName("package5");
+		p1c.setReturnValue(p5);
+		p1.getMemberPackageByName("package6");
+		p1c.setReturnValue(null);
+		p1.getMemberPackageByName("unknownpackage");
+		p1c.setReturnValue(null);
+		p1c.replay();
+		
+		var p2c:MockControl = new MockControl(PackageInfo);
+		var p2:PackageInfo = p2c.getMock();
+		p2.getMemberPackageByName("class2");
+		p2c.setReturnValue(null);
+		p2.getMemberPackageByName("package4");
+		p2c.setReturnValue(p4);
+		p2.getMemberPackageByName("package6");
+		p2c.setReturnValue(null);
+		p2.getMemberPackageByName("unknownpackage");
+		p2c.setReturnValue(null);
+		p2c.replay();
+		
+		var p3c:MockControl = new MockControl(PackageInfo);
+		var p3:PackageInfo = p3c.getMock();
+		p3.getMemberPackageByName("class2");
+		p3c.setReturnValue(null);
+		p3.getMemberPackageByName("package6");
+		p3c.setReturnValue(p6);
+		p3.getMemberPackageByName("unknownpackage");
+		p3c.setReturnValue(null);
+		p3c.replay();
+		
+		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
+		var a:PackageMemberAlgorithm = ac.getMock();
+		a.execute(i);
+		var members:Array = [c1, p1, c2, p2, p3];
+		members["packages"] = [p1, p2, p3];
+		members["packages"]["package1"] = p1;
+		members["packages"]["package2"] = p2;
+		members["packages"]["package3"] = p3;
+		ac.setReturnValue(members);
+		ac.replay();
+		
+		i.setPackageMemberAlgorithm(a);
+		
+		assertNull(i.getMemberPackageByName("class2"));
+		assertSame(i.getMemberPackageByName("package1"), p1);
+		assertSame(i.getMemberPackageByName("package2"), p2);
+		assertSame(i.getMemberPackageByName("package3"), p3);
+		assertSame(i.getMemberPackageByName("package4"), p4);
+		assertSame(i.getMemberPackageByName("package5"), p5);
+		assertSame(i.getMemberPackageByName("package6"), p6);
+		assertNull(i.getMemberPackageByName("unknownpackage"));
+		
+		ac.verify();
+		c1c.verify();
+		c2c.verify();
+		p1c.verify();
+		p2c.verify();
+		p3c.verify();
+		p4c.verify();
+		p5c.verify();
+		p6c.verify();
+	}
+	
+	public function testGetMemberPackageByPackageWithNullAndUndefinedArgument(Void):Void {
 		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
 		var a:PackageMemberAlgorithm = ac.getMock();
 		ac.replay();
@@ -170,18 +582,19 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		ac.verify();
 	}
 	
-	public function testGetPackageByPackageWithNullMemberPackages(Void):Void {
+	public function testGetMemberPackageByPackageWithNullMemberPackages(Void):Void {
 		var i:PackageInfo = new PackageInfo(null, null, null);
 		assertNull(i.getMemberPackageByPackage(new Object()));
 	}
 	
-	public function testGetPackageByPackageWithRealValues(Void):Void {
+	public function testGetMemberPackageByPackageWithRealValues(Void):Void {
 		var T1:Function = function() {};
 		var T2:Function = function() {};
 		var T3:Function = function() {};
 		var cp1:Object = new Object();
 		var cp2:Object = new Object();
 		var cp3:Object = new Object();
+		var up:Object = new Object();
 		
 		var p:Object = new Object();
 		var i:PackageInfo = new PackageInfo(null, p, null);
@@ -208,24 +621,32 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		var p1:PackageInfo = p1c.getMock();
 		p1.getPackage();
 		p1c.setDefaultReturnValue(cp1);
+		p1.getMemberPackageByPackage(up);
+		p1c.setReturnValue(null);
 		p1c.replay();
 		
 		var p2c:MockControl = new MockControl(PackageInfo);
 		var p2:PackageInfo = p2c.getMock();
 		p2.getPackage();
 		p2c.setDefaultReturnValue(cp2);
+		p2.getMemberPackageByPackage(up);
+		p2c.setReturnValue(null);
 		p2c.replay();
 		
 		var p3c:MockControl = new MockControl(PackageInfo);
 		var p3:PackageInfo = p3c.getMock();
 		p3.getPackage();
 		p3c.setDefaultReturnValue(cp3);
+		p3.getMemberPackageByPackage(up);
+		p3c.setReturnValue(null);
 		p3c.replay();
 		
 		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
 		var a:PackageMemberAlgorithm = ac.getMock();
 		a.execute(i);
-		ac.setReturnValue([c1, p1, c2, c3, p2, p3]);
+		var members:Array = [c1, p1, c2, c3, p2, p3];
+		members["packages"] = [p1, p2, p3];
+		ac.setReturnValue(members);
 		ac.replay();
 		
 		i.setPackageMemberAlgorithm(a);
@@ -233,7 +654,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		assertSame(i.getMemberPackageByPackage(cp1), p1);
 		assertSame(i.getMemberPackageByPackage(cp2), p2);
 		assertSame(i.getMemberPackageByPackage(cp3), p3);
-		assertNull(i.getMemberPackageByPackage(new Object()));
+		assertNull(i.getMemberPackageByPackage(up));
 		
 		ac.verify();
 		c1c.verify();
@@ -242,6 +663,101 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		p1c.verify();
 		p2c.verify();
 		p3c.verify();
+	}
+	
+	public function testGetMemberPackageByPackageWithMembersInSubpackages(Void):Void {
+		var T1:Function = function() {};
+		var cp1:Object = new Object();
+		var cp2:Object = new Object();
+		var cp3:Object = new Object();
+		var cp4:Object = new Object();
+		var cp5:Object = new Object();
+		var cp6:Object = new Object();
+		var up:Object = new Object();
+		
+		var p:Object = new Object();
+		var i:PackageInfo = new PackageInfo(null, p, null);
+		
+		var c1c:MockControl = new MockControl(ClassInfo);
+		var c1:ClassInfo = c1c.getMock();
+		c1.getType();
+		c1c.setDefaultReturnValue(T1);
+		c1c.replay();
+		
+		var p4c:MockControl = new MockControl(PackageInfo);
+		var p4:PackageInfo = p4c.getMock();
+		p4c.replay();
+		
+		var p5c:MockControl = new MockControl(PackageInfo);
+		var p5:PackageInfo = p5c.getMock();
+		p5c.replay();
+		
+		var p6c:MockControl = new MockControl(PackageInfo);
+		var p6:PackageInfo = p6c.getMock();
+		p6c.replay();
+		
+		var p1c:MockControl = new MockControl(PackageInfo);
+		var p1:PackageInfo = p1c.getMock();
+		p1.getPackage();
+		p1c.setDefaultReturnValue(cp1);
+		p1.getMemberPackageByPackage(cp4);
+		p1c.setReturnValue(null);
+		p1.getMemberPackageByPackage(cp5);
+		p1c.setReturnValue(null);
+		p1.getMemberPackageByPackage(cp6);
+		p1c.setReturnValue(p6);
+		p1.getMemberPackageByPackage(up);
+		p1c.setReturnValue(null);
+		p1c.replay();
+		
+		var p2c:MockControl = new MockControl(PackageInfo);
+		var p2:PackageInfo = p2c.getMock();
+		p2.getPackage();
+		p2c.setDefaultReturnValue(cp2);
+		p2.getMemberPackageByPackage(cp4);
+		p2c.setReturnValue(p4);
+		p2.getMemberPackageByPackage(cp5);
+		p2c.setReturnValue(null);
+		p2.getMemberPackageByPackage(up);
+		p2c.setReturnValue(null);
+		p2c.replay();
+		
+		var p3c:MockControl = new MockControl(PackageInfo);
+		var p3:PackageInfo = p3c.getMock();
+		p3.getPackage();
+		p3c.setDefaultReturnValue(cp3);
+		p3.getMemberPackageByPackage(cp5);
+		p3c.setReturnValue(p5);
+		p3.getMemberPackageByPackage(up);
+		p3c.setReturnValue(null);
+		p3c.replay();
+		
+		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
+		var a:PackageMemberAlgorithm = ac.getMock();
+		a.execute(i);
+		var members:Array = [c1, p1, p2, p3];
+		members["packages"] = [p1, p2, p3];
+		ac.setReturnValue(members);
+		ac.replay();
+		
+		i.setPackageMemberAlgorithm(a);
+		
+		assertSame(i.getMemberPackageByPackage(cp1), p1);
+		assertSame(i.getMemberPackageByPackage(cp2), p2);
+		assertSame(i.getMemberPackageByPackage(cp3), p3);
+		assertSame(i.getMemberPackageByPackage(cp4), p4);
+		assertSame(i.getMemberPackageByPackage(cp5), p5);
+		assertSame(i.getMemberPackageByPackage(cp6), p6);
+		assertNull(i.getMemberPackageByPackage(up));
+		
+		ac.verify();
+		c1c.verify();
+		p1c.verify();
+		p2c.verify();
+		p3c.verify();
+		p4c.verify();
+		p5c.verify();
+		p6c.verify();
 	}
 	
 }
