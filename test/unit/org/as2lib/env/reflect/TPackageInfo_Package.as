@@ -18,19 +18,19 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.reflect.algorithm.ChildAlgorithm;
+import org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm;
 
 /**
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 	
-	public function testGetChildPackagesWithNullChildren(Void):Void {
+	public function testGetPackagesWithNullMembers(Void):Void {
 		var i:PackageInfo = new PackageInfo(null, null, null);
-		assertNull(i.getChildPackages());
+		assertNull(i.getMemberPackages());
 	}
 	
-	public function testGetChildPackagesWithChildrenOfTypeClassInfoAndPackageInfo(Void):Void {
+	public function testGetPackagesWithMembersOfTypeClassInfoAndPackageInfo(Void):Void {
 		var p:Object = new Object();
 		var i:PackageInfo = new PackageInfo(null, p, null);
 		
@@ -58,19 +58,19 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		var p3:PackageInfo = p3c.getMock();
 		p3c.replay();
 		
-		var ac:MockControl = new MockControl(ChildAlgorithm);
-		var a:ChildAlgorithm = ac.getMock();
+		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
+		var a:PackageMemberAlgorithm = ac.getMock();
 		a.execute(i);
 		ac.setReturnValue([c1, p1, c2, c3, p2, p3]);
 		ac.replay();
 		
-		i.setChildAlgorithm(a);
+		i.setPackageMemberAlgorithm(a);
 		
-		var children:Array = i.getChildPackages();
-		assertSame(children.length, 3);
-		assertSame(children[0], p1);
-		assertSame(children[1], p2);
-		assertSame(children[2], p3);
+		var members:Array = i.getMemberPackages();
+		assertSame(members.length, 3);
+		assertSame(members[0], p1);
+		assertSame(members[1], p2);
+		assertSame(members[2], p3);
 		
 		ac.verify();
 		c1c.verify();
@@ -81,25 +81,25 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		p3c.verify();
 	}
 	
-	public function testGetChildPackageByNameWithNullName(Void):Void {
-		var ac:MockControl = new MockControl(ChildAlgorithm);
-		var a:ChildAlgorithm = ac.getMock();
+	public function testGetPackageByNameWithNullName(Void):Void {
+		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
+		var a:PackageMemberAlgorithm = ac.getMock();
 		ac.replay();
 		
 		var i:PackageInfo = new PackageInfo(null, new Object(), null);
-		i.setChildAlgorithm(a);
-		assertNull(i.getChildPackageByName(null));
-		assertNull(i.getChildPackageByName(undefined));
+		i.setPackageMemberAlgorithm(a);
+		assertNull(i.getMemberPackageByName(null));
+		assertNull(i.getMemberPackageByName(undefined));
 		
 		ac.verify();
 	}
 	
-	public function testGetChildPackageByNameWithNullChildPackages(Void):Void {
+	public function testGetPackageByNameWithNullMemberPackages(Void):Void {
 		var i:PackageInfo = new PackageInfo(null, null, null);
-		assertNull(i.getChildPackageByName("package"));
+		assertNull(i.getMemberPackageByName("package"));
 	}
 	
-	public function testGetChildPackageByNameWithKnownChildPackages(Void):Void {
+	public function testGetPackageByNameWithKnownMemberPackages(Void):Void {
 		var p:Object = new Object();
 		var i:PackageInfo = new PackageInfo(null, p, null);
 		
@@ -133,20 +133,20 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		p3c.setDefaultReturnValue("package3");
 		p3c.replay();
 		
-		var ac:MockControl = new MockControl(ChildAlgorithm);
-		var a:ChildAlgorithm = ac.getMock();
+		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
+		var a:PackageMemberAlgorithm = ac.getMock();
 		a.execute(i);
 		ac.setReturnValue([c1, p1, c2, c3, p2, p3]);
 		ac.replay();
 		
-		i.setChildAlgorithm(a);
+		i.setPackageMemberAlgorithm(a);
 		
-		assertNull(i.getChildPackageByName("class1"));
-		assertNull(i.getChildPackageByName("class2"));
-		assertNull(i.getChildPackageByName("class3"));
-		assertSame(i.getChildPackageByName("package1"), p1);
-		assertSame(i.getChildPackageByName("package2"), p2);
-		assertSame(i.getChildPackageByName("package3"), p3);
+		assertNull(i.getMemberPackageByName("class1"));
+		assertNull(i.getMemberPackageByName("class2"));
+		assertNull(i.getMemberPackageByName("class3"));
+		assertSame(i.getMemberPackageByName("package1"), p1);
+		assertSame(i.getMemberPackageByName("package2"), p2);
+		assertSame(i.getMemberPackageByName("package3"), p3);
 		
 		ac.verify();
 		c1c.verify();
@@ -157,25 +157,25 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		p3c.verify();
 	}
 	
-	public function testGetChildPackageByPackageWithNullAndUndefinedArgument(Void):Void {
-		var ac:MockControl = new MockControl(ChildAlgorithm);
-		var a:ChildAlgorithm = ac.getMock();
+	public function testGetPackageByPackageWithNullAndUndefinedArgument(Void):Void {
+		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
+		var a:PackageMemberAlgorithm = ac.getMock();
 		ac.replay();
 		
 		var i:PackageInfo = new PackageInfo(null, new Object(), null);
-		i.setChildAlgorithm(a);
-		assertNull(i.getChildPackageByPackage(null));
-		assertNull(i.getChildPackageByPackage(undefined));
+		i.setPackageMemberAlgorithm(a);
+		assertNull(i.getMemberPackageByPackage(null));
+		assertNull(i.getMemberPackageByPackage(undefined));
 		
 		ac.verify();
 	}
 	
-	public function testGetChildPackageByPackageWithNullChildPackages(Void):Void {
+	public function testGetPackageByPackageWithNullMemberPackages(Void):Void {
 		var i:PackageInfo = new PackageInfo(null, null, null);
-		assertNull(i.getChildPackageByPackage(new Object()));
+		assertNull(i.getMemberPackageByPackage(new Object()));
 	}
 	
-	public function testGetChildPackageByPackageWithRealValues(Void):Void {
+	public function testGetPackageByPackageWithRealValues(Void):Void {
 		var T1:Function = function() {};
 		var T2:Function = function() {};
 		var T3:Function = function() {};
@@ -222,18 +222,18 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		p3c.setDefaultReturnValue(cp3);
 		p3c.replay();
 		
-		var ac:MockControl = new MockControl(ChildAlgorithm);
-		var a:ChildAlgorithm = ac.getMock();
+		var ac:MockControl = new MockControl(PackageMemberAlgorithm);
+		var a:PackageMemberAlgorithm = ac.getMock();
 		a.execute(i);
 		ac.setReturnValue([c1, p1, c2, c3, p2, p3]);
 		ac.replay();
 		
-		i.setChildAlgorithm(a);
+		i.setPackageMemberAlgorithm(a);
 		
-		assertSame(i.getChildPackageByPackage(cp1), p1);
-		assertSame(i.getChildPackageByPackage(cp2), p2);
-		assertSame(i.getChildPackageByPackage(cp3), p3);
-		assertNull(i.getChildPackageByPackage(new Object()));
+		assertSame(i.getMemberPackageByPackage(cp1), p1);
+		assertSame(i.getMemberPackageByPackage(cp2), p2);
+		assertSame(i.getMemberPackageByPackage(cp3), p3);
+		assertNull(i.getMemberPackageByPackage(new Object()));
 		
 		ac.verify();
 		c1c.verify();

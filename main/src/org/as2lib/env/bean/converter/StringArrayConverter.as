@@ -31,7 +31,7 @@ class org.as2lib.env.bean.converter.StringArrayConverter extends AbstractPropert
 	
 	public function convertPropertyValueByStringValueAndType(value:String, type:Function) {
 		if (type && type != Array) {
-			var array:Array = new [type]();
+			var array:Array = new type();
 			var values:Array = convertPropertyValueByStringValue();
 			for (var i:Number = 0; i < values.length; i++) {
 				array[i] = values[i];

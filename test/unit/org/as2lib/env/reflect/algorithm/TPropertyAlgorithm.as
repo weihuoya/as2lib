@@ -21,7 +21,7 @@ import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PropertyInfo;
-import org.as2lib.env.reflect.CompositeMemberInfo;
+import org.as2lib.env.reflect.PackageMemberInfo;
 
 /**
  * @author Simon Wacker

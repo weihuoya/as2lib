@@ -5,6 +5,17 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="2">
+         <day value="11">
+           <entry type="add" package="org.as2lib.env.reflect" class="PackageMemberFilter">Filters/Excludes package members when searched for by e.g. the PackageInfo.getPackages or PackageInfo.getClasses methods.</entry>
+           <entry type="change" package="org.as2lib.env.reflect" class="ReflectConfig" method="set-/getChildAlgorithm"><change-rename to="set-/getPackageMemberAlgorithm" /></entry>
+           <entry type="change" package="org.as2lib.env.reflect.algorithm" class="ChildAlgorithm"><change-rename to="PackageMemberAlgorithm" /></entry>
+           <entry type="change" package="org.as2lib.env.reflect" class="CompositeMemberInfo"><change-rename to="PackageMemberInfo" /></entry>
+           <entry type="change" package="org.as2lib.env.reflect" class="PackageInfo" method="get-/setChildAlgorithm"><change-rename to="get-/setPackageMemberAlgorithm" /></entry>
+           <entry type="change" package="org.as2lib.env.reflect" class="PackageInfo" method="getChildPackage"><change-rename to="getMemberPackage" /></entry>
+           <entry type="change" package="org.as2lib.env.reflect" class="PackageInfo" method="getChildClass"><change-rename to="getMemberClass" /></entry>
+           <entry type="change" package="org.as2lib.env.reflect" class="PackageInfo" method="getChildPackages"><change-rename to="getMemberPackages" /></entry>
+           <entry type="change" package="org.as2lib.env.reflect" class="PackageInfo" method="getChildClasses"><change-rename to="getMemberClasses" /></entry>
+         </day>
          <day value="9">
            <entry type="add" package="org.as2lib.env.reflect.algorithm" class="ClassAlgorithm" method="executeByName(String):ClassInfo">Returns a class info instance corresponding to the name.</entry>
            <entry type="add" package="org.as2lib.env.reflect" class="TypeInfo" method="getMethodsByFlag(filterSuperTypes:Boolean):Array">Excludes methods of super types when you pass-in true.</entry>

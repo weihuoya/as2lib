@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.reflect.CompositeMemberInfo;
+import org.as2lib.env.reflect.PackageMemberInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.TypeMemberFilter;
 
@@ -24,7 +24,7 @@ import org.as2lib.env.reflect.TypeMemberFilter;
  *
  * @author Simon Wacker
  */
-interface org.as2lib.env.reflect.TypeInfo extends CompositeMemberInfo {
+interface org.as2lib.env.reflect.TypeInfo extends PackageMemberInfo {
 	
 	/**
 	 * Returns the type this TypeInfo instance represents.

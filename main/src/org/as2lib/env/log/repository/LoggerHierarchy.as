@@ -76,7 +76,9 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	 */
 	private function getNormalLoggerFactory(Void):ConfigurableHierarchicalLoggerFactory {
 		var result:ConfigurableHierarchicalLoggerFactory = getBlankConfigurableHierarchicalLoggerFactory();
-		result.getLogger = function(Void):ConfigurableHierarchicalLogger {
+		// Not function(Void) because mtasc compiler complains with the following message:
+		// type error Local variable redefinition : Void
+		result.getLogger = function():ConfigurableHierarchicalLogger {
 			return new SimpleHierarchicalLogger();
 		}
 		return result;
