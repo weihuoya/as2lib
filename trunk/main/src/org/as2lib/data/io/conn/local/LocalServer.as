@@ -120,7 +120,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		
 		if(clients.containsKey(id)) return;
 
-		clients.put(id,new ClientStatusListener(this));
+		clients.put(id,new ClientStatusListener(this,id));
 		eventBroadcaster.dispatch(new ConnectorResponse(getClass().getName()+".addClient on "+id+" with an ClientStatusListener"));
 	}
 	
@@ -128,8 +128,8 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	 * Sends data to clients. The data can include a name of a method and its
 	 * parameters.
 	 */
-	private function dispatch(Void):Void{
-		aOut.debug(getClass().getName()+".dispatch");
+	private function broadcast(Void):Void{
+		aOut.debug(getClass().getName()+".broadcast");
 		
 		if(clients.isEmpty()){
 			eventBroadcaster.dispatch(new ConnectorError(new MissingClientsException("LocalServer has no clients to broadcast !",this,arguments)));
@@ -149,11 +149,11 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		var it:Iterator = clients.iterator();
 		
 		while(it.hasNext()){
-			var listenerObj:Object = it.next();
+			var listenerObj:ClientStatusListener = it.next();
 			var key:String = String(keys.shift());
-			aOut.debug(getClass().getName()+".dispatch: "+listenerObj.getClass().getName()+" @ "+key);
-			//listenerObj.send.apply(null,[key].concat(args));
-			sender.send.apply(this,[key].concat(args));
+			aOut.debug(getClass().getName()+".broadcast: "+listenerObj.getClass().getName()+" @ "+key);
+			sender.send.apply(listenerObj,[key].concat(args));
+			//sender.send.apply(this,[key].concat(args));
 		}
 	}
 	
@@ -239,13 +239,13 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	 * @see initConnection
 	 * @param infoObj  can be used to identify error/ in this case only infoObj.level="error" is possible
 	 */
-	public function onStatus(infoObj){
-		aOut.debug(getClass().getName()+".onStatus: "+infoObj.level);
+	public function statusDispatch(infoObj,id:String){
+		aOut.debug(getClass().getName()+".statusDispatch: "+infoObj.level);
 		if(infoObj.level == "error") {
-			eventBroadcaster.dispatch(new ConnectorError(new MissingClientException("One client doesn´t exist anymore !",this,arguments)));
+			eventBroadcaster.dispatch(new ConnectorError(new MissingClientException("Client "+id+" doesn´t exist anymore !",this,arguments)));
 		}
 		if(infoObj.level == "status") {
-			eventBroadcaster.dispatch(new ConnectorResponse("Broadcast to client was successful!"));
+			eventBroadcaster.dispatch(new ConnectorResponse("Broadcast to client "+id+" was successful!"));
 		}
 	}
 	
@@ -303,7 +303,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		if(m) {
 			method = m;
 			params = a;
-			dispatch();
+			broadcast();
 		}
 	}
 	
