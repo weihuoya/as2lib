@@ -49,7 +49,7 @@
                       </td>
                       <td><img src="../images/seperatorVertical.gif" class="imageSeparatorVertical" alt=""></td>
                       <td class="contentTd">
-                        <h1>Basic Classes (worksheet 0.2)</h1>
+                        <h1>Basic Classes (worksheet 0.3)</h1>
                         For the success of an project with ActionScript 2.0 it is necessary to integrate additional functions that are low-level in Flash.<br>
                         <br>
                         Low-level called in this connection means that many features work in an "usually not suggested" way to handle operations so that other features don't have to use this techniques.<br>
@@ -71,10 +71,19 @@
                             <td><a href="#EventHandling" title="Handling Events from classes">Event Handling</a></td>
                           </tr>
                           <tr>
-                            <td>Typed Array (to come)</td>
+                            <td><a href="#TypedArray" title="To make sure all contents are from the same type">Typed Array</a></td>
                           </tr>
                           <tr>
-                            <td>Overloading (to come)</td>
+                            <td><a href="#Cloning" title="Cloning of Objects">Cloning</a></td>
+                          </tr>
+                          <tr>
+                            <td><a href="#Overloading" title="Overloading Support for Methods">Overloading</a></td>
+                          </tr>
+                          <tr>
+                            <td><a href="#TestCases" title="System testing with TestCases">Test Cases</td>
+                          </tr>
+                          <tr>
+                            <td><a href="#RegExp" title="Regular Expression Handling within as2">Regular Expressions</a></td>
                           </tr>
                         </table>
                         <ol class="conceptList">
@@ -91,8 +100,18 @@
                                   <li><h4>.write([String])</h4>
                                     To Write stuff out. (equally to Trace)
                                   </li>
-                                  <li><h4>.error([Exception])</h4>
-                                    Exceptions are usually not available in an .swf, this should declare them as Exception.
+                                  <li><a name="OutputHandling.error"></a><h4>.error([Exception])</h4>
+                                    Exceptions are usually not available in an .swf, this should declare them as Exception. This method should ensure that the given Exceptions get well printed. <br>
+                                    I suppose that an "TraceOutput" would handle it like:<code>...
+public function error (e:Exception) {
+  trace(" -- Error Occured -- ");
+  trace("    Name: "+e.getClass().getName();
+  trace("    Message: "+e.getMessage();
+  trace("    StackInformation: "+e.getInformation();
+  // and so on.
+  // (Only possible example)
+}
+...</code> and different other System's would display it maybe in an JavaScript Window or they hide some fields, or evaluate different more.
                                   </li>
                                   <li><h4>.log([String])</h4>
                                     Log's differ from usually Output that it's not necessary for developing (you don't need to see them).
@@ -115,6 +134,7 @@
 (4) 100 = Warnings showing.</pre>
 and each combinition:
 <pre>(7) 111 = Complete Output</pre>
+                                 <p class="note">Note: This Issue will probably get changed during the development.</p>
                               </li>
                               <li><h3>Exception Handling</h3>
                                 Exceptions shall be thrown when ...
@@ -139,14 +159,19 @@ and each combinition:
                                 Within as2 its not with the standard possible to fetch the name from an exception. Using <a href="#ReflectionHandling" title="Handling informations for classes">Reflections</a> we won't be used to this anymore. The Exception class should set its .name with the help from <a href="#ReflectionHandling" title="Handling informations for classes">Reflections</a> self.
                               </li>
                               <li><h3>Output problem</h3>
-                                The standard output when an exception occurs is in as2 very "small-sized". The Standardoutput should only be improved in case to have an little better solution (for example:<code>[Exception WrongArgumentsException]</code>). Of course, using this way won't be very nice to view an exception. To really put out an Exception the Exception should redirect itself to the <a href="#OutputHandling" title="StandardOutput Device defined by this project">OutputInterface</a>. This should handle the Exception. There should be an possibility for preventing this functionality but i don't see bigger problems with that (mail to me if think there is an problems with that:<a href="mailto:mastakaneda@sourceforge.net" title="Martin Heidegger">mastakaneda@sourceforge.net</a>)
+                                The standard output when an exception occurs is in as2 very "small-sized". The as2 internal .toString() should only be improved in case to have an little better solution (for example:<code>[Exception WrongArgumentsException]</code>). Of course, using this way won't be very nice to view an exception. To really put out an Exception the Exception should redirect itself to the <a href="#OutputHandling.error" name="Error handling within the standard output system">Outputhandling</a> by using something like<code>...
+public function toString () {
+  org.as2lib.Out.error(this); // Everything next is up to the Output implementation.
+  return "[Exception "+getClass().getName()+"]";
+}
+...</code>. There should be an possibility for preventing this functionality but i don't see bigger problems with that (mail to me if think there is an problems with that:<a href="mailto:mastakaneda@sourceforge.net" title="Martin Heidegger">mastakaneda@sourceforge.net</a>)
                               </li>
                               <li><h3>Exception Conversion</h3>
                                 You might have the used case that an Exception from type "a" that has been thrown should be transformed to a exception from type "b".<br>
                                 <br>
                                 It should be a quite comfortable way if an exception handles this with an standard function.
                                 <code>myException.convertTo(org.as2lib.basic.exceptions.WrongArgumentsException);</code>
-                                <p class="note">Note: Java handles this with an overloaded constructor. Quite not a fine way for as2.</p>
+                                <p class="note">Note: Java handles this with an overloaded constructor(one using message, another one using another exception for the information). Quite not a fine way for as2, but i will maybe change my opinion by response.</p> 
                               </li>
                               <li><h3>Spoken in Code</h3>
                                 <ul>
@@ -213,7 +238,7 @@ ReflectionObject.getVars():Array</code>
                             For generic eventhandling there will be a (abstract) class <code>org.as2lib.basic.EventableElement extends BasicObject</code> to handle general events. This class will not have ANY public method. But this class should be based on the EventDispatcher by Macromedia.<br>
                             <br>
                             This class will provide the functionality to register and fire generic events by <code>.addEventListener(object, "event");
-.removeEventHandler(object, "event");</code>
+.removeEventListener(object, "event");</code>
                             <h3>Eventrule for Using</h3>
                             For cute Handling of this code the Workflow will have to look like this:
                             <ol>
@@ -248,70 +273,123 @@ ReflectionObject.getVars():Array</code>
                             <h3>Why so complicated?</h3>
                             This is actually the best way to ensure that a function is really available and it finally reduces the operation speed of eventhandling by a better Code Handling.
                             Of Course this way isn't perfect. It will maybe get changed within an future worksheet by an better idea, but actually i see no different possibility.
+                            <h3>Different access</h3>
+                            Well, first previewable Problem will be that one class is not able to extend this Eventhandler, because it has already extended on class.
+                            The simplest way to allow this way is to get an Eventhandler as instance.
+                            <code>function MyClass () {
+  this.eventHandler = new org.as2lib.basic.EventHandler();
+}</code>
+                            And the rest works as used only with "this.eventhandler.addEventListener()" instead of "this.addEventListener()". The only problem ist that we have already the abstract class, so this class has to be an own extension:<code>class org.as2lib.basic.EventHandlerUseable extends org.as2lib.basic.EventHandler /* Names not fixed */ {
+  public function addHandler( ... ) {
+    return(this.addEventHandler( ... ));
+  }
+  ... // or similar
+}</code>
+                            <p class="note">Note: this Issue might change a little. (naming and real functionality)</p>
                           </li>
-                          <li><a name="TypedArray"></a><h2>Typed Array (to come)</h2>
+                          <li><a name="TypedArray"></a><h2>Typed Array</h2>
+                            A typical problem using as2 is that an Array might have one or more types within an Array, in most cases, this is very problematic, especially when you want to publish your classes (within a team or generally), because other people can easily create chaos when they don't watch. 
+                            <h3>Where to find?</h3>
+                            Of course we need an Class you will find it at org.as2lib.basic.TypedArray. This class will use the as2 Array class and uses all Methods like Array as an Bridge. It should not be possible to directly set/get an Value like <code>#
+myArray = new Array();
+myArray["name"] = "bunny";</code> because the Compiler would not check it. We cant prevent this (the compiler completly blows it). But at least we can bind ( by not using an dynamic class, like Array is) that <code>
+myArray.name = "bunny"</code> will not work.
+                            <h3>Typedefinition</h3>
+                            The type of an Array should be defined within the constructor. Infact the Type should be the hole lifetime the same.<code>new TypedArray(org.as2lib.basic.Exception)</code>
+                            <h3>Typeinsurance</h3>
+                            We have an "not-dynamic" Class. So there must be methods for adding an value within this array with an name.
+                            <ul>
+                              <li>validation: <code>public function checkType(value) {
+  if(value instanceof this.type) {
+    return(this.type);
+  } else {
+    throw new org.as2lib.basic.exceptions.WrongTypeException("The given Value doesn't match to the Array's type");
+  }
+}</code></li>
+                              <li>setting: <code>public function setValue(name:String, to) {
+  this.internalArray[name] = checkType(to);
+}</code></li>
+                              <li>getting: <code>public function getValue(name:String) {
+  return(this.internalArray[name])
+}</code></li>
+                            </ul>
+                            <h3>Bridge Functionality</h3>
+                            Even the validation and the setting/getting of values are almost simple bridge functionalities. Different Methods like "sort, push, pop, ...." can surly be simple ported.
                           </li>
-                          <li><a name="Overloading"></a><h2>Overloading (to come)</h2>
+                          <li><a name="Cloning"></a><h2>Cloning</h2>
+                            Cloning like in Java would run with an simple Interface that defines "this class is cloneable"(this will also exist in our case). Of course this interface should be shurly used by us too but also it as2 allows us an generic clone.
+                            <h3>Idea</h3>Often it's complicating that the compiler won't check all possibilities and no exceptions won't be thrown (even if the developer does really bad stuff). But it gives us the possibilty for simple using the objects constructor and proto to make a real clone with that. One &quot;for(in)&quot; loop could handle all that.                            <h3>Location</h3>
+                            Of course it's basic functionality like <a href="#ReflectionHandling" title="Basically Stuff for Classhandling with Reflections">Reflections</a> so this should be also in the "BasicClass" that all other extend as ".clone()" Method.
+                            <h3>Access points</h3>
+                            The code/handling should be in an Util class &quot;org.as2lib.basic.Helper&quot;(or something like that)
+                            <h3>Complete cloning</h3>
+                            Sometimes it is a real problem that cloning only clones one level. There should be additionally an Method to clone the complete tree &quot;.cloneComplete&quot; which is defined as &quot;Chain of Responsibility&quot; (Design Pattern) this simply uses &quot;.cloneComplete&quot; recursivly (okay it's a little more difficult).
+                            <p class="note">Note: Interfaces (specially small one) make problems with casting, therefore this won't be available within an interface.</p>
+                          </li>
+                          <li><a name="Overloading"></a><h2>Overloading</h2>
+                            Of course we all should avoid overloading as good as possible, it's not beautiful that as2 doesn't support it but its logical and we have all to live with it. The "standard-way" of using overloading is pretty ugly combined with a lot of if's and code. So we decided to support this feature.
+                            <h3>Target</h3>
+                            Maybe the future presets for us a as2 that supports overloading, but not now. But we should be prepared for that, so each possibility should be defined in its own function:
+                            <code>public function doSomethingWay1() {
+}
+public function doSomethingWay2() {
+}</code>
+                            In this case it will be nice in future to change it to a supported overloading. The second thing is that this can be well documented. But this means an Separation for this overloading would look like this:
+                            <code>public function doSomething() {
+  if(arguments[0] instanceOf Home) {
+    doSomethingWay1(arguments[0], arguments[1]);
+  } else {
+    doSomethingWay2(arguments[0]);
+  }
+}</code>
+                            This is everytime a new challenge for the developer and may cause a lot of problems. Because if you want to check all you have unreadable code, a source for errors and maybe unchecked causes (what if the arguments don't match any case?!). Here is where we want to bring our part into the game. We should provide a functionality that handles these switch automatically. This functionality should be provide the same way like the Reflections: within the basic class and as util. There you should only use a predefined method for that:
+                            <code>public function doSomething() {
+  overload (
+    arguments,
+    createOverloadHandler([String, Number], "doSomethingWay1"),
+    createOverloadHandler([String], "doSomethingWay2")
+  );
+}</code>
+                            <p class="note">Note: This is not the final code! The Syntax might change!<br>
+                            Note 2: "this." Keyword is not important, it will be set by the compiler.<br>
+                            Note 3: createOverloadHandler returns an OverloadHandler Instance from the Utils Class.
+                            </p>
+                            <h3>Wrong calls</h3>
+                            A wrong call is a wrong call if it's size and it's types have no match. In this case, an exception will be thrown.
+                            <h3>Public Access</h3>
+                            The public Access over the Util Class will look like:<code>import org.as2lib.basic.BasicUtil;
+ ...
+ public function doSomething() {
+   BasicUtil.overload (
+     this,
+     arguments,
+     BasicUtil.createOverloadHandler([String, Number], "doSomethingWay1"),
+     BasicUtil.createOverloadHandler([String], "doSomethingWay2")
+   );
+ }</code>So the complete Handling will work even if the basic Class can't be extended.
+                           <h3>Possible Extension</h3>
+                           There could be a possible Extension to insert Wildcards where an (un)-limited part of vars from a type can follow. (future release)
+                          </li>
+                          <li><a name="TestCases"></a><h2>Test Cases</h2>
+                            After a lot discussion we decided to use our own test system instead of the <a href="http://www.as2unit.org" title="Testcases by iteration:two">as2unit</a>, specially because they use components and don't support a lot of methods.
+                            <h3>What are Testcases</h3>
+                            A Testcase is a Class/Method that checks a different method if it works correctly. A Developer has to write a Testcase alone for his class, a Testcase system has to provide the functionality for automated testing
+                            <h3>What we do like other systems</h3>
+                            We have (like all other System too) a basic Class that should be extended. This class will support different functionalities to compare values and define wether a testcase failed or not (for example: assertEquals(), assertTrue() etc.). For all this functionality there should be a inverse functionality to check the difference (example: assertNotEquals(), assertFalse(), etc.).<br>Usually a TestcaseSystem works with overloading, but in fact, we decided to use this as rare as posible so each method should have an additional method to provide an message to the failure (for example: assertTrueWithMessage(), assertFalseWithMessage(), etc.). <p class="note">Note: with as2unit you have also to make different notations to the testcase itself, we will avoid this.</p>
+                            <h3>Running Code</h3>
+                            To run Testcases you should not have to do two different things(as as2unit has). Developers should be able to start a testcase within an call(not add a whole component to the stage). This should work with &lt;basicClass&gt;.run(&quot;&lt;path&gt;&quot;) this way is usual and simple but within flash it doesn't compile the testcase if you use an string. So we will provide a second access to run an testcase seperatly with &lt;basicClass&gt;.runClass(&lt;path&gt;) so the Class itself will be compiled because it is defined as is within the call.
+                            <h3>Handling Output</h3>
+                            The Output Handling should run over the standard OutputHandling. Simple Text Output to Asccii graphics. Another difference to other testsystems should be defined by displaying more details within the result (like which testcases were found and which work correctly), mostly because it's often not clear whether a testcase is found or not.
+                          </li>
+                          <li><a name="RegExp"></a><h2>Regulary Expressions</h2>
+                            Regulary Expression might count to the StringUtils but in my opinion Regulary Expressions can handle a lot and improve the work well, so i put it to the Basic Concept.<br>
+                            <h3>What are Regulary Expressions?</h3>
+                            Regulary Expressions are a simple but mighty way to search within Strings. JavaScript supports Regulary Expressions well and i got no idea why flash not.
+                            <h3>How will they be supported?</h3>
+                            Support will come within an Util Class. One Accesspoint (at least) will handle a Regulary Expression. Further details will come during real concept and Worksheet for this.
+                            <p class="note">Note: This has the lowest priority.</p>
                           </li>
                         </ol>
-                        
-                       
-                        
-                        <!--
-                        System.out(); -> this.outputHandler.out();
-                        System.error() -> this.outputHandler.error();
-                        System.warning() -> this.outputHandler.warning();
-                        System.alert() -> this.outputHandler.alert();
-                        System.log() -> this.outputHandler.log();
-                        System.setOutputLevel();
-                        System.setOutputHandler();
-                        
-                        Exception(); // finer way for "Error"
-                        Warning(); // Similar to Exception but not so accurat
-                        LogEntry(); // Has Informations about the Log Entry. (messge, date, class, and so on)
-                        Alert(); // Has Informations about the Alert (message,
-                        
-                        OutputHandler();
-                        OutputHandler.error([Exception]); // To Trace Errors
-                        OutputHandler.warning([Warning]); // To Trace Warnings
-                        OutputHandler.log([LogEntry]); // To Log information
-                        OutputHandler.alert([Alert]); // To alert mighty stuff
-                        OutputHandler.out([String]); // To trace Output Informations.
-                        
-                        Observer[EventableElement](); // Observer Pattern ?!
-                        
-                        File(); // Filereader based by the XML Object
-                        File.load(useFileHandler[FileHandler]);
-                        
-                        FileHandler(); // Handlerinterface for using Files
-                        FileHandler.setPercentLoaded();
-                        FileHandler.useFileString();
-                        
-                        Reflections.getMethods([Object]);
-                        Reflections.getClassMethods([Function]);
-                        Reflections.getClass([Object]);
-                        Reflections.getClassName([Object]);
-                        Reflections.getExtendedClass([Function]);
-                        Reflections.getReferences();
-                        Reflections.deleteAllReferences();
-                        
-                        VisibleElement(); // Dazu müsste man Roman abhandeln ... 
-                        
-                        Session(); // Erweiterte Map ?! -> 4.
-                        Session.put();
-                        Session.get();
-                        
-                        Testcase(); // System for Testcases.
-                        
-                        -- > Jetzt noch Basisklassen(utilklassen) die nötig wären
-                        
-                        Map();
-                        Map.put([name], [value]);
-                        Map.get([name]);
-                        
-                        Iterator();
-                        
-                        Enumeration(); -->
                       </td>
                     </tr>
                   </table>
@@ -321,12 +399,4 @@ ReflectionObject.getVars():Array</code>
               <tr>
                 <td><img src="../images/borderBottomLeft.gif" alt="" class="imageBorderBottomLeft"></td>
                 <td><img src="../images/borderBottomCenter.gif" alt="" class="imageBorderBottomCenter"></td>
-                <td><img src="../images/borderBottomRight.gif" alt="" class="imageBorderBottomRight"></td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-    </center>
-  </body>
-</html>
+                <td><img src="../images/borderBottomRight.gif" alt=""
