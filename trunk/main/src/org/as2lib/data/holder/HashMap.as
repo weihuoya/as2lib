@@ -82,16 +82,16 @@ class org.as2lib.data.holder.HashMap extends BasicClass implements Map {
 	 * @see org.as2lib.data.holder.Map#put()
 	 */
 	public function put(key, value) {
-		var result = null;
-		var i:Number = findKey(key);
-		if(i != -1) {
-			result = values[i];
-			values[i] = value;
-		} else {
+		var i:Number = findKey(key); 
+		if(i == -1) {
 			keys.push(key);
 			values.push(value);
+			return null;
+		} else {
+			var result = values[i];
+			values[i] = value;
+			return result;
 		}
-		return result;
 	}
 	
 	/**
@@ -118,14 +118,15 @@ class org.as2lib.data.holder.HashMap extends BasicClass implements Map {
 	 * @see org.as2lib.data.holder.Map#remove()
 	 */
 	public function remove(key) {
-		var result = null;
 		var i:Number = findKey(key);
-		if(i!=-1) {
-			result = values[i];
+		if(i==-1) {
+			return null;
+		} else {
+			var result = values[i];
 			values.splice(i, 1);
 			keys.splice(i, 1);
+			return result;
 		}
-		return result;
 	}
 	
 	/**
