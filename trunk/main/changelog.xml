@@ -6,6 +6,8 @@
     <year value="2005">
        <month value="3">
          <day value="4">
+           <entry type="add" package="org.as2lib.env.log.handler" class="Bit101Handler">Handler support for Bit-101 Flash Debug Panel.</entry>
+           <entry type="add" package="org.as2lib.env.log.logger" class="Bit101Logger">Logger support for Bit-101 Flash Debug Panel.</entry>
            <entry type="add" package="org.as2lib.env.log.repository" class="AscbLoggerRepository">Ascb repository support.</entry>
          </day>
          <day value="3">
