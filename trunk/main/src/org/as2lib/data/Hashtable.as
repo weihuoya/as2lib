@@ -67,7 +67,7 @@ class org.as2lib.data.Hashtable implements Map {
 	}
 	
 	public function iterator(Void):Iterator {
-		return new HashtableIterator(this);
+		return (new HashtableIterator(this));
 	}
 	
 	public function size(Void):Number {
@@ -79,9 +79,11 @@ class org.as2lib.data.Hashtable implements Map {
 	}
 	
 	private function findValue(value:Object):Number {
-		for (var i:Number = 0; i < size(); i++)
-			if (values[i] == value)
+		for (var i:Number = 0; i < size(); i++) {
+			if (values[i] == value) {
 				return i;
+			}
+		}
 		return -1;
 	}
 	
