@@ -6,7 +6,7 @@
  */
 class org.as2lib.basic.out.level.Info extends Warning {
 	/**
-	 * @see org.as2lib.basic.out.Level
+	 * @see org.as2lib.basic.out.OutLevel
 	 */
 	public function info(message:String):Void {
 	}
