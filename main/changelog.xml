@@ -6,6 +6,8 @@
     <year value="2005">
        <month value="3">
          <day value="1">
+           <entry type="add" package="org.as2lib.env.log.handler" class="FlashoutHandler">Handler support for Flashout.</entry>
+           <entry type="add" package="org.as2lib.env.log.logger" class="FlashoutLogger">Logger support for Flashout.</entry>
            <entry type="remove" package="org.as2lib.env.log" class="Logger" method="getLevel">Unbinds the general interface from the 'LogLevel' class.</entry>
            <entry type="remove" package="org.as2lib.env.log" class="Logger" method="log">Unbinds the general interface from the 'LogLevel' class.</entry>
            <entry type="remove" package="org.as2lib.env.log" class="Logger" method="isEnabled">Unbinds the general interface from the 'LogLevel' class.</entry>
