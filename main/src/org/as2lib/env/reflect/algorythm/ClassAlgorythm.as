@@ -6,6 +6,7 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.ReferenceNotFoundException;
 
 /**
  * ClassAlgorythm searches for the class of a specific instance and returns a
@@ -26,6 +27,11 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 	public function execute(object):CacheInfo {
 		info = null;
 		findAndStore(cache.getRoot(), object);
+		if (ObjectUtil.isEmpty(info)) {
+			throw new ReferenceNotFoundException("The class corresponding to the instance [" + object + "] could not be found.",
+												 this,
+												 arguments);
+		}
 		return info;
 	}
 	
