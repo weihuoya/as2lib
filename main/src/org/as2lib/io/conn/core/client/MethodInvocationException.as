@@ -19,8 +19,8 @@ import org.as2lib.io.conn.ConnectionException;
 /**
  * Signals that a method has been called incorrectly.
  * 
- * @author Christoph Atteneder
  * @author Simon Wacker
+ * @author Christoph Atteneder
  */
 class org.as2lib.io.conn.core.client.MethodInvocationException extends ConnectionException {
 	

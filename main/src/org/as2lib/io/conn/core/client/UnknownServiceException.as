@@ -17,8 +17,10 @@
 import org.as2lib.io.conn.ConnectionException;
 
 /**
- * @author Christoph Atteneder
+ * Gets thrown if you try to operate on a service that does not exist.
+ *
  * @author Simon Wacker
+ * @author Christoph Atteneder
  */
 class org.as2lib.io.conn.core.client.UnknownServiceException extends ConnectionException {
 	

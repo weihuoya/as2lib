@@ -148,7 +148,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Abs
 	
 	/**
 	 * Returns a client service proxy that can be typed to the passed-in
-	 * type.
+	 * type (class or interface).
 	 *
 	 * <p>The type is therefore normally the type of the 'remote' service
 	 * you wanna call methods on.

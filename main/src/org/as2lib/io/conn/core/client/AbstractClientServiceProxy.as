@@ -16,9 +16,13 @@
  
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.conn.core.event.MethodInvocationCallback;
 
 /**
+ * Offers default implementations of some methods needed when implemnting
+ * the ClientServiceProxy interface.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicClass {
@@ -26,12 +30,22 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicCla
 	/**
 	 * Generates response urls with passed service url and method name.
 	 *
-	 * @param connectionName name of response LocalConnection
-	 * @param method method to be called on response
-	 * @return generated response identifier
+	 * <p>The response url gets composed as follows:
+	 * [serviceUrl]_[methodName]_Return
+	 *
+	 * <p>If the methodName is null, undefined or an empty string it will
+	 * be composed as follows:
+	 * [serviceUrl]_Return
+	 *
+	 * @param serviceUrl the url to the service
+	 * @param methodName the responsing method
+	 * @return the generated response url
+	 * @throws IllegalArgumentException if the passed-in service url is null, undefined or an empty stirng
 	 */
-	public static function generateResponseServiceUrl(url:String, method:String):String {
-		return  url + "_" + method + "_Return";
+	public static function generateResponseUrl(serviceUrl:String, methodName:String):String {
+		if (!serviceUrl) throw new IllegalArgumentException("Service url must not be null, undefined or an empty string.");
+		if (!methodName) return serviceUrl + "_Return";
+		return serviceUrl + "_" + methodName + "_Return";
 	}
 	
 	/**
@@ -41,7 +55,11 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicCla
 	}
 	
 	/**
-	 * @see ClientServiceProxy#invoke()
+	 * @overload #invokeByName(String):MethodInvocationCallback
+	 * @overload #invokeByNameAndArguments(String, Array):MethodInvocationCallback
+	 * @overload #invokeByNameAndCallback(String, MethodInvocationCallback):MethodInvocationCallback
+	 * @overload #invokeByNameAndArgumentsAndCallback(String, Array, MethodInvocationCallback):MethodInvocationCallback
+	 * @see ClientServiceProxy#invoke():MethodInvocationCallback
 	 */
 	public function invoke():MethodInvocationCallback {
 		var o:Overload = new Overload(this);
@@ -53,17 +71,23 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicCla
 	}
 	
 	/**
-	 * @see ClientServiceProxy#invokeByName()
+	 * Forwards to the invokeByNameAndArguments-method passing an empty
+	 * argumetns array.
+	 *
+	 * @see ClientServiceProxy#invokeByName(String):MethodInvocationCallback
 	 */
-	public function invokeByName(name:String):MethodInvocationCallback {
-		return this["invokeByNameAndArguments"](name, []);
+	public function invokeByName(methodName:String):MethodInvocationCallback {
+		return this["invokeByNameAndArguments"](methodName, []);
 	}
 	
 	/**
-	 * @see ClientServiceProxy#invokeByNameAndCallback()
+	 * Forwards to the invokeByNameAndArgumentsAndCallback-method passing an
+	 * empty argumetns array.
+	 *
+	 * @see ClientServiceProxy#invokeByNameAndCallback(String, MethodInvocationCallback):MethodInvocationCallback
 	 */
-	public function invokeByNameAndCallback(name:String, callback:MethodInvocationCallback):MethodInvocationCallback {
-		return this["invokeByNameAndArgumentsAndCallback"](name, [], callback);
+	public function invokeByNameAndCallback(methodName:String, callback:MethodInvocationCallback):MethodInvocationCallback {
+		return this["invokeByNameAndArgumentsAndCallback"](methodName, [], callback);
 	}
 	
 }

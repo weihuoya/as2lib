@@ -18,55 +18,68 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.io.conn.core.event.MethodInvocationCallback;
 
 /**
- * Interface for standardized ClientServiceProxys to handle client requests to a
- * certain service on a server and its response.
+ * ClientServiceProxy handles client requests to a certain service and
+ * its response.
  *
- * @author Christoph Atteneder
  * @author Simon Wacker
+ * @author Christoph Atteneder
  */
 interface org.as2lib.io.conn.core.client.ClientServiceProxy extends BasicInterface {
 	
 	/**
-	 * @overload #invokeByName()
-	 * @overload #invokeByNameAndArguments()
-	 * @overload #invokeByNameAndCallback()
-	 * @overload #invokeByNameAndArgumentsAndCallback()
+	 * @overload #invokeByName(String):MethodInvocationCallback
+	 * @overload #invokeByNameAndArguments(String, Array):MethodInvocationCallback
+	 * @overload #invokeByNameAndCallback(String, MethodInvocationCallback):MethodInvocationCallback
+	 * @overload #invokeByNameAndArgumentsAndCallback(String, Array, MethodInvocationCallback):MethodInvocationCallback
 	 */
 	public function invoke():MethodInvocationCallback;
 	
 	/**
-	 * Invokes the given method by name passing no arguments.
+	 * Invokes the passed-in method on the service.
 	 *
-	 * @param name the name of the method to be invoked
+	 * @param methodName the name of the method to invoke
+	 * @return a callback that can be used to get informed of the response
 	 */
-	public function invokeByName(name:String):MethodInvocationCallback;
+	public function invokeByName(methodName:String):MethodInvocationCallback;
 	
 	/**
-	 * Invokes the given method by name passing the given arguments.
+	 * Invokes the passed-in method passing the given arguments.
 	 *
-	 * @param name the name of the method to be invoked
+	 * @param methodName the name of the method to invoke
 	 * @param args the arguments to be passed to the method
+	 * @return a callback that can be used to get informed of the response
 	 */
-	public function invokeByNameAndArguments(name:String, args:Array):MethodInvocationCallback;
+	public function invokeByNameAndArguments(methodName:String, args:Array):MethodInvocationCallback;
 	
 	/**
-	 * Invokes the given method by name passing no arguments. When the result
-	 * gets returned the appropriate method on MethodInvocationCallback passing the
-	 * result will be invoked.
+	 * Invokes the passed-in method on the service.
 	 *
-	 * @param name the name of the method to be invoked
-	 * @param callback the call to receive the response or possible failures
+	 * <p>When the response arrives the appropriate callback method gets
+	 * invoked.
+	 *
+	 * <p>If the passed-in callback is not null, the returned callback
+	 * should be the same.
+	 *
+	 * @param methodName the name of the method to invoke
+	 * @param callback the callback that receives the return value or errors
+	 * @return a callback that can be used to get informed of the response
 	 */
-	public function invokeByNameAndCallback(name:String, callback:MethodInvocationCallback):MethodInvocationCallback;
+	public function invokeByNameAndCallback(methodName:String, callback:MethodInvocationCallback):MethodInvocationCallback;
 	
 	/**
-	 * Invokes the given method by name passing the given arguments. When the result
-	 * arrives the appropriate method in MethodInvocationCallback passing the result will
-	 * be invoked.
+	 * Invokes the passed-in method on the service, passing the arguments.
 	 *
-	 * @param name the name of the method to be invoked
-	 * @param call the callback to receive the response or possible failures
+	 * <p>When the response arrives the appropriate callback method gets
+	 * invoked.
+	 *
+	 * <p>If the passed-in callback is not null, the returned callback
+	 * should be the same.
+	 *
+	 * @param methodName the name of the method to be invoked
+	 * @param args the arguments to pass to the method
+	 * @param callback the callback to receive the response or possible failures
+	 * @return a callback that can be used to get informed of the response
 	 */
-	public function invokeByNameAndArgumentsAndCallback(name:String, args:Array, callback:MethodInvocationCallback):MethodInvocationCallback;
+	public function invokeByNameAndArgumentsAndCallback(methodName:String, args:Array, callback:MethodInvocationCallback):MethodInvocationCallback;
 	
 }

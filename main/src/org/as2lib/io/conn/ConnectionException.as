@@ -17,6 +17,12 @@
 import org.as2lib.env.except.Exception;
 
 /**
+ * ConnectionException is the super exception of all exceptions that have
+ * to do with connections.
+ *
+ * <p>Every exception contained in this or any subpackage extend this
+ * exception.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.io.conn.ConnectionException extends Exception {

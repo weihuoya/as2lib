@@ -18,20 +18,21 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.io.conn.core.server.ServerServiceProxy;
 
 /**
- * Interface for standardized Servers.
+ * Server acts as a composite for for many services that all get combined
+ * in one domain.
  *
- * @author Christoph Atteneder
  * @author Simon Wacker
+ * @author Christoph Atteneder
  */
 interface org.as2lib.io.conn.core.server.Server extends BasicInterface {
 	
 	/**
-	 * Starts added services.
+	 * Runs the server and all added services.
 	 */
 	public function run(Void):Void;
 	
 	/**
-	 * Stops added services.
+	 * Stops all added services and the server.
 	 */
 	public function stop(Void):Void;
 	
@@ -40,21 +41,22 @@ interface org.as2lib.io.conn.core.server.Server extends BasicInterface {
 	 * 
 	 * @param path the path through which the service can be accessed on the server
 	 * @param service the actual service which provides the functionalities
+	 * @return the service proxy that wraps the passed-in service and path
 	 */
 	public function putService(path:String, service):ServerServiceProxy;
 	
 	/**
-	 * Adds the service already wrapped into a proxy to the server.
+	 * Adds the service that is already wrapped into a proxy to the server.
 	 *
-	 * @param proxy the proxy to be added to the server
+	 * @param serviceProxy the proxy to be added to the server
 	 */
-	public function addService(proxy:ServerServiceProxy):Void;
+	public function addService(serviceProxy:ServerServiceProxy):Void;
 	
 	/**
 	 * Removes the appropriate service from the server.
 	 *
 	 * @param path the full path of the service
-	 * @return a ServerServiceProxy instance wrapping the original service
+	 * @return a service proxy wrapping the original service
 	 */
 	public function removeService(path:String):ServerServiceProxy;
 	
@@ -62,7 +64,7 @@ interface org.as2lib.io.conn.core.server.Server extends BasicInterface {
 	 * Returns an added service.
 	 *
 	 * @param path the full path of the service
-	 * @return a ServerServiceProxy instance wrapping the original service
+	 * @return a service proxy wrapping the original service
 	 */
 	public function getService(path:String):ServerServiceProxy;
 	
@@ -76,7 +78,7 @@ interface org.as2lib.io.conn.core.server.Server extends BasicInterface {
 	/**
 	 * Returns whether the server is running.
 	 * 
-	 * @return true if the server is running
+	 * @return true if the server is running else false
 	 */
 	public function isRunning(Void):Boolean;
 	
