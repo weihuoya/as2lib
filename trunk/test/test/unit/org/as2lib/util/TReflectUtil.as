@@ -27,12 +27,12 @@ class test.org.as2lib.util.TReflectUtil extends Test {
 	}
 	
 	public function testGetClassInfo(Void):Void {
-		trace (subInfo === getClassInfo(sub));
-		trace (superInfo === subInfo.getSuperClass());
+		assertEqualsWithMessage ("Inconsitence: Subinfo is not consistent", subInfo, getClassInfo(sub));
+		assertEqualsWithMessage ("Inconsitence: getSuper() does not return the correct SuperInfo", superInfo, subInfo.getSuperClass());
 	}
 	public function testGetPackageInfo(Void):Void {
-		trace (packageInfo === getPackageInfo(package));
-		trace (packageInfo === subInfo.getParent());
+		assertEqualsWithMessage ("Inconsitence: Packageinfo is not consistent", packageInfo, getPackageInfo(package));
+		assertEqualsWithMessage ("Inconsitence: Subpackage does not return the main Package as parent Package", packageInfo, subInfo.getParent());
 		
 	}
 	
