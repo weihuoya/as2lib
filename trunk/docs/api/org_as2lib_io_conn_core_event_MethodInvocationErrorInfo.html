@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_event_EventInfo.html">EventInfo</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_env_event_EventInfo.html">EventInfo</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,18 +31,15 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.io.conn.core.event.MethodInvocationErrorInfo</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Friday, 07 January 2005, 02:18:52</span>
+              <li><span class="title">File last modified: </span><span class="value">Thursday, 24 March 2005, 23:15:02</span>
               </li>
             </ul>
           </div>
         </div>
         <div class="classDescription"><div class="descriptionSummary">MethodInvocationErrorInfo gets used to inform the client of an error
-
- that occured during a method invocation.<p>It defines constants, that can be used to identify what kind of
-
- error occured.<p>This class gets used in conjunction with the MethodInvocationCallback
-
- and MethodInvocationErrorListener classes. </div></div>
+ that occured during a method invocation. </div><p>It defines constants, that can be used to identify what kind of
+ error occured.<p>This class gets used in conjunction with the <a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a>
+ and <a href="org_as2lib_io_conn_core_event_MethodInvocationErrorListener.html">MethodInvocationErrorListener</a> classes.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
@@ -62,25 +66,6 @@
                 </li>
                 <li>
                   <a href="#METHOD_EXCEPTION_ERROR">METHOD_EXCEPTION_ERROR</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#serviceUrl">serviceUrl</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#methodName">methodName</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#methodArguments">methodArguments</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#errorCode">errorCode</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#exception">exception</a>
                 </li>
               </ul>
             </div>
@@ -120,28 +105,28 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="MethodInvocationErrorInfo" id="MethodInvocationErrorInfo"></a>
           <div class="method hasBottomDivider">
-            <h3>MethodInvocationErrorInfo</h3>
+            <h3 id="MethodInvocationErrorInfo">MethodInvocationErrorInfo</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>MethodInvocationErrorInfo</b> (
+                <div class="floatbox code">function <b>MethodInvocationErrorInfo</b> (
 
 
 
 
 </div>
-                <div class="code">serviceUrl:String,
+                <div><span class="code">serviceUrl:String,
 methodName:String,
 methodArguments:Array,
 errorCode:Number,
-exception)</div>
+exception)</span>
+                </div>
               </div>
             </div>
             <div class="description">Constructs a new MethodInvocationErrorInfo instance.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">serviceUrl     <span class="separator">:</span></div>
                     <div>the url to the service the method should be or was invoked on</div>
@@ -169,249 +154,196 @@ exception)</div>
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Class properties</h2>
-          <a name="METHOD_EXCEPTION_ERROR" id="METHOD_EXCEPTION_ERROR"></a>
           <div class="method hasBottomDivider">
-            <h3>METHOD_EXCEPTION_ERROR</h3>
+            <h3 id="METHOD_EXCEPTION_ERROR">METHOD_EXCEPTION_ERROR</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">static <b>METHOD_EXCEPTION_ERROR</b>:Number
+                <div class="floatbox code">static <b>METHOD_EXCEPTION_ERROR</b>:Number = <span class="codeNumber">4</span>
 </div>
-                <div class="code"></div><span class="access">(read,write)</span>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
               </div>
             </div>
             <div class="description">Indicates that the service method to be invoked threw an exception.</div>
           </div>
-          <a name="OVERSIZED_ARGUMENTS_ERROR" id="OVERSIZED_ARGUMENTS_ERROR"></a>
           <div class="method hasBottomDivider">
-            <h3>OVERSIZED_ARGUMENTS_ERROR</h3>
+            <h3 id="OVERSIZED_ARGUMENTS_ERROR">OVERSIZED_ARGUMENTS_ERROR</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">static <b>OVERSIZED_ARGUMENTS_ERROR</b>:Number
+                <div class="floatbox code">static <b>OVERSIZED_ARGUMENTS_ERROR</b>:Number = <span class="codeNumber">3</span>
 </div>
-                <div class="code"></div><span class="access">(read,write)</span>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
               </div>
             </div>
             <div class="description">Indicates an error caused by arguments that are out of size.</div>
           </div>
-          <a name="UNKNOWN_ERROR" id="UNKNOWN_ERROR"></a>
           <div class="method hasBottomDivider">
-            <h3>UNKNOWN_ERROR</h3>
+            <h3 id="UNKNOWN_ERROR">UNKNOWN_ERROR</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">static <b>UNKNOWN_ERROR</b>:Number
+                <div class="floatbox code">static <b>UNKNOWN_ERROR</b>:Number = <span class="codeNumber">0</span>
 </div>
-                <div class="code"></div><span class="access">(read,write)</span>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
               </div>
             </div>
             <div class="description">Indicates an error of unknown origin.</div>
           </div>
-          <a name="UNKNOWN_METHOD_ERROR" id="UNKNOWN_METHOD_ERROR"></a>
           <div class="method hasBottomDivider">
-            <h3>UNKNOWN_METHOD_ERROR</h3>
+            <h3 id="UNKNOWN_METHOD_ERROR">UNKNOWN_METHOD_ERROR</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">static <b>UNKNOWN_METHOD_ERROR</b>:Number
+                <div class="floatbox code">static <b>UNKNOWN_METHOD_ERROR</b>:Number = <span class="codeNumber">2</span>
 </div>
-                <div class="code"></div><span class="access">(read,write)</span>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
               </div>
             </div>
             <div class="description">Indicates that the method to be invoked does not exist.</div>
           </div>
-          <a name="UNKNOWN_SERVICE_ERROR" id="UNKNOWN_SERVICE_ERROR"></a>
           <div class="method hasBottomDivider">
-            <h3>UNKNOWN_SERVICE_ERROR</h3>
+            <h3 id="UNKNOWN_SERVICE_ERROR">UNKNOWN_SERVICE_ERROR</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">static <b>UNKNOWN_SERVICE_ERROR</b>:Number
+                <div class="floatbox code">static <b>UNKNOWN_SERVICE_ERROR</b>:Number = <span class="codeNumber">1</span>
 </div>
-                <div class="code"></div><span class="access">(read,write)</span>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
               </div>
             </div>
             <div class="description">Indicates an error caused because of a not existing service.</div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="errorCode" id="errorCode"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>errorCode</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>errorCode</b>:Number
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">A number indicating the type of the error.</div>
-          </div>
-          <a name="exception" id="exception"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>exception</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>exception</b>
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The exception that has caused the error.</div>
-          </div>
-          <a name="methodArguments" id="methodArguments"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>methodArguments</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>methodArguments</b>:Array
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The arguments used for the invocation.</div>
-          </div>
-          <a name="methodName" id="methodName"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>methodName</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>methodName</b>:String
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The name of the method to be executed.</div>
-          </div>
-          <a name="serviceUrl" id="serviceUrl"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>serviceUrl</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>serviceUrl</b>:String
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Url of the service the method should have been invoked on.</div>
-          </div>
-        </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="getErrorCode" id="getErrorCode"></a>
           <div class="method hasBottomDivider">
-            <h3>getErrorCode</h3>
+            <h3 id="getErrorCode">getErrorCode</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getErrorCode</b> (
+                <div class="floatbox code">function <b>getErrorCode</b> (
 </div>
-                <div class="code">Void) : Number</div>
+                <div><span class="code">Void) : Number</span>
+                </div>
               </div>
             </div>
+            <div class="description">Returns the error code that describes this error.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the error code that describes the type of the error</div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the error code that describes the type of this error</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getException" id="getException"></a>
           <div class="method hasBottomDivider">
-            <h3>getException</h3>
+            <h3 id="getException">getException</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getException</b> (
+                <div class="floatbox code">function <b>getException</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
+            <div class="description">Returns the exception that caused this error.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the exception that caused the error</div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the exception that caused this error</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getMethodArguments" id="getMethodArguments"></a>
           <div class="method hasBottomDivider">
-            <h3>getMethodArguments</h3>
+            <h3 id="getMethodArguments">getMethodArguments</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getMethodArguments</b> (
+                <div class="floatbox code">function <b>getMethodArguments</b> (
 </div>
-                <div class="code">Void) : Array</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
               </div>
             </div>
+            <div class="description">Returns the arguments used as parameters for the method invocaton
+ that caused this error.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the arguments used as parameters for the method invocation</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getMethodName" id="getMethodName"></a>
           <div class="method hasBottomDivider">
-            <h3>getMethodName</h3>
+            <h3 id="getMethodName">getMethodName</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getMethodName</b> (
+                <div class="floatbox code">function <b>getMethodName</b> (
 </div>
-                <div class="code">Void) : String</div>
+                <div><span class="code">Void) : String</span>
+                </div>
               </div>
             </div>
+            <div class="description">Returns the name of the method that caused this error.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the name of the method that should be or was executed on the service</div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the name of the method that should be or was executed on the
+ service</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getName" id="getName"></a>
           <div class="method hasBottomDivider">
-            <h3>getName</h3>
+            <h3 id="getName">getName</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getName</b> (
+                <div class="floatbox code">function <b>getName</b> (
 </div>
-                <div class="code">Void) : String</div>
+                <div><span class="code">Void) : String</span>
+                </div>
               </div>
             </div>
+            <div class="description">Returns the name of the event 'onError'.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">'onError'</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_event_EventInfo.html#getName">:String</a></div>
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventInfo.html#getName">org.as2lib.env.event.EventInfo.getName</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getServiceUrl" id="getServiceUrl"></a>
           <div class="method hasBottomDivider">
-            <h3>getServiceUrl</h3>
+            <h3 id="getServiceUrl">getServiceUrl</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getServiceUrl</b> (
+                <div class="floatbox code">function <b>getServiceUrl</b> (
 </div>
-                <div class="code">Void) : String</div>
+                <div><span class="code">Void) : String</span>
+                </div>
               </div>
             </div>
+            <div class="description">Returns the url to the service the method should be or was executed
+ on.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the url to the service the method should be or was executed on</div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the url to the service the method should be or was executed
+ on</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:13:29
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:10:18
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

@@ -26,24 +26,18 @@ Interface
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.log.LogLevel</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Tuesday, 15 February 2005, 04:55:15</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 05 March 2005, 05:41:34</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">LogLevel is the basic interface for all levels.<p>It gets used by loggers to write log messages at different levels
-
+        <div class="classDescription"><div class="descriptionSummary">LogLevel is the basic interface for all levels. </div><p>It gets used by loggers to write log messages at different levels
  and to define at which levels messages shall be written.<p>The default levels offered by the as2lib in a descending order are
-
- All, Debug, Info, Warning, Error, Fatal and None.  </div>All these levels
-
- are defined as constants in the AbstractLogLevel class. Use this class
-
+ All, Debug, Info, Warning, Error, Fatal and None. All these levels
+ are defined as constants in the <a href="org_as2lib_env_log_level_AbstractLogLevel.html">org.as2lib.env.log.level.AbstractLogLevel</a> class. Use this class
  to reference them.<p>It is also possible to create your own log levels. You just must
-
  implement this interface or just instantiate one using the
-
- DynamicLogLevel class.</div>
+ <a href="org_as2lib_env_log_level_DynamicLogLevel.html">org.as2lib.env.log.level.DynamicLogLevel</a> class.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
@@ -74,24 +68,22 @@ Interface
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="isGreaterOrEqual" id="isGreaterOrEqual"></a>
           <div class="method hasBottomDivider">
-            <h3>isGreaterOrEqual</h3>
+            <h3 id="isGreaterOrEqual">isGreaterOrEqual</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>isGreaterOrEqual</b> (
+                <div class="floatbox code">function <b>isGreaterOrEqual</b> (
 </div>
-                <div class="code">level:LogLevel) : Boolean</div>
+                <div><span class="code">level:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Determines whether this level is greater or equal than the one passed-in.<p>This is normally done using the number representation of this level
-
  and comparing it using the greater or equal operator with the number
-
  representation of the passed-in level.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">level<span class="separator">:</span></div>
                     <div>the level this level shall be compared with</div>
@@ -99,56 +91,60 @@ Interface
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if this level is greater or equal than the passed-in one</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="toNumber" id="toNumber"></a>
           <div class="method hasBottomDivider">
-            <h3>toNumber</h3>
+            <h3 id="toNumber">toNumber</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>toNumber</b> (
+                <div class="floatbox code">function <b>toNumber</b> (
 </div>
-                <div class="code">Void) : Number</div>
+                <div><span class="code">Void) : Number</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the number representation of this level.<p>Gets used to compare levels with each other.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the number representation of this level</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="toString" id="toString"></a>
           <div class="method hasBottomDivider">
-            <h3>toString</h3>
+            <h3 id="toString">toString</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>toString</b> (
+                <div class="floatbox code">function <b>toString</b> (
 </div>
-                <div class="code">Void) : String</div>
+                <div><span class="code">Void) : String</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the string representation of this level.<p>Gets used when the level shall be shown together with the log
-
  message.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the string representation of this level</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:02:40
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:41
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

@@ -22,24 +22,16 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.reflect.ReflectUtil</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Friday, 04 February 2005, 07:48:05</span>
+              <li><span class="title">File last modified: </span><span class="value">Monday, 04 April 2005, 20:26:24</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">ReflectUtil gets used to obtain simple information about every members.<p>It is independent on any module of the as2lib.  </div>And thus does not
-
- include them and does not increase the file size.</div>
+        <div class="classDescription"><div class="descriptionSummary">ReflectUtil is used to obtain simple information about members. </div><p>It is independent on any module of the as2lib. And thus does not
+ include them and does not dramatically increase the file size.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#ReflectUtil">ReflectUtil</a>
-                </li>
-              </ul>
-            </div>
             <div class="methodSummaryPart"><span class="title">Class methods</span>
               <ul>
                 <li>
@@ -50,9 +42,6 @@
                 </li>
                 <li>
                   <a href="#getTypeNameForType">getTypeNameForType</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#getTypeNameForTypeByPackage">getTypeNameForTypeByPackage</a>
                 </li>
                 <li>
                   <a href="#getMethodName">getMethodName</a>
@@ -97,192 +86,358 @@
             </div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="ReflectUtil" id="ReflectUtil"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>ReflectUtil</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>ReflectUtil</b> (
-</div>
-                <div class="code">Void)</div>
-              </div>
-            </div>
-            <div class="description">Private constructor.</div>
-          </div>
-        </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Class methods</h2>
-          <a name="getMethodName" id="getMethodName"></a>
           <div class="method hasBottomDivider">
-            <h3>getMethodName</h3>
+            <h3 id="getMethodName">getMethodName</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getMethodName</b> (
+                <div class="floatbox code">static function <b>getMethodName</b> (
 
 </div>
-                <div class="code">method:Function,
-object) : String</div>
+                <div><span class="code">method:Function,
+object) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading:</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ReflectUtil.html#getMethodNameByInstance">getMethodNameByInstance</a> <code>(method:Function, instance) : String</code><br /><a href="org_as2lib_env_reflect_ReflectUtil.html#getMethodNameByType">getMethodNameByType</a> <code>(method:Function, type:Function) : String</code></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="getMethodNameByInstance" id="getMethodNameByInstance"></a>
           <div class="method hasBottomDivider">
-            <h3>getMethodNameByInstance</h3>
+            <h3 id="getMethodNameByInstance">getMethodNameByInstance</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getMethodNameByInstance</b> (
+                <div class="floatbox code">static function <b>getMethodNameByInstance</b> (
 
 </div>
-                <div class="code">method:Function,
-instance) : String</div>
+                <div><span class="code">method:Function,
+instance) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the name of the <code>method</code> on the instance's <code>type</code>.<p><code>null</code> will be returned if:<ul><li>The passed-in <code>method</code> or <code>instance</code> are <code>null</code></li><li>The <code>method</code> does not exist on the <code>instance</code>'s type.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">method  <span class="separator">:</span></div>
+                    <div>the method to get the name of</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">instance<span class="separator">:</span></div>
+                    <div>the instance whose type implements the <code>method</code></div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the name of the <code>method</code> or <code>null</code></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="getMethodNameByType" id="getMethodNameByType"></a>
           <div class="method hasBottomDivider">
-            <h3>getMethodNameByType</h3>
+            <h3 id="getMethodNameByType">getMethodNameByType</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getMethodNameByType</b> (
+                <div class="floatbox code">static function <b>getMethodNameByType</b> (
 
 </div>
-                <div class="code">method:Function,
-type:Function) : String</div>
+                <div><span class="code">method:Function,
+type:Function) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the name of the <code>method</code> on the <code>type</code>.<p><code>null</code> will be returned if:<ul><li>The passed-in <code>method</code> or <code>type</code> are <code>null</code></li><li>The <code>method</code> does not exist on the <code>type</code>.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">method<span class="separator">:</span></div>
+                    <div>the method to get the name of</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type  <span class="separator">:</span></div>
+                    <div>the type that implements the <code>method</code></div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the name of the <code>method</code> or <code>null</code></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="getTypeName" id="getTypeName"></a>
           <div class="method hasBottomDivider">
-            <h3>getTypeName</h3>
+            <h3 id="getTypeName">getTypeName</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getTypeName</b> (
+                <div class="floatbox code">static function <b>getTypeName</b> (
 </div>
-                <div class="code">object) : String</div>
+                <div><span class="code">object) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading:</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ReflectUtil.html#getTypeNameForInstance">getTypeNameForInstance</a> <code>(instance) : String</code><br /><a href="org_as2lib_env_reflect_ReflectUtil.html#getTypeNameForType">getTypeNameForType</a> <code>(type:Function) : String</code></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="getTypeNameForInstance" id="getTypeNameForInstance"></a>
           <div class="method hasBottomDivider">
-            <h3>getTypeNameForInstance</h3>
+            <h3 id="getTypeNameForInstance">getTypeNameForInstance</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getTypeNameForInstance</b> (
+                <div class="floatbox code">static function <b>getTypeNameForInstance</b> (
 </div>
-                <div class="code">instance) : String</div>
+                <div><span class="code">instance) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the name of the type, the passed-in object is an instance of.<p><code>null</code> will be returned if:<ul><li>The passed-in <code>instance</code> is <code>null</code> or <code>undefined</code>.</li><li>The appropriate type could not be found in <code>_global</code>.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">instance<span class="separator">:</span></div>
+                    <div>the instance of the type to return the name of</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the name of the type of the instance or <code>null</code></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="getTypeNameForType" id="getTypeNameForType"></a>
           <div class="method hasBottomDivider">
-            <h3>getTypeNameForType</h3>
+            <h3 id="getTypeNameForType">getTypeNameForType</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getTypeNameForType</b> (
+                <div class="floatbox code">static function <b>getTypeNameForType</b> (
 </div>
-                <div class="code">type:Function) : String</div>
+                <div><span class="code">type:Function) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the name of the passed-in <code>type</code>.<p><code>null</code> will be returned if:<ul><li>The passed-in <code>type</code> is <code>null</code> or <code>undefined</code>.</li><li>The <code>type</code> could not be found in <code>_global</code>.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type<span class="separator">:</span></div>
+                    <div>the type to return the name of</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the name of the passed-in <code>type</code> or <code>null</code></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="getTypeNameForTypeByPackage" id="getTypeNameForTypeByPackage"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getTypeNameForTypeByPackage</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>static function <b>getTypeNameForTypeByPackage</b> (
-
-
-</div>
-                <div class="code">c:Function,
-p,
-n:String) : String</div>
-              </div>
-            </div>
-          </div>
-          <a name="isConstructor" id="isConstructor"></a>
           <div class="method hasBottomDivider">
-            <h3>isConstructor</h3>
+            <h3 id="isConstructor">isConstructor</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>isConstructor</b> (
-
-</div>
-                <div class="code">constructor:Function,
-object) : Boolean</div>
-              </div>
-            </div>
-          </div>
-          <a name="isConstructorByInstance" id="isConstructorByInstance"></a>
-          <div class="method hasBottomDivider">
-            <h3>isConstructorByInstance</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>isConstructorByInstance</b> (
-
-</div>
-                <div class="code">constructor:Function,
-instance) : Boolean</div>
-              </div>
-            </div>
-          </div>
-          <a name="isConstructorByType" id="isConstructorByType"></a>
-          <div class="method hasBottomDivider">
-            <h3>isConstructorByType</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>isConstructorByType</b> (
-
-</div>
-                <div class="code">constructor:Function,
-type:Function) : Boolean</div>
-              </div>
-            </div>
-          </div>
-          <a name="isMethodStatic" id="isMethodStatic"></a>
-          <div class="method hasBottomDivider">
-            <h3>isMethodStatic</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>isMethodStatic</b> (
-
-</div>
-                <div class="code">methodName:String,
-object) : Boolean</div>
-              </div>
-            </div>
-          </div>
-          <a name="isMethodStaticByInstance" id="isMethodStaticByInstance"></a>
-          <div class="method hasBottomDivider">
-            <h3>isMethodStaticByInstance</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>isMethodStaticByInstance</b> (
+                <div class="floatbox code">static function <b>isConstructor</b> (
 
 </div>
-                <div class="code">methodName:String,
-instance) : Boolean</div>
+                <div><span class="code">constructor:Function,
+object) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading:</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ReflectUtil.html#isConstructorByInstance">isConstructorByInstance</a> <code>(method:Function, instance) : Boolean</code><br /><a href="org_as2lib_env_reflect_ReflectUtil.html#isConstructorByType">isConstructorByType</a> <code>(method:Function, type:Function) : Boolean</code></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="isMethodStaticByType" id="isMethodStaticByType"></a>
           <div class="method hasBottomDivider">
-            <h3>isMethodStaticByType</h3>
+            <h3 id="isConstructorByInstance">isConstructorByInstance</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>isMethodStaticByType</b> (
+                <div class="floatbox code">static function <b>isConstructorByInstance</b> (
 
 </div>
-                <div class="code">methodName:String,
-type:Function) : Boolean</div>
+                <div><span class="code">method:Function,
+instance) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns whether the passed-in <code>method</code> is the constructor of
+ the passed-in <code>instance</code>.<p><code>false</code> will always be returned if the passed-in <code>method</code>
+ is <code>null</code> or if the passed-in <code>instance</code> is <code>null</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">method  <span class="separator">:</span></div>
+                    <div>the method to check whether it is the constructor of
+ the passed-in <code>instance</code></div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">instance<span class="separator">:</span></div>
+                    <div>the instance that might be instantiated by the passed-in
+ <code>method</code></div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">true if <code>method</code> is the constructor of <code>instance</code>
+ else false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isConstructorByType">isConstructorByType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>isConstructorByType</b> (
+
+</div>
+                <div><span class="code">method:Function,
+type:Function) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns whether the passed-in <code>method</code> is the constructor of
+ the passed-in <code>type</code>.<p>Note that in Flash the constructor is the same as the type.<p><code>false</code> will always be returned if the passed-in <code>method</code>
+ is <code>null</code> or if the passed-in <code>type</code> is <code>null</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">method<span class="separator">:</span></div>
+                    <div>the method to check whether it is the constructor of
+ the passed-in <code>type</code></div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type  <span class="separator">:</span></div>
+                    <div>the type that might declare the passed-in <code>method</code>
+ as constructor</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">true if <code>method</code> is the constructor of <code>type</code> else
+ false</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isMethodStatic">isMethodStatic</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>isMethodStatic</b> (
+
+</div>
+                <div><span class="code">methodName:String,
+object) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading:</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ReflectUtil.html#isMethodStaticByInstance">isMethodStaticByInstance</a> <code>(methodName:String, instance) : Boolean</code><br /><a href="org_as2lib_env_reflect_ReflectUtil.html#isMethodStaticByType">isMethodStaticByType</a> <code>(methodName:String, type:Function) : Boolean</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isMethodStaticByInstance">isMethodStaticByInstance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>isMethodStaticByInstance</b> (
+
+</div>
+                <div><span class="code">methodName:String,
+instance) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns whether the method with the passed-in <code>methodName</code> is
+ static, that means a per type method.<p><code>false</code> will always be returned if the passed-in <code>methodName</code>
+ is <code>null</code> or an empty string or if the passed-in <code>instance</code>
+ is <code>null</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodName<span class="separator">:</span></div>
+                    <div>the name of the method to check whether it is static</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">instance  <span class="separator">:</span></div>
+                    <div>the instance of the type that implements the method</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if the method is static else <code>false</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isMethodStaticByType">isMethodStaticByType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>isMethodStaticByType</b> (
+
+</div>
+                <div><span class="code">methodName:String,
+type:Function) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns whether the method with the passed-in <code>methodName</code> is
+ static, that means a per type method.<p><code>false</code> will always be returned if the passed-in <code>methodName</code>
+ is <code>null</code> or an empty string or if the passed-in <code>type</code>
+ is <code>null</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodName<span class="separator">:</span></div>
+                    <div>the name of the method to check whether it is static</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type      <span class="separator">:</span></div>
+                    <div>the type that implements the method</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if the method is static else <code>false</code></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:10:37
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:10:10
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

@@ -22,29 +22,20 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.reflect.algorithm.PropertyAlgorithm</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Thursday, 10 February 2005, 09:38:48</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 05 March 2005, 05:41:54</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">Searches for all properties of a class.<p>Properties are not meant to be normal variables or fields of an
-
+        <div class="classDescription"><div class="descriptionSummary">Searches for all properties of a class. </div><p>Properties are not meant to be normal variables or fields of an
  instance or class but implicit properties that can be declared via
-
- the 'set' or 'get' keyword or the addProperty(..) method.<p>This class is mostly used internally.  </div>If you wanna obtain the properties
-
+ the 'set' or 'get' keyword or the addProperty(..) method.<p>This class is mostly used internally. If you wanna obtain the properties
  of a class you need its representing ClassInfo. You can then also use
-
- the ClassInfo#getProperties method directly and do not have to make the detour
-
- over this class. The ClassInfo#getProperties method is also easier to use
-
+ the <a href="org_as2lib_env_reflect_ClassInfo.html#getProperties">org.as2lib.env.reflect.ClassInfo.getProperties</a> method directly and do not have to make the detour
+ over this class. The <a href="org_as2lib_env_reflect_ClassInfo.html#getProperties">org.as2lib.env.reflect.ClassInfo.getProperties</a> method is also easier to use
  and offers some extra functionalities.<p>If you nevertheless want to use this class here is how it works.<pre><span class="codeKeyword">var</span> classInfo:ClassInfo = ClassInfo.forClass(MyClass);
-
  <span class="codeKeyword">var</span> propertyAlgorithm:PropertyAlgorithm = <span class="codeKeyword">new</span> PropertyAlgorithm();
-
- <span class="codeKeyword">var</span> properties:<span class="codeIdentifier">Array</span> = propertyAlgorithm.execute(classInfo);</pre><p>Refer to the #execute methods documentation for details on how to
-
+ <span class="codeKeyword">var</span> properties:<span class="codeIdentifier">Array</span> = propertyAlgorithm.execute(classInfo);</pre><p>Refer to the <a href="org_as2lib_env_reflect_algorithm_PropertyAlgorithm.html#execute">execute</a> methods documentation for details on how to
  get data from the properties array appropriately.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
@@ -56,32 +47,10 @@
                 </li>
               </ul>
             </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#r">r</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#g">g</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#s">s</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#c">c</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#a">a</a>
-                </li>
-              </ul>
-            </div>
             <div class="methodSummaryPart"><span class="title">Instance methods</span>
               <ul>
                 <li>
                   <a href="#execute">execute</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#search">search</a>
                 </li>
               </ul>
               <div class="boxWithBorder">
@@ -99,105 +68,41 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="PropertyAlgorithm" id="PropertyAlgorithm"></a>
           <div class="method hasBottomDivider">
-            <h3>PropertyAlgorithm</h3>
+            <h3 id="PropertyAlgorithm">PropertyAlgorithm</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>PropertyAlgorithm</b> (
+                <div class="floatbox code">function <b>PropertyAlgorithm</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
             <div class="description">Constructs a new instance.</div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="a" id="a"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>a</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>a</b>:Boolean
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-          </div>
-          <a name="c" id="c"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>c</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>c</b>:ClassInfo
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-          </div>
-          <a name="g" id="g"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>g</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>g</b>:Object
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-          </div>
-          <a name="r" id="r"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>r</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>r</b>:Array
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-          </div>
-          <a name="s" id="s"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>s</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>s</b>:Object
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="execute" id="execute"></a>
           <div class="method hasBottomDivider">
-            <h3>execute</h3>
+            <h3 id="execute">execute</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>execute</b> (
+                <div class="floatbox code">function <b>execute</b> (
 </div>
-                <div class="code">c:ClassInfo) : Array</div>
+                <div><span class="code">c:<a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a>) : Array</span>
+                </div>
               </div>
             </div>
             <div class="description">Searches for all properties of a class.<p>The resulting array contains PropertyInfo instances.<p>This method will return null if:<ul><li>The argument is null or undefined.</li><li>The argument's getType() method returns null or undefined.</li></ul><p>Only the passed in class will be searched through, no
-
  super classes.<p>The found properties are stored in the resulting array by index as
-
  well as by name. That means you can obtain PropertyInfo instances either
-
  by index:
-
  <code><span class="codeKeyword">var</span> myProperty:PropertyInfo = myProperties[<span class="codeNumber">0</span>];</code>
-
  or by name:
-
  <code><span class="codeKeyword">var</span> myProperty:PropertyInfo = myProperties[<span class="codeString">"myPropertyName"</span>];</code></div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">c<span class="separator">:</span></div>
                     <div>the ClassInfo instance representing the class to search through</div>
@@ -205,27 +110,16 @@
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the found properties, a blank array or null</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="search" id="search"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>search</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>search</b> (
-</div>
-                <div class="code">t) : Void</div>
-              </div>
-            </div>
-          </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:06:39
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:55
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

@@ -26,21 +26,16 @@ Interface
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.reflect.Cache</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Saturday, 12 February 2005, 06:01:40</span>
+              <li><span class="title">File last modified: </span><span class="value">Tuesday, 15 February 2005, 18:28:54</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">Cache chaches classes and packages.<p>The caching of classes and packages leads to higher performance.  </div>
-
+        <div class="classDescription"><div class="descriptionSummary">Cache chaches classes and packages. </div><p>The caching of classes and packages leads to higher performance. 
  You also must cache them because for example the parent of two classes 
-
  residing in the same package should be the same PackageInfo instance.<p>The cache is mostly used internally. But you can also use it to
-
  add ClassInfo or PackageInfo instances directly so that they do not
-
  have to be searched for. This can improve the performance dramatically
-
  with classes or packages that are needed quite often.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
@@ -81,22 +76,21 @@ Interface
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="addClass" id="addClass"></a>
           <div class="method hasBottomDivider">
-            <h3>addClass</h3>
+            <h3 id="addClass">addClass</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>addClass</b> (
+                <div class="floatbox code">function <b>addClass</b> (
 </div>
-                <div class="code">info:ClassInfo) : ClassInfo</div>
+                <div><span class="code">info:<a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a>) : <a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Adds a class info to the list of cached class infos and returns the
-
  added class info.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">info<span class="separator">:</span></div>
                     <div>the class info to add</div>
@@ -104,26 +98,26 @@ Interface
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the added class info</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="addPackage" id="addPackage"></a>
           <div class="method hasBottomDivider">
-            <h3>addPackage</h3>
+            <h3 id="addPackage">addPackage</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>addPackage</b> (
+                <div class="floatbox code">function <b>addPackage</b> (
 </div>
-                <div class="code">info:PackageInfo) : PackageInfo</div>
+                <div><span class="code">info:<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>) : <a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Adds a package info to the cache and returns the added package info.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">info<span class="separator">:</span></div>
                     <div>the package info to add</div>
@@ -131,28 +125,27 @@ Interface
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the added package info</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getClass" id="getClass"></a>
           <div class="method hasBottomDivider">
-            <h3>getClass</h3>
+            <h3 id="getClass">getClass</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getClass</b> (
+                <div class="floatbox code">function <b>getClass</b> (
 </div>
-                <div class="code">object) : ClassInfo</div>
+                <div><span class="code">object) : <a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the class info representing either the class the object was
-
  instantiated of or the class that was passed in.<p>Null will be returned if:<ul><li>There is no corresponding ClassInfo instance cached.</li><li>The passed-in object is null or undefined.</li></ul></div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
                     <div>the instance or class the appropriate class info shall be returned</div>
@@ -160,26 +153,26 @@ Interface
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the class info representing the class</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getPackage" id="getPackage"></a>
           <div class="method hasBottomDivider">
-            <h3>getPackage</h3>
+            <h3 id="getPackage">getPackage</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getPackage</b> (
+                <div class="floatbox code">function <b>getPackage</b> (
 </div>
-                <div class="code">package) : PackageInfo</div>
+                <div><span class="code">package) : <a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the package info representing the package.<p>Null will be returned if:<ul><li>There is no corresponding PackageInfo instance cached.</li><li>The passed-in package is null or undefined.</li></ul></div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">package<span class="separator">:</span></div>
                     <div>the package the appropriate package info shall be returned</div>
@@ -187,49 +180,48 @@ Interface
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the pakcage info representing the passed-in package</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getRoot" id="getRoot"></a>
           <div class="method hasBottomDivider">
-            <h3>getRoot</h3>
+            <h3 id="getRoot">getRoot</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getRoot</b> (
+                <div class="floatbox code">function <b>getRoot</b> (
 </div>
-                <div class="code">Void) : PackageInfo</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the root package of the whole package hierarchy.<p>The root package is also refered to as the default package.<p>The root/default package set determines where the ClassAlgorithm
-
  and PackageAlgorithm start their search.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the root/default package</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="releaseAll" id="releaseAll"></a>
           <div class="method hasBottomDivider">
-            <h3>releaseAll</h3>
+            <h3 id="releaseAll">releaseAll</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>releaseAll</b> (
+                <div class="floatbox code">function <b>releaseAll</b> (
 </div>
-                <div class="code">Void) : Void</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Releases all cached class and package infos.</div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:06:52
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:56
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

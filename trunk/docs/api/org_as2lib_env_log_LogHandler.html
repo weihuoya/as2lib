@@ -26,27 +26,19 @@ Interface
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.log.LogHandler</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Tuesday, 15 February 2005, 05:02:14</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 05 March 2005, 05:41:34</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">LogHandler is gets used to actually log the messages.<p>You need different handlers for different output sources.  </div>Output
-
+        <div class="classDescription"><div class="descriptionSummary">LogHandler is gets used to actually log the messages. </div><p>You need different handlers for different output sources. Output
  sources can be everything, Flash's output window, any type of file,
-
  a database, a custom output console and so on.<p>The as2lib supports a hand full of different output formats. Take
-
  a look at the org.as2lib.env.log.handler package to see which are
-
  supported.<p>A logger does not have to support the feature of adding custom
-
  handlers. It is not prescribed by the Logger interface so it depends
-
  on specific implementations.
-
  Mostly 'speed' loggers do not use this approach because it slows the
-
  whole logging process a little bit down.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
@@ -72,26 +64,23 @@ Interface
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="write" id="write"></a>
           <div class="method hasBottomDivider">
-            <h3>write</h3>
+            <h3 id="write">write</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>write</b> (
+                <div class="floatbox code">function <b>write</b> (
 </div>
-                <div class="code">message:LogMessage) : Void</div>
+                <div><span class="code">message:<a href="org_as2lib_env_log_LogMessage.html">LogMessage</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Writes information obtained from the message parameter as well as 
-
  additional information to the output target.<p>It is not prescribed which information will be written. Hence it
-
- depends on the concrete handler.<p>Most handlers simply use the LogMessage#toString method to obtain
-
+ depends on the concrete handler.<p>Most handlers simply use the <a href="org_as2lib_env_log_LogMessage.html#toString">LogMessage.toString</a> method to obtain
  the string representation to output.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
                     <div>the message containing the basic information to output</div>
@@ -101,9 +90,9 @@ Interface
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:02:32
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:40
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

@@ -22,132 +22,70 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.util.AccessPermission</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Sunday, 20 February 2005, 08:13:10</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 05 March 2005, 05:42:00</span>
               </li>
             </ul>
           </div>
         </div>
         <div class="classDescription"><div class="descriptionSummary">AccessPermission lets you adjust the access permissions of members like
-
- methods and properties in one specific context.<p>You can hide methods from for..in loops, protect them from
-
+ methods and properties in one specific context. </div><p>You can hide methods from for..in loops, protect them from
  deletion and from being overwritten.<p>Note that no matter what access permissions you set they can be over-
-
  written.<p>Also note that the access permissions are not applied to the object
-
- but to the reference to the object.  </div>That means that the object can for
-
+ but to the reference to the object. That means that the object can for
  example be enumerable in one reference but not in another. Here's a little
-
  example.<pre><span class="codeKeyword">var</span> object:<span class="codeIdentifier">Object</span> = <span class="codeKeyword">new</span> <span class="codeIdentifier">Object</span>();
-
- object.myProperty = <span class="codeKeyword">new</span> <span class="codeIdentifier">Object</span>();
-
- object.mySecondReference = object.myProperty;
-
- <span class="codeIdentifier">trace</span>(<span class="codeString">"myProperty:          Value: "</span> + object.myProperty);
-
- <span class="codeIdentifier">trace</span>(<span class="codeString">"mySecondReference:   Value: "</span> + object.mySecondReference);
-
- AccessPermission.<span class="codeIdentifier">set</span>(object, [<span class="codeString">"myProperty"</span>], AccessPermission.PROTECT_DELETE);
-
- <span class="codeIdentifier">trace</span>(<span class="codeString">"myProperty:          Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"myProperty"</span>));
-
- <span class="codeIdentifier">trace</span>(<span class="codeString">"mySecondReference:   Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"mySecondReference"</span>));
-
- <span class="codeKeyword">delete</span> object.myProperty;
-
- <span class="codeKeyword">delete</span> object.mySecondReference;
-
- <span class="codeIdentifier">trace</span>(<span class="codeString">"myProperty:          Value: "</span> + object.myProperty);
-
- <span class="codeIdentifier">trace</span>(<span class="codeString">"mySecondReference:   Value: "</span> + object.mySecondReference);</pre><p>The output of the above example looks as follows:<pre>myProperty:          Value: [object <span class="codeIdentifier">Object</span>]
-
- mySecondReference:   Value: [object <span class="codeIdentifier">Object</span>]
-
- myProperty:          Permission: <span class="codeNumber">2</span>
-
- mySecondReference:   Permission: <span class="codeNumber">0</span>
-
- myProperty:          Value: [object <span class="codeIdentifier">Object</span>]
-
- mySecondReference:   Value: <span class="codeIdentifier">undefined</span></pre><p>As you can see, the above statement holds true. We have two references
-
+object.myProperty = <span class="codeKeyword">new</span> <span class="codeIdentifier">Object</span>();
+object.mySecondReference = object.myProperty;
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myProperty:          Value: "</span> + object.myProperty);
+<span class="codeIdentifier">trace</span>(<span class="codeString">"mySecondReference:   Value: "</span> + object.mySecondReference);
+AccessPermission.<span class="codeIdentifier">set</span>(object, [<span class="codeString">"myProperty"</span>], AccessPermission.PROTECT_DELETE);
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myProperty:          Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"myProperty"</span>));
+<span class="codeIdentifier">trace</span>(<span class="codeString">"mySecondReference:   Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"mySecondReference"</span>));
+<span class="codeKeyword">delete</span> object.myProperty;
+<span class="codeKeyword">delete</span> object.mySecondReference;
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myProperty:          Value: "</span> + object.myProperty);
+<span class="codeIdentifier">trace</span>(<span class="codeString">"mySecondReference:   Value: "</span> + object.mySecondReference);</pre><p>The output of the above example looks as follows:<pre>myProperty:          Value: [object <span class="codeIdentifier">Object</span>]
+mySecondReference:   Value: [object <span class="codeIdentifier">Object</span>]
+myProperty:          Permission: <span class="codeNumber">2</span>
+mySecondReference:   Permission: <span class="codeNumber">0</span>
+myProperty:          Value: [object <span class="codeIdentifier">Object</span>]
+mySecondReference:   Value: <span class="codeIdentifier">undefined</span></pre><p>As you can see, the above statement holds true. We have two references
  that reference the same object. We set the access permission of one
-
  reference. We can then not delete the reference the access permission
-
  was applied to, but the other reference.<p>Following is another example with a property in its normal state
-
- and another protected property we applied the #ALLOW_NOTHING access
-
- permission to.<pre><span class="codeKeyword">var</span> object:<span class="codeIdentifier">Object</span> = <span class="codeKeyword">new</span> <span class="codeIdentifier">Object</span>();
-
- object.myNormalProperty = <span class="codeString">"myNormalPropertyValue"</span>;
-
- object.myProtectedProperty = <span class="codeString">"myProtectedPropertyValue"</span>;
-
- <span class="codeIdentifier">trace</span>(<span class="codeString">"myNormalProperty:      Default Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"myNormalProperty"</span>));
-
- <span class="codeIdentifier">trace</span>(<span class="codeString">"myProtectedProperty:   Default Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"myProtectedProperty"</span>));
-
- AccessPermission.<span class="codeIdentifier">set</span>(object, [<span class="codeString">"myProtectedProperty"</span>], AccessPermission.ALLOW_NOTHING);
-
- <span class="codeIdentifier">trace</span>(<span class="codeString">"myProtectedProperty:   New Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"myProtectedProperty"</span>));
-
- object.myNormalProperty = <span class="codeString">"newMyNormalPropertyValue"</span>;
-
- object.myProtectedProperty = <span class="codeString">"newMyProtectedPropertyValue"</span>;
-
- <span class="codeIdentifier">trace</span>(<span class="codeString">"myNormalProperty:      Value After Overwriting: "</span> + object.myNormalProperty);
-
- <span class="codeIdentifier">trace</span>(<span class="codeString">"myProtectedProperty:   Value After Overwriting: "</span> + object.myProtectedProperty);
-
- <span class="codeKeyword">for</span> (<span class="codeKeyword">var</span> i:<span class="codeIdentifier">String</span> <span class="codeKeyword">in</span> object) {
-
-   <span class="codeIdentifier">trace</span>(i + <span class="codeString">":      Found In For..In Loop, Value: "</span> + object[i]);
-
- }
-
- <span class="codeKeyword">delete</span> object.myNormalProperty;
-
- <span class="codeKeyword">delete</span> object.myProtectedProperty;
-
- <span class="codeIdentifier">trace</span>(<span class="codeString">"myNormalProperty:      Value After Deletion: "</span> + object.myNormalProperty);
-
- <span class="codeIdentifier">trace</span>(<span class="codeString">"myProtectedProperty:   Value After Deletion: "</span> + object.myProtectedProperty);</pre><p>The output of this example looks as follows:<pre>myNormalProperty:      Default Permission: <span class="codeNumber">0</span>
-
- myProtectedProperty:   Default Permission: <span class="codeNumber">0</span>
-
- myProtectedProperty:   New Permission: <span class="codeNumber">7</span>
-
- myNormalProperty:      Value After Overwriting: newMyNormalPropertyValue
-
- myProtectedProperty:   Value After Overwriting: myProtectedPropertyValue
-
- myNormalProperty:      Found In For..In Loop, Value: newMyNormalPropertyValue
-
- myNormalProperty:      Value After Deletion: <span class="codeIdentifier">undefined</span>
-
- myProtectedProperty:   Value After Deletion: myProtectedPropertyValue</pre><p>As you can see the protected property cannot be deleted, overwritten
-
+ and another protected property we applied the <a href="org_as2lib_util_AccessPermission.html#ALLOW_NOTHING">ALLOW_NOTHING</a>
+ access permission to.<pre><span class="codeKeyword">var</span> object:<span class="codeIdentifier">Object</span> = <span class="codeKeyword">new</span> <span class="codeIdentifier">Object</span>();
+object.myNormalProperty = <span class="codeString">"myNormalPropertyValue"</span>;
+object.myProtectedProperty = <span class="codeString">"myProtectedPropertyValue"</span>;
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myNormalProperty:      Default Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"myNormalProperty"</span>));
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myProtectedProperty:   Default Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"myProtectedProperty"</span>));
+AccessPermission.<span class="codeIdentifier">set</span>(object, [<span class="codeString">"myProtectedProperty"</span>], AccessPermission.ALLOW_NOTHING);
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myProtectedProperty:   New Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"myProtectedProperty"</span>));
+object.myNormalProperty = <span class="codeString">"newMyNormalPropertyValue"</span>;
+object.myProtectedProperty = <span class="codeString">"newMyProtectedPropertyValue"</span>;
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myNormalProperty:      Value After Overwriting: "</span> + object.myNormalProperty);
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myProtectedProperty:   Value After Overwriting: "</span> + object.myProtectedProperty);
+<span class="codeKeyword">for</span> (<span class="codeKeyword">var</span> i:<span class="codeIdentifier">String</span> <span class="codeKeyword">in</span> object) {
+  <span class="codeIdentifier">trace</span>(i + <span class="codeString">":      Found In For..In Loop, Value: "</span> + object[i]);
+}
+<span class="codeKeyword">delete</span> object.myNormalProperty;
+<span class="codeKeyword">delete</span> object.myProtectedProperty;
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myNormalProperty:      Value After Deletion: "</span> + object.myNormalProperty);
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myProtectedProperty:   Value After Deletion: "</span> + object.myProtectedProperty);</pre><p>The output of this example looks as follows:<pre>myNormalProperty:      Default Permission: <span class="codeNumber">0</span>
+myProtectedProperty:   Default Permission: <span class="codeNumber">0</span>
+myProtectedProperty:   New Permission: <span class="codeNumber">7</span>
+myNormalProperty:      Value After Overwriting: newMyNormalPropertyValue
+myProtectedProperty:   Value After Overwriting: myProtectedPropertyValue
+myNormalProperty:      Found In For..In Loop, Value: newMyNormalPropertyValue
+myNormalProperty:      Value After Deletion: <span class="codeIdentifier">undefined</span>
+myProtectedProperty:   Value After Deletion: myProtectedPropertyValue</pre><p>As you can see the protected property cannot be deleted, overwritten
  and is hidden from for..in loops, while the non-protected property
-
- can be deleted, can be overwritten and can be enumerated.<p>Besides the #get method you can check properties for specific
-
- access permissions using the #isEnumerable, #isDeletable and #isOverwritable
-
- methods.</div>
+ can be deleted, can be overwritten and can be enumerated.<p>Besides the <a href="org_as2lib_util_AccessPermission.html#get">get</a> method you can check properties for specific
+ access permissions using the <a href="org_as2lib_util_AccessPermission.html#isEnumerable">isEnumerable</a>, <a href="org_as2lib_util_AccessPermission.html#isDeletable">isDeletable</a>
+ and <a href="org_as2lib_util_AccessPermission.html#isOverwritable">isOverwritable</a> methods.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#AccessPermission">AccessPermission</a>
-                </li>
-              </ul>
-            </div>
             <div class="methodSummaryPart"><span class="title">Class properties</span>
               <ul>
                 <li>
@@ -200,79 +138,64 @@
             </div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="AccessPermission" id="AccessPermission"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>AccessPermission</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>AccessPermission</b> (
-</div>
-                <div class="code">Void)</div>
-              </div>
-            </div>
-            <div class="description">Private constructor.</div>
-          </div>
-        </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Class properties</h2>
-          <a name="ALLOW_ALL" id="ALLOW_ALL"></a>
           <div class="method hasBottomDivider">
-            <h3>ALLOW_ALL</h3>
+            <h3 id="ALLOW_ALL">ALLOW_ALL</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">static <b>ALLOW_ALL</b>
+                <div class="floatbox code">static <b>ALLOW_ALL</b> = <span class="codeNumber">0</span>
 </div>
-                <div class="code"></div><span class="access">(read,write)</span>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
               </div>
             </div>
             <div class="description">Allow everything to be done with the object.</div>
           </div>
-          <a name="ALLOW_NOTHING" id="ALLOW_NOTHING"></a>
           <div class="method hasBottomDivider">
-            <h3>ALLOW_NOTHING</h3>
+            <h3 id="ALLOW_NOTHING">ALLOW_NOTHING</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">static <b>ALLOW_NOTHING</b>
+                <div class="floatbox code">static <b>ALLOW_NOTHING</b> = <span class="codeNumber">7</span>
 </div>
-                <div class="code"></div><span class="access">(read,write)</span>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
               </div>
             </div>
             <div class="description">Allow nothing to be done with the object.</div>
           </div>
-          <a name="HIDE" id="HIDE"></a>
           <div class="method hasBottomDivider">
-            <h3>HIDE</h3>
+            <h3 id="HIDE">HIDE</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">static <b>HIDE</b>
+                <div class="floatbox code">static <b>HIDE</b> = <span class="codeNumber">1</span>
 </div>
-                <div class="code"></div><span class="access">(read,write)</span>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
               </div>
             </div>
             <div class="description">Hide an object from for..in loops.</div>
           </div>
-          <a name="PROTECT_DELETE" id="PROTECT_DELETE"></a>
           <div class="method hasBottomDivider">
-            <h3>PROTECT_DELETE</h3>
+            <h3 id="PROTECT_DELETE">PROTECT_DELETE</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">static <b>PROTECT_DELETE</b>
+                <div class="floatbox code">static <b>PROTECT_DELETE</b> = <span class="codeNumber">2</span>
 </div>
-                <div class="code"></div><span class="access">(read,write)</span>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
               </div>
             </div>
             <div class="description">Protect an object from deletion.</div>
           </div>
-          <a name="PROTECT_OVERWRITE" id="PROTECT_OVERWRITE"></a>
           <div class="method hasBottomDivider">
-            <h3>PROTECT_OVERWRITE</h3>
+            <h3 id="PROTECT_OVERWRITE">PROTECT_OVERWRITE</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">static <b>PROTECT_OVERWRITE</b>
+                <div class="floatbox code">static <b>PROTECT_OVERWRITE</b> = <span class="codeNumber">4</span>
 </div>
-                <div class="code"></div><span class="access">(read,write)</span>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
               </div>
             </div>
             <div class="description">Protect an object from overwriting.</div>
@@ -280,32 +203,27 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Class methods</h2>
-          <a name="get" id="get"></a>
           <div class="method hasBottomDivider">
-            <h3>get</h3>
+            <h3 id="get">get</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>get</b> (
+                <div class="floatbox code">static function <b>get</b> (
 
 </div>
-                <div class="code">target,
-object:String) : Number</div>
+                <div><span class="code">target,
+object:String) : Number</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the current access permission of the object. The permission is
-
  represented by a Number. Refer to <a href="http://chattyfig.figleaf.com/flashcoders-wiki/index.php?ASSetPropFlags">http://chattyfig.figleaf.com/flashcoders-wiki/index.php?ASSetPropFlags</a>
-
  for a listing of these numbers and the information they represent.<p>You can also find out what the returned access permission number
-
- means using the constants #ALLOW_EVERYTHING, #ALLOW_NOTHING, #HIDE,
-
- #PROTECT_DELETE and #PROTECT_OVERWRITE. The returned number must be
-
+ means using the constants #ALLOW_EVERYTHING, <a href="org_as2lib_util_AccessPermission.html#ALLOW_NOTHING">ALLOW_NOTHING</a>, <a href="org_as2lib_util_AccessPermission.html#HIDE">HIDE</a>,
+ <a href="org_as2lib_util_AccessPermission.html#PROTECT_DELETE">PROTECT_DELETE</a> and <a href="org_as2lib_util_AccessPermission.html#PROTECT_OVERWRITE">PROTECT_OVERWRITE</a>. The returned number must be
  either of these constants or a bitwise or combination of them.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">target<span class="separator">:</span></div>
                     <div>the target object the object resides in</div>
@@ -317,28 +235,28 @@ object:String) : Number</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">a number representing the access permission of the object</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="isDeletable" id="isDeletable"></a>
           <div class="method hasBottomDivider">
-            <h3>isDeletable</h3>
+            <h3 id="isDeletable">isDeletable</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>isDeletable</b> (
+                <div class="floatbox code">static function <b>isDeletable</b> (
 
 </div>
-                <div class="code">target,
-object:String) : Boolean</div>
+                <div><span class="code">target,
+object:String) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns whether the object is deletable.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">target<span class="separator">:</span></div>
                     <div>the target object the object resides in</div>
@@ -350,28 +268,28 @@ object:String) : Boolean</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if the object is deletable else false</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="isEnumerable" id="isEnumerable"></a>
           <div class="method hasBottomDivider">
-            <h3>isEnumerable</h3>
+            <h3 id="isEnumerable">isEnumerable</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>isEnumerable</b> (
+                <div class="floatbox code">static function <b>isEnumerable</b> (
 
 </div>
-                <div class="code">target,
-object:String) : Boolean</div>
+                <div><span class="code">target,
+object:String) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns whether the object is enumerable.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">target<span class="separator">:</span></div>
                     <div>the target object the object resides in</div>
@@ -383,28 +301,28 @@ object:String) : Boolean</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if the object is enumerable else false</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="isOverwritable" id="isOverwritable"></a>
           <div class="method hasBottomDivider">
-            <h3>isOverwritable</h3>
+            <h3 id="isOverwritable">isOverwritable</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>isOverwritable</b> (
+                <div class="floatbox code">static function <b>isOverwritable</b> (
 
 </div>
-                <div class="code">target,
-object:String) : Boolean</div>
+                <div><span class="code">target,
+object:String) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns whether the object is overwritable.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">target<span class="separator">:</span></div>
                     <div>the target object the object resides in</div>
@@ -416,40 +334,35 @@ object:String) : Boolean</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if the object is overwritable else false</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="set" id="set"></a>
           <div class="method hasBottomDivider">
-            <h3>set</h3>
+            <h3 id="set">set</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>set</b> (
+                <div class="floatbox code">static function <b>set</b> (
 
 
 </div>
-                <div class="code">target,
+                <div><span class="code">target,
 objects:Array,
-access:Number) : Void</div>
+access:Number) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets the access permission of an object by an access value.<p>Uses ASSetPropFlags to set the permissions of the object.
-
- You can apply the access values<table><tr><th>#HIDE</th><td>Hides object from for-in loops.</td></tr><tr><th>#PROTECT_DELETE</th><td>Protects an object from deletion</td></tr><tr><td>#PROTECT_OVERWRITE</th><td>Protects an object from overwriting</td></tr><tr><th>#ALLOW_EVERYTHING</th><td>Allows everything (reading, deleting, over-writing)</td></tr><tr><th>#ALLOW_NOTHING</th><td>Allows nothing (reading, deleting, over-writing)</td></tr></table>as fast references.
-
+ You can apply the access values<table><tr><th><a href="org_as2lib_util_AccessPermission.html#HIDE">HIDE</a></th><td>Hides object from for-in loops.</td></tr><tr><th><a href="org_as2lib_util_AccessPermission.html#PROTECT_DELETE">PROTECT_DELETE</a></th><td>Protects an object from deletion</td></tr><tr><th><a href="org_as2lib_util_AccessPermission.html#PROTECT_OVERWRITE">PROTECT_OVERWRITE</a></th><td>Protects an object from overwriting</td></tr><tr><th>#ALLOW_EVERYTHING</th><td>Allows everything (reading, deleting, over-writing)</td></tr><tr><th><a href="org_as2lib_util_AccessPermission.html#ALLOW_NOTHING">ALLOW_NOTHING</a></th><td>Allows nothing (reading, deleting, over-writing)</td></tr></table>as fast references.
  
-
  You can combine these values as follows:
-
- #PROTECT_DELETE | #PROTECT_OVERWRITE
-
+ <a href="org_as2lib_util_AccessPermission.html#PROTECT_DELETE">PROTECT_DELETE</a> | <a href="org_as2lib_util_AccessPermission.html#PROTECT_OVERWRITE">PROTECT_OVERWRITE</a>
  to apply two access permissions.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">target <span class="separator">:</span></div>
                     <div>the object that holds references to the objects the access permissions shall be applied</div>
@@ -467,9 +380,9 @@ access:Number) : Void</div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:35:58
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:11:13
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

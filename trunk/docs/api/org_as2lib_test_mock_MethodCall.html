@@ -22,7 +22,7 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.mock.MethodCall</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Saturday, 01 January 2005, 11:39:07</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 01 January 2005, 20:28:42</span>
               </li>
             </ul>
           </div>
@@ -35,19 +35,6 @@
               <ul>
                 <li>
                   <a href="#MethodCall">MethodCall</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#methodName">methodName</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#args">args</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#argumentsMatcher">argumentsMatcher</a>
                 </li>
               </ul>
             </div>
@@ -87,22 +74,22 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="MethodCall" id="MethodCall"></a>
           <div class="method hasBottomDivider">
-            <h3>MethodCall</h3>
+            <h3 id="MethodCall">MethodCall</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>MethodCall</b> (
+                <div class="floatbox code">function <b>MethodCall</b> (
 
 </div>
-                <div class="code">methodName:String,
-args:Array)</div>
+                <div><span class="code">methodName:String,
+args:Array)</span>
+                </div>
               </div>
             </div>
             <div class="description">Constructs a new MethodCall instance.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">methodName<span class="separator">:</span></div>
                     <div>the name of the called method</div>
@@ -116,118 +103,78 @@ args:Array)</div>
             </div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="args" id="args"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>args</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>args</b>:Array
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The arguments passed to the method.</div>
-          </div>
-          <a name="argumentsMatcher" id="argumentsMatcher"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>argumentsMatcher</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>argumentsMatcher</b>:ArgumentsMatcher
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The matcher that compares expected and actual arguments.</div>
-          </div>
-          <a name="methodName" id="methodName"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>methodName</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>methodName</b>:String
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The name of the called method.</div>
-          </div>
-        </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="getArguments" id="getArguments"></a>
           <div class="method hasBottomDivider">
-            <h3>getArguments</h3>
+            <h3 id="getArguments">getArguments</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getArguments</b> (
+                <div class="floatbox code">function <b>getArguments</b> (
 </div>
-                <div class="code">Void) : Array</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the arguments used for the method call</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getArgumentsMatcher" id="getArgumentsMatcher"></a>
           <div class="method hasBottomDivider">
-            <h3>getArgumentsMatcher</h3>
+            <h3 id="getArgumentsMatcher">getArgumentsMatcher</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getArgumentsMatcher</b> (
+                <div class="floatbox code">function <b>getArgumentsMatcher</b> (
 </div>
-                <div class="code">Void) : ArgumentsMatcher</div>
+                <div><span class="code">Void) : <a href="org_as2lib_test_mock_ArgumentsMatcher.html">ArgumentsMatcher</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the currently used arguments matcher.<p>That is either the arguments matcher set via setArgumentsMatcher(ArgumentsMatcher):Void
-
  or an instance of the default DefaultArgumentsMatcher.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the currently used arguments matcher</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getMethodName" id="getMethodName"></a>
           <div class="method hasBottomDivider">
-            <h3>getMethodName</h3>
+            <h3 id="getMethodName">getMethodName</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getMethodName</b> (
+                <div class="floatbox code">function <b>getMethodName</b> (
 </div>
-                <div class="code">Void) : String</div>
+                <div><span class="code">Void) : String</span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the name of the called method</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="matches" id="matches"></a>
           <div class="method hasBottomDivider">
-            <h3>matches</h3>
+            <h3 id="matches">matches</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>matches</b> (
+                <div class="floatbox code">function <b>matches</b> (
 </div>
-                <div class="code">methodCall:MethodCall) : Boolean</div>
+                <div><span class="code">methodCall:<a href="org_as2lib_test_mock_MethodCall.html">MethodCall</a>) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Checks whether this method call matches the passed-in one.<p>Falls will be returned if:<ul><li>The passed-in method call is null or undefined.</li><li>The method names do not match.</li><li>The arguments do not match.</li></ul></div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">methodCall<span class="separator">:</span></div>
                     <div>the method call to compare with this instance</div>
@@ -236,24 +183,22 @@ args:Array)</div>
               </div>
             </div>
           </div>
-          <a name="setArgumentsMatcher" id="setArgumentsMatcher"></a>
           <div class="method hasBottomDivider">
-            <h3>setArgumentsMatcher</h3>
+            <h3 id="setArgumentsMatcher">setArgumentsMatcher</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setArgumentsMatcher</b> (
+                <div class="floatbox code">function <b>setArgumentsMatcher</b> (
 </div>
-                <div class="code">argumentsMatcher:ArgumentsMatcher) : Void</div>
+                <div><span class="code">argumentsMatcher:<a href="org_as2lib_test_mock_ArgumentsMatcher.html">ArgumentsMatcher</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets the new arguments matcher.<p>If you set an arguments matcher of value null or undefined the
-
  #getArgumentsMatcher(Void):ArgumentsMatcher method returns the default
-
  one.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">argumentsMatcher<span class="separator">:</span></div>
                     <div>the new arguments matcher</div>
@@ -262,28 +207,40 @@ args:Array)</div>
               </div>
             </div>
           </div>
-          <a name="toString" id="toString"></a>
           <div class="method hasBottomDivider">
-            <h3>toString</h3>
+            <h3 id="toString">toString</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>toString</b> (
+                <div class="floatbox code">function <b>toString</b> (
 </div>
-                <div class="code">Void) : String</div>
+                <div><span class="code">Void) : String</span>
+                </div>
               </div>
             </div>
+            <div class="description"><div class="inheritDoc">Returns the string representation of this instance.<p>The String representation is obtained via the stringifier returned
+ by the {VISDOC_LINK_0} method.</div><a class="followInheritDoc" href="org_as2lib_core_BasicClass.html#toString">#</a></div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_core_BasicInterface.html#toString">:String</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><div class="inheritDoc">the string representation of this instance</div><a class="followInheritDoc" href="org_as2lib_core_BasicClass.html#toString">#</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:20:46
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:10:37
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

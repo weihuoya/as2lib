@@ -22,92 +22,23 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.reflect.ReflectConfig</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Saturday, 12 February 2005, 04:54:45</span>
+              <li><span class="title">File last modified: </span><span class="value">Monday, 04 April 2005, 20:26:24</span>
               </li>
             </ul>
           </div>
         </div>
         <div class="classDescription"><div class="descriptionSummary">ReflectConfig is the main config used to globally configure key parts of the
-
  work the classes of the reflect package try to solve. </div></div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#ReflectConfig">ReflectConfig</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#classAlgorithm">classAlgorithm</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#packageAlgorithm">packageAlgorithm</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#methodAlgorithm">methodAlgorithm</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#propertyAlgorithm">propertyAlgorithm</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#packageMemberAlgorithm">packageMemberAlgorithm</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#cache">cache</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#rootPackage">rootPackage</a>
-                </li>
-              </ul>
-            </div>
             <div class="methodSummaryPart"><span class="title">Class methods</span>
               <ul>
-                <li>
-                  <a href="#setClassAlgorithm">setClassAlgorithm</a>
-                </li>
-                <li>
-                  <a href="#getClassAlgorithm">getClassAlgorithm</a>
-                </li>
-                <li>
-                  <a href="#setPackageAlgorithm">setPackageAlgorithm</a>
-                </li>
-                <li>
-                  <a href="#getPackageAlgorithm">getPackageAlgorithm</a>
-                </li>
-                <li>
-                  <a href="#setMethodAlgorithm">setMethodAlgorithm</a>
-                </li>
-                <li>
-                  <a href="#getMethodAlgorithm">getMethodAlgorithm</a>
-                </li>
-                <li>
-                  <a href="#setPropertyAlgorithm">setPropertyAlgorithm</a>
-                </li>
-                <li>
-                  <a href="#getPropertyAlgorithm">getPropertyAlgorithm</a>
-                </li>
-                <li>
-                  <a href="#setPackageMemberAlgorithm">setPackageMemberAlgorithm</a>
-                </li>
-                <li>
-                  <a href="#getPackageMemberAlgorithm">getPackageMemberAlgorithm</a>
-                </li>
                 <li>
                   <a href="#getCache">getCache</a>
                 </li>
                 <li>
                   <a href="#setCache">setCache</a>
-                </li>
-                <li>
-                  <a href="#getRootPackage">getRootPackage</a>
-                </li>
-                <li>
-                  <a href="#setRootPackage">setRootPackage</a>
                 </li>
               </ul>
             </div>
@@ -125,414 +56,58 @@
             </div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="ReflectConfig" id="ReflectConfig"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>ReflectConfig</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>ReflectConfig</b> (
-</div>
-                <div class="code">Void)</div>
-              </div>
-            </div>
-            <div class="description">Private constructor to prevent instantiation.</div>
-          </div>
-        </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Class properties</h2>
-          <a name="cache" id="cache"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>cache</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>static <b>cache</b>:Cache
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">All ClassInfos and PackageInfos that have already been found will be cached here.</div>
-          </div>
-          <a name="classAlgorithm" id="classAlgorithm"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>classAlgorithm</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>static <b>classAlgorithm</b>:ClassAlgorithm
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The class algorithm used to find classes.</div>
-          </div>
-          <a name="methodAlgorithm" id="methodAlgorithm"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>methodAlgorithm</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>static <b>methodAlgorithm</b>:MethodAlgorithm
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The method algorithm used to find methods.</div>
-          </div>
-          <a name="packageAlgorithm" id="packageAlgorithm"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>packageAlgorithm</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>static <b>packageAlgorithm</b>:PackageAlgorithm
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The property algorithm used to find packages.</div>
-          </div>
-          <a name="packageMemberAlgorithm" id="packageMemberAlgorithm"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>packageMemberAlgorithm</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>static <b>packageMemberAlgorithm</b>:PackageMemberAlgorithm
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The package member algorithm used to find package members.</div>
-          </div>
-          <a name="propertyAlgorithm" id="propertyAlgorithm"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>propertyAlgorithm</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>static <b>propertyAlgorithm</b>:PropertyAlgorithm
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The property algorithm used to find properties.</div>
-          </div>
-          <a name="rootPackage" id="rootPackage"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>rootPackage</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>static <b>rootPackage</b>:PackageInfo
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stores the root package of the hierarchy.</div>
-          </div>
-        </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Class methods</h2>
-          <a name="getCache" id="getCache"></a>
           <div class="method hasBottomDivider">
-            <h3>getCache</h3>
+            <h3 id="getCache">getCache</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getCache</b> (
+                <div class="floatbox code">static function <b>getCache</b> (
 </div>
-                <div class="code">Void) : Cache</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_reflect_Cache.html">Cache</a></span>
+                </div>
               </div>
             </div>
-            <div class="description">Returns the cache used to cache all ClassInfos and PackageInfos that have
-
- already been found.</div>
+            <div class="description">Returns the cache used to cache all classes and packages that have
+ already been found.<p>If no cache was set manually via setCache the default
+ cache will be returned, that is an instance of class <a href="org_as2lib_env_reflect_SimpleCache.html">SimpleCache</a>
+ and that is configured with the root package returned by
+ <a href="org_as2lib_env_reflect_PackageInfo.html#getRootPackage">PackageInfo.getRootPackage</a>.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the cache used to cache ClassInfos and PackageInfos</div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the cache used to cache classes and packages</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getClassAlgorithm" id="getClassAlgorithm"></a>
           <div class="method hasBottomDivider">
-            <h3>getClassAlgorithm</h3>
+            <h3 id="setCache">setCache</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getClassAlgorithm</b> (
+                <div class="floatbox code">static function <b>setCache</b> (
 </div>
-                <div class="code">Void) : ClassAlgorithm</div>
-              </div>
-            </div>
-            <div class="description">Returns the algorithm used to find classes and return ClassInfo instances
-
- representing this classes.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the algorithm used to return ClassInfo instances</div>
+                <div><span class="code">newCache:<a href="org_as2lib_env_reflect_Cache.html">Cache</a>) : Void</span>
                 </div>
               </div>
             </div>
-          </div>
-          <a name="getMethodAlgorithm" id="getMethodAlgorithm"></a>
-          <div class="method hasBottomDivider">
-            <h3>getMethodAlgorithm</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getMethodAlgorithm</b> (
-</div>
-                <div class="code">Void) : MethodAlgorithm</div>
-              </div>
-            </div>
-            <div class="description">Returns the algorithm used to find MethodInfo instances.</div>
+            <div class="description">Sets the new cache used to cache classes and packages.<p>If you set a <code>newCache</code> of value <code>null</code> the default
+ cache will be returned by <a href="org_as2lib_env_reflect_ReflectConfig.html#getCache">getCache</a>.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the algorithm to find MethodInfo instances</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="getPackageAlgorithm" id="getPackageAlgorithm"></a>
-          <div class="method hasBottomDivider">
-            <h3>getPackageAlgorithm</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getPackageAlgorithm</b> (
-</div>
-                <div class="code">Void) : PackageAlgorithm</div>
-              </div>
-            </div>
-            <div class="description">Returns the algorithm used to find packages and return PackageInfo instances 
-
- representing this packages.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the algorithm used to return appropriate PackageInfo instances</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="getPackageMemberAlgorithm" id="getPackageMemberAlgorithm"></a>
-          <div class="method hasBottomDivider">
-            <h3>getPackageMemberAlgorithm</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getPackageMemberAlgorithm</b> (
-</div>
-                <div class="code">Void) : PackageMemberAlgorithm</div>
-              </div>
-            </div>
-            <div class="description">Returns the algorithm used to find and store members.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the algorithm to find and store members</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="getPropertyAlgorithm" id="getPropertyAlgorithm"></a>
-          <div class="method hasBottomDivider">
-            <h3>getPropertyAlgorithm</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getPropertyAlgorithm</b> (
-</div>
-                <div class="code">Void) : PropertyAlgorithm</div>
-              </div>
-            </div>
-            <div class="description">Returns the algorithm used to find PropertyInfo instances.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the algorithm to find PropertyInfo instances</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="getRootPackage" id="getRootPackage"></a>
-          <div class="method hasBottomDivider">
-            <h3>getRootPackage</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getRootPackage</b> (
-</div>
-                <div class="code">Void) : PackageInfo</div>
-              </div>
-            </div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the root package of the hierarchy.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="setCache" id="setCache"></a>
-          <div class="method hasBottomDivider">
-            <h3>setCache</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>setCache</b> (
-</div>
-                <div class="code">newCache:Cache) : Void</div>
-              </div>
-            </div>
-            <div class="description">Sets the new cache used to cache ClassInfos and PackageInfos.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">cache<span class="separator">:</span></div>
-                    <div>the new cache to be used</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="setClassAlgorithm" id="setClassAlgorithm"></a>
-          <div class="method hasBottomDivider">
-            <h3>setClassAlgorithm</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>setClassAlgorithm</b> (
-</div>
-                <div class="code">algorithm:ClassAlgorithm) : Void</div>
-              </div>
-            </div>
-            <div class="description">Sets the algorithm used to return the appropriate ClassInfo instance
-
- of a specific instance or class.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">algorithm<span class="separator">:</span></div>
-                    <div>the new class algortihm to return appropriate ClassInfo instances</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="setMethodAlgorithm" id="setMethodAlgorithm"></a>
-          <div class="method hasBottomDivider">
-            <h3>setMethodAlgorithm</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>setMethodAlgorithm</b> (
-</div>
-                <div class="code">algorithm:MethodAlgorithm) : Void</div>
-              </div>
-            </div>
-            <div class="description">Sets the algorithm used to find MethodInfo instances representing
-
- methods of a class.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">algorithm<span class="separator">:</span></div>
-                    <div>the new algorithm to find and store MethodInfo instances</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="setPackageAlgorithm" id="setPackageAlgorithm"></a>
-          <div class="method hasBottomDivider">
-            <h3>setPackageAlgorithm</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>setPackageAlgorithm</b> (
-</div>
-                <div class="code">algorithm:PackageAlgorithm) : Void</div>
-              </div>
-            </div>
-            <div class="description">Sets the algorithm used to return the appropriate PackageInfo instance of a 
-
- specific package.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">algorithm<span class="separator">:</span></div>
-                    <div>the new algorithm to return appropriate PackageInfo instances</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="setPackageMemberAlgorithm" id="setPackageMemberAlgorithm"></a>
-          <div class="method hasBottomDivider">
-            <h3>setPackageMemberAlgorithm</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>setPackageMemberAlgorithm</b> (
-</div>
-                <div class="code">algorithm:PackageMemberAlgorithm) : Void</div>
-              </div>
-            </div>
-            <div class="description">Sets the algorithm used to find and store members of a package.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">algorithm<span class="separator">:</span></div>
-                    <div>the new algorithm to find and store the members</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="setPropertyAlgorithm" id="setPropertyAlgorithm"></a>
-          <div class="method hasBottomDivider">
-            <h3>setPropertyAlgorithm</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>setPropertyAlgorithm</b> (
-</div>
-                <div class="code">algorithm:PropertyAlgorithm) : Void</div>
-              </div>
-            </div>
-            <div class="description">Sets the algorithm used to find PropertyInfo instances representing
-
- properties of a class.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">algorithm<span class="separator">:</span></div>
-                    <div>the new algorithm to find PropertyInfo instances</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="setRootPackage" id="setRootPackage"></a>
-          <div class="method hasBottomDivider">
-            <h3>setRootPackage</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>setRootPackage</b> (
-</div>
-                <div class="code">newRootPackage:PackageInfo) : Void</div>
-              </div>
-            </div>
-            <div class="description">Sets the new root of the hierarchy.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">newRootPackage<span class="separator">:</span></div>
-                    <div>the new root package</div>
+                    <div>the new cache to use</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:10:17
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:10:09
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

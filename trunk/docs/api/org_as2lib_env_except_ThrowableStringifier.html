@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_util_Stringifier.html">Stringifier</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_util_Stringifier.html">Stringifier</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,7 +31,7 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.except.ThrowableStringifier</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Saturday, 19 February 2005, 03:18:01</span>
+              <li><span class="title">File last modified: </span><span class="value">Monday, 04 April 2005, 20:25:56</span>
               </li>
             </ul>
           </div>
@@ -37,16 +44,6 @@
               <ul>
                 <li>
                   <a href="#ThrowableStringifier">ThrowableStringifier</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#showStackTrace">showStackTrace</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#showCause">showCause</a>
                 </li>
               </ul>
             </div>
@@ -74,32 +71,27 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="ThrowableStringifier" id="ThrowableStringifier"></a>
           <div class="method hasBottomDivider">
-            <h3>ThrowableStringifier</h3>
+            <h3 id="ThrowableStringifier">ThrowableStringifier</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>ThrowableStringifier</b> (
+                <div class="floatbox code">function <b>ThrowableStringifier</b> (
 
 </div>
-                <div class="code">showStackTrace:Boolean,
-showCause:Boolean)</div>
+                <div><span class="code">showStackTrace:Boolean,
+showCause:Boolean)</span>
+                </div>
               </div>
             </div>
             <div class="description">Constructs a new ThrowableStringifier instance.<p>You can switch different parts of the string representation on 
-
  or off using the show* parameters.<p>The stack trace and the cause are be default shown. That means
-
  if you want them to be contained in the resultin string representation
-
  you do not have to specify these parameters.<p>The settings apply only to the throwable to stringify. That means
-
  they do not apply for its cause. The cause is responsible for stringifying
-
  itself.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">showStackTrace<span class="separator">:</span></div>
                     <div>determines whether the string representation contains the stack trace</div>
@@ -113,69 +105,32 @@ showCause:Boolean)</div>
             </div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="showCause" id="showCause"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>showCause</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>showCause</b>:Boolean
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Show the cause.</div>
-          </div>
-          <a name="showStackTrace" id="showStackTrace"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>showStackTrace</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>showStackTrace</b>:Boolean
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Show the stack trace.</div>
-          </div>
-        </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="execute" id="execute"></a>
           <div class="method hasBottomDivider">
-            <h3>execute</h3>
+            <h3 id="execute">execute</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>execute</b> (
+                <div class="floatbox code">function <b>execute</b> (
 </div>
-                <div class="code">target) : String</div>
+                <div><span class="code">target) : String</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns a string representation of the passed-in Throwable instance.<p>Depending on the settings you made on instantiation the stack
-
  trace and cause is contained in the resulting string or not.<p>Note that the cause gets stringified by its own stringifier. That
-
  means the setting show stack trace and show cause settings apply only
-
  for this throwable and not for its causes.
-
  The cause is responsible for stringifying itself.<p>The throwable elements are also responsible for stringifying themselves.<p>The string representation is composed as follows:<pre>theFullQualifiedNameOfTheThrowable: theMessage
-
    at theStringRepresentationOfTheStackTraceElement
-
    ..
-
  Caused by: theStringRepresentationOfTheCause</pre><p>Here is how a real string representation could look like:<pre>org.as2lib.<span class="codeIdentifier">data</span>.holder.IllegalLengthException: The argument <span class="codeIdentifier">length</span> '-<span class="codeNumber">2</span>' is <span class="codeKeyword">not</span> allowed to be negative.
-
    at org.as2lib.<span class="codeIdentifier">data</span>.holder.MyDataHolder.setMaximumLength(<span class="codeIdentifier">Number</span>)
-
  Caused by: org.as2lib.<span class="codeIdentifier">data</span>.math.IllegalNumberException: The argument number '-<span class="codeNumber">2</span>' is <span class="codeKeyword">not</span> allowed <span class="codeKeyword">in</span> a range from <span class="codeNumber">0</span> to &#8734;.
-
    at org.as2lib.<span class="codeIdentifier">data</span>.math.Range.setNumber(<span class="codeIdentifier">Number</span>)</pre></div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">target<span class="separator">:</span></div>
                     <div>the Throwable to stringify</div>
@@ -183,43 +138,42 @@ showCause:Boolean)</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the string representation of the throwable</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_env_except_ThrowableStringifier.html#stringifyStackTrace">stringifyStackTrace</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_util_Stringifier.html#execute">org.as2lib.util.Stringifier.execute</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="stringifyStackTrace" id="stringifyStackTrace"></a>
           <div class="method hasBottomDivider">
-            <h3>stringifyStackTrace</h3>
+            <h3 id="stringifyStackTrace">stringifyStackTrace</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>stringifyStackTrace</b> (
+                <div class="floatbox code">function <b>stringifyStackTrace</b> (
 </div>
-                <div class="code">stackTrace:Array) : String</div>
+                <div><span class="code">stackTrace:Array) : String</span>
+                </div>
               </div>
             </div>
             <div class="description">Stringifies the passed-in stack trace array that contains StackTraceElement
-
  instances.<p>The individual StackTraceElement instances are responsible for
-
  stringifying themselves.<p>The resulting string representation is composed as follows:<pre>at theStringRepresentationOfTheFirstStackTraceElement
-
  at theStringRepresentationOfTheSecondStackTraceElement
-
  ..</pre><p>A real string representation could look like this:<pre>at org.as2lib.<span class="codeIdentifier">data</span>.math.Range.setNumber(<span class="codeIdentifier">Number</span>)
-
  at org.as2lib.<span class="codeIdentifier">data</span>.holder.MyDataHolder.setMaximumLength(<span class="codeIdentifier">Number</span>)
-
  at com.simonwacker.MyApplication.initialize()</pre></div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">stackTrace<span class="separator">:</span></div>
                     <div>the stack trace to stringify</div>
@@ -227,16 +181,16 @@ showCause:Boolean)</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the string representation of the stack trace</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:58:24
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:18
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

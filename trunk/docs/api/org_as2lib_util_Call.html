@@ -16,22 +16,29 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_util_Executable.html">Executable</a>
+                </li>
+              </ul>
+            </div>
+          </div>
           <div class="classDetails">
             <ul>
               <li><span class="title">Author: </span><span class="value">Simon Wacker, Martin Heidegger</span>
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.util.Call</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Sunday, 20 February 2005, 08:42:30</span>
+              <li><span class="title">File last modified: </span><span class="value">Thursday, 24 March 2005, 23:15:10</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">Call is used to enable another object to make a function call in another
-
- scope without having to know where.  </div>This enables you to pass a Call to another
-
- object and let the object execute the call.</div>
+        <div class="classDescription"><div class="descriptionSummary">Call enables another object to make call a method in another scope
+ without having to know where. </div><p>This enables you to pass a call to another object and let the object
+ execute the call. You use the <a href="org_as2lib_util_Call.html#execute">execute</a> method to do so.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
@@ -42,16 +49,6 @@
                 </li>
               </ul>
             </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#object">object</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#func">func</a>
-                </li>
-              </ul>
-            </div>
             <div class="methodSummaryPart"><span class="title">Instance methods</span>
               <ul>
                 <li>
@@ -59,6 +56,9 @@
                 </li>
                 <li>
                   <a href="#toString">toString</a>
+                </li>
+                <li>
+                  <a href="#forEach">forEach</a>
                 </li>
               </ul>
               <div class="boxWithBorder">
@@ -76,121 +76,151 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="Call" id="Call"></a>
           <div class="method hasBottomDivider">
-            <h3>Call</h3>
+            <h3 id="Call">Call</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>Call</b> (
+                <div class="floatbox code">function <b>Call</b> (
 
 </div>
-                <div class="code">object,
-func:Function)</div>
+                <div><span class="code">object,
+method:Function)</span>
+                </div>
               </div>
             </div>
             <div class="description">Constructs a new Call instance.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
-                    <div>the object the Function shall be executed on</div>
+                    <div>the object to execute the method on</div>
                   </div>
                   <div class="item">
-                    <div class="floatbox code colorizedCode">func  <span class="separator">:</span></div>
-                    <div>the Function that shall be executed</div>
+                    <div class="floatbox code colorizedCode">method<span class="separator">:</span></div>
+                    <div>the method to execute</div>
                   </div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
-                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if neigther the object or the function is not available.</div>
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if either the object or the method is null or undefined</div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="func" id="func"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>func</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>func</b>:Function
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The Function to be executed.</div>
-          </div>
-          <a name="object" id="object"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>object</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>object</b>
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The object to execute the Function one.</div>
           </div>
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="execute" id="execute"></a>
           <div class="method hasBottomDivider">
-            <h3>execute</h3>
+            <h3 id="execute">execute</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>execute</b> (
+                <div class="floatbox code">function <b>execute</b> (
 </div>
-                <div class="code">args:Array)</div>
+                <div><span class="code">args:Array)</span>
+                </div>
               </div>
             </div>
-            <div class="description">Executes the passed method on the passed object with the given
-
- arguments and returns the result of the execution.</div>
+            <div class="description">Executes the method on the object passing the given arguments and
+ returns the result of the execution.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">args<span class="separator">:</span></div>
-                    <div>the arguments that shall be passed</div>
+                    <div>the arguments to pass on method invocation</div>
                   </div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the result of the method execution</div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the result of the method invocation</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_util_Executable.html#execute">Executable.execute</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="toString" id="toString"></a>
           <div class="method hasBottomDivider">
-            <h3>toString</h3>
+            <h3 id="forEach">forEach</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>toString</b> (
+                <div class="floatbox code">function <b>forEach</b> (
 </div>
-                <div class="code">Void) : String</div>
+                <div><span class="code">object) : Void</span>
+                </div>
               </div>
             </div>
-            <div class="description">Extended Stringifier for this class.</div>
+            <div class="description">Iterates over the passed-in object using the for..in loop and executes
+ this call passing the found object, its name and the passed-in object.<p>Example:<pre><span class="codeKeyword">class</span> MyClass {
+
+  <span class="codeKeyword">private</span> <span class="codeKeyword">var</span> a:<span class="codeIdentifier">String</span>;
+  <span class="codeKeyword">private</span> <span class="codeKeyword">var</span> b:<span class="codeIdentifier">String</span>;
+  <span class="codeKeyword">private</span> <span class="codeKeyword">var</span> c:<span class="codeIdentifier">String</span>;
+
+  <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> MyClass() {
+    a = <span class="codeString">"1"</span>;
+    b = <span class="codeString">"2"</span>;
+    c = <span class="codeString">"2"</span>;
+  }
+
+  <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> traceObject(value, name:<span class="codeIdentifier">String</span>, inObject):<span class="codeIdentifier">Void</span> {
+    <span class="codeIdentifier">trace</span>(name + <span class="codeString">": "</span> + value);
+  }
+
+  <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> listAll() {
+    <span class="codeKeyword">new</span> Call(<span class="codeIdentifier">this</span>, traceObject).forEach(<span class="codeIdentifier">this</span>);
+  }
+}</pre><p>Note that only members visible for for-in loops cause the execute
+ method to become invoked.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">Call as string.</div>
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
+                    <div>the object to iterate over</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_util_Executable.html#forEach">Executable.forEach</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="toString">toString</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>toString</b> (
+</div>
+                <div><span class="code">Void) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the string representation of this call.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the string representation of this call</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:36:37
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:11:15
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

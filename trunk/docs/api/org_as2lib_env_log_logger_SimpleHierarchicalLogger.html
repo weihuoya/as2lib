@@ -16,7 +16,17 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_env_log_logger_AbstractLogger.html">AbstractLogger</a> &lt; <a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_log_ConfigurableHierarchicalLogger.html">ConfigurableHierarchicalLogger</a></li><li><a href="org_as2lib_env_log_ConfigurableLogger.html">ConfigurableLogger</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_env_log_ConfigurableHierarchicalLogger.html">ConfigurableHierarchicalLogger</a>
+                </li>
+                <li>
+                  <a href="org_as2lib_env_log_ConfigurableLogger.html">ConfigurableLogger</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,68 +34,47 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.log.logger.SimpleHierarchicalLogger</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Thursday, 17 February 2005, 06:12:29</span>
+              <li><span class="title">File last modified: </span><span class="value">Monday, 04 April 2005, 20:26:14</span>
               </li>
             </ul>
           </div>
         </div>
         <div class="classDescription"><div class="descriptionSummary">SimpleHierarchicalLogger is a simple implementation of the
-
- ConfigurableLogger and ConfigurableHierarchicalLogger interfaces.<p>This logger is thus capable of functioning correctly in a hierarchy.
- </div>
- It gets normally used within the LoggerHierarchy repository.<p>The basic methods to write the log messages are #log, #debug,
-
- #info, #warning and #fatal.<p>The first thing to note is that you can write log messages at
-
- different levels. These levels are DEBUG, INFO, WARNING, ERROR and
-
- FATAL. Depending on what level was set only messages at a given
-
- level are logged.
-
- The levels are organized in a hierarchical manner. That means if you
-
- set you log level to ALL every messages get logged. If you set it
-
- to ERROR only messages at ERROR and FATAL level get logged and so on.
-
+ <code>ConfigurableLogger</code> and <code>ConfigurableHierarchicalLogger</code>
+ interfaces. </div><p>This logger is thus capable of functioning correctly in a hierarchy.
+ It is normally used with the <code>LoggerHierarchy</code> repository.<p>The basic methods to write log messages are <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#log">log</a>, <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#debug">debug</a>,
+ <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#info">info</a>, <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#warning">warning</a> and <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#fatal">fatal</a>.<p>The first thing to note is that you can log messages at different
+ levels. These levels are #DEBUG, #INFO, #WARNING,
+ #ERROR and #FATAL. Depending on what level has been
+ set only messages at a given level are logged. The levels are organized
+ in a hierarchical manner. That means if you set the log level to #ALL
+ every messages is logged. If you set it to #ERROR only messages
+ at #ERROR and #FATAL level are logged and so on.
  It is also possible to define your own set of levels. You can therefor
-
- use the #isEnabled(LogLevel):Boolean and log(*, LogLevel):Boolean
-
- methods.
-
- If you do not set a log level the level of its parent gets used to
-
+ use the <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isEnabled">isEnabled</a> and <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#log">log</a> methods.
+ If you do not set a log level the level of its parent is used to
  decide whether the message shall be logged.<p>To do not waste unnecessary performance in constructing log messages
-
- that do not get logged you can use the #isEnabled, #isDebugEnabled,
-
- #isInfoEnabled, #isWarningEnabled, #isErrorEnabled and #isFatalEnabled
-
- methods.<p>Note that the message does in neither case have to be a string.
-
- That means you can pass-in messages and let the actual handler or logger
-
- decide how to produce a string representation of the message. That is in
-
- most cases done by using the toString method of the specific message.
-
- You can use this method to do not lose performance in cases where
-
- the message does not get logged.<p>The actaul log output gets made by log handlers. To configure and
-
- access the handlers of this logger you can use the methods #addHandler,
-
- #removeHandler, #removeAllHandler and #getAllHandler. There are a
-
- few pre-defined handlers for different output devices. Take a look
-
- at the org.as2lib.env.log.handler package for these.
-
+ that are not logged you can use the <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isEnabled">isEnabled</a>, <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isDebugEnabled">isDebugEnabled</a>,
+ <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isInfoEnabled">isInfoEnabled</a>, <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isWarningEnabled">isWarningEnabled</a>, <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isErrorEnabled">isErrorEnabled</a>
+ and <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isFatalEnabled">isFatalEnabled</a> methods.<p>Note that the message does in neither case have to be a string.
+ That means you can pass-in messages and let the actual handler or
+ logger decide how to produce a string representation of the message.
+ That is in most cases done by using the toString method of the specific
+ message. You can use this method to do not lose performance in cases
+ where the message is not logged.<p>The actual logging is made by log handlers. To configure and access
+ the handlers of this logger you can use the methods <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#addHandler">addHandler</a>,
+ <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#removeHandler">removeHandler</a>, <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#removeAllHandlers">removeAllHandlers</a> and <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#getAllHandlers">getAllHandlers</a>.
+ There are a few pre-defined handlers for different output devices. Take a look
+ at the <code>org.as2lib.env.log.handler</code> package for these.
  This logger does not only use the handlers of itself but also the
-
- ones of its parents.</div>
+ ones of its parents.<p>Note that advantage of this class's hierarchical support is not
+ taken in the following example. Take a look at the class documentation
+ of the <code>LoggerHierarchy</code> for an example that uses this support.<pre><span class="codeKeyword">var</span> logger:SimpleHierarchicalLogger = <span class="codeKeyword">new</span> SimpleHierarchicalLogger(<span class="codeString">"myLogger"</span>);
+logger.setLevel(SimpleHierarchicalLogger.ALL);
+logger.addHandler(<span class="codeKeyword">new</span> TraceHandler());
+<span class="codeKeyword">if</span> (logger.isInfoEnabled()) {
+    logger.info(<span class="codeString">"This is an information message."</span>);
+}</pre><div class="classFields"><div class="boxWithBorder"><div class="boxedElem"><div class="contentHolder"><span class="title">See also:</span><div class="item"><a href="org_as2lib_env_log_repository_LoggerHierarchy.html">org.as2lib.env.log.repository.LoggerHierarchy</a></div></div></div></div></div></div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
@@ -97,11 +86,6 @@
               </ul>
             </div>
             <div class="methodSummaryPart"><span class="title">Class properties</span>
-              <ul>
-                <li>
-                  <a href="#__proto__">__proto__</a>
-                </li>
-              </ul>
               <div class="boxWithBorder">
                 <div class="boxedElem">
                   <div class="contentHolder">
@@ -110,25 +94,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#level">level</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#addedParentHandlers">addedParentHandlers</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#parent">parent</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#name">name</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#broadcaster">broadcaster</a>
-                </li>
-              </ul>
             </div>
             <div class="methodSummaryPart"><span class="title">Instance methods</span>
               <ul>
@@ -157,13 +122,10 @@
                   <a href="#removeHandler">removeHandler</a>
                 </li>
                 <li>
-                  <a href="#removeAllHandler">removeAllHandler</a>
+                  <a href="#removeAllHandlers">removeAllHandlers</a>
                 </li>
                 <li>
-                  <a href="#getAllHandler">getAllHandler</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#addParentHandlers">addParentHandlers</a>
+                  <a href="#getAllHandlers">getAllHandlers</a>
                 </li>
                 <li>
                   <a href="#isEnabled">isEnabled</a>
@@ -217,22 +179,22 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="SimpleHierarchicalLogger" id="SimpleHierarchicalLogger"></a>
           <div class="method hasBottomDivider">
-            <h3>SimpleHierarchicalLogger</h3>
+            <h3 id="SimpleHierarchicalLogger">SimpleHierarchicalLogger</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>SimpleHierarchicalLogger</b> (
+                <div class="floatbox code">function <b>SimpleHierarchicalLogger</b> (
 
 </div>
-                <div class="code">name:String,
-broadcaster:EventBroadcaster)</div>
+                <div><span class="code">name:String,
+broadcaster:<a href="org_as2lib_env_event_EventBroadcaster.html">EventBroadcaster</a>)</span>
+                </div>
               </div>
             </div>
-            <div class="description">Constructs a new SimpleHierarchicalLogger instance.<p>The default broadcaster is an instance of type SpeedEventBroadcaster.</div>
+            <div class="description">Constructs a new SimpleHierarchicalLogger instance.<p>The default broadcaster is an instance of type <a href="org_as2lib_env_event_SpeedEventBroadcaster.html">org.as2lib.env.event.SpeedEventBroadcaster</a>.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">name       <span class="separator">:</span></div>
                     <div>the name of the new logger</div>
@@ -243,151 +205,64 @@ broadcaster:EventBroadcaster)</div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="methodSection">
-          <h2 class="hasBottomDivider">Class properties</h2>
-          <a name="__proto__" id="__proto__"></a>
-          <div class="method hasBottomDivider">
-            <h3>__proto__</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">static <b>__proto__</b>:Function
-</div>
-                <div class="code"></div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_env_log_logger_AbstractLogger.html#AbstractLogger">AbstractLogger.AbstractLogger</a></div>
+                </div>
               </div>
             </div>
-            <div class="description">Makes the static variables of the super-class accessible through this class.</div>
-          </div>
-        </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="addedParentHandlers" id="addedParentHandlers"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>addedParentHandlers</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>addedParentHandlers</b>:Boolean
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Says whether the handlers array already contains the parents' handlers.</div>
-          </div>
-          <a name="broadcaster" id="broadcaster"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>broadcaster</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>broadcaster</b>:EventBroadcaster
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stores the broadcaster to broadcast to all added handlers.</div>
-          </div>
-          <a name="level" id="level"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>level</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>level</b>:LogLevel
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The actual level.</div>
-          </div>
-          <a name="name" id="name"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>name</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>name</b>:String
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The name of this logger.</div>
-          </div>
-          <a name="parent" id="parent"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>parent</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>parent</b>:HierarchicalLogger
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stores the parent.</div>
           </div>
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="addHandler" id="addHandler"></a>
           <div class="method hasBottomDivider">
-            <h3>addHandler</h3>
+            <h3 id="addHandler">addHandler</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>addHandler</b> (
+                <div class="floatbox code">function <b>addHandler</b> (
 </div>
-                <div class="code">handler:LogHandler) : Void</div>
+                <div><span class="code">handler:<a href="org_as2lib_env_log_LogHandler.html">LogHandler</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Adds a new log handler.<p>Log handlers get used to actually log the messages. They determine
-
  what information to log and to which output device.<p>This method simply does nothing if the passed-in handler is null
-
  or undefined.<p>If the passed-in handler has already been added it gets deleted
-
  and added again.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">handler<span class="separator">:</span></div>
                     <div>the new log handler to log messages</div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <a name="addParentHandlers" id="addParentHandlers"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>addParentHandlers</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>addParentHandlers</b> (
-</div>
-                <div class="code">Void) : Void</div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_ConfigurableLogger.html#addHandler">org.as2lib.env.log.ConfigurableLogger.addHandler</a></div>
+                </div>
               </div>
             </div>
-            <div class="description">Adds the parent handlers to the broadcaster.</div>
           </div>
-          <a name="debug" id="debug"></a>
           <div class="method hasBottomDivider">
-            <h3>debug</h3>
+            <h3 id="debug">debug</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>debug</b> (
+                <div class="floatbox code">function <b>debug</b> (
 </div>
-                <div class="code">message) : Void</div>
+                <div><span class="code">message) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Logs the message object at debug level.<p>The message gets only logged when the level is set to debug or
-
  a level above.<p>The message gets broadcasted to all log handlers of this logger
-
  and to the ones of its parents or more specifically to the ones
-
- returned by the parent's getAllHandler method, that normally also
-
+ returned by the parent's getAllHandlers method, that normally also
  returns the handlers of its parents and so on.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
                     <div>the message object to log</div>
@@ -395,34 +270,35 @@ broadcaster:EventBroadcaster)</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isDebugEnabled">:Boolean</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isDebugEnabled">isDebugEnabled</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#debug">org.as2lib.env.log.Logger.debug</a><br /><a href="org_as2lib_env_log_Logger.html#debug">org.as2lib.env.log.Logger.debug</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="error" id="error"></a>
           <div class="method hasBottomDivider">
-            <h3>error</h3>
+            <h3 id="error">error</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>error</b> (
+                <div class="floatbox code">function <b>error</b> (
 </div>
-                <div class="code">message) : Void</div>
+                <div><span class="code">message) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Logs the message object at error level.<p>The message gets only logged when the level is set to error or a
-
  level above.<p>The message gets broadcasted to all log handlers of this logger
-
  and to the ones of its parents or more specifically to the ones
-
- returned by the parent's getAllHandler method, that normally also
-
+ returned by the parent's getAllHandlers method, that normally also
  returns the handlers of its parents and so on.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
                     <div>the message object to log</div>
@@ -430,34 +306,35 @@ broadcaster:EventBroadcaster)</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isErrorEnabled">:Boolean</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isErrorEnabled">isErrorEnabled</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#error">org.as2lib.env.log.Logger.error</a><br /><a href="org_as2lib_env_log_Logger.html#error">org.as2lib.env.log.Logger.error</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="fatal" id="fatal"></a>
           <div class="method hasBottomDivider">
-            <h3>fatal</h3>
+            <h3 id="fatal">fatal</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>fatal</b> (
+                <div class="floatbox code">function <b>fatal</b> (
 </div>
-                <div class="code">message) : Void</div>
+                <div><span class="code">message) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Logs the message object at fatal level.<p>The message gets only logged when the level is set to fatal or a
-
  level above.<p>The message gets broadcasted to all log handlers of this logger
-
  and to the ones of its parents or more specifically to the ones
-
- returned by the parent's getAllHandler method, that normally also
-
+ returned by the parent's getAllHandlers method, that normally also
  returns the handlers of its parents and so on.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
                     <div>the message object to log</div>
@@ -465,138 +342,145 @@ broadcaster:EventBroadcaster)</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isFatalEnabled">:Boolean</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isFatalEnabled">isFatalEnabled</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#fatal">org.as2lib.env.log.Logger.fatal</a><br /><a href="org_as2lib_env_log_Logger.html#fatal">org.as2lib.env.log.Logger.fatal</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getAllHandler" id="getAllHandler"></a>
           <div class="method hasBottomDivider">
-            <h3>getAllHandler</h3>
+            <h3 id="getAllHandlers">getAllHandlers</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getAllHandler</b> (
+                <div class="floatbox code">function <b>getAllHandlers</b> (
 </div>
-                <div class="code">Void) : Array</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns all handlers this logger broadcasts to when logging a message.<p>These handlers are the once directly added to this logger and the
-
- once of the parents.<p>The handlers of the parents are obtained via the parents getAllHandler
-
+ once of the parents.<p>The handlers of the parents are obtained via the parents getAllHandlers
  method which is supposed to also return the handlers of its parent and
-
  so on.<p>This method never returns null but an empty array if there are no
-
  handlers added to this logger nor to its parents.<p>Note that this method stores the parents handlers by itself if it
-
  once obtained it. That is when you first log a message. It than always
-
  works with the stored handlers. That means that handlers added to its
-
  parents after the handlers have once been stored are not recognized.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">all added log handlers and the ones of the parents</div>
                 </div>
               </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_ConfigurableLogger.html#getAllHandlers">org.as2lib.env.log.ConfigurableLogger.getAllHandlers</a><br /><a href="org_as2lib_env_log_HierarchicalLogger.html#getAllHandlers">org.as2lib.env.log.HierarchicalLogger.getAllHandlers</a></div>
+                </div>
+              </div>
             </div>
           </div>
-          <a name="getLevel" id="getLevel"></a>
           <div class="method hasBottomDivider">
-            <h3>getLevel</h3>
+            <h3 id="getLevel">getLevel</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getLevel</b> (
+                <div class="floatbox code">function <b>getLevel</b> (
 </div>
-                <div class="code">Void) : LogLevel</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_log_LogLevel.html">LogLevel</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the log level of this logger.<p>If the level has not been set, that means is undefined, the level of
-
  the parent will be returned.<p>Null or undefined will only be returned if this level is not defined
-
  and the parent's getLevel method returns null or undefined.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the log level of this logger</div>
                 </div>
               </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_ConfigurableLogger.html#getLevel">org.as2lib.env.log.ConfigurableLogger.getLevel</a><br /><a href="org_as2lib_env_log_HierarchicalLogger.html#getLevel">org.as2lib.env.log.HierarchicalLogger.getLevel</a></div>
+                </div>
+              </div>
             </div>
           </div>
-          <a name="getName" id="getName"></a>
           <div class="method hasBottomDivider">
-            <h3>getName</h3>
+            <h3 id="getName">getName</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getName</b> (
+                <div class="floatbox code">function <b>getName</b> (
 </div>
-                <div class="code">Void) : String</div>
+                <div><span class="code">Void) : String</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the name of this logger.<p>The name is a fully qualified name and the different parts are
-
  be separated by periods.
-
  The name could for example be 'org.as2lib.core.BasicClass'.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the name of this logger</div>
                 </div>
               </div>
-            </div>
-          </div>
-          <a name="getParent" id="getParent"></a>
-          <div class="method hasBottomDivider">
-            <h3>getParent</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getParent</b> (
-</div>
-                <div class="code">Void) : HierarchicalLogger</div>
-              </div>
-            </div>
-            <div class="description">Returns the parent of this logger that must also be a hierarchical
-
- logger.<p>This logger uses the parent to get the log level, if no
-
- one has been set to this logger manually and to get the handlers of
-
- its parents to write the log messages out.</div>
-            <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the parent of this logger</div>
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_HierarchicalLogger.html#getName">org.as2lib.env.log.HierarchicalLogger.getName</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="info" id="info"></a>
           <div class="method hasBottomDivider">
-            <h3>info</h3>
+            <h3 id="getParent">getParent</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>info</b> (
+                <div class="floatbox code">function <b>getParent</b> (
 </div>
-                <div class="code">message) : Void</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_log_HierarchicalLogger.html">HierarchicalLogger</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the parent of this logger that must also be a hierarchical
+ logger.<p>This logger uses the parent to get the log level, if no
+ one has been set to this logger manually and to get the handlers of
+ its parents to write the log messages out.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the parent of this logger</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_HierarchicalLogger.html#getParent">org.as2lib.env.log.HierarchicalLogger.getParent</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="info">info</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>info</b> (
+</div>
+                <div><span class="code">message) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Logs the message object at info level.<p>The message gets only logged when the level is set to info or
-
  a level above.<p>The message gets broadcasted to all log handlers of this logger
-
  and to the ones of its parents or more specifically to the ones
-
- returned by the parent's getAllHandler method, that normally also
-
+ returned by the parent's getAllHandlers method, that normally also
  returns the handlers of its parents and so on.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
                     <div>the message object to log</div>
@@ -604,58 +488,64 @@ broadcaster:EventBroadcaster)</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isInfoEnabled">:Boolean</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isInfoEnabled">isInfoEnabled</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#info">org.as2lib.env.log.Logger.info</a><br /><a href="org_as2lib_env_log_Logger.html#info">org.as2lib.env.log.Logger.info</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="isDebugEnabled" id="isDebugEnabled"></a>
           <div class="method hasBottomDivider">
-            <h3>isDebugEnabled</h3>
+            <h3 id="isDebugEnabled">isDebugEnabled</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>isDebugEnabled</b> (
+                <div class="floatbox code">function <b>isDebugEnabled</b> (
 </div>
-                <div class="code">Void) : Boolean</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Checks if this logger is enabled for debug level output.<p>Using this method as shown in the class documentation may improve
-
  performance depending on how long the log message construction takes.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if debug output gets made</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#DEBUG">org.as2lib.env.log.level.AbstractLogLevel.DEBUG</a><br /><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#debug">*):Void</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#DEBUG">org.as2lib.env.log.level.AbstractLogLevel.DEBUG</a><br /><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#debug">debug</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#isDebugEnabled">org.as2lib.env.log.Logger.isDebugEnabled</a><br /><a href="org_as2lib_env_log_Logger.html#isDebugEnabled">org.as2lib.env.log.Logger.isDebugEnabled</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="isEnabled" id="isEnabled"></a>
           <div class="method hasBottomDivider">
-            <h3>isEnabled</h3>
+            <h3 id="isEnabled">isEnabled</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>isEnabled</b> (
+                <div class="floatbox code">function <b>isEnabled</b> (
 </div>
-                <div class="code">level:LogLevel) : Boolean</div>
+                <div><span class="code">level:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Checks whether this logger is enabled for the passed-in log level.
 
-
-
  False will be returned if:<ul><li>This logger is not enabled for the passed-in level.</li><li>The passed-in level is null or undefined.</li></ul><p>Using this method as shown in the class documentation may improve
-
  performance depending on how long the log message construction takes.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">level<span class="separator">:</span></div>
                     <div>the level to make the check upon</div>
@@ -663,149 +553,159 @@ broadcaster:EventBroadcaster)</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if this logger is enabled for the given level else false</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#log">*, LogLevel):Void</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#log">log</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="isErrorEnabled" id="isErrorEnabled"></a>
           <div class="method hasBottomDivider">
-            <h3>isErrorEnabled</h3>
+            <h3 id="isErrorEnabled">isErrorEnabled</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>isErrorEnabled</b> (
+                <div class="floatbox code">function <b>isErrorEnabled</b> (
 </div>
-                <div class="code">Void) : Boolean</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Checks if this logger is enabled for error level output.<p>Using this method as shown in the class documentation may improve
-
  performance depending on how long the log message construction takes.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if error output gets made</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#ERROR">org.as2lib.env.log.level.AbstractLogLevel.ERROR</a><br /><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#error">*):Void</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#ERROR">org.as2lib.env.log.level.AbstractLogLevel.ERROR</a><br /><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#error">error</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#isErrorEnabled">org.as2lib.env.log.Logger.isErrorEnabled</a><br /><a href="org_as2lib_env_log_Logger.html#isErrorEnabled">org.as2lib.env.log.Logger.isErrorEnabled</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="isFatalEnabled" id="isFatalEnabled"></a>
           <div class="method hasBottomDivider">
-            <h3>isFatalEnabled</h3>
+            <h3 id="isFatalEnabled">isFatalEnabled</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>isFatalEnabled</b> (
+                <div class="floatbox code">function <b>isFatalEnabled</b> (
 </div>
-                <div class="code">Void) : Boolean</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Checks if this logger is enabled for fatal level output.<p>Using this method as shown in the class documentation may improve
-
  performance depending on how long the log message construction takes.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if fatal output gets made</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#FATAL">org.as2lib.env.log.level.AbstractLogLevel.FATAL</a><br /><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#fatal">*):Void</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#FATAL">org.as2lib.env.log.level.AbstractLogLevel.FATAL</a><br /><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#fatal">fatal</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#isFatalEnabled">org.as2lib.env.log.Logger.isFatalEnabled</a><br /><a href="org_as2lib_env_log_Logger.html#isFatalEnabled">org.as2lib.env.log.Logger.isFatalEnabled</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="isInfoEnabled" id="isInfoEnabled"></a>
           <div class="method hasBottomDivider">
-            <h3>isInfoEnabled</h3>
+            <h3 id="isInfoEnabled">isInfoEnabled</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>isInfoEnabled</b> (
+                <div class="floatbox code">function <b>isInfoEnabled</b> (
 </div>
-                <div class="code">Void) : Boolean</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Checks if this logger is enabled for info level output.<p>Using this method as shown in the class documentation may improve
-
  performance depending on how long the log message construction takes.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if info output gets made</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#INFO">org.as2lib.env.log.level.AbstractLogLevel.INFO</a><br /><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#info">*):Void</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#INFO">org.as2lib.env.log.level.AbstractLogLevel.INFO</a><br /><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#info">info</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#isInfoEnabled">org.as2lib.env.log.Logger.isInfoEnabled</a><br /><a href="org_as2lib_env_log_Logger.html#isInfoEnabled">org.as2lib.env.log.Logger.isInfoEnabled</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="isWarningEnabled" id="isWarningEnabled"></a>
           <div class="method hasBottomDivider">
-            <h3>isWarningEnabled</h3>
+            <h3 id="isWarningEnabled">isWarningEnabled</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>isWarningEnabled</b> (
+                <div class="floatbox code">function <b>isWarningEnabled</b> (
 </div>
-                <div class="code">Void) : Boolean</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Checks if this logger is enabled for warning level output.<p>Using this method as shown in the class documentation may improve
-
  performance depending on how long the log message construction takes.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if warning output gets made</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#WARNING">org.as2lib.env.log.level.AbstractLogLevel.WARNING</a><br /><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#warning">*):Void</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_log_level_AbstractLogLevel.html#WARNING">org.as2lib.env.log.level.AbstractLogLevel.WARNING</a><br /><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#warning">warning</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#isWarningEnabled">org.as2lib.env.log.Logger.isWarningEnabled</a><br /><a href="org_as2lib_env_log_Logger.html#isWarningEnabled">org.as2lib.env.log.Logger.isWarningEnabled</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="log" id="log"></a>
           <div class="method hasBottomDivider">
-            <h3>log</h3>
+            <h3 id="log">log</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>log</b> (
+                <div class="floatbox code">function <b>log</b> (
 
 </div>
-                <div class="code">message,
-level:LogLevel) : Void</div>
+                <div><span class="code">message,
+level:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Logs the message object at the given level.<p>The message gets only logged when this logger is enabled for
-
  the passed-in log level.<p>The message gets broadcasted to all log handlers of this logger
-
  and to the ones of its parents or more specifically to the ones
-
- returned by the parent's getAllHandler method, that normally also
-
+ returned by the parent's getAllHandlers method, that normally also
  returns the handlers of its parents and so on.<p>Note that the handlers of the parents are resloved only once,
-
  when the first message gets logged. They are stored in this logger
-
  to reference them faster.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
                     <div>the message object to log</div>
@@ -817,66 +717,75 @@ level:LogLevel) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isEnabled">:Boolean</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isEnabled">isEnabled</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="removeAllHandler" id="removeAllHandler"></a>
           <div class="method hasBottomDivider">
-            <h3>removeAllHandler</h3>
+            <h3 id="removeAllHandlers">removeAllHandlers</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>removeAllHandler</b> (
+                <div class="floatbox code">function <b>removeAllHandlers</b> (
 </div>
-                <div class="code">Void) : Void</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Removes all added log handlers.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_ConfigurableLogger.html#removeAllHandlers">org.as2lib.env.log.ConfigurableLogger.removeAllHandlers</a></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <a name="removeHandler" id="removeHandler"></a>
           <div class="method hasBottomDivider">
-            <h3>removeHandler</h3>
+            <h3 id="removeHandler">removeHandler</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>removeHandler</b> (
+                <div class="floatbox code">function <b>removeHandler</b> (
 </div>
-                <div class="code">handler:LogHandler) : Void</div>
+                <div><span class="code">handler:<a href="org_as2lib_env_log_LogHandler.html">LogHandler</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Removes all occerrences of the passed-in log handler.<p>If the passed-in handler is null or undefined the method invocation
-
  simply gets ignored.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">handler<span class="separator">:</span></div>
                     <div>the log handler to remove</div>
                   </div>
                 </div>
               </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_ConfigurableLogger.html#removeHandler">org.as2lib.env.log.ConfigurableLogger.removeHandler</a></div>
+                </div>
+              </div>
             </div>
           </div>
-          <a name="setLevel" id="setLevel"></a>
           <div class="method hasBottomDivider">
-            <h3>setLevel</h3>
+            <h3 id="setLevel">setLevel</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setLevel</b> (
+                <div class="floatbox code">function <b>setLevel</b> (
 </div>
-                <div class="code">level:LogLevel) : Void</div>
+                <div><span class="code">level:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets the log level.<p>The level determines which output to make and and which to make
-
  not.<p>The level is allowed to be set to null or undefined. If you do
-
- so the #getLevel method returns the level of the parent.</div>
+ so the <a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#getLevel">getLevel</a> method returns the level of the parent.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">level<span class="separator">:</span></div>
                     <div>the new level to control the output</div>
@@ -884,84 +793,92 @@ level:LogLevel) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#getLevel">:LogLevel</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#getLevel">getLevel</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_ConfigurableLogger.html#setLevel">org.as2lib.env.log.ConfigurableLogger.setLevel</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setName" id="setName"></a>
           <div class="method hasBottomDivider">
-            <h3>setName</h3>
+            <h3 id="setName">setName</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setName</b> (
+                <div class="floatbox code">function <b>setName</b> (
 </div>
-                <div class="code">name:String) : Void</div>
+                <div><span class="code">name:String) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets the name of this logger.<p>The name must exists of the path as well as the actual identifier.
-
  That means it must be fully qualified.<p>The LoggerHierarchy prescribes that the different parts of the
-
  name must be separated by periods.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">name<span class="separator">:</span></div>
                     <div>the name of this logger</div>
                   </div>
                 </div>
               </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_ConfigurableHierarchicalLogger.html#setName">org.as2lib.env.log.ConfigurableHierarchicalLogger.setName</a></div>
+                </div>
+              </div>
             </div>
           </div>
-          <a name="setParent" id="setParent"></a>
           <div class="method hasBottomDivider">
-            <h3>setParent</h3>
+            <h3 id="setParent">setParent</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setParent</b> (
+                <div class="floatbox code">function <b>setParent</b> (
 </div>
-                <div class="code">parent:HierarchicalLogger) : Void</div>
+                <div><span class="code">parent:<a href="org_as2lib_env_log_HierarchicalLogger.html">HierarchicalLogger</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets the parent of this logger.<p>The parent gets used to obtain needed configuration like handlers
-
  and levels.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">parent<span class="separator">:</span></div>
                     <div>the parent of this logger</div>
                   </div>
                 </div>
               </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_ConfigurableHierarchicalLogger.html#setParent">org.as2lib.env.log.ConfigurableHierarchicalLogger.setParent</a></div>
+                </div>
+              </div>
             </div>
           </div>
-          <a name="warning" id="warning"></a>
           <div class="method hasBottomDivider">
-            <h3>warning</h3>
+            <h3 id="warning">warning</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>warning</b> (
+                <div class="floatbox code">function <b>warning</b> (
 </div>
-                <div class="code">message) : Void</div>
+                <div><span class="code">message) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Logs the message object at warning level.<p>The message gets only logged when the level is set to warning or
-
  a level above.<p>The message gets broadcasted to all log handlers of this logger
-
  and to the ones of its parents or more specifically to the ones
-
- returned by the parent's getAllHandler method, that normally also
-
+ returned by the parent's getAllHandlers method, that normally also
  returns the handlers of its parents and so on.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
                     <div>the message object to log</div>
@@ -969,16 +886,21 @@ level:LogLevel) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isWarningEnabled">:Boolean</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#isWarningEnabled">isWarningEnabled</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_Logger.html#warning">org.as2lib.env.log.Logger.warning</a><br /><a href="org_as2lib_env_log_Logger.html#warning">org.as2lib.env.log.Logger.warning</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:00:56
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:35
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

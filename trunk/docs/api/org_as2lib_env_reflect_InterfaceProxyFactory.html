@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_reflect_ProxyFactory.html">ProxyFactory</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_env_reflect_ProxyFactory.html">ProxyFactory</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,15 +31,13 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.reflect.InterfaceProxyFactory</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Wednesday, 02 February 2005, 07:01:09</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 05 March 2005, 05:41:46</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">InterfaceProxyFacotry creates proxies for interfaces.  </div>It can only be
-
+        <div class="classDescription"><div class="descriptionSummary">InterfaceProxyFacotry creates proxies for interfaces. </div> It can only be
  used in conjunction with interfaces.<p>It offers a higher performance than the TypeProxyFactory which can
-
  also be used with classes.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
@@ -58,26 +63,24 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="createProxy" id="createProxy"></a>
           <div class="method hasBottomDivider">
-            <h3>createProxy</h3>
+            <h3 id="createProxy">createProxy</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>createProxy</b> (
+                <div class="floatbox code">function <b>createProxy</b> (
 
 </div>
-                <div class="code">interfaze:Function,
-handler:InvocationHandler)</div>
+                <div><span class="code">interfaze:Function,
+handler:<a href="org_as2lib_env_reflect_InvocationHandler.html">InvocationHandler</a>)</span>
+                </div>
               </div>
             </div>
             <div class="description">Creates proxies for interfaces.<p>You can cast the returned proxy to the interface.<p>Null gets returned if you pass in an interface of value null or
-
  undefined.<p>The proxy catches method invocations by using __resolve.<p>Note that also methods that are not declared on the interface but
-
  get invoked on the proxy, get forwarded to the handler.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">interfaze<span class="separator">:</span></div>
                     <div>the interface to create the proxy for</div>
@@ -89,21 +92,21 @@ handler:InvocationHandler)</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the created interface proxy</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_reflect_ProxyFactory.html#createProxy">, InvocationHandler)</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_reflect_ProxyFactory.html#createProxy">ProxyFactory.createProxy</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:08:05
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:10:01
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_aop_joinpoint_AbstractJoinPoint.html">AbstractJoinPoint</a> &lt; <a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_aop_joinpoint_AbstractJoinPoint.html">AbstractJoinPoint</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_aop_joinpoint_AbstractJoinPoint.html">AbstractJoinPoint</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,7 +31,7 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.aop.joinpoint.PropertyJoinPoint</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Wednesday, 29 December 2004, 10:18:20</span>
+              <li><span class="title">File last modified: </span><span class="value">Wednesday, 12 January 2005, 18:25:20</span>
               </li>
             </ul>
           </div>
@@ -49,16 +56,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#info">info</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#thiz">thiz</a>
-                </li>
-              </ul>
             </div>
             <div class="methodSummaryPart"><span class="title">Instance methods</span>
               <ul>
@@ -99,22 +96,22 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="PropertyJoinPoint" id="PropertyJoinPoint"></a>
           <div class="method hasBottomDivider">
-            <h3>PropertyJoinPoint</h3>
+            <h3 id="PropertyJoinPoint">PropertyJoinPoint</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>PropertyJoinPoint</b> (
+                <div class="floatbox code">function <b>PropertyJoinPoint</b> (
 
 </div>
-                <div class="code">info:PropertyInfo,
-thiz)</div>
+                <div><span class="code">info:<a href="org_as2lib_env_reflect_PropertyInfo.html">PropertyInfo</a>,
+thiz)</span>
+                </div>
               </div>
             </div>
             <div class="description">Constructs a new PropertyJoinPoint.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">info<span class="separator">:</span></div>
                     <div>the PropertyInfo instance that represents the represented property</div>
@@ -125,132 +122,110 @@ thiz)</div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="info" id="info"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>info</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>info</b>:PropertyInfo
-</div>
-                <div class="code"></div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_aop_joinpoint_AbstractJoinPoint.html#AbstractJoinPoint">AbstractJoinPoint.AbstractJoinPoint</a></div>
+                </div>
               </div>
             </div>
-            <div class="description">Stores the PropertyInfo instance that represents the represented property.</div>
-          </div>
-          <a name="thiz" id="thiz"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>thiz</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>thiz</b>
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stores the object returned by the #getThis() method.</div>
           </div>
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="clone" id="clone"></a>
           <div class="method hasBottomDivider">
-            <h3>clone</h3>
+            <h3 id="clone">clone</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>clone</b> (
+                <div class="floatbox code">function <b>clone</b> (
 </div>
-                <div class="code">Void) : JoinPoint</div>
+                <div><span class="code">Void) : <a href="org_as2lib_aop_JoinPoint.html">JoinPoint</a></span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_aop_JoinPoint.html#clone">:JoinPoint</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getInfo" id="getInfo"></a>
           <div class="method hasBottomDivider">
-            <h3>getInfo</h3>
+            <h3 id="getInfo">getInfo</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getInfo</b> (
+                <div class="floatbox code">function <b>getInfo</b> (
 </div>
-                <div class="code">Void) : TypeMemberInfo</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_reflect_TypeMemberInfo.html">TypeMemberInfo</a></span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_aop_JoinPoint.html#getInfo">:TypeMemberInfo</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getThis" id="getThis"></a>
           <div class="method hasBottomDivider">
-            <h3>getThis</h3>
+            <h3 id="getThis">getThis</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getThis</b> (
+                <div class="floatbox code">function <b>getThis</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_aop_JoinPoint.html#getThis">org.as2lib.aop.JoinPoint.getThis(Void)</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getType" id="getType"></a>
           <div class="method hasBottomDivider">
-            <h3>getType</h3>
+            <h3 id="getType">getType</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getType</b> (
+                <div class="floatbox code">function <b>getType</b> (
 </div>
-                <div class="code">Void) : Number</div>
+                <div><span class="code">Void) : Number</span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_aop_JoinPoint.html#getType">:Number</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="proceed" id="proceed"></a>
           <div class="method hasBottomDivider">
-            <h3>proceed</h3>
+            <h3 id="proceed">proceed</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>proceed</b> (
+                <div class="floatbox code">function <b>proceed</b> (
 </div>
-                <div class="code">args:Array)</div>
+                <div><span class="code">args:Array)</span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_aop_JoinPoint.html#getInfo">org.as2lib.aop.JoinPoint.getInfo(Array)</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:34:24
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:08:10
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

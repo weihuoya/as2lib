@@ -26,19 +26,15 @@ Interface
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.aop.JoinPoint</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Thursday, 16 September 2004, 09:14:49</span>
+              <li><span class="title">File last modified: </span><span class="value">Friday, 24 September 2004, 12:27:12</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">JoinPoint represents an identifiable point in a program.  </div>Although
-
+        <div class="classDescription"><div class="descriptionSummary">JoinPoint represents an identifiable point in a program. </div> Although
  this points could also be try..catch blocks the join points offered
-
  by this framework are limited to members of classes or interfaces.
-
  Refer to <a href="http://www.simonwacker.com/blog/archives/000041.php">http://www.simonwacker.com/blog/archives/000041.php</a> for a
-
  description of join points in AOP terms.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
@@ -79,122 +75,109 @@ Interface
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="clone" id="clone"></a>
           <div class="method hasBottomDivider">
-            <h3>clone</h3>
+            <h3 id="clone">clone</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>clone</b> (
+                <div class="floatbox code">function <b>clone</b> (
 </div>
-                <div class="code">Void) : JoinPoint</div>
+                <div><span class="code">Void) : <a href="org_as2lib_aop_JoinPoint.html">JoinPoint</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns a clone of this JoinPoint with the up-to-date type
-
  member.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">a clone of this JoinPoint with a up-to-date type member</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getInfo" id="getInfo"></a>
           <div class="method hasBottomDivider">
-            <h3>getInfo</h3>
+            <h3 id="getInfo">getInfo</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getInfo</b> (
+                <div class="floatbox code">function <b>getInfo</b> (
 </div>
-                <div class="code">Void) : TypeMemberInfo</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_reflect_TypeMemberInfo.html">TypeMemberInfo</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the TypeMemberInfo instance, that represents the join
-
  point. The TypeMemberInfo class is part of the as2libs Reflection
-
  API.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the TypeMemberInfo representing the static part of the join point</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getThis" id="getThis"></a>
           <div class="method hasBottomDivider">
-            <h3>getThis</h3>
+            <h3 id="getThis">getThis</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getThis</b> (
+                <div class="floatbox code">function <b>getThis</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the logical this of the interception. That means if the join
-
  point is part of a call-pointcut the result will refer to the object
-
  where the call is made from. If the join point is part of an execution-
-
  pointcut the result will refer to the object the represented method
-
  resides in.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the logical this of the join point depending on the wrapping pointcut</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getType" id="getType"></a>
           <div class="method hasBottomDivider">
-            <h3>getType</h3>
+            <h3 id="getType">getType</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getType</b> (
+                <div class="floatbox code">function <b>getType</b> (
 </div>
-                <div class="code">Void) : Number</div>
+                <div><span class="code">Void) : Number</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the type of the join point. This can for example be
-
  AbstractJoinPoint.TYPE_METHOD.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the type of the join point represented by a number</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="matches" id="matches"></a>
           <div class="method hasBottomDivider">
-            <h3>matches</h3>
+            <h3 id="matches">matches</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>matches</b> (
+                <div class="floatbox code">function <b>matches</b> (
 </div>
-                <div class="code">pattern:String) : Boolean</div>
+                <div><span class="code">pattern:String) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Checks if the join point matches the given pattern. The pattern
-
  can contain wildcards like '*' or '..'. A pattern could for example
-
  be 'org..BasicClass.*'.
-
  Refer to <a href="http://www.simonwacker.com/blog/archives/000053.php">http://www.simonwacker.com/blog/archives/000053.php</a> for
-
  an explanation of possible wildcards. Note the the '?' wildcard is
-
  not supported.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">pattern<span class="separator">:</span></div>
                     <div>the pattern to be matched against this join point</div>
@@ -203,22 +186,21 @@ Interface
               </div>
             </div>
           </div>
-          <a name="proceed" id="proceed"></a>
           <div class="method hasBottomDivider">
-            <h3>proceed</h3>
+            <h3 id="proceed">proceed</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>proceed</b> (
+                <div class="floatbox code">function <b>proceed</b> (
 </div>
-                <div class="code">args:Array)</div>
+                <div><span class="code">args:Array)</span>
+                </div>
               </div>
             </div>
             <div class="description">Executes the type member represented by this join point, passing the
-
  arguments and returns the result.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">args<span class="separator">:</span></div>
                     <div>the arguments to be passed with the method call</div>
@@ -226,16 +208,16 @@ Interface
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the result of the method execution</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:33:43
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:08:08
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

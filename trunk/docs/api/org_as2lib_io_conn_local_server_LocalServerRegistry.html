@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_io_conn_core_server_ServerRegistry.html">ServerRegistry</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_io_conn_core_server_ServerRegistry.html">ServerRegistry</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,27 +31,19 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.io.conn.local.server.LocalServerRegistry</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Monday, 03 January 2005, 10:53:26</span>
+              <li><span class="title">File last modified: </span><span class="value">Thursday, 24 March 2005, 23:15:06</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">LocalServerRegistry lets you register servers.<p>That means that servers get registered to be aware of all servers
-
- that are currently running.  </div>The servers get registered in a kind of
-
+        <div class="classDescription"><div class="descriptionSummary">LocalServerRegistry lets you register servers. </div><p>That means that servers get registered to be aware of all servers
+ that are currently running. The servers get registered in a kind of
  gloabl registry, even if you instantiate different instances of this
-
  class and in different swfs.<p>Servers are expected to register themselves at this registry when
-
  they start running and unregister themselves when they stop running.<p>The usage is quite simple:<pre><span class="codeKeyword">var</span> serverRegistry:LocalServerRegistry = <span class="codeKeyword">new</span> LocalServerRegistry();
-
 serverRegistry.registerServer(<span class="codeString">"local.as2lib.org"</span>);
-
 serverRegistry.containsServer(<span class="codeString">"local.as2lib.org"</span>);
-
 serverRegistry.removeServer(<span class="codeString">"local.as2lib.org"</span>);</pre><p>As you can see in the above example, not servers are registered
-
  but hosts, that represent servers.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
@@ -53,13 +52,6 @@ serverRegistry.removeServer(<span class="codeString">"local.as2lib.org"</span>);
               <ul>
                 <li>
                   <a href="#LocalServerRegistry">LocalServerRegistry</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#serverRegistry">serverRegistry</a>
                 </li>
               </ul>
             </div>
@@ -90,54 +82,37 @@ serverRegistry.removeServer(<span class="codeString">"local.as2lib.org"</span>);
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="LocalServerRegistry" id="LocalServerRegistry"></a>
           <div class="method hasBottomDivider">
-            <h3>LocalServerRegistry</h3>
+            <h3 id="LocalServerRegistry">LocalServerRegistry</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>LocalServerRegistry</b> (
+                <div class="floatbox code">function <b>LocalServerRegistry</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
             <div class="description">Constructs a new LocalServerRegistry instance.</div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="serverRegistry" id="serverRegistry"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>serverRegistry</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>serverRegistry</b>:Object
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Contains all registered Servers.</div>
-          </div>
-        </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="containsServer" id="containsServer"></a>
           <div class="method hasBottomDivider">
-            <h3>containsServer</h3>
+            <h3 id="containsServer">containsServer</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>containsServer</b> (
+                <div class="floatbox code">function <b>containsServer</b> (
 </div>
-                <div class="code">host:String) : Boolean</div>
+                <div><span class="code">host:String) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns whether a server with the passed-in host is registered in
-
  some registry.<p>This does not mean that the server is registered in this registry.
-
  It can be registered in another registry maybe in another swf.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">host<span class="separator">:</span></div>
                     <div>the host that acts as an identifier for the server</div>
@@ -145,33 +120,32 @@ serverRegistry.removeServer(<span class="codeString">"local.as2lib.org"</span>);
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if the server with the given host is regitered else false</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_local_server_LocalServerRegistry.html#containsServer">:Boolean</a></div>
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_io_conn_core_server_ServerRegistry.html#containsServer">org.as2lib.io.conn.core.server.ServerRegistry.containsServer</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="registerServer" id="registerServer"></a>
           <div class="method hasBottomDivider">
-            <h3>registerServer</h3>
+            <h3 id="registerServer">registerServer</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>registerServer</b> (
+                <div class="floatbox code">function <b>registerServer</b> (
 </div>
-                <div class="code">host:String) : Void</div>
+                <div><span class="code">host:String) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Registers a server at the server registry.<p>The server gets registered gloablly, that means that registries
-
  in other swfs can check whether the server is registered.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">host<span class="separator">:</span></div>
                     <div>the host that acts as an identifier for the server</div>
@@ -179,33 +153,32 @@ serverRegistry.removeServer(<span class="codeString">"local.as2lib.org"</span>);
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the host is null, undefined or a blank string<br /><a href="org_as2lib_io_conn_core_server_ReservedHostException.html">ReservedHostException</a> if a server with the passed-in host is already running</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_local_server_LocalServerRegistry.html#registerServer">:Void</a></div>
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_io_conn_core_server_ServerRegistry.html#registerServer">org.as2lib.io.conn.core.server.ServerRegistry.registerServer</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="removeServer" id="removeServer"></a>
           <div class="method hasBottomDivider">
-            <h3>removeServer</h3>
+            <h3 id="removeServer">removeServer</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>removeServer</b> (
+                <div class="floatbox code">function <b>removeServer</b> (
 </div>
-                <div class="code">host:String) : Void</div>
+                <div><span class="code">host:String) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Removes a server from the registry.<p>Only servers that have been registered directly at this registry
-
  can be removed.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">host<span class="separator">:</span></div>
                     <div>the host that acts as an identifier for the server to remove</div>
@@ -213,21 +186,21 @@ serverRegistry.removeServer(<span class="codeString">"local.as2lib.org"</span>);
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if you tried to unregister a server that has not been registered directly at this registry but at another one</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_local_server_LocalServerRegistry.html#removeServer">:Void</a></div>
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_io_conn_core_server_ServerRegistry.html#removeServer">org.as2lib.io.conn.core.server.ServerRegistry.removeServer</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:17:21
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:10:29
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

@@ -26,21 +26,16 @@ Interface
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.log.ConfigurableLogger</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Tuesday, 15 February 2005, 11:26:31</span>
+              <li><span class="title">File last modified: </span><span class="value">Monday, 04 April 2005, 20:25:58</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">ConfigurableLogger declares methods needed to configure most loggers.<p>These is first the method to set the level #setLevel and second
-
- the methods to add, remove and access handlers #addHandler, #removeHandler,
-
- #removeAllHandler and #getAllHandler.<p>Log handlers are responsible for making the actual output.  </div>There
-
- are a few pre-defined handlers the can be used to log to different
-
+        <div class="classDescription"><div class="descriptionSummary">ConfigurableLogger declares methods needed to configure most loggers. </div><p>These is first the method to set the level <a href="org_as2lib_env_log_ConfigurableLogger.html#setLevel">setLevel</a> and
+ second the methods to add, remove and access handlers <a href="org_as2lib_env_log_ConfigurableLogger.html#addHandler">addHandler</a>,
+ <a href="org_as2lib_env_log_ConfigurableLogger.html#removeHandler">removeHandler</a>, <a href="org_as2lib_env_log_ConfigurableLogger.html#removeAllHandlers">removeAllHandlers</a> and <a href="org_as2lib_env_log_ConfigurableLogger.html#getAllHandlers">getAllHandlers</a>.<p>Log handlers are responsible for making the actual output. There
+ are a few pre-defined handlers that can be used to log to different
  output devices. Take a look at the org.as2lib.env.log.handler package
-
  for these.<p>Loggers normally get configured once.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
@@ -48,26 +43,29 @@ Interface
             <div class="methodSummaryPart"><span class="title">Instance methods</span>
               <ul>
                 <li>
+                  <a href="#getLevel">getLevel</a>
+                </li>
+                <li>
                   <a href="#setLevel">setLevel</a>
                 </li>
                 <li>
                   <a href="#addHandler">addHandler</a>
                 </li>
                 <li>
-                  <a href="#getAllHandler">getAllHandler</a>
+                  <a href="#getAllHandlers">getAllHandlers</a>
                 </li>
                 <li>
                   <a href="#removeHandler">removeHandler</a>
                 </li>
                 <li>
-                  <a href="#removeAllHandler">removeAllHandler</a>
+                  <a href="#removeAllHandlers">removeAllHandlers</a>
                 </li>
               </ul>
               <div class="boxWithBorder">
                 <div class="boxedElem">
                   <div class="contentHolder">
                     <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_env_log_Logger.html">Logger</a></span></span>
-                    <div class="item"><a href="org_as2lib_env_log_Logger.html#debug">debug</a>, <a href="org_as2lib_env_log_Logger.html#error">error</a>, <a href="org_as2lib_env_log_Logger.html#fatal">fatal</a>, <a href="org_as2lib_env_log_Logger.html#getLevel">getLevel</a>, <a href="org_as2lib_env_log_Logger.html#info">info</a>, <a href="org_as2lib_env_log_Logger.html#isDebugEnabled">isDebugEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isEnabled">isEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isErrorEnabled">isErrorEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isFatalEnabled">isFatalEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isInfoEnabled">isInfoEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isWarningEnabled">isWarningEnabled</a>, <a href="org_as2lib_env_log_Logger.html#log">log</a>, <a href="org_as2lib_env_log_Logger.html#warning">warning</a></div>
+                    <div class="item"><a href="org_as2lib_env_log_Logger.html#debug">debug</a>, <a href="org_as2lib_env_log_Logger.html#error">error</a>, <a href="org_as2lib_env_log_Logger.html#fatal">fatal</a>, <a href="org_as2lib_env_log_Logger.html#info">info</a>, <a href="org_as2lib_env_log_Logger.html#isDebugEnabled">isDebugEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isErrorEnabled">isErrorEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isFatalEnabled">isFatalEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isInfoEnabled">isInfoEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isWarningEnabled">isWarningEnabled</a>, <a href="org_as2lib_env_log_Logger.html#warning">warning</a></div>
                   </div>
                 </div>
                 <div class="boxedElem">
@@ -84,22 +82,21 @@ Interface
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="addHandler" id="addHandler"></a>
           <div class="method hasBottomDivider">
-            <h3>addHandler</h3>
+            <h3 id="addHandler">addHandler</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>addHandler</b> (
+                <div class="floatbox code">function <b>addHandler</b> (
 </div>
-                <div class="code">handler:LogHandler) : Void</div>
+                <div><span class="code">handler:<a href="org_as2lib_env_log_LogHandler.html">LogHandler</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Adds a new log handler.<p>Log handlers get used to actually log the messages. They determine
-
  what information to log and to which output device.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">handler<span class="separator">:</span></div>
                     <div>the new log handler to log messages</div>
@@ -108,51 +105,75 @@ Interface
               </div>
             </div>
           </div>
-          <a name="getAllHandler" id="getAllHandler"></a>
           <div class="method hasBottomDivider">
-            <h3>getAllHandler</h3>
+            <h3 id="getAllHandlers">getAllHandlers</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getAllHandler</b> (
+                <div class="floatbox code">function <b>getAllHandlers</b> (
 </div>
-                <div class="code">Void) : Array</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns all handlers that were directly added to this logger.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">all added log handlers</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="removeAllHandler" id="removeAllHandler"></a>
           <div class="method hasBottomDivider">
-            <h3>removeAllHandler</h3>
+            <h3 id="getLevel">getLevel</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>removeAllHandler</b> (
+                <div class="floatbox code">function <b>getLevel</b> (
 </div>
-                <div class="code">Void) : Void</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_log_LogLevel.html">LogLevel</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the set level.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the set level</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_log_ConfigurableLogger.html#setLevel">setLevel</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="removeAllHandlers">removeAllHandlers</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>removeAllHandlers</b> (
+</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Removes all added log handlers.</div>
           </div>
-          <a name="removeHandler" id="removeHandler"></a>
           <div class="method hasBottomDivider">
-            <h3>removeHandler</h3>
+            <h3 id="removeHandler">removeHandler</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>removeHandler</b> (
+                <div class="floatbox code">function <b>removeHandler</b> (
 </div>
-                <div class="code">handler:LogHandler) : Void</div>
+                <div><span class="code">handler:<a href="org_as2lib_env_log_LogHandler.html">LogHandler</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Removes all occerrences of the passed-in log handler.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">handler<span class="separator">:</span></div>
                     <div>the log handler to remove</div>
@@ -161,22 +182,21 @@ Interface
               </div>
             </div>
           </div>
-          <a name="setLevel" id="setLevel"></a>
           <div class="method hasBottomDivider">
-            <h3>setLevel</h3>
+            <h3 id="setLevel">setLevel</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setLevel</b> (
+                <div class="floatbox code">function <b>setLevel</b> (
 </div>
-                <div class="code">level:LogLevel) : Void</div>
+                <div><span class="code">level:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets the log level.<p>The level determines which output to make and and which to make
-
  not.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">level<span class="separator">:</span></div>
                     <div>the new level to control the output</div>
@@ -184,16 +204,16 @@ Interface
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_log_Logger.html#getLevel">:LogLevel</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item">Logger#getLevel</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:58:56
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:20
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

@@ -16,7 +16,20 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_env_bean_factory_support_AbstractBeanFactory.html">AbstractBeanFactory</a> &lt; <a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_bean_factory_config_ConfigurableBeanFactory.html">ConfigurableBeanFactory</a></li><li><a href="org_as2lib_env_bean_factory_config_ConfigurableHierarchicalBeanFactory.html">ConfigurableHierarchicalBeanFactory</a></li><li><a href="org_as2lib_env_bean_factory_config_ConfigurableListableBeanFactory.html">ConfigurableListableBeanFactory</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_env_bean_factory_config_ConfigurableBeanFactory.html">ConfigurableBeanFactory</a>
+                </li>
+                <li>
+                  <a href="org_as2lib_env_bean_factory_config_ConfigurableHierarchicalBeanFactory.html">ConfigurableHierarchicalBeanFactory</a>
+                </li>
+                <li>
+                  <a href="org_as2lib_env_bean_factory_config_ConfigurableListableBeanFactory.html">ConfigurableListableBeanFactory</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,7 +37,7 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.bean.factory.support.DefaultBeanFactory</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Sunday, 05 December 2004, 05:22:13</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 05 March 2005, 05:41:32</span>
               </li>
             </ul>
           </div>
@@ -47,25 +60,6 @@
                 </li>
               </ul>
             </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#beanDefinitionMap">beanDefinitionMap</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#singletonBeanMap">singletonBeanMap</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#parentBeanFactory">parentBeanFactory</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#allowBeanDefinitionOverriding">allowBeanDefinitionOverriding</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#beanWrapper">beanWrapper</a>
-                </li>
-              </ul>
-            </div>
             <div class="methodSummaryPart"><span class="title">Instance methods</span>
               <ul>
                 <li>
@@ -79,18 +73,6 @@
                 </li>
                 <li>
                   <a href="#setAllowBeanDefinitionOverriding">setAllowBeanDefinitionOverriding</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#getBeanByNameAndBean">getBeanByNameAndBean</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#transformBeanName">transformBeanName</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#createBean">createBean</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#destroyBean">destroyBean</a>
                 </li>
                 <li>
                   <a href="#containsBean">containsBean</a>
@@ -150,328 +132,304 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="DefaultBeanFactory" id="DefaultBeanFactory"></a>
           <div class="method hasBottomDivider">
-            <h3>DefaultBeanFactory</h3>
+            <h3 id="DefaultBeanFactory">DefaultBeanFactory</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>DefaultBeanFactory</b> (
+                <div class="floatbox code">function <b>DefaultBeanFactory</b> (
 </div>
-                <div class="code">parentBeanFactory:BeanFactory)</div>
+                <div><span class="code">parentBeanFactory:<a href="org_as2lib_env_bean_factory_BeanFactory.html">BeanFactory</a>)</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_factory_support_AbstractBeanFactory.html#AbstractBeanFactory">AbstractBeanFactory.AbstractBeanFactory</a></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Class properties</h2>
-          <a name="FACTORY_BEAN_PREFIX" id="FACTORY_BEAN_PREFIX"></a>
           <div class="method hasBottomDivider">
-            <h3>FACTORY_BEAN_PREFIX</h3>
+            <h3 id="FACTORY_BEAN_PREFIX">FACTORY_BEAN_PREFIX</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">static <b>FACTORY_BEAN_PREFIX</b>:String
+                <div class="floatbox code">static <b>FACTORY_BEAN_PREFIX</b>:String = <span class="codeString">"&"</span>
 </div>
-                <div class="code"></div><span class="access">(read,write)</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="allowBeanDefinitionOverriding" id="allowBeanDefinitionOverriding"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>allowBeanDefinitionOverriding</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>allowBeanDefinitionOverriding</b>:Boolean
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-          </div>
-          <a name="beanDefinitionMap" id="beanDefinitionMap"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>beanDefinitionMap</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>beanDefinitionMap</b>:Map
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-          </div>
-          <a name="beanWrapper" id="beanWrapper"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>beanWrapper</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>beanWrapper</b>:BeanWrapper
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-          </div>
-          <a name="parentBeanFactory" id="parentBeanFactory"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>parentBeanFactory</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>parentBeanFactory</b>:BeanFactory
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-          </div>
-          <a name="singletonBeanMap" id="singletonBeanMap"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>singletonBeanMap</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>singletonBeanMap</b>:Map
-</div>
-                <div class="code"></div>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="containsBean" id="containsBean"></a>
           <div class="method hasBottomDivider">
-            <h3>containsBean</h3>
+            <h3 id="containsBean">containsBean</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>containsBean</b> (
+                <div class="floatbox code">function <b>containsBean</b> (
 </div>
-                <div class="code">name:String) : Boolean</div>
+                <div><span class="code">name:String) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_factory_BeanFactory.html#containsBean">org.as2lib.env.bean.factory.BeanFactory.containsBean</a><br /><a href="org_as2lib_env_bean_factory_BeanFactory.html#containsBean">org.as2lib.env.bean.factory.BeanFactory.containsBean</a><br /><a href="org_as2lib_env_bean_factory_BeanFactory.html#containsBean">org.as2lib.env.bean.factory.BeanFactory.containsBean</a></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="containsBeanDefinition" id="containsBeanDefinition"></a>
           <div class="method hasBottomDivider">
-            <h3>containsBeanDefinition</h3>
+            <h3 id="containsBeanDefinition">containsBeanDefinition</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>containsBeanDefinition</b> (
+                <div class="floatbox code">function <b>containsBeanDefinition</b> (
 </div>
-                <div class="code">name:String) : Boolean</div>
+                <div><span class="code">name:String) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_factory_ListableBeanFactory.html#containsBeanDefinition">org.as2lib.env.bean.factory.ListableBeanFactory.containsBeanDefinition</a></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="createBean" id="createBean"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>createBean</h3>
+          <div class="method hasBottomDivider">
+            <h3 id="getBeanByName">getBeanByName</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>createBean</b> (
+                <div class="floatbox code">function <b>getBeanByName</b> (
+</div>
+                <div><span class="code">name:String)</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_factory_BeanFactory.html#getBeanByName">org.as2lib.env.bean.factory.BeanFactory.getBeanByName</a><br /><a href="org_as2lib_env_bean_factory_BeanFactory.html#getBeanByName">org.as2lib.env.bean.factory.BeanFactory.getBeanByName</a><br /><a href="org_as2lib_env_bean_factory_BeanFactory.html#getBeanByName">org.as2lib.env.bean.factory.BeanFactory.getBeanByName</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getBeanByNameAndType">getBeanByNameAndType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getBeanByNameAndType</b> (
 
 </div>
-                <div class="code">beanName:String,
-beanDefinition:BeanDefinition)</div>
+                <div><span class="code">name:String,
+requiredType:Function)</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_factory_BeanFactory.html#getBeanByNameAndType">org.as2lib.env.bean.factory.BeanFactory.getBeanByNameAndType</a><br /><a href="org_as2lib_env_bean_factory_BeanFactory.html#getBeanByNameAndType">org.as2lib.env.bean.factory.BeanFactory.getBeanByNameAndType</a><br /><a href="org_as2lib_env_bean_factory_BeanFactory.html#getBeanByNameAndType">org.as2lib.env.bean.factory.BeanFactory.getBeanByNameAndType</a></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="destroyBean" id="destroyBean"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>destroyBean</h3>
+          <div class="method hasBottomDivider">
+            <h3 id="getBeanDefinition">getBeanDefinition</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>destroyBean</b> (
+                <div class="floatbox code">function <b>getBeanDefinition</b> (
+</div>
+                <div><span class="code">beanName:String) : <a href="org_as2lib_env_bean_factory_config_BeanDefinition.html">BeanDefinition</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_factory_config_ConfigurableListableBeanFactory.html#getBeanDefinition">org.as2lib.env.bean.factory.config.ConfigurableListableBeanFactory.getBeanDefinition</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getBeanDefinitionCount">getBeanDefinitionCount</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getBeanDefinitionCount</b> (
+</div>
+                <div><span class="code">Void) : Number</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_factory_ListableBeanFactory.html#getBeanDefinitionCount">org.as2lib.env.bean.factory.ListableBeanFactory.getBeanDefinitionCount</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getBeanDefinitionNamesByType">getBeanDefinitionNamesByType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getBeanDefinitionNamesByType</b> (
+</div>
+                <div><span class="code">type:Function) : Array</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_factory_ListableBeanFactory.html#getBeanDefinitionNamesByType">org.as2lib.env.bean.factory.ListableBeanFactory.getBeanDefinitionNamesByType</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getBeanDefinitionNamesByVoid">getBeanDefinitionNamesByVoid</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getBeanDefinitionNamesByVoid</b> (
+</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_factory_ListableBeanFactory.html#getBeanDefinitionNamesByVoid">org.as2lib.env.bean.factory.ListableBeanFactory.getBeanDefinitionNamesByVoid</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getBeanWrapper">getBeanWrapper</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getBeanWrapper</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_bean_BeanWrapper.html">BeanWrapper</a></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getParentBeanFactory">getParentBeanFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getParentBeanFactory</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_bean_factory_BeanFactory.html">BeanFactory</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_factory_HierarchicalBeanFactory.html#getParentBeanFactory">org.as2lib.env.bean.factory.HierarchicalBeanFactory.getParentBeanFactory</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isSingleton">isSingleton</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>isSingleton</b> (
+</div>
+                <div><span class="code">beanName:String) : Boolean</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="registerBeanDefinition">registerBeanDefinition</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>registerBeanDefinition</b> (
 
 </div>
-                <div class="code">bean,
-beanDefinition:BeanDefinition)</div>
+                <div><span class="code">beanName:String,
+beanDefinition:<a href="org_as2lib_env_bean_factory_config_BeanDefinition.html">BeanDefinition</a>) : Void</span>
+                </div>
               </div>
             </div>
           </div>
-          <a name="getBeanByName" id="getBeanByName"></a>
           <div class="method hasBottomDivider">
-            <h3>getBeanByName</h3>
+            <h3 id="registerSingleton">registerSingleton</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getBeanByName</b> (
-</div>
-                <div class="code">name:String)</div>
-              </div>
-            </div>
-          </div>
-          <a name="getBeanByNameAndBean" id="getBeanByNameAndBean"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getBeanByNameAndBean</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getBeanByNameAndBean</b> (
+                <div class="floatbox code">function <b>registerSingleton</b> (
 
 </div>
-                <div class="code">name:String,
-bean)</div>
+                <div><span class="code">beanName:String,
+singleton) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_factory_config_ConfigurableBeanFactory.html#registerSingleton">org.as2lib.env.bean.factory.config.ConfigurableBeanFactory.registerSingleton</a></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="getBeanByNameAndType" id="getBeanByNameAndType"></a>
           <div class="method hasBottomDivider">
-            <h3>getBeanByNameAndType</h3>
+            <h3 id="setAllowBeanDefinitionOverriding">setAllowBeanDefinitionOverriding</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getBeanByNameAndType</b> (
-
+                <div class="floatbox code">function <b>setAllowBeanDefinitionOverriding</b> (
 </div>
-                <div class="code">name:String,
-requiredType:Function)</div>
+                <div><span class="code">allowBeanDefinitionOverriding:Boolean) : Void</span>
+                </div>
               </div>
             </div>
           </div>
-          <a name="getBeanDefinition" id="getBeanDefinition"></a>
           <div class="method hasBottomDivider">
-            <h3>getBeanDefinition</h3>
+            <h3 id="setBeanWrapper">setBeanWrapper</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getBeanDefinition</b> (
+                <div class="floatbox code">function <b>setBeanWrapper</b> (
 </div>
-                <div class="code">beanName:String) : BeanDefinition</div>
+                <div><span class="code">beanWrapper:<a href="org_as2lib_env_bean_BeanWrapper.html">BeanWrapper</a>) : Void</span>
+                </div>
               </div>
             </div>
           </div>
-          <a name="getBeanDefinitionCount" id="getBeanDefinitionCount"></a>
           <div class="method hasBottomDivider">
-            <h3>getBeanDefinitionCount</h3>
+            <h3 id="setParentBeanFactory">setParentBeanFactory</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getBeanDefinitionCount</b> (
+                <div class="floatbox code">function <b>setParentBeanFactory</b> (
 </div>
-                <div class="code">Void) : Number</div>
+                <div><span class="code">parentBeanFactory:<a href="org_as2lib_env_bean_factory_BeanFactory.html">BeanFactory</a>) : Void</span>
+                </div>
               </div>
             </div>
-          </div>
-          <a name="getBeanDefinitionNamesByType" id="getBeanDefinitionNamesByType"></a>
-          <div class="method hasBottomDivider">
-            <h3>getBeanDefinitionNamesByType</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getBeanDefinitionNamesByType</b> (
-</div>
-                <div class="code">type:Function) : Array</div>
-              </div>
-            </div>
-          </div>
-          <a name="getBeanDefinitionNamesByVoid" id="getBeanDefinitionNamesByVoid"></a>
-          <div class="method hasBottomDivider">
-            <h3>getBeanDefinitionNamesByVoid</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getBeanDefinitionNamesByVoid</b> (
-</div>
-                <div class="code">Void) : Array</div>
-              </div>
-            </div>
-          </div>
-          <a name="getBeanWrapper" id="getBeanWrapper"></a>
-          <div class="method hasBottomDivider">
-            <h3>getBeanWrapper</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getBeanWrapper</b> (
-</div>
-                <div class="code">Void) : BeanWrapper</div>
-              </div>
-            </div>
-          </div>
-          <a name="getParentBeanFactory" id="getParentBeanFactory"></a>
-          <div class="method hasBottomDivider">
-            <h3>getParentBeanFactory</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getParentBeanFactory</b> (
-</div>
-                <div class="code">Void) : BeanFactory</div>
-              </div>
-            </div>
-          </div>
-          <a name="isSingleton" id="isSingleton"></a>
-          <div class="method hasBottomDivider">
-            <h3>isSingleton</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>isSingleton</b> (
-</div>
-                <div class="code">beanName:String) : Boolean</div>
-              </div>
-            </div>
-          </div>
-          <a name="registerBeanDefinition" id="registerBeanDefinition"></a>
-          <div class="method hasBottomDivider">
-            <h3>registerBeanDefinition</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>registerBeanDefinition</b> (
-
-</div>
-                <div class="code">beanName:String,
-beanDefinition:BeanDefinition) : Void</div>
-              </div>
-            </div>
-          </div>
-          <a name="registerSingleton" id="registerSingleton"></a>
-          <div class="method hasBottomDivider">
-            <h3>registerSingleton</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>registerSingleton</b> (
-
-</div>
-                <div class="code">beanName:String,
-singleton) : Void</div>
-              </div>
-            </div>
-          </div>
-          <a name="setAllowBeanDefinitionOverriding" id="setAllowBeanDefinitionOverriding"></a>
-          <div class="method hasBottomDivider">
-            <h3>setAllowBeanDefinitionOverriding</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setAllowBeanDefinitionOverriding</b> (
-</div>
-                <div class="code">allowBeanDefinitionOverriding:Boolean) : Void</div>
-              </div>
-            </div>
-          </div>
-          <a name="setBeanWrapper" id="setBeanWrapper"></a>
-          <div class="method hasBottomDivider">
-            <h3>setBeanWrapper</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setBeanWrapper</b> (
-</div>
-                <div class="code">beanWrapper:BeanWrapper) : Void</div>
-              </div>
-            </div>
-          </div>
-          <a name="setParentBeanFactory" id="setParentBeanFactory"></a>
-          <div class="method hasBottomDivider">
-            <h3>setParentBeanFactory</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setParentBeanFactory</b> (
-</div>
-                <div class="code">parentBeanFactory:BeanFactory) : Void</div>
-              </div>
-            </div>
-          </div>
-          <a name="transformBeanName" id="transformBeanName"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>transformBeanName</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>transformBeanName</b> (
-</div>
-                <div class="code">name:String) : String</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_factory_config_ConfigurableHierarchicalBeanFactory.html#setParentBeanFactory">org.as2lib.env.bean.factory.config.ConfigurableHierarchicalBeanFactory.setParentBeanFactory</a></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:51:30
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:01
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

@@ -26,16 +26,14 @@ Interface
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.log.ConfigurableHierarchicalLogger</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Tuesday, 15 February 2005, 11:38:18</span>
+              <li><span class="title">File last modified: </span><span class="value">Thursday, 17 February 2005, 18:21:32</span>
               </li>
             </ul>
           </div>
         </div>
         <div class="classDescription"><div class="descriptionSummary">ConfigurableHierarchicalLogger declares methods needed to configure
-
- hierarchical loggers.<p>Loggers that shall be used with the LoggerHierarchy mus implement
-
- this interface. </div></div>
+ hierarchical loggers. </div><p>Loggers that shall be used with the LoggerHierarchy mus implement
+ this interface.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
@@ -52,13 +50,13 @@ Interface
                 <div class="boxedElem">
                   <div class="contentHolder">
                     <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_env_log_HierarchicalLogger.html">HierarchicalLogger</a></span></span>
-                    <div class="item"><a href="org_as2lib_env_log_HierarchicalLogger.html#getAllHandler">getAllHandler</a>, <a href="org_as2lib_env_log_HierarchicalLogger.html#getName">getName</a>, <a href="org_as2lib_env_log_HierarchicalLogger.html#getParent">getParent</a></div>
+                    <div class="item"><a href="org_as2lib_env_log_HierarchicalLogger.html#getAllHandlers">getAllHandlers</a>, <a href="org_as2lib_env_log_HierarchicalLogger.html#getLevel">getLevel</a>, <a href="org_as2lib_env_log_HierarchicalLogger.html#getName">getName</a>, <a href="org_as2lib_env_log_HierarchicalLogger.html#getParent">getParent</a></div>
                   </div>
                 </div>
                 <div class="boxedElem">
                   <div class="contentHolder">
                     <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_env_log_Logger.html">Logger</a></span></span>
-                    <div class="item"><a href="org_as2lib_env_log_Logger.html#debug">debug</a>, <a href="org_as2lib_env_log_Logger.html#error">error</a>, <a href="org_as2lib_env_log_Logger.html#fatal">fatal</a>, <a href="org_as2lib_env_log_Logger.html#getLevel">getLevel</a>, <a href="org_as2lib_env_log_Logger.html#info">info</a>, <a href="org_as2lib_env_log_Logger.html#isDebugEnabled">isDebugEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isEnabled">isEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isErrorEnabled">isErrorEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isFatalEnabled">isFatalEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isInfoEnabled">isInfoEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isWarningEnabled">isWarningEnabled</a>, <a href="org_as2lib_env_log_Logger.html#log">log</a>, <a href="org_as2lib_env_log_Logger.html#warning">warning</a></div>
+                    <div class="item"><a href="org_as2lib_env_log_Logger.html#debug">debug</a>, <a href="org_as2lib_env_log_Logger.html#error">error</a>, <a href="org_as2lib_env_log_Logger.html#fatal">fatal</a>, <a href="org_as2lib_env_log_Logger.html#info">info</a>, <a href="org_as2lib_env_log_Logger.html#isDebugEnabled">isDebugEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isErrorEnabled">isErrorEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isFatalEnabled">isFatalEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isInfoEnabled">isInfoEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isWarningEnabled">isWarningEnabled</a>, <a href="org_as2lib_env_log_Logger.html#warning">warning</a></div>
                   </div>
                 </div>
                 <div class="boxedElem">
@@ -75,28 +73,24 @@ Interface
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="setName" id="setName"></a>
           <div class="method hasBottomDivider">
-            <h3>setName</h3>
+            <h3 id="setName">setName</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setName</b> (
+                <div class="floatbox code">function <b>setName</b> (
 </div>
-                <div class="code">name:String) : Void</div>
+                <div><span class="code">name:String) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets the name of this logger.<p>The name normally exists of the path as well as the actual identifier.
-
  That means it must be fully qualified.<p>The LoggerHierarchy prescribes that the different parts of the
-
  name must be separated by periods. If you do not want to use it
-
  with the LoggerHierarchy you can of course separate the different
-
  parts as you please.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">name<span class="separator">:</span></div>
                     <div>the name of this logger</div>
@@ -105,22 +99,21 @@ Interface
               </div>
             </div>
           </div>
-          <a name="setParent" id="setParent"></a>
           <div class="method hasBottomDivider">
-            <h3>setParent</h3>
+            <h3 id="setParent">setParent</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setParent</b> (
+                <div class="floatbox code">function <b>setParent</b> (
 </div>
-                <div class="code">parent:HierarchicalLogger) : Void</div>
+                <div><span class="code">parent:<a href="org_as2lib_env_log_HierarchicalLogger.html">HierarchicalLogger</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets the parent of this logger.<p>The parent gets used to obtain needed configuration like handlers
-
  and levels.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">parent<span class="separator">:</span></div>
                     <div>the parent of this logger</div>
@@ -130,9 +123,9 @@ Interface
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:58:46
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:20
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

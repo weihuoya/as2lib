@@ -22,24 +22,16 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.io.conn.core.client.AbstractClientServiceProxy</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Monday, 31 January 2005, 13:35:30</span>
+              <li><span class="title">File last modified: </span><span class="value">Monday, 04 April 2005, 20:27:04</span>
               </li>
             </ul>
           </div>
         </div>
         <div class="classDescription"><div class="descriptionSummary">Offers default implementations of some methods needed when implemnting
-
- the ClientServiceProxy interface. </div></div>
+ the <a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html">ClientServiceProxy</a> interface. </div></div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#AbstractClientServiceProxy">AbstractClientServiceProxy</a>
-                </li>
-              </ul>
-            </div>
             <div class="methodSummaryPart"><span class="title">Class methods</span>
               <ul>
                 <li>
@@ -72,47 +64,27 @@
             </div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="AbstractClientServiceProxy" id="AbstractClientServiceProxy"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>AbstractClientServiceProxy</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>AbstractClientServiceProxy</b> (
-</div>
-                <div class="code">Void)</div>
-              </div>
-            </div>
-            <div class="description">Private constructor.</div>
-          </div>
-        </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Class methods</h2>
-          <a name="generateResponseServiceUrl" id="generateResponseServiceUrl"></a>
           <div class="method hasBottomDivider">
-            <h3>generateResponseServiceUrl</h3>
+            <h3 id="generateResponseServiceUrl">generateResponseServiceUrl</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>generateResponseServiceUrl</b> (
+                <div class="floatbox code">static function <b>generateResponseServiceUrl</b> (
 
 </div>
-                <div class="code">serviceUrl:String,
-methodName:String) : String</div>
+                <div><span class="code">serviceUrl:String,
+methodName:String) : String</span>
+                </div>
               </div>
             </div>
-            <div class="description">Generates the response url for a service.<p>The response url gets composed as follows:
-
- [serviceUrl].[methodName]_Return_[index]<p>If the methodName is null, undefined or an empty string it will
-
+            <div class="description">Generates the response url for a service.<p>The response url gets composed as follows:<pre>[serviceUrl].[methodName]_Return_[index]</pre><p>If the methodName is null, undefined or an empty string it will
  be composed as follows:
-
  [serviceUrl]_Return_[index]<p>Index is a number from null to infinite depending on how many
-
  responses are pending.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">serviceUrl<span class="separator">:</span></div>
                     <div>the url to the service</div>
@@ -124,12 +96,12 @@ methodName:String) : String</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the generated response url</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in service url is null, undefined or an empty stirng</div>
                 </div>
               </div>
@@ -138,77 +110,92 @@ methodName:String) : String</div>
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="invoke" id="invoke"></a>
           <div class="method hasBottomDivider">
-            <h3>invoke</h3>
+            <h3 id="invoke">invoke</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>invoke</b> (
+                <div class="floatbox code">function <b>invoke</b> (
 </div>
-                <div class="code">) : MethodInvocationCallback</div>
+                <div><span class="code">) : <a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a></span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Overloading</span>
-                  <div class="item"><a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxy.html#invokeByName">:MethodInvocationCallback</a> (methodName:String) : MethodInvocationCallback<br />#invokeByNameAndArguments(String, Array):MethodInvocationCallback<br /><a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxy.html#invokeByNameAndCallback">, MethodInvocationCallback):MethodInvocationCallback</a> (methodName:String, callback:MethodInvocationCallback) : MethodInvocationCallback<br />#invokeByNameAndArgumentsAndCallback(String, Array, MethodInvocationCallback):MethodInvocationCallback</div>
-                </div>
-              </div>
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html#invoke">:MethodInvocationCallback</a></div>
+                <div class="contentHolder"><span class="title">Overloading:</span>
+                  <div class="item"><a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxy.html#invokeByName">invokeByName</a> <code>(methodName:String) : {VISDOC_LINK_1}</code><br />#invokeByNameAndArguments<br /><a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxy.html#invokeByNameAndCallback">invokeByNameAndCallback</a> <code>(methodName:String, callback:{VISDOC_LINK_1}) : {VISDOC_LINK_2}</code><br />#invokeByNameAndArgumentsAndCallback</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="invokeByName" id="invokeByName"></a>
           <div class="method hasBottomDivider">
-            <h3>invokeByName</h3>
+            <h3 id="invokeByName">invokeByName</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>invokeByName</b> (
+                <div class="floatbox code">function <b>invokeByName</b> (
 </div>
-                <div class="code">methodName:String) : MethodInvocationCallback</div>
+                <div><span class="code">methodName:String) : <a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a></span>
+                </div>
               </div>
             </div>
-            <div class="description">Forwards to the invokeByNameAndArguments-method passing an empty
-
- argumetns array.</div>
+            <div class="description">Invokes the passed-in method on the service.<p>The invocation is done by forwardning to the #invokeByNameAndArguments
+ method passing an empty arguments array.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html#invokeByName">:MethodInvocationCallback</a></div>
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodName<span class="separator">:</span></div>
+                    <div>the name of the method to invoke</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">a callback that can be used to get informed of the response</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="invokeByNameAndCallback" id="invokeByNameAndCallback"></a>
           <div class="method hasBottomDivider">
-            <h3>invokeByNameAndCallback</h3>
+            <h3 id="invokeByNameAndCallback">invokeByNameAndCallback</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>invokeByNameAndCallback</b> (
+                <div class="floatbox code">function <b>invokeByNameAndCallback</b> (
 
 </div>
-                <div class="code">methodName:String,
-callback:MethodInvocationCallback) : MethodInvocationCallback</div>
+                <div><span class="code">methodName:String,
+callback:<a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a>) : <a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a></span>
+                </div>
               </div>
             </div>
-            <div class="description">Forwards to the invokeByNameAndArgumentsAndCallback-method passing an
-
- empty argumetns array.</div>
+            <div class="description">Invokes the passed-in method on the service.<p>When the response arrives the appropriate callback method gets
+ invoked.<p>If the passed-in callback is not null, the returned callback
+ should be the same.<p>The invocation is done by forwardning to the #invokeByNameAndArgumentsAndCallback
+ method passing an empty arguments array.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html#invokeByNameAndCallback">, MethodInvocationCallback):MethodInvocationCallback</a></div>
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodName<span class="separator">:</span></div>
+                    <div>the name of the method to invoke</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">callback  <span class="separator">:</span></div>
+                    <div>the callback that receives the return value or errors</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">a callback that can be used to get informed of the response</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:12:17
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:10:15
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

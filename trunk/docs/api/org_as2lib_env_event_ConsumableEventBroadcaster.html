@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>ConsumableEventBroadcaster</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>ConsumableEventBroadcaster</h1>
+        <div class="classProperties">
+          <div class="kindOfClass"><span class="value">
+Interface
+</span>
+          </div>
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_env_event_EventBroadcaster.html">EventBroadcaster</a> &lt; <a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Martin Heidegger</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.event.ConsumableEventBroadcaster</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 12 March 2005, 09:04:46</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">Allows to consume a broadcasted event. </div>
+ This allows to stop a Eventbroadcaster during the execution by the implementation
+ of a element. Therefore it is possible to<p>Example:
+ 
+ Useage:<pre><span class="codeKeyword">import</span> org.as2lib.env.event.ConsumableEventBroadcaster;
+<span class="codeKeyword">import</span> org.as2lib.env.event.SimpleEventBroadcaster;
+<span class="codeKeyword">import</span> org.as2lib.env.event.ConsumableEventInfo;
+<span class="codeKeyword">import</span> org.as2lib.env.event.SimpleConsumableEventInfo;
+
+<span class="codeComment">// Should usualy be a implementation detail of a class.</span>
+<span class="codeKeyword">var</span> eb:ConsumableEventBroadcaster = <span class="codeKeyword">new</span> SimpleEventBroadcaster();
+eb.<span class="codeIdentifier">addListener</span>(<span class="codeKeyword">new</span> MainListener());
+eb.<span class="codeIdentifier">addListener</span>(<span class="codeKeyword">new</span> SubListener());
+
+<span class="codeComment">// </span>
+<span class="codeKeyword">var</span> info:ConsumableEventInfo = <span class="codeKeyword">new</span> SimpleConsumableEventInfo(<span class="codeString">"onLoad"</span>);
+eb.dispatch(info);
+eb.dispatch(info);</pre>
+
+ MainListener:<pre><span class="codeKeyword">import</span> org.as2lib.env.event.SimpleConsumableEventListener;
+<span class="codeKeyword">import</span> org.as2lib.env.event.SimpleConsumableEventInfo;
+
+<span class="codeKeyword">class</span> MainListener <span class="codeKeyword">extends</span> SimpleConsumableEventListener { 
+   <span class="codeKeyword">private</span> <span class="codeKeyword">var</span> times:<span class="codeIdentifier">Number</span>;
+   <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> MainListener() {
+       times = <span class="codeNumber">0</span>;
+   }
+   <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> <span class="codeIdentifier">onLoad</span>(info:ConsumableEventInfo) {
+       <span class="codeKeyword">if</span>(times &#62; <span class="codeNumber">0</span>) {
+          <span class="codeComment">// breaks executing after the first call</span>
+          info.consume();
+       }
+       <span class="codeIdentifier">trace</span>(<span class="codeString">"MainListener called."</span>);
+       times++;
+   }
+}</pre>
+
+ SubListener:<pre><span class="codeKeyword">import</span> org.as2lib.env.event.SimpleConsumableEventListener;
+<span class="codeKeyword">import</span> org.as2lib.env.event.SimpleConsumableEventInfo;
+
+<span class="codeKeyword">class</span> SubListener <span class="codeKeyword">extends</span> SimpleConsumableEventListener { 
+   <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> SubListener() {
+   }
+   <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> <span class="codeIdentifier">onLoad</span>(info:ConsumableEventInfo) {
+       <span class="codeIdentifier">trace</span>(<span class="codeString">"SubListener called."</span>);
+   }
+}</pre>
+ 
+ Output:<pre>MainListener called.
+SubListener called.
+MainListener called.</pre></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#dispatchConsumable">dispatchConsumable</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_env_event_EventBroadcaster.html">EventBroadcaster</a></span></span>
+                    <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#addAllListeners">addAllListeners</a>, <a href="org_as2lib_env_event_EventBroadcaster.html#addListener">addListener</a>, <a href="org_as2lib_env_event_EventBroadcaster.html#dispatch">dispatch</a>, <a href="org_as2lib_env_event_EventBroadcaster.html#getAllListeners">getAllListeners</a>, <a href="org_as2lib_env_event_EventBroadcaster.html#removeAllListeners">removeAllListeners</a>, <a href="org_as2lib_env_event_EventBroadcaster.html#removeListener">removeListener</a></div>
+                  </div>
+                </div>
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicInterface.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="dispatchConsumable">dispatchConsumable</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>dispatchConsumable</b> (
+</div>
+                <div><span class="code">event:<a href="org_as2lib_env_event_ConsumableEventInfo.html">ConsumableEventInfo</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Dispatches the events associated with the name contained in the
+ EventInfo instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">event<span class="separator">:</span></div>
+                    <div>the EventInfo to be passed to the operation of the EventListeners</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:06
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

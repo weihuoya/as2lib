@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items">Array</span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_core_BasicInterface.html">BasicInterface</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,14 +31,21 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.data.holder.array.TypedArray</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Thursday, 03 February 2005, 06:08:02</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 05 March 2005, 05:41:26</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">Acts like a normal Array but assures that only objects from one and the same
-
- type are added to the Array. </div></div>
+        <div class="classDescription"><div class="descriptionSummary">TypedArray acts like a normal array but assures that only objects of
+ a specific type are added to the array. </div><p>Note that values that get added to this array using the dot-syntax
+ do not get type-checked. For example:<pre>myArray[<span class="codeNumber">0</span>] = <span class="codeString">"value1"</span>;
+<span class="codeComment">// or</span>
+myArray.myProp = <span class="codeString">"value2"</span>; <span class="codeComment">// myArray["myProp"] = "value2";</span></pre><p>A simple usage example:<pre><span class="codeKeyword">var</span> array:<span class="codeIdentifier">Array</span> = <span class="codeKeyword">new</span> TypedArray(<span class="codeIdentifier">Number</span>);
+array.push(<span class="codeNumber">0</span>);
+array.push(<span class="codeNumber">1</span>);
+array.push(<span class="codeNumber">2</span>);
+<span class="codeComment">// throws an IllegalArgumentException because the value is not of the expected type</span>
+array.push(<span class="codeString">"myString"</span>);</pre><p>You can also construct your array the following way:<pre><span class="codeKeyword">var</span> array:<span class="codeIdentifier">Array</span> = <span class="codeKeyword">new</span> TypedArray(<span class="codeIdentifier">Number</span>, <span class="codeNumber">0</span>, <span class="codeNumber">1</span>, <span class="codeNumber">2</span>);</pre><div class="classFields"><div class="boxWithBorder"><div class="boxedElem"><div class="contentHolder"><span class="title">See also:</span><div class="item"><a href="http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001191.html">http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001191.html</a></div></div></div></div></div></div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
@@ -39,13 +53,6 @@
               <ul>
                 <li>
                   <a href="#TypedArray">TypedArray</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#type">type</a>
                 </li>
               </ul>
             </div>
@@ -66,181 +73,213 @@
                 <li>
                   <a href="#toString">toString</a>
                 </li>
-                <li class="private" style="display:none;">
-                  <a href="#validate">validate</a>
-                </li>
               </ul>
             </div>
           </div>
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="TypedArray" id="TypedArray"></a>
           <div class="method hasBottomDivider">
-            <h3>TypedArray</h3>
+            <h3 id="TypedArray">TypedArray</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>TypedArray</b> (
+                <div class="floatbox code">function <b>TypedArray</b> (
 </div>
-                <div class="code">type:Function)</div>
+                <div><span class="code">type:Function)</span>
+                </div>
               </div>
             </div>
-            <div class="description">Constructs a new TypedArray instance.</div>
+            <div class="description">Constructs a new TypedArray instance.<p>You can optionally pass-in values to populate this array with
+ after the type parameter. These values also get type-checked.<pre><span class="codeKeyword">var</span> array:<span class="codeIdentifier">Array</span> = <span class="codeKeyword">new</span> TypedArray(<span class="codeIdentifier">Number</span>, <span class="codeNumber">1</span>, <span class="codeNumber">2</span>, <span class="codeNumber">3</span>);</pre></div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
-                    <div class="floatbox code colorizedCode">type <span class="separator">:</span></div>
-                    <div>the type of the values this TypedArray contains</div>
+                    <div class="floatbox code colorizedCode">type<span class="separator">:</span></div>
+                    <div>the type of the values this array will contain</div>
                   </div>
                   <div class="item">
-                    <div class="floatbox code colorizedCode">array<span class="separator">:</span></div>
-                    <div>the Array that shall be wrapped</div>
+                    <div class="floatbox code colorizedCode">..  <span class="separator">:</span></div>
+                    <div>&nbsp;</div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="type" id="type"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>type</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>type</b>:Function
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The type of values that can be added.</div>
-          </div>
-        </div>
-        <div class="methodSection">
-          <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="concat" id="concat"></a>
-          <div class="method hasBottomDivider">
-            <h3>concat</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>concat</b> (
-</div>
-                <div class="code">) : TypedArray</div>
-              </div>
-            </div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_array_TypedArray.html#concat">concat()</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="getType" id="getType"></a>
-          <div class="method hasBottomDivider">
-            <h3>getType</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getType</b> (
-</div>
-                <div class="code">Void) : Function</div>
-              </div>
-            </div>
-            <div class="description">Returns the type of the array all contained elements have.<p>This is the type passed-in on construction.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the type of the array's elements</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="push" id="push"></a>
-          <div class="method hasBottomDivider">
-            <h3>push</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>push</b> (
-</div>
-                <div class="code">value) : Number</div>
-              </div>
-            </div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_array_TypedArray.html#push">push()</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="toString" id="toString"></a>
-          <div class="method hasBottomDivider">
-            <h3>toString</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>toString</b> (
-</div>
-                <div class="code">Void) : String</div>
-              </div>
-            </div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString()</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="unshift" id="unshift"></a>
-          <div class="method hasBottomDivider">
-            <h3>unshift</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>unshift</b> (
-</div>
-                <div class="code">value) : Number</div>
-              </div>
-            </div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_array_TypedArray.html#unshift">unshift()</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="validate" id="validate"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>validate</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>validate</b> (
-</div>
-                <div class="code">object) : Void</div>
-              </div>
-            </div>
-            <div class="description">Validates the passed object based on its type.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
-                    <div>the object which type shall be validated</div>
-                  </div>
-                </div>
-              </div>
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
-                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the type of the object is not valid</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:37:42
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="concat">concat</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>concat</b> (
+</div>
+                <div><span class="code">) : <a href="org_as2lib_data_holder_array_TypedArray.html">TypedArray</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Concatenates the elements specified in the parameter list with the
+ elements of this array and returns a new array containing these elements.<p>This array itself is left unchanged.<p>The returned array expects elements of the same type as this
+ array does.<p>If you do not pass-in any values a duplicate of this array gets
+ returned.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">..<span class="separator">:</span></div>
+                    <div>&nbsp;</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">a new array that contains the elements of this array as well
+ as the passed-in elements</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item">http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001192.html#3988964</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getType">getType</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getType</b> (
+</div>
+                <div><span class="code">Void) : Function</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the type all elements of this array have.<p>This is the type passed-in on construction.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the type all elements of this array have</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="push">push</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>push</b> (
+</div>
+                <div><span class="code">value) : Number</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Adds one or more elements to the end of this array and returns the
+ new length of this array.<p>The passed-in values get type-checked first. They will only be added
+ if they are of the correct type.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">value<span class="separator">:</span></div>
+                    <div>the new element to add to the end of this array</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">..   <span class="separator">:</span></div>
+                    <div>&nbsp;</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the new length of this array</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if one of the passed-in values is
+ of invalid type</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item">http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001196.html#3989073</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="toString">toString</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>toString</b> (
+</div>
+                <div><span class="code">Void) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the string representation of this array.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the string representation of this array</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="unshift">unshift</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>unshift</b> (
+</div>
+                <div><span class="code">value) : Number</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Adds one or more elements to the beginning of this array and returns
+ the new length of this array.<p>The passed-in values get type-checked first. They will only be added
+ if they are of the correct type.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">value<span class="separator">:</span></div>
+                    <div>the new element to add to the beginnign of this array</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">..   <span class="separator">:</span></div>
+                    <div>&nbsp;</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the new length of this array</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if one of the passed-in values is
+ of invalid type</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item">http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001204.html#3989452</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:08:21
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>
