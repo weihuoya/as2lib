@@ -93,6 +93,9 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	 * @return true if the object is an instance of the class otherwise false
 	 */
 	public static function isInstanceOf(anObject, aClass:Function):Boolean {
+		if((typeof anObject == "string" || typeof anObject ==  "number" || typeof anObject ==  "movieclip") && aClass == Object) {
+			return true;
+		}
 		return (anObject instanceof aClass);
 	}
 	
