@@ -5,31 +5,20 @@ import org.as2lib.data.io.conn.ConnectorError;
 import org.as2lib.data.io.conn.ConnectorResponse;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.EventInfo;
-import org.as2lib.core.BasicClass;
+//import org.as2lib.core.BasicClass;
+import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.util.ObjectUtil;
 import org.as2lib.Config;
+import org.as2lib.env.out.OutAccess;
 
 /**
- * Ideas: functionality to automatic call send method after a specific time
- * Functionality of LocalConnection:
- * LC.send(conName, method [, p1,...,pN]):Boolean;
- * LC.send returns true if syntax was correct, it doesn´t
- * mean that a successful connection has been established.
- * If you want to check the connection you have to use the
- * onStatus() method. Also you have a size restriction of passed
- * data.
- * LC.connect();
- * LC.close();
- * LC.allowDomain
- * LC.allowInsecureDomain
- * LC.onStatus();
- * LC.domain();
- *
  * @author Christoph Atteneder
  * @version 1.0
  * @date 30.04.2004
  */
 
-class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements Connector {
+class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implements Connector {
 	
 	/* EventBroadcaster for onResponse and onError - events */
 	private var eventBroadcaster:EventBroadcaster;
@@ -43,30 +32,51 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 	
 	private var params:Array;
 	
+	private var aOut:OutAccess;
+	
+	private var sender:LocalConnection;
+	
 	/* LocalConnection object for connection */
-	private var loc:LocalConnection;
+	//private var sender:LocalConnection;
+	private var connID:String;
 	
 	/* stores domain, used by allowDomain, for security */
 	private var domain:String;
 	
-	public function LocalConnector(Void) {
+	public function LocalClient(Void) {
 		eventBroadcaster = Config.getEventBroadcasterFactory().createEventBroadcaster();
-		loc = new LocalConnection();
 		params = new Array();
+		aOut = Config.getOut();
 	}
 	
 	public function initConnection(Void):Void {
-		if(method){
-			var args:Array = new Array();
-			args = args.concat(params);
-			args.splice(0,0,host+path,method);
-			loc.send.apply(args);
-		}
-		else{
-			//loc = eventBroadcaster.
-			loc.connect(host+path);
-			
-		}
+		aOut.debug("initConnection");
+		connID = getRandomID();
+		sender = new LocalConnection();
+		//sender.name = "lc"+Number(new Date());
+		//lc.connect(lc.name);
+		sender.send("register","addClient", connID);
+		connect(connID);
+		//sender.send("register","addClient", getRandomID());
+	}
+	
+	/*public function onServerStarted():Void {
+		
+	}*/
+	
+	public function getRandomID(Void):String {
+        var s:String = "abcdefghijklmnopqrstuvwxyz";
+        var cnt:Number = 10;
+		var result:String = new String(host + path+"_");
+        while (cnt--) {
+            result += s.charAt(Math.floor(Math.random() * s.length));
+        }
+        return result;
+    }
+	
+	public function clientMethod() {
+		aOut.debug("clientMethod");
+		aOut.debug(arguments.toString());
 	}
 	
 	public function setHost(host:String):Void {
@@ -132,5 +142,26 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 		}
 
 		initConnection();
+	}
+	
+	/**
+	 * Uses the ReflectUtil#getClassInfo() operation to fulfill the task.
+	 *
+	 * @see org.as2lib.core.BasicInterface#getClass()
+	 * @see org.as2lib.env.util.ReflectUtil;
+	 */
+	public function getClass(Void):ClassInfo {
+		return ReflectUtil.getClassInfo(this);
+	}
+	
+	/**
+	 * Returns a String representation of the instance. The String representation
+	 * is obtained via the Stringifier obtained from the ObjectUtil#getStringifier()
+	 * operation.
+	 *
+	 * @see org.as2lib.core.BasicInterface#toString()
+	 */
+	public function toString(Void):String {
+		return ObjectUtil.getStringifier().execute(this);
 	}
 }

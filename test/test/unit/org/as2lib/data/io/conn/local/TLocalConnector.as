@@ -46,7 +46,7 @@ class test.org.as2lib.data.io.conn.local.TLocalConnector extends Test{
 		
 		connector.removeListener(remListener);
 		
-		
+		connector.initConnection();
 	}
 	
 	public function testLocalConnector(Void):Void {

@@ -3,10 +3,17 @@ import org.as2lib.data.io.conn.ConnectorListener;
 import org.as2lib.data.io.conn.ConnectorRequest;
 import org.as2lib.data.io.conn.ConnectorError;
 import org.as2lib.data.io.conn.ConnectorResponse;
+
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.EventInfo;
-import org.as2lib.core.BasicClass;
+
 import org.as2lib.Config;
+import org.as2lib.env.out.OutAccess;
+
+//import org.as2lib.core.BasicClass;
+import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.util.ObjectUtil;
 
 /**
  * Ideas: functionality to automatic call send method after a specific time
@@ -29,7 +36,7 @@ import org.as2lib.Config;
  * @date 30.04.2004
  */
 
-class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements Connector {
+class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implements Connector {
 	
 	/* EventBroadcaster for onResponse and onError - events */
 	private var eventBroadcaster:EventBroadcaster;
@@ -40,33 +47,65 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 	private var path:String;
 	
 	private var method:String;
+	private var cMethod:String;
 	
 	private var params:Array;
 	
 	/* LocalConnection object for connection */
-	private var loc:LocalConnection;
+	private var sender:LocalConnection;
 	
 	/* stores domain, used by allowDomain, for security */
 	private var domain:String;
+
+	private var clients:Array;
 	
-	public function LocalConnector(Void) {
+	private var aOut:OutAccess;
+	
+	public function LocalServer(Void) {
 		eventBroadcaster = Config.getEventBroadcasterFactory().createEventBroadcaster();
-		loc = new LocalConnection();
 		params = new Array();
+		clients = new Array();
+		aOut = Config.getOut();
+		cMethod = "clientMethod";
 	}
 	
 	public function initConnection(Void):Void {
-		if(method){
-			var args:Array = new Array();
-			args = args.concat(params);
-			args.splice(0,0,host+path,method);
-			loc.send.apply(args);
+		aOut.debug("initConnection");
+		
+		//receiver = new LocalConnection();
+		connect("register");
+		
+		//sender = new LocalConnection();
+        //sender.onStatus = onStatus;
+	}
+	
+	public function addClient(name:String):Void{
+		aOut.debug("addClient: "+name);
+		var l:Number = clients.length;
+    	while(l--){
+			if(clients[l]==name) return;
+    	}
+    	clients.push(name);
+		aOut.debug("clients["+(clients.length-1)+"] = "+clients[clients.length-1]);
+	}
+	
+	private function dispatch(Void):Void{
+		sender = new LocalConnection();
+		aOut.debug("dispatch");
+		var l:Number = clients.length;
+		aOut.debug("length:"+l);
+		var args:Array = new Array();
+		args.push(cMethod);
+		args.push(method);
+		args = args.concat(params);
+		while(l--){
+			aOut.debug("dispatch: "+clients[l]);
+			sender.send.apply(null,[clients[l]].concat(args));
 		}
-		else{
-			//loc = eventBroadcaster.
-			loc.connect(host+path);
-			
-		}
+	}
+	
+	public function serverMethod() {
+		aOut.debug(arguments.toString());
 	}
 	
 	public function setHost(host:String):Void {
@@ -103,6 +142,7 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 	}
 	
 	public function onStatus(infoObj){
+		aOut.debug("onStatus: "+infoObj.level);
 		if(infoObj.level == "error") {
 			eventBroadcaster.dispatch(new ConnectorError("There is no receiver with this defined connection identifier",this,arguments,true,false));
 		}
@@ -129,8 +169,28 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 		if(m) {
 			method = m;
 			params = a;
+			dispatch();
 		}
-
-		initConnection();
+	}
+	
+	/**
+	 * Uses the ReflectUtil#getClassInfo() operation to fulfill the task.
+	 *
+	 * @see org.as2lib.core.BasicInterface#getClass()
+	 * @see org.as2lib.env.util.ReflectUtil;
+	 */
+	public function getClass(Void):ClassInfo {
+		return ReflectUtil.getClassInfo(this);
+	}
+	
+	/**
+	 * Returns a String representation of the instance. The String representation
+	 * is obtained via the Stringifier obtained from the ObjectUtil#getStringifier()
+	 * operation.
+	 *
+	 * @see org.as2lib.core.BasicInterface#toString()
+	 */
+	public function toString(Void):String {
+		return ObjectUtil.getStringifier().execute(this);
 	}
 }
