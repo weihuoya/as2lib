@@ -1,0 +1,79 @@
+\chapter{Test Cases}
+\label{sec:TestCases}
+
+Un \emph{Test Unitaire} est une classe/méthode qui vérifie une classe/méthode spécifique afin d'assurer que son comportement est correct. La plupart des développeurs doivent créer un test unitaire pour leurs propres classes et sont assisté par un API de test unitaire qui offre des fonctionnalités de test automatique.
+
+\paragraph{Motivation:}
+Bien qu'il existe déjà un API de test pour {\sl ActionScript 2}, {\sl as2unit}\footnote{\href{http://www.as2unit.org}{www.as2unit.org}}, notre API de test a été créée pour les raisons suivantes :
+
+\begin{itemize}
+	\item {\sl As2unit} -	{\sl As2unit} n'offre pas beaucoup de fonctionnalités ({\sl as2unit}  7 méthodes de test - {\sl as2lib}  15 méthodes de test).
+	\item {\sl As2unit} est dans le dépit de la révélation de leur code source, pas encore open source.
+	\item La documentation officiel de {\sl as2unit} n'est toujours pas disponible.
+	\item {\sl As2unit} est seulement disponible sous forme de component.
+	\item {\sl As2unit} ne peut tester qu'une seule classe à la fois.
+	\item La sortie d'{\sl as2unit} ne peut être fait qu'avec un trace.
+\end{itemize}
+
+\paragraph{Solution:}
+
+Il y a deux actions qui ne devrait pas être nécessaire (incluant le component Flash, régler les paramètres) pour effectuer les test unitaire, comme s'est le cas présentement avec {\sl as2unit}. Il devrait être possible pour le développeur d'effectuer un test unitaire à partir d'une invocation de méthode. Un appel direct de la classe autant qu'un appel direct à un package entier est possible.
+
+\clearpage
+\begin{lstlisting}[frame=single]
+import org.as2lib.test.unit.Test;
+// Add your Tests here.
+test.org.as2lib.core.TReflections;
+Test.run("test.org");
+\end{lstlisting}
+
+Les unités à tester doivent être invoqué avant le début du test pour être disponible durant l'exécution. Similaire aux APIs de test unitaire comme : \emph{JUnit}\footnote{\href{http://www.junit.org}{www.junit.org}}, une variétés de méthodes sont disponibles aux développeurs. (les paramètres optionnels sont marqué avec []):
+
+\begin{itemize}
+	\item \textbf{assertTrue}([\textit{message:String}], \textit{testVar1:Boolean}) - Une erreur sera reporté si testVar1 est false.
+	\item \textbf{assertFalse}([\textit{message:String}],\textit{ testVar1:Boolean}) - Une erreur sera reporté si testVar1 est true.
+	\item \textbf{assertEquals}([\textit{message:String}], \textit{testVar1}, \textit{testVar2}) - Une erreur sera reporté si les deux paramètre ne sont pas identique.
+	\item \textbf{assertNotEquals}([\textit{message:String}], \textit{testVar1}, \textit{testVar2}) - Une erreur sera reporté si les deux paramètre sont identiques.
+	\item \textbf{assertNull}([\textit{message:String}], \textit{testVar1}) - Une erreur sera reporté si testVar1 n'est pas null.
+	\item \textbf{assertNotNull}([\textit{message:String}], \textit{testVar1}) - Une erreur sera reporté si testVar1 est  null.
+	\item \textbf{assertUndefined}([\textit{message:String}], \textit{testVar1}) - Une erreur sera reporté si testVar1 n'est pas undefined.
+	\item \textbf{assertNotUndefined}([\textit{message:String}], \textit{testVar1}) - Une erreur sera reporté si testVar1 est undefined.
+	\item \textbf{assertIsEmpty}([\textit{message:String}], \textit{testVar1}) - Une erreur sera reporté si testVar1 n'est pas undefined ou null.
+	\item \textbf{assertIsNotEmpty}([\textit{message:String}], \textit{testVar1}) - Une erreur sera reporté si testVar1 est undefined ou null.
+	\item \textbf{assertInfinity}([\textit{message:String}], \textit{testVar1}) - Une erreur sera reporté si testVar1 n'est pas équivalent à l'infini.
+	\item \textbf{assertNotInfinity}([\textit{message:String}], \textit{testVar1}) - Une erreur sera reporté si testVar1 est équivalent à l'infini.
+	\item \textbf{fail}(\textit{message:String}) - Ajoute un message d'erreur personnalisé pour toutes les erreurs reportés.
+	\item \textbf{assertThrows}(\textit{exception:Function, atObject, theFunction:String, parameter:Array}) - S'il n'y pas d'exception de lancé durant l'exécution de la fonction envoyé (theFunction) sur l'objet (atObject) avec les paramètres(parameter), un erreur sera reporté.
+	\item \textbf{assertNotThrows}(\textit{exception:Function, atObject, theFunction:String, parameter:Array}) - Si une exception est lancé durant l'exécution de la fonction envoyé (theFunction) sur l'objet (atObject) avec les paramètres(parameter), un erreur sera reporté.
+\end{itemize}
+
+Un test unitaire doit hériter de la classe \emph{Test}\footnote{org.as2lib.test.unit.Test}. Toutes les méthodes du test dont le nom débute par ``test'' seront exécuté par l'API de test. Voir le code suivant pour mieux comprendre l'API de test unitaire:
+
+\begin{lstlisting}[frame=single]
+import org.as2lib.test.unit.Test;
+import org.as2lib.core.BasicClass;
+import org.as2lib.env.reflect.ClassInfo;
+
+class test.org.as2lib.core.TReflections extends Test {
+	private var clazz:BasicClass;
+	
+	public function TReflections(Void) {
+			clazz = new BasicClass();
+	}
+	
+	public function testGetClass(Void):Void {
+		trace (":: testGetClass");
+		var info:ClassInfo = clazz.getClass();
+		assertEquals(
+		"The name of the basic class changed",
+		info.getName(),
+		"BasicClass");
+		assertEquals(
+		"Problems evaluating the full name",
+		info.getFullName(),
+		"org.as2lib.core.BasicClass");
+		trace ("------------------");
+	}
+}
+\end{lstlisting}
+
