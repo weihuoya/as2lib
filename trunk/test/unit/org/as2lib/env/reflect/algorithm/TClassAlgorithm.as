@@ -108,7 +108,7 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		var package:PackageInfo = objectInfo.getParent();
 		assertNotNull("Parent package is null.", package);
 		assertSame("Parent package is wrong.", package.getPackage(), _global.org.as2lib.env.reflect.algorithm);
-		assertSame("Parent package name is not core.", package.getName(), "algorithm");
+		assertSame("Parent package name is not algorithm.", package.getName(), "algorithm");
 		
 		//cc.verify();
 	}
