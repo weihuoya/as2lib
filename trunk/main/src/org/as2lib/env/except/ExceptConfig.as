@@ -18,6 +18,8 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.ThrowableStringifier;
 import org.as2lib.env.except.StackTraceElementStringifier;
 import org.as2lib.env.except.StackTraceStringifier;
+import org.as2lib.env.except.StackTraceElementFactory;
+import org.as2lib.env.except.SimpleStackTraceElementFactory;
 import org.as2lib.util.string.Stringifier;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.out.OutAccess;
@@ -39,6 +41,9 @@ class org.as2lib.env.except.ExceptConfig extends BasicClass {
 	
 	/** Used to stringify the StackTrace returned by Throwable#getStackTrace(). */
 	private static var stackTraceStringifier:Stringifier = new StackTraceStringifier();
+	
+	/** Stores the StackTraceElementFactory used to obtain StackTraceElement instances. */
+	private static var stackTraceElementFactory:StackTraceElementFactory;
 	
 	/** The OutAccess that is used by the Throwables toString() operation. */
 	private static var out:OutAccess;
@@ -108,6 +113,11 @@ class org.as2lib.env.except.ExceptConfig extends BasicClass {
 		return stackTraceElementStringifier;
 	}
 	
+	/**
+	 * Sets a new Stringifier used to stringify Stack traces.
+	 *
+	 * @param stringifier the new Stringifier
+	 */
 	public static function setStackTraceStringifier(newStringifier:Stringifier):Void {
 		stackTraceStringifier = newStringifier;
 	}
@@ -120,5 +130,28 @@ class org.as2lib.env.except.ExceptConfig extends BasicClass {
 	 */
 	public static function getStackTraceStringifier(Void):Stringifier {
 		return stackTraceStringifier;
+	}
+	
+	/**
+	 * Sets a new StackTraceElementFactory used to obtain StackTraceElement
+	 * instances.
+	 *
+	 * @param factory the new StackTraceElementFactory
+	 */
+	public static function setStackTraceElementFactory(factory:StackTraceElementFactory):Void {
+		stackTraceElementFactory = factory;
+	}
+	
+	/**
+	 * Returns the set StackTraceElementFactory or the default
+	 * SimpleStackTraceElementFactory.
+	 *
+	 * @return the StackTraceElementFactory used to obtain StackTraceElement instances
+	 */
+	public static function getStackTraceElementFactory(Void):StackTraceElementFactory {
+		if (ObjectUtil.isEmpty(stackTraceElementFactory)) {
+			stackTraceElementFactory = new SimpleStackTraceElementFactory();
+		}
+		return stackTraceElementFactory;
 	}
 }

@@ -149,3 +149,12 @@
         + changed the following OutHandlers to use this toString() operation
           * org.as2lib.env.out.handler.TraceHandler
           * org.as2lib.env.out.handler.SocketOutputServerHandler
+
+
+      >> org.as2lib.env.except
+
+        > added StackTraceElementFactory
+        > added SimpleStackTraceElementFactory
+        > added ExceptConfig.getStackTraceElementFactory()
+        > added ExceptConfig.setStackTraceElementFactory()
+        + changed AbstractException.addStackTraceElement() to use this newly created classes and operations
