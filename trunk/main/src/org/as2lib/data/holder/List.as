@@ -5,6 +5,7 @@ import org.as2lib.data.holder.Iterator;
  * @author Simon Wacker
  */
 interface org.as2lib.data.holder.List extends BasicInterface {
+	
 	public function insert(value):Void;
 	public function insertFirst(value):Void;
 	public function insertLast(value):Void;
@@ -32,4 +33,7 @@ interface org.as2lib.data.holder.List extends BasicInterface {
 	public function isEmpty(Void):Boolean;
 	public function iterator(Void):Iterator;
 	public function indexOf(value):Number;
+	
+	public function toArray(Void):Array;
+	
 }

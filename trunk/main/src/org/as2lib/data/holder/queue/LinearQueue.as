@@ -28,6 +28,7 @@ import org.as2lib.data.holder.HolderConfig;
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Queue {
+	
 	/** Contains the inserted elements. */
 	private var data:Array;
 	
@@ -66,6 +67,13 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	}
 	
 	/**
+	 * @see org.as2lib.data.holder.Queue#iterator()
+	 */
+	public function iterator(Void):Iterator {
+		return (new ArrayIterator(data.concat()));
+	}
+	
+	/**
 	 * @see org.as2lib.data.holder.Queue#isEmpty()
 	 */
 	public function isEmpty(Void):Boolean {
@@ -73,10 +81,10 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#iterator()
+	 * @see org.as2lib.data.holder.Queue#toArray()
 	 */
-	public function iterator(Void):Iterator {
-		return (new ArrayIterator(data.concat()));
+	public function toArray(Void):Array {
+		return data.concat();
 	}
 	
 	/**
@@ -85,4 +93,5 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	public function toString(Void):String {
 		return HolderConfig.getQueueStringifier().execute(this);
 	}
+	
 }

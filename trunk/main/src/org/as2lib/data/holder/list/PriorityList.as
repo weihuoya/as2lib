@@ -232,4 +232,9 @@ class org.as2lib.data.holder.list.PriorityList extends AbstractPriority implemen
 	private function getRight(index:Number):Number {
 		return (2 * index + 2);
 	}
+	
+	public function toArray(Void):Array {
+		return list.toArray();
+	}
+	
 }

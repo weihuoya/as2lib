@@ -318,8 +318,8 @@ class test.unit.org.as2lib.data.holder.AbstractTList extends TestCase {
 		newList.insert("a");
 		list.retainAll(newList);
 		assertEquals("Content at entry 0 should be 'a'", list.get(0), 'a');
-		assertEquals("Content at entry 1 should be undefined", list.get(1));
-		assertEquals("Content at entry 2 should be undefined", list.get(2));
+		assertUndefined("Content at entry 1 should be undefined", list.get(1));
+		assertUndefined("Content at entry 2 should be undefined", list.get(2));
 	}
 	
 	/**
@@ -481,4 +481,28 @@ class test.unit.org.as2lib.data.holder.AbstractTList extends TestCase {
 		assertEquals("List content at index 5 should be null", list.indexOf(null), 5);
 		assertEquals("List content at index 6 should be undefined", list.indexOf(undefined), 6);
 	}
+	
+	public function testToArray(Void):Void {
+		var obj1:Object = new Object();
+		var obj2:Object = new Object();
+		var obj3:Object = new Object();
+		
+		assertSame("array representation should contain no elements", list.toArray().length, 0);
+		list.insert(obj1);
+		assertSame("array representation should contain one element", list.toArray().length, 1);
+		assertSame("first element should be obj1", list.toArray()[0], obj1);
+		list.insert(obj2);
+		assertSame("array representation should contain two elements", list.toArray().length, 2);
+		assertSame("first element should be obj1", list.toArray()[0], obj1);
+		assertSame("second element should be obj2", list.toArray()[1], obj2);
+		list.insert(obj3);
+		assertSame("array representation should contain three elements", list.toArray().length, 3);
+		assertSame("first element should be obj1", list.toArray()[0], obj1);
+		assertSame("second element should be obj2", list.toArray()[1], obj2);
+		assertSame("third element should be obj3", list.toArray()[2], obj3);
+		
+		list.clear();
+		assertSame("array representation should again contain no elements", list.toArray().length, 0);
+	}
+	
 }

@@ -60,4 +60,15 @@ interface org.as2lib.data.holder.Stack extends BasicInterface {
 	 */
 	public function isEmpty(Void):Boolean;
 	
+	/**
+	 * Returns an array representation of this stack.
+	 *
+	 * <p>The elements are copied onto the array in a last-in-first-out
+	 * order, similar to the order of the elements returned by a succession 
+	 * of calls to #pop().
+	 *
+	 * @return the stack's array representation
+	 */
+	 public function toArray(Void):Array;
+	
 }

@@ -179,4 +179,29 @@ class test.unit.org.as2lib.data.holder.AbstractTQueue extends TestCase {
 		assertEquals("The second object in the iterator should match obj2", obj2, iterator.next());
 		assertFalse("There should be only two entries in the iterator", iterator.hasNext());
 	}
+	
+	public function testToArray(Void):Void {
+		var obj:Object = new Object();
+		var obj1:Object = new Object();
+		var obj2:Object = new Object();
+		
+		assertSame("Queue is empty and so should be the array representation.", queue.toArray().length, 0);
+		queue.enqueue(obj1);
+		assertSame("Array representation should contain exactly one element.", queue.toArray().length, 1);
+		assertSame("The first and only element should be obj1.", queue.toArray()[0], obj1);
+		queue.enqueue(obj2);
+		assertSame("Array representation should contain exactly two elements.", queue.toArray().length, 2);
+		assertSame("The first element should be obj1.", queue.toArray()[0], obj1);
+		assertSame("The second element should be obj2.", queue.toArray()[1], obj2);
+		queue.enqueue(obj);
+		assertSame("Array representation should contain exactly three elements.", queue.toArray().length, 3);
+		assertSame("The first element should be obj1.", queue.toArray()[0], obj1);
+		assertSame("The second element should be obj2.", queue.toArray()[1], obj2);
+		assertSame("The third element should be obj.", queue.toArray()[2], obj);
+		queue.dequeue();
+		queue.dequeue();
+		queue.dequeue();
+		assertSame("Queue is again empty and so should be the array representation.", queue.toArray().length, 0);
+	}
+	
 }

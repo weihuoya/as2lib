@@ -151,4 +151,26 @@ class test.unit.org.as2lib.data.holder.AbstractTStack extends TestCase {
 		assertTrue("A Exception should not manipulate the isEmpty result", stack.isEmpty());
 	}
 	
+	public function testToArray(Void):Void {
+		var obj:Object = new Object();
+		
+		assertSame("Stack is empty and so should be the array representation.", stack.toArray().length, 0);
+		stack.push(obj1);
+		assertSame("Array representation should contain exactly one element.", stack.toArray().length, 1);
+		assertSame("The first and only element should be obj1.", stack.toArray()[0], obj1);
+		stack.push(obj2);
+		assertSame("Array representation should contain exactly two elements.", stack.toArray().length, 2);
+		assertSame("The first element should be obj2.", stack.toArray()[0], obj2);
+		assertSame("The second element should be obj1.", stack.toArray()[1], obj1);
+		stack.push(obj);
+		assertSame("Array representation should contain exactly three elements.", stack.toArray().length, 3);
+		assertSame("The first element should be obj.", stack.toArray()[0], obj);
+		assertSame("The second element should be obj2.", stack.toArray()[1], obj2);
+		assertSame("The third element should be obj1.", stack.toArray()[2], obj1);
+		stack.pop();
+		stack.pop();
+		stack.pop();
+		assertSame("Stack is again empty and so should be the array representation.", stack.toArray().length, 0);
+	}
+	
 }

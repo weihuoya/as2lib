@@ -27,6 +27,7 @@ import org.as2lib.env.except.IllegalArgumentException;
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stack {
+	
 	/** The wrapped Stack. */
 	private var stack:Stack;
 	
@@ -82,6 +83,13 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	}
 	
 	/**
+	 * @see org.as2lib.data.holder.Stack#toArray()
+	 */
+	public function toArray(Void):Array {
+		return stack.toArray();
+	}
+	
+	/**
 	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
 	public function toString(Void):String {
@@ -96,9 +104,8 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	 */
 	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].",
-											   this,
-											   arguments);
+			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].", this, arguments);
 		}
 	}
+	
 }

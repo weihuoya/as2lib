@@ -25,6 +25,7 @@ import org.as2lib.data.holder.HolderConfig;
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
+	
 	private var data:Array;
 	
 	public function ArrayList(Void) {
@@ -145,10 +146,15 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 		return l;
 	}
 	
+	public function toArray(Void):Array {
+		return data.concat();
+	}
+	
 	/**
 	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
 	public function toString(Void):String {
 		return HolderConfig.getListStringifier().execute(this);
 	}
+	
 }
