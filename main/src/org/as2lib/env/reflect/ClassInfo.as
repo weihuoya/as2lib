@@ -6,7 +6,9 @@ import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.CacheInfo;
 import org.as2lib.env.reflect.MethodInfo;
+import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.NoSuchMethodException;
+import org.as2lib.env.reflect.NoSuchPropertyException;
 import org.as2lib.env.EnvConfig;
 
 /**
@@ -168,7 +170,28 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	}
 	
 	/**
-	 * Returns null becuase the class cannot contain any children.
+	 * Returns the PropertyInfo corresponding to the passed property name.
+	 *
+	 * @param propertyName the name of the property you wanna obtain
+	 * @return the PropertyInfo correspoinding to the property's name
+	 * @throws org.as2lib.env.reflect.NoSuchPropertyException if the property you tried to obtain does not exist
+	 */
+	public function getProperty(propertyName:String):PropertyInfo {
+		var iterator:Iterator = getProperties().iterator();
+		var property:PropertyInfo;
+		while (iterator.hasNext()) {
+			property = PropertyInfo(iterator.next());
+			if (property.getName() == propertyName) {
+				return property;
+			}
+		}
+		throw new NoSuchPropertyException("The property with the name [" + propertyName + "] you tried to obtain does not exist.",
+										this,
+										arguments);
+	}
+	
+	/**
+	 * Returns null becuase a class cannot contain any children.
 	 *
 	 * @return null
 	 */
