@@ -1,5 +1,5 @@
 ﻿import org.as2lib.test.speed.TestCase;
-import broadcasting.ExampleCall;
+import test.speed.broadcasting.ExampleCall;
 
 /**
  * Test for a minimal Eventhandling with an Array.
@@ -11,7 +11,7 @@ import broadcasting.ExampleCall;
  * @see broadcasting.EventBroadcasterTest
  * @see broadcasting.EventDispatcherTest
  */
-class broadcasting.ArrayTest implements TestCase {
+class test.speed.broadcasting.ArrayTest implements TestCase {
 	private var content:Array;
 	
 	function ArrayTest () {

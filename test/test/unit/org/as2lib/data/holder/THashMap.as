@@ -20,7 +20,7 @@ class test.org.as2lib.data.holder.THashMap extends TestCase{
 		var map:Map = new HashMap();
 		map.put("key", true);
 		assertTrue(map.containsValue(true));
-		assertFalse(map.containsValue("I'm not in there"));
+		assertFalse(map.containsValue("I'm not in here"));
 		assertFalse(map.containsValue());
 	}
 	
@@ -33,7 +33,7 @@ class test.org.as2lib.data.holder.THashMap extends TestCase{
 		assertEquals("hi", keys[1], "key2");
 		// Changes made to the Array returned by HashMap.getKeys() must not alter the HashMap's actual keys. 
 		keys[0] = "Hi!";
-		if(map.getKeys()[0]=="Hi!") {
+		if (map.getKeys()[0] == "Hi!") {
 			fail("Changes made to the Array returned by HashMap.getKeys() do alter the HashMap's actual keys!");
 		}
 	}

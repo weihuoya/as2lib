@@ -1,7 +1,7 @@
 ﻿import org.as2lib.test.speed.TestCase;
-import broadcasting.ExampleCall;
+import test.speed.broadcasting.ExampleCall;
 
-class broadcasting.ASBroadcasterTest implements TestCase{
+class test.speed.broadcasting.ASBroadcasterTest implements TestCase{
 	private var _listener:Array;
 	private var addListener:Function;
 	private var removeListener:Function;

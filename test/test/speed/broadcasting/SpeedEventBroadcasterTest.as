@@ -1,11 +1,11 @@
 ﻿import org.as2lib.test.speed.TestCase;
-import broadcasting.ExampleCall;
+import test.speed.broadcasting.ExampleCall;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.EventListener;
 import org.as2lib.env.event.SpeedEventBroadcaster;
 import org.as2lib.env.event.SimpleEventInfo;
 
-class broadcasting.SpeedEventBroadcasterTest implements TestCase{
+class test.speed.broadcasting.SpeedEventBroadcasterTest implements TestCase{
 	private var eB:EventBroadcaster;
 	
 	function SpeedEventBroadcasterTest () {

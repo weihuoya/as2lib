@@ -1,5 +1,5 @@
 ﻿import org.as2lib.test.speed.TestCase;
-import broadcasting.ExampleCall;
+import test.speed.broadcasting.ExampleCall;
 import mx.events.EventDispatcher;
 /**
  * Test for the Eventdispatcher.
@@ -11,7 +11,7 @@ import mx.events.EventDispatcher;
  * @see broadcasting.ASBroadcasterTest
  * @see broadcasting.EventDispatcherTest
  */
-class broadcasting.EventDispatcherTest implements TestCase {
+class test.speed.broadcasting.EventDispatcherTest implements TestCase {
 	
 	/** adds a listener */
 	public var addEventListener:Function;
