@@ -2,7 +2,7 @@
 import org.as2lib.basic.reflect.Cache;
 import org.as2lib.basic.reflect.ClassInfo;
 import org.as2lib.basic.reflect.PackageInfo;
-import org.as2lib.data.holder.Hashtable;
+import org.as2lib.data.holder.HashMap;
 import org.as2lib.basic.reflect.algorythm.CacheAlgorythm;
 import org.as2lib.basic.reflect.algorythm.ContentAlgorythm;
 import org.as2lib.basic.reflect.algorythm.ClassAlgorythm;
@@ -74,25 +74,25 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	}
 	
 	/**
-	 * This operation returns a Hashtable containing the MethodInfo instances representing the methods.
+	 * This operation returns a HashMap containing the MethodInfo instances representing the methods.
 	 * The problem right now is that public and private methods are not distinguished.
 	 * This is due to the impossibility of finding out (at runtime) whether the method is private or public.
 	 *
 	 * @param The ClassInfo instance representing the class the methods shall be searched for.
-	 * @return A Hashtable holding MethodInfo instances for each method.
+	 * @return A HashMap holding MethodInfo instances for each method.
 	 */
-	public static function getMethods(info:ClassInfo):Hashtable {
+	public static function getMethods(info:ClassInfo):HashMap {
 		return methodAlgorythm.execute(info);
 	}
 	
 	/** 
-	 * This operation returns a Hashtable containing the PropertyInfo instances representing the Properties.
+	 * This operation returns a HashMap containing the PropertyInfo instances representing the Properties.
 	 * Properties are set in Flash MX 2004 via the set and get keyword.
 	 *
 	 * @param The ClassInfo instance representing the class the methods shall be searched for.
-	 * @return A Hashtable holding PropertyInfo instances for each property.
+	 * @return A HashMap holding PropertyInfo instances for each property.
 	 */
-	public static function getProperties(info:ClassInfo):Hashtable {
+	public static function getProperties(info:ClassInfo):HashMap {
 		return propertyAlgorythm.execute(info);
 	}
 	
@@ -101,9 +101,9 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	 * Children can be either of type ClassInfo or PackageInfo.
 	 *
 	 * @param A PackageInfo instance representing the package the children shall be returned.
-	 * @return A Hashtable containing all children of the appropriate package.
+	 * @return A HashMap containing all children of the appropriate package.
 	 */
-	public static function getChildren(info:PackageInfo):Hashtable {
+	public static function getChildren(info:PackageInfo):HashMap {
 		return childrenAlgorythm.execute(info);
 	}
 	
