@@ -220,7 +220,10 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return Runner of the Testcases (containing all informations about the run)
 	 */
 	public function run():TestRunner {
-		return new TestRunner().run(this);
+		var testRunner:TestRunner = new TestRunner();
+		return testRunner.run(this);
+		// not mtasc compatible:
+		// return new TestRunner().run(this);
 	}
 	
 	/**

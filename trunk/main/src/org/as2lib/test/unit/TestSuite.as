@@ -81,7 +81,11 @@ class org.as2lib.test.unit.TestSuite extends BasicClass implements Test {
 	 * @return TestRunner that run this test (including all informations about the run).
 	 */
 	public function run():TestRunner {
-		return new TestRunner().run(this);
+		var testRunner:TestRunner = new TestRunner();
+		return testRunner.run(this);
+		// not mtasc compatible:
+		// return new TestRunner().run(this);
+		
 	}
 	
 	/**

@@ -281,7 +281,7 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 		var p:PackageInfo = getCache().getRoot();
 		var x:String = p.getFullName();
 		if (!x) x = "_global";
-		var f:Function = eval(g + "." + n);
+		var f:Function = eval(x + "." + n);
 		if (!f) throw new ClassNotFoundException("A class with the name '" + n + "' could not be found.", this, arguments);
 		if (typeof(f) != "function") throw new IllegalArgumentException("The object corresponding to the passed-in class name '" + n + "' is not of type function.", this, arguments);
 		var r:ClassInfo = c.getClass(f);
