@@ -4,7 +4,7 @@ import org.as2lib.tool.console.ConsoleConnection;
 /**
  * Interface to be used for all Views of the console.
  */
-import org.as2lib.tool.console.ConsoleView extends EventListener {
+interface org.as2lib.tool.console.ConsoleView extends EventListener {
 	
 	/**
 	 * Event if the selected Connection changed.
