@@ -27,36 +27,36 @@ class org.as2lib.env.out.level.NoneLevel extends BasicClass implements OutLevel 
 	/**
 	 * @see org.as2lib.env.out.OutLevel
 	 */
-	public function log(message, broadcaster:EventBroadcaster):Void {
+	public function log(m, b:EventBroadcaster, s:EventBroadcaster):Void {
 	}
 	
 	/**
 	 * @see org.as2lib.env.out.OutLevel
 	 */
-	public function debug(message, broadcaster:EventBroadcaster):Void {
+	public function debug(m, b:EventBroadcaster, s:EventBroadcaster):Void {
 	}
 	
 	/**
 	 * @see org.as2lib.env.out.OutLevel
 	 */
-	public function info(message, broadcaster:EventBroadcaster):Void {
+	public function info(m, b:EventBroadcaster, s:EventBroadcaster):Void {
 	}
 	
 	/**
 	 * @see org.as2lib.env.out.OutLevel
 	 */
-	public function warning(message, broadcaster:EventBroadcaster):Void {
+	public function warning(m, b:EventBroadcaster, s:EventBroadcaster):Void {
 	}
 	
 	/**
 	 * @see org.as2lib.env.out.OutLevel
 	 */
-	public function error(error, broadcaster:EventBroadcaster):Void {
+	public function error(m, b:EventBroadcaster, s:EventBroadcaster):Void {
 	}
 	
 	/**
 	 * @see org.as2lib.env.out.OutLevel
 	 */
-	public function fatal(error, broadcaster:EventBroadcaster):Void {
+	public function fatal(m, b:EventBroadcaster, s:EventBroadcaster):Void {
 	}
 }
