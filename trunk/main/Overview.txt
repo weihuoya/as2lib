@@ -7,13 +7,15 @@ interface org.as2lib.basic.BasicInterface {
       */ 
      public function getClass():org.as2lib.reflect.ClassInfo; 
       
-     /** 
+interface org.as2lib.basic.Cloneable {
+      /** 
       * Returns a clone from actually used Object 
       *  
       * @throws org.as2lib.basic.CloneNotSupportedException if the object was not possible to clone. 
       */ 
      public function clone():Object; 
-      
+}
+interface org.as2lib.basic.Overloading {
      /** 
       * Processes the overloading, finds a matching type within the TypeArray 
       * 
@@ -30,9 +32,7 @@ interface org.as2lib.basic.BasicInterface {
       * @param 
       */ 
      public function createOverloadHandler(matches:TypedArray,forwardsTo:Function):Void; 
-} 
-interface org.as2lib.basic.Overloading {
-
+}
 }
  
 class org.as2lib.basic.BasicClass implements org.as2lib.basic.BasicInterface { 
