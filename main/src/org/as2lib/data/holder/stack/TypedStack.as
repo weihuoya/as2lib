@@ -27,7 +27,7 @@ import org.as2lib.data.holder.Iterator;
  * <p>This method simply delegates all method invocations to the wrapped
  * stack. If the specific method is responsible for adding values it first
  * checks if the values to add are of the expected type. If they are the
- * method invocation gets forwarded, otherwise and {@link IllegalArgumentException}
+ * method invocation gets forwarded, otherwise an {@link IllegalArgumentException}
  * gets thrown.
  *
  * @author Simon Wacker
@@ -154,7 +154,7 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	/**
 	 * Validates the passed-in value based on its type.
 	 *
-	 * @param value the value which type shall be validated
+	 * @param value the value whose type shall be validated
 	 * @throws IllegalArgumentException if the type of the value is not valid
 	 */
 	private function validate(value):Void {

@@ -23,8 +23,14 @@ import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
- * TypedQueue is used as a wrapper for Queues. It ensures that only values from
- * a specific type are added to the queue.
+ * TypedQueue is used as a wrapper for {@link Queue} instances that ensures
+ * that only values of a specific type can be added to the wrapped queue.
+ *
+ * <p>This method simply delegates all method invocations to the wrapped
+ * queue. If the specific method is responsible for adding values it first
+ * checks if the values to add are of the expected type. If they are the
+ * method invocation gets forwarded, otherwise an {@link IllegalArgumentException}
+ * gets thrown.
  *
  * @author Simon Wacker
  */
@@ -37,10 +43,14 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	private var type:Function;
 	
 	/**
-	 * Constructs a new TypedQueue
+	 * Constructs a new TypedQueue instance.
 	 *
-	 * @param type the type of values that are allowed to be added
+	 * <p>If the passed-in queue does already contain values, these values
+	 * do not get type-checked.
+	 *
+	 * @param type the type of the values that are allowed to be added
 	 * @param queue the queue to be wrapped
+	 * @throws IllegalArgumentException if the passed-in type is null or undefined
 	 */
 	public function TypedQueue(type:Function, queue:Queue) {
 		this.type = type;
@@ -48,19 +58,23 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	}
 	
 	/**
-	 * Returns the type of the queue all contained elements have.
+	 * Returns the type that all values in the wrapped queue have.
 	 *
 	 * <p>This is the type passed-in on construction.
 	 *
-	 * @return the type of the queue's elements
+	 * @return the type the all values of the wrapped queue have
 	 */
 	public function getType(Void):Function {
 		return type;
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#enqueue()
-	 * @throws org.as2lib.env.except.IllegalArgumentException if the type of the value is not valid
+	 * Adds the passed-in value to this queue.
+	 *
+	 * <p>The value gets only enqueued if it is of the expected type.
+	 *
+	 * @param value the value add
+	 * @throws IllegalArgumentException if the type of the passed-in value is not valid
 	 */
 	public function enqueue(value):Void {
 		validate(value);
@@ -68,63 +82,85 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#dequeue()
+	 * Removes the firstly inserted value.
+	 *
+	 * @return the firstly inserted value
+	 * @throws org.as2lib.data.holder.EmptyDataHolderException if this queue is empty
 	 */
 	public function dequeue(Void) {
 		return queue.dequeue();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#peek()
+	 * Returns the firstly inserted value.
+	 *
+	 * @return the firstly inserted value
+	 * @throws org.as2lib.data.holder.EmptyDataHolderException if this queue is empty
 	 */
 	public function peek(Void) {
 		return queue.peek();
 	}
-	
 	/**
-	 * @see org.as2lib.data.holder.Queue#iterator()
+	 * Returns an iterator that can be used to iterate over the values of
+	 * this queue.
+	 *
+	 * @return an iterator to iterate over this queue
+	 * @see #toArray
 	 */
 	public function iterator(Void):Iterator {
 		return queue.iterator();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#isEmpty()
+	 * Returns whether this queue contains any values.
+	 *
+	 * @return true if this queue contains no values else false
 	 */
 	public function isEmpty(Void):Boolean {
 		return queue.isEmpty();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#size()
+	 * Returns the number of enqueued elements.
+	 *
+	 * @return the number of enqueued elements
+	 * @see #enqueue
 	 */
 	public function size(Void):Number {
 		return queue.size();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#toArray()
+	 * Returns an array representation of this queue.
+	 *
+	 * <p>The elements are copied onto the array in a first-in, first-out
+	 * order, similar to the order of the elements returned by a succession 
+	 * of calls to the {@link #dequeue} method.
+	 *
+	 * @return the array representation of this queue
 	 */
 	public function toArray(Void):Array {
 		return queue.toArray();
 	}
 	
 	/**
-	 * @see org.as2lib.core.BasicInterface#toString()
+	 * Returns the string representation of the wrapped queue.
+	 *
+	 * @return the string representation of the wrapped queue
 	 */
 	public function toString(Void):String {
 		return queue.toString();
 	}
 	
 	/**
-	 * Validates the passed object based on its type.
+	 * Validates the passed-in value based on its type.
 	 *
-	 * @param object the object which type shall be validated
+	 * @param value the value whose type shall be validated
 	 * @throws org.as2lib.env.except.IllegalArgumentException if the type of the object is not valid
 	 */
-	private function validate(object):Void {
-		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].", this, arguments);
+	private function validate(value):Void {
+		if (!ObjectUtil.typesMatch(value, type)) {
+			throw new IllegalArgumentException("Type mismatch between value '" + value + "' and type '" + type + "'.", this, arguments);
 		}
 	}
 	

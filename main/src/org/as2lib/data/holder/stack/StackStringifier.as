@@ -35,6 +35,7 @@ class org.as2lib.data.holder.stack.StackStringifier extends BasicClass implement
 	 *   [lastlyAddedValue, penultimatelyAddedValue, ...]
 	 * </pre>
 	 *
+	 * @param target the target stack to stringify
 	 * @return the string representation of the passed-in stack
 	 */
 	public function execute(target):String {

@@ -20,26 +20,37 @@ import org.as2lib.data.holder.Queue;
 import org.as2lib.data.holder.Iterator;
 
 /**
- * QueueStringifier is the default Stringifier used to stringify Queues.
+ * QueueStringifier stringifies instances of type {@link Queue}.
  *
  * @author Simon Wacker
- * @see org.as2lib.data.holder.Queue
+ * @see Queue
  */
 class org.as2lib.data.holder.queue.QueueStringifier extends BasicClass implements Stringifier {
+	
 	/**
-	 * @see org.as2lib.util.string.Stringifier
+	 * Returns the string representation of the passed-in {@link Queue}
+	 * instance.
+	 *
+	 * <p>The string representation is constructed as follows:
+	 * <pre>
+	 *   [firstlyAddedValue, secondlyAddedValue, ...]
+	 * </pre>
+	 *
+	 * @param target the target queue to stringifiy
+	 * @return the string representation of the passed-in queue
 	 */
 	public function execute(target):String {
-		var queue:Queue = Queue(target);
+		var queue:Queue = target;
 		var result:String = "[";
-		var iterator:Iterator = queue.iterator();
-		while (iterator.hasNext()) {
-			result += iterator.next().toString();
-			if (iterator.hasNext()) {
+		var array:Array = queue.toArray();
+		for (var i:Number = 0; i < array.length; i++) {
+			result += array[i].toString();
+			if (i < array.length-1) {
 				result += ", ";
 			}
 		}
 		result += "]";
 		return result;
 	}
+	
 }

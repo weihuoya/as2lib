@@ -23,8 +23,61 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.data.holder.queue.QueueStringifier;
 
 /**
- * LinearQueue is an implementaion of the Queue interface. The LinearQueue stores
- * values in a linear manner.
+ * LinearQueue can be used to store values in a first-in, first-out manner.
+ *
+ * <p>This class is a linear implementation of the {@link Queue} interface.
+ * That means enqueued values are stored in a linear manner and that
+ * you can store as many values as you want. There are also queues that
+ * store values in a cyclic manner. These queues can normally only hold
+ * a prescribed number of values and overwrite old values or throw an
+ * exception if you try to enqueue more values.
+ *
+ * <p>'first-in, first-out' means that the first value that has been
+ * enqueued/added to the queue is the first that gets dequeued/removed.
+ *
+ * <p>The usage of a queue is quite simple. You have one method to
+ * add/enqueue values {@link #enqueue} and one method to remove/dequeue
+ * them {@link #dequeue}. You can also peek at the beginning of the queue
+ * to see what value has been added/enqueued at first without removing
+ * it {@link #peek}.
+ *
+ * <p>If you want to iterate over the values of the queue you can either
+ * use the iterator returned by the {@link #iterator} method or the array
+ * that contains the queue's values returned by the {@link toArray} method.
+ *
+ * <p>The two methods {@link #isEmpty} and {@link #size} let you find
+ * out whether the queue contains values and how many values it contains.
+ * 
+ * <p>You can modify the string representation that gets returned by
+ * the {@link #toString} method using the static {@link #setStringifier}
+ * method.
+ *
+ * <p>You can use this queue as follows:
+ * <code>
+ *   // construct the queue
+ *   var queue:Queue = new LinearQueue();
+ *   queue.enqueue("value1");
+ *   queue.enqueue("value2");
+ *   queue.enqueue("value3");
+ *   // use the queue
+ *   trace(queue.peek());
+ *   while (!queue.isEmpty()) {
+ *     trace(queue.pop());
+ *   }
+ * </code>
+ * <p>The above code outputs the following:
+ * <pre>
+ *   value1
+ *   value1
+ *   value2
+ *   value3
+ * </pre>
+ *
+ * <p>You could alternatively pass-in the content of the queue on construction.
+ * <code>
+ *   var queue:Queue = new LinearQueue(["value1", "value2", "value3"]);
+ *   // ..
+ * </code>
  *
  * @author Simon Wacker
  */
@@ -39,6 +92,9 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	/**
 	 * Returns the stringifier that stringifies queues.
 	 *
+	 * <p>If no stringifier has been set manually via the {@link #setStringifier}
+	 * method an instance of class {@link QueueStringifier} will be returned.
+	 *
 	 * @return the stringifier that stringifies queues
 	 */
 	public static function getStringifier(Void):Stringifier {
@@ -48,6 +104,9 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	
 	/**
 	 * Sets the new stringifier that stringifies queues.
+	 *
+	 * <p>If you set a stringifier of value null or undefined, the method
+	 * {@link #getStringifier} will return the default stringifier.
 	 *
 	 * @param queueStringifier the new queue stringifier
 	 */
@@ -60,13 +119,16 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	 *
 	 * <p>The queue steps through the passed-in source beginning at position
 	 * zero and enqueues all contained elements.
-	 * <code>var queue:LinearQueue = new LinearQueue([1, 2, 3]);
- 	 * while (!queue.isEmpty()) {
-	 * 	 trace(queue.dequeue());
-	 * }</code>
+	 *
+	 * <code>
+	 *   var queue:LinearQueue = new LinearQueue([1, 2, 3]);
+ 	 *   while (!queue.isEmpty()) {
+	 * 	   trace(queue.dequeue());
+	 *   }
+	 * </code>
 	 * The output is made in the following order: 1, 2, 3
 	 *
-	 * @param source (optional) an array that contains values to populate the new queue with
+	 * @param source (optional) an array that contains values to populate this new queue with
 	 */
 	public function LinearQueue(source:Array) {
 		if (source) {
@@ -77,14 +139,21 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#enqueue()
+	 * Adds the passed-in value to this queue.
+	 *
+	 * <p>Null or undefined values are allowed.
+	 *
+	 * @param value the value add
 	 */
 	public function enqueue(value):Void {
 		data.push(value);
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#dequeue()
+	 * Removes the firstly inserted value.
+	 *
+	 * @return the firstly inserted value
+	 * @throws EmptyDataHolderException if this queue is empty
 	 */
 	public function dequeue(Void) {
 		if (isEmpty()) {
@@ -94,7 +163,10 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#peek()
+	 * Returns the firstly inserted value.
+	 *
+	 * @return the firstly inserted value
+	 * @throws EmptyDataHolderException if this queue is empty
 	 */
 	public function peek(Void) {
 		if (isEmpty()) {
@@ -104,35 +176,55 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#iterator()
+	 * Returns an iterator that can be used to iterate over the values of
+	 * this queue.
+	 *
+	 * @return an iterator to iterate over this queue
+	 * @see #toArray
 	 */
 	public function iterator(Void):Iterator {
 		return (new ArrayIterator(data.concat()));
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#isEmpty()
+	 * Returns whether this queue contains any values.
+	 *
+	 * @return true if this queue contains no values else false
 	 */
 	public function isEmpty(Void):Boolean {
 		return (data.length < 1);
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#size()
+	 * Returns the number of enqueued elements.
+	 *
+	 * @return the number of enqueued elements
+	 * @see #enqueue
 	 */
 	public function size(Void):Number {
 		return data.length;
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Queue#toArray()
+	 * Returns an array representation of this queue.
+	 *
+	 * <p>The elements are copied onto the array in a first-in, first-out
+	 * order, similar to the order of the elements returned by a succession 
+	 * of calls to the {@link #dequeue} method.
+	 *
+	 * @return the array representation of this queue
 	 */
 	public function toArray(Void):Array {
 		return data.concat();
 	}
 	
 	/**
-	 * @see org.as2lib.core.BasicInterface#toString()
+	 * Returns the string representation of this queue.
+	 *
+	 * <p>The string representation is obtained via the stringifier returned
+	 * by the static {@link #getStringifier} method.
+	 *
+	 * @return the string representation of this queue
 	 */
 	public function toString(Void):String {
 		return getStringifier().execute(this);

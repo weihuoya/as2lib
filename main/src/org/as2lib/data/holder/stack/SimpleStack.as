@@ -124,7 +124,7 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	 * </code>
 	 * The output is made in the following order: 3, 2, 1
 	 *
-	 * @param source (optional) an array that contains values to populate the new stack with
+	 * @param source (optional) an array that contains values to populate this new stack with
 	 */
 	public function SimpleStack(source:Array) {
 		if (source) {
