@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_util_Stringifier.html">Stringifier</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_util_Stringifier.html">Stringifier</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,13 +31,12 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.log.LogMessageStringifier</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Wednesday, 16 February 2005, 08:12:45</span>
+              <li><span class="title">File last modified: </span><span class="value">Monday, 04 April 2005, 20:25:58</span>
               </li>
             </ul>
           </div>
         </div>
         <div class="classDescription"><div class="descriptionSummary">LogMessageStringifier is the default stringifier to stringify LogMessage
-
  instances. </div></div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
@@ -39,19 +45,6 @@
               <ul>
                 <li>
                   <a href="#LogMessageStringifier">LogMessageStringifier</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#showLevel">showLevel</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#showLoggerName">showLoggerName</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#showTime">showTime</a>
                 </li>
               </ul>
             </div>
@@ -76,111 +69,81 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="LogMessageStringifier" id="LogMessageStringifier"></a>
           <div class="method hasBottomDivider">
-            <h3>LogMessageStringifier</h3>
+            <h3 id="LogMessageStringifier">LogMessageStringifier</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>LogMessageStringifier</b> (
+                <div class="floatbox code">function <b>LogMessageStringifier</b> (
 
 
 </div>
-                <div class="code">showLevel:Boolean,
+                <div><span class="code">showLevel:Boolean,
 showLoggerName:Boolean,
-showTime:Boolean)</div>
-              </div>
-            </div>
-            <div class="description">Constructs a new LogMessageStringifier instance.<p>Level and logger name are shown by default.<p>The time is not shown by default.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">showLevel    <span class="separator">:</span></div>
-                    <div>determines whether to show levels in the string representation</div>
-                  </div>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">shoLoggerName<span class="separator">:</span></div>
-                    <div>determines whether to show the logger name in the string representation</div>
-                  </div>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">showTime     <span class="separator">:</span></div>
-                    <div>determines whether to show the time in the string representation</div>
-                  </div>
+timeFormat:String)</span>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="showLevel" id="showLevel"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>showLevel</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>showLevel</b>:Boolean
-</div>
-                <div class="code"></div>
+            <div class="description">Constructs a new LogMessageStringifier instance.<p>Level and logger name are shown by default.<p>If <code>timeFormat</code> is nor passed-in or is <code>null</code> or
+ <code>undefined</code> the date-time is not shown in the log message.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">showLevel    <span class="separator">:</span></div>
+                    <div>determines whether to show levels in the string
+ representation</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">shoLoggerName<span class="separator">:</span></div>
+                    <div>determines whether to show the logger name in
+ the string representation</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">timeFormat   <span class="separator">:</span></div>
+                    <div>(optional) the time format pattern used to format the
+ time stamp</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_util_DateFormatter.html">org.as2lib.util.DateFormatter</a></div>
+                </div>
               </div>
             </div>
-            <div class="description">Flag that determines whether to show the level in the string representation.</div>
-          </div>
-          <a name="showLoggerName" id="showLoggerName"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>showLoggerName</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>showLoggerName</b>:Boolean
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Flag that determines whether to show the name of the logger in the string representation.</div>
-          </div>
-          <a name="showTime" id="showTime"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>showTime</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>showTime</b>:Boolean
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Flag that determines whether to show the time in the string representation.</div>
           </div>
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="execute" id="execute"></a>
           <div class="method hasBottomDivider">
-            <h3>execute</h3>
+            <h3 id="execute">execute</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>execute</b> (
+                <div class="floatbox code">function <b>execute</b> (
 </div>
-                <div class="code">target) : String</div>
+                <div><span class="code">target) : String</span>
+                </div>
               </div>
             </div>
-            <div class="description">Returns the string representation of the passed-in LogMessage instance.<p>The returned string gets composed as follows:
-
- [hours]:[minutes]:[seconds].[milliseconds]  [theLogLevel]  [theLoggerName] - [theMessage]<p>Depending on your custom settings, which information to show and
-
- which not, a few parts may be left out.<p>The hours, minutes and seconds represent the time<p>The elapsedMilliseconds are the milliseconds the elapsed since 
-
- system start up on creation of the log message.</div>
+            <div class="description">Returns the string representation of the passed-in LogMessage instance.<p>The returned string is composed as follows:<pre>[theTime]  [theLogLevel]  [theLoggerName] - [theMessage]</pre><p>Depending on your custom settings, which information to show and
+ which not, a few parts may be left out.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the string representation of the log message</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_util_Stringifier.html#execute">org.as2lib.util.Stringifier.execute</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:03:19
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:44
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

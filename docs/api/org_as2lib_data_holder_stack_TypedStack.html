@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_data_holder_Stack.html">Stack</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_data_holder_Stack.html">Stack</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,14 +31,17 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.data.holder.stack.TypedStack</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Thursday, 03 February 2005, 06:13:41</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 05 March 2005, 05:41:32</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">TypedStack is used as a wrapper for Stacks.  </div>It ensures that only values of a
-
- specific type are added to the Stack.</div>
+        <div class="classDescription"><div class="descriptionSummary">TypedStack is used as a wrapper for <a href="org_as2lib_data_holder_Stack.html">org.as2lib.data.holder.Stack</a> instances that ensures
+ that only values of a specific type can be added to the wrapped stack. </div><p>This class simply delegates all method invocations to the wrapped
+ stack. If the specific method is responsible for adding values it first
+ checks if the values to add are of the expected type. If they are the
+ method invocation gets forwarded, otherwise an <a href="org_as2lib_env_except_IllegalArgumentException.html">org.as2lib.env.except.IllegalArgumentException</a>
+ gets thrown.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
@@ -39,16 +49,6 @@
               <ul>
                 <li>
                   <a href="#TypedStack">TypedStack</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#stack">stack</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#type">type</a>
                 </li>
               </ul>
             </div>
@@ -81,9 +81,6 @@
                 <li>
                   <a href="#toString">toString</a>
                 </li>
-                <li class="private" style="display:none;">
-                  <a href="#validate">validate</a>
-                </li>
               </ul>
               <div class="boxWithBorder">
                 <div class="boxedElem">
@@ -100,263 +97,293 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="TypedStack" id="TypedStack"></a>
           <div class="method hasBottomDivider">
-            <h3>TypedStack</h3>
+            <h3 id="TypedStack">TypedStack</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>TypedStack</b> (
+                <div class="floatbox code">function <b>TypedStack</b> (
 
 </div>
-                <div class="code">type:Function,
-stack:Stack)</div>
-              </div>
-            </div>
-            <div class="description">Constructs a new TypedStack.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">type <span class="separator">:</span></div>
-                    <div>the type of values the Stack can have</div>
-                  </div>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">stack<span class="separator">:</span></div>
-                    <div>the Stack that shall be typed checked</div>
-                  </div>
+                <div><span class="code">type:Function,
+stack:<a href="org_as2lib_data_holder_Stack.html">Stack</a>)</span>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="stack" id="stack"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>stack</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>stack</b>:Stack
-</div>
-                <div class="code"></div>
+            <div class="description">Constructs a new TypedStack instance.<p>If the passed-in stack does already contain values, these values
+ do not get type-checked.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">type <span class="separator">:</span></div>
+                    <div>the type of values the stack can have</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">stack<span class="separator">:</span></div>
+                    <div>the stack that shall be typed checked</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in type is null or undefined</div>
+                </div>
               </div>
             </div>
-            <div class="description">The wrapped Stack.</div>
-          </div>
-          <a name="type" id="type"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>type</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>type</b>:Function
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The type of values that are contained in the Stack.</div>
           </div>
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="getType" id="getType"></a>
           <div class="method hasBottomDivider">
-            <h3>getType</h3>
+            <h3 id="getType">getType</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getType</b> (
+                <div class="floatbox code">function <b>getType</b> (
 </div>
-                <div class="code">Void) : Function</div>
+                <div><span class="code">Void) : Function</span>
+                </div>
               </div>
             </div>
-            <div class="description">Returns the type of the stack all contained elements have.<p>This is the type passed-in on construction.</div>
+            <div class="description">Returns the type that all values in the wrapped stack have.<p>This is the type passed-in on construction.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the type of the stack's elements</div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the type that all values of the wrapped stack have</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="isEmpty" id="isEmpty"></a>
           <div class="method hasBottomDivider">
-            <h3>isEmpty</h3>
+            <h3 id="isEmpty">isEmpty</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>isEmpty</b> (
+                <div class="floatbox code">function <b>isEmpty</b> (
 </div>
-                <div class="code">Void) : Boolean</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
               </div>
             </div>
+            <div class="description">Returns whether this stack is empty.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#isEmpty">org.as2lib.data.holder.Stack.isEmpty()</a></div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">true if this stack is empty else false</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#isEmpty">org.as2lib.data.holder.Stack.isEmpty</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="iterator" id="iterator"></a>
           <div class="method hasBottomDivider">
-            <h3>iterator</h3>
+            <h3 id="iterator">iterator</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>iterator</b> (
+                <div class="floatbox code">function <b>iterator</b> (
 </div>
-                <div class="code">Void) : Iterator</div>
+                <div><span class="code">Void) : <a href="org_as2lib_data_holder_Iterator.html">Iterator</a></span>
+                </div>
               </div>
             </div>
+            <div class="description">Returns an iterator to iterate over the values of this stack.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#iterator">org.as2lib.data.holder.Stack.iterator()</a></div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">an iterator to iterate over this stack</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_stack_TypedStack.html#toArray">toArray</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#iterator">org.as2lib.data.holder.Stack.iterator</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="peek" id="peek"></a>
           <div class="method hasBottomDivider">
-            <h3>peek</h3>
+            <h3 id="peek">peek</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>peek</b> (
+                <div class="floatbox code">function <b>peek</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
+            <div class="description">Returns the lastly pushed value without removing it.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#peek">org.as2lib.data.holder.Stack.peek()</a></div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the lastly pushed value</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if this stack is empty</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#peek">org.as2lib.data.holder.Stack.peek</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="pop" id="pop"></a>
           <div class="method hasBottomDivider">
-            <h3>pop</h3>
+            <h3 id="pop">pop</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>pop</b> (
+                <div class="floatbox code">function <b>pop</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
+            <div class="description">Removes and returns the lastly pushed value.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#pop">org.as2lib.data.holder.Stack.pop()</a></div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the lastly pushed value</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if this stack is empty</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#pop">org.as2lib.data.holder.Stack.pop</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="push" id="push"></a>
           <div class="method hasBottomDivider">
-            <h3>push</h3>
+            <h3 id="push">push</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>push</b> (
+                <div class="floatbox code">function <b>push</b> (
 </div>
-                <div class="code">value) : Void</div>
-              </div>
-            </div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#push">org.as2lib.data.holder.Stack.push()</a></div>
-                </div>
-              </div>
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
-                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the type of the value is not valid</div>
+                <div><span class="code">value) : Void</span>
                 </div>
               </div>
             </div>
-          </div>
-          <a name="size" id="size"></a>
-          <div class="method hasBottomDivider">
-            <h3>size</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>size</b> (
-</div>
-                <div class="code">Void) : Number</div>
-              </div>
-            </div>
+            <div class="description">Pushes the passed-in value to this stack.<p>The value gets only pushed if it is of the expected type.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#size">org.as2lib.data.holder.Stack.size()</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="toArray" id="toArray"></a>
-          <div class="method hasBottomDivider">
-            <h3>toArray</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>toArray</b> (
-</div>
-                <div class="code">Void) : Array</div>
-              </div>
-            </div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#toArray">org.as2lib.data.holder.Stack.toArray()</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="toString" id="toString"></a>
-          <div class="method hasBottomDivider">
-            <h3>toString</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>toString</b> (
-</div>
-                <div class="code">Void) : String</div>
-              </div>
-            </div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString()</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="validate" id="validate"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>validate</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>validate</b> (
-</div>
-                <div class="code">object) : Void</div>
-              </div>
-            </div>
-            <div class="description">Validates the passed object based on its type.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
-                    <div class="floatbox code colorizedCode">object<span class="separator">:</span></div>
-                    <div>the object which type shall be validated</div>
+                    <div class="floatbox code colorizedCode">value<span class="separator">:</span></div>
+                    <div>the value to push to this stack</div>
                   </div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
-                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the type of the object is not valid</div>
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the type of the passed-in value is not valid</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#push">org.as2lib.data.holder.Stack.push</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="size">size</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>size</b> (
+</div>
+                <div><span class="code">Void) : Number</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the number of pushed values.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the number of pushed values</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_stack_TypedStack.html#push">push</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#size">org.as2lib.data.holder.Stack.size</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="toArray">toArray</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>toArray</b> (
+</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns an array representation of this stack.<p>The elements are copied onto the array in a last-in, first-out
+ order, similar to the order of the elements returned by a succession 
+ of calls to the <a href="org_as2lib_data_holder_stack_TypedStack.html#pop">pop</a> method.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the array representation of this stack</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#toArray">org.as2lib.data.holder.Stack.toArray</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="toString">toString</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>toString</b> (
+</div>
+                <div><span class="code">Void) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the string representation of the wrapped stack.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the string representation of the wrapped stack</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:45:04
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:08:38
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

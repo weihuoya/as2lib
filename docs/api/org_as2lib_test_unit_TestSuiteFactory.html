@@ -22,15 +22,13 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.unit.TestSuiteFactory</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Sunday, 20 February 2005, 08:42:25</span>
+              <li><span class="title">File last modified: </span><span class="value">Sunday, 20 February 2005, 17:49:32</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">Factory to create TestSuites.
- </div>
+        <div class="classDescription"><div class="descriptionSummary">Factory to create TestSuites. </div>
  This factory can be used to create TestSuites that contain all
-
  TestCases that are available.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
@@ -50,9 +48,6 @@
                 <li>
                   <a href="#collectTestCases">collectTestCases</a>
                 </li>
-                <li class="private" style="display:none;">
-                  <a href="#collectAgent">collectAgent</a>
-                </li>
               </ul>
               <div class="boxWithBorder">
                 <div class="boxedElem">
@@ -69,14 +64,14 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="TestSuiteFactory" id="TestSuiteFactory"></a>
           <div class="method hasBottomDivider">
-            <h3>TestSuiteFactory</h3>
+            <h3 id="TestSuiteFactory">TestSuiteFactory</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>TestSuiteFactory</b> (
+                <div class="floatbox code">function <b>TestSuiteFactory</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
             <div class="description">Constructs a new Factory.</div>
@@ -84,97 +79,41 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="collectAgent" id="collectAgent"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>collectAgent</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>collectAgent</b> (
-
-
-</div>
-                <div class="code">package,
-suite:TestSuite,
-recursive:Boolean) : Void</div>
-              </div>
-            </div>
-            <div class="description">Agent to collect TestCases within a package.
-
- 
-
- Note: If you want that a class gets blocked from collection simple add
-
- a static method "blockCollecting" that returns true.
-
- 
-
- Example:<pre><span class="codeKeyword">import</span> org.as2lib.test.unit.TestCase;
-
-
-
-<span class="codeKeyword">class</span> MyTest <span class="codeKeyword">extends</span> TestCase {
-
-  <span class="codeKeyword">public</span> <span class="codeKeyword">static</span> <span class="codeKeyword">function</span> blockCollecting(<span class="codeIdentifier">Void</span>):<span class="codeIdentifier">Boolean</span> {
-
-      <span class="codeKeyword">return</span> <span class="codeIdentifier">true</span>;
-
-  }
-
-}</pre></div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">package  <span class="separator">:</span></div>
-                    <div>Package to search in.</div>
-                  </div>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">suite    <span class="separator">:</span></div>
-                    <div>TestSuite to add the found TestCase.</div>
-                  </div>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">recursive<span class="separator">:</span></div>
-                    <div>Recursive Flag.</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="collectAllTestCases" id="collectAllTestCases"></a>
           <div class="method hasBottomDivider">
-            <h3>collectAllTestCases</h3>
+            <h3 id="collectAllTestCases">collectAllTestCases</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>collectAllTestCases</b> (
+                <div class="floatbox code">function <b>collectAllTestCases</b> (
 </div>
-                <div class="code">Void) : TestSuite</div>
+                <div><span class="code">Void) : <a href="org_as2lib_test_unit_TestSuite.html">TestSuite</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Collects all TestCases that are available.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">TestSuite that contains all available TestCases.</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="collectTestCases" id="collectTestCases"></a>
           <div class="method hasBottomDivider">
-            <h3>collectTestCases</h3>
+            <h3 id="collectTestCases">collectTestCases</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>collectTestCases</b> (
+                <div class="floatbox code">function <b>collectTestCases</b> (
 
 </div>
-                <div class="code">package,
-recursive:Boolean) : TestSuite</div>
+                <div><span class="code">package,
+recursive:Boolean) : <a href="org_as2lib_test_unit_TestSuite.html">TestSuite</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Collects all TestCases by a given package.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">package  <span class="separator">:</span></div>
                     <div>Package to start with.</div>
@@ -186,16 +125,16 @@ recursive:Boolean) : TestSuite</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">TestSuite that contains all available TestCases.</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:35:27
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:11:12
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

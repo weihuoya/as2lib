@@ -9,6 +9,7 @@
 	<string>org.as2lib.aop.advice.AbstractAfterThrowingAdvice</string>
 	<string>org.as2lib.aop.advice.AbstractAroundAdvice</string>
 	<string>org.as2lib.aop.advice.AbstractBeforeAdvice</string>
+	<string>org.as2lib.aop.advice.AdviceConfig</string>
 	<string>org.as2lib.aop.advice.AdviceFactory</string>
 	<string>org.as2lib.aop.advice.AfterAdvice</string>
 	<string>org.as2lib.aop.advice.AfterReturningAdvice</string>
@@ -35,6 +36,7 @@
 	<string>org.as2lib.aop.joinpoint.SetPropertyJoinPoint</string>
 	<string>org.as2lib.aop.Matcher</string>
 	<string>org.as2lib.aop.matcher.DefaultMatcher</string>
+	<string>org.as2lib.aop.matcher.Matcher</string>
 	<string>org.as2lib.aop.Pointcut</string>
 	<string>org.as2lib.aop.pointcut.AbstractCompositePointcut</string>
 	<string>org.as2lib.aop.pointcut.AbstractPointcut</string>
@@ -43,10 +45,19 @@
 	<string>org.as2lib.aop.pointcut.DynamicPointcutFactory</string>
 	<string>org.as2lib.aop.pointcut.KindedPointcut</string>
 	<string>org.as2lib.aop.pointcut.OrCompositePointcut</string>
+	<string>org.as2lib.aop.pointcut.PointcutConfig</string>
 	<string>org.as2lib.aop.pointcut.PointcutFactory</string>
 	<string>org.as2lib.aop.pointcut.PointcutRule</string>
 	<string>org.as2lib.aop.Weaver</string>
 	<string>org.as2lib.aop.weaver.SimpleWeaver</string>
+	<string>org.as2lib.app.exec.Batch</string>
+	<string>org.as2lib.app.exec.BatchInfo</string>
+	<string>org.as2lib.app.exec.BatchListener</string>
+	<string>org.as2lib.app.exec.BatchProcess</string>
+	<string>org.as2lib.app.exec.ExecutableProcess</string>
+	<string>org.as2lib.app.exec.Process</string>
+	<string>org.as2lib.app.exec.ProcessInfo</string>
+	<string>org.as2lib.app.exec.ProcessListener</string>
 	<string>org.as2lib.Config</string>
 	<string>org.as2lib.core.BasicClass</string>
 	<string>org.as2lib.core.BasicInterface</string>
@@ -66,6 +77,7 @@
 	<string>org.as2lib.data.holder.map.AbstractMap</string>
 	<string>org.as2lib.data.holder.map.HashMap</string>
 	<string>org.as2lib.data.holder.map.KeyMapIterator</string>
+	<string>org.as2lib.data.holder.map.MapIterator</string>
 	<string>org.as2lib.data.holder.map.MapStringifier</string>
 	<string>org.as2lib.data.holder.map.PrimitiveTypeMap</string>
 	<string>org.as2lib.data.holder.map.PriorityMap</string>
@@ -81,6 +93,28 @@
 	<string>org.as2lib.data.holder.stack.SimpleStack</string>
 	<string>org.as2lib.data.holder.stack.StackStringifier</string>
 	<string>org.as2lib.data.holder.stack.TypedStack</string>
+	<string>org.as2lib.data.io.conn.Connection</string>
+	<string>org.as2lib.data.io.conn.ConnectionFactory</string>
+	<string>org.as2lib.data.io.conn.local.ExtendedLocalConnection</string>
+	<string>org.as2lib.data.io.conn.local.InvalidMethodCallException</string>
+	<string>org.as2lib.data.io.conn.local.LocalClientServiceProxy</string>
+	<string>org.as2lib.data.io.conn.local.LocalConfig</string>
+	<string>org.as2lib.data.io.conn.local.LocalConn</string>
+	<string>org.as2lib.data.io.conn.local.LocalConnFactory</string>
+	<string>org.as2lib.data.io.conn.local.LocalServer</string>
+	<string>org.as2lib.data.io.conn.local.LocalServerFactory</string>
+	<string>org.as2lib.data.io.conn.local.LocalServerRegistry</string>
+	<string>org.as2lib.data.io.conn.local.LocalServerServiceProxy</string>
+	<string>org.as2lib.data.io.conn.local.LocalUtil</string>
+	<string>org.as2lib.data.io.conn.local.ReservedConnectionException</string>
+	<string>org.as2lib.data.io.conn.local.ReservedHostException</string>
+	<string>org.as2lib.data.io.conn.local.ServerFactory</string>
+	<string>org.as2lib.data.io.conn.local.ServerRegistry</string>
+	<string>org.as2lib.data.io.conn.local.SimpleLocalServer</string>
+	<string>org.as2lib.data.io.conn.local.UnknownConnectionException</string>
+	<string>org.as2lib.data.io.conn.local.UnknownHostException</string>
+	<string>org.as2lib.data.io.conn.local.UnknownServiceException</string>
+	<string>org.as2lib.data.io.conn.ServiceProxy</string>
 	<string>org.as2lib.data.math.Vector</string>
 	<string>org.as2lib.data.math.vector.AbstractVector</string>
 	<string>org.as2lib.data.math.vector.LimitedVector</string>
@@ -123,11 +157,8 @@
 	<string>org.as2lib.env.bean.factory.ListableBeanFactory</string>
 	<string>org.as2lib.env.bean.factory.NoSuchBeanDefinitionException</string>
 	<string>org.as2lib.env.bean.factory.support.AbstractBeanFactory</string>
-	<string>org.as2lib.env.bean.factory.support.BeanDefinitionRegistry</string>
 	<string>org.as2lib.env.bean.factory.support.DefaultBeanFactory</string>
 	<string>org.as2lib.env.bean.factory.support.RootBeanDefinition</string>
-	<string>org.as2lib.env.bean.factory.xml.DefaultXmlBeanDefinitionParser</string>
-	<string>org.as2lib.env.bean.factory.xml.XmlBeanDefinitionParser</string>
 	<string>org.as2lib.env.bean.FatalBeanException</string>
 	<string>org.as2lib.env.bean.MutablePropertyValueSet</string>
 	<string>org.as2lib.env.bean.PropertyAccessor</string>
@@ -136,8 +167,10 @@
 	<string>org.as2lib.env.bean.PropertyValueConverterHolder</string>
 	<string>org.as2lib.env.bean.PropertyValueSet</string>
 	<string>org.as2lib.env.bean.SimpleBeanWrapper</string>
-	<string>org.as2lib.env.event.Consumable</string>
+	<string>org.as2lib.env.event.ConsumableEventBroadcaster</string>
+	<string>org.as2lib.env.event.ConsumableEventDispatcher</string>
 	<string>org.as2lib.env.event.ConsumableEventInfo</string>
+	<string>org.as2lib.env.event.DelegatingConsumableEventBroadcaster</string>
 	<string>org.as2lib.env.event.DelegatingEventBroadcaster</string>
 	<string>org.as2lib.env.event.dispatcher.LogEventDispatcher</string>
 	<string>org.as2lib.env.event.dispatcher.NormalEventDispatcher</string>
@@ -145,9 +178,12 @@
 	<string>org.as2lib.env.event.EventBroadcaster</string>
 	<string>org.as2lib.env.event.EventBroadcasterFactory</string>
 	<string>org.as2lib.env.event.EventDispatcher</string>
+	<string>org.as2lib.env.event.EventExecutionException</string>
 	<string>org.as2lib.env.event.EventInfo</string>
 	<string>org.as2lib.env.event.EventListener</string>
-	<string>org.as2lib.env.event.SimpleEventBroadcaster</string>
+	<string>org.as2lib.env.event.SimpleConsumableEventBroadcaster</string>
+	<string>org.as2lib.env.event.SimpleDelegatingConsumableEventBroadcaster</string>
+	<string>org.as2lib.env.event.SimpleDelegatingEventBroadcaster</string>
 	<string>org.as2lib.env.event.SimpleEventBroadcasterFactory</string>
 	<string>org.as2lib.env.event.SimpleEventInfo</string>
 	<string>org.as2lib.env.event.SpeedEventBroadcaster</string>
@@ -164,6 +200,11 @@
 	<string>org.as2lib.env.except.UnsupportedOperationException</string>
 	<string>org.as2lib.env.log.ConfigurableHierarchicalLogger</string>
 	<string>org.as2lib.env.log.ConfigurableLogger</string>
+	<string>org.as2lib.env.log.handler.AlconHandler</string>
+	<string>org.as2lib.env.log.handler.AscbHandler</string>
+	<string>org.as2lib.env.log.handler.Bit101Handler</string>
+	<string>org.as2lib.env.log.handler.FlashoutHandler</string>
+	<string>org.as2lib.env.log.handler.LuminicBoxHandler</string>
 	<string>org.as2lib.env.log.handler.TraceHandler</string>
 	<string>org.as2lib.env.log.handler.XmlSocketHandler</string>
 	<string>org.as2lib.env.log.HierarchicalLogger</string>
@@ -171,6 +212,11 @@
 	<string>org.as2lib.env.log.level.DynamicLogLevel</string>
 	<string>org.as2lib.env.log.Logger</string>
 	<string>org.as2lib.env.log.logger.AbstractLogger</string>
+	<string>org.as2lib.env.log.logger.AlconLogger</string>
+	<string>org.as2lib.env.log.logger.AscbLogger</string>
+	<string>org.as2lib.env.log.logger.Bit101Logger</string>
+	<string>org.as2lib.env.log.logger.FlashoutLogger</string>
+	<string>org.as2lib.env.log.logger.LuminicBoxLogger</string>
 	<string>org.as2lib.env.log.logger.RootLogger</string>
 	<string>org.as2lib.env.log.logger.SimpleHierarchicalLogger</string>
 	<string>org.as2lib.env.log.logger.SimpleLogger</string>
@@ -181,6 +227,7 @@
 	<string>org.as2lib.env.log.LogManager</string>
 	<string>org.as2lib.env.log.LogMessage</string>
 	<string>org.as2lib.env.log.LogMessageStringifier</string>
+	<string>org.as2lib.env.log.repository.AscbLoggerRepository</string>
 	<string>org.as2lib.env.log.repository.ConfigurableHierarchicalLoggerFactory</string>
 	<string>org.as2lib.env.log.repository.DynamicLoggerRepository</string>
 	<string>org.as2lib.env.log.repository.LoggerFactory</string>
@@ -198,17 +245,22 @@
 	<string>org.as2lib.env.reflect.algorithm.PropertyAlgorithm</string>
 	<string>org.as2lib.env.reflect.Cache</string>
 	<string>org.as2lib.env.reflect.ClassInfo</string>
+	<string>org.as2lib.env.reflect.ClassNotFoundException</string>
 	<string>org.as2lib.env.reflect.ConstructorInfo</string>
 	<string>org.as2lib.env.reflect.InterfaceProxyFactory</string>
 	<string>org.as2lib.env.reflect.InvocationHandler</string>
 	<string>org.as2lib.env.reflect.MemberInfo</string>
 	<string>org.as2lib.env.reflect.MethodInfo</string>
+	<string>org.as2lib.env.reflect.NoSuchMethodException</string>
+	<string>org.as2lib.env.reflect.NoSuchPropertyException</string>
 	<string>org.as2lib.env.reflect.PackageInfo</string>
 	<string>org.as2lib.env.reflect.PackageMemberFilter</string>
 	<string>org.as2lib.env.reflect.PackageMemberInfo</string>
+	<string>org.as2lib.env.reflect.PackageNotFoundException</string>
 	<string>org.as2lib.env.reflect.PropertyInfo</string>
 	<string>org.as2lib.env.reflect.ProxyFactory</string>
 	<string>org.as2lib.env.reflect.ReflectConfig</string>
+	<string>org.as2lib.env.reflect.ReflectionException</string>
 	<string>org.as2lib.env.reflect.ReflectUtil</string>
 	<string>org.as2lib.env.reflect.SimpleCache</string>
 	<string>org.as2lib.env.reflect.string.MethodInfoStringifier</string>
@@ -308,6 +360,7 @@
 	<string>org.as2lib.test.unit.StartInfo</string>
 	<string>org.as2lib.test.unit.Test</string>
 	<string>org.as2lib.test.unit.TestCase</string>
+	<string>org.as2lib.test.unit.TestCaseHelper</string>
 	<string>org.as2lib.test.unit.TestCaseMethodInfo</string>
 	<string>org.as2lib.test.unit.TestCaseResult</string>
 	<string>org.as2lib.test.unit.TestListener</string>
@@ -322,6 +375,8 @@
 	<string>org.as2lib.util.Call</string>
 	<string>org.as2lib.util.ClassUtil</string>
 	<string>org.as2lib.util.ConstructorCall</string>
+	<string>org.as2lib.util.DateFormatter</string>
+	<string>org.as2lib.util.Executable</string>
 	<string>org.as2lib.util.MathUtil</string>
 	<string>org.as2lib.util.ObjectUtil</string>
 	<string>org.as2lib.util.StopWatch</string>

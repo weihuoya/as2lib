@@ -26,7 +26,7 @@ Interface
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.mock.MethodBehavior</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Saturday, 01 January 2005, 11:50:38</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 01 January 2005, 20:28:42</span>
               </li>
             </ul>
           </div>
@@ -74,20 +74,20 @@ Interface
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="addActualMethodCall" id="addActualMethodCall"></a>
           <div class="method hasBottomDivider">
-            <h3>addActualMethodCall</h3>
+            <h3 id="addActualMethodCall">addActualMethodCall</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>addActualMethodCall</b> (
+                <div class="floatbox code">function <b>addActualMethodCall</b> (
 </div>
-                <div class="code">actualMethodCall:MethodCall) : Void</div>
+                <div><span class="code">actualMethodCall:<a href="org_as2lib_test_mock_MethodCall.html">MethodCall</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Adds a new actual method call.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">actualMethodCall<span class="separator">:</span></div>
                     <div>the new actual method call</div>
@@ -95,32 +95,30 @@ Interface
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item">AssertionFailedException if the maximum number of actual method calls has been passed</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="addMethodResponse" id="addMethodResponse"></a>
           <div class="method hasBottomDivider">
-            <h3>addMethodResponse</h3>
+            <h3 id="addMethodResponse">addMethodResponse</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>addMethodResponse</b> (
+                <div class="floatbox code">function <b>addMethodResponse</b> (
 
 </div>
-                <div class="code">methodResponse:MethodResponse,
-methodCallRange:MethodCallRange) : Void</div>
+                <div><span class="code">methodResponse:<a href="org_as2lib_test_mock_MethodResponse.html">MethodResponse</a>,
+methodCallRange:<a href="org_as2lib_test_mock_MethodCallRange.html">MethodCallRange</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Adds a new method response together with the range that indicates
-
  when the response shall take place.<p>If you set no response gets set the behavior expects exactly
-
  one method call.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">methodResponse <span class="separator">:</span></div>
                     <div>the response to do a given number of times</div>
@@ -133,78 +131,77 @@ methodCallRange:MethodCallRange) : Void</div>
               </div>
             </div>
           </div>
-          <a name="expectsAnotherMethodCall" id="expectsAnotherMethodCall"></a>
           <div class="method hasBottomDivider">
-            <h3>expectsAnotherMethodCall</h3>
+            <h3 id="expectsAnotherMethodCall">expectsAnotherMethodCall</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>expectsAnotherMethodCall</b> (
+                <div class="floatbox code">function <b>expectsAnotherMethodCall</b> (
 </div>
-                <div class="code">Void) : Boolean</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Checks whether this behavior expects another method call.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if a further method call is expected else false</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getExpectedMethodCall" id="getExpectedMethodCall"></a>
           <div class="method hasBottomDivider">
-            <h3>getExpectedMethodCall</h3>
+            <h3 id="getExpectedMethodCall">getExpectedMethodCall</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getExpectedMethodCall</b> (
+                <div class="floatbox code">function <b>getExpectedMethodCall</b> (
 </div>
-                <div class="code">Void) : MethodCall</div>
+                <div><span class="code">Void) : <a href="org_as2lib_test_mock_MethodCall.html">MethodCall</a></span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the expected method call</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="response" id="response"></a>
           <div class="method hasBottomDivider">
-            <h3>response</h3>
+            <h3 id="response">response</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>response</b> (
+                <div class="floatbox code">function <b>response</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
             <div class="description">Responses depending on the current number of actual method calls.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the response's return value
-
  @throw the response's throwable</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setArgumentsMatcher" id="setArgumentsMatcher"></a>
           <div class="method hasBottomDivider">
-            <h3>setArgumentsMatcher</h3>
+            <h3 id="setArgumentsMatcher">setArgumentsMatcher</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setArgumentsMatcher</b> (
+                <div class="floatbox code">function <b>setArgumentsMatcher</b> (
 </div>
-                <div class="code">argumentsMatcher:ArgumentsMatcher) : Void</div>
+                <div><span class="code">argumentsMatcher:<a href="org_as2lib_test_mock_ArgumentsMatcher.html">ArgumentsMatcher</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets the arguments matcher for the expected method call.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">argumentsMatcher<span class="separator">:</span></div>
                     <div>the arguments matcher for the expected method call</div>
@@ -213,29 +210,29 @@ methodCallRange:MethodCallRange) : Void</div>
               </div>
             </div>
           </div>
-          <a name="verify" id="verify"></a>
           <div class="method hasBottomDivider">
-            <h3>verify</h3>
+            <h3 id="verify">verify</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>verify</b> (
+                <div class="floatbox code">function <b>verify</b> (
 </div>
-                <div class="code">Void) : Void</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Verifies that the expactations have been met.<p>That is that there haven't been to many or to little method calls.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item">AssertionFailedException if the verification fails</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:20:26
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:10:36
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

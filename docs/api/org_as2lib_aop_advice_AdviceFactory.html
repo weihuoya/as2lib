@@ -26,7 +26,7 @@ Interface
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.aop.advice.AdviceFactory</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Thursday, 16 September 2004, 10:51:11</span>
+              <li><span class="title">File last modified: </span><span class="value">Friday, 24 September 2004, 12:27:16</span>
               </li>
             </ul>
           </div>
@@ -62,42 +62,41 @@ Interface
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="getAdvice" id="getAdvice"></a>
           <div class="method hasBottomDivider">
-            <h3>getAdvice</h3>
+            <h3 id="getAdvice">getAdvice</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getAdvice</b> (
+                <div class="floatbox code">function <b>getAdvice</b> (
 </div>
-                <div class="code">) : Advice</div>
+                <div><span class="code">) : <a href="org_as2lib_aop_Advice.html">Advice</a></span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Overloading</span>
-                  <div class="item"><a href="org_as2lib_aop_advice_AdviceFactory.html#getAdviceByStringAndCall">getAdviceByStringAndCall()</a> (pointcut:String, callback:Call) : Advice<br /><a href="org_as2lib_aop_advice_AdviceFactory.html#getAdviceByPointcutAndCall">getAdviceByPointcutAndCall()</a> (pointcut:Pointcut, callback:Call) : Advice</div>
+                <div class="contentHolder"><span class="title">Overloading:</span>
+                  <div class="item"><a href="org_as2lib_aop_advice_AdviceFactory.html#getAdviceByStringAndCall">getAdviceByStringAndCall()</a> <code>(pointcut:String, callback:{VISDOC_LINK_0}) : {VISDOC_LINK_1}</code><br /><a href="org_as2lib_aop_advice_AdviceFactory.html#getAdviceByPointcutAndCall">getAdviceByPointcutAndCall()</a> <code>(pointcut:{VISDOC_LINK_0}, callback:{VISDOC_LINK_1}) : {VISDOC_LINK_2}</code></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getAdviceByPointcutAndCall" id="getAdviceByPointcutAndCall"></a>
           <div class="method hasBottomDivider">
-            <h3>getAdviceByPointcutAndCall</h3>
+            <h3 id="getAdviceByPointcutAndCall">getAdviceByPointcutAndCall</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getAdviceByPointcutAndCall</b> (
+                <div class="floatbox code">function <b>getAdviceByPointcutAndCall</b> (
 
 </div>
-                <div class="code">pointcut:Pointcut,
-callback:Call) : Advice</div>
+                <div><span class="code">pointcut:<a href="org_as2lib_aop_Pointcut.html">Pointcut</a>,
+callback:<a href="org_as2lib_util_Call.html">Call</a>) : <a href="org_as2lib_aop_Advice.html">Advice</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the appropriate advice corresponding to the passed pointcut
-
  and callback instance.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">pointcut<span class="separator">:</span></div>
                     <div>the pointcut used by the returned advice</div>
@@ -109,30 +108,29 @@ callback:Call) : Advice</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">an advice that uses the passed pointcut and call</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getAdviceByStringAndCall" id="getAdviceByStringAndCall"></a>
           <div class="method hasBottomDivider">
-            <h3>getAdviceByStringAndCall</h3>
+            <h3 id="getAdviceByStringAndCall">getAdviceByStringAndCall</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getAdviceByStringAndCall</b> (
+                <div class="floatbox code">function <b>getAdviceByStringAndCall</b> (
 
 </div>
-                <div class="code">pointcut:String,
-callback:Call) : Advice</div>
+                <div><span class="code">pointcut:String,
+callback:<a href="org_as2lib_util_Call.html">Call</a>) : <a href="org_as2lib_aop_Advice.html">Advice</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the appropriate advice corresponding to the passed pointcut
-
  string and callback instance.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">pointcut<span class="separator">:</span></div>
                     <div>a string representation of a pointcut used by the returned advice</div>
@@ -144,16 +142,16 @@ callback:Call) : Advice</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">an advice that uses the passed pointcut and call</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:31:14
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:08:02
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

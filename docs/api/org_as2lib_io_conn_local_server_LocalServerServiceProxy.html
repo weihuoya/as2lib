@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_io_conn_core_server_AbstractServerServiceProxy.html">AbstractServerServiceProxy</a> &lt; <a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_io_conn_core_server_AbstractServerServiceProxy.html">AbstractServerServiceProxy</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_io_conn_core_server_AbstractServerServiceProxy.html">AbstractServerServiceProxy</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,61 +31,36 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.io.conn.local.server.LocalServerServiceProxy</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Friday, 28 January 2005, 11:14:55</span>
+              <li><span class="title">File last modified: </span><span class="value">Thursday, 24 March 2005, 23:15:06</span>
               </li>
             </ul>
           </div>
         </div>
         <div class="classDescription"><div class="descriptionSummary">LocalServerServiceProxy handles client requests to a certain service
-
- and its response.<p>This client requests normally come from a client service proxy
-
+ and its response. </div><p>This client requests normally come from a client service proxy
  because this class is designed to interact with this type of client.<p>You can setup your service proxy as follows to await client requests:<pre><span class="codeKeyword">var</span> service:LocalServerServiceProxy = <span class="codeKeyword">new</span> LocalServerServiceProxy(<span class="codeString">"myService"</span>, <span class="codeKeyword">new</span> MyService());
-
 service.run();</pre><p>A client may then call the invoke method on this service proxy.<pre><span class="codeKeyword">var</span> client = <span class="codeKeyword">new</span> LocalClientServiceProxy(<span class="codeString">"local.as2lib.org/myService"</span>);
-
 <span class="codeKeyword">var</span> callback:MethodInvocationCallback = client.myMethod(<span class="codeString">"firstArgument"</span>, <span class="codeString">"secondArgument"</span>);</pre><p>You may choose to combine multiple services in one server for
-
  easier usage.<pre><span class="codeKeyword">var</span> server:LocalServer = <span class="codeKeyword">new</span> LocalServer(<span class="codeString">"local.as2lib.org"</span>);
-
 server.addService(<span class="codeKeyword">new</span> LocalServerServiceProxy(<span class="codeString">"myServiceOne"</span>, <span class="codeKeyword">new</span> MyServiceOne()));
-
 server.addService(<span class="codeKeyword">new</span> LocalServerServiceProxy(<span class="codeString">"myServiceTwo"</span>, <span class="codeKeyword">new</span> MyServiceTwo()));
-
 server.run();</pre><p>A client would then need to prefix the service's name with the
-
  host of the server.<pre><span class="codeKeyword">var</span> client = <span class="codeKeyword">new</span> LocalClientServiceProxy(<span class="codeString">"local.as2lib.org/myService"</span>);
-
 <span class="codeKeyword">var</span> callback:MethodInvocationCallback = client.myMethod(<span class="codeString">"firstArgument"</span>, <span class="codeString">"secondArgument"</span>);</pre><p>If the client invokes a method with arguments on this service
-
  that are not of type Number, String, Boolean or Array that get
-
  converted dynamically to the correct type, flash just creates a new
-
  object of type Object and populates it with the instance variables
-
  of the passed object.
- </div>
  To receive an instance of correct type you must thus register the
-
  class.
-
  <code><span class="codeIdentifier">Object</span>.registerClass(<span class="codeString">"MyClass"</span>, MyClass);</code><p>The received object will now be of correct type. But you still
-
  have to be aware of some facts.
-
  Flash creates a new object in the background and sets the instance
-
  variables of the sent instance to the new object. It then registers
-
  this object to the appropriate class (if registered previously) and
-
  applies the constructor of that class to the new object passing no
-
  arguments.
-
  That means if the constructor sets instance variables it overwrites
-
  the once set previously by undefined.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
@@ -87,28 +69,6 @@ server.run();</pre><p>A client would then need to prefix the service's name with
               <ul>
                 <li>
                   <a href="#LocalServerServiceProxy">LocalServerServiceProxy</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#service">service</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#path">path</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#connection">connection</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#errorBroadcaster">errorBroadcaster</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#running">running</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#currentServiceUrl">currentServiceUrl</a>
                 </li>
               </ul>
             </div>
@@ -150,12 +110,6 @@ server.run();</pre><p>A client would then need to prefix the service's name with
                 <li>
                   <a href="#invokeMethodByNameAndArgumentsAndResponseService">invokeMethodByNameAndArgumentsAndResponseService</a>
                 </li>
-                <li class="private" style="display:none;">
-                  <a href="#getBlankMethodInvocationErrorListener">getBlankMethodInvocationErrorListener</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#sendResponse">sendResponse</a>
-                </li>
                 <li>
                   <a href="#getService">getService</a>
                 </li>
@@ -195,22 +149,22 @@ server.run();</pre><p>A client would then need to prefix the service's name with
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="LocalServerServiceProxy" id="LocalServerServiceProxy"></a>
           <div class="method hasBottomDivider">
-            <h3>LocalServerServiceProxy</h3>
+            <h3 id="LocalServerServiceProxy">LocalServerServiceProxy</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>LocalServerServiceProxy</b> (
+                <div class="floatbox code">function <b>LocalServerServiceProxy</b> (
 
 </div>
-                <div class="code">path:String,
-service)</div>
+                <div><span class="code">path:String,
+service)</span>
+                </div>
               </div>
             </div>
             <div class="description">Constructs a new LocalServerServiceProxy instance.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">path   <span class="separator">:</span></div>
                     <div>the path of the service</div>
@@ -222,245 +176,132 @@ service)</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the path is null, undefined or a blank string
-
                                   if the service is null or undefined</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_io_conn_core_server_AbstractServerServiceProxy.html#AbstractServerServiceProxy">org.as2lib.io.conn.core.server.AbstractServerServiceProxy.AbstractServerServiceProxy</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="connection" id="connection"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>connection</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>connection</b>:EnhancedLocalConnection
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Used to set up the service.</div>
-          </div>
-          <a name="currentServiceUrl" id="currentServiceUrl"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>currentServiceUrl</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>currentServiceUrl</b>:String
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stores the current service url.</div>
-          </div>
-          <a name="errorBroadcaster" id="errorBroadcaster"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>errorBroadcaster</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>errorBroadcaster</b>:EventBroadcaster
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stores set error listener.</div>
-          </div>
-          <a name="path" id="path"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>path</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>path</b>:String
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Service path.</div>
-          </div>
-          <a name="running" id="running"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>running</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>running</b>:Boolean
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Service's status.</div>
-          </div>
-          <a name="service" id="service"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>service</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>service</b>
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Wrapped service object.</div>
-          </div>
-        </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="addErrorListener" id="addErrorListener"></a>
           <div class="method hasBottomDivider">
-            <h3>addErrorListener</h3>
+            <h3 id="addErrorListener">addErrorListener</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>addErrorListener</b> (
+                <div class="floatbox code">function <b>addErrorListener</b> (
 </div>
-                <div class="code">errorListener:MethodInvocationErrorListener) : Void</div>
+                <div><span class="code">errorListener:<a href="org_as2lib_io_conn_core_event_MethodInvocationErrorListener.html">MethodInvocationErrorListener</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Adds an error listener.<p>Error listeners get notified when a client tried to invoke a method
-
  on the service and something went wrong.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">errorListener<span class="separator">:</span></div>
                     <div>the new error listener to add</div>
                   </div>
                 </div>
               </div>
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html#addErrorListener">:Void</a></div>
-                </div>
-              </div>
             </div>
           </div>
-          <a name="getBlankMethodInvocationErrorListener" id="getBlankMethodInvocationErrorListener"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getBlankMethodInvocationErrorListener</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getBlankMethodInvocationErrorListener</b> (
-</div>
-                <div class="code">Void) : MethodInvocationErrorListener</div>
-              </div>
-            </div>
-            <div class="description">Returns a blank method invocation error listener. That is
-
- a error listern with no initialized methods.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">a blank method invocation error listener</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="getConnection" id="getConnection"></a>
           <div class="method hasBottomDivider">
-            <h3>getConnection</h3>
+            <h3 id="getConnection">getConnection</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getConnection</b> (
+                <div class="floatbox code">function <b>getConnection</b> (
 </div>
-                <div class="code">Void) : EnhancedLocalConnection</div>
+                <div><span class="code">Void) : <a href="org_as2lib_io_conn_local_core_EnhancedLocalConnection.html">EnhancedLocalConnection</a></span>
+                </div>
               </div>
             </div>
-            <div class="description">Returns the currently used connection.<p>This is either the connection set via #setConnection(EnhancedLocalConnection):Void
-
- of a default EnhancedLocalConnection instance.</div>
+            <div class="description">Returns the currently used connection.<p>This is either the connection set via <a href="org_as2lib_io_conn_local_server_LocalServerServiceProxy.html#setConnection">setConnection</a>
+ of a default <a href="org_as2lib_io_conn_local_core_EnhancedLocalConnection.html">org.as2lib.io.conn.local.core.EnhancedLocalConnection</a> instance.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the currently used connection</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getErrorBroadcaster" id="getErrorBroadcaster"></a>
           <div class="method hasBottomDivider">
-            <h3>getErrorBroadcaster</h3>
+            <h3 id="getErrorBroadcaster">getErrorBroadcaster</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getErrorBroadcaster</b> (
+                <div class="floatbox code">function <b>getErrorBroadcaster</b> (
 </div>
-                <div class="code">Void) : EventBroadcaster</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_event_EventBroadcaster.html">EventBroadcaster</a></span>
+                </div>
               </div>
             </div>
-            <div class="description">Returns the currently used error broadcaster.<p>This is either the one set via #setErrorBroadcaster(EventBroadcaster):Void
-
- or the default SpeedEventBroadcaster instance.</div>
+            <div class="description">Returns the currently used error broadcaster.<p>This is either the one set via <a href="org_as2lib_io_conn_local_server_LocalServerServiceProxy.html#setErrorBroadcaster">setErrorBroadcaster</a>
+ or the default <a href="org_as2lib_env_event_SpeedEventBroadcaster.html">org.as2lib.env.event.SpeedEventBroadcaster</a> instance.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the currently used error broadcaster</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getPath" id="getPath"></a>
           <div class="method hasBottomDivider">
-            <h3>getPath</h3>
+            <h3 id="getPath">getPath</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getPath</b> (
+                <div class="floatbox code">function <b>getPath</b> (
 </div>
-                <div class="code">Void) : String</div>
-              </div>
-            </div>
-            <div class="description">Returns the path of this service.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html#getPath">:String</a></div>
+                <div><span class="code">Void) : String</span>
                 </div>
               </div>
             </div>
+            <div class="description">Returns the path of this service.</div>
           </div>
-          <a name="getService" id="getService"></a>
           <div class="method hasBottomDivider">
-            <h3>getService</h3>
+            <h3 id="getService">getService</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getService</b> (
+                <div class="floatbox code">function <b>getService</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the wrapped service.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the wrapped service</div>
-                </div>
-              </div>
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html#getService">org.as2lib.io.conn.core.server.ServerServiceProxy.getService(Void)</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="invokeMethodByNameAndArguments" id="invokeMethodByNameAndArguments"></a>
           <div class="method hasBottomDivider">
-            <h3>invokeMethodByNameAndArguments</h3>
+            <h3 id="invokeMethodByNameAndArguments">invokeMethodByNameAndArguments</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>invokeMethodByNameAndArguments</b> (
+                <div class="floatbox code">function <b>invokeMethodByNameAndArguments</b> (
 
 </div>
-                <div class="code">methodName:String,
-args:Array) : Void</div>
+                <div><span class="code">methodName:String,
+args:Array) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Handles an incoming 'remote' method invocation to the service.<p>The method corresponding to the passed-in method name gets
-
  executed on the service.<p>The error listeners will be informed of a failure if:<ul><li>A method with the passed-in name does not exist on the service.</li><li>The service method threw an exception.</li></ul></div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">methodName<span class="separator">:</span></div>
                     <div>the name of the method to invoke on the service</div>
@@ -471,45 +312,32 @@ args:Array) : Void</div>
                   </div>
                 </div>
               </div>
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html#invokeMethodByNameAndArguments">, Array):Void</a></div>
-                </div>
-              </div>
             </div>
           </div>
-          <a name="invokeMethodByNameAndArgumentsAndResponseService" id="invokeMethodByNameAndArgumentsAndResponseService"></a>
           <div class="method hasBottomDivider">
-            <h3>invokeMethodByNameAndArgumentsAndResponseService</h3>
+            <h3 id="invokeMethodByNameAndArgumentsAndResponseService">invokeMethodByNameAndArgumentsAndResponseService</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>invokeMethodByNameAndArgumentsAndResponseService</b> (
+                <div class="floatbox code">function <b>invokeMethodByNameAndArgumentsAndResponseService</b> (
 
 
 </div>
-                <div class="code">methodName:String,
+                <div><span class="code">methodName:String,
 args:Array,
-responseServiceUrl:String) : Void</div>
+responseServiceUrl:String) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Handles incoming 'remote' method invocations to the service and
-
  responses through the response service url.<p>The method corresponding to the passed-in method name gets
-
  executed on the service and the response of this execution gets
-
  passed though the response service's url to the client.<p>If the response service url is null or an empty string the
-
- #invokeMethodByNameAndArguments(String, Array):Void method gets
-
- invoked instead.<p>The response service is supposed to define two methods with the
-
+ <a href="org_as2lib_io_conn_local_server_LocalServerServiceProxy.html#invokeMethodByNameAndArguments">invokeMethodByNameAndArguments</a> method gets invoked instead.<p>The response service is supposed to define two methods with the
  following signature:<ul><li>onReturn(returnValue):*</li><li>onError(errorCode:Number, exception):*</li></ul><p>The onReturn(..) method gets invoked on the response service if
-
  the method executed successfully.<p>The onError(..) method gets invoked on the response service if:<ul><li>The method threw an exception.</li><li>The method does not exist on the service.</li></ul><p>The error listeners will be informed of a failure if:<ul><li>A method with the passed-in name does not exist on the service.</li><li>The service method threw an exception.</li><li>The response server with the given url does not exist.</li><li>The return value is to big to send over a local connection.</li><li>An unknown failure occured when trying to send the response.</li></ul></div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">methodName        <span class="separator">:</span></div>
                     <div>the name of the method to invoke on the service</div>
@@ -524,84 +352,66 @@ responseServiceUrl:String) : Void</div>
                   </div>
                 </div>
               </div>
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html#invokeMethodByNameAndArgumentsAndResponseService">, Array, String):Void</a></div>
-                </div>
-              </div>
             </div>
           </div>
-          <a name="isRunning" id="isRunning"></a>
           <div class="method hasBottomDivider">
-            <h3>isRunning</h3>
+            <h3 id="isRunning">isRunning</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>isRunning</b> (
+                <div class="floatbox code">function <b>isRunning</b> (
 </div>
-                <div class="code">Void) : Boolean</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns whether this service is running or not.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if this service runs else false</div>
-                </div>
-              </div>
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html#isRunning">:Boolean</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="removeErrorListener" id="removeErrorListener"></a>
           <div class="method hasBottomDivider">
-            <h3>removeErrorListener</h3>
+            <h3 id="removeErrorListener">removeErrorListener</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>removeErrorListener</b> (
+                <div class="floatbox code">function <b>removeErrorListener</b> (
 </div>
-                <div class="code">errorListener:MethodInvocationErrorListener) : Void</div>
+                <div><span class="code">errorListener:<a href="org_as2lib_io_conn_core_event_MethodInvocationErrorListener.html">MethodInvocationErrorListener</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Removes an error listener.<p>Error listeners get notified when a client tried to invoke a method
-
  on the service and something went wrong.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">errorListener<span class="separator">:</span></div>
                     <div>the error listener to remove</div>
                   </div>
                 </div>
               </div>
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html#removeErrorListener">:Void</a></div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="run">run</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>run</b> (
+</div>
+                <div><span class="code">host:String) : Void</span>
                 </div>
               </div>
             </div>
-          </div>
-          <a name="run" id="run"></a>
-          <div class="method hasBottomDivider">
-            <h3>run</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>run</b> (
-</div>
-                <div class="code">host:String) : Void</div>
-              </div>
-            </div>
             <div class="description">Runs the service proxy on the passed-in host.<p>The service proxy will be restarted if it is already running. That
-
  means it first stops itself and starts it again.<p>Only the path of the service proxy gets used to connect if the host
-
  is null, undefined or a blank string.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">host<span class="separator">:</span></div>
                     <div>the host to run the service on</div>
@@ -609,57 +419,28 @@ responseServiceUrl:String) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_io_conn_core_server_ReservedServiceException.html">ReservedServiceException</a> if a service on the passed-in host with the service's path is already in use</div>
                 </div>
               </div>
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html#run">:Void</a></div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setConnection">setConnection</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>setConnection</b> (
+</div>
+                <div><span class="code">connection:<a href="org_as2lib_io_conn_local_core_EnhancedLocalConnection.html">EnhancedLocalConnection</a>) : Void</span>
                 </div>
               </div>
             </div>
-          </div>
-          <a name="sendResponse" id="sendResponse"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>sendResponse</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>sendResponse</b> (
-
-
-
-
-
-</div>
-                <div class="code">methodName:String,
-methodArguments:Array,
-responseServiceUrl:String,
-responseMethod:String,
-responseArguments:Array,
-responseListener:MethodInvocationErrorListener) : Void</div>
-              </div>
-            </div>
-            <div class="description">Sends a response to the client.</div>
-          </div>
-          <a name="setConnection" id="setConnection"></a>
-          <div class="method hasBottomDivider">
-            <h3>setConnection</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setConnection</b> (
-</div>
-                <div class="code">connection:EnhancedLocalConnection) : Void</div>
-              </div>
-            </div>
             <div class="description">Sets a new connection.<p>The target of the connection, that means the receiver of all remote
-
- calls must be this instance. If it is not nothing will work properly.<p>If you set a connection of value null or undefined #getConnection(Void):EnhancedLocalConnection
-
+ calls must be this instance. If it is not nothing will work properly.<p>If you set a connection of value null or undefined <a href="org_as2lib_io_conn_local_server_LocalServerServiceProxy.html#getConnection">getConnection</a>
  will return the default connection.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">connection<span class="separator">:</span></div>
                     <div>the new connection to use</div>
@@ -668,24 +449,21 @@ responseListener:MethodInvocationErrorListener) : Void</div>
               </div>
             </div>
           </div>
-          <a name="setErrorBroadcaster" id="setErrorBroadcaster"></a>
           <div class="method hasBottomDivider">
-            <h3>setErrorBroadcaster</h3>
+            <h3 id="setErrorBroadcaster">setErrorBroadcaster</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setErrorBroadcaster</b> (
+                <div class="floatbox code">function <b>setErrorBroadcaster</b> (
 </div>
-                <div class="code">errorBroadcaster:EventBroadcaster) : Void</div>
+                <div><span class="code">errorBroadcaster:<a href="org_as2lib_env_event_EventBroadcaster.html">EventBroadcaster</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets a new error broadcaster.<p>If you set an error broadcaster of value null or undefined
-
- #getErrorBroadcaster(Void):EventBroadcaster will return the default
-
- broadcaster.</div>
+ <a href="org_as2lib_io_conn_local_server_LocalServerServiceProxy.html#getErrorBroadcaster">getErrorBroadcaster</a> will return the default broadcaster.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">errorBroadcaster<span class="separator">:</span></div>
                     <div>the new error broadcaster</div>
@@ -694,29 +472,22 @@ responseListener:MethodInvocationErrorListener) : Void</div>
               </div>
             </div>
           </div>
-          <a name="stop" id="stop"></a>
           <div class="method hasBottomDivider">
-            <h3>stop</h3>
+            <h3 id="stop">stop</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>stop</b> (
+                <div class="floatbox code">function <b>stop</b> (
 </div>
-                <div class="code">Void) : Void</div>
-              </div>
-            </div>
-            <div class="description">Stops the service.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html#stop">:Void</a></div>
+                <div><span class="code">Void) : Void</span>
                 </div>
               </div>
             </div>
+            <div class="description">Stops this service.</div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:17:39
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:10:30
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

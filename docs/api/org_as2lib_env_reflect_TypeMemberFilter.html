@@ -26,15 +26,13 @@ Interface
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.reflect.TypeMemberFilter</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Wednesday, 09 February 2005, 07:30:23</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 05 March 2005, 05:41:52</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">TypeMemberFilter gets used to filter the result of type members' searches.<p>You can pass it for example in the ClassInfo.getMethods(TypeMemberInfo)
-
- method to receive only methods that match your criteria.<p>Using this filter can mean a performance boost.  </div>Refer to the specific
-
+        <div class="classDescription"><div class="descriptionSummary">TypeMemberFilter gets used to filter the result of type members' searches. </div><p>You can pass it for example in the <a href="org_as2lib_env_reflect_ClassInfo.html#getMethodsByFilter">ClassInfo.getMethodsByFilter</a>
+ method to receive only methods that match your criteria.<p>Using this filter can mean a performance boost. Refer to the specific
  filter and search methods for more information.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
@@ -63,28 +61,24 @@ Interface
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="filter" id="filter"></a>
           <div class="method hasBottomDivider">
-            <h3>filter</h3>
+            <h3 id="filter">filter</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>filter</b> (
+                <div class="floatbox code">function <b>filter</b> (
 </div>
-                <div class="code">typeMember:TypeMemberInfo) : Boolean</div>
+                <div><span class="code">typeMember:<a href="org_as2lib_env_reflect_TypeMemberInfo.html">TypeMemberInfo</a>) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns true if the passed-in type member shall be filtered, that
-
  means excluded from the result.<p>This method slows the whole algorithm down because it gets invoked
-
  for every found type member that is not excluded by any of the other
-
  filter methods.
-
  So if you use it try to keep the checks simple.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">typeMember<span class="separator">:</span></div>
                     <div>the type member to exclude or to include from the result</div>
@@ -92,39 +86,37 @@ Interface
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if the type member shall be excluded else false</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="filterSuperTypes" id="filterSuperTypes"></a>
           <div class="method hasBottomDivider">
-            <h3>filterSuperTypes</h3>
+            <h3 id="filterSuperTypes">filterSuperTypes</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>filterSuperTypes</b> (
+                <div class="floatbox code">function <b>filterSuperTypes</b> (
 </div>
-                <div class="code">Void) : Boolean</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns true if type members of super types shall be filtered, that
-
  means excluded from the result.<p>Returning true can mean a performance boost because the algorithm
-
  does then not search for type members of super types.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if super types' type members shall be excluded else false</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:11:37
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:10:13
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

@@ -26,25 +26,18 @@ Interface
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.overload.OverloadHandler</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Friday, 18 February 2005, 10:36:42</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 05 March 2005, 05:41:42</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">OverloadHandler declares method needed by overload handlers.<p>Overload handlers are used by the Overload class to identify the
-
- corresponding method for a specific list of arguments.  </div>Whereby the
-
+        <div class="classDescription"><div class="descriptionSummary">OverloadHandler declares method needed by overload handlers. </div><p>Overload handlers are used by the Overload class to identify the
+ corresponding method for a specific list of arguments. Whereby the
  overload handler holds the method and the expected arguments' types
-
  of this method.<p>It also offers functionalities to match real arguments against the
-
- expected arguments' types, #matches, and to determine which overload
-
+ expected arguments' types, <a href="org_as2lib_env_overload_OverloadHandler.html#matches">matches</a>, and to determine which overload
  handler or rather which arguments' types of two handlers are more
-
- explicit, #isMoreExplicit.<p>It also offers the ability to invoke/execute the target method
-
+ explicit, <a href="org_as2lib_env_overload_OverloadHandler.html#isMoreExplicit">isMoreExplicit</a>.<p>It also offers the ability to invoke/execute the target method
  on a target scope passing-in a list of real arguments.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
@@ -82,26 +75,24 @@ Interface
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="execute" id="execute"></a>
           <div class="method hasBottomDivider">
-            <h3>execute</h3>
+            <h3 id="execute">execute</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>execute</b> (
+                <div class="floatbox code">function <b>execute</b> (
 
 </div>
-                <div class="code">target,
-args:Array)</div>
+                <div><span class="code">target,
+args:Array)</span>
+                </div>
               </div>
             </div>
             <div class="description">Executes the method of this handler on the target passing-in the
-
  given arguments.<p>The 'this' scope of the method refers to the passed-in target on
-
  execution.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">target<span class="separator">:</span></div>
                     <div>the target object to invoke the method on</div>
@@ -113,86 +104,75 @@ args:Array)</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the result of the method invocation</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getArgumentsTypes" id="getArgumentsTypes"></a>
           <div class="method hasBottomDivider">
-            <h3>getArgumentsTypes</h3>
+            <h3 id="getArgumentsTypes">getArgumentsTypes</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getArgumentsTypes</b> (
+                <div class="floatbox code">function <b>getArgumentsTypes</b> (
 </div>
-                <div class="code">Void) : Array</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the arguments' types used to match against the real arguments.<p>The arguments' types determine for which types of arguments the
-
  method was declared for. That means which arguments' types the method
-
  expects.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the arguments' types the method expects</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getMethod" id="getMethod"></a>
           <div class="method hasBottomDivider">
-            <h3>getMethod</h3>
+            <h3 id="getMethod">getMethod</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getMethod</b> (
+                <div class="floatbox code">function <b>getMethod</b> (
 </div>
-                <div class="code">Void) : Function</div>
+                <div><span class="code">Void) : Function</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the method this overload handler was assigned to.<p>This is the method to invoke passing the appropriate arguments
-
  when this handler matches the arguments and is the most explicit one.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the method to invoke when the real arguments match the ones 
-
  of this handler and this handler is the most explicit one</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="isMoreExplicit" id="isMoreExplicit"></a>
           <div class="method hasBottomDivider">
-            <h3>isMoreExplicit</h3>
+            <h3 id="isMoreExplicit">isMoreExplicit</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>isMoreExplicit</b> (
+                <div class="floatbox code">function <b>isMoreExplicit</b> (
 </div>
-                <div class="code">handler:OverloadHandler) : Boolean</div>
+                <div><span class="code">handler:<a href="org_as2lib_env_overload_OverloadHandler.html">OverloadHandler</a>) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Checks if this overload handler is more explicit than the passed-in
-
  handler.<p>What means more explicit? The type String is for example more explicit
-
  than Object. The type org.as2lib.core.BasicClass is also more explicit
-
  than Object. And the type org.as2lib.env.overload.SimpleOverloadHandler
-
  is more explicit than org.as2lib.core.BasicClass. I hope you get the
-
  image. As you can see, the explicity depends on the inheritance
-
  hierarchy.
-
  Classes are also supposed to be more explicit than interfaces.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">handler<span class="separator">:</span></div>
                     <div>the handler to compare this handler with regarding explicity</div>
@@ -200,30 +180,28 @@ args:Array)</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if this handler is more explicit else false or
-
          null if the two handlers have the same explicity</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="matches" id="matches"></a>
           <div class="method hasBottomDivider">
-            <h3>matches</h3>
+            <h3 id="matches">matches</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>matches</b> (
+                <div class="floatbox code">function <b>matches</b> (
 </div>
-                <div class="code">realArguments:Array) : Boolean</div>
+                <div><span class="code">realArguments:Array) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Checks whether the passed-in real arguments match the arguments' types
-
  of this overload handler.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">realArguments<span class="separator">:</span></div>
                     <div>the real arguments to match against the arguments' types</div>
@@ -231,16 +209,16 @@ args:Array)</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">true if the real arguments match the arguments' types else false</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:04:54
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:49
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>LocalClientServiceProxy</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>LocalClientServiceProxy</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_data_io_conn_ServiceProxy.html">ServiceProxy</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Christoph Atteneder, Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.data.io.conn.local.LocalClientServiceProxy</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Wednesday, 08 September 2004, 21:50:30</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">Proxy handles client request to a certain service and its response. </div>
+ services, which are availiable after server is started.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#LocalClientServiceProxy">LocalClientServiceProxy</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#putCallback">putCallback</a>
+                </li>
+                <li>
+                  <a href="#invoke">invoke</a>
+                </li>
+                <li>
+                  <a href="#invokeWithArgs">invokeWithArgs</a>
+                </li>
+                <li>
+                  <a href="#invokeWithoutArgs">invokeWithoutArgs</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="LocalClientServiceProxy">LocalClientServiceProxy</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>LocalClientServiceProxy</b> (
+</div>
+                <div><span class="code">target:String)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructor of LocalClientServiceProxy</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">target<span class="separator">:</span></div>
+                    <div>host on which service methods should be called</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="invoke">invoke</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>invoke</b> (
+</div>
+                <div><span class="code">) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Overload
+ #invokeWithArgs()
+ #invokeWithoutArgs()</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_io_conn_ServiceProxy.html#invoke">org.as2lib.data.io.conn.ServiceProxy.invoke</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="invokeWithArgs">invokeWithArgs</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>invokeWithArgs</b> (
+
+</div>
+                <div><span class="code">method:String,
+args:Array) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Invokes service method with passed arguments.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">method<span class="separator">:</span></div>
+                    <div>of service which should be invoked</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args  <span class="separator">:</span></div>
+                    <div>arguments which should be passed to service method</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_io_conn_ServiceProxy.html#invokeWithArgs">org.as2lib.data.io.conn.ServiceProxy.invokeWithArgs</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="invokeWithoutArgs">invokeWithoutArgs</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>invokeWithoutArgs</b> (
+</div>
+                <div><span class="code">method:String) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">invokes service method.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">method<span class="separator">:</span></div>
+                    <div>of service which should be invoked</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_io_conn_ServiceProxy.html#invokeWithoutArgs">org.as2lib.data.io.conn.ServiceProxy.invokeWithoutArgs</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="putCallback">putCallback</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>putCallback</b> (
+
+</div>
+                <div><span class="code">method:String,
+call:<a href="org_as2lib_util_Call.html">Call</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Puts callback object which should be called after service method response.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">method<span class="separator">:</span></div>
+                    <div>of a specific service</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">call  <span class="separator">:</span></div>
+                    <div>object which is connected to service</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_io_conn_ServiceProxy.html#putCallback">org.as2lib.data.io.conn.ServiceProxy.putCallback</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:08:41
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

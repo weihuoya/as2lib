@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_test_mock_MethodBehavior.html">MethodBehavior</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_test_mock_MethodBehavior.html">MethodBehavior</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,7 +31,7 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.mock.support.DefaultMethodBehavior</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Saturday, 01 January 2005, 12:18:50</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 01 January 2005, 20:28:50</span>
               </li>
             </ul>
           </div>
@@ -40,22 +47,6 @@
                 </li>
               </ul>
             </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#expectedMethodCall">expectedMethodCall</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#actualMethodCalls">actualMethodCalls</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#methodCallRanges">methodCallRanges</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#methodResponses">methodResponses</a>
-                </li>
-              </ul>
-            </div>
             <div class="methodSummaryPart"><span class="title">Instance methods</span>
               <ul>
                 <li>
@@ -63,12 +54,6 @@
                 </li>
                 <li>
                   <a href="#addActualMethodCall">addActualMethodCall</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#getTotalMinimumMethodCallCount">getTotalMinimumMethodCallCount</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#getTotalMaximumMethodCallCount">getTotalMaximumMethodCallCount</a>
                 </li>
                 <li>
                   <a href="#addMethodResponse">addMethodResponse</a>
@@ -79,14 +64,8 @@
                 <li>
                   <a href="#expectsAnotherMethodCall">expectsAnotherMethodCall</a>
                 </li>
-                <li class="private" style="display:none;">
-                  <a href="#getCurrentMethodCallRangeIndex">getCurrentMethodCallRangeIndex</a>
-                </li>
                 <li>
                   <a href="#response">response</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#getCurrentMethodResponseIndex">getCurrentMethodResponseIndex</a>
                 </li>
                 <li>
                   <a href="#verify">verify</a>
@@ -107,24 +86,22 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="DefaultMethodBehavior" id="DefaultMethodBehavior"></a>
           <div class="method hasBottomDivider">
-            <h3>DefaultMethodBehavior</h3>
+            <h3 id="DefaultMethodBehavior">DefaultMethodBehavior</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>DefaultMethodBehavior</b> (
+                <div class="floatbox code">function <b>DefaultMethodBehavior</b> (
 </div>
-                <div class="code">expectedMethodCall:MethodCall)</div>
+                <div><span class="code">expectedMethodCall:<a href="org_as2lib_test_mock_MethodCall.html">MethodCall</a>)</span>
+                </div>
               </div>
             </div>
             <div class="description">Constructs a new DefaultMethodBehavior instance with the passed-in
-
  method call.<p>An expected method call of value null or undefined means
-
  that this behavior expects no actual method calls.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">expectedMethodCall<span class="separator">:</span></div>
                     <div>the expected method call this behavior registers expectations, actual calls and responses for</div>
@@ -134,75 +111,23 @@
             </div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="actualMethodCalls" id="actualMethodCalls"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>actualMethodCalls</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>actualMethodCalls</b>:Array
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stores the actual method calls.</div>
-          </div>
-          <a name="expectedMethodCall" id="expectedMethodCall"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>expectedMethodCall</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>expectedMethodCall</b>:MethodCall
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stores the expected method call.</div>
-          </div>
-          <a name="methodCallRanges" id="methodCallRanges"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>methodCallRanges</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>methodCallRanges</b>:Array
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stores the method call ranges.</div>
-          </div>
-          <a name="methodResponses" id="methodResponses"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>methodResponses</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>methodResponses</b>:Array
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stores the method responses.</div>
-          </div>
-        </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="addActualMethodCall" id="addActualMethodCall"></a>
           <div class="method hasBottomDivider">
-            <h3>addActualMethodCall</h3>
+            <h3 id="addActualMethodCall">addActualMethodCall</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>addActualMethodCall</b> (
+                <div class="floatbox code">function <b>addActualMethodCall</b> (
 </div>
-                <div class="code">actualMethodCall:MethodCall) : Void</div>
+                <div><span class="code">actualMethodCall:<a href="org_as2lib_test_mock_MethodCall.html">MethodCall</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Adds an actual method call.<p>The method call gets added if it is not null, undefined and if
-
  if matches the expected method call.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">actualMethodCall<span class="separator">:</span></div>
                     <div>the new actual method call to add</div>
@@ -210,208 +135,169 @@
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in method call is null or undefined<br /><a href="org_as2lib_test_mock_AssertionFailedError.html">AssertionFailedError</a> if no method call was expected
-
                               if the actual method call does not match the expected method call
-
                               if the total maximum call count has been passed</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MethodBehavior.html#addActualMethodCall">org.as2lib.test.mock.MethodBehavior.addActualMethodCall</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="addMethodResponse" id="addMethodResponse"></a>
           <div class="method hasBottomDivider">
-            <h3>addMethodResponse</h3>
+            <h3 id="addMethodResponse">addMethodResponse</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>addMethodResponse</b> (
+                <div class="floatbox code">function <b>addMethodResponse</b> (
 
 </div>
-                <div class="code">methodResponse:MethodResponse,
-methodCallRange:MethodCallRange) : Void</div>
+                <div><span class="code">methodResponse:<a href="org_as2lib_test_mock_MethodResponse.html">MethodResponse</a>,
+methodCallRange:<a href="org_as2lib_test_mock_MethodCallRange.html">MethodCallRange</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if the expected method call is null or undefined</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_test_mock_MethodBehavior.html#addMethodResponse">, MethodCallRange):Void</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MethodBehavior.html#addMethodResponse">org.as2lib.test.mock.MethodBehavior.addMethodResponse</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="expectsAnotherMethodCall" id="expectsAnotherMethodCall"></a>
           <div class="method hasBottomDivider">
-            <h3>expectsAnotherMethodCall</h3>
+            <h3 id="expectsAnotherMethodCall">expectsAnotherMethodCall</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>expectsAnotherMethodCall</b> (
+                <div class="floatbox code">function <b>expectsAnotherMethodCall</b> (
 </div>
-                <div class="code">Void) : Boolean</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns false if the expected method call is null or undefined.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_test_mock_MethodBehavior.html#expectsAnotherMethodCall">:Boolean</a></div>
                 </div>
               </div>
-            </div>
-          </div>
-          <a name="getCurrentMethodCallRangeIndex" id="getCurrentMethodCallRangeIndex"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getCurrentMethodCallRangeIndex</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getCurrentMethodCallRangeIndex</b> (
-</div>
-                <div class="code">Void) : Number</div>
-              </div>
-            </div>
-            <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the current position in the method call range array</div>
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MethodBehavior.html#expectsAnotherMethodCall">org.as2lib.test.mock.MethodBehavior.expectsAnotherMethodCall</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getCurrentMethodResponseIndex" id="getCurrentMethodResponseIndex"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getCurrentMethodResponseIndex</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getCurrentMethodResponseIndex</b> (
-</div>
-                <div class="code">Void) : Number</div>
-              </div>
-            </div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the current position in the method response array</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="getExpectedMethodCall" id="getExpectedMethodCall"></a>
           <div class="method hasBottomDivider">
-            <h3>getExpectedMethodCall</h3>
+            <h3 id="getExpectedMethodCall">getExpectedMethodCall</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getExpectedMethodCall</b> (
+                <div class="floatbox code">function <b>getExpectedMethodCall</b> (
 </div>
-                <div class="code">Void) : MethodCall</div>
+                <div><span class="code">Void) : <a href="org_as2lib_test_mock_MethodCall.html">MethodCall</a></span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_test_mock_MethodBehavior.html#getExpectedMethodCall">:MethodCall</a></div>
                 </div>
               </div>
-            </div>
-          </div>
-          <a name="getTotalMaximumMethodCallCount" id="getTotalMaximumMethodCallCount"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getTotalMaximumMethodCallCount</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getTotalMaximumMethodCallCount</b> (
-</div>
-                <div class="code">Void) : Number</div>
-              </div>
-            </div>
-            <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the total maximum call count</div>
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MethodBehavior.html#getExpectedMethodCall">org.as2lib.test.mock.MethodBehavior.getExpectedMethodCall</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getTotalMinimumMethodCallCount" id="getTotalMinimumMethodCallCount"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getTotalMinimumMethodCallCount</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getTotalMinimumMethodCallCount</b> (
-</div>
-                <div class="code">Void) : Number</div>
-              </div>
-            </div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the total minimum call count</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="response" id="response"></a>
           <div class="method hasBottomDivider">
-            <h3>response</h3>
+            <h3 id="response">response</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>response</b> (
+                <div class="floatbox code">function <b>response</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_test_mock_MethodBehavior.html#response">org.as2lib.test.mock.MethodBehavior.response(Void)</a></div>
                 </div>
               </div>
-            </div>
-          </div>
-          <a name="setArgumentsMatcher" id="setArgumentsMatcher"></a>
-          <div class="method hasBottomDivider">
-            <h3>setArgumentsMatcher</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setArgumentsMatcher</b> (
-</div>
-                <div class="code">argumentsMatcher:ArgumentsMatcher) : Void</div>
-              </div>
-            </div>
-            <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item">MethodBehavior#addArgumentsMatcher(ArgumentsMatcher):Void</div>
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MethodBehavior.html#response">org.as2lib.test.mock.MethodBehavior.response</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="verify" id="verify"></a>
           <div class="method hasBottomDivider">
-            <h3>verify</h3>
+            <h3 id="setArgumentsMatcher">setArgumentsMatcher</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>verify</b> (
+                <div class="floatbox code">function <b>setArgumentsMatcher</b> (
 </div>
-                <div class="code">Void) : Void</div>
+                <div><span class="code">argumentsMatcher:<a href="org_as2lib_test_mock_ArgumentsMatcher.html">ArgumentsMatcher</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item">MethodBehavior#addArgumentsMatcher(ArgumentsMatcher):Void</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MethodBehavior.html#setArgumentsMatcher">org.as2lib.test.mock.MethodBehavior.setArgumentsMatcher</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="verify">verify</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>verify</b> (
+</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_test_mock_MethodBehavior.html#verify">:Void</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MethodBehavior.html#verify">org.as2lib.test.mock.MethodBehavior.verify</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:23:17
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:10:44
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

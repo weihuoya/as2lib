@@ -22,14 +22,14 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.data.holder.NoSuchElementException</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Wednesday, 19 January 2005, 09:43:02</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 05 March 2005, 05:41:24</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">NoSuchElementException will be thrown if the element you tried to obtain does
-
- not exist. </div></div>
+        <div class="classDescription"><div class="descriptionSummary">NoSuchElementException gets thrown if the element you tried to obtain
+ does not exist. </div> This can be the case if you for example call the next
+ method on an iterator that has no elements left to iterate over.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
@@ -72,32 +72,55 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="NoSuchElementException" id="NoSuchElementException"></a>
           <div class="method hasBottomDivider">
-            <h3>NoSuchElementException</h3>
+            <h3 id="NoSuchElementException">NoSuchElementException</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>NoSuchElementException</b> (
+                <div class="floatbox code">function <b>NoSuchElementException</b> (
 
 
 </div>
-                <div class="code">message:String,
+                <div><span class="code">message:String,
 thrower,
-args:Array)</div>
+args:Array)</span>
+                </div>
               </div>
             </div>
+            <div class="description">Constructs a new NoSuchElementException instance.<p>All arguments are allowed to be null or undefined. But if one is,
+ the string representation returned by the #toString method
+ will not be complete.<p>The args array should be the internal arguments array of the
+ method that throws the throwable. The internal arguments array exists
+ in every method and contains its parameters, the callee method and
+ the caller method. You can refernce it in every method using the name
+ 'arguments'.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item">DataHolderException#new()</div>
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>the message that describes in detail what the problem is</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">thrower<span class="separator">:</span></div>
+                    <div>the object that declares the method that throws this exception</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args   <span class="separator">:</span></div>
+                    <div>the arguments of the throwing method</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_DataHolderException.html#DataHolderException">DataHolderException.DataHolderException</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:43:20
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:08:33
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

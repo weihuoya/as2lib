@@ -22,89 +22,50 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.mock.MockControl</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Saturday, 19 February 2005, 11:01:55</span>
+              <li><span class="title">File last modified: </span><span class="value">Tuesday, 05 April 2005, 18:00:00</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">The MockControl is the central class of the mock object framework.
- </div>
+        <div class="classDescription"><div class="descriptionSummary">The MockControl is the central class of the mock object framework. </div>
  You use it to create your mock object, set expectations and verify
-
  whether this expectations have been met.<p>The normal workflow is creating a mock control for a specific class
-
  or interface, receiving the mock object from it, setting expectations,
-
  setting the behavior of the mock object, switching to replay state,
-
  using the mock object as if it were a normal instance of a class and
-
  verifying that all expectations have been met.<pre><span class="codeKeyword">import</span> org.as2lib.test.mock.MockControl;
 
-
-
 <span class="codeComment">// create mock control for class MyClass</span>
-
 <span class="codeKeyword">var</span> myMockControl:MockControl = <span class="codeKeyword">new</span> MockControl(MyClass);
-
 <span class="codeComment">// receive the mock object (it is in record state)</span>
-
 <span class="codeKeyword">var</span> myMock:MyClass = myMockControl.getMock();
-
 <span class="codeComment">// expect a call to the setStringProperty-method with argument 'myString'.</span>
-
 myMock.setStringProperty(<span class="codeString">"myString"</span>);
-
 <span class="codeComment">// expect calls to the getStringProperty-method</span>
-
 myMock.getStringProperty();
-
 <span class="codeComment">// return 'myString' for the first two calls</span>
-
 myMockControl.setReturnValue(<span class="codeString">"myString"</span>, <span class="codeNumber">2</span>);
-
 <span class="codeComment">// throw MyException for any further call</span>
-
 myMockControl.setDefaultThrowable(<span class="codeKeyword">new</span> MyException());
-
 <span class="codeComment">// switch to replay state</span>
-
 myMockControl.replay();
 
-
-
 <span class="codeComment">// the class under test calls these methods on the mock</span>
-
 myMock.setStringProperty(<span class="codeString">"myString"</span>);
-
 myMock.getStringProperty();
-
 myMock.getStringProperty();
-
-
 
 <span class="codeComment">// verify that alle expectations have been met</span>
-
 myMockControl.verify();</pre><p>If an expectation has not been met a AssertionFailedError will
-
  be thrown. 
-
  If an expectation violation gets discovered during execution
-
  an AssertionFailedError will be thrown immediately.<p>If you called the setStringProperty method in the above example
-
  with another string like 'unexpectedString' an AssertFailedError
-
  would be thrown immediately.
-
  If you called the setStringProperty method a second time, what has
-
  not been expected, an AssertionFailedError would also be thrown
-
  immediately.
-
  If you did not call the setStringProperty method at all, an
-
  AssertionFailedError would be thrown on verification.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
@@ -113,31 +74,6 @@ myMockControl.verify();</pre><p>If an expectation has not been met a AssertionFa
               <ul>
                 <li>
                   <a href="#MockControl">MockControl</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#type">type</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#proxyFactory">proxyFactory</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#mock">mock</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#behavior">behavior</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#state">state</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#recordStateFactory">recordStateFactory</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#replayStateFactory">replayStateFactory</a>
                 </li>
               </ul>
             </div>
@@ -153,11 +89,11 @@ myMockControl.verify();</pre><p>If an expectation has not been met a AssertionFa
             </div>
             <div class="methodSummaryPart"><span class="title">Instance methods</span>
               <ul>
-                <li class="private" style="display:none;">
-                  <a href="#MockControlByType">MockControlByType</a>
+                <li>
+                  <a href="#setHandleToStringInvocations">setHandleToStringInvocations</a>
                 </li>
-                <li class="private" style="display:none;">
-                  <a href="#MockControlByTypeAndBehavior">MockControlByTypeAndBehavior</a>
+                <li>
+                  <a href="#areToStringInvocationsHandled">areToStringInvocationsHandled</a>
                 </li>
                 <li>
                   <a href="#getMockProxyFactory">getMockProxyFactory</a>
@@ -168,35 +104,17 @@ myMockControl.verify();</pre><p>If an expectation has not been met a AssertionFa
                 <li>
                   <a href="#getRecordStateFactory">getRecordStateFactory</a>
                 </li>
-                <li class="private" style="display:none;">
-                  <a href="#getDefaultRecordStateFactory">getDefaultRecordStateFactory</a>
-                </li>
                 <li>
                   <a href="#setRecordStateFactory">setRecordStateFactory</a>
                 </li>
                 <li>
                   <a href="#getReplayStateFactory">getReplayStateFactory</a>
                 </li>
-                <li class="private" style="display:none;">
-                  <a href="#getDefaultReplayStateFactory">getDefaultReplayStateFactory</a>
-                </li>
                 <li>
                   <a href="#setReplayStateFactory">setReplayStateFactory</a>
                 </li>
-                <li class="private" style="display:none;">
-                  <a href="#getBlankMockControlStateFactory">getBlankMockControlStateFactory</a>
-                </li>
                 <li>
                   <a href="#getMock">getMock</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#createDelegator">createDelegator</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#getBlankInvocationHandler">getBlankInvocationHandler</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#invokeMethod">invokeMethod</a>
                 </li>
                 <li>
                   <a href="#replay">replay</a>
@@ -271,147 +189,60 @@ myMockControl.verify();</pre><p>If an expectation has not been met a AssertionFa
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="MockControl" id="MockControl"></a>
           <div class="method hasBottomDivider">
-            <h3>MockControl</h3>
+            <h3 id="MockControl">MockControl</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>MockControl</b> (
+                <div class="floatbox code">function <b>MockControl</b> (
 </div>
-                <div class="code">)</div>
+                <div><span class="code">)</span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Overloading</span>
-                  <div class="item"><a href="org_as2lib_test_mock_MockControl.html#MockControlByType">:Void</a> (type:Function) : Void<br /><a href="org_as2lib_test_mock_MockControl.html#MockControlByTypeAndBehavior">, Behavior):Void</a> (type:Function, behavior:Behavior) : Void</div>
+                <div class="contentHolder"><span class="title">Overloading:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MockControl.html#MockControlByType">MockControlByType</a> <code>(type:Function) : Void</code><br /><a href="org_as2lib_test_mock_MockControl.html#MockControlByTypeAndBehavior">MockControlByTypeAndBehavior</a> <code>(type:Function, behavior:{VISDOC_LINK_0}) : Void</code></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="behavior" id="behavior"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>behavior</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>behavior</b>:Behavior
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stores the mock behavior.</div>
-          </div>
-          <a name="mock" id="mock"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>mock</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>mock</b>
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stores the created mock proxy.</div>
-          </div>
-          <a name="proxyFactory" id="proxyFactory"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>proxyFactory</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>proxyFactory</b>:ProxyFactory
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Used to create a new mock proxy.</div>
-          </div>
-          <a name="recordStateFactory" id="recordStateFactory"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>recordStateFactory</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>recordStateFactory</b>:MockControlStateFactory
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Factory used to obtain the record state.</div>
-          </div>
-          <a name="replayStateFactory" id="replayStateFactory"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>replayStateFactory</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>replayStateFactory</b>:MockControlStateFactory
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Factory used to obtain the replay state.</div>
-          </div>
-          <a name="state" id="state"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>state</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>state</b>:MockControlState
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stores the state.</div>
-          </div>
-          <a name="type" id="type"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>type</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>type</b>:Function
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stores the type of the mock proxy.</div>
-          </div>
-        </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Class methods</h2>
-          <a name="getDefaultArgumentsMatcher" id="getDefaultArgumentsMatcher"></a>
           <div class="method hasBottomDivider">
-            <h3>getDefaultArgumentsMatcher</h3>
+            <h3 id="getDefaultArgumentsMatcher">getDefaultArgumentsMatcher</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getDefaultArgumentsMatcher</b> (
+                <div class="floatbox code">static function <b>getDefaultArgumentsMatcher</b> (
 </div>
-                <div class="code">Void) : DefaultArgumentsMatcher</div>
+                <div><span class="code">Void) : <a href="org_as2lib_test_mock_support_DefaultArgumentsMatcher.html">DefaultArgumentsMatcher</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns a default arguments matcher.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">a default arguments matcher</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getTypeArgumentsMatcher" id="getTypeArgumentsMatcher"></a>
           <div class="method hasBottomDivider">
-            <h3>getTypeArgumentsMatcher</h3>
+            <h3 id="getTypeArgumentsMatcher">getTypeArgumentsMatcher</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getTypeArgumentsMatcher</b> (
+                <div class="floatbox code">static function <b>getTypeArgumentsMatcher</b> (
 </div>
-                <div class="code">expectedTypes:Array) : TypeArgumentsMatcher</div>
+                <div><span class="code">expectedTypes:Array) : <a href="org_as2lib_test_mock_support_TypeArgumentsMatcher.html">TypeArgumentsMatcher</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns a type arguments matcher.<p>Type arguments matcher match arguments by type and not by value.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">a type arguments matcher</div>
                 </div>
               </div>
@@ -420,366 +251,181 @@ myMockControl.verify();</pre><p>If an expectation has not been met a AssertionFa
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="createDelegator" id="createDelegator"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>createDelegator</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>createDelegator</b> (
-</div>
-                <div class="code">Void) : InvocationHandler</div>
-              </div>
-            </div>
-            <div class="description">Creates a new invocation handler instance that handles method
-
- invocations on the mock proxy.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">a delegator that handles proxy method invocations</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="getBlankInvocationHandler" id="getBlankInvocationHandler"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getBlankInvocationHandler</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getBlankInvocationHandler</b> (
-</div>
-                <div class="code">Void) : InvocationHandler</div>
-              </div>
-            </div>
-            <div class="description">Returns a blank invocation handler. That is a handler with no initialized
-
- methods.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">a blank invocation handler</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="getBlankMockControlStateFactory" id="getBlankMockControlStateFactory"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getBlankMockControlStateFactory</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getBlankMockControlStateFactory</b> (
-</div>
-                <div class="code">Void) : MockControlStateFactory</div>
-              </div>
-            </div>
-            <div class="description">Returns a blank mock control state factory. That is a factory with
-
- no initialized methods.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">a blank mock control state factory</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="getDefaultRecordStateFactory" id="getDefaultRecordStateFactory"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getDefaultRecordStateFactory</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getDefaultRecordStateFactory</b> (
-</div>
-                <div class="code">Void) : MockControlStateFactory</div>
-              </div>
-            </div>
-            <div class="description">Returns the default record state factory.<p>The default record state factory returns instances of type RecordState.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the default record state factory</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="getDefaultReplayStateFactory" id="getDefaultReplayStateFactory"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getDefaultReplayStateFactory</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getDefaultReplayStateFactory</b> (
-</div>
-                <div class="code">Void) : MockControlStateFactory</div>
-              </div>
-            </div>
-            <div class="description">Returns the default replay state factory.<p>The default replay state factory returns instances of type ReplayState.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the default replay state factory</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="getMock" id="getMock"></a>
           <div class="method hasBottomDivider">
-            <h3>getMock</h3>
+            <h3 id="areToStringInvocationsHandled">areToStringInvocationsHandled</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getMock</b> (
+                <div class="floatbox code">function <b>areToStringInvocationsHandled</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns whether <code>toString</code> invocations on the mock are handled.<p>Handling <code>toString</code> invocations means that these invocations
+ are added to the expected or actual behavior. This means if they are
+ handled, calling the <code>toString</code> method on the mock in replay
+ state results in an added expection and in record state in a verification
+ whether the call was expected. If they are not handled, the result of
+ an invocation of the mock's <code>toString</code> method is returned.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if <code>toString</code> invocations are handled, else
+ <code>false</code></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MockControl.html#setHandleToStringInvocations">setHandleToStringInvocations</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMock">getMock</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMock</b> (
+</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the mock object.<p>The mock can be casted and typed to the interface or class defined
-
  during instantiation.<p>The mock gets created using the mock proxy factory returned by the
-
  #getMockProxyFactory method.<p>Once the mock object has been created it gets cached. That means
-
  this method always returns the same mock object for this mock control.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the mock object</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getMockProxyFactory" id="getMockProxyFactory"></a>
           <div class="method hasBottomDivider">
-            <h3>getMockProxyFactory</h3>
+            <h3 id="getMockProxyFactory">getMockProxyFactory</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getMockProxyFactory</b> (
+                <div class="floatbox code">function <b>getMockProxyFactory</b> (
 </div>
-                <div class="code">Void) : ProxyFactory</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_reflect_ProxyFactory.html">ProxyFactory</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the currently used mock proxy factory.<p>This proxy factoy is either the default TypeProxyFactory or the
-
  one set via #setMockProxyFactory.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the currently used proxy factory</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_test_mock_MockControl.html#setMockProxyFactory">setMockProxyFactory</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getRecordStateFactory" id="getRecordStateFactory"></a>
           <div class="method hasBottomDivider">
-            <h3>getRecordStateFactory</h3>
+            <h3 id="getRecordStateFactory">getRecordStateFactory</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getRecordStateFactory</b> (
+                <div class="floatbox code">function <b>getRecordStateFactory</b> (
 </div>
-                <div class="code">Void) : MockControlStateFactory</div>
+                <div><span class="code">Void) : <a href="org_as2lib_test_mock_MockControlStateFactory.html">MockControlStateFactory</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the currently used record state factory.<p>This is either the factory set via #setRecordStateFactory or the
-
  default one, which returns instances of the RecordState class.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the currently used record state factory</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_test_mock_MockControl.html#setRecordStateFactory">:Void</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getReplayStateFactory" id="getReplayStateFactory"></a>
           <div class="method hasBottomDivider">
-            <h3>getReplayStateFactory</h3>
+            <h3 id="getReplayStateFactory">getReplayStateFactory</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getReplayStateFactory</b> (
+                <div class="floatbox code">function <b>getReplayStateFactory</b> (
 </div>
-                <div class="code">Void) : MockControlStateFactory</div>
+                <div><span class="code">Void) : <a href="org_as2lib_test_mock_MockControlStateFactory.html">MockControlStateFactory</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the currently used replay state factory.<p>This is either the factory set via #setReplayStateFactory of the
-
  default one, which returns instances of the ReplayState class.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the currently used replay state factory</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_test_mock_MockControl.html#setReplayStateFactory">setReplayStateFactory</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="invokeMethod" id="invokeMethod"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>invokeMethod</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>invokeMethod</b> (
-
-</div>
-                <div class="code">methodName:String,
-args:Array)</div>
-              </div>
-            </div>
-            <div class="description">Gets called when a method gets invoked on the proxy.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">methodName<span class="separator">:</span></div>
-                    <div>the name of the invoked method</div>
-                  </div>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">args      <span class="separator">:</span></div>
-                    <div>the arguments passed to the invoked method</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="MockControlByType" id="MockControlByType"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>MockControlByType</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>MockControlByType</b> (
-</div>
-                <div class="code">type:Function) : Void</div>
-              </div>
-            </div>
-            <div class="description">Constrcuts a new MockControl instance using the default behavior.<p>The default behavior is an instance of class DefaultBehaviour.<p>This instance is in reset state after creation. That means it is
-
- ready to to receive expectations and to record them.<p>When you have finished recording you must switch to replay state
-
- using the #replay method.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">type<span class="separator">:</span></div>
-                    <div>the interface or class to create a mock object for</div>
-                  </div>
-                </div>
-              </div>
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
-                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in type is null or undefined</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="MockControlByTypeAndBehavior" id="MockControlByTypeAndBehavior"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>MockControlByTypeAndBehavior</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>MockControlByTypeAndBehavior</b> (
-
-</div>
-                <div class="code">type:Function,
-behavior:Behavior) : Void</div>
-              </div>
-            </div>
-            <div class="description">Constructs a new MockControl instance.<p>If the passed-in behavior is null or undefined the default behavior
-
- that is of type DefaultBehavior gets used instead.<p>This instance is in reset state after creation. That means it is
-
- ready to to receive expectations and to record them.<p>When you have finished recording you must switch to replay state
-
- using the #replay method.</div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">type    <span class="separator">:</span></div>
-                    <div>the interface or class to create a mock object for</div>
-                  </div>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">behavior<span class="separator">:</span></div>
-                    <div>the instance to store the behavior of the mock</div>
-                  </div>
-                </div>
-              </div>
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
-                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in type is null or undefined</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a name="replay" id="replay"></a>
           <div class="method hasBottomDivider">
-            <h3>replay</h3>
+            <h3 id="replay">replay</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>replay</b> (
+                <div class="floatbox code">function <b>replay</b> (
 </div>
-                <div class="code">Void) : Void</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Switches the mock object from record state to replay state.<p>The mock object is in record state as soon as it gets returned by
-
  the #getMock method.<p>You cannot record expectations in replay state. In replay state
-
  you verify that all your expectations have been met, by using the
-
  mock as it were a real instance.<p>If an expectations does not get met an AssertionFailedError gets
-
  thrown. This is either done during execution of your test or on
-
  verification.
-
  Take a look at the example provided in the class declaration to see
-
  when what AssertFailedError gets thrown.</div>
           </div>
-          <a name="reset" id="reset"></a>
           <div class="method hasBottomDivider">
-            <h3>reset</h3>
+            <h3 id="reset">reset</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>reset</b> (
+                <div class="floatbox code">function <b>reset</b> (
 </div>
-                <div class="code">Void) : Void</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Resets the mock control and the mock object to the state directly after
-
  creation.<p>That means that all previously made expectations will be removed
-
  and that the mock object will again be in record state.</div>
           </div>
-          <a name="setArgumentsMatcher" id="setArgumentsMatcher"></a>
           <div class="method hasBottomDivider">
-            <h3>setArgumentsMatcher</h3>
+            <h3 id="setArgumentsMatcher">setArgumentsMatcher</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setArgumentsMatcher</b> (
+                <div class="floatbox code">function <b>setArgumentsMatcher</b> (
 </div>
-                <div class="code">argumentsMatcher:ArgumentsMatcher) : Void</div>
+                <div><span class="code">argumentsMatcher:<a href="org_as2lib_test_mock_ArgumentsMatcher.html">ArgumentsMatcher</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets the arguments matcher that will be used for the last method
-
  specified by a method call.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">argumentsMatcher<span class="separator">:</span></div>
                     <div>the arguments matcher to use for the specific method</div>
@@ -787,32 +433,29 @@ behavior:Behavior) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setDefaultReturnValue" id="setDefaultReturnValue"></a>
           <div class="method hasBottomDivider">
-            <h3>setDefaultReturnValue</h3>
+            <h3 id="setDefaultReturnValue">setDefaultReturnValue</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setDefaultReturnValue</b> (
+                <div class="floatbox code">function <b>setDefaultReturnValue</b> (
 </div>
-                <div class="code">value) : Void</div>
+                <div><span class="code">value) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Records that the mock object will by default allow the last method
-
  specified by a method call and will react by returning the provided
-
  return value.<p>Default means that the method can be called zero to infinite times
-
  without expectation errors.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">value<span class="separator">:</span></div>
                     <div>the return value to return</div>
@@ -820,32 +463,29 @@ behavior:Behavior) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setDefaultThrowable" id="setDefaultThrowable"></a>
           <div class="method hasBottomDivider">
-            <h3>setDefaultThrowable</h3>
+            <h3 id="setDefaultThrowable">setDefaultThrowable</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setDefaultThrowable</b> (
+                <div class="floatbox code">function <b>setDefaultThrowable</b> (
 </div>
-                <div class="code">throwable) : Void</div>
+                <div><span class="code">throwable) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Records that the mock object will by default allow the last method 
-
  specified by a method call, and will react by throwing the provided
-
  throwable.<p>Default means that the method can be called zero to infinite times
-
  without expectation errors.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">throwable<span class="separator">:</span></div>
                     <div>the throwable to throw</div>
@@ -853,55 +493,80 @@ behavior:Behavior) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setDefaultVoidCallable" id="setDefaultVoidCallable"></a>
           <div class="method hasBottomDivider">
-            <h3>setDefaultVoidCallable</h3>
+            <h3 id="setDefaultVoidCallable">setDefaultVoidCallable</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setDefaultVoidCallable</b> (
+                <div class="floatbox code">function <b>setDefaultVoidCallable</b> (
 </div>
-                <div class="code">Void) : Void</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Recards that the mock object will by default allow the last method
-
  specified by a method call.<p>Default means that the method can be called zero to infinite times
-
  without expectation errors.<p>Calling this method is not necessary. The mock control expects
-
  the last method specified by a method call as soon as this method
-
  call occured.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setMockProxyFactory" id="setMockProxyFactory"></a>
           <div class="method hasBottomDivider">
-            <h3>setMockProxyFactory</h3>
+            <h3 id="setHandleToStringInvocations">setHandleToStringInvocations</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setMockProxyFactory</b> (
+                <div class="floatbox code">function <b>setHandleToStringInvocations</b> (
 </div>
-                <div class="code">proxyFactory:ProxyFactory) : Void</div>
+                <div><span class="code">handleToStringInvocations:Boolean) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Sets whether to handle <code>toString</code> invocations on mocks or not.<p>Handling <code>toString</code> invocations means that these invocations
+ are added to the expected or actual behavior. This means if you set
+ <code>handleToStringInvocations</code> to <code>true</code> calling this method
+ on the mock in replay state results in an added expection and in record
+ state in a verification whether the call was expected. If you set
+ it to <code>false</code> the result of an invocation of the mock's <code>toString</code>
+ method is returned.<p>If <code>handleToStringInvocations</code> is <code>null</code>, it is interpreted
+ as <code>false</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">handleToStringInvocations<span class="separator">:</span></div>
+                    <div>determines whether to handle <code>toStirng</code>
+ method invocations</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setMockProxyFactory">setMockProxyFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>setMockProxyFactory</b> (
+</div>
+                <div><span class="code">proxyFactory:<a href="org_as2lib_env_reflect_ProxyFactory.html">ProxyFactory</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets the proxy factory used to obtain the mock proxy / mocks.<p>If you set a proxy factory of null or undefined, the
-
  #getMockProxyFactory method will use the default factory.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">proxyFactory<span class="separator">:</span></div>
                     <div>factory to obtain mock proxies / mocks</div>
@@ -909,28 +574,27 @@ behavior:Behavior) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_test_mock_MockControl.html#getMockProxyFactory">getMockProxyFactory</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setRecordStateFactory" id="setRecordStateFactory"></a>
           <div class="method hasBottomDivider">
-            <h3>setRecordStateFactory</h3>
+            <h3 id="setRecordStateFactory">setRecordStateFactory</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setRecordStateFactory</b> (
+                <div class="floatbox code">function <b>setRecordStateFactory</b> (
 </div>
-                <div class="code">recordStateFactory:MockControlStateFactory) : Void</div>
+                <div><span class="code">recordStateFactory:<a href="org_as2lib_test_mock_MockControlStateFactory.html">MockControlStateFactory</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets the new record state factory to be used.<p>If you set a factory of value null or undefined the default record
-
  state factory gets returned by the #getRecordStateFactory method.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">recordStateFactory<span class="separator">:</span></div>
                     <div>the new record state factory</div>
@@ -938,28 +602,27 @@ behavior:Behavior) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_test_mock_MockControl.html#getRecordStateFactory">getRecordStateFactory</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setReplayStateFactory" id="setReplayStateFactory"></a>
           <div class="method hasBottomDivider">
-            <h3>setReplayStateFactory</h3>
+            <h3 id="setReplayStateFactory">setReplayStateFactory</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setReplayStateFactory</b> (
+                <div class="floatbox code">function <b>setReplayStateFactory</b> (
 </div>
-                <div class="code">replayStateFactory:MockControlStateFactory) : Void</div>
+                <div><span class="code">replayStateFactory:<a href="org_as2lib_test_mock_MockControlStateFactory.html">MockControlStateFactory</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets the new replay state factory to be used.<p>If you set a factory of value null or undefined, #getReplayStateFactory
-
  will return the default replay state factory.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">replayStateFactory<span class="separator">:</span></div>
                     <div>the new replay state factory</div>
@@ -967,46 +630,45 @@ behavior:Behavior) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_test_mock_MockControl.html#getReplayStateFactory">getReplayStateFactory</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setReturnValue" id="setReturnValue"></a>
           <div class="method hasBottomDivider">
-            <h3>setReturnValue</h3>
+            <h3 id="setReturnValue">setReturnValue</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setReturnValue</b> (
+                <div class="floatbox code">function <b>setReturnValue</b> (
 </div>
-                <div class="code">) : Void</div>
+                <div><span class="code">) : Void</span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Overloading</span>
-                  <div class="item"><a href="org_as2lib_test_mock_MockControl.html#setReturnValueByValue">*):Void</a> (value) : Void<br /><a href="org_as2lib_test_mock_MockControl.html#setReturnValueByValueAndQuantity">*, Number):Void</a> (value, quantity:Number) : Void<br /><a href="org_as2lib_test_mock_MockControl.html#setReturnValueByValueAndMinimumAndMaximumQuantity">*, Number, Number):Void</a> (value, minimumQuantity:Number, maximumQuantity:Number) : Void</div>
+                <div class="contentHolder"><span class="title">Overloading:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MockControl.html#setReturnValueByValue">setReturnValueByValue</a> <code>(value) : Void</code><br /><a href="org_as2lib_test_mock_MockControl.html#setReturnValueByValueAndQuantity">setReturnValueByValueAndQuantity</a> <code>(value, quantity:Number) : Void</code><br /><a href="org_as2lib_test_mock_MockControl.html#setReturnValueByValueAndMinimumAndMaximumQuantity">setReturnValueByValueAndMinimumAndMaximumQuantity</a> <code>(value, minimumQuantity:Number, maximumQuantity:Number) : Void</code></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setReturnValueByValue" id="setReturnValueByValue"></a>
           <div class="method hasBottomDivider">
-            <h3>setReturnValueByValue</h3>
+            <h3 id="setReturnValueByValue">setReturnValueByValue</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setReturnValueByValue</b> (
+                <div class="floatbox code">function <b>setReturnValueByValue</b> (
 </div>
-                <div class="code">value) : Void</div>
+                <div><span class="code">value) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Records that the mock object will expect the last method call once
-
  and will react by returning the provided return value.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">value<span class="separator">:</span></div>
                     <div>the return value to return</div>
@@ -1014,34 +676,32 @@ behavior:Behavior) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setReturnValueByValueAndMinimumAndMaximumQuantity" id="setReturnValueByValueAndMinimumAndMaximumQuantity"></a>
           <div class="method hasBottomDivider">
-            <h3>setReturnValueByValueAndMinimumAndMaximumQuantity</h3>
+            <h3 id="setReturnValueByValueAndMinimumAndMaximumQuantity">setReturnValueByValueAndMinimumAndMaximumQuantity</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setReturnValueByValueAndMinimumAndMaximumQuantity</b> (
+                <div class="floatbox code">function <b>setReturnValueByValueAndMinimumAndMaximumQuantity</b> (
 
 
 </div>
-                <div class="code">value,
+                <div><span class="code">value,
 minimumQuantity:Number,
-maximumQuantity:Number) : Void</div>
+maximumQuantity:Number) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Records that the mock object will expect the last method call between
-
  minimumQuantity and maximumQuantity times and will react by returning
-
  the provided return value.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">value          <span class="separator">:</span></div>
                     <div>the return value to return</div>
@@ -1057,30 +717,29 @@ maximumQuantity:Number) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setReturnValueByValueAndQuantity" id="setReturnValueByValueAndQuantity"></a>
           <div class="method hasBottomDivider">
-            <h3>setReturnValueByValueAndQuantity</h3>
+            <h3 id="setReturnValueByValueAndQuantity">setReturnValueByValueAndQuantity</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setReturnValueByValueAndQuantity</b> (
+                <div class="floatbox code">function <b>setReturnValueByValueAndQuantity</b> (
 
 </div>
-                <div class="code">value,
-quantity:Number) : Void</div>
+                <div><span class="code">value,
+quantity:Number) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Records that the mock object will expect the last method call a fixed
-
  number of times and will react by returning the provided return value.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">value   <span class="separator">:</span></div>
                     <div>the return value to return</div>
@@ -1092,46 +751,45 @@ quantity:Number) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setThrowable" id="setThrowable"></a>
           <div class="method hasBottomDivider">
-            <h3>setThrowable</h3>
+            <h3 id="setThrowable">setThrowable</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setThrowable</b> (
+                <div class="floatbox code">function <b>setThrowable</b> (
 </div>
-                <div class="code">) : Void</div>
+                <div><span class="code">) : Void</span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Overloading</span>
-                  <div class="item"><a href="org_as2lib_test_mock_MockControl.html#setThrowableByThrowable">*):Void</a> (throwable) : Void<br /><a href="org_as2lib_test_mock_MockControl.html#setThrowableByThrowableAndQuantity">*, Number):Void</a> (throwable, quantity:Number) : Void<br /><a href="org_as2lib_test_mock_MockControl.html#setThrowableByThrowableAndMinimumAndMaximumQuantity">*, Number, Number):Void</a> (throwable, minimumQuantity:Number, maximumQuantity:Number) : Void</div>
+                <div class="contentHolder"><span class="title">Overloading:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MockControl.html#setThrowableByThrowable">setThrowableByThrowable</a> <code>(throwable) : Void</code><br /><a href="org_as2lib_test_mock_MockControl.html#setThrowableByThrowableAndQuantity">setThrowableByThrowableAndQuantity</a> <code>(throwable, quantity:Number) : Void</code><br /><a href="org_as2lib_test_mock_MockControl.html#setThrowableByThrowableAndMinimumAndMaximumQuantity">setThrowableByThrowableAndMinimumAndMaximumQuantity</a> <code>(throwable, minimumQuantity:Number, maximumQuantity:Number) : Void</code></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setThrowableByThrowable" id="setThrowableByThrowable"></a>
           <div class="method hasBottomDivider">
-            <h3>setThrowableByThrowable</h3>
+            <h3 id="setThrowableByThrowable">setThrowableByThrowable</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setThrowableByThrowable</b> (
+                <div class="floatbox code">function <b>setThrowableByThrowable</b> (
 </div>
-                <div class="code">throwable) : Void</div>
+                <div><span class="code">throwable) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Records that the mock object will expect the last method call once
-
  and will react by throwing the provided throwable.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">throwable<span class="separator">:</span></div>
                     <div>the throwable to throw</div>
@@ -1139,34 +797,32 @@ quantity:Number) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setThrowableByThrowableAndMinimumAndMaximumQuantity" id="setThrowableByThrowableAndMinimumAndMaximumQuantity"></a>
           <div class="method hasBottomDivider">
-            <h3>setThrowableByThrowableAndMinimumAndMaximumQuantity</h3>
+            <h3 id="setThrowableByThrowableAndMinimumAndMaximumQuantity">setThrowableByThrowableAndMinimumAndMaximumQuantity</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setThrowableByThrowableAndMinimumAndMaximumQuantity</b> (
+                <div class="floatbox code">function <b>setThrowableByThrowableAndMinimumAndMaximumQuantity</b> (
 
 
 </div>
-                <div class="code">throwable,
+                <div><span class="code">throwable,
 minimumQuantity:Number,
-maximumQuantity:Number) : Void</div>
+maximumQuantity:Number) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Records that the mock object will expect the last method call between 
-
  minimumQuantity and maximumQuantity times, and will react by throwing
-
  the provided throwable.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">throwable      <span class="separator">:</span></div>
                     <div>the throwable to throw</div>
@@ -1182,30 +838,29 @@ maximumQuantity:Number) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setThrowableByThrowableAndQuantity" id="setThrowableByThrowableAndQuantity"></a>
           <div class="method hasBottomDivider">
-            <h3>setThrowableByThrowableAndQuantity</h3>
+            <h3 id="setThrowableByThrowableAndQuantity">setThrowableByThrowableAndQuantity</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setThrowableByThrowableAndQuantity</b> (
+                <div class="floatbox code">function <b>setThrowableByThrowableAndQuantity</b> (
 
 </div>
-                <div class="code">throwable,
-quantity:Number) : Void</div>
+                <div><span class="code">throwable,
+quantity:Number) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Records that the mock object will expect the last method call a fixed 
-
  number of times and will react by throwing the provided throwable.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">throwable<span class="separator">:</span></div>
                     <div>the throwable to throw</div>
@@ -1217,50 +872,48 @@ quantity:Number) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setVoidCallable" id="setVoidCallable"></a>
           <div class="method hasBottomDivider">
-            <h3>setVoidCallable</h3>
+            <h3 id="setVoidCallable">setVoidCallable</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setVoidCallable</b> (
+                <div class="floatbox code">function <b>setVoidCallable</b> (
 </div>
-                <div class="code">) : Void</div>
+                <div><span class="code">) : Void</span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Overloading</span>
-                  <div class="item"><a href="org_as2lib_test_mock_MockControl.html#setVoidCallableByVoid">:Void</a> (Void) : Void<br /><a href="org_as2lib_test_mock_MockControl.html#setVoidCallableByQuantity">:Void</a> (quantity:Number) : Void<br /><a href="org_as2lib_test_mock_MockControl.html#setVoidCallableByMinimumAndMaximumQuantity">, Number):Void</a> (minimumQuantity:Number, maximumQuantity:Number) : Void</div>
+                <div class="contentHolder"><span class="title">Overloading:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MockControl.html#setVoidCallableByVoid">setVoidCallableByVoid</a> <code>(Void) : Void</code><br /><a href="org_as2lib_test_mock_MockControl.html#setVoidCallableByQuantity">setVoidCallableByQuantity</a> <code>(quantity:Number) : Void</code><br /><a href="org_as2lib_test_mock_MockControl.html#setVoidCallableByMinimumAndMaximumQuantity">setVoidCallableByMinimumAndMaximumQuantity</a> <code>(minimumQuantity:Number, maximumQuantity:Number) : Void</code></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setVoidCallableByMinimumAndMaximumQuantity" id="setVoidCallableByMinimumAndMaximumQuantity"></a>
           <div class="method hasBottomDivider">
-            <h3>setVoidCallableByMinimumAndMaximumQuantity</h3>
+            <h3 id="setVoidCallableByMinimumAndMaximumQuantity">setVoidCallableByMinimumAndMaximumQuantity</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setVoidCallableByMinimumAndMaximumQuantity</b> (
+                <div class="floatbox code">function <b>setVoidCallableByMinimumAndMaximumQuantity</b> (
 
 </div>
-                <div class="code">minimumQuantity:Number,
-maximumQuantity:Number) : Void</div>
+                <div><span class="code">minimumQuantity:Number,
+maximumQuantity:Number) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Records that the mock object will expect the last method call between 
-
  minimumQuantity and maximumQuantity times and will react by returning
-
  silently.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">minimumQuantity<span class="separator">:</span></div>
                     <div>the minimum number of times the method must be called</div>
@@ -1272,28 +925,27 @@ maximumQuantity:Number) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setVoidCallableByQuantity" id="setVoidCallableByQuantity"></a>
           <div class="method hasBottomDivider">
-            <h3>setVoidCallableByQuantity</h3>
+            <h3 id="setVoidCallableByQuantity">setVoidCallableByQuantity</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setVoidCallableByQuantity</b> (
+                <div class="floatbox code">function <b>setVoidCallableByQuantity</b> (
 </div>
-                <div class="code">quantity:Number) : Void</div>
+                <div><span class="code">quantity:Number) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Records that the mock object will expect the last method call a fixed 
-
  number of times and will react by returning silently.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">quantity<span class="separator">:</span></div>
                     <div>the number of times the method is allowed to be invoked</div>
@@ -1301,56 +953,55 @@ maximumQuantity:Number) : Void</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setVoidCallableByVoid" id="setVoidCallableByVoid"></a>
           <div class="method hasBottomDivider">
-            <h3>setVoidCallableByVoid</h3>
+            <h3 id="setVoidCallableByVoid">setVoidCallableByVoid</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setVoidCallableByVoid</b> (
+                <div class="floatbox code">function <b>setVoidCallableByVoid</b> (
 </div>
-                <div class="code">Void) : Void</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Records that the mock object will expect the last method call once
-
  and will react by returning silently.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="verify" id="verify"></a>
           <div class="method hasBottomDivider">
-            <h3>verify</h3>
+            <h3 id="verify">verify</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>verify</b> (
+                <div class="floatbox code">function <b>verify</b> (
 </div>
-                <div class="code">Void) : Void</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Verifies that all expectations have been met that could not been verified during execution.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
+                <div class="contentHolder"><span class="title">Throws:</span>
                   <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in record state<br /><a href="org_as2lib_test_mock_AssertionFailedError.html">AssertionFailedError</a> if an expectation has not been met</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:21:50
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:10:40
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_env_bean_AbstractBeanWrapper.html">AbstractBeanWrapper</a> &lt; <a href="org_as2lib_env_bean_AbstractPropertyAccessor.html">AbstractPropertyAccessor</a> &lt; <a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_bean_BeanWrapper.html">BeanWrapper</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_env_bean_BeanWrapper.html">BeanWrapper</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,7 +31,7 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.bean.SimpleBeanWrapper</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Thursday, 16 December 2004, 10:29:02</span>
+              <li><span class="title">File last modified: </span><span class="value">Thursday, 16 December 2004, 21:30:56</span>
               </li>
             </ul>
           </div>
@@ -56,53 +63,16 @@
                 </div>
               </div>
             </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#wrappedObject">wrappedObject</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#propertyValueConverters">propertyValueConverters</a>
-                </li>
-              </ul>
-            </div>
             <div class="methodSummaryPart"><span class="title">Instance methods</span>
               <ul>
                 <li>
                   <a href="#getPropertyValue">getPropertyValue</a>
                 </li>
-                <li class="private" style="display:none;">
-                  <a href="#getPropertyValueByPropertyAccess">getPropertyValueByPropertyAccess</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#getPropertyValueByMethodAccess">getPropertyValueByMethodAccess</a>
-                </li>
                 <li>
                   <a href="#setPropertyValueByPropertyValue">setPropertyValueByPropertyValue</a>
                 </li>
-                <li class="private" style="display:none;">
-                  <a href="#setPropertyValueByPropertyAccess">setPropertyValueByPropertyAccess</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#setPropertyValueByMethodAccess">setPropertyValueByMethodAccess</a>
-                </li>
                 <li>
                   <a href="#setPropertyValueByNameAndValue">setPropertyValueByNameAndValue</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#isNestedProperty">isNestedProperty</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#getFinalPropertyName">getFinalPropertyName</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#getKeyName">getKeyName</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#transformPropertyName">transformPropertyName</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#transformPropertyValue">transformPropertyValue</a>
                 </li>
                 <li>
                   <a href="#setPropertyValuesByPropertyValueSet">setPropertyValuesByPropertyValueSet</a>
@@ -112,9 +82,6 @@
                 </li>
                 <li>
                   <a href="#findPropertyValueConverter">findPropertyValueConverter</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#getPropertyValueConverterByType">getPropertyValueConverterByType</a>
                 </li>
                 <li>
                   <a href="#registerPropertyValueConverterByTypeAndConverter">registerPropertyValueConverterByTypeAndConverter</a>
@@ -158,299 +125,221 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="SimpleBeanWrapper" id="SimpleBeanWrapper"></a>
           <div class="method hasBottomDivider">
-            <h3>SimpleBeanWrapper</h3>
+            <h3 id="SimpleBeanWrapper">SimpleBeanWrapper</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>SimpleBeanWrapper</b> (
+                <div class="floatbox code">function <b>SimpleBeanWrapper</b> (
 </div>
-                <div class="code">wrappedObject)</div>
+                <div><span class="code">wrappedObject)</span>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="propertyValueConverters" id="propertyValueConverters"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>propertyValueConverters</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>propertyValueConverters</b>:Map
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-          </div>
-          <a name="wrappedObject" id="wrappedObject"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>wrappedObject</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>wrappedObject</b>
-</div>
-                <div class="code"></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_AbstractBeanWrapper.html#AbstractBeanWrapper">AbstractBeanWrapper.AbstractBeanWrapper</a></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="findPropertyValueConverter" id="findPropertyValueConverter"></a>
           <div class="method hasBottomDivider">
-            <h3>findPropertyValueConverter</h3>
+            <h3 id="findPropertyValueConverter">findPropertyValueConverter</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>findPropertyValueConverter</b> (
+                <div class="floatbox code">function <b>findPropertyValueConverter</b> (
 
 </div>
-                <div class="code">requiredType:Function,
-propertyPath:String) : PropertyValueConverter</div>
+                <div><span class="code">requiredType:Function,
+propertyPath:String) : <a href="org_as2lib_env_bean_PropertyValueConverter.html">PropertyValueConverter</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_BeanWrapper.html#findPropertyValueConverter">BeanWrapper.findPropertyValueConverter</a></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="getFinalPropertyName" id="getFinalPropertyName"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getFinalPropertyName</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getFinalPropertyName</b> (
-</div>
-                <div class="code">propertyPath:String) : String</div>
-              </div>
-            </div>
-          </div>
-          <a name="getKeyName" id="getKeyName"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getKeyName</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getKeyName</b> (
-</div>
-                <div class="code">propertyPath:String) : String</div>
-              </div>
-            </div>
-          </div>
-          <a name="getPropertyValue" id="getPropertyValue"></a>
           <div class="method hasBottomDivider">
-            <h3>getPropertyValue</h3>
+            <h3 id="getPropertyValue">getPropertyValue</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getPropertyValue</b> (
+                <div class="floatbox code">function <b>getPropertyValue</b> (
 </div>
-                <div class="code">propertyName:String)</div>
+                <div><span class="code">propertyName:String)</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_PropertyAccessor.html#getPropertyValue">PropertyAccessor.getPropertyValue</a></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="getPropertyValueByMethodAccess" id="getPropertyValueByMethodAccess"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getPropertyValueByMethodAccess</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getPropertyValueByMethodAccess</b> (
-
-
-</div>
-                <div class="code">object,
-methodName:String,
-keyName:String)</div>
-              </div>
-            </div>
-          </div>
-          <a name="getPropertyValueByPropertyAccess" id="getPropertyValueByPropertyAccess"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getPropertyValueByPropertyAccess</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getPropertyValueByPropertyAccess</b> (
-
-
-</div>
-                <div class="code">object,
-propertyName:String,
-keyName:String)</div>
-              </div>
-            </div>
-          </div>
-          <a name="getPropertyValueConverterByType" id="getPropertyValueConverterByType"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getPropertyValueConverterByType</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>getPropertyValueConverterByType</b> (
-</div>
-                <div class="code">requiredType:Function) : PropertyValueConverter</div>
-              </div>
-            </div>
-          </div>
-          <a name="getWrappedObject" id="getWrappedObject"></a>
           <div class="method hasBottomDivider">
-            <h3>getWrappedObject</h3>
+            <h3 id="getWrappedObject">getWrappedObject</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getWrappedObject</b> (
+                <div class="floatbox code">function <b>getWrappedObject</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_BeanWrapper.html#getWrappedObject">BeanWrapper.getWrappedObject</a></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="isNestedProperty" id="isNestedProperty"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>isNestedProperty</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>isNestedProperty</b> (
-</div>
-                <div class="code">propertyName:String) : Boolean</div>
-              </div>
-            </div>
-          </div>
-          <a name="registerPropertyValueConverterByTypeAndConverter" id="registerPropertyValueConverterByTypeAndConverter"></a>
           <div class="method hasBottomDivider">
-            <h3>registerPropertyValueConverterByTypeAndConverter</h3>
+            <h3 id="registerPropertyValueConverterByTypeAndConverter">registerPropertyValueConverterByTypeAndConverter</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>registerPropertyValueConverterByTypeAndConverter</b> (
+                <div class="floatbox code">function <b>registerPropertyValueConverterByTypeAndConverter</b> (
 
 </div>
-                <div class="code">requiredType:Function,
-propertyValueConverter:PropertyValueConverter) : Void</div>
+                <div><span class="code">requiredType:Function,
+propertyValueConverter:<a href="org_as2lib_env_bean_PropertyValueConverter.html">PropertyValueConverter</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_BeanWrapper.html#registerPropertyValueConverterByTypeAndConverter">BeanWrapper.registerPropertyValueConverterByTypeAndConverter</a></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="registerPropertyValueConverterByTypeAndPathAndConverter" id="registerPropertyValueConverterByTypeAndPathAndConverter"></a>
           <div class="method hasBottomDivider">
-            <h3>registerPropertyValueConverterByTypeAndPathAndConverter</h3>
+            <h3 id="registerPropertyValueConverterByTypeAndPathAndConverter">registerPropertyValueConverterByTypeAndPathAndConverter</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>registerPropertyValueConverterByTypeAndPathAndConverter</b> (
+                <div class="floatbox code">function <b>registerPropertyValueConverterByTypeAndPathAndConverter</b> (
 
 
 </div>
-                <div class="code">requiredType:Function,
+                <div><span class="code">requiredType:Function,
 propertyPath:String,
-propertyValueConverter:PropertyValueConverter) : Void</div>
+propertyValueConverter:<a href="org_as2lib_env_bean_PropertyValueConverter.html">PropertyValueConverter</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_BeanWrapper.html#registerPropertyValueConverterByTypeAndPathAndConverter">BeanWrapper.registerPropertyValueConverterByTypeAndPathAndConverter</a></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="setPropertyValueByMethodAccess" id="setPropertyValueByMethodAccess"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>setPropertyValueByMethodAccess</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>setPropertyValueByMethodAccess</b> (
-
-
-
-</div>
-                <div class="code">object,
-methodName,
-keyName,
-propertyValue) : Void</div>
-              </div>
-            </div>
-          </div>
-          <a name="setPropertyValueByNameAndValue" id="setPropertyValueByNameAndValue"></a>
           <div class="method hasBottomDivider">
-            <h3>setPropertyValueByNameAndValue</h3>
+            <h3 id="setPropertyValueByNameAndValue">setPropertyValueByNameAndValue</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setPropertyValueByNameAndValue</b> (
+                <div class="floatbox code">function <b>setPropertyValueByNameAndValue</b> (
 
 </div>
-                <div class="code">propertyName:String,
-value) : Void</div>
+                <div><span class="code">propertyName:String,
+value) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_PropertyAccessor.html#setPropertyValueByNameAndValue">PropertyAccessor.setPropertyValueByNameAndValue</a></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="setPropertyValueByPropertyAccess" id="setPropertyValueByPropertyAccess"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>setPropertyValueByPropertyAccess</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>setPropertyValueByPropertyAccess</b> (
-
-
-
-</div>
-                <div class="code">object,
-propertyName,
-keyName,
-propertyValue) : Void</div>
-              </div>
-            </div>
-          </div>
-          <a name="setPropertyValueByPropertyValue" id="setPropertyValueByPropertyValue"></a>
           <div class="method hasBottomDivider">
-            <h3>setPropertyValueByPropertyValue</h3>
+            <h3 id="setPropertyValueByPropertyValue">setPropertyValueByPropertyValue</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setPropertyValueByPropertyValue</b> (
+                <div class="floatbox code">function <b>setPropertyValueByPropertyValue</b> (
 </div>
-                <div class="code">propertyValue:PropertyValue) : Void</div>
+                <div><span class="code">propertyValue:<a href="org_as2lib_env_bean_PropertyValue.html">PropertyValue</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_PropertyAccessor.html#setPropertyValueByPropertyValue">PropertyAccessor.setPropertyValueByPropertyValue</a></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="setPropertyValuesByMap" id="setPropertyValuesByMap"></a>
           <div class="method hasBottomDivider">
-            <h3>setPropertyValuesByMap</h3>
+            <h3 id="setPropertyValuesByMap">setPropertyValuesByMap</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setPropertyValuesByMap</b> (
+                <div class="floatbox code">function <b>setPropertyValuesByMap</b> (
 </div>
-                <div class="code">propertyValues:Map) : Void</div>
+                <div><span class="code">propertyValues:<a href="org_as2lib_data_holder_Map.html">Map</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_PropertyAccessor.html#setPropertyValuesByMap">PropertyAccessor.setPropertyValuesByMap</a></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="setPropertyValuesByPropertyValueSet" id="setPropertyValuesByPropertyValueSet"></a>
           <div class="method hasBottomDivider">
-            <h3>setPropertyValuesByPropertyValueSet</h3>
+            <h3 id="setPropertyValuesByPropertyValueSet">setPropertyValuesByPropertyValueSet</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setPropertyValuesByPropertyValueSet</b> (
+                <div class="floatbox code">function <b>setPropertyValuesByPropertyValueSet</b> (
 </div>
-                <div class="code">propertyValues:PropertyValueSet) : Void</div>
+                <div><span class="code">propertyValues:<a href="org_as2lib_env_bean_PropertyValueSet.html">PropertyValueSet</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_PropertyAccessor.html#setPropertyValuesByPropertyValueSet">PropertyAccessor.setPropertyValuesByPropertyValueSet</a></div>
+                </div>
               </div>
             </div>
           </div>
-          <a name="setWrappedObject" id="setWrappedObject"></a>
           <div class="method hasBottomDivider">
-            <h3>setWrappedObject</h3>
+            <h3 id="setWrappedObject">setWrappedObject</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>setWrappedObject</b> (
+                <div class="floatbox code">function <b>setWrappedObject</b> (
 </div>
-                <div class="code">wrappedObject) : Void</div>
+                <div><span class="code">wrappedObject) : Void</span>
+                </div>
               </div>
             </div>
-          </div>
-          <a name="transformPropertyName" id="transformPropertyName"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>transformPropertyName</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>transformPropertyName</b> (
-</div>
-                <div class="code">propertyName:String) : String</div>
-              </div>
-            </div>
-          </div>
-          <a name="transformPropertyValue" id="transformPropertyValue"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>transformPropertyValue</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>function <b>transformPropertyValue</b> (
-</div>
-                <div class="code">propertyValue:PropertyValue)</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_bean_BeanWrapper.html#setWrappedObject">BeanWrapper.setWrappedObject</a></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:54:12
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:05
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

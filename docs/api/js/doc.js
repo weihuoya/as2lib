@@ -1,5 +1,7 @@
 
 
+
+
 var isShowingPrivateMembers = 0;
 var privateElements = null;
 var view_btn = null;
@@ -20,6 +22,7 @@ window.onload = function(e) {
 		var bodyNode = document.getElementsByTagName('body')[0];
 		bodyNode.setAttribute("id", "framed");
 	}
+ 
 	var cookie = readCookie("privateMembers");
 	var showPrivateMembers = cookie;
 	if (showPrivateMembers == "1") {
@@ -27,6 +30,10 @@ window.onload = function(e) {
 	} else {
 		setButtonsToHidePrivateState();
 	}
+		
+	/* Init the highlight script */
+	fragHLload();
+ 	fragHLlink();
 }
 
 window.onunload = function(e) {
@@ -53,12 +60,12 @@ function getElementsByClassName(class_name)
 	var all_obj, ret_obj = new Array();
 	if (document.all)
 		all_obj=document.all;
-  	else if (document.getElementsByTagName && !document.all)
+ 	else if (document.getElementsByTagName && !document.all)
 		all_obj=document.getElementsByTagName("*");
 	var len = all_obj.length;
 	for (i=0;i<len;++i) {
 		var myClass = all_obj[i].className;
-    	if (myClass == class_name) {
+ 	if (myClass == class_name) {
 			ret_obj.push(all_obj[i]);
 		} else {
 			var classElems = myClass.split(" ");
@@ -107,7 +114,7 @@ function showPrivate() {
 	}
 	var len = privateElements.length;
 	for (i=0; i<len; ++i) {
-		privateElements[i].style.display = "block"; 
+		privateElements[i].style.display = "block";
 	}
 	setCookie("privateMembers", isShowingPrivateMembers, 365);
 }
@@ -120,7 +127,7 @@ function hidePrivate() {
 	}
 	var len = privateElements.length;
 	for (i=0; i<len; ++i) {
-		privateElements[i].style.display = "none"; 
+		privateElements[i].style.display = "none";
 	}
 	setCookie("privateMembers", isShowingPrivateMembers, 365);
 }
@@ -134,7 +141,7 @@ function setCookie(name,value,days) {
 	document.cookie = name+"="+value+expires+"; path=/";
 }
 
-function readCookie(name) {    
+function readCookie(name) { 
 	var nameEQ = name + "=";
 	var ca = document.cookie.split(';');
 	if (ca.length == 0) {
@@ -146,6 +153,80 @@ function readCookie(name) {
 		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
 	}
 	return null;
+}
+
+
+/* Fragment Highlight version 0.1 */
+
+//*** This JavaScript highlight code is copyright 2003 by David Dorward; http://dorward.me.uk
+//*** Re-use or modification permitted provided the previous line is included and
+//*** modifications are indicated
+
+/*********** Start of JavaScript Library *********/
+
+//*** This JavaScript library is copyright 2002 by Gavin Kistner and Refinery; www.refinery.com
+//*** Re-use or modification permitted provided the previous line is included
+
+//Adds a new class to an object, preserving existing classes
+function AddClass(obj,cName) {
+	KillClass(obj,cName);
+	return obj.className += (obj.className.length>0?' ':'') + cName;
+}
+
+//Removes a particular class from an object, preserving other existing classes.
+function KillClass(obj,cName) {
+	return obj.className=obj.className.replace(new RegExp("^"+cName+"\\b\\s*|\\s*\\b"+cName+"\\b",'g'),'');
+}
+
+/*********** End of JavaScript Library ***********/
+
+/* Fragment Highlight */
+
+/* Indicates area that has been linked to if fragment identifiers have
+ * been used. Especially useful in situations where a short fragment
+ * is near the end of a page. */
+
+var fragHLed = '';
+var fragExclude = ('header');
+
+Array.prototype.search = function(myVariable) {
+	for(x in this) if(x == myVariable) return true; return false;
+}
+
+/* Highlight link target if the visitor arrives at the page with a # */
+
+function fragHLload() {
+ fragHL(location.hash.substring(1));
+}
+
+/* Highlight link target from an onclick event after unhighlighting the old one */
+
+function fragHL(frag) {
+ if (fragHLed.length > 0 && document.getElementById(fragHLed)) {
+		KillClass(document.getElementById(fragHLed),'highlight');
+ }
+ if (frag.length > 0 && document.getElementById(frag)) {
+		fragHLed = frag;
+		AddClass (document.getElementById(frag),'highlight');
+ }
+}
+
+/* Add onclick events to all <a> with hrefs that include a "#" */
+
+function fragHLlink() {
+ if (document.getElementsByTagName) {
+	var an = document.getElementsByTagName('a');
+	for (i=0; i<an.length; i++) {
+	 if (an.item(i).getAttribute('href').indexOf('#') >= 0) {
+		var fragment = an.item(i).getAttribute('href').substring(an.item(i).getAttribute('href').indexOf('#') + 1);
+		if (fragExclude.search(fragment)) {
+		 var evn = "fragHL('" + fragment + "')";
+		 var fun = new Function('e',evn);
+		 an.item(i).onclick = fun;
+		}
+	 }
+	}
+ }
 }
 
 

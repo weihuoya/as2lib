@@ -26,12 +26,33 @@ Interface
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.data.holder.Stack</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Monday, 24 January 2005, 07:21:52</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 05 March 2005, 05:41:26</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary"> </div></div>
+        <div class="classDescription"><div class="descriptionSummary">Stack is the base interface for data holders that follow the last-in,
+ first-out policy. </div><p>It offers the opposite functionality of a queue, which follows the
+ first-in, first-out policy.<p>'last-in, first-out' means that the last value that has been pushed
+ to the stack is the first that is popped from the stack.<p>The usage of a stack is quite simple. You have one method to push
+ values <a href="org_as2lib_data_holder_Stack.html#push">push</a> and one method to pop values <a href="org_as2lib_data_holder_Stack.html#pop">pop</a>. You
+ can also peek at the top of the stack to see what's the last value
+ that has been pushed to the stack without removing it <a href="org_as2lib_data_holder_Stack.html#peek">peek</a>.<p>If you want to iterate over the values of the stack you can either
+ use the iterator returned by the <a href="org_as2lib_data_holder_Stack.html#iterator">iterator</a> method or the array
+ that contains the stack's values returned by the <a href="org_as2lib_data_holder_Stack.html#toArray">toArray</a> method.<p>The two methods <a href="org_as2lib_data_holder_Stack.html#isEmpty">isEmpty</a> and <a href="org_as2lib_data_holder_Stack.html#size">size</a> let you find
+ out whether the stack contains values and how many values it contains.<p>A usage example may look like this:<pre><span class="codeComment">// the stack gets set up</span>
+<span class="codeKeyword">var</span> stack:Stack = <span class="codeKeyword">new</span> MyStack();
+stack.push(<span class="codeString">"value1"</span>);
+stack.push(<span class="codeString">"value2"</span>);
+stack.push(<span class="codeString">"value3"</span>);
+<span class="codeComment">// the stack gets used somewhere in your application</span>
+<span class="codeIdentifier">trace</span>(stack.peek()); <span class="codeComment">// traces the last element without removing it</span>
+<span class="codeKeyword">while</span> (!stack.isEmpty()) {
+   <span class="codeIdentifier">trace</span>(stack.pop());
+}</pre><p>The output would be the following:<pre>value3
+value3
+value2
+value1</pre></div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
@@ -74,170 +95,168 @@ Interface
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="isEmpty" id="isEmpty"></a>
           <div class="method hasBottomDivider">
-            <h3>isEmpty</h3>
+            <h3 id="isEmpty">isEmpty</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>isEmpty</b> (
+                <div class="floatbox code">function <b>isEmpty</b> (
 </div>
-                <div class="code">Void) : Boolean</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
               </div>
             </div>
-            <div class="description">Returns whether the Stack is empty.</div>
+            <div class="description">Returns whether this stack is empty.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">true if the Stack is empty else false</div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">true if this stack is empty else false</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="iterator" id="iterator"></a>
           <div class="method hasBottomDivider">
-            <h3>iterator</h3>
+            <h3 id="iterator">iterator</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>iterator</b> (
+                <div class="floatbox code">function <b>iterator</b> (
 </div>
-                <div class="code">Void) : Iterator</div>
+                <div><span class="code">Void) : <a href="org_as2lib_data_holder_Iterator.html">Iterator</a></span>
+                </div>
               </div>
             </div>
-            <div class="description">Returns an Iterator used to iterate over the values of the Stack.</div>
+            <div class="description">Returns an iterator to iterate over the values of this stack.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">an Iterator to iterate over the Stack</div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">an iterator to iterate over this stack</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_Iterator.html">Iterator</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#toArray">toArray</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="peek" id="peek"></a>
           <div class="method hasBottomDivider">
-            <h3>peek</h3>
+            <h3 id="peek">peek</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>peek</b> (
+                <div class="floatbox code">function <b>peek</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
-            <div class="description">Returns the lastly pushed value.</div>
+            <div class="description">Returns the lastly pushed value without removing it.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the lastly pushed value</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
-                  <div class="item"><a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if the Stack is empty</div>
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if this stack is empty</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="pop" id="pop"></a>
           <div class="method hasBottomDivider">
-            <h3>pop</h3>
+            <h3 id="pop">pop</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>pop</b> (
+                <div class="floatbox code">function <b>pop</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
-            <div class="description">Removes the lastly pushed value.</div>
+            <div class="description">Removes and returns the lastly pushed value.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the lastly pushed value</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Throws</span>
-                  <div class="item"><a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if the Stack is empty</div>
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if this stack is empty</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="push" id="push"></a>
           <div class="method hasBottomDivider">
-            <h3>push</h3>
+            <h3 id="push">push</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>push</b> (
+                <div class="floatbox code">function <b>push</b> (
 </div>
-                <div class="code">value) : Void</div>
+                <div><span class="code">value) : Void</span>
+                </div>
               </div>
             </div>
-            <div class="description">Pushes the value to the Stack.</div>
+            <div class="description">Pushes the passed-in value to this stack.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">value<span class="separator">:</span></div>
-                    <div>the value to be pushed to the Stack</div>
+                    <div>the value to push to this stack</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="size" id="size"></a>
           <div class="method hasBottomDivider">
-            <h3>size</h3>
+            <h3 id="size">size</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>size</b> (
+                <div class="floatbox code">function <b>size</b> (
 </div>
-                <div class="code">Void) : Number</div>
+                <div><span class="code">Void) : Number</span>
+                </div>
               </div>
             </div>
-            <div class="description">Returns the number of pushed elements.</div>
+            <div class="description">Returns the number of pushed values.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the number of pushed elements</div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the number of pushed values</div>
                 </div>
               </div>
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#push">*):Void</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_Stack.html#push">push</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="toArray" id="toArray"></a>
           <div class="method hasBottomDivider">
-            <h3>toArray</h3>
+            <h3 id="toArray">toArray</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>toArray</b> (
+                <div class="floatbox code">function <b>toArray</b> (
 </div>
-                <div class="code">Void) : Array</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
               </div>
             </div>
-            <div class="description">Returns an array representation of this stack.<p>The elements are copied onto the array in a last-in-first-out
-
+            <div class="description">Returns an array representation of this stack.<p>The elements are copied onto the array in a last-in, first-out
  order, similar to the order of the elements returned by a succession 
-
- of calls to #pop().</div>
+ of calls to the <a href="org_as2lib_data_holder_Stack.html#pop">pop</a> method.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">the stack's array representation</div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the array representation of this stack</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:44:27
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:08:36
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>SimpleDelegatingConsumableEventBroadcaster</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>SimpleDelegatingConsumableEventBroadcaster</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_env_event_DelegatingConsumableEventBroadcaster.html">DelegatingConsumableEventBroadcaster</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.event.SimpleDelegatingConsumableEventBroadcaster</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Monday, 04 April 2005, 20:25:52</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">SimpleConsumableEventBroadcaster is an EventBroadcaster implementation that supports
+ every broadcaster functionalities. </div> These functionalities are setting your
+ own EventDispatcher and consuming events.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#SimpleDelegatingConsumableEventBroadcaster">SimpleDelegatingConsumableEventBroadcaster</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class properties</span>
+              <ul>
+                <li>
+                  <a href="#NORMAL_DISPATCHER">NORMAL_DISPATCHER</a>
+                </li>
+                <li>
+                  <a href="#LOG_DISPATCHER">LOG_DISPATCHER</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#setDispatcher">setDispatcher</a>
+                </li>
+                <li>
+                  <a href="#addListener">addListener</a>
+                </li>
+                <li>
+                  <a href="#addAllListeners">addAllListeners</a>
+                </li>
+                <li>
+                  <a href="#removeListener">removeListener</a>
+                </li>
+                <li>
+                  <a href="#removeAllListeners">removeAllListeners</a>
+                </li>
+                <li>
+                  <a href="#getAllListeners">getAllListeners</a>
+                </li>
+                <li>
+                  <a href="#dispatch">dispatch</a>
+                </li>
+                <li>
+                  <a href="#dispatchConsumable">dispatchConsumable</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="SimpleDelegatingConsumableEventBroadcaster">SimpleDelegatingConsumableEventBroadcaster</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>SimpleDelegatingConsumableEventBroadcaster</b> (
+</div>
+                <div><span class="code">Void)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructs a new EventBroadcaster instance.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="LOG_DISPATCHER">LOG_DISPATCHER</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>LOG_DISPATCHER</b>:<a href="org_as2lib_env_event_ConsumableEventDispatcher.html">ConsumableEventDispatcher</a> = <span class="codeKeyword">new</span> LogEventDispatcher()
+</div>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">A reference to the LogEventDispatcher.</div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="NORMAL_DISPATCHER">NORMAL_DISPATCHER</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>NORMAL_DISPATCHER</b>:<a href="org_as2lib_env_event_ConsumableEventDispatcher.html">ConsumableEventDispatcher</a> = <span class="codeKeyword">new</span> NormalEventDispatcher()
+</div>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">A reference to the NormalEventDispatcher.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="addAllListeners">addAllListeners</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>addAllListeners</b> (
+</div>
+                <div><span class="code">listeners:Array) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Null or undefined argument will be interpreted as empty
+ listener array.<p>The listeners in the array will not be checked for correct
+ type nor for being undefined or null.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#addAllListeners">EventBroadcaster.addAllListeners()</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#addAllListeners">EventBroadcaster.addAllListeners</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="addListener">addListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>addListener</b> (
+</div>
+                <div><span class="code">listener:<a href="org_as2lib_env_event_EventListener.html">EventListener</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Listener will only be added if it is not null or undefined.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item">org.as2lib.env.event.ConsumableEventBroadcaster#addListener()</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#addListener">EventBroadcaster.addListener</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="dispatch">dispatch</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>dispatch</b> (
+</div>
+                <div><span class="code">event:<a href="org_as2lib_env_event_EventInfo.html">EventInfo</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item">org.as2lib.env.event.ConsumableEventBroadcaster#dispatch()</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#dispatch">EventBroadcaster.dispatch</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="dispatchConsumable">dispatchConsumable</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>dispatchConsumable</b> (
+</div>
+                <div><span class="code">event:<a href="org_as2lib_env_event_ConsumableEventInfo.html">ConsumableEventInfo</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item">org.as2lib.env.event.ConsumableEventBroadcaster#dispatch()</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_event_ConsumableEventBroadcaster.html#dispatchConsumable">ConsumableEventBroadcaster.dispatchConsumable</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getAllListeners">getAllListeners</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getAllListeners</b> (
+</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#getAllListeners">EventBroadcaster.getAllListeners()</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#getAllListeners">EventBroadcaster.getAllListeners</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="removeAllListeners">removeAllListeners</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>removeAllListeners</b> (
+</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#removeAllListeners">EventBroadcaster.removeAllListeners()</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#removeAllListeners">EventBroadcaster.removeAllListeners</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="removeListener">removeListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>removeListener</b> (
+</div>
+                <div><span class="code">listener:<a href="org_as2lib_env_event_EventListener.html">EventListener</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item">org.as2lib.env.event.ConsumableEventBroadcaster#removeListener()</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventBroadcaster.html#removeListener">EventBroadcaster.removeListener</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setDispatcher">setDispatcher</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>setDispatcher</b> (
+</div>
+                <div><span class="code">newDispatcher:<a href="org_as2lib_env_event_ConsumableEventDispatcher.html">ConsumableEventDispatcher</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Dispatcher will only be set if it is not null or undefined.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_event_DelegatingEventBroadcaster.html#setDispatcher">DelegatingEventBroadcaster.setDispatcher()</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:12
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

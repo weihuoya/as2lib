@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_event_EventDispatcher.html">EventDispatcher</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_env_event_ConsumableEventDispatcher.html">ConsumableEventDispatcher</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,31 +31,16 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.event.dispatcher.LogEventDispatcher</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Wednesday, 16 February 2005, 10:50:49</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 19 March 2005, 15:09:52</span>
               </li>
             </ul>
           </div>
         </div>
         <div class="classDescription"><div class="descriptionSummary">An implementation of the EventDispatcher interface that logs the dispatching
-
  of the event. </div></div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#logger">logger</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class methods</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#getLogger">getLogger</a>
-                </li>
-              </ul>
-            </div>
             <div class="methodSummaryPart"><span class="title">Instance methods</span>
               <ul>
                 <li>
@@ -71,88 +63,62 @@
             </div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Class properties</h2>
-          <a name="logger" id="logger"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>logger</h3>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="dispatch">dispatch</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>static <b>logger</b>:Logger
+                <div class="floatbox code">function <b>dispatch</b> (
+
 </div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Logger to log forwarded events.</div>
-          </div>
-        </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Class methods</h2>
-          <a name="getLogger" id="getLogger"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>getLogger</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>static function <b>getLogger</b> (
-</div>
-                <div class="code">Void) : Logger</div>
-              </div>
-            </div>
-            <div class="boxWithBorder">
-              <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
-                  <div class="item">logger to log forwared events</div>
+                <div><span class="code">event:<a href="org_as2lib_env_event_EventInfo.html">EventInfo</a>,
+listeners:Array) : Void</span>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="methodSection">
-          <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="dispatch" id="dispatch"></a>
-          <div class="method hasBottomDivider">
-            <h3>dispatch</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>dispatch</b> (
-
-</div>
-                <div class="code">event:EventInfo,
-listeners:Array) : Void</div>
-              </div>
-            </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
+                <div class="contentHolder"><span class="title">See also:</span>
                   <div class="item"><a href="org_as2lib_env_event_EventDispatcher.html#dispatch">org.as2lib.env.event.EventDispatcher.dispatch()</a></div>
                 </div>
               </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventDispatcher.html#dispatch">org.as2lib.env.event.EventDispatcher.dispatch</a></div>
+                </div>
+              </div>
             </div>
           </div>
-          <a name="dispatchConsumable" id="dispatchConsumable"></a>
           <div class="method hasBottomDivider">
-            <h3>dispatchConsumable</h3>
+            <h3 id="dispatchConsumable">dispatchConsumable</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>dispatchConsumable</b> (
+                <div class="floatbox code">function <b>dispatchConsumable</b> (
 
 </div>
-                <div class="code">event:EventInfo,
-listeners:Array) : Void</div>
+                <div><span class="code">event:<a href="org_as2lib_env_event_ConsumableEventInfo.html">ConsumableEventInfo</a>,
+listeners:Array) : Void</span>
+                </div>
               </div>
             </div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_env_event_EventDispatcher.html#dispatchConsumable">org.as2lib.env.event.EventDispatcher.dispatchConsumable()</a></div>
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item">org.as2lib.env.event.EventDispatcher#dispatchConsumable()</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_event_ConsumableEventDispatcher.html#dispatchConsumable">org.as2lib.env.event.ConsumableEventDispatcher.dispatchConsumable</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:54:56
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:08
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

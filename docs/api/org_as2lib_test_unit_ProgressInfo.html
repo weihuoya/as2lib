@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_test_unit_TestRunnerInfo.html">TestRunnerInfo</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_test_unit_TestRunnerInfo.html">TestRunnerInfo</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,7 +31,7 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.unit.ProgressInfo</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Sunday, 29 August 2004, 23:54:12</span>
+              <li><span class="title">File last modified: </span><span class="value">Friday, 11 February 2005, 19:17:40</span>
               </li>
             </ul>
           </div>
@@ -37,19 +44,6 @@
               <ul>
                 <li>
                   <a href="#ProgressInfo">ProgressInfo</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#testRunner">testRunner</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#testCaseResult">testCaseResult</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#testCaseMethod">testCaseMethod</a>
                 </li>
               </ul>
             </div>
@@ -83,162 +77,125 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="ProgressInfo" id="ProgressInfo"></a>
           <div class="method hasBottomDivider">
-            <h3>ProgressInfo</h3>
+            <h3 id="ProgressInfo">ProgressInfo</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>ProgressInfo</b> (
+                <div class="floatbox code">function <b>ProgressInfo</b> (
 
 
 </div>
-                <div class="code">testRunner:TestRunner,
-testCaseResult:TestCaseResult,
-testCaseMethod:TestCaseMethodInfo)</div>
+                <div><span class="code">testRunner:<a href="org_as2lib_test_unit_TestRunner.html">TestRunner</a>,
+testCaseResult:<a href="org_as2lib_test_unit_TestCaseResult.html">TestCaseResult</a>,
+testCaseMethod:<a href="org_as2lib_test_unit_TestCaseMethodInfo.html">TestCaseMethodInfo</a>)</span>
+                </div>
               </div>
             </div>
             <div class="description">Constructs a event information for a process.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
-                    <div class="floatbox code colorizedCode">testRunner    <span class="separator">:</span></div>
+                    <div class="floatbox code colorizedCode">testRunner<span class="separator">:</span></div>
                     <div>TestRunner that published this event.</div>
-                  </div>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">testCaseResult<span class="separator">:</span></div>
-                    <div>Result for the current TestCase.</div>
-                  </div>
-                  <div class="item">
-                    <div class="floatbox code colorizedCode">testCaseMethod<span class="separator">:</span></div>
-                    <div>Method that just finished.</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="testCaseMethod" id="testCaseMethod"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>testCaseMethod</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>testCaseMethod</b>:TestCaseMethodInfo
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Internal Holder for the TestCaseMethodInformation.</div>
-          </div>
-          <a name="testCaseResult" id="testCaseResult"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>testCaseResult</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>testCaseResult</b>:TestCaseResult
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Internal Holder for the TestCaseResult.</div>
-          </div>
-          <a name="testRunner" id="testRunner"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>testRunner</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>testRunner</b>:TestRunner
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Internal Testrunner holder.</div>
-          </div>
-        </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="getFinishedMethodInfo" id="getFinishedMethodInfo"></a>
           <div class="method hasBottomDivider">
-            <h3>getFinishedMethodInfo</h3>
+            <h3 id="getFinishedMethodInfo">getFinishedMethodInfo</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getFinishedMethodInfo</b> (
+                <div class="floatbox code">function <b>getFinishedMethodInfo</b> (
 </div>
-                <div class="code">Void) : TestCaseMethodInfo</div>
+                <div><span class="code">Void) : <a href="org_as2lib_test_unit_TestCaseMethodInfo.html">TestCaseMethodInfo</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Getter for the just finished Mmethod.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">MethodInfo for the just finished method.</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getName" id="getName"></a>
           <div class="method hasBottomDivider">
-            <h3>getName</h3>
+            <h3 id="getName">getName</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getName</b> (
+                <div class="floatbox code">function <b>getName</b> (
 </div>
-                <div class="code">Void) : String</div>
+                <div><span class="code">Void) : String</span>
+                </div>
               </div>
             </div>
             <div class="description">Implementation of TestRunnerInfo#getName.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">Name of the event.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventInfo.html#getName">org.as2lib.env.event.EventInfo.getName</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getRunningTestCase" id="getRunningTestCase"></a>
           <div class="method hasBottomDivider">
-            <h3>getRunningTestCase</h3>
+            <h3 id="getRunningTestCase">getRunningTestCase</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getRunningTestCase</b> (
+                <div class="floatbox code">function <b>getRunningTestCase</b> (
 </div>
-                <div class="code">Void) : TestCaseResult</div>
+                <div><span class="code">Void) : <a href="org_as2lib_test_unit_TestCaseResult.html">TestCaseResult</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Getter for the current running TestCase.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">ResultInformations for the current running TestCase.</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getTestRunner" id="getTestRunner"></a>
           <div class="method hasBottomDivider">
-            <h3>getTestRunner</h3>
+            <h3 id="getTestRunner">getTestRunner</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getTestRunner</b> (
+                <div class="floatbox code">function <b>getTestRunner</b> (
 </div>
-                <div class="code">Void) : TestRunner</div>
+                <div><span class="code">Void) : <a href="org_as2lib_test_unit_TestRunner.html">TestRunner</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Implementation of TestRunnerInfo#getTestRunner.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">TestRunner that published this event.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_test_unit_TestRunnerInfo.html#getTestRunner">TestRunnerInfo.getTestRunner</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 12:29:57
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:11:01
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

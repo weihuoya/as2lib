@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_data_holder_Iterator.html">Iterator</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_data_holder_Iterator.html">Iterator</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,12 +31,28 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.data.holder.map.KeyMapIterator</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Wednesday, 19 January 2005, 10:10:29</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 05 March 2005, 05:41:28</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">KeyMapIterator is used to iterate over the keys of a map. </div></div>
+        <div class="classDescription"><div class="descriptionSummary">KeyMapIterator is used to iterate over the keys of a map. </div><p>This iterator is quite simple to use. There is one method to check
+ whether there are more elements left to iterate over <a href="org_as2lib_data_holder_map_KeyMapIterator.html#hasNext">hasNext</a>,
+ one method to get the next element <a href="org_as2lib_data_holder_map_KeyMapIterator.html#next">next</a> and one to remove
+ the current element <a href="org_as2lib_data_holder_map_KeyMapIterator.html#remove">remove</a>.<p>And here is how it works:<pre><span class="codeKeyword">var</span> map:Map = <span class="codeKeyword">new</span> HashMap();
+map.put(<span class="codeString">"key1"</span>, <span class="codeNumber">1</span>);
+map.put(<span class="codeString">"key2"</span>, <span class="codeNumber">2</span>);
+map.put(<span class="codeString">"key3"</span>, <span class="codeNumber">3</span>);
+<span class="codeKeyword">var</span> iterator:Iterator = <span class="codeKeyword">new</span> KeyMapIterator(map);
+<span class="codeKeyword">while</span> (iterator.hasNext()) {
+  <span class="codeIdentifier">trace</span>(iterator.next());
+}</pre><p>You normally do not use this class directly. You normally obtain
+ an iterator that iterates over the keys of a map using the
+ <a href="org_as2lib_data_holder_Map.html#keyIterator">org.as2lib.data.holder.Map.keyIterator</a> method. The returned iterator can, but does
+ not have to be an instance of this class.<pre><span class="codeKeyword">var</span> map:Map = <span class="codeKeyword">new</span> HashMap();
+<span class="codeComment">// ...</span>
+<span class="codeKeyword">var</span> iterator:Iterator = map.keyIterator();
+<span class="codeComment">// ...</span></pre></div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
@@ -37,19 +60,6 @@
               <ul>
                 <li>
                   <a href="#KeyMapIterator">KeyMapIterator</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#target">target</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#iterator">iterator</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#key">key</a>
                 </li>
               </ul>
             </div>
@@ -80,128 +90,120 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="KeyMapIterator" id="KeyMapIterator"></a>
           <div class="method hasBottomDivider">
-            <h3>KeyMapIterator</h3>
+            <h3 id="KeyMapIterator">KeyMapIterator</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>KeyMapIterator</b> (
+                <div class="floatbox code">function <b>KeyMapIterator</b> (
 </div>
-                <div class="code">target:Map)</div>
+                <div><span class="code">target:<a href="org_as2lib_data_holder_Map.html">Map</a>)</span>
+                </div>
               </div>
             </div>
             <div class="description">Constructs a new KeyMapIterator instance.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">target<span class="separator">:</span></div>
                     <div>the map to iterate over</div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="iterator" id="iterator"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>iterator</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>iterator</b>:ArrayIterator
-</div>
-                <div class="code"></div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in target map is null or undefined</div>
+                </div>
               </div>
             </div>
-            <div class="description">The iterator used as a helper.</div>
-          </div>
-          <a name="key" id="key"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>key</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>key</b>
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The presently selected key.</div>
-          </div>
-          <a name="target" id="target"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>target</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>target</b>:Map
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The target data holder to iterate over.</div>
           </div>
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="hasNext" id="hasNext"></a>
           <div class="method hasBottomDivider">
-            <h3>hasNext</h3>
+            <h3 id="hasNext">hasNext</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>hasNext</b> (
+                <div class="floatbox code">function <b>hasNext</b> (
 </div>
-                <div class="code">Void) : Boolean</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
               </div>
             </div>
+            <div class="description">Returns whether there exists another key to iterate over.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_Iterator.html#hasNext">org.as2lib.data.holder.Iterator.hasNext()</a></div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">true if there is at least one key left to iterate over</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_Iterator.html#hasNext">org.as2lib.data.holder.Iterator.hasNext</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="next" id="next"></a>
           <div class="method hasBottomDivider">
-            <h3>next</h3>
+            <h3 id="next">next</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>next</b> (
+                <div class="floatbox code">function <b>next</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
+            <div class="description">Returns the next key.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_Iterator.html#next">org.as2lib.data.holder.Iterator.next()</a></div>
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the next key</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_NoSuchElementException.html">NoSuchElementException</a> if there is
+ no next key</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_Iterator.html#next">org.as2lib.data.holder.Iterator.next</a></div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="remove" id="remove"></a>
           <div class="method hasBottomDivider">
-            <h3>remove</h3>
+            <h3 id="remove">remove</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>remove</b> (
+                <div class="floatbox code">function <b>remove</b> (
 </div>
-                <div class="code">Void) : Void</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
               </div>
             </div>
+            <div class="description">Removes the currently selected key-value pair from this iterator
+ and from the map this iterator iterates over.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">See also</span>
-                  <div class="item"><a href="org_as2lib_data_holder_Iterator.html#remove">org.as2lib.data.holder.Iterator.remove()</a></div>
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if you try to 
+ remove a key-value pair when none is selected</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_Iterator.html#remove">org.as2lib.data.holder.Iterator.remove</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:41:40
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:08:28
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

@@ -22,23 +22,17 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.except.StackTraceElement</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Saturday, 19 February 2005, 04:06:17</span>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 19 February 2005, 18:27:26</span>
               </li>
             </ul>
           </div>
         </div>
         <div class="classDescription"><div class="descriptionSummary">StackTraceElement represents an element in the stack trace returned
-
- by the Throwable#getStackTrace method.<p>A stack trace element is simply a data holder.  </div>It holds the thrower,
-
+ by the Throwable#getStackTrace method. </div><p>A stack trace element is simply a data holder. It holds the thrower,
  the method that threw the throwable and the arguments passed to the
-
  method that threw the throwable.<p>This class is also responsible for stringifying itself. This
-
  functionality is used by the ThrowableStringifier. You can set your
-
  own stringifier to get a custom string representation of the stack
-
  trace element via the static #setStringifier method.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
@@ -47,26 +41,6 @@
               <ul>
                 <li>
                   <a href="#StackTraceElement">StackTraceElement</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#stringifier">stringifier</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#thrower">thrower</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#method">method</a>
-                </li>
-                <li class="private" style="display:none;">
-                  <a href="#args">args</a>
                 </li>
               </ul>
             </div>
@@ -110,24 +84,24 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="StackTraceElement" id="StackTraceElement"></a>
           <div class="method hasBottomDivider">
-            <h3>StackTraceElement</h3>
+            <h3 id="StackTraceElement">StackTraceElement</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>StackTraceElement</b> (
+                <div class="floatbox code">function <b>StackTraceElement</b> (
 
 
 </div>
-                <div class="code">thrower,
+                <div><span class="code">thrower,
 method:Function,
-args:Array)</div>
+args:Array)</span>
+                </div>
               </div>
             </div>
             <div class="description">Constructs a new SimpleStackTraceElement instance.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">thrower<span class="separator">:</span></div>
                     <div>the object that declares the method that threw the throwable</div>
@@ -145,101 +119,44 @@ args:Array)</div>
             </div>
           </div>
         </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Class properties</h2>
-          <a name="stringifier" id="stringifier"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>stringifier</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span>static <b>stringifier</b>:Stringifier
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">Stringifier to stringify stack trace elements.</div>
-          </div>
-        </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="args" id="args"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>args</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>args</b>:Array
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The arguments passed to the throwing method.</div>
-          </div>
-          <a name="method" id="method"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>method</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>method</b>:Function
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The throwing method.</div>
-          </div>
-          <a name="thrower" id="thrower"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>thrower</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>thrower</b>
-</div>
-                <div class="code"></div>
-              </div>
-            </div>
-            <div class="description">The thrower.</div>
-          </div>
-        </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Class methods</h2>
-          <a name="getStringifier" id="getStringifier"></a>
           <div class="method hasBottomDivider">
-            <h3>getStringifier</h3>
+            <h3 id="getStringifier">getStringifier</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>getStringifier</b> (
+                <div class="floatbox code">static function <b>getStringifier</b> (
 </div>
-                <div class="code">Void) : Stringifier</div>
+                <div><span class="code">Void) : <a href="org_as2lib_util_Stringifier.html">Stringifier</a></span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the stringifier to stringify stack trace elements.<p>The returned stringifier is either the default StackTraceElementStringifier
-
  if no custom stringifier was set or if the stringifier was set to null
-
  or the set stringifier.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the default StackTraceElementStringifier or a custom stringifier</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="setStringifier" id="setStringifier"></a>
           <div class="method hasBottomDivider">
-            <h3>setStringifier</h3>
+            <h3 id="setStringifier">setStringifier</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public static function <b>setStringifier</b> (
+                <div class="floatbox code">static function <b>setStringifier</b> (
 </div>
-                <div class="code">stackTraceElementStringifier:Stringifier) : Void</div>
+                <div><span class="code">stackTraceElementStringifier:<a href="org_as2lib_util_Stringifier.html">Stringifier</a>) : Void</span>
+                </div>
               </div>
             </div>
             <div class="description">Sets the stringifier to stringify stack trace elements.<p>If you set a stringifier of value null the #getStringifier method
-
  returns the default stringifier.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">stackTraceElementStringifier<span class="separator">:</span></div>
                     <div>the stringifier to stringify stack trace elements</div>
@@ -251,90 +168,93 @@ args:Array)</div>
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="getArguments" id="getArguments"></a>
           <div class="method hasBottomDivider">
-            <h3>getArguments</h3>
+            <h3 id="getArguments">getArguments</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getArguments</b> (
+                <div class="floatbox code">function <b>getArguments</b> (
 </div>
-                <div class="code">Void) : Array</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the arguments that have been passed to the method that threw
-
  the throwable.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the arguments passed to the method that threw the throwable</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getMethod" id="getMethod"></a>
           <div class="method hasBottomDivider">
-            <h3>getMethod</h3>
+            <h3 id="getMethod">getMethod</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getMethod</b> (
+                <div class="floatbox code">function <b>getMethod</b> (
 </div>
-                <div class="code">Void) : Function</div>
+                <div><span class="code">Void) : Function</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the method that threw the throwable.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the method that threw the throwable</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="getThrower" id="getThrower"></a>
           <div class="method hasBottomDivider">
-            <h3>getThrower</h3>
+            <h3 id="getThrower">getThrower</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>getThrower</b> (
+                <div class="floatbox code">function <b>getThrower</b> (
 </div>
-                <div class="code">Void)</div>
+                <div><span class="code">Void)</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the object that declares the method that threw the throwable.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the object that declares the method that threw the throwable</div>
                 </div>
               </div>
             </div>
           </div>
-          <a name="toString" id="toString"></a>
           <div class="method hasBottomDivider">
-            <h3>toString</h3>
+            <h3 id="toString">toString</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>toString</b> (
+                <div class="floatbox code">function <b>toString</b> (
 </div>
-                <div class="code">Void) : String</div>
+                <div><span class="code">Void) : String</span>
+                </div>
               </div>
             </div>
             <div class="description">Returns the string representation of this stack trace element.<p>The string representation is obtained via the stringifier returned
-
  by the static #getStringifier method.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Returns</span>
+                <div class="contentHolder"><span class="title">Returns:</span>
                   <div class="item">the string representation of this stack trace element</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:57:48
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:17
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>

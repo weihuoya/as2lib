@@ -16,7 +16,14 @@
         <div class="classProperties">
           <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
           </div>
-          <div class="conformsTo"><span class="title">Implements:</span><span class="items"><ul><li><a href="org_as2lib_env_log_LogHandler.html">LogHandler</a></li></ul></span>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_env_log_LogHandler.html">LogHandler</a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="classDetails">
             <ul>
@@ -24,16 +31,14 @@
               </li>
               <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.log.handler.XmlSocketHandler</span>
               </li>
-              <li><span class="title">File last modified: </span><span class="value">Tuesday, 15 February 2005, 06:02:10</span>
+              <li><span class="title">File last modified: </span><span class="value">Monday, 04 April 2005, 20:26:02</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="classDescription"><div class="descriptionSummary">XmlSocketHandler uses the XMLSocket to log the received data.<p>It was originally designed to work with the POWERFLASHER's SOS 
-
+        <div class="classDescription"><div class="descriptionSummary">XmlSocketHandler uses the XMLSocket to log the received data. </div><p>It was originally designed to work with the POWERFLASHER's SOS 
  XML-Socket-Server but you can use it for any output device that is
-
- accessible over the XML socket. </div></div>
+ accessible over the XML socket.</div>
         <div class="summary hasBottomDivider">
           <h2 class="hasBottomDivider">Summary</h2>
           <div class="methodList">
@@ -41,13 +46,6 @@
               <ul>
                 <li>
                   <a href="#XmlSocketHandler">XmlSocketHandler</a>
-                </li>
-              </ul>
-            </div>
-            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
-              <ul>
-                <li class="private" style="display:none;">
-                  <a href="#socket">socket</a>
                 </li>
               </ul>
             </div>
@@ -72,22 +70,22 @@
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Constructor</h2>
-          <a name="XmlSocketHandler" id="XmlSocketHandler"></a>
           <div class="method hasBottomDivider">
-            <h3>XmlSocketHandler</h3>
+            <h3 id="XmlSocketHandler">XmlSocketHandler</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>XmlSocketHandler</b> (
+                <div class="floatbox code">function <b>XmlSocketHandler</b> (
 
 </div>
-                <div class="code">host:String,
-port:Number)</div>
+                <div><span class="code">host:String,
+port:Number)</span>
+                </div>
               </div>
             </div>
             <div class="description">Constructs a new XmlSocketHandler instance.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">host<span class="separator">:</span></div>
                     <div>a fully qualified DNS domain name</div>
@@ -98,54 +96,54 @@ port:Number)</div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="methodSection private" style="display:none;">
-          <h2 class="hasBottomDivider">Instance properties</h2>
-          <a name="socket" id="socket"></a>
-          <div class="method hasBottomDivider private" style="display:none;">
-            <h3>socket</h3>
-            <div class="fullMethod">
-              <div class="clearfix floatholder">
-                <div class="floatbox code"><span class="privateColor">private</span><b>socket</b>:XMLSocket
-</div>
-                <div class="code"></div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in <code>port</code> is
+ <code>null</code> or less than 1024</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">To do:</span>
+                  <div class="item">throw exception when unable to connect</div>
+                </div>
               </div>
             </div>
-            <div class="description">Socket to connect to the specified host.</div>
           </div>
         </div>
         <div class="methodSection">
           <h2 class="hasBottomDivider">Instance methods</h2>
-          <a name="write" id="write"></a>
           <div class="method hasBottomDivider">
-            <h3>write</h3>
+            <h3 id="write">write</h3>
             <div class="fullMethod">
               <div class="clearfix floatholder">
-                <div class="floatbox code">public function <b>write</b> (
+                <div class="floatbox code">function <b>write</b> (
 </div>
-                <div class="code">message:LogMessage) : Void</div>
+                <div><span class="code">message:<a href="org_as2lib_env_log_LogMessage.html">LogMessage</a>) : Void</span>
+                </div>
               </div>
             </div>
-            <div class="description">Uses the xml socket connection to log the passed-in message.<p>Uses the LogMessage#toString method to obtain the string to
-
+            <div class="description">Uses the xml socket connection to log the passed-in message.<p>Uses the <a href="org_as2lib_env_log_LogMessage.html#toString">org.as2lib.env.log.LogMessage.toString</a> method to obtain the string to
  log.</div>
             <div class="boxWithBorder">
               <div class="boxedElem">
-                <div class="contentHolder"><span class="title">Parameters</span>
+                <div class="contentHolder"><span class="title">Parameters:</span>
                   <div class="item">
                     <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
                     <div>the message to log</div>
                   </div>
                 </div>
               </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_LogHandler.html#write">org.as2lib.env.log.LogHandler.write</a></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="copyright">&copy; 2003 - 2005 As2lib - Open Source ActionScript 2.0 Library | </span><span class="created">Created with
-<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Thursday, 24 February 2005, 11:59:16
- | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        <div class="footer"><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Tuesday, 05 April 2005, 19:09:25
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span>
         </div>
       </div>
     </div>
