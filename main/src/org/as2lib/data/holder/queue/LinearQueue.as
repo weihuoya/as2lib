@@ -58,6 +58,14 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	/**
 	 * Constructs a new LinearQueue instance.
 	 *
+	 * <p>The queue steps through the passed-in source beginning at position
+	 * zero and enqueues all contained elements.
+	 * <code>var queue:LinearQueue = new LinearQueue([1, 2, 3]);
+ 	 * while (!queue.isEmpty()) {
+	 * 	 trace(queue.dequeue());
+	 * }</code>
+	 * The output is made in the following order: 1, 2, 3
+	 *
 	 * @param source (optional) an array that contains values to populate the new queue with
 	 */
 	public function LinearQueue(source:Array) {

@@ -58,6 +58,14 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	/**
 	 * Constructs a new SimpleStack instance.
 	 *
+	 * <p>The stack steps through the passed-in source beginning at position
+	 * zero and pushes all contained elements.
+	 * <code>var stack:SimpleStack = new SimpleStack([1, 2, 3]);
+ 	 * while (!stack.isEmpty()) {
+	 * 	 trace(stack.pop());
+	 * }</code>
+	 * The output is made in the following order: 3, 2, 1
+	 *
 	 * @param source (optional) an array that contains values to populate the new stack with
 	 */
 	public function SimpleStack(source:Array) {
