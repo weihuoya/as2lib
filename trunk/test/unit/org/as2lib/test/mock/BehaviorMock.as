@@ -34,7 +34,7 @@ class org.as2lib.test.mock.BehaviorMock extends BasicClass implements Behavior {
 	private var __createMethodBehavior:Object;
 	private var __getMethodBehavior:Object;
 	private var __getLastMethodBehavior:Object;
-	private var __removeAllBehavior:Object;
+	private var __removeAllBehaviors:Object;
 	private var __verify:Object;
 	
 	public function BehaviorMock(testCase:TestCase) {
@@ -44,7 +44,7 @@ class org.as2lib.test.mock.BehaviorMock extends BasicClass implements Behavior {
 		__createMethodBehavior = new Object();
 		__getMethodBehavior = new Object();
 		__getLastMethodBehavior = new Object();
-		__removeAllBehavior = new Object();
+		__removeAllBehaviors = new Object();
 		__verify = new Object();
 	}
 	
@@ -57,7 +57,7 @@ class org.as2lib.test.mock.BehaviorMock extends BasicClass implements Behavior {
 		if (__createMethodBehavior.callExpected != __createMethodBehavior.called) testCase["fail"]("createMethodBehavior(..): Expected call.");
 		if (__getMethodBehavior.callExpected != __getMethodBehavior.called) testCase["fail"]("getMethodBehavior(..): Expected call.");
 		if (__getLastMethodBehavior.callExpected != __getLastMethodBehavior.called) testCase["fail"]("getLastMethodBehavior(..): Expected call.");
-		if (__removeAllBehavior.callExpected != __removeAllBehavior.called) testCase["fail"]("removeAllBehavior(..): Expected call.");
+		if (__removeAllBehaviors.callExpected != __removeAllBehaviors.called) testCase["fail"]("removeAllBehaviors(..): Expected call.");
 		if (__verify.callExpected != __verify.called) testCase["fail"]("verify(..): Expected call.");
 	}
 	
@@ -132,14 +132,14 @@ class org.as2lib.test.mock.BehaviorMock extends BasicClass implements Behavior {
 		}
 	}
 	
-	public function removeAllBehavior(Void):Void {
+	public function removeAllBehaviors(Void):Void {
 		if (state == RECORD) {
-			__removeAllBehavior.callExpected = true;
+			__removeAllBehaviors.callExpected = true;
 		} else {
-			if (__removeAllBehavior.callExpected) {
-				__removeAllBehavior.called = true;
+			if (__removeAllBehaviors.callExpected) {
+				__removeAllBehaviors.called = true;
 			} else {
-				testCase["fail"]("removeAllBehavior(..): Unexpected call.");
+				testCase["fail"]("removeAllBehaviors(..): Unexpected call.");
 			}
 		}
 	}

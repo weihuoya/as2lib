@@ -62,6 +62,6 @@ interface org.as2lib.env.log.HierarchicalLogger extends Logger {
 	 *
 	 * @return all added log handlers and the ones of the parents
 	 */
-	public function getAllHandler(Void):Array;
+	public function getAllHandlers(Void):Array;
 	
 }

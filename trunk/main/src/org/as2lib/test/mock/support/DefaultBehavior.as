@@ -159,9 +159,9 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 	}
 	
 	/**
-	 * @see Behavior#removeAllBehavior()
+	 * @see Behavior#removeAllBehaviors()
 	 */
-	public function removeAllBehavior(Void):Void {
+	public function removeAllBehaviors(Void):Void {
 		methodBehaviors.clear();
 	}
 	

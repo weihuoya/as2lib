@@ -57,9 +57,9 @@ class org.as2lib.env.event.SimpleConsumableEventBroadcaster extends BasicClass i
 	 * <p>The listeners in the array will not be checked for correct
 	 * type nor for being undefined or null.
 	 *
-	 * @see org.as2lib.env.event.EventBroadcaster#addAllListener()
+	 * @see org.as2lib.env.event.EventBroadcaster#addAllListeners()
 	 */
-	public function addAllListener(listeners:Array):Void {
+	public function addAllListeners(listeners:Array):Void {
 		if (listeners) {
 			var i:Number = listeners.length;
 			while(--i-(-1)) {
@@ -84,16 +84,16 @@ class org.as2lib.env.event.SimpleConsumableEventBroadcaster extends BasicClass i
 	}
 	
 	/**
-	 * @see org.as2lib.env.event.EventBroadcaster#removeAllListener()
+	 * @see org.as2lib.env.event.EventBroadcaster#removeAllListeners()
 	 */
-	public function removeAllListener(Void):Void {
+	public function removeAllListeners(Void):Void {
 		listeners = new Array();
 	}
 	
 	/**
-	 * @see org.as2lib.env.event.EventBroadcaster#getAllListener()
+	 * @see org.as2lib.env.event.EventBroadcaster#getAllListeners()
 	 */
-	public function getAllListener(Void):Array {
+	public function getAllListeners(Void):Array {
 		return listeners.concat();
 	}
 	

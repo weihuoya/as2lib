@@ -397,7 +397,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 * and that the mock object will again be in record state.
 	 */
 	public function reset(Void):Void {
-		behavior.removeAllBehavior();
+		behavior.removeAllBehaviors();
 		state = getRecordStateFactory().getMockControlState(behavior);
 	}
 	

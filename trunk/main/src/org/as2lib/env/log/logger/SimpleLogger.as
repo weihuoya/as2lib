@@ -54,7 +54,7 @@ import org.as2lib.env.log.logger.AbstractLogger;
  *
  * <p>The actaul log output gets made by log handlers. To configure and
  * access the handlers of this logger you can use the methods {@link #addHandler},
- * {@link #removeHandler}, {@link #removeAllHandler} and {@link #getAllHandler}. There are a
+ * {@link #removeHandler}, {@link #removeAllHandlers} and {@link #getAllHandlers}. There are a
  * few pre-defined handlers for different output devices. Take a look
  * at the org.as2lib.env.log.handler package for these.
  *
@@ -200,8 +200,8 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	/**
 	 * Removes all added log handlers.
 	 */
-	public function removeAllHandler(Void):Void {
-		broadcaster.removeAllListener();
+	public function removeAllHandlers(Void):Void {
+		broadcaster.removeAllListeners();
 	}
 	
 	/**
@@ -211,8 +211,8 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 *
 	 * @return all added log handlers
 	 */
-	public function getAllHandler(Void):Array {
-		return broadcaster.getAllListener();
+	public function getAllHandlers(Void):Array {
+		return broadcaster.getAllListeners();
 	}
 	
 	/**

@@ -109,7 +109,7 @@ class org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase {
 		b.addListener(null);
 		b.addListener(null);
 		b.addListener(null);
-		assertSame(b.getAllListener().length, 0);
+		assertSame(b.getAllListeners().length, 0);
 	}
 	
 	public function testAddListener(Void):Void {
@@ -121,10 +121,10 @@ class org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase {
 		b.addListener(l1);
 		b.addListener(l2);
 		b.addListener(l3);
-		assertSame(b.getAllListener().length, 3);
-		assertSame(b.getAllListener()[0], l1);
-		assertSame(b.getAllListener()[1], l2);
-		assertSame(b.getAllListener()[2], l3);
+		assertSame(b.getAllListeners().length, 3);
+		assertSame(b.getAllListeners()[0], l1);
+		assertSame(b.getAllListeners()[1], l2);
+		assertSame(b.getAllListeners()[2], l3);
 	}
 	
 	public function testRemoveWithUnknownListener(Void):Void {
@@ -138,10 +138,10 @@ class org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase {
 		b.addListener(l3);
 		b.removeListener(getEventListener());
 		
-		assertSame(b.getAllListener().length, 3);
-		assertSame(b.getAllListener()[0], l1);
-		assertSame(b.getAllListener()[1], l2);
-		assertSame(b.getAllListener()[2], l3);
+		assertSame(b.getAllListeners().length, 3);
+		assertSame(b.getAllListeners()[0], l1);
+		assertSame(b.getAllListeners()[1], l2);
+		assertSame(b.getAllListeners()[2], l3);
 	}
 	
 	public function testRemoveWithNullListener(Void):Void {
@@ -155,10 +155,10 @@ class org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase {
 		b.addListener(l3);
 		b.removeListener(null);
 		
-		assertSame(b.getAllListener().length, 3);
-		assertSame(b.getAllListener()[0], l1);
-		assertSame(b.getAllListener()[1], l2);
-		assertSame(b.getAllListener()[2], l3);
+		assertSame(b.getAllListeners().length, 3);
+		assertSame(b.getAllListeners()[0], l1);
+		assertSame(b.getAllListeners()[1], l2);
+		assertSame(b.getAllListeners()[2], l3);
 	}
 	
 	public function testRemoveListener(Void):Void {
@@ -170,17 +170,17 @@ class org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase {
 		b.addListener(l1);
 		b.addListener(l2);
 		b.addListener(l3);
-		assertSame(b.getAllListener().length, 3);
-		assertSame(b.getAllListener()[0], l1);
-		assertSame(b.getAllListener()[1], l2);
-		assertSame(b.getAllListener()[2], l3);
+		assertSame(b.getAllListeners().length, 3);
+		assertSame(b.getAllListeners()[0], l1);
+		assertSame(b.getAllListeners()[1], l2);
+		assertSame(b.getAllListeners()[2], l3);
 		b.removeListener(l2);
-		assertSame(b.getAllListener()[0], l1);
-		assertSame(b.getAllListener()[1], l3);
+		assertSame(b.getAllListeners()[0], l1);
+		assertSame(b.getAllListeners()[1], l3);
 		b.removeListener(l1);
-		assertSame(b.getAllListener()[0], l3);
+		assertSame(b.getAllListeners()[0], l3);
 		b.removeListener(l3);
-		assertSame(b.getAllListener().length, 0);
+		assertSame(b.getAllListeners().length, 0);
 	}
 	
 	public function testRemoveAllListener(Void):Void {
@@ -188,8 +188,8 @@ class org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase {
 		b.addListener(getEventListener());
 		b.addListener(getEventListener());
 		b.addListener(getEventListener());
-		assertSame(b.getAllListener().length, 3);
-		b.removeAllListener();
-		assertSame(b.getAllListener().length, 0);
+		assertSame(b.getAllListeners().length, 3);
+		b.removeAllListeners();
+		assertSame(b.getAllListeners().length, 0);
 	}
 }

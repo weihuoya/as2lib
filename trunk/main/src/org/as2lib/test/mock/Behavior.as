@@ -55,7 +55,7 @@ interface org.as2lib.test.mock.Behavior extends BasicInterface {
 	/**
 	 * Removes all added behaviors.
 	 */
-	public function removeAllBehavior(Void):Void;
+	public function removeAllBehaviors(Void):Void;
 	
 	/**
 	 * Verifies every behavior.

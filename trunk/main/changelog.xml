@@ -4,6 +4,17 @@
     xsi:schemaLocation="aslib http://www.as2lib.org/changelog_0.91.xsd">
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
+       <month value="3">
+         <day value="26">           
+           <entry type="change" package="org.as2lib.test.mock" class="Behavior" method="removeAllBehavior"><change-rename to="removeAllBehaviors" /></entry>
+           <entry type="change" package="org.as2lib.env.event" class="EventBroadcaster" method="removeAllListener"><change-rename to="removeAllListeners" /></entry>
+           <entry type="change" package="org.as2lib.env.event" class="EventBroadcaster" method="addAllListener"><change-rename to="addAllListeners" /></entry>
+           <entry type="change" package="org.as2lib.env.event" class="EventBroadcaster" method="getAllListener"><change-rename to="getAllListeners" /></entry>
+           <entry type="change" package="org.as2lib.env.log" class="HierarchicalLogger" method="getAllHandler"><change-rename to="getAllHandlers" /></entry>
+           <entry type="change" package="org.as2lib.env.log" class="ConfigurableLogger" method="removeAllHandler"><change-rename to="removeAllHandlers" /></entry>
+           <entry type="change" package="org.as2lib.env.log" class="ConfigurableLogger" method="getAllHandler"><change-rename to="getAllHandlers" /></entry>
+         </day>
+       </month>
        <month value="2">
          <day value="27">
            <entry type="add" package="org.as2lib.env.reflect" class="PackageNotFoundException"></entry>
