@@ -17,35 +17,35 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	 * Constant for hiding a object from for-in loops.
 	 * 
 	 * @see #setStatus()
-       */
+        */
 	public static var STATUS_IS_HIDDEN = 1
 	
 	/**
 	 * Constant for setting an object deletable.
 	 * 
 	 * @see #setStatus()
-       */
+        */
 	public static var STATUS_CAN_DELETE = 2;
 	
 	/**
 	 * Constant for setting an object overwritable.
 	 * 
 	 * @see #setStatus()
-       */
-	public static var STATUS_CAN_OVER_WRITE = 4;
+        */
+	public static var STATUS_CAN_OVERWRITE = 4;
 	
 	/**
 	 * Constant for allowing everything to an object.
 	 * 
 	 * @see #setStatus()
-       */
-	public static var STATUS_ALL_ALLOWED = STATUS_CAN_DELETE | STATUS_CAN_OVER_WRITE;
+        */
+	public static var STATUS_ALL_ALLOWED = STATUS_CAN_DELETE | STATUS_CAN_OVERWRITE;
 	
 	/**
 	 * Constant for allowing nothing..
 	 * 
 	 * @see #setStatus()
-       */
+        */
 	public static var STATUS_NOTHING_ALLOWED = STATUS_IS_HIDDEN;
 	
 	/**
@@ -70,7 +70,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	 * @param object The object that should be found.
 	 * @return The name if it was found. Null if it wasn't found.
 	 */
-	public static function isChild(inObject, object:Function):String {
+	public static function getChildName(inObject, object:Function):String {
 		for(var i:String in inObject) {
 			try {
 				if(inObject[i] == object) {
@@ -84,9 +84,9 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	}
 	
 	/**
-	 * Sets the Status of a Object to a status-value.
-	 * Uses ASSetPropFlags to set the Status of the Object.
-	 * You Can apply the static values:
+	 * Sets the Access permission to a object by a status-value.
+	 * Uses ASSetPropFlags to set the permissions of the Object.
+	 * You can apply the static values:
 	 * <table>
 	 *   <tr>
 	 *     <th>#STATUS_IS_HIDDEN</th>
@@ -97,7 +97,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	 *     <td>Marks the Object as Deleteable</td>
 	 *   </tr>
 	 *   <tr>
-	 *     <td>#STATUS_CAN_OVER_WRITE</th>
+	 *     <td>#STATUS_CAN_OVERWRITE</th>
 	 *     <td>Marks the Object as Overwriteable</td>
 	 *   </tr>
 	 *   <tr>
@@ -112,13 +112,13 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	 * as fast references.
 	 * 
 	 * You can combine this values for proper uses binary with:
-	 * #STATUS_CAN_DELETE | #STATUS_CAN_OVER_WRITE
+	 * #STATUS_CAN_DELETE | #STATUS_CAN_OVERWRITE
 	 * to apply only two status.
 	 * 
 	 * @param object The object that should be modified.
 	 * @param status Status that should apply.
 	 */
-	public static function setStatus(object, status:Number):Void {
+	public static function setAccessPermissions(object, status:Number):Void {
 		_global.ASSetPropFlags(object, null, status, true);
 	}
 	

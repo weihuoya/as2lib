@@ -127,7 +127,7 @@ class org.as2lib.util.StringUtil extends BasicClass {
 		return false;
 	}
 	
-	public static function beginsWith(string:String, chars:String):Boolean {
+	public static function startsWith(string:String, chars:String):Boolean {
 		if (string.indexOf(chars) == 0) {
 			return true;
 		}
