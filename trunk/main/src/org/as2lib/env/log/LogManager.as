@@ -17,6 +17,8 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.LoggerRepository;
 import org.as2lib.env.log.Logger;
+import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.level.AbstractLogLevel;
 
 /**
  * LogManager is the core access point in the logging api.
