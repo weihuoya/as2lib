@@ -72,12 +72,12 @@ class org.as2lib.util.Call extends BasicClass {
 	public function toString(Void):String {
 		// TODO: Refactor the code and outsource it.
 		var result:String="";
-		result += "[type " + ReflectUtil.getClassNameForInstance(this) + " -> ";
+		result += "[type " + ReflectUtil.getTypeNameForInstance(this) + " -> ";
 		ObjectUtil.setAccessPermission(object, null, ObjectUtil.ACCESS_ALL_ALLOWED);
 		if (ObjectUtil.isEmpty(object)) {
 			result += object.toString() + "." + ObjectUtil.getChildName(object, func);
 		} else {
-			var className:String = ReflectUtil.getClassName(object);
+			var className:String = ReflectUtil.getTypeName(object);
 			if (className) {
 				result += className;
 				result += "." + ReflectUtil.getMethodName(func, object);

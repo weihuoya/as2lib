@@ -154,7 +154,7 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 			if(i != 0) {
 				result += ", ";
 			}
-			result += ReflectUtil.getClassName(args[i]);
+			result += ReflectUtil.getTypeName(args[i]);
 		}
 		if(l > 0) {
 			result += ")";

@@ -176,7 +176,7 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	 */
 	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between object [" + object + "] and type [" + ReflectUtil.getClassNameForClass(type) + "].", this, arguments);
+			throw new IllegalArgumentException("Type mismatch between object [" + object + "] and type [" + ReflectUtil.getTypeNameForType(type) + "].", this, arguments);
 		}
 	}
 	

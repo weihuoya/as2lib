@@ -30,7 +30,7 @@ class org.as2lib.core.ObjectStringifier extends BasicClass implements Stringifie
 	 * @see org.as2lib.util.string.Stringifier
 	 */
 	public function execute(target):String {
-		return "[type " + ReflectUtil.getClassName(target) + "]";
+		return "[type " + ReflectUtil.getTypeName(target) + "]";
 	}
 	
 }

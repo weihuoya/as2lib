@@ -26,27 +26,27 @@ import org.as2lib.core.BasicClass;
  */
 class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	
-	public static function getClassName(object):String {
+	public static function getTypeName(object):String {
 		if (object == null) return null;
 		if (typeof(object) == "function") {
-			return getClassNameForClass(object);
+			return getTypeNameForType(object);
 		}
-		return getClassNameForInstance(object);
+		return getTypeNameForInstance(object);
 	}
 	
-	public static function getClassNameForInstance(instance):String {
+	public static function getTypeNameForInstance(instance):String {
 		if (instance == null) return null;
 		// MovieClips on the stage do not have a '__constructor__' but a 'constructor' variable.
-		return getClassNameForClass(instance.__constructor__ ? instance.__constructor__ : instance.constructor);
+		return getTypeNameForType(instance.__constructor__ ? instance.__constructor__ : instance.constructor);
 	}
 	
-	public static function getClassNameForClass(clazz:Function):String {
-		if (!clazz) return null;
+	public static function getTypeNameForType(type:Function):String {
+		if (!type) return null;
 		_global.ASSetPropFlags(_global, null, 0, true);
-		return getClassNameForClassByPackage(clazz, _global, "");
+		return getTypeNameForTypeByPackage(type, _global, "");
 	}
 	
-	private static function getClassNameForClassByPackage(c:Function, p, n:String):String {
+	private static function getTypeNameForTypeByPackage(c:Function, p, n:String):String {
 		for (var r:String in p) {
 			try {
 				// flex stores every class in _global and in its actual package
@@ -54,7 +54,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 				// the first part of the if-clause excludes these extra stored classes
 				if ((!eval("_global." + r.split("_").join(".")) || r.indexOf("_") < 0) && p[r] == c) return (n + r);
 				if (p[r].__constructor__ == Object) {
-					r = getClassNameForClassByPackage(c, p[r], n + r + ".");
+					r = getTypeNameForTypeByPackage(c, p[r], n + r + ".");
 					if (r) return r;
 				}
 			} catch (e) {
@@ -66,19 +66,19 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	public static function getMethodName(method:Function, object):String {
 		if (!method || object == null) return null;
 		if (typeof(object) == "function") {
-			return getMethodNameByClass(method, object);
+			return getMethodNameByType(method, object);
 		}
 		return getMethodNameByInstance(method, object);
 	}
 	
 	public static function getMethodNameByInstance(method:Function, instance):String {
 		if (!method || instance == null) return null;
-		return getMethodNameByClass(method, instance.__constructor__);
+		return getMethodNameByType(method, instance.__constructor__);
 	}
 	
-	public static function getMethodNameByClass(method:Function, clazz:Function):String {
-		if (!method || !clazz) return null;
-		var p = clazz.prototype;
+	public static function getMethodNameByType(method:Function, type:Function):String {
+		if (!method || !type) return null;
+		var p = type.prototype;
 		while (p) {
 			_global.ASSetPropFlags(p, null, 0, true);
 			_global.ASSetPropFlags(p, ["__proto__", "__constructor__"], 7, true);
@@ -92,15 +92,15 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 			_global.ASSetPropFlags(p, null, 1, true);
 			p = p.__proto__;
 		}
-		for (var n:String in clazz) {
-			_global.ASSetPropFlags(clazz, null, 0, true);
-			_global.ASSetPropFlags(clazz, ["__proto__", "constructor", "prototype"], 7, true);
+		for (var n:String in type) {
+			_global.ASSetPropFlags(type, null, 0, true);
+			_global.ASSetPropFlags(type, ["__proto__", "constructor", "prototype"], 7, true);
 			try {
-				if (clazz[n] == method) return n;
+				if (type[n] == method) return n;
 			} catch (e) {
 			}
 			// ASSetPropFlags must be restored because unexpected behaviours get caused otherwise
-			_global.ASSetPropFlags(clazz, null, 1, true);
+			_global.ASSetPropFlags(type, null, 1, true);
 		}
 		return null;
 	}
@@ -108,20 +108,20 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	public static function isMethodStatic(methodName:String, object):Boolean {
 		if (!methodName || object == null) return false;
 		if (typeof(object) == "function") {
-			return isMethodStaticByClass(methodName, object);
+			return isMethodStaticByType(methodName, object);
 		}
 		return isMethodStaticByInstance(methodName, object);
 	}
 	
 	public static function isMethodStaticByInstance(methodName:String, instance):Boolean {
 		if (!methodName || instance == null) return false;
-		return isMethodStaticByClass(methodName, instance.__constructor__);
+		return isMethodStaticByType(methodName, instance.__constructor__);
 	}
 	
-	public static function isMethodStaticByClass(methodName:String, clazz:Function):Boolean {
-		if (!methodName || !clazz) return false;
+	public static function isMethodStaticByType(methodName:String, type:Function):Boolean {
+		if (!methodName || !type) return false;
 		try {
-			if (clazz[methodName]) return true;
+			if (type[methodName]) return true;
 		} catch (e) {
 		}
 		return false;
@@ -130,18 +130,18 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	public static function isConstructor(constructor:Function, object):Boolean {
 		if (!constructor || object == null) return false;
 		if (typeof(object) == "function") {
-			return isConstructorByClass(constructor, object);
+			return isConstructorByType(constructor, object);
 		}
 		return isConstructorByInstance(constructor, object);
 	}
 	
 	public static function isConstructorByInstance(constructor:Function, instance):Boolean {
 		if (!constructor || instance == null) return false;
-		return isConstructorByClass(constructor, instance.__constructor__);
+		return isConstructorByType(constructor, instance.__constructor__);
 	}
 	
-	public static function isConstructorByClass(constructor:Function, clazz:Function):Boolean {
-		return (constructor == clazz);
+	public static function isConstructorByType(constructor:Function, type:Function):Boolean {
+		return (constructor == type);
 	}
 	
 	/**

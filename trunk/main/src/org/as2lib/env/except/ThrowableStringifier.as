@@ -32,7 +32,7 @@ class org.as2lib.env.except.ThrowableStringifier extends BasicClass implements S
 	 */
 	public function execute(target):String {
 		var throwable:Throwable = target;
-		return (ReflectUtil.getClassNameForInstance(throwable) + ": " + throwable.getMessage() + "\n"
+		return (ReflectUtil.getTypeNameForInstance(throwable) + ": " + throwable.getMessage() + "\n"
 				+ stringifyStackTrace(throwable.getStackTrace()));
 	}
 

@@ -36,7 +36,7 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 		var thrower = element.getThrower();
 		var method:Function = element.getMethod();
 		
-		var throwerName:String = ReflectUtil.getClassName(thrower);
+		var throwerName:String = ReflectUtil.getTypeName(thrower);
 		if (throwerName == null) {
 			throwerName = "[unknown]";
 		}

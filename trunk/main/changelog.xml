@@ -6,6 +6,12 @@
     <year value="2005">
        <month value="2">
          <day value="4">
+           <entry type="change" package="static org.as2lib.env.reflect" class="ReflectUtil" method="getClassName(..)"><change-rename to="getTypeName(..)" /></entry>
+           <entry type="change" package="static org.as2lib.env.reflect" class="ReflectUtil" method="getClassNameForClass(..)"><change-rename to="getTypeNameForType(..)" /></entry>
+           <entry type="change" package="static org.as2lib.env.reflect" class="ReflectUtil" method="getClassNameForInstance(..)"><change-rename to="getTypeNameForInstance(..)" /></entry>
+           <entry type="change" package="static org.as2lib.env.reflect" class="ReflectUtil" method="getMethodNameByClass(..)"><change-rename to="getMethodNameByType(..)" /></entry>
+           <entry type="change" package="static org.as2lib.env.reflect" class="ReflectUtil" method="isMethodStaticByClass(..)"><change-rename to="isMethodStaticByType(..)" /></entry>
+           <entry type="change" package="static org.as2lib.env.reflect" class="ReflectUtil" method="isConstructorByClass(..)"><change-rename to="isConstructorByType(..)" /></entry>
            <entry type="change" package="static org.as2lib.env.except" class="ExceptConfig" method="get-/setThrowableStringifier(..)">Moved methods to static AbstractThrowable.get/-setStringifier(..)</entry>
            <entry type="change" package="static org.as2lib.env.except" class="ExceptConfig" method="get-/setStackTraceElementStringifier(..)">Moved methods to static StackTraceElement.get/-setStringifier(..)</entry>
            <entry type="remove" package="org.as2lib.env.except" class="StackTraceStringifier">ThrowableStringifier is now also responsible for stringifying the stack trace.</entry>
