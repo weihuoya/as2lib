@@ -22,7 +22,7 @@ import org.as2lib.core.BasicClass;
 /**
  * ArrayIterator is used to iterate over an Array.
  *
- * @author Michael Hermann
+ * @author Michael Herrmann
  * @author Simon Wacker
  */
 class org.as2lib.data.iterator.ArrayIterator extends BasicClass implements Iterator {
