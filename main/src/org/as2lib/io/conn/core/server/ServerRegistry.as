@@ -15,7 +15,6 @@
  */
  
 import org.as2lib.core.BasicInterface;
-import org.as2lib.io.conn.core.server.Server;
 
 /**
  * Interface for a standardized ServerRegistry.
@@ -30,20 +29,20 @@ interface org.as2lib.io.conn.core.server.ServerRegistry extends BasicInterface {
 	 *
 	 * @param host the name of server
 	 */
-	public function contains(host:String):Boolean;
+	public function containsServer(host:String):Boolean;
 	
 	/**
-	 * Registers passed Server at ServerRegistry.
+	 * Registers a server with the given host.
 	 *
-	 * @param server a Server instance
+	 * @param host the host to register
 	 */
-	public function register(server:Server):Void;
+	public function registerServer(host:String):Void;
 	
 	/**
-	 * Removes passed Server from ServerRegistry.
+	 * Unregisters the server with the given host.
 	 *
-	 * @param server a Server instance
+	 * @param host the host to unregister
 	 */
-	public function remove(server:Server):Void;
+	public function removeServer(host:String):Void;
 	
 }

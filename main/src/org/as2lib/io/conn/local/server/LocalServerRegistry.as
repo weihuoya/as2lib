@@ -17,7 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.conn.core.server.ServerRegistry;
-import org.as2lib.io.conn.core.server.Server;
 import org.as2lib.io.conn.core.server.ReservedHostException;
 import org.as2lib.io.conn.local.core.LocalConnectionTemplate;
 
@@ -29,60 +28,53 @@ import org.as2lib.io.conn.local.core.LocalConnectionTemplate;
  */
 class org.as2lib.io.conn.local.server.LocalServerRegistry extends BasicClass implements ServerRegistry {
 	
-	/** Stores the only available LocalServerRegistry instance. */
-	private static var instance:LocalServerRegistry;
-	
 	/** Contains all registered Servers. */
 	private var serverRegistry:Object;
 	
 	/**
-	 * LocalServerRegistry is a singleton. An instance of this class can
-	 * thus only be obtained through this operation.
-	 *
-	 * @returns a LocalServerRegistry instance.
-	 */
-	public static function getInstance(Void):LocalServerRegistry {
-		if (!instance) instance = new LocalServerRegistry();
-		return instance;
-	}
-	
-	/**
 	 * Constructs a new LocalServerRegistry.
 	 */
-	private function LocalServerRegistry(Void) {
+	public function LocalServerRegistry(Void) {
 		serverRegistry = new Object();
 	}
 	
 	/**
-	 * @see org.as2lib.io.conn.local.ServerRegistry#contains()
+	 * @see org.as2lib.io.conn.local.ServerRegistry#containsServer()
 	 */
-	public function contains(host:String):Boolean {
+	public function containsServer(host:String):Boolean {
 		return LocalConnectionTemplate.connectionExists(host);
 	}
 	
 	/**
-	 * @see org.as2lib.io.conn.local.ServerRegistry#register()
+	 * @throws IllegalArgumentException if the host is null, undefined or a blank string
+	 * @throws ReservedHostException if a server with the passed-in host is already running
+	 * @see org.as2lib.io.conn.local.ServerRegistry#registerServer()
 	 */
-	public function register(server:Server):Void {
+	public function registerServer(host:String):Void {
+		if (!host) throw new IllegalArgumentException("Host must not be null, undefined or a blank string.", this, arguments);
 		var connection:LocalConnectionTemplate = new LocalConnectionTemplate();
 		try {
-			connection.connect(server.getHost());
+			connection.connect(host);
 		} catch(exception:org.as2lib.io.conn.local.core.ReservedConnectionException) {
-			throw new ReservedHostException("Server with host [" + server.getHost() + "] is already running.", this, arguments).initCause(exception);
+			throw new ReservedHostException("Server with host [" + host + "] is already running.", this, arguments).initCause(exception);
 		}
-		serverRegistry[server.getHost()] = connection;
+		serverRegistry[host] = connection;
 	}
 	
 	/**
-	 * @see org.as2lib.io.conn.local.ServerRegistry#remove()
+	 * @throws IllegalArgumentException if you tried to unregister a server that has not been registered directly at this registry but at another one
+	 * @see org.as2lib.io.conn.local.ServerRegistry#removeServer()
 	 */
-	public function remove(server:Server):Void {
-		if (serverRegistry[server.getHost()]) {
-			var connection:LocalConnectionTemplate = serverRegistry[server.getHost()];
+	public function removeServer(host:String):Void {
+		if (serverRegistry[host]) {
+			var connection:LocalConnectionTemplate = serverRegistry[host];
 			connection.close();
-			serverRegistry[server.getHost()] = undefined;
+			serverRegistry[host] = undefined;
+			return;
 		}
-		throw new IllegalArgumentException("You tried to remove a server [" + server + "] with host [" + server.getHost() + "] from the registry that has not been registered yet.", this, arguments);
+		if (containsServer(host)) {
+			throw new IllegalArgumentException("Local server registry can only remove servers that have been registered directly at it. Host [" + host + "] has been registered at another registry.", this, arguments);
+		}
 	}
 	
 }
