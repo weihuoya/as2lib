@@ -17,6 +17,12 @@
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.support.RecordState;
 import org.as2lib.test.mock.Behaviour;
+import org.as2lib.test.mock.MethodCall;
+import org.as2lib.test.mock.MethodCallRange;
+import org.as2lib.test.mock.MethodResponse;
+import org.as2lib.test.mock.ArgumentsMatcher;
+import test.unit.org.as2lib.test.mock.BehaviourMock;
+import test.unit.org.as2lib.test.mock.MethodBehaviourMock;
 
 /**
  * @author Simon Wacker
@@ -32,7 +38,150 @@ class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 	}
 	
 	public function testNewWithRealArgument(Void):Void {
-		var s:RecordState = new RecordState(new Behaviour());
+		var b:Behaviour = new Behaviour();
+		var s:RecordState = new RecordState(b);
+		assertSame(s.getBehaviour(), b);
+	}
+	
+	public function testInvokeMethodWithNullArgument(Void):Void {
+		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		m.replay();
+		
+		var b:BehaviourMock = new BehaviourMock(this);
+		b.createMethodBehaviour(null);
+		b.setCreateMethodBehaviourReturnValue(m);
+		b.addMethodBehaviour("[unknown]", m);
+		b.replay();
+		
+		var s:RecordState = new RecordState(b);
+		s.invokeMethod(null);
+	}
+	
+	public function testInvokeMethodWithRealArgument(Void):Void {
+		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		m.replay();
+		
+		var c:MethodCall = new MethodCall("methodName", []);
+		
+		var b:BehaviourMock = new BehaviourMock(this);
+		b.createMethodBehaviour(c);
+		b.setCreateMethodBehaviourReturnValue(m);
+		b.addMethodBehaviour("methodName", m);
+		b.replay();
+		
+		var s:RecordState = new RecordState(b);
+		s.invokeMethod(c);
+	}
+	
+	public function testInvokeMethodWithNullReturningMethodCallGetMethodNameMethod(Void):Void {
+		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		m.replay();
+		
+		var c:MethodCall = new MethodCall(null, []);
+		
+		var b:BehaviourMock = new BehaviourMock(this);
+		b.createMethodBehaviour(c);
+		b.setCreateMethodBehaviourReturnValue(m);
+		b.addMethodBehaviour("[unknown]", m);
+		b.replay();
+		
+		var s:RecordState = new RecordState(b);
+		s.invokeMethod(c);
+	}
+	
+	public function testInvokeMethodWithEmptyStringReturningMethodCallGetMethodNameMethod(Void):Void {
+		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		m.replay();
+		
+		var c:MethodCall = new MethodCall("", []);
+		
+		var b:BehaviourMock = new BehaviourMock(this);
+		b.createMethodBehaviour(c);
+		b.setCreateMethodBehaviourReturnValue(m);
+		b.addMethodBehaviour("[unknown]", m);
+		b.replay();
+		
+		var s:RecordState = new RecordState(b);
+		s.invokeMethod(c);
+	}
+	
+	public function testSetMethodResponseWithNullMethodResponse(Void):Void {
+		var r:MethodCallRange = new MethodCallRange();
+		
+		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		m.addMethodResponse(null, r);
+		m.replay();
+
+		var b:BehaviourMock = new BehaviourMock(this);
+		b.getLastMethodBehaviour();
+		b.setGetLastMethodBehaviourReturnValue(m);
+		b.replay();
+		
+		var s:RecordState = new RecordState(b);
+		s.setMethodResponse(null, r);
+	}
+	
+	public function testSetMethodResponseWithNullMethodCallRange(Void):Void {
+		var r:MethodResponse = new MethodResponse();
+		
+		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		m.addMethodResponse(r, null);
+		m.replay();
+
+		var b:BehaviourMock = new BehaviourMock(this);
+		b.getLastMethodBehaviour();
+		b.setGetLastMethodBehaviourReturnValue(m);
+		b.replay();
+		
+		var s:RecordState = new RecordState(b);
+		s.setMethodResponse(r, null);
+	}
+	
+	public function testSetMethodResponseWithRealArguments(Void):Void {
+		var r:MethodResponse = new MethodResponse();
+		var cr:MethodCallRange = new MethodCallRange();
+		
+		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		m.addMethodResponse(r, cr);
+		m.replay();
+
+		var b:BehaviourMock = new BehaviourMock(this);
+		b.getLastMethodBehaviour();
+		b.setGetLastMethodBehaviourReturnValue(m);
+		b.replay();
+		
+		var s:RecordState = new RecordState(b);
+		s.setMethodResponse(r, cr);
+	}
+	
+	public function testSetArgumentsMatcherWithNullArgument(Void):Void {
+		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		m.setArgumentsMatcher(null);
+		m.replay();
+
+		var b:BehaviourMock = new BehaviourMock(this);
+		b.getLastMethodBehaviour();
+		b.setGetLastMethodBehaviourReturnValue(m);
+		b.replay();
+		
+		var s:RecordState = new RecordState(b);
+		s.setArgumentsMatcher(null);
+	}
+	
+	public function testSetArgumentsMatcherWithRealArgument(Void):Void {
+		var a:ArgumentsMatcher = new ArgumentsMatcher();
+		
+		var m:MethodBehaviourMock = new MethodBehaviourMock(this);
+		m.setArgumentsMatcher(a);
+		m.replay();
+
+		var b:BehaviourMock = new BehaviourMock(this);
+		b.getLastMethodBehaviour();
+		b.setGetLastMethodBehaviourReturnValue(m);
+		b.replay();
+		
+		var s:RecordState = new RecordState(b);
+		s.setArgumentsMatcher(a);
 	}
 	
 	public function testVerify(Void):Void {
