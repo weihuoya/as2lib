@@ -1,4 +1,5 @@
 ﻿import org.as2lib.basic.OverloadHandler;
+import org.as2lib.util.ObjectUtil;
 
 /**
  * @author: Simon Wacker
@@ -34,48 +35,17 @@ class org.as2lib.basic.SimpleOverloadHandler implements OverloadHandler {
 			return false;
 		}
 		for (var i:Number = 0; i < l; i++) {
-			if (isPrimitiveType(someArguments[i])) {
-				if (typesDoNotMatch(args[i](someArguments[i]), someArguments[i])) {
-					return false;
+			if (ObjectUtil.isPrimitiveType(someArguments[i])) {
+				if (ObjectUtil.typesMatch(args[i](someArguments[i]), someArguments[i])) {
+					return true;
 				}
 			} else {
-				if (isNotInstanceOf(someArguments[i], args[i])) {
-					return false;
+				if (ObjectUtil.isInstanceOf(someArguments[i], args[i])) {
+					return true;
 				}
 			}
 		}
-		return true;
-	}
-	
-	/**
-	 * Checks if the object is a primitive type.
-	 * @param anObject
-	 * @return true if the object is a primitive type else false
-	 */
-	private function isPrimitiveType(anObject:Object):Boolean {
-		return (typeof(anObject) == "string"
-				|| typeof(anObject) == "number"
-				|| typeof(anObject) == "boolean");
-	}
-	
-	/**
-	 * Checks if types fo the first object do not match the types of the second object.
-	 * @param firstObject
-	 * @param secondObject
-	 * @return true if the types don't match else false
-	 */
-	private function typesDoNotMatch(firstObject:Object, secondObject:Object):Boolean {
-		return (typeof(firstObject) != typeof(secondObject));
-	}
-	
-	/**
-	 * Checks if an object isn't an instance of a class.
-	 * @param anObject
-	 * @param aClass
-	 * @return true if the object isn't an instance of the class otherwise false
-	 */
-	private function isNotInstanceOf(anObject:Object, aClass:Function):Boolean {
-		return (!(anObject instanceof aClass));
+		return false;
 	}
 	
 	/**
