@@ -32,10 +32,13 @@ class org.as2lib.env.event.SpeedEventBroadcaster extends BasicClass implements E
 	
 	/**
 	 * Constructs a new SpeedEventBroadcaster.
+	 *
+	 * @param listeners optional argument that can be used to configure the broadcaster
 	 */
-	public function SpeedEventBroadcaster(Void) {
+	public function SpeedEventBroadcaster(listeners:Array) {
 		l = new Object();
 		AsBroadcaster.initialize(l);
+		if (listeners) l._listeners = listeners;
 	}
 	
 	/**
