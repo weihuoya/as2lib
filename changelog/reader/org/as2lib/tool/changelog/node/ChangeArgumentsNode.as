@@ -53,7 +53,7 @@ class org.as2lib.tool.changelog.node.ChangeArgumentsNode extends BasicClass {
 		if(from) {
 			result = "<b>Changed arguments</b> from <i>"+from+"</i> to <i>"+to+"</i>";
 		} else {
-			result = "<b>Set arguments</b> to <i>"+to+"</i>";
+			result = "<b>Changed arguments</b> to <i>"+to+"</i>";
 		}
 		if(annotation.length > 0) {
 			result += "("+annotation+")";

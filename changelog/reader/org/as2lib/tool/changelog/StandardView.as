@@ -188,7 +188,7 @@ class org.as2lib.tool.changelog.StandardView extends BasicClass implements Chang
 			if(clazz || package) {
 				content += ".";
 			}
-			content += method();
+			content += method;
 			somethingWrittenBeforeDate = true;
 		} else if (variable) {
 			if(clazz || package) {
