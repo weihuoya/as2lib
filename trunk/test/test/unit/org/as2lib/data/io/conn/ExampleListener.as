@@ -2,34 +2,35 @@
 import org.as2lib.data.io.conn.ConnectorListener;
 import org.as2lib.data.io.conn.ConnectorError;
 import org.as2lib.data.io.conn.ConnectorResponse;
-import org.as2lib.env.out.Out;
+import org.as2lib.Config;
+import org.as2lib.env.out.OutAccess;
 
 class test.org.as2lib.data.io.conn.ExampleListener extends BasicClass implements ConnectorListener {
 	/** Internal counter (just to do something */
 	public static var counter:Number = 0;
 	private var cnt:Number;
-	private var myOut:Out;
+	/* Standard debug output */
+	private var aOut:OutAccess;
 	
 	public function ExampleListener(Void) {
 		counter++;
 		cnt=counter;
-		myOut = new Out();
-		myOut.info("ExampleListener.instance: "+counter);
+		aOut = Config.getOut();
+		aOut.debug("ExampleListener.instance: "+counter);
 	}
 	
 	/**
 	 * Executes a call.
 	 */
 	public function onError(error:ConnectorError):Void{
-		myOut.info("ExampleListener Nr."+cnt);
-		myOut.info(error.getMessage());
-		myOut.error(error);
-		//myOut.error(error);
+		aOut.debug("ExampleListener Nr."+cnt+".onError");
+		//aOut.debug(error.getMessage());
+		aOut.error(error);
 	}
 	
 	public function onResponse(response:ConnectorResponse):Void{
 		trace("ExampleListener Nr."+cnt);
 		//trace(response.getName());
-		myOut.info(response.getData().toString());
+		aOut.debug(response.getData().toString());
 	}
 }
