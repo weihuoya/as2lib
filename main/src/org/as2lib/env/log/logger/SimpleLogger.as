@@ -117,6 +117,9 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	/** The broadcaster to dispatch the messages to all handlers. */
 	private var broadcaster:EventBroadcaster;
 	
+	/** The name of the logger. */
+	private var name:String;
+	
 	/**
 	 * Constructs a new SimpleLogger instance.
 	 *
@@ -125,9 +128,14 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 *
 	 * <p>The default broadcaster is of type SpeedEventBroadcaster.
 	 *
+	 * <p>The logger name is by default shown in the log message to identify
+	 * where the message came from.
+	 *
+	 * @param broadcaster (optional) the name of this logger
 	 * @param broadcaster (optional) the broadcaster used to broadcast to the added handlers
 	 */
-	public function SimpleLogger(broadcaster:EventBroadcaster) {
+	public function SimpleLogger(name:String, broadcaster:EventBroadcaster) {
+		this.name = name;
 		this.broadcaster = broadcaster ? broadcaster : new SpeedEventBroadcaster();
 		level = AbstractLogLevel.ALL;
 		levelAsNumber = level.toNumber();
@@ -141,6 +149,29 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 		errorLevelAsNumber = errorLevel.toNumber();
 		fatalLevel = AbstractLogLevel.FATAL;
 		fatalLevelAsNumber = fatalLevel.toNumber();
+	}
+	
+	/**
+	 * Returns the name of this logger.
+	 *
+	 * <p>This method returns null if no name has been set via the
+	 * #setName method.
+	 *
+	 * @return the name of this logger
+	 */
+	public function getName(Void):String {
+		return name;
+	}
+	
+	/**
+	 * Sets the name of this logger.
+	 *
+	 * <p>The name is by default shown in the log message.
+	 *
+	 * @param name the new name of this logger
+	 */
+	public function setName(name:String):Void {
+		this.name = name;
 	}
 	
 	/**
@@ -325,7 +356,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			broadcaster.dispatch(new LogMessage(message, level, null));
+			broadcaster.dispatch(new LogMessage(message, level, name));
 		}
 	}
 	
@@ -340,7 +371,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 */
 	public function debug(message):Void {
 		if (isDebugEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, debugLevel, null));
+			broadcaster.dispatch(new LogMessage(message, debugLevel, name));
 		}
 	}
 	
@@ -355,7 +386,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 */
 	public function info(message):Void {
 		if (isInfoEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, infoLevel, null));
+			broadcaster.dispatch(new LogMessage(message, infoLevel, name));
 		}
 	}
 	
@@ -370,7 +401,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 */
 	public function warning(message):Void {
 		if (isWarningEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, warningLevel, null));
+			broadcaster.dispatch(new LogMessage(message, warningLevel, name));
 		}
 	}
 	
@@ -385,7 +416,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 */
 	public function error(message):Void {
 		if (isErrorEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, errorLevel, null));
+			broadcaster.dispatch(new LogMessage(message, errorLevel, name));
 		}
 	}
 	
@@ -400,7 +431,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 */
 	public function fatal(message):Void {
 		if (isFatalEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, fatalLevel, null));
+			broadcaster.dispatch(new LogMessage(message, fatalLevel, name));
 		}
 	}
 	
