@@ -7,7 +7,7 @@ import org.as2lib.env.out.Out;
 /**
  * @author Martin Heidegger
  * @author Simon Wacker
- * @see org.as2lib.env.out.level.Error
+ * @see org.as2lib.env.out.level.ErrorLevel
  */
 class org.as2lib.env.out.level.WarningLevel extends ErrorLevel {
 	/**
