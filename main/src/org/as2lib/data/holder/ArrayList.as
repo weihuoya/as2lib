@@ -83,7 +83,7 @@ class org.as2lib.data.holder.ArrayList extends BasicClass implements List {
 	}
 	
 	public function contains(value):Boolean {
-		return (indexOf(value) != -1);
+		return (indexOf(value) > -1);
 	}
 	
 	public function containsAll(list:List):Boolean {
@@ -113,7 +113,7 @@ class org.as2lib.data.holder.ArrayList extends BasicClass implements List {
 	}
 	
 	public function isEmpty(Void):Boolean {
-		return (data.length == 0);
+		return (data.length < 1);
 	}
 	
 	public function iterator(Void):Iterator {
