@@ -30,9 +30,9 @@ import org.as2lib.test.unit.ResumeInfo;
  * Default listener for TestRunner.
  * Listener as default logger for the Testrunner. To be used as standard outwriter for the TestRunner.
  *
+ * @author Martin Heidegger
  * @see LogManager#getLoggerRepository
  * @see Logger
- * @author Martin Heidegger
  */
 class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements TestListener {
 	
@@ -72,7 +72,6 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Test
 	public function onFinish(finishInfo:FinishInfo):Void {
 		var testRunner:TestRunner = finishInfo.getTestRunner();
 	    getLogger().info(testRunner.getTestResult().toString());
-		trace(testRunner.getTestResult().toString());
 	}
 	
 	/**
