@@ -50,7 +50,11 @@ class org.as2lib.tool.changelog.node.ChangeRenameNode extends BasicClass {
 	 */
 	public function toString(Void):String {
 		var result:String;
-		result = "Renamed "+from+" to "+to;
+		result = "Renamed ";
+		if(from) {
+			result += from+" ";
+		}
+		result += " to "+to;
 		if(annotation.length > 0) {
 			result += "("+annotation+")";
 		}
