@@ -15,18 +15,18 @@
  */
 
 import org.as2lib.env.event.EventListener;
-import org.as2lib.data.io.conn.core.event.MethodInvocationResponseInfo;
+import org.as2lib.data.io.conn.core.event.MethodInvocationReturnInfo;
 
 /**
  * @author Simon Wacker
  */
-interface org.as2lib.data.io.conn.core.event.MethodInvocationResponseListener extends EventListener {
+interface org.as2lib.data.io.conn.core.event.MethodInvocationReturnListener extends EventListener {
 	
 	/**
 	 * Gets executed when the method invocation succeeded.
 	 *
 	 * @param info contains the result of the method invocation
 	 */
-	public function onResponse(info:MethodInvocationResponseInfo):Void;
+	public function onReturn(info:MethodInvocationReturnInfo):Void;
 	
 }

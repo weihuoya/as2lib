@@ -20,18 +20,18 @@ import org.as2lib.env.event.EventInfo;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.data.io.conn.core.event.MethodInvocationResponseInfo extends BasicClass implements EventInfo {
+class org.as2lib.data.io.conn.core.event.MethodInvocationReturnInfo extends BasicClass implements EventInfo {
 	
 	/** The result returned by the invoked method. */
-	private var response;
+	private var returnValue;
 	
 	/**
-	 * Constructs a new MethodInvocationResponseInfo.
+	 * Constructs a new instance.
 	 *
-	 * @param response the response of the invoked method
+	 * @param returnValue the result of the invoked method
 	 */
-	public function MethodInvocationResponseInfo(response) {
-		this.response = response;
+	public function MethodInvocationReturnInfo(returnValue) {
+		this.returnValue = returnValue;
 	}
 	
 	/*
@@ -39,8 +39,8 @@ class org.as2lib.data.io.conn.core.event.MethodInvocationResponseInfo extends Ba
 	 *
 	 * @param the result of the invoked method
 	 */
-	public function getResponse(Void) {
-		return response;
+	public function getReturnValue(Void) {
+		return returnValue;
 	}
 	
 	/**

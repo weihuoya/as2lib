@@ -27,7 +27,7 @@ interface org.as2lib.data.io.conn.core.client.ClientServiceProxyFactory extends 
 	
 	/**
 	 * @overload #getServiceProxyByUrl()
-	 * @overload #getServiceProxyByUrlAndInterface()
+	 * @overload #getServiceProxyByUrlAndType()
 	 */
 	public function getServiceProxy();
 	
@@ -41,12 +41,13 @@ interface org.as2lib.data.io.conn.core.client.ClientServiceProxyFactory extends 
 	public function getServiceProxyByUrl(url:String):ClientServiceProxy;
 	
 	/**
-	 * Returns a proxy that can be casted to the given interface.
+	 * Returns a proxy that can be casted to the given type. A type can either
+	 * be a class or an interface.
 	 *
 	 * @param url the full url to the service
-	 * @param interfaze the interface of the service
-	 * @return a proxy that can be casted to the given interface
+	 * @param type the type of the service
+	 * @return a proxy that can be casted to the given type
 	 */
-	public function getServiceProxyByUrlAndInterface(url:String, interfaze:Function);
+	public function getServiceProxyByUrlAndType(url:String, type:Function);
 	
 }

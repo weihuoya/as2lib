@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.data.io.conn.core.event.MethodInvocationResponseInfo;
+import org.as2lib.data.io.conn.core.event.MethodInvocationReturnInfo;
 import org.as2lib.data.io.conn.core.event.MethodInvocationErrorInfo;
 
 /**
@@ -28,7 +28,7 @@ interface org.as2lib.data.io.conn.core.event.MethodInvocationCallback extends Ba
 	 *
 	 * @param info contains the returned result
 	 */
-	public function onResponse(info:MethodInvocationResponseInfo):Void;
+	public function onReturn(info:MethodInvocationReturnInfo):Void;
 	
 	/**
 	 * Gets executed when a method invocation fails.
