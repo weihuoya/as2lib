@@ -20,6 +20,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.UnknownOverloadHandlerException;
 import org.as2lib.util.ArrayUtil;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.overload.SameTypeSignatureException;
 
 /**
  * You use this class to overload a method. Create a new instance of it, add the
@@ -123,9 +124,10 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 			throw new UnknownOverloadHandlerException("No appropriate OverloadHandler found.",
 									 			  	  this,
 									 			  	  arguments,
+													  target,
 													  handlers);
 		}
-		return getMatchingHandler(matchingHandlers).execute(target, args);
+		return getMatchingHandler(matchingHandlers, arguments.caller, args).execute(target, args);
 	}
 	
 	/**
@@ -151,11 +153,21 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * @param handlers the matching OverloadHandlers found by the #getMatchingHandlers() operation
 	 * @return the most explicit OverloadHandler
 	 */
-	private function getMatchingHandler(matchingHandlers:Array):OverloadHandler {
+	private function getMatchingHandler(matchingHandlers:Array, overloadedMethod:Function, overloadArguments:Array):OverloadHandler {
 		var i:Number = matchingHandlers.length;
 		var result:OverloadHandler = matchingHandlers[--i];
 		while (--i-(-1)) {
-			if (!result.isMoreExplicit(matchingHandlers[i])) result = matchingHandlers[i];
+			var moreExplicit:Boolean = result.isMoreExplicit(matchingHandlers[i]);
+			if (moreExplicit == null) {
+				throw new SameTypeSignatureException("Two OverloadHandlers have the same type signature.",
+													 this,
+													 arguments,
+													 target,
+													 overloadedMethod,
+													 overloadArguments,
+													 [result, matchingHandlers[i]]);
+			}
+			if (!moreExplicit) result = matchingHandlers[i];
 		}
 		return result;
 	}
