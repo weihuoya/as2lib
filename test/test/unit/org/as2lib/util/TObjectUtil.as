@@ -270,6 +270,11 @@ class test.unit.org.as2lib.util.TObjectUtil extends TestCase {
 		assertFalse("'test9' is a extended movieclip, so it should not match to BasicClass", ObjectUtil.typesMatch(test8, BasicClass));
 		assertFalse("'test9' is a extended movieclip, so it should not match 'null'", ObjectUtil.typesMatch(test8, null));
 		assertFalse("'test9' is a extended movieclip, so it should not match 'undefined'", ObjectUtil.typesMatch(test8, undefined));
+		
+		/**
+		 * Complex case if a Constructor of a class threws a exception and you validate with a primitive class
+		 */
+		assertNotThrows("Call throws a exception but should be validated anyway", ObjectUtil, "typesMatch", ["test", Call]);
 	}
 	
 	/**

@@ -15,6 +15,10 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 	public function AbstractTMap(Void) {
 	}
 	
+	public function getMap(Void):Map {
+		return null;
+	}
+	
 	private function fillMap(map:Map):Void {
 		map.put("key", "stringKey");
 		map.put(12, 15);
@@ -22,7 +26,7 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 	}
 	
 	public function testContainsKey(Void):Void {
-		var map:Map = this["getMap"]();
+		var map:Map = getMap();
 		fillMap(map);
 		assertTrue("Map.containsKey('key') should return true.", map.containsKey("key"));
 		assertTrue("Map.containsKey(12) should return true.", map.containsKey(12));
@@ -33,7 +37,7 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 	}
 	
 	public function testContainsValue(Void):Void {
-		var map:Map = this["getMap"]();
+		var map:Map = getMap();
 		fillMap(map);
 		assertTrue("Map.containsValue('stringKey') should return true.", map.containsValue("stringKey"));
 		assertTrue("Map.containsValue(15) should return true.", map.containsValue(15));
@@ -44,7 +48,7 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 	}
 	
 	public function testGetKeys(Void):Void {
-		var map:Map = this["getMap"]();
+		var map:Map = getMap();
 		fillMap(map);
 		var keys:Array = map.getKeys();
 		assertSame("Map.getKeys()[0] should be 'key'.", keys[0], "key");
@@ -55,7 +59,7 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 	}
 	
 	public function testGetValues(Void):Void {
-		var map:Map = this["getMap"]();
+		var map:Map = getMap();
 		fillMap(map);
 		var values:Array = map.getValues();
 		assertSame("Map.getValues()[0] should be 'stringKey'.", values[0], "stringKey");
@@ -66,7 +70,7 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 	}
 	
 	public function testGet(Void):Void {
-		var map:Map = this["getMap"]();
+		var map:Map = getMap();
 		fillMap(map);
 		assertSame("Map.get('key') should return 'stringKey'.", map.get("key"), "stringKey");
 		assertSame("Map.get(12) should return 15.", map.get(12), 15);
@@ -74,13 +78,9 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 		assertUndefined("Map.get('notContainedKey') should return undefined.", map.get("notContainedKey"));
 	}
 	
-	public function testPut(Void):Void {
-		// Has already been tested in testGet(Void):Void.
-	}
-	
 	public function testPutAll(Void):Void {
-		var map:Map = this["getMap"]();
-		var source:Map = this["getMap"]();
+		var map:Map = getMap();
+		var source:Map = getMap();
 		fillMap(source);
 		map.putAll(source);
 		assertSame("Map.get('key') should return 'stringKey'.", map.get("key"), "stringKey");
@@ -89,7 +89,7 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 	}
 	
 	public function testRemove(Void):Void {
-		var map:Map = this["getMap"]();
+		var map:Map = getMap();
 		fillMap(map);
 		map.remove("key");
 		map.remove(12);
@@ -100,7 +100,7 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 	}
 	
 	public function testClear(Void):Void {
-		var map:Map = this["getMap"]();
+		var map:Map = getMap();
 		fillMap(map);
 		map.clear();
 		assertFalse("Map.containsKey('key') should return false.", map.containsKey("key"));
@@ -109,7 +109,7 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 	}
 	
 	public function testSize(Void):Void {
-		var map:Map = this["getMap"]();
+		var map:Map = getMap();
 		fillMap(map);
 		assertSame("Map.size() should return 3.", map.size(), 3);
 		map.remove("key");
@@ -119,7 +119,7 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 	}
 	
 	public function testIsEmpty(Void):Void {
-		var map:Map = this["getMap"]();
+		var map:Map = getMap();
 		fillMap(map);
 		assertFalse("Map.isEmpty() should return false.", map.isEmpty());
 		map.clear();
@@ -127,7 +127,7 @@ class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 	}
 	
 	public function testIterator(Void):Void {
-		var map:Map = this["getMap"]();
+		var map:Map = getMap();
 		fillMap(map);
 		var iterator:Iterator = map.iterator();
 		assertSame("First element and 'stringKey' should be the same.", iterator.next(), "stringKey");
