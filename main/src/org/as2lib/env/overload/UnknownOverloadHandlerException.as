@@ -18,8 +18,11 @@ import org.as2lib.env.overload.OverloadException;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
- * UnknownOverloadHandlerException will be thrown if no appropriate OverloadHandler
- * could be found.
+ * UnknownOverloadHandlerException will be thrown if no appropriate
+ * overload handler for a list of real arguments could be found.
+ *
+ * <p>Whether an overload handler matches a given list of real arguments
+ * is determined by the OverloadHandler#matches method.
  *
  * @author Simon Wacker
  * @author Martin Heidegger
@@ -42,15 +45,16 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 	private var overloadedMethod;
 	
 	/**
-	 * Constructs a new OverloadException
+	 * Constructs a new UnknownOverloadHandlerException instance.
 	 * 
-	 * @param message			Message to the Exception.
-	 * @param thrower			Object where the Exception occured.
-	 * @param args				Arguments of the method where the exception occured.
-	 * @param overloadTarget	The target object on which the overload is perfomred.
-	 * @param overloadedMethod	The method that gets overlaoded.
-	 * @param overloadArguments	The arguments used for the overloading.
-	 * @param overloadHandlers	The available handlers that do not match.
+	 * @param message the message of the exception
+	 * @param thrower the object whose method threw the exception
+	 * @param args the arguments of the method that threw the exception
+	 * @param overloadTarget the target object the method should be invoked on / on which the overload is performed
+	 * @param overloadedMethod the method that is overloaded
+	 * @param overloadArguments the real arguments used to perform the overloading
+	 * @param overloadHandlers an array containing all OverloadHandler instances
+	 * that do not match the overload arguments
 	 */
 	public function UnknownOverloadHandlerException(message:String, thrower, args:Array, overloadTarget, overloadedMethod:Function, overloadArguments:Array, overloadHandlers:Array) {
 		super (message, thrower, args);
@@ -59,17 +63,16 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 		this.overloadArguments = overloadArguments;
 		this.overloadHandlers = overloadHandlers;
 	}
-	
 	/**
-	 * Extended toString method that displayes the content of this exception lazy.
+	 * Returns a well formatted informative string representation of this
+	 * exceptions.
 	 * 
-	 * @return Exception as string.
+	 * @return the string representation of this exception
 	 */
 	public function toString(Void):String {
-		// Lazy construction of the string,
-		// Because it takes pretty much time to construct it (using Reflections)
-		// it would take unnecessary much time to construct it if you catch it (and it
-		// won't be displayed).
+		// The resulting string gets constructed lazily and gets stored once it has been generated.
+		// It would take unnecessary much time to generate the string representation if you'd catch
+		// it and it would never get displayed.
 		if (!asString) {
 			asString = message;
 			var methodName:String = ReflectUtil.getMethodName(overloadedMethod, overloadTarget);

@@ -17,57 +17,84 @@
 import org.as2lib.core.BasicInterface;
 
 /**
- * OverloadHandler is the interface for all OverloadHandlers. OverloadHandlers
- * are used by the Overload class to identify the corresponding operation for
- * a specific list of arguments.
+ * OverloadHandler declares method needed by overload handlers.
+ *
+ * <p>Overload handlers are used by the Overload class to identify the
+ * corresponding method for a specific list of arguments. Whereby the
+ * overload handler holds the method and the expected arguments' types
+ * of this method.
+ *
+ * <p>It also offers functionalities to match real arguments against the
+ * expected arguments' types, #matches, and to determine which overload
+ * handler or rather which arguments' types of two handlers are more
+ * explicit, #isMoreExplicit.
+ *
+ * <p>It also offers the ability to invoke/execute the target method
+ * on a target scope passing-in a list of real arguments.
  *
  * @author Simon Wacker
  */
 interface org.as2lib.env.overload.OverloadHandler extends BasicInterface {
 	
 	/**
-	 * Checks if the types of the arguments match the arguments types of the 
-	 * OverloadHandler.
+	 * Checks whether the passed-in real arguments match the arguments' types
+	 * of this overload handler.
 	 *
-	 * @param args the arguments that shall be compared with the arguments types
-	 * @return true if the types of the arguments match, otherwise false
+	 * @param realArguments the real arguments to match against the arguments' types
+	 * @return true if the real arguments match the arguments' types else false
 	 */
-	public function matches(args:Array):Boolean;
+	public function matches(realArguments:Array):Boolean;
 	
 	/**
-	 * Executes the appropriate operation on the given target passing the arguments
-	 * in.
+	 * Executes the method of this handler on the target passing-in the
+	 * given arguments.
 	 *
-	 * @param target the target to execute the operation on
-	 * @param args the arguments to be passed as parameters
+	 * <p>The 'this' scope of the method refers to the passed-in target on
+	 * execution.
+	 *
+	 * @param target the target object to invoke the method on
+	 * @param args the arguments to pass-in on method invocation
+	 * @return the result of the method invocation
 	 */
 	public function execute(target, args:Array);
 	
 	/**
-	 * Compares the OverloadHandler passed in with this OverloadHandler for explicity.
-	 * The operation returns true when this OverloadHandler is more explicit than
-	 * the passed in, false otherwise and null if the two handlers have the same
-	 * explicity.
-	 * What means more explicit? The class SimpleOverloadHandler is for example more
-	 * explicit than the class Object.
+	 * Checks if this overload handler is more explicit than the passed-in
+	 * handler.
 	 *
-	 * @param handler the OverloadHandler that shall be compared with this OverloadHandler
-	 * @return true if this OverloadHandler is more explicit, false otherwise and null means same explicity
+	 * <p>What means more explicit? The type String is for example more explicit
+	 * than Object. The type org.as2lib.core.BasicClass is also more explicit
+	 * than Object. And the type org.as2lib.env.overload.SimpleOverloadHandler
+	 * is more explicit than org.as2lib.core.BasicClass. I hope you get the
+	 * image. As you can see, the explicity depends on the inheritance
+	 * hierarchy.
+	 * Classes are also supposed to be more explicit than interfaces.
+	 *
+	 * @param handler the handler to compare this handler with regarding explicity
+	 * @return true if this handler is more explicit else false or
+	 *         null if the two handlers have the same explicity
 	 */
 	public function isMoreExplicit(handler:OverloadHandler):Boolean;
 	
 	/**
-	 * Returns the arguments Array that contains the type siganture of the
-	 * OverloadHandler.
+	 * Returns the arguments' types used to match against the real arguments.
 	 *
-	 * @return an Array containing the OverloadHandler's type signature
+	 * <p>The arguments' types determine for which types of arguments the
+	 * method was declared for. That means which arguments' types the method
+	 * expects.
+	 *
+	 * @return the arguments' types the method expects
 	 */
-	public function getArguments(Void):Array;
+	public function getArgumentsTypes(Void):Array;
 	
 	/**
-	 * Returns the method this handler will execute to if its the most explicit one.
+	 * Returns the method this overload handler was assigned to.
 	 *
-	 * @return the method this handler executes
+	 * <p>This is the method to invoke passing the appropriate arguments
+	 * when this handler matches the arguments and is the most explicit one.
+	 *
+	 * @return the method to invoke when the real arguments match the ones 
+	 * of this handler and this handler is the most explicit one
 	 */
 	public function getMethod(Void):Function;
 	
