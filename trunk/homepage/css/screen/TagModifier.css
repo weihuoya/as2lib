@@ -1,0 +1,51 @@
+body {
+  text-align: center;
+  background-color: #606060;
+  padding: 0;
+  margin: 0;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+h2 {
+  background-image: url(../../img/marker.gif);
+  background-repeat: no-repeat;
+  background-position: 5px 4px;
+  padding-left: 16px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-right: 5px;
+  margin: 0;
+  font-size: 0.6875em;
+  font-weight: normal;
+  color: #444444;
+}
+h3, h3 a {
+  padding: 0px;
+  margin: 0px;
+  color: #FF9900;
+  font-size: 1.1em;
+  font-weight: normal;
+  text-decoration: none;
+}
+h3 a:hover {
+  text-decoration: underline;
+}
+a {
+  color: #666666;
+}
+a:hover {
+  color: #FF9900;
+}
+input {
+  font-size: 1em;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+textarea {
+  font-size: 1em;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+code {
+  font-size: 1.2em;
+}
+pre {
+  font-size: 1.3em;
+}

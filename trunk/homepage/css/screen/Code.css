@@ -1,0 +1,46 @@
+.as2 {
+  font-family: Courier new, Courier, monospaced;
+  background-color: #FFFFFF;
+  padding: 5px;
+  border: 1px solid #999999;
+  font-size: 11px;
+  overflow: scroll;
+  width: 435px;
+}
+/** Comment Style */
+.as2 .style0 {
+  color: #999999;
+}
+/** Text Style */
+.as2 .style1 {
+  color: #009900;
+}
+/** Types Style */
+.as2 .style2{
+  color : #000080;
+}
+/** ??? */
+.as2 .style4 {
+  /* no occurences found */
+}
+/** Number Style */
+.as2 .style3 {
+  color : #000099;
+}
+/** Keyword 1 (this, new, ...) */
+.as2 .style5{
+  color : #800000;
+}
+/** Methods & Keyword 2 (public, function, return, join, ...)*/
+.as2 .style6 {
+  color : #006600;
+}
+/** Braces */
+.as2 .style7 {
+  color : #004080;
+  font-weight: bold;
+}
+/** Variable names */
+.as2 .style8{
+  color : #000000;
+}

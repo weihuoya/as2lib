@@ -1,0 +1,82 @@
+.weblogMeta {
+  font-size: 9px;
+  text-align: left;
+  color: #999999;
+  margin-bottom: 8px;
+}
+.weblogMeta .post-categories {
+  display: inline;
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+.weblogMeta .post-categories li {
+  display: inline;
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+.weblogFeedback {
+  font-size: 9px;
+  text-align: right;
+  color: #999999;
+}
+.weblogLinks {
+  margin: 5px;
+  list-style: none;
+  padding: 0px;
+}
+.weblogLinks li {
+  font-size: 0.625em;
+  color: #FF9900;
+  margin: 0px;
+  padding: 0px;
+}
+.weblogLinks li ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  margin-bottom: 5px;
+}
+.weblogLinks li ul li {
+  font-size: 1em;
+  color: #666666;
+}
+.weblogLinks li ul li a {
+  padding: 0px;
+  padding-left: 16px;
+  background-image: url(../../img/arrow.gif);
+  background-repeat: no-repeat;
+  background-position: 5px 3px;
+  color: #666666;
+  text-decoration: none;
+}
+.weblogLinks li ul li a:hover {
+  background-image: url(../../img/arrowRollOver.gif);
+  color: #FF9900;
+  text-decoration: none;
+}
+#weblogNewComment #comment {
+  width: 400px;
+}
+#searchform {
+  margin: 5px;
+  padding: 0px;
+  font-size: 0.625em;
+}
+#wp-calendar {
+  font-size: 0.625em;
+  margin: 5px;
+  padding: 0px;
+}
+#wp-calendar td {
+  text-align: center;
+}
+#wp-calendar caption {
+  margin-top: 5px;
+  font-weight: bold;
+  color: #FF9900;
+}
+#wp-calendar #today {
+  background-color: #DCDCDC;
+}
