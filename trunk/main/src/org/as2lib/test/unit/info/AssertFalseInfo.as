@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.test.unit.AbstractAssertInfo;
+import org.as2lib.util.StringUtil;
 
 /**
  * Information holder and examiner of a assertFalse call.
@@ -56,8 +57,7 @@ class org.as2lib.test.unit.info.AssertFalseInfo extends AbstractAssertInfo {
 		if(hasMessage()) {
 			result += " with message: "+message;
 		}
-		result += "!\n"
-				+ "  "+val+" !== false";
+		result += "!\n"+StringUtil.addSpaceIndent(val+" !== false", 2);
 		return result;
 	}
 	

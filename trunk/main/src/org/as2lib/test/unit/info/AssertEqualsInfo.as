@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.test.unit.AbstractAssertInfo;
+import org.as2lib.util.StringUtil;
 
 /**
  * Information holder and examiner of a assertEquals call.
@@ -61,8 +62,7 @@ class org.as2lib.test.unit.info.AssertEqualsInfo extends AbstractAssertInfo {
 		if(hasMessage()) {
 			result += " with message: "+message;
 		}
-		result += "!\n"
-				+ "  "+val+" != "+compareTo;
+		result += "!\n"+StringUtil.addSpaceIndent(val+" != "+compareTo, 2);
 		return result;
 	}
 	
@@ -73,6 +73,6 @@ class org.as2lib.test.unit.info.AssertEqualsInfo extends AbstractAssertInfo {
 	 * @return Message on success
 	 */
 	private function getSuccessMessage(Void):String {
-		return ("assertEquals executed. "+val+" == "+compareTo+".");
+		return ("assertEquals executed. \n"+StringUtil.addSpaceIndent(val+" == "+compareTo, 2));
 	}
 }
