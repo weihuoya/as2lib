@@ -26,7 +26,7 @@ class org.as2lib.data.io.conn.local.ReservedHostException extends Exception {
 	/**
 	 * @see org.as2lib.env.except.Exception#Constructor()
 	 */
-	public function ReservedConnectionException(message:String, thrower, args:FunctionArguments) {
+	public function ReservedHostException(message:String, thrower, args:FunctionArguments) {
 		super (message, thrower, args);
 	}
 }
