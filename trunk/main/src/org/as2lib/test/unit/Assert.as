@@ -4,6 +4,7 @@ import org.as2lib.env.overload.Overload;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.test.unit.error.*;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.util.Call;
 
 /**
  * This class is a collectioon of utils to assert different cases.
@@ -403,9 +404,9 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * Appends a Message to @see #isNotNull.
 	 *
 	 * @see #isNull
-	 * @see #isNullWithMessage
-	 * @see #isNullWithMessage
+	 * @see #isNullWithoutMessage
 	 * @see #isNotNull
+	 * @see #isNotNullWithMessage
 	 * @see #isNotNullWithoutMessage
 	 * 
 	 * @throws AssertIsNotNullException if the assertion fails.
@@ -522,220 +523,200 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 		}
 	}
 
-	
 	/**
 	 * overload
-	 * @see #isIsEmptyWithMessage
-	 * @see #isIsEmptyWithoutMessage
-	 * /
-	private static function isIsEmpty():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, Object], isIsEmptyWithMessage);
-		overload.addHandler([Object], isIsEmptyWithoutMessage);
-		overload.forward(arguments);
-	}
-	
-	/**
-	 * Asserts if an Var is empty.
-	 *
-	 * @see #isIsEmpty
-	 * @see ObjectUtil#isEmpty
-	 * @see #isIsEmptyWithMessage
-	 * 
-	 * @param var1		Var that should be empty.
-	 * /
-	private static function isIsEmptyWithoutMessage (var1):Void {
-		isIsEmptyWithMessage("", var1);
-	}
-	
-	/**
-	 * Asserts if an Var is empty.
-	 *
-	 * @see #isIsEmpty
-	 * @see ObjectUtil#isEmpty
-	 * @see #isIsEmptyWithMessage
-	 * 
-	 * @param message	Message to be displayed if an error occures
-	 * @param var1		Var that should be empty.
-	 * /
-	private static function isIsEmptyWithMessage (message:String, var1):Void {
-		if(!ObjectUtil.isEmpty(var1)) {
-			//addError("isIsEmpty failed: "+var1+" message: "+message);
-		}
-	}
-	
-	/**
-	 * overload
-	 * @see #isIsNotEmptyWithMessage
-	 * @see #isIsNotEmptyWithoutMessage
-	 * /
-	private static function isIsNotEmpty():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, Object], isIsNotEmptyWithMessage);
-		overload.addHandler([Object], isIsNotEmptyWithoutMessage);
-		overload.forward(arguments);
-	}
-	
-	/**
-	 * Asserts if an Var is not empty.
-	 *
-	 * @see #isIsNotEmpty
-	 * @see ObjectUtil#isEmpty
-	 * @see #isIsNotEmptyWithMessage
-	 * 
-	 * @param var1		Var that should be empty.
-	 * /
-	private static function isIsNotEmptyWithoutMessage (var1):Void {
-		isIsNotEmptyWithMessage("", var1);
-	}
-	
-	/**
-	 * Asserts if an Var is empty.
-	 *
-	 * @see #isIsNotEmpty
-	 * @see ObjectUtil#isEmpty
-	 * @see #isIsNotEmptyWithMessage
-	 * 
-	 * @param message	Message to be displayed if an error occures
-	 * @param var1		Var that should be empty.
-	 * /
-	private static function isIsNotEmptyWithMessage (message:String, var1):Void {
-		if(ObjectUtil.isEmpty(var1)) {
-			//addError("isIsNotEmpty failed: "+var1+" message: "+message);
-		}
-	}
-	
-	/**
-	 * overload
-	 * @see #isNotInfinityWithMessage
-	 * @see #isNotInfinityWithoutMessage
-	 * /
-	private static function isNotInfinity():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, Object], isNotInfinityWithMessage);
-		overload.addHandler([Object], isNotInfinityWithoutMessage);
-		overload.forward(arguments);
-	}
-	
-	/**
-	 * Asserts if an Var is Infinity.
-	 *
-	 * @see #isNotInifity
-	 * @see #isNotInifityWithMessage
-	 * @see #isInfinity
 	 * @see #isInfinityWithoutMessage
 	 * @see #isInfinityWithMessage
-	 * 
-	 * @param var1	Var that should not be Infinity.
-	 * /	
-	private static function isNotInfinityWithoutMessage (var1:Number):Void {
-		isNotInfinityWithMessage("", var1);
-	}
-
-	/**
-	 * Adds a Message to #isNotInfinity.
-	 *
-	 * @see #isNotInifity
-	 * @see #isNotInifityWithoutMessage
-	 * @see #isInfinity
-	 * @see #isInfinityWithoutMessage
-	 * @see #isInfinityWithMessage
-	 * 
-	 * @param message	Message to be displayed if an error occures
-	 * @param var1		Var that should not be Infinity.
-	 * /	
-	private static function isNotInfinityWithMessage (message:String, var1:Number):Void {
-		if(var1 != Infinity) {
-			//addError("isNotInfinity failed: "+var1+" message: "+message);
-		}
-	}
-	
-	/**
-	 * overload
-	 * @see #isInfinityWithMessage
-	 * @see #isInfinityWithoutMessage
-	 * /
-	private static function isInfinity():Void {
+	 */
+	public static function isInfinity():Void {
 		var that = eval("th"+"is");
 		var overload:Overload = new Overload(that);
+		overload.addHandler([String, undefined], isInfinityWithMessage);
 		overload.addHandler([String, Object], isInfinityWithMessage);
 		overload.addHandler([Object], isInfinityWithoutMessage);
+		overload.addHandler([undefined], isInfinityWithoutMessage);
+		overload.addHandler([], isInfinityWithoutMessage);
 		overload.forward(arguments);
 	}
 	
 	/**
-	 * Asserts if an Var is not Infinity.
+	 * Checks that a variable is a reference to Infinity.
+	 * Checks with a === that a variable is Infinity.
 	 *
-	 * @see #isNotInfinity
-	 * @see #isNotInifityWithoutMessage
-	 * @see #isNotInifityWithMessage
 	 * @see #isInfinity
 	 * @see #isInfinityWithMessage
+	 * @see #isNotInfinity
+	 * @see #isNotInfinityWithoutMessage
+	 * @see #isNotInfinityWithMessage
 	 * 
-	 * @param var1	Var that should be Infinity.
-	 * /	
-	private static function isInfinityWithoutMessage (var1:Number):Void {
-		isInfinityWithMessage("", var1);
+	 * @throws AssertIsInfinityException if the assertion fails.
+	 * @param var1 Variable that should be Infinity.
+	 */
+	public static function isInfinityWithoutMessage (var1):Void {
+		isInfinityWithMessage ("", var1);
+	}
+	
+	/**
+	 * Appends a Message to @see #isInfinity.
+	 *
+	 * @see #isInfinity
+	 * @see #isInfinityWithoutMessage
+	 * @see #isNotInfinity
+	 * @see #isNotInfinityWithMessage
+	 * @see #isNotInfinityWithoutMessage
+	 * 
+	 * @throws AssertIsInfinityException if the assertion fails.
+	 * @param message	Message to be displayed if an error occurs.
+	 * @param var1		Variable that should be Infinity.
+	 */
+	public static function isInfinityWithMessage (message:String, var1):Void {
+		if(var1 !== Infinity) {
+			throw new AssertIsInfinityException(message, eval("th"+"is"), arguments, var1);
+		}
 	}
 
 	/**
-	 * Adds a Message to #isInfinity.
+	 * overload
+	 * @see #isNotInfinityWithoutMessage
+	 * @see #isNotInfinityWithMessage
+	 */
+	public static function isNotInfinity():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that);
+		overload.addHandler([String, undefined], isNotInfinityWithMessage);
+		overload.addHandler([String, Object], isNotInfinityWithMessage);
+		overload.addHandler([Object], isNotInfinityWithoutMessage);
+		overload.addHandler([undefined], isNotInfinityWithoutMessage);
+		overload.addHandler([], isNotInfinityWithoutMessage);
+		overload.forward(arguments);
+	}
+	
+	/**
+	 * Checks that a variable is not a reference to Infinity.
+	 * Checks with a !== that a variable is not Infinity.
 	 *
 	 * @see #isNotInfinity
-	 * @see #isNotInifityWithoutMessage
-	 * @see #isNotInifityWithMessage
+	 * @see #isNotInfinityWithMessage
 	 * @see #isInfinity
 	 * @see #isInfinityWithoutMessage
+	 * @see #isInfinityWithMessage
 	 * 
-	 * @param message	Message to be displayed if an error occures.
-	 * @param var1		Var that should be Infinity.
-	 * /	
-	private static function isInfinityWithMessage (message:String, var1:Number):Void {
-		if(var1 == Infinity) {
-			//addError("isInfinity failed: "+var1+" message: "+message);
+	 * @throws AssertIsNotInfinityException if the assertion fails.
+	 * @param var1 Variable that should not be Infinity.
+	 */
+	public static function isNotInfinityWithoutMessage (var1):Void {
+		isNotInfinityWithMessage ("", var1);
+	}
+	
+	/**
+	 * Appends a Message to @see #isNotInfinity.
+	 *
+	 * @see #isNotInfinity
+	 * @see #isNotInfinityWithoutMessage
+	 * @see #isInfinity
+	 * @see #isInfinityWithMessage
+	 * @see #isInfinityWithoutMessage
+	 * 
+	 * @throws AssertIsNotInfinityException if the assertion fails.
+	 * @param message	Message to be displayed if an error occurs
+	 * @param var1 Variable that should not be Infinity.
+	 */
+	public static function isNotInfinityWithMessage (message:String, var1):Void {
+		if(var1 === Infinity) {
+			throw new AssertIsNotInfinityException(message, eval("th"+"is"), arguments, var1);
+		}
+	}
+
+	/**
+	 * overload
+	 * @see #isEmptyWithoutMessage
+	 * @see #isEmptyWithMessage
+	 */
+	public static function isEmpty():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that);
+		overload.addHandler([String, undefined], isEmptyWithMessage);
+		overload.addHandler([String, Object], isEmptyWithMessage);
+		overload.addHandler([Object], isEmptyWithoutMessage);
+		overload.addHandler([undefined], isEmptyWithoutMessage);
+		overload.addHandler([], isEmptyWithoutMessage);
+		overload.forward(arguments);
+	}
+	
+	/**
+	 * Checks that a variable is undefined or null.
+	 * Checks with a != that a variable is not undefined or null.
+	 *
+	 * @see #isEmpty
+	 * @see #isEmptyWithMessage
+	 * @see #isNotEmpty
+	 * @see #isNotEmptyWithoutMessage
+	 * @see #isNotEmptyWithMessage
+	 * 
+	 * @throws AssertIsEmptyException if the assertion fails.
+	 * @param var1 Variable that should be empty.
+	 */
+	public static function isEmptyWithoutMessage (var1):Void {
+		isEmptyWithMessage ("", var1);
+	}
+	
+	/**
+	 * Appends a Message to @see #isEmptyWithoutMessage.
+	 * 
+	 * @see #isEmpty.
+	 * @see #isEmptyWithoutMessage
+	 * @see #isNotEmpty
+	 * @see #isNotEmptyWithMessage
+	 * @see #isNotEmptyWithoutMessage
+	 * 
+	 * @throws AssertIsEmptyException if the assertion fails.
+	 * @param message	Message to be displayed if an error occurs
+	 * @param var1 Variable that should be empty.
+	 */
+	public static function isEmptyWithMessage (message:String, var1):Void {
+		if(!ObjectUtil.isEmpty(var1)) {
+			throw new AssertIsEmptyException(message, eval("th"+"is"), arguments, var1);
 		}
 	}
 	
 	/**
-	 * Asserts if an Exception is thrown by calling an Function.
+	 * Checks that a variable is not undefined or null.
+	 * Checks with a != that a variable is not undefined or null.
+	 * Throws a exception if the check fails.
 	 * 
-	 * @param exception	Class of the Exception that should be thrown.
-	 * @param atObject	Object where the call should get called.
-	 * @param theFunction	Function that should be called.
-	 * @param parameters	Parameters to call.
-	 * /
-	private static function isThrows(exception:Function, atObject, theFunction:String, parameters:Array):Void {
-		var exceptionThrown:Boolean = false;
+	 * @see #isEmpty
+	 * 
+	 * @throws AssertIsNotEmptyException if the assertion fails.
+	 * @param message	Message to be displayed if an error occurs
+	 * @param var1 Variable that should not be empty.
+	 */
+	public static function isNotEmpty (message:String, var1):Void {
+		if(ObjectUtil.isEmpty(var1)) {
+			throw new AssertIsNotEmptyException(message, eval("th"+"is"), arguments, var1);
+		}
+	}
+	
+	/**
+	 * Checks if a call throws a exception type.
+	 * Executes the given call and checks if it throws an defined error else it will throw an exception.
+	 * 
+	 * @throws NothingThrownException if nothing was thrown.
+	 * @throws IllegalTypeThrownException if something different was thrown.
+	 * @param message	Message that should be submitted if it fails.
+	 * @param type		Exceptiontype that should be thrown.
+	 * @param call		Call that should be executed.
+	 * @param args		Arguments for the call.
+	 */
+	public static function isThrowing(message:String, type, call:Call, args):Void {
 		try {
-			atObject[theFunction].apply(atObject, parameters);
-		} catch (e) {
-			exceptionThrown = true;
-			if (!(e instanceof exception)) {
-				//addError("isThrows: ["+ReflectUtil.getClassInfo(e).getFullName()+"] was thrown but ["+ReflectUtil.getClassInfo(new exception()).getName()+"] was expected by calling ."+theFunction+"("+parameters+")");
+			call.execute(args);
+			throw new NothingThrownException(message, eval("th"+"is"), arguments, call, args);
+		} catch(e:org.as2lib.test.unit.error.NothingThrownException){
+			throw e;
+		} catch(e) {
+			if(!ObjectUtil.isInstanceOf(e, type)) {
+				throw new IllegalTypeThrownException(message, eval("th"+"is"), arguments, call, e, args);
 			}
 		}
-		if (!exceptionThrown) {
-			//addError("isThrows: No exception was thrown but ["+ReflectUtil.getClassInfo(new exception()).getFullName()+"] was expected for ."+theFunction+"("+parameters+")");
-		}
 	}
-	
-	/**
-	 * Asserts that no exception will be thrown @ a call.
-	 * 
-	 * @param atObject	Object where the call should get called.
-	 * @param theFunction	Function that should be called.
-	 * @param parameters	Parameters to call.
-	 * /
-	private static function isNotThrows(atObject, theFunction:String, parameters:Array):Void {
-		var exceptionThrown:Boolean = false;
-		try {
-			atObject[theFunction].apply(atObject, parameters);
-		} catch (e) {
-			//addError("isNotThrows: ["+ReflectUtil.getClassInfo(e).getFullName()+"] was thrown but not expected with ."+theFunction+"("+parameters+")");
-		}
-	}
-	*/
 }

@@ -1,4 +1,23 @@
-﻿import org.as2lib.test.unit.TestCase;
+﻿/**
+ * Copyright the original author or authors.
+ * 
+ * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.mozilla.org/MPL/MPL-1.1.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.except.Throwable;
+import org.as2lib.test.unit.TestCase;
+import org.as2lib.util.Call;
 
 /**
  * This is a test to proof if all TestUnit Methods work
@@ -149,6 +168,7 @@ class AssertTest extends TestCase {
 		assertFalse("NOT FAIL! 6 ", assertNull("fail", undefined));
 		assertFalse("NOT FAIL! 7 ", assertNull("fail"));
 		assertFalse("NOT FAIL! 8 ", assertNull(2));
+		assertFalse("NOT FAIL! 9 ", assertNull());
 	}
 	
 	public function testNotNull(Void):Void {
@@ -159,6 +179,7 @@ class AssertTest extends TestCase {
 		assertTrue ("NOT FAIL! 5 ", assertNotNull("NOT FAIL!", 0));
 		assertTrue ("NOT FAIL! 6 ", assertNotNull("fail"));
 		assertTrue ("NOT FAIL! 7 ", assertNotNull(2));
+		assertTrue ("NOT FAIL! 8 ", assertNotNull());
 	}
 	
 	public function testUndefined(Void):Void {
@@ -169,6 +190,7 @@ class AssertTest extends TestCase {
 		assertFalse("NOT FAIL! 5 ", assertUndefined("fail", 3));
 		assertFalse("NOT FAIL! 6 ", assertUndefined("fail"));
 		assertFalse("NOT FAIL! 7 ", assertUndefined(2));
+		assertTrue ("NOT FAIL! 8 ", assertUndefined());
 	}
 	
 	public function testNotUndefined(Void):Void {
@@ -179,26 +201,103 @@ class AssertTest extends TestCase {
 		assertTrue ("NOT FAIL! 5 ", assertNotUndefined("NOT FAIL!", 3));
 		assertTrue ("NOT FAIL! 6 ", assertNotUndefined("NOT FAIL!"));
 		assertTrue ("NOT FAIL! 7 ", assertNotUndefined(2));
+		assertFalse("NOT FAIL! 8 ", assertNotUndefined());
 	}
 
 	public function testInfinity(Void):Void {
+		assertTrue ("NOT FAIL! 1 ", assertInfinity("NOT FAIL!", Infinity));
+		assertFalse("NOT FAIL! 2 ", assertInfinity("fail", 1000000000));
+		assertFalse("NOT FAIL! 3 ", assertInfinity("fail", 1));
+		assertFalse("NOT FAIL! 4 ", assertInfinity("fail", undefined));
+		assertFalse("NOT FAIL! 5 ", assertInfinity("fail"));
+		assertTrue ("NOT FAIL! 6 ", assertInfinity(Infinity));
+		assertFalse("NOT FAIL! 7 ", assertInfinity(1));
+		assertFalse("NOT FAIL! 8 ", assertInfinity());
 	}
 	
 	public function testNotInfinity(Void):Void {
+		assertFalse("NOT FAIL! 1 ", assertNotInfinity("fail", Infinity));
+		assertTrue ("NOT FAIL! 2 ", assertNotInfinity("NOT FAIL!", 1000000000));
+		assertTrue ("NOT FAIL! 3 ", assertNotInfinity("NOT FAIL!", 1));
+		assertTrue ("NOT FAIL! 4 ", assertNotInfinity("NOT FAIL!", undefined));
+		assertTrue ("NOT FAIL! 5 ", assertNotInfinity("NOT FAIL!"));
+		assertFalse("NOT FAIL! 6 ", assertNotInfinity(Infinity));
+		assertTrue ("NOT FAIL! 7 ", assertNotInfinity(1));
+		assertTrue ("NOT FAIL! 8 ", assertNotInfinity());
 	}
 	
 	public function testEmpty(Void):Void {
+		assertTrue ("NOT FAIL! 1 ", assertEmpty(null));
+		assertTrue ("NOT FAIL! 2 ", assertEmpty(undefined));
+		assertTrue ("NOT FAIL! 3 ", assertEmpty("NOT FAIL!", null));
+		assertTrue ("NOT FAIL! 4 ", assertEmpty("NOT FAIL!", undefined));
+		assertFalse("NOT FAIL! 5 ", assertEmpty("fail", 3));
+		assertFalse("NOT FAIL! 6 ", assertEmpty("fail"));
+		assertFalse("NOT FAIL! 7 ", assertEmpty(2));
+		assertTrue ("NOT FAIL! 8 ", assertEmpty());
 	}
 	
 	public function testNotEmpty(Void):Void {
+		assertFalse("NOT FAIL! 1 ", assertNotEmpty(null));
+		assertFalse("NOT FAIL! 2 ", assertNotEmpty(undefined));
+		assertFalse("NOT FAIL! 3 ", assertNotEmpty("fail", null));
+		assertFalse("NOT FAIL! 4 ", assertNotEmpty("fail", undefined));
+		assertTrue ("NOT FAIL! 5 ", assertNotEmpty("NOT FAIL!", 3));
+		assertTrue ("NOT FAIL! 6 ", assertNotEmpty("fail"));
+		assertTrue ("NOT FAIL! 7 ", assertNotEmpty(2));
+		assertFalse("NOT FAIL! 8 ", assertNotEmpty());
 	}
 	
 	public function testThrows(Void):Void {
+		assertTrue ("NOT FAIL! 1 ", assertThrows("NOT FAIL!", IllegalArgumentException, "throwIllegalArgumentException", []));
+		assertTrue ("NOT FAIL! 2 ", assertThrows("NOT FAIL!", IllegalArgumentException, throwIllegalArgumentException, []));
+		assertTrue ("NOT FAIL! 3 ", assertThrows("NOT FAIL!", IllegalArgumentException, new Call(this, throwIllegalArgumentException), []));
+		assertTrue ("NOT FAIL! 4 ", assertThrows(IllegalArgumentException, "throwIllegalArgumentException", []));
+		assertTrue ("NOT FAIL! 5 ", assertThrows(IllegalArgumentException, throwIllegalArgumentException, []));
+		assertTrue ("NOT FAIL! 6 ", assertThrows(IllegalArgumentException, new Call(this, throwIllegalArgumentException), []));
+		
+		assertTrue ("NOT FAIL! 7 ", assertThrows("NOT FAIL!", Throwable, "throwIllegalArgumentException", []));
+		assertTrue ("NOT FAIL! 8 ", assertThrows("NOT FAIL!", Throwable, throwIllegalArgumentException, []));
+		assertTrue ("NOT FAIL! 9 ", assertThrows("NOT FAIL!", Throwable, new Call(this, throwIllegalArgumentException), []));
+		assertTrue ("NOT FAIL! 10", assertThrows(Throwable, "throwIllegalArgumentException", []));
+		assertTrue ("NOT FAIL! 11", assertThrows(Throwable, throwIllegalArgumentException, []));
+		assertTrue ("NOT FAIL! 12", assertThrows(Throwable, new Call(this, throwIllegalArgumentException), []));
+		
+		assertFalse("NOT FAIL! 13", assertThrows("fail", Throwable, throwNothing, []));
+		assertTrue ("NOT FAIL! 14", assertThrows("fail", Throwable, throwSomethingByNoParams, []));
+		assertFalse("NOT FAIL! 15", assertThrows("fail", Throwable, throwSomethingByNoParams, [{a:""},"b"]));
+		assertFalse("NOT FAIL! 16", assertThrows("fail", Throwable, "here", []))
+		assertFalse("NOT FAIL! 17", assertThrows("fail", String, throwIllegalArgumentException, []))
 	}
 	
 	public function testNotThrows(Void):Void {
 	}
 	
+	/**
+	 * Helper method for testThrows
+	 */
+	public function throwNothing(Void):Void {
+	}
+	
+	/**
+	 * Helper method for testThrows
+	 */
+	public function throwSomethingByNoParams(a:Object, b:String):Void {
+		if(!a || !b) {
+			throw new IllegalArgumentException("A or B not provided", this, arguments);
+		}
+	}
+	
+	/**
+	 * Helper method for testThrows
+	 */
+	public function throwIllegalArgumentException(Void):Void {
+		throw new IllegalArgumentException("Simply thrown.", this, arguments);
+	}
+	
+	/**
+	 * Tears down the application. Usually outcomment.
+	 */
     public function tearDown(Void):Void {
 		// Strings thrown to evaluate how it acts with unexcepted Exceptiontypes.
 		//throw "My Error @ tear down";
