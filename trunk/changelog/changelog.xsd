@@ -1,5 +1,45 @@
 <?xml version="1.0"?>
+<!--
+
+  LICENSE
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Copyright the original author or authors.
+ 
+  Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+   
+  http://www.mozilla.org/MPL/MPL-1.1.html
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+
+
+  EXAMPLE
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  <changelog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:noSchemaNamespaceLocation="http://www.as2lib.org/changelog.xsd">
+    <release day="21" month="12" year="2004" name="testRelease">
+      <year value="2004">
+        <month value="6">
+          <day value="24">
+            <entry type="change" package="org.as2lib.dummie" class="Dummy" method="doSomething()">Some details changed.</entry>
+            <entry type="add" package="org.as2lib.dummie" class="Different">New class for some things.</entry>
+            <entry type="bugfix">Important Bugfix #2371941</entry>
+          </day>
+        </month>
+      </year>
+    </release>
+  </changelog>
+  
+-->
 <xs:schema elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<!-- possible types for a entry -->
 	<xs:simpleType name="entryType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="bugfix"/>
@@ -10,65 +50,93 @@
 			<xs:enumeration value="enhancement"/>
 		</xs:restriction>
 	</xs:simpleType>
+
+	<!-- available months -->
 	<xs:simpleType name="monthType">
 		<xs:restriction base="xs:integer">
 			<xs:minInclusive value="1"/>
 			<xs:maxInclusive value="12"/>
 		</xs:restriction>
 	</xs:simpleType>
+
+	<!-- available days -->
 	<xs:simpleType name="dayType">
 		<xs:restriction base="xs:integer">
 			<xs:minInclusive value="1"/>
 			<xs:maxInclusive value="31"/>
 		</xs:restriction>
 	</xs:simpleType>
+
+	<!-- available years -->
 	<xs:simpleType name="yearType">
 		<xs:restriction base="xs:integer">
 			<xs:minInclusive value="-9999"/>
 			<xs:maxInclusive value="9999"/>
 		</xs:restriction>
 	</xs:simpleType>
+	
+	<!-- root node (changelog) -->
 	<xs:element name="changelog">
 		<xs:complexType>
 			<xs:sequence maxOccurs="unbounded">
+			
+			    <!-- release node -->
 				<xs:element name="release">
 					<xs:complexType>
 						<xs:sequence maxOccurs="unbounded">
+						
+							<!-- year node -->
 							<xs:element name="year">
 								<xs:complexType>
 									<xs:sequence maxOccurs="unbounded">
+						
+										<!-- month node -->
 										<xs:element name="month">
 											<xs:complexType>
 												<xs:sequence maxOccurs="unbounded">
+						
+													<!-- day node -->
 													<xs:element name="day">
 														<xs:complexType>
 															<xs:sequence maxOccurs="unbounded">
+						
+																<!-- entry node -->
 																<xs:element name="entry">
 																	<xs:complexType>
 																		<xs:simpleContent>
 																			<xs:extension base="xs:string">
+																			    <!-- type for the entry -->
 																				<xs:attribute name="type" type="entryType" use="required"/>
 																				<xs:attribute name="package" type="xs:string" use="optional"/>
 																				<xs:attribute name="class" type="xs:string" use="optional"/>
 																				<xs:attribute name="method" type="xs:string" use="optional"/>
+																			    <!-- list of keywords, for a detailed search, seperate with ';' -->
 																				<xs:attribute name="keywords" type="xs:string" use="optional"/>
 																			</xs:extension>
 																		</xs:simpleContent>
 																	</xs:complexType>
 																</xs:element>
 															</xs:sequence>
+															
+															<!-- Attributes for the month node (using dayType definition) -->
 															<xs:attribute name="value" type="dayType" use="required"/>
 														</xs:complexType>
 													</xs:element>
 												</xs:sequence>
+												
+												<!-- Attributes for the month node (using monthType definition) -->
 												<xs:attribute name="value" type="monthType" use="required"/>
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
+									
+									<!-- Attributes for the year node (using yearType definition) -->
 									<xs:attribute name="value" type="yearType" use="required"/>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
+						
+						<!-- Attributes for the release node -->
 						<xs:attribute name="day" type="dayType" use="required"/>
 						<xs:attribute name="month" type="monthType" use="required"/>
 						<xs:attribute name="year" type="yearType" use="required"/>
