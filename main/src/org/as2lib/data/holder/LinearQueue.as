@@ -2,7 +2,7 @@
 import org.as2lib.data.iterator.ArrayIterator;
 import org.as2lib.data.holder.Queue;
 import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.EmptyQueueException;
+import org.as2lib.data.holder.EmptyDataHolderException;
 import org.as2lib.data.holder.HolderConfig;
 
 class org.as2lib.data.holder.LinearQueue extends BasicClass implements Queue {
@@ -18,7 +18,7 @@ class org.as2lib.data.holder.LinearQueue extends BasicClass implements Queue {
 	
 	public function dequeue(Void) {
 		if (data.length == 0) {
-			throw new EmptyQueueException("You tried to dequeue an element from an empty Queue.",
+			throw new EmptyDataHolderException("You tried to dequeue an element from an empty Queue.",
 										  this,
 										  arguments);
 		}
@@ -27,7 +27,7 @@ class org.as2lib.data.holder.LinearQueue extends BasicClass implements Queue {
 	
 	public function peek(Void) {
 		if (data.length == 0) {
-			throw new EmptyQueueException("You tried to peek an element from an empty Queue.",
+			throw new EmptyDataHolderException("You tried to peek an element from an empty Queue.",
 										  this,
 										  arguments);
 		}
