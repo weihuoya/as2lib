@@ -1,4 +1,4 @@
-﻿import org.as2lib.env.out.Out;
+﻿import org.as2lib.env.out.OutAccess;
 import org.as2lib.data.holder.TypedArray;
 import org.as2lib.test.speed.TestCaseInformation;
 import org.as2lib.test.speed.TestCase;
@@ -21,8 +21,8 @@ class org.as2lib.test.speed.Test {
 	private var speedTestCases:TypedArray;
 	/** Times of calls by running a Test */
  	private var calls:Number = 0;
-    /** Output Device to display the result */
-	private var out:Out;
+	/** Output Device to display the result */
+	private var out:OutAccess;
 	
 	/**
 	 * Constructs a new Test.
@@ -65,10 +65,10 @@ class org.as2lib.test.speed.Test {
 	 * Sets the output device to print the result.
 	 * 
 	 * @see #printResult
-	 * @see org.aslib.basic.Out
+	 * @see org.aslib.env.out.Out
 	 * @param Output Device
 	 */
-	public function setOut(to:Out):Void {
+	public function setOut(to:OutAccess):Void {
 		this.out = to;
 	}
 	
@@ -120,9 +120,9 @@ class org.as2lib.test.speed.Test {
 		for(var i:Number=0; i<this.speedTestCases.length; i++) {
 			var obj:TestCaseInformation = TestCaseInformation(this.speedTestCases.getValue(i));
 			if(fastest == obj) {
-				result += "[fastest] "+Math.round(this.getPercent(obj, fastest))+"% "+obj.getName()+": total time:"+obj.getTotalTime()+"ms; average time:"+obj.getAverageTime()+"ms;\n";
+				result += "[fastest] "+Math.round(this.getPercent(obj, fastest))+"% "+obj.getName()+": total time:"+obj.getTotalTime()+"ms; calls/second:"+obj.getMaxCallsPerSecond()+"; average time:"+obj.getAverageTime()+"ms;\n";
 			} else {
-				result += "          "+Math.round(this.getPercent(obj, fastest))+"% "+obj.getName()+": total time:"+obj.getTotalTime()+"ms; average time:"+obj.getAverageTime()+"ms; (+"+Math.round(this.getAverageTimeDifference(obj, fastest)*1000)/1000+"ms)\n";
+				result += "          "+Math.round(this.getPercent(obj, fastest))+"% "+obj.getName()+": total time:"+obj.getTotalTime()+"ms; calls/second:"+obj.getMaxCallsPerSecond()+"; average time:"+obj.getAverageTime()+"ms; (+"+Math.round(this.getAverageTimeDifference(obj, fastest)*1000)/1000+"ms)\n";
 			}
 		}
 		return result;
