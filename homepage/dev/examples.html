@@ -238,23 +238,6 @@ public function getA(Void):Number {
   return(this.a);
 }</pre> This allows you a pretty setting of vars.</li>
                                   <li>Never use public vars. Variables are not controlable, every user of your class can create not planned actions!</li>
-                                  <li>Your constructor should not do the work for initializing. If you wan't to provide clear constructing use and init method. This allows you even by extending an class to do some operations <b>before</b> you call the super constructor. <pre class="code">class A {
-  function A() {
-    this.init();
-  }
-  private function init() {
-    // Does something.
-  }
-}
-class B extends A {
-  function B() {
-    this.init();
-  }
-  private function init() {
-    // prepares some stuff
-    super.init();
-  }
-}</pre></li>
                                   <li>Try to avoid overloading. If you can't avoid it, use the as2lib overloading handling(see <a href="conceptBasic.html#Overloading">basic concept</a>). So you can pretty documentate youre method.</li>
                                   <li>Try to avoid counting of any variables name and dont abbrevate names. All names can have a good name that describes it's value.</li>
                                   <li>Don't try to hide mistakes by the user from your class. Throwing Exceptions is always prefered &amp; often faster.</li>
