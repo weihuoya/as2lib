@@ -52,26 +52,29 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	}
 	
 	/**
-	 * Sets the default handler, this handler will be used if no other handler applies to a set of arguments.
-	 * This handler will get all the arguments that were applied to the method.
+	 * Sets the default handler.
 	 *
-	 * This method will be executed on the same scope as the other handlers!
+	 * <p>This handler will be used if no other handler applies to a set of 
+	 * arguments. This handler will be passed all the arguments that were 
+	 * applied to the method.
+	 *
+	 * <p>This method gets executed on the same scope as the other handlers!
 	 * 
 	 * <code>
 	 *   var overload:Overload = new Overload(this);
-	 *   overload.addHandler([String], methodUsingString);
-	 *   overload.addHandler([Number], methodUsingNumber);
+	 *   overload.addHandler([String], methodWithStringArgument);
+	 *   overload.addHandler([Number], methodWithNumberArgument);
 	 *   overload.setDefaultHandler(function() {
-	 *     trace(arguments.length+" arguments were used");
+	 *     trace(arguments.length + " arguments were used.");
 	 *   });
 	 *   return overload.forward(arguments);
 	 * </code>
 	 *
-	 * @param handler Handler to be used if no other handler applies.
-	 * @see #removeDefaultHandler
+	 * @param handler the handler to use if no other handler applies
+	 * @see #removeDefaultHandler(Void):Void
 	 */
 	public function setDefaultHandler(handler:Function):Void {
-		if(typeof handler == "function") {
+		if (typeof handler == "function") {
 			defaultHandler = new SimpleOverloadHandler(null, handler);
 		} else {
 			removeDefaultHandler();
@@ -79,9 +82,12 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	}
 	
 	/**
-	 * Removes the handler for the case if no handler for a set of arguments was available.
+	 * Removes the default handler.
+	 *
+	 * <p>This handler is used if no other handler applies to a set of 
+	 * arguments.
 	 * 
-	 * @see #setDefaultHandler
+	 * @see #setDefaultHandler(Function):Void
 	 */
 	public function removeDefaultHandler(Void):Void {
 		defaultHandler = null;
@@ -128,7 +134,7 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * @return the newly created OverloadHandler
 	 */
 	public function addHandlerByValue(args:Array, method:Function):OverloadHandler {
-		var handler:OverloadHandler = new SimpleOverloadHandler(args, method); 
+		var handler:OverloadHandler = new SimpleOverloadHandler(args, method);
 		handlers.push(handler);
 		return handler;
 	}
