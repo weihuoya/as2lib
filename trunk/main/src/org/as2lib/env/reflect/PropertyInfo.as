@@ -23,6 +23,11 @@ import org.as2lib.env.reflect.ReflectConfig;
 /**
  * PropertyInfo represents a property.
  *
+ * <p>The term property means only properties added via Object#addProperty(..)
+ * or the ones added with the 'get' and 'set' keywords.
+ * 'Normal' properties are not supported because at runtime you can only
+ * evaluate them if they have been initialized.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemberInfo {
