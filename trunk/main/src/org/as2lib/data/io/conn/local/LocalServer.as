@@ -231,6 +231,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		aOut.debug(getClass().getName()+".statusDispatch: "+infoObj.level);
 		if(infoObj.level == "error") {
 			eventBroadcaster.dispatch(new ConnectorError(new MissingClientException("Client "+id+" doesn´t exist anymore !",this,arguments)));
+			clients.remove(id);
 		}
 		if(infoObj.level == "status") {
 			eventBroadcaster.dispatch(new ConnectorResponse("Broadcast to client "+id+" was successful!"));
