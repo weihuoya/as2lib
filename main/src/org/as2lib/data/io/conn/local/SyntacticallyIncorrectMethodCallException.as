@@ -19,11 +19,11 @@ import org.as2lib.env.except.Exception;
 /**
  * @author Christoph Atteneder
  */
-class org.as2lib.data.io.conn.local.NotSyntacticalException extends Exception {
+class org.as2lib.data.io.conn.local.SyntacticallyIncorrectMethodCallException extends Exception {
 	/**
 	 * @see org.as2lib.env.except.Exception#Constructor()
 	 */
-	public function NotSyntacticalException(message:String, thrower, args:FunctionArguments) {
+	public function SyntacticallyIncorrectMethodCallException(message:String, thrower, args:FunctionArguments) {
 		super (message, thrower, args);
 	}
 }
