@@ -1,7 +1,7 @@
 <?
   require('class.inc.php');
   $homepageInfo = new HomepageInfo;
-  $homepageInfo->title = "About";
+  $homepageInfo->title = "Features";
   $homepageInfo->page = "about";
   $homepageInfo->path = "";
   include('header.inc.php');
@@ -37,20 +37,22 @@
       </div>
       <div id="content">
         <div class="contentArea">
-          <h2>About the as2lib</h2>
+          <h2>Features</h2>
           <div class="hr"></div>
           <div class="text">
-            <h3>About the as2lib</h3>
-            The as2lib is an opensource framework targeted to Macromedia Flash MX 2004+ developers. It offers support for basic idioms like event-handling, exception-handling, output-handling and reflections as well as different kinds of data holders and iterators. Also contained is a comprehensive set of IO classes.
-            Our target is to offer support for almost every problem domain in future releases including connection-handling, file access, aop, regular expressions, ...<br />
-            <br />
-            <a href="download.php" title="Latest version of as2lib">Download our latest version</a>
+            <h3>Actual Features of as2lib</h3>
+            <ul>
+              <li><b>Event Handling:</b> containing the specification and standard implementations.</li>
+              <li><b>Reflections:</b> System to obtain information about a class, its methods, its package and so on.</li>
+              <li><b>Overloading:</b> Implementation of a Overloading API for as2.</li>
+              <li><b>Exceptions:</b> Exceptions that contain a lot more information, than Flash's inbuilt exceptions.</li>
+              <li><b>Output Handling:</b> Standardized Outputhandling for multiple devices.</li>
+              <li><b>Data Holders:</b> Additionally to standard dataholders for as2 (e.g.: HashMap, Queue, Stack, ....) exist TypeWrappers (for type checking) and Iterators.</li>
+              <li><b>Utils:</b> Utils for working with Object, Array, String and Class.</li>
+              <li><b>Unit Testing:</b> We offer an own Unittesting API similar to asUnit.</li>
+              <li><b>Speed Testing:</b> API to run performance tests.</li>
+            </ul>
           </div>
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
       </div>
 <? include('footer.inc.php') ?>

@@ -31,7 +31,7 @@
   margin-left: 2px;
   margin-right: 2px;
 }
-#mainNavigationFlashWrapper {
+#mainNavigationWrapper {
   padding: 2px;
   padding-top: 0px;
 }
@@ -71,7 +71,7 @@
   font-size: 0.625em;
   color: #666666;
 }
-.links li a {
+.links li a, .bigLink {
   padding: 0px;
   padding-left: 16px;
   background-image: url(../../img/arrow.gif);
@@ -80,7 +80,7 @@
   color: #666666;
   text-decoration: none;
 }
-.links li a:hover {
+.links li a:hover, .bigLink:hover {
   background-image: url(../../img/arrowRollOver.gif);
   color: #FF9900;
   text-decoration: none;

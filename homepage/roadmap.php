@@ -1,7 +1,7 @@
 <?
   require('class.inc.php');
   $homepageInfo = new HomepageInfo;
-  $homepageInfo->title = "About";
+  $homepageInfo->title = "Roadmap";
   $homepageInfo->page = "about";
   $homepageInfo->path = "";
   include('header.inc.php');
@@ -37,20 +37,40 @@
       </div>
       <div id="content">
         <div class="contentArea">
-          <h2>About the as2lib</h2>
+          <h2>Roadmap</h2>
           <div class="hr"></div>
           <div class="text">
-            <h3>About the as2lib</h3>
-            The as2lib is an opensource framework targeted to Macromedia Flash MX 2004+ developers. It offers support for basic idioms like event-handling, exception-handling, output-handling and reflections as well as different kinds of data holders and iterators. Also contained is a comprehensive set of IO classes.
-            Our target is to offer support for almost every problem domain in future releases including connection-handling, file access, aop, regular expressions, ...<br />
+            A long list of features until release 1.0 of as2lib already exists. This release provides a solid fundament for creating Rich Internet Applications with as2.
             <br />
-            <a href="download.php" title="Latest version of as2lib">Download our latest version</a>
+            <h4>0.1 Basic as2 extensions (see <a href="features.php" title="Features of the as2lib">Featurelist</a>)</h4>
+            <h4>0.2 Extended Programming Support</h4>
+            <ul>
+              <li>Enhanced File Access, includes Streamresponse, etc.</li>
+              <li>Standardized Connection Handling (for Remoting, LocalConnection, WebServices, XMLSocket,....)</li>
+              <li>Integrated Support for AOP</li>
+              <li>Regular Expressions</li>
+            </ul>
+            <h4>0.3 Simple Application Support</h4>
+            <ul>
+              <li>Application Loading via Config Files</li>
+              <li>Language File Support for Applications</li>
+              <li>Session Handling for Userrelated Properties (Settings for Flash, Serverside, etc.)</li>
+              <li>Environment related program switches (one programm many environments: In Browser, In Central, as Standalone Application)</li>
+            </ul>
+            <h4>0.4 Web Support</h4>
+            <ul>
+              <li>JavaScript access definition (easier access to JavaScript Methods by Flash)</li>
+              <li>History management (System for easing handling of the History Problem)</li>
+              <li>Extended Accessability support (Way to define WebAccessInitiative (WAI) compatible Flash-Pages )</li>
+            </ul>
+            <h4>0.5 GUI Definitions</h4>
+            <ul>
+              <li>A Graphical Component Definition.</li>
+              <li>Predefined GUI Components.</li>
+            </ul>
+            <br />
+            We plan to release one alpha, one beta and a final for every 0.* release. The timespan between each release should be about 12 weeks.
           </div>
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
       </div>
 <? include('footer.inc.php') ?>

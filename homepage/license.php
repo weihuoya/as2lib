@@ -1,7 +1,7 @@
 <?
   require('class.inc.php');
   $homepageInfo = new HomepageInfo;
-  $homepageInfo->title = "About";
+  $homepageInfo->title = "License";
   $homepageInfo->page = "about";
   $homepageInfo->path = "";
   include('header.inc.php');
@@ -37,16 +37,19 @@
       </div>
       <div id="content">
         <div class="contentArea">
-          <h2>About the as2lib</h2>
+          <h2>License</h2>
           <div class="hr"></div>
           <div class="text">
-            <h3>About the as2lib</h3>
-            The as2lib is an opensource framework targeted to Macromedia Flash MX 2004+ developers. It offers support for basic idioms like event-handling, exception-handling, output-handling and reflections as well as different kinds of data holders and iterators. Also contained is a comprehensive set of IO classes.
-            Our target is to offer support for almost every problem domain in future releases including connection-handling, file access, aop, regular expressions, ...<br />
+            The as2lib is licensed according to the terms of the Mozilla Public License, Version 1.1.<br />
             <br />
-            <a href="download.php" title="Latest version of as2lib">Download our latest version</a>
+            The MPL is a full open-source license. This means you can read and change the source and you can
+            publish your application without any application fees.<br />
+            <br />
+            The full text of this license can be found at:<br />
+            <a href="http://www.mozilla.org/MPL/MPL-1.1.html" title="Mozilla 1.1 License">http://www.mozilla.org/MPL/MPL-1.1.html</a>
           </div>
         </div>
+        <br />
         <br />
         <br />
         <br />
