@@ -1,4 +1,4 @@
-﻿import org.as2lib.except.IllegalArgumentException;
+﻿import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.core.BasicClass;
 
 /*

@@ -1,5 +1,5 @@
 ﻿import org.as2lib.test.speed.TestCase;
-import org.as2lib.util.ReflectUtil;
+import org.as2lib.env.util.ReflectUtil;
 
 /**
  * Wrapper arround a Testcase that evaluates all informations.
