@@ -2,6 +2,7 @@
 import org.as2lib.data.io.conn.local.MissingServerException;
 import org.as2lib.data.io.conn.local.SyntacticallyIncorrectMethodCallException;
 import org.as2lib.data.io.conn.local.ExtendedLocalConnection;
+import org.as2lib.env.overload.Overload;
 
 class org.as2lib.data.io.conn.local.LocalServerServiceProxy extends ExtendedLocalConnection {
 	private var service;
@@ -10,10 +11,19 @@ class org.as2lib.data.io.conn.local.LocalServerServiceProxy extends ExtendedLoca
 		this.service = service;
 	}
 	
-	public function remoteCall(method:String, args:Array, listener:String):Void {
+	public function remoteCall() {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String, Array, String],remoteCallwithResponse);
+		overload.addHandler([String, Array],remoteCallwithoutResponse);
+		overload.forward(arguments);
+	}
+	
+	public function remoteCallwithResponse(method:String, args: Array, listener:String):Void {
 		var response = service[method].apply(service, args);
-		if (listener) {
-			send(listener, "onResponse", [response]);
-		}
+		send(listener, "onResponse", [response]);
+	}
+	
+	public function remoteCallwithoutResponse(method:String, args:Array):Void {
+		service[method].apply(service, args);
 	}
 }
