@@ -307,12 +307,12 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	
 	/**
 	 * Returns a String representation of the instance. The String representation
-	 * is obtained via the Stringifier obtained from the ObjectUtil#getStringifier()
+	 * is obtained via the Stringifier obtained from the Config#getObjectStringifier()
 	 * operation.
 	 *
 	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
 	public function toString(Void):String {
-		return ObjectUtil.getStringifier().execute(this);
+		return Config.getObjectStringifier().execute(this);
 	}
 }
