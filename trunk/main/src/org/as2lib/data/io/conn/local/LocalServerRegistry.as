@@ -29,5 +29,6 @@ class org.as2lib.data.io.conn.local.LocalServerRegistry extends BasicClass imple
 			lc.close();
 			serverMap.remove(server.getHost());
 		}
+		// Exception werfen falls Server nicht vorhanden um Programmierer darauf hinzuweisen
 	}
 }

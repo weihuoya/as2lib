@@ -25,15 +25,16 @@ class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass impleme
 			var key:String = String(keys.shift());
 			// source out: 'host + "/" + key'
 			if (!path.connect(host + "/" + key)){
-				throw new ReservedHostException("Connection name [" + host + "/" + key + "] is already in use.", this, arguments);
+				throw new ReservedHostException("Connection with name [" + host + "/" + key + "] is already in use.", this, arguments);
 			}
 		}
-		LocalConfig.getServerRegistry().register(host);
+		LocalConfig.getServerRegistry().register(this);
 		running = true;
 	}
 	
-	public function isRunning(Void):Boolean {
-		return running;
+	public function stop(Void):Void {
+		LocalConfig.getServerRegistry().remove(this);
+		running = false;
 	}
 	
 	public function putPath(path:String, object):Void {
@@ -46,5 +47,13 @@ class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass impleme
 		}
 		localConnection.__proto__ = object;
 		pathMap.put(path, localConnection);
+	}
+	
+	public function isRunning(Void):Boolean {
+		return running;
+	}
+	
+	public function getHost(Void):String {
+		return host;
 	}
 }
