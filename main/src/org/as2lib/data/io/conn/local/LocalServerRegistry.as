@@ -13,7 +13,7 @@ class org.as2lib.data.io.conn.local.LocalServerRegistry extends BasicClass imple
 	}
 	
 	public function contains(host:String):Boolean {
-		return !(new LocalConnection().connect(host));
+		return ExtendedLocalConnection.connectionExists(host);
 	}
 	
 	public function register(server:LocalServer):Void {

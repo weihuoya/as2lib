@@ -13,6 +13,16 @@ class org.as2lib.data.io.conn.local.ExtendedLocalConnection extends BasicClass {
 	// sollte eigentlich keine Instanzvariable sein
 	private var responseServer;
 	
+	public static function connectionExists(host:String):Boolean {
+		var lc:LocalConnection = new LocalConnection();
+		var result:Boolean = true;
+		if(!lc.connect(host)) {
+			result = false;
+		}
+		lc.close();
+		return result;
+	}
+	
 	public function ExtendedLocalConnection() {
 		var o:Overload = new Overload(this);
 		o.addHandler([Object], ExtendedLocalConnectionWithTarget);
