@@ -20,5 +20,10 @@ interface org.as2lib.core.BasicInterface {
       */ 
      public function getClass(Void):ClassInfo; 
 	 
+	 /**
+	  * Returns a String representation of the instance.
+	  *
+	  * @return a String representing the instance
+	  */
 	 public function toString(Void):String;
 }

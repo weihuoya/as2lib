@@ -1,8 +1,10 @@
 ﻿import org.as2lib.env.except.Exception;
 
 /**
+ * DataHolderException is the base Exception of the org.as2lib.data.holder package.
+ * All Exceptions contained in this package extend it.
+ *
  * @author Simon Wacker
- * @see org.as2lib.env.except.Exception
  */
 class org.as2lib.data.holder.DataHolderException extends Exception {
 	/**

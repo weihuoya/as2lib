@@ -9,13 +9,13 @@ import org.as2lib.util.ObjectUtil;
  *
  * @author Simon Wacker
  * @author Martin Heidegger
- * @see org.as2lib.core.BasicInterface
  */
 class org.as2lib.core.BasicClass implements BasicInterface {
 	/**
 	 * Uses the ReflectUtil#getClassInfo() operation to fulfill the task.
 	 *
 	 * @see org.as2lib.core.BasicInterface#getClass()
+	 * @see org.as2lib.env.util.ReflectUtil;
 	 */
 	public function getClass(Void):ClassInfo {
 		return ReflectUtil.getClassInfo(this);
@@ -23,11 +23,10 @@ class org.as2lib.core.BasicClass implements BasicInterface {
 	
 	/**
 	 * Returns a String representation of the instance. The String representation
-	 * is obtained via the ObjectUtil#stringify() operation. You can set your own
-	 * Stringifier to change the stringify process and get a custom String
-	 * representation of the instance.
+	 * is obtained via the Stringifier obtained from the ObjectUtil#getStringifier()
+	 * operation.
 	 *
-	 * @return a String representation of the instance
+	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
 	public function toString(Void):String {
 		return ObjectUtil.getStringifier().execute(this);
