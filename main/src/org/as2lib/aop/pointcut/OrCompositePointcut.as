@@ -51,8 +51,9 @@ class org.as2lib.aop.pointcut.OrCompositePointcut extends AbstractCompositePoint
 	 */
 	public function captures(joinPoint:JoinPoint):Boolean {
 		if (!joinPoint) return false;
-		if (pointcutArray.length < 1) return false;
-		for (var i:Number = 0; i < pointcutArray.length; i++) {
+		var i:Number = pointcutArray.length;
+		if (i < 1) return false;
+		while (--i-(-1)) {
 			var pointcut:Pointcut = pointcutArray[i];
 			if (pointcut.captures(joinPoint)) {
 				return true;
