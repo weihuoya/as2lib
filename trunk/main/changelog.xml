@@ -6,6 +6,8 @@
     <year value="2005">
        <month value="1">
          <day value="22">
+           <entry type="add" package="org.as2lib.test.mock" class="MockControl" method="static getDefaultArgumentsMatcher(Void):DefaultArgumentsMatcher">Matches arguments by value.</entry>
+           <entry type="add" package="org.as2lib.test.mock" class="MockControl" method="static getTypeArgumentsMatcher(Array):TypeArgumentsMatcher">Matches arguments by type.</entry>
            <entry type="add" package="org.as2lib.data.holder" class="Stack" method="size(Void):Number"></entry>
            <entry type="add" package="org.as2lib.data.holder" class="Queue" method="size(Void):Number"></entry>
          </day>

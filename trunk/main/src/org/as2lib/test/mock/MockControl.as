@@ -23,6 +23,8 @@ import org.as2lib.env.reflect.ProxyFactory;
 import org.as2lib.env.reflect.ResolveProxyFactory;
 import org.as2lib.env.reflect.InvocationHandler;
 import org.as2lib.test.mock.ArgumentsMatcher;
+import org.as2lib.test.mock.support.DefaultArgumentsMatcher;
+import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.test.mock.MethodBehavior;
 import org.as2lib.test.mock.Behavior;
 import org.as2lib.test.mock.MethodCall;
@@ -101,6 +103,26 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	
 	/** Factory used to obtain the replay state. */
 	private var replayStateFactory:MockControlStateFactory;
+	
+	/**
+	 * Returns a default arguments matcher.
+	 *
+	 * @return a default arguments matcher
+	 */
+	public static function getDefaultArgumentsMatcher(Void):DefaultArgumentsMatcher {
+		return new DefaultArgumentsMatcher();
+	}
+	
+	/**
+	 * Returns a type arguments matcher.
+	 * 
+	 * <p>Type arguments matcher match arguments by type and not by value.
+	 *
+	 * @return a type arguments matcher
+	 */
+	public static function getTypeArgumentsMatcher(expectedTypes:Array):TypeArgumentsMatcher {
+		return new TypeArgumentsMatcher(expectedTypes);
+	}
 	
 	/**
 	 * @overload #MockControlByType(Function)
