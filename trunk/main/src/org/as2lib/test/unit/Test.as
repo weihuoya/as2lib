@@ -1,4 +1,5 @@
-﻿import org.as2lib.test.unit.Failure
+﻿import org.as2lib.test.unit.Failure;
+import org.as2lib.util.ReflectUtil;
 
 /**
  * Basic Class to be Extended by all Testcases.
@@ -510,20 +511,22 @@ class org.as2lib.test.unit.Test {
 	 * Asserts if an Exception is thrown by calling an Function.
 	 * 
 	 * @param exception		Class of the Exception that should be thrown.
+	 * @param atObject		Object where the call should be called.
 	 * @param theFunction	Function that should be called.
 	 * @param parameters	Parameters to call the Array.
 	 */
-	private static function assertThrows(exception:Function, theFunction:Function, parameters:Array):Void {
+	private static function assertThrows(exception:Function, atObject, theFunction:String, parameters:Array):Void {
 		var exceptionThrown:Boolean = false;
 		try {
-			theFunction.apply(null, parameters);
-		} catch (e:Error) {
-			if (e instanceof exception) {
-				exceptionThrown = true;
+			atObject[theFunction](parameters);
+		} catch (e) {
+			exceptionThrown = true;
+			if (!(e instanceof exception)) {
+				addError("assertThrows: A different exception was thrown.");
 			}
 		}
 		if (!exceptionThrown) {
-			addError("assertThrows: The expected Exception was not thrown.");
+			addError("assertThrows: No Exception was thrown.");
 		}
 	}
 }
