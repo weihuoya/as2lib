@@ -49,9 +49,8 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	}
 	
 	/**
-	 * Overload
-	 * #addHandlerByHandler()
-	 * #addHandlerByValue()
+	 * @overload #addHandlerByHandler(OverloadHandler)
+	 * @overload #addHandlerByValue(Array, Function)
 	 */
 	public function addHandler() {
 		var l:Number = arguments.length;
@@ -86,31 +85,26 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * arguments.
 	 *
 	 * @param args the arguments types of the OverloadHandler to be matched
-	 * @param func the function corresponding to the passed arguments types
+	 * @param method the method corresponding to the passed arguments types
 	 * @return the newly created OverloadHandler
 	 */
-	public function addHandlerByValue(args:Array, func:Function):OverloadHandler {
-		var handler:OverloadHandler = new SimpleOverloadHandler(args, func); 
+	public function addHandlerByValue(args:Array, method:Function):OverloadHandler {
+		var handler:OverloadHandler = new SimpleOverloadHandler(args, method); 
 		handlers.push(handler);
 		return handler;
 	}
 	
 	/**
-	 * Removes an OverloadHandler from the list of handlers. If the OverloadHandler
-	 * could not be found on the list the IllegalArgumentException will be thrown.
+	 * Removes an OverloadHandler from the list of handlers.
 	 *
 	 * @param handler the OverloadHandler to be removed
-	 * @throws org.as2lib.env.except.IllegalArgumentException if the specified OverloadHandler does not exist in the list of handlers
 	 */
 	public function removeHandler(handler:OverloadHandler):Void {
 		ArrayUtil.removeElement(handlers, handler);
 	}
 	
 	/**
-	 * Forwards the arguments to the corresponding OverloadHandler. The
-	 * UnknownOverloadHandlerException will be thrown if no adequate OverloadHandler
-	 * could be found. If there exist at least to OverloadHandlers with the same
-	 * type signature a SameTypeSignatureException will be thrown.
+	 * Forwards the arguments to the corresponding OverloadHandler.
 	 *
 	 * @return the return value of the called operation
 	 * @throws org.as2lib.env.overload.UnknownOverloadHandlerException if no adequate OverloadHandler could be found

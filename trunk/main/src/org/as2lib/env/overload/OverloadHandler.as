@@ -24,6 +24,7 @@ import org.as2lib.core.BasicInterface;
  * @author Simon Wacker
  */
 interface org.as2lib.env.overload.OverloadHandler extends BasicInterface {
+	
 	/**
 	 * Checks if the types of the arguments match the arguments types of the 
 	 * OverloadHandler.

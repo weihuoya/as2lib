@@ -38,8 +38,12 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	/**
 	 * Constructs a new SimpleOverloadHandler instance.
 	 *
+	 * <p>An argument-type of null or undefined will be interpreted as any
+	 * type allowed.
+	 *
 	 * @param args the arguments types of the operation
 	 * @param method the actual operation to be executed on the target if the argumetns types match
+	 * @throws IllegalArgumentException if the argument method is null or undefined
 	 */
 	public function SimpleOverloadHandler(args:Array, method:Function) {
 		if (!method) throw new IllegalArgumentException("Method to be executed by the overload handler must not be null or undefined.", this, arguments);
@@ -49,11 +53,10 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	}
 	
 	/**
-	 * If the passed-in arguments array equals null or undefined it will
-	 * be used as it were an empy array.
-	 * An argument value of null or undefined matches any type.
-	 * An argument-type of null or undefined will be interpreted as any
-	 * type allowed.
+	 * <ul>
+	 *   <li>If the passed-in arguments array equals null or undefined it will be used as it were an empy array.</li>
+	 *   <li>An argument value of null or undefined matches any type.</li>
+	 * </ul>
 	 *
 	 * @see org.as2lib.env.overload.OverloadHandler#matches()
 	 */
@@ -83,12 +86,12 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	}
 	
 	/**
-	 * If the handler is null or undefined, true will be returned.
-	 * If the handler's getArguments-method returns null or undefined an
-	 * empty array will be used instead.
-	 * If the arguments' lengths do not match, true will be returned.
-	 * If one argument-type is null or undefined it is less explicit
-	 * than no matter what type it gets compared with.
+	 * <ul>
+	 *   <li>If the handler is null or undefined, true will be returned.</li>
+	 *   <li>If the handler's getArguments-method returns null or undefined an empty array will be used instead.</li>
+	 *   <li>If the arguments' lengths do not match, true will be returned.</li>
+	 *   <li>If one argument-type is null or undefined it is less explicit than no matter what type it gets compared with.</li>
+	 * </ul>
 	 *
 	 * @see org.as2lib.env.overload.OverloadHandler#isMoreExplicit()
 	 */
