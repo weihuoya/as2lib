@@ -3,6 +3,7 @@ import org.as2lib.env.overload.SimpleOverloadHandler;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.UnknownOverloadHandlerException;
 import org.as2lib.util.ArrayUtil;
+import org.as2lib.env.except.IllegalArgumentException;
 
 /**
  * You use this class to overload a method. Create a new instance of it, add the
@@ -30,11 +31,38 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	}
 	
 	/**
+	 * Overload
+	 * #addHandlerByHandler()
+	 * #addHandlerByValue()
+	 */
+	public function addHandler() {
+		var l:Number = arguments.length;
+		if (l == 1) {
+			var handler:OverloadHandler = OverloadHandler(arguments[0]);
+			if (handler != null) {
+				addHandlerByHandler(handler);
+				return;
+			}
+		}
+		if (l == 2) {
+			// Why does 'var args:Array = Array(arguments[0]);' not work?
+			var args:Array = arguments[0];
+			var func:Function = Function(arguments[1]);
+			if (args != null && func != null) {
+				return addHandlerByValue(args, func);
+			}
+		}
+		throw new IllegalArgumentException("The types of the passed arguments [" + arguments + "] must match one of the available choices.",
+										   this,
+										   arguments);
+	}
+	
+	/**
 	 * Adds a new OverloadHandler to the list of handlers.
 	 *
 	 * @param handler the new OverloadHandler to be added
 	 */
-	public function addHandler(handler:OverloadHandler):Void {
+	public function addHandlerByHandler(handler:OverloadHandler):Void {
 		handlers.push(handler);
 	}
 	
