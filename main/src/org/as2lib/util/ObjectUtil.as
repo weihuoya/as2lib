@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.Config;
 
 /**
  * ObjectUtil contains fundamental operations to efficiently and easily work
@@ -63,6 +64,16 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * Private constructor.
 	 */
 	private function ObjectUtil(Void) {
+	}
+	
+	/**
+	 * Stringifies the passed Object using the Stringifier returned by Config#getObjectStringifier().
+	 * 
+	 * @param object the Object to be stringified
+	 * @return a String representation of the object
+	 */
+	public function stringify(object):String {
+		return Config.getObjectStringifier().execute(object);
 	}
 	
 	/**

@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicInterface;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.util.ReflectUtil;
-import org.as2lib.Config;
+import org.as2lib.util.ObjectUtil;
 
 /**
  * BasicClass is the basic class with default implementations of the functionality
@@ -39,12 +39,11 @@ class org.as2lib.core.BasicClass implements BasicInterface {
 	
 	/**
 	 * Returns a String representation of the instance. The String representation
-	 * is obtained via the Stringifier obtained from the Config#getObjectStringifier()
-	 * operation.
+	 * is obtained via the ObjectUtil#stringify() operation.
 	 *
 	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
 	public function toString(Void):String {
-		return Config.getObjectStringifier().execute(this);
+		return ObjectUtil.stringify(this);
 	}
 }
