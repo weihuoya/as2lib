@@ -17,6 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.reflect.PackageMemberInfo;
+import org.as2lib.env.reflect.PackageMemberFilter;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm;
@@ -215,9 +216,27 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	}
 	
 	/**
+	 * @overload #getMembersByFlag(Boolean):Array
+	 * @overload #getMembersByFilter(PackageMemberFilter):Array
+	 */
+	public function getMembers():Array {
+		var o:Overload = new Overload(this);
+		o.addHandler([], getMembersByFlag);
+		o.addHandler([Boolean], getMembersByFlag);
+		o.addHandler([PackageMemberFilter], getMembersByFilter);
+		return o.forward(arguments);
+	}
+	
+	/**
 	 * Returns an array containing PackageMemberInfo instances representing
-	 * the members of the package. That means all classes and packages 
-	 * contained in the package.
+	 * the members of the package and maybe the ones of the sub-packages.
+	 *
+	 * <p>The members of a package are all types and packages contained in
+	 * the represented package.
+	 *
+	 * <p>If the passed-in argument filterSubPackages is null or undefined
+	 * it gets interpreted as true, that means sub-packages' package members
+	 * will be filtered/excluded from the result.
 	 *
 	 * <p>Null will be returned if
 	 * <ul>
@@ -225,111 +244,287 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 *   <li>The #getPackageMemberAlgorithm().execute method returns null or undefined.</li>
 	 * </ul>
 	 *
-	 * @return an array containing the members
+	 * @param filterSubPackages (optional) determines whether the sub-packages'
+	 * members shall be filtered/excluded from (true) or included (false) in the result
+	 * @return an array containing the members of the represented package
 	 */
-	public function getMembers(Void):Array {
+	public function getMembersByFlag(filterSubPackages:Boolean):Array {
 		if (getPackage() == null) return null;
+		if (filterSubPackages == null) filterSubPackages = true;
 		if (members === undefined) {
 			members = getPackageMemberAlgorithm().execute(this);
 		}
-		return members;
-	}
-	
-	/**
-	 * Returns an Array containing ClassInfo instances representing the classes
-	 * contained in this package.
-	 *
-	 * <p>Null will be returned if the #getMembers() method returns null.
-	 *
-	 * @return an Array containing the classes
-	 */
-	public function getMemberClasses(Void):Array {
-		if (!getMembers()) return null;
-		var result:Array = new Array();
-		var l:Number = getMembers().length;
-		for (var i:Number = 0; i < l; i = i-(-1)) {
-			var member:PackageMemberInfo = getMembers()[i];
-			if (member instanceof ClassInfo) {
-				result[result.length] = member;
+		var result:Array = members.concat();
+		if (!filterSubPackages) {
+			var subPackages:Array = members["packages"];
+			for (var i:Number = 0; i < subPackages.length; i++) {
+				result.concat(PackageInfo(subPackages[i]).getMembersByFlag(filterSubPackages));
 			}
 		}
 		return result;
 	}
 	
 	/**
-	 * Returns an Array containing PackageInfos representing the packages contained
-	 * in this package.
+	 * Returns an array containing PackageMemberInfo instances representing
+	 * the members of the package and sub-packages that do not get filtered/
+	 * excluded.
 	 *
-	 * <p>Null will be returned if the #getMembers() method returns null.
+	 * <p>The members of a package are all types and packages contained in
+	 * the represented package.
 	 *
-	 * @return an Array containing the packages
+	 * <p>The PackageMemberFilter#filter(PackageMemberFilter):Boolean method
+	 * gets invoked for every package member to determine whether it shall
+	 * be contained in the result.
+	 *
+	 * <p>If the passed-in packageMemberFilter is null or undefined the
+	 * result of the invocation of #getMembersByFlag(Boolean):Array with
+	 * argument 'true' gets returned.
+	 *
+	 * <p>Null will be returned if
+	 * <ul>
+	 *   <li>The #getPackage method returns null or undefined.</li>
+	 *   <li>The #getPackageMemberAlgorithm().execute method returns null or undefined.</li>
+	 * </ul>
+	 *
+	 * @param packageMemberFilter the filter that filters unwanted package members out
+	 * @return an array containing the remaining members of the represented package
 	 */
-	public function getMemberPackages(Void):Array {
-		if (!getMembers()) return null;
-		var result:Array = new Array();
-		var l:Number = getMembers().length;
-		for (var i:Number = 0; i < l; i = i-(-1)) {
-			var member:PackageMemberInfo = getMembers()[i];
-			if (member instanceof PackageInfo) {
-				result[result.length] = member;
+	 public function getMembersByFilter(packageMemberFilter:PackageMemberFilter):Array {
+		if (getPackage() == null) return null;
+		if (!packageMemberFilter) return getMembersByFlag(true);
+		var result:Array = getMembersByFlag(packageMemberFilter.filterSubPackages());
+		for (var i:Number = 0; i < result.length; i++) {
+			if (packageMemberFilter.filter(PackageMemberInfo(result[i]))) {
+				result.splice(i, 1);
+				i--;
 			}
 		}
 		return result;
 	}
 	
 	/**
-	 * @overload #getMemberByName(String)
-	 * @overload #getMemberByMember(*)
+	 * @overload #getMemberClassesByFlag(Boolean):Array
+	 * @overload #getMemberClassesByFilter(PackageMemberFilter):Array
 	 */
-	public function getMember(member):PackageMemberInfo {
-		var overload:Overload = new Overload(this);
-		overload.addHandler([String], getMemberByName);
-		overload.addHandler([Object], getMemberByMember);
-		return overload.forward(arguments);
+	public function getMemberClasses():Array {
+		var o:Overload = new Overload(this);
+		o.addHandler([], getMemberClassesByFlag);
+		o.addHandler([Boolean], getMemberClassesByFlag);
+		o.addHandler([PackageMemberFilter], getMemberClassesByFilter);
+		return o.forward(arguments);
+	}
+	
+	/**
+	 * Returns an array containing ClassInfo instances representing the
+	 * member classes of the package and maybe the ones of the sub-packages.
+	 *
+	 * <p>If the passed-in argument filterSubPackages is null or undefined
+	 * it gets interpreted as true, that means sub-packages' classes will
+	 * be filtered/excluded from the result.
+	 *
+	 * <p>Null will be returned if
+	 * <ul>
+	 *   <li>The #getPackage method returns null or undefined.</li>
+	 *   <li>The #getPackageMemberAlgorithm().execute method returns null or undefined.</li>
+	 * </ul>
+	 *
+	 * @param filterSubPackages (optional) determines whether the sub-packages member
+	 * classes shall be filtered/excluded from (true) or included (false) in the result
+	 * @return an array containing the member classes of the represented package
+	 */
+	public function getMemberClassesByFlag(filterSubPackages:Boolean):Array {
+		if (getPackage() == null) return null;
+		if (filterSubPackages == null) filterSubPackages = true;
+		if (members === undefined) {
+			members = getPackageMemberAlgorithm().execute(this);
+		}
+		var result:Array = members["classes"].concat();
+		if (!filterSubPackages) {
+			var subPackages:Array = members["packages"];
+			for (var i:Number = 0; i < subPackages.length; i++) {
+				result.concat(PackageInfo(subPackages[i]).getMemberClassesByFlag(filterSubPackages));
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Returns an array containing ClassInfo instances representing the
+	 * class members of the package and sub-packages that do not get
+	 * filtered/excluded.
+	 *
+	 * <p>The PackageMemberFilter#filter(PackageMemberFilter):Boolean method
+	 * gets invoked for every member class to determine whether it shall
+	 * be contained in the result.
+	 *
+	 * <p>If the passed-in clasFilter is null or undefined the result of the
+	 * invocation of #getMemberClassesByFlag(Boolean):Array with argument
+	 * 'true' gets returned.
+	 *
+	 * <p>Null will be returned if
+	 * <ul>
+	 *   <li>The #getPackage method returns null or undefined.</li>
+	 *   <li>The #getPackageMemberAlgorithm().execute method returns null or undefined.</li>
+	 * </ul>
+	 *
+	 * @param classFilter the filter that filters unwanted member classes out
+	 * @return an array containing the remaining member classes of the represented package
+	 */
+	 public function getMemberClassesByFilter(classFilter:PackageMemberFilter):Array {
+		if (getPackage() == null) return null;
+		if (!classFilter) return getMemberClassesByFlag(true);
+		var result:Array = getMemberClassesByFlag(classFilter.filterSubPackages());
+		for (var i:Number = 0; i < result.length; i++) {
+			if (classFilter.filter(ClassInfo(result[i]))) {
+				result.splice(i, 1);
+				i--;
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * @overload #getMemberPackagesByFlag(Boolean):Array
+	 * @overload #getMemberPackagesByFilter(PackageMemberFilter):Array
+	 */
+	public function getMemberPackages():Array {
+		var o:Overload = new Overload(this);
+		o.addHandler([], getMemberPackagesByFlag);
+		o.addHandler([Boolean], getMemberPackagesByFlag);
+		o.addHandler([PackageMemberFilter], getMemberPackagesByFilter);
+		return o.forward(arguments);
+	}
+	
+	/**
+	 * Returns an array containing PackageInfo instances representing the
+	 * member packages of the package and maybe the ones of the sub-packages.
+	 *
+	 * <p>If the passed-in argument filterSubPackages is null or undefined
+	 * it gets interpreted as true, that means sub-packages' packages will
+	 * be filtered/excluded from the result.
+	 *
+	 * <p>Null will be returned if
+	 * <ul>
+	 *   <li>The #getPackage method returns null or undefined.</li>
+	 *   <li>The #getPackageMemberAlgorithm().execute method returns null or undefined.</li>
+	 * </ul>
+	 *
+	 * @param filterSubPackages (optional) determines whether the sub-packages member
+	 * packages shall be filtered/excluded from (true) or included (false) in the result
+	 * @return an array containing the member packages of the represented package
+	 */
+	public function getMemberPackagesByFlag(filterSubPackages:Boolean):Array {
+		if (getPackage() == null) return null;
+		if (filterSubPackages == null) filterSubPackages = true;
+		if (members === undefined) {
+			members = getPackageMemberAlgorithm().execute(this);
+		}
+		var result:Array = members["packages"].concat();
+		if (!filterSubPackages) {
+			var subPackages:Array = members["packages"];
+			for (var i:Number = 0; i < subPackages.length; i++) {
+				result.concat(PackageInfo(subPackages[i]).getMemberPackagesByFlag(filterSubPackages));
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Returns an array containing PackageInfo instances representing the
+	 * package members of the package and sub-packages that do not get
+	 * filtered/excluded.
+	 *
+	 * <p>The PackageMemberFilter#filter(PackageMemberFilter):Boolean method
+	 * gets invoked for every member package to determine whether it shall
+	 * be contained in the result.
+	 *
+	 * <p>If the passed-in packageFilter is null or undefined the result of the
+	 * invocation of #getMemberPackagesByFlag(Boolean):Array with argument
+	 * 'true' gets returned.
+	 *
+	 * <p>Null will be returned if
+	 * <ul>
+	 *   <li>The #getPackage method returns null or undefined.</li>
+	 *   <li>The #getPackageMemberAlgorithm().execute method returns null or undefined.</li>
+	 * </ul>
+	 *
+	 * @param packageFilter the filter that filters unwanted member packages out
+	 * @return an array containing the remaining member packages of the represented package
+	 */
+	 public function getMemberPackagesByFilter(packageFilter:PackageMemberFilter):Array {
+		if (getPackage() == null) return null;
+		if (!packageFilter) return getMemberPackagesByFlag(true);
+		var result:Array = getMemberPackagesByFlag(packageFilter.filterSubPackages());
+		for (var i:Number = 0; i < result.length; i++) {
+			if (packageFilter.filter(PackageInfo(result[i]))) {
+				result.splice(i, 1);
+				i--;
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * @overload #getMemberByName(String):PackageMemberInfo
+	 * @overload #getMemberByMember(*):PackageMemberInfo
+	 */
+	public function getMember():PackageMemberInfo {
+		var o:Overload = new Overload(this);
+		o.addHandler([String], getMemberByName);
+		o.addHandler([Object], getMemberByMember);
+		return o.forward(arguments);
 	}
 	
 	/**
 	 * Returns the PackageMemberInfo corresponding to the name of the member.
 	 *
+	 * <p>If the package member with the passed-in name cannot be found directly
+	 * in the represented package its sub-packages get searched through.
+	 *
 	 * <p>Null will be returned if:
 	 * <ul>
-	 *   <li>The #getMembers() method returns null or undefined.</li>
+	 *   <li>The #getMembers method returns null or undefined.</li>
 	 *   <li>The passed-in name is null or undefined.</li>
 	 *   <li>There is no member with the passed-in name.</li>
 	 * </ul>
 	 *
 	 * @param memberName the name of the member
-	 * @return the PackageMemberInfo corresponding to the member's name
+	 * @return the member corresponding to the member's name
 	 */
 	public function getMemberByName(memberName:String):PackageMemberInfo {
 		if (memberName == null) return null;
-		var members:Array = getMembers();
-		if (!members) return null;
-		for (var i:Number = 0; i < members.length; i++) {
-			var member:PackageMemberInfo = members[i];
-			if (member.getName() == memberName) {
-				return member;
+		if (getMembersByFlag(true)) {
+			if (members["classes"][memberName]) return members["classes"][memberName];
+			if (members["packages"][memberName]) return members["packages"][memberName];
+			var subPackages:Array = members["packages"];
+			for (var i:Number = 0; i < subPackages.length; i++) {
+				var member:PackageMemberInfo = PackageInfo(subPackages[i]).getMemberByName(memberName);
+				if (member) return member;
 			}
 		}
 		return null;
 	}
 	
 	/**
-	 * Returns the PackageMemberInfo corresponding to the member.
+	 * Returns the PackageMemberInfo corresponding to the passed-in concrete
+	 * member.
+	 *
+	 * <p>If the package member corresponding to the passed-in concrete member
+	 * cannot be found directly in the represented package its sub-packages
+	 * get searched through.
 	 *
 	 * <p>Null will be returned if:
 	 * <ul>
-	 *   <li>The #getMembers() method returns null or undefined.</li>
+	 *   <li>The #getMembers method returns null or undefined.</li>
 	 *   <li>The passed-in argument is null or undefined.</li>
 	 *   <li>The member could not be found.</li>
 	 * </ul>
 	 *
-	 * @param member the concrete member you want the PackageMemberInfo for
-	 * @return the PackageMemberInfo corresponding to the member
+	 * @param concreteMember the concrete member you want the PackageMemberInfo instance for
+	 * @return the PackageMemberInfo instance corresponding to the member
 	 */
 	public function getMemberByMember(concreteMember):PackageMemberInfo {
 		if (concreteMember == null) return null;
-		if (!getMembers()) return null;
 		if (typeof(concreteMember) == "function") {
 			return getMemberClassByClass(concreteMember);
 		} else {
@@ -338,100 +533,118 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	}
 	
 	/**
-	 * @overload #getMemberClassByName(String)
-	 * @overload #getMemberClassByClass(Function)
+	 * @overload #getMemberClassByName(String):ClassInfo
+	 * @overload #getMemberClassByClass(Function):ClassInfo
 	 */
 	public function getMemberClass(clazz):ClassInfo {
-		var overload:Overload = new Overload(this);
-		overload.addHandler([String], getMemberClassByName);
-		overload.addHandler([Function], getMemberClassByClass);
-		return overload.forward(arguments);
+		var o:Overload = new Overload(this);
+		o.addHandler([String], getMemberClassByName);
+		o.addHandler([Function], getMemberClassByClass);
+		return o.forward(arguments);
 	}
 	
 	/**
-	 * Returns a ClassInfo corresponding to the name of the class.
+	 * Returns the class info corresponding to the passed-in class name.
+	 *
+	 * <p>If the member class with the passed-in name cannot be found directly
+	 * in the represented package its sub-packages get searched through.
 	 *
 	 * <p>Null will be returned if:
 	 * <ul>
 	 *   <li>The passed-in class name is null or undefined.</li>
-	 *   <li>The #getMemberClasses() method returns null.</li>
 	 *   <li>There is no class with the passed-in name.</li>
 	 * </ul>
 	 *
 	 * @param className the name of the class
-	 * @return a ClassInfo corresponding to the passed name
+	 * @return the class info corresponding to the passed-in name
 	 */
 	public function getMemberClassByName(className:String):ClassInfo {
 		if (className == null) return null;
-		var classes:Array = getMemberClasses();
-		if (!classes) return null;
-		for (var i:Number = 0; i < classes.length; i++) {
-			var clazz:ClassInfo = classes[i];
-			if (clazz.getName() == className) {
-				return clazz;
+		if (getMemberClassesByFlag(true)) {
+			if (members["classes"][className]) return members["classes"][className];
+		}
+		var subPackages:Array = getMemberPackagesByFlag(true);
+		if (subPackages) {
+			for (var i:Number = 0; i < subPackages.length; i++) {
+				var clazz:ClassInfo = PackageInfo(subPackages[i]).getMemberClassByName(className);
+				if (clazz) return clazz;
 			}
 		}
 		return null;
 	}
 	
 	/**
-	 * Returns a ClassInfo corresponding to the passed concrete class.
+	 * Returns the class ifno corresponding to the passed-in concrete class.
+	 *
+	 * <p>If the member class corresponding to the passed-in concrete class
+	 * cannot be found directly in the represented package its sub-packages
+	 * get searched through.
 	 *
 	 * <p>Null will be returned if:
 	 * <ul>
 	 *   <li>The passed-in argument is null or undefined.</li>
-	 *   <li>The #getMemberClasses() method returns null.</li>
 	 *   <li>There is no class matching the passed-in concrete class in this package.</li>
 	 * </ul>
 	 *
-	 * @param concreteClass the concrete class a corresponding ClassInfo shall be returned
-	 * @return the ClassInfo corresponding to the passed class
+	 * @param concreteClass the concrete class a corresponding class info shall be returned
+	 * @return the class info corresponding to the passed-in concrete class
 	 */
 	public function getMemberClassByClass(concreteClass:Function):ClassInfo {
 		if (!concreteClass) return null;
-		var classes:Array = getMemberClasses();
-		if (!classes) return null;
-		for (var i:Number = 0; i < classes.length; i++) {
-			var clazz:ClassInfo = classes[i];
-			if (clazz.getType() == concreteClass) {
-				return clazz;
+		var classes:Array = getMemberClassesByFlag(true);
+		if (classes) {
+			for (var i:Number = 0; i < classes.length; i++) {
+				var clazz:ClassInfo = classes[i];
+				if (clazz.getType() == concreteClass) {
+					return clazz;
+				}
+			}
+		}
+		var subPackages:Array = getMemberPackagesByFlag(true);
+		if (subPackages) {
+			for (var i:Number = 0; i < subPackages.length; i++) {
+				var clazz:ClassInfo = PackageInfo(subPackages[i]).getMemberClassByClass(concreteClass);
+				if (clazz) return clazz;
 			}
 		}
 		return null;
 	}
 	
 	/**
-	 * @overload #getMemberPackageByName(String)
-	 * @overload #getMemberPackageByPackage(*)
+	 * @overload #getMemberPackageByName(String):PackageInfo
+	 * @overload #getMemberPackageByPackage(*):PackageInfo
 	 */
 	public function getMemberPackage(package):PackageInfo {
-		var overload:Overload = new Overload(this);
-		overload.addHandler([String], getMemberPackageByName);
-		overload.addHandler([Object], getMemberPackageByPackage);
-		return overload.forward(arguments);
+		var o:Overload = new Overload(this);
+		o.addHandler([String], getMemberPackageByName);
+		o.addHandler([Object], getMemberPackageByPackage);
+		return o.forward(arguments);
 	}
 	
 	/**
-	 * Returns a PackageInfo corresponding to the name of the package.
+	 * Returns the package info corresponding to the passed-in package name.
 	 *
+	 * <p>If the member package with the passed-in name cannot be found directly
+	 * in the represented package its sub-packages get searched through.
+	 * 
 	 * <p>Null will be returned if:
 	 * <ul>
 	 *   <li>The passed-in package name is null or undefined.</li>
-	 *   <li>The #getMemberPackages() method returns null.</li>
+	 *   <li>The #getMemberPackages method returns null.</li>
 	 *   <li>There is no package with the given name.</li>
 	 * </ul>
 	 *
 	 * @param packageName the name of the package
-	 * @return a PackageInfo corresponding to the passed name
+	 * @return the package info corresponding to the passed-in name
 	 */
 	public function getMemberPackageByName(packageName:String):PackageInfo {
 		if (packageName == null) return null;
-		var packages:Array = getMemberPackages();
-		if (!packages) return null;
-		for (var i:Number = 0; i < packages.length; i++) {
-			var package:PackageInfo = packages[i];
-			if (package.getName() == packageName) {
-				return package;
+		if (getMemberPackagesByFlag(true)) {
+			if (members["packages"][packageName]) return members["packages"][packageName];
+			var subPackages:Array = members["packages"];
+			for (var i:Number = 0; i < subPackages.length; i++) {
+				var package:PackageInfo = PackageInfo(subPackages[i]).getMemberPackageByName(packageName);
+				if (package) return package;
 			}
 		}
 		return null;
@@ -440,24 +653,33 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	/**
 	 * Returns a PackageInfo corresponding to the passed concrete package.
 	 *
+	 * <p>If the member package corresponding to the passed-in concrete package
+	 * cannot be found directly in the represented package its sub-packages
+	 * get searched through.
+	 * 
 	 * <p>Null will be returned if:
 	 * <ul>
 	 *   <li>The passed-in concrete package is null or undefined.</li>
-	 *   <li>The #getMemberPackages() method returns null.</li>
+	 *   <li>The #getMemberPackages method returns null.</li>
 	 *   <li>A package matching the passed-in concrete package could not be found.</li>
 	 * </ul>
 	 *
-	 * @param concretePackage the concrete package a corresponding PackageInfo shall be returned
-	 * @return the PackageInfo corresponding to the passed package
+	 * @param concretePackage the concrete package the corresponding package info shall be returned
+	 * @return the package info corresponding to the passed-in concrete package
 	 */
 	public function getMemberPackageByPackage(concretePackage):PackageInfo {
 		if (concretePackage == null) return null;
-		var packages:Array = getMemberPackages();
-		if (!packages) return null;
-		for (var i:Number = 0; i < packages.length; i++) {
-			var package:PackageInfo = packages[i];
-			if (package.getPackage() == concretePackage) {
-				return package;
+		var packages:Array = getMemberPackagesByFlag(true);
+		if (packages) {
+			for (var i:Number = 0; i < packages.length; i++) {
+				var package:PackageInfo = packages[i];
+				if (package.getPackage() == concretePackage) {
+					return package;
+				}
+			}
+			for (var i:Number = 0; i < packages.length; i++) {
+				var package:PackageInfo = PackageInfo(packages[i]).getMemberPackageByPackage(concretePackage);
+				if (package) return package;
 			}
 		}
 		return null;
@@ -483,7 +705,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 *   <li>The passed-in package is not a parent package of this package.</li>
 	 *   <li>The passed-in package is null or undefined.</li>
 	 *   <li>The passed-in package equals this package.</li>
-	 *   <li>The passed-in package's isRoot() method returns true.</li>
+	 *   <li>The passed-in package's isRoot method returns true.</li>
 	 * </ul>
 	 * 
 	 * @param package package this package could be a parent of

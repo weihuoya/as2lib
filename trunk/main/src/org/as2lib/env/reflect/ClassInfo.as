@@ -452,7 +452,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * Returns an array containing the methods represented by MethodInfos
 	 * this type and super types' declare that do not get filtered/excluded.
 	 *
-	 * <p>The TypeMemberFilter#filter(TypeMemberInfo):Boolean gets invoked
+	 * <p>The TypeMemberFilter#filter(TypeMemberInfo):Boolean method gets invoked
 	 * for every method to determine whether it shall be contained in the 
 	 * result.
 	 *
