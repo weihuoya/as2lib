@@ -14,7 +14,6 @@ class broadcasting.ExampleCall extends BasicClass implements EventListener {
 	 * Executes a call.
 	 */
 	public function call(Void):Void {
-		trace ("call");
 		counter++;
 	}
 }
