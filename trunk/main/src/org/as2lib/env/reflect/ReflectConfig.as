@@ -27,7 +27,6 @@ import org.as2lib.env.reflect.algorithm.MethodAlgorithm;
 import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
 import org.as2lib.env.reflect.algorithm.ChildrenAlgorithm;
 import org.as2lib.data.holder.HashMap;
-import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.reflect.SimpleCache;
 import org.as2lib.env.reflect.string.MethodInfoStringifier;
 import org.as2lib.env.reflect.string.PropertyInfoStringifier;
@@ -40,28 +39,28 @@ import org.as2lib.env.reflect.string.PropertyInfoStringifier;
  */
 class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	/** The CacheAlgorithm used to find classes. */
-	private static var classAlgorithm:CacheAlgorithm = new ClassAlgorithm();
+	private static var classAlgorithm:CacheAlgorithm;
 	
 	/** The CacheAlgorithm used to find packages. */
-	private static var packageAlgorithm:CacheAlgorithm = new PackageAlgorithm();
+	private static var packageAlgorithm:CacheAlgorithm;
 	
 	/** The ContentAlgorithm used to find methods. */
-	private static var methodAlgorithm:ContentAlgorithm = new MethodAlgorithm();
+	private static var methodAlgorithm:ContentAlgorithm;
 	
 	/** The ContentAlgorithm used to find properties. */
-	private static var propertyAlgorithm:ContentAlgorithm = new PropertyAlgorithm();
+	private static var propertyAlgorithm:ContentAlgorithm;
 	
 	/** The ContentAlgorithm used to find children. */
-	private static var childrenAlgorithm:ContentAlgorithm = new ChildrenAlgorithm();
+	private static var childrenAlgorithm:ContentAlgorithm;
 	
 	/** All ClassInfos and PackageInfos that have already been found will be cached here. */
 	private static var cache:Cache = new SimpleCache();
 	
 	/** Used to stringify MethodInfo instances. */
-	private static var methodInfoStringifier:Stringifier = new MethodInfoStringifier();
+	private static var methodInfoStringifier:Stringifier;
 	
 	/** Used to stringify PropertyInfo instances. */
-	private static var propertyInfoStringifier:Stringifier = new PropertyInfoStringifier();
+	private static var propertyInfoStringifier:Stringifier;
 	
 	/**
 	 * Private constructor to prevent an instantiation.
@@ -86,6 +85,7 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 * @return the CacheAlgorithm used to return ClassInfos
 	 */
 	public static function getClassAlgorithm(Void):CacheAlgorithm {
+		if (!classAlgorithm) classAlgorithm = new ClassAlgorithm();
 		return classAlgorithm;
 	}
 	
@@ -106,6 +106,7 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 * @return the CacheAlgorithm used to return PackageInfos
 	 */
 	public static function getPackageAlgorithm(Void):CacheAlgorithm {
+		if (!packageAlgorithm) packageAlgorithm = new PackageAlgorithm();
 		return packageAlgorithm;
 	}
 	
@@ -125,6 +126,7 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 * @return the ContentAlgorithm to find and store MethodInfos
 	 */
 	public static function getMethodAlgorithm(Void):ContentAlgorithm {
+		if (!methodAlgorithm) methodAlgorithm = new MethodAlgorithm();
 		return methodAlgorithm;
 	}
 	
@@ -144,6 +146,7 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 * @return the ContentAlgorithm to find and store PropertyInfos
 	 */
 	public static function getPropertyAlgorithm(Void):ContentAlgorithm {
+		if (!propertyAlgorithm) propertyAlgorithm = new PropertyAlgorithm();
 		return propertyAlgorithm;
 	}
 	
@@ -162,6 +165,7 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 * @return the ContentAlgorithm to find and store children
 	 */
 	public static function getChildrenAlgorithm(Void):ContentAlgorithm {
+		if (!childrenAlgorithm) childrenAlgorithm = new ChildrenAlgorithm();
 		return childrenAlgorithm;
 	}
 	
@@ -199,6 +203,7 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 * @return the Stringifier used to stringify MethodInfos
 	 */
 	public static function getMethodInfoStringifier(Void):Stringifier {
+		if (!methodInfoStringifier) methodInfoStringifier = new MethodInfoStringifier();
 		return methodInfoStringifier;
 	}
 	
@@ -217,6 +222,7 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 * @return the Stringifier used to stringify PropertyInfos
 	 */
 	public static function getPropertyInfoStringifier(Void):Stringifier {
+		if (!propertyInfoStringifier) propertyInfoStringifier = new PropertyInfoStringifier();
 		return propertyInfoStringifier;
 	}
 }

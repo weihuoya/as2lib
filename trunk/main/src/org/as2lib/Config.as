@@ -38,7 +38,7 @@ class org.as2lib.Config extends BasicClass {
 	private static var eventBroadcasterFactory:EventBroadcasterFactory;
 	
 	/** Stringifier used to stringify Objects. */
-	private static var objectStringifier:Stringifier = new ObjectStringifier();
+	private static var objectStringifier:Stringifier;
 	
 	/**
 	 * Private constructor.
@@ -88,9 +88,7 @@ class org.as2lib.Config extends BasicClass {
 	 * @return the currently used EventBroadcasterFactory
 	 */
 	public static function getEventBroadcasterFactory(Void):EventBroadcasterFactory {
-		if(!eventBroadcasterFactory) {
-			eventBroadcasterFactory = new SimpleEventBroadcasterFactory();
-		}
+		if(!eventBroadcasterFactory) eventBroadcasterFactory = new SimpleEventBroadcasterFactory();
 		return eventBroadcasterFactory;
 	}
 	
@@ -109,6 +107,7 @@ class org.as2lib.Config extends BasicClass {
 	 * @return the currently used Object Stringifier.
 	 */
 	public static function getObjectStringifier(Void):Stringifier {
+		if (!objectStringifier) objectStringifier = new ObjectStringifier();
 		return objectStringifier;
 	}
 }
