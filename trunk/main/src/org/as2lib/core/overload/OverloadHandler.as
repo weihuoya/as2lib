@@ -1,10 +1,10 @@
-﻿import org.as2lib.basic.BasicInterface;
+﻿import org.as2lib.core.BasicInterface;
 
 /**
  * @author: Simon Wacker
  * @version: 1.0
  */
-interface org.as2lib.basic.overload.OverloadHandler extends BasicInterface {
+interface org.as2lib.core.overload.OverloadHandler extends BasicInterface {
 	/**
 	 * Checks if the types of the arguments match the types of the OverloadHandler.
 	 * @param someArguments

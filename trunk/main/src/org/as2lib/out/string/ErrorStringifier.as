@@ -1,5 +1,5 @@
-﻿import org.as2lib.basic.BasicClass;
-import org.as2lib.basic.string.Stringifier;
+﻿import org.as2lib.core.BasicClass;
+import org.as2lib.core.string.Stringifier;
 import org.as2lib.util.ReflectUtil;
 import org.as2lib.out.info.OutErrorInfo;
 

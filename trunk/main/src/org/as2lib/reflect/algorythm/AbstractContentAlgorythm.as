@@ -1,4 +1,4 @@
-﻿import org.as2lib.basic.BasicClass;
+﻿import org.as2lib.core.BasicClass;
 import org.as2lib.reflect.ReflectInfo;
 
 class org.as2lib.reflect.algorythm.AbstractContentAlgorythm extends BasicClass {

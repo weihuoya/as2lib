@@ -3,7 +3,7 @@ import org.as2lib.out.info.OutWriteInfo;
 import org.as2lib.out.info.OutErrorInfo;
 import org.as2lib.event.EventInfo;
 import org.as2lib.util.OutUtil;
-import org.as2lib.basic.BasicClass;
+import org.as2lib.core.BasicClass;
 
 /**
  * @author Simon Wacker

@@ -5,7 +5,7 @@ import org.as2lib.event.EventListener;
 import org.as2lib.event.EventInfo;
 import org.as2lib.event.ListenerArray;
 import org.as2lib.event.Consumeable;
-import org.as2lib.basic.BasicClass;
+import org.as2lib.core.BasicClass;
 
 /**
  * @version 1.0

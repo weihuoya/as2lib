@@ -1,6 +1,6 @@
-﻿import org.as2lib.basic.BasicClass;
+﻿import org.as2lib.core.BasicClass;
 
-class test.org.as2lib.basic.reflect.DummieClass extends BasicClass {
+class test.org.as2lib.core.reflect.DummieClass extends BasicClass {
 	public static function set muh(muh:String) {
 		
 	}

@@ -1,6 +1,6 @@
 ﻿import org.as2lib.event.EventInfo;
 import org.as2lib.out.OutLevel;
-import org.as2lib.basic.BasicClass;
+import org.as2lib.core.BasicClass;
 
 /**
  * @author Simon Wacker
