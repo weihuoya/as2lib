@@ -4,6 +4,7 @@ import org.as2lib.data.io.conn.remoting.RemotingConnector;
 import org.as2lib.data.io.conn.Connector;
 import org.as2lib.env.out.Out;
 import test.org.as2lib.data.io.conn.ExampleListener;
+import org.as2lib.env.event.SimpleEventInfo;
 
 class test.org.as2lib.data.io.conn.TNetConnectorImplementation extends Test{
    private var connector:RemotingConnector;
@@ -11,7 +12,7 @@ class test.org.as2lib.data.io.conn.TNetConnectorImplementation extends Test{
      connector = new RemotingConnector();
    }
 	
-	private function connectionTest(con:Connector){
+	private function connectionTest(con:RemotingConnector){
 		
 		// getter setter Test
 		con.setIdentifier("http://192.168.0.1/flashservices/gateway");
@@ -28,10 +29,10 @@ class test.org.as2lib.data.io.conn.TNetConnectorImplementation extends Test{
 		con.addListener(l2);
 		con.addListener(l3);
 		
-		con.removeListener(l1));
+		con.removeListener(l1);
 		
-		dispatch(event:EventInfo):Void {
-		
+		con.dispatch(new SimpleEventInfo("onError"));
+		con.dispatch(new SimpleEventInfo("onResponse"));
 		// Error Test
 		
 		
