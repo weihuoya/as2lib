@@ -49,7 +49,7 @@ class org.as2lib.env.except.FatalException extends AbstractThrowable implements 
 		if (!arguments.caller && getLogger()) {
 			getLogger().fatal(this);
 		}
-		return ExceptConfig.getThrowableStringifier().execute(this);
+		return getStringifier().execute(this);
 	}
 	
 }

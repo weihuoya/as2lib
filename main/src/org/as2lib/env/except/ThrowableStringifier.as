@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
 import org.as2lib.env.except.Throwable;
-import org.as2lib.env.except.ExceptConfig;
+import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
@@ -33,7 +33,26 @@ class org.as2lib.env.except.ThrowableStringifier extends BasicClass implements S
 	public function execute(target):String {
 		var throwable:Throwable = target;
 		return (ReflectUtil.getClassNameForInstance(throwable) + ": " + throwable.getMessage() + "\n"
-				+ ExceptConfig.getStackTraceStringifier().execute(throwable.getStackTrace()));
+				+ stringifyStackTrace(throwable.getStackTrace()));
+	}
+
+	/**
+	 * Stringifies the passed-in stack trace.
+	 *
+	 * @param stackTrace the stack trace to stringify
+	 * @return the string representation of the stack trace
+	 */
+	public function stringifyStackTrace(stackTrace:Array):String {
+		var result:String = "";
+		for (var i:Number = 0; i < stackTrace.length; i++) {
+			var element:StackTraceElement = stackTrace[i];
+			result += ("  at " 
+					   + element.toString());
+			if (i < stackTrace.length-1) {
+				result += "\n";
+			}
+		}
+		return result;
 	}
 	
 }

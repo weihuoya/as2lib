@@ -15,7 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.except.ExceptConfig;
+import org.as2lib.util.Stringifier;
+import org.as2lib.env.except.StackTraceElementStringifier;
 
 /**
  * StackTraceElement represents an element in the stack trace returned by
@@ -26,6 +27,9 @@ import org.as2lib.env.except.ExceptConfig;
  */
 class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	
+	/** Stringifier to stringify stack trace elements. */
+	private static var stringifier:Stringifier;
+	
 	/** The thrower. */
 	private var thrower;
 	
@@ -34,6 +38,31 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	
 	/** The arguments passed to the throwing method. */
 	private var args:Array;
+	
+	/**
+	 * Returns the stringifier to stringify stack trace elements.
+	 *
+	 * <p>The returned stringifier is either the default StackTraceElementStringifier
+	 * if no custom stringifier was set or if the stringifier was set to null.
+	 *
+	 * @return the current stringifier
+	 */
+	public static function getStringifier(Void):Stringifier {
+		if (!stringifier) stringifier = new StackTraceElementStringifier();
+		return stringifier;
+	}
+	
+	/**
+	 * Sets the stringifier to stringify stack trace elements.
+	 *
+	 * <p>If you set a stringifier of value null #getStringifier(Void):Stringifier
+	 * returns the default stringifier.
+	 *
+	 * @param stackTraceElementStringifier the stringifier to stringify stack trace elements
+	 */
+	public static function setStringifier(stackTraceElementStringifier:Stringifier):Void {
+		stringifier = stackTraceElementStringifier;
+	}
 	
 	/**
 	 * Constructs a new SimpleStackTraceElement instance.
@@ -80,7 +109,7 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
 	public function toString(Void):String {
-		return ExceptConfig.getStackTraceElementStringifier().execute(this);
+		return getStringifier().execute(this);
 	}
 	
 }

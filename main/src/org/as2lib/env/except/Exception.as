@@ -16,7 +16,6 @@
 
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.except.AbstractThrowable;
-import org.as2lib.env.except.ExceptConfig;
 
 /**
  * Exception is a normal default implementation of the Throwable interface.
@@ -47,7 +46,7 @@ class org.as2lib.env.except.Exception extends AbstractThrowable implements Throw
 		if (!arguments.caller && getLogger()) {
 			getLogger().error(this);
 		}
-		return ExceptConfig.getThrowableStringifier().execute(this);
+		return getStringifier().execute(this);
 	}
 	
 }
