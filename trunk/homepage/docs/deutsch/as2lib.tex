@@ -1,0 +1,624 @@
+\chapter{As2lib - Framework für RIAs}
+\label{cha:As2libFrameworkFuerRIAs}
+
+\section{Entstehungsgeschichte}
+\label{sec:Entstehungsgeschichte}
+
+Dieses Kapitel beschäfigt sich mit dem grundlegenden Aufbau der {\sl as2lib}, einer Open Source Actionscript 2 Library.
+Die {\sl as2lib} wurde Semptember 2003 als Projekt zur Schaffung besserer Programmiermöglichkeiten unter Actionscript 2 ins Leben gerufen. Das Projektteam setzt sich mit den Kernproblemen von Flash auseinander und versucht gezielt die täglichen Probleme beim Programmieren mit Flash zu beheben.
+Als wichtiges Merkmal lässt sich hervorheben das die {\sl as2lib} unter der MPL (Mozilla Public License) veröffentlicht wird. Dies bedeutet freie Benutzung in privaten, wie kommerziellen Projekten. Zu Anfang standen grosse, mittlerweile geklärte, Zieldefinitionsprobleme im Raum. Nach der Festlegung der Programmierrichtlinien und dem Grundkonzept, wurde die Arbeit der einzelnen Packages von 5 Projekt Mitarbeitern in Angriff genommen.
+
+\begin{table*}[h]
+	\centering
+		\begin{tabular}{|c||c||c||c|} \hline
+				{\em Name} & {\em Aufgabe} & {\em Website} & {\em Nationalität}\\
+				\hline\hline
+				Atteneder Christoph & Mitarbeiter & www.cubeworx.com & Austria\\
+				Heidegger Martin & Projektleitung & www.traumwandler.com & Austria\\
+				Herrmann Michael & Mitarbeiter & & Austria\\
+				Schliebner Alexander & Mitinitiator & www.schliebner.de & Germany\\
+				Wacker Simon & Chef Entwickler & www.simonwacker.com & Germany\\
+				\hline\hline
+		\end{tabular}
+	\caption{Aktive Mitglieder {\sl as2lib}}
+	\label{tab:as2libmembers}
+\end{table*}
+
+\section{As2lib - Kernkomponenten}
+\label{sec:As2libKernkomponenten}
+
+\subsection{Core Package}
+\label{sec:CorePackage}
+
+\paragraph{Beweggrund}
+Das Festlegen und zur Verfügung stellen gewisser Funktionalitäten vereinfacht die Entwicklung von Applikationen.
+
+\paragraph{Lösungsansatz}
+Alle Klassen, Interfaces und Packages der {\sl as2lib} unterliegen gewissen Vorgaben. Die wichtigsten Kernklassen befinden sich im \emph{\textbf{core}-Package}.
+
+\subsubsection{BasicInterface}
+\label{sec:BasicInterface}
+
+Zur besseren Definition von Klassenfunktionalitäten wird in der {\sl as2lib} intensiv von \emph{Interfaces} Gebrauch gemacht. Jedes erstellte Interface der {\sl as2lib} erweitert das \emph{BasicInterface}, um folgende Funktionalität in jeder {\sl as2lib} Klasse sicherzustellen:
+
+\begin{itemize}
+	\item \textbf{getClass()}:\textit{ClassInfo} - Diese Methode liefert genauere Informationen zur Klasse, in der diese Funktion aufgerufen wird. Die zurückgegebene Information ist vom Typ \emph{ClassInfo} und beinhaltet zusätzlich deren Klassennamen, Informationen wie Methoden, Eigenschaften, Klassenpfad und Superklasse.
+\end{itemize}
+
+Die Logik der \emph{getClass} Methode wird in der BasicClass Klasse zur Verfügung gestellt.
+
+\subsubsection{BasicClass}
+\label{sec:BasicClass}
+
+Die Grundklasse der {\sl as2lib} ist wie man am Namen erkennen kann die BasicClass Klasse. Alle Klassen der {\sl as2lib} sind direkt oder indirekt von der BasicClass Klasse abgeleitet. Sie implementiert das BasicInterface und liefert die Logik für folgende Methoden:
+
+\begin{itemize}
+	\item \textbf{getClass()}:\textit{ClassInfo} - Erklärung siehe BasicInterface. Das Erstellen der Klasseninformationen wird durch das {\sl as2lib} \emph{reflection} Package, siehe \ref{sec:Reflections}, ermöglicht.
+	\item \textbf{toString()}:\textit{String} - Diese Methode liefert eine Darstellung der Klasse, vom Typ String, zurück. 
+\end{itemize}
+
+\subsection{Output Handling}
+\label{sec:OutputHandling}
+
+\paragraph{Beweggrund}
+Die normale Ausgabe von Applikationen in Flash wird über den internen Befehl
+\begin{verbatim}
+trace(ausdruck);
+\end{verbatim}
+durchgeführt. Die trace Ausgabe ist jedoch nur in Entwicklungsumgebungen möglich, die den Befehl auch unterstützen. Bei allen anderen Fällen (\zB in einer Webapplikation,...) ist keine Standardausgabe definiert. Eine Library sollte eine standardisierte Ausgabe sowohl für den User als auch für den Entwickler zu Verfügung stellen und überall möglich sein.
+
+\paragraph{Lösungsansatz}
+Um in jeder Laufzeitumgebung (Flash kann im Player, in {\sl Macromedia Central}, in einer kompilierten Applikation(*.exe) laufen) eine oder mehrere Ausgabemöglichkeiten zu haben(\zB Webapplikation speichert Fehlermeldungen auch serverseitig ab um sicherzustellen das Fehler sich nicht nur beim Kunden bemerkbar machen), wird die \emph{Out Klasse}\footnote{org.as2lib.env.out.Out} verwendet. Sie behandelt alle eingehenden Anfragen ("`Ausgabeversuche"') und leitet sie in Abhängigkeit von der Konfiguration @an einen, oder mehrere \emph{OutputHandler}\footnote{org.as2lib.env.out.OutputHandler, org.as2lib.env.out.handler.*} weiter. Die {\sl as2lib} bietet eine standardisierte Ausgabemöglichkeit für beliebig viele Schnittstellen.
+
+\paragraph{Anwendung}
+
+Man kann auf bereits definierte Ausgaben wie den TraceHandler(Konsolenausgabe) zurückgreifen oder sich selbst einen OutputHandler erstellen (\zB eine Ausgabe über die Macromedia Alert Komponente):
+
+\begin{verbatim}
+import org.as2lib.env.event.EventInfo;
+import org.as2lib.env.out.OutHandler;
+import org.as2lib.env.out.info.OutWriteInfo;
+import org.as2lib.env.out.info.OutErrorInfo;
+import org.as2lib.env.out.OutConfig;
+import org.as2lib.core.BasicClass;
+import mx.controls.Alert;
+
+/** 
+  * Die Macromedia Alert Komponente muss sich in der Bibliothek befinden
+  * und Sie müssen Flash MX 2004 Professional besitzen, um über die Alert
+  * Klasse darauf zugreifen zu können. 
+  *
+  * @author Christoph Atteneder
+*/
+ 
+class test.org.as2lib.env.out.handler.UIAlertHandler 
+																	extends BasicClass 
+																	implements OutHandler {
+
+	public function write(info:OutWriteInfo):Void {
+		Alert.show(info.getMessage(), getClass().getName());
+	}
+	
+	public function error(info:OutErrorInfo):Void {
+		Alert.show(OutConfig.getErrorStringifier().execute(info),
+							 getClass().getName());
+	}
+}
+\end{verbatim}
+
+Durch die Festlegung von Ausgabe Levels(\zB \emph{aOut.setLevel(Out.DEBUG)}) kann die Ausgabe bestimmter Informationen verhindert werden:
+Die möglichen Ausgabe Levels sind:
+\begin{itemize}
+	\item Out.ALL
+	\item Out.DEBUG
+	\item Out.INFO
+	\item Out.WARNING
+	\item Out.ERROR
+	\item Out.FATAL
+	\item Out.NONE
+\end{itemize}
+
+Diese Abstufung ermöglicht einerseits ein übersichtlicheres Debuggen bei der Entwicklung, als auch eine schnelleres Umschreiben der Ausgabe in einer fertigen Applikation.
+Verwendet man bei der Entwicklung \zB Out.DEBUG:
+
+\begin{verbatim}
+var aOut = new Out();
+
+aOut.setLevel(Out.DEBUG);
+
+aOut.log("log me Please!");
+aOut.debug("debug me Please!");
+aOut.info("inform me Please!");
+aOut.warning("warn me Please!");
+aOut.error(new Exception("Output Error", this));
+aOut.fatal(new FatalException("Fatal Output Error", this));
+\end{verbatim}
+
+werden bei dieser Konfiguration alle Informationen die sich in einem niedrigeren Level, als das gesetzte(\textit{DEBUG}), befinden ausgegeben: \textit{DEBUG},\textit{INFO},\textit{WARNING},\textit{ERROR} und \textit{FATAL}. Nur die \textit{LOG} Ausgabe wird unterdrückt.
+Möchte man in der fertigen Applikation nur die schwerwiegenden Fehler ausgeben, lässt sich das durch eine einfache Zeile in der Applikation bewerkstelligen.
+
+\begin{verbatim}
+aOut.setLevel(Out.FATAL);
+\end{verbatim}
+
+\subsection{Exception Handling}
+\label{sec:ExceptionHandling}
+
+\paragraph{Beweggrund}
+Nicht abgefangene Fehlermeldungen werden von der Entwicklungsumgebung mit
+\begin{verbatim}
+trace(Error.toString());
+\end{verbatim}
+ausgegeben\footnote{Online Dokumentation unter http://livedocs.macromedia.com/flash/mx2004/main/12\_as217.htm}. Neben der Tatsache, dass die ausgegebene Information nur wenig bis gar nicht aufschlussreich ist (Es wird nur "`Error"' \bzw der dem Konstruktor übergebene String ausgegeben) ist eine Anzeige der Fehlermeldungen nur in {\sl Flash MX 2004} möglich.
+
+\paragraph{Lösungsansatz}
+In der {\sl as2lib} stehen basierend auf der {\sl Macromedia} internen {\sl Error} Klasse unterschiedliche Exception Klassen zur Verfügung, die die Methoden des \emph{Throwable}\footnote{org.as2lib.env.except.Throwable} Interfaces implementieren.
+Die neuen Funktionalitäten des Exception Handlings sind:
+
+\begin{itemize}
+	\item Alle Operationen die aufgerufen werden, bevor die Exception geworfen wurde, werden in einem Stack abgespeichert, um die Fehlersuche zu beschleunigen.
+	\item Es ist keine manuelle Eingabe der Fehlerbezeichnung mehr notwendig.
+	Vor der as2lib:
+		\begin{verbatim}
+			class MyError extends Error {
+				public var name = "org.as2lib.basic.WrongArgumentException"';
+			}
+		\end{verbatim}
+		Mit Hilfe von Reflections, siehe \ref{sec:Reflections}, wird der Name der Fehlermeldung in der {\sl as2lib} automatisch generiert.
+	\item Exceptions können einfach in andere Exceptions umgewandelt werden.
+\end{itemize}
+
+
+
+Folgene Vordefinierte Exception Klassen stehen zur Verfügung:
+
+\begin{itemize}
+	\item AbstractException : Alle Exception Klassen werden von der AbstractException Klasse abgeleitet, da sie die durch das Throwable Interface definierte Methoden implementiert.
+	\item Throwable : Ist ein Interface, dass die Implementierung folgender Methoden erzwingt:
+		\begin{itemize}
+			\item \textbf{getStackTrace(Void):}\textit{Stack} - Gibt einen Stack aller Operationen zurück, die aufgerufen wurden, bevor diese Exception geworfen wurde.
+			\item \textbf{initCause(cause:Throwable):}\textit{Void} - Gibt den Grund der Exception an und kann nur einmal gesetzt werden. Die Methode wird normalerweise verwendet wenn eine Exception in eine andere Exception umgewandelt und weitergeworfen wird, um keine Information zu verlieren.
+			\item \textbf{getCause(Void):}\textit{Throwable} - Gibt den Grund der Exception zurück.
+			\item \textbf{getMessage(Void):}\textit{String} - Gibt die Nachricht, die bei der Erstellung des Exception Objektes im Konstruktor übergeben wurde, zurück.
+		\end{itemize}
+	\item \emph{Exception} : Ist eine Standard-Implementierung des Throwable Interfaces und wird von der AbstractException Klasse abgeleitet.
+	\item \emph{FatalException} : Zum Unterschied einer Exception Implementierung, hat eine FatalException eine höhere Priorität \bzw ein höheres Level als eine normale Exception.
+	\item In der {\sl as2lib} sind bereits einige Exceptions definiert:
+	\begin{itemize}
+		\item IllegalArgumentException
+		\item IllegalStateException
+		\item ...
+	\end{itemize}
+\end{itemize}
+
+\paragraph{Anwendung}
+
+Möchte ein Entwickler nach einer fehlerhaften Parameterübergabe \zB eine IllegalArgumentException werfen muss er folgenden Code schreiben:
+
+\begin{verbatim}
+import org.as2lib.env.except.IllegalArgumentException;
+...
+throw new IllegalArgumentException("Falscher Parameter",this,arguments);
+\end{verbatim}
+Bei allen Exceptions sind drei Übergabeparameter notwendig:
+\begin{enumerate}
+	\item message:String \zB "`Falscher Parameter"'- Ein beliebiger Text, der den Grund der Exception deutlicher hervorbringen soll.
+	\item thrower \zB "`this"' - Referenz auf die Klasse \bzw das Objekt, dass die Exception geworfen hat.
+	\item arguments - arguments ist eine intrinsische Variable von Flash, die alle Parameter einer Funktion beinhaltet
+\end{enumerate}
+Es wird folglich eine IllegalArgumentException geworfen, welche im ausführenden Code mit einem \emph{try-catch} Block im Code abgefangen wird. 
+
+\begin{verbatim}
+import org.diplomarbeit.ExceptionTest;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.out.Out;
+
+try {
+	var myOut:Out = new Out();
+	var myET:ExceptionTest = new ExceptionTest();
+	myOut.info(myET.getString());
+}
+catch(e:IllegalArgumentException){
+	myOut.error(e);
+}
+\end{verbatim}
+
+Möchte der Entwickler eine eigene Exception \zB OutOfTimeException werfen, müsste er folgende Implementierung vornehmen:
+
+\begin{verbatim}
+import org.as2lib.env.except.Exception;
+
+/**
+ * @author Christoph Atteneder
+ * @see org.as2lib.env.except.Exception
+ */
+class org.as2lib.env.except.OutOfTimeException extends Exception {
+	/**
+	 * @see org.as2lib.env.except.Exception#Constructor()
+	 */
+	public function OutOfTimeException(message:String, thrower
+											 , args:FunctionArguments) {
+		super (message, thrower, args);
+	}
+}
+\end{verbatim}
+
+Es wird die Exception Klasse abgeleitet und der Konstruktor der Exception Klasse aufgerufen.
+
+\subsection{Event Handling}
+\label{sec:EventHandling}
+
+\paragraph{Beweggrund}
+
+Ereignisse(Events) brauchen in Flash sehr viel Rechenleistung und sind ein grundlegender Bestandteil bei der Entwicklung von Benutzeroberflächen. Viele Entwickler verwenden den in Flash inkludierten AsBroadcaster\footnote{Nicht dokumentiertes Feature von Flash MX 2004} oder die EventDispatcher\footnote{mx.events.EventDispatcher} Klasse von Macromedia für diese Problematik. Jedoch gibt es weder genaue Spezifikationen für EventListener als für einzelne Events und es sind keine Übergabewerte definiert.
+Die Festlegung von Schnittstellen über Interfaces ist für eine "`saubere"' Programmierung unumgänglich. Die Art und Weise wie Macromedia den EventDispatcher implementiert hat, kann nur als "`lack of Definition"' bezeichnet werden. Es fehlen unter anderem für Listenerentwickler wichtige Informationen bezüglich Events und der Übergabeparameter.
+
+\paragraph{Lösungsansatz}
+
+Zu bewältigende Probleme sind:
+
+\begin{itemize}
+	\item Der Objektentwickler muss definieren, welche Events abgewartet werden können.
+	\item Der Listenerentwickler (Listener: Objekt das auf ein Event wartet) muss alle Events definieren.
+	\item Der Objektentwickler muss die Möglichkeit haben, Events auszulösen.
+	\item Der Objektentwickler sollte Eventinformationen einem Event hinzufügen können.
+\end{itemize}
+
+Die {\sl as2lib} unterstützt \emph{Event Handling}, da es ein Kernstück der Applikationsentwicklung ist. Verwendet man direkt die Flash internen \emph{AsBroadcaster} kann es zu einer ineffizienten Implementierung kommen. Der \emph{EventDispatcher} von {\sl Macromedia} ist nicht frei zugänglich, kann also nur verwendet werden, wenn man {\sl Macromedia Flash} käuflich erworben hat und stellt nicht alle benötigten Funktionen zur Verfügung.
+
+Die wichtigste Klasse des \emph{event} Packages mit der man als Entwickler in Berührung kommt ist der \emph{EventBroadcaster}\footnote{org.as2lib.env.event.EventBroadcaster}. Es können mehrere Listener(Zuhörer) zum EventBroadcaster(Ereignissverteiler) hinzugefügt,
+\begin{verbatim}
+addListener(listener:EventListener)
+\end{verbatim}
+aber auch wieder entfernt werden.
+\begin{verbatim}
+removeListener(listener:EventListener)
+\end{verbatim}
+Wie man in den Methodenaufrufen erkennen kann müssen die Listener Objekte das EventListener Interface implementieren. Für eigene Projekte empfiehlt es sich ein eigenes EventListener Interface zu erstellen (für eine Anwendung des EventBroadcasters siehe \ref{sec:ConnectionHandling}).
+
+Möchte man den \emph{EventBroadcaster} verwenden kann man seine Funktionalitäten durch Vererbung erlangen.
+\begin{verbatim}
+// ------------- MyClass.as ---------------
+
+import org.as2lib.env.event.EventBroadcaster;
+
+class MyClass extends EventBroadcaster {
+
+  public function addListener(l:FrameEventListener) {
+    super.addListener(l);
+  }
+  
+  public function removeListener(l:FrameEventListener) {
+  	super.removeListener(l);
+  }
+  
+  public function gotoFrame (frame:Number) {
+    super.dispatch(new MyFrameEventInfo(frame));
+  }
+}
+\end{verbatim}
+
+Zusätzlich zu den bereits oben erwähnten Methoden \emph{addListener} und \emph{removeListener}, finden wir hier noch die Methode \emph{dispatch} vor. Die Methode dispatch überprüft das \emph{name} Attribut des EventInfo Objektes und ruft die Methode mit dem selben Namen in allen hinzugefügten Listener Objekten auf.
+Eine Beispielimplementierung zum vorhergehenden Codebeispiel wäre:
+
+\begin{verbatim}
+// ------------- MyFrameEventInfo.as ---------------
+
+import org.as2lib.env.event.EventInfo;
+import org.as2lib.core.BasicClass;
+
+class MyFrameEventInfo extends BasicClass implements EventInfo {
+	private var frame:Number;
+	private var name:String;
+	
+	public function MyFrameEventInfo(frame:Number){
+		name = "onFrame";
+		this.frame = frame;
+	}
+	
+	public function getName(Void):String {
+		return name;
+	}
+}
+
+// ------------- MyFrameEventInfo.as ---------------
+
+import org.as2lib.env.event.EventListener;
+
+interface FrameEventListener extends EventListener {
+	public function onFrame(frame:Number):Void;
+}
+
+\end{verbatim}
+
+\subsection{Reflections}
+\label{sec:Reflections}
+
+\paragraph{Beweggrund}
+
+In Java ist es möglich Informationen über den Namen der Klasse, deren Methoden und Eigenschaften mittels Reflections zu ermitteln. Diese eingebaute Funktionalität von Java ist in {\sl Flash} \bzw {\sl Actionscript 2} nicht integriert und wird deshalb von der {\sl as2lib} unterstützt.
+
+\paragraph{Lösungsansatz}
+Um diese Funktionalitäten in Flash verwenden zu können wurden die Reflections nach folgendem Schema implementiert.
+Ausgehend vom Namensbereich \emph{\_global} wird die Actionscript Klassenstruktur durchsucht. Wird ein Objekt gefunden, wird es als Package erkannt. Ein Unterobjekt vom Typ Function wird als Klasse gekennzeichntet.
+
+Eine der vielen Anwendungen von Reflections in der {\sl as2lib} ist \zB die BasicClass, siehe \ref{sec:CorePackage}. Die Methode \emph{getClass}, der BasicClass greift auf die Methode \emph{getClassInfo} der ReflectUtil\footnote{org.as2lib.env.util.ReflectUtil} Klasse zu und gibt ein \emph{ClassInfo} Objekt zurück, dass alle wichtigen Informationen der Klasse zur Verfügung stellt. Das \emph{reflect}\footnote{org.as2lib.env.reflect} Package arbeitet mit unterschiedlichen Algorithmen um an die Klasseninformationen zu gelangen. Die Sammlung aller Algorithmen befindet sich im \emph{algorythm}\footnote{org.as2lib.env.reflect.algorythm} Package der \emph{as2lib}. Die Funktionaliäten der Reflections können natürlich auch direkt über die \emph{ReflectUtil} Klasse verwendet werden.
+\begin{verbatim}
+import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.ClassInfo;
+import edu.test.TestClass;
+
+var myClass:TestClass = new TestClass();
+var myClassInfo:ClassInfo = ReflectUtil.getClassInfo(myClass);
+\end{verbatim}
+Das erzeugte Objekt vom Typ ClassInfo beinhaltet Methoden um genauere Informationen der Klasse zu erhalten.
+Seine Methoden sind:
+
+\begin{itemize}
+	\item \textbf{getName(}):\textit{String} - Name der Klasse \zB "`TestClass"'.
+	\item \textbf{getFullName()}:\textit{String} - Name der Klasse inklusive Packageinformationen \zB "`edu.test.TestClass"'.
+	\item \textbf{getClass()}:\textit{Function} - Klasse zu der die Klasseninformation erstellt wurde.
+	\item \textbf{getSuperClass(}):\textit{ClassInfo} - Informationen zur Vaterklasse, falls vorhanden.
+	\item \textbf{newInstance(}) - Neue Instanz der Klasse zu der die Klasseninformation erstellt wurde.
+	\item \textbf{getParent()}:\textit{PackageInfo} - Informationen zum Package in dem sich die Klasse befindet.
+	\item \textbf{getMethods()}:\textit{HashMap} - HashMap, siehe \ref{sec:DataHolding}, die Informationen zu den einzelnen Methoden der Klasse beinhaltet.
+	\item \textbf{getProperties()}:\textit{HashMap} - HashMap, die Informationen zu den einzelnen Eigenschaften, falls sie eine get set Methode besitzen zurückliefert.
+\end{itemize}
+
+\subsection{Data Holding}
+\label{sec:DataHolding}
+
+\paragraph{Beweggrund}
+Ein typisches Problem beim Gebrauch von {\sl Actionscript 2} ist das einige Datentypen (\zB Array) unterschiedliche Datentypen (\zB String und Number) beinhalten können. Diese nicht strikte Notation kann vor allem bei einer Arbeit in Teams leicht zu Problemen führen.
+
+\paragraph{Lösungsansatz}
+In der {\sl as2lib} gibt es nicht nur eine Array Klasse(TypedArray\footnote{org.as2lib.data.holder.TypedArray}), die nur bestimmte Datentypen zulässt, sondern auch eine Vielzahl anderer Datentypen zur Datenhaltung.
+
+\paragraph{TypedArray} Die Klasse TypedArray erlaubt eine strikte Datentypisierung eines Arrays.
+\begin{verbatim}
+import org.as2lib.data.holder.TypedArray;
+
+var myA:TypedArray = new TypedArray(Number);
+myA.push(2);
+myA.push("Hallo");
+\end{verbatim}
+In dem Codebeispiel wird ein Array vom Typ Number erstellt. Versucht ein Entwickler einen String zum TypedArray hinzuzufügen(\emph{myA.push}("`\textit{Hallo}"')) wirft der Compiler einen Fehler. Zusätzlich zum Typ des Arrays kann dem TypedArray Konstruktor ein bereits bestehendes Array als zweiter Übergabeparameter mit übergeben werden. TypedArray besitzt die gleichen Funktionaliäten wie die normale Array Klasse von {\sl Macromedia}.
+
+Weitere {\sl as2lib} Datentypen sind:
+\begin{itemize}
+	\item HashMap : Ein Datentyp dem ein Key und der dazugehörige Wert übergeben werden kann. Er besitzt alle Methoden einer normalen HashMap(siehe Java).
+	
+\begin{verbatim}
+import org.as2lib.data.holder.HashMap;
+
+var aPerson:Person = new Person("Christoph","Atteneder");
+var bPerson:Person = new Person("Martin","Heidegger");
+
+var nickNames:HashMap = new HashMap();
+nickNames.put("ripcurlx", aPerson);
+nickNames.put("mastaKaneda", bPerson);
+
+trace(nickNames.get("mastaKaneda").toString());
+trace(nickNames.get("ripcurlx").toString());
+\end{verbatim}
+	\item Stack : Einem Stack können mit der Methode \emph{push} Werte hinzugefügt \bzw mit \emph{pop} wieder entfernt werden. Es kann immer nur auf das oberste Element zugegriffen werden.
+	
+\begin{verbatim}
+import org.as2lib.data.holder.Stack;
+
+var myS:Stack = new Stack();
+myS.push("gehts?!");
+myS.push("wie");
+myS.push("Hallo,");
+trace(myS.pop());
+trace(myS.pop());
+trace(myS.pop());
+\end{verbatim}
+\end{itemize}
+
+Zusätzlich zu den Datentypen wurden auch Iteratoren\footnote{Ein Iterator ermöglicht den Zugriff auf die Elemente einer Sammlung ohne Kenntnis der Struktur der Sammlung.} implementiert:
+
+\begin{itemize}
+	\item ArrayIterator : Da die zusätzliche \emph{as2lib} Datentypen intern mit Arrays aufgebaut sind, wird bei allen speziellen Iteratoren indirekt der ArrayIterator verwendet.
+	\item MapIterator : Wenn die Methode getIterator() oder iterator() in einer HashMap aufgerufen wird, wird automatisch ein MapIterator zurückgeworfen.
+\end{itemize}
+
+Möchte man \zB alle Elemente einer HashMap ausgeben, kann diese Aufgabe mit einem MapIterator leicht gelöst werden.
+\begin{verbatim}
+import org.as2lib.data.holder.HashMap;
+
+var aPerson:Person = new Person("Christoph","Atteneder");
+var bPerson:Person = new Person("Martin","Heidegger");
+
+var nickNames:HashMap = new HashMap();
+nickNames.put("ripcurlx", aPerson);
+nickNames.put("mastaKaneda", bPerson);
+
+var myI:Iterator = myH.getIterator();
+
+while(myI.hasNext()){
+	trace(myI.next());
+}
+\end{verbatim}
+
+\subsection{Overloading}
+\label{sec:Overloading}
+
+\paragraph{Beweggrund}
+
+Da Überladen von Methoden in Java unterstützt wird können \zB in einer Klasse zwei Konstruktoren vorhanden sind, die sich nur durch in ihren Übergabeparameter unterscheiden. Versucht man in \emph{Actionscript 2} mehrere Konstruktoren oder Methoden mit dem gleichen Namen und unterschiedlichen Übergabeparametern zu implementieren wird folgende Fehlermeldung ausgegeben:
+\begin{quote}
+	"`Eine Klasse kann nur einen Konstruktor haben!"'\\
+	\bzw \\
+	"`Ein Mitgliedsname darf nur einmal vorkommen!"'
+\end{quote}
+
+\paragraph{Lösungsansatz}
+
+Die {\sl as2lib} ermöglicht das Overloading in Actionscript 2 durch das \emph{overload}\footnote{org.as2lib.env.overload} Package. Benötigt man \zB drei Konstruktoren in einer Klasse kann dieses Problem mit der {\sl as2lib} einfach gelöst werden.
+
+\begin{verbatim}
+import org.as2lib.env.overload.Overload;
+
+class TryOverload {
+	private var aString:String;
+	private var aNumber:Number;
+	
+	public function TryOverload(){
+		var overload:Overload = new Overload(this);
+		overload.addHandlerByValue([Number, String], setValues);
+		overload.addHandlerByValue([Number], setNumber);
+		overload.addHandlerByValue([String], setString);
+		overload.forward(arguments);
+	}
+	public function setValues(aNumber:Number, aString:String){
+		this.aNumber = aNumber;
+		this.aString = aString;
+	}
+	public function setNumber(aNumber:Number){
+		this.aNumber = aNumber;
+	}
+	public function setString(aString:String){
+		this.aString = aString;
+	}
+}
+\end{verbatim}
+
+Es wird in der Klasse TryOverload ein Konstruktor erstellt, der keine bestimmten Übergabeparameter definiert. Wird eine Instanz der Klasse TryOverload erstellt, wird eine Overload Objekt zusätzlich erstellt, dem soviele Handler übergeben werden, wie man zusätzliche Konstruktoren haben möchte. In dem speziellen Fall gibt es einen Konstruktor für Number und String, einen Konstruktor für eine Number und einen Konstruktor für einen String. Schlussendlich werden die übergebenen Argumente(arguments) dem Overload Objekt übergeben, der die entsprechende Funktion aufruft.
+Ein Test der TryOverload Klasse würde wie folgt aussehen:
+
+\begin{verbatim}
+var aOverload:TryOverload = new TryOverload("Hallo");
+var bOverload:TryOverload = new TryOverload(6);
+var cOverload:TryOverload = new TryOverload(6,"y");
+\end{verbatim}
+
+\subsection{Test Cases}
+\label{sec:TestCases}
+
+Ein \emph{Test Case}(Testfall) ist eine Klasse/Methode, die eine bestimmte Klasse/Methode auf ihre korrekte Funktionsweise überprüft. Jeder Entwickler muss für seine Klassen Testfälle erstellen und wird von einem Test Case System unterstützt, das Funktionalitäten für ein automatisches Testen zur Verfügung stellt.
+
+\paragraph{Beweggrund}
+Obwohl bereits ein Testsystem für {\sl Actionscript 2} Klassen existiert, as2unit\footnote{http://www.as2lib.org}, wurde aus folgenden Gründen ein eigenes Testsystem erstellt:
+
+\begin{itemize}
+	\item {\sl as2unit} unterstützt nur wenige Funktionalitäten(as2unit 7 Testmethoden - as2lib 15 Testmethoden).
+	\item {\sl as2unit} ist trotz verkündeter Offenlegung des Quellcodes immer noch nicht Open Source.
+	\item Es gibt immer noch keine offizielle Dokumentation von {\sl as2unit}.
+	\item {\sl as2unit} ist nur als Komponente vorhanden.
+	\item {\sl as2unit} kann immer nur eine Klasse testen.
+	\item {\sl as2unit} erlaubt eine Ausgabe nur über trace.
+\end{itemize}
+
+\paragraph{Lösungsansatz}
+
+Um Testfälle durchführen zu können, sollen nicht zwei unterschiedliche Aktionen notwendig sein(Einbinden der Flashkomponente, setzen der Parameter ), wie es momentan bei der {\sl as2unit} der Fall ist. Es soll dem Entwickler möglich sein einen Testfall durch einen einfachen Methodenaufruf durchführen zu können. Sowohl ein direkter Aufruf einer Klasse, als auch ein Aufruf eines gesamten Packages, falls mehrere Test Fälle durchzuführen sind, ist möglich.
+\begin{verbatim}
+import org.as2lib.test.unit.Test;
+
+// Add here your Tests.
+test.org.as2lib.core.TReflections;
+test.org.as2lib.util.TReflectUtil;
+test.org.as2lib.util.TStringUtil;
+
+Test.run("test.org");
+\end{verbatim}
+
+Die zu testenden Fälle müssen vor dem Testaufruf angeführt werden, damit sie zur Laufzeit verfügbar sind.
+Ähnlich wie bei Test Case Systemen \zB JUnit\footnote{http://www.junit.org} stehen dem Entwickler in der {\sl as2lib} bereits eine Vielzahl von Methoden zu Verfügung(optionale Parameter sind durch [] gekennzeichnet):
+
+\begin{itemize}
+	\item \textbf{assertTrue}([\textit{message:String}], \textit{testVar1:Boolean}) - Ist testVar1 false wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertFalse}([\textit{message:String}],\textit{ testVar1:Boolean}) - Ist testVar1 true wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertEquals}([\textit{message:String}], \textit{testVar1}, \textit{testVar2}) - Sind die übergebenen Parameter nicht gleich wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertNotEquals}([\textit{message:String}], \textit{testVar1}, \textit{testVar2}) - Sind die übergebenen Parameter gleich wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertNull}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 nicht null wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertNotNull}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 gleich null wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertUndefined}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 nicht undefined wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertNotUndefined}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 gleich undefined wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertIsEmpty}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 weder undefined noch null wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertIsNotEmpty}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 undefined oder null wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertInifinity}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 nicht unendlich(d.h. != Infinity) wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertNotInfinity}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 unendlich(d.h. == Infinity) wird eine Fehlermeldung ausgegeben.
+	\item \textbf{fail}(\textit{message:String}) - Fügt eine selbst definierte Fehlermeldung zu allen Error-Ausgaben hinzu.
+	\item \textbf{assertThrows}(\textit{exception:Function, atObject, theFunction:String, parameter:Array}) - Wird beim Ausführen der übergebenen Funktion(theFunction) des Objektes(atObjekt) mit den Übergabeparametern(parameter) keine Exception geworfen wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertNotThrows}(\textit{exception:Function, atObject, theFunction:String, parameter:Array}) - Wird beim Ausführen der übergebenen Funktion(theFunction) des Objektes(atObjekt) mit den Übergabeparametern(parameter) eine Exception geworfen wird eine Fehlermeldung ausgegeben.
+\end{itemize}
+
+Ein Testfall muss von der Test Klasse\footnote{org.as2lib.test.unit.Test} abgeleitet werden. Jede Methode des Testfalles, die mit "`test"' beginnt, wird von dem Testsystem aufgerufen. Um das TestCase System besser verstehen zu können soll dieses Codebeispiel dienen:
+
+\begin{verbatim}
+import org.as2lib.test.unit.Test;
+import org.as2lib.core.BasicClass;
+import org.as2lib.env.reflect.ClassInfo;
+
+/**
+ * Testcase for Reflections.
+ * @author Martin Heidegger
+ */
+ 
+class test.org.as2lib.core.TReflections extends Test {
+	private var clazz:BasicClass;
+	
+	public function TReflections(Void) {
+			clazz = new BasicClass();
+	}
+	
+	public function testGetClass(Void):Void {
+		trace (":: testGetClass");
+		var info:ClassInfo = clazz.getClass();
+		assertEquals("The name of the basic class changed",info.getName(),
+		"BasicClass");
+		assertEquals("Problems evaluating the full name",info.getFullName(),
+								 "org.as2lib.core.BasicClass");
+		trace ("----------------------------------------------");
+	}
+}
+\end{verbatim}
+
+\subsection{Speed Tests}
+\label{sec:SpeedTests}
+
+\paragraph{Beweggrund}
+Das Testen von Applikationen auf dessen Performanz ist unumgänglich, da diese meistens direkt mit dem Erfolg der Applikation zusammenhängt.
+
+\paragraph{Lösungsansatz}
+Die Durchführung eines Speed Testes lässt sich nach folgendem Schema durchführen:
+\begin{itemize}
+	\item Importieren der SpeedTest Klasse und des Output Handlers.
+\begin{verbatim}
+import org.as2lib.env.out.Out;
+import org.as2lib.test.speed.Test;
+\end{verbatim}
+	\item Erstellen einer Instanz der Test Klasse und Übergabe des Output Handlers.
+\begin{verbatim}
+var test:Test = new Test();
+test.setOut(new Out());
+\end{verbatim}
+	\item Setzen der Anzahl der durchzuführenden Test Fälle.
+\begin{verbatim}
+test.setCalls(2000);
+\end{verbatim}
+	\item Nachdem die durchzuführenden Testfälle hinzugefügt worden sind kann der Test durchgeführt werden. Der Übergabeparameter \emph{true} in \emph{test.run(}) bewirkt eine sofortig Ausgabe des Testergebnisses.
+\begin{verbatim}
+test.addTestCase(new TypedArrayTest());
+test.addTestCase(new ArrayTest());
+test.addTestCase(new ASBroadcasterTest());
+test.addTestCase(new EventDispatcherTest());
+test.addTestCase(new EventBroadcasterTest());
+test.run(true);
+\end{verbatim}
+\end{itemize} 
+
+Ausgabe:
+\begin{verbatim}
+** InfoLevel **
+-- Testresult [2000 calls] --
+187% TypedArrayTest: total time:457ms; average time:0.2285ms; (+0.106ms)
+111% ArrayTest: total time:272ms; average time:0.136ms; (+0.014ms)
+[fastest] 100% ASBroadcasterTest: total time:245ms; average time:0.1225ms;
+175% EventDispatcherTest: total time:428ms; average time:0.214ms; (+0.092ms)
+191% EventBroadcasterTest: total time:469ms; average time:0.2345ms; (+0.112ms)
+\end{verbatim}
+
+Die Ausgabe des SpeedTests zeigt die Anzahl der Aufrufe, die verstrichene Gesamtzeit und den durchschnittlichen Zeitbedarf. Sie findet den schnellsten Testfall und gibt das prozentuelle Verhalten der anderen Testfälle im Verhältnis zum Schnellsten aus.

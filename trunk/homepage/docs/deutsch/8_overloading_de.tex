@@ -1,0 +1,47 @@
+\chapter{Overloading}
+\label{sec:Overloading}
+
+\paragraph{Beweggrund:}
+
+Da Überladen von Methoden in Java unterstützt wird können zB.: in einer Klasse zwei Konstruktoren vorhanden sind, die sich nur durch in ihren Übergabeparameter unterscheiden. Versucht man in \emph{Actionscript 2} mehrere Konstruktoren oder Methoden mit dem gleichen Namen und unterschiedlichen Übergabeparametern zu implementieren wird folgende Fehlermeldung ausgegeben:
+\begin{quote}
+	"`Eine Klasse kann nur einen Konstruktor haben!"'\\
+	bzw. \\
+	"`Ein Mitgliedsname darf nur einmal vorkommen!"'
+\end{quote}
+
+\paragraph{Lösungsansatz:}
+
+Die {\sl as2lib} ermöglicht das Overloading in {\sl ActionScript 2} durch das \emph{overload}\footnote{org.as2lib.env.overload} Package. Benötigt man z.B.: drei Konstruktoren in einer Klasse kann dieses Problem mit der {\sl as2lib} einfach gelöst werden.
+
+\begin{lstlisting}[frame=single]
+import org.as2lib.env.overload.Overload;
+
+class TryOverload {
+	private var aString:String;
+	private var aNumber:Number;
+	
+	public function TryOverload(){
+		var overload:Overload = new Overload(this);
+		overload.addHandler([Number], 
+		setNumber);
+		overload.addHandler([String],
+		setString);
+		overload.forward(arguments);
+	}
+	public function setNumber(aNumber:Number){
+		this.aNumber = aNumber;
+	}
+	public function setString(aString:String){
+		this.aString = aString;
+	}
+}
+\end{lstlisting}
+
+In diesem Codebeispiel wird in der Klasse \emph{TryOverload} ein Konstruktor erstellt, der keine bestimmten Übergabeparameter definiert. Wird eine Instanz der Klasse \emph{TryOverload} erstellt, wird zusätlich eine Overload Objekt erzeugt, dem für jeden zustätzlichen Konstructor ein eigener Handler(Typ des Übergabeparameters und aufzurufende Methode) übergeben werden muss. In diesem speziellen Fall gibt es einen Konstruktor für eine Number und einen Konstruktor für einen String. Schlussendlich werden die übergebenen Argumente(arguments) dem Overload Objekt übergeben, der die entsprechende Funktion aufruft.
+Ein Test der TryOverload Klasse würde wie folgt aussehen:
+
+\begin{lstlisting}[frame=single]
+var aOverload:TryOverload = new TryOverload("Hallo");
+var bOverload:TryOverload = new TryOverload(6);
+\end{lstlisting}
