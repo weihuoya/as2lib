@@ -9,30 +9,26 @@ import org.as2lib.data.io.conn.local.LocalServerServiceProxy;
 
 class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass implements LocalServer {
 	private var host:String;
-	private var serviceMap:HashMap;
+	private var serviceArray:Array;
 	private var running:Boolean;
 	
 	public function SimpleLocalServer(host:String) {
 		this.host = host;
-		serviceMap = new HashMap();
+		serviceArray = new Array();
 		running = false;
 	}
 	
 	public function run(Void):Void {
-		var serviceIterator:Iterator = serviceMap.iterator();
-		while (serviceIterator.hasNext()){
-			var service:LocalServerServiceProxy = LocalServerServiceProxy(serviceIterator.next());
-			service.run();
+		for (var i:Number = 0; i < serviceArray.length; i++) {
+			LocalServerServiceProxy(serviceArray[i]).run();
 		}
 		LocalConfig.getServerRegistry().register(this);
 		running = true;
 	}
 	
 	public function stop(Void):Void {
-		var serviceIterator:Iterator = serviceMap.iterator();
-		while (serviceIterator.hasNext()) {
-			var service:LocalServerServiceProxy = LocalServerServiceProxy(serviceIterator.next());
-			service.stop();
+		for (var i:Number = 0; i < serviceArray.length; i++) {
+			LocalServerServiceProxy(serviceArray[i]).stop();
 		}
 		LocalConfig.getServerRegistry().remove(this);
 		running = false;
@@ -40,7 +36,7 @@ class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass impleme
 	
 	public function putService(name:String, service):Void {
 		var proxy:LocalServerServiceProxy = new LocalServerServiceProxy(service, name, host);
-		serviceMap.put(name, proxy);
+		serviceArray.push(proxy);
 	}
 	
 	public function isRunning(Void):Boolean {

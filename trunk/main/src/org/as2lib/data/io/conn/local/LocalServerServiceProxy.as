@@ -33,10 +33,10 @@ class org.as2lib.data.io.conn.local.LocalServerServiceProxy extends BasicClass {
 		o.forward(arguments);
 	}
 	
-	public function remoteCallWithResponse(method:String, args:Array, listener:String):Void {
+	public function remoteCallWithResponse(method:String, args:Array, callback:String):Void {
 		var response = service[method].apply(service, args);
-		var lc:ExtendedLocalConnection = new ExtendedLocalConnection();
-		lc.send(listener, "onResponse", [response]);
+		var responseConnection:ExtendedLocalConnection = new ExtendedLocalConnection();
+		responseConnection.send(callback, "onResponse", [response]);
 	}
 	
 	public function remoteCallWithoutResponse(method:String, args:Array):Void {

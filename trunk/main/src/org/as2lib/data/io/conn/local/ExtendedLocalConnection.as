@@ -6,7 +6,7 @@ import org.as2lib.data.io.conn.local.MissingServerException;
 import org.as2lib.data.io.conn.local.SyntacticallyIncorrectMethodCallException;
 
 class org.as2lib.data.io.conn.local.ExtendedLocalConnection extends BasicClass {
-	private var host:String;
+	private var connectionName:String;
 	private var connection:LocalConnection;
 	private var target:Object;
 	
@@ -29,9 +29,9 @@ class org.as2lib.data.io.conn.local.ExtendedLocalConnection extends BasicClass {
 		ExtendedLocalConnectionWithTarget(this);
 	}
 	
-	public function connect(host:String):Void {
-		if (!connection.connect.apply(target, [host])) {
-			throw new ReservedHostException("Connection with host [" + host + "] is already in use.", this, arguments);
+	public function connect(connectionName:String):Void {
+		if (!connection.connect.apply(target, [connectionName])) {
+			throw new ReservedHostException("Connection with connection name [" + connectionName + "] is already in use.", this, arguments);
 		}
 	}
 	
@@ -44,24 +44,24 @@ class org.as2lib.data.io.conn.local.ExtendedLocalConnection extends BasicClass {
 		o.forward(arguments);
 	}
 	
-	public function sendWithoutArgsAndResponse(host:String, method:String):Void {
-		sendWithArgs(host, method, []);
+	public function sendWithoutArgsAndResponse(connectionName:String, method:String):Void {
+		sendWithArgs(connectionName, method, []);
 	}
 	
-	public function sendWithArgs(host:String, method:String, args:Array):Void {
-		this.host = host;
-		if (!connection.send.apply(target, [host, method].concat(args))) {
+	public function sendWithArgs(connectionName:String, method:String, args:Array):Void {
+		this.connectionName = connectionName;
+		if (!connection.send.apply(target, [connectionName, method].concat(args))) {
 			throw new SyntacticallyIncorrectMethodCallException("Passed arguments [" + args + "] are out of size.", this, arguments);
 		}
 	}
 	
-	public function sendWithResponse(host:String, method:String, call:Call):Void {
-		sendWithArgsAndResponse(host, method, [], call);
+	public function sendWithResponse(connectionName:String, method:String, call:Call):Void {
+		sendWithArgsAndResponse(connectionName, method, [], call);
 	}
 	
-	public function sendWithArgsAndResponse(host:String, method:String, args:Array, call:Call):Void {
+	public function sendWithArgsAndResponse(connectionName:String, method:String, args:Array, call:Call):Void {
 		// in Methode auslagern
-		var responseServerString:String = host + "." + method + "_Return";
+		var responseServerString:String = connectionName + "." + method + "_Return";
 		
 		// in "inner class" aulagern
 		responseServer = new ExtendedLocalConnection();
@@ -74,7 +74,7 @@ class org.as2lib.data.io.conn.local.ExtendedLocalConnection extends BasicClass {
 
 		args.push(responseServerString);
 		
-		sendWithArgs(host, method, args);
+		sendWithArgs(connectionName, method, args);
 	}
 	
 	public function close(Void):Void {
@@ -83,7 +83,7 @@ class org.as2lib.data.io.conn.local.ExtendedLocalConnection extends BasicClass {
 	
 	private function onStatus(info):Void {
 		if (info.level == "error") {
-			throw new MissingServerException("Server with host name [" + host + "] does not exist.", this, arguments);
+			throw new MissingServerException("Connection with connection name [" + connectionName + "] does not exist.", this, arguments);
 		}
 	}
 }
