@@ -695,7 +695,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	private static function assertThrows(exception:Function, atObject, theFunction:String, parameters:Array):Void {
 		var exceptionThrown:Boolean = false;
 		try {
-			atObject[theFunction](parameters);
+			atObject[theFunction].apply(atObject, parameters);
 		} catch (e) {
 			exceptionThrown = true;
 			if (!(e instanceof exception)) {
@@ -703,7 +703,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 			}
 		}
 		if (!exceptionThrown) {
-			addError("assertThrows: No exception was thrown.");
+			addError("assertThrows: No exception was thrown but "+ReflectUtil.getClassInfo(new exception()).getName()+" was expected for ."+theFunction+"("+parameters+")");
 		}
 	}
 }
