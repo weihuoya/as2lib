@@ -23,30 +23,31 @@ img {
 }
 
 a {
-  color: #444444;
+  color: #666666;
+  border-bottom: 1px dashed #FF9F07;
   text-decoration: none;
 }
 
 a:hover {
   color: #000000;
-  text-decoration: underline;
+  border-bottom: 1px dashed #000000;
 }
 
 h1 {
-  color: #000000;
+  color: #FF9F07;
   font-size: 1.4em;
   font-family: Verdana, Arial, Helvetica, sans, serif;
 }
 h2 {
-  color: #000000;
-  margin-top: 2.5em;
+  color: #FF9F07;
+  margin-top: 4em;
   margin-bottom: 0.75em;
   font-size: 1.3em;
   font-family: Verdana, Arial, Helvetica, sans, serif;
 }
 h3 {
   color: #000000;
-  margin-bottom: 0.3em;
+  margin-bottom: 0.4em;
   margin-top: 1em;
   font-size: 1.2em;
   font-family: Verdana, Arial, Helvetica, sans, serif;
@@ -55,17 +56,28 @@ h4 {
   color: #000000;
   padding: 0em;
   margin: 0em;
+  margin-top: 0.5em;
+  margin-bottom: 0.3em;
   font-size: 1.1em;
   font-family: Verdana, Arial, Helvetica, sans, serif;
 }
 code {
   font-family: Courier;
-  font-color: #006600;
-  font-size: 10px;
+  color: #006600;
+  background-color: #FCFCFC;
+  font-size: 11px;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  padding: 0.3em;
+  display: block;
+  white-space: pre;
 }
 pre {
   font-family: Courier, Courier New;
-  font-size: 10px;
+  font-size: 11px;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  display: block;
 }
 ul {
   margin-top: 0.2em;
@@ -112,6 +124,7 @@ ul {
   padding-left: 1.25em;
   padding-right: 3.5625em;
   color: #444444;
+  border: none;
 }
 .menu a:hover {
   color: #FF8711;
@@ -171,7 +184,7 @@ ul {
   padding: 0.2em;
 }
 .listeningTable a {
-  cursor: help;
+  border: none;
 }
 .linkList {
   margin-top: 1em;
@@ -186,6 +199,23 @@ ul {
   margin-bottom: 0.2em;
 }
 .linkList a {
+  border: none;
   display: block;
+  color: #666666;
   padding-left: 0.2em;
+}
+.tab {
+  display: block;
+  padding-left: 1em;
+  text-align: left;
+}
+.conceptList {
+  padding: 0px;
+  list-style: none;
+}
+.conceptList ul {
+  padding-left: 2em;
+}
+.note {
+  font-style: italic;
 }
