@@ -529,37 +529,56 @@ a["monkey"] = "true";
                             </ul>
                           </li>
                           <li><a name="Overloading"></a><h2>Overloading</h2>
-                            Of course we all should avoid overloading as good as possible, it's not beautiful that as2 doesn't support it but its logical and we have all to live with it. The "standard-way" of using overloading is pretty ugly combined with a lot of if's and code. So we decided to support this feature.
-                            <h3>Target</h3>
-                            Maybe the future presets for us a as2 that supports overloading, but not now. But we should be prepared for that, so each possibility should be defined in its own function:
-                            <code>public function doSomethingWay1() {
-}
-public function doSomethingWay2() {
-}</code>
-                            In this case it will be nice in future to change it to a supported overloading. The second thing is that this can be well documented. But this means a Separation for this overloading would look like this:
-                            <code>public function doSomething() {
-  if(arguments[0] instanceOf Home) {
-    doSomethingWay1(arguments[0], arguments[1]);
-  } else {
-    doSomethingWay2(arguments[0]);
-  }
-}</code>
-                            This is everytime a new challenge for the developer and may cause a lot of problems. Because if you want to check all you have unreadable code, a source for errors and maybe unchecked causes (what if the arguments don't match any case?!). Here is where we want to bring our part into the game. We should provide a functionality that handles these switch automatically. This functionality should be provide the same way like the Reflections: within the basic class and as util. There you should only use a predefined method for that:
-                            <code>public function doSomething() {
+                            Overloading is using different arguments for one Method. Overloading is only manually possible within as2.
+                            <ul>
+                              <li><a name="OverloadingReason"></a><h3>Reason</h3>
+                                Of course we all should avoid overloading as good as possible, it's not beautiful that as2 doesn't support it but its logical and we have all to live with it. The "standard-way" of using overloading is pretty ugly combined with a lot of code. So we decided to support this feature for people that want to use overloading.
+                              </li>
+                              <li><a name="OverloadingSolution"></a><h3>Solution</h3>
+                                We support overloading with simple functionalities accessed by an util class or within the basic class.
+                              </li>
+                              <li><a name="OverloadingAPI"></a><h3>API</h3>
+                                The primary methods should be available within the util class: <pre>org.as2lib.basic.Overloading</pre>
+                                <ul>
+                                  <li><a name="OverloadingAPI"></a><h3>.overload(applyTo:Object, arguments:Arguments, handler1:OverloadHandler, ... , handlerN:OverloadHandler)</h3>
+                                    Checks the arguments if it matches to one handler and then executes the handler with this arguments by the Object(applyTo).
+                                  </li>
+                                  <li><a name="OverloadingAPIcreateOverloadHandler"></a><h3>.createOverloadHandler(arguments, functionString)</h3>
+                                    Creates an new OverloadHandler (factory), for easier access.
+                                  </li>
+                                </ul>
+                                There will be additionally a class for the Handler: <pre>org.as2lib.basic.OverloadHandler</pre>
+                                This has to be initialized with <code>new OverloadHandler(arguments:Arguments, function:String);</code>
+                                <ul>
+                                  <li><a name="OverloadingAPI"></a><h3>.matches(arguments)</h3>
+                                    Returns true if the arguments match to the Handlers argument.
+                                  </li>
+                                  <li><a name="OverloadingAPIHandlerGetFunctionString"></a><h3>.getFunctionString</h3>
+                                    Returns the functionstring set to the Overloadhandler.
+                                  </li>
+                                </ul>
+                                <p class="note">Note: applyTo is only needed by accessing the utils, access within the basic class will not need that.</p>
+                              </li>
+                              <li><a name="OverloadingExceptions"></a><h3>Exceptions</h3>
+                                Exception will be thrown if ...
+                                <ul>
+                                  <li>the arguments dont match any handler.</li>
+                                  <li>there are two handler with the same arguments array</li>
+                                </ul>
+                              </li>
+                              <li><a name="OverloadingExample"></a><h3>Example</h3>
+                                As example for using Overloading:
+                                <ul>
+                                  <li><h4>Within the basic class:</h4>
+                                  <code>public function doSomething() {
   overload (
     arguments,
     createOverloadHandler([String, Number], "doSomethingWay1"),
     createOverloadHandler([String], "doSomethingWay2")
   );
-}</code>
-                            <p class="note">Note: This is not the final code! The Syntax might change!<br>
-                            Note 2: "this." Keyword is not important, it will be set by the compiler.<br>
-                            Note 3: createOverloadHandler returns an OverloadHandler Instance from the Utils Class.
-                            </p>
-                            <h3>Wrong calls</h3>
-                            A wrong call is a wrong call if it's size and it's types have no match. In this case, an exception will be thrown.
-                            <h3>Public Access</h3>
-                            The public Access over the Util Class will look like:<code>import org.as2lib.basic.BasicUtil;
+}</code></li>
+                                  <li><h4>Using the util class:</h4>
+                                  <code>import org.as2lib.basic.BasicUtil;
  ...
  public function doSomething() {
    BasicUtil.overload (
@@ -568,9 +587,12 @@ public function doSomethingWay2() {
      BasicUtil.createOverloadHandler([String, Number], "doSomethingWay1"),
      BasicUtil.createOverloadHandler([String], "doSomethingWay2")
    );
- }</code>So the complete Handling will work even if the basic Class can't be extended.
-                           <h3>Possible Extension</h3>
-                           There could be a possible Extension to insert Wildcards where an (un)-limited part of vars from a type can follow. (future release)
+ }</code></li>
+                              </li>
+                              <li><a name="OverloadingFuture"></a><h3>Possible future addition</h3>
+                                It could be very possible to use wildcards within the Overloadhandler.
+                              </li>
+                            </ul>
                           </li>
                           <li><a name="TestCases"></a><h2>Test Cases</h2>
                             After a lot discussion we decided to use our own test system instead of the <a href="http://www.as2unit.org" title="Testcases by iteration:two">as2unit</a>, specially because they use components and don't support a lot of methods.
