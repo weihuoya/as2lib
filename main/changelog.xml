@@ -5,6 +5,10 @@
 	<release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
 		<year value="2004">
 			<month value="9">
+      <day value="26">
+          <entry type="bugfix" package="org.as2lib.env.reflect" link="https://sourceforge.net/tracker/index.php?func=detail&aid=1028923&group_id=94206&atid=607074">Important Bugfix#1028923 about infinite recursion in reflections.</entry>
+          <entry type="bugfix" package="org.as2lib.env.reflect" link="https://sourceforge.net/tracker/index.php?func=detail&aid=1035084&group_id=94206&atid=607074">Removed hiding of classes by reflections</entry>
+      </day>
 	    <day value="16">
           <entry type="documentation" package="org.as2lib.aop.joinpoint" class="*">Added documentation.</entry>
           <entry type="documentation" package="org.as2lib.aop.pointcut" class="*">Added documentation.</entry>
