@@ -31,23 +31,13 @@ class org.as2lib.test.unit.ProgressInfo extends BasicClass implements TestRunner
 	/** Internal Testrunner holder. */	
 	private var testRunner:TestRunner;
 
-	/** Internal Holder for the TestCaseResult. */
-	private var testCaseResult:TestCaseResult;
-
-	/** Internal Holder for the TestCaseMethodInformation. */
-	private var testCaseMethod:TestCaseMethodInfo;
-	
 	/**
 	 * Constructs a event information for a process.
 	 * 
 	 * @param testRunner TestRunner that published this event.
-	 * @param testCaseResult Result for the current TestCase.
-	 * @param testCaseMethod Method that just finished.
 	 */
 	public function ProgressInfo(testRunner:TestRunner, testCaseResult:TestCaseResult, testCaseMethod:TestCaseMethodInfo) {
 		this.testRunner = testRunner;
-		this.testCaseResult = testCaseResult;
-		this.testCaseMethod = testCaseMethod;
 	}
 	
 	/**
@@ -65,7 +55,7 @@ class org.as2lib.test.unit.ProgressInfo extends BasicClass implements TestRunner
 	 * @return ResultInformations for the current running TestCase.
 	 */
 	public function getRunningTestCase(Void):TestCaseResult {
-		return testCaseResult;
+		return testRunner.getCurrentTestCase();
 	}
 	
 	/**
@@ -74,7 +64,7 @@ class org.as2lib.test.unit.ProgressInfo extends BasicClass implements TestRunner
 	 * @return MethodInfo for the just finished method.
 	 */
 	public function getFinishedMethodInfo(Void):TestCaseMethodInfo {
-		return testCaseMethod;
+		return testRunner.getCurrentTestCaseMethodInfo();
 	}
 	
 	/**
