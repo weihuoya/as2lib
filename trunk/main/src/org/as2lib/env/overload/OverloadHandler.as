@@ -26,4 +26,14 @@ interface org.as2lib.env.overload.OverloadHandler extends BasicInterface {
 	 * @param args the arguments to be passed as parameters
 	 */
 	public function execute(target, args:Array);
+	
+	/**
+	 *
+	 */
+	public function isMoreExplicitThan(handler:OverloadHandler):Boolean;
+	
+	/**
+	 *
+	 */
+	public function getArguments(Void):Array;
 }
