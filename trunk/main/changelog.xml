@@ -5,6 +5,19 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2004">
       <month value="10">
+	    <day value="27">
+		  <entry type="documentation" package="org.as2lib.util" class="ObjectUtil" method="forEach(...)">Added extended documentation</entry>
+		  <entry type="change" package="org.as2lib.util" class="ObjectUtil" method="forEach(..)">Additional submitting of the name.</entry>
+		  <entry type="add" package="org.as2ib.test.unit" class="TestCase" method="assertTypeOf(message:String, value, type:String)" />
+		  <entry type="add" package="org.as2ib.test.unit" class="TestCase" method="assertInstanceOf(message:String, value, type)" />
+		  <entry type="add" package="org.as2ib.data.io.file" class="File" />
+		  <entry type="add" package="org.as2ib.data.io.file" class="FileListener" />
+		  <entry type="add" package="org.as2ib.data.io.file" class="FileEventInfo" />
+		  <entry type="add" package="org.as2ib.data.io.file" class="FileNotLoadedException" />
+		  <entry type="add" package="org.as2ib.data.io.file" class="SimpleFile" />
+		  <entry type="add" package="org.as2ib.data.io.file" class="BitFormat" />
+		  <entry type="add" package="org.as2ib.data.io.file" class="ByteFormat" />
+		</day>
         <day value="20">
           <entry type="change" package="org.as2lib.data.io.conn.core.event" class="MethodInvocationReturnListener" method="onResponse(..)"><change-rename to="onReturn" /></entry>
           <entry type="change" package="org.as2lib.data.io.conn.core.event" class="MethodInvocationReturnInfo" method="getResponse(..)"><change-rename to="getReturnValue" /></entry>
