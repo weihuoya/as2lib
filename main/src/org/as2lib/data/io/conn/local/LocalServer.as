@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import org.as2lib.data.io.conn.Connector;
 import org.as2lib.data.io.conn.ConnectorListener;
 import org.as2lib.data.io.conn.ConnectorRequest;
@@ -69,20 +68,12 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	
 	/* LocalConnection object for broadcasting messages */
 	private var sender:LocalConnection;
-	
-	/* Stores domain, used by allowDomain, for security */
-	//private var domain:String;
 
 	/* List of clients and their StatusListener Objects*/
 	private var clients:HashMap;
 	
 	/* Standard debug output */
 	private var aOut:OutAccess;
-	
-	//private var currClient:String;
-	
-	/*private var cacheClient:String;
-	private var connTests:Number = 10;*/
 	
 	/**
 	 * Constructs a new LocalServer instance.
@@ -153,7 +144,6 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 			var key:String = String(keys.shift());
 			aOut.debug(getClass().getName()+".broadcast: "+listenerObj.getClass().getName()+" @ "+key);
 			sender.send.apply(listenerObj,[key].concat(args));
-			//sender.send.apply(this,[key].concat(args));
 		}
 	}
 	

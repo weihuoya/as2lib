@@ -10,6 +10,9 @@ import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.Config;
 import org.as2lib.env.out.OutAccess;
+import org.as2lib.data.io.conn.local.ReservedConnectionException;
+import org.as2lib.data.io.conn.local.NotAllowedDomainException;
+import org.as2lib.data.io.conn.local.MissingServerException;
 
 /**
  * @author Christoph Atteneder
@@ -64,9 +67,8 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 		
 		var args:Array = new Array("register","addClient",connID);
 		sender.send.apply(this,args);
-		//sender.send("register","addClient", connID);
 		if(!connect(connID)){
-			eventBroadcaster.dispatch(new ConnectorError("Connection name '"+connID+"' is already used by another LocalConnection",this,arguments,true,false));
+			eventBroadcaster.dispatch(new ConnectorError(new ReservedConnectionException("Connection name '"+connID+"' is already used by another LocalConnection",this,arguments)));
 		}
 	}
 	
@@ -74,7 +76,7 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 		aOut.debug(getClass().getName()+".getRandomID");
         var s:String = "abcdefghijklmnopqrstuvwxyz";
         var cnt:Number = 10;
-		var result:String = new String("conn_");//(host + path+"_");
+		var result:String = new String("conn_");
         while (cnt--) {
             result += s.charAt(Math.floor(Math.random() * s.length));
         }
@@ -84,7 +86,6 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 	public function clientMethod():Void {
 		aOut.debug(getClass().getName()+".clientMethod");
 		eventBroadcaster.dispatch(new ConnectorResponse(arguments));
-		//aOut.debug(arguments.toString());
 	}
 	
 	public function setHost(host:String):Void {
@@ -123,7 +124,7 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 	public function onStatus(infoObj){
 		aOut.debug(getClass().getName()+".onStatus: "+infoObj.level);
 		if(infoObj.level == "error") {;
-			eventBroadcaster.dispatch(new ConnectorError("There is no server to listen to !",this,arguments,true,false));
+			eventBroadcaster.dispatch(new ConnectorError(new MissingServerException("There is no server with a 'register' connection to listen to !",this,arguments,true,false)));
 		}
 		/*if(infoObj.level == "status") {
 			eventBroadcaster.dispatch(new ConnectorResponse("Serverbroadcast was successful!"));
