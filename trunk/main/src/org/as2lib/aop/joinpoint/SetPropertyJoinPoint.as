@@ -14,6 +14,6 @@ class org.as2lib.aop.joinpoint.SetPropertyJoinPoint extends PropertyJoinPoint {
 	}
 	
 	public function getType(Void):Number {
-		return TYPE_PROPERTY_SET;
+		return TYPE_SET_PROPERTY;
 	}
 }

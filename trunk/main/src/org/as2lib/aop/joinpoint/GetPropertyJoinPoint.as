@@ -14,6 +14,6 @@ class org.as2lib.aop.joinpoint.GetPropertyJoinPoint extends PropertyJoinPoint {
 	}
 	
 	public function getType(Void):Number {
-		return TYPE_PROPERTY_GET;
+		return TYPE_GET_PROPERTY;
 	}
 }
