@@ -1,6 +1,5 @@
 ﻿import org.as2lib.basic.event.EventInfo;
 import org.as2lib.basic.out.OutLevel;
-import org.as2lib.basic.Throwable;
 import org.as2lib.basic.BasicClass;
 
 /**

@@ -1,4 +1,4 @@
-﻿import org.as2lib.basic.Out;
+﻿import org.as2lib.basic.out.Out;
 import org.as2lib.data.holder.TypedArray;
 import org.as2lib.test.speed.TestCaseInformation;
 import org.as2lib.test.speed.TestCase;
@@ -28,6 +28,7 @@ class org.as2lib.test.speed.Test {
 	 * Constructs a new Test.
 	 */
 	function Test(Void) {
+		trace ("aha");
 		this.speedTestCases = new TypedArray(TestCaseInformation);
 	}
 	
@@ -38,6 +39,7 @@ class org.as2lib.test.speed.Test {
 	 * @param true if it should print the result immediatly.
 	 */
 	public function run(printResult:Boolean):Void {
+		trace ("aha");
 		var i:Number;
 		for(i=0; i<this.speedTestCases.length; i++) {
 			for(var j=0; j<this.calls; j++) {

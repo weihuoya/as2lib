@@ -1,6 +1,6 @@
 ﻿import org.as2lib.basic.out.OutHandler;
 import org.as2lib.basic.event.EventBroadcaster;
-import org.as2lib.basic.Throwable;
+import org.as2lib.basic.except.Throwable;
 import org.as2lib.basic.BasicInterface;
 
 /**
