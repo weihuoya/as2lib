@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.data.iterator.Iterator;
-import org.as2lib.data.iterator.ArrayIterator;
+import org.as2lib.data.iterator.ProtectedArrayIterator;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.HolderConfig;
 import org.as2lib.data.holder.Stack;
@@ -28,58 +28,59 @@ import org.as2lib.data.holder.EmptyDataHolderException;
  */
 class org.as2lib.data.holder.SimpleStack extends BasicClass implements Stack {
 	/** Contains the inserted values. */
-	private var target:Array;
+	private var values:Array;
 	
 	/**
 	 * Constructs a new SimpleStack.
 	 */
 	public function SimpleStack(Void) {
-		target = new Array();
+		values = new Array();
 	}
 	
 	/**
 	 * @see org.as2lib.data.holder.Stack#push()
 	 */
 	public function push(value):Void {
-		target.unshift(value);
+		values.push(value);
 	}
 	
 	/**
 	 * @see org.as2lib.data.holder.Stack#pop()
 	 */
 	public function pop(Void) {
-		if (target.length == 0) {
+		if (isEmpty()) {
 			throw new EmptyDataHolderException("You tried to pop an element from an empty Stack.",
 										  this,
 										  arguments);
 		}
-		return target.shift();
+		return values.pop();
 	}
 	
 	/**
 	 * @see org.as2lib.data.holder.Stack#peek()
 	 */
 	public function peek(Void) {
-		if (target.length == 0) {
+		if (values.length == 0) {
 			throw new EmptyDataHolderException("You tried to peek an element from an empty Stack.",
 										  this,
 										  arguments);
 		}
-		return target[target.length - 1];
+		return values[values.length-1];
 	}
 	
 	/**
 	 * @see org.as2lib.data.holder.Stack#iterator()
 	 */
 	public function iterator(Void):Iterator {
-		return (new ArrayIterator(target));
+		var reversedValues = values.slice().reverse();
+		return (new ProtectedArrayIterator(reversedValues));
 	}
 	
 	/**
 	 * @see org.as2lib.data.holder.Stack#isEmpty()
 	 */
 	public function isEmpty(Void):Boolean {
-		return (target.length == 0);
+		return (values.length == 0);
 	}
 	
 	/**
