@@ -69,6 +69,7 @@ class org.as2lib.env.event.SimpleEventBroadcaster extends BasicClass implements 
 	 * @see org.as2lib.env.event.EventBroadcaster#addListener()
 	 */
 	public function addListener(listener:EventListener):Void {
+		removeListener(listener);
 		if (listener)
 			listeners.push(listener);
 	}
@@ -83,8 +84,12 @@ class org.as2lib.env.event.SimpleEventBroadcaster extends BasicClass implements 
 	 * @see org.as2lib.env.event.EventBroadcaster#addAllListener()
 	 */
 	public function addAllListener(listeners:Array):Void {
-		if (listeners)
-			this.listeners = this.listeners.concat(listeners);
+		if (listeners) {
+			var i:Number = listeners.length;
+			while(--i-(-1)) {
+				addListener(listeners[i]);
+			}
+		}
 	}
 	
 	/**
