@@ -1,5 +1,5 @@
 ﻿import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.Map;
 import org.as2lib.env.reflect.CacheInfo;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
@@ -26,7 +26,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CacheInfo
 	private var parent:PackageInfo;
 	
 	/** The children of the package. That means all classes and packages contained in the package. */
-	private var children:HashMap;
+	private var children:Map;
 	
 	/**
 	 * Constructs a new PackageInfo.
@@ -93,7 +93,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CacheInfo
 	 *
 	 * @return a HashMap containing the children
 	 */
-	public function getChildren(Void):HashMap {
+	public function getChildren(Void):Map {
 		if (children == undefined) {
 			children = ReflectUtil.getChildren(this);
 		}

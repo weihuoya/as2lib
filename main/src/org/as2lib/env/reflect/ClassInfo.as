@@ -1,5 +1,5 @@
 ﻿import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.Map;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.PackageInfo;
@@ -31,10 +31,10 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	private var parent:PackageInfo;
 	
 	/** The methods the class has. */
-	private var methods:HashMap;
+	private var methods:Map;
 	
 	/** The properties of the class. */
-	private var properties:HashMap;
+	private var properties:Map;
 	
 	/**
 	 * Constructs a new ClassInfo.
@@ -125,7 +125,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	 *
 	 * @return a HashMap containing MethodInfos representing the operations
 	 */
-	public function getMethods(Void):HashMap {
+	public function getMethods(Void):Map {
 		if (ObjectUtil.isEmpty(methods)) {
 			methods = ReflectUtil.getMethods(this);
 		}
@@ -138,7 +138,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	 *
 	 * @return a HashMap containing PropertyInfos representing the properties
 	 */
-	public function getProperties(Void):HashMap {
+	public function getProperties(Void):Map {
 		if (ObjectUtil.isEmpty(properties)) {
 			properties = ReflectUtil.getProperties(this);
 		}
@@ -150,7 +150,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	 *
 	 * @return null
 	 */
-	public function getChildren(Void):HashMap {
+	public function getChildren(Void):Map {
 		return null;
 	}
 }

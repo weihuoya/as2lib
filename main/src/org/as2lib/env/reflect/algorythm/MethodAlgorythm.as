@@ -4,6 +4,7 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.algorythm.ContentAlgorythm;
 import org.as2lib.env.reflect.algorythm.AbstractContentAlgorythm;
+import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.util.ObjectUtil;
 
@@ -11,14 +12,14 @@ import org.as2lib.util.ObjectUtil;
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorythm.MethodAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
-	private var data:HashMap;
+	private var data:Map;
 	private var info:ClassInfo;
 	private var staticFlag:Boolean;
 	
 	public function MethodAlgorythm(Void) {
 	}
 	
-	public function execute(info:CacheInfo):HashMap {
+	public function execute(info:CacheInfo):Map {
 		this.info = ClassInfo(info);
 		this.data = new HashMap();
 		
