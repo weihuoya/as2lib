@@ -50,6 +50,8 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 		
 		var s:ReplayState = new ReplayState(b);
 		s.verify(null);
+		
+		b.doVerify();
 	}
 	
 	public function testVerifyWithRealArgument(Void):Void {
@@ -59,6 +61,8 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 		
 		var s:ReplayState = new ReplayState(b);
 		s.verify(this);
+		
+		b.doVerify();
 	}
 	
 	public function testInvokeMethodWithAvailableMethodBehaviourAndNullArgument(Void):Void {
@@ -77,6 +81,9 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 		
 		var s:ReplayState = new ReplayState(b);
 		assertSame(s.invokeMethod(null), rv);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testInvokeMethodWithAvailableMethodBehaviourAndRealArgument(Void):Void {
@@ -96,6 +103,9 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 		
 		var s:ReplayState = new ReplayState(b);
 		assertSame(s.invokeMethod(mc), rv);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testInvokeMethodWithUnavailableMethodBehaviourAndNullArgument(Void):Void {
@@ -117,6 +127,9 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 		
 		var s:ReplayState = new ReplayState(b);
 		assertSame(s.invokeMethod(null), rv);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testInvokeMethodWithUnavailableMethodBehaviourAndRealArgument(Void):Void {
@@ -139,6 +152,9 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 		
 		var s:ReplayState = new ReplayState(b);
 		assertSame(s.invokeMethod(mc), rv);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testInvokeMethodWithUnavailableMethodBehaviourAndRealArgumentAndNullMethodName(Void):Void {
@@ -161,6 +177,9 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 		
 		var s:ReplayState = new ReplayState(b);
 		assertSame(s.invokeMethod(mc), rv);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testInvokeMethodWithUnavailableMethodBehaviourAndRealArgumentAndBlankStringMethodName(Void):Void {
@@ -183,6 +202,9 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 		
 		var s:ReplayState = new ReplayState(b);
 		assertSame(s.invokeMethod(mc), rv);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testSetMethodResponse(Void):Void {
@@ -195,6 +217,8 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 			fail("Expected IllegalStateException.");
 		} catch (e:org.as2lib.env.except.IllegalStateException) {
 		}
+		
+		b.doVerify();
 	}
 	
 	public function testSetArgumentsMatcher(Void):Void {
@@ -207,6 +231,8 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 			fail("Expected IllegalStateException.");
 		} catch (e:org.as2lib.env.except.IllegalStateException) {
 		}
+		
+		b.doVerify();
 	}
 	
 }

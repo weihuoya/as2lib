@@ -50,11 +50,14 @@ class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 		var b:BehaviourMock = new BehaviourMock(this);
 		b.createMethodBehaviour(null);
 		b.setCreateMethodBehaviourReturnValue(m);
-		b.addMethodBehaviour("[unknown]", m);
+		b.addMethodBehaviour(undefined, m);
 		b.replay();
 		
 		var s:RecordState = new RecordState(b);
 		s.invokeMethod(null);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testInvokeMethodWithRealArgument(Void):Void {
@@ -71,6 +74,9 @@ class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 		
 		var s:RecordState = new RecordState(b);
 		s.invokeMethod(c);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testInvokeMethodWithNullReturningMethodCallGetMethodNameMethod(Void):Void {
@@ -82,11 +88,14 @@ class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 		var b:BehaviourMock = new BehaviourMock(this);
 		b.createMethodBehaviour(c);
 		b.setCreateMethodBehaviourReturnValue(m);
-		b.addMethodBehaviour("[unknown]", m);
+		b.addMethodBehaviour(null, m);
 		b.replay();
 		
 		var s:RecordState = new RecordState(b);
 		s.invokeMethod(c);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testInvokeMethodWithEmptyStringReturningMethodCallGetMethodNameMethod(Void):Void {
@@ -98,11 +107,14 @@ class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 		var b:BehaviourMock = new BehaviourMock(this);
 		b.createMethodBehaviour(c);
 		b.setCreateMethodBehaviourReturnValue(m);
-		b.addMethodBehaviour("[unknown]", m);
+		b.addMethodBehaviour("", m);
 		b.replay();
 		
 		var s:RecordState = new RecordState(b);
 		s.invokeMethod(c);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testSetMethodResponseWithNullMethodResponse(Void):Void {
@@ -119,6 +131,9 @@ class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 		
 		var s:RecordState = new RecordState(b);
 		s.setMethodResponse(null, r);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testSetMethodResponseWithNullMethodCallRange(Void):Void {
@@ -135,6 +150,9 @@ class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 		
 		var s:RecordState = new RecordState(b);
 		s.setMethodResponse(r, null);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testSetMethodResponseWithRealArguments(Void):Void {
@@ -152,6 +170,9 @@ class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 		
 		var s:RecordState = new RecordState(b);
 		s.setMethodResponse(r, cr);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testSetArgumentsMatcherWithNullArgument(Void):Void {
@@ -166,6 +187,9 @@ class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 		
 		var s:RecordState = new RecordState(b);
 		s.setArgumentsMatcher(null);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testSetArgumentsMatcherWithRealArgument(Void):Void {
@@ -182,6 +206,9 @@ class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 		
 		var s:RecordState = new RecordState(b);
 		s.setArgumentsMatcher(a);
+		
+		b.doVerify();
+		m.doVerify();
 	}
 	
 	public function testVerify(Void):Void {
