@@ -97,6 +97,13 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	public static var TYPE_MOVIECLIP = "movieclip";
 	
 	/**
+	 * Constant for the type of function.
+	 * 
+	 * @see #isTypeOf
+	 */
+	public static var TYPE_FUNCTION = "function";
+	
+	/**
 	 * Constant for the type of undefined.
 	 * 
 	 * @see #isTypeOf
@@ -227,8 +234,8 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * @link http://chattyfig.figleaf.com/flashcoders-wiki/index.php?ASSetPropFlags
 	 */
 	public static function isOverwritable(target, object:String):Boolean {
-		var newVal = (target[object] == 0) ? 1 : 0;
 		var tmp = target[object];
+		var newVal = (tmp == 0) ? 1 : 0;
 		target[object] = newVal;
 		if(target[object] == newVal){
 			target[object] = tmp;
@@ -261,7 +268,8 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	
 	/**
 	 * Checks if the type of object matches the given type.
-	 *
+	 * Every value (even "null" & "undefined") matches type "Object".
+	 * 
 	 * @param aObject the object whose type shall be compared with the type
 	 * @param aType the type that shall be used for the comparison
 	 * @return true if the type of the object matches else false
@@ -271,15 +279,10 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 			return true;
 		}
 		if (isPrimitiveType(anObject)) {
-			if (compareTypeOf(aType(anObject), anObject)) {
-				return true;
-			}
+			return (compareTypeOf(aType(anObject), anObject));
 		} else {
-			if (isInstanceOf(anObject, aType)) {
-				return true;
-			}
+			return (isInstanceOf(anObject, aType));
 		}
-		return false;
 	}
 	
 	/**
