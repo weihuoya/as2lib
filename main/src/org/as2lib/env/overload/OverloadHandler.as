@@ -28,12 +28,23 @@ interface org.as2lib.env.overload.OverloadHandler extends BasicInterface {
 	public function execute(target, args:Array);
 	
 	/**
+	 * Compares the OverloadHandler passed in with this OverloadHandler for explicity.
+	 * The operation returns true when this OverloadHandler is more explicit than
+	 * the passed in. Otherwise false will be returned.
+	 * What means more explicit? The class SimpleOverloadHandler is for example more
+	 * explicit than the class Object.
 	 *
+	 * @param handler the OverloadHandler that shall be compared with this OverloadHandler
+	 * @return true if this OverloadHandler is more explicit else false
+	 * @throws org.as2lib.env.overload.IllegalTypeException if the two OverloadHandler have the same explicity
 	 */
 	public function isMoreExplicitThan(handler:OverloadHandler):Boolean;
 	
 	/**
+	 * Returns the arguments Array that contains the type siganture of the
+	 * OverloadHandler.
 	 *
+	 * @return an Array containing the OverloadHandler's type signature
 	 */
 	public function getArguments(Void):Array;
 }

@@ -69,32 +69,55 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	/**
 	 * Forwards the arguments to the corresponding OverloadHandler. The
 	 * UnknownOverloadHandlerException will be thrown if no adequate OverloadHandler
-	 * could be found.
+	 * could be found. If there exist at least to OverloadHandlers with the same
+	 * type signature a IllegalTypeException will be thrown.
 	 *
 	 * @return the return value of the called operation
 	 * @throws org.as2lib.env.overload.UnknownOverloadHandlerException if no adequate OverloadHandler could be found
+	 * @throws org.as2lib.env.overload.IllegalTypeException if there exist at least two OverloadHandlers with the same type siganture
 	 */
 	public function forward(args:Array) {
-		var handler:OverloadHandler;
-		var matchingHandlers:Array = new Array();
-		var l:Number = handlers.length;
-		for (var i:Number = 0; i < l; i++) {
-			handler = OverloadHandler(handlers[i]);
-			if (handler.matches(args)) {
-				matchingHandlers.push(handler);
-			}
-		}
+		var matchingHandlers:Array = getMatchingHandlers(args);
 		if (matchingHandlers.length == 0) {
 			throw new UnknownOverloadHandlerException("No appropriate OverloadHandler [" + handlers + "] for the arguments [" + args + "] could be found.",
 									 			  	  this,
 									 			  	  arguments);
 		}
-		var currentHandler:OverloadHandler = OverloadHandler(matchingHandlers[0]);
-		for (var i:Number = 1; i < matchingHandlers.length; i++) {
-			if (!currentHandler.isMoreExplicitThan(OverloadHandler(matchingHandlers[i]))) {
-				currentHandler = OverloadHandler(matchingHandlers[i]);
+		return getMatchingHandler(matchingHandlers).execute(target, args);
+	}
+	
+	/**
+	 * Returns all OverloadHandlers in an Array that match the given arguments.
+	 * 
+	 * @param args the arguments that shall match to a specific OverloadHandler
+	 * @return an Array containing the matching OverloadHandlers
+	 */
+	private function getMatchingHandlers(args:Array):Array {
+		var result:Array = new Array();
+		var handler:OverloadHandler;
+		for (var i:Number = 0; i < handlers.length; i++) {
+			handler = OverloadHandler(handlers[i]);
+			if (handler.matches(args)) {
+				result.push(handler);
 			}
 		}
-		return currentHandler.execute(target, args);
+		return result;
+	}
+	
+	/**
+	 * Returns the most explicit OverloadHandler out of the Array of matching
+	 * OverloadHandlers.
+	 *
+	 * @param handlers the matching OverloadHandlers found by the #getMatchingHandlers() operation
+	 * @return the most explicit OverloadHandler
+	 */
+	private function getMatchingHandler(matchingHandlers:Array):OverloadHandler {
+		var result:OverloadHandler = OverloadHandler(matchingHandlers[0]);
+		for (var i:Number = 1; i < matchingHandlers.length; i++) {
+			if (!result.isMoreExplicitThan(OverloadHandler(matchingHandlers[i]))) {
+				result = OverloadHandler(matchingHandlers[i]);
+			}
+		}
+		return result;
 	}
 }
