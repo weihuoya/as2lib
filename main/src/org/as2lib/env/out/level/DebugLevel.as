@@ -28,8 +28,7 @@ class org.as2lib.env.out.level.DebugLevel extends InfoLevel {
 	/**
 	 * @see org.as2lib.env.out.OutLevel
 	 */
-	public function debug(message:String, broadcaster:EventBroadcaster):Void {
-		var event:EventInfo = new OutWriteInfo(message, Out.DEBUG);
-		broadcaster.dispatch(event);
+	public function debug(message, broadcaster:EventBroadcaster):Void {
+		broadcaster.dispatch(new OutWriteInfo(message, Out.DEBUG));
 	}
 }

@@ -31,50 +31,50 @@ import org.as2lib.core.BasicInterface;
  */
 interface org.as2lib.env.out.OutLevel extends BasicInterface {
 	/**
-	 * Outputs a message.
+	 * Outputs a message object.
+	 *
+	 * @param message the message object to be written out
+	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
+	 */
+	public function log(message, broadcaster:EventBroadcaster):Void;
+	
+	/**
+	 * Outputs a message object.
+	 *
+	 * @param message the message object to be written out
+	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
+	 */
+	public function debug(message, broadcaster:EventBroadcaster):Void;
+	
+	/**
+	 * Outputs a message object.
 	 *
 	 * @param message the message to be written out
 	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
-	public function log(message:String, broadcaster:EventBroadcaster):Void;
+	public function info(message, broadcaster:EventBroadcaster):Void;
 	
 	/**
-	 * Outputs a message.
+	 * Outputs a message object.
 	 *
-	 * @param message the message to be written out
+	 * @param message the message object to be written out
 	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
-	public function debug(message:String, broadcaster:EventBroadcaster):Void;
+	public function warning(message, broadcaster:EventBroadcaster):Void;
 	
 	/**
-	 * Outputs a message.
+	 * Outputs an error object.
 	 *
-	 * @param message the message to be written out
+	 * @param error the error object to be written out
 	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
-	public function info(message:String, broadcaster:EventBroadcaster):Void;
+	public function error(error, broadcaster:EventBroadcaster):Void;
 	
 	/**
-	 * Outputs a message.
+	 * Outputs an error object.
 	 *
-	 * @param message the message to be written out
+	 * @param error the error object to be written out
 	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
-	public function warning(message:String, broadcaster:EventBroadcaster):Void;
-	
-	/**
-	 * Outputs a Throwable.
-	 *
-	 * @param throwable the Throwable to be written out
-	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
-	 */
-	public function error(exception:Throwable, broadcaster:EventBroadcaster):Void;
-	
-	/**
-	 * Outputs a Throwable.
-	 *
-	 * @param throwable the Throwable to be written out
-	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
-	 */
-	public function fatal(exception:Throwable, broadcaster:EventBroadcaster):Void;
+	public function fatal(error, broadcaster:EventBroadcaster):Void;
 }

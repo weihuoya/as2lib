@@ -35,14 +35,10 @@ class org.as2lib.env.out.string.ErrorStringifier extends BasicClass implements S
 	public function execute(target):String {
 		var info:OutErrorInfo = OutErrorInfo(target);
 		return ("** " + getLevelName(info.getLevel()) + " ** \n" 
-				+ getThrowableString(info.getThrowable()));
+				+ info.getError());
 	}
 	
 	private function getLevelName(level:OutLevel):String {
 		return ReflectUtil.getClassInfo(level).getName();
-	}
-	
-	private function getThrowableString(throwable:Throwable):String {
-		return ExceptConfig.getThrowableStringifier().execute(throwable);
 	}
 }
