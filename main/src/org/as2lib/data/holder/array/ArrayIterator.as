@@ -14,16 +14,36 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.NoSuchElementException;
-import org.as2lib.env.except.IllegalStateException;
-import org.as2lib.core.BasicClass;
 
 /**
- * ArrayIterator is used to iterate over an Array.
+ * ArrayIterator can be used to iterate over arrays.
  *
- * @author Michael Herrmann
+ * <p>An iterator is quite simple to use. There is one method to check
+ * whether there are more elements left to iterate over {@link #hasNext},
+ * one method to get the next element {@link #next} and one to remove
+ * the current element {@link #remove}.
+ *
+ * <p>And here is how it works:
+ * <code>
+ *   var iterator:Iterator = new ArrayIterator(["value1", "value2", "value3"]);
+ *   while (iterator.hasNext()) {
+ *     trace(iterator.next());
+ *   }
+ * </code>
+ * <p>The output would be the following:
+ * <pre>
+ *   value1
+ *   value2
+ *   value3
+ * </pre>
+ *
  * @author Simon Wacker
+ * @author Michael Herrmann
  */
 class org.as2lib.data.holder.array.ArrayIterator extends BasicClass implements Iterator {
 	
@@ -34,24 +54,32 @@ class org.as2lib.data.holder.array.ArrayIterator extends BasicClass implements I
 	private var index:Number;
 	
 	/**
-	 * Constructs a new ArrayIterator.
+	 * Constructs a new ArrayIterator instance.
 	 *
-	 * @param target the Array to iterate over
+	 * @param target the array to iterate over
+	 * @throws IllegalArgumentException if the passed-in target array is null or undefined
 	 */
-	public function ArrayIterator(newTarget:Array) {
-		target = newTarget;
+	public function ArrayIterator(target:Array) {
+		if (!target) throw new IllegalArgumentException("The passed-in target array '" + target + "' is not allowed to be null or undefined.", this, arguments);
+		this.target = target;
 		index = -1;
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Iterator#hasNext()
+	 * Returns whether there exists another element to iterate over.
+	 *
+	 * @return true if there is at least one lement left to iterate over
 	 */
 	public function hasNext(Void):Boolean {
 		return (index < target.length - 1);
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Iterator#next()
+	 * Returns the next element of the array.
+	 *
+	 * @return the next element of the array
+	 * @throws org.as2lib.data.holder.NoSuchElementException if there is
+	 * no next element
 	 */
 	public function next(Void) {
 		if (!hasNext()) {
@@ -61,7 +89,11 @@ class org.as2lib.data.holder.array.ArrayIterator extends BasicClass implements I
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Iterator#remove()
+	 * Removes the currently selected element from this iterator and from
+	 * the passed-in array this iterator iterates over.
+	 *
+	 * @throws org.as2lib.env.except.IllegalStateException if you try to 
+	 * remove an element when none is selected
 	 */
 	public function remove(Void):Void {
 		if (index < 0) {
