@@ -1,8 +1,9 @@
 ﻿import org.as2lib.data.holder.Map;
-import org.as2lib.data.iterator.HashMapIterator;
+import org.as2lib.data.iterator.MapIterator;
 import org.as2lib.data.iterator.Iterator;
 import org.as2lib.data.iterator.ArrayIterator;
 import org.as2lib.core.BasicClass;
+import org.as2lib.data.holder.HolderConfig;
 
 class org.as2lib.data.holder.HashMap extends BasicClass implements Map {
 	private var keys:Array;
@@ -73,7 +74,7 @@ class org.as2lib.data.holder.HashMap extends BasicClass implements Map {
 	}
 	
 	public function iterator(Void):Iterator {
-		return (new HashMapIterator(this));
+		return (new MapIterator(this));
 	}
 	
 	public function getIterator(Void):Iterator {
@@ -105,16 +106,6 @@ class org.as2lib.data.holder.HashMap extends BasicClass implements Map {
 	}
 	
 	public function toString(Void):String {
-		var result:String = "{";
-		var valueIterator:ArrayIterator = new ArrayIterator(values);
-		var keyIterator:ArrayIterator = new ArrayIterator(keys)
-		while (keyIterator.hasNext()) {
-			result += keyIterator.next().toString()+"="+valueIterator.next().toString();
-			if (keyIterator.hasNext()) {
-				result += ", ";
-			}
-		}
-		result += "}";
-		return result;
+		return HolderConfig.getHashMapStringifier().execute(this);
 	}
 }

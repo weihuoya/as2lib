@@ -1,6 +1,7 @@
 ﻿import org.as2lib.data.iterator.Iterator;
 import org.as2lib.data.iterator.ArrayIterator;
 import org.as2lib.core.BasicClass;
+import org.as2lib.data.holder.HolderConfig;
 
 class org.as2lib.data.holder.Stack extends BasicClass {
 	private var target:Array;
@@ -32,5 +33,9 @@ class org.as2lib.data.holder.Stack extends BasicClass {
 	
 	public function isEmpty() {
 		return (target.length == 0);
+	}
+	
+	public function toString(Void):String {
+		return HolderConfig.getStackStringifier().execute(this);
 	}
 }
