@@ -59,13 +59,14 @@ class org.as2lib.env.except.AbstractException extends Error {
 	/**
 	 * @see org.as2lib.env.except.Throwable#initCause()
 	 */
-	public function initCause(aCause:Throwable):Void {
+	public function initCause(aCause:Throwable):Throwable {
 		if (ObjectUtil.isAvailable(cause)) {
 			throw new IllegalStateException("The cause [" + cause + "] has already been initialized.",
 											this,
 											arguments);
 		}
 		cause = aCause;
+		return Throwable(this);
 	}
 	
 	/**

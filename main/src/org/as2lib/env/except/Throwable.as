@@ -24,11 +24,14 @@ interface org.as2lib.env.except.Throwable extends BasicInterface {
 	 * once. You normally initialize a cause if you throw a Throwable due to
 	 * the throw of another Throwable. Thereby you will not lose the information
 	 * the cause offers.
+	 * This method returns as Throwable its class to have a easy way to initialize it:
+	 * <pre>throw new Throwable("error", this, arguments).initCause(e);</pre>
 	 *
 	 * @param a Throwable representing the cause of the new Throwable
 	 * @throws org.as2lib.env.except.IllegalStateException
+	 * @return the exception itself.
 	 */
-	public function initCause(cause:Throwable):Void;
+	public function initCause(cause:Throwable):Throwable;
 	
 	/**
 	 * Returns the initialized cause.
