@@ -18,6 +18,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.util.Executable;
 import org.as2lib.util.AccessPermission;
 
 /**
@@ -28,7 +29,7 @@ import org.as2lib.util.AccessPermission;
  * @author Simon Wacker
  * @author Martin Heidegger
  */
-class org.as2lib.util.Call extends BasicClass {
+class org.as2lib.util.Call extends BasicClass implements Executable {
 	
 	/** The object to execute the Function one. */
 	private var object;
@@ -88,6 +89,46 @@ class org.as2lib.util.Call extends BasicClass {
 		}
 		result += "() ]";
 		return result;
+	}
+	
+	/**
+	 * Iterates through the passed Object using the for..in loop and executes
+	 * the Call by passing the object, the found child and its name.
+	 * 
+	 * Example:
+	 * <CODE>
+	 *   class MyClass {
+	 * 
+         *      private var a:String;
+         *      private var b:String;
+         *      private var c:String;
+	 * 
+	 *      public function MyClass() {
+	 *          a = "1";
+	 *          b = "2";
+	 *          c = "2";
+	 *      }
+	 *      
+	 *      public function traceObject(value, name:String, inObject):Void {
+	 *          trace(name+": "+value);
+	 *      }
+	 * 
+	 *      public function listAll() {
+         *          new Call(this, traceObject).forEach(this);
+	 *      }
+	 *   }
+	 * </CODE>
+	 *
+	 * Note: Only childs visible by a for-in loop will be displayed!
+	 *  
+	 * @param object the object to iterate over
+	 * @param call the Call to be executed for each found object
+	 */
+	public function forEach(object):Void {
+		var i:String;
+		for (i in object) {
+			execute([object[i], i, object]);
+		}
 	}
 	
 }
