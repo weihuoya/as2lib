@@ -1,5 +1,13 @@
 ﻿// :: CHANGELOG :: //
 
+    :: 23/07/04 :: Martin Heidegger ::
+
+      >> Important Bugfix SF-Request#996433
+      
+      >> org.as2lib.util.ArrayUtil
+        + added method shuffle().
+
+
     :: 22/07/04 :: Martin Heidegger ::
     
       >> Enhanced the toString Method of org.as2lib.Call
