@@ -3,9 +3,10 @@ import org.as2lib.env.overload.Overload;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.out.Out;
 import org.as2lib.env.out.string.WriteStringifier;
+import org.as2lib.env.overload.UnknownOverloadHandlerException;
 import org.as2lib.test.unit.Failure;
 import org.as2lib.test.unit.TestConfig;
-import org.as2lib.env.overload.UnknownOverloadHandlerException;
+import org.as2lib.util.ClassUtil;
 
 /**
  * Basic Class to be Extended by all Testcases.
@@ -37,6 +38,9 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	private static var startedPath:String;
 	// Var to view the actual running case from outside
 	public static var runningTest;
+	
+	/** Private Constructor */
+	private function Test() {}
 	
 	/**
 	 * Starts a Testcase (useful with different Methods to start an Testcase)
@@ -107,14 +111,16 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 */
 	public static function runClass(useClass, myPath:String):Void {
 		initTest("runClass");
-		if(myPath.indexOf("__constructor__") < 0 || !myPath) {
-			try {
-				var tempVar = new useClass();
-			} catch (e) {
-				addError("Internal Error: TestClass "+myPath+" could not initalized. Exception was thrown. Type: "+ReflectUtil.getClassInfo(e).getName()+"; Message: "+e.getMessage());
+		if(ClassUtil.isSubClassOf(useClass,eval("th"+"is"))){
+			if(myPath.indexOf("__constructor__") < 0 || !myPath) {
+				try {
+					var tempVar = new useClass();
+				} catch (e) {
+					addError("Internal Error: TestClass "+myPath+" could not initalized. Exception was thrown. Type: "+ReflectUtil.getClassInfo(e).getName()+"; Message: "+e.getMessage());
+				}
+				runTest(tempVar, myPath);
 			}
-			runObject(tempVar, myPath);
-		}
+		}	
 		exitTest("runClass");
 	}
 	
