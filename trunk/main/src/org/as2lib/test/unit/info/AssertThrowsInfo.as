@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.test.unit.AbstractAssertInfo;
-import org.as2lib.util.Call;
+import org.as2lib.util.Executable;
 import org.as2lib.util.StringUtil;
 import org.as2lib.env.reflect.ClassInfo;
 
@@ -30,7 +30,7 @@ class org.as2lib.test.unit.info.AssertThrowsInfo extends AbstractAssertInfo {
 	private var type;
 	
 	/** Holder for the call to be executed. */
-	private var toCall:Call;
+	private var toCall:Executable;
 	
 	/** Holder for the arguments for the call. */
 	private var args:Array;
@@ -49,7 +49,7 @@ class org.as2lib.test.unit.info.AssertThrowsInfo extends AbstractAssertInfo {
 	 * @param toCall Call to be executed
 	 * @param args Arguments for the Call.
 	 */
-	public function AssertThrowsInfo(message:String, type, toCall:Call, args:Array) {
+	public function AssertThrowsInfo(message:String, type, toCall:Executable, args:Array) {
 		super(message);
 		this.type = type;
 		this.toCall = toCall;
