@@ -98,6 +98,13 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	 * @throws org.as2lib.env.except.IllegalArgumentException if the type of the object is not valid
 	 */
 	private function validate(object):Void {
+		if (ObjectUtil.isInstanceOf(object, Array)) {
+			var l:Number = Array(object).length;
+			for (var i:Number = 0; i < l; i++) {
+				validate(object[i]);
+			}
+			return;
+		}
 		if (!ObjectUtil.typesMatch(object, type)) {
 			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].");
 		}
