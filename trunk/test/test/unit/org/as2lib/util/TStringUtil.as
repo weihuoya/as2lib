@@ -22,6 +22,7 @@ import org.as2lib.env.except.IllegalArgumentException;
  * Validates the most common use cases for the StringUtil.
  * 
  * @author Martin Heidegger
+ * @author Christophe Herreman
  */
 class test.unit.org.as2lib.util.TStringUtil extends TestCase {
 	
@@ -125,5 +126,13 @@ class test.unit.org.as2lib.util.TStringUtil extends TestCase {
 		assertEquals("Content: hallo", StringUtil.leftTrim("hallo"), "hallo");
 		assertEquals("Content:   h a ll o ", StringUtil.leftTrim("  h a ll o "), "h a ll o ");
 		assertEquals("Content: \\n\\thallo", StringUtil.leftTrim("\n\thallo"), "hallo");
+	}
+	private function testUcFirst(Void):Void{
+		assertEquals("Content: hello world", StringUtil.ucFirst("hello world"), "Hello world");
+		assertEquals("Content: Hello world", StringUtil.ucFirst("Hello world"), "Hello world");
+	}
+	private function testUcWords(Void):Void{
+		assertEquals("Content: hello world", StringUtil.ucWords("hello world"), "Hello World");
+		assertEquals("Content: Hello world", StringUtil.ucWords("Hello world"), "Hello World");
 	}
 }
