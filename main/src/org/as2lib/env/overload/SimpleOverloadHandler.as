@@ -1,7 +1,7 @@
 ﻿import org.as2lib.env.overload.OverloadHandler;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.overload.IllegalTypeException;
+import org.as2lib.env.overload.SameTypeSignatureException;
 
 /**
  * SimpleOverloadHandler is a default implementation of the OverloadHandler interface
@@ -68,7 +68,7 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 			}
 		}
 		if (points == 0) {
-			throw new IllegalTypeException("The two OverloadHandler [" + this + "] and [" + handler + "] have the same type signature.",
+			throw new SameTypeSignatureException("The two OverloadHandler [" + this + "] and [" + handler + "] have the same type signature.",
 										   this,
 										   arguments);
 		}
