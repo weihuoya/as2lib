@@ -5,6 +5,7 @@ import org.as2lib.data.holder.Map;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.reflect.NoSuchChildException;
+import org.as2lib.env.reflect.RootInfo;
 import org.as2lib.env.overload.Overload;
 
 /**
@@ -129,5 +130,14 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 		throw new NoSuchChildException("The package [" + name + "] you tried to obtain does not exist.",
 										eval("th" + "is"),
 										arguments);
+	}
+	
+	/**
+	 * Returns the root of the whole hierachy.
+	 *
+	 * @return the root of the hierachy
+	 */
+	public static function getRoot(Void):RootInfo {
+		return ReflectConfig.getCache().getRoot();
 	}
 }
