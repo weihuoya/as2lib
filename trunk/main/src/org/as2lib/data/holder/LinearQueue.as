@@ -49,10 +49,8 @@ class org.as2lib.data.holder.LinearQueue extends BasicClass implements Queue {
 	 * @see org.as2lib.data.holder.Queue#dequeue()
 	 */
 	public function dequeue(Void) {
-		if (data.length == 0) {
-			throw new EmptyDataHolderException("You tried to dequeue an element from an empty Queue.",
-										  this,
-										  arguments);
+		if (isEmpty()) {
+			throw new EmptyDataHolderException("You tried to dequeue an element from an empty Queue.", this, arguments);
 		}
 		return data.shift();
 	}
@@ -61,10 +59,8 @@ class org.as2lib.data.holder.LinearQueue extends BasicClass implements Queue {
 	 * @see org.as2lib.data.holder.Queue#peek()
 	 */
 	public function peek(Void) {
-		if (data.length == 0) {
-			throw new EmptyDataHolderException("You tried to peek an element from an empty Queue.",
-										  this,
-										  arguments);
+		if (isEmpty()) {
+			throw new EmptyDataHolderException("You tried to peek an element from an empty Queue.", this, arguments);
 		}
 		return data[0];
 	}
@@ -73,7 +69,7 @@ class org.as2lib.data.holder.LinearQueue extends BasicClass implements Queue {
 	 * @see org.as2lib.data.holder.Queue#isEmpty()
 	 */
 	public function isEmpty(Void):Boolean {
-		return (data.length == 0);
+		return (data.length < 1);
 	}
 	
 	/**

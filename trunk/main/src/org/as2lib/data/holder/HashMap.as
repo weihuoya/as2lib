@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.iterator.MapIterator;
 import org.as2lib.data.iterator.Iterator;
 import org.as2lib.data.iterator.ArrayIterator;
-import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.HolderConfig;
 
 /**
@@ -40,21 +40,20 @@ class org.as2lib.data.holder.HashMap extends BasicClass implements Map {
 	public function HashMap(Void) {
 		keys = new Array();
 		values = new Array();
-		keys[-1] = values[-1] = null;
 	}
 
 	/**
 	 * @see org.as2lib.data.holder.Map#containsKey()
 	 */
 	public function containsKey(key):Boolean {
-		return (findKey(key) != -1);
+		return (findKey(key) > -1);
 	}
 	
 	/**
 	 * @see org.as2lib.data.holder.Map#containsValue()
 	 */
 	public function containsValue(value):Boolean {
-		return (findValue(value) != -1);
+		return (findValue(value) > -1);
 	}
 	
 	/**
@@ -82,16 +81,16 @@ class org.as2lib.data.holder.HashMap extends BasicClass implements Map {
 	 * @see org.as2lib.data.holder.Map#put()
 	 */
 	public function put(key, value) {
+		var result;
 		var i:Number = findKey(key); 
-		if(i == -1) {
+		if(i < 0) {
 			keys.push(key);
 			values.push(value);
-			return null;
 		} else {
-			var result = values[i];
+			result = values[i];
 			values[i] = value;
-			return result;
 		}
+		return result;
 	}
 	
 	/**
@@ -100,17 +99,17 @@ class org.as2lib.data.holder.HashMap extends BasicClass implements Map {
 	public function clear(Void):Void {
 		keys = new Array();
 		values = new Array();
-		keys[-1] = values[-1] = null;
 	}
 	
 	/**
 	 * @see org.as2lib.data.holder.Map#putAll()
 	 */
 	public function putAll(map:Map):Void {
-		var valueIterator:ArrayIterator = new ArrayIterator(map.getValues());
-		var keyIterator:ArrayIterator = new ArrayIterator(map.getKeys())
-		while (keyIterator.hasNext()) {
-			put(keyIterator.next(), valueIterator.next());
+		var values:Array = map.getValues();
+		var keys:Array = map.getKeys();
+		var l:Number = keys.length;
+		for (var i:Number = 0; i < l; i = i-(-1)) {
+			put(keys[i], values[i]);
 		}
 	}
 	
@@ -118,15 +117,15 @@ class org.as2lib.data.holder.HashMap extends BasicClass implements Map {
 	 * @see org.as2lib.data.holder.Map#remove()
 	 */
 	public function remove(key) {
+		var result;
 		var i:Number = findKey(key);
-		if(i==-1) {
-			return null;
-		} else {
-			var result = values[i];
+		if(i > -1) {
+			result = values[i];
 			values.splice(i, 1);
 			keys.splice(i, 1);
 			return result;
 		}
+		return result;
 	}
 	
 	/**
@@ -147,7 +146,7 @@ class org.as2lib.data.holder.HashMap extends BasicClass implements Map {
 	 * @see org.as2lib.data.holder.Map#isEmpty()
 	 */
 	public function isEmpty(Void):Boolean {
-		return (size() == 0);
+		return (size() < 1);
 	}
 	
 	/**

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.iterator.MapIterator;
 import org.as2lib.data.iterator.Iterator;
 import org.as2lib.data.iterator.ArrayIterator;
-import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.HolderConfig;
 
 /**
@@ -95,14 +95,14 @@ class org.as2lib.data.holder.PrimitiveTypeMap extends BasicClass implements Map 
 	 * @see org.as2lib.data.holder.Map#put()
 	 */
 	public function put(key, value) {
-		var result = null;
+		var result;
 		var i:Number = indexMap[key];
-		if (i != undefined) {
-			result = values[i];
-			values[i] = value;
-		} else {
+		if (i == undefined) {
 			indexMap[key] = keys.push(key) - 1;
 			values.push(value);
+		} else {
+			result = values[i];
+			values[i] = value;
 		}
 		map[key] = value;
 		return result;
@@ -123,10 +123,11 @@ class org.as2lib.data.holder.PrimitiveTypeMap extends BasicClass implements Map 
 	 * @see org.as2lib.data.holder.Map#putAll()
 	 */
 	public function putAll(map:Map):Void {
-		var valueIterator:ArrayIterator = new ArrayIterator(map.getValues());
-		var keyIterator:ArrayIterator = new ArrayIterator(map.getKeys())
-		while (keyIterator.hasNext()) {
-			put(keyIterator.next(), valueIterator.next());
+		var values:Array = map.getValues();
+		var keys:Array = map.getKeys();
+		var l:Number = keys.length;
+		for (var i:Number = 0; i < l; i = i-(-1)) {
+			put(keys[i], values[i]);
 		}
 	}
 	
@@ -134,7 +135,7 @@ class org.as2lib.data.holder.PrimitiveTypeMap extends BasicClass implements Map 
 	 * @see org.as2lib.data.holder.Map#remove()
 	 */
 	public function remove(key) {
-		var result = null;
+		var result;
 		var i:Number = indexMap[key];
 		if (i != undefined) {
 			result = values[i];
@@ -164,7 +165,7 @@ class org.as2lib.data.holder.PrimitiveTypeMap extends BasicClass implements Map 
 	 * @see org.as2lib.data.holder.Map#isEmpty()
 	 */
 	public function isEmpty(Void):Boolean {
-		return (keys.length == 0);
+		return (size() < 1);
 	}
 	
 	/**

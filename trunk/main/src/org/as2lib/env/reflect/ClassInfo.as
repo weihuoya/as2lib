@@ -156,7 +156,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		if (!methods) {
 			methods = ReflectConfig.getMethodAlgorithm().execute(this);
 			if (getSuperType() != null) {
-				methods.concat(getSuperType().getMethods());
+				methods = methods.concat(getSuperType().getMethods());
 			}
 		}
 		return methods;
@@ -211,7 +211,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		if (!properties) {
 			properties = ReflectConfig.getPropertyAlgorithm().execute(this);
 			if (getSuperType() != null) {
-				properties.concat(ClassInfo(getSuperType()).getProperties());
+				properties = properties.concat(ClassInfo(getSuperType()).getProperties());
 			}
 		}
 		return properties;
