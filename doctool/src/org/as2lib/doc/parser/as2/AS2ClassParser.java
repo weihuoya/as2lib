@@ -65,6 +65,7 @@ public class AS2ClassParser implements ClassParser {
 					name = m.group(1);
 					pureExtendedClass = m.group(2);
 					pureImplementedInterfaces = m.group(3);
+				} catch (IllegalStateException e) {
 				} catch (StringIndexOutOfBoundsException e) {
 				}
 				if(pureExtendedClass != null) {

@@ -68,10 +68,10 @@ abstract class AbstractLanguage {
 				if(!typeStartFound) {
 					if(area.isCode())  {
 						String areaContent = area.getContent();
-						if(areaContent.indexOf(classPattern) > 0) {
+						if(areaContent.indexOf(classPattern) >= 0) {
 							isClass = true;
 							typeMarkerFound = true;
-						} else if(areaContent.indexOf(interfacePattern) > 0) {
+						} else if(areaContent.indexOf(interfacePattern) >= 0) {
 							isInterface = true;
 							typeMarkerFound = true;
 						}
@@ -89,6 +89,8 @@ abstract class AbstractLanguage {
 						} else {
 							header.add(area);
 						}
+					} else {
+						header.add(area);
 					}
 				} else {
 					body.add(area);
