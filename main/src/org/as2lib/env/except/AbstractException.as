@@ -46,14 +46,7 @@ class org.as2lib.env.except.AbstractException extends Error {
 	 * @see org.as2lib.env.except.Throwable#initThrower()
 	 */
 	private function initThrower(thrower):Void {
-		if (ObjectUtil.isTypeOf(thrower, "object")) {
-			this.thrower = thrower;
-			return;
-		}
-		if (ObjectUtil.isTypeOf(thrower, "function")) {
-			this.thrower = new (Function(thrower))();
-			return;
-		}
+		this.thrower = thrower;
 	}
 	
 	/**
