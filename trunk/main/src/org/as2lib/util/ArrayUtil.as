@@ -16,6 +16,8 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.data.holder.Stack;
+import org.as2lib.data.holder.SimpleStack;
 
 /**
  * ArrayUtil contains fundamental operations to manipulate Arrays.
@@ -76,5 +78,23 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 		return false;
 	}
 	
-	
+	/**
+	 * Converts the passed Array to a Stack. The Boolean determines whether
+	 * the Array shall be converted in asceding or descending order. Pass true
+	 * for ascending and false for descending order.
+	 *
+	 * @param array the Array to be converted
+	 * @param order Boolean value specifying the convertion order
+	 * @return the Stack representation of the Array
+	 */
+	public static function toStack(array:Array, order:Boolean):Stack {
+		var result:Stack = new SimpleStack();
+		if (!order) {
+			array.reverse();
+		}
+		for (var i:Number = 0; i < array.length; i++) {
+			result.push(array[i]);
+		}
+		return result;
+	}
 }
