@@ -150,10 +150,9 @@ class org.as2lib.data.holder.map.PrimitiveTypeMap extends AbstractMap implements
 	 * Internal method to resort the other indexes.
 	 */
 	private function removeIndex(index:Number) {
-		var i:Number = indexMap.length;
-		for(var i:String in indexMap) {
-			if(indexMap[i] > index) {
-				indexMap[i]--;
+		for (var k:String in indexMap) {
+			if (indexMap[k] > index) {
+				indexMap[k]--;
 			}
 		}
 	}
