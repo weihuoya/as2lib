@@ -444,7 +444,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		} catch(e:org.as2lib.test.unit.AssertException) {
 			getMethodInformation().addError(e);
 		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertEquals", this, arguments).initCause(e));
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotEquals", this, arguments).initCause(e));
 		}
 		return false;
 	}
@@ -512,7 +512,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		} catch(e:org.as2lib.test.unit.AssertException) {
 			getMethodInformation().addError(e);
 		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertEquals", this, arguments).initCause(e));
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertSame", this, arguments).initCause(e));
 		}
 		return false;
 	}
@@ -580,15 +580,15 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		} catch(e:org.as2lib.test.unit.AssertException) {
 			getMethodInformation().addError(e);
 		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertEquals", this, arguments).initCause(e));
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotSame", this, arguments).initCause(e));
 		}
 		return false;
 	}
 	
 	/**
 	 * overload
-	 * @see #assertIsNullWithMessage
-	 * @see #assertIsNullWithoutMessage
+	 * @see #assertNullWithMessage
+	 * @see #assertNullWithoutMessage
 	 */
 	private function assertNull():Boolean {
 		var overload:Overload = new Overload(this);
@@ -636,15 +636,15 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		} catch(e:org.as2lib.test.unit.AssertException) {
 			getMethodInformation().addError(e);
 		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotNull", this, arguments).initCause(e));
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNull", this, arguments).initCause(e));
 		}
 		return false;
 	}
 	
 	/**
 	 * overload
-	 * @see #assertIsNotNullWithMessage
-	 * @see #assertIsNotNullWithoutMessage
+	 * @see #assertNotNullWithMessage
+	 * @see #assertNotNullWithoutMessage
 	 */
 	private function assertNotNull():Boolean {
 		var overload:Overload = new Overload(this);
@@ -693,6 +693,62 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 			getMethodInformation().addError(e);
 		} catch(e) {
 			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotNull", this, arguments).initCause(e));
+		}
+		return false;
+	}
+	
+	/**
+	 * overload
+	 * @see #assertUndefinedWithMessage
+	 * @see #assertUndefinedWithoutMessage
+	 */
+	private function assertUndefined():Boolean {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String, undefined], assertUndefinedWithMessage);
+		overload.addHandler([String, Object], assertUndefinedWithMessage);
+		overload.addHandler([undefined], assertUndefinedWithoutMessage);
+		overload.addHandler([Object], assertUndefinedWithoutMessage);
+		overload.addHandler([], assertUndefinedWithoutMessage);
+		return overload.forward(arguments);
+	}
+	
+	/**
+	 * Asserts if a value is undefined else it fails.
+	 * Method to assert that a value is undefined.
+	 * It adds a error to the result if the value is not undefined.
+	 * 
+	 * Note: This method refers to the Assert Util
+	 * 
+	 * @see Assert#isUndefined
+	 * @see #assertUndefined
+	 * @see #assertUndefinedWithMessage
+	 * @param val Object that should be undefined.
+	 * @return true if no error occured else false
+	 */
+	private function assertUndefinedWithoutMessage(val):Boolean {
+		return assertUndefinedWithMessage("", val);
+	}
+	
+	/**
+	 * Asserts if a value is undefined else it fails.
+	 * This method asserts the same like @see #assertUndefinedWithoutMessage
+	 * but it adds a message to the failure.
+	 * 
+	 * @see Assert#isUndefined
+	 * @see #assertUndefined
+	 * @see #assertUndefinedWithoutMessage
+	 * @param message Message that should be provided if the assertion fails.
+	 * @param val Object that should not be null.
+	 * @return true if no error occured else false
+	 */
+	private function assertUndefinedWithMessage(message:String, val):Boolean {
+		try {
+			Assert.isUndefinedWithMessage(message, val);
+			return true;
+		} catch(e:org.as2lib.test.unit.AssertException) {
+			getMethodInformation().addError(e);
+		} catch(e) {
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertUndefined", this, arguments).initCause(e));
 		}
 		return false;
 	}
