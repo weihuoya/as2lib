@@ -6,7 +6,7 @@ import org.as2lib.except.Throwable;
 class org.as2lib.util.ExceptUtil extends BasicClass {
 	private static var stringifier:Stringifier = new ThrowableStringifier();
 	
-	private function ThrowUtil(Void) {
+	private function ExceptUtil(Void) {
 	}
 	
 	public static function setStringifier(newStringifier:Stringifier):Void {
