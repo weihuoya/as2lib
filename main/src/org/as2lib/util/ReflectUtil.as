@@ -23,16 +23,20 @@ import org.as2lib.util.ObjectUtil;
 class org.as2lib.util.ReflectUtil extends BasicClass {
 	/** All classes and packages that have already been found will be cached here. */
 	private static var cache:Cache = new Cache();
-	private static var classAlgorythm:CacheAlgorythm = new ClassAlgorythm(cache);
-	private static var packageAlgorythm:CacheAlgorythm = new PackageAlgorythm(cache);
+	private static var classAlgorythm:CacheAlgorythm = new ClassAlgorythm();
+	private static var packageAlgorythm:CacheAlgorythm = new PackageAlgorythm();
 	private static var methodAlgorythm:ContentAlgorythm = new MethodAlgorythm();
 	private static var propertyAlgorythm:ContentAlgorythm = new PropertyAlgorythm();
-	private static var childrenAlgorythm:ContentAlgorythm = new ChildrenAlgorythm(cache);
+	private static var childrenAlgorythm:ContentAlgorythm = new ChildrenAlgorythm();
 	
 	/**
 	 * The constructor is private to prevent an instantiation.
 	 */
 	private function ReflectUtil(Void) {
+	}
+	
+	public static function getCache(Void):Cache {
+		return cache;
 	}
 	
 	/**
