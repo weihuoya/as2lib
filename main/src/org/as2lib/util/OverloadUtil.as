@@ -1,15 +1,15 @@
-﻿import org.as2lib.basic.OverloadHandler;
+﻿import org.as2lib.basic.overload.OverloadHandler;
 import org.as2lib.basic.TypedArray;
 
 /**
  * @author: Simon Wacker
  * @version: 1.0
  */
-class org.as2lib.util.OverloadingUtil {
+class org.as2lib.util.OverloadUtil {
 	/**
 	 * private constructor.
 	 */
-	private function OverloadingUtil(Void) {
+	private function OverloadUtil(Void) {
 	}
 	
 	/**
