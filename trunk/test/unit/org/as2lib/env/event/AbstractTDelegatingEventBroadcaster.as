@@ -84,32 +84,4 @@ class org.as2lib.env.event.AbstractTDelegatingEventBroadcaster extends AbstractT
 		
 		dispatcherControl.verify();
 	}
-	
-	/**
-     * Tests if the delegation works even for consumable events.
-	 */
-	public function testDelegateConsumable(Void):Void {
-		
-		// Usual case: Simple Broadcasting with two listeners
-		var broadcaster:DelegatingEventBroadcaster = getDelegatingEventBroadcaster();
-		var eventInfo:EventInfo = new ConsumableEventInfo("on");
-		var listener1:EventListener = new SampleEventListener();
-		var listener2:EventListener = new SampleEventListener();
-		
-		var dispatcherControl:MockControl = new MockControl(EventDispatcher);
-		var dispatcher:EventDispatcher = dispatcherControl.getMock();
-		dispatcher.dispatchConsumable(eventInfo, [listener1, listener2]);
-		dispatcherControl.setReturnValue(null);
-		dispatcherControl.replay();
-		
-		broadcaster.addListener(listener1);
-		broadcaster.addListener(listener2);
-		broadcaster.setDispatcher(dispatcher);
-		broadcaster.dispatch(eventInfo);
-		
-		dispatcherControl.verify();
-		
-		// Verification that it even works with no available 
-		
-	}
 }
