@@ -17,7 +17,7 @@
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.test.mock.support.TypeArgumentsMatcher;
-import org.as2lib.env.log.logger.SimpleLogger;
+import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
@@ -26,7 +26,7 @@ import org.as2lib.env.event.EventBroadcaster;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
+class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 	
 	private function getLogLevel(Void):LogLevel {
 		var result = new Object();
@@ -41,19 +41,19 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testNewWithNullAndUndefinedArgument(Void):Void {
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		assertNull("returned name should be null", logger.getName());
-		var logger:SimpleLogger = new SimpleLogger(undefined);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(undefined);
 		assertUndefined("returned name should be undefined", logger.getName());
 	}
 	
 	public function testNewWithRealArgument(Void):Void {
-		var logger:SimpleLogger = new SimpleLogger("org.as2lib.core.BasicClass");
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("org.as2lib.core.BasicClass");
 		assertSame(logger.getName(), "org.as2lib.core.BasicClass");
 	}
 	
 	public function testSetLevelWithValidLevel(Void):Void {
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		var level:LogLevel = getLogLevel();
 		logger.setLevel(level);
 		var returnedLevel:LogLevel = logger.getLevel();
@@ -61,15 +61,15 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testSetLevelWithNullLevel(Void):Void {
-		var logger:SimpleLogger = new SimpleLogger();
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger();
 		logger.setLevel(null);
 		var returnedLevel:LogLevel = logger.getLevel();
 		assertNull("The returned level [" + returnedLevel + "] should be null.", returnedLevel);
 	}
 	
 	public function testSetLevelWithNullLevelAndParentWithValidLevel(Void):Void {
-		var logger:SimpleLogger = new SimpleLogger();
-		var parent:SimpleLogger = new SimpleLogger();
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger();
+		var parent:SimpleHierarchicalLogger = new SimpleHierarchicalLogger();
 		var level:LogLevel = getLogLevel();
 		parent.setLevel(level);
 		logger.setParent(parent);
@@ -78,14 +78,14 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testSetNameWithRealArgument(Void):Void {
-		var logger:SimpleLogger = new SimpleLogger();
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger();
 		logger.setName("any.name");
 		var returnedName:String = logger.getName();
 		assertSame("The returned name [" + returnedName + "] should be 'any.name'.", "any.name", returnedName);
 	}
 	
 	public function testSetNameWithNullArgument(Void):Void {
-		var logger:SimpleLogger = new SimpleLogger();
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger();
 		logger.setName(null);
 		assertNull(logger.getName());
 	}
@@ -103,7 +103,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		var h4:LogHandler = h4c.getMock();
 		h4c.replay();
 		
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.addHandler(h1);
 		logger.addHandler(h3);
 		logger.addHandler(h4);
@@ -117,7 +117,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testAddHandlerWithNullArgumentViaGetAllHandler(Void):Void {
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.addHandler(null);
 		assertSame(logger.getAllHandler().length, 0);
 	}
@@ -129,7 +129,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		
 		var handlers:Array;
 		
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.addHandler(h1);
 		logger.addHandler(h2);
 		logger.addHandler(h3);
@@ -162,7 +162,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		var h2:LogHandler = getLogHandler();
 		var h3:LogHandler = getLogHandler();
 		
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.addHandler(h1);
 		logger.addHandler(h2);
 		logger.addHandler(h3);
@@ -176,7 +176,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		var h2:LogHandler = getLogHandler();
 		var h3:LogHandler = getLogHandler();
 		
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.addHandler(h1);
 		logger.addHandler(h2);
 		logger.addHandler(h3);
@@ -186,7 +186,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testGetAllHandlerWithNoRegisteredHandler(Void):Void {
-		var l:SimpleLogger = new SimpleLogger();
+		var l:SimpleHierarchicalLogger = new SimpleHierarchicalLogger();
 		assertSame(l.getAllHandler().length, 0);
 	}
 	
@@ -195,7 +195,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		var l:LogLevel = lc.getMock();
 		lc.replay();
 		
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.setLevel(l);
 		assertFalse(logger.isEnabled(null));
 		
@@ -211,7 +211,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		lc.setReturnValue(true);
 		lc.replay();
 		
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.setLevel(l);
 		assertTrue(logger.isEnabled(a));
 		
@@ -227,7 +227,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		lc.setReturnValue(false);
 		lc.replay();
 		
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.setLevel(l);
 		assertFalse(logger.isEnabled(a));
 		
@@ -239,7 +239,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		var b:EventBroadcaster = bc.getMock();
 		bc.replay();
 		
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.setBroadcaster(b);
 		logger.log("message", null);
 		
@@ -259,7 +259,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		var b:EventBroadcaster = bc.getMock();
 		bc.replay();
 		
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.setBroadcaster(b);
 		logger.setLevel(l);
 		logger.log("message", a);
@@ -287,7 +287,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		bc.setVoidCallable();
 		bc.replay();
 		
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.setBroadcaster(b);
 		logger.setLevel(l);
 		logger.log(m, a);
@@ -321,7 +321,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		bc.setVoidCallable();
 		bc.replay();
 		
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.setBroadcaster(b);
 		logger.setLevel(l);
 		logger.addHandler(h1);
@@ -338,16 +338,16 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		var h2:LogHandler = getLogHandler();
 		var h3:LogHandler = getLogHandler();
 		
-		var lo2c:MockControl = new MockControl(SimpleLogger);
-		var lo2:SimpleLogger = lo2c.getMock();
+		var lo2c:MockControl = new MockControl(SimpleHierarchicalLogger);
+		var lo2:SimpleHierarchicalLogger = lo2c.getMock();
 		lo2.getAllHandler();
 		lo2c.setReturnValue([h1, h2, h3]);
 		lo2.getParent();
 		lo2c.setReturnValue(null);
 		lo2c.replay();
 		
-		var loc:MockControl = new MockControl(SimpleLogger);
-		var lo:SimpleLogger = loc.getMock();
+		var loc:MockControl = new MockControl(SimpleHierarchicalLogger);
+		var lo:SimpleHierarchicalLogger = loc.getMock();
 		lo.getAllHandler();
 		loc.setReturnValue([h1, h2, h3]);
 		lo.getParent();
@@ -374,7 +374,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		bc.setVoidCallable(2);
 		bc.replay();
 		
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.setBroadcaster(b);
 		logger.setLevel(l);
 		logger.setParent(lo);
@@ -391,16 +391,16 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		var h2:LogHandler = getLogHandler();
 		var h3:LogHandler = getLogHandler();
 		
-		var lo2c:MockControl = new MockControl(SimpleLogger);
-		var lo2:SimpleLogger = lo2c.getMock();
+		var lo2c:MockControl = new MockControl(SimpleHierarchicalLogger);
+		var lo2:SimpleHierarchicalLogger = lo2c.getMock();
 		lo2.getAllHandler();
 		lo2c.setReturnValue([h1, h2, h3]);
 		lo2.getParent();
 		lo2c.setReturnValue(null);
 		lo2c.replay();
 		
-		var loc:MockControl = new MockControl(SimpleLogger);
-		var lo:SimpleLogger = loc.getMock();
+		var loc:MockControl = new MockControl(SimpleHierarchicalLogger);
+		var lo:SimpleHierarchicalLogger = loc.getMock();
 		lo.getAllHandler();
 		loc.setReturnValue([h1, h2, h3]);
 		lo.getParent();
@@ -427,7 +427,7 @@ class org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		bc.setVoidCallable(3);
 		bc.replay();
 		
-		var logger:SimpleLogger = new SimpleLogger(null);
+		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.setBroadcaster(b);
 		logger.setLevel(l);
 		logger.setParent(lo);

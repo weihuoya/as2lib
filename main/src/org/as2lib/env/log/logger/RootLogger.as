@@ -16,12 +16,12 @@
 
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.logger.SimpleLogger;
+import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.env.log.logger.RootLogger extends SimpleLogger {
+class org.as2lib.env.log.logger.RootLogger extends SimpleHierarchicalLogger {
 	
 	/**
 	 * Constructs a new instance. The name will be automatically set to

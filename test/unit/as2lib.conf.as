@@ -12,7 +12,7 @@
 //  Implementations of the interfaces for different functionality and settings.
 // 
 
-import org.as2lib.env.log.logger.SimpleLogger;
+import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
 import org.as2lib.env.log.logger.TraceLogger;
 import org.as2lib.env.log.logger.VoidLogger;
 import org.as2lib.env.log.logger.RootLogger;
@@ -45,7 +45,7 @@ import org.as2lib.test.unit.TestSuiteFactory;
   // Tell the Logger Repository to use the loggerHierarchy for default.
   LoggerRepositoryManager.setRepository(loggerHierarchy); 
   
-  var logger:SimpleLogger = new SimpleLogger("org.as2lib");
+  var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("org.as2lib");
   logger.addHandler(new TraceHandler());
   
   // Log to trace console in org.as2lib package

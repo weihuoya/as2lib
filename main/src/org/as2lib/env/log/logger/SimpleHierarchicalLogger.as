@@ -15,28 +15,39 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.util.ArrayUtil;
+import org.as2lib.env.overload.Overload;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.SpeedEventBroadcaster;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.ConfigurableLogger;
+import org.as2lib.env.log.ConfigurableHierarchicalLogger;
+import org.as2lib.env.log.HierarchicalLogger;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.LogMessage;
 
 /**
- * SimpleLogger is a simple implementation of the ConfigurableLogger
- * interface.
- *
- * <p>It cannot be used with the LoggerHierarchy because it does not
- * offer hierarchy support. If you want to use you logger in a hierarchy
- * use the SimpleHierarchicalLogger instead.
+ * Log output can be made at different levels. You use these levels to enable
+ * or prevent specific output. Refer to LogLevel for further information.
+ * You can also add your own message handlers, to write for example to a textfile.
+ * You do this with the #addHandler(LogHandler) method.
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements ConfigurableLogger {
+class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends BasicClass implements ConfigurableLogger, ConfigurableHierarchicalLogger {
 	
 	/** The actual level. */
 	private var level:LogLevel;
+	
+	/** Stores all added handlers. */
+	private var handlers:Array;
+	
+	/** Stores the parent. */
+	private var parent:HierarchicalLogger;
+	
+	/** The name of this logger. */
+	private var name:String;
 	
 	/** Stores the broadcaster factory. */
 	private var broadcaster:EventBroadcaster;
@@ -46,15 +57,73 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 *
 	 * @param name the name of the new logger
 	 */
-	public function SimpleLogger(broadcaster:EventBroadcaster) {
-		this.broadcaster = broadcaster ? broadcaster : new SpeedEventBroadcaster();
+	public function SimpleHierarchicalLogger(name:String) {
+		setName(name);
+		handlers = new Array();
+	}
+	
+	/**
+	 * Sets the broadcaster used to dispatch to all registered handlers.
+	 *
+	 * <p>If you set a broadcaster of value null or undefined the default
+	 * broadcaster will be used.
+	 *
+	 * @param broadcaster the new broadcaster used to dispatch to handlers
+	 * @see #getBroadcaster()
+	 */
+	public function setBroadcaster(broadcaster:EventBroadcaster):Void {
+		this.broadcaster = broadcaster;
+	}
+	
+	/**
+	 * Returns the currently used broadcaster.
+	 *
+	 * <p>Either the broadcaster set via #setBroadcaster(EventBroadcaster) will be
+	 * returned or the default SpeedEventBroadcaster.
+	 *
+	 * <p>The default one will be used if you set a broadcaster of value null
+	 * or undefined.
+	 *
+	 * @return the currently used broadcaster
+	 * @see #setBroadcaster(EventBroadcaster)
+	 */
+	public function getBroadcaster(Void):EventBroadcaster {
+		if (!broadcaster) broadcaster = new SpeedEventBroadcaster();
+		return broadcaster;
+	}
+	
+	/**
+	 * @see HierarchicalLogger#getParent()
+	 */
+	public function getParent(Void):HierarchicalLogger {
+		return parent;
+	}
+	
+	/**
+	 * @see ConfigurableHierarchicalLogger#setParent()
+	 */
+	public function setParent(parent:HierarchicalLogger):Void {
+		this.parent = parent;
+	}
+	
+	/**
+	 * @see HierarchicalLogger#getName()
+	 */
+	public function getName(Void):String {
+		return name;
+	}
+	
+	/**
+	 * @see ConfigurableHierarchicalLogger#setName()
+	 */
+	public function setName(name:String):Void {
+		this.name = name;
 	}
 	
 	/**
 	 * @see ConfigurableLogger#setLevel()
 	 */
 	public function setLevel(level:LogLevel):Void {
-		if (!level) level = AbstractLogLevel.ALL;
 		this.level = level;
 	}
 	
@@ -68,6 +137,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 * @see Logger#getLevel()
 	 */
 	public function getLevel(Void):LogLevel {
+		if (level === undefined) return getParent().getLevel();
 		return level;
 	}
 	
@@ -76,7 +146,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 */
 	public function addHandler(handler:LogHandler):Void {
 		if (handler)
-			broadcaster.addListener(handler);
+			handlers.push(handler);
 	}
 	
 	/**
@@ -84,14 +154,14 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 */
 	public function removeHandler(handler:LogHandler):Void {
 		if (handler)
-			broadcaster.removeListener(handler);
+			ArrayUtil.removeElement(handlers, handler);
 	}
 	
 	/**
 	 * @see ConfigurableLogger#removeAllHandler()
 	 */
 	public function removeAllHandler(Void):Void {
-		broadcaster.removeAllListener();
+		handlers = new Array();
 	}
 	
 	/**
@@ -100,7 +170,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 * @see HierarchicalLogger#getAllHandler()
 	 */
 	public function getAllHandler(Void):Array {
-		return broadcaster.getAllListener();
+		return handlers.concat();
 	}
 	
 	/**
@@ -160,7 +230,18 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			broadcaster.dispatch(new LogMessage(message, level));
+			var logMessage:LogMessage = new LogMessage(message, level);
+			var broadcaster:EventBroadcaster = getBroadcaster();
+			var target:HierarchicalLogger = this;
+			while (target) {
+				var handlers:Array = target.getAllHandler();
+				if (handlers.length > 0) {
+					broadcaster.addAllListener(handlers);
+				}
+				target = target.getParent();
+			}
+			broadcaster.dispatch(logMessage);
+			broadcaster.removeAllListener();
 		}
 	}
 	
