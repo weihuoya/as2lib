@@ -1,5 +1,5 @@
 ﻿import org.as2lib.basic.Out;
-import org.as2lib.data.TypedArray;
+import org.as2lib.data.holder.TypedArray;
 import org.as2lib.test.speed.TestCaseInformation;
 import org.as2lib.test.speed.TestCase;
 
@@ -41,7 +41,7 @@ class org.as2lib.test.speed.Test {
 		var i:Number;
 		for(i=0; i<this.speedTestCases.length; i++) {
 			for(var j=0; j<this.calls; j++) {
-				this.speedTestCases[i].run();
+				this.speedTestCases.getValue(i).run();
 			}			
 		}
 		if(printResult) {
@@ -90,7 +90,7 @@ class org.as2lib.test.speed.Test {
 		var fastest:TestCaseInformation = null;
 		var fastestTime:Number = -1;
 		for(var i:Number=0; i<this.speedTestCases.length; i++) {
-			var obj:TestCaseInformation = TestCaseInformation(this.speedTestCases[i]);
+			var obj:TestCaseInformation = TestCaseInformation(this.speedTestCases.getValue(i));
 			if(fastestTime == -1 || obj.getTotalTime() < fastestTime) {
 				fastest = obj;
 				fastestTime = obj.getTotalTime();
@@ -106,7 +106,7 @@ class org.as2lib.test.speed.Test {
 		var fastest:TestCaseInformation = this.getFastestTestCase();
 		var result:String = "-- Testresult ["+this.calls+" calls] -- \n";
 		for(var i:Number=0; i<this.speedTestCases.length; i++) {
-			var obj:TestCaseInformation = TestCaseInformation(this.speedTestCases[i]);
+			var obj:TestCaseInformation = TestCaseInformation(this.speedTestCases.getValue(i));
 			if(fastest == obj) {
 				result += "[fastest] "+Math.round(this.getPercent(obj, fastest))+"% "+obj.getName()+": total time:"+obj.getTotalTime()+"ms; average time:"+obj.getAverageTime()+"ms;\n";
 			} else {
