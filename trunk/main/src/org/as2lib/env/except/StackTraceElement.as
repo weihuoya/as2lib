@@ -19,8 +19,17 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.env.except.StackTraceElementStringifier;
 
 /**
- * StackTraceElement represents an element in the stack trace returned by
- * Throwable#getStackTrace().
+ * StackTraceElement represents an element in the stack trace returned
+ * by the Throwable#getStackTrace method.
+ *
+ * <p>A stack trace element is simply a data holder. It holds the thrower,
+ * the method that threw the throwable and the arguments passed to the
+ * method that threw the throwable.
+ *
+ * <p>This class is also responsible for stringifying itself. This
+ * functionality is used by the ThrowableStringifier. You can set your
+ * own stringifier to get a custom string representation of the stack
+ * trace element via the static #setStringifier method.
  *
  * @author Simon Wacker
  * @author Martin Heidegger
@@ -43,9 +52,10 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	 * Returns the stringifier to stringify stack trace elements.
 	 *
 	 * <p>The returned stringifier is either the default StackTraceElementStringifier
-	 * if no custom stringifier was set or if the stringifier was set to null.
+	 * if no custom stringifier was set or if the stringifier was set to null
+	 * or the set stringifier.
 	 *
-	 * @return the current stringifier
+	 * @return the default StackTraceElementStringifier or a custom stringifier
 	 */
 	public static function getStringifier(Void):Stringifier {
 		if (!stringifier) stringifier = new StackTraceElementStringifier();
@@ -55,7 +65,7 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	/**
 	 * Sets the stringifier to stringify stack trace elements.
 	 *
-	 * <p>If you set a stringifier of value null #getStringifier(Void):Stringifier
+	 * <p>If you set a stringifier of value null the #getStringifier method
 	 * returns the default stringifier.
 	 *
 	 * @param stackTraceElementStringifier the stringifier to stringify stack trace elements
@@ -66,9 +76,9 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	
 	/**
 	 * Constructs a new SimpleStackTraceElement instance.
-	 * 
-	 * @param thrower the class that threw the throwable
-	 * @param method the method that threw the throwabele
+	 *
+	 * @param thrower the object that declares the method that threw the throwable
+	 * @param method the method that threw the throwable
 	 * @param args the arguments passed to the throwing method
 	 */
 	public function StackTraceElement(thrower, method:Function, args:Array) {
@@ -78,18 +88,18 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	}
 	
 	/**
-	 * Returns the object that threw the exception.
+	 * Returns the object that declares the method that threw the throwable.
 	 *
-	 * @return the object that threw the exception
+	 * @return the object that declares the method that threw the throwable
 	 */
 	public function getThrower(Void) {
 		return thrower;
 	}
 	
 	/**
-	 * Returns the method that threw the exception.
+	 * Returns the method that threw the throwable.
 	 *
-	 * @return the method that threw the exception
+	 * @return the method that threw the throwable
 	 */
 	public function getMethod(Void):Function {
 		return method;
@@ -97,16 +107,21 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	
 	/**
 	 * Returns the arguments that have been passed to the method that threw
-	 * the exception.
+	 * the throwable.
 	 *
-	 * @return the arguments passed to the method that threw the exception
+	 * @return the arguments passed to the method that threw the throwable
 	 */
 	public function getArguments(Void):Array {
 		return args;
 	}
 	
 	/**
-	 * @see org.as2lib.core.BasicInterface#toString()
+	 * Returns the string representation of this stack trace element.
+	 *
+	 * <p>The string representation is obtained via the stringifier returned
+	 * by the static #getStringifier method.
+	 *
+	 * @return the string representation of this stack trace element
 	 */
 	public function toString(Void):String {
 		return getStringifier().execute(this);
