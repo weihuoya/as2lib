@@ -140,9 +140,9 @@ class org.as2lib.test.speed.Test {
 		for(var i:Number=0; i<this.speedTestCases.length; i++) {
 			var obj:TestCaseInformation = TestCaseInformation(this.speedTestCases[i]);
 			if(fastest == obj) {
-				result += "[fastest] "+Math.round(this.getPercent(obj, fastest))+"% "+obj.getName()+": total time:"+obj.getTotalTime()+"ms; calls/second:"+obj.getMaxCallsPerSecond()+"; average time:"+obj.getAverageTime()+"ms;\n";
+				result += "[fastest] "+Math.round(this.getPercent(obj, fastest))+"% "+obj.getName()+": total time:"+obj.getTotalTime()+"ms; calls/second:"+obj.getMaxCallsPerSecond()+"; average time/call:"+obj.getAverageTime()+"ms;\n";
 			} else {
-				result += "          "+Math.round(this.getPercent(obj, fastest))+"% "+obj.getName()+": total time:"+obj.getTotalTime()+"ms; calls/second:"+obj.getMaxCallsPerSecond()+"; average time:"+obj.getAverageTime()+"ms; (+"+Math.round(this.getAverageTimeDifference(obj, fastest)*1000)/1000+"ms)\n";
+				result += "          "+Math.round(this.getPercent(obj, fastest))+"% "+obj.getName()+": total time:"+obj.getTotalTime()+"ms; calls/second:"+obj.getMaxCallsPerSecond()+"; average time/call:"+obj.getAverageTime()+"ms; (+"+Math.round(this.getAverageTimeDifference(obj, fastest)*1000)/1000+"ms)\n";
 			}
 		}
 		return result;
