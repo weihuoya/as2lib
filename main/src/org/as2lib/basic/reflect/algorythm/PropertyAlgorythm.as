@@ -1,62 +1,81 @@
-﻿import org.as2lib.basic.BasicClass;
-import org.as2lib.basic.reflect.ReflectInfo;
+﻿import org.as2lib.basic.reflect.ReflectInfo;
 import org.as2lib.basic.reflect.PropertyInfo;
 import org.as2lib.basic.reflect.ClassInfo;
 import org.as2lib.basic.reflect.Cache;
 import org.as2lib.basic.reflect.algorythm.ContentAlgorythm;
+import org.as2lib.basic.reflect.algorythm.AbstractContentAlgorythm;
 import org.as2lib.data.Hashtable;
 
-class org.as2lib.basic.reflect.algorythm.PropertyAlgorythm extends BasicClass implements ContentAlgorythm {
-	private var cache:Cache;
+class org.as2lib.basic.reflect.algorythm.PropertyAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
+	private var data:Hashtable;
+	private var getters:Hashtable;
+	private var setters:Hashtable;
+	private var staticGetters:Hashtable;
+	private var staticSetters:Hashtable;
+	private var info:ClassInfo;
+	private var staticFlag:Boolean;
+	private var type:String;
 	
-	public function PropertyAlgorythm(cache:Cache) {
-		this.cache = cache;
+	public function PropertyAlgorythm(Void) {
 	}
 	
 	public function execute(info:ReflectInfo):Hashtable {
-		var result:Hashtable = new Hashtable();
-		var getters:Hashtable = new Hashtable();
-		var setters:Hashtable = new Hashtable();
-		var staticGetters:Hashtable = new Hashtable();
-		var staticSetters:Hashtable = new Hashtable();
-		var clazz:Function = ClassInfo(info).getClass();
+		this.info = ClassInfo(info);
+		this.data = new Hashtable();
+		this.getters = new Hashtable();
+		this.setters = new Hashtable();
+		this.staticGetters = new Hashtable();
+		this.staticSetters = new Hashtable();
+		
+		this.staticFlag = true;
+		var clazz:Function = this.info.getClass();
+		search(clazz);
+		
+		this.staticFlag = false;
 		var prototype:Object = clazz.prototype;
 		_global.ASSetPropFlags(prototype, null, 6, true);
-		_global.ASSetPropFlags(prototype, ["__proto__", "constructor", "__constructor__"], 0, true);
-		var name:String;
-		var i:String;
-		for (i in prototype) {
-			if (typeof(prototype[i] == "function")) {
-				name = i.substring(7);
-				if (i.indexOf("__get__") == 0) {
-					getters.set(name, true);
-					if (!setters.get(name)) {
-						result.set(name, new PropertyInfo(name, prototype["__set__" + name], prototype[i], ClassInfo(info), false));
-					}
-				} else if (i.indexOf("__set__") == 0) {
-					setters.set(name, true);
-					if (!getters.get(name)) {
-						result.set(name, new PropertyInfo(name, prototype[i], prototype["__get__" + name], ClassInfo(info), false));
-					}
+		_global.ASSetPropFlags(prototype, ["__proto__", "constructor", "__constructor__"], 1, true);
+		search(prototype);
+		_global.ASSetPropFlags(prototype, null, 1, true);
+		
+		return data;
+	}
+	
+	private function validate(target:Object, name:String):Boolean {
+		if (typeof(prototype[name] == "function")) {
+			var coreName = name.substring(7);
+			if (name.indexOf("__get__") == 0) {
+				getters.set(coreName, true);
+				if (!setters.get(coreName)) {
+					type = "__get__";
+					return true;
 				}
+				return false;
+			} 
+			if (name.indexOf("__set__") == 0) {
+				setters.set(coreName, true);
+				if (!getters.get(coreName)) {
+					type = "__set__";
+					return true;
+				}
+				return false;
 			}
 		}
-		for (i in clazz) {
-			if (typeof(clazz[i] == "function")) {
-				name = i.substring(7);
-				if (i.indexOf("__get__") == 0) {
-					staticGetters.set(name, true);
-					if (!staticSetters.get(name)) {
-						result.set(name, new PropertyInfo(name, clazz[i], clazz["__get__" + name], ClassInfo(info), true));
-					}
-				} else if (i.indexOf("__set__") == 0) {
-					staticSetters.set(name, true);
-					if (!staticGetters.get(name)) {
-						result.set(name, new PropertyInfo(name, clazz[i], clazz["__get__" + name], ClassInfo(info), true));
-					}
-				}
-			}
+		return false;
+	}
+	
+	private function store(name:String, target:Object):Void {
+		var coreName = name.substring(7);
+		var property:PropertyInfo;
+		if (type == "__get__") {
+			property = new PropertyInfo(coreName, target["__set__" + coreName], target[name], info, staticFlag);
+			data.set(coreName, property);
+			return;
 		}
-		return result;
+		if (type == "__set__") {
+			property = new PropertyInfo(coreName, target[name], target["__get__" + coreName], info, staticFlag);
+			data.set(coreName, property);
+			return;
+		}
 	}
 }

@@ -43,7 +43,7 @@ class org.as2lib.basic.reflect.ClassInfo extends BasicClass implements ReflectIn
 	
 	public function getSuperClass(Void):ClassInfo {
 		if (ObjectUtil.isEmpty(superClass)) {
-			superClass = ReflectUtil.getSuperClassInfo(this);
+			superClass = ReflectUtil.getClassInfo(clazz.prototype);
 		}
 		return superClass;
 	}

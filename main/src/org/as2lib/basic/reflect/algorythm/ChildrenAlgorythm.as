@@ -1,42 +1,62 @@
-﻿import org.as2lib.basic.BasicClass;
-import org.as2lib.basic.reflect.ReflectInfo;
+﻿import org.as2lib.basic.reflect.ReflectInfo;
 import org.as2lib.basic.reflect.PackageInfo;
 import org.as2lib.basic.reflect.ClassInfo;
 import org.as2lib.basic.reflect.Cache;
 import org.as2lib.basic.reflect.algorythm.ContentAlgorythm;
+import org.as2lib.basic.reflect.algorythm.AbstractContentAlgorythm;
 import org.as2lib.data.Hashtable;
 import org.as2lib.util.ObjectUtil;
 
-class org.as2lib.basic.reflect.algorythm.ChildrenAlgorythm extends BasicClass implements ContentAlgorythm {
+class org.as2lib.basic.reflect.algorythm.ChildrenAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
 	private var cache:Cache;
+	private var data:Hashtable;
+	private var info:PackageInfo;
+	private var type:String;
 	
-	public function ChildrenAlgorythm(cache:Cache) {
+	public function ChildrenAlgorythm(cache) {
 		this.cache = cache;
 	}
 	
 	public function execute(info:ReflectInfo):Hashtable {
-		var result:Hashtable = new Hashtable();
-		var object:Object = PackageInfo(info).getPackage();
-		var package:PackageInfo;
-		var clazz:ClassInfo;
-		var i:String;
-		for (i in object) {
-			if (ObjectUtil.isTypeOf(object[i], "function")) {
-				clazz = cache.getClass(object[i]);
-				if (ObjectUtil.isEmpty(clazz)) {
-					clazz = new ClassInfo(i, object[i], PackageInfo(info));
-					cache.addClass(clazz);
-				}
-				result.set(i, clazz);
-			} else if (ObjectUtil.isTypeOf(object[i], "object")) {
-				package = cache.getPackage(object[i]);
-				if (ObjectUtil.isEmpty(package)) {
-					package = new PackageInfo(i, object[i], PackageInfo(info));
-					cache.addPackage(package);
-				}
-				result.set(i, package);
-			}
+		this.info = PackageInfo(info);
+		this.data = new Hashtable();
+		
+		var package:Object = this.info.getPackage();
+		search(package);
+		
+		return data;
+	}
+	
+	private function validate(target:Object, name:String):Boolean {
+		if (ObjectUtil.isTypeOf(target[name], "function")) {
+			type = "class";
+			return true;
 		}
-		return result;
+		if (ObjectUtil.isTypeOf(target[name], "object")) {
+			type = "package";
+			return true;
+		}
+		return false;
+	}
+	
+	private function store(name:String, target:Object):Void {
+		if (type == "class") {
+			var clazz:ClassInfo = cache.getClass(target[name]);
+			if (ObjectUtil.isEmpty(clazz)) {
+				clazz = new ClassInfo(name, target[name], info);
+				cache.addClass(clazz);
+			}
+			data.set(name, clazz);
+			return;
+		}
+		if (type == "package") {
+			var package:PackageInfo = cache.getPackage(target[name]);
+			if (ObjectUtil.isEmpty(package)) {
+				package = new PackageInfo(name, target[name], info);
+				cache.addPackage(package);
+			}
+			data.set(name, package);
+			return;
+		}
 	}
 }
