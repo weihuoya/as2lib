@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<changelog
+                    xmlns="http://www.as2lib.org"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xsi:noSchemaNamespaceLocation="http://www.as2lib.org/changelog.xsd">
+	<release day="20" month="05" year="2004" name="as2lib 0.1 alpha">
+		<year value="10011">
+			<month value="7">
+				<day value="23">
+					<entry type="bugfix" package="asdfasdf">Important Bugfix SF-Request#996433</entry>
+					<entry type="add" package="org.as2lib.util" class="ArrayUtil" method="shuffle(array:Array):Array"></entry>
+				</day>
+				<day value="22">
+					<entry type="enhancement" package="org.as2lib.util">Extended toString Method in Call</entry>
+					<entry type="change" package="org.as2lib.util">Change Argument Type from Function to Object</entry>
+					<entry type="enhancement" package="org.as2lib.env.reflect">SimpleCache changed to allow MovieClips within Reflections</entry>
+				</day>
+				<day value="21">
+					<entry type="add" package="org.as2lib.util">ArrayUtil.indexOf(array:Array):Array added</entry>
+					<entry type="change" package="org.as2lib.util">Implementation of ArrayUtil.contains changed to a for-in loop (could have sideeffects to useages)</entry>
+				</day>
+				<day value="">
+					<entry type="add" package="org.as2lib.env.reflect">ClassUtil.createCleanInstance(clazz:Function):Object added.</entry>
+				</day>
+				<day value="17">
+					<entry type="add" package="org.as2lib.env.except">Added addStackTraceElement() to org.as2lib.env.except.Throwable.</entry>
+					<entry type="change" package="org.as2lib.env.except">Changed the addStackTraceElement() access specifier in org.as2lib.env.except.AbstractException from private to public.</entry>
+				</day>
+				<day value="15">
+					<entry type="add" package="org.as2lib.aop">AOP Framework added.</entry>
+				</day>
+				<day value="12">
+					<entry type="change" package="org.as2lib.env.overload">Changed org.as2lib.env.overload.Overload.matches() it returns true now if you check null against any type as expected.</entry>
+				</day>
+				<day value="11">
+					<entry type="add" package="org.as2lib.util">StringUtil.endsWith() added.</entry>
+				</day>
+				<day value="2">
+					<entry type="change" package="org.as2lib.env.except">Changed '!message' in org.as2lib.env.except.AbstractException.new() to '(message == undefined)' because passing a blank String resulted in a failure.</entry>
+				</day>
+			</month>
+			<month value="6">
+				<day value="25">
+					<entry type="add" package="org.as2lib.util">StringUtil.addSpaceIndent(string:String, count:Number):String.</entry>
+					<entry type="add" package="org.as2lib.util">StringUtil.multiply(string:String, count:Number):String.</entry>
+					<entry type="documentation" package="org.as2lib.util">StringUtil documentation added.</entry>
+				</day>
+				<day value="18">
+					<entry type="add" package="org.as2lib.util">StopWatch class added to stop time differences.</entry>
+					<entry type="change" package="org.as2lib.env.reflect.ReflectConfig">Moved initialization of static vars into appropriate getter methods.</entry>
+					<entry type="change" package="org.as2lib.Config">Moved initialization of static vars into appropriate getter methods.</entry>
+					<entry type="change" package="org.as2lib.data.holder.HolderConfig">Moved initialization of static vars into appropriate getter methods.</entry>
+					<entry type="change" package="org.as2lib.env.except.ExceptConfig">Moved initialization of static vars into appropriate getter methods.</entry>
+					<entry type="change" package="org.as2lib.env.reflect.RootInfo">Moved initialization of static vars into appropriate getter methods.</entry>
+				</day>
+				<day value="6">
+					<entry type="add" package="org.as2lib.env.out.info">Added OutErrorInfo.toString().</entry>
+					<entry type="add" package="org.as2lib.env.out.info">Added OutWriteInfo.toString().</entry>
+					<entry type="add" package="org.as2lib.env.except">Added StackTraceElementFactory.</entry>
+					<entry type="add" package="org.as2lib.env.except">Added SimpleStackTraceElementFactory.</entry>
+					<entry type="add" package="org.as2lib.env.except">Added ExceptConfig.getStackTraceElementFactory().</entry>
+					<entry type="add" package="org.as2lib.env.except">Added ExceptConfig.setStackTraceElementFactory().</entry>
+					<entry type="change" package="org.as2lib.env.except">Changed AbstractException.addStackTraceElement() to use this newly created classes and operations.</entry>
+				</day>
+				<day value="5">
+					<entry type="bugfix" package="org.as2lib.env.except">Fixed serious bug in SimpleStackTraceElement.getMethod() that broke the whole program if a Throwable was thrown by an operation of the superclass (the operation couldn't be found in the throwing subclass and a Throwable was thus being thrown) - it was actually no bug in the SimpleStackTraceElement but in the ClassInfo's.getMethods() operation.</entry>
+					<entry type="change" package="org.as2lib.env.reflect">Changed ClassInfo.getMethods(). It now also returns the operations declared by the super type.</entry>
+				</day>
+				<day value="3">
+					<entry type="change" package="org.as2lib.env.event">Changed throwed Throwable in DynamicEventBroadcasterFactory.createEventBroadcaster() from org.as2lib.env.except.UndefinedPropertyExceptiont to org.as2lib.env.except.IllegalStateException.</entry>
+					<entry type="remove" package="org.as2lib.env.except">Removed UndefinedPropertyException.</entry>
+					<entry type="add" package="org.as2lib.out.handler">Added class SocketOutputServerHandler.</entry>
+				</day>
+			</month>
+			<month value="5">
+				<day value="31">
+					<entry type="documentation" package="org.as2lib.env.event">corrected overall documentation.</entry>
+					<entry type="change" package="org.as2lib.env.event">Field "SimpleEventBroadcaster.listeners:ListenerArray" changed to listeners:Array.</entry>
+					<entry type="change" package="org.as2lib.env.event">Operation "EventBroadcaster.getAllListener():ListenerArray" changed to getAllListener():Array.</entry>
+					<entry type="change" package="org.as2lib.env.event">Constant "SimpleEventBroadcaster.normalDispatcher" changed to NORMAL_DISPATCHER.</entry>
+					<entry type="change" package="org.as2lib.env.event">Constant "SimpleEventBroadcaster.logDispatcher" changed to LOG_DISPATCHER.</entry>
+					<entry type="change" package="org.as2lib.env.event">Changed operation "EventDispatcher.dispatch(event:EventInfo, listeners:ListenerArray)" to dispatch(event:EventInfo, listeners:Array).</entry>
+					<entry type="remove" package="org.as2lib.env.event">ListenerArray removed.</entry>
+					<entry type="change" package="org.as2lib.env.event">Consumeable changed to Consumable.</entry>
+					<entry type="change" package="org.as2lib.env.event">EventDispatcher.dispatchConsumeable() renamed to dispatchConsumable().</entry>
+					<entry type="add" package="org.as2lib.env.event">SpeedEventBroadcaster for Fast broadcasting added.</entry>
+					<entry type="change" package="org.as2lib.env.reflect">changed ClassInfo.newInstance() to newInstance(args:Array).</entry>
+				</day>
+				<day value="30">
+					<entry type="remove" package="org.as2lib.util">Removed Executeable.</entry>
+					<entry type="change" package="org.as2lib.util">Call's constructor changed from Call(object, func:Function, args:Array) to Call(object, func:Function).</entry>
+					<entry type="change" package="org.as2lib.util">Call.execute() changed to execute(args:Array).</entry>
+				</day>
+				<day value="28">
+					<entry type="change" package="org.as2lib.env.reflect">Renamed algorythm to algorithm.</entry>
+					<entry type="change" package="org.as2lib.env.reflect">Renamed algorithm.ClassAlgorythm to ClassAlgorithm.</entry>
+					<entry type="change" package="org.as2lib.env.reflect">Renamed algorithm.PackageAlgorythm to PackageAlgorithm.</entry>
+					<entry type="change" package="org.as2lib.env.reflect">Renamed algorithm.ChildrenAlgorythm to ChildrenAlgorithm.</entry>
+					<entry type="change" package="org.as2lib.env.reflect">Renamed algorithm.MethodAlgorythm to MethodAlgorithm.</entry>
+					<entry type="change" package="org.as2lib.env.reflect">Renamed algorithm.PropertyAlgorythm to PropertyAlgorithm.</entry>
+					<entry type="change" package="org.as2lib.env.reflect">Renamed algorithm.AbstractContentAlgorythm to AbstractContentAlgorithm.</entry>
+					<entry type="change" package="org.as2lib.env.reflect">Renamed algorithm.ContentAlgorythm to ContentAlgorithm.</entry>
+					<entry type="change" package="org.as2lib.env.reflect">Renamed algorithm.CacheAlgorythm to CacheAlgorithm.</entry>
+					<entry type="change" package="org.as2lib.env.reflect">Renamed ReflectConfig.get-/set*Algorythm to get-/set*Algorithm.</entry>
+					<entry type="change" package="org.as2lib.env.reflect">Renamed TypeInfo.getRepresentedType() to getType().</entry>
+					<entry type="change" package="org.as2lib.env.reflect">Renamed ClassInfo.getRepresentedType() to getType().</entry>
+				</day>
+				<day value="26">
+					<entry type="remove" package="org.as2lib.env.reflect">CompositeMemberInfo.getName():String [is already defined in interface MemberInfo].</entry>
+					<entry type="remove" package="org.as2lib.env.reflect">TypeInfo.getParent():PackageInfo [is already defined in interface CompositeMemberInfo].</entry>
+				</day>
+			</month>
+		</year>
+	</release>
+</changelog>
