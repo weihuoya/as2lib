@@ -3,13 +3,12 @@
   This is a example changelog file to test the functionality of the reader.
   It contains various entries with different content.
 -->
-<changelog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		   xsi:noNamespaceSchemaLocation="C:\Dokumente und Einstellungen\main\Desktop\changelog\changelog.xsd">
+<changelog xmlns="as2lib" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="as2lib ../changelog.xsd">
 	<release day="20" month="7" year="2004" name="example">
 		<year value="1999">
 			<month value="12">
 				<day value="11">
-					<entry type="change" package="stuff" class="MyClass2" method="myMethod1()">Something changed.</entry>
+					<entry type="change" package="stuff" class="MyClass2" method="myMethod1()">Somethingchanged.</entry>
 					<entry type="remove" package="stuff" class="MyClass3" method="myMethod2()">Something removed.</entry>
 				</day>
 				<!-- Direction test, if its sorted or not -->
@@ -25,6 +24,15 @@
 					<entry type="enhancement" package="stuff" class="MyClass6" method="myMethod5()">Enhanced something.</entry>
 					<entry type="bugfix" package="stuff" class="MyClass7" method="myMethod6()">Multiline test.
 This is some stupid dummie test, lets see what it does.</entry>
+				</day>
+				<day value="12">
+					<entry type="documentation" link="http://www.google.de">Hello<change-arguments from="a" to="b">Hello</change-arguments></entry>
+					<entry type="documentation" link="http://www.amazon.de">Hello<change-move from="a" to="b">Hello</change-move></entry>
+					<entry type="documentation" link="http://www.gmx.de">Hello<change-rename from="a" to="b">Hello</change-rename></entry>
+					<entry type="documentation" link="http://www.hotmail.de">Hello<change-returnType from="a" to="b">Hello</change-returnType></entry>
+					<entry type="documentation" link="http://www.yahoo.de">Hello<change-returnValue from="a" to="b">Hello</change-returnValue></entry>
+					<entry type="documentation" link="http://www.gmail.com">Hello<change-throws from="a" to="b">Hello</change-throws></entry>
+					<entry type="documentation" link="http://www.macromedia.com">Hello<change-type from="a" to="b">Hello</change-type></entry>
 				</day>
 				<day value="9">
 					<entry type="change">More entries with more content</entry>
