@@ -18,7 +18,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.ThrowableStringifier;
 import org.as2lib.env.except.StackTraceElementStringifier;
 import org.as2lib.env.except.StackTraceStringifier;
-import org.as2lib.core.string.Stringifier;
+import org.as2lib.util.string.Stringifier;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.out.OutAccess;
 import org.as2lib.util.ObjectUtil;

@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.core.string.Stringifier;
+import org.as2lib.util.string.Stringifier;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
@@ -31,7 +31,7 @@ import org.as2lib.env.except.ExceptConfig;
  */
 class org.as2lib.env.except.ThrowableStringifier extends BasicClass implements Stringifier {
 	/**
-	 * @see org.as2lib.core.string.Stringifier#execute()
+	 * @see org.as2lib.util.string.Stringifier#execute()
 	 */
 	public function execute(target):String {
 		var throwable:Throwable = Throwable(target);

@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.core.string.Stringifier;
+import org.as2lib.util.string.Stringifier;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.data.holder.string.MapStringifier;
 import org.as2lib.data.holder.string.StackStringifier;

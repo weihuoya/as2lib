@@ -15,8 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.core.string.ObjectStringifier;
-import org.as2lib.core.string.Stringifier;
+import org.as2lib.util.string.ObjectStringifier;
+import org.as2lib.util.string.Stringifier;
 
 /**
  * ObjectUtil contains fundamental operations to efficiently and easily work

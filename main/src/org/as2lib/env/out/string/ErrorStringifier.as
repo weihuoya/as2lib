@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.core.string.Stringifier;
+import org.as2lib.util.string.Stringifier;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.out.info.OutErrorInfo;
 import org.as2lib.env.out.OutLevel;
@@ -30,7 +30,7 @@ import org.as2lib.env.except.ExceptConfig;
  */
 class org.as2lib.env.out.string.ErrorStringifier extends BasicClass implements Stringifier {
 	/**
-	 * @see org.as2lib.core.string.Stringifier
+	 * @see org.as2lib.util.string.Stringifier
 	 */
 	public function execute(target):String {
 		var info:OutErrorInfo = OutErrorInfo(target);

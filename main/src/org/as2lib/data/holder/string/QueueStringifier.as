@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.core.string.Stringifier;
+import org.as2lib.util.string.Stringifier;
 import org.as2lib.data.holder.Queue;
 import org.as2lib.data.iterator.Iterator;
 
@@ -27,7 +27,7 @@ import org.as2lib.data.iterator.Iterator;
  */
 class org.as2lib.data.holder.string.QueueStringifier extends BasicClass implements Stringifier {
 	/**
-	 * @see org.as2lib.core.string.Stringifier
+	 * @see org.as2lib.util.string.Stringifier
 	 */
 	public function execute(target):String {
 		var queue:Queue = Queue(target);
