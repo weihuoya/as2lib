@@ -21,14 +21,15 @@ class test.org.as2lib.data.io.conn.ExampleListener extends BasicClass implements
 	 * Executes a call.
 	 */
 	public function onError(error:ConnectorError):Void{
-		//trace("onError "+cnt);
+		trace("ExampleListener Nr."+cnt);
 		//trace();
 		myOut.error(error);
 		//myOut.error(error);
 	}
 	
 	public function onResponse(response:ConnectorResponse):Void{
-		trace(response.getName());
-		//myOut.info(response.toString());
+		trace("ExampleListener Nr."+cnt);
+		//trace(response.getName());
+		myOut.info(response.getName());
 	}
 }

@@ -21,6 +21,7 @@ class test.org.as2lib.data.io.conn.TRemoteConnectorImplementation extends Test{
 		
 		// initialization of output object
 		var myOut:Out = new Out();
+		//myOut.setLevel(Out.INFO);
 		
 		// getter setter Test
 		
