@@ -15,8 +15,6 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.log.LoggerRepositoryManager;
-import org.as2lib.env.log.Logger;
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.event.EventDispatcher;
 import org.as2lib.env.event.Consumable;
@@ -30,13 +28,20 @@ import org.as2lib.env.event.Consumable;
 class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass implements EventDispatcher {
 	
 	/** Logger to log forwarded events. */
-	private static var logger:Logger;
+	private static var logger;
 	
 	/**
 	 * @return logger to log forwared events
 	 */
-	private static function getLogger(Void):Logger {
-		if (!logger) logger = LoggerRepositoryManager.getRepository().getLogger("org.as2lib.env.event.dispatcher.LogEventDispatcher");
+	private static function getLogger(Void) {
+		if (logger === undefined) {
+			var repositoryManager = eval("_global." + "org.as2lib.env.log.LoggerRepositoryManager");
+			if (repositoryManager) {
+				logger = repositoryManager.getRepository().getLogger("org.as2lib.env.event.dispatcher.LogEventDispatcher");
+			} else {
+				logger = null;
+			}
+		}
 		return logger;
 	}
 	
@@ -47,7 +52,8 @@ class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass impl
 		var name:String = event.getName();
 		var l:Number = listeners.length;
 		for (var i:Number = 0; i < l; i++) {
-			getLogger().log("Forwarding event #" + i + " with name " + name);
+			if (getLogger()) getLogger().log("Forwarding event #" + i + " with name " + name);
+			else trace("Forwarding event #" + i + " with name " + name);
 			listeners[i][name](event);
 		}
 	}
@@ -59,7 +65,8 @@ class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass impl
 		var name:String = event.getName();
 		var l:Number = listeners.length;
 		for (var i:Number = 0; i < l; i++) {
-			getLogger().log("Forwarding event #" + i + " with name " + name);
+			if (getLogger()) getLogger().log("Forwarding event #" + i + " with name " + name);
+			else trace("Forwarding event #" + i + " with name " + name);
 			listeners[i][name](event);
 			if (Consumable(event).isConsumed()) {
 				return;

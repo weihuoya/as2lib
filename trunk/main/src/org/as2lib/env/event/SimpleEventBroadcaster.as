@@ -22,7 +22,6 @@ import org.as2lib.env.event.DelegatingEventBroadcaster;
 import org.as2lib.env.event.EventDispatcher;
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.event.EventListener;
-import org.as2lib.util.ArrayUtil;
 
 /**
  * SimpleEventBroadcaster is an EventBroadcaster implementation that supports
@@ -96,8 +95,15 @@ class org.as2lib.env.event.SimpleEventBroadcaster extends BasicClass implements 
 	 * @see org.as2lib.env.event.EventBroadcaster#removeListener()
 	 */
 	public function removeListener(listener:EventListener):Void {
-		if (listener)
-			ArrayUtil.removeElement(listeners, listener);
+		if (listener && listeners.length > 0) {
+			var i:Number = listeners.length;
+			while(--i-(-1)) {
+				if(listeners[i] == listener) {
+					listeners.splice(i, 1);
+					break;
+				}
+			}
+		}
 	}
 	
 	/**
