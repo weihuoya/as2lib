@@ -1,18 +1,19 @@
 ﻿import org.as2lib.data.io.conn.Connector;
 import org.as2lib.data.io.conn.ConnectionListener;
 import org.as2lib.data.io.conn.ConnectionRequest;
+import org.as2lib.data.io.conn.ResponseController;
 //import org.as2lib.data.io.comm.remoting
-import org.as2lib.env.event.EventBroadcaster;
 
 class org.as2lib.data.io.conn.NetConnector implements Connector {
-	private var eventBroadcaster:EventBroadcaster;
 	private var gatewayUrl:String;
+	private var responseCtrl:ResponseController;
 	
 	public function NetConnector(Void) {
-		eventBroadcaster = new EventBroadcaster();
+		responseCtrl = new ResponseController();
 	}
 	
 	public function initConnection(Void):Void {
+		
 		//TODO: ServiceLocator activation
 	}
 	public function getUrl(Void):String {
@@ -23,7 +24,7 @@ class org.as2lib.data.io.conn.NetConnector implements Connector {
 	}
 	
 	public function addListener(l:ConnectionListener):Void {
-		eventBroadcaster.addListener(l);
+		responseCtrl.addListener(l);
 	}
 	
 	public function handleRequest(r:ConnectionRequest):Void {
