@@ -5,6 +5,12 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2004">
       <month value="10">
+        <day value="20">
+          <entry type="change" package="org.as2lib.data.io.conn.core.event" class="MethodInvocationReturnListener" method="onResponse(..)"><change-rename to="onReturn" /></entry>
+          <entry type="change" package="org.as2lib.data.io.conn.core.event" class="MethodInvocationReturnInfo" method="getResponse(..)"><change-rename to="getReturnValue" /></entry>
+          <entry type="change" package="org.as2lib.data.io.conn.core.event" class="MethodInvocationResponseInfo"><change-rename to="MethodInvocationReturnInfo" /></entry>
+          <entry type="change" package="org.as2lib.data.io.conn.core.event" class="MethodInvocationResponseListener"><change-rename to="MethodInvocationReturnListener" /></entry>
+        </day>
         <day value="10">
           <entry type="add" package="org.as2lib.env.reflect" class="ProxyFactory" />
           <entry type="add" package="org.as2lib.env.reflect" class="InvocationHandler" />

@@ -20,7 +20,7 @@ import org.as2lib.data.io.conn.core.client.AbstractClientServiceProxy;
 import org.as2lib.data.io.conn.core.client.UnknownServiceException;
 import org.as2lib.data.io.conn.core.server.ReservedServiceException;
 import org.as2lib.data.io.conn.core.event.MethodInvocationCallback;
-import org.as2lib.data.io.conn.core.event.MethodInvocationResponseInfo;
+import org.as2lib.data.io.conn.core.event.MethodInvocationReturnInfo;
 import org.as2lib.data.io.conn.core.event.MethodInvocationErrorInfo;
 import org.as2lib.data.io.conn.core.event.MethodInvocationErrorListener;
 import org.as2lib.data.io.conn.local.core.LocalConnectionTemplate;
@@ -100,9 +100,9 @@ class org.as2lib.data.io.conn.local.client.LocalClientServiceProxy extends Abstr
 		var responseService:LocalConnectionTemplate = new LocalConnectionTemplate();
 		var index:Number = responseServices.push(responseService) - 1;
 		var owner:LocalClientServiceProxy = this;
-		responseService["onResponse"] = function(response):Void {
+		responseService["onReturn"] = function(returnValue):Void {
 			owner.responseServices.splice(index, 1);
-			callback.onResponse(new MethodInvocationResponseInfo(response));
+			callback.onReturn(new MethodInvocationReturnInfo(returnValue));
 			this.close();
 		}
 		responseService["onError"] = function(exception):Void {

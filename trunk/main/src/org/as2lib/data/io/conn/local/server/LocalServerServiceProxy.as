@@ -118,12 +118,12 @@ class org.as2lib.data.io.conn.local.server.LocalServerServiceProxy extends Abstr
 		}
 		try {
 			if (service[name]) {
-				var response = service[name].apply(service, args);
+				var returnValue = service[name].apply(service, args);
 			} else {
 				errorBroadcaster.dispatch(new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null));
 			}
 			try {
-				connection.send(responseService, "onResponse", [response], listener);
+				connection.send(responseService, "onReturn", [returnValue], listener);
 			} catch (exception:org.as2lib.data.io.conn.local.core.UnknownConnectionException) {
 				errorBroadcaster.dispatch(new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_UNKNOWN_SERVICE, exception));
 			} catch (exception:org.as2lib.data.io.conn.core.client.MethodInvocationException) {
