@@ -60,11 +60,17 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 		return maximum;
 	}
 	
-	public function verify(quantity:Number):Void {
+	public function contains(quantity:Number):Boolean {
 		if (minimum != QUANTITY_ANY && maximum != QUANTITY_ANY) {
-			if (minimum > quantity || maximum < quantity)
-				throw new AssertionFailedError("Quantity [" + quantity + "] is not between the expected minimum [" + minimum + "] and maximum [" + maximum + "].", this, arguments);
+			if (minimum > quantity || maximum < quantity) {
+				return false;
+			}
 		}
+		return true;
+	}
+	
+	public function toString(Void):String {
+		return ("minimum: " + minimum + ", maximum: " + maximum);
 	}
 	
 }

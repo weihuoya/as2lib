@@ -16,6 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalStateException;
+import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControlState;
 import org.as2lib.test.mock.MethodCallBehaviour;
 import org.as2lib.test.mock.MockBehaviour;
@@ -51,8 +52,8 @@ class org.as2lib.test.mock.support.ReplayState extends BasicClass implements Moc
 	/**
 	 * @see MockControlState#verify()
 	 */
-	public function verify(Void):Void {
-		behaviour.verify();
+	public function verify(testCase:TestCase):Void {
+		behaviour.verify(testCase);
 	}
 	
 	/**
