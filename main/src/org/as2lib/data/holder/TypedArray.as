@@ -45,29 +45,17 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	 * @see Array#concat()
 	 */
 	public function concat():TypedArray {
-		var l:Number = arguments.length;
-		for (var i:Number = 0; i < l; i++) {
-			if (ObjectUtil.isInstanceOf(arguments[i], Array)) {
-				for (var k:Number = 0; k < arguments[i].length; k++) {
-					validate(arguments[i][k]);
-				}
-			} else {
-				validate(arguments[i]);
-			}
-		}
 		var result:TypedArray = new TypedArray(this.type);
 		for (var i:Number = 0; i < length; i++) {
 			result.push(this[i]);
 		}
-		if (l != 0) {
-			for (var i:Number = 0; i < arguments.length; i++) {
-				if (ObjectUtil.isInstanceOf(arguments[i], Array)) {
-					for (var k:Number = 0; k < arguments[i].length; k++) {
-						result.push(arguments[i][k]);
-					}
-				} else {
-					result.push(arguments[i]);
+		for (var i:Number = 0; i < arguments.length; i++) {
+			if (ObjectUtil.isInstanceOf(arguments[i], Array)) {
+				for (var k:Number = 0; k < arguments[i].length; k++) {
+					result.push(arguments[i][k]);
 				}
+			} else {
+				result.push(arguments[i]);
 			}
 		}
 		return result;
