@@ -22,6 +22,11 @@ import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
 
 /**
+ * Searches for all properties of a class. Properties are not meant to be
+ * normal fields/variables of an instance or class but macromedia properties
+ * that can be declared via the 'set' or 'get' keyword or the addProperty(..)
+ * method.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass implements ContentAlgorithm {
@@ -32,9 +37,29 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass impl
 	private var c:ClassInfo;
 	private var a:Boolean;
 	
+	/**
+	 * Constructs a new instance.
+	 */
 	public function PropertyAlgorithm(Void) {
 	}
 	
+	/**
+	 * Searches for all properties of a class.
+	 *
+	 * <p>The resulting array contains PropertyInfo instances.
+	 *
+	 * <p>This method will return null if:
+	 * <ul>
+	 *   <li>The argument is null.</li>
+	 *   <li>The argument is not of type ClassInfo.</li>
+	 * </ul>
+	 *
+	 * <p>Only the passed in class will be searched through, no
+	 * super classes.
+	 *
+	 * @param c the ClassInfo instance representing the class to search through
+	 * @return the found properties, a blank array or null
+	 */
 	public function execute(c:CompositeMemberInfo):Array {
 		if (c == null) return null;
 		this.c = ClassInfo(c);
@@ -57,7 +82,7 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass impl
 		return r;
 	}
 	
-	public function search(t):Void {
+	private function search(t):Void {
 		var i:String;
 		for (i in t) {
 			if (typeof(t[i]) == "function") {
