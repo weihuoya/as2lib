@@ -38,35 +38,43 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	private var loggers:Map;
 	
 	/** This factory gets used when no custom factory is specified. */
-	private var defaultFactory:ConfigurableHierarchicalLoggerFactory;
+	private var defaultLoggerFactory:ConfigurableHierarchicalLoggerFactory;
 	
 	/**
 	 * Constructs a new instance.
 	 *
+	 * <p>Registers the root logger with name 'root' if the root's getName()
+	 * method returns null or undefined. Otherwise it will be registered
+	 * with the name returned by the getName() method.
+	 *
 	 * @param root the root of the hierarchy
+	 * @throws IllegalArgumentException if the passed-in root is null or undefined
 	 */
 	public function LoggerHierarchy(root:ConfigurableHierarchicalLogger) {
+		if (!root) throw new IllegalArgumentException("The root logger is not allowed to be null or undefined.", this, arguments);
 		this.root = root;
 		loggers = new PrimitiveTypeMap();
-		loggers.put(root.getName(), root);
+		if (root.getName() == null)
+			loggers.put("root", root);
+		else
+			loggers.put(root.getName(), root);
 	}
 	
-	
 	/**
-	 * Returns either the factory set via #setDefaultFactory() or the
+	 * Returns either the factory set via #setDefaultLoggerFactory() or the
 	 * default one.
 	 *
 	 * @return the factory used as default
 	 */
-	public function getDefaultFactory(Void):ConfigurableHierarchicalLoggerFactory {
-		if (!defaultFactory) defaultFactory = getNormalFactory();
-		return defaultFactory;
+	public function getDefaultLoggerFactory(Void):ConfigurableHierarchicalLoggerFactory {
+		if (!defaultLoggerFactory) defaultLoggerFactory = getNormalLoggerFactory();
+		return defaultLoggerFactory;
 	}
 	
 	/**
 	 * @return the normal factory
 	 */
-	private function getNormalFactory(Void):ConfigurableHierarchicalLoggerFactory {
+	private function getNormalLoggerFactory(Void):ConfigurableHierarchicalLoggerFactory {
 		var result:ConfigurableHierarchicalLoggerFactory = new ConfigurableHierarchicalLoggerFactory();
 		result.getLogger = function(Void):ConfigurableHierarchicalLogger {
 			return new SimpleLogger();
@@ -78,26 +86,10 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	 * Sets the factory used when obtaining an out that has not been set
 	 * before.
 	 *
-	 * @param defaultFactory the factory to be used as default
+	 * @param defaultLoggerFactory the factory to be used as default
 	 */
-	public function setDefaultFactory(defaultFactory:ConfigurableHierarchicalLoggerFactory):Void {
-		this.defaultFactory = defaultFactory;
-	}
-	
-	/**
-	 * Returns a logger depending on the specified name.
-	 * The name can exist of a path as well as the actual specifier,
-	 * e.g. org.as2lib.core.BasicClass. In case no logger instance has
-	 * been put for the passed-in name a new will be created by the set
-	 * factory, that by default obtains all its configuration from the
-	 * parent.
-	 *
-	 * @param name the specifier of the logger to obtain
-	 * @return a specific logger depending on the name
-	 * @see LoggerRepository#getLogger()
-	 */
-	public function getLogger(name:String):Logger {
-		return getLoggerByFactory(name, getDefaultFactory());
+	public function setDefaultLoggerFactory(defaultLoggerFactory:ConfigurableHierarchicalLoggerFactory):Void {
+		this.defaultLoggerFactory = defaultLoggerFactory;
 	}
 	
 	/**
@@ -111,14 +103,24 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	 * Adds a new logger to the hierarchical repository. It will be
 	 * automatically integrated into the hierarchy.
 	 *
+	 * <p>If the passed-in name is null or undefined, the name returned
+	 * by the passed-in logger's getName() method will be used.
+	 * If this name is also null or undefined an IllegalArgumentException
+	 * will be thrown.
+	 *
 	 * @param name the name under which the logger to add shall be referenced
 	 * @param logger the logger to be registered with the passed-in name
-	 * @throws IllegalArgumentException if the given name is reserved
+	 * @throws IllegalArgumentException if the passed-in and the name of the logger are both null or undefined or
+	 *                                  if a logger with the given name is already in use
 	 */
 	public function putLogger(name:String, logger:ConfigurableHierarchicalLogger):Void {
+		if (name == null || name == "") name = logger.getName();
+		if (name == null || name == "") throw new IllegalArgumentException("Name is not allowed to be null, undefined or a blank string.", this, arguments);
 		if (loggers.containsKey(name) && loggers.get(name) instanceof ConfigurableHierarchicalLogger)
 			throw new IllegalArgumentException("Name [" + name + "] is already in use.", this, arguments);
-		getLoggerByFactory(name, getSingletonFactory(logger));
+		if (logger) {
+			getLoggerByFactory(name, getSingletonFactory(logger));
+		}
 	}
 	
 	/**
@@ -136,12 +138,38 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	}
 	
 	/**
+	 * Returns a logger depending on the specified name.
+	 *
+	 * <p>The name can exist of a path as well as the actual specifier,
+	 * e.g. org.as2lib.core.BasicClass. In case no logger instance has
+	 * been put for the passed-in name a new will be created by the set
+	 * factory, that by default obtains all its configuration from the
+	 * parent.
+	 *
+	 * <p>Null will be returned if passed-in name is null or undefined.
+	 *
+	 * @param name the specifier of the logger to obtain
+	 * @return a specific logger depending on the name
+	 * @see LoggerRepository#getLogger()
+	 */
+	public function getLogger(name:String):Logger {
+		if (name == null) return null;
+		return getLoggerByFactory(name, null);
+	}
+	
+	/**
 	 * Does the same as the #getLogger() method but uses the explicitely passed-in
 	 * factory to obtain the appropriate logger if necessary.
 	 *
-	 * @see #getOut()
+	 * <p>Null will be returned if the passed-in name is null or undefined.
+	 *
+	 * <p>If the passed-in factory is null or undefined the default one will be used.
+	 *
+	 * @see #getLogger()
 	 */
 	public function getLoggerByFactory(name:String, factory:ConfigurableHierarchicalLoggerFactory):Logger {
+		if (name == null) return null;
+		if (!factory) factory = getDefaultLoggerFactory();
 		var result = loggers.get(name);
 		if (!result) {
 			result = factory.getLogger();
