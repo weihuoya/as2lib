@@ -4,11 +4,11 @@ import org.as2lib.util.Call;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.data.io.conn.local.ReservedHostException;
-import org.as2lib.data.io.conn.local.LocalClientServiceStatusListener;
+import org.as2lib.data.io.conn.local.ExtendedLocalConnection;
 
 class org.as2lib.data.io.conn.local.LocalClientServiceProxy extends BasicClass implements ServiceProxy {
 	private var target:String;
-	private var connection:LocalConnection;
+	private var connection:ExtendedLocalConnection;
 	private var listenerMap:Map;
 	
 	// wenn nicht Instanzvariable gehts nicht. Komische Sache!
@@ -16,7 +16,7 @@ class org.as2lib.data.io.conn.local.LocalClientServiceProxy extends BasicClass i
 	
 	public function LocalClientServiceProxy(target:String) {
 		this.target = target;
-		connection = new LocalConnection();
+		connection = new ExtendedLocalConnection();
 		listenerMap = new HashMap();
 	}
 	
@@ -26,21 +26,16 @@ class org.as2lib.data.io.conn.local.LocalClientServiceProxy extends BasicClass i
 	
 	public function invoke(method:String, args:Array):Void {
 		if (listenerMap.containsKey(method)) {
-			responseServer = new LocalConnection();
+			responseServer = new ExtendedLocalConnection();
 			responseServer.listener = listenerMap.get(method);
 			responseServer.onResponse = function(response):Void {
 				this.listener.execute([response]);
 				this.close();
 			}
-			if(!responseServer.connect(target + "." + method + "_Return")) {
-				throw new ReservedHostException("Connection with name [" + target + "." + method + "_Return] is already in use.", this, arguments);
-			}
-			var statusListener:LocalClientServiceStatusListener = new LocalClientServiceStatusListener(target,method);
-			connection.send.apply(statusListener,[target,"remoteCall", method, args, (target + "." + method + "_Return")]);
-			//connection.onStatus = function(info){trace("onStatus:"+info.level)}
-			//connection.send(target, "remoteCall", method, args, (target + "." + method + "_Return"));
+			responseServer.connect(target + "." + method + "_Return");
+			connection.send(target, "remoteCall", [method, args, (target + "." + method + "_Return")]);
 			return;
 		}
-		connection.send(target, "remoteCall", method, args);
+		connection.send(target, "remoteCall", [method, args]);
 	}
 }

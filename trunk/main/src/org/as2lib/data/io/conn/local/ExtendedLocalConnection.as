@@ -11,17 +11,16 @@ class org.as2lib.data.io.conn.local.ExtendedLocalConnection extends LocalConnect
 		}
 	}
 	
-	public function send(host:String, method:String, args:Array){
+	public function send(host:String, method:String, args:Array) {
 		this.host = host;
 		if (!super.send.apply(this, [host, method].concat(args))) {
 			throw new SyntacticallyIncorrectMethodCallException("Passed arguments [" + args + "] are out of size.", this, arguments);
 		}
 	}
 	
-	public function onStatus(info){
+	private function onStatus(info):Void {
 		if (info.level == "error") {
 			throw new MissingServerException("Server with host name [" + host + "] does not exist.", this, arguments);
 		}
 	}
-	
 }
