@@ -88,6 +88,15 @@ class org.as2lib.test.unit.TestSuite extends BasicClass implements Test {
 	}
 	
 	/**
+	 * Blocks collecting of TestSuiteFactory
+	 * 
+	 * @return true to not get collected.
+	 */
+	public static function blockCollecting(Void):Boolean {
+		return true;
+	}
+	
+	/**
 	 * Getter for all Tests contained within the TestSuite.
 	 * 
 	 * @return TypedArray that contains all Tests of the TestSuite.

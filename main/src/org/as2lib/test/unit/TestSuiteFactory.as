@@ -20,6 +20,7 @@ import org.as2lib.data.holder.Iterator;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.TestSuite;
 import org.as2lib.util.ClassUtil;
@@ -89,7 +90,7 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 		for(i in package) {
 			var child = package[i];
 			if(typeof child == "function" && ClassUtil.isSubClassOf(child, TestCase) && !child.blockCollecting()) {
-				suite.addTest(TestCase(ClassUtil.createCleanInstance(child)));
+				suite.addTest(Test(ClassUtil.createCleanInstance(child)));
 			}
 			if(typeof child == "object" && recursive) {
 				collectAgent(child, suite, recursive);

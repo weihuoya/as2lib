@@ -382,10 +382,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertEquals():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, Object, undefined], assertEqualsWithMessage);
-		overload.addHandler([String, undefined, Object], assertEqualsWithMessage);
 		overload.addHandler([String, Object, Object], assertEqualsWithMessage);
-		overload.addHandler([String, undefined], assertEqualsWithMessage);
 		overload.addHandler([String, Object], assertEqualsWithMessage);
 		overload.addHandler([undefined, undefined], assertEqualsWithoutMessage);
 		overload.addHandler([undefined, Object], assertEqualsWithoutMessage);
@@ -1198,7 +1195,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertThrowsWithStringAndMessageAndType(message:String, type, inObject, name:String, args:Array):Boolean {
 		if(ObjectUtil.isTypeOf(inObject[name], "function")) {
-			return assertThrowsWithCallAndMessageAndType(message, type, new Call(inObject, inObject[name]), args);
+			return assertThrowsWithFunctionAndMessageAndType(message, type, inObject, inObject[name], args);
 		} else {
 			var e:IllegalArgumentException = new IllegalArgumentException("The method '"+name+"' is not available within "+inObject.toString(), this, arguments);
 			//getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrowsWithStringAndMessageAndType", this, arguments).initCause(e));	
