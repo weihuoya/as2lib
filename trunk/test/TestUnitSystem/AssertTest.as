@@ -141,6 +141,14 @@ class AssertTest extends TestCase {
 	}
 	
 	public function testNull(Void):Void {
+		assertTrue ("NOT FAIL! 1 ", assertNull(null));
+		assertFalse("NOT FAIL! 2 ", assertNull(undefined));
+		assertTrue ("NOT FAIL! 3 ", assertNull("NOT FAIL!", null));
+		assertFalse("NOT FAIL! 4 ", assertNull("fail", undefined));
+		assertFalse("NOT FAIL! 5 ", assertNull("fail", 3));
+		assertFalse("NOT FAIL! 6 ", assertNull("fail", undefined));
+		assertFalse("NOT FAIL! 5 ", assertNull("fail"));
+		assertFalse("NOT FAIL! 5 ", assertNull(2));
 	}
 	
 	public function testNotNull(Void):Void {
@@ -150,6 +158,8 @@ class AssertTest extends TestCase {
 		assertTrue ("NOT FAIL! 4 ", assertNotNull("NOT FAIL!", undefined));
 		assertTrue ("NOT FAIL! 5 ", assertNotNull("NOT FAIL!", 0));
 		assertTrue ("NOT FAIL! 6 ", assertNotNull("NOT FAIL!", undefined));
+		assertTrue ("NOT FAIL! 5 ", assertNotNull("fail"));
+		assertTrue ("NOT FAIL! 5 ", assertNotNull(2));
 	}
 	
 	public function testUndefined(Void):Void {

@@ -313,6 +313,58 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 			throw new AssertIsNotSameException(message, var1, var2, eval("th"+"is"), arguments);
 		}
 	}
+
+	/**
+	 * overload
+	 * @see #isNullWithoutMessage
+	 * @see #isNullWithMessage
+	 */
+	public static function isNull():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that);
+		overload.addHandler([String, undefined], isNullWithMessage);
+		overload.addHandler([String, Object], isNullWithMessage);
+		overload.addHandler([Object], isNullWithoutMessage);
+		overload.addHandler([undefined], isNullWithoutMessage);
+		overload.addHandler([], isNullWithoutMessage);
+		overload.forward(arguments);
+	}
+	
+	/**
+	 * Checks that a variable is a reference to null.
+	 * Checks with a === that a variable is null.
+	 *
+	 * @see #isNull
+	 * @see #isNullWithMessage
+	 * @see #isNotNull
+	 * @see #isNotNullWithoutMessage
+	 * @see #isNotNullWithMessage
+	 * 
+	 * @throws AssertIsNullException if the assertion fails.
+	 * @param var1 Variable that should be null
+	 */
+	public static function isNullWithoutMessage (var1):Void {
+		isNullWithMessage ("", var1);
+	}
+	
+	/**
+	 * Appends a Message to @see #isNull.
+	 *
+	 * @see #isNull
+	 * @see #isNullWithMessage
+	 * @see #isNullWithMessage
+	 * @see #isNotNull
+	 * @see #isNotNullWithoutMessage
+	 * 
+	 * @throws AssertIsNotNullException if the assertion fails.
+	 * @param message	Message to be displayed if an error occurs
+	 * @param var1 Variable that should be null.
+	 */
+	public static function isNullWithMessage (message:String, var1):Void {
+		if(var1 !== null) {
+			throw new AssertIsNullException(message, eval("th"+"is"), arguments, var1);
+		}
+	}
 	
 	/**
 	 * overload
@@ -331,8 +383,8 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	}
 	
 	/**
-	 * Checks if two given objects are not equal.
-	 * This methods checks with "!=" if two given variables do not contain the same value.
+	 * Checks that a variable does not contain null.
+	 * Checks with a !== that a variable is not null.
 	 *
 	 * @see #isNotNull
 	 * @see #isNotNullWithMessage
@@ -341,11 +393,10 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isNullWithMessage
 	 * 
 	 * @throws AssertIsNotNullException if the assertion fails.
-	 * @param var1 First var.
-	 * @param var2 Second var.
+	 * @param var1 Variable that should not be null.
 	 */
-	public static function isNotNullWithoutMessage (var1, var2):Void {
-		isNotNullWithMessage ("", var1, var2);
+	public static function isNotNullWithoutMessage (var1):Void {
+		isNotNullWithMessage ("", var1);
 	}
 	
 	/**
@@ -358,59 +409,12 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isNotNullWithoutMessage
 	 * 
 	 * @throws AssertIsNotNullException if the assertion fails.
-	 * @param message	Message to be displayed if an error occures
-	 * @param var1 First Var.
-	 * @param var1 Second Var.
+	 * @param message	Message to be displayed if an error occurs
+	 * @param var1 Variable that should not be null.
 	 */
 	public static function isNotNullWithMessage (message:String, var1):Void {
 		if(var1 === null) {
 			throw new AssertIsNotNullException(message, eval("th"+"is"), arguments);
-		}
-	}
-
-	/**
-	 * overload
-	 * @see #isNullWithMessage
-	 * @see #isNullWithoutMessage
-	 * /
-	private static function isNull():Void {
-		var that = eval("th"+"is");
-		var overload:Overload = new Overload(that);
-		overload.addHandler([String, Object], isNullWithMessage);
-		overload.addHandler([Object], isNullWithoutMessage);
-		overload.forward(arguments);
-	}
-	
-	/**
-	 * Asserts if an Var is Null.
-	 *
-	 * @see #isNotNull
-	 * @see #isNotNullWithoutMessage
-	 * @see #isNotNullWithMessage
-	 * @see #isNull
-	 * @see #isNullWithMessage
-	 * 
-	 * @param var1	Var that should be Null.
-	 * /
-	private static function isNullWithoutMessage (var1):Void {
-		isNullWithMessage("", var1);
-	}
-	
-	/**
-	 * Adds a Message to #isNull.
-	 *
-	 * @see #isNotNull
-	 * @see #isNotNullWithoutMessage
-	 * @see #isNotNullWithMessage
-	 * @see #isNull
-	 * @see #isNullWithoutMessage
-	 * 
-	 * @param message	Message to be displayed if an error occures
-	 * @param var1		Var that should not be Null.
-	 * /
-	private static function isNullWithMessage (message:String, var1):Void {
-		if(var1 !== null) {
-			//addError("isNull failed: "+var1+" message: "+message);
 		}
 	}
 	
