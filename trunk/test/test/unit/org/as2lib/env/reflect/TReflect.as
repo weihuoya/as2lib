@@ -30,6 +30,10 @@ class test.unit.org.as2lib.env.reflect.TReflect extends TestCase {
 	public function TReflect(Void) {}
 	
 	public function setUp(Void):Void {
+		_global.a = "";
+		_global.b = [[1,2],[1,3]];
+		_global.c = new XML();
+		_global.c.parseXML("<a><b></b></a>");
 		
 		subClass = new SubClass();
 		superClass = new SuperClass();
@@ -50,10 +54,6 @@ class test.unit.org.as2lib.env.reflect.TReflect extends TestCase {
 	}
 	
 	public function testGlobalContent(Void):Void {
-		_global.a = "";
-		_global.b = [[1,2],[1,3]];
-		_global.c = new XML();
-		_global.c.parseXML("<a><b></b></a>");
 		
 		var subName:String = subInfo.getFullName();
 		var superName:String = superInfo.getFullName();
@@ -134,5 +134,12 @@ class test.unit.org.as2lib.env.reflect.TReflect extends TestCase {
 		
 		var tempSubInfo:ClassInfo = instance.getClass();
 		assertEquals("The two ClassInfos [" + subInfo + " and " + tempSubInfo + "] obtained from different instances of the same class are not equal.", subInfo, tempSubInfo);
+	}
+	public function tearDown(Void):Void {
+		
+		delete(_global.a);
+		delete(_global.b);
+		delete(_global.c);
+		delete(_global.c);
 	}
 }
