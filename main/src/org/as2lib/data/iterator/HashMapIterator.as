@@ -7,7 +7,7 @@ class org.as2lib.data.iterator.HashMapIterator implements Iterator {
 	private var iterator:ArrayIterator;
 	private var key:Object;
 	
-	public function HashtableIterator(newTarget:HashMap) {
+	public function HashMapIterator(newTarget:HashMap) {
 		target = newTarget;
 		iterator = new ArrayIterator(target.getKeys());
 	}
