@@ -16,6 +16,6 @@ class org.as2lib.env.out.string.WriteStringifier extends BasicClass implements S
 	 * @see org.as2lib.core.string.Stringifier
 	 */
 	public function execute(target):String {
-		return "** "+OutWriteInfo(target).getLevel().getClass().getName()+" **" + OutWriteInfo(target).getMessage();
+		return "** "+ReflectUtil.getClassInfo(OutWriteInfo(target).getLevel()).getName()+" ** " + OutWriteInfo(target).getMessage();
 	}
 }
