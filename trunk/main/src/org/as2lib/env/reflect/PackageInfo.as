@@ -400,45 +400,27 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	}
 	
 	/** 
-	 * Returns true if the applied package is a parent package of this package.
-	 * 
-	 * @param package Package that could be a parent package.
-	 * @return true if the applied package is a parent package of this package.
-	 */
-	public function isParentPackage(package:PackageInfo):Boolean {
-		var parent:PackageInfo = getParent();
-		if (parent === package) {
-			return true;
-		} else if(parent.isRoot()) {
-			return false;
-		} else {
-			return parent.isParentPackage(package);
-		}
-	}
-	
-	/** 
 	 * Returns true if this package is the parent package of the passed-in one.
-	 * Returns false if the passed-in package is null or undefined.
+	 * 
+	 * <p>False will be returned if:
+	 * <ul>
+	 *   <li>The passed-in package is not a parent package of this package.</li>
+	 *   <li>The passed-in package is null or undefined.</li>
+	 *   <li>The passed-in package equals this package.</li>
+	 *   <li>The passed-in package's isRoot() method returns true.</li>
+	 * </ul>
 	 * 
 	 * @param package package this package could be a parent of
 	 * @return true if this package is the parent of the passed-in package
 	 */
-	/*public function isParentPackage(package:PackageInfo):Boolean {
+	public function isParentPackage(package:PackageInfo):Boolean {
 		if (!package) return false;
+		if (package.isRoot()) return false;
+		if (package == this) return false;
 		var parent:PackageInfo = package.getParent();
-		if (parent === this) {
-			return true;
-		}
-		if (parent.isRoot()) {
-			return false;
-		}
-		while (!parent.isRoot()) {
-			parent = parent.getParent();
-			if (parent === this) {
-				return true;
-			}
-		}
-		return false;
-	}*/
+		if (!parent) return false;
+		if (parent == this) return true;
+		return isParentPackage(parent);
+	}
 	
 }

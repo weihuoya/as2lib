@@ -94,7 +94,7 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 					p = d;
 					return true;
 				}
-				if (d.isParentPackage(a)) {
+				if (!d.isParentPackage(a)) {
 					// replace recursion with loop
 					if (findAndStore(d, o)) {
 						return true;
