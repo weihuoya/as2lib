@@ -17,6 +17,7 @@
 import org.as2lib.env.overload.OverloadHandler;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.overload.SameTypeSignatureException;
 
 /**
@@ -113,7 +114,7 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 			if(i != 0) {
 				result += ", ";
 			}
-			result += args[i];
+			result += ReflectUtil.getClassInfo(args[i]).getName();
 		}
 		if(l > 0) {
 			result += ") ";
