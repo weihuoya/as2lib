@@ -35,6 +35,9 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	/** The list of registered handlers. */
 	private var handlers:Array;
 	
+	/** Handler to be used if no handler applies. */
+	private var defaultHandler:OverloadHandler;
+	
 	/** The target instance on which the operation will be invoked. */
 	private var target;
 	
@@ -46,6 +49,42 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	public function Overload(target) {
 		this.handlers = new Array();
 		this.target = target;
+	}
+	
+	/**
+	 * Sets the default handler, this handler will be used if no other handler applies to a set of arguments.
+	 * This handler will get all the arguments that were applied to the method.
+	 *
+	 * This method will be executed on the same scope as the other handlers!
+	 * 
+	 * <code>
+	 *   var overload:Overload = new Overload(this);
+	 *   overload.addHandler([String], methodUsingString);
+	 *   overload.addHandler([Number], methodUsingNumber);
+	 *   overload.setDefaultHandler(function() {
+	 *     trace(arguments.length+" arguments were used");
+	 *   });
+	 *   return overload.forward(arguments);
+	 * </code>
+	 *
+	 * @param handler Handler to be used if no other handler applies.
+	 * @see #removeDefaultHandler
+	 */
+	public function setDefaultHandler(handler:Function):Void {
+		if(typeof handler == "function") {
+			defaultHandler = new SimpleOverloadHandler(null, handler);
+		} else {
+			removeDefaultHandler();
+		}
+	}
+	
+	/**
+	 * Removes the handler for the case if no handler for a set of arguments was available.
+	 * 
+	 * @see #setDefaultHandler
+	 */
+	public function removeDefaultHandler(Void):Void {
+		defaultHandler = null;
 	}
 	
 	/**
@@ -140,6 +179,9 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 		var matchingHandlers:Array = getMatchingHandlers(overloadArguments);
 		var i:Number = matchingHandlers.length;
 		if (i == 0) {
+			if(defaultHandler) {
+				return defaultHandler;
+			}
 			throw new UnknownOverloadHandlerException("No appropriate OverloadHandler found.",
 									 			  	  this,
 									 			  	  arguments,
