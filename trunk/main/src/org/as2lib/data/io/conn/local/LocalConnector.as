@@ -1,7 +1,6 @@
 ﻿import org.as2lib.data.io.conn.Connector;
 import org.as2lib.data.io.conn.ConnectorListener;
 import org.as2lib.data.io.conn.ConnectorRequest;
-//import org.as2lib.data.io.conn.local.LocalRequest;
 import org.as2lib.data.io.conn.ConnectorError;
 import org.as2lib.data.io.conn.ConnectorResponse;
 import org.as2lib.env.event.EventBroadcaster;
@@ -63,7 +62,9 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 			loc.send.apply(args);
 		}
 		else{
+			//loc = eventBroadcaster.
 			loc.connect(host+path);
+			
 		}
 	}
 	
@@ -98,6 +99,12 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 	public function setParams():Void {
 		
 		params = arguments;
+	}
+	
+	public function onStatus(infoObj){
+		if(infoObj.level == "error") {
+			eventBroadcaster.dispatch(new ConnectorError("There is no receiver with this defined connection identifier",this,arguments,true,false));
+		}
 	}
 	
 	public function addListener(l:ConnectorListener):Void {
