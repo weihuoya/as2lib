@@ -6,46 +6,46 @@ import org.as2lib.core.string.Stringifier;
  * ObjectUtil contains fundamental operations to efficiently and easily work
  * with any type of object.
  *
- * @author: Simon Wacker, Martin Heidegger
- * @see org.as2lib.core.BasicClass
+ * @author Simon Wacker
+ * @author Martin Heidegger
  */
 class org.as2lib.util.ObjectUtil extends BasicClass {
 	/** Private holder for a Stringifier for objects */
 	private static var stringifier:Stringifier = new ObjectStringifier();
 	
 	/**
-	 * Constant for hiding a object from for-in loops.
+	 * Constant for hiding an object from for-in loops.
 	 * 
-	 * @see #setStatus()
-        */
+	 * @see #setAccessPermissions()
+     */
 	public static var ACCESS_IS_HIDDEN = 1
 	
 	/**
 	 * Constant for setting an object deletable.
 	 * 
-	 * @see #setStatus()
-        */
+	 * @see #setAccessPermissions()
+     */
 	public static var ACCESS_CAN_DELETE = 2;
 	
 	/**
 	 * Constant for setting an object overwritable.
 	 * 
-	 * @see #setStatus()
-        */
+	 * @see #setAccessPermissions()
+     */
 	public static var ACCESS_CAN_OVERWRITE = 4;
 	
 	/**
 	 * Constant for allowing everything to an object.
 	 * 
-	 * @see #setStatus()
-        */
+	 * @see #setAccessPermissions()
+     */
 	public static var ACCESS_ALL_ALLOWED = ACCESS_CAN_DELETE | ACCESS_CAN_OVERWRITE;
 	
 	/**
 	 * Constant for allowing nothing..
 	 * 
-	 * @see #setStatus()
-        */
+	 * @see #setAccessPermissions()
+     */
 	public static var ACCESS_NOTHING_ALLOWED = ACCESS_IS_HIDDEN;
 	
 	/**
@@ -63,12 +63,12 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Evaluates if a object is a child of another object.
-	 * It evaluates only methods because parameters could throw an exception.
+	 * Evaluates if an object is a child of another object. It evaluates only
+	 * methods because properties could throw an exception.
 	 * 
-	 * @param inObject The parent-object, where the method should search in.
-	 * @param object The object that should be found.
-	 * @return The name if it was found. Null if it wasn't found.
+	 * @param inObject the parent object, where the method shall search in.
+	 * @param object the object that shall be found.
+	 * @return the name if it could be found else null
 	 */
 	public static function getChildName(inObject, object:Function):String {
 		for(var i:String in inObject) {
@@ -77,16 +77,16 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 					return i;
 				}
 			} catch(e) {
-				// Catching if an getter throws an exception
+				// Catches the Exception a property could throw.
 			}
 		}
 		return null;
 	}
 	
 	/**
-	 * Sets the Access permission to a object by a status-value.
+	 * Sets the Access permission of an object by an access value.
 	 * Uses ASSetPropFlags to set the permissions of the Object.
-	 * You can apply the static values:
+	 * You can apply the access values
 	 * <table>
 	 *   <tr>
 	 *     <th>#ACCESS_IS_HIDDEN</th>
@@ -111,12 +111,12 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * </table>
 	 * as fast references.
 	 * 
-	 * You can combine this values for proper uses binary with:
+	 * You can combine this values for proper using binary with:
 	 * #ACCESS_CAN_DELETE | #ACCESS_CAN_OVERWRITE
-	 * to apply only two status.
+	 * to apply two access permissions.
 	 * 
-	 * @param object The object that should be modified.
-	 * @param status Status that should apply.
+	 * @param object the object that shall be modified.
+	 * @param status the access permission that shall be applied.
 	 */
 	public static function setAccessPermissions(object, access:Number):Void {
 		_global.ASSetPropFlags(object, null, access, true);
