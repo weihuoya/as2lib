@@ -15,30 +15,33 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.MockControl;
 import org.as2lib.test.mock.support.SimpleMockControl;
+import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.log.logger.SimpleLogger;
 import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.LogHandler;
+import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.event.EventBroadcaster;
 
 /**
  * @author Simon Wacker
  */
 class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	
-	public function testConstructor(Void):Void {
-		var logger:SimpleLogger = new SimpleLogger();
-		var returnedName:String = logger.getName();
-		assertSame("The returned name [" + returnedName + "] should be a blank string.", "", returnedName);
+	public function testNewWithNullAndUndefinedArgument(Void):Void {
+		var logger:SimpleLogger = new SimpleLogger(null);
+		assertNull("returned name should be null", logger.getName());
+		var logger:SimpleLogger = new SimpleLogger(undefined);
+		assertUndefined("returned name should be undefined", logger.getName());
 	}
 	
-	public function testConstructorWithName(Void):Void {
-		var logger:SimpleLogger = new SimpleLogger("loggerName");
-		var returnedName:String = logger.getName();
-		assertSame("The two names [loggerName ," + returnedName + "] should be the same.", "loggerName", returnedName);
+	public function testNewWithRealArgument(Void):Void {
+		var logger:SimpleLogger = new SimpleLogger("org.as2lib.core.BasicClass");
+		assertSame(logger.getName(), "org.as2lib.core.BasicClass");
 	}
 	
 	public function testSetLevelWithValidLevel(Void):Void {
-		var logger:SimpleLogger = new SimpleLogger();
+		var logger:SimpleLogger = new SimpleLogger(null);
 		var level:LogLevel = new LogLevel();
 		logger.setLevel(level);
 		var returnedLevel:LogLevel = logger.getLevel();
@@ -62,53 +65,369 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		assertSame("The two levels [" + level + ", " + returnedLevel + "] should be the same.", level, returnedLevel);
 	}
 	
-	public function testSetName(Void):Void {
+	public function testSetNameWithRealArgument(Void):Void {
 		var logger:SimpleLogger = new SimpleLogger();
 		logger.setName("any.name");
 		var returnedName:String = logger.getName();
 		assertSame("The returned name [" + returnedName + "] should be 'any.name'.", "any.name", returnedName);
 	}
 	
-	public function testAddHandler(Void):Void {
-		// TODO: Functionality to add a custom broadcaster needed.
+	public function testSetNameWithNullArgument(Void):Void {
+		var logger:SimpleLogger = new SimpleLogger();
+		logger.setName(null);
+		assertNull(logger.getName());
 	}
 	
-	public function testRemoveHandler(Void):Void {
-		// TODO: Functionality to add a custom broadcaster needed.
+	public function testAddHandlerViaGetAllHandler(Void):Void {
+		var h1c:SimpleMockControl = new SimpleMockControl(LogHandler);
+		var h1:LogHandler = h1c.getMock();
+		h1c.replay();
+		
+		var h3c:SimpleMockControl = new SimpleMockControl(LogHandler);
+		var h3:LogHandler = h3c.getMock();
+		h3c.replay();
+		
+		var h4c:SimpleMockControl = new SimpleMockControl(LogHandler);
+		var h4:LogHandler = h4c.getMock();
+		h4c.replay();
+		
+		var logger:SimpleLogger = new SimpleLogger(null);
+		logger.addHandler(h1);
+		logger.addHandler(h3);
+		logger.addHandler(h4);
+		assertSame(logger.getAllHandler()[0], h1);
+		assertSame(logger.getAllHandler()[1], h3);
+		assertSame(logger.getAllHandler()[2], h4);
+		
+		h1c.verify(this);
+		h3c.verify(this);
+		h4c.verify(this);
 	}
 	
-	public function testRemoveAllHandler(Void):Void {
-		// TODO: Functionality to add a custom broadcaster needed.
+	public function testAddHandlerWithNullArgumentViaGetAllHandler(Void):Void {
+		var logger:SimpleLogger = new SimpleLogger(null);
+		logger.addHandler(null);
+		assertSame(logger.getAllHandler().length, 0);
+	}
+	
+	public function testRemoveHandlerVaiAddHandlerAndGetAllHandler(Void):Void {
+		var h1:LogHandler = new LogHandler();
+		var h2:LogHandler = new LogHandler();
+		var h3:LogHandler = new LogHandler();
+		
+		var handlers:Array;
+		
+		var logger:SimpleLogger = new SimpleLogger(null);
+		logger.addHandler(h1);
+		logger.addHandler(h2);
+		logger.addHandler(h3);
+		
+		logger.removeHandler(h2);
+		handlers = logger.getAllHandler();
+		assertSame(handlers[0], h1);
+		assertSame(handlers[1], h3);
+		
+		logger.removeHandler(h2);
+		handlers = logger.getAllHandler();
+		assertSame(handlers[0], h1);
+		assertSame(handlers[1], h3);
+		
+		logger.removeHandler(h1);
+		handlers = logger.getAllHandler();
+		assertSame(handlers[0], h3);
+		
+		logger.removeHandler(null);
+		handlers = logger.getAllHandler();
+		assertSame(handlers[0], h3);
+		
+		logger.removeHandler(h3);
+		handlers = logger.getAllHandler();
+		assertSame(handlers.length, 0);
+	}
+	
+	public function testRemoveAllHandlerViaGetAllHandler(Void):Void {
+		var h1:LogHandler = new LogHandler();
+		var h2:LogHandler = new LogHandler();
+		var h3:LogHandler = new LogHandler();
+		
+		var logger:SimpleLogger = new SimpleLogger(null);
+		logger.addHandler(h1);
+		logger.addHandler(h2);
+		logger.addHandler(h3);
+		assertSame(logger.getAllHandler().length, 3);
+		logger.removeAllHandler();
+		assertSame(logger.getAllHandler().length, 0);
 	}
 	
 	public function testGetAllHandler(Void):Void {
-		// TODO: Functionality to add a custom broadcaster needed.
-	}
-	
-	public function testIsEnabled(Void):Void {
-		var control:MockControl = new SimpleMockControl(LogLevel);
-		var level:LogLevel = control.getMock();
-		var passedLevel:LogLevel = new LogLevel();
-		level.isGreaterOrEqual(passedLevel);
-		control.setReturnValue(true);
-		control.replay();
-	
-		var logger:SimpleLogger = new SimpleLogger();
-		logger.setLevel(level);
-		var returnedBoolean = logger.isEnabled(passedLevel);
-		assertTrue("Returned boolean [" + returnedBoolean + "] should be 'true'.", returnedBoolean);
+		var h1:LogHandler = new LogHandler();
+		var h2:LogHandler = new LogHandler();
+		var h3:LogHandler = new LogHandler();
 		
-		control.verify(this);
+		var logger:SimpleLogger = new SimpleLogger(null);
+		logger.addHandler(h1);
+		logger.addHandler(h2);
+		logger.addHandler(h3);
+		assertSame(logger.getAllHandler()[0], h1);
+		assertSame(logger.getAllHandler()[1], h2);
+		assertSame(logger.getAllHandler()[2], h3);
 	}
 	
-	public function testLogWithEnabledLevel(Void):Void {
-		// TODO: Functionality to add a custom broadcaster needed.
-		//       Functionality to use a custom log message needed.
+	public function testGetAllHandlerWithNoRegisteredHandler(Void):Void {
+		var l:SimpleLogger = new SimpleLogger();
+		assertSame(l.getAllHandler().length, 0);
+	}
+	
+	public function testIsEnabledWithNullArgument(Void):Void {
+		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var l:LogLevel = lc.getMock();
+		lc.replay();
+		
+		var logger:SimpleLogger = new SimpleLogger(null);
+		logger.setLevel(l);
+		assertFalse(logger.isEnabled(null));
+		
+		lc.verify(this);
+	}
+	
+	public function testIsEnabledWithTrueReturningLogLevel(Void):Void {
+		var a:LogLevel = new LogLevel();
+		
+		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var l:LogLevel = lc.getMock();
+		l.isGreaterOrEqual(a);
+		lc.setReturnValue(true);
+		lc.replay();
+		
+		var logger:SimpleLogger = new SimpleLogger(null);
+		logger.setLevel(l);
+		assertTrue(logger.isEnabled(a));
+		
+		lc.verify(this);
+	}
+	
+	public function testIsEnabledWithFalseReturningLogLevel(Void):Void {
+		var a:LogLevel = new LogLevel();
+		
+		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var l:LogLevel = lc.getMock();
+		l.isGreaterOrEqual(a);
+		lc.setReturnValue(false);
+		lc.replay();
+		
+		var logger:SimpleLogger = new SimpleLogger(null);
+		logger.setLevel(l);
+		assertFalse(logger.isEnabled(a));
+		
+		lc.verify(this);
+	}
+	
+	public function testLogWithNullLevel(Void):Void {
+		var bc:SimpleMockControl = new SimpleMockControl(EventBroadcaster);
+		var b:EventBroadcaster = bc.getMock();
+		bc.replay();
+		
+		var logger:SimpleLogger = new SimpleLogger(null);
+		logger.setBroadcaster(b);
+		logger.log("message", null);
+		
+		bc.verify(this);
 	}
 	
 	public function testLogWithDisabledLevel(Void):Void {
-		// TODO: Functionality to add a custom broadcaster needed.
-		//       Functionality to use a custom log message needed.
+		var a:LogLevel = new LogLevel();
+		
+		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var l:LogLevel = lc.getMock();
+		l.isGreaterOrEqual(a);
+		lc.setReturnValue(false);
+		lc.replay();
+		
+		var bc:SimpleMockControl = new SimpleMockControl(EventBroadcaster);
+		var b:EventBroadcaster = bc.getMock();
+		bc.replay();
+		
+		var logger:SimpleLogger = new SimpleLogger(null);
+		logger.setBroadcaster(b);
+		logger.setLevel(l);
+		logger.log("message", a);
+		
+		bc.verify(this);
+		lc.verify(this);
+	}
+	
+	public function testLogWithEnabledLevelNoHandlersAndNullParent(Void):Void {
+		var m:Object = new Object();
+		var a:LogLevel = new LogLevel();
+		
+		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var l:LogLevel = lc.getMock();
+		l.isGreaterOrEqual(a);
+		lc.setReturnValue(true);
+		lc.replay();
+		
+		var bc:SimpleMockControl = new SimpleMockControl(EventBroadcaster);
+		var b:EventBroadcaster = bc.getMock();
+		b.dispatch(null);
+		bc.setVoidCallable();
+		bc.setArgumentsMatcher(new TypeArgumentsMatcher([LogMessage]));
+		b.removeAllListener();
+		bc.setVoidCallable();
+		bc.replay();
+		
+		var logger:SimpleLogger = new SimpleLogger(null);
+		logger.setBroadcaster(b);
+		logger.setLevel(l);
+		logger.log(m, a);
+		
+		bc.verify(this);
+		lc.verify(this);
+	}
+	
+	public function testLogWithEnabledLevelAndHandlersAndNullParent(Void):Void {
+		var h1:LogHandler = new LogHandler();
+		var h2:LogHandler = new LogHandler();
+		var h3:LogHandler = new LogHandler();
+		
+		var m:Object = new Object();
+		var a:LogLevel = new LogLevel();
+		
+		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var l:LogLevel = lc.getMock();
+		l.isGreaterOrEqual(a);
+		lc.setReturnValue(true);
+		lc.replay();
+		
+		var bc:SimpleMockControl = new SimpleMockControl(EventBroadcaster);
+		var b:EventBroadcaster = bc.getMock();
+		b.dispatch(null);
+		bc.setVoidCallable();
+		bc.setArgumentsMatcher(new TypeArgumentsMatcher([LogMessage]));
+		b.removeAllListener();
+		bc.setVoidCallable();
+		b.addAllListener([h1, h2, h3]);
+		bc.setVoidCallable();
+		bc.replay();
+		
+		var logger:SimpleLogger = new SimpleLogger(null);
+		logger.setBroadcaster(b);
+		logger.setLevel(l);
+		logger.addHandler(h1);
+		logger.addHandler(h2);
+		logger.addHandler(h3);
+		logger.log(m, a);
+		
+		bc.verify(this);
+		lc.verify(this);
+	}
+	
+	public function testLogWithEnabledLevelNoHandlersAndDefinedParents(Void):Void {
+		var h1:LogHandler = new LogHandler();
+		var h2:LogHandler = new LogHandler();
+		var h3:LogHandler = new LogHandler();
+		
+		var lo2c:SimpleMockControl = new SimpleMockControl(SimpleLogger);
+		var lo2:SimpleLogger = lo2c.getMock();
+		lo2.getAllHandler();
+		lo2c.setReturnValue([h1, h2, h3]);
+		lo2.getParent();
+		lo2c.setReturnValue(null);
+		lo2c.replay();
+		
+		var loc:SimpleMockControl = new SimpleMockControl(SimpleLogger);
+		var lo:SimpleLogger = loc.getMock();
+		lo.getAllHandler();
+		loc.setReturnValue([h1, h2, h3]);
+		lo.getParent();
+		loc.setReturnValue(lo2);
+		loc.replay();
+		
+		var m:Object = new Object();
+		var a:LogLevel = new LogLevel();
+		
+		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var l:LogLevel = lc.getMock();
+		l.isGreaterOrEqual(a);
+		lc.setReturnValue(true);
+		lc.replay();
+		
+		var bc:SimpleMockControl = new SimpleMockControl(EventBroadcaster);
+		var b:EventBroadcaster = bc.getMock();
+		b.dispatch(null);
+		bc.setVoidCallable();
+		bc.setArgumentsMatcher(new TypeArgumentsMatcher([LogMessage]));
+		b.removeAllListener();
+		bc.setVoidCallable();
+		b.addAllListener([h1, h2, h3]);
+		bc.setVoidCallable(2);
+		bc.replay();
+		
+		var logger:SimpleLogger = new SimpleLogger(null);
+		logger.setBroadcaster(b);
+		logger.setLevel(l);
+		logger.setParent(lo);
+		logger.log(m, a);
+		
+		bc.verify(this);
+		lc.verify(this);
+		loc.verify(this);
+		loc.verify(this);
+	}
+	
+	public function testLogWithEnabledLevelHandlersAndDefinedParents(Void):Void {
+		var h1:LogHandler = new LogHandler();
+		var h2:LogHandler = new LogHandler();
+		var h3:LogHandler = new LogHandler();
+		
+		var lo2c:SimpleMockControl = new SimpleMockControl(SimpleLogger);
+		var lo2:SimpleLogger = lo2c.getMock();
+		lo2.getAllHandler();
+		lo2c.setReturnValue([h1, h2, h3]);
+		lo2.getParent();
+		lo2c.setReturnValue(null);
+		lo2c.replay();
+		
+		var loc:SimpleMockControl = new SimpleMockControl(SimpleLogger);
+		var lo:SimpleLogger = loc.getMock();
+		lo.getAllHandler();
+		loc.setReturnValue([h1, h2, h3]);
+		lo.getParent();
+		loc.setReturnValue(lo2);
+		loc.replay();
+		
+		var m:Object = new Object();
+		var a:LogLevel = new LogLevel();
+		
+		var lc:SimpleMockControl = new SimpleMockControl(LogLevel);
+		var l:LogLevel = lc.getMock();
+		l.isGreaterOrEqual(a);
+		lc.setReturnValue(true);
+		lc.replay();
+		
+		var bc:SimpleMockControl = new SimpleMockControl(EventBroadcaster);
+		var b:EventBroadcaster = bc.getMock();
+		b.dispatch(null);
+		bc.setVoidCallable();
+		bc.setArgumentsMatcher(new TypeArgumentsMatcher([LogMessage]));
+		b.removeAllListener();
+		bc.setVoidCallable();
+		b.addAllListener([h1, h2, h3]);
+		bc.setVoidCallable(3);
+		bc.replay();
+		
+		var logger:SimpleLogger = new SimpleLogger(null);
+		logger.setBroadcaster(b);
+		logger.setLevel(l);
+		logger.setParent(lo);
+		logger.addHandler(h1);
+		logger.addHandler(h2);
+		logger.addHandler(h3);
+		logger.log(m, a);
+		
+		bc.verify(this);
+		lc.verify(this);
+		loc.verify(this);
+		loc.verify(this);
 	}
 	
 }

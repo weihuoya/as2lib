@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.util.ArrayUtil;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.SpeedEventBroadcaster;
@@ -31,8 +32,8 @@ import org.as2lib.env.log.repository.LoggerHierarchy;
 /**
  * Log output can be made at different levels. You use these levels to enable
  * or prevent specific output. Refer to LogLevel for further information.
- * You can also add your own message handler. To write for example to a textfile.
- * You do this with the #addHandler(LogHandler) operation.
+ * You can also add your own message handlers, to write for example to a textfile.
+ * You do this with the #addHandler(LogHandler) method.
  *
  * @author Simon Wacker
  */
@@ -41,8 +42,8 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	/** The actual level. */
 	private var level:LogLevel;
 	
-	/** The broadcaster that is used to dispatch to all registered writers. */
-	private var broadcaster:EventBroadcaster;
+	/** Stores all added handlers. */
+	private var handlers:Array;
 	
 	/** Stores the parent. */
 	private var parent:HierarchicalLogger;
@@ -50,15 +51,47 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	/** The name of this logger. */
 	private var name:String;
 	
+	/** Stores the broadcaster factory. */
+	private var broadcaster:EventBroadcaster;
+	
 	/**
 	 * Constructs a new instance.
 	 *
-	 * @param name the name of the new logger (optional)
+	 * @param name the name of the new logger
 	 */
 	public function SimpleLogger(name:String) {
-		if (name) setName(name);
-		else setName("");
-		broadcaster = new SpeedEventBroadcaster();
+		setName(name);
+		handlers = new Array();
+	}
+	
+	/**
+	 * Sets the broadcaster used to dispatch to all registered handlers.
+	 *
+	 * <p>If you set a broadcaster of value null or undefined the default
+	 * broadcaster will be used.
+	 *
+	 * @param broadcaster the new broadcaster used to dispatch to handlers
+	 * @see #getBroadcaster()
+	 */
+	public function setBroadcaster(broadcaster:EventBroadcaster):Void {
+		this.broadcaster = broadcaster;
+	}
+	
+	/**
+	 * Returns the currently used broadcaster.
+	 *
+	 * <p>Either the broadcaster set via #setBroadcaster(EventBroadcaster) will be
+	 * returned or the default SpeedEventBroadcaster.
+	 *
+	 * <p>The default one will be used if you set a broadcaster of value null
+	 * or undefined.
+	 *
+	 * @return the currently used broadcaster
+	 * @see #setBroadcaster(EventBroadcaster)
+	 */
+	public function getBroadcaster(Void):EventBroadcaster {
+		if (!broadcaster) broadcaster = new SpeedEventBroadcaster();
+		return broadcaster;
 	}
 	
 	/**
@@ -97,6 +130,12 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	}
 	
 	/**
+	 * If the level has not been set, that means is undefined, the level of
+	 * the parent will be returned.
+	 *
+	 * <p>Null or undefined will only be returned if this level is not defined
+	 * and the parent's getLevel() method returns null or undefined.
+	 *
 	 * @see Logger#getLevel()
 	 */
 	public function getLevel(Void):LogLevel {
@@ -108,34 +147,45 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	 * @see ConfigurableLogger#addHandler()
 	 */
 	public function addHandler(handler:LogHandler):Void {
-		broadcaster.addListener(handler);
+		if (handler)
+			handlers.push(handler);
 	}
 	
 	/**
 	 * @see ConfigurableLogger#removeHandler()
 	 */
 	public function removeHandler(handler:LogHandler):Void {
-		broadcaster.removeListener(handler);
+		if (handler)
+			ArrayUtil.removeElement(handlers, handler);
 	}
 	
 	/**
 	 * @see ConfigurableLogger#removeAllHandler()
 	 */
 	public function removeAllHandler(Void):Void {
-		broadcaster.removeAllListener();
+		handlers = new Array();
 	}
 	
 	/**
+	 * This method never returns null or undefined.
+	 *
 	 * @see HierarchicalLogger#getAllHandler()
 	 */
 	public function getAllHandler(Void):Array {
-		return broadcaster.getAllListener();
+		return handlers.concat();
 	}
 	
 	/**
+	 * False will be returned if:
+	 * <ul>
+	 *   <li>This logger is not enabled for the passed-in level.</li>
+	 *   <li>The passed-in level is null or undefined.</li>
+	 * </ul>
+	 *
 	 * @see Logger#isEnabled()
 	 */
 	public function isEnabled(level:LogLevel):Boolean {
+		if (!level) return false;
 		return getLevel().isGreaterOrEqual(level);
 	}
 	
@@ -175,16 +225,25 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	}
 	
 	/**
+	 * Broadcasts the passed-in message to all handlers of this logger as
+	 * well as to the handlers of every parent logger.
+	 *
 	 * @see Logger#log()
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			var message:LogMessage = new LogMessage(message, level);
+			var logMessage:LogMessage = new LogMessage(message, level);
+			var broadcaster:EventBroadcaster = getBroadcaster();
 			var target:HierarchicalLogger = this;
 			while (target) {
-				new SpeedEventBroadcaster(target.getAllHandler()).dispatch(message);
+				var handlers:Array = target.getAllHandler();
+				if (handlers.length > 0) {
+					broadcaster.addAllListener(handlers);
+				}
 				target = target.getParent();
 			}
+			broadcaster.dispatch(logMessage);
+			broadcaster.removeAllListener();
 		}
 	}
 	

@@ -67,6 +67,13 @@ class org.as2lib.env.event.SimpleEventBroadcaster extends BasicClass implements 
 	}
 	
 	/**
+	 * @see org.as2lib.env.event.EventBroadcaster#addAllListener()
+	 */
+	public function addAllListener(listeners:Array):Void {
+		this.listeners = this.listeners.concat(listeners);
+	}
+	
+	/**
 	 * @see org.as2lib.env.event.EventBroadcaster#removeListener()
 	 */
 	public function removeListener(listener:EventListener):Void {

@@ -49,6 +49,13 @@ class org.as2lib.env.event.SpeedEventBroadcaster extends BasicClass implements E
 	}
 	
 	/**
+	 * @see org.as2lib.env.event.EventBroadcaster#addAllListener()
+	 */
+	public function addAllListener(listeners:Array):Void {
+		l = l.concat(listeners);
+	}
+	
+	/**
 	 * @see org.as2lib.env.event.EventBroadcaster#removeListener()
 	 */
 	public function removeListener(listener:EventListener):Void {
