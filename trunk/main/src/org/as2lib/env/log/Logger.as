@@ -18,111 +18,195 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.env.log.LogLevel;
 
 /**
- * Logger defines all possible operations to write output at specific levels.
+ * Logger declares all methods needed to write log messages in a well
+ * defined and performant way.
+ *
+ * <p>The basic methods to write the log messages are #log, #debug,
+ * #info, #warning and #fatal.
+ *
+ * <p>The first thing to note is that you can write log messages at
+ * different levels. These levels are Debug, Info, Warning, Error and
+ * Fatal. Depending on what level was set only messages at a given
+ * level are logged.
+ * The levels are organized in a hierarchical manner. That means if you
+ * set you log level to All every messages get logged. If you set it
+ * to Error only messages at Error and Fatal level get logged and so on.
+ * It is also possible to define your own set of levels. You can therefor
+ * use the #isEnabled(LogLevel):Boolean and log(*, LogLevel):Boolean
+ * methods.
+ *
+ * <p>To do not waste unnecessary performance in constructing log messages
+ * that do not get logged you can use the #isEnabled, #isDebugEnabled,
+ * #isInfoEnabled, #isWarningEnabled, #isErrorEnabled and #isFatalEnabled
+ * methods.
+ *
+ * <p>Note that the message does in neither case have to be a string.
+ * That means you can pass-in messages and let the actual handler or logger
+ * decide how to produce a string representation of the message. That is in
+ * most cases done by using the toString method of the specific message.
+ * You can use this method to do not lose performance in cases where
+ * the message does not get logged.
+ *
+ * <p>The basic workflow of using loggers is as follows:
+ * <code>// MyLogger is an implementation of this interface
+ * var logger:Logger = new MyLogger();
+ * if (logger.isInfoEnabled()) {
+ *   logger.info("This is an information message.");
+ * }</code>
+ *
+ * <p>Note that we are in the above example not setting a log level.
+ * This depends on what methods the implementation of this interface
+ * offers.
+ * Note also that depending on the concrete implementation and the message
+ * it may be faster to do not call any of the is*Enabled(..) methods.
  *
  * @author Simon Wacker
  */
 interface org.as2lib.env.log.Logger extends BasicInterface {
 	
 	/**
-	 * Checks whether this instance is enabled for a given level passed as
-	 * argument.
+	 * Checks whether this logger is enabled for the passed-in log level.
+	 *
+	 * <p>Using this method as shown in the class documentation may improve
+	 * performance depending on how long the log message construction takes.
 	 *
 	 * @param level the level to make the check upon
-	 * @return true if this instance is enabled for the given level else false
+	 * @return true if this logger is enabled for the given level else false
+	 * @see #log(*, LogLevel):Void
 	 */
 	public function isEnabled(level:LogLevel):Boolean;
 	
 	/**
-	 * Checks if this instance is enabled for debug level output.
+	 * Checks if this logger is enabled for debug level output.
 	 *
-	 * @return true if debug output can be made
+	 * <p>Using this method as shown in the class documentation may improve
+	 * performance depending on how long the log message construction takes.
+	 *
+	 * @return true if debug output gets made
+	 * @see org.as2lib.env.log.level.AbstractLogLevel#DEBUG
+	 * @see #debug(*):Void
 	 */
 	public function isDebugEnabled(Void):Boolean;
 	
 	/**
-	 * Checks if this instance is enabled for info level output.
+	 * Checks if this logger is enabled for info level output.
 	 *
-	 * @return true if info output can be made
+	 * <p>Using this method as shown in the class documentation may improve
+	 * performance depending on how long the log message construction takes.
+	 *
+	 * @return true if info output gets made
+	 * @see org.as2lib.env.log.level.AbstractLogLevel#INFO
+	 * @see #info(*):Void
 	 */
 	public function isInfoEnabled(Void):Boolean;
 	
 	/**
-	 * Checks if this instance is enabled for warning level output.
+	 * Checks if this logger is enabled for warning level output.
 	 *
-	 * @return true if warning output can be made
+	 * <p>Using this method as shown in the class documentation may improve
+	 * performance depending on how long the log message construction takes.
+	 *
+	 * @return true if warning output gets made
+	 * @see org.as2lib.env.log.level.AbstractLogLevel#WARNING
+	 * @see #warning(*):Void
 	 */
 	public function isWarningEnabled(Void):Boolean;
 	
 	/**
-	 * Checks if this instance is enabled for error level output.
+	 * Checks if this logger is enabled for error level output.
 	 *
-	 * @return true if error output can be made
+	 * <p>Using this method as shown in the class documentation may improve
+	 * performance depending on how long the log message construction takes.
+	 *
+	 * @return true if error output gets made
+	 * @see org.as2lib.env.log.level.AbstractLogLevel#ERROR
+	 * @see #error(*):Void
 	 */
 	public function isErrorEnabled(Void):Boolean;
 	
 	/**
-	 * Checks if this instance is enabled for fatal level output.
+	 * Checks if this logger is enabled for fatal level output.
 	 *
-	 * @return true if fatal output can be made
+	 * <p>Using this method as shown in the class documentation may improve
+	 * performance depending on how long the log message construction takes.
+	 *
+	 * @return true if fatal output gets made
+	 * @see org.as2lib.env.log.level.AbstractLogLevel#FATAL
+	 * @see #fatal(*):Void
 	 */
 	public function isFatalEnabled(Void):Boolean;
 	
 	/**
-	 * @return the currently active level
+	 * Returns the set level.
+	 *
+	 * @return the set level
 	 */
 	public function getLevel(Void):LogLevel;
 	
 	/**
-	 * Outputs a message object at the given level.
+	 * Logs the message object at the given level.
 	 *
-	 * @param message the message object to be written out
-	 * @param level the specific level at which the message shall be written out
+	 * <p>The message gets only logged when this logger is enabled for
+	 * the passed-in log level.
+	 *
+	 * @param message the message object to log
+	 * @param level the specific level at which the message shall be logged
+	 * @see #isEnabled(LogLevel):Boolean
 	 */
 	public function log(message, level:LogLevel):Void;
 	
 	/**
-	 * Outputs a message object. The output will only be made when the level is set to
-	 * debug or an above level.
+	 * Logs the message object at debug level.
 	 *
-	 * @param message the message object to be written out
-	 * @see LogLevel
+	 * <p>The message gets only logged when the level is set to debug or
+	 * a level above.
+	 *
+	 * @param message the message object to log
+	 * @see #isDebugEnabled(Void):Boolean
 	 */
 	public function debug(message):Void;
 	
 	/**
-	 * Outputs a message object. The output will only be made when the level is set to
-	 * info or an above level.
+	 * Logs the message object at info level.
 	 *
-	 * @param message the message object to be written out
-	 * @see LogLevel
+	 * <p>The message gets only logged when the level is set to info or
+	 * a level above.
+	 *
+	 * @param message the message object to log
+	 * @see #isInfoEnabled(Void):Boolean
 	 */
 	public function info(message):Void;
 	
 	/**
-	 * Outputs a message object. The output will only be made when the level is set to
-	 * warning or an above level.
+	 * Logs the message object at warning level.
 	 *
-	 * @param message the message object to be written out
-	 * @see LogLevel
+	 * <p>The message gets only logged when the level is set to warning or
+	 * a level above.
+	 *
+	 * @param message the message object to log
+	 * @see #isWarningEnabled(Void):Boolean
 	 */
 	public function warning(message):Void;
 	
 	/**
-	 * Outputs a message object. The output will only be made when the level is set to
-	 * error or an above level.
+	 * Logs the message object at error level.
 	 *
-	 * @param message the message object to be written out
-	 * @see LogLevel
+	 * <p>The message gets only logged when the level is set to error or a
+	 * level above.
+	 *
+	 * @param message the message object to log
+	 * @see #isErrorEnabled(Void):Boolean
 	 */
 	public function error(message):Void;
 	
 	/**
-	 * Outputs a message object. The output will only be made when the level is set to
-	 * fatal or an above level.
+	 * Logs the message object at fatal level.
 	 *
-	 * @param message the message object to be written out
-	 * @see LogLevel
+	 * <p>The message gets only logged when the level is set to fatal or a
+	 * above level.
+	 *
+	 * @param message the message object to log
+	 * @see #isFatalEnabled(Void):Boolean
 	 */
 	public function fatal(message):Void;
 	
