@@ -24,7 +24,7 @@ import org.as2lib.data.holder.HolderConfig;
 /**
  * ?
  *
- * @author Michael Hermann
+ * @author Michael Herrmann
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.HashMap extends BasicClass implements Map {
