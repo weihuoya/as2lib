@@ -22,10 +22,7 @@
  */
 test.unit.org.as2lib.data.holder.array.TArrayIterator;
 test.unit.org.as2lib.data.holder.array.TTypedArray;
-
-// TODO: Simon check this test, it contains awful much errors and I don't know where to start ... 
-// test.unit.org.as2lib.data.holder.list.TPriorityList;
-
+test.unit.org.as2lib.data.holder.list.TPriorityList;
 test.unit.org.as2lib.data.holder.list.TArrayList;
 test.unit.org.as2lib.data.holder.TProtectedIterator;
 test.unit.org.as2lib.data.holder.map.TMapIterator;

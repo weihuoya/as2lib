@@ -5,6 +5,12 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2004">
       <month value="11">
+        <day value="21">
+          <entry type="bugfix" package="org.as2lib.data.holder.list" class="PriorityList" method="insertFirst(value):Void">Did not work when there was not any value inserted before calling the method.</entry>
+          <entry type="bugfix" package="org.as2lib.data.holder.list" class="PriorityList" method="insertLast(value):Void">Did not work when there was not any value inserted before calling the method.</entry>
+          <entry type="bugfix" package="org.as2lib.data.holder.list" class="PriorityList" method="setAll(index:Number, list:List):Void">Did not work at all because methods with name 'set' are causing bugs.</entry>
+          <entry type="bugfix" package="org.as2lib.data.holder.list" class="PriorityList" method="retainAll(list:List):Void">Did not work when there was more than one value to delete from the list because of a missing '--'.</entry>
+        </day>
         <day value="18">
           <entry type="change" package="org.as2lib.util" class="Call"><change-throws to="IllegalArgumentException"></change-throws> If the applied arguments are null.</entry>
           <entry type="add" package="org.as2lib.util" class="ArrayUtil" method="removeAllOccurances(array:Array, element)"></entry>
