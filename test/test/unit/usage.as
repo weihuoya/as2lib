@@ -87,7 +87,7 @@ test.unit.org.as2lib.env.reflect.algorithm.TPropertyAlgorithm;
 
 // org.as2lib.env.log
 test.unit.org.as2lib.env.log.logger.TSimpleLogger;
-//test.unit.org.as2lib.env.log.repository.TLoggerHierarchy; // causes the player to break up
+test.unit.org.as2lib.env.log.repository.TLoggerHierarchy;
 
 // org.as2lib.env.bean
 test.unit.org.as2lib.env.bean.TMutablePropertyValueSet;
