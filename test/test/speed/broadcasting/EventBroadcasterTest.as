@@ -19,7 +19,4 @@ class broadcasting.EventBroadcasterTest implements TestCase{
 	public function run(Void):Void {
 		eB.dispatch(new SimpleEventInfo("call"));
 	}
-	public function getName(Void):String {
-		return "EventBroadcaster";
-	}
 }

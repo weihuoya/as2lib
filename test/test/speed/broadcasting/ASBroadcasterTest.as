@@ -19,7 +19,4 @@ class broadcasting.ASBroadcasterTest implements TestCase{
 	public function run(Void):Void {
 		broadcastMessage('call');
 	}
-	public function getName(Void):String {
-		return "ASBroadcaster";
-	}
 }
