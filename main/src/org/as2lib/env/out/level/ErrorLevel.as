@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.env.out.level.FatalLevel;
-import org.as2lib.env.out.info.OutErrorInfo;
+import org.as2lib.env.out.OutInfo;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.except.Throwable;
@@ -29,7 +29,7 @@ class org.as2lib.env.out.level.ErrorLevel extends FatalLevel {
 	/**
 	 * @see org.as2lib.env.out.OutLevel
 	 */
-	public function error(error, broadcaster:EventBroadcaster):Void {
-		broadcaster.dispatch(new OutErrorInfo(error, Out.ERROR));
+	public function error(message, broadcaster:EventBroadcaster):Void {
+		broadcaster.dispatch(new OutInfo(message, Out.ERROR));
 	}
 }

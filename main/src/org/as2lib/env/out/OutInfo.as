@@ -20,13 +20,13 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.out.OutConfig;
 
 /**
- * OutWriteInfo is a dumb model that contains all the information needed by the OutHandlers
- * #write() operation. These information include the OutLevel the output has as 
+ * OutInfo is a dumb model that contains all the information needed by the OutHandlers
+ * write() and error() operation. These information include the OutLevel the output has as 
  * well as the message that shall be written out.
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.out.info.OutWriteInfo extends BasicClass implements EventInfo {
+class org.as2lib.env.out.OutInfo extends BasicClass implements EventInfo {
 	/** The message object that shall be written out. */
 	private var message;
 	
@@ -39,7 +39,7 @@ class org.as2lib.env.out.info.OutWriteInfo extends BasicClass implements EventIn
 	 * @param message the message object that shall be written out
 	 * @param level the level of the output
 	 */
-	public function OutWriteInfo(message, level:OutLevel) {
+	public function OutInfo(message, level:OutLevel) {
 		this.message = message;
 		this.level = level;
 	}
@@ -77,6 +77,6 @@ class org.as2lib.env.out.info.OutWriteInfo extends BasicClass implements EventIn
 	 * @see org.as2lib.core.BasicInterface
 	 */
 	public function toString(Void):String {
-		return OutConfig.getWriteStringifier().execute(this);
+		return OutConfig.getInfoStringifier().execute(this);
 	}
 }

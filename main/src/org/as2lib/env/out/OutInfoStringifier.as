@@ -17,25 +17,22 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
 import org.as2lib.env.util.ReflectUtil;
-import org.as2lib.env.out.info.OutErrorInfo;
+import org.as2lib.env.out.OutInfo;
 import org.as2lib.env.out.OutLevel;
-import org.as2lib.env.except.Throwable;
-import org.as2lib.env.except.ExceptConfig;
 
 /**
- * ErrorStringifier is the default Stringifier used by the OutUtil#stringifyErrorInfo()
- * operation.
+ * OutInfoStringifier is the default Stringifier used to Stringify OutInfos.
  * 
  * @author Simon Wacker
  */
-class org.as2lib.env.out.string.ErrorStringifier extends BasicClass implements Stringifier {
+class org.as2lib.env.out.OutInfoStringifier extends BasicClass implements Stringifier {
 	/**
 	 * @see org.as2lib.util.string.Stringifier
 	 */
 	public function execute(target):String {
-		var info:OutErrorInfo = OutErrorInfo(target);
+		var info:OutInfo = target;
 		return ("** " + getLevelName(info.getLevel()) + " ** \n" 
-				+ info.getError());
+				+ info.getMessage());
 	}
 	
 	private function getLevelName(level:OutLevel):String {

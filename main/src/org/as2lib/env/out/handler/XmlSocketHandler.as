@@ -16,48 +16,39 @@
 
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.out.OutHandler;
-import org.as2lib.env.out.info.OutWriteInfo;
-import org.as2lib.env.out.info.OutErrorInfo;
+import org.as2lib.env.out.OutInfo;
 import org.as2lib.core.BasicClass;
 
 /**
- * SocketOutputServerHandler is an implementation of the OutHandler interface
- * that uses the POWERFLASHER.SOS's XML-Socket-Server to handle/print out
- * the passed information.
+ * XmlSocketHandler is an implementation of the OutHandler interface that
+ * uses the XMLSocket to handle the received data. It was originally designed
+ * to work with the POWERFLASHER's SOS XML-Socket-Server.
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.out.handler.SocketOutputServerHandler extends BasicClass implements OutHandler {
+class org.as2lib.env.out.handler.XmlSocketHandler extends BasicClass implements OutHandler {
+	
 	private var socket:XMLSocket;
 	
 	/**
-	 * Constructs a new SocketOutputServerHandler.
+	 * Constructs a new XmlSocketHandler.
 	 *
 	 * @param host a fully qualified DNS domain name
 	 * @param port the TCP port number on the host used to establish a connection
 	 */
-	public function SocketOutputServerHandler(host:String, port:Number) {
+	public function XmlSocketHandler(host:String, port:Number) {
 		socket = new XMLSocket();
 		socket.connect(host, port);
 	}
 	
 	/**
 	 * Uses the XMLSocket connection for the output. Uses the toString()
-	 * operation of the OutWriteInfo to obtain the String representation.
+	 * operation of the OutInfo to obtain the String representation.
 	 *
 	 * @see org.as2lib.env.out.OutHandler
 	 */
-	public function write(info:OutWriteInfo):Void {
-		socket.send(info.toString() + "\n");
+	public function write(info:OutInfo):Void {
+		socket.send(info + "\n");
 	}
 	
-	/**
-	 * Uses the XMLSocket connection for the output. Uses the toString()
-	 * operation of the OutErrorInfo to obtain the String representation.
-	 *
-	 * @see org.as2lib.env.out.OutHandler
-	 */
-	public function error(info:OutErrorInfo):Void {
-		socket.send(info.toString() + "\n");
-	}
 }

@@ -63,18 +63,18 @@ interface org.as2lib.env.out.OutLevel extends BasicInterface {
 	public function warning(message, broadcaster:EventBroadcaster):Void;
 	
 	/**
-	 * Outputs an error object.
+	 * Outputs an message object.
 	 *
-	 * @param error the error object to be written out
+	 * @param message the message object to be written out
 	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
-	public function error(error, broadcaster:EventBroadcaster):Void;
+	public function error(message, broadcaster:EventBroadcaster):Void;
 	
 	/**
-	 * Outputs an error object.
+	 * Outputs an message object.
 	 *
-	 * @param error the error object to be written out
+	 * @param message the message object to be written out
 	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
-	public function fatal(error, broadcaster:EventBroadcaster):Void;
+	public function fatal(message, broadcaster:EventBroadcaster):Void;
 }

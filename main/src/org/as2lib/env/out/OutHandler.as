@@ -15,8 +15,7 @@
  */
 
 import org.as2lib.env.event.EventListener;
-import org.as2lib.env.out.info.OutWriteInfo;
-import org.as2lib.env.out.info.OutErrorInfo;
+import org.as2lib.env.out.OutInfo;
 
 /**
  * OutHandler is the base interface for all concrete OutHandlers. OutHandlers are used 
@@ -31,21 +30,11 @@ import org.as2lib.env.out.info.OutErrorInfo;
  */
 interface org.as2lib.env.out.OutHandler extends EventListener {
 	/**
-	 * Writes information obtained from the OutWriteInfo parameter as well as additional 
+	 * Writes information obtained from the OutInfo parameter as well as additional 
 	 * information to the output target. It is not prescribed which information will be 
 	 * written. Hence it depends on the concrete OutHandler.
 	 *
-	 * @param info the OutWriteInfo instance containing the base information
+	 * @param info the OutInfo instance containing the basic information
 	 */
-	public function write(info:OutWriteInfo):Void;
-	
-	/**
-	 * Writes information obtained from the OutErrorInfo parameter as well as additional 
-	 * information to the output target. It is not prescribed which information will be 
-	 * written and how the Throwable will be stringified. Hence it depends on the concrete 
-	 * OutHandler.
-	 *
-	 * @param info the OutErrorInfo instance containing the base information
-	 */
-	public function error(info:OutErrorInfo):Void;
+	public function write(info:OutInfo):Void;
 }
