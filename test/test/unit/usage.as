@@ -60,7 +60,6 @@ test.unit.org.as2lib.util.TArrayUtil;
 test.unit.org.as2lib.util.TObjectUtil;
 test.unit.org.as2lib.util.TStringUtil;
 test.unit.org.as2lib.util.TCall;
-//test.unit.org.as2lib.util.TConstructorCall;
 test.unit.org.as2lib.util.TClassUtil;
 test.unit.org.as2lib.util.TStopWatch;
 test.unit.org.as2lib.util.TObjectUtil;
