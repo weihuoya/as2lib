@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<changelog xmlns="as2lib-changelog"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noSchemaLocation="changelog.xsd">
+<changelog xmlns="as2lib"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="aslib http://www.as2lib.org/changelog_0.91.xsd">
+  <release name="as2lib 0.1 beta" day="3" month="9" year="2004">
   <year value="2004">
     <month value="9">
       <day value="1">
@@ -163,6 +164,7 @@
         <entry type="remove" package="org.as2lib.env.reflect" class="CompositeMemberInfo" method="getName(Void):String">[is already defined in interface MemberInfo].</entry>
         <entry type="remove" package="org.as2lib.env.reflect" class="TypeInfo" method="getParent(Void):PackageInfo">[is already defined in interface CompositeMemberInfo].</entry>
       </day>
-    </month
-  ></year>
+    </month>
+    </year>
+    </release>
 </changelog>
