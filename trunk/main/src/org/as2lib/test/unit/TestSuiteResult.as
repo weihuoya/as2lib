@@ -203,12 +203,14 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	 * @return TestSuiteResult as well formated String.
 	 */
 	public function toString(Void):String {
-		var result:String = "";
-		result += "*** TestSuite "+getName()+" ["+getOperationTime()+"ms] ***";
+		var result:String;
+		var titleLength:Number;
+		result = "*** TestSuite "+getName()+" ["+getOperationTime()+"ms] ***";
+		titleLength = result.length;
 		for(var i=0; i<this.testResults.length; i++){
 			result += "\n"+StringUtil.addSpaceIndent(this.testResults[i].toString(), 2);
 		}
-		result += "\n*********************************"
+		result += "\n"+StringUtil.multiply("*", titleLength);
 		return result;
 	}
 	
