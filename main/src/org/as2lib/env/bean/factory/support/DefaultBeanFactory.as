@@ -68,14 +68,7 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	}
 	
 	public function getBeanByName(name:String) {
-		var beanDefinition:BeanDefinition = beanDefinitionMap.get(name);
-		if (!beanDefinition) {
-			beanDefinition = getParentBeanFactory().getBeanByName(name);
-			if (!beanDefinition) {
-				throw new NoSuchBeanDefinitionException("There is no bean definition with name [" + name + "].", this, arguments);
-			}
-		}
-		return beanDefinition.getBean();
+		return getBeanDefinition(name).getBean();
 	}
 	
 	public function getBeanByNameAndType(name:String, requiredType:Function) {
@@ -86,8 +79,8 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 		return bean;
 	}
 	
-	public function isSingleton(name:String):Boolean {
-		return BeanDefinition(beanDefinitionMap.get(name)).isSingleton();
+	public function isSingleton(beanName:String):Boolean {
+		return getBeanDefinition(beanName).isSingleton();
 	}
 	
 	//---------------------------------------------------------------------
@@ -142,7 +135,14 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	//---------------------------------------------------------------------
 	
 	public function getBeanDefinition(beanName:String):BeanDefinition {
-		return beanDefinitionMap.get(beanName);
+		var result:BeanDefinition = beanDefinitionMap.get(beanName);
+		if (!result) {
+			result = getParentBeanFactory().getBeanByName(beanName);
+			if (!result) {
+				throw new NoSuchBeanDefinitionException("There is no bean definition with name [" + beanName + "].", this, arguments);
+			}
+		}
+		return result;
 	}
 	
 }
