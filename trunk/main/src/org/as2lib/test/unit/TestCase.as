@@ -298,9 +298,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertTrue():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, undefined], assertTrueWithMessage);
 		overload.addHandler([String, Object], assertTrueWithMessage);
-		overload.addHandler([undefined], assertTrueWithoutMessage);
 		overload.addHandler([Object], assertTrueWithoutMessage);
 		overload.addHandler([], assertTrueWithoutMessage);
 		return overload.forward(arguments);
@@ -344,9 +342,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertFalse():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, undefined], assertFalseWithMessage);
 		overload.addHandler([String, Object], assertFalseWithMessage);
-		overload.addHandler([undefined], assertFalseWithoutMessage);
 		overload.addHandler([Object], assertFalseWithoutMessage);
 		overload.addHandler([], assertFalseWithoutMessage);
 		return overload.forward(arguments);
@@ -390,17 +386,10 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertEquals():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, Object, undefined], assertEqualsWithMessage);
-		overload.addHandler([String, undefined, Object], assertEqualsWithMessage);
 		overload.addHandler([String, Object, Object], assertEqualsWithMessage);
-		overload.addHandler([String, undefined], assertEqualsWithMessage);
 		overload.addHandler([String, Object], assertEqualsWithMessage);
-		overload.addHandler([undefined, undefined], assertEqualsWithoutMessage);
-		overload.addHandler([undefined, Object], assertEqualsWithoutMessage);
-		overload.addHandler([Object, undefined], assertEqualsWithoutMessage);
 		overload.addHandler([Object, Object], assertEqualsWithoutMessage);
 		overload.addHandler([String, String], assertEqualsWithoutMessage);
-		overload.addHandler([undefined], assertEqualsWithoutMessage);
 		overload.addHandler([Object], assertEqualsWithoutMessage);
 		overload.addHandler([], assertEqualsWithoutMessage);
 		return overload.forward(arguments);
@@ -541,17 +530,10 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertNotEquals():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, Object, undefined], assertNotEqualsWithMessage);
-		overload.addHandler([String, undefined, Object], assertNotEqualsWithMessage);
 		overload.addHandler([String, Object, Object], assertNotEqualsWithMessage);
-		overload.addHandler([String, undefined], assertNotEqualsWithMessage);
 		overload.addHandler([String, Object], assertNotEqualsWithMessage);
-		overload.addHandler([undefined, undefined], assertNotEqualsWithoutMessage);
-		overload.addHandler([undefined, Object], assertNotEqualsWithoutMessage);
-		overload.addHandler([Object, undefined], assertNotEqualsWithoutMessage);
 		overload.addHandler([Object, Object], assertNotEqualsWithoutMessage);
 		overload.addHandler([String, String], assertNotEqualsWithoutMessage);
-		overload.addHandler([undefined], assertNotEqualsWithoutMessage);
 		overload.addHandler([Object], assertNotEqualsWithoutMessage);
 		overload.addHandler([], assertNotEqualsWithoutMessage);
 		return overload.forward(arguments);
@@ -602,17 +584,10 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertSame():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, Object, undefined], assertSameWithMessage);
-		overload.addHandler([String, undefined, Object], assertSameWithMessage);
 		overload.addHandler([String, Object, Object], assertSameWithMessage);
-		overload.addHandler([String, undefined], assertSameWithMessage);
 		overload.addHandler([String, Object], assertSameWithMessage);
-		overload.addHandler([undefined, undefined], assertSameWithoutMessage);
-		overload.addHandler([undefined, Object], assertSameWithoutMessage);
-		overload.addHandler([Object, undefined], assertSameWithoutMessage);
 		overload.addHandler([Object, Object], assertSameWithoutMessage);
 		overload.addHandler([String, String], assertSameWithoutMessage);
-		overload.addHandler([undefined], assertSameWithoutMessage);
 		overload.addHandler([Object], assertSameWithoutMessage);
 		overload.addHandler([], assertSameWithoutMessage);
 		return overload.forward(arguments);
@@ -663,17 +638,10 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertNotSame():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, Object, undefined], assertNotSameWithMessage);
-		overload.addHandler([String, undefined, Object], assertNotSameWithMessage);
 		overload.addHandler([String, Object, Object], assertNotSameWithMessage);
-		overload.addHandler([String, undefined], assertNotSameWithMessage);
 		overload.addHandler([String, Object], assertNotSameWithMessage);
-		overload.addHandler([undefined, undefined], assertNotSameWithoutMessage);
-		overload.addHandler([undefined, Object], assertNotSameWithoutMessage);
-		overload.addHandler([Object, undefined], assertNotSameWithoutMessage);
 		overload.addHandler([Object, Object], assertNotSameWithoutMessage);
 		overload.addHandler([String, String], assertNotSameWithoutMessage);
-		overload.addHandler([undefined], assertNotSameWithoutMessage);
 		overload.addHandler([Object], assertNotSameWithoutMessage);
 		overload.addHandler([], assertNotSameWithoutMessage);
 		return overload.forward(arguments);
@@ -724,9 +692,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertNull():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, undefined], assertNullWithMessage);
 		overload.addHandler([String, Object], assertNullWithMessage);
-		overload.addHandler([undefined], assertNullWithoutMessage);
 		overload.addHandler([Object], assertNullWithoutMessage);
 		overload.addHandler([], assertNullWithoutMessage);
 		return overload.forward(arguments);
@@ -774,9 +740,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertNotNull():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, undefined], assertNotNullWithMessage);
 		overload.addHandler([String, Object], assertNotNullWithMessage);
-		overload.addHandler([undefined], assertNotNullWithoutMessage);
 		overload.addHandler([Object], assertNotNullWithoutMessage);
 		overload.addHandler([], assertNotNullWithoutMessage);
 		return overload.forward(arguments);
@@ -824,9 +788,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertUndefined():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, undefined], assertUndefinedWithMessage);
 		overload.addHandler([String, Object], assertUndefinedWithMessage);
-		overload.addHandler([undefined], assertUndefinedWithoutMessage);
 		overload.addHandler([Object], assertUndefinedWithoutMessage);
 		overload.addHandler([], assertUndefinedWithoutMessage);
 		return overload.forward(arguments);
@@ -874,9 +836,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertNotUndefined():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, undefined], assertNotUndefinedWithMessage);
 		overload.addHandler([String, Object], assertNotUndefinedWithMessage);
-		overload.addHandler([undefined], assertNotUndefinedWithoutMessage);
 		overload.addHandler([Object], assertNotUndefinedWithoutMessage);
 		overload.addHandler([], assertNotUndefinedWithoutMessage);
 		return overload.forward(arguments);
@@ -924,9 +884,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertInfinity():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, undefined], assertInfinityWithMessage);
 		overload.addHandler([String, Object], assertInfinityWithMessage);
-		overload.addHandler([undefined], assertInfinityWithoutMessage);
 		overload.addHandler([Object], assertInfinityWithoutMessage);
 		overload.addHandler([], assertInfinityWithoutMessage);
 		return overload.forward(arguments);
@@ -970,9 +928,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertNotInfinity():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, undefined], assertNotInfinityWithMessage);
 		overload.addHandler([String, Object], assertNotInfinityWithMessage);
-		overload.addHandler([undefined], assertNotInfinityWithoutMessage);
 		overload.addHandler([Object], assertNotInfinityWithoutMessage);
 		overload.addHandler([], assertNotInfinityWithoutMessage);
 		return overload.forward(arguments);
@@ -1016,9 +972,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertEmpty():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, undefined], assertEmptyWithMessage);
 		overload.addHandler([String, Object], assertEmptyWithMessage);
-		overload.addHandler([undefined], assertEmptyWithoutMessage);
 		overload.addHandler([Object], assertEmptyWithoutMessage);
 		overload.addHandler([], assertEmptyWithoutMessage);
 		return overload.forward(arguments);
@@ -1068,9 +1022,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertNotEmpty():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, undefined], assertNotEmptyWithMessage);
 		overload.addHandler([String, Object], assertNotEmptyWithMessage);
-		overload.addHandler([undefined], assertNotEmptyWithoutMessage);
 		overload.addHandler([Object], assertNotEmptyWithoutMessage);
 		overload.addHandler([], assertNotEmptyWithoutMessage);
 		return overload.forward(arguments);
