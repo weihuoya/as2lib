@@ -13,55 +13,42 @@ import org.as2lib.data.io.conn.remoting.RemotingRequest;
 class test.org.as2lib.data.io.conn.TRemoteConnectorImplementation extends Test{
    private var connector:RemotingConnector;
    private var myEB:EventBroadcaster;
+   private var myOut:Out;
    
    public function TRemoteConnectorImplementation() {
      connector = new RemotingConnector();
+	 myOut = new Out();
    }
 	
 	private function connectionTest(con:RemotingConnector){
+		myOut.info("----------------------------------------");
+		myOut.info("---- Test of Identifier ----");
+		var gatewayUrl:String = "http://192.168.0.2/flashservices/gateway";//"http://127.0.0.1:8500/flashservices/gateway"
+		con.setIdentifier(gatewayUrl);
 		
-		// initialization of output object
-		var myOut:Out = new Out();
-		//myOut.setLevel(Out.INFO);
+		Test.assertEqualsWithoutMessage(gatewayUrl,gatewayUrl);
+		Test.assertEqualsWithoutMessage(gatewayUrl,"blabla");
+		Test.assertEqualsWithoutMessage(gatewayUrl,con.getIdentifier());
 		
-		// getter setter Test
+		myOut.info("----------------------------------------");
+		myOut.info("---- Test of Listener ----");
+		var remListener:ExampleListener = new ExampleListener();
+		con.addListener(new ExampleListener());
+		con.addListener(remListener);
+		con.addListener(new ExampleListener());
 		
-		myOut.info("-- Test of setIdentifier --");
-		con.setIdentifier("http://192.168.0.2/flashservices/gateway");
-		myOut.info("RemotingConnector.identifier: "+con.getIdentifier());
+		con.removeListener(remListener);
 		
-		// Listener Test
+		myOut.info("----------------------------------------");
+		myOut.info("---- Test of onError ----");
+		con.onStatus({description:"unconvertable Object passed"});
 		
-		myOut.info("-- Test of Listener --");
-		var l1:ExampleListener = new ExampleListener();
-		var l2:ExampleListener = new ExampleListener();
-		var l3:ExampleListener = new ExampleListener();
-		myOut.info("---- addListener l1,l2,l3 --");
-		con.addListener(l1);
-		con.addListener(l2);
-		con.addListener(l3);
-		myOut.info("---- removeListener l1 --");
-		//con.removeListener(l1);
+		myOut.info("----------------------------------------");
+		myOut.info("---- Test of onResponse ----");
+		con.onResult("Yeah you´ve got a Result of your Connector!");
 		
-		// EventBroadcaster for testing of onError onResponse methods
-		myOut.info("-- Test of EventBroadcaster --");
-		
-		//myEB = con.getEventBroadcaster();
-		
-		//var myListener:ListenerArray = myEB.getAllListener();
-		//trace(ExampleListener(myListener.get(0)).counter);
-		//trace(typeof(myListener.get(1)));
-		
-		/*for(var i=0; i<=myListener.length;i++){
-			var l = myListener.get(i);
-			trace("myListener.get: "+l instanceof ExampleListener);
-			myOut.info("EventBroadcaster.ListenerArray:");
-		}
-		*/
-		//myEB.dispatch(new ConnectorError("TestConnectionError",this,new FunctionArguments(),true,false));
-		//myEB.dispatch(new ConnectorResponse());
-		
-		//Establish Connection
+		myOut.info("----------------------------------------");
+		myOut.info("---- Test of real connection ----");
 		con.initConnection();
 		con.handleRequest(new RemotingRequest("com.oreilly.frdg.HelloWorld.sayHello"));
 		
