@@ -67,7 +67,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	private var superClass:ClassInfo;
 	
 	/** The package that contains the class. */
-	private var parent:PackageInfo;
+	private var package:PackageInfo;
 	
 	/** The methods the class has. */
 	private var methods:Array;
@@ -164,21 +164,21 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * Constructs a new ClassInfo.
+	 * Constructs a new ClassInfo instance.
 	 *
 	 * <p>All arguments are allowed to be null, but keep in mind that not
 	 * all methods will function if one is.
 	 * 
 	 * @param name the name of the class
 	 * @param class the class the newly created ClassInfo represents
-	 * @param parent the parent of the class
+	 * @param package the package in which the class is declared
 	 */
 	public function ClassInfo(name:String, 
 							  clazz:Function, 
-							  parent:PackageInfo) {
+							  package:PackageInfo) {
 		this.name = name;
 		this.clazz = clazz;
-		this.parent = parent;
+		this.package = package;
 	}
 	
 	/**
@@ -300,8 +300,8 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *
 	 * <p>The path will not be included if:
 	 * <ul>
-	 *   <li>The #getParent method returns null or undefined.</li>
-	 *   <li>The #getParent method returns a package whose #isRoot method returns true.</li>
+	 *   <li>The #getPackage method returns null or undefined.</li>
+	 *   <li>The #getPackage method returns a package whose #isRoot method returns true.</li>
 	 * </ul>
 	 *
 	 * @return the full name of the represented class
@@ -309,10 +309,10 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 */
 	public function getFullName(Void):String {
 		if (fullName === undefined) {
-			if (getParent().isRoot() || !getParent()) {
+			if (getPackage().isRoot() || !getPackage()) {
 				return (fullName = getName());
 			}
-			fullName = getParent().getFullName() + "." + getName();
+			fullName = getPackage().getFullName() + "." + getName();
 		}
 		return fullName;
 	}
@@ -399,15 +399,15 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * Returns the parent package of the represented class.
+	 * Returns the package the represented class is declared in / resides
+	 * in.
 	 *
-	 * <p>The parent is the package the class is resides in. The parent of
-	 * org.as2lib.core.BasicClass is org.as2lib.core.
+	 * <p>The package of the class org.as2lib.core.BasicClass is org.as2lib.core.
 	 *
-	 * @return the parent package of the represented class
+	 * @return the package the represented class is declared in / resides in
 	 */
-	public function getParent(Void):PackageInfo {
-		return parent;
+	public function getPackage(Void):PackageInfo {
+		return package;
 	}
 	
 	/**
@@ -491,7 +491,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @overload #getMethodByName(String):MethodInfo
 	 * @overload #getMethodByMethod(Function):MethodInfo
 	 */
-	public function getMethod(method):MethodInfo {
+	public function getMethod():MethodInfo {
 		var overload:Overload = new Overload(this);
 		overload.addHandler([String], getMethodByName);
 		overload.addHandler([Function], getMethodByMethod);
@@ -637,7 +637,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @overload #getPropertyByName(String):PropertyInfo
 	 * @overload #getPropertyByProperty(Function):PropertyInfo
 	 */
-	public function getProperty(property):PropertyInfo {
+	public function getProperty():PropertyInfo {
 		var overload:Overload = new Overload(this);
 		overload.addHandler([String], getPropertyByName);
 		overload.addHandler([Function], getPropertyByProperty);

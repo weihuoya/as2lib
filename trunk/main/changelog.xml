@@ -6,6 +6,9 @@
     <year value="2005">
        <month value="2">
          <day value="17">
+           <entry type="change" package="org.as2lib.env.reflect" class="ClassInfo" method="getParent"><change-rename to="getPackage" /></entry>
+           <entry type="add" package="org.as2lib.env.reflect" class="TypeInfo" method="getPackage(Void):PackageInfo"></entry>
+           <entry type="remove" package="org.as2lib.env.reflect" class="PackageMemberInfo" method="getParent"></entry>
            <entry type="add" package="org.as2lib.env.log.logger" class="AbstractLogger">Provides common functionalities normally needed by loggers.</entry>
          </day>
          <day value="16">
