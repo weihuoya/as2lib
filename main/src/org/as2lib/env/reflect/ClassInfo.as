@@ -172,13 +172,9 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	 * @throws org.as2lib.env.reflect.NoSuchClassMemberException if the method you tried to obtain does not exist
 	 */
 	public function getMethodByName(methodName:String):MethodInfo {
-		var iterator:Iterator = getMethods().iterator();
-		var method:MethodInfo;
-		while (iterator.hasNext()) {
-			method = MethodInfo(iterator.next());
-			if (method.getName() == methodName) {
-				return method;
-			}
+		var result:MethodInfo = getMethods().get(methodName);
+		if (ObjectUtil.isAvailable(result)) {
+			return result;
 		}
 		throw new NoSuchClassMemberException("The method with the name [" + methodName + "] you tried to obtain does not exist.",
 										this,
@@ -239,13 +235,9 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	 * @throws org.as2lib.env.reflect.NoSuchClassMemberException if the property you tried to obtain does not exist
 	 */
 	public function getPropertyByName(propertyName:String):PropertyInfo {
-		var iterator:Iterator = getProperties().iterator();
-		var property:PropertyInfo;
-		while (iterator.hasNext()) {
-			property = PropertyInfo(iterator.next());
-			if (property.getName() == propertyName) {
-				return property;
-			}
+		var property:PropertyInfo = getProperties().get(propertyName);
+		if (ObjectUtil.isAvailable(property)) {
+			return property;
 		}
 		throw new NoSuchClassMemberException("The property with the name [" + propertyName + "] you tried to obtain does not exist.",
 										this,
