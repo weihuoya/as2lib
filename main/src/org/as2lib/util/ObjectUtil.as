@@ -15,8 +15,6 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.util.string.ObjectStringifier;
-import org.as2lib.util.string.Stringifier;
 
 /**
  * ObjectUtil contains fundamental operations to efficiently and easily work
@@ -26,9 +24,6 @@ import org.as2lib.util.string.Stringifier;
  * @author Martin Heidegger
  */
 class org.as2lib.util.ObjectUtil extends BasicClass {
-	/** Private holder for a Stringifier for objects */
-	private static var stringifier:Stringifier = new ObjectStringifier();
-	
 	/**
 	 * Constant for allowing everything to an object.
 	 * 
@@ -68,14 +63,6 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * Private constructor.
 	 */
 	private function ObjectUtil(Void) {
-	}
-	
-	public static function setStringifier(newStringifier:Stringifier):Void {
-		stringifier = newStringifier;
-	}
-	
-	public static function getStringifier(Void):Stringifier {
-		return stringifier;
 	}
 	
 	/**

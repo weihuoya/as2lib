@@ -14,24 +14,37 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
 import org.as2lib.env.out.Out;
 import org.as2lib.env.out.OutAccess;
 import org.as2lib.env.out.handler.TraceHandler;
 import org.as2lib.env.event.EventBroadcasterFactory;
 import org.as2lib.env.event.SimpleEventBroadcasterFactory;
+import org.as2lib.util.string.ObjectStringifier;
+import org.as2lib.util.string.Stringifier;
 
 /**
  * Basic configuration class for all classes.
  * The configurations out of this file will be used if subconfigurations wont overwrite it.
  * 
  * @author Martin Heidegger
+ * @author Simon Wacker
  */
-class org.as2lib.Config {
+class org.as2lib.Config extends BasicClass {
 	/** The OutAccess instance basically used by all classes to do their output. */
 	private static var out:OutAccess;
 	
 	/** Internal holder for the EventBroadcasterFactory */
 	private static var eventBroadcasterFactory:EventBroadcasterFactory;
+	
+	/** Stringifier used to stringify Objects. */
+	private static var objectStringifier:Stringifier = new ObjectStringifier();
+	
+	/**
+	 * Private constructor.
+	 */
+	private function Config(Void) {
+	}
 	
 	/**
 	 * Sets a new OutAccess instance.
@@ -79,5 +92,23 @@ class org.as2lib.Config {
 			eventBroadcasterFactory = new SimpleEventBroadcasterFactory();
 		}
 		return eventBroadcasterFactory;
+	}
+	
+	/**
+	 * Sets a new Stringifier used to stringify Objects.
+	 *
+	 * @param stringifier the new Object Stringifier
+	 */
+	public static function setObjectStringifier(stringifier:Stringifier):Void {
+		objectStringifier = stringifier;
+	}
+	
+	/**
+	 * Returns the Stringifier used to stringify Objects.
+	 *
+	 * @return the currently used Object Stringifier.
+	 */
+	public static function getObjectStringifier(Void):Stringifier {
+		return objectStringifier;
 	}
 }
