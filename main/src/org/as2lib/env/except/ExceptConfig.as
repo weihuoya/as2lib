@@ -20,10 +20,8 @@ import org.as2lib.env.except.StackTraceElementStringifier;
 import org.as2lib.env.except.StackTraceStringifier;
 import org.as2lib.env.except.StackTraceElementFactory;
 import org.as2lib.env.except.SimpleStackTraceElementFactory;
-import org.as2lib.util.Stringifier;
 import org.as2lib.env.except.Throwable;
-import org.as2lib.env.out.OutAccess;
-import org.as2lib.env.EnvConfig;
+import org.as2lib.util.Stringifier;
 
 /**
  * ExceptConfig is the base configuration file for the exceptions. It allows you
@@ -32,7 +30,8 @@ import org.as2lib.env.EnvConfig;
  * @author Simon Wacker
  */
 class org.as2lib.env.except.ExceptConfig extends BasicClass {
-	/** The Stringifier used to stringify a Throwable */
+	
+	/** The Stringifier used to stringify a Throwable. */
 	private static var throwableStringifier:Stringifier;
 	
 	/** Used to stringify a StackTraceElement */
@@ -44,34 +43,10 @@ class org.as2lib.env.except.ExceptConfig extends BasicClass {
 	/** Stores the StackTraceElementFactory used to obtain StackTraceElement instances. */
 	private static var stackTraceElementFactory:StackTraceElementFactory;
 	
-	/** The OutAccess that is used by the Throwables toString() operation. */
-	private static var out:OutAccess;
-	
 	/**
 	 * Private constructor.
 	 */
 	private function ExceptConfig(Void) {
-	}
-	
-	/**
-	 * Sets the OutAccess instance used by the Throwables toString() operation.
-	 *
-	 * @param out the new OutAccess instance
-	 */
-	public static function setOut(newOut:OutAccess):Void {
-		out = newOut;
-	}
-	
-	/**
-	 * Returns the OutAccess instance currently used to write out Throwables.
-	 * If no OutAccess instance has been set manually the OutAccess instance
-	 * returned by EnvConifg#getOut() will be used.
-	 *
-	 * @return the OutAccess instance used to write out Throwables
-	 */
-	public static function getOut(Void):OutAccess {
-		if (!out) return EnvConfig.getOut();
-		return out;
 	}
 	
 	/**
@@ -152,4 +127,5 @@ class org.as2lib.env.except.ExceptConfig extends BasicClass {
 		if (!stackTraceElementFactory) stackTraceElementFactory = new SimpleStackTraceElementFactory();
 		return stackTraceElementFactory;
 	}
+	
 }

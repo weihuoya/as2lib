@@ -15,9 +15,6 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.out.Out;
-import org.as2lib.env.out.OutAccess;
-import org.as2lib.env.out.handler.TraceHandler;
 import org.as2lib.env.event.EventBroadcasterFactory;
 import org.as2lib.env.event.SimpleEventBroadcasterFactory;
 import org.as2lib.core.ObjectStringifier;
@@ -31,9 +28,7 @@ import org.as2lib.util.Stringifier;
  * @author Simon Wacker
  */
 class org.as2lib.Config extends BasicClass {
-	/** The OutAccess instance basically used by all classes to do their output. */
-	private static var out:OutAccess;
-	
+
 	/** Internal holder for the EventBroadcasterFactory */
 	private static var eventBroadcasterFactory:EventBroadcasterFactory;
 	
@@ -44,32 +39,6 @@ class org.as2lib.Config extends BasicClass {
 	 * Private constructor.
 	 */
 	private function Config(Void) {
-	}
-	
-	/**
-	 * Sets a new OutAccess instance.
-	 *
-	 * @param out the new OutAcces instance
-	 */
-	public static function setOut(to:OutAccess):Void {
-		out = to;
-	}
-	
-	/**
-	 * Returns the OutAccess instance currently used.
-	 * If it wasn't set before or was set to null a new Out instance will be
-	 * initialized and a TraceOutputHandler will be added.
-	 *
-	 * @return the OutAccess instance used
-	 * @see org.as2lib.env.out.handler.TraceOutputHandler
-	 * @see org.as2lib.env.out.Out
-	 */
-	public static function getOut(Void):OutAccess {
-		if(!out) {
-			out = new Out();
-			Out(out).addHandler(new TraceHandler());
-		}
-		return out;
 	}
 	
 	/**

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
+import org.as2lib.env.log.LoggerRepositoryManager;
+import org.as2lib.env.log.Logger;
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.event.EventDispatcher;
 import org.as2lib.env.event.Consumable;
-import org.as2lib.core.BasicClass;
-import org.as2lib.env.out.OutAccess;
-import org.as2lib.env.event.EventConfig;
 
 /**
  * An implementation of the EventDispatcher interface that logs the dispatching
@@ -28,15 +28,18 @@ import org.as2lib.env.event.EventConfig;
  * @author Simon Wacker
  */
 class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass implements EventDispatcher {
+	
+	/** Logger to log forwarded events. */
+	private static var logger:Logger = LoggerRepositoryManager.getRepository().getLogger("org.as2lib.env.event.dispatcher.LogEventDispatcher");
+	
 	/**
 	 * @see org.as2lib.env.event.EventDispatcher#dispatch()
 	 */
 	public function dispatch(event:EventInfo, listeners:Array):Void {
 		var name:String = event.getName();
 		var l:Number = listeners.length;
-		var out:OutAccess = EventConfig.getOut();
 		for (var i:Number = 0; i < l; i++) {
-			out.log("Forwarding event #" + i + " with name " + name);
+			logger.log("Forwarding event #" + i + " with name " + name);
 			listeners[i][name](event);
 		}
 	}
@@ -47,13 +50,13 @@ class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass impl
 	public function dispatchConsumable(event:EventInfo, listeners:Array):Void {
 		var name:String = event.getName();
 		var l:Number = listeners.length;
-		var out:OutAccess = EventConfig.getOut();
 		for (var i:Number = 0; i < l; i++) {
-			out.log("Forwarding event #" + i + " with name " + name);
+			logger.log("Forwarding event #" + i + " with name " + name);
 			listeners[i][name](event);
 			if (Consumable(event).isConsumed()) {
 				return;
 			}
 		}
 	}
+	
 }
