@@ -23,6 +23,7 @@ import org.as2lib.data.holder.stack.SimpleStack;
  * ArrayUtil contains fundamental operations to manipulate Arrays.
  *
  * @author Simon Wacker
+ * @author Christophe Herreman
  */
 class org.as2lib.util.ArrayUtil extends BasicClass {
 	/**
@@ -139,5 +140,19 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 			array[i] = array[rand]; 
 			array[rand] = temp; 
 		} 
+	}
+	
+	
+	/**
+	 * Swaps 2 values of an array.
+	 *
+	 * @param a The array to swap its values from.
+	 * @param i The index of the first value.
+	 * @param j The index of the second value.
+	 */
+	public static function swap(a:Array, i:Number, j:Number){
+		var tmp = a[i];
+		a[i] = a[j];
+		a[j] = tmp;
 	}
 }
