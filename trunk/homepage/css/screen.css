@@ -25,6 +25,7 @@ img {
 h1 {
   color: #FF9F07;
   font-size: 1.4em;
+  margin-left:0px;
   font-family: Verdana, Arial, Helvetica, sans, serif;
 }
 h2 {
@@ -48,6 +49,15 @@ h4 {
   margin-top: 0.5em;
   margin-bottom: 0.3em;
   font-size: 1.1em;
+  font-family: Verdana, Arial, Helvetica, sans, serif;
+}
+h5 {
+  color: #666666;
+  font-size: 1.1em;
+  padding: 0em;
+  margin: 0em;
+  margin-top: 0.3em;
+  margin-bottom: 0.2em;
   font-family: Verdana, Arial, Helvetica, sans, serif;
 }
 .code {
@@ -74,6 +84,12 @@ ul {
 }
 ol {
   margin: 0em;
+  padding: 0em;
+  margin-top: 0.2em;
+  margin-bottom: 1em;
+}
+ol ol{
+  margin-left: 2.3em;
 }
 .mainTable {
 }
