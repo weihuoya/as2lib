@@ -27,7 +27,7 @@ class org.as2lib.io.conn.core.client.UnknownServiceException extends ConnectionE
 	/**
 	 * @see org.as2lib.io.conn.ConnectionException#new()
 	 */
-	public function UnknownServiceException(message:String, thrower, args:FunctionArguments) {
+	public function UnknownServiceException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
 	}
 	

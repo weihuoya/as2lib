@@ -41,9 +41,9 @@ class org.as2lib.aop.advice.DynamicBeforeAdvice extends AbstractBeforeAdvice imp
 	/**
 	 * Executes the callback passing the passed join point and arguments.
 	 * 
-	 * @see org.as2lib.aop.advice.BeforeAdvice#execute(JoinPoint, FunctionArguments):Void
+	 * @see org.as2lib.aop.advice.BeforeAdvice#execute(JoinPoint, Array):Void
 	 */
-	public function execute(joinPoint:JoinPoint, args:FunctionArguments):Void {
+	public function execute(joinPoint:JoinPoint, args:Array):Void {
 		callback.execute([joinPoint, args]);
 	}
 }

@@ -22,9 +22,9 @@ import org.as2lib.env.except.Exception;
 class org.as2lib.env.bean.BeanException extends Exception {
 	
 	/**
-	 * @see Exception#new(String, , FunctionArguments)
+	 * @see Exception#new(String, , Array)
 	 */
-	public function BeanException(message:String, thrower, args:FunctionArguments) {
+	public function BeanException(message:String, thrower, args:Array) {
 		super(message, thrower, args);
 	}
 	

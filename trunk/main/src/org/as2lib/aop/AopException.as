@@ -26,7 +26,7 @@ class org.as2lib.aop.AopException extends Exception {
 	/**
 	 * @see org.as2lib.env.except.Exception#new()
 	 */
-	public function AopException(message:String, thrower, args:FunctionArguments) {
+	public function AopException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
 	}
 	

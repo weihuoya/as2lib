@@ -5,6 +5,9 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="1">
+         <day value="19">
+           <entry type="change">Changed all occurences of type FunctionArguments to Array. Done change because FunctionArguments cannot be instantiated, FunctionArguments is not explicitely needed, to allow for better testing.</entry>
+         </day>
          <day value="16">
            <entry type="add" package="org.as2lib.env.overload" class="Overload" method="setDefaultHandler(handler:Function):Void">Allows alternative handling if no matching handler was found.</entry>
            <entry type="add" package="org.as2lib.env.overload" class="Overload" method="removeDefaultHandler(handler:Function):Void">Allows removing of the alternative handler.</entry>

@@ -52,7 +52,7 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 	 * @param overloadArguments	The arguments used for the overloading.
 	 * @param overloadHandlers	The available handlers that do not match.
 	 */
-	public function UnknownOverloadHandlerException(message:String, thrower, args:FunctionArguments, overloadTarget, overloadedMethod:Function, overloadArguments:Array, overloadHandlers:Array) {
+	public function UnknownOverloadHandlerException(message:String, thrower, args:Array, overloadTarget, overloadedMethod:Function, overloadArguments:Array, overloadHandlers:Array) {
 		super (message, thrower, args);
 		this.overloadTarget = overloadTarget;
 		this.overloadedMethod = overloadedMethod;

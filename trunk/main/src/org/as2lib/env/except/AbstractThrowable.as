@@ -49,15 +49,15 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	 * @param thrower the instance that throwed the Throwable
 	 * @param args the arguments of the throwing operation
 	 */
-	private function AbstractThrowable(message:String, thrower, args:FunctionArguments) {
+	private function AbstractThrowable(message:String, thrower, args:Array) {
 		/*if ((message == undefined) || !thrower || !args) {
-			throw new IllegalArgumentException("All three specified arguments [message:String, thrower, args:FunctionArguments] must be passed.", this, arguments);
+			throw new IllegalArgumentException("All three specified arguments [message:String, thrower, args:Array] must be passed.", this, arguments);
 		}*/
 		stackTrace = new SimpleStack();
 		this.message = message;
 		addStackTraceElement(thrower, args.callee, args);
 		// TODO: Implement findMethod to display the next line correctly.
-		// addStackTraceElement(undefined, args.caller, new FunctionArguments());
+		// addStackTraceElement(undefined, args.caller, new Array());
 	}
 	
 	/**

@@ -26,7 +26,7 @@ class org.as2lib.env.except.AbstractOperationException extends FatalException {
 	/**
 	 * @see org.as2lib.env.except.FatalException#Constructor()
 	 */
-	public function AbstractOperationException(message:String, thrower, args:FunctionArguments) {
+	public function AbstractOperationException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
 	}
 }

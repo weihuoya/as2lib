@@ -30,7 +30,7 @@ class org.as2lib.io.conn.ConnectionException extends Exception {
 	/**
 	 * @see org.as2lib.env.except.Exception#new()
 	 */
-	public function ConnectionException(message:String, thrower, args:FunctionArguments) {
+	public function ConnectionException(message:String, thrower, args:Array) {
 		super(message, thrower, args);
 	}
 	

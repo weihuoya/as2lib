@@ -31,7 +31,7 @@ class org.as2lib.env.overload.OverloadException extends FatalException {
 	 * @param thrower			Object where the Exception occured.
 	 * @param args				Arguments of the method where the exception occured.
 	 */
-	public function OverloadException(message:String, thrower, args:FunctionArguments) {
+	public function OverloadException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
 	}
 }

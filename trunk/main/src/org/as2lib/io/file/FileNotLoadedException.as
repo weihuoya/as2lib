@@ -24,7 +24,7 @@ class org.as2lib.io.file.FileNotLoadedException extends Exception {
 	/**
 	 * @see org.as2lib.env.except.Exception#new()
 	 */
-	public function FileNotLoadedException(message:String, thrower, args:FunctionArguments) {
+	public function FileNotLoadedException(message:String, thrower, args:Array) {
 		super(message, thrower, args);
 	}
 	

@@ -28,7 +28,7 @@ class org.as2lib.test.mock.MethodCallRangeError extends AssertionFailedError {
 	private var expectedMethodCallRanges:Array;
 	private var actualMethodCallRanges:Array;
 	
-	public function MethodCallRangeError(message:String, thrower, args:FunctionArguments) {
+	public function MethodCallRangeError(message:String, thrower, args:Array) {
 		super(message, thrower, args);
 		methodCalls = new Array();
 		expectedMethodCallRanges = new Array();

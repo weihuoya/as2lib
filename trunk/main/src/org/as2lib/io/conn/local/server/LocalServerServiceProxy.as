@@ -60,6 +60,25 @@ import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
  * var callback:MethodInvocationCallback = client.myMethod("firstArgument", "secondArgument");
  * </code>
  *
+ * <p>If the client invokes a method with arguments on this service
+ * that are not of type Number, String, Boolean or Array that get
+ * converted dynamically to the correct type, flash just creates a new
+ * object of type Object and populates it with the instance variables
+ * of the passed object.
+ * To receive an instance of correct type you must thus register the
+ * class.
+ * <code>Object.registerClass("MyClass", MyClass);</code>
+ *
+ * <p>The received object will now be of correct type. But you still
+ * have to be aware of some facts.
+ * Flash creates a new object in the background and sets the instance
+ * variables of the sent instance to the new object. It then registers
+ * this object to the appropriate class (if registered previously) and
+ * applies the constructor of that class to the new object passing no
+ * arguments.
+ * That means if the constructor sets instance variables it overwrites
+ * the once set previously by undefined.
+ *
  * @author Simon Wacker
  * @author Christoph Atteneder
  */

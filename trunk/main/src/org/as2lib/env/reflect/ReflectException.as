@@ -25,7 +25,7 @@ class org.as2lib.env.reflect.ReflectException extends Exception {
 	/**
 	 * @see org.as2lib.env.except.Exception#Constructor()
 	 */
-	public function ReflectException(message:String, thrower, args:FunctionArguments) {
+	public function ReflectException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
 	}
 }

@@ -30,6 +30,6 @@ interface org.as2lib.aop.advice.BeforeAdvice extends Advice {
 	 * @param joinPoint the join point the advice was woven into
 	 * @param args the arguments passed to the join point
 	 */
-	public function execute(joinPoint:JoinPoint, args:FunctionArguments):Void;
+	public function execute(joinPoint:JoinPoint, args:Array):Void;
 	
 }

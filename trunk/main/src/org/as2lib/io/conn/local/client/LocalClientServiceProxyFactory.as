@@ -166,7 +166,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Abs
 		var serviceProxy:ClientServiceProxy = getClientServiceProxyByUrl(url);
 		if (!type) return serviceProxy;
 		var handler:InvocationHandler = new InvocationHandler();
-		handler.invoke = function(proxy, methodName:String, args:FunctionArguments) {
+		handler.invoke = function(proxy, methodName:String, args:Array) {
 			if (args[args.length-1] instanceof MethodInvocationCallback) {
 				var callback:MethodInvocationCallback = MethodInvocationCallback(args.pop());
 				return serviceProxy.invokeByNameAndArgumentsAndCallback(methodName, args, callback);

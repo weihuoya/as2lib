@@ -29,6 +29,6 @@ interface org.as2lib.env.reflect.InvocationHandler extends BasicInterface {
 	 * @param args the arguments that were passed
 	 * @return the result of the actual method invokation
 	 */
-	public function invoke(proxy, method:String, args:FunctionArguments);
+	public function invoke(proxy, method:String, args:Array);
 	
 }

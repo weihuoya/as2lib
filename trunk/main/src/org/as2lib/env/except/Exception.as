@@ -30,7 +30,7 @@ class org.as2lib.env.except.Exception extends AbstractThrowable implements Throw
 	 *
 	 * @see org.as2lib.env.except.AbstractThrowable#new()
 	 */
-	public function Exception(message:String, thrower, args:FunctionArguments) {
+	public function Exception(message:String, thrower, args:Array) {
 		super(message, thrower, args);
 	}
 	
