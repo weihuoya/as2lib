@@ -1,55 +1,64 @@
-﻿
-import org.as2lib.basic.ReflectionObject
+﻿import org.as2lib.basic.ReflectionObject
 import org.as2lib.basic.exceptions.*
 
 class org.as2lib.basic.Reflections {
 	public static var foundTypes:Array;
 	public static var foundObjects:Array;
 	public static var foundClasses:Array;
+	public static var __blockReflection__:Boolean = true;
 	private static var started:Boolean;
 	
 	public static function findObject (realObject):ReflectionObject {
 		if(!started) {
-			checkType(realObject, "org.as2lib.basic.Reflections", "findObject");
+			var foundObj:ReflectionObject = allReadyFound(realObject);
+			checkType(realObject, arguments);
 			// Reset previous Searches
 			resetResults();
 			// Search in all Paths
 			startIndexAll();
-			// Return if Found
-			var foundObj = allReadyFound(realObject);
-			if(!foundObj) {
-				throw new ObjectNotFoundException("The Object was at no reachable place. Maybe the scope from the Object was set to an function.", "org.as2lib.basic.Reflections", "findObject", arguments);
-			} else {
-				return(foundObj);
-			}
+			return(foundObj);
 		}
 	}
 	
-	public static function checkType (object, place:String, inFunction:String):Void {
+	public static function getInfosFor(realObject):ReflectionObject {
+		if(!started) {
+			var foundObj:ReflectionObject = allReadyFound(realObject);
+			checkType(realObject, arguments);
+			// Reset previous Searches
+			resetResults();
+			// Search in all Paths
+			startIndexAll();
+			return(foundObj);
+		}
+	}
+	
+	public static function checkType (object, path, name, parent, infoArguments:Array):Void {
 		if(typeof object == "undefined" || object == "null") {
-			throw new WrongArgumentException("It is not possible to search for "+object, place, inFunction, new Array(object));
+			throw new WrongArgumentException("It is not possible to search for '"+object+"'. It's only possible to search for existing Values!", infoArguments);
 		}
 	}
 	
 	public static function resetResults (Void):Void {
-		foundTypes = new Array();
-		foundObjects = new Array();
-		foundClasses = new Array();
+		delete(foundTypes);
+		delete(foundObjects);
+		delete(foundClasses);
 	}
 	
 	public static function startIndexAll (Void):Void {
-		started = true;
-		var root = new ReflectionObject(_root);
-		root.addReference("_root", "_root", null);
-		var global = new ReflectionObject(_global);
-		global.addReference("_global", "_global", null);
-		started = false;
+		if(!started) {
+			started = true;
+			var root = new ReflectionObject(_root);
+			root.addReference("_root", "_root", null);
+			var global = new ReflectionObject(_global);
+			global.addReference("_global", "_global", null);
+			started = false;
+		}
 	}
 	
 	public static function getClass (realObject):ReflectionObject {
 		var reflClass = allReadyFoundReflectionClass(realObject);
 		if(reflClass) {
-			return(reflClass);
+			return (reflClass);
 		} else {
 			return (new ReflectionObject(realObject));
 		}
@@ -95,16 +104,19 @@ class org.as2lib.basic.Reflections {
 				return(foundObjects[i]);
 			}
 		}
+		return(new ReflectionObject(realObject));
 	}
 	
 	public static function allReadyFoundReflectionClass (realObject):ReflectionObject {
 		if(!foundClasses) {
 			foundClasses = new Array();
 		}
-		for(var i:Number; i<foundClasses.length; i++ ) {
+		//for(var i:Number; i<foundClasses.length; i++ ) {
+		for(var i:String in foundClasses) {	
 			if(foundClasses[i].realObject === realObject) {
 				return(foundClasses[i]);
 			}
 		}
+		return(new ReflectionObject(realObject));
 	}
 }
