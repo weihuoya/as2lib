@@ -22,7 +22,6 @@ class org.as2lib.basic.ReflectionObject {
 		this.references = new Array();
 		this.instances = new Array();
 		this.__blockReflection__ = true;
-		_global.ASSetPropFlag(this.__blockReflection__, null, 7, false);
 		if(typeof realObject == "function") {
 			Reflections.foundClasses.push(this);
 		} else {
@@ -35,6 +34,7 @@ class org.as2lib.basic.ReflectionObject {
 		if(!this.setted) {
 			this.setted = true;
 			this.fetchAllInfos();
+			trace("--> found: "+path+", "+this.type);
 		}
 	}
 	
@@ -78,26 +78,45 @@ class org.as2lib.basic.ReflectionObject {
 		this.properties = new Array();
 		
 		if(typeof this.realObject == "object" || typeof this.realObject == "movieclip") {
-			_global.ASSetPropFlags(this.realObject, null, 6, true);
-			trace("------------> level ++ ["+(count++)+"] , "+this._name);
-			for(var i:String in this.realObject) {
-				if(!realObject[i].__blockReflection__) {
-					var usedObject:org.as2lib.basic.ReflectionObject = Reflections.allReadyFound(realObject[i]);
-					if(!usedObject) {
-						var usedObject = new org.as2lib.basic.ReflectionObject(realObject[i]);
-					}		
-					usedObject.addReference(i, this.references[0].path+"."+i, this);
-					//var usedObject:org.as2lib.basic.ReflectionObject = Reflections.addReflectionObject(realObject[i], i, this.references[0].path+"."+i, this);
-
-					if(typeof realObject[i] == "function") {
-						this.methods.push(usedObject);
-					} else {
-						this.properties.push(usedObject);
-					}
+			this.getPropertiesAndMethods(this.realObject);
+		} else if(typeof this.realObject == "function") {
+			// Class Defined Functions.
+			this.getPropertiesAndMethods(this.realObject.prototype);
+			// InstanceFunctions.
+			if(/*this._name != "undefined" && !this._name &&*/ this.parentObject._name != "__constructor__" && !this.realObject.__blockReflection__){
+				trace('-----> Calling: '+this_._name);
+				var instance = new this.realObject();
+				if(!instance.__blockReflection__) {
+					this.getPropertiesAndMethods(instance);
 				}
 			}
-			trace("------------> level --");
-			count--;
 		}
+	}
+	
+	private function getPropertiesAndMethods (fromObject):Void {
+		for(var i:String in fromObject) {
+			addPropertyOrMethod(fromObject[i], i);
+		}
+		for(var j:Number = 0; j < fromObject.length; j++) {
+			addPropertyOrMethod(fromObject[j], j);
+		}
+		count--;
+	}
+	
+	private function addPropertyOrMethod (content, name):Void {
+		var usedObject:org.as2lib.basic.ReflectionObject = Reflections.allReadyFound(content);
+		if(!usedObject) {
+			var usedObject = new org.as2lib.basic.ReflectionObject(content);
+		}		
+		usedObject.addReference(name, this.references[0].path+"."+name, this);
+		if(typeof content == "function") {
+			this.methods.push(usedObject);
+		} else {
+			this.properties.push(usedObject);
+		}
+	}
+	
+	public function toString (Void):String {
+		return("[object org.as2lib.basic.ReflectionObject:"+this._path+"]");
 	}
 }
