@@ -117,12 +117,12 @@
                                     Usually the "StandardOutputHandler"(which is itself implementing the OutputHandlerInterface) should process all actions, but it will be possible to write custom output handlers for specific needs/various systems.
                                   </li>
                                   <li><h4>.setOutputLevel([Number]):Void</h4>
-                                    The Outputlevel defines which actions are processed and which not. It is designed as a binary flag, you may set it to:                                <pre>(0) 000 = No output.
+                                    The Outputlevel defines which actions are processed and which not. It is designed as a binary flag, you may set it to:                                <pre>0 = 000 = No output.
 1 = 001 = processing only exceptions.
 2 = 010 = processing only logs.
 4 = 100 = processing only writes..</pre>
 and each combination:
-<pre>(7) 111 = complete output</pre><br>
+<pre>7 = 111 = complete output</pre><br>
                                     In this way, it's simple to extend it. There will be constants to simplify the access:
                                     <code>.DO_EXCEPTIONS // 1
 .DO_LOG // 2
@@ -382,7 +382,7 @@ class MyClass extends SomethingDifferent {
                                 <ul>
                                   <li><a name="EventHandlingExampleObjectDeveloper"></a><h4>ObjectDeveloper</h4>
                                     <ol>
-                                     <li><h5>class</h5>
+                                     <li><h5>Class where listener should be addable</h5>
                                        <code>import org.as2lib.basic.*
 class MyClass extends EventHandler {
   private function onEnterframe (e:MyEventHandler) {
@@ -424,7 +424,7 @@ class MyEventListener implements MyEventInterface {
   }
 }</code>
                                       </li>
-                                      <li><h5>Listenerregistration/h5>
+                                      <li><h5>Listenerregistration</h5>
                                        <code>...
   var myObject:MyClass = new MyClass();
   myObject.addListener(new MyEventListener());
@@ -487,15 +487,14 @@ class MyEventListener implements MyEventInterface {
                                 <ol>
                                   <li><a name="TypedArrayProblemsTypeInsurance"></a><h3>TypeInsurance</h3>
                                     instanceof has a "bug" or its a flash specifica that i not really understand, this:<pre>[ClassA extends ClassB]
-                                    (new ClassA instanceof ClassB)</pre>
+(new ClassA instanceof ClassB)</pre>
                                     is true!<br>
                                     That means we have to use an second check that this object really doesn't extend any class (even no superclass).
                                   </li>
                                   <li><a name="TypedArrayProblemsFlash"></a><h3>Flash Basic Functionality</h3>
                                     In Flash its possible to access every method and content with [].
-                                    <code>
-                                      a = new NotDynamicClass();
-                                      a["monkey"] = "true";
+                                    <code>a = new NotDynamicClass();
+a["monkey"] = "true";
                                     </code>
                                     To prevent this we will not extend the Array, this class will be an bridge to the array.
                                   </li>
@@ -504,14 +503,30 @@ class MyEventListener implements MyEventInterface {
                             </ul>
                           </li>
                           <li><a name="Cloning"></a><h2>Cloning</h2>
-                            Cloning like in Java would run with a simple Interface that defines "this class is cloneable"(this will also exist in our case). Of course this interface should be shurly used by us too but also it as2 allows us a generic clone.
-                            <h3>Idea</h3>Often it's complicating that the compiler won't check all possibilities and no exceptions won't be thrown (even if the developer does really bad stuff). But it gives us the possibilty for simple using the objects constructor and proto to make a real clone with that. One &quot;for(in)&quot; loop could handle all that.                            <h3>Location</h3>
-                            Of course it's basic functionality like <a href="#ReflectionHandling" title="Basically Stuff for Classhandling with Reflections">Reflections</a> so this should be also in the "BasicClass" that all other extend as ".clone()" Method.
-                            <h3>Access points</h3>
-                            The code/handling should be in a Util class &quot;org.as2lib.basic.Helper&quot;(or something like that)
-                            <h3>Complete cloning</h3>
-                            Sometimes it is a real problem that cloning only clones one level. There should be additionally a Method to clone the complete tree &quot;.cloneComplete&quot; which is defined as &quot;Chain of Responsibility&quot; (Design Pattern) this simply uses &quot;.cloneComplete&quot; recursivly (okay it's a little more difficult).
-                            <p class="note">Note: Interfaces (specially small one) make problems with casting, therefore this won't be available within an interface.</p>
+                            Cloning like in Java would run with a simple Interface that defines "this class is cloneable". Flash offers a way to clone a class generic.
+                            <ul>
+                              <li><a name="CloningReason"></a><h3>Reason</h3>
+                                Cloning is something everyone needs sometimes, an support would make most times the work easier.
+                              </li>
+                              <li><a name="CloningSolution"></a><h3>Solution</h3>
+                                Within the util class <pre>org.as2lib.basic.Clone</pre> we'll provide simple cloning. The <a href="#BasicClass">Basic Class</a> will also provide access.<br>
+                                Generally this will work by creating a new instance from the class and setting all fields to the values from the old field.
+                              </li>
+                              <li><a name="CloningAPI"></a><h3>API</h3>
+                                <ul>
+                                  <li><a name="CloningAPIclone"></a><h3>.clone()</h3>
+                                    Will return a new object from the same class with the same values.
+                                  </li>
+                                  <li><a name="CloningAPIcloneCompletly"></a><h3>.cloneCompletly()</h3>
+                                    This will return recursivly from all Objects a clone.
+                                  </li>
+                                </ul>
+                              </li>
+                              <li><a name="CloningProblems"></a><h3>Problems</h3>
+                                The worst Problem with cloning is the fact that some classes throw exceptions if not the correct Value has been set.<br>
+                                This will be hidden by try {}.
+                              </li>
+                            </ul>
                           </li>
                           <li><a name="Overloading"></a><h2>Overloading</h2>
                             Of course we all should avoid overloading as good as possible, it's not beautiful that as2 doesn't support it but its logical and we have all to live with it. The "standard-way" of using overloading is pretty ugly combined with a lot of if's and code. So we decided to support this feature.
