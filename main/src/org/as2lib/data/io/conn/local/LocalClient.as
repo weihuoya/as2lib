@@ -75,6 +75,8 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
     }
 	
 	public function clientMethod() {
+		//params = arguments;
+		_root.output_txt.text=arguments.toString();
 		aOut.debug("clientMethod");
 		aOut.debug(arguments.toString());
 	}

@@ -4,6 +4,9 @@ import org.as2lib.data.io.conn.ConnectorRequest;
 import org.as2lib.data.io.conn.ConnectorError;
 import org.as2lib.data.io.conn.ConnectorResponse;
 
+import org.as2lib.data.io.conn.local.ConnectionReservedException;
+import org.as2lib.env.except.IllegalArgumentException;
+
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.EventInfo;
 
@@ -53,7 +56,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	 * String, which method on the clients is accessed 
 	 * @see LocalServer constructor
 	 */
-	private var cMethod:String;
+	private var clientMethod:String;
 	
 	/* LocalConnection object for broadcasting messages */
 	private var sender:LocalConnection;
@@ -77,7 +80,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		params = new Array();
 		clients = new TypedArray(String);
 		aOut = Config.getOut();
-		cMethod = "clientMethod";
+		clientMethod = "clientMethod";
 	}
 	
 	/**
@@ -86,8 +89,10 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	 */
 	public function initConnection(Void):Void {
 		aOut.debug("initConnection");
-	
-		connect("register");
+		if(!connect("register")){
+			throw new IllegalArgumentException("Connection name 'register' is already used by another LocalConnection",this,arguments);
+			//eventBroadcaster.dispatch(new ConnectorError("Connection name 'register' is already used by another LocalConnection",this,arguments,true,false));
+		}
 	}
 	
 	/**
@@ -119,7 +124,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		
 		aOut.debug("clients.length:"+l);
 		
-		args.push(cMethod);
+		args.push(clientMethod);
 		args.push(method);
 		args = args.concat(params);
 		
@@ -129,52 +134,98 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		}
 	}
 	
-	public function serverMethod() {
+	/**
+	 * Method which is called by clients to communicate with the server.
+	 * @params as many as possible
+	 */
+	public function serverMethod():Void {
 		aOut.debug(arguments.toString());
 	}
 	
+	/**
+	 * Sets domain name to activate allowDomain functionality
+	 * @see allowDomain
+	 * @params host an url representing allowed domains (e.g. "www.as2lib.org")
+	 */
 	public function setHost(host:String):Void {
 		this.host = host;
 	}
 	
+	/**
+	 * Returns host/domain
+	 * @return host an url representing allowed domain (e.g. "www.as2lib.org")
+	 */
 	public function getHost(Void):String {
 		return host;
 	}
 	
+	/**
+	 * Sets additional path. In case of LocalConnection a possible second domain
+	 *  to restrict domain access.
+	 * @param path an url representing allowed domain (e.g. "www.as2lib.org")
+	 */
 	public function setPath(path:String):Void {
 		this.path = path;
 	}
 	
+	/**
+	 * Returns path/domain
+	 * @return path an url representing allowed domain (e.g. "www.as2lib.org")
+	 */
 	public function getPath(Void):String {
 		return path;
 	}
-
-	public function getMethod(Void):String {
-		return method;
-	}
 	
+	/**
+	 * Sets method, which should be passed to client/s
+	 * @param method  name of the method (e.g "draw)
+	 */
 	public function setMethod(method:String):Void {
 		this.method = method;
 	}
 	
-	public function getParams() {
-		return params;
+	/**
+	 * Returns method
+	 * @return method name of the method
+	 */
+	public function getMethod(Void):String {
+		return method;
 	}
 	
+	/**
+	 * Sets parameters, which should be passed to client/s
+	 * @param arguments  all arguments that are passed to clients
+	 */
 	public function setParams():Void {
 		
 		params = arguments;
 	}
 	
+	/**
+	 * Returns parameters
+	 * @return params parameters, which should be passed to clients
+	 */
+	public function getParams(Void):Array {
+		return params;
+	}
+	
+	
+	/**
+	 * Is called if an error occured while trying to establish a connection.
+	 * If an error is caught it is tried again to connect until an connection 
+	 * is established or tries are timed out.
+	 * @see initConnection
+	 * @param infoObj  can be used to identify error/ in this case only infoObj.level="error" is possible
+	 */
 	public function onStatus(infoObj){
 		aOut.debug("onStatus: "+infoObj.level);
 		/*if (infoObject.level!="error"){
-		googleConnection.connect(connectionName);
+			connect(connectionName);
 		connected=true
 		}
 		else {
 			if (tries--){
-				searching.text = "Waiting for LocalConnection ("+tries+" attempts left)"
+				searching.text = "Waiting for Clients ("+tries+" attempts left)"
 				iv=setInterval(initConnection,1000)
 			}
 		}*/
