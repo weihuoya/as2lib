@@ -1,4 +1,7 @@
-﻿class org.as2lib.data.io.conn.remoting.ServiceLocator {
+﻿import org.as2lib.core.BasicClass;
+import org.as2lib.data.io.conn.remoting.Wrapper;
+
+class org.as2lib.data.io.conn.remoting.ServiceLocator extends BasicClass{
 	
 	/** Instance of only availiable ServiceLocator */
 	private static var INST:ServiceLocator;
@@ -20,12 +23,15 @@
 		SERVICE_DIRECTORY = new Object();
 		SERVICE_CACHE = new Object();
 		
-		// TODO: Initialization of NetConnection
+		/* to load "NetServices.as" and "NetDebug.as" */
+		Wrapper.getInstance();
+		
+		NetServices.setDefaultGatewayUrl(GATEWAY_URL);
 	}
 	
-	public function getInstance(aGatewayURL):ServiceLocator {
+	public static function getInstance(gatewayUrl,responseHandler):ServiceLocator {
 		if(INST == null){
-			INST = new ServiceLocator();
+			INST = new ServiceLocator(gatewayUrl,responseHandler);
 		}
 		++COUNT;
 		return INST;
@@ -35,77 +41,40 @@
 		return COUNT;
 	}
 
-//------------------------------------------------------------------------------
-	
-	public function getService( serviceName:String )
-	{
-		if ( serviceExists( serviceName ) )
-			return getServiceInstance( serviceName );
-		else
-			trace( "ServiceLocator: No Such Service - " + serviceName );
-	}
-
-//------------------------------------------------------------------------------
-
-	private function initialiseServices()
-	{		
-      addService( "AmazonService", "com.iterationtwo.amazonria.flash.AmazonService" );
-	}	
-	
-//------------------------------------------------------------------------------
-
-	private function addService( serviceName:String, servicePath:String )
-   {
-	   serviceDirectory[ serviceName ] = servicePath;
-	}
-
-//------------------------------------------------------------------------------
-
-	private function serviceExists( serviceName:String ):Boolean
-	{
-		return getServicePath( serviceName ) != null;
-	}
-
-//------------------------------------------------------------------------------
-
-	private function getServicePath( serviceName:String ):String
-	{
-		return serviceDirectory[ serviceName ];
+	public function getGatewayURL(Void):String {
+		return GATEWAY_URL;
 	}
 	
-//------------------------------------------------------------------------------
-
-	private function getServiceInstance( serviceName:String )
-	{
-		var service:String = serviceCache[ serviceName ];
+	public function setResponder(responder:Object):Void {
+		RESPONSE_HANDLER = responder;
+	}
 	
-		var serviceInstantiated:Boolean = ( service != null );
-		if ( !serviceInstantiated )
-		{
-			service = getServiceConnection( serviceName );
-			serviceCache[ serviceName ] = service;
+	public function addService(serviceName:String, servicePath:String):Void {
+		SERVICE_DIRECTORY[serviceName] = servicePath;
+	}
+	
+	public function getServicePath(serviceName:String):String {
+		return SERVICE_DIRECTORY[serviceName];
+	}
+	
+	public function getServiceInstance(serviceName:String):Object {
+		var resultService:Object = SERVICE_CACHE[serviceName];
+		if (resultService != null) {
+			return resultService;
+		} else {
+			resultService = getServiceConnection(serviceName);
+			SERVICE_CACHE[serviceName] = resultService;
+			return resultService;
 		}
-		return service;
 	}
-
-
-//------------------------------------------------------------------------------
-
-	private function getServiceConnection( serviceName:String )
-   {
-		if ( ServiceLocator.connection == undefined )
-		   ServiceLocator.connection = NetServices.createGatewayConnection();
-			
-		return connection.getService( getServicePath( serviceName ), responseHandler );
-   }
-
-//------------------------------------------------------------------------------
-
-   private static var connection;
 	
-	private var responseHandler;
-	private var serviceDirectory:Array;
-	private var serviceCache:Array;
+	private function getServiceConnection(serviceName:String):Object {
+		trace("getServiceConnection");
+		var connection:NetConnection = NetServices.createGatewayConnection();
+		trace(connection);
+		var resultService:Object = connection.getService(getServicePath(serviceName), RESPONSE_HANDLER);
+		return resultService;
+	}
 }
 
 
