@@ -19,9 +19,9 @@ import org.as2lib.env.reflect.CompositeMemberInfo;
 /**
  * @author Simon Wacker
  */
-interface org.as2lib.env.reflect.algorythm.CacheAlgorythm {
+interface org.as2lib.env.reflect.algorithm.CacheAlgorithm {
 	/**
-	 * Executes the algorythm and returns the searched for CompositeMemberInfo.
+	 * Executes the algorithm and returns the searched for CompositeMemberInfo.
 	 *
 	 * @param object the object you search for
 	 * @return the searched for CompositeMemberInfo

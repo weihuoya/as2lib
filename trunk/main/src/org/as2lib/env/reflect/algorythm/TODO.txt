@@ -1,5 +1,0 @@
-Refactoring, Performance, Naming
-
-The ChildrenAlgorythm returns undefined if no children were found.
-It should return a blank HashMap.
-This is true for other Algorythms too.

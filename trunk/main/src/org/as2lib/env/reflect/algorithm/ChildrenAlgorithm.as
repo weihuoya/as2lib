@@ -18,8 +18,8 @@ import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
-import org.as2lib.env.reflect.algorythm.ContentAlgorythm;
-import org.as2lib.env.reflect.algorythm.AbstractContentAlgorythm;
+import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
+import org.as2lib.env.reflect.algorithm.AbstractContentAlgorithm;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.util.ObjectUtil;
@@ -29,7 +29,7 @@ import org.as2lib.env.reflect.ReflectConfig;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorythm.ChildrenAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
+class org.as2lib.env.reflect.algorithm.ChildrenAlgorithm extends AbstractContentAlgorithm implements ContentAlgorithm {
 	public static var TYPE_CLASS:Number = 0;
 	public static var TYPE_PACKAGE:Number = 1;
 	
@@ -38,7 +38,7 @@ class org.as2lib.env.reflect.algorythm.ChildrenAlgorythm extends AbstractContent
 	private var info:PackageInfo;
 	private var type:Number;
 	
-	public function ChildrenAlgorythm(Void) {
+	public function ChildrenAlgorithm(Void) {
 	}
 	
 	public function execute(info:CompositeMemberInfo):Map {

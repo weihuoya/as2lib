@@ -55,9 +55,9 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 * class information.
 	 * It first checks based on the object whether an appropriate ClassInfo
 	 * exists. If one exists it will be returned otherwise a new will be created.
-	 * The responsibility for doing this lies in the suitable CacheAlgorythm.
-	 * By default this is the ClassAlgorythm. But you can set your own with the
-	 * ReflectConfig#setClassAlgorythm() operation.
+	 * The responsibility for doing this lies in the suitable CacheAlgorithm.
+	 * By default this is the ClassAlgorithm. But you can set your own with the
+	 * ReflectConfig#setClassAlgorithm() operation.
 	 * 
 	 * @param object the object the appropriate ClassInfo shall be found.
 	 * @return the appropriate ClassInfo instance containing all class information
@@ -66,7 +66,7 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	public static function getClassInfoByObject(object):ClassInfo {
 		var info:ClassInfo = ReflectConfig.getCache().getClass(object);
 		if (ObjectUtil.isEmpty(info)) {
-			info = ClassInfo(ReflectConfig.getClassAlgorythm().execute(object));
+			info = ClassInfo(ReflectConfig.getClassAlgorithm().execute(object));
 			ReflectConfig.getCache().addClass(info);
 		}
 		return info;
@@ -107,8 +107,8 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 * passed in. It first checks based on the passed in package whether an
 	 * appropriate PackageInfo exists. If one exists it will be returned otherwise
 	 * a new will be created. The responsibility for doing this lies in the
-	 * suitable CacheAlgorythm. By default this is the PackageAlgorythm. But you
-	 * can set your own with the ReflectConfig#setPackageAlgorythm() operation.
+	 * suitable CacheAlgorithm. By default this is the PackageAlgorithm. But you
+	 * can set your own with the ReflectConfig#setPackageAlgorithm() operation.
 	 *
 	 * @param package the package the appropriate PackageInfo shall be found.
 	 * @return the appropriate PackageInfo instance containing all package information.
@@ -116,7 +116,7 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	public static function getPackageInfoByPackage(package):PackageInfo {
 		var info:PackageInfo = ReflectConfig.getCache().getPackage(package);
 		if (ObjectUtil.isEmpty(info)) {
-			info = PackageInfo(ReflectConfig.getPackageAlgorythm().execute(package));
+			info = PackageInfo(ReflectConfig.getPackageAlgorithm().execute(package));
 			ReflectConfig.getCache().addPackage(info);
 		}
 		return info;

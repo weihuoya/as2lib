@@ -20,11 +20,11 @@ import org.as2lib.env.reflect.CompositeMemberInfo;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorythm.AbstractContentAlgorythm extends BasicClass {
+class org.as2lib.env.reflect.algorithm.AbstractContentAlgorithm extends BasicClass {
 	/**
 	 * Private constructor.
 	 */
-	private function AbstractContentAlgorythm(Void) {
+	private function AbstractContentAlgorithm(Void) {
 	}
 	
 	/**

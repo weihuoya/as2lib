@@ -146,7 +146,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 */
 	public function getMethods(Void):Map {
 		if (ObjectUtil.isEmpty(methods)) {
-			methods = ReflectConfig.getMethodAlgorythm().execute(this);
+			methods = ReflectConfig.getMethodAlgorithm().execute(this);
 		}
 		return methods;
 	}
@@ -199,7 +199,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 */
 	public function getProperties(Void):Map {
 		if (ObjectUtil.isEmpty(properties)) {
-			properties = ReflectConfig.getPropertyAlgorythm().execute(this);
+			properties = ReflectConfig.getPropertyAlgorithm().execute(this);
 		}
 		return properties;
 	}
