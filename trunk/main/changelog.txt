@@ -61,8 +61,37 @@
 
 
 
-    :: 05/30/04 :: Simon Wacker ::
+    :: 05/31/04 :: Simon Wacker ::
 
       >> org.as2lib.env.reflect
 
         > changed ClassInfo.newInstance() to newInstance(args:Array)
+
+
+      >> org.as2lib.env.event
+
+        > corrected overall documentation
+        > changed field SimpleEventBroadcaster.listeners:ListenerArray to listeners:Array
+        > changed operation EventBroadcaster.getAllListener():ListenerArray to getAllListener():Array
+        + changed corresponding implementations in
+          * org.as2lib.env.event.SimpleEventBroadcaster
+
+        > changed constant SimpleEventBroadcaster.normalDispatcher to NORMAL_DISPATCHER
+        > changed constant SimpleEventBroadcaster.logDispatcher to LOG_DISPATCHER
+        > changed operation EventDispatcher.dispatch(event:EventInfo, listeners:ListenerArray) to dispatch(event:EventInfo, listeners:Array)
+        + changed corresponding implementations in
+          * org.as2lib.env.event.dispatcher.NormalEventDispatcher
+          * org.as2lib.env.event.dispatcher.LogEventDispatcher
+
+        > removed ListenerArray
+        > renamed Consumeable to Consumable
+        + changed corresponding references from
+          * org.as2lib.env.event.dispatcher.NormalEventDispatcher
+          * org.as2lib.env.event.dispatcher.LogEventDispatcher
+
+        > renamed EventDispatcher.dispatchConsumeable() to dispatchConsumable()
+        + changed corresponding implementations in
+          * org.as2lib.env.event.dispatcher.NormalEventDispatcher
+          * org.as2lib.env.event.dispatcher.LogEventDispatcher
+        + and references from
+          * org.as2lib.env.event.SimpleEventBroadcaster

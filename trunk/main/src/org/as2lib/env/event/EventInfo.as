@@ -21,10 +21,10 @@ import org.as2lib.core.BasicInterface;
  */
 interface org.as2lib.env.event.EventInfo extends BasicInterface {
 	/**
-	 * Returns the name of the event. The name of the event equals the operation
-	 * that will be called on the EventListeners.
+	 * Returns the name of the event. The name of the event equals the
+	 * name of the operation that will be called on the EventListeners.
 	 *
-	 * @return The specified name.
+	 * @return the specified name
 	 */
 	public function getName(Void):String;
 }

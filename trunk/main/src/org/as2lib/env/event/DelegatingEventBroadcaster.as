@@ -18,18 +18,18 @@ import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.EventDispatcher;
 
 /**
- * Special form of EventBroadcaster that delegates dispatch to a EventDispatcher.
- * You can define a dispatcher for the dispatch method. In this way it is possible
- * to define in a free way how you want to dispatch a event.
+ * Special form of EventBroadcaster that delegates the dispatching process
+ * to a EventDispatcher. You can implement your own EventDispatcher and
+ * have thus the freedom to dispatch events at your will.
  * 
- * @see EventBroadcaster
- * @autor Martin Heidegger
+ * @author Martin Heidegger
+ * @author Simon Wacker
  */
 interface org.as2lib.env.event.DelegatingEventBroadcaster extends EventBroadcaster {
 	/**
 	 * Sets the EventDispatcher to delegate to.
 	 * 
-	 * @param eventDispatcher Dispatcher instance to delegate to.
+	 * @param eventDispatcher EventDispatcher instance to delegate to
 	 */
 	public function setDispatcher(eventDispatcher:EventDispatcher):Void;
 }

@@ -20,17 +20,16 @@ import org.as2lib.env.event.EventBroadcasterFactory;
 import org.as2lib.env.event.SimpleEventBroadcaster;
 
 /**
- * Broadcasterfactory to generate SimpleEventBroadcaster.
+ * SimpleEventBroadcasterFactory in a simple implemetation of the EventBroadcasterFactory
+ * whose #createEventBroadcaster() operation returns a SimpleEventBroadcaster instnace.
  * 
  * @author Martin Heidegger
  */
 class org.as2lib.env.event.SimpleEventBroadcasterFactory extends BasicClass implements EventBroadcasterFactory {
 	/**
-	 * Creates and returns a new instance of a SimpleEventBroadcaster.
-	 * 
-	 * @return A new instance of SimpleEventBroadcaster.
+	 * @see org.as2lib.env.event.EventBroadcasterFactory#createEventBroadcaster()
 	 */
 	public function createEventBroadcaster(Void):EventBroadcaster {
-		return EventBroadcaster(new SimpleEventBroadcaster());
+		return (new SimpleEventBroadcaster());
 	}
 }
