@@ -17,8 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.except.IllegalStateException;
-import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.map.PrimitiveTypeMap;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ProxyFactory;
 import org.as2lib.env.reflect.TypeProxyFactory;
 import org.as2lib.env.reflect.InvocationHandler;
@@ -74,10 +73,19 @@ import org.as2lib.test.mock.MockControlStateFactory;
  * myMockControl.verify();
  * </code>
  *
- * If a expectation has not been met a AssertionFailedError will
+ * <p>If an expectation has not been met a AssertionFailedError will
  * be thrown. 
- * If a expectation violation gets discovered during execution
+ * If an expectation violation gets discovered during execution
  * an AssertionFailedError will be thrown immediately.
+ *
+ * <p>If you called the setStringProperty method in the above example
+ * with another string like 'unexpectedString' an AssertFailedError
+ * would be thrown immediately.
+ * If you called the setStringProperty method a second time, what has
+ * not been expected, an AssertionFailedError would also be thrown
+ * immediately.
+ * If you did not call the setStringProperty method at all, an
+ * AssertionFailedError would be thrown on verification.
  *
  * @author Simon Wacker
  */
@@ -125,8 +133,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * @overload #MockControlByType(Function)
-	 * @overload #MockControlByTypeAndBehavior(Function, Behavior)
+	 * @overload #MockControlByType(Function):Void
+	 * @overload #MockControlByTypeAndBehavior(Function, Behavior):Void
 	 */
 	public function MockControl() {
 		var o:Overload = new Overload(this);
@@ -136,36 +144,54 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Constrcuts a new instance using the default behavior.
+	 * Constrcuts a new MockControl instance using the default behavior.
 	 *
 	 * <p>The default behavior is an instance of class DefaultBehaviour.
 	 *
+	 * <p>This instance is in reset state after creation. That means it is
+	 * ready to to receive expectations and to record them.
+	 *
+	 * <p>When you have finished recording you must switch to replay state
+	 * using the #replay method.
+	 *
 	 * @param type the interface or class to create a mock object for
+	 * @throws IllegalArgumentException if the passed-in type is null or undefined
 	 */
-	private function MockControlByType(type:Function) {
-		MockControlByTypeAndBehavior(type, new DefaultBehavior());
+	private function MockControlByType(type:Function):Void {
+		MockControlByTypeAndBehavior(type, null);
 	}
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new MockControl instance.
+	 *
+	 * <p>If the passed-in behavior is null or undefined the default behavior
+	 * that is of type DefaultBehavior gets used instead.
+	 *
+	 * <p>This instance is in reset state after creation. That means it is
+	 * ready to to receive expectations and to record them.
+	 *
+	 * <p>When you have finished recording you must switch to replay state
+	 * using the #replay method.
 	 *
 	 * @param type the interface or class to create a mock object for
 	 * @param behavior the instance to store the behavior of the mock
+	 * @throws IllegalArgumentException if the passed-in type is null or undefined
 	 */
 	private function MockControlByTypeAndBehavior(type:Function, behavior:Behavior):Void {
+		if (!type) throw new IllegalArgumentException("The argument type '" + type + "' is not allowed to be null or undefined.");
 		this.type = type;
-		this.behavior = behavior;
+		this.behavior = behavior ? behavior : new DefaultBehavior();
 		reset();
 	}
 	
 	/**
-	 * Returns the currently used proxy factory.
+	 * Returns the currently used mock proxy factory.
 	 *
-	 * <p>This proxy factoy is either the default TypeProxyFactory
-	 * or the one set via #setMockProxyFactory(ProxyFactory):Void.
+	 * <p>This proxy factoy is either the default TypeProxyFactory or the
+	 * one set via #setMockProxyFactory.
 	 *
 	 * @return the currently used proxy factory
-	 * @see #setMockProxyFactory(ProxyFactory):Void
+	 * @see #setMockProxyFactory
 	 */
 	public function getMockProxyFactory(Void):ProxyFactory {
 		if (!proxyFactory) proxyFactory = new TypeProxyFactory();
@@ -173,14 +199,13 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Sets the proxy factory used to obtain the mock proxy.
+	 * Sets the proxy factory used to obtain the mock proxy / mocks.
 	 *
 	 * <p>If you set a proxy factory of null or undefined, the
-	 * #getMockProxyFactory(Void):ProxyFactory method will use the
-	 * default one.
+	 * #getMockProxyFactory method will use the default factory.
 	 *
-	 * @param proxyFactory factory to obtain mock proxies
-	 * @see #getMockProxyFactory(Void):ProxyFactory
+	 * @param proxyFactory factory to obtain mock proxies / mocks
+	 * @see #getMockProxyFactory
 	 */
 	public function setMockProxyFactory(proxyFactory:ProxyFactory):Void {
 		this.proxyFactory = proxyFactory;
@@ -189,8 +214,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Returns the currently used record state factory.
 	 *
-	 * <p>This is either the factory set via #setRecordStateFactory(MockControlStateFactory):Void
-	 * or the default one, which returns an instance of the RecordState class.
+	 * <p>This is either the factory set via #setRecordStateFactory or the
+	 * default one, which returns instances of the RecordState class.
 	 *
 	 * @return the currently used record state factory
 	 * @see #setRecordStateFactory(MockControlStateFactory):Void
@@ -201,6 +226,10 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
+	 * Returns the default record state factory.
+	 *
+	 * <p>The default record state factory returns instances of type RecordState.
+	 *
 	 * @return the default record state factory
 	 */
 	private function getDefaultRecordStateFactory(Void):MockControlStateFactory {
@@ -215,11 +244,10 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 * Sets the new record state factory to be used.
 	 *
 	 * <p>If you set a factory of value null or undefined the default record
-	 * state factory gets returned by the #getRecordStateFactory(Void):MockControlStateFactory
-	 * method.
+	 * state factory gets returned by the #getRecordStateFactory method.
 	 *
 	 * @param recordStateFactory the new record state factory
-	 * @see #getRecordStateFactory(Void):MockControlStateFactory
+	 * @see #getRecordStateFactory
 	 */
 	public function setRecordStateFactory(recordStateFactory:MockControlStateFactory):Void {
 		this.recordStateFactory = recordStateFactory;
@@ -228,11 +256,11 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Returns the currently used replay state factory.
 	 *
-	 * <p>This is either the factory set via #setReplayStateFactory(MockControlStateFactory):Void
-	 * or the default one, which returns an instance of the ReplayState class.
+	 * <p>This is either the factory set via #setReplayStateFactory of the
+	 * default one, which returns instances of the ReplayState class.
 	 *
 	 * @return the currently used replay state factory
-	 * @see #setReplayStateFactory(MockControlStateFactory):Void
+	 * @see #setReplayStateFactory
 	 */
 	public function getReplayStateFactory(Void):MockControlStateFactory {
 		if (!replayStateFactory) replayStateFactory = getDefaultReplayStateFactory();
@@ -240,6 +268,10 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
+	 * Returns the default replay state factory.
+	 *
+	 * <p>The default replay state factory returns instances of type ReplayState.
+	 *
 	 * @return the default replay state factory
 	 */
 	private function getDefaultReplayStateFactory(Void):MockControlStateFactory {
@@ -253,19 +285,19 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Sets the new replay state factory to be used.
 	 *
-	 * <p>If you set a factory of value null or undefined, #getReplayStateFactory(Void):MockControlStateFactory
+	 * <p>If you set a factory of value null or undefined, #getReplayStateFactory
 	 * will return the default replay state factory.
 	 *
 	 * @param replayStateFactory the new replay state factory
-	 * @see #getReplayStateFactory(Void):MockControlStateFactory
+	 * @see #getReplayStateFactory
 	 */
 	public function setReplayStateFactory(replayStateFactory:MockControlStateFactory):Void {
 		this.replayStateFactory = replayStateFactory;
 	}
 	
 	/**
-	 * Returns a blank mock control state factory. That is a factory with no
-	 * initialized methods.
+	 * Returns a blank mock control state factory. That is a factory with
+	 * no initialized methods.
 	 *
 	 * @return a blank mock control state factory
 	 */
@@ -278,7 +310,14 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Returns the mock object.
 	 *
-	 * <p>It can be casted to the interface defined during instantiation.
+	 * <p>The mock can be casted and typed to the interface or class defined
+	 * during instantiation.
+	 *
+	 * <p>The mock gets created using the mock proxy factory returned by the
+	 * #getMockProxyFactory method.
+	 *
+	 * <p>Once the mock object has been created it gets cached. That means
+	 * this method always returns the same mock object for this mock control.
 	 *
 	 * @return the mock object
 	 */
@@ -289,7 +328,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	
 	/**
 	 * Creates a new invocation handler instance that handles method
-	 * invocations on the proxy.
+	 * invocations on the mock proxy.
 	 *
 	 * @return a delegator that handles proxy method invocations
 	 */
@@ -299,9 +338,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 		result.invoke = function(proxy, method:String, args:Array) {
 			// 'toString' must be excluded because it gets used everytime an output gets made.
 			// For example in the success and failure messages of the unit testing api.
-			if (method != "toString") {
+			//if (method != "toString") {
 				return owner.invokeMethod(method, args);
-			}
+			//}
 		}
 		return result;
 	}
@@ -332,7 +371,17 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 * Switches the mock object from record state to replay state.
 	 *
 	 * <p>The mock object is in record state as soon as it gets returned by
-	 * the #getMock(Void) method.
+	 * the #getMock method.
+	 *
+	 * <p>You cannot record expectations in replay state. In replay state
+	 * you verify that all your expectations have been met, by using the
+	 * mock as it were a real instance.
+	 *
+	 * <p>If an expectations does not get met an AssertionFailedError gets
+	 * thrown. This is either done during execution of your test or on
+	 * verification.
+	 * Take a look at the example provided in the class declaration to see
+	 * when what AssertFailedError gets thrown.
 	 */
 	public function replay(Void):Void {
 		state = getReplayStateFactory().getMockControlState(behavior);
@@ -340,8 +389,10 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	
 	/**
 	 * Resets the mock control and the mock object to the state directly after
-	 * creation. That means that all previously made configurations will be
-	 * removed and that the mock object will again be in record state.
+	 * creation.
+	 *
+	 * <p>That means that all previously made expectations will be removed
+	 * and that the mock object will again be in record state.
 	 */
 	public function reset(Void):Void {
 		behavior.removeAllBehavior();
@@ -349,20 +400,26 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Sets the arguments matcher that will be used for the last method specified
-	 * by a method call.
+	 * Sets the arguments matcher that will be used for the last method
+	 * specified by a method call.
 	 *
 	 * @param argumentsMatcher the arguments matcher to use for the specific method
+	 * @throws IllegalStateException if this mock control is in replay state
 	 */
 	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void {
 		state.setArgumentsMatcher(argumentsMatcher);
 	}
 	
 	/**
-	 * Records that the mock object will by default allow the last method specified
-	 * by a method call and will react by returning the provided return value.
+	 * Records that the mock object will by default allow the last method
+	 * specified by a method call and will react by returning the provided
+	 * return value.
+	 *
+	 * <p>Default means that the method can be called zero to infinite times
+	 * without expectation errors.
 	 *
 	 * @param value the return value to return
+	 * @throws IllegalStateException if this mock control is in replay state
 	 */
 	public function setDefaultReturnValue(value):Void {
 		var response:MethodResponse = new MethodResponse();
@@ -371,10 +428,15 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Records that the mock object will by default allow the last method specified 
-	 * by a method call, and will react by throwing the provided throwable.
+	 * Records that the mock object will by default allow the last method 
+	 * specified by a method call, and will react by throwing the provided
+	 * throwable.
+	 *
+	 * <p>Default means that the method can be called zero to infinite times
+	 * without expectation errors.
 	 *
 	 * @param throwable the throwable to throw
+	 * @throws IllegalStateException if this mock control is in replay state
 	 */
 	public function setDefaultThrowable(throwable):Void {
 		var response:MethodResponse = new MethodResponse();
@@ -383,17 +445,26 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Recards that the mock object will by default allow the last method specified
-	 * by a method call.
+	 * Recards that the mock object will by default allow the last method
+	 * specified by a method call.
+	 *
+	 * <p>Default means that the method can be called zero to infinite times
+	 * without expectation errors.
+	 *
+	 * <p>Calling this method is not necessary. The mock control expects
+	 * the last method specified by a method call as soon as this method
+	 * call occured.
+	 *
+	 * @throws IllegalStateException if this mock control is in replay state
 	 */
 	public function setDefaultVoidCallable(Void):Void {
 		state.setMethodResponse(new MethodResponse(), new MethodCallRange());
 	}
 	
 	/**
-	 * @overload #setReturnValueByValue(*)
-	 * @overload #setReturnValueByValueAndQuantity(*, Number)
-	 * @overload #setReturnValueByValueAndMinimumAndMaximumQuantity(*, Number, Number)
+	 * @overload #setReturnValueByValue(*):Void
+	 * @overload #setReturnValueByValueAndQuantity(*, Number):Void
+	 * @overload #setReturnValueByValueAndMinimumAndMaximumQuantity(*, Number, Number):Void
 	 */
 	public function setReturnValue():Void {
 		var o:Overload = new Overload(this);
@@ -404,21 +475,23 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call once and will
-	 * react by returning the provided return value.
+	 * Records that the mock object will expect the last method call once
+	 * and will react by returning the provided return value.
 	 *
 	 * @param value the return value to return
+	 * @throws IllegalStateException if this mock control is in replay state
 	 */
 	public function setReturnValueByValue(value):Void {
 		setReturnValueByValueAndQuantity(value, 1);
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call a fixed number
-	 * of times and will react by returning the provided return value.
+	 * Records that the mock object will expect the last method call a fixed
+	 * number of times and will react by returning the provided return value.
 	 *
 	 * @param value the return value to return
 	 * @param quantity the number of times the method is allowed to be invoked
+	 * @throws IllegalStateException if this mock control is in replay state
 	 */
 	public function setReturnValueByValueAndQuantity(value, quantity:Number):Void {
 		var response:MethodResponse = new MethodResponse();
@@ -427,12 +500,14 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call between minimumQuantity
-	 * and maximumQuantity times and will react by returning the provided return value.
+	 * Records that the mock object will expect the last method call between
+	 * minimumQuantity and maximumQuantity times and will react by returning
+	 * the provided return value.
 	 *
 	 * @param value the return value to return
 	 * @param minimumQuantity the minimum number of times the method must be called
 	 * @param maximumQuantity the maximum number of times the method can be called
+	 * @throws IllegalStateException if this mock control is in replay state
 	 */
 	public function setReturnValueByValueAndMinimumAndMaximumQuantity(value, minimumQuantity:Number, maximumQuantity:Number):Void {
 		var response:MethodResponse = new MethodResponse();
@@ -441,9 +516,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * @overload #setThrowableByThrowable(*)
-	 * @overload #setThrowableByThrowableAndQuantity(*, Number)
-	 * @overload #setThrowableByThrowableAndMinimumAndMaximumQuantity(*, Number, Number)
+	 * @overload #setThrowableByThrowable(*):Void
+	 * @overload #setThrowableByThrowableAndQuantity(*, Number):Void
+	 * @overload #setThrowableByThrowableAndMinimumAndMaximumQuantity(*, Number, Number):Void
 	 */
 	public function setThrowable():Void {
 		var o:Overload = new Overload(this);
@@ -454,21 +529,23 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call once and will 
-	 * react by throwing the provided throwable.
+	 * Records that the mock object will expect the last method call once
+	 * and will react by throwing the provided throwable.
 	 *
 	 * @param throwable the throwable to throw
+	 * @throws IllegalStateException if this mock control is in replay state
 	 */
 	public function setThrowableByThrowable(throwable):Void {
 		setThrowableByThrowableAndQuantity(throwable, 1);
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call a fixed number 
-	 * of times and will react by throwing the provided throwable.
+	 * Records that the mock object will expect the last method call a fixed 
+	 * number of times and will react by throwing the provided throwable.
 	 *
 	 * @param throwable the throwable to throw
 	 * @param quantity the number of times the method is allowed to be invoked
+	 * @throws IllegalStateException if this mock control is in replay state
 	 */
 	public function setThrowableByThrowableAndQuantity(throwable, quantity:Number):Void {
 		var response:MethodResponse = new MethodResponse();
@@ -477,12 +554,14 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call between minimumQuantity 
-	 * and maximumQuantity times, and will react by throwing the provided throwable.
+	 * Records that the mock object will expect the last method call between 
+	 * minimumQuantity and maximumQuantity times, and will react by throwing
+	 * the provided throwable.
 	 *
 	 * @param throwable the throwable to throw
 	 * @param minimumQuantity the minimum number of times the method must be called
 	 * @param maximumQuantity the maximum number of times the method can be called
+	 * @throws IllegalStateException if this mock control is in replay state
 	 */
 	public function setThrowableByThrowableAndMinimumAndMaximumQuantity(throwable, minimumQuantity:Number, maximumQuantity:Number):Void {
 		var response:MethodResponse = new MethodResponse();
@@ -491,9 +570,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * @overload #setVoidCallableByVoid(Void)
-	 * @overload #setVoidCallableByQuantity(Number)
-	 * @overload #setVoidCallableByMinimumAndMaximumQuantity(Number, Number)
+	 * @overload #setVoidCallableByVoid(Void):Void
+	 * @overload #setVoidCallableByQuantity(Number):Void
+	 * @overload #setVoidCallableByMinimumAndMaximumQuantity(Number, Number):Void
 	 */
 	public function setVoidCallable():Void {
 		var o:Overload = new Overload(this);
@@ -504,39 +583,44 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call once and will 
-	 * react by returning silently.
+	 * Records that the mock object will expect the last method call once
+	 * and will react by returning silently.
+	 *
+	 * @throws IllegalStateException if this mock control is in replay state
 	 */
 	public function setVoidCallableByVoid(Void):Void {
 		setVoidCallableByQuantity(1);
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call a fixed number 
-	 * of times and will react by returning silently.
+	 * Records that the mock object will expect the last method call a fixed 
+	 * number of times and will react by returning silently.
 	 *
 	 * @param quantity the number of times the method is allowed to be invoked
+	 * @throws IllegalStateException if this mock control is in replay state
 	 */
 	public function setVoidCallableByQuantity(quantity:Number):Void {
 		state.setMethodResponse(new MethodResponse(), new MethodCallRange(quantity));
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call between minimumQuantity 
-	 * and maximumQuantity times and will react by returning silently.
+	 * Records that the mock object will expect the last method call between 
+	 * minimumQuantity and maximumQuantity times and will react by returning
+	 * silently.
 	 *
 	 * @param minimumQuantity the minimum number of times the method must be called
 	 * @param maximumQuantity the maximum number of times the method can be called
+	 * @throws IllegalStateException if this mock control is in replay state
 	 */
 	public function setVoidCallableByMinimumAndMaximumQuantity(minimumQuantity:Number, maximumQuantity:Number):Void {
 		state.setMethodResponse(new MethodResponse(), new MethodCallRange(minimumQuantity, maximumQuantity));
 	}
 	
 	/**
-	 * Verifies that all expectations have been met.
+	 * Verifies that all expectations have been met that could not been verified during execution.
 	 *
-	 * <p>If an expectation has not been met an AssertionFailedError will be 
-	 * thrown.
+	 * @throws IllegalStateException if this mock control is in record state
+	 * @throws AssertionFailedError if an expectation has not been met
 	 */
 	public function verify(Void):Void {
 		state.verify();
