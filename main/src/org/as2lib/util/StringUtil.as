@@ -23,6 +23,7 @@ import org.as2lib.core.BasicClass;
  *
  * @author Martin Heidegger
  * @author Simon Wacker
+ * @author Christophe Herreman
  * @author Flashforum.de Community
  */
 class org.as2lib.util.StringUtil extends BasicClass {
@@ -315,5 +316,32 @@ class org.as2lib.util.StringUtil extends BasicClass {
 			result += string;
 		}
 		return result;
+	}
+
+	/**
+	 * Capitalizes the first character of the string.
+	 * 
+	 * @param string The string of which the first character should get capitalized.
+	 * @return The string with the first character capitalized.
+	 */
+	public static function ucFirst(string:String):String{
+		 return string.charAt(0).toUpperCase() + string.substr(1);
+	}
+
+	/**
+	 * Capitalizes the first character of every word in the string.
+	 * 
+	 * @param string The string of which the first character of every word should get capitalized.
+	 * @return The string with the first character of every word capitalized.
+	 */
+	public static function ucWords(string:String):String{
+		var w:Array = string.split(" ");
+		var l:Number = w.length;
+		
+		for(var i:Number=0; i<l; i++){
+			w[i] = StringUtil.ucFirst(w[i]);
+		}
+		
+		return w.join(" ");
 	}
 }
