@@ -217,9 +217,9 @@ class test.unit.org.as2lib.env.out.TOutImplementation extends TestCase {
 	
 	public function testIsEnabled(Void):Void {
 		aOut.setLevel(Out.ALL);
-		assertTrue("ALL Level won't work", aOut.isEnabledFor(Out.ALL));
+		assertTrue("ALL Level won't work", aOut.isEnabled(Out.ALL));
 		
 		aOut.setLevel(Out.NONE);
-		assertTrue("NONE Level won't work", aOut.isEnabledFor(Out.NONE));
+		assertTrue("NONE Level won't work", aOut.isEnabled(Out.NONE));
 	}
 }

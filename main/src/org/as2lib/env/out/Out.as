@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.out.OutAccess;
+import org.as2lib.env.out.ConfigurableOut;
 import org.as2lib.env.out.OutLevel;
 import org.as2lib.env.out.OutHandler;
 import org.as2lib.env.out.OutConfig;
@@ -46,7 +46,7 @@ import org.as2lib.env.overload.Overload;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
+class org.as2lib.env.out.Out extends BasicClass implements ConfigurableOut {
 	
 	/** All output will be made. */
 	public static var ALL:OutLevel = new AllLevel();
@@ -175,20 +175,14 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	}
 	
 	/**
-	 * Sets a new OutLevel. The OutLevel determines which output will be made.
-	 * Possible OutLevels are: 
-	 * Out.ALL, Out.DEBUG, Out.INFO, Out.WARNING, Out.ERROR, Out.FATAL, Out.NONE
-	 *
-	 * @param level the new OutLevel to control the output
+	 * @see ConfigurableOut#setLevel()
 	 */
 	public function setLevel(newLevel:OutLevel):Void {
 		level = newLevel;
 	}
 	
 	/**
-	 * Returns the currently set OutLevel.
-	 *
-	 * @return the OutLevel
+	 * @see OutAccess#getLevel()
 	 */
 	public function getLevel(Void):OutLevel {
 		if (!level) return getParent().getLevel();
@@ -196,61 +190,50 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	}
 	
 	/**
-	 * Adds a new OutHandler to the list of handlers. These OutHandlers will be used
-	 * to make the actual output. They get invoked when output shall be made.
-	 *
-	 * @param handler the new OutHandler that shall handle output
+	 * @see ConfigurableOut#addHandler()
 	 */
 	public function addHandler(aHandler:OutHandler):Void {
 		broadcaster.addListener(aHandler);
 	}
 	
 	/**
-	 * Removes the specified OutHandler from the list of handlers. If the OutHandler
-	 * does not exist in the list the IllegalArgumentException will be thrown.
-	 *
-	 * @param handler the OutHandler to be removed from the list
-	 * @throws IllegalArgumentException the exception will be thrown when the OutHandler does not exist on the list
+	 * @see ConfigurableOut#removeHandler()
 	 */
 	public function removeHandler(aHandler:OutHandler):Void {
 		broadcaster.removeListener(aHandler);
 	}
 	
 	/**
-	 * Removes all registered handlers.
+	 * @see ConfigurableOut#removeAllHandler()
 	 */
 	public function removeAllHandler(Void):Void {
 		broadcaster.removeAllListener();
 	}
 	
 	/**
-	 * Checks whether this Out instance is enabled for a given OutLevel passed as
-	 * parameter.
-	 *
-	 * @param level the OutLevel to make the check upon
-	 * @return true if this Out instance is enabled for the given OutLevel else false
+	 * @see OutAccess#isEnabled()
 	 */
-	public function isEnabledFor(aLevel:OutLevel):Boolean {
-		if (getLevel() == aLevel) return true;
-		return (getLevel() instanceof ReflectUtil.getClassInfo(aLevel).getType());
+	public function isEnabled(level:OutLevel):Boolean {
+		if (getLevel() == level) return true;
+		return (getLevel() instanceof ReflectUtil.getClassInfo(level).getType());
 	}
 	
 	/**
-	 * @see org.as2lib.core.OutAccess
+	 * @see OutAccess#log()
 	 */
 	public function log(message):Void {
 		level.log(message, broadcaster, staticBroadcaster);
 	}
 	
 	/**
-	 * @see org.as2lib.core.OutAccess
+	 * @see OutAccess#debug()
 	 */
 	public function debug(message):Void {
 		level.debug(message, broadcaster, staticBroadcaster);
 	}
 	
 	/**
-	 * @see org.as2lib.core.OutAccess
+	 * @see OutAccess#info()
 	 */
 	public function info(message):Void {
 		level.info(message, broadcaster, staticBroadcaster);
@@ -264,14 +247,14 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	}
 	
 	/**
-	 * @see org.as2lib.core.OutAccess
+	 * @see OutAccess#error()
 	 */
 	public function error(message):Void {
 		level.error(message, broadcaster, staticBroadcaster);
 	}
 	
 	/**
-	 * @see org.as2lib.core.OutAccess
+	 * @see OutAccess#fatal()
 	 */
 	public function fatal(message):Void {
 		level.fatal(message, broadcaster, staticBroadcaster);
