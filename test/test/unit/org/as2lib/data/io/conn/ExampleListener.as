@@ -16,21 +16,21 @@ class test.org.as2lib.data.io.conn.ExampleListener extends BasicClass implements
 		counter++;
 		cnt=counter;
 		aOut = Config.getOut();
-		aOut.debug("ExampleListener.instance: "+counter);
+		aOut.debug(getClass().getName()+".instance: "+counter);
 	}
 	
 	/**
 	 * Executes a call.
 	 */
 	public function onError(error:ConnectorError):Void{
-		aOut.debug("ExampleListener Nr."+cnt+".onError");
-		//aOut.debug(error.getMessage());
+		aOut.debug(getClass().getName()+".onError");
+		aOut.debug(getClass().getName()+".cnt = "+cnt);
 		aOut.error(error);
 	}
 	
 	public function onResponse(response:ConnectorResponse):Void{
-		trace("ExampleListener Nr."+cnt);
-		//trace(response.getName());
+		aOut.debug(getClass().getName()+".onResponse");
+		aOut.debug(getClass().getName()+".cnt = "+cnt);
 		aOut.debug(response.getData().toString());
 	}
 }

@@ -43,12 +43,13 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 	
 	private var sender:LocalConnection;
 	
+	private static var SERVER_METHOD:String = "serverMethod";
+	private static var ADD_CLIENT_METHOD:String = "addClient";
+	private static var SERVER_ID = "register";
+	
 	/* LocalConnection object for connection */
 	//private var sender:LocalConnection;
 	private var connID:String;
-	
-	/* stores domain, used by allowDomain, for security */
-	private var domain:String;
 	
 	public function LocalClient(Void) {
 		aOut.debug(getClass().getName()+"- Constructor");
@@ -65,7 +66,7 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 		
 		sender = new LocalConnection();
 		
-		var args:Array = new Array("register","addClient",connID);
+		var args:Array = new Array(SERVER_ID,ADD_CLIENT_METHOD,connID);
 		sender.send.apply(this,args);
 		if(!connect(connID)){
 			eventBroadcaster.dispatch(new ConnectorError(new ReservedConnectionException("Connection name '"+connID+"' is already used by another LocalConnection",this,arguments)));
@@ -121,14 +122,33 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 		params = arguments;
 	}
 	
+	/**
+	 * Sends data to clients. The data can include a name of a method and its
+	 * parameters.
+	 */
+	private function broadcast(Void):Void{
+		aOut.debug(getClass().getName()+".broadcast");
+		
+		var args:Array = new Array();
+		sender = new LocalConnection();
+		
+		args.push(SERVER_ID);
+		args.push(SERVER_METHOD);
+		args.push(connID);
+		args.push(method);
+		args = args.concat(params);
+		
+		sender.send.apply(this,args);
+	}
+	
 	public function onStatus(infoObj){
 		aOut.debug(getClass().getName()+".onStatus: "+infoObj.level);
 		if(infoObj.level == "error") {;
 			eventBroadcaster.dispatch(new ConnectorError(new MissingServerException("There is no server with a 'register' connection to listen to !",this,arguments,true,false)));
 		}
-		/*if(infoObj.level == "status") {
-			eventBroadcaster.dispatch(new ConnectorResponse("Serverbroadcast was successful!"));
-		}*/
+		if(infoObj.level == "status") {
+			eventBroadcaster.dispatch(new ConnectorResponse("Clientbroadcast was successful!"));
+		}
 	}
 	
 	/**
@@ -148,6 +168,7 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 	}
 	
 	public function handleRequest(r:ConnectorRequest):Void {
+		aOut.debug(getClass().getName()+".handleRequest");
 		var h:String = r.getHost();
 		var p:String = r.getPath();
 		var m:String = r.getMethod();
@@ -160,7 +181,7 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 			params = a;
 		}
 
-		initConnection();
+		broadcast();
 	}
 	
 	/**
