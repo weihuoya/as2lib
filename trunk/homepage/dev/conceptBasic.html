@@ -89,7 +89,7 @@
                         </table>
                         <ol class="conceptList">
                           <li><a name="Output"></a><h2>Output handling</h2>
-                            Usually, the output from an application within flash runs over <code>trace();</code>(including reports about uncaught errors). The Problem of this way is that it will only work within an environment where "trace" is supported (only the Flash environment supports this by default). All other cases (within a website, in an executeable file, etc.) don't have a standard output. The output of trace actions is not even guaranteed in the Flash environment, because their export can be switched off(and, of course back on) in the publish settings.
+                            Usually, the output from an application within flash runs over <pre class="code">trace();</pre>(including reports about uncaught errors). The Problem of this way is that it will only work within an environment where "trace" is supported (only the Flash environment supports this by default). All other cases (within a website, in an executeable file, etc.) don't have a standard output. The output of trace actions is not even guaranteed in the Flash environment, because their export can be switched off(and, of course back on) in the publish settings.
                             <ul>
                               <li><a name="OutputReason"></a><h3>Reason</h3>
                                 We support this because we think that output is absolutely necessary(for the user as for the developer) and that it should be possible anywhere.
@@ -103,7 +103,7 @@
                               </li>
                               <li><a name="OutputAPI"></a><h3>API</h3>
                                 All functions will be accessible through the org.as2lib.basic.Out class with the following static functions:
-                                <code>org.as2lib.basic.Out</code>
+                                <pre class="code">org.as2lib.basic.Out</pre>
                                 <ul>
                                   <li><a name="OutputHandlerAPIWrite"></a><h4>.write([String]):Void</h4>
                                     Simple string output to the standard device (comparable with <a href="http://livedocs.macromedia.com/flash/mx2004/main/03_wri29.htm" target="_blank" title="Macromedia Documentation for accessing the Output Panel">trace</a>).
@@ -127,13 +127,13 @@
 and each combination:
 <pre>7 = 111 = complete output</pre><br>
                                     In this way, it's simple to extend it. There will be constants to simplify the access:
-                                    <code>.DO_EXCEPTIONS // 1
+                                    <pre class="code">.DO_EXCEPTIONS // 1
 .DO_LOG // 2
 .DO_WRITE // 4
 .DO_EXCEPTIONS_AND_LOG // DO_EXCEPTIONS | DO_LOG
 .DO_EXCEPTIONS_AND_WRITE // DO_EXCEPTIONS | DO_WRITE
 .DO_LOG_AND_WRITE // DO_LOG | DO_WRITE
-.DO_EVERYTHING // DO_EXCEPTIONS | DO_LOG | DO_WRITE</code>
+.DO_EVERYTHING // DO_EXCEPTIONS | DO_LOG | DO_WRITE</pre>
                                   </li>
                                 </ul>
                               </li>
@@ -143,15 +143,15 @@ and each combination:
                               <li><a name="OutputExceptions"></a><h3>Exceptions</h3>
                                 Exceptions will be thrown if ...
                                 <ul>
-                                  <li>no Exception was defined (<code>.error()</code>)</li>
-                                  <li>the given String was empty (<code>.write()</code>,<code>.log()</code>)</li>
+                                  <li>no Exception was defined (<pre class="code">.error()</pre>)</li>
+                                  <li>the given String was empty (<pre class="code">.write()</pre>,<pre class="code">.log()</pre>)</li>
                                   <li>no OutputWriter was available (default value is a "TraceOutputWriter")</li>
                                 </ul>
                               </li>
                             </ul>
                           </li>
                           <li><a name="Exception"></a><h2>Exception handling</h2>
-                            Uncaught exceptions are usually displayed by <code>trace(Error.toString());</code> (<a href="http://livedocs.macromedia.com/flash/mx2004/main/12_as217.htm" target="_blank" title="How Macromedia understands an Exception">link to Macromedia's Error Class</a>). The result is very minimalistic (if toString is not overridden by the exception's class, only: "Error occured" is displayed). This blocks viewing informations about uncaught exceptions within another than the Flash MX 2004 testing environment.
+                            Uncaught exceptions are usually displayed by <pre class="code">trace(Error.toString());</pre> (<a href="http://livedocs.macromedia.com/flash/mx2004/main/12_as217.htm" target="_blank" title="How Macromedia understands an Exception">link to Macromedia's Error Class</a>). The result is very minimalistic (if toString is not overridden by the exception's class, only: "Error occured" is displayed). This blocks viewing informations about uncaught exceptions within another than the Flash MX 2004 testing environment.
                             <ul>
                               <li><a name="ExceptionReason"></a><h3>Reason</h3>
                                 The Error class provided by Flash is not really helpful. It doesn't allow you to find an error by simple viewing any stack or even the exception name.
@@ -163,10 +163,10 @@ and each combination:
                                 <ul>
                                   <li><h4>Automized name generation</h4>
                                     To stop that you will have automatically to insert an Exception name
-                                    <code>class MyError extends Error {
+                                    <pre class="code">class MyError extends Error {
   public var name = "org.as2lib.basic.WrongArgumentException";
 }
-                                    </code>
+                                    </pre>
                                     we will use reflections to get automatically the name of the Exception.
                                   </li>
                                   <li><h4>Stack</h4>
@@ -180,8 +180,8 @@ and each combination:
                               </li>
                               <li><a name="ExceptionAPI"></a><h3>API</h3>
                                 For using this exception it's only necessary to extend the basic class.
-                                Example:<code>class org.as2lib.basic.WrongArgumentsException extends org.as2lib.basic.Exception {
-}</code>, all the Rest will be done by the basic class.
+                                Example:<pre class="code">class org.as2lib.basic.WrongArgumentsException extends org.as2lib.basic.Exception {
+}</pre>, all the Rest will be done by the basic class.
                                 Methods:
                                 <ul>
                                   <li><a name="ExceptionAPIgetName"></a><h4>.getName():String</h4>
@@ -218,12 +218,12 @@ and each combination:
                                   </li>
                                   <li><h4>Developers</h4>
                                     The developer will have to code this:
-                                    <code>throw new org.as2lib.basic.exceptions.WrongArgumentsException('You did something wrong.', arguments);</code>
+                                    <pre class="code">throw new org.as2lib.basic.exceptions.WrongArgumentsException('You did something wrong.', arguments);</pre>
                                   </li>
                                   <li><h4>ExceptionDeveloper</h4>
                                     The Exceptiondeveloper will have to code an exception like this:
-                                    <code>class org.as2lib.basic.exceptions.WrongArgumentsException extends Exception {
-}</code>
+                                    <pre class="code">class org.as2lib.basic.exceptions.WrongArgumentsException extends Exception {
+}</pre>
                                   </li>
                                 </ul>
                               </li>
@@ -271,11 +271,11 @@ and each combination:
                                       </li>
                                       <li><h5>[static] .logEvents([boolean]);</h5>
                                         Defines whether all Events (from all Classes) should be logged or not.
-                                        <code>org.as2lib.basic.EventHandler.logEvents(true);</code>
+                                        <pre class="code">org.as2lib.basic.EventHandler.logEvents(true);</pre>
                                       </li>
                                     </ul>
                                     <p class="note">Note: This class is not specified as abstract class, to use it if you can't extend it.</p>
-                                    <code>import org.as2lib.basic.*
+                                    <pre class="code">import org.as2lib.basic.*
 
 class MyClass extends SomethingDifferent {
   private var eventHandler:EventHandler;
@@ -283,7 +283,7 @@ class MyClass extends SomethingDifferent {
   function MyClass () {
     eventHandler = new EventHandler();
   }
-}</code>
+}</pre>
                                   </li>
                                   <li><a name="EventHandlingAPIEventAbstractClass"></a><h4>Event abstract class</h4>
                                     There will be an Eventabstractclass to define which event has to be called.<br>
@@ -303,7 +303,7 @@ class MyClass extends SomethingDifferent {
                                   <li><a name="EventHandlingExampleObjectDeveloper"></a><h4>ObjectDeveloper</h4>
                                     <ol>
                                      <li><h5>Class where listener should be addable</h5>
-                                       <code>import org.as2lib.basic.*
+                                       <pre class="code">import org.as2lib.basic.*
 class MyClass extends EventHandler {
   private function onEnterframe (e:MyEventHandler) {
   }
@@ -313,10 +313,10 @@ class MyClass extends EventHandler {
   public function gotoFrame (frame:Number) {
     this.dispatchEvent(new MyEventHandler(frame);
   }
-}</code>
+}</pre>
                                      </li>
                                      <li><h5>Returned Eventhandler</h5>
-                                       <code>import org.as2lib.basic.*
+                                       <pre class="code">import org.as2lib.basic.*
 class MyEventHandler extends EventHandler {
   public var eventName:String = "onEnterFrame";
   public var frameNumber:Number;
@@ -324,31 +324,31 @@ class MyEventHandler extends EventHandler {
   public function MyEventHandler (frameNumber) {
     this.frameNumber = frameNumber;
   }
-}</code>
+}</pre>
                                      </li>
                                      <li><h5>Eventinterface</h5>
-                                       <code>import org.as2lib.basic.*
+                                       <pre class="code">import org.as2lib.basic.*
 class MyEventInterface extends EventInterface {
   public function onEnterframe (e:MyEventHandler):Void;
-}</code>
+}</pre>
                                      </li>
                                     </ol>
                                   </li>
                                   <li><a name="EventHandlingExampleListenerDeveloper"></a><h4>ListenerDeveloper</h4>
                                     <ol>
                                       <li><h5>Listenercreation</h5>
-                                       <code>import org.as2lib.basic.*
+                                       <pre class="code">import org.as2lib.basic.*
 class MyEventListener implements MyEventInterface {
   public function onEnterframe (e:MyEventHandler){
     Out.write('entered Frame number '+e.frameNumber);
   }
-}</code>
+}</pre>
                                       </li>
                                       <li><h5>Listenerregistration</h5>
-                                       <code>...
+                                       <pre class="code">...
   var myObject:MyClass = new MyClass();
   myObject.addListener(new MyEventListener());
-...</code>
+...</pre>
                                       </li>
                                     </ol>
                                   </li>
@@ -367,7 +367,7 @@ class MyEventListener implements MyEventInterface {
                               </li>
                               <li><a name="TypedArrayAPI"></a><h3>API</h3>
                                 There will be one basic class that can be used as is or be extended:<pre>org.as2lib.basic.TypedArray</pre>
-                                You have to add an constructor type to that class: <code>new org.as2lib.basic.TypedArray(String)</code>
+                                You have to add an constructor type to that class: <pre class="code">new org.as2lib.basic.TypedArray(String)</pre>
                                 Methods from TypedArray (differing to the Array Methods):
                                 <ul>
                                   <li><a name="TypedArrayAPIpush"></a><h4>.push()</h4>
@@ -413,9 +413,9 @@ class MyEventListener implements MyEventInterface {
                                   </li>
                                   <li><a name="TypedArrayProblemsFlash"></a><h3>Flash Basic Functionality</h3>
                                     In Flash its possible to access every method and content with [].
-                                    <code>a = new NotDynamicClass();
+                                    <pre class="code">a = new NotDynamicClass();
 a["monkey"] = "true";
-                                    </code>
+                                    </pre>
                                     To prevent this we will not extend the Array, this class will be an bridge to the array.
                                   </li>
                                 </ol>
@@ -433,15 +433,15 @@ a["monkey"] = "true";
                               <li><a name="BasicClassContent"></a><h3>Content</h3>
                                 <ul>
                                   <li><a href="#Reflections">Reflections</a>
-                                    <code>.getClass():ClassInfo;</code>
+                                    <pre class="code">.getClass():ClassInfo;</pre>
                                   </li>
                                   <li><a href="#Cloning">Cloning</a>
-                                    <code>.clone():Object;</code>
+                                    <pre class="code">.clone():Object;</pre>
                                   </li>
                                   <li><a href="#Overloading">Overloading</a>
-                                    <code>.overload([arguments], [OverloadHandler1],...[OverloadHandlerN]);
+                                    <pre class="code">.overload([arguments], [OverloadHandler1],...[OverloadHandlerN]);
 .createOverloadHandler([Array], [String]);
-                                    </code>
+                                    </pre>
                                   </li>
                                 </ul>
                               </li>
@@ -551,7 +551,7 @@ a["monkey"] = "true";
                                   </li>
                                 </ul>
                                 There will be additionally a class for the Handler: <pre>org.as2lib.basic.OverloadHandler</pre>
-                                This has to be initialized with <code>new OverloadHandler(arguments:Arguments, function:String);</code>
+                                This has to be initialized with <pre class="code">new OverloadHandler(arguments:Arguments, function:String);</pre>
                                 <ul>
                                   <li><a name="OverloadingAPI"></a><h3>.matches(arguments)</h3>
                                     Returns true if the arguments match to the Handlers argument.
@@ -573,15 +573,15 @@ a["monkey"] = "true";
                                 As example for using Overloading:
                                 <ul>
                                   <li><h4>Within the basic class:</h4>
-                                    <code>public function doSomething() {
+                                    <pre class="code">public function doSomething() {
   overload (
     arguments,
     createOverloadHandler([String, Number], "doSomethingWay1"),
     createOverloadHandler([String], "doSomethingWay2")
   );
-}</code></li>
+}</pre></li>
                                   <li><h4>Using the util class:</h4>
-                                    <code>import org.as2lib.basic.BasicUtil;
+                                    <pre class="code">import org.as2lib.basic.BasicUtil;
  ...
  public function doSomething() {
    BasicUtil.overload (
@@ -590,7 +590,7 @@ a["monkey"] = "true";
      BasicUtil.createOverloadHandler([String, Number], "doSomethingWay1"),
      BasicUtil.createOverloadHandler([String], "doSomethingWay2")
    );
- }</code></li>
+ }</pre></li>
                                 </ul>
                               </li>
                               <li><a name="OverloadingFuture"></a><h3>Possible future addition</h3>
