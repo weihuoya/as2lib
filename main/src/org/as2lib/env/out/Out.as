@@ -136,7 +136,7 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 		if (level == aLevel) {
 			return true;
 		}
-		return ObjectUtil.isInstanceOf(level, ReflectUtil.getClassInfo(aLevel).getRepresentedClass());
+		return ObjectUtil.isInstanceOf(level, ReflectUtil.getClassInfo(aLevel).getRepresentedType());
 	}
 	
 	/**
