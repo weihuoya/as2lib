@@ -44,11 +44,4 @@ class broadcasting.EventDispatcherTest implements TestCase {
 	public function run(Void):Void {
 		dispatchEvent({type:'call'});
 	}
-	
-	/**
-	 * @return the own name.
-	 */
-	public function getName(Void):String {
-		return "EventDispatcher";
-	}
 }
