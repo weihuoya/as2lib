@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.env.except.Throwable;
+import org.as2lib.env.except.ExceptConfig;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
@@ -62,8 +63,15 @@ class org.as2lib.env.except.AbstractException extends Error {
 		// addStackTraceElement(undefined, args.caller, new FunctionArguments());
 	}
 	
+	/**
+	 * Adds a StackTraceElement to the Stack trace.
+	 *
+	 * @param thrower the object that threw the Throwable
+	 * @param method the operation that thew the Throwable
+	 * @param args the arguments that caused the operation to throw the Throwable
+	 */
 	private function addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void {
-		var element:StackTraceElement = new SimpleStackTraceElement(thrower, method, args);
+		var element:StackTraceElement = ExceptConfig.getStackTraceElementFactory().getStackTraceElement(thrower, method, args);
 		stackTrace.push(element);
 	}
 	
