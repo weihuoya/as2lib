@@ -38,6 +38,9 @@ class org.as2lib.Config extends BasicClass {
 	/**
 	 * Sets a new stringifier used to stringify objects.
 	 *
+	 * <p>If you set a stringifier of value null or undefined #getObjectStringifier(Void):Stringifier
+	 * returns the default stringifier.
+	 *
 	 * @param stringifier the new object stringifier
 	 */
 	public static function setObjectStringifier(stringifier:Stringifier):Void {
@@ -47,7 +50,10 @@ class org.as2lib.Config extends BasicClass {
 	/**
 	 * Returns the stringifier used to stringify objects.
 	 *
-	 * @return the currently used object stringifier.
+	 * <p>If no stringifier is set the default stringifier gets returned.
+	 * That is an instance of class ObjectStringifier.
+	 *
+	 * @return the currently used object stringifier
 	 */
 	public static function getObjectStringifier(Void):Stringifier {
 		if (!objectStringifier) objectStringifier = new ObjectStringifier();

@@ -36,7 +36,8 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	
 	public static function getClassNameForInstance(instance):String {
 		if (instance == null) return null;
-		return getClassNameForClass(instance.__constructor__);
+		// MovieClips on the stage do not have a '__constructor__' but a 'constructor' variable.
+		return getClassNameForClass(instance.__constructor__ ? instance.__constructor__ : instance.constructor);
 	}
 	
 	public static function getClassNameForClass(clazz:Function):String {

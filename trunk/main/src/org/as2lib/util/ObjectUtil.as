@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.Config;
 import org.as2lib.util.ClassUtil;
-import org.as2lib.util.Call;
+//import org.as2lib.util.Call;
 
 /**
  * ObjectUtil contains fundamental operations to efficiently and easily work
@@ -27,6 +27,7 @@ import org.as2lib.util.Call;
  * @author Martin Heidegger
  */
 class org.as2lib.util.ObjectUtil extends BasicClass {
+	
 	/**
 	 * Constant for allowing everything to an object.
 	 * 
@@ -434,10 +435,11 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * @param object the object to iterate over
 	 * @param call the Call to be executed for each found object
 	 */
-	public static function forEach(object, call:Call):Void {
+	/*public static function forEach(object, call:Call):Void {
 		var i:String;
 		for (i in object) {
 			call.execute([object[i], i]);
 		}
-	}
+	}*/
+	
 }
