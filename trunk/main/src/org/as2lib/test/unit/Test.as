@@ -1,5 +1,6 @@
 ﻿import org.as2lib.test.unit.Failure;
 import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.overload.Overload;
 import org.as2lib.core.BasicClass;
 
 /**
@@ -208,18 +209,30 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	private static function addError (message:String):Void {
 		errors.push(new Failure(atFunction, atClass, getTimer()-startTime, message));
 	}
+	/**
+	 * overload
+	 * @see assertTrueWithMessage
+	 * @see assertTrueWithoutMessage
+	 */
+	private static function assertTrue():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that,arguments);
+		overload.addHandlerByValue([String, Object], assertTrueWithMessage);
+		overload.addHandlerByValue([Object], assertTrueWithoutMessage);
+		overload.forward();
+	}
 	
 	/**
 	 * Asserts if one var is shurly True.
 	 *
 	 * @see #assertTrueWithMessage
-	 * @see #assertFalse
+	 * @see #assertFalseWithoutMessage
 	 * @see #assertFalseWithMessage
 	 * 
 	 * @param var1		Var that should be true.
 	 */
-	private static function assertTrue (var1):Void {
-		assertTrueWithMessage ("undefined", var1);
+	private static function assertTrueWithoutMessage (var1:Boolean):Void {
+		assertTrueWithMessage ("", var1);
 	}
 
 	/**
