@@ -16,6 +16,7 @@ import org.as2lib.env.log.logger.SimpleLogger;
 import org.as2lib.env.log.logger.TraceLogger;
 import org.as2lib.env.log.logger.VoidLogger;
 import org.as2lib.env.log.logger.RootLogger;
+import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.handler.TraceHandler;
 import org.as2lib.env.log.repository.LoggerHierarchy;
 import org.as2lib.env.log.LoggerRepositoryManager;
@@ -39,13 +40,19 @@ import org.as2lib.test.unit.TestSuiteFactory;
 //
   
   // Use a LoggerHierarchy as repository and take a TraceLogger by default
-  var loggerHierarchy:LoggerHierarchy = new LoggerHierarchy(new TraceLogger("root"));
+  var loggerHierarchy:LoggerHierarchy = new LoggerHierarchy(new RootLogger(AbstractLogLevel.ALL));
   
   // Tell the Logger Repository to use the loggerHierarchy for default.
   LoggerRepositoryManager.setRepository(loggerHierarchy); 
   
+  var traceLogger:SimpleLogger = new SimpleLogger("org.as2lib");
+  traceLogger.addHandler(new TraceHandler());
+  
   // Log to trace console in org.as2lib package
-  loggerHierarchy.putLogger(new TraceLogger("org.as2lib"));
+  loggerHierarchy.putLogger(traceLogger);
+  
+  // Disables logging of exceptions.
+  loggerHierarchy.putLogger(new VoidLogger("org.as2lib.env.except.Throwable"));
   
   // Example for your package
   /*

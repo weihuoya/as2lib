@@ -42,7 +42,7 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 		}
 		
 		var methodName:String;
-		if ((method == thrower || method == thrower.__constructor__) && thrower) {
+		if ((method == thrower || method == thrower.__constructor__) && thrower && method) {
 			// source string 'new' out, to a constant
 			methodName = "new";
 		} else {
