@@ -9,7 +9,7 @@ import org.as2lib.core.string.Stringifier;
  * @author: Simon Wacker, Martin Heidegger
  * @see org.as2lib.core.BasicClass
  */
-class org.as2lib.util.ObjectUtil extends BasicClass{
+class org.as2lib.util.ObjectUtil extends BasicClass {
 	/** Private holder for a Stringifier for objects */
 	private static var stringifier:Stringifier = new ObjectStringifier();
 	
@@ -18,35 +18,35 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	 * 
 	 * @see #setStatus()
         */
-	public static var STATUS_IS_HIDDEN = 1
+	public static var ACCESS_IS_HIDDEN = 1
 	
 	/**
 	 * Constant for setting an object deletable.
 	 * 
 	 * @see #setStatus()
         */
-	public static var STATUS_CAN_DELETE = 2;
+	public static var ACCESS_CAN_DELETE = 2;
 	
 	/**
 	 * Constant for setting an object overwritable.
 	 * 
 	 * @see #setStatus()
         */
-	public static var STATUS_CAN_OVERWRITE = 4;
+	public static var ACCESS_CAN_OVERWRITE = 4;
 	
 	/**
 	 * Constant for allowing everything to an object.
 	 * 
 	 * @see #setStatus()
         */
-	public static var STATUS_ALL_ALLOWED = STATUS_CAN_DELETE | STATUS_CAN_OVERWRITE;
+	public static var ACCESS_ALL_ALLOWED = ACCESS_CAN_DELETE | ACCESS_CAN_OVERWRITE;
 	
 	/**
 	 * Constant for allowing nothing..
 	 * 
 	 * @see #setStatus()
         */
-	public static var STATUS_NOTHING_ALLOWED = STATUS_IS_HIDDEN;
+	public static var ACCESS_NOTHING_ALLOWED = ACCESS_IS_HIDDEN;
 	
 	/**
 	 * Private constructor.
@@ -89,37 +89,37 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	 * You can apply the static values:
 	 * <table>
 	 *   <tr>
-	 *     <th>#STATUS_IS_HIDDEN</th>
+	 *     <th>#ACCESS_IS_HIDDEN</th>
 	 *     <td>Hides Object from for-in loops.</td>
 	 *   </tr>
 	 *   <tr>
-	 *     <th>#STATUS_CAN_DELETE</th>
+	 *     <th>#ACCESS_CAN_DELETE</th>
 	 *     <td>Marks the Object as Deleteable</td>
 	 *   </tr>
 	 *   <tr>
-	 *     <td>#STATUS_CAN_OVERWRITE</th>
+	 *     <td>#ACCESS_CAN_OVERWRITE</th>
 	 *     <td>Marks the Object as Overwriteable</td>
 	 *   </tr>
 	 *   <tr>
-	 *     <th>#STATUS_ALL_ALLOWED</th>
+	 *     <th>#ACCESS_ALL_ALLOWED</th>
 	 *     <td>Allows everything (reading, deleting, over-writing)</td>
 	 *   </tr>
 	 *   <tr>
-	 *     <th>#STATUS_NOTHING_ALLOWED</th>
+	 *     <th>#ACCESS_NOTHING_ALLOWED</th>
 	 *     <td>Allows nothing (reading, deleting, over-writing)</td>
 	 *   </tr>
 	 * </table>
 	 * as fast references.
 	 * 
 	 * You can combine this values for proper uses binary with:
-	 * #STATUS_CAN_DELETE | #STATUS_CAN_OVERWRITE
+	 * #ACCESS_CAN_DELETE | #ACCESS_CAN_OVERWRITE
 	 * to apply only two status.
 	 * 
 	 * @param object The object that should be modified.
 	 * @param status Status that should apply.
 	 */
-	public static function setAccessPermissions(object, status:Number):Void {
-		_global.ASSetPropFlags(object, null, status, true);
+	public static function setAccessPermissions(object, access:Number):Void {
+		_global.ASSetPropFlags(object, null, access, true);
 	}
 	
 	/**
@@ -189,7 +189,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	 * @return true if the object is an instance of the class otherwise false
 	 */
 	public static function isInstanceOf(anObject, aClass:Function):Boolean {
-		if((typeof anObject == "string" || typeof anObject ==  "number" || typeof anObject ==  "movieclip") && aClass == Object) {
+		if (aClass === Object) {
 			return true;
 		}
 		return (anObject instanceof aClass);
