@@ -9,6 +9,19 @@
         <entry type="change" package="org.as2lib.env.out" class="OutAccess" method="*(throwable:Throwable):Void"><change-arguments to="error" /></entry>
         <entry type="change" package="org.as2lib.env.out" class="OutLevel" method="*(message:String, broadcaster:EventBroadcaster):Void"><change-arguments to="message, broadcaster:EventBroadcaster" /></entry>
         <entry type="change" package="org.as2lib.env.out" class="OutLevel" method="*(throwable:Throwable, broadcaster:EventBroadcaster):Void"><change-arguments to="error, broadcaster:EventBroadcaster" /></entry>
+        <entry type="change" package="org.as2lib.env.out.handler" class="SocketOutputServerHandler"><change-rename to="XmlSocketHandler" /></entry>
+        <entry type="remove" package="org.as2lib.env.out.info">Removed the package and its content. The classes OutErrorInfo and OutWriteInfo have been replaced by the org.as2lib.env.out.OutInfo class.</entry>
+        <entry type="add" package="org.as2lib.env.out.info" class="OutInfo">The OutInfo class replaces the OutError- and OutWriteInfo classes.</entry>
+        <entry type="remove" package="org.as2lib.env.out.string">Removed the package and its content. The classes WriteStringifier and ErrorStringifier have been replaced by the org.as2lib.env.out.OutInfoStringifier class.</entry>
+        <entry type="add" package="org.as2lib.env.out" class="OutInfoStringifier">This class replaces the two classes WriteStringifier and ErrorStringifier.</entry>
+        <entry type="remove" package="org.as2lib.env.out" class="OutHandler" method="error(info:OutErrorInfo):Void"></entry>
+        <entry type="change" package="org.as2lib.env.out" class="OutHandler" method="write(info:OutWriteInfo):Void"><change-arguments to="info:OutInfo" /></entry>
+        <entry type="add" package="org.as2lib.env.out" class="OutConfig" method="setInfoStringifier(Stringifier):Void"></entry>
+        <entry type="add" package="org.as2lib.env.out" class="OutConfig" method="getInfoStringifier(Void):Stringifier"></entry>
+        <entry type="remove" package="org.as2lib.env.out" class="OutConfig" method="setWriteStringifier(OutInfoStringifier):Void"></entry>
+        <entry type="add" package="org.as2lib.env.out" class="OutConfig" method="getWriteStringifier(Void):Stringifier"></entry>
+        <entry type="remove" package="org.as2lib.env.out" class="OutConfig" method="setErrorStringifier(OutInfoStringifier):Void"></entry>
+        <entry type="add" package="org.as2lib.env.out" class="OutConfig" method="getErrorStringifier(Void):Stringifier"></entry>
       </day>
     </month>
     <month value="8">
