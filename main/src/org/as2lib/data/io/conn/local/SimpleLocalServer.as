@@ -5,7 +5,7 @@ import org.as2lib.data.io.conn.local.LocalServer;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.data.io.conn.local.ReservedHostException;
 import org.as2lib.data.io.conn.local.LocalConfig;
-import org.as2lib.data.io.conn.local.ServiceAdapter;
+import org.as2lib.data.io.conn.local.LocalServerServiceProxy;
 
 class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass implements LocalServer {
 	private var host:String;
@@ -22,11 +22,10 @@ class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass impleme
 		var keys:Array = serviceMap.getKeys();
 		var iterator:Iterator = serviceMap.iterator();
 		while (iterator.hasNext()){
-			var adapter:ServiceAdapter = iterator.next();
+			var proxy:LocalServerServiceProxy = iterator.next();
 			var key:String = String(keys.shift());
 			// source out: 'host + "/" + key'
-			var lc:LocalConnection = adapter.getLocalConnection();
-			if (!lc.connect(host + "/" + key)){
+			if (!proxy.connect(host + "/" + key)){
 				throw new ReservedHostException("Connection with name [" + host + "/" + key + "] is already in use.", this, arguments);
 			}
 		}
@@ -40,9 +39,8 @@ class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass impleme
 	}
 	
 	public function putService(service:String, object):Void {
-		
-		var adapter:ServiceAdapter = new ServiceAdapter(object,new LocalConnection());
-		serviceMap.put(service, adapter);
+		var proxy:LocalServerServiceProxy = new LocalServerServiceProxy(object);
+		serviceMap.put(service, proxy);
 	}
 	
 	public function isRunning(Void):Boolean {

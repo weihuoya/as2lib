@@ -1,8 +1,8 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.data.io.conn.Connection;
-import org.as2lib.data.io.conn.ConnectionProxy;
-import org.as2lib.data.io.conn.local.LocalConnProxy;
+import org.as2lib.data.io.conn.ServiceProxy;
+import org.as2lib.data.io.conn.local.LocalClientServiceProxy;
 import org.as2lib.data.io.conn.local.LocalConfig;
 import org.as2lib.data.io.conn.local.MissingServerException;
 import org.as2lib.data.io.conn.local.MissingServiceException;
@@ -16,13 +16,13 @@ class org.as2lib.data.io.conn.local.LocalConn extends BasicClass implements Conn
 		opened = false;
 	}
 	
-	public function getProxy(service:String):ConnectionProxy {
+	public function getProxy(service:String):ServiceProxy {
 		if (opened) {
 			var lc:LocalConnection = new LocalConnection();
 			if (lc.connect(host + "/" + service)) {
 				throw new MissingServiceException("The service [" + service + "] on host [" + host + "] does not exist.", this, arguments);
 			}
-			return (new LocalConnProxy(host + "/" + service));
+			return (new LocalClientServiceProxy(host + "/" + service));
 		}
 		throw new IllegalStateException("You must call the #open() operation before calling #getProxy().", this, arguments);
 	}
