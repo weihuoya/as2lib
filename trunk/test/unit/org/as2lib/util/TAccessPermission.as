@@ -31,7 +31,7 @@ class org.as2lib.util.TAccessPermission extends TestCase {
 		inObject.test = "a";
 		
 		// Test for a valid all allowed state.
-		AccessPermission.set(inObject, ["test"], AccessPermission.ALL_ALLOWED);
+		AccessPermission.set(inObject, ["test"], AccessPermission.ALLOW_ALL);
 		
 		inObject.test = "b";
 		assertNotEquals("test was not overwritten, even if it was allowed to", inObject.test, "a");
@@ -41,7 +41,7 @@ class org.as2lib.util.TAccessPermission extends TestCase {
 		
 		
 		// Test setting of isHidden
-		AccessPermission.set(inObject, ["test"], AccessPermission.IS_HIDDEN);
+		AccessPermission.set(inObject, ["test"], AccessPermission.HIDE);
 
 		for(var i:String in inObject) {
 			if(i == "test") {
@@ -61,7 +61,7 @@ class org.as2lib.util.TAccessPermission extends TestCase {
 		inObject.test = "a";
 		
 		// Another test with all permissions
-		AccessPermission.set(inObject, ["test"], AccessPermission.ALL_ALLOWED);
+		AccessPermission.set(inObject, ["test"], AccessPermission.ALLOW_ALL);
 		var found:Boolean = false;
 		for(var i:String in inObject) {
 			if(i == "test") {
@@ -90,13 +90,13 @@ class org.as2lib.util.TAccessPermission extends TestCase {
 		var inObject:Object = new Object();
 		inObject.test = "a";
 		
-		AccessPermission.set(inObject, ["test"], AccessPermission.ALL_ALLOWED);
-		assertFalse("Validates as hidden even if it is not hidden", (AccessPermission.get(inObject, "test") & AccessPermission.IS_HIDDEN) == AccessPermission.IS_HIDDEN);
+		AccessPermission.set(inObject, ["test"], AccessPermission.ALLOW_ALL);
+		assertFalse("Validates as hidden even if it is not hidden", (AccessPermission.get(inObject, "test") & AccessPermission.HIDE) == AccessPermission.HIDE);
 		assertFalse("Validates as protected of deletion even if it is not protected", (AccessPermission.get(inObject, "test") & AccessPermission.PROTECT_DELETE) == AccessPermission.PROTECT_DELETE);
 		assertFalse("Validates as protected of overwriting even if it is not protected", (AccessPermission.get(inObject, "test") & AccessPermission.PROTECT_OVERWRITE) == AccessPermission.PROTECT_OVERWRITE);
 		
-		AccessPermission.set(inObject, ["test"], AccessPermission.IS_HIDDEN);
-		assertTrue("Validates as not hidden even if it is hidden", (AccessPermission.get(inObject, "test") & AccessPermission.IS_HIDDEN) == AccessPermission.IS_HIDDEN);
+		AccessPermission.set(inObject, ["test"], AccessPermission.HIDE);
+		assertTrue("Validates as not hidden even if it is hidden", (AccessPermission.get(inObject, "test") & AccessPermission.HIDE) == AccessPermission.HIDE);
 		
 		AccessPermission.set(inObject, ["test"], AccessPermission.PROTECT_DELETE);
 		assertTrue("Validates as not protected of deletion if it is protected", (AccessPermission.get(inObject, "test") & AccessPermission.PROTECT_DELETE) == AccessPermission.PROTECT_DELETE);
@@ -104,8 +104,8 @@ class org.as2lib.util.TAccessPermission extends TestCase {
 		AccessPermission.set(inObject, ["test"], AccessPermission.PROTECT_OVERWRITE);
 		assertTrue("Validates as not protected of overwriting if it is protected", (AccessPermission.get(inObject, "test") & AccessPermission.PROTECT_OVERWRITE) == AccessPermission.PROTECT_OVERWRITE);
 		
-		AccessPermission.set(inObject, ["test"], AccessPermission.ALL_ALLOWED);
-		assertFalse("Validates 2nd time as hidden even if it is not hidden", (AccessPermission.get(inObject, "test") & AccessPermission.IS_HIDDEN) == AccessPermission.IS_HIDDEN);
+		AccessPermission.set(inObject, ["test"], AccessPermission.ALLOW_ALL);
+		assertFalse("Validates 2nd time as hidden even if it is not hidden", (AccessPermission.get(inObject, "test") & AccessPermission.HIDE) == AccessPermission.HIDE);
 		
 		/**
 		 * This has been inverted(!!!) due to a Macromedia Bug. 
@@ -126,11 +126,11 @@ class org.as2lib.util.TAccessPermission extends TestCase {
 		assertTrue("'test' should be enumberable by default", AccessPermission.isEnumerable(inObject, "test"));
 		
 		// negative case
-		AccessPermission.set(inObject, ["test"], AccessPermission.IS_HIDDEN);
+		AccessPermission.set(inObject, ["test"], AccessPermission.HIDE);
 		assertFalse("'test' should not be enumberable if its denied!", AccessPermission.isEnumerable(inObject, "test"));
 		
 		// positive case again
-		AccessPermission.set(inObject, ["test"], AccessPermission.ALL_ALLOWED);
+		AccessPermission.set(inObject, ["test"], AccessPermission.ALLOW_ALL);
 		assertTrue("'test' should be enumberable", AccessPermission.isEnumerable(inObject, "test"));
 		
 		// invalid case
@@ -152,7 +152,7 @@ class org.as2lib.util.TAccessPermission extends TestCase {
 		assertFalse("'test' should not be overwriteable if its denied!", AccessPermission.isOverwritable(inObject, "test"));
 		
 		// positive case again (doesn't work! - MM Bug)
-		AccessPermission.set(inObject, ["test"], AccessPermission.ALL_ALLOWED);
+		AccessPermission.set(inObject, ["test"], AccessPermission.ALLOW_ALL);
 		assertFalse("'test' should be overwriteable, but MM has a Bug. If you see this, tell Macromedia they fixed it.", AccessPermission.isOverwritable(inObject, "test"));
 		
 		// invalid case
@@ -174,7 +174,7 @@ class org.as2lib.util.TAccessPermission extends TestCase {
 		assertFalse("'test' should not be deleteable if its denied!", AccessPermission.isDeletable(inObject, "test"));
 		
 		// positive case again (doesn't work! - MM Bug)
-		AccessPermission.set(inObject, ["test"], AccessPermission.ALL_ALLOWED);
+		AccessPermission.set(inObject, ["test"], AccessPermission.ALLOW_ALL);
 		assertFalse("'test' should be deletable, but MM has a Bug. If you see this, tell Macromedia they fixed it.", AccessPermission.isDeletable(inObject, "test"));
 		
 		// invalid case

@@ -338,9 +338,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 		result.invoke = function(proxy, method:String, args:Array) {
 			// 'toString' must be excluded because it gets used everytime an output gets made.
 			// For example in the success and failure messages of the unit testing api.
-			//if (method != "toString") {
+			if (method != "toString") {
 				return owner.invokeMethod(method, args);
-			//}
+			}
 		}
 		return result;
 	}
