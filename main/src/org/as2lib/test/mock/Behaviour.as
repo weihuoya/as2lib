@@ -21,11 +21,11 @@ import org.as2lib.test.mock.MethodCallBehaviour;
 /**
  * @author Simon Wacker
  */
-interface org.as2lib.test.mock.MockBehaviour extends BasicInterface {
+interface org.as2lib.test.mock.Behaviour extends BasicInterface {
 	
 	public function addMethodCallBehaviour(methodName:String):MethodCallBehaviour;
 	
-	public function getMethodCallBehaviour(methodName:String):MethodCallBehaviour;
+	public function getMethodCallBehaviour(methodName:String, args:Array):MethodCallBehaviour;
 	
 	public function getLastMethodCallBehaviour(Void):MethodCallBehaviour;
 	

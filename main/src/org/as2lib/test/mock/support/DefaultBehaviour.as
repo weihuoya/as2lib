@@ -19,14 +19,14 @@ import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.PrimitiveTypeMap;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MethodCallBehaviour;
-import org.as2lib.test.mock.MockBehaviour;
+import org.as2lib.test.mock.Behaviour;
 import org.as2lib.test.mock.MethodCallBehaviourFactory;
 import org.as2lib.test.mock.support.DefaultMethodCallBehaviour;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.test.mock.support.DefaultMockBehaviour extends BasicClass implements MockBehaviour {
+class org.as2lib.test.mock.support.DefaultBehaviour extends BasicClass implements Behaviour {
 	
 	/** Stores added method call behaviours. */
 	private var methodCallBehaviours:Map;
@@ -37,7 +37,7 @@ class org.as2lib.test.mock.support.DefaultMockBehaviour extends BasicClass imple
 	/**
 	 * Constructs a new instance.
 	 */
-	public function DefaultMockBehaviour(Void) {
+	public function DefaultBehaviour(Void) {
 		methodCallBehaviours = new PrimitiveTypeMap();
 	}
 	
@@ -73,41 +73,63 @@ class org.as2lib.test.mock.support.DefaultMockBehaviour extends BasicClass imple
 	}
 	
 	/**
-	 * @see MockBehaviour#addMethodCallBehaviour()
+	 * @see Behaviour#addMethodCallBehaviour()
 	 */
 	public function addMethodCallBehaviour(methodName:String):MethodCallBehaviour {
-		methodCallBehaviours.put(methodName, getMethodCallBehaviourFactory().getMethodCallBehaviour(methodName));
-		return methodCallBehaviours.get(methodName);
+		if (!methodCallBehaviours.containsKey(methodName)) methodCallBehaviours.put(methodName, new Array());
+		var behaviours:Array = methodCallBehaviours.get(methodName);
+		behaviours.push(getMethodCallBehaviourFactory().getMethodCallBehaviour(methodName));
+		return behaviours[behaviours.length-1];
 	}
 	
 	/**
-	 * @see MockBehaviour#getMethodCallBehaviour()
+	 * @see Behaviour#getMethodCallBehaviour()
 	 */
-	public function getMethodCallBehaviour(methodName:String):MethodCallBehaviour {
-		return methodCallBehaviours.get(methodName);
+	public function getMethodCallBehaviour(methodName:String, args:Array):MethodCallBehaviour {
+		var behaviours:Array = methodCallBehaviours.get(methodName);
+		var matchingBehaviours:Array = new Array();
+		for (var i:Number = 0; i < behaviours.length; i++) {
+			var behaviour:MethodCallBehaviour = behaviours[i];
+			if (behaviour.getArgumentsMatcher().matchArguments(behaviour.getExpectedCall().getArguments(), args)) {
+				matchingBehaviours.push(behaviour);
+			}
+		}
+		if (matchingBehaviours.length < 1) return null;
+		if (matchingBehaviours.length < 2) return matchingBehaviours[0];
+		var result:MethodCallBehaviour = matchingBehaviours[matchingBehaviours.length-1];
+		for (var i:Number = behaviours.length-1; i > -1; i--) {
+			var behaviour:MethodCallBehaviour = behaviours[i];
+			if (behaviour.getExpectedRange().contains(behaviour.getActualCallCount())) {
+				result = behaviour;
+			}
+		}
+		return result;
 	}
 	
 	/**
-	 * @see MockBehaviour#getLastMethodCallBehaviour()
+	 * @see Behaviour#getLastMethodCallBehaviour()
 	 */
 	public function getLastMethodCallBehaviour(Void):MethodCallBehaviour {
-		return methodCallBehaviours.getValues()[methodCallBehaviours.size()-1];
+		var behaviours:Array = methodCallBehaviours.getValues()[methodCallBehaviours.size()-1];
+		return behaviours[behaviours.length-1];
 	}
 	
 	/**
-	 * @see MockBehaviour#removeAllBehaviour()
+	 * @see Behaviour#removeAllBehaviour()
 	 */
 	public function removeAllBehaviour(Void):Void {
 		methodCallBehaviours.clear();
 	}
 	
 	/**
-	 * @see MockBehaviour#verify()
+	 * @see Behaviour#verify()
 	 */
 	public function verify(testCase:TestCase):Void {
 		var behaviours:Array = methodCallBehaviours.getValues();
 		for (var i:Number = 0; i < behaviours.length; i++) {
-			MethodCallBehaviour(behaviours[i]).verify(testCase);
+			for (var k:Number = 0; k < behaviours[i].length; k++) {
+				MethodCallBehaviour(behaviours[i][k]).verify(testCase);
+			}
 		}
 	}
 	

@@ -46,11 +46,19 @@ class org.as2lib.test.mock.support.DefaultMethodCallBehaviour extends BasicClass
 		this.expectedCall = expectedCall;
 	}
 	
+	public function getExpectedCall(Void):MethodCall {
+		return expectedCall;
+	}
+	
 	/**
 	 * @see MethodCallBehaviour#addActualCall()
 	 */
 	public function addActualCall(actualCall:MethodCall):Void {
 		this.actualCalls.push(actualCall);
+	}
+	
+	public function getActualCallCount(Void):Number {
+		return actualCalls.length;
 	}
 	
 	/**
@@ -67,6 +75,10 @@ class org.as2lib.test.mock.support.DefaultMethodCallBehaviour extends BasicClass
 		this.expectedRange = expectedRange;
 	}
 	
+	public function getExpectedRange(Void):MethodCallRange {
+		return expectedRange;
+	}
+	
 	/**
 	 * @see MethodCallBehaviour#response()
 	 */
@@ -81,12 +93,17 @@ class org.as2lib.test.mock.support.DefaultMethodCallBehaviour extends BasicClass
 		expectedCall.setArgumentsMatcher(argumentsMatcher);
 	}
 	
+	public function getArgumentsMatcher(Void):ArgumentsMatcher {
+		return expectedCall.getArgumentsMatcher();
+	}
+	
 	/**
 	 * @see MethodCallBehaviour#verify()
 	 */
 	public function verify(testCase:TestCase):Void {
 		if (expectedCall) {
-			testCase["assertTrue"](expectedCall.getMethodName() + ": Expected call range [" + expectedRange + "] has not been met. Actual number of calls have been: " + actualCalls.length + ".", expectedRange.contains(actualCalls.length));
+			testCase["assertTrue"](expectedCall.getMethodName() + "(" + expectedCall.getArguments() + "): Expected call range [" + expectedRange + "] has not been met. Actual number of calls have been: " + actualCalls.length + ".", expectedRange.contains(actualCalls.length));
+			// Case that can never happen!
 			for (var i:Number = 0; i < actualCalls.length; i++) {
 				testCase["assertTrue"](expectedCall.getMethodName() + ": Expected call [" + expectedCall + "] does not match actual call [" + actualCalls[i] + "].", expectedCall.matches(actualCalls[i]));
 			}

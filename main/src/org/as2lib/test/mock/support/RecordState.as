@@ -19,7 +19,7 @@ import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControlState;
 import org.as2lib.test.mock.MethodCallBehaviour;
-import org.as2lib.test.mock.MockBehaviour;
+import org.as2lib.test.mock.Behaviour;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodResponse;
 import org.as2lib.test.mock.MethodCall;
@@ -31,14 +31,14 @@ import org.as2lib.test.mock.ArgumentsMatcher;
 class org.as2lib.test.mock.support.RecordState extends BasicClass implements MockControlState {
 	
 	/** Used to add and get method call behaviours. */
-	private var behaviour:MockBehaviour;
+	private var behaviour:Behaviour;
 	
 	/**
 	 * Constructs a new instance.
 	 *
 	 * @param behaviour used to add and get method call behaviours
 	 */
-	public function RecordState(behaviour:MockBehaviour) {
+	public function RecordState(behaviour:Behaviour) {
 		this.behaviour = behaviour;
 	}
 	
