@@ -23,14 +23,15 @@ import org.as2lib.env.reflect.MethodInfo;
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.ConstructorInfo extends MethodInfo {
+	
 	/**
 	 * Constructs a new ConstructorInfo.
 	 *
 	 * @param constructor the actual constructor
 	 * @param declaringClass the declaring class of the constructor
 	 */
-	public function ConstructorInfo(constructor:Function,
-							  		declaringClass:ClassInfo) {
-		super("new", constructor, declaringClass, false);
+	public function ConstructorInfo(constructor:Function, declaringClass:ClassInfo) {
+		super ("new", constructor, declaringClass, false);
 	}
+	
 }

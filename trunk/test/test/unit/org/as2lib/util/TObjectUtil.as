@@ -21,6 +21,7 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.Test;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.Call;
+import org.as2lib.env.reflect.ClassInfo;
 
 /**
  * Testcase for massive ObjectUtil testing.
@@ -372,7 +373,7 @@ class test.unit.org.as2lib.util.TObjectUtil extends TestCase {
 		assertTrue("'inst' is a instance of BasicInterface", ObjectUtil.isInstanceOf(inst, BasicInterface));
 		assertFalse("'inst' is not a instance of Test", ObjectUtil.isInstanceOf(inst, Test));
 		assertFalse("'inst' is not a instance of null, its a instance of Object", ObjectUtil.isInstanceOf(inst, null));
-		assertTrue("'this' should be a instance of "+getClass().getFullName(), ObjectUtil.isInstanceOf(this, getClass().getType()));
+		assertTrue("'this' should be a instance of "+ClassInfo.forObject(this).getFullName(), ObjectUtil.isInstanceOf(this, ClassInfo.forObject(this).getType()));
 	}
 	
 	/**
@@ -396,7 +397,7 @@ class test.unit.org.as2lib.util.TObjectUtil extends TestCase {
 		assertFalse("'this' should not be a explicit instance of BasicClass", ObjectUtil.isExplicitInstanceOf(this, BasicClass));
 		assertFalse("'this' should not be a explicit instance of BasicInterface", ObjectUtil.isExplicitInstanceOf(this, BasicInterface));
 		assertFalse("'this' should not be a explicit instance of Test", ObjectUtil.isExplicitInstanceOf(this, Test));
-		assertTrue("'this' should be a explicit instance of "+getClass().getFullName(), ObjectUtil.isExplicitInstanceOf(this, getClass().getType()));
+		assertTrue("'this' should be a explicit instance of "+ClassInfo.forObject(this).getFullName(), ObjectUtil.isExplicitInstanceOf(this, ClassInfo.forObject(this).getType()));
 	}
 	
 	/**
@@ -429,7 +430,7 @@ class test.unit.org.as2lib.util.TObjectUtil extends TestCase {
 	/**
 	 * Tests the .isAvailable method.
 	 */
-	public function testForEach(Void):Void {
+	/*public function testForEach(Void):Void {
 		var call:Call = new Call(this, forEachCall);
 		var obj:Object = new Object();
 		obj.test1 = "a";
@@ -437,7 +438,7 @@ class test.unit.org.as2lib.util.TObjectUtil extends TestCase {
 		obj.test3 = "c";
 		
 		ObjectUtil.forEach(obj, call);
-	}
+	}*/
 	
 	
 	/**

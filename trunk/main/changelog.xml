@@ -5,6 +5,9 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="1">
+         <day value="28>
+           <entry type="change" package="org.as2lib.env.except" class="Throwable" method="getStackTrace(Void):Stack">Changed return type to Array to reduce dependencies.</entry>
+         </day>
          <day value="27>
            <entry type="remove" package="org.as2lib.data.holder" class="HolderConfig">Moved stringifier into specific data holder to reduce unnecessary imports of stringifiers.</entry>
            <entry type="add" package="org.as2lib.data.holder.map" class="AbstractMap">Contains the set- and getStringifier method to stringify maps.</entry>

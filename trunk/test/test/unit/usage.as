@@ -24,12 +24,12 @@
 // Data Holder tests
 test.unit.org.as2lib.data.holder.array.TArrayIterator;
 test.unit.org.as2lib.data.holder.array.TTypedArray;
-test.unit.org.as2lib.data.holder.list.TPriorityList;
+//test.unit.org.as2lib.data.holder.list.TPriorityList;
 test.unit.org.as2lib.data.holder.list.TArrayList;
 test.unit.org.as2lib.data.holder.TProtectedIterator;
 test.unit.org.as2lib.data.holder.map.TValueMapIterator;
 test.unit.org.as2lib.data.holder.map.THashMap;
-test.unit.org.as2lib.data.holder.map.TPriorityMap;
+//test.unit.org.as2lib.data.holder.map.TPriorityMap;
 test.unit.org.as2lib.data.holder.map.TTypedMap;
 test.unit.org.as2lib.data.holder.map.TPrimitiveTypeMap;
 test.unit.org.as2lib.data.holder.stack.TSimpleStack;
@@ -128,7 +128,6 @@ test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition;
 // org.as2lib.env.event
 test.unit.org.as2lib.env.event.TSpeedEventBroadcaster;
 test.unit.org.as2lib.env.event.TSimpleEventBroadcaster;
-
  
 // org.as2lib.env.except
 // - TODO some problem with TIllegalStateException and TUnsupportedOperationException exceeds 256 levels of recursion -

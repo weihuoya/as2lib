@@ -19,8 +19,6 @@ import org.as2lib.env.except.ExceptConfig;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.StackTraceElement;
-import org.as2lib.data.holder.Stack;
-import org.as2lib.data.holder.stack.SimpleStack;
 
 /**
  * AbstractThrowable is an abstract class that contains sourced out functionalities
@@ -40,7 +38,7 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	private static var logger;
 	
 	/** The saved stack of operation calls. */
-	private var stackTrace:Stack;
+	private var stackTrace:Array;
 	
 	/** The Throwable that caused this Throwable to be thrown. */
 	private var cause:Throwable;
@@ -82,7 +80,7 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	 * @param args the arguments of the throwing operation
 	 */
 	private function AbstractThrowable(message:String, thrower, args:Array) {
-		stackTrace = new SimpleStack();
+		stackTrace = new Array();
 		this.message = message;
 		addStackTraceElement(thrower, args.callee, args);
 		// TODO: Implement findMethod to display the next line correctly.
@@ -99,7 +97,7 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	/**
 	 * @see org.as2lib.env.except.Throwable#getStack()
 	 */
-	public function getStackTrace(Void):Stack {
+	public function getStackTrace(Void):Array {
 		return stackTrace;
 	}
 	

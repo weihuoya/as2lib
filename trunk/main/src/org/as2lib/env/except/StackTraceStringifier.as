@@ -31,9 +31,8 @@ class org.as2lib.env.except.StackTraceStringifier extends BasicClass implements 
 	 * @see org.as2lib.util.string.Stringifier#execute()
 	 */
 	public function execute(target):String {
-		var stack:Stack = target;
+		var array:Array = target;
 		var result:String = "";
-		var array:Array = stack.toArray();
 		for (var i:Number = 0; i < array.length; i++) {
 			var element:StackTraceElement = array[i];
 			result += ("  at " 

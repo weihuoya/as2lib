@@ -14,26 +14,28 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.holder.Stack;
 import org.as2lib.core.BasicInterface;
 
 /**
  * Throwable is the basic interface for every class that will be thrown. You can
  * actually throw every class even if it does not implement this interface but it
  * is recommended to strictly use this interface for every Throwable. It produces 
- * clarity and builds a standard.
+ * clarity and setups a standard.
  *
  * @author Simon Wacker
  */
 interface org.as2lib.env.except.Throwable extends BasicInterface {
 	
 	/**
-	 * Returns a Stack of the operations that were called before this Throwable
+	 * Returns an array of the operations that were called before this throwable
 	 * was thrown.
 	 *
-	 * @return a Stack containing the called operations
+	 * <p>The last element is always the one that contains the actual method that
+	 * threw the throwable.
+	 *
+	 * @return a stack containing the called operations
 	 */
-	public function getStackTrace(Void):Stack;
+	public function getStackTrace(Void):Array;
 	
 	/**
 	 * Adds a StackTraceElement to the Stack trace.
