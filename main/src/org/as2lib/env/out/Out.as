@@ -6,6 +6,7 @@ import org.as2lib.env.out.level.*;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.core.BasicClass;
+import org.as2lib.util.ObjectUtil;
 
 /**
  * Out is the main output class. You use this class to make your output.
@@ -95,6 +96,16 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	 */
 	public function removeAllHandler(Void):Void {
 		broadcaster.removeAllListener();
+	}
+	
+	/**
+	 * Checks if messages appropriate to the passed in OutLevel can be put out.
+	 *
+	 * @param level the OutLevel to make the check upon
+	 * @return true if output of the passed in OutLevel can be made else false
+	 */
+	public function isOutputable(aLevel:OutLevel):Boolean {
+		return ObjectUtil.isInstanceOf(level, aLevel.getClass().getClass());
 	}
 	
 	/**
