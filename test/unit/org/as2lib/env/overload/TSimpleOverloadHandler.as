@@ -187,7 +187,7 @@ class org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase {
 	public function testIsMoreExplicitWithNullReturningGetArgumentsMethod(Void):Void {
 		var hc:MockControl = new MockControl(OverloadHandler);
 		var mh:OverloadHandler = hc.getMock();
-		mh.getArguments();
+		mh.getArgumentsTypes();
 		hc.setReturnValue(null, 2);
 		hc.replay();
 		
