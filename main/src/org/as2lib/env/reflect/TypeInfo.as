@@ -62,6 +62,20 @@ interface org.as2lib.env.reflect.TypeInfo extends PackageMemberInfo {
 	public function getPackage(Void):PackageInfo;
 	
 	/**
+	 * Returns whether this type or any super-type has a method with the
+	 * passed-in method name.
+	 *
+	 * <p>Static methods are not filtered by default. That means {@code filterStaticMethods}
+	 * is by default set to {@code false}.
+	 *
+	 * @param methodName the name of the method to search for
+	 * @param filterStaticMethods (optional) determines whether static methods
+	 * are filtered, that means excluded from the search
+	 * @return {@code true} if the method exists else {@code false}
+	 */
+	public function hasMethod(methodName:String, filterStaticMethods:Boolean):Boolean;
+	
+	/**
 	 * @overload #getMethodsByFlag
 	 * @overload #getMethodsByFilter
 	 */

@@ -480,6 +480,37 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
+	 * Returns whether this class or any super-class implements a method
+	 * with the passed-in {@code methodName}.
+	 *
+	 * <p>Static methods are not filtered by default. That means {@code filterStaticMethods}
+	 * is by default set to {@code false}.
+	 *
+	 * <p>If the passed-in {@code methodName} is {@code null} or {@code undefined},
+	 * {@code false} will be returned.
+	 *
+	 * @param methodName the name of the method to search for
+	 * @param filterStaticMethods (optional) determines whether static methods
+	 * are filtered, that means excluded from the search
+	 * @return {@code true} if the method exists else {@code false}
+	 */
+	public function hasMethod(methodName:String, filterStaticMethods:Boolean):Boolean {
+		if (methodName == null) return false;
+		if (filterStaticMethods == null) filterStaticMethods = false;
+		if (clazz.prototype[methodName]) return true;
+		if (filterStaticMethods) return false;
+		if (clazz[methodName]) return true;
+		var superClass:TypeInfo = getSuperType();
+		while (superClass) {
+			if (superClass.getType()[methodName]) {
+				return true;
+			}
+			superClass = superClass.getSuperType();
+		}
+		return false;
+	}
+	
+	/**
 	 * @overload #getMethodsByFlag
 	 * @overload #getMethodsByFilter
 	 */

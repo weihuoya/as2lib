@@ -6,6 +6,7 @@
     <year value="2005">
        <month value="3">
          <day value="3">
+           <entry type="add" package="org.as2lib.env.reflect" class="TypeInfo" method="hasMethod">Helps you find out whether a method with the given name exists.</entry>
            <entry type="add" package="org.as2lib.env.log.handler" class="AlconHandler">Handler support for Alcon.</entry>
            <entry type="add" package="org.as2lib.env.log.logger" class="AlconLogger">Logger support for Alcon.</entry>
          </day>
