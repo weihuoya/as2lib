@@ -21,6 +21,7 @@ import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.HierarchicalLogger;
 import org.as2lib.env.log.ConfigurableHierarchicalLogger;
 import org.as2lib.env.log.logger.SimpleLogger;
+import org.as2lib.env.log.logger.RootLogger;
 import org.as2lib.env.log.repository.LoggerHierarchy;
 import org.as2lib.env.log.repository.ConfigurableHierarchicalLoggerFactory;
 import org.as2lib.env.except.IllegalArgumentException;
@@ -31,11 +32,8 @@ import org.as2lib.env.except.IllegalArgumentException;
 class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 	
 	public function testNewWithNullArgument(Void):Void {
-		try {
-			new LoggerHierarchy(null);
-			fail("null argument should cause the throwing of an IllegalArgumentException");
-		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
-		}
+		var r:LoggerHierarchy = new LoggerHierarchy(null);
+		assertTrue(r.getRootLogger() instanceof RootLogger);
 	}
 	
 	public function testNewWithRealArgumentWithNullReturningGetNameMethodViaGetLogger(Void):Void {
