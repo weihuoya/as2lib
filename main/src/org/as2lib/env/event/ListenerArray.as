@@ -9,7 +9,7 @@ class org.as2lib.env.event.ListenerArray extends BasicClass {
 		listeners = new Array();
 	}
 	
-	public function set(listener:EventListener):Void {
+	public function push(listener:EventListener):Void {
 		listeners.push(listener);
 	}
 	

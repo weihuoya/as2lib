@@ -44,7 +44,7 @@ class org.as2lib.env.event.EventBroadcaster extends BasicClass {
 	 * @param listener
 	 */
 	public function addListener(listener:EventListener):Void {
-		listeners.set(listener);
+		listeners.push(listener);
 	}
 	
 	/**
@@ -69,7 +69,7 @@ class org.as2lib.env.event.EventBroadcaster extends BasicClass {
 		var result:ListenerArray = new ListenerArray();
 		var l:Number = listeners.length;
 		for (var i:Number = 0; i < l; i++) {
-			result.set(listeners[i]);
+			result.push(listeners[i]);
 		}
 		return result;
 	}
