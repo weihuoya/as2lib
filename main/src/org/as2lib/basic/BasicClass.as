@@ -6,8 +6,7 @@ import org.as2lib.basic.reflect.ClassInfo;
 import org.as2lib.util.OverloadUtil;
 import org.as2lib.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
-import org.as2lib.basic.string.Stringifier;
-import org.as2lib.basic.string.ObjectStringifier;
+import org.as2lib.util.StringifyUtil;
 
 /**
  * The basic class that implements the basic functionalities.
@@ -32,5 +31,9 @@ class org.as2lib.basic.BasicClass implements BasicInterface, Overload {
 	 */
 	public function newOverloadHandler(someArguments:Array, aFunction:Function):OverloadHandler {
 		return OverloadUtil.newOverloadHandler(someArguments, aFunction);
+	}
+	
+	public function toString(Void):String {
+		return StringifyUtil.stringifyObject(this);
 	}
 }

@@ -13,8 +13,8 @@ class org.as2lib.basic.out.level.Fatal extends None {
 	/**
 	 * @see org.as2lib.basic.out.OutLevel
 	 */
-	public function fatal(exception:Throwable, broadcaster:EventBroadcaster):Void {
-		var event:EventInfo = new OutErrorInfo("error", exception, Out.FATAL);
+	public function fatal(throwable:Throwable, broadcaster:EventBroadcaster):Void {
+		var event:EventInfo = new OutErrorInfo("error", throwable, Out.FATAL);
 		broadcaster.dispatch(event);
 	}
 }
