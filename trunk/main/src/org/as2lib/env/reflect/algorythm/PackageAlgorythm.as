@@ -5,6 +5,7 @@ import org.as2lib.env.reflect.CacheInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.ReferenceNotFoundException;
 
 /**
  * PackageAlgorythm searches for the specified package and returns a PackageInfo
@@ -25,6 +26,11 @@ class org.as2lib.env.reflect.algorythm.PackageAlgorythm extends BasicClass imple
 	public function execute(object):CacheInfo {
 		info = null;
 		findAndStore(cache.getRoot(), object);
+		if (ObjectUtil.isEmpty(info)) {
+			throw new ReferenceNotFoundException("The package [" + object + "] could not be found.",
+												 this,
+												 arguments);
+		}
 		return info;
 	}
 	
