@@ -9,6 +9,7 @@ import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.NoSuchClassMemberException;
 import org.as2lib.env.EnvConfig;
+import org.as2lib.env.reflect.ReflectConfig;
 
 /**
  * ClassInfo represents a real class in the Flash environment. This class is used
@@ -129,7 +130,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	 */
 	public function getMethods(Void):Map {
 		if (ObjectUtil.isEmpty(methods)) {
-			methods = ReflectUtil.getMethods(this);
+			methods = ReflectConfig.getMethodAlgorythm().execute(this);
 		}
 		return methods;
 	}
@@ -163,7 +164,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	 */
 	public function getProperties(Void):Map {
 		if (ObjectUtil.isEmpty(properties)) {
-			properties = ReflectUtil.getProperties(this);
+			properties = ReflectConfig.getPropertyAlgorythm().execute(this);
 		}
 		return properties;
 	}

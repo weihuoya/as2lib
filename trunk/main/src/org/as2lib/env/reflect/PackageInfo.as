@@ -2,6 +2,7 @@
 import org.as2lib.data.holder.Map;
 import org.as2lib.env.reflect.CacheInfo;
 import org.as2lib.env.reflect.NoSuchChildException;
+import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.data.iterator.Iterator;
@@ -97,7 +98,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CacheInfo
 	 */
 	public function getChildren(Void):Map {
 		if (children == undefined) {
-			children = ReflectUtil.getChildren(this);
+			children = ReflectConfig.getChildrenAlgorythm().execute(this);
 		}
 		return children;
 	}
