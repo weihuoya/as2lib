@@ -26,6 +26,8 @@ import org.as2lib.env.out.level.AllLevel;
 import org.as2lib.env.out.OutConfig;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.out.OutLevel;
+import org.as2lib.Config;
+import org.as2lib.env.out.OutAccess;
 
 /**
  * ExternalConsoleHandler is a concrete instance of the OutHandler interface. It uses e.g. the
@@ -40,7 +42,12 @@ class org.as2lib.env.out.handler.ExternalConsoleHandler extends BasicClass imple
 	
 	private var client:LocalClient;
 	
+	/* Standard debug output */
+	private var aOut:OutAccess;
+	
 	public function ExternalConsoleHandler(Void){
+		aOut = Config.getOut();
+		aOut.debug(getClass().getName()+" - Constructor");
 		client = new LocalClient();
 		client.addListener(new SimpleListener());
 		client.initConnection();
