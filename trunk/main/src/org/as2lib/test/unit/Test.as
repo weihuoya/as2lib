@@ -103,7 +103,11 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	public static function runClass(useClass, myPath:String):Void {
 		initTest("runClass");
 		if(myPath.indexOf("__constructor__") < 0 || !myPath) {
-			var tempVar = new useClass();
+			try {
+				var tempVar = new useClass();
+			} catch (e) {
+				addError("Internal Error: TestClass "+myPath+" could not initalized. Exception was thrown. Type: "+ReflectUtil.getClassInfo(e).getName()+"; Message: "+e.getMessage());
+			}
 			runObject(tempVar, myPath);
 		}
 		exitTest("runClass");
@@ -119,7 +123,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 		initTest("runObject");
 		var that = eval("th"+"is");
 		if(pathObject instanceof that) {
-			runTest(pathObject, myPath);
+      runTest(pathObject, myPath);
 		} else {
 			for(var i:String in pathObject) {
 				if(typeof pathObject[i] == "function") {
@@ -157,8 +161,12 @@ class org.as2lib.test.unit.Test extends BasicClass {
 		for(var j:String in toMyObject) {
 			if(j.indexOf("test") == 0 && typeof toMyObject[j] == "function") {
 				atFunction = j;
-				pathObject[j]();
-				paths.push(myPath+"."+j+"()");
+				try {
+					pathObject[j]();
+					paths.push(myPath+"."+j+"()");
+				} catch (e) {
+					addError("Internal Error: Test "+myPath+" could not be started. Exception was thrown. Type: "+ReflectUtil.getClassInfo(e).getName()+"; Message: "+e.getMessage());
+				}
 			}
 		}
 	}
