@@ -1,6 +1,6 @@
 ﻿import org.as2lib.core.BasicClass;
-import org.as2lib.data.io.conn.local.MissingReceiverException;
-import org.as2lib.data.io.conn.local.NotSyntacticalException;
+import org.as2lib.data.io.conn.local.MissingServerException;
+import org.as2lib.data.io.conn.local.SyntacticallyIncorrectMethodCallException;
 
 class org.as2lib.data.io.conn.local.LocalServerServiceProxy extends LocalConnection {
 	private var service;
@@ -16,17 +16,17 @@ class org.as2lib.data.io.conn.local.LocalServerServiceProxy extends LocalConnect
 		// Fehler abfangen und noch einmal probieren? oder Exception?
 		if (listener) {
 			if(!send(listener, "onResponse", response)) {
-				throw new NotSyntacticalException("Response values of remote method: '"+method+"' are oversized.",this,arguments);
+				throw new SyntacticallyIncorrectMethodCallException("Response values of remote method: '"+method+"' are oversized.",this,arguments);
 			}
 		}
 	}
 	
 	public function onStatus(info){
 		if(info.level == "error") {
-			throw new MissingServerException("ResponseServer for response of remote method: '"+method+"' doesn´t exist anymore !",this,arguments);
+			throw new MissingServerException("No receiver with connection to call method '"+method+"' existing !",this,arguments);
 		}
 		if(info.level == "status") {
-			//trace("Response of remote method: '"+method+"' to receiver was successful!");
+			trace("Call to remote method '"+method+"' was successful!");
 		}
 	}
 }
