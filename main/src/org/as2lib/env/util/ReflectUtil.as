@@ -65,13 +65,9 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 * @throws org.as2lib.env.reflect.NoSuchChildException if the class with the specified name does not exist
 	 */
 	public static function getClassInfoByName(name:String):ClassInfo {
-		var path:Array = name.split(".");
-		var member = _global;
-		for (var i:Number = 0; i < path.length; i++) {
-			member = member[path[i]];
-		}
-		if (ObjectUtil.isTypeOf(member, "function")) {
-			return getClassInfoByObject(member);
+		var clazz:Function = eval("_global." + name);
+		if (ObjectUtil.isTypeOf(clazz, "function")) {
+			return getClassInfoByObject(clazz);
 		}
 		throw new NoSuchChildException("The class [" + name + "] you tried to obtain does not exist.",
 										eval("th" + "is"),
@@ -119,13 +115,9 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 * @throws org.as2lib.env.reflect.NoSuchChildException if the package with the specified name does not exist
 	 */
 	public static function getPackageInfoByName(name:String):PackageInfo {
-		var path:Array = name.split(".");
-		var member = _global;
-		for (var i:Number = 0; i < path.length; i++) {
-			member = member[path[i]];
-		}
-		if (ObjectUtil.isTypeOf(member, "object")) {
-			return getPackageInfoByPackage(member);
+		var package:Object = eval("_global." + name);
+		if (ObjectUtil.isTypeOf(package, "object")) {
+			return getPackageInfoByPackage(package);
 		}
 		throw new NoSuchChildException("The package [" + name + "] you tried to obtain does not exist.",
 										eval("th" + "is"),
