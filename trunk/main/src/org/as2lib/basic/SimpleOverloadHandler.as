@@ -35,17 +35,11 @@ class org.as2lib.basic.SimpleOverloadHandler implements OverloadHandler {
 			return false;
 		}
 		for (var i:Number = 0; i < l; i++) {
-			if (ObjectUtil.isPrimitiveType(someArguments[i])) {
-				if (ObjectUtil.typesMatch(args[i](someArguments[i]), someArguments[i])) {
-					return true;
-				}
-			} else {
-				if (ObjectUtil.isInstanceOf(someArguments[i], args[i])) {
-					return true;
-				}
+			if (!ObjectUtil.typesMatch(someArguments[i], args[i])) {
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	/**
