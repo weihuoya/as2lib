@@ -30,11 +30,11 @@ class org.as2lib.basic.event.EventBroadcaster {
 	}
 	
 	/**
-	 * Sets the appropriate EventDispatcher.
-	 * @param log True if logging should be enabled else false
+	 * Sets a new dispatcher to be used by the dispatch method.
+	 * @param newDispatcher
 	 */
-	public function log(log:Boolean):Void {
-		dispatcher = log ? logDispatcher : normalDispatcher;
+	public function setDispatcher(newDispatcher:EventDispatcher):Void {
+		dispatcher = newDispatcher;
 	}
 	
 	/**
