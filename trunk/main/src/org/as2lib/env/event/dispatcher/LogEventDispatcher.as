@@ -18,6 +18,7 @@ import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.event.EventDispatcher;
 import org.as2lib.env.event.Consumable;
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.out.OutAccess;
 import org.as2lib.env.event.EventConfig;
 
 /**
@@ -33,8 +34,9 @@ class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass impl
 	public function dispatch(event:EventInfo, listeners:Array):Void {
 		var name:String = event.getName();
 		var l:Number = listeners.length;
+		var out:OutAccess = EventConfig.getOut();
 		for (var i:Number = 0; i < l; i++) {
-			EventConfig.getOut().log("Forwarding event #" + i + " with name " + name);
+			out.log("Forwarding event #" + i + " with name " + name);
 			listeners[i][name](event);
 		}
 	}
@@ -45,8 +47,9 @@ class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass impl
 	public function dispatchConsumable(event:EventInfo, listeners:Array):Void {
 		var name:String = event.getName();
 		var l:Number = listeners.length;
+		var out:OutAccess = EventConfig.getOut();
 		for (var i:Number = 0; i < l; i++) {
-			EventConfig.getOut().log("Forwarding event #" + i + " with name " + name);
+			out.log("Forwarding event #" + i + " with name " + name);
 			listeners[i][name](event);
 			if (Consumable(event).isConsumed()) {
 				return;
