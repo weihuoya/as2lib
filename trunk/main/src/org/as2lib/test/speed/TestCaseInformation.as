@@ -43,28 +43,35 @@ class org.as2lib.test.speed.TestCaseInformation {
 	}
 	
 	/**
-	 * @return total executing time from all calls in ms.
+	 * @return Total execution time of all runs in ms.
 	 */
 	public function getTotalTime(Void):Number {
 		return this.totalTime;
 	}
 	
 	/** 
-	 * @return times how often this testcase was run.
+	 * @return Times that this Testcase was run.
 	 */
 	public function getRuns(Void):Number {
 		return this.runs;
 	}
 	
 	/**
-	 * @return average executing time in ms.
+	 * @return Average executing time in ms.
 	 */
 	public function getAverageTime(Void):Number {
 		return this.getTotalTime()/this.getRuns();
 	}
 	
 	/**
-	 * @return name from the wrapped object.
+	 * @return Maximum calls that are possible within a second.
+	 */
+	public function getMaxCallsPerSecond(Void):Number {
+		return(Math.floor(1000/this.getAverageTime()));
+	}
+	
+	/**
+	 * @return Name of the wrapped object.
 	 */
 	public function getName(Void):String {
 		return ReflectUtil.getClassInfo(this.testCase).getName();
