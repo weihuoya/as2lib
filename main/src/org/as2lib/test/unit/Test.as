@@ -224,7 +224,7 @@ class org.as2lib.test.unit.Test {
 	 * @param var1		Var that should be true.
 	 */
 	private static function assertTrueWithMessage (message:String, var1):Void {
-		if(var1 != true) {
+		if(var1 !== true) {
 			addError("assertTrue failed: "+var1+" != true message: "+message);
 		}
 	}
@@ -254,7 +254,7 @@ class org.as2lib.test.unit.Test {
 	 * @param var1		First Var.
 	 */
 	private static function assertFalseWithMessage (message:String, var1):Void {
-		if(var1 != false) {
+		if(var1 !== false) {
 			addError("assertFalse failed: "+var1+" != false message: "+message);
 		}
 	}
@@ -285,7 +285,7 @@ class org.as2lib.test.unit.Test {
 	 * @param var2		Second Var.
 	 */
 	private static function assertEqualsWithMessage (message:String, var1, var2):Void {
-		if(var1 != var2) {
+		if(var1 !== var2) {
 			addError("assertEquals failed: "+var1+" != "+var2+" message: "+message);
 		}
 	}
@@ -317,7 +317,7 @@ class org.as2lib.test.unit.Test {
 	 * @param var2		Second Var.
 	 */
 	private static function assertNotEqualsWithMessage (message:String, var1, var2):Void {
-		if(var1 == var2) {
+		if(var1 === var2) {
 			addError("assertNotEquals failed: "+var1+" == "+var2+" message: "+message);
 		}
 	}
