@@ -130,38 +130,4 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 										eval("th" + "is"),
 										arguments);
 	}
-	
-	/**
-	 * This operation returns a Map containing the MethodInfo instances
-	 * representing the methods.
-	 *
-	 * @param info the ClassInfo instance representing the class the methods shall be searched for.
-	 * @return a Map holding MethodInfos for each method.
-	 */
-	public static function getMethods(info:ClassInfo):Map {
-		return ReflectConfig.getMethodAlgorythm().execute(info);
-	}
-	
-	/** 
-	 * This operation returns a Map containing the PropertyInfo instance
-	 * representing the Properties. Properties are set in Flash MX 2004 via the
-	 * set and get keyword.
-	 *
-	 * @param info the ClassInfo instance representing the class the properties shall be searched for.
-	 * @return a Map holding PropertyInfos for each property.
-	 */
-	public static function getProperties(info:ClassInfo):Map {
-		return ReflectConfig.getPropertyAlgorythm().execute(info);
-	}
-	
-	/**
-	 * This operation returns the children of a package. The children are of
-	 * type CacheInfo.
-	 *
-	 * @param info a PackageInfo instance representing the package the children shall be returned for
-	 * @return a Map containing all children of the appropriate package
-	 */
-	public static function getChildren(info:PackageInfo):Map {
-		return ReflectConfig.getChildrenAlgorythm().execute(info);
-	}
 }
