@@ -82,7 +82,7 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	 * @param The ClassInfo instance the super class shall be returned.
 	 * @return The ClassInfo instance representing the super class.
 	 */
-	public static function getSuperClass(info:ClassInfo):ClassInfo {
+	public static function getSuperClassInfo(info:ClassInfo):ClassInfo {
 		if (ObjectUtil.isEmpty(cache.getClass(info.getClass().prototype))) {
 			superClassAlgorythm.execute(info);
 		}
