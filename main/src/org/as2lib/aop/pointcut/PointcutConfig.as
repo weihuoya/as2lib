@@ -1,7 +1,6 @@
 ﻿import org.as2lib.core.BasicClass;
-import org.as2lib.util.ObjectUtil;
 import org.as2lib.aop.pointcut.PointcutFactory;
-import org.as2lib.aop.pointcut.SimplePointcutFactory;
+import org.as2lib.aop.pointcut.DynamicPointcutFactory;
 
 /**
  * @author Simon Wacker
@@ -17,9 +16,7 @@ class org.as2lib.aop.pointcut.PointcutConfig extends BasicClass {
 	}
 	
 	public static function getPointcutFactory(Void):PointcutFactory {
-		if (ObjectUtil.isEmpty(pointcutFactory)) {
-			pointcutFactory = new SimplePointcutFactory();
-		}
+		if (!pointcutFactory) pointcutFactory = new DynamicPointcutFactory();
 		return pointcutFactory;
 	}
 }

@@ -9,7 +9,7 @@ import org.as2lib.aop.pointcut.PointcutConfig;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.aop.advice.AbstractAdvice extends BasicClass implements Advice {
+class org.as2lib.aop.advice.AbstractAdvice extends BasicClass {
 	private var pointcut:Pointcut;
 	private var aspect:Aspect;
 	

@@ -1,7 +1,5 @@
-﻿import org.as2lib.core.BasicClass;
-import org.as2lib.util.ObjectUtil;
-import org.as2lib.aop.JoinPoint;
-import org.as2lib.aop.joinpoint.GetPropertyJoinPoint;
+﻿import org.as2lib.aop.JoinPoint;
+import org.as2lib.aop.joinpoint.AbstractJoinPoint;
 import org.as2lib.aop.pointcut.PropertyPointcut;
 import org.as2lib.aop.matcher.Matcher;
 
@@ -14,7 +12,7 @@ class org.as2lib.aop.pointcut.GetPropertyPointcut extends PropertyPointcut {
 	}
 	
 	public function captures(joinPoint:JoinPoint):Boolean {
-		if (ObjectUtil.isInstanceOf(joinPoint, GetPropertyJoinPoint)) {
+		if (joinPoint.getType() == AbstractJoinPoint.TYPE_PROPERTY_GET) {
 			if (Matcher.matches(joinPoint, getJoinPointDescription())) {
 				return true;
 			}

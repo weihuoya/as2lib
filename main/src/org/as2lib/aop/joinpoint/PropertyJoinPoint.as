@@ -1,4 +1,4 @@
-﻿import org.as2lib.core.BasicClass;
+﻿import org.as2lib.aop.joinpoint.AbstractJoinPoint;
 import org.as2lib.env.except.UnsupportedOperationException;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.TypeMemberInfo;
@@ -7,7 +7,7 @@ import org.as2lib.aop.JoinPoint;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.aop.joinpoint.PropertyJoinPoint extends BasicClass implements JoinPoint {
+class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint implements JoinPoint {
 	private var info:PropertyInfo;
 	private var thiz;
 	
@@ -46,5 +46,9 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends BasicClass implements J
 													info.getDeclaringType(),
 													info.isStatic());
 		return (new PropertyJoinPoint(newInfo, getThis()));
+	}
+	
+	public function getType(Void):Number {
+		return TYPE_PROPERTY;
 	}
 }

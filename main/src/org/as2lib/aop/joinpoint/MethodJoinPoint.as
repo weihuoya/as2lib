@@ -1,4 +1,4 @@
-﻿import org.as2lib.core.BasicClass;
+﻿import org.as2lib.aop.joinpoint.AbstractJoinPoint;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.TypeMemberInfo;
 import org.as2lib.aop.JoinPoint;
@@ -6,7 +6,7 @@ import org.as2lib.aop.JoinPoint;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.aop.joinpoint.MethodJoinPoint extends BasicClass implements JoinPoint {
+class org.as2lib.aop.joinpoint.MethodJoinPoint extends AbstractJoinPoint implements JoinPoint {
 	private var info:MethodInfo;
 	private var thiz;
 	
@@ -39,5 +39,9 @@ class org.as2lib.aop.joinpoint.MethodJoinPoint extends BasicClass implements Joi
 												info.getDeclaringType(),
 												info.isStatic());
 		return (new MethodJoinPoint(newInfo, getThis()));
+	}
+	
+	public function getType(Void):Number {
+		return TYPE_METHOD;
 	}
 }

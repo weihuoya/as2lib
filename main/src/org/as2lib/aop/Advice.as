@@ -6,4 +6,5 @@ import org.as2lib.aop.JoinPoint;
  */
 interface org.as2lib.aop.Advice extends BasicInterface {
 	public function captures(joinPoint:JoinPoint):Boolean;
+	public function getProxy(joinPoint:JoinPoint):Function;
 }

@@ -16,9 +16,7 @@ import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.joinpoint.MethodJoinPoint;
 import org.as2lib.aop.joinpoint.GetPropertyJoinPoint;
 import org.as2lib.aop.joinpoint.SetPropertyJoinPoint;
-import org.as2lib.aop.proxy.MethodProxyFactory;
 import org.as2lib.aop.aspect.AspectConfig;
-import org.as2lib.aop.proxy.ProxyConfig;
 
 /**
  * @author Simon Wacker
@@ -85,7 +83,7 @@ class org.as2lib.aop.aspect.AbstractAspect extends BasicClass {
 	}
 	
 	private function weaveJoinPoint(advice:Advice, joinPoint:JoinPoint):Void {
-		var proxy:Function = ProxyConfig.getMethodProxyFactory().getMethodProxy(joinPoint, advice);
+		var proxy:Function = advice.getProxy(joinPoint);
 		if (joinPoint.getInfo().isStatic()) {
 			var target:Function = joinPoint.getInfo().getDeclaringType().getType();
 			//ObjectUtil.setAccessPermission(target, ObjectUtil.ACCESS_ALL_ALLOWED);
