@@ -1,7 +1,7 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.Map;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.reflect.ReflectConfig;
 
@@ -71,7 +71,7 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 * @param info the ClassInfo instance representing the class the methods shall be searched for.
 	 * @return a HashMap holding MethodInfos for each method.
 	 */
-	public static function getMethods(info:ClassInfo):HashMap {
+	public static function getMethods(info:ClassInfo):Map {
 		return ReflectConfig.getMethodAlgorythm().execute(info);
 	}
 	
@@ -83,7 +83,7 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 * @param info the ClassInfo instance representing the class the properties shall be searched for.
 	 * @return a HashMap holding PropertyInfos for each property.
 	 */
-	public static function getProperties(info:ClassInfo):HashMap {
+	public static function getProperties(info:ClassInfo):Map {
 		return ReflectConfig.getPropertyAlgorythm().execute(info);
 	}
 	
@@ -94,7 +94,7 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 * @param info a PackageInfo instance representing the package the children shall be returned for
 	 * @return a HashMap containing all children of the appropriate package
 	 */
-	public static function getChildren(info:PackageInfo):HashMap {
+	public static function getChildren(info:PackageInfo):Map {
 		return ReflectConfig.getChildrenAlgorythm().execute(info);
 	}
 }

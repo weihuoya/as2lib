@@ -4,6 +4,7 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.algorythm.ContentAlgorythm;
 import org.as2lib.env.reflect.algorythm.AbstractContentAlgorythm;
+import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
@@ -14,14 +15,14 @@ import org.as2lib.env.reflect.ReflectConfig;
  */
 class org.as2lib.env.reflect.algorythm.ChildrenAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
 	private var cache:Cache;
-	private var data:HashMap;
+	private var data:Map;
 	private var info:PackageInfo;
 	private var type:String;
 	
 	public function ChildrenAlgorythm(Void) {
 	}
 	
-	public function execute(info:CacheInfo):HashMap {
+	public function execute(info:CacheInfo):Map {
 		cache = ReflectConfig.getCache();
 		type = null;
 		

@@ -1,5 +1,5 @@
 ﻿import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.Map;
 
 /**
  * CacheInfo is the interface for classes residing in the Cache.
@@ -35,5 +35,5 @@ interface org.as2lib.env.reflect.CacheInfo {
 	 *
 	 * @return the children of the entity
 	 */
-	public function getChildren(Void):HashMap;
+	public function getChildren(Void):Map;
 }

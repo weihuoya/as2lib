@@ -1,4 +1,5 @@
 ﻿import org.as2lib.core.BasicClass;
+import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
@@ -18,10 +19,10 @@ import org.as2lib.env.reflect.Cache;
  */
 class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	/** The cached ClassInfos. */
-	private var classes:HashMap;
+	private var classes:Map;
 	
 	/** The cache PackageInfos. */
-	private var packages:HashMap;
+	private var packages:Map;
 	
 	/** The root represented by a RootInfo. */
 	private var root:RootInfo;

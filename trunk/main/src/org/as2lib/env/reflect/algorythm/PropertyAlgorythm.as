@@ -4,17 +4,18 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.algorythm.ContentAlgorythm;
 import org.as2lib.env.reflect.algorythm.AbstractContentAlgorythm;
+import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
 
 /**
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorythm.PropertyAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
-	private var data:HashMap;
-	private var getters:HashMap;
-	private var setters:HashMap;
-	private var staticGetters:HashMap;
-	private var staticSetters:HashMap;
+	private var data:Map;
+	private var getters:Map;
+	private var setters:Map;
+	private var staticGetters:Map;
+	private var staticSetters:Map;
 	private var info:ClassInfo;
 	private var staticFlag:Boolean;
 	private var type:String;
@@ -22,7 +23,7 @@ class org.as2lib.env.reflect.algorythm.PropertyAlgorythm extends AbstractContent
 	public function PropertyAlgorythm(Void) {
 	}
 	
-	public function execute(info:CacheInfo):HashMap {
+	public function execute(info:CacheInfo):Map {
 		type = null;
 		
 		this.info = ClassInfo(info);

@@ -4,13 +4,12 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.PropertyInfo;
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.Map;
 import org.as2lib.data.iterator.Iterator;
 import org.as2lib.env.reflect.CacheInfo;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 import test.org.as2lib.env.reflect.*;
-import org.as2lib.core.Out;
 import org.as2lib.env.EnvConfig;
 import test.org.as2lib.core.reflect.DummieClass;
 import test.org.as2lib.core.reflect.AnotherDummie
@@ -54,20 +53,20 @@ class test.org.as2lib.core.TReflections extends Test {
 	public function testGetChildren(Void):Void {
 		trace (":: testGetChildren");
 		var info = ReflectUtil.getPackageInfo(_global.org.as2lib);
-		var children:HashMap = info.getChildren();
+		var children:Map = info.getChildren();
 		var iterator:Iterator = children.iterator();
 		while (iterator.hasNext()) {
 			var child:CacheInfo = CacheInfo(iterator.next());
 			trace (child.getName());
 		}
-		assertTrueWithMessage("getChildren() does not return a HashMap", ObjectUtil.isInstanceOf(children, HashMap));
+		assertTrueWithMessage("getChildren() does not return a Map", ObjectUtil.isInstanceOf(children, Map));
 		trace ("----------------------------------------------");
 	}
 	
 	public function testGetMethods(Void):Void {
 		trace (":: testGetMethods");
 		var info:ClassInfo = clazz.getClass();
-		var methods:HashMap = info.getMethods();
+		var methods:Map = info.getMethods();
 		var iterator:Iterator = methods.iterator()
 		while(iterator.hasNext()) {
 			var method:MethodInfo = MethodInfo(iterator.next());
@@ -79,7 +78,7 @@ class test.org.as2lib.core.TReflections extends Test {
 	public function testGetProperties(Void):Void {
 		trace (":: testGetProperties");
 		var info:ClassInfo = (new DummieClass()).getClass();
-		var properties:HashMap = HashMap(info.getProperties());
+		var properties:Map = Map(info.getProperties());
 		var prop:PropertyInfo;
 		var iterator:Iterator = properties.iterator();
 		while (iterator.hasNext()) {
