@@ -15,24 +15,20 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.Iterator;
-import org.as2lib.util.ObjectUtil;
-import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.overload.Overload;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.TypeInfo;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.ConstructorInfo;
 import org.as2lib.env.reflect.NoSuchTypeMemberException;
-import org.as2lib.env.EnvConfig;
 import org.as2lib.env.reflect.ReflectConfig;
-import org.as2lib.env.overload.Overload;
+import org.as2lib.env.reflect.algorithm.CacheAlgorithm;
+import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
 
 /**
  * ClassInfo represents a real class in the Flash environment. This class is used
- * to store information about the class it represents.
+ * to get information about the class it represents.
  *
  * @author Simon Wacker
  */
@@ -62,8 +58,20 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	/** The class's constructor. */
 	private var classConstructor:ConstructorInfo;
 	
+	/** Stores the algorithm to find classes. */
+	private var classAlgorithm:CacheAlgorithm;
+	
+	/** Stores the algorithm to find methods of this class. */
+	private var methodAlgorithm:ContentAlgorithm;
+	
+	/** Stores the algorithm to find properties of this class. */
+	private var propertyAlgorithm:ContentAlgorithm;
+	
 	/**
 	 * Constructs a new ClassInfo.
+	 *
+	 * <p>All arguments are allowed to be null, but keep in mind that not
+	 * all methods will function if one is.
 	 * 
 	 * @param name the name of the class
 	 * @param class the class the newly created ClassInfo represents
@@ -78,6 +86,111 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
+	 * Sets the algorithm used to find classes. 
+	 *
+	 * <p>If you pass an algorithm of value null or undefined,
+	 * #getClassAlgorithm() will return the default one.
+	 *
+	 * <p>This algorithm is used by the #getSuperType() method.
+	 *
+	 * @param classAlgorithm the new class algorithm to find classes
+	 *
+	 * @see #getClassAlgorithm()
+	 */
+	public function setClassAlgorithm(classAlgorithm:CacheAlgorithm):Void {
+		this.classAlgorithm = classAlgorithm;
+	}
+	
+	/**
+	 * Returns the class algorithm used to find classes.
+	 *
+	 * <p>Either the algorithm set via #setClassAlgorithm() will be
+	 * returned or the default class algorithm returned by the
+	 * ReflectConfig#getClassAlgorithm() method.
+	 *
+	 * <p>If you set an algorithm of value null or undefined the default
+	 * one will be used.
+	 *
+	 * @return the currently used class algorithm
+	 *
+	 * @see #setClassAlgorithm(CacheAlgorithm)
+	 */
+	public function getClassAlgorithm(Void):CacheAlgorithm {
+		if (!classAlgorithm) classAlgorithm = ReflectConfig.getClassAlgorithm();
+		return classAlgorithm;
+	}
+	
+	/**
+	 * Sets the algorithm used to find methods.
+	 *
+	 * <p>If you pass an algorithm of value null or undefined,
+	 * #getMethodAlgorithm() will return the default one.
+	 *
+	 * <p>This algorithm is used by the #getMethods() method.
+	 *
+	 * @param methodAlgorithm the new method algorithm to find methods
+	 *
+	 * @see #getMethodAlgorithm()
+	 */
+	public function setMethodAlgorithm(methodAlgorithm:ContentAlgorithm):Void {
+		this.methodAlgorithm = methodAlgorithm;
+	}
+	
+	/**
+	 * Returns the method algorithm used to find methods.
+	 *
+	 * <p>Either the algorithm set via #setMethodAlgorithm() will be
+	 * returned or the default method algorithm returned by the
+	 * ReflectConfig#getMethodAlgorithm() method.
+	 *
+	 * <p>If you set an algorithm of value null or undefined the default
+	 * one will be used.
+	 *
+	 * @return the currently used method algorithm
+	 *
+	 * @see #setMethodAlgorithm(ContentAlgorithm)
+	 */
+	public function getMethodAlgorithm(Void):ContentAlgorithm {
+		if (!methodAlgorithm) methodAlgorithm = ReflectConfig.getMethodAlgorithm();
+		return methodAlgorithm;
+	}
+	
+	/**
+	 * Sets the algorithm used to find properties.
+	 *
+	 * <p>If you pass an algorithm of value null or undefined,
+	 * #getPropertyAlgorithm() will return the default one.
+	 *
+	 * <p>This algorithm is used by the #getProperties() method.
+	 *
+	 * @param propertyAlgorithm the new property algorithm to find properties
+	 *
+	 * @see #getPropertyAlgorithm()
+	 */
+	public function setPropertyAlgorithm(propertyAlgorithm:ContentAlgorithm):Void {
+		this.propertyAlgorithm = propertyAlgorithm;
+	}
+	
+	/**
+	 * Returns the property algorithm used to find properties.
+	 *
+	 * <p>Either the algorithm set via #setPropertyAlgorithm() will be
+	 * returned or the default property algorithm returned by the
+	 * ReflectConfig#getPropertyAlgorithm() method.
+	 *
+	 * <p>If you set an algorithm of value null or undefined the default
+	 * one will be used.
+	 *
+	 * @return the currently used property algorithm
+	 *
+	 * @see #setPropertyAlgorithm(ContentAlgorithm)
+	 */
+	public function getPropertyAlgorithm(Void):ContentAlgorithm {
+		if (!propertyAlgorithm) propertyAlgorithm = ReflectConfig.getPropertyAlgorithm();
+		return propertyAlgorithm;
+	}
+	
+	/**
 	 * @see org.as2lib.env.reflect.MemberInfo#getName()
 	 */
 	public function getName(Void):String {
@@ -85,11 +198,20 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
+	 * Returns the full name of the represented class. That means the name
+	 * of the class plus its package path.
+	 *
+	 * <p>The path will not be included if #getParent() returns null, 
+	 * undefined.
+	 *
+	 * <p>If the #getParent() method returns a package whose #isRoot() method
+	 * returns true it is not listed in the resulting string.
+	 *
 	 * @see org.as2lib.env.reflect.CompositeMemberInfo#getFullName()
 	 */
 	public function getFullName(Void):String {
-		if (ObjectUtil.isEmpty(fullName)) {
-			if (getParent().isRoot()) {
+		if (fullName === undefined) {
+			if (getParent().isRoot() || !getParent()) {
 				return (fullName = getName());
 			}
 			fullName = getParent().getFullName() + "." + getName();
@@ -107,22 +229,40 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	/**
 	 * Returns the class's constructor as ConstructorInfo.
 	 *
+	 * <p>If the #getType() method returns null or undefined, null will be
+	 * returned.
+	 *
 	 * @return the constructor of the class.
 	 */
 	public function getConstructor(Void):ConstructorInfo {
-		if (ObjectUtil.isEmpty(classConstructor)) {
-			classConstructor = new ConstructorInfo(getType(), this);
+		if (classConstructor === undefined) {
+			if (getType()) {
+				classConstructor = new ConstructorInfo(getType(), this);
+			} else {
+				classConstructor = null;
+			}
 		}
 		return classConstructor;
 	}
 	
 	/**
+	 * Returns the super class of the class this class info instance
+	 * represents.
+	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The represented type is Object.</li>
+	 *   <li>The represented type has no prototype.</li>
+	 *   <li>The super type could not be found.</li>
+	 * </ul>
+	 *
 	 * @see org.as2lib.env.reflect.TypeInfo#getSuperType()
+	 * @see #setClassAlgorithm(CacheAlgorithm)
 	 */
 	public function getSuperType(Void):TypeInfo {
 		if (superClass === undefined) {
-			if (clazz.prototype != undefined) {
-				superClass = ReflectUtil.getClassInfo(clazz.prototype);
+			if (clazz.prototype.__proto__) {
+				superClass = ClassInfo(getClassAlgorithm().execute(clazz.prototype));
 			} else {
 				superClass = null;
 			}
@@ -133,10 +273,14 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	/**
 	 * Creates a new instance of the class passing the constructor arguments.
 	 *
+	 * <p>Null will be returned if the #getType() method returns null or
+	 * undefined.
+	 *
 	 * @param args the constructor arguments
-	 * @return a new instance of the class
+	 * @return a new instance of the class or null
 	 */
 	public function newInstance(args:Array) {
+		if (!clazz) return null;
 		var result:Object = new Object();
 		result.__proto__ = clazz.prototype;
 		clazz.apply(result, args);
@@ -151,11 +295,14 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
+	 * Null will be returned if the #getType() method returns null.
+	 *
 	 * @see org.as2lib.env.reflect.TypeInfo#getMethods()
 	 */
 	public function getMethods(Void):Array {
-		if (!methods) {
-			methods = ReflectConfig.getMethodAlgorithm().execute(this);
+		if (!getType()) return null;
+		if (methods === undefined) {
+			methods = getMethodAlgorithm().execute(this);
 			if (getSuperType() != null) {
 				methods = methods.concat(getSuperType().getMethods());
 			}
@@ -174,9 +321,20 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
+	 * Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in argument is null or undefined.</li>
+	 *   <li>A method with the given name can not be found.</li>
+	 * </ul>
+	 *
+	 * <p>If this class overwrites a method of any super class the, MethodInfo
+	 * instance of the overwriting method will be returned.
+	 *
 	 * @see org.as2lib.env.reflect.TypeInfo#getMethodByName()
 	 */
 	public function getMethodByName(methodName:String):MethodInfo {
+		if (methodName == null) return null;
+		if (!getMethods()) return null;
 		var l:Number = getMethods().length;
 		for (var i:Number = 0; i < l; i = i-(-1)) {
 			var method:MethodInfo = getMethods()[i];
@@ -184,13 +342,21 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 				return method;
 			}
 		}
-		throw new NoSuchTypeMemberException("The method with the name [" + methodName + "] you tried to obtain does not exist.", this, arguments);
+		return null;
 	}
 	
 	/**
+	 * Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in argument is null or undefined.</li>
+	 *   <li>A method matching the given method can not be found.</li>
+	 * </ul>
+	 *
 	 * @see org.as2lib.env.reflect.TypeInfo#getMethodByMethod()
 	 */
 	public function getMethodByMethod(concreteMethod:Function):MethodInfo {
+		if (!concreteMethod) return null;
+		if (!getMethods()) return null;
 		var l:Number = getMethods().length;
 		for (var i:Number = 0; i < l; i = i-(-1)) {
 			var method:MethodInfo = getMethods()[i];
@@ -198,19 +364,21 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 				return method;
 			}
 		}
-		throw new NoSuchTypeMemberException("The method [" + concreteMethod + "] you tried to obtain does not exist in this class.", this, arguments);
+		return null;
 	}
 	
 	/**
 	 * Returns an Array containing the properties represented by PropertyInfos
-	 * the class has. As well as the properties defined by super classes. Lazy
-	 * loading is used.
+	 * the class has. As well as the properties defined by super classes.
+	 *
+	 * <p>Null will be returned if the #getType() method returns null.
 	 *
 	 * @return an Array containing PropertyInfos representing the properties
 	 */
 	public function getProperties(Void):Array {
+		if (!getType()) return null;
 		if (!properties) {
-			properties = ReflectConfig.getPropertyAlgorithm().execute(this);
+			properties = getPropertyAlgorithm().execute(this);
 			if (getSuperType() != null) {
 				properties = properties.concat(ClassInfo(getSuperType()).getProperties());
 			}
@@ -219,9 +387,8 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * Overload
-	 * #getPropertyByName()
-	 * #getPropertyByProperty()
+	 * @overload #getPropertyByName(String)
+	 * @overload #getPropertyByProperty(Function)
 	 */
 	public function getProperty(property):PropertyInfo {
 		var overload:Overload = new Overload(this);
@@ -233,11 +400,21 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	/**
 	 * Returns the PropertyInfo corresponding to the passed property name.
 	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in argument is null or undefined.</li>
+	 *   <li>A property with the given name cannot be found.</li>
+	 * </ul>
+	 *
+	 * <p>If this class overwrites a property of any super class the, PropertyInfo
+	 * instance of the overwriting property will be returned.
+	 *
 	 * @param propertyName the name of the property you wanna obtain
 	 * @return the PropertyInfo correspoinding to the property's name
-	 * @throws org.as2lib.env.reflect.NoSuchTypeMemberException if the property you tried to obtain does not exist
 	 */
 	public function getPropertyByName(propertyName:String):PropertyInfo {
+		if (propertyName == null) return null;
+		if (!getProperties()) return null;
 		var l:Number = getProperties().length;
 		for (var i:Number = 0; i < l; i = i-(-1)) {
 			var property:PropertyInfo = getProperties()[i];
@@ -245,17 +422,24 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 				return property;
 			}
 		}
-		throw new NoSuchTypeMemberException("The property with the name [" + propertyName + "] you tried to obtain does not exist.", this, arguments);
+		return null;
 	}
 	
 	/**
 	 * Returns the PropertyInfo corresponding to the passed property.
 	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in argument is null or undefined.</li>
+	 *   <li>A property with the given name cannot be found.</li>
+	 * </ul>
+	 *
 	 * @param property the property the corresponding PropertyInfo shall be returned
 	 * @return the PropertyInfo correspoinding to the property
-	 * @throws org.as2lib.env.reflect.NoSuchTypeMemberException if the property you tried to obtain does not exist
 	 */
 	public function getPropertyByProperty(concreteProperty:Function):PropertyInfo {
+		if (concreteProperty == null) return null;
+		if (!getProperties()) return null;
 		var l:Number = getProperties().length;
 		for (var i:Number = 0; i < l; i = i-(-1)) {
 			var property:PropertyInfo = getProperties()[i];
@@ -264,7 +448,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 				return property;
 			}
 		}
-		throw new NoSuchTypeMemberException("The property [" + concreteProperty + "] you tried to obtain does not exist in this class.", this, arguments);
+		return null;
 	}
 	
 }

@@ -15,25 +15,20 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.map.HashMap;
+import org.as2lib.env.overload.Overload;
 import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.reflect.NoSuchChildException;
 import org.as2lib.env.reflect.ReflectConfig;
-import org.as2lib.env.util.ReflectUtil;
-import org.as2lib.util.ObjectUtil;
-import org.as2lib.data.holder.Iterator;
-import org.as2lib.env.overload.Overload;
-import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
 
 /**
  * PackageInfo represents a real package in the Flash environment. This class is
- * used to store specific information about the package it represents.
+ * used to get specific information about the package it represents.
  *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CompositeMemberInfo {
+	
 	/** The name of the package. */
 	private var name:String;
 	
@@ -49,8 +44,14 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	/** The children of the package. That means all classes and packages contained in the package. */
 	private var children:Array;
 	
+	/** Stores the child algorithm. */
+	private var childAlgorithm:ContentAlgorithm;
+	
 	/**
-	 * Constructs a new PackageInfo.
+	 * Constructs a new PackageInfo instance.
+	 *
+	 * <p>All arguments are allowed to be null, but keep in mind that if one is
+	 * not all methods function.
 	 *
 	 * @param name the name of the package
 	 * @param package the actual package the PackageInfo shall represent
@@ -65,6 +66,41 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	}
 	
 	/**
+	 * Sets the algorithm used to find children.
+	 *
+	 * <p>If you pass an algorithm of value null or undefined,
+	 * #getChildAlgorithm() will return the default one.
+	 *
+	 * <p>This algorithm is used by the #getChildren() method.
+	 *
+	 * @param childAlgorithm the new child algorithm to find children
+	 *
+	 * @see #getChildAlgorithm()
+	 */
+	public function setChildAlgorithm(childAlgorithm:ContentAlgorithm):Void {
+		this.childAlgorithm = childAlgorithm;
+	}
+	
+	/**
+	 * Returns the child algorithm used to find children.
+	 *
+	 * <p>Either the algorithm set via #setChildAlgorithm() will be
+	 * returned or the default child algorithm returned by the
+	 * ReflectConfig#getChildAlgorithm() method.
+	 *
+	 * <p>If you set an algorithm of value null or undefined the default
+	 * one will be used.
+	 *
+	 * @return the currently used child algorithm
+	 *
+	 * @see #setChildAlgorithm(ContentAlgorithm)
+	 */
+	public function getChildAlgorithm(Void):ContentAlgorithm {
+		if (!childAlgorithm) childAlgorithm = ReflectConfig.getChildAlgorithm();
+		return childAlgorithm;
+	}
+	
+	/**
 	 * @see org.as2lib.env.reflect.MemberInfo#getName()
 	 */
 	public function getName(Void):String {
@@ -72,11 +108,20 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	}
 	
 	/**
+	 * Returns the full name of the represented package. That means the name
+	 * of the package plus its package path.
+	 *
+	 * <p>The path will not be included if #getParent() returns null, 
+	 * undefined.
+	 *
+	 * <p>If the #getParent() method returns a package whose #isRoot() method
+	 * returns true it is not listed in the resulting string.
+	 *
 	 * @see org.as2lib.env.reflect.CompositeMemberInfo#getFullName()
 	 */
 	public function getFullName(Void):String {
-		if (ObjectUtil.isEmpty(fullName)) {
-			if (getParent().isRoot()) {
+		if (fullName === undefined) {
+			if (getParent().isRoot() || !getParent()) {
 				return (fullName = getName());
 			}
 			fullName = getParent().getFullName() + "." + getName();
@@ -104,22 +149,28 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	 * Returns an Array containing CompositeMemberInfos representing the children of the
 	 * package. That means all classes and packages contained in the package.
 	 *
+	 * <p>Null will be returned if #getPackage() returns null or undefined.
+	 *
 	 * @return an Array containing the children
 	 */
 	public function getChildren(Void):Array {
-		if (!children) {
-			children = ReflectConfig.getChildrenAlgorithm().execute(this);
+		if (getPackage() == null) return null;
+		if (children === undefined) {
+			children = getChildAlgorithm().execute(this);
 		}
 		return children;
 	}
 	
 	/**
-	 * Returns an Array containing ClassInfos representing the classes contained
-	 * in this package.
+	 * Returns an Array containing ClassInfo instances representing the classes
+	 * contained in this package.
+	 *
+	 * <p>Null will be returned if the #getChildren() method returns null.
 	 *
 	 * @return an Array containing the classes
 	 */
 	public function getChildClasses(Void):Array {
+		if (!getChildren()) return null;
 		var result:Array = new Array();
 		var l:Number = getChildren().length;
 		for (var i:Number = 0; i < l; i = i-(-1)) {
@@ -135,9 +186,12 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	 * Returns an Array containing PackageInfos representing the packages contained
 	 * in this package.
 	 *
+	 * <p>Null will be returned if the #getChildren() method returns null.
+	 *
 	 * @return an Array containing the packages
 	 */
 	public function getChildPackages(Void):Array {
+		if (!getChildren()) return null;
 		var result:Array = new Array();
 		var l:Number = getChildren().length;
 		for (var i:Number = 0; i < l; i = i-(-1)) {
@@ -150,108 +204,131 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	}
 	
 	/**
-	 * Overload
-	 * #getChildByName()
-	 * #getChildByChild()
+	 * @overload #getChildByName(String)
+	 * @overload #getChildByChild(*)
 	 */
 	public function getChild(child):CompositeMemberInfo {
 		var overload:Overload = new Overload(this);
 		overload.addHandler([String], getChildByName);
 		overload.addHandler([Object], getChildByChild);
-		return CompositeMemberInfo(overload.forward(arguments));
+		return overload.forward(arguments);
 	}
 	
 	/**
 	 * Returns the CompositeMemberInfo corresponding to the name of the child.
 	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The #getChildren() method returns null or undefined.</li>
+	 *   <li>The passed-in name is null or undefined.</li>
+	 *   <li>There is no child with the passed-in name.</li>
+	 * </ul>
+	 *
 	 * @param childName the name of the child
 	 * @return the CompositeMemberInfo corresponding to the child's name
-	 * @throws org.as2lib.env.reflect.NoSuchChildException if there is no child with the passed name
 	 */
 	public function getChildByName(childName:String):CompositeMemberInfo {
-		var child:CompositeMemberInfo = getChildren().get(childName);
-		if (ObjectUtil.isAvailable(child)) {
-			return child;
+		if (childName == null) return null;
+		var children:Array = getChildren();
+		if (!children) return null;
+		for (var i:Number = 0; i < children.length; i++) {
+			var child:CompositeMemberInfo = children[i];
+			if (child.getName() == childName) {
+				return child;
+			}
 		}
-		throw new NoSuchChildException("The child with the name [" + childName + "] you tried to obtain does not exist.",
-									   this,
-									   arguments);
+		return null;
 	}
 	
 	/**
 	 * Returns the CompositeMemberInfo corresponding to the child.
 	 *
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The #getChildren() method returns null or undefined.</li>
+	 *   <li>The passed-in argument is null or undefined.</li>
+	 *   <li>The child could not be found.</li>
+	 * </ul>
+	 *
 	 * @param child the concrete child you want the CompositeMemberInfo for
 	 * @return the CompositeMemberInfo corresponding to the child
-	 * @throws org.as2lib.env.reflect.NoSuchChildException if the child does not exist in this package
-	 * @throws org.as2lib.env.except.IllegalArgumentException if the child is neither of type function nor object
 	 */
 	public function getChildByChild(concreteChild):CompositeMemberInfo {
-		if (ObjectUtil.isTypeOf(concreteChild, "function")) {
+		if (concreteChild == null) return null;
+		if (!getChildren()) return null;
+		if (typeof(concreteChild) == "function") {
 			return getChildClassByClass(concreteChild);
-		}
-		if (ObjectUtil.isTypeOf(concreteChild, "object")) {
+		} else {
 			return getChildPackageByPackage(concreteChild);
 		}
-		throw new IllegalArgumentException("The passed child [" + concreteChild + "] must be either of type function or object.",
-										   this,
-										   arguments);
 	}
 	
 	/**
-	 * Overlaod
-	 * #getChildClassByName()
-	 * #getChildClassByClass()
+	 * @overload #getChildClassByName(String)
+	 * @overload #getChildClassByClass(Function)
 	 */
 	public function getChildClass(clazz):ClassInfo {
 		var overload:Overload = new Overload(this);
 		overload.addHandler([String], getChildClassByName);
 		overload.addHandler([Function], getChildClassByClass);
-		return ClassInfo(overload.forward(arguments));
+		return overload.forward(arguments);
 	}
 	
 	/**
 	 * Returns a ClassInfo corresponding to the name of the class.
 	 *
-	 * @param class the name of the class
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in class name is null or undefined.</li>
+	 *   <li>The #getChildClasses() method returns null.</li>
+	 *   <li>There is no class with the passed-in name.</li>
+	 * </ul>
+	 *
+	 * @param className the name of the class
 	 * @return a ClassInfo corresponding to the passed name
-	 * @throws org.as2lib.env.reflect.NoSuchChildException if the class does not exist in this package
 	 */
-	public function getChildClassByName(clazz:String):ClassInfo {
-		var result:ClassInfo = ClassInfo(getChildClasses().get(clazz));
-		if (ObjectUtil.isAvailable(result)) {
-			return result;
+	public function getChildClassByName(className:String):ClassInfo {
+		if (className == null) return null;
+		var classes:Array = getChildClasses();
+		if (!classes) return null;
+		for (var i:Number = 0; i < classes.length; i++) {
+			var clazz:ClassInfo = classes[i];
+			if (clazz.getName() == className) {
+				return clazz;
+			}
 		}
-		throw new NoSuchChildException("The class with the name [" + clazz + "] you tried to obtain does not exist.",
-									   this,
-									   arguments);
+		return null;
 	}
 	
 	/**
 	 * Returns a ClassInfo corresponding to the passed concrete class.
 	 *
-	 * @param class the concrete class a corresponding ClassInfo shall be returned
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in argument is null or undefined.</li>
+	 *   <li>The #getChildClasses() method returns null.</li>
+	 *   <li>There is no class matching the passed-in concrete class in this package.</li>
+	 * </ul>
+	 *
+	 * @param concreteClass the concrete class a corresponding ClassInfo shall be returned
 	 * @return the ClassInfo corresponding to the passed class
-	 * @throws org.as2lib.env.reflect.NoSuchChildException if the class does not exist in this package
 	 */
-	public function getChildClassByClass(clazz:Function):ClassInfo {
-		var result:ClassInfo;
-		var iterator:Iterator = getChildClasses().iterator();
-		while (iterator.hasNext()) {
-			result = ClassInfo(iterator.next());
-			if (result.getType() == clazz) {
-				return result;
+	public function getChildClassByClass(concreteClass:Function):ClassInfo {
+		if (!concreteClass) return null;
+		var classes:Array = getChildClasses();
+		if (!classes) return null;
+		for (var i:Number = 0; i < classes.length; i++) {
+			var clazz:ClassInfo = classes[i];
+			if (clazz.getType() == concreteClass) {
+				return clazz;
 			}
 		}
-		throw new NoSuchChildException("The class [" + clazz + "] you tried to obtain does not exist in this package.",
-									   this,
-									   arguments);
+		return null;
 	}
 	
 	/**
-	 * Overlaod
-	 * #getChildPackageByName()
-	 * #getChildPackageByPackage()
+	 * @overload #getChildPackageByName(String)
+	 * @overload #getChildPackageByPackage(*)
 	 */
 	public function getChildPackage(package):PackageInfo {
 		var overload:Overload = new Overload(this);
@@ -263,44 +340,58 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	/**
 	 * Returns a PackageInfo corresponding to the name of the package.
 	 *
-	 * @param package the name of the package
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in package name is null or undefined.</li>
+	 *   <li>The #getChildPackages() method returns null.</li>
+	 *   <li>There is no package with the given name.</li>
+	 * </ul>
+	 *
+	 * @param packageName the name of the package
 	 * @return a PackageInfo corresponding to the passed name
-	 * @throws org.as2lib.env.reflect.NoSuchChildException if the package does not exist in this package
 	 */
-	public function getChildPackageByName(package:String):PackageInfo {
-		var result:PackageInfo = PackageInfo(getChildPackages().get(package));
-		if (ObjectUtil.isAvailable(result)) {
-			return result;
+	public function getChildPackageByName(packageName:String):PackageInfo {
+		if (packageName == null) return null;
+		var packages:Array = getChildPackages();
+		if (!packages) return null;
+		for (var i:Number = 0; i < packages.length; i++) {
+			var package:PackageInfo = packages[i];
+			if (package.getName() == packageName) {
+				return package;
+			}
 		}
-		throw new NoSuchChildException("The package with the name [" + package + "] you tried to obtain does not exist.",
-									   this,
-									   arguments);
+		return null;
 	}
 	
 	/**
 	 * Returns a PackageInfo corresponding to the passed concrete package.
 	 *
-	 * @param package the concrete package a corresponding PackageInfo shall be returned
+	 * <p>Null will be returned if:
+	 * <ul>
+	 *   <li>The passed-in concrete package is null or undefined.</li>
+	 *   <li>The #getChildPackages() method returns null.</li>
+	 *   <li>A package matching the passed-in concrete package could not be found.</li>
+	 * </ul>
+	 *
+	 * @param concretePackage the concrete package a corresponding PackageInfo shall be returned
 	 * @return the PackageInfo corresponding to the passed package
-	 * @throws org.as2lib.env.reflect.NoSuchChildException if the package does not exist in this package
 	 */
-	public function getChildPackageByPackage(package:Function):PackageInfo {
-		var result:PackageInfo;
-		var iterator:Iterator = getChildPackages().iterator();
-		while (iterator.hasNext()) {
-			result = PackageInfo(iterator.next());
-			if (result.getPackage() == package) {
-				return result;
+	public function getChildPackageByPackage(concretePackage):PackageInfo {
+		if (concretePackage == null) return null;
+		var packages:Array = getChildPackages();
+		if (!packages) return null;
+		for (var i:Number = 0; i < packages.length; i++) {
+			var package:PackageInfo = packages[i];
+			if (package.getPackage() == concretePackage) {
+				return package;
 			}
 		}
-		throw new NoSuchChildException("The package [" + package + "] you tried to obtain does not exist in this package.",
-									   this,
-									   arguments);
+		return null;
 	}
 	
 	/**
 	 * Returns false because a PackageInfo can never be the root. The root is
-	 * represented by a RootInfo.
+	 * represented by the RootInfo instance.
 	 *
 	 * @return false
 	 */
@@ -349,4 +440,5 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 		}
 		return false;
 	}*/
+	
 }

@@ -46,6 +46,7 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass implem
 	 * <ul>
 	 *   <li>The argument is null or undefined.</li>
 	 *   <li>The argument is not of type ClassInfo.</li>
+	 *   <li>The argument's getType() method returns null or undefined.</li>
 	 * </ul>
 	 *
 	 * <p>Only the passed in class will be searched through, no
@@ -59,10 +60,11 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass implem
 		
 		this.i = ClassInfo(i);
 		if (this.i == null) return null;
+		var c:Function = this.i.getType();
+		if (!c) return null;
 		this.r = new Array();
 		
 		this.s = true;
-		var c:Function = this.i.getType();
 		_global.ASSetPropFlags(c, null, 0, true);
 		_global.ASSetPropFlags(c, ["__proto__", "constructor", "prototype"], 7, true);
 		search(c);

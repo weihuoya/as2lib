@@ -25,7 +25,7 @@ import org.as2lib.env.reflect.algorithm.PackageAlgorithm;
 import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
 import org.as2lib.env.reflect.algorithm.MethodAlgorithm;
 import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
-import org.as2lib.env.reflect.algorithm.ChildrenAlgorithm;
+import org.as2lib.env.reflect.algorithm.ChildAlgorithm;
 import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.env.reflect.SimpleCache;
 import org.as2lib.env.reflect.string.MethodInfoStringifier;
@@ -51,7 +51,7 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	private static var propertyAlgorithm:ContentAlgorithm;
 	
 	/** The ContentAlgorithm used to find children. */
-	private static var childrenAlgorithm:ContentAlgorithm;
+	private static var childAlgorithm:ContentAlgorithm;
 	
 	/** All ClassInfos and PackageInfos that have already been found will be cached here. */
 	private static var cache:Cache = new SimpleCache();
@@ -155,8 +155,8 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 *
 	 * @param algorithm the new ContentAlgorithm to find and store the children
 	 */
-	public static function setChildrenAlgorithm(algorithm:ContentAlgorithm):Void {
-		childrenAlgorithm = algorithm;
+	public static function setChildAlgorithm(algorithm:ContentAlgorithm):Void {
+		childAlgorithm = algorithm;
 	}
 	
 	/**
@@ -164,9 +164,9 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 *
 	 * @return the ContentAlgorithm to find and store children
 	 */
-	public static function getChildrenAlgorithm(Void):ContentAlgorithm {
-		if (!childrenAlgorithm) childrenAlgorithm = new ChildrenAlgorithm();
-		return childrenAlgorithm;
+	public static function getChildAlgorithm(Void):ContentAlgorithm {
+		if (!childAlgorithm) childAlgorithm = new ChildAlgorithm();
+		return childAlgorithm;
 	}
 	
 	/**

@@ -27,33 +27,33 @@ import org.as2lib.env.reflect.CompositeMemberInfo;
  * @author Simon Wacker
  */
 interface org.as2lib.env.reflect.TypeInfo extends CompositeMemberInfo {
+	
 	/**
-	 * Returns the type this TypeInfo represents.
+	 * Returns the type this TypeInfo instance represents.
 	 *
-	 * @return the type represented by this TypeInfo
+	 * @return the type represented by this instance
 	 */
 	public function getType(Void):Function;
 	
 	/**
-	 * Returns the super types's TypeInfo.
+	 * Returns the super types's TypeInfo instance.
 	 * 
-	 * @return the super types's TypeInfo
+	 * @return the super types's TypeInfo instance
 	 */
 	public function getSuperType(Void):TypeInfo;
 	
 	/**
-	 * Returns an Array containing the operations represented by MethodInfos
-	 * the type declares including the declared operations of all super
+	 * Returns an Array containing the methods represented by MethodInfos
+	 * the type declares including the declared methods of all super
 	 * types.
 	 *
-	 * @return an Array containing MethodInfos representing the available operations
+	 * @return an Array containing MethodInfos representing the available methods
 	 */
 	public function getMethods(Void):Array;
 	
 	/**
-	 * Overload
-	 * #getMethodByName()
-	 * #getMethodByMethod()
+	 * @overload #getMethodByName(String)
+	 * @overload #getMethodByMethod(Function)
 	 */
 	public function getMethod(method):MethodInfo;
 	
@@ -62,7 +62,6 @@ interface org.as2lib.env.reflect.TypeInfo extends CompositeMemberInfo {
 	 *
 	 * @param methodName the name of the method you wanna obtain
 	 * @return the MethodInfo correspoinding to the method name
-	 * @throws org.as2lib.env.reflect.NoSuchTypeMemberException if the method you tried to obtain does not exist
 	 */
 	public function getMethodByName(methodName:String):MethodInfo;
 	
@@ -71,7 +70,7 @@ interface org.as2lib.env.reflect.TypeInfo extends CompositeMemberInfo {
 	 *
 	 * @param method the method you wanna obtain the corresponding MethodInfo
 	 * @return the MethodInfo correspoinding to the method
-	 * @throws org.as2lib.env.reflect.NoSuchTypeMemberException if the method you tried to obtain does not exist
 	 */
 	public function getMethodByMethod(concreteMethod:Function):MethodInfo;
+	
 }
