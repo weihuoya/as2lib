@@ -26,11 +26,11 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.test.mock.ArgumentsMatcher;
 import org.as2lib.test.mock.MethodCallBehaviour;
-import org.as2lib.test.mock.MockBehaviour;
+import org.as2lib.test.mock.Behaviour;
 import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodResponse;
-import org.as2lib.test.mock.support.DefaultMockBehaviour;
+import org.as2lib.test.mock.support.DefaultBehaviour;
 import org.as2lib.test.mock.MockControlState;
 import org.as2lib.test.mock.support.RecordState;
 import org.as2lib.test.mock.support.ReplayState;
@@ -51,7 +51,7 @@ class org.as2lib.test.mock.support.SimpleMockControl extends BasicClass implemen
 	private var mock;
 	
 	/** Stores the mock behaviours. */
-	private var behaviour:MockBehaviour;
+	private var behaviour:Behaviour;
 	
 	/** Stores the state. */
 	private var state:MockControlState;
@@ -69,7 +69,7 @@ class org.as2lib.test.mock.support.SimpleMockControl extends BasicClass implemen
 	public function SimpleMockControl() {
 		var o:Overload = new Overload(this);
 		o.addHandler([Function], SimpleMockControlByType);
-		o.addHandler([Function, MockBehaviour], SimpleMockControlByTypeAndBehaviour);
+		o.addHandler([Function, Behaviour], SimpleMockControlByTypeAndBehaviour);
 		o.forward(arguments);
 	}
 	
@@ -79,7 +79,7 @@ class org.as2lib.test.mock.support.SimpleMockControl extends BasicClass implemen
 	 * @param type the interface or class to create a mock object for
 	 */
 	private function SimpleMockControlByType(type:Function) {
-		SimpleMockControlByTypeAndBehaviour(type, new DefaultMockBehaviour());
+		SimpleMockControlByTypeAndBehaviour(type, new DefaultBehaviour());
 	}
 	
 	/**
@@ -88,7 +88,7 @@ class org.as2lib.test.mock.support.SimpleMockControl extends BasicClass implemen
 	 * @param type the interface or class to create a mock object for
 	 * @param behaviour the instance to store the behaviour of the mock inside
 	 */
-	private function SimpleMockControlByTypeAndBehaviour(type:Function, behaviour:MockBehaviour):Void {
+	private function SimpleMockControlByTypeAndBehaviour(type:Function, behaviour:Behaviour):Void {
 		this.type = type;
 		this.behaviour = behaviour;
 		reset();
@@ -130,7 +130,7 @@ class org.as2lib.test.mock.support.SimpleMockControl extends BasicClass implemen
 	 */
 	private function getDefaultRecordStateFactory(Void):MockControlStateFactory {
 		var result:MockControlStateFactory = new MockControlStateFactory();
-		result.getMockControlState = function(behaviour:MockBehaviour):MockControlState {
+		result.getMockControlState = function(behaviour:Behaviour):MockControlState {
 			return new RecordState(behaviour);
 		}
 		return result;
@@ -161,7 +161,7 @@ class org.as2lib.test.mock.support.SimpleMockControl extends BasicClass implemen
 	 */
 	private function getDefaultReplayStateFactory(Void):MockControlStateFactory {
 		var result:MockControlStateFactory = new MockControlStateFactory();
-		result.getMockControlState = function(behaviour:MockBehaviour):MockControlState {
+		result.getMockControlState = function(behaviour:Behaviour):MockControlState {
 			return new ReplayState(behaviour);
 		}
 		return result;
@@ -193,7 +193,7 @@ class org.as2lib.test.mock.support.SimpleMockControl extends BasicClass implemen
 	private function createDelegator(Void):InvocationHandler {
 		var result:InvocationHandler = new InvocationHandler();
 		var owner:SimpleMockControl = this;
-		result.invoke = function(proxy, method:String, args:FunctionArguments) {
+		result.invoke = function(proxy, method:String, args:Array) {
 			return owner.invokeMethod(method, args);
 		}
 		return result;
@@ -205,7 +205,7 @@ class org.as2lib.test.mock.support.SimpleMockControl extends BasicClass implemen
 	 * @param methodName the name of the invoked method
 	 * @param args the arguments passed to the invoked method
 	 */
-	private function invokeMethod(methodName:String, args:FunctionArguments) {
+	private function invokeMethod(methodName:String, args:Array) {
 		return state.invokeMethod(new MethodCall(methodName, args));
 	}
 	

@@ -19,7 +19,7 @@ import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControlState;
 import org.as2lib.test.mock.MethodCallBehaviour;
-import org.as2lib.test.mock.MockBehaviour;
+import org.as2lib.test.mock.Behaviour;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.MethodResponse;
@@ -31,14 +31,14 @@ import org.as2lib.test.mock.ArgumentsMatcher;
 class org.as2lib.test.mock.support.ReplayState extends BasicClass implements MockControlState {
 	
 	/** Used to verify the expectations. */
-	private var behaviour:MockBehaviour;
+	private var behaviour:Behaviour;
 	
 	/**
 	 * Constructs a new instance.
 	 *
 	 * @param behaviour used to verify the expectations
 	 */
-	public function ReplayState(behaviour:MockBehaviour) {
+	public function ReplayState(behaviour:Behaviour) {
 		this.behaviour = behaviour;
 	}
 	
@@ -46,7 +46,7 @@ class org.as2lib.test.mock.support.ReplayState extends BasicClass implements Moc
 	 * @see MockControlState#invokeMethod()
 	 */
 	public function invokeMethod(call:MethodCall) {
-		var callBehaviour:MethodCallBehaviour = behaviour.getMethodCallBehaviour(call.getMethodName());
+		var callBehaviour:MethodCallBehaviour = behaviour.getMethodCallBehaviour(call.getMethodName(), call.getArguments());
 		if (callBehaviour) {
 			callBehaviour.addActualCall(call);
 			return callBehaviour.response();

@@ -26,10 +26,10 @@ import org.as2lib.test.mock.AssertionFailedError;
 class org.as2lib.test.mock.MethodCall extends BasicClass {
 	
 	private var methodName:String;
-	private var args:FunctionArguments;
+	private var args:Array;
 	private var argumentsMatcher:ArgumentsMatcher;
 	
-	public function MethodCall(methodName:String, args:FunctionArguments) {
+	public function MethodCall(methodName:String, args:Array) {
 		this.methodName = methodName;
 		this.args = args;
 	}
@@ -38,7 +38,7 @@ class org.as2lib.test.mock.MethodCall extends BasicClass {
 		return methodName;
 	}
 	
-	public function getArguments(Void):FunctionArguments {
+	public function getArguments(Void):Array {
 		return args;
 	}
 	

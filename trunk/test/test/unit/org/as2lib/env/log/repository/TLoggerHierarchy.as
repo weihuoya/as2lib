@@ -255,19 +255,13 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		var lc:SimpleMockControl = new SimpleMockControl(ConfigurableHierarchicalLogger);
 		var l:ConfigurableHierarchicalLogger = lc.getMock();
 		l.getName();
-		lc.setDefaultReturnValue("org.as2lib.core.test.t2.MyLogger");
+		lc.setDefaultReturnValue("org.as2lib.core.test.t2.MyLogger", 2);
 		l.setName("org.as2lib.core.test.t2.MyLogger");
 		lc.setVoidCallable();
-		
-		// Multiple calls with different arguments are not supported. ////////////////////////////////////////////// TODO ////////////////////////////////
-		/*l.setParent(r);
+		l.setParent(r);
 		lc.setVoidCallable();
 		l.setParent(p);
-		lc.setVoidCallable();*/
-		
-		l.setParent(null);
-		lc.setVoidCallable(2);
-		lc.setArgumentsMatcher(new TypeArgumentsMatcher([ConfigurableHierarchicalLogger]));
+		lc.setVoidCallable();
 		l.getParent();
 		lc.setReturnValue(r, 2);
 		lc.replay();
@@ -275,19 +269,13 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		var l2c:SimpleMockControl = new SimpleMockControl(ConfigurableHierarchicalLogger);
 		var l2:ConfigurableHierarchicalLogger = l2c.getMock();
 		l2.getName();
-		l2c.setDefaultReturnValue("org.as2lib.SecondLogger");
+		l2c.setDefaultReturnValue("org.as2lib.SecondLogger", 2);
 		l2.setName("org.as2lib.SecondLogger");
 		l2c.setVoidCallable();
-		
-		// Multiple calls with different arguments are not supported. ////////////////////////////////////////////// TODO ////////////////////////////////
-		/*l2.setParent(r);
+		l2.setParent(r);
 		l2c.setVoidCallable();
 		l2.setParent(p);
-		l2c.setVoidCallable();*/
-		
-		l2.setParent(null);
-		l2c.setVoidCallable(2);
-		l2c.setArgumentsMatcher(new TypeArgumentsMatcher([ConfigurableHierarchicalLogger]));
+		l2c.setVoidCallable();
 		l2.getParent();
 		l2c.setReturnValue(r, 2);
 		l2c.replay();
@@ -296,9 +284,9 @@ class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase 
 		h.putLogger(l);
 		h.putLogger(l2);
 		h.putLogger(p);
-		assertSame(h.getLogger("org.as2lib"), p);
 		assertSame(h.getLogger("org.as2lib.core.test.t2.MyLogger"), l);
 		assertSame(h.getLogger("org.as2lib.SecondLogger"), l2);
+		assertSame(h.getLogger("org.as2lib"), p);
 		
 		rc.verify(this);
 		pc.verify(this);

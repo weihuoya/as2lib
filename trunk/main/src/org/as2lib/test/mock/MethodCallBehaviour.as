@@ -28,16 +28,24 @@ interface org.as2lib.test.mock.MethodCallBehaviour extends BasicInterface {
 	
 	public function setExpectedCall(expectedCall:MethodCall):Void;
 	
+	public function getExpectedCall(Void):MethodCall;
+	
 	public function addActualCall(actualArguments:MethodCall):Void;
+	
+	public function getActualCallCount(Void):Number;
 	
 	public function setExpectedRange(expectedRange:MethodCallRange):Void;
 	
+	public function getExpectedRange(Void):MethodCallRange;
+	
 	public function setResponse(response:MethodResponse):Void;
+	
+	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void;
+	
+	public function getArgumentsMatcher(Void):ArgumentsMatcher;
 	
 	public function response(Void);
 	
 	public function verify(testCase:TestCase):Void;
-	
-	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void;
 	
 }
