@@ -175,4 +175,15 @@ class test.unit.org.as2lib.util.TMathUtil extends TestCase {
 		assertTrue("Divisors of 0 are none", ArrayUtil.isSame(MathUtil.getDivisors(new NaturalNumberIncludingZero(0)), []));
 	}
 	
+	
+	/**
+	 * Tests the rounding of a number with a given number of values after the comma.
+	 */
+	public function testRound():Void{
+		assertEquals("1.2345 after rouding with 0 comma value is 1", MathUtil.round(1.2345, 0), 1);
+		assertEquals("1.2345 after rouding with 1 comma value is 1.2", MathUtil.round(1.2345, 1), 1.2);
+		assertEquals("1.2345 after rouding with 2 comma values is 1.23", MathUtil.round(1.2345, 2), 1.23);
+		assertEquals("1.2344 after rouding with 3 comma values is 1.234", MathUtil.round(1.2344, 3), 1.234);
+		assertEquals("1.2345 after rouding with 3 comma values is 1.235", MathUtil.round(1.2345, 3), 1.235);
+	}
 }

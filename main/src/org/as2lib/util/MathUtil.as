@@ -130,5 +130,18 @@ class org.as2lib.util.MathUtil extends BasicClass {
 		return divisors;
 	}
 	
-
+	/**
+	 * Rounds a number to the nearest value.
+	 * It works the same as the Math.round() method,
+	 * but is adds a new argument, specifying the number of values after the comma.
+	 * 
+	 * @param n The number to round.
+	 * @param c The number of values after the comma.
+	 * @returns The rounded number.
+	 */
+	public static function round(n:Number, c:Number):Number{
+		var r:Number = Math.pow(10,c);
+		return Math.round(n*r)/r;
+	} 
+	
 }
