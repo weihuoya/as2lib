@@ -22,6 +22,8 @@ import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.data.holder.Stack;
 import org.as2lib.data.holder.stack.SimpleStack;
+import org.as2lib.env.log.LoggerRepositoryManager;
+import org.as2lib.env.log.Logger;
 
 /**
  * AbstractThrowable is an abstract class that contains sourced out functionalities
@@ -33,6 +35,9 @@ import org.as2lib.data.holder.stack.SimpleStack;
  */
 class org.as2lib.env.except.AbstractThrowable extends Error {
 	
+	/** Logger used to output the exception. */
+	private static var logger:Logger;
+	
 	/** The saved stack of operation calls. */
 	private var stackTrace:Stack;
 	
@@ -41,6 +46,14 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	
 	/** The message describing what was wrong. */
 	private var message:String;
+	
+	/**
+	 * @return logger used to output the exception
+	 */
+	private static function getLogger(Void):Logger {
+		if (!logger) logger = LoggerRepositoryManager.getRepository().getLogger("org.as2lib.env.except.Throwable");
+		return logger;
+	}
 	
 	/**
 	 * The private constructor.

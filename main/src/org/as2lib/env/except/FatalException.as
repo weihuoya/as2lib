@@ -17,8 +17,6 @@
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.except.AbstractThrowable;
 import org.as2lib.env.except.ExceptConfig;
-import org.as2lib.env.log.LoggerRepositoryManager;
-import org.as2lib.env.log.Logger;
 
 /**
  * FatalException is a default implementation of the Throwable interface. It is
@@ -28,9 +26,6 @@ import org.as2lib.env.log.Logger;
  * @author Simon Wacker
  */
 class org.as2lib.env.except.FatalException extends AbstractThrowable implements Throwable {
-	
-	/** Logger used to output this fatal exception. */
-	private static var logger:Logger = LoggerRepositoryManager.getRepository().getLogger("org.as2lib.env.except.Throwable");
 	
 	/**
 	 * Constructs a new FatalException.
@@ -51,7 +46,7 @@ class org.as2lib.env.except.FatalException extends AbstractThrowable implements 
 	 */
 	public function toString(Void):String {
 		if (!arguments.caller) {
-			logger.fatal(this);
+			getLogger().fatal(this);
 			return "";
 		}
 		return ExceptConfig.getThrowableStringifier().execute(this);

@@ -17,8 +17,6 @@
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.except.AbstractThrowable;
 import org.as2lib.env.except.ExceptConfig;
-import org.as2lib.env.log.LoggerRepositoryManager;
-import org.as2lib.env.log.Logger;
 
 /**
  * Exception is a normal default implementation of the Throwable interface.
@@ -26,9 +24,6 @@ import org.as2lib.env.log.Logger;
  * @author Simon Wacker
  */
 class org.as2lib.env.except.Exception extends AbstractThrowable implements Throwable {
-	
-	/** Logger used to output this exception. */
-	private static var logger:Logger = LoggerRepositoryManager.getRepository().getLogger("org.as2lib.env.except.Throwable");
 	
 	/**
 	 * Constructs a new Exception.
@@ -49,7 +44,7 @@ class org.as2lib.env.except.Exception extends AbstractThrowable implements Throw
 	 */
 	public function toString(Void):String {
 		if (!arguments.caller) {
-			logger.error(this);
+			getLogger().error(this);
 			return "";
 		}
 		return ExceptConfig.getThrowableStringifier().execute(this);
