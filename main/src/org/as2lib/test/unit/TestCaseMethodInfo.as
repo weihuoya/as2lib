@@ -179,10 +179,14 @@ class org.as2lib.test.unit.TestCaseMethodInfo extends BasicClass {
 	 */
 	public function toString(Void):String {
 		var result:String = getMethodInfo().toString()+" ["+getStopWatch().getTimeInMilliSeconds()+"ms]";
-		if(hasErrors()) {
-			result += " "+getErrors().length+" error(s)";
+		var errors:Array = getErrors();
+		if(errors.length > 1) {
+			result += " "+getErrors().length+" errors occured";
+		} else if(errors.length > 0) {
+			result += " "+getErrors().length+" error occured";
+			
 		}
-		var errorIterator:Iterator = new ArrayIterator(getErrors());
+		var errorIterator:Iterator = new ArrayIterator(errors);
 		while(errorIterator.hasNext()) {
 			var error = errorIterator.next();
 			result += "\n"+StringUtil.addSpaceIndent(error.getMessage(), 2);
