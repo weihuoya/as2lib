@@ -1,20 +1,20 @@
 ﻿import org.as2lib.test.unit.TestCase;
-import org.as2lib.data.io.file.File;
-import org.as2lib.data.io.file.FileEventInfo;
-import org.as2lib.data.io.file.SimpleFile;
-import org.as2lib.data.io.file.FileListener;
-import org.as2lib.data.io.file.FileNotLoadedException;
+import org.as2lib.io.file.File;
+import org.as2lib.io.file.FileEventInfo;
+import org.as2lib.io.file.SimpleFile;
+import org.as2lib.io.file.FileListener;
+import org.as2lib.io.file.FileNotLoadedException;
 import org.as2lib.util.ObjectUtil;
 
 /**
  *
  */
-class test.unit.org.as2lib.data.io.file.TFile extends TestCase implements FileListener {
+class test.unit.org.as2lib.io.file.TFile extends TestCase implements FileListener {
 	
 	/** Holder for the File */
 	private var file:File;
 	
-	private static var PATH:String = "org/as2lib/data/io/file/";
+	private static var PATH:String = "org/as2lib/io/file/";
 	private static var NOT_EXISTING_FILE:String = PATH+"simpleFile.txt";
 	private static var UNICODE_FILE:String = PATH+"simpleFile_Unicode.txt";
 	private static var ASCII_FILE:String = PATH+"simpleFile_ASCII.txt";

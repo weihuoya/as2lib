@@ -1,10 +1,10 @@
 ﻿import org.as2lib.test.unit.TestCase;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.data.io.file.ByteFormat;
-import org.as2lib.data.io.file.BitFormat;
+import org.as2lib.io.file.ByteFormat;
+import org.as2lib.io.file.BitFormat;
 
-class test.unit.org.as2lib.data.io.file.TBitAndByteFormat extends TestCase {
+class test.unit.org.as2lib.io.file.TBitAndByteFormat extends TestCase {
 	private var byteFormat:ByteFormat;
 	private var bitFormat:BitFormat;
 	
