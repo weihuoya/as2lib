@@ -8,6 +8,7 @@ import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.ListenerArray;
 import org.as2lib.data.io.conn.ConnectorError;
 import org.as2lib.data.io.conn.ConnectorResponse;
+import org.as2lib.data.io.conn.remoting.RemotingRequest;
 
 class test.org.as2lib.data.io.conn.TRemoteConnectorImplementation extends Test{
    private var connector:RemotingConnector;
@@ -26,7 +27,7 @@ class test.org.as2lib.data.io.conn.TRemoteConnectorImplementation extends Test{
 		// getter setter Test
 		
 		myOut.info("-- Test of setIdentifier --");
-		con.setIdentifier("http://192.168.0.1/flashservices/gateway");
+		con.setIdentifier("http://192.168.0.2/flashservices/gateway");
 		myOut.info("RemotingConnector.identifier: "+con.getIdentifier());
 		
 		// Listener Test
@@ -44,7 +45,8 @@ class test.org.as2lib.data.io.conn.TRemoteConnectorImplementation extends Test{
 		
 		// EventBroadcaster for testing of onError onResponse methods
 		myOut.info("-- Test of EventBroadcaster --");
-		myEB = con.getEventBroadcaster();
+		
+		//myEB = con.getEventBroadcaster();
 		
 		//var myListener:ListenerArray = myEB.getAllListener();
 		//trace(ExampleListener(myListener.get(0)).counter);
@@ -56,10 +58,12 @@ class test.org.as2lib.data.io.conn.TRemoteConnectorImplementation extends Test{
 			myOut.info("EventBroadcaster.ListenerArray:");
 		}
 		*/
-		myEB.dispatch(new ConnectorError("TestConnectionError",this,new FunctionArguments(),true,false));
-		myEB.dispatch(new ConnectorResponse());
-		// Error Test
+		//myEB.dispatch(new ConnectorError("TestConnectionError",this,new FunctionArguments(),true,false));
+		//myEB.dispatch(new ConnectorResponse());
 		
+		//Establish Connection
+		con.initConnection();
+		con.handleRequest(new RemotingRequest("com.oreilly.frdg.HelloWorld.sayHello"));
 		
 	}
    
