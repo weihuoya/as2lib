@@ -100,7 +100,7 @@
         <entry type="change" package="org.as2lib.env.reflect" class="ClassInfo" method="getMethods(Void):Map">It now also returns the operations declared by super types.</entry>
       </day>
       <day value="3">
-        <entry type="change" package="org.as2lib.env.event" class="DynamicEventBroadcasterFactory" method="createEventBroadcaster(Void):EventBroadcaster"><change-throws from="org.as2lib.env.except.UndefinedPropertyExceptiont" to="org.as2lib.env.except.IllegalStateException" /></entry>
+        <entry type="change" package="org.as2lib.env.event" class="DynamicEventBroadcasterFactory" method="createEventBroadcaster(Void):EventBroadcaster" throws="org.as2lib.env.except.UndefinedPropertyExceptiont"><change-throws to="org.as2lib.env.except.IllegalStateException" /></entry>
         <entry type="remove" package="org.as2lib.env.except" class="UndefinedPropertyException"></entry>
         <entry type="add" package="org.as2lib.out.handler" class="SocketOutputServerHandler"></entry>
       </day>
