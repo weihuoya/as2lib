@@ -77,7 +77,7 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		rc.verify();
 	}
 	
-	public function testPutLoggerWithNullLogger(Void):Void {
+	public function testAddLoggerWithNullLogger(Void):Void {
 		var rc:MockControl = new MockControl(ConfigurableHierarchicalLogger);
 		var r:ConfigurableHierarchicalLogger = rc.getMock();
 		r.getName();
@@ -86,7 +86,7 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		
 		var h:LoggerHierarchy = new LoggerHierarchy(r);
 		try {
-			h.putLogger(null);
+			h.addLogger(null);
 			fail("null logger should cause an IllegalArgumentException to be thrown");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
@@ -94,7 +94,7 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		rc.verify();
 	}
 	
-	public function testPutLoggerWithNullName(Void):Void {
+	public function testAddLoggerWithNullName(Void):Void {
 		var rc:MockControl = new MockControl(ConfigurableHierarchicalLogger);
 		var r:ConfigurableHierarchicalLogger = rc.getMock();
 		r.getName();
@@ -109,7 +109,7 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		
 		var h:LoggerHierarchy = new LoggerHierarchy(r);
 		try {
-			h.putLogger(l);
+			h.addLogger(l);
 			fail("logger with null returning getName() method should cause the IllegalArgumentException to be thrown");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
@@ -118,7 +118,7 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		lc.verify();
 	}
 	
-	public function testPutLoggerWithBlankStringName(Void):Void {
+	public function testAddLoggerWithBlankStringName(Void):Void {
 		var rc:MockControl = new MockControl(ConfigurableHierarchicalLogger);
 		var r:ConfigurableHierarchicalLogger = rc.getMock();
 		r.getName();
@@ -133,7 +133,7 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		
 		var h:LoggerHierarchy = new LoggerHierarchy(r);
 		try {
-			h.putLogger(l);
+			h.addLogger(l);
 			fail("logger with blank string returning getName() method should cause the IllegalArgumentException to be thrown");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
@@ -142,7 +142,7 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		lc.verify();
 	}
 	
-	public function testPutLoggerWithReservedName(Void):Void {
+	public function testAddLoggerWithReservedName(Void):Void {
 		var rc:MockControl = new MockControl(ConfigurableHierarchicalLogger);
 		var r:ConfigurableHierarchicalLogger = rc.getMock();
 		r.getName();
@@ -160,10 +160,10 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		lc.replay();
 		
 		var h:LoggerHierarchy = new LoggerHierarchy(r);
-		h.putLogger(l);
+		h.addLogger(l);
 		assertSame(h.getLogger("MyLogger"), l);
 		try {
-			h.putLogger(l);
+			h.addLogger(l);
 			fail("same name -> exception");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
@@ -172,7 +172,7 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		lc.verify();
 	}
 	
-	public function testPutLoggerWithAllRealValues(Void):Void {
+	public function testAddLoggerWithAllRealValues(Void):Void {
 		var rc:MockControl = new MockControl(ConfigurableHierarchicalLogger);
 		var r:ConfigurableHierarchicalLogger = rc.getMock();
 		r.getName();
@@ -190,14 +190,14 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		lc.replay();
 		
 		var h:LoggerHierarchy = new LoggerHierarchy(r);
-		h.putLogger(l);
+		h.addLogger(l);
 		assertSame(h.getLogger("MyLogger"), l);
 		
 		rc.verify();
 		lc.verify();
 	}
 	
-	public function testPutLoggerWithParent(Void):Void {
+	public function testAddLoggerWithParent(Void):Void {
 		var rc:MockControl = new MockControl(ConfigurableHierarchicalLogger);
 		var r:ConfigurableHierarchicalLogger = rc.getMock();
 		r.getName();
@@ -225,8 +225,8 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		lc.replay();
 		
 		var h:LoggerHierarchy = new LoggerHierarchy(r);
-		h.putLogger(p);
-		h.putLogger(l);
+		h.addLogger(p);
+		h.addLogger(l);
 		assertSame(h.getLogger("org.as2lib"), p);
 		assertSame(h.getLogger("org.as2lib.core.test.t2.MyLogger"), l);
 		
@@ -235,7 +235,7 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		lc.verify();
 	}
 	
-	public function testPutLoggerWithChildren(Void):Void {
+	public function testAddLoggerWithChildren(Void):Void {
 		var rc:MockControl = new MockControl(ConfigurableHierarchicalLogger);
 		var r:ConfigurableHierarchicalLogger = rc.getMock();
 		r.getName();
@@ -281,9 +281,9 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		l2c.replay();
 		
 		var h:LoggerHierarchy = new LoggerHierarchy(r);
-		h.putLogger(l);
-		h.putLogger(l2);
-		h.putLogger(p);
+		h.addLogger(l);
+		h.addLogger(l2);
+		h.addLogger(p);
 		assertSame(h.getLogger("org.as2lib.core.test.t2.MyLogger"), l);
 		assertSame(h.getLogger("org.as2lib.SecondLogger"), l2);
 		assertSame(h.getLogger("org.as2lib"), p);
@@ -439,8 +439,8 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		factoryControl.replay();
 		
 		var repository:LoggerHierarchy = new LoggerHierarchy(root);
-		repository.putLogger("any.name.child1", child1Mock);
-		repository.putLogger("any.name.subNode1.subNode2.child2", child2Mock);
+		repository.addLogger("any.name.child1", child1Mock);
+		repository.addLogger("any.name.subNode1.subNode2.child2", child2Mock);
 		var returnedLogger:HierarchicalLogger = HierarchicalLogger(repository.getLoggerByFactory("any.name", factoryMock));
 		assertSame("The returned logger [" + returnedLogger + "] and expected logger [" + loggerMock + "] should be the same.", loggerMock, returnedLogger);
 		
@@ -450,11 +450,11 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		factoryControl.verify();
 	}
 	
-	public function testPutLoggerWithReservedName(Void):Void {
+	public function testAddLoggerWithReservedName(Void):Void {
 		var root:SimpleLogger = new SimpleLogger("root");
 		var repository:LoggerHierarchy = new LoggerHierarchy(root);
-		repository.putLogger("reserved.name", new SimpleLogger());
-		assertThrows("Repository should throw an exception in case passed-in name is reserved.", IllegalArgumentException, repository, repository.putLogger, ["reserved.name", new SimpleLogger()]);
+		repository.addLogger("reserved.name", new SimpleLogger());
+		assertThrows("Repository should throw an exception in case passed-in name is reserved.", IllegalArgumentException, repository, repository.addLogger, ["reserved.name", new SimpleLogger()]);
 	}
 	
 	// ----------------------------------------------------- //
