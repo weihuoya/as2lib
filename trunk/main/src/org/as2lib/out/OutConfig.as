@@ -12,19 +12,19 @@ class org.as2lib.out.OutConfig extends BasicClass {
 	private function OutConfig(Void) {
 	}
 	
-	public static function stringifyWriteInfo(info:OutWriteInfo):String {
-		return writeStringifier.execute(info);
-	}
-	
-	public static function stringifyErrorInfo(info:OutErrorInfo):String {
-		return errorStringifier.execute(info);
-	}
-	
 	public static function setWriteStringifier(newStringifier:Stringifier):Void {
 		writeStringifier = newStringifier;
 	}
 	
+	public static function getWriteStringifier(Void):Stringifier {
+		return writeStringifier;
+	}
+	
 	public static function setErrorStringifier(newStringifier:Stringifier):Void {
 		errorStringifier = newStringifier;
+	}
+	
+	public static function getErrorStringifier(Void):Stringifier {
+		return errorStringifier;
 	}
 }
