@@ -3,6 +3,8 @@ import org.as2lib.data.holder.HashMap;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.RootInfo;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.util.ObjectUtil;
 
 /**
  * Cache is used to cache classes and packages. The caching of classes and packages
@@ -33,14 +35,24 @@ class org.as2lib.env.reflect.Cache extends BasicClass {
 	}
 	
 	/**
-	 * Returns the ClassInfo representing the class the instance was instantiated
-	 * of. If the ClassInfo does not exist nothing will be returned.
+	 * Returns the ClassInfo representing either the class the object was instantiated
+	 * of or the class that was passed in. If there is no corresponding ClassInfo
+	 * cached nothing will be returned.
 	 *
-	 * @param instance the instance the appropriate ClassInfo shall be returned
+	 * @param object the instance or class the appropriate ClassInfo shall be returned
 	 * @return the ClassInfo representing the class
+	 * @throws IllegalArgumentException if the passed in object is neither of type function nor object
 	 */
-	public function getClass(instance):ClassInfo {
-		return ClassInfo(classes.get(instance.__proto__));
+	public function getClass(object):ClassInfo {
+		if (ObjectUtil.isTypeOf(object, "object")) {
+			return ClassInfo(classes.get(object.__proto__));
+		}
+		if (ObjectUtil.isTypeOf(object, "function")) {
+			return ClassInfo(classes.get(object.prototype));
+		}
+		throw new IllegalArgumentException("The object [" + object + "] must be either of type object or function.",
+										   this,
+										   arguments);
 	}
 	
 	/**

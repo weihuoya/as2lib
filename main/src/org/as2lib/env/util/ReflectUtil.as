@@ -36,15 +36,16 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	
 	/**
 	 * This is the core operation of the class. It returns the ClassInfo
-	 * appropriate to the instance containing all needed class information.
-	 * It first checks based on the instance whether an appropriate ClassInfo
+	 * appropriate to the object containing all needed class information.
+	 * It first checks based on the object whether an appropriate ClassInfo
 	 * exists. If one exists it will be returned otherwise a new will be created.
 	 * The responsibility for doing this lies in the suitable CacheAlgorythm.
 	 * By default this is the ClassAlgorythm. But you can set your own with the
 	 * ReflectConfig#setClassAlgorythm() operation.
 	 * 
-	 * @param instance the instance the appropriate ClassInfo shall be found.
+	 * @param object the object the appropriate ClassInfo shall be found.
 	 * @return the appropriate ClassInfo instance containing all class information
+	 * @throws IllegalArgumentException if the passed in object is neither of type function nor object
 	 */
 	public static function getClassInfo(object):ClassInfo {
 		var info:ClassInfo = cache.getClass(object);

@@ -57,6 +57,10 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 			storeClass(name, clazz, parent);
 			return true;
 		}
+		if (object.prototype == clazz.prototype) {
+			storeClass(name, clazz, parent);
+			return true;
+		}
 		return false;
 	}
 	
