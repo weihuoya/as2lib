@@ -84,6 +84,8 @@ test.unit.org.as2lib.env.reflect.algorithm.TPropertyAlgorithm;
 
 // org.as2lib.env.reflect
 test.unit.org.as2lib.env.reflect.TSimpleCache;
+test.unit.org.as2lib.env.reflect.TClassInfo;
+test.unit.org.as2lib.env.reflect.TPackageInfo;
 
 // org.as2lib.env.bean
 test.unit.org.as2lib.env.bean.TMutablePropertyValueSet;

@@ -7,6 +7,12 @@ import org.as2lib.env.bean.PropertyValue;
 
 class test.unit.org.as2lib.env.reflect.TResolveProxyFactory extends TestCase {
 	
+	public function testCreateProxyWithTypeOfValueNullAndUndefined(Void):Void {
+		var factory:ProxyFactory = new ResolveProxyFactory();
+		assertNull(factory.createProxy(null));
+		assertNull(factory.createProxy(undefined));
+	}
+	
 	public function testTypeCast(Void):Void {
 		var factory:ProxyFactory = new ResolveProxyFactory();
 		assertNotNull(BasicInterface(factory.createProxy(BasicInterface, new InvocationHandler())));
