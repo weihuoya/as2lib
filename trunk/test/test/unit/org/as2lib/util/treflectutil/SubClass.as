@@ -1,9 +1,14 @@
-﻿import test.org.as2lib.util.treflectutil.SuperClass;
+﻿import test.org.as2lib.env.reflect.treflect.SuperClass;
 
-class test.org.as2lib.util.treflectutil.SubClass extends SuperClass {
-	public function firstMethod(Void):Void {
+class test.org.as2lib.env.reflect.treflect.SubClass extends SuperClass {
+	public static function publicStaticMethod(Void):Void {
 	}
-	private function secondMethod(Void):Void {
+	private static function privateStaticMethod(Void):Void {
+	}
+	
+	public function publicMethod(Void):Void {
+	}
+	private function privateMethod(Void):Void {
 	}
 	
 	public function set setOnlyProperty(p:String):Void {
