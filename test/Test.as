@@ -351,7 +351,7 @@ class test.Test {
 	 * 
 	 * @param var1	Var that should be Null.
 	 */
-	private static function assertNull (var1) {
+	private static function assertNull (var1):Void {
 		assertNullWithMessage("undefined", var1);
 	}
 	
@@ -380,7 +380,7 @@ class test.Test {
 	 * 
 	 * @param var1	Var that should not be Undefined.
 	 */
-	private static function assertNotUndefined (var1) {
+	private static function assertNotUndefined (var1):Void {
 		assertNotUndefinedWithMessage("undefined", var1);
 	}
 	
@@ -394,7 +394,7 @@ class test.Test {
 	 * @param message	Message to be displayed when an Error occured
 	 * @param var1		Var that should not be Undefined.
 	 */
-	private static function assertNotUndefinedWithMessage (message:String, var1) {
+	private static function assertNotUndefinedWithMessage (message:String, var1):Void {
 		if(var1 == undefined) {
 			addError("assertNotUndefined failed: "+var1+" message: "+message);
 		}
@@ -409,7 +409,7 @@ class test.Test {
 	 * 
 	 * @param var1	Var that should be Undefined.
 	 */
-	private static function assertUndefined (var1) {
+	private static function assertUndefined (var1):Void {
 		assertUndefinedWithMessage("undefined", var1);
 	}
 	
@@ -423,7 +423,7 @@ class test.Test {
 	 * @param message	Message to be displayed when an Error occured
 	 * @param var1		Var that should not be Undefined.
 	 */
-	private static function assertUndefinedWithMessage (message:String, var1) {
+	private static function assertUndefinedWithMessage (message:String, var1):Void {
 		if(var1 != undefined) {
 			addError("assertUndefined failed: "+var1+" message: "+message);
 		}
@@ -438,7 +438,7 @@ class test.Test {
 	 * 
 	 * @param var1	Var that should not be Infinity.
 	 */	
-	private static function assertNotInfinity (var1:Number) {
+	private static function assertNotInfinity (var1:Number):Void {
 		assertNotInfinityWithMessage("undefined", var1);
 	}
 
@@ -452,7 +452,7 @@ class test.Test {
 	 * @param message	Message to be displayed when an Error occured
 	 * @param var1		Var that should not be Infinity.
 	 */	
-	private static function assertNotInfinityWithMessage (message:String, var1:Number) {
+	private static function assertNotInfinityWithMessage (message:String, var1:Number):Void {
 		if(var1 == Infinity) {
 			addError("assertNotInfinity failed: "+var1+" message: "+message);
 		}
@@ -468,7 +468,7 @@ class test.Test {
 	 * 
 	 * @param var1	Var that should be Infinity.
 	 */	
-	private static function assertInfinity (var1:Number) {
+	private static function assertInfinity (var1:Number):Void {
 		assertInfinityWithMessage("undefined", var1);
 	}
 
@@ -482,7 +482,7 @@ class test.Test {
 	 * @param message	Message to be displayed when an Error occured.
 	 * @param var1		Var that should not be Infinity.
 	 */	
-	private static function assertInfinityWithMessage (message:String, var1:Number) {
+	private static function assertInfinityWithMessage (message:String, var1:Number):Void {
 		if(var1 == Infinity) {
 			addError("assertInfinity failed: "+var1+" message: "+message);
 		}
@@ -493,7 +493,28 @@ class test.Test {
 	 *
 	 * @param message	Message that should be called with the Error.
 	 */
-	private static function fail (message:String) {
+	private static function fail (message:String):Void {
 		addError("Failure: "+message);
+	}
+	
+	/**
+	 * Asserts if an Exception is thrown by calling an Function.
+	 * 
+	 * @param exception		Class of the Exception that should be thrown.
+	 * @param theFunction	Function that should be called.
+	 * @param parameters	Parameters to call the Array.
+	 */
+	private static function assertThrows(exception:Function, theFunction:Function, parameters:Array):Void {
+		var exceptionThrown:Boolean = false;
+		try {
+			theFunction.apply(null, parameters);
+		} catch (e:Error) {
+			if (e instanceof exception) {
+				exceptionThrown = true;
+			}
+		}
+		if (!exceptionThrown) {
+			addError("assertThrows: The expected Exception was not thrown.");
+		}
 	}
 }
