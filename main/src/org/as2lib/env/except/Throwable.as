@@ -127,7 +127,7 @@ interface org.as2lib.env.except.Throwable extends BasicInterface {
 	 * @return this throwable itself
 	 * @throws org.as2lib.env.except.IllegalStateException if the cause has already been initialized
 	 */
-	public function initCause(cause:Throwable):Throwable;
+	public function initCause(cause):Throwable;
 	
 	/**
 	 * Returns the initialized cause.
@@ -137,7 +137,7 @@ interface org.as2lib.env.except.Throwable extends BasicInterface {
 	 * @return the initialized cause
 	 * @see #initCause
 	 */
-	public function getCause(Void):Throwable;
+	public function getCause(Void);
 	
 	/**
 	 * Returns the message that describes in detail what went wrong.
