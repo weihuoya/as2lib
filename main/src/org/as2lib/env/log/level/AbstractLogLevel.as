@@ -16,6 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.except.IllegalArgumentException;
 //import org.as2lib.env.log.level.DynamicLogLevel;
 
 /**
@@ -52,17 +53,26 @@ class org.as2lib.env.log.level.AbstractLogLevel extends BasicClass implements Lo
 	
 	/**
 	 * Private constructor.
+	 *
+	 * @throws IllegalArgumentException if passed-in level is null or undefined
 	 */
 	private function AbstractLogLevel(level:Number, name:String) {
+		if (level == null) throw new IllegalArgumentException("Level is not allowed to be null or undefined.", this, arguments);
 		this.level = level;
 		this.name = name;
 	}
 	
 	/**
+	 * True will be returned if:
+	 * <ul>
+	 *   <li>This level is greater or equal than the passed-in one.</li>
+	 *   <li>The passed-in level is null or undefined.</li>
+	 * </ul>
+	 *
 	 * @see LogLevel#isGreaterOrEqual()
 	 */
 	public function isGreaterOrEqual(level:LogLevel):Boolean {
-		return (level >= level.toNumber());
+		return (this.level >= level.toNumber());
 	}
 	
 	/**

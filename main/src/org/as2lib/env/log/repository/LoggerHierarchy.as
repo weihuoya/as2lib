@@ -103,24 +103,20 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	 * Adds a new logger to the hierarchical repository. It will be
 	 * automatically integrated into the hierarchy.
 	 *
-	 * <p>If the passed-in name is null or undefined, the name returned
-	 * by the passed-in logger's getName() method will be used.
-	 * If this name is also null or undefined an IllegalArgumentException
-	 * will be thrown.
-	 *
 	 * @param name the name under which the logger to add shall be referenced
 	 * @param logger the logger to be registered with the passed-in name
-	 * @throws IllegalArgumentException if the passed-in and the name of the logger are both null or undefined or
+	 * @throws IllegalArgumentException if the passed-in logger is null or undefined or
+	 *                                  if the passed-in logger's getName() method returns null or undefined or
 	 *                                  if a logger with the given name is already in use
 	 */
-	public function putLogger(name:String, logger:ConfigurableHierarchicalLogger):Void {
-		if (name == null || name == "") name = logger.getName();
+	public function putLogger(logger:ConfigurableHierarchicalLogger):Void {
+		if (!logger) throw new IllegalArgumentException("Logger to add is not allowed to be null or undefined.", this, arguments);
+		var name:String = logger.getName();
 		if (name == null || name == "") throw new IllegalArgumentException("Name is not allowed to be null, undefined or a blank string.", this, arguments);
-		if (loggers.containsKey(name) && loggers.get(name) instanceof ConfigurableHierarchicalLogger)
+		if (loggers.containsKey(name) && loggers.get(name) instanceof ConfigurableHierarchicalLogger) {
 			throw new IllegalArgumentException("Name [" + name + "] is already in use.", this, arguments);
-		if (logger) {
-			getLoggerByFactory(name, getSingletonFactory(logger));
 		}
+		getLoggerByFactory(name, getSingletonFactory(logger));
 	}
 	
 	/**
