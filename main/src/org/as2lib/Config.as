@@ -19,10 +19,10 @@ import org.as2lib.core.ObjectStringifier;
 import org.as2lib.util.Stringifier;
 
 /**
- * Config is the basic configuration class of the as2lib framework.
- *
- * <p>It lets you configure global behavior of key features like the
- * stirngification of classes and instances.
+ * {@code Config} is the basic configuration class of the as2lib framework.
+ * 
+ * <p>It lets you configure global behavior of key features like the stringification
+ * of classes and instances.
  * 
  * @author Martin Heidegger
  * @author Simon Wacker
@@ -41,21 +41,21 @@ class org.as2lib.Config extends BasicClass {
 	/**
 	 * Sets a new stringifier used to stringify objects.
 	 *
-	 * <p>If you set a stringifier of value null or undefined {@link #getObjectStringifier}
-	 * returns the default stringifier.
-	 *
-	 * @param stringifier the new object stringifier
+	 * <p>If {@code newStringifier} is {@code null} or {@code undefined}
+	 * {@link #getObjectStringifier} will return the default stringifier.
+	 * 
+	 * @param newStringifier the new object stringifier
 	 */
-	public static function setObjectStringifier(stringifier:Stringifier):Void {
-		objectStringifier = stringifier;
+	public static function setObjectStringifier(newStringifier:Stringifier):Void {
+		objectStringifier = newStringifier;
 	}
 	
 	/**
 	 * Returns the stringifier used to stringify objects.
 	 *
-	 * <p>If no stringifier is set the default stringifier gets returned.
-	 * That is an instance of class {@link ObjectStringifier}.
-	 *
+	 * <p>If no stringifier is set the default stringifier will be returned. This is an
+	 * instance of class {@link ObjectStringifier}.
+	 * 
 	 * @return the currently used object stringifier
 	 */
 	public static function getObjectStringifier(Void):Stringifier {

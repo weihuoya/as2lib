@@ -21,14 +21,13 @@ import org.as2lib.data.holder.Stack;
 import org.as2lib.data.holder.Iterator;
 
 /**
- * TypedStack is used as a wrapper for {@link Stack} instances that ensures
- * that only values of a specific type can be added to the wrapped stack.
- *
- * <p>This class simply delegates all method invocations to the wrapped
- * stack. If the specific method is responsible for adding values it first
- * checks if the values to add are of the expected type. If they are the
- * method invocation gets forwarded, otherwise an {@link IllegalArgumentException}
- * gets thrown.
+ * {@code TypedStack} is a wrapper for {@link Stack} instances that ensures that
+ * only values of a specific type can be added to the wrapped stack.
+ * 
+ * <p>This class simply delegates all method invocations to the wrapped stack. If
+ * the specific method is responsible for adding values it first checks if the values
+ * to add are of the expected type. If they are the method invocation is forwarded,
+ * otherwise an {@link IllegalArgumentException} is thrown.
  *
  * @author Simon Wacker
  */
@@ -37,18 +36,19 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	/** The wrapped Stack. */
 	private var stack:Stack;
 	
-	/** The type of values that are contained in the Stack. */
+	/** The type of the values that are allowed. */
 	private var type:Function;
 	
 	/**
-	 * Constructs a new TypedStack instance.
+	 * Constructs a new {@code TypedStack} instance.
 	 *
-	 * <p>If the passed-in stack does already contain values, these values
-	 * do not get type-checked.
-	 *
+	 * <p>If the passed-in stack does already contain values, these values do not get
+	 * type-checked.
+	 * 
 	 * @param type the type of values the stack can have
-	 * @param stack the stack that shall be typed checked
-	 * @throws IllegalArgumentException if the passed-in type is null or undefined
+	 * @param stack the stack to type-check
+	 * @throws IllegalArgumentException if the passed-in {@code type} is {@code null}
+	 * or {@code undefined}
 	 */
 	public function TypedStack(type:Function, stack:Stack) {
 		if (!type) throw new IllegalArgumentException("The passed-in type '" + type + "' the contained values must have is not allowed to be null or undefined.", this, arguments);
@@ -58,7 +58,7 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	
 	/**
 	 * Returns the type that all values in the wrapped stack have.
-	 *
+	 * 
 	 * <p>This is the type passed-in on construction.
 	 *
 	 * @return the type that all values of the wrapped stack have
@@ -70,10 +70,11 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	/**
 	 * Pushes the passed-in value to this stack.
 	 *
-	 * <p>The value gets only pushed if it is of the expected type.
-	 *
+	 * <p>The value is only pushed if it is of the expected type.
+	 * 
 	 * @param value the value to push to this stack
-	 * @throws IllegalArgumentException if the type of the passed-in value is not valid
+	 * @throws IllegalArgumentException if the type of the passed-in {@code value} is
+	 * invalid
 	 */
 	public function push(value):Void {
 		validate(value);
@@ -82,7 +83,7 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	
 	/**
 	 * Removes and returns the lastly pushed value.
-	 *
+	 * 
 	 * @return the lastly pushed value
 	 * @throws org.as2lib.data.holder.EmptyDataHolderException if this stack is empty
 	 */
@@ -92,7 +93,7 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	
 	/**
 	 * Returns the lastly pushed value without removing it.
-	 *
+	 * 
 	 * @return the lastly pushed value
 	 * @throws org.as2lib.data.holder.EmptyDataHolderException if this stack is empty
 	 */
@@ -103,7 +104,7 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	/**
 	 * Returns an iterator to iterate over the values of this stack.
 	 *
-	 * @return an iterator to iterate over this stack
+	 * @return an iterator to iterate over this stack's values
 	 * @see #toArray
 	 */
 	public function iterator(Void):Iterator {
@@ -113,7 +114,7 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	/**
 	 * Returns whether this stack is empty.
 	 *
-	 * @return true if this stack is empty else false
+	 * @return {@code true} if this stack is empty else {@code false}
 	 */
 	public function isEmpty(Void):Boolean {
 		return stack.isEmpty();
@@ -131,10 +132,10 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	
 	/**
 	 * Returns an array representation of this stack.
-	 *
-	 * <p>The elements are copied onto the array in a last-in, first-out
-	 * order, similar to the order of the elements returned by a succession 
-	 * of calls to the {@link #pop} method.
+	 * 
+	 * <p>The elements are copied onto the array in a 'last-in, first-out' order, similar
+	 * to the order of the elements returned by a succession of calls to the {@link #pop}
+	 * method.
 	 *
 	 * @return the array representation of this stack
 	 */
@@ -152,10 +153,10 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	}
 	
 	/**
-	 * Validates the passed-in value based on its type.
+	 * Validates the passed-in {@code value} based on its type.
 	 *
-	 * @param value the value whose type shall be validated
-	 * @throws IllegalArgumentException if the type of the value is not valid
+	 * @param value the value whose type to validate
+	 * @throws IllegalArgumentException if the type of the value is invalid
 	 */
 	private function validate(value):Void {
 		if (!ObjectUtil.typesMatch(value, type)) {

@@ -19,31 +19,31 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
- * ObjectStringifier is the most basic form of Stringifier.
+ * {@code ObjectStringifier} is the most basic stringifier form.
  *
- * <p>It stringifies all kinds of objects, that means classes, instances and
+ * <p>It stringifies all kinds of objects, this means classes, instances and 
  * primitives.
- *
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.core.ObjectStringifier extends BasicClass implements Stringifier {
 	
 	/**
-	 * Returns a string representation of the passed-in object.
-	 *
+	 * Returns the string representation of the passed-in {@code target} object.
+	 * 
 	 * <p>The string representation is composed as follows:
 	 * <pre>
-	 *  [type theFullQualifiedNameOfTheObjectsType]
+	 *   [type theFullQualifiedNameOfTheObjectsType]
 	 * </pre>
-	 *
-	 * <p>The string representation of the class {@link BasicClass} or
+	 * 
+	 * <p>The string representation of the class {@code org.as2lib.core.BasicClass} or
 	 * instances of it looks like this:
 	 * <pre>
 	 *   [type org.as2lib.core.BasicClass]
 	 * </pre>
 	 *
 	 * @param target the target object to stringify
-	 * @return the string representation of the passed-in object
+	 * @return the string representation of the passed-in {@code target} object
 	 */
 	public function execute(target):String {
 		return "[type " + ReflectUtil.getTypeName(target) + "]";

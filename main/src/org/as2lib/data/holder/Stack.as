@@ -18,28 +18,28 @@ import org.as2lib.data.holder.Iterator;
 import org.as2lib.core.BasicInterface;
 
 /**
- * Stack is the base interface for data holders that follow the last-in,
- * first-out policy.
+ * {@code Stack} is the base interface for data holders that follow the 'last-in,
+ * first-out' policy.
+ * 
+ * <p>It offers the opposite functionality of a queue, which follows the 'first-in,
+ * first-out' policy.
  *
- * <p>It offers the opposite functionality of a queue, which follows the
- * first-in, first-out policy.
+ * <p>'last-in, first-out' means that the last value that has been pushed to the
+ * stack is the first that is popped from the stack.
  *
- * <p>'last-in, first-out' means that the last value that has been pushed
- * to the stack is the first that is popped from the stack.
+ * <p>The usage of a stack is quite simple. You have one method to push values,
+ * {@link #push}, and one method to pop values, {@link #pop}. You can also peek at
+ * the top of the stack to see what's the last value that has been pushed to the
+ * stack without removing it {@link #peek}.
+ * 
+ * <p>If you want to iterate over the values of the stack you can either use the
+ * iterator returned by the {@link #iterator} method or the array that contains the
+ * stack's values returned by the {@link #toArray} method.
+ * 
+ * <p>The two methods {@link #isEmpty} and {@link #size} let you find out whether
+ * the stack contains values and how many values it contains.
  *
- * <p>The usage of a stack is quite simple. You have one method to push
- * values {@link #push} and one method to pop values {@link #pop}. You
- * can also peek at the top of the stack to see what's the last value
- * that has been pushed to the stack without removing it {@link #peek}.
- *
- * <p>If you want to iterate over the values of the stack you can either
- * use the iterator returned by the {@link #iterator} method or the array
- * that contains the stack's values returned by the {@link #toArray} method.
- *
- * <p>The two methods {@link #isEmpty} and {@link #size} let you find
- * out whether the stack contains values and how many values it contains.
- *
- * <p>A usage example may look like this:
+ * <p>Example:
  * <code>
  *   // the stack gets set up
  *   var stack:Stack = new MyStack();
@@ -49,10 +49,11 @@ import org.as2lib.core.BasicInterface;
  *   // the stack gets used somewhere in your application
  *   trace(stack.peek()); // traces the last element without removing it
  *   while (!stack.isEmpty()) {
- *      trace(stack.pop());
+ *       trace(stack.pop());
  *   }
  * </code>
- * <p>The output would be the following:
+ *
+ * <p>Output:
  * <pre>
  *   value3
  *   value3
@@ -65,7 +66,7 @@ import org.as2lib.core.BasicInterface;
 interface org.as2lib.data.holder.Stack extends BasicInterface {
 	
 	/**
-	 * Pushes the passed-in value to this stack.
+	 * Pushes the passed-in {@code value} to this stack.
 	 *
 	 * @param value the value to push to this stack
 	 */
@@ -90,7 +91,7 @@ interface org.as2lib.data.holder.Stack extends BasicInterface {
 	/**
 	 * Returns an iterator to iterate over the values of this stack.
 	 *
-	 * @return an iterator to iterate over this stack
+	 * @return an iterator to iterate over this stack's values
 	 * @see #toArray
 	 */
 	public function iterator(Void):Iterator;
@@ -98,7 +99,7 @@ interface org.as2lib.data.holder.Stack extends BasicInterface {
 	/**
 	 * Returns whether this stack is empty.
 	 *
-	 * @return true if this stack is empty else false
+	 * @return {@code true} if this stack is empty else {@code false}
 	 */
 	public function isEmpty(Void):Boolean;
 	
@@ -111,11 +112,11 @@ interface org.as2lib.data.holder.Stack extends BasicInterface {
 	public function size(Void):Number;
 	
 	/**
-	 * Returns an array representation of this stack.
-	 *
-	 * <p>The elements are copied onto the array in a last-in, first-out
-	 * order, similar to the order of the elements returned by a succession 
-	 * of calls to the {@link #pop} method.
+	 * Returns the array representation of this stack.
+	 * 
+	 * <p>The elements are copied onto the array in a 'last-in, first-out' order, similar
+	 * to the order of the elements returned by a succession of calls to the {@link #pop}
+	 * method.
 	 *
 	 * @return the array representation of this stack
 	 */

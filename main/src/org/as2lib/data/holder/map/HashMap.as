@@ -21,45 +21,44 @@ import org.as2lib.data.holder.map.KeyMapIterator;
 import org.as2lib.data.holder.Iterator;
 
 /**
- * HashMap can be used to map any type of key to any type of value.
+ * {@code HashMap} can be used to map any type of key to any type of value.
+ * 
+ * <p>This class offers ordered mapping functionality. That means that the methods
+ * {@link #getKeys} and {@link #getValues} return the keys and values in the order
+ * they were put to the map and that the iterators returned by the methods
+ * {@link #valueIterator} and {@link #keyIterator} also iterate over the keys and
+ * values in the correct order.
  *
- * <p>This class offers ordered mapping functionality. That means that
- * the {@link #getKeys} and {@link #getValues} methods return the keys
- * and values in the order they were put to the map and that the iterators
- * returned by the methods {@link #valueIterator} and {@link #keyIterator}
- * also iterate over the keys and values in the correct order.
+ * <p>This map offers two methods that help you find out whether it contains a
+ * specific key or value. These two methods are {@link #containsKey} and
+ * {@link #containsValue}.
+ * 
+ * <p>To get the data stored in this map you can use the {@link #getKeys},
+ * {@link #getValues} and {@link #get} methods. If you want to iterate over the
+ * values of this map you can use the iterators returned by the methods {@link #iterator}
+ * or {@link #valueIterator}. If you want to iterate over the keys you can use the
+ * iterator returned by the {@link #keyIterator} method.
  *
- * <p>This map offers two methods that help you find out whether it contains
- * a specific key or value. These two methods are {@link #containsKey}
- * and {@link #containsValue}.
+ * <p>To add key-value pairs to this map you can use the methods {@link #put} and
+ * {@link #putAll}. The {@code putAll} method lets you add all key-value pairs
+ * contained in the passed-in {@code map} to this map.
+ * 
+ * <p>To remove key-value pairs you can use the methods {@link #remove} and
+ * {@link #clear}. The {@code remove} method deletes only the key-value pair
+ * corresponding to the passed-in {@code key}, while the clear method removes all
+ * key-value pairs.
  *
- * <p>To get the data stored in the map you can use the {@link #getKeys},
- * {@link #getValues} and {@link #get} methods. If you want to iterate
- * over the values of the map you can use the iterators returned by the
- * {@link #iterator} or {@link #valueIterator} methods. If you want to
- * iterate over the keys you can use the iterator returned by the
- * {@link #keyIterator} method.
- *
- * <p>To add key value pairs to the map you can use the {@link #put} and
- * {@link #putAll} methods. The putAll method lets you add all key-value
- * pairs contained in the passed-in map to this map.
- *
- * <p>To remove key-value pairs you can use the {@link #remove} and
- * {@link #clear} methods. The remove method deletes only the key-value
- * pair corresponding to the passed-in key, while the clear method removes
- * all key-value pairs.
- *
- * <p>There are two more methods you may need. The {@link #getSize} and
- * the {@link #isEmpty} method. These methods give you information about
- * whether this map contains any mappings and how many mappings it contains.
+ * <p>There are two more methods you may need. The {@link #isEmpty} and the {@link #size}
+ * method. These methods give you information about whether this map contains any
+ * mappings and how many mappings it contains.
  *
  * <p>To change the string representation returned by the {@link #toString}
- * method you can set your own stringifier using the static {@link setStringifier}
- * method.
- *
- * <p>A simple example:
+ * method you can set your own stringifier using the static
+ * {@link AbstractMap#setStringifier} method.
+ * 
+ * <p>Example:
  * <code>
- *   // construct the map
+ *   // constructs the map
  *   var key1:Object = new Object();
  *   var key2:Object = new Object();
  *   var key3:Object = new Object();
@@ -67,12 +66,13 @@ import org.as2lib.data.holder.Iterator;
  *   map.put(key1, "value1");
  *   map.put(key2, "value2");
  *   map.put(key3, "value3");
- *   // use the map
+ *   // uses the map
  *   trace(map.get(key1));
  *   trace(map.get(key2));
  *   trace(map.get(key3));
  * </code>
- * <p>The output:
+ *
+ * <p>Output:
  * <pre>
  *   value1
  *   value2
@@ -94,14 +94,14 @@ class org.as2lib.data.holder.map.HashMap extends AbstractMap implements Map {
 	private var values:Array;
 	
 	/**
-	 * Constructs a new HashMap instance.
+	 * Constructs a new {@code HashMap} instance.
 	 *
-	 * <p>The map iterates over the passed-in source with the for..in
-	 * loop and uses the variables' names as key and their values as
-	 * value. Variables that are hidden from for..in loops will not be
-	 * added to the map.
-	 *
-	 * @param source (optional) an object that contains values to populate this map with
+	 * <p>This map iterates over the passed-in source with the for..in loop and uses the
+	 * variables' names as key and their values as value. Variables that are hidden from
+	 * for..in loops will not be added to this map.
+	 * 
+	 * @param source (optional) an object that contains key-value pairs to populate this
+	 * map with
 	 */
 	public function HashMap(source) {
 		keys = new Array();
@@ -110,31 +110,30 @@ class org.as2lib.data.holder.map.HashMap extends AbstractMap implements Map {
 	}
 
 	/**
-	 * Checks if the passed-in key exists.
+	 * Checks if the passed-in {@code key} exists.
 	 *
 	 * <p>That means whether a value has been mapped to it.
 	 *
 	 * @param key the key to be checked for availability
-	 * @return true if the key exists else false
+	 * @return {@code true} if the {@code key} exists else {@code false}
 	 */
 	public function containsKey(key):Boolean {
 		return (findKey(key) > -1);
 	}
 	
 	/**
-	 * Checks if the passed-in value is mapped to a key.
-	 *
+	 * Checks if the passed-in {@code value} is mapped to a key.
+	 * 
 	 * @param value the value to be checked for availability
-	 * @return true if the value is mapped to a key else false
+	 * @return {@code true} if the {@code value} is mapped to a key else {@code false}
 	 */
 	public function containsValue(value):Boolean {
 		return (findValue(value) > -1);
 	}
 	
 	/**
-	 * Returns an array that contains all keys that have a value mapped to
-	 * it.
-	 *
+	 * Returns an array that contains all keys that have a value mapped to it.
+	 * 
 	 * @return an array that contains all keys
 	 */
 	public function getKeys(Void):Array {
@@ -151,23 +150,24 @@ class org.as2lib.data.holder.map.HashMap extends AbstractMap implements Map {
 	}
 	
 	/**
-	 * Returns the value that is mapped to the passed-in key.
+	 * Returns the value that is mapped to the passed-in {@code key}.
 	 *
-	 * @param key the key to return the appropriate value for
-	 * @return the value appropriate to the key
+	 * @param key the key to return the corresponding value for
+	 * @return the value corresponding to the passed-in {@code key}
 	 */
 	public function get(key) {
 		return values[findKey(key)];
 	}
 	
 	/**
-	 * Maps the specified key to the value.
+	 * Maps the given {@code key} to the {@code value}.
 	 *
-	 * <p>Both keys and values are allowed to be null and undefined.
-	 *
-	 * @param key the key used as identifier for the value
-	 * @param value the value to map to the key
-	 * @return the value that was originally mapped to the key or null
+	 * <p>Both {@code key} and {@code value} are allowed to be {@code null} and
+	 * {@code undefined}.
+	 * 
+	 * @param key the key used as identifier for the {@code value}
+	 * @param value the value to map to the {@code key}
+	 * @return the value that was originally mapped to the {@code key} or {@code undefined}
 	 */
 	public function put(key, value) {
 		var result;
@@ -183,7 +183,7 @@ class org.as2lib.data.holder.map.HashMap extends AbstractMap implements Map {
 	}
 	
 	/**
-	 * Copies all mappings from the passed-in map to this map.
+	 * Copies all mappings from the passed-in {@code map} to this map.
 	 *
 	 * @param map the mappings to add to this map
 	 */
@@ -205,10 +205,10 @@ class org.as2lib.data.holder.map.HashMap extends AbstractMap implements Map {
 	}
 	
 	/**
-	 * Removes the mapping from the specified key to the value.
+	 * Removes the mapping from the given {@code key} to the value.
 	 *
-	 * @param key the key identifying the mapping to be removed
-	 * @return the value that was originally mapped to the key
+	 * @param key the key identifying the mapping to remove
+	 * @return the value that was originally mapped to the {@code key}
 	 */
 	public function remove(key) {
 		var i:Number = findKey(key);
@@ -264,18 +264,18 @@ class org.as2lib.data.holder.map.HashMap extends AbstractMap implements Map {
 	
 	/**
 	 * Returns whether this map contains any mappings.
-	 *
-	 * @return true if this map contains mappings else false
+	 * 
+	 * @return {@code true} if this map contains no mappings else {@code false}
 	 */
 	public function isEmpty(Void):Boolean {
 		return (size() < 1);
 	}
 	
 	/**
-	 * Searches for the value and returns the index where it is stored.
+	 * Searches for the given {@code value} and returns the index where it is stored.
 	 *
 	 * @param value the value to search for
-	 * @return the index where the value is stored
+	 * @return the index where the {@code value} is stored
 	 */
 	private function findValue(value):Number {
 		var l = values.length;
@@ -284,10 +284,10 @@ class org.as2lib.data.holder.map.HashMap extends AbstractMap implements Map {
 	}
 	
 	/**
-	 * Searches for the key and returns the index where it is stored.
-	 *
+	 * Searches for the given {@code key} and returns the index where it is stored.
+	 * 
 	 * @param key the key to search for
-	 * @return the index where the key is stored
+	 * @return the index where the {@code key} is stored
 	 */
 	private function findKey(key):Number {
 		var l = keys.length;
@@ -298,9 +298,9 @@ class org.as2lib.data.holder.map.HashMap extends AbstractMap implements Map {
 	/**
 	 * Returns the string representation of this map.
 	 *
-	 * <p>The string representation is obtained using the stringifier returned
-	 * by the static {@link #getStringifier} method.
-	 *
+	 * <p>The string representation is obtained using the stringifier returned by the
+	 * static {@link AbstractMap#getStringifier} method.
+	 * 
 	 * @return the string representation of this map
 	 */
 	public function toString(Void):String {

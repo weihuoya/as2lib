@@ -19,26 +19,27 @@ import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
- * TypedArray acts like a normal array but assures that only objects of
- * a specific type are added to the array.
- *
- * <p>Note that values that get added to this array using the dot-syntax
- * do not get type-checked. For example:
+ * {@code TypedArray} acts like a normal array but assures that only objects of a
+ * specific type are added to the array.
+ * 
+ * <p>Note that elements that are added to this array using the dot-syntax do not
+ * get type-checked. For example:
  * <code>
  *   myArray[0] = "value1";
  *   // or
  *   myArray.myProp = "value2"; // myArray["myProp"] = "value2";
  * </code>
  *
- * <p>A simple usage example:
+ * <p>Example:
  * <code>
  *   var array:Array = new TypedArray(Number);
  *   array.push(0);
  *   array.push(1);
  *   array.push(2);
- *   // throws an IllegalArgumentException because the value is not of the expected type
+ *   // throws an IllegalArgumentException because the element is not of the expected type
  *   array.push("myString");
  * </code>
+ *
  * <p>You can also construct your array the following way:
  * <code>
  *   var array:Array = new TypedArray(Number, 0, 1, 2);
@@ -46,24 +47,24 @@ import org.as2lib.env.except.IllegalArgumentException;
  * 
  * @author Simon Wacker
  * @author Martin Heidegger
- * @see http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001191.html
+ * @see <a href="http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001191.html">Array class</a>
  */
 class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInterface {
 	
-	/** The type of the values that can be added. */
+	/** The type of the elements that can be added. */
 	private var type:Function;
 	
 	/**
-	 * Constructs a new TypedArray instance.
-	 *
-	 * <p>You can optionally pass-in values to populate this array with
-	 * after the type parameter. These values also get type-checked.
+	 * Constructs a new {@code TypedArray} instance.
+	 * 
+	 * <p>You can optionally pass-in elements to populate this array with after the type
+	 * parameter. These elements also get type-checked. For example:
 	 * <code>
 	 *   var array:Array = new TypedArray(Number, 1, 2, 3);
 	 * </code>
 	 *
-	 * @param type the type of the values this array will contain
-	 * @param ..
+	 * @param type the type of the elements this array expects
+	 * @param .. any number of elements to populate this array with
 	 */
 	public function TypedArray(type:Function) {
 		this.type = type;
@@ -85,21 +86,19 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 	}
 	
 	/**
-	 * Concatenates the elements specified in the parameter list with the
-	 * elements of this array and returns a new array containing these elements.
-	 *
+	 * Concatenates the elements specified in the parameter list with the elements of
+	 * this array and returns a new array containing these elements.
+	 * 
 	 * <p>This array itself is left unchanged.
 	 * 
-	 * <p>The returned array expects elements of the same type as this
-	 * array does.
+	 * <p>The returned array expects elements of the same type as this array does.
 	 *
-	 * <p>If you do not pass-in any values a duplicate of this array gets
-	 * returned.
-	 *
-	 * @param ..
-	 * @return a new array that contains the elements of this array as well
-	 * as the passed-in elements
-	 * @see http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001192.html#3988964
+	 * <p>If you do not pass-in any elements a duplicate of this array gets returned.
+	 * 
+	 * @param .. any number of elements to concatenate the elements of this array with
+	 * @return a new array that contains the elements of this array as well as the
+	 * passed-in elements
+	 * @see <a href="http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001192.html#3988964">Array.concat()</a>
 	 */
 	public function concat():TypedArray {
 		var result:TypedArray = new TypedArray(this.type);
@@ -127,18 +126,19 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 	}
 	
 	/**
-	 * Adds one or more elements to the end of this array and returns the
-	 * new length of this array.
-	 *
-	 * <p>The passed-in values get type-checked first. They will only be added
-	 * if they are of the correct type.
+	 * Adds one or more elements to the end of this array and returns the new length of
+	 * this array.
+	 * 
+	 * <p>The passed-in elements get type-checked first. They will only be added if they
+	 * are all of the correct type.
 	 *
 	 * @param value the new element to add to the end of this array
-	 * @param ..
+	 * @param .. any number of further elements to add to the end of this array
 	 * @return the new length of this array
-	 * @throws IllegalArgumentException if one of the passed-in values is
-	 * of invalid type
-	 * @see http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001196.html#3989073
+	 * 
+	 * @throws IllegalArgumentException if one of the passed-in elements is of invalid
+	 * type
+	 * @see <a href="http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001196.html#3989073">Array.push()</a>
 	 */
 	public function push(value):Number {
 		if (arguments.length > 1) {
@@ -153,18 +153,18 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 	}
 	
 	/**
-	 * Adds one or more elements to the beginning of this array and returns
-	 * the new length of this array.
+	 * Adds one or more elements to the beginning of this array and returns the new
+	 * length of this array.
+	 * 
+	 * <p>The passed-in values get type-checked first. They will only be added if they
+	 * are all of the correct type.
 	 *
-	 * <p>The passed-in values get type-checked first. They will only be added
-	 * if they are of the correct type.
-	 *
-	 * @param value the new element to add to the beginnign of this array
-	 * @param ..
+	 * @param value the new element to add to the beginning of this array
+	 * @param .. any number of further elements to add to the beginning of this array
 	 * @return the new length of this array
-	 * @throws IllegalArgumentException if one of the passed-in values is
-	 * of invalid type
-	 * @see http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001204.html#3989452
+	 * @throws IllegalArgumentException if one of the passed-in elements is of invalid
+	 * type
+	 * @see <a href="http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001204.html#3989452">Array.unshift()</a>
 	 */
 	public function unshift(value):Number {
 		if (arguments.length > 1) {
@@ -188,14 +188,14 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 	}
 
 	/**
-	 * Validates the passed-in object based on its type.
-	 *
+	 * Validates the passed-in {@code object} based on its type.
+	 * 
 	 * @param object the object whose type to validate
-	 * @throws org.as2lib.env.except.IllegalArgumentException if the type of the object is not valid
+	 * @throws IllegalArgumentException if the type of the {@code object} is invalid
 	 */
 	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between object '" + object + "' and type '" + type + "'.", this, arguments);
+			throw new IllegalArgumentException("Type mismatch between object [" + object + "] and type [" + type + "].", this, arguments);
 		}
 	}
 	

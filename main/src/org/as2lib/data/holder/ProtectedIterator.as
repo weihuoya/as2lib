@@ -20,11 +20,11 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.except.UnsupportedOperationException;
 
 /**
- * ProtectedIterator is used to iterate over any data holder without being
- * able to remove elements.
- *
+ * {@code ProtectedIterator} is used to iterate over any data holder
+ * without being able to remove elements.
+ * 
  * <p>This class acts as a wrapper for any class that implements the
- * {@link Iterator} interface and wants to be protected.
+ * {@code Iterator} interface and wants to be protected.
  *
  * @author Simon Wacker
  * @author Michael Herrmann
@@ -35,16 +35,17 @@ class org.as2lib.data.holder.ProtectedIterator extends BasicClass implements Ite
 	private var iterator:Iterator;
 	
 	/**
-	 * Constructs a new ProtectedIterator instance.
+	 * Constructs a new {@code ProtectedIterator} instance.
 	 * 
 	 * <p>This iterator forwards all functionality to the wrapped passed-in
-	 * iterator, except the removal of the current element.
-	 *
+	 * {@code iterator}, except the removal of the current element.
+	 * 
 	 * @param iterator the iterator to protect
-	 * @throws IllegalArgumentException if the passed-in iterator is null or undefined
+	 * @throws IllegalArgumentException if the passed-in {@code iterator}
+	 * is {@code null} or {@code undefined}
 	 */
 	public function ProtectedIterator(iterator:Iterator) {
-		if (!iterator) throw new IllegalArgumentException("The passed-in iterator to protect '" + iterator + "' is not allowed to be null or undefined.", this, arguments);
+		if (!iterator) throw new IllegalArgumentException("Argument 'iterator' [" + iterator + "] to protect is not allowed to be 'null' or 'undefined'.", this, arguments);
 		this.iterator = iterator;
 	}
 	
@@ -55,7 +56,7 @@ class org.as2lib.data.holder.ProtectedIterator extends BasicClass implements Ite
 	 * wrapped iterator that has been passed-in on construction. This method
 	 * simply delegates to the wrapped iterator.
 	 *
-	 * @return true if there is a next element else false
+	 * @return {@code true} if there is a next element else {@code false}
 	 */
 	public function hasNext(Void):Boolean {
 		return iterator.hasNext();
@@ -77,11 +78,9 @@ class org.as2lib.data.holder.ProtectedIterator extends BasicClass implements Ite
 	}
 	
 	/**
-	 * This method always throws an UnsupportedOperationException because
-	 * this method is not supported by this iterator.
-	 *
-	 * <p>This method even has the duty to not let the removal of elements
-	 * happen.
+	 * This method always throws an {@code UnsupportedOperationException}
+	 * because this method is not supported by this iterator and has the
+	 * duty to not let the removal of elements happen.
 	 *
 	 * @throws UnsupportedOperationException
 	 */

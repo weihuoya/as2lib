@@ -19,22 +19,22 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.data.holder.map.MapStringifier;
 
 /**
- * AbstractMap offers implementations of methods needed by most concrete
+ * {@code AbstractMap} offers implementations of methods needed by most concrete
  * {@link org.as2lib.data.holder.Map} implementations.
- *
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.map.AbstractMap extends BasicClass {
 	
-	/** Used to stringify maps. */
+	/** Stringifies maps. */
 	private static var stringifier:Stringifier;
 	
 	/**
 	 * Returns the stringifier that stringifies maps.
 	 *
-	 * <p>If no stringifier has been set manually an instance of class
-	 * {@link MapStringifier} will be returned.
-	 *
+	 * <p>If no stringifier has been set manually an instance of class {@link MapStringifier}
+	 * will be returned.
+	 * 
 	 * @return the stringifier that stringifies maps
 	 */
 	public static function getStringifier(Void):Stringifier {
@@ -45,9 +45,9 @@ class org.as2lib.data.holder.map.AbstractMap extends BasicClass {
 	/**
 	 * Sets the new stringifier that stringifies maps.
 	 *
-	 * <p>If you set a stringifier of value null or undefined the static
+	 * <p>If you set a stringifier of value {@code null} or {@code undefined} the static
 	 * method {@link #getStringifier} will return the default stringifier.
-	 *
+	 * 
 	 * @param mapStringifier the new map stringifier
 	 */
 	public static function setStringifier(mapStringifier:Stringifier):Void {
@@ -55,23 +55,21 @@ class org.as2lib.data.holder.map.AbstractMap extends BasicClass {
 	}
 	
 	/**
-	 * Constructs a new AbstractMap instance.
+	 * Constructs a new {@code AbstractMap} instance.
 	 */
 	private function AbstractMap(Void) {
 	}
 	
 	/**
-	 * Populates the map with the source's content.
-	 *
-	 * <p>Iterates over the passed-in source with the for..in
-	 * loop and uses the variables' names as key and their values as
-	 * value. Variables that are hidden from for..in loops will not be
-	 * added to the map.
-	 *
-	 * <p>It uses the put(String, *):Void method to add the key-value
-	 * pairs.
-	 *
-	 * @param source an object that contains values to populate the new source with
+	 * Populates the map with the content of the passed-in {@code source}.
+	 * 
+	 * <p>Iterates over the passed-in source with the for..in loop and uses the variables'
+	 * names as key and their values as value. Variables that are hidden from for..in
+	 * loops will not be added to this map.
+	 * 
+	 * <p>This method uses the {@code put} method to add the key-value pairs.
+	 * 
+	 * @param source an object that contains key-value pairs to populate this map with
 	 */
 	private function populate(source):Void {
 		if (source) {

@@ -14,43 +14,41 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.holder.Iterator;
-import org.as2lib.data.holder.array.ArrayIterator;
-import org.as2lib.data.holder.Queue;
 import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.EmptyDataHolderException;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.data.holder.Queue;
+import org.as2lib.data.holder.Iterator;
 
 /**
- * TypedQueue is used as a wrapper for {@link Queue} instances that ensures
- * that only values of a specific type can be added to the wrapped queue.
- *
- * <p>This class simply delegates all method invocations to the wrapped
- * queue. If the specific method is responsible for adding values it first
- * checks if the values to add are of the expected type. If they are the
- * method invocation gets forwarded, otherwise an {@link IllegalArgumentException}
- * gets thrown.
+ * {@code TypedQueue} is a wrapper for {@link Queue} instances that ensures that
+ * only values of a specific type can be added to the wrapped queue.
+ * 
+ * <p>This class simply delegates all method invocations to the wrapped queue. If
+ * the specific method is responsible for adding values it first checks if the values
+ * to add are of the expected type. If they are the method invocation is forwarded,
+ * otherwise an {@link IllegalArgumentException} is thrown.
  *
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queue {
 	
-	/** The Queue the TypedQueue wraps. */
+	/** The wrapped queue. */
 	private var queue:Queue;
 	
-	/** The type of values that can be added. */
+	/** The type of the values that can be added. */
 	private var type:Function;
 	
 	/**
-	 * Constructs a new TypedQueue instance.
+	 * Constructs a new {@code TypedQueue} instance.
 	 *
-	 * <p>If the passed-in queue does already contain values, these values
-	 * do not get type-checked.
-	 *
+	 * <p>If the passed-in {@code queue} does already contain values, these values do
+	 * not get type-checked.
+	 * 
 	 * @param type the type of the values that are allowed to be added
-	 * @param queue the queue to be wrapped
-	 * @throws IllegalArgumentException if the passed-in type is null or undefined
+	 * @param queue the queue to wrap
+	 * @throws IllegalArgumentException if the passed-in type is {@code null} or
+	 * {@code undefined}
 	 */
 	public function TypedQueue(type:Function, queue:Queue) {
 		this.type = type;
@@ -69,12 +67,13 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	}
 	
 	/**
-	 * Adds the passed-in value to this queue.
+	 * Adds the passed-in {@code value} to this queue.
 	 *
-	 * <p>The value gets only enqueued if it is of the expected type.
+	 * <p>The value is only enqueued if it is of the expected type.
 	 *
-	 * @param value the value add
-	 * @throws IllegalArgumentException if the type of the passed-in value is not valid
+	 * @param value the value to add
+	 * @throws IllegalArgumentException if the type of the passed-in {@code value} is
+	 * invalid
 	 */
 	public function enqueue(value):Void {
 		validate(value);
@@ -101,10 +100,9 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 		return queue.peek();
 	}
 	/**
-	 * Returns an iterator that can be used to iterate over the values of
-	 * this queue.
-	 *
-	 * @return an iterator to iterate over this queue
+	 * Returns an iterator that can be used to iterate over the values of this queue.
+	 * 
+	 * @return an iterator to iterate over this queue's values
 	 * @see #toArray
 	 */
 	public function iterator(Void):Iterator {
@@ -114,7 +112,7 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	/**
 	 * Returns whether this queue contains any values.
 	 *
-	 * @return true if this queue contains no values else false
+	 * @return {@code true} if this queue contains no values else {@code false}
 	 */
 	public function isEmpty(Void):Boolean {
 		return queue.isEmpty();
@@ -133,10 +131,10 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	/**
 	 * Returns an array representation of this queue.
 	 *
-	 * <p>The elements are copied onto the array in a first-in, first-out
-	 * order, similar to the order of the elements returned by a succession 
-	 * of calls to the {@link #dequeue} method.
-	 *
+	 * <p>The elements are copied onto the array in a 'first-in, first-out' order,
+	 * similar to the order of the elements returned by a succession of calls to the
+	 * {@link #dequeue} method.
+	 * 
 	 * @return the array representation of this queue
 	 */
 	public function toArray(Void):Array {
@@ -153,10 +151,10 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	}
 	
 	/**
-	 * Validates the passed-in value based on its type.
+	 * Validates the passed-in {@code value} based on its type.
 	 *
 	 * @param value the value whose type shall be validated
-	 * @throws org.as2lib.env.except.IllegalArgumentException if the type of the object is not valid
+	 * @throws IllegalArgumentException if the type of the {@code value} is invalid
 	 */
 	private function validate(value):Void {
 		if (!ObjectUtil.typesMatch(value, type)) {

@@ -21,14 +21,13 @@ import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.data.holder.Map;
 
 /**
- * KeyMapIterator is used to iterate over the keys of a map.
+ * {@code KeyMapIterator} is used to iterate over the keys of a map.
+ * 
+ * <p>This iterator is quite simple to use. There is one method to check whether
+ * there are more elements left to iterate over {@link #hasNext}, one method to get
+ * the next element {@link #next} and one to remove the current element {@link #remove}.
  *
- * <p>This iterator is quite simple to use. There is one method to check
- * whether there are more elements left to iterate over {@link #hasNext},
- * one method to get the next element {@link #next} and one to remove
- * the current element {@link #remove}.
- *
- * <p>And here is how it works:
+ * <p>Example:
  * <code>
  *   var map:Map = new HashMap();
  *   map.put("key1", 1);
@@ -36,15 +35,15 @@ import org.as2lib.data.holder.Map;
  *   map.put("key3", 3);
  *   var iterator:Iterator = new KeyMapIterator(map);
  *   while (iterator.hasNext()) {
- *     trace(iterator.next());
+ *       trace(iterator.next());
  *   }
  * </code>
  *
- * <p>You normally do not use this class directly. You normally obtain
- * an iterator that iterates over the keys of a map using the
- * {@link Map#keyIterator} method. The returned iterator can, but does
- * not have to be an instance of this class.
- *
+ * <p>You normally do not use this class directly, but obtain an iterator that
+ * iterates over the keys of a map using the {@link Map#keyIterator} method. The
+ * returned iterator can, but does not have to be an instance of this class.
+ * 
+ * <p>Example:
  * <code>
  *   var map:Map = new HashMap();
  *   // ...
@@ -56,7 +55,7 @@ import org.as2lib.data.holder.Map;
  */
 class org.as2lib.data.holder.map.KeyMapIterator extends BasicClass implements Iterator {
 	
-	/** The target data holder to iterate over. */
+	/** The target map to iterate over. */
 	private var target:Map;
 	
 	/** The iterator used as a helper. */
@@ -66,10 +65,11 @@ class org.as2lib.data.holder.map.KeyMapIterator extends BasicClass implements It
 	private var key;
 	
 	/**
-	 * Constructs a new KeyMapIterator instance.
-	 *
+	 * Constructs a new {@code KeyMapIterator} instance.
+	 * 
 	 * @param target the map to iterate over
-	 * @throws IllegalArgumentException if the passed-in target map is null or undefined
+	 * @throws IllegalArgumentException if the passed-in {@code target} map is {@code null}
+	 * or {@code undefined}
 	 */
 	public function KeyMapIterator(target:Map) {
 		if (!target) throw new IllegalArgumentException("The passed-in target map '" + target + "' is not allowed to be null or undefined.", this, arguments);
@@ -79,8 +79,8 @@ class org.as2lib.data.holder.map.KeyMapIterator extends BasicClass implements It
 	
 	/**
 	 * Returns whether there exists another key to iterate over.
-	 *
-	 * @return true if there is at least one key left to iterate over
+	 * 
+	 * @return {@code true} if there is at least one key left to iterate over
 	 */
 	public function hasNext(Void):Boolean {
 		return iterator.hasNext();
@@ -88,10 +88,9 @@ class org.as2lib.data.holder.map.KeyMapIterator extends BasicClass implements It
 	
 	/**
 	 * Returns the next key.
-	 *
+	 * 
 	 * @return the next key
-	 * @throws org.as2lib.data.holder.NoSuchElementException if there is
-	 * no next key
+	 * @throws org.as2lib.data.holder.NoSuchElementException if there is no next key
 	 */
 	public function next(Void) {
 		key = iterator.next();
@@ -99,11 +98,11 @@ class org.as2lib.data.holder.map.KeyMapIterator extends BasicClass implements It
 	}
 	
 	/**
-	 * Removes the currently selected key-value pair from this iterator
-	 * and from the map this iterator iterates over.
-	 *
-	 * @throws org.as2lib.env.except.IllegalStateException if you try to 
-	 * remove a key-value pair when none is selected
+	 * Removes the currently selected key-value pair from this iterator and from the
+	 * map this iterator iterates over.
+	 * 
+	 * @throws org.as2lib.env.except.IllegalStateException if you try to remove a
+	 * key-value pair when none is selected
 	 */
 	public function remove(Void):Void {
 		iterator.remove();

@@ -18,20 +18,22 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.Config;
 
 /**
- * BasicMovieClip is the basic class for movieclips with default implementations
- * of the functionalities declared by the {@link BasicInterface}.
- *
- * @see org.as2lib.core.BasicClass
+ * {@code BasicMovieClip} offers default implementations of the methods declared by
+ * the {@code BasicInterface}. Use this class in conjunction with {@code MovieClip}s
+ * on stage.
+ * 
  * @author Martin Heidegger
+ * @author Simon Wacker
+ * @see org.as2lib.core.BasicClass
  */
 class org.as2lib.core.BasicMovieClip extends MovieClip implements BasicInterface {
 
 	/**
-	 * Returns the string representation of this instance.
+	 * Returns the string representation of this movieclip.
 	 *
-	 * <p>The string representation is obtained via the stringifier returned
-	 * by the {@link Config#getObjectStringifier} method.
-	 *
+	 * <p>The string representation is obtained via the stringifier returned by the
+	 * {@link Config#getObjectStringifier} method.
+	 * 
 	 * @return the string representation of this instance
 	 */
 	public function toString(Void):String {
