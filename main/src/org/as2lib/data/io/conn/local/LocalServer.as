@@ -1,8 +1,28 @@
-﻿import org.as2lib.data.io.conn.Connector;
+﻿/*
+ * Copyright the original author or authors.
+ * 
+ * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.mozilla.org/MPL/MPL-1.1.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import org.as2lib.data.io.conn.Connector;
 import org.as2lib.data.io.conn.ConnectorListener;
 import org.as2lib.data.io.conn.ConnectorRequest;
 import org.as2lib.data.io.conn.ConnectorError;
 import org.as2lib.data.io.conn.ConnectorResponse;
+import org.as2lib.data.io.conn.local.ReservedConnectionException;
+import org.as2lib.data.io.conn.local.MissingClientsException;
+import org.as2lib.data.io.conn.local.MissingClientException;
+import org.as2lib.data.io.conn.local.NotAllowedDomainException;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.Config;
@@ -18,10 +38,7 @@ import org.as2lib.data.iterator.ArrayIterator;
  * messages to all clients.
  *
  * @author Christoph Atteneder
- * @version 1.0
- * @date 13.05.2004
  */
-
 class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implements Connector {
 	
 	/* EventBroadcaster for onResponse and onError - events */
@@ -88,7 +105,8 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	public function initConnection(Void):Void {
 		aOut.debug(getClass().getName()+".initConnection");
 		if(!connect("register")){
-			eventBroadcaster.dispatch(new ConnectorError("Connection name 'register' is already used by another LocalConnection",this,arguments,true,false));
+			//eventBroadcaster.dispatch(new ConnectorError("Connection name 'register' is already used by another LocalConnection",this,arguments,true,false));
+			eventBroadcaster.dispatch(new ConnectorError(new ReservedConnectionException("Connection name 'register' is already used by another LocalConnection",this,arguments)));
 		}
 	}
 	
@@ -117,7 +135,8 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		var l:Number = clients.length;
 		
 		if(l==0){
-			eventBroadcaster.dispatch(new ConnectorError("No clients added!",this,arguments,false,true));
+			eventBroadcaster.dispatch(new ConnectorError(new MissingClientsException("LocalServer has no clients to broadcast !",this,arguments)));
+			//eventBroadcaster.dispatch(new ConnectorError("No clients added!",this,arguments,false,true));
 			return;
 		}
 		
@@ -222,7 +241,8 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	public function onStatus(infoObj){
 		aOut.debug(getClass().getName()+".onStatus: "+infoObj.level);
 		if(infoObj.level == "error") {
-			eventBroadcaster.dispatch(new ConnectorError("One client doesn´t exist anymore",this,arguments,true,false));
+			//eventBroadcaster.dispatch(new ConnectorError("One client doesn´t exist anymore",this,arguments,true,false));
+			eventBroadcaster.dispatch(new ConnectorError(new MissingClientException("One client doesn´t exist anymore !",this,arguments)));
 		}
 		if(infoObj.level == "status") {
 			eventBroadcaster.dispatch(new ConnectorResponse("Broadcast to client was successful!"));
@@ -243,7 +263,8 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 				return true;
 			}
 			else{
-				eventBroadcaster.dispatch(new ConnectorError("Clientdomain "+clientDomain+" is not allowed !",this,arguments,false,true));
+				//eventBroadcaster.dispatch(new ConnectorError("Clientdomain "+clientDomain+" is not allowed !",this,arguments,false,true));
+				eventBroadcaster.dispatch(new ConnectorError(new NotAllowedDomainException("Clientdomain "+clientDomain+" is not allowed !",this,arguments)));
 				return false;
 			}
 		}
