@@ -32,6 +32,10 @@ import org.as2lib.env.log.LogMessageStringifier;
  * log message you can use the static #setStringifier method to set your
  * custom stringifier.
  *
+ * <p>The LogMessageStringifier supports different presentation styles.
+ * It allows to switch the log level, the logger name and the time on
+ * and off.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
@@ -48,6 +52,9 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	/** The name of the logger that logs the message. */
 	private var loggerName:String;
 	
+	/** The number of milliseconds elapsed from 1/1/1970 until log message was created. */
+	private var timeStamp:Number;
+	
 	/**
 	 * Returns either the stringifier set via #setStringifier() or the
 	 * default one.
@@ -55,7 +62,7 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	 * @return the currently used stringifier
 	 */
 	public static function getStringifier(Void):Stringifier {
-		if (!stringifier) stringifier = new LogMessageStringifier(true, true);
+		if (!stringifier) stringifier = new LogMessageStringifier(true, true, false);
 		return stringifier;
 	}
 	
@@ -71,14 +78,20 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	/**
 	 * Constructs a new instance.
 	 * 
+	 * <p>If you do not specify a time stamp the constructor calls the sets
+	 * it by itself using the current construction time. That does it in
+	 * most cases.
+	 *
 	 * @param message the message object that shall be written out
 	 * @param level the level of the message
 	 * @param loggerName the name of the logger that logs the message
+	 * @param timeStamp (optional) the number of milliseconds elapsed from 1/1/1970 until log message was created
 	 */
-	public function LogMessage(message, level:LogLevel, loggerName:String) {
+	public function LogMessage(message, level:LogLevel, loggerName:String, timeStamp:Number) {
 		this.message = message;
 		this.level = level;
 		this.loggerName = loggerName;
+		this.timeStamp = timeStamp == null ? new Date().getTime() : timeStamp;
 	}
 	
 	/**
@@ -106,6 +119,16 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	 */
 	public function getLoggerName(Void):String {
 		return loggerName;
+	}
+	
+	/**
+	 * Returns the number of milliseconds elapsed from 1/1/1970 until log
+	 * message was created.
+	 *
+	 * @returns the number of milliseconds elapsed from 1/1/1970 until log message was created.
+	 */
+	public function getTimeStamp(Void):Number {
+		return timeStamp;
 	}
 	
 	/**
