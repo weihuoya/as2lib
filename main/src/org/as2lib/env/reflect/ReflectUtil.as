@@ -78,13 +78,15 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 		var p = clazz.prototype;
 		while (p) {
 			_global.ASSetPropFlags(p, null, 0, true);
-			_global.ASSetPropFlags(p, ["__proto__", "constructor", "prototype"], 7, true);
+			_global.ASSetPropFlags(p, ["__proto__", "__constructor__"], 7, true);
 			for (var n:String in p) {
 				try {
 					if (p[n] == method) return n;
 				} catch (e) {
 				}
 			}
+			// ASSetPropFlags must be restored because unexpected behaviours get caused otherwise
+			_global.ASSetPropFlags(p, null, 1, true);
 			p = p.__proto__;
 		}
 		for (var n:String in clazz) {
@@ -94,6 +96,8 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 				if (clazz[n] == method) return n;
 			} catch (e) {
 			}
+			// ASSetPropFlags must be restored because unexpected behaviours get caused otherwise
+			_global.ASSetPropFlags(clazz, null, 1, true);
 		}
 		return null;
 	}

@@ -28,6 +28,12 @@ import test.unit.org.as2lib.test.mock.MethodBehaviorMock;
  * @author Simon Wacker
  */
 class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
+
+	private function getBlankBehavior(Void):Behavior {
+		var result = new Object();
+		result.__proto__ = Behavior["prototype"];
+		return result;
+	}
 	
 	public function testNewWithNullArgument(Void):Void {
 		try {
@@ -38,7 +44,7 @@ class test.unit.org.as2lib.test.mock.support.TReplayState extends TestCase {
 	}
 	
 	public function testNewWithRealArgument(Void):Void {
-		var b:Behavior = new Behavior();
+		var b:Behavior = getBlankBehavior();
 		var s:ReplayState = new ReplayState(b);
 		assertSame(s.getBehavior(), b);
 	}

@@ -53,7 +53,7 @@ class org.as2lib.aop.advice.AbstractAfterThrowingAdvice extends AbstractAdvice {
 		var result;
 		try {
 			result = joinPoint.proceed(args);
-		} catch (throwable:org.as2lib.env.except.Throwable) {
+		} catch (throwable) {
 			this["execute"](joinPoint, throwable);
 			throw throwable;
 		}

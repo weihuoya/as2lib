@@ -75,7 +75,7 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	 * @return the normal factory
 	 */
 	private function getNormalLoggerFactory(Void):ConfigurableHierarchicalLoggerFactory {
-		var result:ConfigurableHierarchicalLoggerFactory = new ConfigurableHierarchicalLoggerFactory();
+		var result:ConfigurableHierarchicalLoggerFactory = getBlankConfigurableHierarchicalLoggerFactory();
 		result.getLogger = function(Void):ConfigurableHierarchicalLogger {
 			return new SimpleLogger();
 		}
@@ -126,7 +126,7 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	 * @return a factory that returns the passed-in logger
 	 */
 	private function getSingletonFactory(logger:ConfigurableHierarchicalLogger):ConfigurableHierarchicalLoggerFactory {
-		var result:ConfigurableHierarchicalLoggerFactory = new ConfigurableHierarchicalLoggerFactory();
+		var result:ConfigurableHierarchicalLoggerFactory = getBlankConfigurableHierarchicalLoggerFactory();
 		result.getLogger = function(Void):ConfigurableHierarchicalLogger {
 			return logger;
 		}
@@ -225,6 +225,18 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 				child.setParent(logger);
 			}
 		}
+	}
+	
+	/**
+	 * Returns a blank configurable hierarchical logger factory. That is
+	 * a logger factory with no initialized methods.
+	 *
+	 * @return a blank configurable hierarchical logger factory
+	 */
+	private function getBlankConfigurableHierarchicalLoggerFactory(Void):ConfigurableHierarchicalLoggerFactory {
+		var result = new Object();
+		result.__proto__ = ConfigurableHierarchicalLoggerFactory["prototype"];
+		return result;
 	}
 	
 }

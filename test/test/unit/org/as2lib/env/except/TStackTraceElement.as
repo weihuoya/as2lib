@@ -25,7 +25,7 @@ import test.unit.org.as2lib.env.except.SimpleTestClass;
  * @author Jayaprakash A
  * @author Martin Heidegger
  */
-class test.unit.org.as2lib.env.except.AbstractTStackTraceElement extends TestCase {
+class test.unit.org.as2lib.env.except.TStackTraceElement extends TestCase {
 	
 	private var method:Function;
 	private var args:Array;
@@ -34,17 +34,10 @@ class test.unit.org.as2lib.env.except.AbstractTStackTraceElement extends TestCas
 	private var caller:Function;
 	
 	/**
-	 * Flag to block collecting by the TestSuiteFactory of this Abstract class.
-	 */
-	public static function blockCollecting (Void):Boolean {
-		return true;
-	}
-	
-	/**
 	 * Template Method to get the specific StackTraceElement implementation.
 	 */
 	public function getStackTraceElement (thrower:Object, method:Function, args:Array):StackTraceElement {
-		return null;
+		return new StackTraceElement(thrower, method, args);
 	}
 	
 	/**

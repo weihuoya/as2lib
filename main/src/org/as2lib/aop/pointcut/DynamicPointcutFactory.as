@@ -51,14 +51,38 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	}
 	
 	/**
+	 * Returns a blank pointcut rule. That is a rule with no initialized
+	 * methods.
+	 *
+	 * @return a blank pointcut rule
+	 */
+	private function getBlankPointcutRule(Void):PointcutRule {
+		var result = new Object();
+		result.__proto__ = PointcutRule["prototype"];
+		return result;
+	}
+	
+	/**
+	 * Returns a blank pointcut factory. That is a factory with no initialized
+	 * methods.
+	 *
+	 * @return a blank pointcut factory
+	 */
+	private function getBlankPointcutFactory(Void):PointcutFactory {
+		var result = new Object();
+		result.__proto__ = PointcutFactory["prototype"];
+		return result;
+	}
+	
+	/**
 	 * TODO: Documentation
 	 */
 	private function bindOrCompositePointcut(Void):Void {
-		var rule:PointcutRule = new PointcutRule();
+		var rule:PointcutRule = getBlankPointcutRule();
 		rule.execute = function(pattern:String):Boolean {
 			return (pattern.indexOf(" || ") != -1);
 		}
-		var factory:PointcutFactory = new PointcutFactory();
+		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
 			return (new OrCompositePointcut(pattern));
 		}
@@ -69,11 +93,11 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	 * TODO: Documentation
 	 */
 	private function bindAndCompositePointcut(Void):Void {
-		var rule:PointcutRule = new PointcutRule();
+		var rule:PointcutRule = getBlankPointcutRule();
 		rule.execute = function(pattern:String):Boolean {
 			return (pattern.indexOf(" && ") != -1);
 		}
-		var factory:PointcutFactory = new PointcutFactory();
+		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
 			return (new AndCompositePointcut(pattern));
 		}
@@ -84,11 +108,11 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	 * TODO: Documentation
 	 */
 	private function bindMethodPointcut(Void):Void {
-		var rule:PointcutRule = new PointcutRule();
+		var rule:PointcutRule = getBlankPointcutRule();
 		rule.execute = function(pattern:String):Boolean {
 			return (pattern.indexOf("execution") == 0);
 		}
-		var factory:PointcutFactory = new PointcutFactory();
+		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
 			pattern = pattern.substring(10, pattern.length - 3);
 			return (new KindedPointcut(pattern, AbstractJoinPoint.TYPE_METHOD));
@@ -100,11 +124,11 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	 * TODO: Documentation
 	 */
 	private function bindSetPropertyPointcut(Void):Void {
-		var rule:PointcutRule = new PointcutRule();
+		var rule:PointcutRule = getBlankPointcutRule();
 		rule.execute = function(pattern:String):Boolean {
 			return (pattern.indexOf("set") == 0);
 		}
-		var factory:PointcutFactory = new PointcutFactory();
+		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
 			pattern = pattern.substring(4, pattern.length - 1);
 			return (new KindedPointcut(pattern, AbstractJoinPoint.TYPE_SET_PROPERTY));
@@ -116,11 +140,11 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	 * TODO: Documentation
 	 */
 	private function bindGetPropertyPointcut(Void):Void {
-		var rule:PointcutRule = new PointcutRule();
+		var rule:PointcutRule = getBlankPointcutRule();
 		rule.execute = function(pattern:String):Boolean {
 			return (pattern.indexOf("get") == 0);
 		}
-		var factory:PointcutFactory = new PointcutFactory();
+		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
 			pattern = pattern.substring(4, pattern.length - 1);
 			return (new KindedPointcut(pattern, AbstractJoinPoint.TYPE_GET_PROPERTY));
@@ -129,11 +153,11 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	}
 	
 	/*private function bindWithinPointcut(Void):Void {
-		var rule:PointcutRule = new PointcutRule();
+		var rule:PointcutRule = getBlankPointcutRule();
 		rule.execute = function(pattern:String):Boolean {
 			return (pattern.indexOf("within") == 0);
 		}
-		var factory:PointcutFactory = new PointcutFactory();
+		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
 			pattern = pattern.substring(7, pattern.length - 1);
 			return (new WithinPointcut(pattern));

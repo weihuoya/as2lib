@@ -40,9 +40,15 @@ import org.as2lib.env.bean.factory.config.RuntimeBeanReference;
  */
 class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends TestCase {
 	
+	private function getBeanDefinition(Void):BeanDefinition {
+		var result = new Object();
+		result.__proto__ = BeanDefinition["prototype"];
+		return result;
+	}
+	
 	public function testRegisterBeanDefinitionForMultipleRegistrationWithSameName(Void):Void {
 		var factory:DefaultBeanFactory = new DefaultBeanFactory();
-		var bd:BeanDefinition = new BeanDefinition();
+		var bd:BeanDefinition = getBeanDefinition();
 		factory.registerBeanDefinition("beanName", bd);
 		factory.registerBeanDefinition("beanName", bd);
 		factory.setAllowBeanDefinitionOverriding(false);
@@ -51,14 +57,14 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 	
 	public function testRegisterBeanDefinitionViaGetBeanDefinition(Void):Void {
 		var factory:DefaultBeanFactory = new DefaultBeanFactory();
-		var bd:BeanDefinition = new BeanDefinition();
+		var bd:BeanDefinition = getBeanDefinition();
 		factory.registerBeanDefinition("beanName", bd);
 		assertSame("Returned and registered bean definition should be the same.", factory.getBeanDefinition("beanName"), bd);
 	}
 	
 	public function testGetBeanDefinitionCountWithMultipleRegistrations(Void):Void {
 		var factory:DefaultBeanFactory = new DefaultBeanFactory();
-		var bd:BeanDefinition = new BeanDefinition();
+		var bd:BeanDefinition = getBeanDefinition();
 		assertSame("Bean definition count should be 0.", factory.getBeanDefinitionCount(), 0);
 		factory.registerBeanDefinition("beanName1", bd);
 		factory.registerBeanDefinition("beanName2", bd);
@@ -255,9 +261,15 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		assertThrows(NoSuchBeanDefinitionException, bf, bf.getBeanByNameAndType, ["bean", null]);
 	}
 	
+	private function getBasicInterface(Void):BasicInterface {
+		var result = new Object();
+		result.__proto__ = BasicInterface["prototype"];
+		return result;
+	}
+	
 	public function testGetBeanByNameAndType(Void):Void {
 		var bf:DefaultBeanFactory = new DefaultBeanFactory();
-		var bean:BasicInterface = new BasicInterface();
+		var bean:BasicInterface = getBasicInterface();
 		bf.registerSingleton("bean", bean);
 		assertSame(bf.getBeanByNameAndType("bean", Object), bean);
 		assertSame(bf.getBeanByNameAndType("bean", BasicInterface), bean);

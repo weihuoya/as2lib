@@ -165,7 +165,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Abs
 	public function getClientServiceProxyByUrlAndType(url:String, type:Function) {
 		var serviceProxy:ClientServiceProxy = getClientServiceProxyByUrl(url);
 		if (!type) return serviceProxy;
-		var handler:InvocationHandler = new InvocationHandler();
+		var handler:InvocationHandler = getBlankInvocationHandler();
 		handler.invoke = function(proxy, methodName:String, args:Array) {
 			if (args[args.length-1] instanceof MethodInvocationCallback) {
 				var callback:MethodInvocationCallback = MethodInvocationCallback(args.pop());
@@ -175,6 +175,18 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Abs
 			}
 		}
 		return getTypeProxyFactory().createProxy(type, handler);
+	}
+	
+	/**
+	 * Returns a blank invocation handler. That is a handler with no initialized
+	 * methods.
+	 *
+	 * @return a blank invocation handler
+	 */
+	private function getBlankInvocationHandler(Void):InvocationHandler {
+		var result = new Object();
+		result.__proto__ = InvocationHandler["prototype"];
+		return result;
 	}
 	
 }

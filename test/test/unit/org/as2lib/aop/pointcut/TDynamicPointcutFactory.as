@@ -26,10 +26,28 @@ import org.as2lib.aop.Pointcut;
  */
 class test.unit.org.as2lib.aop.pointcut.TDynamicPointcutFactory extends TestCase {
 	
+	private function getBlankPointcutFactory(Void):PointcutFactory {
+		var result = new Object();
+		result.__proto__ = PointcutFactory["prototype"];
+		return result;
+	}
+	
+	private function getBlankPointcutRule(Void):PointcutRule {
+		var result = new Object();
+		result.__proto__ = PointcutRule["prototype"];
+		return result;
+	}
+	
+	private function getBlankPointcut(Void):Pointcut {
+		var result = new Object();
+		result.__proto__ = Pointcut["prototype"];
+		return result;
+	}
+	
 	public function testBindPointcutFactoryWithNullRule(Void):Void {
 		var f:DynamicPointcutFactory = new DynamicPointcutFactory();
 		try {
-			f.bindPointcutFactory(null, new PointcutFactory());
+			f.bindPointcutFactory(null, getBlankPointcutFactory());
 			fail("Expected IllegalArgumentException.");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
@@ -38,7 +56,7 @@ class test.unit.org.as2lib.aop.pointcut.TDynamicPointcutFactory extends TestCase
 	public function testBindPointcutFactoryWithNullFactory(Void):Void {
 		var f:DynamicPointcutFactory = new DynamicPointcutFactory();
 		try {
-			f.bindPointcutFactory(new PointcutRule(), null);
+			f.bindPointcutFactory(getBlankPointcutRule(), null);
 			fail("Expected IllegalArgumentException.");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
@@ -60,8 +78,8 @@ class test.unit.org.as2lib.aop.pointcut.TDynamicPointcutFactory extends TestCase
 	}
 	
 	public function testGetPointcutWithMultipleBoundFactories(Void):Void {
-		var p1:Pointcut = new Pointcut();
-		var p3:Pointcut = new Pointcut();
+		var p1:Pointcut = getBlankPointcut();
+		var p3:Pointcut = getBlankPointcut();
 		
 		var fc1:MockControl = new MockControl(PointcutFactory);
 		var f1:PointcutFactory = fc1.getMock();

@@ -24,6 +24,12 @@ import org.as2lib.io.conn.core.event.MethodInvocationCallback;
  */
 class test.unit.org.as2lib.io.conn.local.client.TLocalClientServiceProxy extends TestCase {
 	
+	private function getBlankMethodInvocationCallback(Void):MethodInvocationCallback {
+		var result = new Object();
+		result.__proto__ = MethodInvocationCallback["prototype"];
+		return result;
+	}
+	
 	public function testNewWithNullUrl(Void):Void {
 		try {
 			new LocalClientServiceProxy(null);
@@ -48,7 +54,7 @@ class test.unit.org.as2lib.io.conn.local.client.TLocalClientServiceProxy extends
 	public function testInvokeByNameAndArgumentsAndCallbackWithNullName(Void):Void {
 		var p:LocalClientServiceProxy = new LocalClientServiceProxy("local.as2lib.org/myService");
 		try {
-			p.invokeByNameAndArgumentsAndCallback(null, [], new MethodInvocationCallback());
+			p.invokeByNameAndArgumentsAndCallback(null, [], getBlankMethodInvocationCallback());
 			fail("Expected IllegalArgumentException.");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
@@ -57,7 +63,7 @@ class test.unit.org.as2lib.io.conn.local.client.TLocalClientServiceProxy extends
 	public function testInvokeByNameAndArgumentsAndCallbackWithEmptyStringName(Void):Void {
 		var p:LocalClientServiceProxy = new LocalClientServiceProxy("local.as2lib.org/myService");
 		try {
-			p.invokeByNameAndArgumentsAndCallback("", [], new MethodInvocationCallback());
+			p.invokeByNameAndArgumentsAndCallback("", [], getBlankMethodInvocationCallback());
 			fail("Expected IllegalArgumentException.");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}

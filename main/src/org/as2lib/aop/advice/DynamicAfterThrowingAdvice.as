@@ -42,9 +42,9 @@ class org.as2lib.aop.advice.DynamicAfterThrowingAdvice extends AbstractAfterThro
 	/**
 	 * Executes the callback passing the passed join point and throwable.
 	 * 
-	 * @see org.as2lib.aop.advice.AfterThrowingAdvice#execute(JoinPoint, Throwable):Void
+	 * @see org.as2lib.aop.advice.AfterThrowingAdvice#execute(JoinPoint, *):Void
 	 */
-	public function execute(joinPoint:JoinPoint, throwable:Throwable):Void {
+	public function execute(joinPoint:JoinPoint, throwable):Void {
 		callback.execute([joinPoint, throwable]);
 	}
 	

@@ -30,6 +30,12 @@ class test.unit.org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase 
 		return null;
 	}
 	
+	private function getEventListener(Void):EventListener {
+		var result = new Object();
+		result.__proto__ = EventListener["prototype"];
+		return result;
+	}
+	
 	public function testDispatchWithNullEventInfo(Void):Void {
 		var lc:MockControl = new MockControl(EventListener);
 		var l:EventListener = lc.getMock();
@@ -105,9 +111,9 @@ class test.unit.org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase 
 	}
 	
 	public function testAddListener(Void):Void {
-		var l1:EventListener = new EventListener();
-		var l2:EventListener = new EventListener();
-		var l3:EventListener = new EventListener();
+		var l1:EventListener = getEventListener();
+		var l2:EventListener = getEventListener();
+		var l3:EventListener = getEventListener();
 		
 		var b:EventBroadcaster = getEventBroadcaster();
 		b.addListener(l1);
@@ -120,15 +126,15 @@ class test.unit.org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase 
 	}
 	
 	public function testRemoveWithUnknownListener(Void):Void {
-		var l1:EventListener = new EventListener();
-		var l2:EventListener = new EventListener();
-		var l3:EventListener = new EventListener();
+		var l1:EventListener = getEventListener();
+		var l2:EventListener = getEventListener();
+		var l3:EventListener = getEventListener();
 		
 		var b:EventBroadcaster = getEventBroadcaster();
 		b.addListener(l1);
 		b.addListener(l2);
 		b.addListener(l3);
-		b.removeListener(new EventListener());
+		b.removeListener(getEventListener());
 		
 		assertSame(b.getAllListener().length, 3);
 		assertSame(b.getAllListener()[0], l1);
@@ -137,9 +143,9 @@ class test.unit.org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase 
 	}
 	
 	public function testRemoveWithNullListener(Void):Void {
-		var l1:EventListener = new EventListener();
-		var l2:EventListener = new EventListener();
-		var l3:EventListener = new EventListener();
+		var l1:EventListener = getEventListener();
+		var l2:EventListener = getEventListener();
+		var l3:EventListener = getEventListener();
 		
 		var b:EventBroadcaster = getEventBroadcaster();
 		b.addListener(l1);
@@ -154,9 +160,9 @@ class test.unit.org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase 
 	}
 	
 	public function testRemoveListener(Void):Void {
-		var l1:EventListener = new EventListener();
-		var l2:EventListener = new EventListener();
-		var l3:EventListener = new EventListener();
+		var l1:EventListener = getEventListener();
+		var l2:EventListener = getEventListener();
+		var l3:EventListener = getEventListener();
 		
 		var b:EventBroadcaster = getEventBroadcaster();
 		b.addListener(l1);
@@ -177,9 +183,9 @@ class test.unit.org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase 
 	
 	public function testRemoveAllListener(Void):Void {
 		var b:EventBroadcaster = getEventBroadcaster();
-		b.addListener(new EventListener());
-		b.addListener(new EventListener());
-		b.addListener(new EventListener());
+		b.addListener(getEventListener());
+		b.addListener(getEventListener());
+		b.addListener(getEventListener());
 		assertSame(b.getAllListener().length, 3);
 		b.removeAllListener();
 		assertSame(b.getAllListener().length, 0);

@@ -28,6 +28,18 @@ import org.as2lib.env.event.EventBroadcaster;
  */
 class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	
+	private function getLogLevel(Void):LogLevel {
+		var result = new Object();
+		result.__proto__ = LogLevel["prototype"];
+		return result;
+	}
+	
+	private function getLogHandler(Void):LogHandler {
+		var result = new Object();
+		result.__proto__ = LogHandler["prototype"];
+		return result;
+	}
+	
 	public function testNewWithNullAndUndefinedArgument(Void):Void {
 		var logger:SimpleLogger = new SimpleLogger(null);
 		assertNull("returned name should be null", logger.getName());
@@ -42,7 +54,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	
 	public function testSetLevelWithValidLevel(Void):Void {
 		var logger:SimpleLogger = new SimpleLogger(null);
-		var level:LogLevel = new LogLevel();
+		var level:LogLevel = getLogLevel();
 		logger.setLevel(level);
 		var returnedLevel:LogLevel = logger.getLevel();
 		assertSame("The two levels [" + level + ", " + returnedLevel + "] should be the same.", level, returnedLevel);
@@ -58,7 +70,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	public function testSetLevelWithNullLevelAndParentWithValidLevel(Void):Void {
 		var logger:SimpleLogger = new SimpleLogger();
 		var parent:SimpleLogger = new SimpleLogger();
-		var level:LogLevel = new LogLevel();
+		var level:LogLevel = getLogLevel();
 		parent.setLevel(level);
 		logger.setParent(parent);
 		var returnedLevel:LogLevel = logger.getLevel();
@@ -111,9 +123,9 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testRemoveHandlerVaiAddHandlerAndGetAllHandler(Void):Void {
-		var h1:LogHandler = new LogHandler();
-		var h2:LogHandler = new LogHandler();
-		var h3:LogHandler = new LogHandler();
+		var h1:LogHandler = getLogHandler();
+		var h2:LogHandler = getLogHandler();
+		var h3:LogHandler = getLogHandler();
 		
 		var handlers:Array;
 		
@@ -146,9 +158,9 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testRemoveAllHandlerViaGetAllHandler(Void):Void {
-		var h1:LogHandler = new LogHandler();
-		var h2:LogHandler = new LogHandler();
-		var h3:LogHandler = new LogHandler();
+		var h1:LogHandler = getLogHandler();
+		var h2:LogHandler = getLogHandler();
+		var h3:LogHandler = getLogHandler();
 		
 		var logger:SimpleLogger = new SimpleLogger(null);
 		logger.addHandler(h1);
@@ -160,9 +172,9 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testGetAllHandler(Void):Void {
-		var h1:LogHandler = new LogHandler();
-		var h2:LogHandler = new LogHandler();
-		var h3:LogHandler = new LogHandler();
+		var h1:LogHandler = getLogHandler();
+		var h2:LogHandler = getLogHandler();
+		var h3:LogHandler = getLogHandler();
 		
 		var logger:SimpleLogger = new SimpleLogger(null);
 		logger.addHandler(h1);
@@ -191,7 +203,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testIsEnabledWithTrueReturningLogLevel(Void):Void {
-		var a:LogLevel = new LogLevel();
+		var a:LogLevel = getLogLevel();
 		
 		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();
@@ -207,7 +219,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testIsEnabledWithFalseReturningLogLevel(Void):Void {
-		var a:LogLevel = new LogLevel();
+		var a:LogLevel = getLogLevel();
 		
 		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();
@@ -235,7 +247,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testLogWithDisabledLevel(Void):Void {
-		var a:LogLevel = new LogLevel();
+		var a:LogLevel = getLogLevel();
 		
 		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();
@@ -258,7 +270,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	
 	public function testLogWithEnabledLevelNoHandlersAndNullParent(Void):Void {
 		var m:Object = new Object();
-		var a:LogLevel = new LogLevel();
+		var a:LogLevel = getLogLevel();
 		
 		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();
@@ -285,12 +297,12 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testLogWithEnabledLevelAndHandlersAndNullParent(Void):Void {
-		var h1:LogHandler = new LogHandler();
-		var h2:LogHandler = new LogHandler();
-		var h3:LogHandler = new LogHandler();
+		var h1:LogHandler = getLogHandler();
+		var h2:LogHandler = getLogHandler();
+		var h3:LogHandler = getLogHandler();
 		
 		var m:Object = new Object();
-		var a:LogLevel = new LogLevel();
+		var a:LogLevel = getLogLevel();
 		
 		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();
@@ -322,9 +334,9 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testLogWithEnabledLevelNoHandlersAndDefinedParents(Void):Void {
-		var h1:LogHandler = new LogHandler();
-		var h2:LogHandler = new LogHandler();
-		var h3:LogHandler = new LogHandler();
+		var h1:LogHandler = getLogHandler();
+		var h2:LogHandler = getLogHandler();
+		var h3:LogHandler = getLogHandler();
 		
 		var lo2c:MockControl = new MockControl(SimpleLogger);
 		var lo2:SimpleLogger = lo2c.getMock();
@@ -343,7 +355,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		loc.replay();
 		
 		var m:Object = new Object();
-		var a:LogLevel = new LogLevel();
+		var a:LogLevel = getLogLevel();
 		
 		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();
@@ -375,9 +387,9 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 	}
 	
 	public function testLogWithEnabledLevelHandlersAndDefinedParents(Void):Void {
-		var h1:LogHandler = new LogHandler();
-		var h2:LogHandler = new LogHandler();
-		var h3:LogHandler = new LogHandler();
+		var h1:LogHandler = getLogHandler();
+		var h2:LogHandler = getLogHandler();
+		var h3:LogHandler = getLogHandler();
 		
 		var lo2c:MockControl = new MockControl(SimpleLogger);
 		var lo2:SimpleLogger = lo2c.getMock();
@@ -396,7 +408,7 @@ class test.unit.org.as2lib.env.log.logger.TSimpleLogger extends TestCase {
 		loc.replay();
 		
 		var m:Object = new Object();
-		var a:LogLevel = new LogLevel();
+		var a:LogLevel = getLogLevel();
 		
 		var lc:MockControl = new MockControl(LogLevel);
 		var l:LogLevel = lc.getMock();

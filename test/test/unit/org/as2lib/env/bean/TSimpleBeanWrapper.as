@@ -29,18 +29,24 @@ import org.as2lib.env.bean.PropertyValueConverter;
  */
 class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	
+	private function getBlankPropertyValueConverter(Void):PropertyValueConverter {
+		var result = new Object();
+		result.__proto__ = PropertyValueConverter["prototype"];
+		return result;
+	}
+	
 	/********************************************************************************/
 	/* REGISTER PROPERTY VALUE                                                      */
 	/********************************************************************************/
 	
 	public function testRegisterPropertyValueConverterByNullTypeAndNullProperty(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
-		assertThrows(IllegalArgumentException, bw, bw.registerPropertyValueConverter, [null, null, new PropertyValueConverter()]);
+		assertThrows(IllegalArgumentException, bw, bw.registerPropertyValueConverter, [null, null, getBlankPropertyValueConverter()]);
 	}
 	
 	public function testRegisterPropertyValueConverterByTypeViaFindPropertyValueConverter(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
-		var c:PropertyValueConverter = new PropertyValueConverter();
+		var c:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(PropertyValueConverter, c);
 		assertSame("1", bw.findPropertyValueConverter(PropertyValueConverter, null), c);
 		assertSame("2", bw.findPropertyValueConverter(PropertyValueConverter, "property"), c);
@@ -48,7 +54,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	
 	public function testRegisterPropertyValueConverterByTypeAndPropertyNameViaFindPropertyValueConverter(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
-		var c1:PropertyValueConverter = new PropertyValueConverter();
+		var c1:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(PropertyValueConverter, "property", c1);
 		assertSame(bw.findPropertyValueConverter(PropertyValueConverter, "property"), c1);
 	}
@@ -60,81 +66,81 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	public function testFindPropertyValueConverterByDirectType(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
 		
-		var c1:PropertyValueConverter = new PropertyValueConverter();
+		var c1:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(PropertyValueConverter, c1);
 		assertSame("1", bw.findPropertyValueConverter(PropertyValueConverter, null), c1);
 		
-		var c2:PropertyValueConverter = new PropertyValueConverter();
+		var c2:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(MockControl, "property", c2);
 		assertNull("2", bw.findPropertyValueConverter(MockControl, null));
 	}
 	
 	public function testFindPropertyValueConverterWithRegisteredInterfaceForSubinterface(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
-		var c1:PropertyValueConverter = new PropertyValueConverter();
+		var c1:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(BasicInterface, c1);
 		assertSame(bw.findPropertyValueConverter(PropertyValueConverter, null), c1);
 	}
 	
 	public function testFindPropertyValueConverterWithRegisteredClassForSubclass(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
-		var c1:PropertyValueConverter = new PropertyValueConverter();
+		var c1:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(BasicClass, c1);
 		assertSame(bw.findPropertyValueConverter(MockControl, null), c1);
 	}
 	
 	public function testFindPropertyValueConverterWithRegisteredInterfaceForImplementationClass(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
-		var c1:PropertyValueConverter = new PropertyValueConverter();
+		var c1:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(BasicInterface, c1);
 		assertSame(bw.findPropertyValueConverter(MockControl, null), c1);
 	}
 	
 	public function testFindPropertyValueConverterWithDirectTypeForPropertyName(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
-		var c2:PropertyValueConverter = new PropertyValueConverter();
+		var c2:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(MockControl, "property", c2);
 		assertSame(bw.findPropertyValueConverter(MockControl, "property"), c2);
 	}
 	
 	public function testFindPropertyValueConverterWithRegisteredInterfaceForSubinterfaceAndPropertyName(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
-		var c2:PropertyValueConverter = new PropertyValueConverter();
+		var c2:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(BasicInterface, "property", c2);
 		assertSame(bw.findPropertyValueConverter(PropertyValueConverter, "property"), c2);
 	}
 	
 	public function testFindPropertyValueConverterWithRegisteredClassForSubclassAndPropertyName(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
-		var c2:PropertyValueConverter = new PropertyValueConverter();
+		var c2:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(BasicClass, "property", c2);
 		assertSame(bw.findPropertyValueConverter(MockControl, "property"), c2);
 	}
 	
 	public function testFindPropertyValueConverterWithRegisteredInterfaceForImplementationClassAndPropertyName(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
-		var c2:PropertyValueConverter = new PropertyValueConverter();
+		var c2:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(BasicInterface, "property", c2);
 		assertSame(bw.findPropertyValueConverter(MockControl, "property"), c2);
 	}
 	
 	public function testFindPropertyValueConverterWithRegisteredInterfaceForWrongInterfaceButRightPropertyName(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
-		var c2:PropertyValueConverter = new PropertyValueConverter();
+		var c2:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(MockControl, "property", c2);
 		assertNull(bw.findPropertyValueConverter(BasicInterface, "property"));
 	}
 	
 	public function testFindPropertyValueConverterWithRegisteredInterfaceForWrongClassButRightPropertyName(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
-		var c2:PropertyValueConverter = new PropertyValueConverter();
+		var c2:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(MockControl, "property", c2);
 		assertNull(bw.findPropertyValueConverter(BasicClass, "property"));
 	}
 	
 	public function testFindPropertyValueConverterWithRegisteredClassForWrongClassButRightPropertyName(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
-		var c2:PropertyValueConverter = new PropertyValueConverter();
+		var c2:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(MockControl, "property", c2);
 		assertNull(bw.findPropertyValueConverter(BasicClass, "property"));
 	}
@@ -142,11 +148,11 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 	public function testFindPropertyValueConverterForPropertyNameWithNullType(Void):Void {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(new Object());
 		
-		var c1:PropertyValueConverter = new PropertyValueConverter();
+		var c1:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(null, "property", c1);
 		assertSame("1", bw.findPropertyValueConverter(MockControl, "property"), c1);
 		
-		var c2:PropertyValueConverter = new PropertyValueConverter();
+		var c2:PropertyValueConverter = getBlankPropertyValueConverter();
 		bw.registerPropertyValueConverter(MockControl, "property", c2);
 		assertSame("2", bw.findPropertyValueConverter(null, "property"), c2);
 	}

@@ -59,10 +59,22 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 	 * @return the default method call behavior factory
 	 */
 	private function getDefaultMethodBehaviorFactory(Void):MethodBehaviorFactory {
-		var result:MethodBehaviorFactory = new MethodBehaviorFactory();
+		var result:MethodBehaviorFactory = getBlankMethodBehaviorFactory();
 		result.getMethodBehavior = function(expectedMethodCall:MethodCall):MethodBehavior {
 			return new DefaultMethodBehavior(expectedMethodCall);
 		}
+		return result;
+	}
+	
+	/**
+	 * Returns a blank method behavior factory. That is a factory
+	 * with no initialized methods.
+	 *
+	 * @return a blank method behavior factory
+	 */
+	private function getBlankMethodBehaviorFactory(Void):MethodBehaviorFactory {
+		var result = new Object();
+		result.__proto__ = MethodBehaviorFactory["prototype"];
 		return result;
 	}
 	

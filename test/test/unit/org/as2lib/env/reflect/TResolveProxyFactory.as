@@ -6,6 +6,12 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.env.bean.PropertyValue;
 
 class test.unit.org.as2lib.env.reflect.TResolveProxyFactory extends TestCase {
+
+	private function getBlankInvocationHandler(Void):InvocationHandler {
+		var result = new Object();
+		result.__proto__ = InvocationHandler["prototype"];
+		return result;
+	}
 	
 	public function testCreateProxyWithTypeOfValueNullAndUndefined(Void):Void {
 		var factory:ProxyFactory = new ResolveProxyFactory();
@@ -15,13 +21,13 @@ class test.unit.org.as2lib.env.reflect.TResolveProxyFactory extends TestCase {
 	
 	public function testTypeCast(Void):Void {
 		var factory:ProxyFactory = new ResolveProxyFactory();
-		assertNotNull(BasicInterface(factory.createProxy(BasicInterface, new InvocationHandler())));
+		assertNotNull(BasicInterface(factory.createProxy(BasicInterface, getBlankInvocationHandler())));
 	}
 	
 	public function testInvocationPropagationWithInterface(Void):Void {
 		var factory:ProxyFactory = new ResolveProxyFactory();
 		var proxy1:BasicInterface;
-		var handler:InvocationHandler = new InvocationHandler();
+		var handler:InvocationHandler = getBlankInvocationHandler();
 		var owner:TResolveProxyFactory = this;
 		handler.invoke = function(proxy, method:String, args:FunctionArguments) {
 			owner.assertSame(proxy1, proxy);
@@ -36,7 +42,7 @@ class test.unit.org.as2lib.env.reflect.TResolveProxyFactory extends TestCase {
 	public function testInvocationPropagationWithClass(Void):Void {
 		var factory:ProxyFactory = new ResolveProxyFactory();
 		var proxy1:PropertyValue;
-		var handler:InvocationHandler = new InvocationHandler();
+		var handler:InvocationHandler = getBlankInvocationHandler();
 		var owner:TResolveProxyFactory = this;
 		handler["count"] = 0;
 		handler.invoke = function(proxy, method:String, args:FunctionArguments) {

@@ -271,7 +271,7 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 		if (!connectionName || !methodName) throw new IllegalArgumentException("Neither the connection name [" + connectionName + "] nor the method name [" + methodName + "] are allowed to be null, undefined or an empty string.", this, arguments);
 		if (!connectionExists(connectionName)) throw new UnknownConnectionException("Connection with name [" + connectionName + "] does not exist.", this, arguments);
 		if (!args) args = new Array();
-		if (!listener) listener = new MethodInvocationErrorListener();
+		if (!listener) listener = getBlankMethodInvocationErrorListener();
 		var client:LocalConnection = new LocalConnection();
 		var owner:EnhancedLocalConnection = this;
 		var index:Number = clientArray.push(client) - 1;
@@ -285,6 +285,18 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 		if (!client.send.apply(client, [connectionName, methodName].concat(args)))
 			throw new MethodInvocationException("Arguments [" + args + "] are out of size.", this, arguments);
 		return listener;
+	}
+	
+	/**
+	 * Returns a blank method invocation error listener. That is
+	 * a error listern with no initialized methods.
+	 *
+	 * @return a blank method invocation error listener
+	 */
+	private function getBlankMethodInvocationErrorListener(Void):MethodInvocationErrorListener {
+		var result = new Object();
+		result.__proto__ = MethodInvocationErrorListener["prototype"];
+		return result;
 	}
 	
 	/**

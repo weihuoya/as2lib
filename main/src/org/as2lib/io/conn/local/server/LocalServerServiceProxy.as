@@ -282,7 +282,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 			invokeMethodByNameAndArguments(methodName, args);
 			return;
 		}
-		var listener:MethodInvocationErrorListener = new MethodInvocationErrorListener();
+		var listener:MethodInvocationErrorListener = getBlankMethodInvocationErrorListener();
 		var owner:LocalServerServiceProxy = this;
 		listener.onError = function(info:MethodInvocationErrorInfo):Void {
 			owner.getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(owner.currentServiceUrl, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR, null));
@@ -299,6 +299,18 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 			sendResponse(methodName, args, responseServiceUrl, "onError", [MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, serviceMethodException], listener);
 			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, serviceMethodException));
 		}
+	}
+	
+	/**
+	 * Returns a blank method invocation error listener. That is
+	 * a error listern with no initialized methods.
+	 *
+	 * @return a blank method invocation error listener
+	 */
+	private function getBlankMethodInvocationErrorListener(Void):MethodInvocationErrorListener {
+		var result = new Object();
+		result.__proto__ = MethodInvocationErrorListener["prototype"];
+		return result;
 	}
 	
 	/**

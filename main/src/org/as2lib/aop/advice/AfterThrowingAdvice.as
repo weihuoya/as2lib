@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.except.Throwable;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.Advice;
 
@@ -28,8 +27,8 @@ interface org.as2lib.aop.advice.AfterThrowingAdvice extends Advice {
 	 * point threw an exception.
 	 *
 	 * @param joinPoint the join point the advice was woven into
-	 * @param throwable the Throwable thrown by the join point
+	 * @param throwable the throwable thrown by the join point
 	 */
-	public function execute(joinPoint:JoinPoint, throwable:Throwable):Void;
+	public function execute(joinPoint:JoinPoint, throwable):Void;
 	
 }

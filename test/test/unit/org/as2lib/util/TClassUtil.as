@@ -18,9 +18,9 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.core.BasicInterface;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.Test;
-import org.as2lib.env.out.Out;
-import org.as2lib.env.out.OutHandler;
 import org.as2lib.util.ClassUtil;
+import org.as2lib.env.overload.Overload;
+import org.as2lib.env.overload.OverloadHandler;
 
 /**
  * Test of all methods in ClassUtil.
@@ -37,7 +37,7 @@ class test.unit.org.as2lib.util.TClassUtil extends TestCase {
 		assertFalse("TestCase is not a subclass of BasicInterface because it is a Interface", ClassUtil.isSubClassOf(TestCase, BasicInterface));
 		assertFalse("TestCase is not a subclass of Test because it directly implements it", ClassUtil.isSubClassOf(TestCase, Test));
 		assertFalse("TestCase is not a subclass of TestCase because it is TestCase", ClassUtil.isSubClassOf(TestCase, TestCase));
-		assertFalse("TestCase is not a subclass of Out", ClassUtil.isSubClassOf(TestCase, Out));
+		assertFalse("TestCase is not a subclass of Overload", ClassUtil.isSubClassOf(TestCase, Overload));
 	}
 	
 	/**
@@ -48,7 +48,7 @@ class test.unit.org.as2lib.util.TClassUtil extends TestCase {
 		assertTrue("TestCase is a implementation of BasicInterface because it is a Interface", ClassUtil.isImplementationOf(TestCase, BasicInterface));
 		assertTrue("TestCase is a implementation of Test because it directly implements it", ClassUtil.isImplementationOf(TestCase, Test));
 		assertTrue("TestCase is a implementation of TestCase because it is no interface", ClassUtil.isImplementationOf(TestCase, TestCase));
-		assertFalse("TestCase is not a implementation of OutHandler", ClassUtil.isImplementationOf(TestCase, OutHandler));
+		assertFalse("TestCase is not a implementation of OverloadHandler", ClassUtil.isImplementationOf(TestCase, OverloadHandler));
 	}
 	
 	/**
