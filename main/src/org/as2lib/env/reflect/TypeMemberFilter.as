@@ -45,6 +45,17 @@ interface org.as2lib.env.reflect.TypeMemberFilter extends BasicInterface {
 	public function filter(typeMember:TypeMemberInfo):Boolean;
 	
 	/**
+	 * Returns true if type members of super types shall be filtered, that
+	 * means excluded from the result.
+	 *
+	 * <p>Returning true can mean a performance boost because the algorithm
+	 * does then not search for type members of super types.
+	 *
+	 * @return true if super types' type members shall be excluded else false
+	 */
+	public function filterSuperTypes(Void):Boolean;
+	
+	/**
 	 * Returns true if all static type members shall be filtered, that means
 	 * excluded from the result.
 	 *
@@ -65,16 +76,5 @@ interface org.as2lib.env.reflect.TypeMemberFilter extends BasicInterface {
 	 * @return true if non-static type members shall be excluded else false
 	 */
 	//public function filterNonStatic(Void):Boolean;
-	
-	/**
-	 * Returns true if type members of super types shall be filtered, that
-	 * means excluded from the result.
-	 *
-	 * <p>Returning true can mean a performance boost because the algorithm
-	 * does then not search for type members of super types.
-	 *
-	 * @return true if super types' type members shall be excluded else false
-	 */
-	public function filterSuperTypes(Void):Boolean;
 	
 }

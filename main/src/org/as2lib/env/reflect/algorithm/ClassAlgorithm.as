@@ -121,4 +121,23 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 		return false;
 	}
 	
+	public function executeByName(n:String):ClassInfo {
+		if (!n) return null;
+		var f:Function = eval("_global." + n);
+		if (!f) return null;
+		if (typeof(f) != "function") return null;
+		var a:Array = n.split(".");
+		var p:PackageInfo = getCache().getRoot();
+		var g:Object = p.getPackage();
+		for (var i:Number = 0; i < a.length; i++) {
+			if (i == a.length-1) {
+				return c.addClass(new ClassInfo(a[i], f, p));
+			} else {
+				g = g[i];
+				p = c.addPackage(new PackageInfo(a[i], g, p));
+			}
+		}
+		return null;
+	}
+	
 }
