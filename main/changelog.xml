@@ -5,6 +5,9 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="3">
+         <day value="29">
+           <entry type="add" package="org.as2lib.util" class="DateFormatter">Formats a date according to a string pattern.</entry>
+         </day>
          <day value="26">
            <entry type="change" package="static org.as2lib.env.reflect" class="ReflectConfig" method="get-/setRootPackage"><change-move to="PackageInfo" /></entry>
            <entry type="change" package="org.as2lib.env.except" class="Throwable" method="initCause(cause:Throwable):Void"><change-arguments to="cause:*" /></entry>

@@ -18,7 +18,28 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
- * 
+ * DateFormatter formats a given date with a specified pattern.
+ *
+ * <p>Use the declared constants as placeholders for specific parts of
+ * the date-time.
+ *
+ * <p>All characters from 'A' to 'Z' and from 'a' to 'z' are reserved,
+ * although not all of these characters are interpreted right now. If
+ * you want to include plain text in the pattern put it into quotes (')
+ * to avoid interpretation. If you want a quote in the formatted date-
+ * time, put two quotes directly after one another. For example:
+ * {@code "hh 'o''clock'"}.
+ *
+ * <p>Example:
+ * <code>
+ *   var formatter:DateFormatter = new DateFormatter("dd.mm.yyyy hh:nn:ss S");
+ *   trace(formatter.format(new Date(2005, 2, 29, 18, 14, 3, 58)));
+ * </code>
+ *
+ * <p>Output:
+ * <code>
+ *   29.03.2005 18:14:03 58
+ * </code>
  *
  * @author Simon Wacker
  */
@@ -27,17 +48,35 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	/** Placeholder for year in date format. */
 	public static var YEAR:String = "y";
 	
-	/** Placeholder for month as number in date format. */
+	/** Placeholder for month in year as number in date format. */
 	public static var MONTH_AS_NUMBER:String = "m";
 	
-	/** Placeholder for month as text in date format. */
+	/** Placeholder for month in year as text in date format. */
 	public static var MONTH_AS_TEXT:String = "M";
 	
-	/** Placeholder for day of month as number in date format. */
+	/** Placeholder for day in month as number in date format. */
 	public static var DAY_AS_NUMBER:String = "d";
 	
-	/** Placeholder for day of week as text in date format. */
+	/** Placeholder for day in week as text in date format. */
 	public static var DAY_AS_TEXT:String = "D";
+	
+	/** Placeholder for hour in am/pm (1 - 12) in date format. */
+	public static var HOUR_IN_AM_PM:String = "h";
+	
+	/** Placeholder for hour in day (0 - 23) in date format. */
+	public static var HOUR_IN_DAY:String = "H";
+	
+	/** Placeholder for minute in hour in date format. */
+	public static var MINUTE:String = "n";
+	
+	/** Placeholder for second in minute in date format. */
+	public static var SECOND:String = "s";
+	
+	/** Placeholder for millisecond in date format. */
+	public static var MILLISECOND:String = "S";
+	
+	/** Quotation beginning and ending token. */
+	public static var QUOTE:String = "'";
 	
 	/** Fully written out string for january. */
 	public static var JANUARY:String = "January";
@@ -124,6 +163,7 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * @return the formatted date-time string
 	 */
 	public function format(date:Date):String {
+		if (!date) date = new Date();
 		var result:String = "";
 		for (var i:Number = 0; i < dateFormat.length; i++) {
 			if (dateFormat.substr(i, 1) == YEAR) {
@@ -156,6 +196,57 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 				i += tokenCount - 1;
 				continue;
 			}
+			if (dateFormat.substr(i, 1) == HOUR_IN_AM_PM) {
+				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
+				result += formatHourInAmPm(date.getHours(), tokenCount);
+				i += tokenCount - 1;
+				continue;
+			}
+			if (dateFormat.substr(i, 1) == HOUR_IN_DAY) {
+				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
+				result += formatHourInDay(date.getHours(), tokenCount);
+				i += tokenCount - 1;
+				continue;
+			}
+			if (dateFormat.substr(i, 1) == MINUTE) {
+				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
+				result += formatMinute(date.getMinutes(), tokenCount);
+				i += tokenCount - 1;
+				continue;
+			}
+			if (dateFormat.substr(i, 1) == SECOND) {
+				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
+				result += formatSecond(date.getSeconds(), tokenCount);
+				i += tokenCount - 1;
+				continue;
+			}
+			if (dateFormat.substr(i, 1) == MILLISECOND) {
+				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
+				result += formatMillisecond(date.getMilliseconds(), tokenCount);
+				i += tokenCount - 1;
+				continue;
+			}
+			if (dateFormat.substr(i, 1) == QUOTE) {
+				if (dateFormat.substr(i + 1, 1) == QUOTE) {
+					result += "'";
+					i++;
+					continue;
+				}
+				var nextQuote:Number = i;
+				var oldQuote:Number;
+				while (true) {
+					oldQuote = nextQuote;
+					nextQuote = dateFormat.indexOf("'", nextQuote + 1);
+					if (dateFormat.substr(nextQuote + 1, 1) != QUOTE) {
+						break;
+					}
+					result += dateFormat.substring(oldQuote + 1, nextQuote + 1);
+					nextQuote++;
+				}
+				result += dateFormat.substring(oldQuote + 1, nextQuote);
+				i = nextQuote;
+				continue;
+			}
 			result += dateFormat.substr(i, 1);
 		}
 		return result;
@@ -182,6 +273,27 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	}
 	
 	/**
+	 * Returns a string that contains the specified number of 0s.
+	 *
+	 * <p>A {@code count} less or equal than 0 or a {@code count} of value
+	 * null or undefined results in en empty string.
+	 *
+	 * @param count the number of 0s
+	 * @return the specified number of 0s
+	 */
+	private function getZeros(count:Number):String {
+		if (count < 1 || count == null) return "";
+		if (count < 2) return "0";
+		var result:String = "00";
+		count -= 2;
+		while (count) {
+			result += "0";
+			count--;
+		}
+		return result;
+	}
+	
+	/**
 	 * Formats the passed-in {@code year} into a year string with the specified
 	 * {@code digitCount}.
 	 *
@@ -191,19 +303,14 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * if the {@code digitCount} is greater than four.
 	 *
 	 * @param year the year to format to a string
-	 * @param digitCount the number of expected digits
+	 * @param digitCount the number of favored digits
 	 * @return the string representation of the year
 	 */
 	private function formatYear(year:Number, digitCount:Number):String {
 		if (digitCount < 4) {
 			return year.toString().substr(2);
 		}
-		var zeros:String = "";
-		while (digitCount > 4) {
-			zeros += "0";
-			digitCount--;
-		}
-		return (zeros + year.toString());
+		return (getZeros(digitCount - 4) + year.toString());
 	}
 	
 	/**
@@ -218,7 +325,7 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * <p>{@code month} must be a number from 0 to 11.
 	 *
 	 * @param month the month to format to a number string
-	 * @param digitCount the number of expected digits
+	 * @param digitCount the number of favored digits
 	 * @return the number representation of the month
 	 * @throws IllegalArgumentException if the passed-in {@code month} is
 	 * less than 0 or greater than 11
@@ -227,15 +334,8 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 		if (month < 0 || month > 11) {
 			throw new IllegalArgumentException("Argument 'month' [" + month + "] must not be less than 0 nor greater than 11.", this, arguments);
 		}
-		var result:String = (month + 1).toString();
-		if (digitCount > result.length) {
-			var i:Number = digitCount - result.length;
-			while (i) {
-				result = "0" + result;
-				i--;
-			}
-		}
-		return result;
+		var string:String = (month + 1).toString();
+		return (getZeros(digitCount - string.length) + string);
 	}
 	
 	/**
@@ -249,7 +349,7 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * <p>{@code month} must be a number from 0 to 11.
 	 *
 	 * @param month the month to format to a string
-	 * @param tokenCount the number of expected tokens
+	 * @param tokenCount the number of favored tokens
 	 * @return the string representation of the month
 	 * @throws IllegalArgumentException if the passed-in {@code month} is
 	 * less than 0 or greater than 11
@@ -304,24 +404,6 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	}
 	
 	/**
-	 * Formats the passed-in {@code month} into a month as number string
-	 * with the specified {@code digitCount}.
-	 * 
-	 * <p>A {@code digitCount} less or equal than one results in a month
-	 * with one digit, if the month is less or equal than nine. Otherwise
-	 * the month is represented by a two digit number. A {@code digitCount}
-	 * greater or equal than two results in a month with preceding zeros.
-	 *
-	 * <p>{@code month} must be a number from 0 to 11.
-	 *
-	 * @param month the month to format to a number string
-	 * @param digitCount the number of expected digits
-	 * @return the number representation of the month
-	 * @throws IllegalArgumentException if the passed-in {@code month} is
-	 * less than 0 or greater than 11
-	 */
-	
-	/**
 	 * Formats the passed-in {@code day} into a day as number string with
 	 * the specified {@code digitCount}.
 	 *
@@ -342,15 +424,8 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 		if (day < 1 || day > 31) {
 			throw new IllegalArgumentException("Argument 'day' [" + day + "] must not be less than 1 nor greater than 31.", this, arguments);
 		}
-		var result:String = day.toString();
-		if (digitCount > result.length) {
-			var i:Number = digitCount - result.length;
-			while (i) {
-				result = "0" + result;
-				i--;
-			}
-		}
-		return result;
+		var string:String = day.toString();
+		return (getZeros(digitCount - string.length) + string);
 	}
 	
 	/**
@@ -364,7 +439,7 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * <p>{@code day} must be a number from 0 to 6.
 	 *
 	 * @param day the day to format to a string
-	 * @param tokenCount the number of expected tokens
+	 * @param tokenCount the number of favored tokens
 	 * @return the string representation of the day
 	 * @throws IllegalArgumentException if the passed-in {@code day} is less
 	 * than 0 or greater than 6.
@@ -401,6 +476,139 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 			return result.substr(0, 2);
 		}
 		return result;
+	}
+	
+	/**
+	 * Formats the passed-in {@code hour} into a number string from range
+	 * 1 to 12.
+	 *
+	 * <p>The resulting string contains only the specified {@code digitCount}
+	 * if possible. This means if the hour is 3 and the {@code digitCount}
+	 * 1 the resulting string contains one digit. But this is not possible
+	 * with the hour 12. So in this case the resulting string contains 2
+	 * digits. If {@code digitCount} is greater than the actual number of
+	 * digits, preceding 0s are added.
+	 *
+	 * @param hour the hour to format
+	 * @param digitCount the number of favored digits
+	 * @return the string representation of {@code hour}
+	 * @throws IllegalArgumentException if the passed-in {@code hour} is less
+	 * than 0 or greater than 23
+	 */
+	private function formatHourInAmPm(hour:Number, digitCount:Number):String {
+		if (hour < 0 || hour > 23) {
+			throw new IllegalArgumentException("Argument 'hour' [" + hour + "] must not be less than 0 nor greater than 23.", this, arguments);
+		}
+		var string:String;
+		if (hour == 0) {
+			// 12.toString() causes a compiler error
+			string = (12).toString();
+		} else if (hour > 12) {
+			string = (hour - 12).toString();
+		} else {
+			string = hour.toString();
+		}
+		return (getZeros(digitCount - string.length) + string);
+	}
+	
+	/**
+	 * Formats the passed-in {@code hour} into a number string from range
+	 * 0 to 23.
+	 *
+	 * <p>The resulting string contains only the specified {@code digitCount}
+	 * if possible. This means if the hour is 3 and the {@code digitCount}
+	 * 1 the resulting string contains one digit. But this is not possible
+	 * with the hour 18. So in this case the resulting string contains 2
+	 * digits. If {@code digitCount} is greater than the actual number of
+	 * digits, preceding 0s are added.
+	 *
+	 * @param hour the hour to format
+	 * @param digitCount the number of favored digits
+	 * @return the string representation of {@code hour}
+	 * @throws IllegalArgumentException if the passed-in {@code hour} is less
+	 * than 0 or greater than 23
+	 */
+	private function formatHourInDay(hour:Number, digitCount:Number):String {
+		if (hour < 0 || hour > 23) {
+			throw new IllegalArgumentException("Argument 'hour' [" + hour + "] must not be less than 0 nor greater than 23.", this, arguments);
+		}
+		var string:String = hour.toString();
+		return (getZeros(digitCount - string.length) + string);
+	}
+	
+	/**
+	 * Formats the passed-in {@code minute} into a number string with range
+	 * 0 to 59.
+	 *
+	 * <p>The resulting string contains only the specified {@code digitCount}
+	 * if possible. This means if the minute is 3 and the {@code digitCount}
+	 * 1, the resulting string contains only one digit. But this is not possible
+	 * with the minute 46. So in this case the resulting string contains 2
+	 * digits. If {@code digitCount} is greater than the actual number of
+	 * digits, preceding 0s are added.
+	 *
+	 * @param minute the minute to format
+	 * @param digitCount the number of favored digits
+	 * @return the string representation of the {@code minute}
+	 * @throws IllegalArgumentException if the passed-in {@code minute} is
+	 * less than 0 or greater than 59
+	 */
+	private function formatMinute(minute:Number, digitCount:Number):String {
+		if (minute < 0 || minute > 59) {
+			throw new IllegalArgumentException("Argument 'minute' [" + minute + "] must not be less than 0 nor greater than 59.", this, arguments);
+		}
+		var string:String = minute.toString();
+		return (getZeros(digitCount - string.length) + string);
+	}
+	
+	/**
+	 * Formats the passed-in {@code second} into a number string with range
+	 * 0 to 59.
+	 *
+	 * <p>The resulting string contains only the specified {@code digitCount}
+	 * if possible. This means if the second is 3 and the {@code digitCount}
+	 * 1, the resulting string contains only one digit. But this is not possible
+	 * with the second 46. So in this case the resulting string contains 2
+	 * digits. If {@code digitCount} is greater than the actual number of
+	 * digits, preceding 0s are added.
+	 *
+	 * @param second the second to format
+	 * @param digitCount the number of favored digits
+	 * @return the string representation of the {@code second}
+	 * @throws IllegalArgumentException if the passed-in {@code second} is
+	 * less than 0 or greater than 59
+	 */
+	private function formatSecond(second:Number, digitCount:Number):String {
+		if (second < 0 || second > 59) {
+			throw new IllegalArgumentException("Argument 'second' [" + second + "] must not be less than 0 nor greater than 59.", this, arguments);
+		}
+		var string:String = second.toString();
+		return (getZeros(digitCount - string.length) + string);
+	}
+	
+	/**
+	 * Formats the passed-in {@code millisecond} into a number string with
+	 * range 0 to 999.
+	 *
+	 * <p>The resulting string contains only the specified {@code digitCount}
+	 * if possible. This means if the millisecond is 7 and the {@code digitCount}
+	 * 1, the resulting string contains only one digit. But this is not possible
+	 * with the millisecond 588. So in this case the resulting string contains
+	 * 3 digits. If {@code digitCount} is greater than the actual number of
+	 * digits, preceding 0s are added.
+	 *
+	 * @param millisecond the millisecond to format
+	 * @param digitCount the number of favored digits
+	 * @return the string representation of the {@code millisecond}
+	 * @throws IllegalArgumentException if the passed-in {@code millisecond}
+	 * is less than 0 or greater than 999.
+	 */
+	private function formatMillisecond(millisecond:Number, digitCount:Number):String {
+		if (millisecond < 0 || millisecond > 999) {
+			throw new IllegalArgumentException("Argument 'millisecond' [" + millisecond + "] must not be less than 0 nor greater than 999.", this, arguments);
+		}
+		var string:String = millisecond.toString();
+		return (getZeros(digitCount - string.length) + string);
 	}
 	
 }
