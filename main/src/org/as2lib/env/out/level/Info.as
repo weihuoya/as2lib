@@ -6,7 +6,6 @@ import org.as2lib.env.out.Out;
 
 /**
  * @author Martin Heidegger, Simon Wacker
- * @version 1.0
  */
 class org.as2lib.env.out.level.Info extends Warning {
 	/**
