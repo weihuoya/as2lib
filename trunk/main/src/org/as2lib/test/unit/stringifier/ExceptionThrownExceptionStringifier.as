@@ -16,23 +16,25 @@
  
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.string.Stringifier;
-import org.as2lib.test.unit.error.UnexpectedException;
+import org.as2lib.test.unit.error.ExceptionThrownException;
+import org.as2lib.util.StringUtil;
 
 /**
- * Stringifier for a Exception that occurs during set up.
- * 
- * @see Failure
  * @author Martin Heidegger
  */
-class org.as2lib.test.unit.stringifier.UnexpectedExceptionStringifier extends BasicClass implements Stringifier {
+class org.as2lib.test.unit.stringifier.ExceptionThrownExceptionStringifier extends BasicClass implements Stringifier {
 	
 	/**
-	 * Returns a SetUpException as string.
+	 * Returns a ExceptionThrownException as string.
 	 * 
-	 * @return SetUpException as string.
+	 * @return ExceptionThrownException as string.
 	 */
 	public function execute (object):String {
-		var failure:UnexpectedException = UnexpectedException(object);
-		return(failure.getMessage()+"\n  "+failure.getCause());
+		var failure:ExceptionThrownException = ExceptionThrownException(object);
+		var result:String = "assertNotThrows failed";
+		if(failure.getMessage().length > 0) result += " with message: "+failure.getMessage();
+		result += "\n  A unexpected exception was thrown during "+failure.getCall().toString()+" with arguments ["+failure.getCallArguments()+"]";
+		result += "\n  The exception was: \n"+StringUtil.addSpaceIndent(failure.getNestedException().toString(), 4);
+		return(result);
 	}
 }

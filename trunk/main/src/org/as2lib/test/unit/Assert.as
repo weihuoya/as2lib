@@ -298,6 +298,27 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	}
 	
 	/**
+	 * Checks if a call throws any exception type.
+	 * Executes the given call and checks if it throws any error, else it will throw an exception.
+	 * 
+	 * @see #isNotThrowing
+	 * 
+	 * @throws NothingThrownException if nothing was thrown.
+	 * @param message	Message that should be submitted if it fails.
+	 * @param call		Call that should be executed.
+	 * @param args		Arguments for the call.
+	 */
+	public static function isThrowingWithoutType(message:String,  call:Call, args):Void {
+		try {
+			call.execute(args);
+			throw new NothingThrownException(message, eval("th"+"is"), arguments, call, args);
+		} catch(e:org.as2lib.test.unit.error.NothingThrownException){
+			throw e;
+		} catch(e) {
+		}
+	}
+	
+	/**
 	 * Checks if a call doesn't throw a expected exception type.
 	 * Executes the given call and checks if it doesn't throw an defined error else it will throw an exception.
 	 * 
@@ -316,6 +337,25 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 			if(ObjectUtil.isInstanceOf(e, type)) {
 				throw new ExpectedTypeThrownException(message, eval("th"+"is"), arguments, call, e, args);
 			}
+		}
+	}
+	
+	/**
+	 * Checks if a call doesn't throw any exception.
+	 * Executes the given call and checks if it doesn't throw anything, else it will throw an exception.
+	 * 
+	 * @see #isNotThrowing
+	 * 
+	 * @throws ExceptionThrownException if the exception was thrown.
+	 * @param message	Message that should be submitted if it fails.
+	 * @param call		Call that should be executed.
+	 * @param args		Arguments for the call.
+	 */
+	public static function isNotThrowingWithoutType(message:String, call:Call, args):Void {
+		try {
+			call.execute(args);
+		} catch(e) {
+			throw new ExceptionThrownException(message, eval("th"+"is"), arguments, call, e, args);
 		}
 	}
 }

@@ -1121,37 +1121,78 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * overload
 	 * 
 	 * @see #assertThrowsWithCall
-	 * @see #assertThrowsWithString
-	 * @see #assertThrowsWithFunction
+	 * @see #assertThrowsWithCallAndType
 	 * @see #assertThrowsWithCallAndMessage
+	 * @see #assertThrowsWithCallAndMessageAndType
+	 * @see #assertThrowsWithString
+	 * @see #assertThrowsWithStringAndType
 	 * @see #assertThrowsWithStringAndMessage
+	 * @see #assertThrowsWithStringAndMessageAndType
+	 * @see #assertThrowsWithFunction
+	 * @see #assertThrowsWithFunctionAndType
 	 * @see #assertThrowsWithFunctionAndMessage
+	 * @see #assertThrowsWithFunctionAndMessageAndType
 	 */
 	private function assertThrows():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([Object, Call, Array], assertThrowsWithCall);
-		overload.addHandler([Object, Object, String, Array], assertThrowsWithString);
-		overload.addHandler([Object, Object, Function, Array], assertThrowsWithFunction);
-		overload.addHandler([String, Object, Call, Array], assertThrowsWithCallAndMessage);
-		overload.addHandler([String, Object, Object, String, Array], assertThrowsWithStringAndMessage);
-		overload.addHandler([String, Object, Object, Function, Array], assertThrowsWithFunctionAndMessage);
+		overload.addHandler([Call, Array], assertThrowsWithCall);
+		overload.addHandler([Object, String, Array], assertThrowsWithString);
+		overload.addHandler([Object, Function, Array], assertThrowsWithFunction);
+		overload.addHandler([Object, Call, Array], assertThrowsWithCallAndType);
+		overload.addHandler([Object, Object, String, Array], assertThrowsWithStringAndType);
+		overload.addHandler([Object, Object, Function, Array], assertThrowsWithFunctionAndType);
+		overload.addHandler([String, Call, Array], assertThrowsWithCallAndMessage);
+		overload.addHandler([String, Object, String, Array], assertThrowsWithStringAndMessage);
+		overload.addHandler([String, Object, Function, Array], assertThrowsWithFunctionAndMessage);
+		overload.addHandler([String, Object, Call, Array], assertThrowsWithCallAndMessageAndType);
+		overload.addHandler([String, Object, Object, String, Array], assertThrowsWithStringAndMessageAndType);
+		overload.addHandler([String, Object, Object, Function, Array], assertThrowsWithFunctionAndMessageAndType);
 		return overload.forward(arguments);
 	}
 	
 	/**
-	 * Asserts that the execution of a call throws a exception.
-	 * This method executes the given Call with arguments and checks if it throws a expected Exception.
+	 * Asserts that the execution of a call throws any exception.
+	 * This method executes the given Call with arguments and checks if it throws any Exception.
+	 * 
+	 * The assertion adds a error to the result if the method didn't throw a exception.
+	 * 
+	 * @see #assertThrowsWithCallAndMessage
+	 * @param call	Call that should be executed.
+	 * @param args	Arguments that should be used by executing.
+	 */
+	private function assertThrowsWithCall(call:Call, args:Array):Boolean {
+		return assertThrowsWithCallAndMessage("", call, args);
+	}
+	
+	/**
+	 * Asserts that the execution of a call throws any exception.
+	 * This method executes the given Call with arguments and checks if it throws any Exception.
 	 * 
 	 * The assertion adds a error to the result if the method didn't throw a exception or throw a 
 	 * exception with the wrong type.
 	 * 
-	 * @see assertThrowsWithCallAndMessage
+	 * @see #assertThrowsWithCallAndMessageAndType
 	 * @param type	Type of the Exception that should be thrown.
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
 	 */
-	private function assertThrowsWithCall(type, call:Call, args:Array):Boolean {
-		return assertThrowsWithCallAndMessage("", type, call, args);
+	private function assertThrowsWithCallAndType(type, call:Call, args:Array):Boolean {
+		return assertThrowsWithCallAndMessageAndType("", type, call, args);
+	}
+	
+	/**
+	 * Asserts that the execution of a method throws any exception.
+	 * This method takes a method of the given object(inObject) by a given name and checks if it throws any expected exception by execution.
+	 * 
+	 * The assertion adds a error to the result if the method didn't throw a exception or if the method was not available.
+	 * 
+	 * @see #assertThrowsWithStringAndMessage
+	 * @param inObject	Object that should be used as scope.
+	 * @param name		Name of the method that should be executed.
+	 * @param args		Arguments that should be used by executing.
+	 */
+	private function assertThrowsWithString(inObject, name:String, args:Array):Boolean {
+		return assertThrowsWithStringAndMessage("",  inObject, name, args);
 	}
 	
 	/**
@@ -1161,14 +1202,29 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * The assertion adds a error to the result if the method didn't throw a exception or throw a 
 	 * exception with the wrong type or if the method was not available.
 	 * 
-	 * @see assertThrowsWithStringAndMessage
+	 * @see #assertThrowsWithStringAndMessageAndType
 	 * @param type		Type of the Exception that should be thrown.
 	 * @param inObject	Object that should be used as scope.
 	 * @param name		Name of the method that should be executed.
 	 * @param args		Arguments that should be used by executing.
 	 */
-	private function assertThrowsWithString(type, inObject, name:String, args:Array):Boolean {
-		return assertThrowsWithStringAndMessage("", type, inObject, name, args);
+	private function assertThrowsWithStringAndType(type, inObject, name:String, args:Array):Boolean {
+		return assertThrowsWithStringAndMessageAndType("", type, inObject, name, args);
+	}
+	
+	/**
+	 * Asserts that the execution of a method throws any exception.
+	 * This method takes a given method and excutes it within a given object. It checks if it throws any exception by execution.
+	 * 
+	 * The assertion adds a error to the result if the method didn't throw any exception.
+	 * 
+	 * @see #assertThrowsWithFunctionAndMessage
+	 * @param inObject	Object that should be used as scope.
+	 * @param func		Function that should be executed.
+	 * @param args		Arguments that should be used by executing.
+	 */
+	private function assertThrowsWithFunction(inObject, func:Function, args:Array):Boolean {
+		return assertThrowsWithFunctionAndMessage("", inObject, func, args);
 	}
 	
 	/**
@@ -1177,33 +1233,52 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * 
 	 * The assertion adds a error to the result if the method didn't throw a exception or throw a exception with the wrong type.
 	 * 
-	 * @see assertThrowsWithFunctionAndMessage
-	 * @param type		Type of the Exception that should be thrown.
+	 * @see #assertThrowsWithFunctionAndMessageAndType
 	 * @param inObject	Object that should be used as scope.
 	 * @param func		Function that should be executed.
 	 * @param args		Arguments that should be used by executing.
 	 */
-	private function assertThrowsWithFunction(type, inObject, func:Function, args:Array):Boolean {
-		return assertThrowsWithFunctionAndMessage("", type, inObject, func, args);
+	private function assertThrowsWithFunctionAndType(type, inObject, func:Function, args:Array):Boolean {
+		return assertThrowsWithFunctionAndMessageAndType("", type, inObject, func, args);
 	}
 	
 	/**
 	 * Asserts the same like @see #assertThrowsWithCall but adds a message to the failure (if necessary).
 	 * 
-	 * @see assertThrowsWithCall
+	 * @see #assertThrowsWithCall
+	 * @param message	Message that should be used by fail.
+	 * @param call	Call that should be executed.
+	 * @param args	Arguments that should be used by executing.
+	 */
+	private function assertThrowsWithCallAndMessage(message:String, call:Call, args:Array):Boolean {
+		try {
+			Assert.isThrowingWithoutType(message, call, args);
+			return true;
+		} catch(e:org.as2lib.test.unit.AssertException) {
+			getMethodInformation().addError(e);
+		} catch(e) {
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrowsWithCalAndMessage", this, arguments).initCause(e));
+		}
+		return false;
+	}
+	
+	/**
+	 * Asserts the same like @see #assertThrowsWithCallAndType but adds a message to the failure (if necessary).
+	 * 
+	 * @see #assertThrowsWithCallAndType
 	 * @param message	Message that should be used by fail.
 	 * @param type	Type of the Exception that should be thrown.
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
 	 */
-	private function assertThrowsWithCallAndMessage(message:String, type, call:Call, args:Array):Boolean {
+	private function assertThrowsWithCallAndMessageAndType(message:String, type, call:Call, args:Array):Boolean {
 		try {
 			Assert.isThrowing(message, type, call, args);
 			return true;
 		} catch(e:org.as2lib.test.unit.AssertException) {
 			getMethodInformation().addError(e);
 		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrows", this, arguments).initCause(e));
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrowsWithCallAndMessageAndType", this, arguments).initCause(e));
 		}
 		return false;
 	}
@@ -1211,19 +1286,38 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	/**
 	 * Asserts the same like @see #assertThrowsWithString but adds a message to the failure (if necessary).
 	 * 
-	 * @see assertThrowsWithString
+	 * @see #assertThrowsWithString
+	 * @param message	Message that should be used by fail.
+	 * @param inObject	Object that should be used as scope.
+	 * @param name		Name of the method that should be executed.
+	 * @param args		Arguments that should be used by executing.
+	 */
+	private function assertThrowsWithStringAndMessage(message:String,  inObject, name:String, args:Array):Boolean {
+		if(ObjectUtil.isTypeOf(inObject[name], "function")) {
+			return assertThrowsWithCallAndMessage(message, new Call(inObject, inObject[name]), args);
+		} else {
+			var e:IllegalArgumentException = new IllegalArgumentException("The method '"+name+"' is not available within "+inObject.toString(), this, arguments);
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrowsWithStringAndMessage", this, arguments).initCause(e));	
+			return false;
+		}
+	}
+	
+	/**
+	 * Asserts the same like @see #assertThrowsWithStringAndType but adds a message to the failure (if necessary).
+	 * 
+	 * @see #assertThrowsWithStringAndType
 	 * @param message	Message that should be used by fail.
 	 * @param type		Type of the Exception that should be thrown.
 	 * @param inObject	Object that should be used as scope.
 	 * @param name		Name of the method that should be executed.
 	 * @param args		Arguments that should be used by executing.
 	 */
-	private function assertThrowsWithStringAndMessage(message:String, type, inObject, name:String, args:Array):Boolean {
+	private function assertThrowsWithStringAndMessageAndType(message:String, type, inObject, name:String, args:Array):Boolean {
 		if(ObjectUtil.isTypeOf(inObject[name], "function")) {
-			return assertThrowsWithCallAndMessage(message, type, new Call(inObject, inObject[name]), args);
+			return assertThrowsWithCallAndMessageAndType(message, type, new Call(inObject, inObject[name]), args);
 		} else {
 			var e:IllegalArgumentException = new IllegalArgumentException("The method '"+name+"' is not available within "+inObject.toString(), this, arguments);
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrows", this, arguments).initCause(e));	
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrowsWithStringAndMessageAndType", this, arguments).initCause(e));	
 			return false;
 		}
 	}
@@ -1233,13 +1327,26 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * 
 	 * @see assertThrowsWithFunction
 	 * @param message	Message that should be used by fail.
+	 * @param inObject	Object that should be used as scope.
+	 * @param func		Function that should be executed.
+	 * @param args		Arguments that should be used by executing.
+	 */
+	private function assertThrowsWithFunctionAndMessage(message:String, inObject, func:Function, args:Array):Boolean {
+		return assertThrowsWithCallAndMessage(message, new Call(inObject, func), args);
+	}
+	
+	/**
+	 * Asserts the same like @see #assertThrowsWithFunctionAndType but adds a message to the failure (if necessary).
+	 * 
+	 * @see #assertThrowsWithFunctionAndType
+	 * @param message	Message that should be used by fail.
 	 * @param type		Type of the Exception that should be thrown.
 	 * @param inObject	Object that should be used as scope.
 	 * @param func		Function that should be executed.
 	 * @param args		Arguments that should be used by executing.
 	 */
-	private function assertThrowsWithFunctionAndMessage(message:String, type, inObject, func:Function, args:Array):Boolean {
-		return assertThrowsWithCallAndMessage(message, type, new Call(inObject, func), args);
+	private function assertThrowsWithFunctionAndMessageAndType(message:String, type, inObject, func:Function, args:Array):Boolean {
+		return assertThrowsWithCallAndMessageAndType(message, type, new Call(inObject, func), args);
 	}
 	
 	
@@ -1247,21 +1354,48 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * overload
 	 * 
 	 * @see #assertNotThrowsWithCall
-	 * @see #assertNotThrowsWithString
-	 * @see #assertNotThrowsWithFunction
+	 * @see #assertNotThrowsWithCallAndType
 	 * @see #assertNotThrowsWithCallAndMessage
+	 * @see #assertNotThrowsWithCallAndMessageAndType
+	 * @see #assertNotThrowsWithString
+	 * @see #assertNotThrowsWithStringAndType
 	 * @see #assertNotThrowsWithStringAndMessage
+	 * @see #assertNotThrowsWithStringAndMessageAndType
+	 * @see #assertNotThrowsWithFunction
+	 * @see #assertNotThrowsWithFunctionAndType
 	 * @see #assertNotThrowsWithFunctionAndMessage
+	 * @see #assertNotThrowsWithFunctionAndMessageAndType
 	 */
 	private function assertNotThrows():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([Object, Call, Array], assertNotThrowsWithCall);
-		overload.addHandler([Object, Object, String, Array], assertNotThrowsWithString);
-		overload.addHandler([Object, Object, Function, Array], assertNotThrowsWithFunction);
-		overload.addHandler([String, Object, Call, Array], assertNotThrowsWithCallAndMessage);
-		overload.addHandler([String, Object, Object, String, Array], assertNotThrowsWithStringAndMessage);
-		overload.addHandler([String, Object, Object, Function, Array], assertNotThrowsWithFunctionAndMessage);
+		overload.addHandler([Call, Array], assertNotThrowsWithCall);
+		overload.addHandler([Object, String, Array], assertNotThrowsWithString);
+		overload.addHandler([Object, Function, Array], assertNotThrowsWithFunction);
+		overload.addHandler([Object, Call, Array], assertNotThrowsWithCallAndType);
+		overload.addHandler([Object, Object, String, Array], assertNotThrowsWithStringAndType);
+		overload.addHandler([Object, Object, Function, Array], assertNotThrowsWithFunctionAndType);
+		overload.addHandler([String, Call, Array], assertNotThrowsWithCallAndMessage);
+		overload.addHandler([String, Object, String, Array], assertNotThrowsWithStringAndMessage);
+		overload.addHandler([String, Object, Function, Array], assertNotThrowsWithFunctionAndMessage);
+		overload.addHandler([String, Object, Call, Array], assertNotThrowsWithCallAndMessageAndType);
+		overload.addHandler([String, Object, Object, String, Array], assertNotThrowsWithStringAndMessageAndType);
+		overload.addHandler([String, Object, Object, Function, Array], assertNotThrowsWithFunctionAndMessageAndType);
 		return overload.forward(arguments);
+	}
+	
+	/**
+	 * Asserts that the execution of a call doesn't throw any exception.
+	 * This method executes the given Call with arguments and checks if it doesn't throw any exception.
+	 * 
+	 * The assertion adds a error to the result if the method did throw any exception.
+	 * 
+	 * @see #assertNotThrowsWithCallAndMessage
+	 * @see #assertNotThrowsWithCallAndTypeAndMessage
+	 * @param call	Call that should be executed.
+	 * @param args	Arguments that should be used by executing.
+	 */
+	private function assertNotThrowsWithCall(call:Call, args:Array):Boolean {
+		return assertNotThrowsWithCallAndMessage("", call, args);
 	}
 	
 	/**
@@ -1270,13 +1404,28 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * 
 	 * The assertion adds a error to the result if the method did throw the expected exception.
 	 * 
-	 * @see assertNotThrowsWithCallAndMessage
+	 * @see #assertNotThrowsWithCallAndTypeAndMessage
 	 * @param type	Type of the Exception that should not be thrown.
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
 	 */
-	private function assertNotThrowsWithCall(type, call:Call, args:Array):Boolean {
-		return assertNotThrowsWithCallAndMessage("", type, call, args);
+	private function assertNotThrowsWithCallAndType(type, call:Call, args:Array):Boolean {
+		return assertNotThrowsWithCallAndMessageAndType("", type, call, args);
+	}
+	
+	/**
+	 * Asserts that the execution of a method doesn't throw any exception.
+	 * This method takes a method of the given object(inObject) by a given name and checks if it doesn't throw any exception by execution.
+	 * 
+	 * The assertion adds a error to the result if the method did throw any exception or if the method was not available.
+	 * 
+	 * @see #assertNotThrowsWithStringAndMessage
+	 * @param inObject	Object that should be used as scope.
+	 * @param name		Name of the method that should be executed.
+	 * @param args		Arguments that should be used by executing.
+	 */
+	private function assertNotThrowsWithString(inObject, name:String, args:Array):Boolean {
+		return assertNotThrowsWithStringAndMessage("", inObject, name, args);
 	}
 	
 	/**
@@ -1285,14 +1434,29 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * 
 	 * The assertion adds a error to the result if the method did throw the expected exception or if the method was not available.
 	 * 
-	 * @see assertNotThrowsWithStringAndMessage
+	 * @see #assertNotThrowsWithStringAndMessageAndType
 	 * @param type		Type of the Exception that should not be thrown.
 	 * @param inObject	Object that should be used as scope.
 	 * @param name		Name of the method that should be executed.
 	 * @param args		Arguments that should be used by executing.
 	 */
-	private function assertNotThrowsWithString(type, inObject, name:String, args:Array):Boolean {
-		return assertNotThrowsWithStringAndMessage("", type, inObject, name, args);
+	private function assertNotThrowsWithStringAndType(type, inObject, name:String, args:Array):Boolean {
+		return assertNotThrowsWithStringAndMessageAndType("", type, inObject, name, args);
+	}
+	
+	/**
+	 * Asserts that the execution of a method doesn't throw any exception.
+	 * This method takes a given method and excutes it within a given object. It checks if it doesn't throw any exception by execution.
+	 * 
+	 * The assertion adds a error to the result if the method did throw any exception.
+	 * 
+	 * @see #assertNotThrowsWithFunctionAndMessage
+	 * @param inObject	Object that should be used as scope.
+	 * @param func		Function that should be executed.
+	 * @param args		Arguments that should be used by executing.
+	 */
+	private function assertNotThrowsWithFunction(inObject, func:Function, args:Array):Boolean {
+		return assertNotThrowsWithFunctionAndMessage("", inObject, func, args);
 	}
 	
 	/**
@@ -1301,26 +1465,46 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * 
 	 * The assertion adds a error to the result if the method did throw the expected exception.
 	 * 
-	 * @see assertNotThrowsWithFunctionAndMessage
+	 * @see #assertNotThrowsWithFunctionAndMessage
 	 * @param type		Type of the Exception that should not be thrown.
 	 * @param inObject	Object that should be used as scope.
 	 * @param func		Function that should be executed.
 	 * @param args		Arguments that should be used by executing.
 	 */
-	private function assertNotThrowsWithFunction(type, inObject, func:Function, args:Array):Boolean {
-		return assertNotThrowsWithFunctionAndMessage("", type, inObject, func, args);
+	private function assertNotThrowsWithFunctionAndType(type, inObject, func:Function, args:Array):Boolean {
+		return assertNotThrowsWithFunctionAndMessageAndType("", type, inObject, func, args);
 	}
 	
 	/**
 	 * Asserts the same like @see #assertNotThrowsWithCall but adds a message to the failure (if necessary).
 	 * 
-	 * @see assertNotThrowsWithCall
+	 * @see #assertNotThrowsWithCall
+	 * @param message	Message that should be used by fail.
+	 * @param call	Call that should be executed.
+	 * @param args	Arguments that should be used by executing.
+	 */
+	private function assertNotThrowsWithCallAndMessage(message:String, call:Call, args:Array):Boolean {
+		try {
+			Assert.isNotThrowingWithoutType(message, call, args);
+			return true;
+		} catch(e:org.as2lib.test.unit.AssertException) {
+			getMethodInformation().addError(e);
+		} catch(e) {
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotThrows", this, arguments).initCause(e));
+		}
+		return false;
+	}
+	
+	/**
+	 * Asserts the same like @see #assertNotThrowsWithCallAndType but adds a message to the failure (if necessary).
+	 * 
+	 * @see #assertNotThrowsWithCallAndType
 	 * @param message	Message that should be used by fail.
 	 * @param type	Type of the Exception that should not be thrown.
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
 	 */
-	private function assertNotThrowsWithCallAndMessage(message:String, type, call:Call, args:Array):Boolean {
+	private function assertNotThrowsWithCallAndMessageAndType(message:String, type, call:Call, args:Array):Boolean {
 		try {
 			Assert.isNotThrowing(message, type, call, args);
 			return true;
@@ -1335,19 +1519,38 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	/**
 	 * Asserts the same like @see #assertNotThrowsWithString but adds a message to the failure (if necessary).
 	 * 
-	 * @see assertNotThrowsWithString
+	 * @see #assertNotThrowsWithString
+	 * @param message	Message that should be used by fail.
+	 * @param inObject	Object that should be used as scope.
+	 * @param name		Name of the method that should be executed.
+	 * @param args		Arguments that should be used by executing.
+	 */
+	private function assertNotThrowsWithStringAndMessage(message:String, inObject, name:String, args:Array):Boolean {
+		if(ObjectUtil.isTypeOf(inObject[name], "function")) {
+			return assertNotThrowsWithCallAndMessage(message, new Call(inObject, inObject[name]), args);
+		} else {
+			var e:IllegalArgumentException = new IllegalArgumentException("The method '"+name+"' is not available within "+inObject.toString(), this, arguments);
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotThrowsWithString", this, arguments).initCause(e));	
+			return false;
+		}
+	}
+	
+	/**
+	 * Asserts the same like @see #assertNotThrowsWithStringAndType but adds a message to the failure (if necessary).
+	 * 
+	 * @see #assertNotThrowsWithString
 	 * @param message	Message that should be used by fail.
 	 * @param type		Type of the Exception that should not be thrown.
 	 * @param inObject	Object that should be used as scope.
 	 * @param name		Name of the method that should be executed.
 	 * @param args		Arguments that should be used by executing.
 	 */
-	private function assertNotThrowsWithStringAndMessage(message:String, type, inObject, name:String, args:Array):Boolean {
+	private function assertNotThrowsWithStringAndMessageAndType(message:String, type, inObject, name:String, args:Array):Boolean {
 		if(ObjectUtil.isTypeOf(inObject[name], "function")) {
-			return assertNotThrowsWithCallAndMessage(message, type, new Call(inObject, inObject[name]), args);
+			return assertNotThrowsWithCallAndMessageAndType(message, type, new Call(inObject, inObject[name]), args);
 		} else {
 			var e:IllegalArgumentException = new IllegalArgumentException("The method '"+name+"' is not available within "+inObject.toString(), this, arguments);
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrows", this, arguments).initCause(e));	
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotThrowsWithStringAndMessageAndType", this, arguments).initCause(e));	
 			return false;
 		}
 	}
@@ -1355,14 +1558,27 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	/**
 	 * Asserts the same like @see #assertNotThrowsWithFunction but adds a message to the failure (if necessary).
 	 * 
-	 * @see assertNotThrowsWithFunction
+	 * @see #assertNotThrowsWithFunction
+	 * @param message	Message that should be used by fail.
+	 * @param inObject	Object that should be used as scope.
+	 * @param func		Function that should be executed.
+	 * @param args		Arguments that should be used by executing.
+	 */
+	private function assertNotThrowsWithFunctionAndMessage(message:String, inObject, func:Function, args:Array):Boolean {
+		return assertNotThrowsWithCallAndMessage(message, new Call(inObject, func), args);
+	}
+	
+	/**
+	 * Asserts the same like @see #assertNotThrowsWithFunctionAndType but adds a message to the failure (if necessary).
+	 * 
+	 * @see #assertNotThrowsWithFunctionAndType
 	 * @param message	Message that should be used by fail.
 	 * @param type		Type of the Exception that should not be thrown.
 	 * @param inObject	Object that should be used as scope.
 	 * @param func		Function that should be executed.
 	 * @param args		Arguments that should be used by executing.
 	 */
-	private function assertNotThrowsWithFunctionAndMessage(message:String, type, inObject, func:Function, args:Array):Boolean {
-		return assertNotThrowsWithCallAndMessage(message, type, new Call(inObject, func), args);
+	private function assertNotThrowsWithFunctionAndMessageAndType(message:String, type, inObject, func:Function, args:Array):Boolean {
+		return assertNotThrowsWithCallAndMessageAndType(message, type, new Call(inObject, func), args);
 	}
 }
