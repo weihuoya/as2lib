@@ -26,8 +26,8 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	private static var cache:Cache = new Cache();
 	private static var classAlgorythm:CacheAlgorythm = new ClassAlgorythm(cache);
 	private static var packageAlgorythm:CacheAlgorythm = new PackageAlgorythm(cache);
-	private static var methodAlgorythm:ContentAlgorythm = new MethodAlgorythm(cache);
-	private static var propertyAlgorythm:ContentAlgorythm = new PropertyAlgorythm(cache);
+	private static var methodAlgorythm:ContentAlgorythm = new MethodAlgorythm();
+	private static var propertyAlgorythm:ContentAlgorythm = new PropertyAlgorythm();
 	private static var childrenAlgorythm:ContentAlgorythm = new ChildrenAlgorythm(cache);
 	
 	/**
