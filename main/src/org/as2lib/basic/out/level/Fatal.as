@@ -1,5 +1,5 @@
 ﻿import org.as2lib.basic.out.level.None;
-import org.as2lib.basic.out.OutErrorInfo;
+import org.as2lib.basic.out.info.OutErrorInfo;
 import org.as2lib.basic.event.EventBroadcaster;
 import org.as2lib.basic.event.EventInfo;
 import org.as2lib.basic.Throwable;

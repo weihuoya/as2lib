@@ -1,12 +1,26 @@
-﻿/**
+﻿import org.as2lib.basic.BasicClass;
+import org.as2lib.basic.string.ObjectStringifier;
+import org.as2lib.basic.string.Stringifier;
+
+/**
  * @author: Simon Wacker
  * @version: 1.0
  */
-class org.as2lib.util.ObjectUtil {
+class org.as2lib.util.ObjectUtil extends BasicClass{
+	private static var stringifier:Stringifier = new ObjectStringifier();
+	
 	/**
 	 * private constructor.
 	 */
 	private function ObjectUtil(Void) {
+	}
+	
+	public static function setStringifier(newStringifier:Stringifier):Void {
+		stringifier = newStringifier;
+	}
+	
+	public static function stringify(object:Object):String {
+		return stringifier.execute(object);
 	}
 	
 	/**

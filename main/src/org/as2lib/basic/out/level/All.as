@@ -1,5 +1,5 @@
 ﻿import org.as2lib.basic.out.level.Debug;
-import org.as2lib.basic.out.OutWriteInfo;
+import org.as2lib.basic.out.info.OutWriteInfo;
 import org.as2lib.basic.event.EventBroadcaster;
 import org.as2lib.basic.event.EventInfo;
 import org.as2lib.basic.Out;
