@@ -63,6 +63,9 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	/** No output will be made. */
 	public static var NONE:OutLevel = new NoneLevel();
 	
+	/** The EventBroadcaster that is used to dispatch to all static registered OutHandlers. */
+	private static var staticBroadcaster:EventBroadcaster;
+	
 	/** The actual OutLevel of the Out instance. */
 	private var level:OutLevel;
 	
@@ -98,6 +101,19 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	}
 	
 	/**
+	 * Adds a new OutHandler to the static list of handlers. These OutHandlers will be used
+	 * to make the output of all instances. They get invoked when output shall be made.
+	 *
+	 * @param handler the new OutHandler that shall handle output
+	 */
+	public static function addStaticHandler(aHandler:OutHandler):Void {
+		if(!staticBroadcaster) {
+			staticBroadcaster = OutConfig.getEventBroadcasterFactory().createEventBroadcaster();
+		}
+		staticBroadcaster.addListener(aHandler);
+	}
+	
+	/**
 	 * Adds a new OutHandler to the list of handlers. These OutHandlers will be used
 	 * to make the actual output. They get invoked when output shall be made.
 	 *
@@ -105,6 +121,17 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	 */
 	public function addHandler(aHandler:OutHandler):Void {
 		broadcaster.addListener(aHandler);
+	}
+	
+	/**
+	 * Removes the specified OutHandler from the list of static handlers. If the OutHandler
+	 * does not exist in the list the IllegalArgumentException will be thrown.
+	 *
+	 * @param handler the OutHandler to be removed from the list
+	 * @throws IllegalArgumentException the exception will be thrown when the OutHandler does not exist on the list
+	 */
+	public static function removeStaticHandler(aHandler:OutHandler):Void {
+		staticBroadcaster.removeListener(aHandler);
 	}
 	
 	/**
@@ -141,41 +168,41 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	 * @see org.as2lib.core.OutAccess
 	 */
 	public function log(message):Void {
-		level.log(message, broadcaster);
+		level.log(message, broadcaster, staticBroadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
 	public function debug(message):Void {
-		level.debug(message, broadcaster);
+		level.debug(message, broadcaster, staticBroadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
 	public function info(message):Void {
-		level.info(message, broadcaster);
+		level.info(message, broadcaster, staticBroadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
 	public function warning(message):Void {
-		level.warning(message, broadcaster);
+		level.warning(message, broadcaster, staticBroadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
 	public function error(message):Void {
-		level.error(message, broadcaster);
+		level.error(message, broadcaster, staticBroadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
 	public function fatal(message):Void {
-		level.fatal(message, broadcaster);
+		level.fatal(message, broadcaster, staticBroadcaster);
 	}
 }
