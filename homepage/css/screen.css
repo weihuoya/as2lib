@@ -1,0 +1,114 @@
+@import url(screen/image.css);
+
+html {
+  border: 0px;
+}
+
+body {
+  border: 0px;
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+  background-color: #A9FF2F;
+  background-image: url(../images/background.gif);
+  background-repeat: repeat-x;
+}
+
+div{
+  text-align: center;
+}
+
+img {
+  border: 0px;
+}
+
+a {
+  color: #444444;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #000000;
+  text-decoration: underline;
+}
+
+.mainTable {
+}
+
+.contentBorder {
+  width: 38.0625em;
+}
+.logo {
+  padding: 0.375em;
+  padding-top: 0.75em;
+  vertical-align: bottom;
+}
+.right {
+  width: 0.125em;
+}
+.center {
+  width: 100%;
+}
+.left {
+  width: 0.125em;
+}
+.content {
+  width: 38.06em;
+  background-color: #F0F0F0;
+}
+.menu {
+  width: 100%;
+  border: 0px;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+.menu td {
+  font-size: 0.75em;
+  font-family: Verdana, Arial, Helvetica, sans, serif;
+  white-space: nowrap;
+}
+.menu td a {
+  text-decoration: none;
+  display: block;
+  padding-left: 1.25em;
+  padding-right: 3.5625em;
+  color: #444444;
+}
+.menu td a:hover {
+  color: #FF8711;
+}
+.menu td b {
+  padding-left: 1.25em;
+  padding-right: 3.5625em;
+  cursor: default;
+}
+.contentTd {
+  width: 100%;
+  vertical-align: top;
+  padding: 1.25em;
+  padding-top: 3.5em;
+  font-size: 0.625em;
+  color: #444444;
+  font-family: Verdana, Arial, Helvetica, sans, serif;
+}
+.contentTd h1 {
+  color: #000000;
+  font-size: 1.2em;
+  font-family: Verdana, Arial, Helvetica, sans, serif;
+  
+}
+.eyecatcher {
+  padding: 1em;
+  background-color: #FFFFFF;
+  color: #000000;
+  border: 0.0625em solid #A9FF2F;
+  text-align: left;
+}
+.menuTable {
+  width: 100%;
+  height: 100%;
+}
+.externalIcons {
+  margin-left: 1em;
+  margin-right: 2em;
+}
