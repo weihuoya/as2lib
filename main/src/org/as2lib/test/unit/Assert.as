@@ -335,7 +335,7 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 			call.execute(args);
 		} catch(e) {
 			if(ObjectUtil.isInstanceOf(e, type)) {
-				throw new ExpectedTypeThrownException(message, eval("th"+"is"), arguments, call, e, args);
+				throw new ExpectedTypeThrownException(message, eval("th"+"is"), arguments, call, args, e);
 			}
 		}
 	}
@@ -355,7 +355,7 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 		try {
 			call.execute(args);
 		} catch(e) {
-			throw new ExceptionThrownException(message, eval("th"+"is"), arguments, call, e, args);
+			throw new ExceptionThrownException(message, eval("th"+"is"), arguments, call, args, e);
 		}
 	}
 }
