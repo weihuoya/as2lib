@@ -68,8 +68,8 @@ class org.as2lib.env.overload.SameTypeSignatureException extends OverloadExcepti
 			} catch (e) {
 			}
 			asString += "\n  Used Arguments["+overloadArguments.length+"]: ";
-			for(var i:Number = 0; i < overloadArguments.length; i++) {
-				if(i != 0) {
+			for (var i:Number = 0; i < overloadArguments.length; i++) {
+				if (i != 0) {
 					asString += ", ";
 				}
 				asString += overloadArguments[i];

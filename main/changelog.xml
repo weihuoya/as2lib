@@ -5,6 +5,10 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2004">
       <month value="12">
+        <day value="8">
+          <entry type="add" package="org.as2lib.env.overload" class="Overload" method="getMatchingHandler(..):OverloadHandler">Added public getMatchingHandler-Method that can be used to obtain an overload handler to be able execute the right method directly without more delegates. This enables the use of more recursions.</entry>
+          <entry type="add" package="org.as2lib.env.overload" class="OverloadHandler" method="getMethod(Void):Function">Added public getMethod-Method that can be used to obtain the method to execute of an overload handler to be able execute the method directly without more delegates. This enables the use of more recursions.</entry>
+        </day>
         <day value="2">
           <entry type="add" package="org.as2lib.util" class="ConstructorCall">New Class to call a constructor within a assertThrows testcase</entry>
           <entry type="add" package="org.as2lib.data.type" class="Angle">Common Interface to work with angles</entry>

@@ -26,21 +26,22 @@ import org.as2lib.env.overload.SameTypeSignatureException;
  * @author Simon Wacker
  */
 class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implements OverloadHandler {
+	
 	/** Contains the arguments types of the operation. */
 	private var args:Array;
 	
 	/** The operation to be executed on the given target. */
-	private var func:Function;
+	private var method:Function;
 	
 	/**
 	 * Constructs a new SimpleOverloadHandler instance.
 	 *
 	 * @param args the arguments types of the operation
-	 * @param func the actual operation to be executed on the target if the argumetns types match
+	 * @param method the actual operation to be executed on the target if the argumetns types match
 	 */
-	public function SimpleOverloadHandler(args:Array, func:Function) {
+	public function SimpleOverloadHandler(args:Array, method:Function) {
 		this.args = args;
-		this.func = func;
+		this.method = method;
 	}
 	
 	/**
@@ -64,7 +65,7 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	 * @see org.as2lib.env.overload.OverloadHandler#execute()
 	 */
 	public function execute(target, someArguments:Array) {
-		return func.apply(target, someArguments);
+		return method.apply(target, someArguments);
 	}
 	
 	/**
@@ -97,6 +98,13 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	}
 	
 	/**
+	 * @see org.as2lib.env.overload.OverloadHandler#getMethod()
+	 */
+	public function getMethod(Void):Function {
+		return method;
+	}
+	
+	/**
 	 * Constructs a more detailed String output information for this class.
 	 * 
 	 * @returns Instance as string.
@@ -119,4 +127,5 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 		}
 		return result + "]";
 	}
+	
 }

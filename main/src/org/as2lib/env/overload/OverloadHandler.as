@@ -62,4 +62,12 @@ interface org.as2lib.env.overload.OverloadHandler extends BasicInterface {
 	 * @return an Array containing the OverloadHandler's type signature
 	 */
 	public function getArguments(Void):Array;
+	
+	/**
+	 * Returns the method this handler will execute to if its the most explicit one.
+	 *
+	 * @return the method this handler executes
+	 */
+	public function getMethod(Void):Function;
+	
 }

@@ -69,9 +69,7 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 				return addHandlerByValue(args, func);
 			}
 		}
-		throw new IllegalArgumentException("The types of the passed arguments [" + arguments + "] must match one of the available choices.",
-										   this,
-										   arguments);
+		throw new IllegalArgumentException("The types of the passed arguments [" + arguments + "] must match one of the available choices.", this, arguments);
 	}
 	
 	/**
@@ -119,15 +117,57 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * @throws org.as2lib.env.overload.SameTypeSignatureException if there exist at least two OverloadHandlers with the same type siganture
 	 */
 	public function forward(args:Array) {
-		var matchingHandlers:Array = getMatchingHandlers(args);
-		if (matchingHandlers.length == 0) {
+		return doGetMatchingHandler(arguments.caller, args).getMethod().apply(target, args);
+	}
+	
+	/**
+	 * Returns the most explicit OverloadHandler out of the Array of matching
+	 * OverloadHandlers.
+	 *
+	 * @param args the arguments that shall match to a specific OverloadHandler
+	 * @return the most explicit OverloadHandler
+	 */
+	public function getMatchingHandler(args:Array):OverloadHandler {
+		return doGetMatchingHandler(arguments.caller, args);
+	}
+	
+	/**
+	 * Returns the most explicit OverloadHandler out of the Array of matching
+	 * OverloadHandlers.
+	 *
+	 * @param overloadedMethod the overloaded method on the target
+	 * @param overloadArguments the arguments for which the overload shall be performed
+	 * @return the most explicit OverloadHandler
+	 * @throws SameTypeSignatureException if there are two overload handlers with the same type signature
+	 * @throws UnknownOverloadHandlerException if there is no matching handler
+	 */
+	private function doGetMatchingHandler(overloadedMethod:Function, overloadArguments:Array):OverloadHandler {
+		var matchingHandlers:Array = getMatchingHandlers(overloadArguments);
+		var i:Number = matchingHandlers.length;
+		if (i == 0) {
 			throw new UnknownOverloadHandlerException("No appropriate OverloadHandler found.",
 									 			  	  this,
 									 			  	  arguments,
 													  target,
+													  overloadedMethod,
+													  overloadArguments,
 													  handlers);
 		}
-		return getMatchingHandler(matchingHandlers, arguments.caller, args).execute(target, args);
+		var result:OverloadHandler = matchingHandlers[--i];
+		while (--i-(-1)) {
+			var moreExplicit:Boolean = result.isMoreExplicit(matchingHandlers[i]);
+			if (moreExplicit == null) {
+				throw new SameTypeSignatureException("Two OverloadHandlers have the same type signature.",
+													 this,
+													 arguments,
+													 target,
+													 overloadedMethod,
+													 overloadArguments,
+													 [result, matchingHandlers[i]]);
+			}
+			if (!moreExplicit) result = matchingHandlers[i];
+		}
+		return result;
 	}
 	
 	/**
@@ -142,32 +182,6 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 		while (--i-(-1)) {
 			var handler:OverloadHandler = handlers[i];
 			if (handler.matches(args)) result.push(handler);
-		}
-		return result;
-	}
-	
-	/**
-	 * Returns the most explicit OverloadHandler out of the Array of matching
-	 * OverloadHandlers.
-	 *
-	 * @param handlers the matching OverloadHandlers found by the #getMatchingHandlers() operation
-	 * @return the most explicit OverloadHandler
-	 */
-	private function getMatchingHandler(matchingHandlers:Array, overloadedMethod:Function, overloadArguments:Array):OverloadHandler {
-		var i:Number = matchingHandlers.length;
-		var result:OverloadHandler = matchingHandlers[--i];
-		while (--i-(-1)) {
-			var moreExplicit:Boolean = result.isMoreExplicit(matchingHandlers[i]);
-			if (moreExplicit == null) {
-				throw new SameTypeSignatureException("Two OverloadHandlers have the same type signature.",
-													 this,
-													 arguments,
-													 target,
-													 overloadedMethod,
-													 overloadArguments,
-													 [result, matchingHandlers[i]]);
-			}
-			if (!moreExplicit) result = matchingHandlers[i];
 		}
 		return result;
 	}
