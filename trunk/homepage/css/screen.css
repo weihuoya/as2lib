@@ -22,17 +22,6 @@ img {
   border: 0px;
 }
 
-a {
-  color: #666666;
-  border-bottom: 1px dashed #FF9F07;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #000000;
-  border-bottom: 1px dashed #000000;
-}
-
 h1 {
   color: #FF9F07;
   font-size: 1.4em;
@@ -61,7 +50,7 @@ h4 {
   font-size: 1.1em;
   font-family: Verdana, Arial, Helvetica, sans, serif;
 }
-code {
+.code {
   font-family: Courier;
   color: #006600;
   background-color: #FCFCFC;
@@ -70,7 +59,6 @@ code {
   margin-bottom: 0.2em;
   padding: 0.3em;
   display: block;
-  white-space: pre;
 }
 pre {
   font-family: Courier, Courier New;
@@ -80,8 +68,12 @@ pre {
   display: block;
 }
 ul {
+  margin: 0em;
   margin-top: 0.2em;
   margin-bottom: 1em;
+}
+ol {
+  margin: 0em;
 }
 .mainTable {
 }
@@ -119,6 +111,7 @@ ul {
 .menu a {
   text-decoration: none;
   display: block;
+	border: none;
   white-space:nowrap;
   text-align: left;
   padding-left: 1.25em;
@@ -128,6 +121,7 @@ ul {
 }
 .menu a:hover {
   color: #FF8711;
+	border: none;
 }
 .menu b {
   font-family: Verdana, Arial, Helvetica, sans, serif;
@@ -147,6 +141,17 @@ ul {
   color: #444444;
   font-family: Verdana, Arial, Helvetica, sans, serif;
 }
+.contentTd a {
+  color: #666666;
+  border-bottom: 1px dashed #FF9F07;
+  text-decoration: none;
+}
+
+.contentTd a:hover {
+  color: #000000;
+  border-bottom: 1px dashed #000000;
+}
+
 .eyecatcher {
   padding: 1em;
   background-color: #FFFFFF;
