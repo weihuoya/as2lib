@@ -1,0 +1,58 @@
+\chapter{Overloading}
+\label{sec:Overloading}
+
+\paragraph{Motivation:}
+
+En Java, la surcharge de méthode est supportée, cela veut dire que la classe peut avoir un ou plusieurs constructeurs dont leurs seuls différences sont les paramètres qui leurs sont envoyés.  Essayé d'implémenter plus d'un constructeur ou méthode avec le même nom mais des paramètres différents donne l'erreur suivante en \emph{ActionScript 2}:
+
+\begin{quote}
+	``Une classe doit comporter un seul constructeur. ''
+	ou bien:\\
+	``Impossible d'utiliser un nom de membre plusieurs fois.''
+\end{quote}
+
+\paragraph{Solution:}
+
+{\sl As2lib} rend la surcharge possible en {\sl ActionScript 2} à l'aide du package \emph{Overload}\footnote{org.as2lib.env.overload}. Si par exemple, une classe a besoin de 3 constructeurs, {\sl as2lib} fournit une solution simple.
+
+\begin{lstlisting}[frame=single]
+import org.as2lib.env.overload.Overload;
+
+class TryOverload {
+	private var aString:String;
+	private var aNumber:Number;
+	
+	public function TryOverload(){
+		var overload:Overload = new Overload(this);
+		overload.addHandler([Number, 
+		String], 
+		setValues);
+		overload.addHandler([Number], 
+		setNumber);
+		overload.addHandler([String],
+		setString);
+		overload.forward(arguments);
+	}
+	public function setValues(aNumber:Number, 
+	aString:String){
+		this.aNumber = aNumber;
+		this.aString = aString;
+	}
+	public function setNumber(aNumber:Number){
+		this.aNumber = aNumber;
+	}
+	public function setString(aString:String){
+		this.aString = aString;
+	}
+}
+\end{lstlisting}
+
+Dans la clase \emph{TryOverload}, un constructeur est déclaré sans spécifier les paramètres de réception. Créé une instance de la classe \emph{TryOverload} crée également un objet de type Overload qui reçoit des traiteurs pour chaque constructeur additionnels qui sont requis. Dans ce cas spécifique, il y a un constructeur pour Number et String, un constructeur pour un Number et un autre pour un String. Finalement les arguments sont envoyés à l'objet Overload qui invoque la méthode appropriée. Si les paramètres envoyés ne correspondent à aucun traiteur, une exception de type UnknownOverloadHandlerException est lancée.
+
+Un test sur la classe \emph{TryOverload} ressemble a ceci:
+
+\begin{lstlisting}[frame=single]
+var aOverload:TryOverload = new TryOverload("Hallo");
+var bOverload:TryOverload = new TryOverload(6);
+var cOverload:TryOverload = new TryOverload(6,"y");
+\end{lstlisting}
