@@ -20,7 +20,8 @@ import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.env.except.ThrowableStringifier;
 import org.as2lib.util.Stringifier;
-import org.as2lib.env.log.LogUtil;
+import org.as2lib.env.log.Logger;
+import org.as2lib.env.log.LogManager;
 
 /**
  * AbstractThrowable is an abstract class that contains sourced out functionalities
@@ -35,12 +36,8 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	/** Stringifier used to stringify throwables. */
 	private static var stringifier:Stringifier;
 	
-	/** 
-	 * Logger used to output the exception.
-	 * Not typed because typing would add dependency on the logging module.
-	 * (org.as2lib.env.log)
-	 */
-	private static var logger;
+	/** Logger used to output the exception. */
+	private static var logger:Logger;
 	
 	/** The saved stack of operation calls. */
 	private var stackTrace:Array;
@@ -79,19 +76,13 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	/**
 	 * Returns the logger used to output the exception.
 	 *
-	 * <p>This method's return type is not specified because this would
-	 * introduce dependency on the logging module (org.as2lib.env.log).
-	 *
-	 * <p>Null will be returned if:
-	 * <ul>
-	 *   <li>The logging module is not included.</li>
-	 *   <li>The logger repository's getLogger-method returns null.</li>
-	 * </ul>
+	 * <p>Null will be returned if LogManager#getLogger return null or
+	 * undefined.
 	 * 
 	 * @return the logger used to output the exception
 	 */
-	private static function getLogger(Void) {
-		return LogUtil.getLogger("org.as2lib.env.except.Throwable");
+	private static function getLogger(Void):Logger {
+		return LogManager.getLogger("org.as2lib.env.except.Throwable");
 	}
 	
 	/**

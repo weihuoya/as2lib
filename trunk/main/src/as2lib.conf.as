@@ -12,7 +12,7 @@
 //  Implementations of the interfaces for different functionality and settings.
 // 
 
-import org.as2lib.env.log.logger.SimpleLogger;
+import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
 import org.as2lib.env.log.logger.TraceLogger;
 import org.as2lib.env.log.logger.VoidLogger;
 import org.as2lib.env.log.logger.RootLogger;
@@ -45,18 +45,21 @@ import org.as2lib.test.unit.TestSuiteFactory;
   // Tell the Logger Repository to use the loggerHierarchy for default.
   LogManager.setLoggerRepository(loggerHierarchy); 
   
-  var traceLogger:SimpleLogger = new SimpleLogger("org.as2lib");
+  var traceLogger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("org.as2lib");
   traceLogger.addHandler(new TraceHandler());
   
   // Log to trace console in org.as2lib package
-  loggerHierarchy.putLogger(traceLogger);
+  loggerHierarchy.addLogger(traceLogger);
+  
+  var exceptLogger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("org.as2lib.env.except");
+  exceptLogger.setLevel(AbstractLogLevel.NONE);
   
   // Disables logging of exceptions.
-  loggerHierarchy.putLogger(new VoidLogger("org.as2lib.env.except.Throwable"));
+  loggerHierarchy.addLogger(exceptLogger);
   
   // Example for your package
   /*
-  loggerHierarchy.putLogger(new TraceLogger("com.mypackage"));
+  loggerHierarchy.addLogger(new TraceLogger("com.mypackage"));
   */
   
   // Example for a output to a XMLSocket & the output console
@@ -64,19 +67,19 @@ import org.as2lib.test.unit.TestSuiteFactory;
   var myPackageLogger:SimpleLogger = new SimpleLogger("com.mypackage.xml.support");
   myPackageLogger.addHandler(new XmlSocketHandler());
   myPackageLogger.addHandler(TraceHandler.getInstance());
-  loggerHierarchy.putLogger(myPackageLogger);
+  loggerHierarchy.addLogger(myPackageLogger);
   */
   
   // Example to hide a package
   /*
-  loggerHierarchy.putLogger(new VoidLogger("com.mypackage.package.to.hide"));
+  loggerHierarchy.addLogger(new VoidLogger("com.mypackage.package.to.hide"));
   */
   
   // Example for a restricted LogLevel
   /*
   var myPackageLogger2:TraceLogger = new TraceLogger("com.mypackage.debug.level");
   myPackageLogger2.setLevel(AbstractLogLevel.DEBUG);
-  loggerHierarchy.putLogger(myPackageLogger2);
+  loggerHierarchy.addLogger(myPackageLogger2);
   */
 
 

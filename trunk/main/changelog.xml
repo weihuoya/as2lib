@@ -5,6 +5,9 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="2">
+         <day value="15">
+           <entry type="change" package="org.as2lib.env.log.repository" class="LoggerHierarchy" method="putLogger"><change-rename to="addLogger" /></entry>
+         </day>
          <day value="12">
            <entry type="remove" package="org.as2lib.env.reflect" class="ReflectException"></entry>
            <entry type="change" package="static org.as2lib.env.reflect" class="ReflectConfig" method="get-/setMethodInfoStringifier">Moved to MethodInfo class and renamed to get-/setStringifier.</entry>
