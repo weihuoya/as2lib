@@ -15,19 +15,13 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.env.bean.PropertyValueSet;
-import org.as2lib.env.bean.factory.config.ConstructorArgumentValueList;
+import org.as2lib.env.bean.factory.BeanFactory;
 
 /**
  * @author Simon Wacker
  */
-interface org.as2lib.env.bean.factory.config.BeanDefinition extends BasicInterface {
+interface org.as2lib.env.bean.factory.BeanFactoryAware extends BasicInterface {
 	
-	public function getBeanClass(Void):Function;
-	public function getConstructorArgumentValues(Void):ConstructorArgumentValueList;
-	public function getPropertyValues(Void):PropertyValueSet;
-	public function isSingleton(Void):Boolean;
-	public function createBean(Void);
-	public function destroyBean(bean):Void;
+	public function setBeanFactory(beanFactory:BeanFactory):Void;
 	
 }

@@ -21,6 +21,11 @@ import org.as2lib.env.bean.MutablePropertyValueSet;
 import org.as2lib.env.bean.factory.config.BeanDefinition;
 import org.as2lib.env.bean.factory.config.ConstructorArgumentValueList;
 import org.as2lib.env.bean.factory.config.MutableConstructorArgumentValueList;
+import org.as2lib.env.bean.factory.BeanFactory;
+import org.as2lib.env.bean.factory.BeanNameAware;
+import org.as2lib.env.bean.factory.BeanFactoryAware;
+import org.as2lib.env.bean.factory.InitializingBean;
+import org.as2lib.env.bean.factory.DisposableBean;
 
 /**
  * @author Simon Wacker
@@ -31,13 +36,16 @@ class org.as2lib.env.bean.factory.support.RootBeanDefinition extends BasicClass 
 	private var argumentValues:ConstructorArgumentValueList;
 	private var propertyValues:PropertyValueSet;
 	private var singleton:Boolean;
-	private var bean;
+	private var destroyMethodName:String;
+	private var initMethodName:String;
+	private var beanName:String;
+	private var beanFactory:BeanFactory;
 	
 	public function RootBeanDefinition() {
 		var o:Overload = new Overload(this);
 		o.addHandler([Function], RootBeanDefinitionByClass);
 		o.addHandler([Function, PropertyValueSet], RootBeanDefinitionByClassAndPropertyValues);
-		o.addHandler([Function, PropertyValueSet, ConstructorArgumentValueList], RootBeanDefinitionByClassAndArgumentValuesAndPropertyValues);
+		o.addHandler([Function, ConstructorArgumentValueList, PropertyValueSet], RootBeanDefinitionByClassAndArgumentValuesAndPropertyValues);
 		o.forward(arguments);
 	}
 	
@@ -58,6 +66,14 @@ class org.as2lib.env.bean.factory.support.RootBeanDefinition extends BasicClass 
 	public function setSingleton(singleton:Boolean):Void {
 		this.singleton = singleton;
 	}
+	
+	public function setConstructorArgumentValues(argumentValues:ConstructorArgumentValueList):Void {
+		this.argumentValues = argumentValues;
+	}
+	
+	public function setPropertyValues(propertyValues:PropertyValueSet):Void {
+		this.propertyValues = propertyValues;
+	}
 
 	public function getBeanClass(Void):Function {
 		return beanClass;
@@ -75,16 +91,48 @@ class org.as2lib.env.bean.factory.support.RootBeanDefinition extends BasicClass 
 		return singleton;
 	}
 	
-	public function getBean(Void) {
-		if (bean) {
-			return bean;
-		} else {
-			var result = new Object();
-			result.__proto__ = beanClass.prototype;
-			beanClass.apply(result, argumentValues.getArgumentValues());
-			propertyValues.apply(result);
-			if (isSingleton()) bean = result;
-			return result;
+	public function getDestroyMethodName(Void):String {
+		return destroyMethodName;
+	}
+	
+	public function setDestroyMethodName(destroyMethodName:String):Void {
+		this.destroyMethodName = destroyMethodName;
+	}
+	
+	public function getInitMethodName(Void):String {
+		return initMethodName;
+	}
+	
+	public function setInitMethodName(initMethodName:String):Void {
+		this.initMethodName = initMethodName;
+	}
+	
+	public function createBean(Void) {
+		var result = new Object();
+		result.__proto__ = beanClass.prototype;
+		beanClass.apply(result, argumentValues.getArgumentValues());
+		if (result instanceof BeanNameAware) {
+			BeanNameAware(result).setBeanName(beanName);
+		}
+		if (result instanceof BeanFactoryAware) {
+			BeanFactoryAware(result).setBeanFactory(beanFactory);
+		}
+		propertyValues.apply(result);
+		if (result instanceof InitializingBean) {
+			InitializingBean(result).afterPropertiesSet();
+		}
+		if (initMethodName) {
+			result[initMethodName]();
+		}
+		return result;
+	}
+	
+	public function destroyBean(bean):Void {
+		if (bean instanceof DisposableBean) {
+			DisposableBean(bean).destroy();
+		}
+		if (destroyMethodName) {
+			bean[destroyMethodName]();
 		}
 	}
 	

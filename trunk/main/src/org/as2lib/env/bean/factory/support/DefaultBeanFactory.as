@@ -37,6 +37,8 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	
 	private var beanDefinitionMap:Map;
 	
+	private var singletonBeanMap:Map;
+	
 	private var parentBeanFactory:BeanFactory;
 	
 	//---------------------------------------------------------------------
@@ -46,6 +48,7 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	public function DefaultBeanFactory(parentBeanFactory:BeanFactory) {
 		this.parentBeanFactory = parentBeanFactory;
 		beanDefinitionMap = new PrimitiveTypeMap();
+		singletonBeanMap = new PrimitiveTypeMap();
 	}
 	
 	//---------------------------------------------------------------------
@@ -69,7 +72,18 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	
 	public function getBeanByName(name:String) {
 		try {
-			return getBeanDefinition(name).getBean();
+			var beanDefinition:BeanDefinition = getBeanDefinition(name);
+			if (beanDefinition.isSingleton()) {
+				if (singletonBeanMap.get(name)) {
+					return singletonBeanMap.get(name);
+				} else {
+					var result = beanDefinition.createBean();
+					singletonBeanMap.put(name, result);
+					return result;
+				}
+			} else {
+				return beanDefinition.createBean();
+			}
 		} catch (exception:org.as2lib.env.bean.factory.NoSuchBeanDefinitionException) {
 			return getParentBeanFactory().getBeanByName(name);
 		}
@@ -90,6 +104,14 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	//---------------------------------------------------------------------
 	// Implementation of ConfigurableBeanFactory
 	//---------------------------------------------------------------------
+	
+	public function destroySingletons(Void):Void {
+		var beanNames:Array = singletonBeanMap.getKeys();
+		for (var i:Number = 0; i < beanNames.length; i++) {
+			getBeanDefinition(beanNames[i]).destroyBean(singletonBeanMap.get(beanNames[i]));
+		}
+		singletonBeanMap.clear();
+	}
 	
 	//---------------------------------------------------------------------
 	// Implementation of HierarchicalBeanFactory
