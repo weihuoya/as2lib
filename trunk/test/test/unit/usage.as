@@ -20,7 +20,7 @@
  * access this file and all testcases that are listed here will
  * be executed. Simple add your test to get it executed.
  */
- 
+
 // Data Holder tests
 test.unit.org.as2lib.data.holder.array.TArrayIterator;
 test.unit.org.as2lib.data.holder.array.TTypedArray;
@@ -130,13 +130,17 @@ test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition;
 
 // org.as2lib.env.event
 test.unit.org.as2lib.env.event.TSpeedEventBroadcaster;
+test.unit.org.as2lib.env.event.TSimpleEventBroadcaster;
 
+ 
 // org.as2lib.env.except
+// - TODO some problem with TIllegalStateException and TUnsupportedOperationException exceeds 256 levels of recursion -
+/*
 test.unit.org.as2lib.env.except.TException;
 test.unit.org.as2lib.env.except.TFatalException;
 test.unit.org.as2lib.env.except.TSimpleStackTraceElement;
-
-test.unit.org.as2lib.env.except.TIllegalArgumentException;*/
-/*TODO some problem with TIllegalStateException and TUnsupportedOperationException exceeds 256 levels of recursion*/
-//test.unit.org.as2lib.env.except.TIllegalStateException;
-//test.unit.org.as2lib.env.except.TUnsupportedOperationException;
+test.unit.org.as2lib.env.except.TIllegalStateException;
+test.unit.org.as2lib.env.except.TUnsupportedOperationException;
+test.unit.org.as2lib.env.except.TSimpleStackTraceElement;
+test.unit.org.as2lib.env.except.TIllegalArgumentException;
+*/
