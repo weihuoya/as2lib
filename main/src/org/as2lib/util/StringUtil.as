@@ -208,7 +208,7 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 */
 	public static function assureLength(string:String, length:Number):Boolean {
 		if (length < 0 || (!length && length !== 0)) {
-			throw new IllegalArgumentException("The Second Attribute [" + length + "] must be bigger or equals 0.", 
+			throw new IllegalArgumentException("The given length [" + length + "] has to be bigger or equals 0.", 
 												eval("th" + "is"), 
 												arguments);
 		}
@@ -232,6 +232,9 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 * @return true if one of these characters are contained in string.
 	 */
 	public static function contains(string:String, chars:String):Boolean {
+		if(chars == null || string == null) {
+			return false;
+		}
 		for (var i:Number = chars.length-1; i >= 0 ; i--) {
 			if (string.indexOf(chars.charAt(i)) >= 0) {
 				return true;
@@ -291,9 +294,16 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 * 
 	 * @param string String that contains lines that should get a space indent.
 	 * @param indent Size of the Indent (will get floor'ed)
+	 * @throws IllegalArgumentException if the size was smaller than 0
 	 * @return String with a extended Indent.
 	 */
 	public static function addSpaceIndent(string:String, size:Number):String {
+		if(string == null) {
+			string = "";
+		}
+		if(size < 0) {
+			throw new IllegalArgumentException("The given size has to be bigger or equals null.", eval("th"+"is"), arguments);
+		}
 		var indentString:String = multiply(" ", size);
 		return indentString+replace(string, "\n", "\n"+indentString);
 	}
