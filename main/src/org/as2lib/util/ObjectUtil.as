@@ -85,7 +85,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * @param object the object that shall be found.
 	 * @return the name if it could be found else null
 	 */
-	public static function getChildName(inObject, object:Function):String {
+	public static function getChildName(inObject, object):String {
 		for(var i:String in inObject) {
 			try {
 				if(inObject[i] == object) {
