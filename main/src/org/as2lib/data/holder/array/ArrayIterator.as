@@ -44,14 +44,15 @@ import org.as2lib.data.holder.NoSuchElementException;
  *
  * @author Simon Wacker
  * @author Michael Herrmann
+ * @author Martin Heidegger
  */
-class org.as2lib.data.holder.array.ArrayIterator extends BasicClass implements Iterator {
+ class org.as2lib.data.holder.array.ArrayIterator extends BasicClass implements Iterator {
 	
 	/** The target data holder. */
-	private var target:Array;
+	private var t:Array;
 	
 	/** The current index of the iteration. */
-	private var index:Number;
+	private var i:Number;
 	
 	/**
 	 * Constructs a new ArrayIterator instance.
@@ -60,9 +61,63 @@ class org.as2lib.data.holder.array.ArrayIterator extends BasicClass implements I
 	 * @throws IllegalArgumentException if the passed-in target array is null or undefined
 	 */
 	public function ArrayIterator(target:Array) {
+		// IllegalArgumentException if the passed array is not available.
 		if (!target) throw new IllegalArgumentException("The passed-in target array '" + target + "' is not allowed to be null or undefined.", this, arguments);
-		this.target = target;
-		index = -1;
+
+		// Usual handling of the arguments.
+		this.t = target;
+		i = -1;
+		
+		// Prepare of fast internal replacement
+		var t:Array = target;
+		var g:Number = -1;
+		var p = ArrayIterator.prototype;
+		
+		// Replacement of internal methods as performance upgrade.
+		// - Only if this class is used, else the OOP functionality would be broken.
+		// - With more than 50 elements, else this method would be slower
+		if(this.__proto__ == p && t.length > 25) {
+			
+			// Replace for .next() if .hasNext was not called
+			var y:Function = function() {
+				if(g < t.length-1) {
+					arguments.callee = p.next;
+					throw new NoSuchElementException("There is no more element.", this, arguments);
+				}
+				return t[++g];
+			}
+			// Replace for .next() if .hasNext was called and there is something next
+			var x:Function = function() {
+				next = y;
+				return t[++g];
+			}
+			// Replace for .next() if .hasNext found that there is no next
+			var z:Function = function() {
+				next = y;
+				arguments.callee = p.next;
+				throw new NoSuchElementException("There is no more element.", this, arguments);
+			}
+			// .next replacement
+			next = y;
+			// .hasNext replacement
+			hasNext = function() {
+				if(g < t.length-1) {
+					next = x;
+					return true;
+				} else {
+					next = z;
+					return false; 
+				}
+			}
+			// .remove replacement
+			remove = function() {
+				if (g < 0) {
+					arguments.callee = p.remove;
+					throw new IllegalStateException("You tried to remove an element before calling the #next() method. Thus there is no element selected to remove.", this, arguments);
+				}
+				t.splice(g--, 1);
+			}
+		}
 	}
 	
 	/**
@@ -71,7 +126,7 @@ class org.as2lib.data.holder.array.ArrayIterator extends BasicClass implements I
 	 * @return true if there is at least one lement left to iterate over
 	 */
 	public function hasNext(Void):Boolean {
-		return (index < target.length - 1);
+		return (i < t.length-1);
 	}
 	
 	/**
@@ -85,7 +140,7 @@ class org.as2lib.data.holder.array.ArrayIterator extends BasicClass implements I
 		if (!hasNext()) {
 			throw new NoSuchElementException("There is no more element.", this, arguments);
 		}
-		return target[++index];
+		return t[++i];
 	}
 	
 	/**
@@ -96,10 +151,10 @@ class org.as2lib.data.holder.array.ArrayIterator extends BasicClass implements I
 	 * remove an element when none is selected
 	 */
 	public function remove(Void):Void {
-		if (index < 0) {
+		if (i < 0) {
 			throw new IllegalStateException("You tried to remove an element before calling the #next() method. Thus there is no element selected to remove.", this, arguments);
 		}
-		target.splice(index--, 1);
+		t.splice(i--, 1);
 	}
 	
 }
