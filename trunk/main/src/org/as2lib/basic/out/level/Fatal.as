@@ -6,7 +6,7 @@
  */
 class org.as2lib.basic.out.level.Fatal extends None {
 	/**
-	 * @see org.as2lib.basic.out.Level
+	 * @see org.as2lib.basic.out.OutLevel
 	 */
 	public function fatal(exception:Exception):Void {
 	}

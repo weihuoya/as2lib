@@ -6,7 +6,7 @@
  */
 class org.as2lib.basic.out.level.Warning extends Error {
 	/**
-	 * @see org.as2lib.basic.out.Level
+	 * @see org.as2lib.basic.out.OutLevel
 	 */
 	public function warning(message:String):Void {
 	}
