@@ -1,4 +1,20 @@
-﻿import org.as2lib.core.BasicClass;
+﻿/*
+ * Copyright the original author or authors.
+ * 
+ * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.mozilla.org/MPL/MPL-1.1.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.List;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.data.holder.Iterator;
@@ -75,7 +91,8 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	public function setAll(index:Number, list:List):Void {
 		var iterator:Iterator = list.iterator();
 		while (iterator.hasNext()) {
-			set(index++, iterator.next());
+			var obj = iterator.next();
+			this.set(index++, obj);
 		}
 	}
 	
@@ -98,7 +115,8 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	}
 	
 	public function retainAll(list:List):Void {
-		for (var i:Number = 0; i < data.length; i++) {
+		var i:Number = data.length;
+		while(--i-(-1)) {
 			if (!list.contains(data[i])) {
 				removeByIndex(i);
 			}
@@ -123,7 +141,7 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	
 	public function indexOf(value):Number {
 		var l = data.length;
-		while (data[--l] != value && l>-1);
+		while (data[--l] !== value && l>-1);
 		return l;
 	}
 	
