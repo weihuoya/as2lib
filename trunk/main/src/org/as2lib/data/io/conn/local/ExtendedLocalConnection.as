@@ -13,12 +13,9 @@ class org.as2lib.data.io.conn.local.ExtendedLocalConnection extends BasicClass {
 	// sollte eigentlich keine Instanzvariable sein
 	private var responseServer;
 	
-	public static function connectionExists(host:String):Boolean {
+	public static function connectionExists(connectionName:String):Boolean {
 		var lc:LocalConnection = new LocalConnection();
-		var result:Boolean = true;
-		if(!lc.connect(host)) {
-			result = false;
-		}
+		var result:Boolean = !lc.connect(connectionName);
 		lc.close();
 		return result;
 	}
@@ -41,6 +38,7 @@ class org.as2lib.data.io.conn.local.ExtendedLocalConnection extends BasicClass {
 	
 	public function connect(connectionName:String):Void {
 		if (!connection.connect.apply(target, [connectionName])) {
+			// rename to ReservedConnectionException
 			throw new ReservedHostException("Connection with connection name [" + connectionName + "] is already in use.", this, arguments);
 		}
 	}
@@ -61,6 +59,7 @@ class org.as2lib.data.io.conn.local.ExtendedLocalConnection extends BasicClass {
 	public function sendWithArgs(connectionName:String, method:String, args:Array):Void {
 		this.connectionName = connectionName;
 		if (!connection.send.apply(target, [connectionName, method].concat(args))) {
+			// rename to IncorrectMethodCallException? InvalidMethodCallException?
 			throw new SyntacticallyIncorrectMethodCallException("Passed arguments [" + args + "] are out of size.", this, arguments);
 		}
 	}
@@ -93,6 +92,7 @@ class org.as2lib.data.io.conn.local.ExtendedLocalConnection extends BasicClass {
 	
 	private function onStatus(info):Void {
 		if (info.level == "error") {
+			// rename to UnknownConnectionException
 			throw new MissingServerException("Connection with connection name [" + connectionName + "] does not exist.", this, arguments);
 		}
 	}
