@@ -88,6 +88,7 @@ test.unit.org.as2lib.env.reflect.algorithm.TPropertyAlgorithm;
 // org.as2lib.env.log
 test.unit.org.as2lib.env.log.logger.TSimpleLogger;
 test.unit.org.as2lib.env.log.repository.TLoggerHierarchy;
+test.unit.org.as2lib.env.log.level.TDynamicLogLevel;
 
 // org.as2lib.env.bean
 test.unit.org.as2lib.env.bean.TMutablePropertyValueSet;
