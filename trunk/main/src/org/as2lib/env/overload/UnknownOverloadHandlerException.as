@@ -26,17 +26,20 @@ import org.as2lib.env.util.ReflectUtil;
  */
 class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadException {
 	
-	/** Arguments used by overloading */
-	private var overloadArguments:FunctionArguments;
-	
-	/** Handlers that where available by the unknown overloadHandler */
-	private var handlers:Array;
-	
 	/** Exception printed as string */
 	private var asString:String;
 	
+	/** Arguments used by overloading */
+	private var overloadArguments:Array;
+	
+	/** Handlers that where available by the unknown overloadHandler */
+	private var overloadHandlers:Array;
+	
 	/** The object on which the overload should have taken place. */
-	private var target;
+	private var overloadTarget;
+	
+	/** The method that performs the overloading. */
+	private var overloadedMethod;
 	
 	/**
 	 * Constructs a new OverloadException
@@ -44,41 +47,45 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 	 * @param message			Message to the Exception.
 	 * @param thrower			Object where the Exception occured.
 	 * @param args				Arguments of the method where the exception occured.
-	 * @param handlers			Available Handlers due to the unhandable exception.
+	 * @param overloadTarget	The target object on which the overload is perfomred.
+	 * @param overloadedMethod	The method that gets overlaoded.
+	 * @param overloadArguments	The arguments used for the overloading.
+	 * @param overloadHandlers	The available handlers that do not match.
 	 */
-	public function UnknownOverloadHandlerException(message:String, thrower, args:FunctionArguments, target, handlers:Array) {
+	public function UnknownOverloadHandlerException(message:String, thrower, args:FunctionArguments, overloadTarget, overloadedMethod:Function, overloadArguments:Array, overloadHandlers:Array) {
 		super (message, thrower, args);
-		this.target = target;
-		this.handlers = handlers;
-		this.overloadArguments = args;
+		this.overloadTarget = overloadTarget;
+		this.overloadedMethod = overloadedMethod;
+		this.overloadArguments = overloadArguments;
+		this.overloadHandlers = overloadHandlers;
 	}
 	
 	/**
-	 * Extended toString method that displayes the content of this exception lacy.
+	 * Extended toString method that displayes the content of this exception lazy.
 	 * 
 	 * @return Exception as string.
 	 */
 	public function toString():String {
-		// Lacy construction of the string,
+		// Lazy construction of the string,
 		// Because it takes pretty much time to construct it (using Reflections)
 		// it would take unnecessary much time to construct it if you catch it (and it
 		// won't be displayed).
-		if(!asString) {
-			asString = message;
+		if (!asString) {
+			asString = getMessage();
 			try {
-				asString += "\n  Overloaded Method: " + ReflectUtil.getClassInfo(target).getMethodByMethod(overloadArguments.caller);
-			} catch(e) {
+				asString += "\n  Overloaded Method: " + ReflectUtil.getClassInfo(overloadTarget).getMethodByMethod(overloadedMethod);
+			} catch (e) {
 			}
-			asString += "\n  Used Arguments["+overloadArguments[0].length+"]: ";
-			for(var i:Number = 0; i < overloadArguments[0].length; i++) {
-				if(i != 0) {
+			asString += "\n  Used Arguments["+overloadArguments.length+"]: ";
+			for (var i:Number = 0; i < overloadArguments.length; i++) {
+				if (i != 0) {
 					asString += ", ";
 				}
-				asString += overloadArguments[0][i];
+				asString += overloadArguments[i];
 			}
 			asString += "\n  Available Handlers: ";
-			for(var i:Number = 0; i < handlers.length; i++) {
-				asString += "\n    "+handlers[i].toString();
+			for(var i:Number = 0; i < overloadHandlers.length; i++) {
+				asString += "\n    "+overloadHandlers[i].toString();
 			}
 		}
 		return asString;
