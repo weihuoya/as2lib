@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.test.unit.AssertInfo;
+import org.as2lib.test.unit.ExecutionInfo;
 import org.as2lib.test.unit.info.*;
 import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestCaseMethodInfo;
@@ -166,7 +166,7 @@ import org.as2lib.util.ObjectUtil;
  * @see org.as2lib.test.unit.Test
  * @see org.as2lib.test.unit.Assert
  * @see org.as2lib.test.unit.TestResults
- * @autor Martin Heidegger
+ * @author Martin Heidegger
  */
 
 class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
@@ -200,10 +200,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * 
 	 * @see TestRunner.run
 	 * @param doNotPrintResult Parameter to prevent immediately printing of the Result.
-	 * @return Result of the run. Warning the result is lacy, this means its values could
-	 *         get filled after you recieved it. (related to @see #pause and @see #resume).
+	 * @return Runner of the Testcases (containing all informations about the run)
 	 */
-	public function run(doNotPrintResult:Boolean):TestResult {
+	public function run(doNotPrintResult:Boolean):TestRunner {
 		if(!doNotPrintResult) {
 			 doNotPrintResult = false;
 		}
@@ -231,7 +230,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * Setter for the testrunner.
 	 * The testrunner represents the context of the actual method.
 	 * @see #getMethodInformation is a referred to the informations that represent this
-	 * methods information. It will be automatically set by the testrunner.
+	 * methods information. It will be automatically set by the testrunner, because
+	 * only it know who runs this test)
 	 * 
 	 * @param testRunner Used testrunner for this testcase.
 	 */
@@ -316,7 +316,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false.
 	 */
 	private function assertTrueWithMessage(message:String, val:Boolean):Boolean {
-		var info:AssertInfo = new AssertTrueInfo(message, val);
+		var info:ExecutionInfo = new AssertTrueInfo(message, val);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -362,7 +362,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false.
 	 */
 	private function assertFalseWithMessage(message:String, val:Boolean):Boolean {
-		var info:AssertInfo = new AssertFalseInfo(message, val);
+		var info:ExecutionInfo = new AssertFalseInfo(message, val);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -423,7 +423,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertEqualsWithMessage(message:String, val, compareTo):Boolean {
-		var info:AssertInfo = new AssertEqualsInfo(message, val, compareTo);
+		var info:ExecutionInfo = new AssertEqualsInfo(message, val, compareTo);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -484,7 +484,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertNotEqualsWithMessage(message:String, val, compareTo):Boolean {
-		var info:AssertInfo = new AssertNotEqualsInfo(message, val, compareTo);
+		var info:ExecutionInfo = new AssertNotEqualsInfo(message, val, compareTo);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -545,7 +545,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertSameWithMessage(message:String, val, compareTo):Boolean {
-		var info:AssertInfo = new AssertSameInfo(message, val, compareTo);
+		var info:ExecutionInfo = new AssertSameInfo(message, val, compareTo);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -606,7 +606,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertNotSameWithMessage(message:String, val, compareTo):Boolean {
-		var info:AssertInfo = new AssertNotSameInfo(message, val, compareTo);
+		var info:ExecutionInfo = new AssertNotSameInfo(message, val, compareTo);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -656,7 +656,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertNullWithMessage(message:String, val):Boolean {
-		var info:AssertInfo = new AssertNullInfo(message, val);
+		var info:ExecutionInfo = new AssertNullInfo(message, val);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -706,7 +706,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertNotNullWithMessage(message:String, val):Boolean {
-		var info:AssertInfo = new AssertNotNullInfo(message, val);
+		var info:ExecutionInfo = new AssertNotNullInfo(message, val);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -756,7 +756,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertUndefinedWithMessage(message:String, val):Boolean {
-		var info:AssertInfo = new AssertUndefinedInfo(message, val);
+		var info:ExecutionInfo = new AssertUndefinedInfo(message, val);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -806,7 +806,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertNotUndefinedWithMessage(message:String, val):Boolean {
-		var info:AssertInfo = new AssertNotUndefinedInfo(message, val);
+		var info:ExecutionInfo = new AssertNotUndefinedInfo(message, val);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -852,7 +852,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertInfinityWithMessage(message:String, val):Boolean {
-		var info:AssertInfo = new AssertInfinityInfo(message, val);
+		var info:ExecutionInfo = new AssertInfinityInfo(message, val);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -898,7 +898,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertNotInfinityWithMessage(message:String, val):Boolean {
-		var info:AssertInfo = new AssertNotInfinityInfo(message, val);
+		var info:ExecutionInfo = new AssertNotInfinityInfo(message, val);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -950,7 +950,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertEmptyWithMessage(message:String, val):Boolean {
-		var info:AssertInfo = new AssertEmptyInfo(message, val);
+		var info:ExecutionInfo = new AssertEmptyInfo(message, val);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -1002,7 +1002,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @return true if no error occured else false
 	 */
 	private function assertNotEmptyWithMessage(message:String, val):Boolean {
-		var info:AssertInfo = new AssertNotEmptyInfo(message, val);
+		var info:ExecutionInfo = new AssertNotEmptyInfo(message, val);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -1154,7 +1154,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param args	Arguments that should be used by executing.
 	 */
 	private function assertThrowsWithCallAndMessageAndType(message:String, type, call:Call, args:Array):Boolean {
-		var info:AssertInfo = new AssertThrowsInfo(message, type, call, args);
+		var info:ExecutionInfo = new AssertThrowsInfo(message, type, call, args);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}
@@ -1373,7 +1373,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param args	Arguments that should be used by executing.
 	 */
 	private function assertNotThrowsWithCallAndMessageAndType(message:String, type, call:Call, args:Array):Boolean {
-		var info:AssertInfo = new AssertNotThrowsInfo(message, type, call, args);
+		var info:ExecutionInfo = new AssertNotThrowsInfo(message, type, call, args);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
 	}

@@ -1,6 +1,23 @@
-﻿import org.as2lib.core.BasicClass;
+﻿/**
+ * Copyright the original author or authors.
+ * 
+ * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.mozilla.org/MPL/MPL-1.1.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.data.holder.Stack;
+import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.ArrayUtil;
 import org.as2lib.util.StringUtil;
@@ -10,48 +27,63 @@ import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.TestCaseResult;
 import org.as2lib.test.unit.TestSuite;
+import org.as2lib.test.unit.TestConfig;
 import org.as2lib.env.out.OutAccess;
 import org.as2lib.env.out.Out;
 import org.as2lib.env.out.handler.TraceHandler;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
- * 
+ * Wrapper for a TestSuite with extended Informations about the run of the TestSuite.
  * 
  * @see org.as2lib.test.unit.TestSuite
  * @autor Martin Heidegger
  */
 class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestResult {
 
-	private var tests:TypedArray;
-	private var testRunner:TestRunner;
+	/** TestSuite that gets wrapped. */
 	private var testSuite:TestSuite;
+	
+	/** TestResults related to the tests. */
 	private var testResults:TypedArray;
-	private static var out:OutAccess;
 
 	/**
-	 * Constructs 
+	 * Constructs a new TestSuiteResult.
+	 * 
+	 * @param testSuite TestSuite to be wrapped
+	 * @param testRunner TestRunner that created this Result.
 	 */
 	public function TestSuiteResult(testSuite:TestSuite, testRunner:TestRunner) {
 		this.testSuite = testSuite;
-		this.testRunner = testRunner;
-		this.testResults = new TypedArray(TestResult);
+		testResults = new TypedArray(TestResult);
+		
 		var tests:Array = testSuite.getTests();
-		for(var i=0; i<tests.length; i++) {
-			if(ObjectUtil.isInstanceOf(tests[i], TestCase)) {
-				this.testResults.push(new TestCaseResult(tests[i], testRunner));
-			} else if(ObjectUtil.isInstanceOf(tests[i], TestSuite)) {
-				this.testResults.push(new TestSuiteResult(tests[i], testRunner));
+		var i:Number = tests.length;
+		while(--i-(-1)) {
+			if(tests[i] instanceof TestCase) {
+				testResults.unshift(new TestCaseResult(tests[i], testRunner));
+			} else if(tests[i] instanceof TestSuite) {
+				testResults.unshift(new TestSuiteResult(tests[i], testRunner));
 			} else {
-				throw new IllegalArgumentException("Type not handled!", this, arguments);
+				throw new IllegalArgumentException("Type "+ReflectUtil.getClassInfo(tests[i]).getFullName()+" not supported!", this, arguments);
 			}
 		}
 	}
 	
+	/**
+	 * Getter for all Test(Results) contained in the TestSuite
+	 * 
+	 * @return List of all TestResults.
+	 */
 	public function getTests(Void):TypedArray {
 		return this.testResults;
 	}
 	
+	/**
+	 * Getter for the Percentage of the execution.
+	 * 
+	 * @return Percentage of execution.
+	 */
 	public function getPercentage(Void):Number {
 		var result:Number = 0;
 		var unit:Number = 100/this.testResults.length;
@@ -61,6 +93,9 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 		return result;
 	}
 	
+	/**
+	 * @return True if the TestSuite is finished.
+	 */
 	public function isFinished(Void):Boolean {
 		for(var i=this.testResults.length-1; i>=0; i--) {
 			if(!this.testResults[i].isFinished()) {
@@ -70,6 +105,9 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 		return true;
 	}
 	
+	/**
+	 * @return True if the TestSuite is started.
+	 */
 	public function isStarted(Void):Boolean {
 		for(var i=this.testResults.length-1; i>=0; i--) {
 			if(this.testResults[i].isStarted()) {
@@ -79,6 +117,12 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 		return false;
 	}
 	
+	/**
+	 * Getter for all TestCaseResults (flatten) contained in the TestSuite.
+	 * Returns flatten all TestCaseResults.
+	 * 
+	 * @return TestCaseResults containted in the TestSuite and all SubSuites.
+	 */
 	public function getTestCaseResults(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestCaseResult);
 		for(var i:Number=0; i<this.testResults.length; i++) {
@@ -91,31 +135,12 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 		return result;
 	}
 	
-	public function getName(Void):String {
-		return this.getTestSuite().getName();
-	}
-	
-	public function getOperationTime(Void):Number {
-		var result:Number = 0;
-		for(var i=this.testResults.length-1; i>=0; i--) {
-			result += this.testResults[i].getOperationTime();
-		}
-		return result;
-	}
-	
-	public function hasErrors(Void):Boolean {
-		for(var i=this.testResults.length-1; i>=0; i--) {
-			if(this.testResults[i].hasErrors()) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public function getTestSuite(Void):TestSuite {
-		return this.testSuite;
-	}
-	
+	/**
+	 * Getter for all TestResults (flatten) contained in the TestSuite.
+	 * Returns flatten all TestResults.
+	 * 
+	 * @return TestResults containted in the TestSuite and all SubSuites.
+	 */
 	public function getTestResults(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestResult);
 		for(var i:Number=0; i<this.testResults.length; i++) {
@@ -128,6 +153,55 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 		return result;
 	}
 	
+	/**
+	 * Getter for the Name of the TestSuite.
+	 * 
+	 * @return Name of the TestSuite.
+	 */
+	public function getName(Void):String {
+		return this.getTestSuite().getName();
+	}
+	
+	/**
+	 * Getter for the total Operation time of the TestSuite.
+	 * 
+	 * @return Operation Time of the TestSuite in milliseconds..
+	 */
+	public function getOperationTime(Void):Number {
+		var result:Number = 0;
+		for(var i=this.testResults.length-1; i>=0; i--) {
+			result += this.testResults[i].getOperationTime();
+		}
+		return result;
+	}
+	
+	/**
+	 * @return True if the TestSuite contains errors.
+	 */
+	public function hasErrors(Void):Boolean {
+		for(var i=this.testResults.length-1; i>=0; i--) {
+			if(this.testResults[i].hasErrors()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Getter for the wrapped TestSuite.
+	 * 
+	 * @return wrapped TestSuite.
+	 */
+	public function getTestSuite(Void):TestSuite {
+		return this.testSuite;
+	}
+
+
+	/**
+	 * Extended .toString implementation.
+	 * 
+	 * @return TestSuiteResult as well formated String.
+	 */
 	public function toString(Void):String {
 		var result:String = "";
 		result += "*** TestSuite "+getName()+" ["+getOperationTime()+"ms] ***";
@@ -138,18 +212,13 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 		return result;
 	}
 	
-	public static function setOut(to:OutAccess):Void {
-		out = to;
-	}
-	public static function getOut(Void):OutAccess {
-		if(!out) {
-			out = new Out();
-			Out(out).addHandler(new TraceHandler());
-		}
-		return out;
-	}
+	
+	/**
+	 * Prints the TestSuiteResult to a standard Outputdevice.
+	 * It is possible to change the output device by @see TestConfig#setOut.
+	 */
 	public function print(Void):Void {
-		getOut().info(this.toString());
+		TestConfig.getOut().info(this.toString());
 	}
 	
 }

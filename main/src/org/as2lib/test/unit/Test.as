@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.test.unit.TestResult;
+import org.as2lib.test.unit.TestRunner;
 
 /**
  * Basic Class to be Extended by all Testcases.
@@ -23,16 +23,16 @@ import org.as2lib.test.unit.TestResult;
  * It should used by all Testcases. It uses the Class "test.Failure" for Errors.
  * This is a Subproject from www.as2lib.org.
  *
- * @autor Martin Heidegger
+ * @author Martin Heidegger
  * @see TestResult
  */
 interface org.as2lib.test.unit.Test extends BasicInterface {
 		
 	/**
-	 * Runs any Test.
+	 * Runs the Test.
 	 * 
 	 * @param doNotPrintResult [Optional Parameter, null interpreted as false] Boolean if the Result should be printed immediately or not.
-	 * @return TestResult that contains all Informations about this run.
+	 * @return TestRunner that run this test (including all informations about the run).
 	 */
-	public function run(doNotPrintResult:Boolean):TestResult;
+	public function run(doNotPrintResult:Boolean):TestRunner;
 }
