@@ -36,7 +36,7 @@ class org.as2lib.basic.out.info.OutWriteInfo extends BasicClass implements Event
 	}
 	
 	/**
-	 * @see org.as2lib.basic.event.EventInfo
+	 * @see org.as2lib.event.EventInfo
 	 */
 	public function getName(Void):String {
 		return name;

@@ -1,9 +1,10 @@
 ﻿import org.as2lib.basic.BasicClass;
+import org.as2lib.event.EventInfo;
 
 /**
  * @version 1.0
  */
-class org.as2lib.basic.event.SimpleEventInfo extends BasicClass implements org.as2lib.basic.event.EventInfo {
+class org.as2lib.event.SimpleEventInfo extends BasicClass implements EventInfo {
 	/** Name of the event */
 	private var name:String;
 	

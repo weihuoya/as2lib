@@ -1,16 +1,16 @@
-﻿import org.as2lib.basic.event.EventDispatcher;
-import org.as2lib.basic.event.dispatcher.NormalEventDispatcher;
-import org.as2lib.basic.event.dispatcher.LogEventDispatcher;
-import org.as2lib.basic.event.EventListener;
-import org.as2lib.basic.event.EventInfo;
-import org.as2lib.basic.event.ListenerArray;
-import org.as2lib.basic.event.Consumeable;
+﻿import org.as2lib.event.EventDispatcher;
+import org.as2lib.event.dispatcher.NormalEventDispatcher;
+import org.as2lib.event.dispatcher.LogEventDispatcher;
+import org.as2lib.event.EventListener;
+import org.as2lib.event.EventInfo;
+import org.as2lib.event.ListenerArray;
+import org.as2lib.event.Consumeable;
 import org.as2lib.basic.BasicClass;
 
 /**
  * @version 1.0
  */
-class org.as2lib.basic.event.EventBroadcaster extends BasicClass {
+class org.as2lib.event.EventBroadcaster extends BasicClass {
 	/** A reference to the NormalEventDispatcher. */
 	public static var normalDispatcher:EventDispatcher = new NormalEventDispatcher();
 	

@@ -1,8 +1,8 @@
 ﻿import org.as2lib.test.speed.TestCase;
 import broadcasting.ExampleCall;
-import org.as2lib.basic.event.EventBroadcaster;
-import org.as2lib.basic.event.SimpleEventInfo;
-import org.as2lib.basic.event.EventListener;
+import org.as2lib.event.EventBroadcaster;
+import org.as2lib.event.SimpleEventInfo;
+import org.as2lib.event.EventListener;
 
 class broadcasting.EventBroadcasterTest implements TestCase{
 	private var eB:EventBroadcaster;
