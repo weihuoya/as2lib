@@ -1,4 +1,4 @@
-﻿/*
+﻿ust /*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -59,7 +59,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	private var properties:Array;
 	
 	/** The class's constructor. */
-	private var constructor:ConstructorInfo;
+	private var classConstructor:ConstructorInfo;
 	
 	/**
 	 * Constructs a new ClassInfo.
@@ -109,10 +109,10 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @return the constructor of the class.
 	 */
 	public function getConstructor(Void):ConstructorInfo {
-		if (ObjectUtil.isEmpty(constructor)) {
-			constructor = new ConstructorInfo(getType(), this);
+		if (ObjectUtil.isEmpty(classConstructor)) {
+			classConstructor = new ConstructorInfo(getType(), this);
 		}
-		return constructor;
+		return classConstructor;
 	}
 	
 	/**
