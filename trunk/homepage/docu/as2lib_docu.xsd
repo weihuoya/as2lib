@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Alexander Schliebner (Alexander Schliebner) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified">
+	<!-- -->
+	<xs:element name="document">
+		<xs:annotation>
+			<xs:documentation>as2lib Documentation Document</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element name="class" type="classType"/>
+					<xs:element name="interface" type="interfaceType"/>
+				</xs:choice>
+				<xs:element name="comment" type="docuTextType" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="version" type="versionNrType" use="required"/>
+			<xs:attribute name="date" type="xs:date" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<!--Contains either a class or an interface node and optional comment nodes-->
+	<xs:complexType name="classType">
+		<xs:annotation>
+			<xs:documentation>ActionScript2.0 Class Documentation Format</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="availability" type="docuTextType"/>
+			<xs:element name="description" type="docuTextType"/>
+			<xs:element name="implements" type="implementsType" minOccurs="0"/>
+			<xs:element name="method" type="classMethodType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="property" type="classPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="see" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="developer" type="developerType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="extends" type="xs:string" use="optional"/>
+		<xs:attribute name="dynamic" type="xs:boolean" default="false"/>
+		<xs:attribute name="version" type="versionNrType" use="required"/>
+		<xs:attribute name="deprecated" type="xs:boolean" default="false"/>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="interfaceType">
+		<xs:annotation>
+			<xs:documentation>ActionScript2.0 Interface Documentation Format</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="availability" type="docuTextType"/>
+			<xs:element name="description" type="docuTextType"/>
+			<xs:element name="method" type="interfaceMethodType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="see" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="developer" type="developerType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="extends" type="xs:string" use="optional"/>
+		<xs:attribute name="version" type="versionNrType" use="required"/>
+		<xs:attribute name="deprecated" type="xs:boolean" default="false"/>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="classMethodType">
+		<xs:annotation>
+			<xs:documentation>ActionScript2.0 Class Method Documentation Format</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="availability" type="docuTextType"/>
+			<xs:element name="usages" type="usagesType"/>
+			<xs:element name="parameters" type="parametersType"/>
+			<xs:element name="returns" type="returnsType"/>
+			<xs:element name="description" type="docuTextType"/>
+			<xs:element name="example" type="docuTextType"/>
+			<xs:element name="see" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="developer" type="developerType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="version" type="versionNrType" use="required"/>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="static" type="xs:boolean" use="required"/>
+		<xs:attribute name="private" type="xs:boolean" use="required"/>
+		<xs:attribute name="deprecated" type="xs:boolean" default="false"/>
+		<xs:attribute name="type" type="xs:string" use="required"/>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="interfaceMethodType">
+		<xs:annotation>
+			<xs:documentation>ActionScript2.0 Interface Method Documentation Format</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="availability" type="docuTextType"/>
+			<xs:element name="usages" type="usagesType"/>
+			<xs:element name="parameters" type="parametersType"/>
+			<xs:element name="see" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="version" type="versionNrType" use="required"/>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="deprecated" type="xs:boolean" default="false"/>
+		<xs:attribute name="type" type="xs:string" use="required"/>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="classPropertyType" mixed="true">
+		<xs:annotation>
+			<xs:documentation>ActionScript2.0 Class Property Documentation Format</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="availability" type="docuTextType"/>
+			<xs:element name="usages" type="usagesType"/>
+			<xs:element name="description" type="docuTextType"/>
+		</xs:sequence>
+		<xs:attribute name="version" type="versionNrType" use="required"/>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="static" type="xs:boolean" use="required"/>
+		<xs:attribute name="private" type="xs:boolean" use="required"/>
+		<xs:attribute name="deprecated" type="xs:boolean" default="false"/>
+		<xs:attribute name="type" type="xs:string" use="required"/>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="returnsType">
+		<xs:annotation>
+			<xs:documentation>ActionScript2.0 Method Return Value Documentation Format</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="docuTextType">
+				<xs:attribute name="type" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="implementsType">
+		<xs:annotation>
+			<xs:documentation>ActionScript2.0 Class Interface Implementations Documentation Format</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="interface" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="name" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="parametersType">
+		<xs:annotation>
+			<xs:documentation>ActionScript2.0 Collection of Parameters Documentation Format</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="parameter" type="parameterType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="parameterType">
+		<xs:annotation>
+			<xs:documentation>ActionScript2.0 Method Parameter Value Documentation Format</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="docuTextType">
+				<xs:attribute name="name" type="xs:string" use="required"/>
+				<xs:attribute name="type" type="xs:string" use="required"/>
+				<xs:attribute name="optional" type="xs:boolean" default="false"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="usagesType">
+		<xs:annotation>
+			<xs:documentation>ActionScript2.0 Collection of Usages Documentation Format</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="usage" type="codeType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="developerType">
+		<xs:annotation>
+			<xs:documentation>Developer Format</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="person" type="personType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="personType">
+		<xs:annotation>
+			<xs:documentation>Person Format</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="task" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="authoring"/>
+					<xs:enumeration value="dokumentation"/>
+					<xs:enumeration value="testing"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="contact" type="emailType" use="required"/>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="docuTextType" mixed="true">
+		<xs:annotation>
+			<xs:documentation>Documentation Text Format</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent mixed="true">
+			<xs:extension base="textWithKeywordsType">
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="see" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="code" type="codeType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="note" type="textWithKeywordsType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="caution" type="textWithKeywordsType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="player" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="codeType" mixed="true">
+		<xs:annotation>
+			<xs:documentation>Code Text Format with optional Expressions</xs:documentation>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="expression" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="textWithKeywordsType" mixed="true">
+		<xs:annotation>
+			<xs:documentation>Basic Text Format with optional Keywords</xs:documentation>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="keyword" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+	</xs:complexType>
+	<!-- -->
+	<xs:simpleType name="emailType">
+		<xs:annotation>
+			<xs:documentation>E-Mail Format</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[^@ ]{2,}@[^@ \.]{3,}(\.[^@ \.]{2,}){1,}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- -->
+	<xs:simpleType name="versionNrType">
+		<xs:annotation>
+			<xs:documentation>Version Number Format</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(0|([1-9][0-9]*))\.(0|([1-9][0-9]*))(\.(0|([1-9][0-9]*))){0,1}[a|b]{0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Version number format #.#[.#][a|b]-->
+</xs:schema>

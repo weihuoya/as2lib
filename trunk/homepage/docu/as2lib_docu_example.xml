@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Alexander Schliebner (Alexander Schliebner) -->
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="as2lib_docu.xsd" version="0.0.0a" date="2003-11-25">
+	<class name="myClass" version="0.0.0a">
+		<availability>
+			<player>Flash Player 6</player>
+		</availability>
+		<description>
+			The <keyword>myClass</keyword> class is only for demonstration purposes. It works very similar to <keyword>myOtherClass</keyword>.
+			<note>Although <keyword>myClass</keyword> and <keyword>myOtherClass</keyword> are similar, they are not the same.</note>
+			<caution>Do not use <keyword>myClass</keyword> when you intend to use <keyword>myOtherClass</keyword>.</caution>
+		</description>
+		<implements>
+			<interface name="myInterface"/>
+			<interface name="myOtherInterface"/>
+		</implements>
+		<method version="0.0.0a" name="my1stMethod" static="false" private="false" type="String" deprecated="false">
+			<availability>
+				<player>Flash Player 6</player>; behavior changed in <player>Flash Player 7</player>.
+			</availability>
+			<usages>
+				<usage>
+					<expression>inst_myClass</expression>.my1stMethod("<expression>String</expression>");</usage>
+				<usage>
+					<expression>inst_myClass</expression>.my1stMethod("<expression>String</expression>", <expression>Number</expression>);</usage>
+			</usages>
+			<parameters>
+				<parameter name="Parameter1" type="String">A Name for the action to perform.</parameter>
+				<parameter name="Parameter2" type="Number" optional="true">An optional Number for the action to perform.</parameter>
+			</parameters>
+			<returns type="Boolean">A Boolean value that indicates the success of my1stMethod.</returns>
+			<description>my1stMethod is performing some action with its parameters described in this section of the documentation. A <keyword>SomeException</keyword> is thrown, if you pass illegal parameters.</description>
+			<example>
+				This example creates an instance of myClass and invokes my1stMethod on it.
+				<code>
+					var myInstance:myClass = new myClass();
+					myInstance.my1stMethod("Hello World!", 5);
+				</code>
+			</example>
+			<see>myClass.my2ndMethod()</see>
+			<see>myOtherClass.my1stOtherMethod()</see>
+			<developer>
+				<person name="Alexander Schliebner" task="authoring" contact="alex@schliebner.de"/>
+			</developer>
+		</method>
+		<property version="0.0.0a" name="my1stProperty" static="false" private="false" type="Number" deprecated="false">
+			<availability>
+				<player>Flash Player 6</player>
+			</availability>
+			<usages>
+				<usage>
+					<expression>inst_myClass</expression>.my1stProperty
+				</usage>
+			</usages>
+			<description><keyword>my1stProperty</keyword> is a property for demonstration purposes only.</description>
+		</property>
+		<property version="0.0.0a" name="my2ndProperty" static="false" private="false" type="Boolean" deprecated="false">
+			<availability>
+				<player>Flash Player 6</player>
+			</availability>
+			<usages>
+				<usage>
+					<expression>inst_myClass</expression>.my2ndProperty
+				</usage>
+			</usages>
+			<description><keyword>my2ndProperty</keyword> is a property for demonstration purposes only.</description>
+		</property>
+		<developer>
+			<person name="Alexander Schliebner" task="authoring" contact="alex@schliebner.de"/>
+			<person name="Anton Anonym" task="testing" contact="anton@anonym.de"/>
+		</developer>
+	</class>
+	<comment>You can add some comments here.</comment>
+</document>
