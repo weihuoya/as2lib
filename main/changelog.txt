@@ -1,5 +1,30 @@
-// :: CHANGELOG :: //
+﻿// :: CHANGELOG :: //
 
+    :: 22/07/04 :: Martin Heidegger ::
+    
+      >> Enhanced the toString Method of org.as2lib.Call
+
+      >> org.as2lib.util.ObjectUtil
+        > getChildName changed from type Function 
+
+      >> org.as2lib.util.ArrayUtil
+        + added method indexOf().
+
+      >> org.as2lib.env.reflect.SimpleCache
+        > allowed using of movieclip.
+
+    :: 21/07/04 :: Martin Heidegger ::
+     
+      >> Added indexOf Method to ArrayUtil
+      >> Changed the Implementation of ArrayUtil.contains to a for-in loop (could have sideeffects to implementations)
+
+    :: 18/07/04 :: Martin Heidegger ::
+     
+      >> Introduced org.as2lib.util.ClassUtil.createCleanInstance(clazz:Function):Object
+
+    :: 15/07/04 :: Simon Wacker ::
+
+      >> AOP Package (org.as2lib.aop)
 
     :: 05/25/04 :: Martin Heidegger ::
        
@@ -12,7 +37,7 @@
     :: 05/18/04 :: Martin Heidegger ::
 
 
-        > Introduced org.as2lib.util.StopWatch class to stop time differences
+        + Introduced org.as2lib.util.StopWatch class to stop time differences
 
 
 
