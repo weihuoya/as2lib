@@ -274,6 +274,8 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 		if (!listener) listener = getBlankMethodInvocationErrorListener();
 		var client:LocalConnection = new LocalConnection();
 		var owner:EnhancedLocalConnection = this;
+		// If the client did not get stored the garbage collector would remove it before
+		// the onStatus-event would get invoked.
 		var index:Number = clientArray.push(client) - 1;
 		client.onStatus = function(info) {
 			owner.clientArray.splice(index, 1);
