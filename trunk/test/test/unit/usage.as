@@ -95,3 +95,6 @@ test.unit.org.as2lib.env.bean.TSimpleBeanWrapper;
 // org.as2lib.env.bean.factory.support
 test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory;
 test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition;
+
+// org.as2lib.env.except tests
+test.unit.org.as2lib.env.except.TSimpleStackTraceElement;
