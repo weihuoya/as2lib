@@ -1,0 +1,47 @@
+\chapter{Reflections}
+\label{sec:Reflections}
+
+\paragraph{Motivation:}
+
+En {\sl Java}, il est possible d'obtenir de l'information à propos d'une classe : son nom, méthodes et propriétés via Relfections. Cette fonctionnalité par défaut de Java n'est pas intégré en {\sl ActionScript 2} et devrait l'être par {\sl as2lib}.
+
+\paragraph{Solution:}
+Afin d'utiliser ces fonctionnalités dans {\sl Flash}, les \emph{Reflections} ont été implémentés d'après le schéma suivant.  Les classes ActionScript sont recherchées à partir du ``root package'' \emph{_global}. Si un objet est trouvé, il est reconnu en tant que package. Les sous-objets de type function sont marqués comme des classes.
+
+Un usage parmi plusieurs pour \emph{Reflections} avec {\sl as2lib} est par exemple \emph{BasicClass}, voir chapitre \ref{sec:CorePackage}.  La méthode \emph{getClass} de \emph{BasicClass} utilise la méthode \emph{getClassInfo} de la classe \emph{ReflectUtil}\footnote{org.as2lib.env.util.ReflectUtil} et retourne une instance de \emph{ClassInfo} qui fournit toutes les informations importantes d'une classe. Le package \emph{reflect}\footnote{org.as2lib.env.reflect} utilise différents algorithmes pour obtenir l'information d'une classe. La collection qui contient toutes les  algorithmes est située dans le package algorythm de {\sl as2lib}. Cette fonctionnalité peut, bien sûr, être accédé directement par la classe \emph{ReflectUtil}.
+
+\begin{lstlisting}[frame=single]
+import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.ClassInfo;
+import edu.test.TestClass;
+
+var aClass:TestClass = new TestClass();
+var aClassInfo:ClassInfo = ReflectUtil.getClassInfo(
+				aClass);
+\end{lstlisting}
+L'instance de \emph{ClassInfo} qui a été créé contient des méthodes qui permettent au développeur d'obtenir d'autre information à propos de la classe. Ses méthodes sont:
+
+\begin{itemize}
+	\item \textbf{getName(}):\textit{String} - Nom de la classe  ex : "`TestClass"'.
+	\item \textbf{getFullName()}:\textit{String} - Nom complet de la classe incluant le package ex: "`edu.test.TestClass"'.
+	\item \textbf{getRepresentedClass()}:\textit{Function} - Référence vers la classe dont on a obtenu l'information.
+	\item \textbf{getConstructor()}: \textit{ConstructorInfo} - Retourne le constructeur de la classe entouré dans un instance de la classe \emph{ConstructorInfo}.
+	\item \textbf{getSuperClass(}):\textit{ClassInfo} - Information à propos de la classe supérieure, si elle existe.
+	\item \textbf{newInstance(}) - Crée une nouvelle instance de la classe dont  on a obtenu l'information.
+	\item \textbf{getParent()}:\textit{PackageInfo} - Information à propos du package dans lequel la classe est située.
+	\item \textbf{getMethods()}:\textit{Map} - Une Map, voir chapitre \ref{sec:DataHolding} , qui contient de l'information a propos de chaque méthode de la classe.
+	\item \textbf{getMethod(methodName:String)}:\textit{MethodInfo} - Retourne l'information à propos de la méthode dont le nom à été passé en paramètre sous la forme d'une instance de la classe MethodInfo.
+	\item \textbf{getMethod(concreteMethod:Function)}:\textit{MethodInfo} - Retourne l'information à propos de la méthode qui a été passé en paramètre sous la forme d'une instance de la classe MethodInfo.
+	\item \textbf{getProperties()}:\textit{HashMap} - - HashMap contenant l'information à propos des propriétés de la classe qui ont été défini en tant que setters et getters.
+	\item \textbf{getProperty(propertyName:String)}:\textit{PropertyInfo} - Retourne l'information à propos de la propriété dont le nom à été passé en paramètre sous la forme d'une instance de la classe PropertyInfo. 
+	\item \textbf{getProperty(concreteProperty:Function)}:\textit{PropertyInfo} - Retourne l'information à propos de la propriété qui a été passé en paramètre sous la forme d'une instance de la classe PropertyInfo. 
+\end{itemize}
+
+\begin{figure}
+\begin{center}
+\includegraphics{uml/as2lib/reflect.eps}
+\caption{Hierarchy of the Info Classes in the \emph{reflect} package}
+\label{fig:as2libreflect}
+\end{center}
+\end{figure}
+La connexion entre les classes Info démontré à l'aide de la figure \ref{fig:as2libreflect} à la page \pageref{fig:as2libreflect}.
