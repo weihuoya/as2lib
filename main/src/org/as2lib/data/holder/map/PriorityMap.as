@@ -136,23 +136,39 @@ class org.as2lib.data.holder.map.PriorityMap extends AbstractPriority implements
 		filter(index);
 	}
 	
+	/**
+	 * Handles the priority within the map.
+	 * 
+	 * @param index	Index of the new content.
+	 */
 	private function filter(index:Number):Void {
+		
+		// Only applies if more than one entry is contained in the list.
 		if (priorityArray.length > 1) {
+			
+			// Saving previous state
 			var keyArray:Array = map.getKeys();
 			var key = keyArray[index];
 			var value = map.remove(key);
+			keyArray = map.getKeys();
 			var priority:Number = priorityArray.splice(index, 1)[0];
+			
+			// Putting bigger priorities to a temporary map
 			var tempMap:Map = new HashMap();
-			var i:Number;
-			for (i = priorityArray.length-1; i > -1; i--) {
+			var i:Number = 0;
+			var l:Number = priorityArray.length;
+			for (i = 0; i < l; i=i-(-1)) {
+				// Forward iterating for not messing the content
 				if (priorityArray[i] > priority) {
 					tempMap.put(keyArray[i], map.remove(keyArray[i]));
-				} else {
-					break;
 				}
 			}
+			
+			// Inserting the key with the new priority 
 			map.put(key, value);
 			priorityArray.splice(i+1, 0, priority);
+			
+			// Re-inserting bigger priorities
 			map.putAll(tempMap);
 		}
 	}
