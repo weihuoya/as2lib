@@ -5,13 +5,14 @@ import org.as2lib.basic.reflect.ReflectInfo;
 import org.as2lib.basic.reflect.PackageInfo;
 import org.as2lib.basic.reflect.ClassInfo;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.util.ReflectUtil;
 
 class org.as2lib.basic.reflect.algorythm.ClassAlgorythm extends BasicClass implements CacheAlgorythm {
 	private var cache:Cache;
 	private var info:ClassInfo;
 	
-	public function ClassAlgorythm(cache:Cache) {
-		this.cache = cache;
+	public function ClassAlgorythm() {
+		cache = ReflectUtil.getCache();
 	}
 	
 	public function execute(object:Object):ReflectInfo {
