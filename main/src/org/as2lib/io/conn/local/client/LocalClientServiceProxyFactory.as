@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.env.reflect.ProxyFactory;
-import org.as2lib.env.reflect.ResolveProxyFactory;
+import org.as2lib.env.reflect.InterfaceProxyFactory;
 import org.as2lib.env.reflect.InvocationHandler;
 import org.as2lib.io.conn.core.client.ClientServiceProxy;
 import org.as2lib.io.conn.core.client.ClientServiceProxyFactory;
@@ -83,12 +83,15 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Abs
 	 * proxies for a specific type.
 	 *
 	 * <p>That is either the proxy factory set via #setServiceProxyFactory(ProxyFactory):Void
-	 * or the default one, which is an instance of type ResolveProxyFactory.
+	 * or the default one, which is an instance of type InterfaceProxyFactory.
+	 *
+	 * <p>The default InterfaceProxyFactory can only be used to create proxies
+	 * of interfaces.
 	 *
 	 * @return the currently used type proxy factory
 	 */
 	public function getTypeProxyFactory(Void):ProxyFactory {
-		if (!typeProxyFactory) typeProxyFactory = new ResolveProxyFactory();
+		if (!typeProxyFactory) typeProxyFactory = new InterfaceProxyFactory();
 		return typeProxyFactory;
 	}
 	

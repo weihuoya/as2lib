@@ -102,7 +102,7 @@ org.as2lib.io.conn.local.client.TLocalClientServiceProxyFactory;
 org.as2lib.env.reflect.TSimpleCache;
 org.as2lib.env.reflect.TClassInfo;
 org.as2lib.env.reflect.TPackageInfo;
-org.as2lib.env.reflect.TResolveProxyFactory;
+org.as2lib.env.reflect.TTypeProxyFactory;
 
 // org.as2lib.env.reflect.algorithm
 org.as2lib.env.reflect.algorithm.TClassAlgorithm;

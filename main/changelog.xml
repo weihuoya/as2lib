@@ -4,24 +4,30 @@
     xsi:schemaLocation="aslib http://www.as2lib.org/changelog_0.91.xsd">
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
+       <month value="2">
+         <day value="2">
+           <entry type="change" package="org.as2lib.env.reflect" class="ResolveProxyFactory"><change-rename to="TypeProxyFactory" /></entry>
+           <entry type="add" package="org.as2lib.env.reflect" class="InterfaceProxyFactory">Is capable of creating proxies for interfaces and offers higher performance than TypeProxyFactory.</entry>
+         </day>
+       </month>
        <month value="1">
-         <day value="28>
-           <entry type="change" package="org.as2lib.test.unit.info" class="InstanciationError"><change-rename to="InstantiationError"></entry>
-           <entry type="change" package="org.as2lib.aop.advice" class="AfterThrowingAdvice" method="execute(JoinPoint, Throwable):Void>Changed arguments types to execute(JoinPoint, *):Void.</entry>
+         <day value="28">
+           <entry type="change" package="org.as2lib.test.unit.info" class="InstanciationError"><change-rename to="InstantiationError" /></entry>
+           <entry type="change" package="org.as2lib.aop.advice" class="AfterThrowingAdvice" method="execute(JoinPoint, Throwable):Void">Changed arguments types to execute(JoinPoint, *):Void.</entry>
            <entry type="change" package="org.as2lib.env.except" class="Throwable" method="getStackTrace(Void):Stack">Changed return type to Array to reduce dependencies.</entry>
          </day>
-         <day value="27>
+         <day value="27">
            <entry type="remove" package="org.as2lib.data.holder" class="HolderConfig">Moved stringifier into specific data holder to reduce unnecessary imports of stringifiers.</entry>
            <entry type="add" package="org.as2lib.data.holder.map" class="AbstractMap">Contains the set- and getStringifier method to stringify maps.</entry>
-           <entry type="add" package="org.as2lib.data.holder.stack" class="SimpleStack" method="set-/getStringifier></entry>
-           <entry type="add" package="org.as2lib.data.holder.queue" class="LinearQueue" method="set-/getStringifier></entry>
-           <entry type="add" package="org.as2lib.data.holder.list" class="ArrayList" method="set-/getStringifier></entry>
+           <entry type="add" package="org.as2lib.data.holder.stack" class="SimpleStack" method="set-/getStringifier"></entry>
+           <entry type="add" package="org.as2lib.data.holder.queue" class="LinearQueue" method="set-/getStringifier"></entry>
+           <entry type="add" package="org.as2lib.data.holder.list" class="ArrayList" method="set-/getStringifier"></entry>
          </day>
          <day value="26">
            <entry type="remove" package="org.as2lib.env.except" class="StackTraceElementFactory"></entry>
-           <entry type="change" package="org.as2lib.env.except" class="SimpleStackTraceElement"><change-rename to="StackTraceElement"></entry>
+           <entry type="change" package="org.as2lib.env.except" class="SimpleStackTraceElement"><change-rename to="StackTraceElement" /></entry>
          </day>
-         <day value="25>
+         <day value="25">
            <entry type="add" package="org.as2lib.env.reflect" class="ReflectUtil">Offers lightweight reflection support. It has no dependence on any other as2lib module. That means if you use it no other modules will be included.</entry>
            <entry type="remove" package="org.as2lib.core" class="BasicInterface" method="getClass(Void):ClassInfo">Removed method to remove dependency on reflection module (org.as2lib.env.reflect).</entry>
          </day>
@@ -34,7 +40,7 @@
            <entry type="remove" package="org.as2lib.test.unit" class="TestConfig">Removed due to Configuration</entry>
            <entry type="add" package="org.as2lib.test.unit" class="LoggerTestListener">Default listener to be used with the TestSuite</entry>
            <entry type="add" package="org.as2lib.env.event" class="ConsumableEventInfo">SimpleEventInfo that is consumable</entry>
-           <entry type="add" package="org.as2lib.env.log.handler" class="TraceHandler" method="getInstance(Void):TraceHandler>Added method for singleton access.</entry>
+           <entry type="add" package="org.as2lib.env.log.handler" class="TraceHandler" method="getInstance(Void):TraceHandler">Added method for singleton access.</entry>
            <entry type="add" package="org.as2lib.env.log.logger" class="TraceLogger">Introduced simple logger that redirects to the output console</entry>
            <entry type="add" package="org.as2lib.env.log.logger" class="VoidLogger">Introduces logger that dismisses all messages</entry>
          </day>
