@@ -40,7 +40,6 @@ class org.as2lib.util.Call extends BasicClass {
 	 *
 	 * @param object the object the Function shall be executed on
 	 * @param func the Function that shall be executed
-	 * @param args the arguments that shall be passed
 	 * @throws IllegalArgumentException if neigther the object or the function is not available.
 	 */
 	public function Call(object, func:Function) {
