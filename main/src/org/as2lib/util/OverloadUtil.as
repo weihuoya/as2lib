@@ -2,7 +2,7 @@
 import org.as2lib.basic.overload.OverloadHandler;
 import org.as2lib.basic.overload.SimpleOverloadHandler;
 import org.as2lib.data.TypedArray;
-import org.as2lib.basic.except.MethodNotFoundException;
+import org.as2lib.basic.overload.OverloadException;
 
 /**
  * @author: Simon Wacker
@@ -32,9 +32,9 @@ class org.as2lib.util.OverloadUtil extends BasicClass {
 				}
 			}
 		}
-		throw new MethodNotFoundException("No appropriate OverloadHandler [" + someOverloadHandlers + "] for the arguments [" + someArguments + "] could be found.",
-										   eval("th" + "is"),
-										   arguments);
+		throw new OverloadException("No appropriate OverloadHandler [" + someOverloadHandlers + "] for the arguments [" + someArguments + "] could be found.",
+									 eval("th" + "is"),
+									 arguments);
 	}
 	
 	/**
