@@ -7,6 +7,11 @@ import org.as2lib.data.holder.Iterator;
  */
 class test.unit.org.as2lib.data.holder.AbstractTMap extends TestCase {
 	
+	
+	public static function blockCollecting(Void):Boolean {
+		return true;
+	}
+	
 	public function AbstractTMap(Void) {
 	}
 	
