@@ -1,4 +1,4 @@
-﻿import org.as2lib.basic.event.EventListener;
+﻿import org.as2lib.event.EventListener;
 import org.as2lib.basic.out.info.OutWriteInfo;
 import org.as2lib.basic.out.info.OutErrorInfo;
 

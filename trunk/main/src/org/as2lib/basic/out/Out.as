@@ -3,7 +3,7 @@ import org.as2lib.basic.out.OutLevel;
 import org.as2lib.basic.out.OutHandler;
 import org.as2lib.basic.out.handler.TraceHandler;
 import org.as2lib.basic.out.level.*;
-import org.as2lib.basic.event.EventBroadcaster;
+import org.as2lib.event.EventBroadcaster;
 import org.as2lib.basic.except.Throwable;
 import org.as2lib.basic.BasicClass;
 
