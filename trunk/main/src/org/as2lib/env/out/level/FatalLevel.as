@@ -8,7 +8,7 @@ import org.as2lib.env.out.Out;
 /**
  * @author Martin Heidegger
  * @author Simon Wacker
- * @see org.as2lib.env.out.level.None
+ * @see org.as2lib.env.out.level.NoneLevel
  */
 class org.as2lib.env.out.level.FatalLevel extends NoneLevel {
 	/**
