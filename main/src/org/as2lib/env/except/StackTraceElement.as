@@ -47,5 +47,5 @@ interface org.as2lib.env.except.StackTraceElement extends BasicInterface {
 	 *
 	 * @return the passed arguments
 	 */
-	public function getArguments(Void):FunctionArguments;
+	public function getArguments(Void):Array;
 }

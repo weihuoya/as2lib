@@ -17,12 +17,10 @@
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.except.ExceptConfig;
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.StackTraceElement;
-import org.as2lib.env.except.SimpleStackTraceElement;
 import org.as2lib.data.holder.Stack;
 import org.as2lib.data.holder.stack.SimpleStack;
 
@@ -53,11 +51,9 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	 * @param args the arguments of the throwing operation
 	 */
 	private function AbstractThrowable(message:String, thrower, args:FunctionArguments) {
-		if ((message == undefined) || !thrower || !args) {
-			throw new IllegalArgumentException("All three specified arguments [message:String, thrower, args:FunctionArguments] must be passed.",
-											   this,
-											   arguments);
-		}
+		/*if ((message == undefined) || !thrower || !args) {
+			throw new IllegalArgumentException("All three specified arguments [message:String, thrower, args:FunctionArguments] must be passed.", this, arguments);
+		}*/
 		stackTrace = new SimpleStack();
 		this.message = message;
 		addStackTraceElement(thrower, args.callee, args);
@@ -68,7 +64,7 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	/**
 	 * @see org.as2lib.env.except.Throwable#addStackTraceElement()
 	 */
-	public function addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void {
+	public function addStackTraceElement(thrower, method:Function, args:Array):Void {
 		var element:StackTraceElement = ExceptConfig.getStackTraceElementFactory().getStackTraceElement(thrower, method, args);
 		stackTrace.push(element);
 	}
@@ -90,13 +86,10 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	/**
 	 * @see org.as2lib.env.except.Throwable#initCause()
 	 */
-	public function initCause(aCause:Throwable):Throwable {
-		if (ObjectUtil.isAvailable(cause)) {
-			throw new IllegalStateException("The cause [" + cause + "] has already been initialized.",
-											this,
-											arguments);
-		}
-		cause = aCause;
+	public function initCause(newCause:Throwable):Throwable {
+		if (!newCause) throw new IllegalArgumentException("Cause must not be null or undefined.", this, arguments);
+		if (cause) throw new IllegalStateException("The cause [" + cause + "] has already been initialized.", this, arguments);
+		cause = newCause;
 		return Throwable(this);
 	}
 	

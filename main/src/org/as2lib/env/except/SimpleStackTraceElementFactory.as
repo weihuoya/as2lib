@@ -23,10 +23,12 @@ import org.as2lib.env.except.SimpleStackTraceElement;
  * @author Simon Wacker
  */
 class org.as2lib.env.except.SimpleStackTraceElementFactory extends BasicClass implements StackTraceElementFactory {
+	
 	/**
 	 * @see org.as2lib.env.except.StackTraceElementFactory#getStackTraceElement()
 	 */
-	public function getStackTraceElement(thrower, method:Function, args:FunctionArguments):StackTraceElement {
+	public function getStackTraceElement(thrower, method:Function, args:Array):StackTraceElement {
 		return new SimpleStackTraceElement(thrower, method, args);
 	}
+	
 }

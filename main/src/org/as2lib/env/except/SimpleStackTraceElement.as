@@ -44,7 +44,7 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 	private var method:MethodInfo;
 	
 	/** The arguments passed to the throwing method. */
-	private var args:FunctionArguments;
+	private var args:Array;
 	
 	/**
 	 * Constructs a new SimpleStackTraceElement instance.
@@ -53,7 +53,7 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 	 * @param method the method that threw the Throwabele
 	 * @param args the arguments passed to the throwing method
 	 */
-	public function SimpleStackTraceElement(thrower, method:Function, args:FunctionArguments) {
+	public function SimpleStackTraceElement(thrower, method:Function, args:Array) {
 		this.concreteThrower = thrower;
 		this.concreteMethod = method;
 		this.args = args;
@@ -105,7 +105,7 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 	/**
 	 * @see org.as2lib.env.except.StackTraceElement#getArguments()
 	 */
-	public function getArguments(Void):FunctionArguments {
+	public function getArguments(Void):Array {
 		return this.args;
 	}
 	
