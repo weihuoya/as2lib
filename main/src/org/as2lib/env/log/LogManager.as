@@ -72,11 +72,16 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 	 * <p>Uses the set logger repository to receive the logger that gets
 	 * returned.
 	 *
+	 * <p>Null gets returned if the logger repository returns null or
+	 * undefined.
+	 *
 	 * @param loggerName the name of the logger to return
 	 * @return the logger according to the name
 	 */
 	public static function getLogger(loggerName:String):Logger {
-		return getLoggerRepository().getLogger(loggerName);
+		var result:Logger = getLoggerRepository().getLogger(loggerName);
+		if (result) return result;
+		return null;
 	}
 	
 	/**

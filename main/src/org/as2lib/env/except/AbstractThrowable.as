@@ -82,7 +82,10 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	 * @return the logger used to output the exception
 	 */
 	private static function getLogger(Void):Logger {
-		return LogManager.getLogger("org.as2lib.env.except.Throwable");
+		if (logger === undefined) {
+			logger = LogManager.getLogger("org.as2lib.env.except.Throwable");
+		}
+		return logger;
 	}
 	
 	/**

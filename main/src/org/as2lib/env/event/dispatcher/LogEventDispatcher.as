@@ -18,6 +18,8 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.event.EventDispatcher;
 import org.as2lib.env.event.Consumable;
+import org.as2lib.env.log.LogManager;
+import org.as2lib.env.log.Logger;
 
 /**
  * An implementation of the EventDispatcher interface that logs the dispatching
@@ -28,19 +30,14 @@ import org.as2lib.env.event.Consumable;
 class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass implements EventDispatcher {
 	
 	/** Logger to log forwarded events. */
-	private static var logger;
+	private static var logger:Logger;
 	
 	/**
 	 * @return logger to log forwared events
 	 */
-	private static function getLogger(Void) {
+	private static function getLogger(Void):Logger {
 		if (logger === undefined) {
-			var repositoryManager = eval("_global." + "org.as2lib.env.log.LogManager");
-			if (repositoryManager) {
-				logger = repositoryManager.getLoggerRepository().getLogger("org.as2lib.env.event.dispatcher.LogEventDispatcher");
-			} else {
-				logger = null;
-			}
+			logger = LogManager.getLogger("org.as2lib.env.event.dispatcher.LogEventDispatcher");
 		}
 		return logger;
 	}
