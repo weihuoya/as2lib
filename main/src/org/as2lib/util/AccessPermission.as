@@ -32,7 +32,7 @@ import org.as2lib.core.BasicClass;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.AccessPermission extends BasicClass {
+class org.as2lib.util.AccessPermission extends BasicClass {
 	
 	/**
 	 * Allow everything to be done with the object.
