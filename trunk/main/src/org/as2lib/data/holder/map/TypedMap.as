@@ -21,6 +21,7 @@ import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.HolderConfig;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
@@ -107,7 +108,7 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 		while (iterator.hasNext()) {
 			validate(iterator.next());
 		}
-		map.putAll(map);
+		this.map.putAll(map);
 	}
 	
 	/**
@@ -150,7 +151,7 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	 */
 	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].",
+			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + ReflectUtil.getClassInfo(type).getFullName() + "].",
 											   this,
 											   arguments);
 		}
