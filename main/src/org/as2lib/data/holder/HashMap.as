@@ -98,6 +98,6 @@ class org.as2lib.data.holder.HashMap extends BasicClass implements Map {
 	}
 	
 	public function toString(Void):String {
-		return HolderConfig.getHashMapStringifier().execute(this);
+		return HolderConfig.getMapStringifier().execute(this);
 	}
 }
