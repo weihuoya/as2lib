@@ -49,11 +49,11 @@ import org.as2lib.test.unit.TestSuiteFactory;
   logger.addHandler(new TraceHandler());
   
   // Log to trace console in org.as2lib package
-  loggerHierarchy.putLogger(logger);
+  loggerHierarchy.addLogger(logger);
   
   // Example for your package
   /*
-  loggerHierarchy.putLogger(new TraceLogger("com.mypackage"));
+  loggerHierarchy.addLogger(new TraceLogger("com.mypackage"));
   */
   
   // Example for a output to a XMLSocket & the output console
@@ -61,19 +61,19 @@ import org.as2lib.test.unit.TestSuiteFactory;
   var myPackageLogger:SimpleLogger = new SimpleLogger("com.mypackage.xml.support");
   myPackageLogger.addHandler(new XmlSocketHandler());
   myPackageLogger.addHandler(TraceHandler.getInstance());
-  loggerHierarchy.putLogger(myPackageLogger);
+  loggerHierarchy.addLogger(myPackageLogger);
   */
   
   // Example to hide a package
   /*
-  loggerHierarchy.putLogger(new VoidLogger("com.mypackage.package.to.hide"));
+  loggerHierarchy.addLogger(new VoidLogger("com.mypackage.package.to.hide"));
   */
   
   // Example for a restricted LogLevel
   /*
   var myPackageLogger2:TraceLogger = new TraceLogger("com.mypackage.debug.level");
   myPackageLogger2.setLevel(AbstractLogLevel.DEBUG);
-  loggerHierarchy.putLogger(myPackageLogger2);
+  loggerHierarchy.addLogger(myPackageLogger2);
   */
 //
 //  - TESTSYSTEM -

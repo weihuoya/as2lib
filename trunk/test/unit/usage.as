@@ -22,7 +22,7 @@
  */
 
 // Data Holder tests
-org.as2lib.data.holder.array.TArrayIterator;
+/*org.as2lib.data.holder.array.TArrayIterator;
 org.as2lib.data.holder.array.TTypedArray;
 //org.as2lib.data.holder.list.TPriorityList;
 org.as2lib.data.holder.list.TArrayList;
@@ -114,7 +114,7 @@ org.as2lib.env.reflect.algorithm.TClassAlgorithm;
 org.as2lib.env.reflect.algorithm.TPackageAlgorithm;
 org.as2lib.env.reflect.algorithm.TPackageMemberAlgorithm;
 org.as2lib.env.reflect.algorithm.TMethodAlgorithm;
-org.as2lib.env.reflect.algorithm.TPropertyAlgorithm;
+org.as2lib.env.reflect.algorithm.TPropertyAlgorithm;*/
 
 // org.as2lib.env.log
 org.as2lib.env.log.logger.TSimpleHierarchicalLogger;
@@ -122,7 +122,7 @@ org.as2lib.env.log.repository.TLoggerHierarchy;
 org.as2lib.env.log.level.TDynamicLogLevel;
 
 // org.as2lib.env.bean
-org.as2lib.env.bean.TMutablePropertyValueSet;
+/*org.as2lib.env.bean.TMutablePropertyValueSet;
 org.as2lib.env.bean.TPropertyValue;
 org.as2lib.env.bean.TSimpleBeanWrapper;
 
@@ -139,6 +139,6 @@ org.as2lib.env.event.TSimpleEventBroadcaster;
 org.as2lib.env.except.TException;
 org.as2lib.env.except.TFatalException;
 org.as2lib.env.except.TStackTraceElement;
-org.as2lib.env.except.TIllegalArgumentException;
+org.as2lib.env.except.TIllegalArgumentException;*/
 /*org.as2lib.env.except.TIllegalStateException;
 org.as2lib.env.except.TUnsupportedOperationException;*/
