@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.core.string.Stringifier;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
@@ -28,6 +29,8 @@ import org.as2lib.env.reflect.algorythm.ChildrenAlgorythm;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.reflect.SimpleCache;
+import org.as2lib.env.reflect.string.MethodInfoStringifier;
+import org.as2lib.env.reflect.string.PropertyInfoStringifier;
 
 /**
  * ReflectConfig is the main config used to globally configure key parts of the
@@ -53,6 +56,12 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	
 	/** All ClassInfos and PackageInfos that have already been found will be cached here. */
 	private static var cache:Cache = new SimpleCache();
+	
+	/** Used to stringify MethodInfo instances. */
+	private static var methodInfoStringifier:Stringifier = new MethodInfoStringifier();
+	
+	/** Used to stringify PropertyInfo instances. */
+	private static var propertyInfoStringifier:Stringifier = new PropertyInfoStringifier();
 	
 	/**
 	 * Private constructor to prevent an instantiation.
@@ -173,5 +182,41 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 */
 	public static function setCache(newCache:Cache):Void {
 		cache = newCache;
+	}
+	
+	/**
+	 * Sets the new Stringifier to stringify MethodInfos.
+	 *
+	 * @param stringifier the new MethodInfo Stringifier
+	 */
+	public static function setMethodInfoStringifier(stringifier:Stringifier):Void {
+		methodInfoStringifier = stringifier;
+	}
+	
+	/**
+	 * Returns the Stringifier used to stringify MethodInfos.
+	 *
+	 * @return the Stringifier used to stringify MethodInfos
+	 */
+	public static function getMethodInfoStringifier(Void):Stringifier {
+		return methodInfoStringifier;
+	}
+	
+	/**
+	 * Sets the new Stringifier to stringify PropertyInfos.
+	 *
+	 * @param stringifier the new PropertyInfo Stringifier
+	 */
+	public static function setPropertyInfoStringifier(stringifier:Stringifier):Void {
+		propertyInfoStringifier = stringifier;
+	}
+	
+	/**
+	 * Returns the Stringifier used to stringify PropertyInfos.
+	 *
+	 * @return the Stringifier used to stringify PropertyInfos
+	 */
+	public static function getPropertyInfoStringifier(Void):Stringifier {
+		return propertyInfoStringifier;
 	}
 }
