@@ -66,7 +66,6 @@ class org.as2lib.io.conn.local.server.LocalServerRegistry extends BasicClass imp
 	 *
 	 * @param host the host that acts as an identifier for the server
 	 * @return true if the server with the given host is regitered else false
-	 * @see org.as2lib.io.conn.local.ServerRegistry#containsServer(String):Boolean
 	 */
 	public function containsServer(host:String):Boolean {
 		return EnhancedLocalConnection.connectionExists(host);
@@ -81,7 +80,6 @@ class org.as2lib.io.conn.local.server.LocalServerRegistry extends BasicClass imp
 	 * @param host the host that acts as an identifier for the server
 	 * @throws IllegalArgumentException if the host is null, undefined or a blank string
 	 * @throws ReservedHostException if a server with the passed-in host is already running
-	 * @see org.as2lib.io.conn.local.ServerRegistry#registerServer(String):Void
 	 */
 	public function registerServer(host:String):Void {
 		if (!host) throw new IllegalArgumentException("Host must not be null, undefined or a blank string.", this, arguments);
@@ -102,7 +100,6 @@ class org.as2lib.io.conn.local.server.LocalServerRegistry extends BasicClass imp
 	 *
 	 * @param host the host that acts as an identifier for the server to remove
 	 * @throws IllegalArgumentException if you tried to unregister a server that has not been registered directly at this registry but at another one
-	 * @see org.as2lib.io.conn.local.ServerRegistry#removeServer(String):Void
 	 */
 	public function removeServer(host:String):Void {
 		if (serverRegistry[host]) {

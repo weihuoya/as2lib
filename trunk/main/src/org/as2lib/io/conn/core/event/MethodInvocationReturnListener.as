@@ -51,7 +51,7 @@ interface org.as2lib.io.conn.core.event.MethodInvocationReturnListener extends E
 	 * <p>That indicates that the method was invoked successfully.
 	 *
 	 * @param returnInfo contains the return value and some other useful 
-	 *                   information about the invoked method
+	 * information about the invoked method
 	 */
 	public function onReturn(returnInfo:MethodInvocationReturnInfo):Void;
 	

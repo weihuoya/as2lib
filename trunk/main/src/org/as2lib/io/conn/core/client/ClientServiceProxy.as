@@ -27,10 +27,10 @@ import org.as2lib.io.conn.core.event.MethodInvocationCallback;
 interface org.as2lib.io.conn.core.client.ClientServiceProxy extends BasicInterface {
 	
 	/**
-	 * @overload #invokeByName(String):MethodInvocationCallback
-	 * @overload #invokeByNameAndArguments(String, Array):MethodInvocationCallback
-	 * @overload #invokeByNameAndCallback(String, MethodInvocationCallback):MethodInvocationCallback
-	 * @overload #invokeByNameAndArgumentsAndCallback(String, Array, MethodInvocationCallback):MethodInvocationCallback
+	 * @overload #invokeByName
+	 * @overload #invokeByNameAndArguments
+	 * @overload #invokeByNameAndCallback
+	 * @overload #invokeByNameAndArgumentsAndCallback
 	 */
 	public function invoke():MethodInvocationCallback;
 	

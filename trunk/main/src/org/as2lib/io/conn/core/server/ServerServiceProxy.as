@@ -39,8 +39,8 @@ interface org.as2lib.io.conn.core.server.ServerServiceProxy extends BasicInterfa
 	public function stop(Void):Void;
 	
 	/**
-	 * @overload #invokeMethodByNameAndArguments(String, Array):Void
-	 * @overload #invokeMethodByNameAndArgumentsAndResponseService(String, Array, String):Void
+	 * @overload #invokeMethodByNameAndArguments
+	 * @overload #invokeMethodByNameAndArgumentsAndResponseService
 	 */
 	public function invokeMethod():Void;
 	

@@ -28,8 +28,8 @@ class org.as2lib.io.conn.core.client.UnknownServiceException extends ConnectionE
 	 * Constructs a new Exception instance.
 	 *
 	 * <p>All arguments are allowed to be null or undefined. But if one is,
-	 * the string representation returned by the #toString method is not
-	 * complete anymore.
+	 * the string representation returned by the {@link #toString] method
+	 * is not complete anymore.
 	 *
 	 * <p>The args array should be the internal arguments array of the
 	 * method that throws the throwable. The internal arguments array exists

@@ -21,8 +21,8 @@ import org.as2lib.env.event.EventInfo;
  * MethodInvocationReturnInfo gets used to inform clients that the method
  * invocation completed successfully.
  *
- * <p>This class gets used in conjunction with the MethodInvocationCallback
- * and MethodInvocationReturnListener classes.
+ * <p>This class gets used in conjunction with the {@link MethodInvocationCallback}
+ * and {@link MethodInvocationReturnListener} classes.
  *
  * @author Simon Wacker
  */
@@ -56,20 +56,26 @@ class org.as2lib.io.conn.core.event.MethodInvocationReturnInfo extends BasicClas
 	}
 	
 	/**
-	 * @return the url to the service the method should be or was executed on
+	 * Returns the url to the service the method was executed on.
+	 *
+	 * @return the url to the service the method was executed on
 	 */
 	public function getServiceUrl(Void):String {
 		return serviceUrl;
 	}
 	
 	/**
-	 * @return the name of the method that should be or was executed on the service
+	 * Returns the name of the method that was executed on the service
+	 *
+	 * @return the name of the method that was executed on the service
 	 */
 	public function getMethodName(Void):String {
 		return methodName;
 	}
 	
 	/**
+	 * Returns the arguments used as parameters for the method invocation.
+	 *
 	 * @return the arguments used as parameters for the method invocation
 	 */
 	public function getMethodArguments(Void):Array {
@@ -77,6 +83,8 @@ class org.as2lib.io.conn.core.event.MethodInvocationReturnInfo extends BasicClas
 	}
 	
 	/*
+	 * Returns the return value of the invoked method.
+	 *
 	 * @return the return value of the invoked method
 	 */
 	public function getReturnValue(Void) {

@@ -82,10 +82,10 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Abs
 	 * Returns the currently used type proxy factory that gets used to get
 	 * proxies for a specific type.
 	 *
-	 * <p>That is either the proxy factory set via #setServiceProxyFactory(ProxyFactory):Void
-	 * or the default one, which is an instance of type InterfaceProxyFactory.
+	 * <p>That is either the proxy factory set via {@link #setServiceProxyFactory}
+	 * or the default one, which is an instance of type {@link InterfaceProxyFactory}.
 	 *
-	 * <p>The default InterfaceProxyFactory can only be used to create proxies
+	 * <p>The default {@link InterfaceProxyFactory} can only be used to create proxies
 	 * of interfaces.
 	 *
 	 * @return the currently used type proxy factory
@@ -99,7 +99,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Abs
 	 * Sets the new type proxy factory that gets used to get proxies for a
 	 * specific type.
 	 *
-	 * <p>If you set a type proxy factory of value null getTypeProxyFactory(Void):ProxyFactory
+	 * <p>If you set a type proxy factory of value null {@link #getTypeProxyFactory}
 	 * will return the default factory.
 	 *
 	 * @param proxyFactory the new type proxy factory
@@ -112,8 +112,8 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Abs
 	 * Returns the client service proxy factory used to get client service
 	 * proxy instances.
 	 *
-	 * <p>The returned factory is either the one set via setClientServiceProxyFactory(ClientServiceProxyFactory):Void
-	 * or the default one which is an instance of SimpleClientServiceProxyFactory.
+	 * <p>The returned factory is either the one set via {@link #setClientServiceProxyFactory}
+	 * or the default one which is an instance of {@link SimpleClientServiceProxyFactory}.
 	 *
 	 * @return the currently used client service proxy factory
 	 */
@@ -126,7 +126,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Abs
 	 * Sets a new client service proxy factory used to get client service
 	 * proxy instances.
 	 *
-	 * <p>If you set a new factory of value null or undefined getClientServiceProxyFactory(Void):ClientServiceProxyFactory
+	 * <p>If you set a new factory of value null or undefined {@link #getClientServiceProxyFactory}
 	 * will return the default factory.
 	 *
 	 * @param clientServiceProxyFactory the new client service proxy factory
@@ -143,7 +143,6 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Abs
 	 *
 	 * @param url the url of teh 'remote' service
 	 * @return a client service proxy used to call methods on the 'remote' service
-	 * @see ClientServiceProxyFactory#getClientServiceProxyByUrl(String):ClientServiceProxy
 	 */
 	public function getClientServiceProxyByUrl(url:String):ClientServiceProxy {
 		return getClientServiceProxyFactory().getClientServiceProxy(url);
@@ -156,14 +155,13 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Abs
 	 * <p>The type is therefore normally the type of the 'remote' service
 	 * you wanna call methods on.
 	 *
-	 * <p>If the type is null an instance of type ClientServiceProxy will be
-	 * returned. That means this method will do the same as the getClientServiceProxyByUrl(String):ClientServiceProxy
+	 * <p>If the type is null an instance of type {@link ClientServiceProxy} will be
+	 * returned. That means this method will do the same as the {@link #getClientServiceProxyByUrl}
 	 * method.
 	 *
 	 * @param url the url of the 'remote' service
 	 * @param type the type of the 'remote' service
 	 * @return a client service proxy that can be casted to the passed-in type
-	 * @see ClientServiceProxyFactory#getClientServiceProxyByUrlAndType(String, Function)
 	 */
 	public function getClientServiceProxyByUrlAndType(url:String, type:Function) {
 		var serviceProxy:ClientServiceProxy = getClientServiceProxyByUrl(url);

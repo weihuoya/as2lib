@@ -27,8 +27,8 @@ import org.as2lib.io.conn.core.client.ClientServiceProxy;
 interface org.as2lib.io.conn.core.client.ClientServiceProxyFactory extends BasicInterface {
 	
 	/**
-	 * @overload #getClientServiceProxyByUrl(String):ClientServiceProxy
-	 * @overload #getClientServiceProxyByUrlAndType(String, Function)
+	 * @overload #getClientServiceProxyByUrl
+	 * @overload #getClientServiceProxyByUrlAndType
 	 */
 	public function getClientServiceProxy();
 	

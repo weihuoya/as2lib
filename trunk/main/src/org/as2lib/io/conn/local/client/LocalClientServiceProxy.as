@@ -122,7 +122,6 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	 * @param args the arguments that get passed to the method as parameters
 	 * @return the callback that handles the response
 	 * @throws IllegalArgumentException if the passed-in method name is null or an empty string
-	 * @see ClientServiceProxy#invokeByNameAndArguments(String, Array):MethodInvocationCallback
 	 */
 	public function invokeByNameAndArguments(methodName:String, args:Array):MethodInvocationCallback {
 		return invokeByNameAndArgumentsAndCallback(methodName, args, null);
@@ -146,7 +145,6 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	 * @param callback the callback that handles the response
 	 * @return either the passed-in callback or a new callback if null
 	 * @throws IllegalArgumentException if the passed-in method name is null or an empty string
-	 * @see ClientServiceProxy#invokeByNameAndArgumentsAndCallback(String, Array, MethodInvocationCallback):MethodInvocationCallback
 	 */
 	public function invokeByNameAndArgumentsAndCallback(methodName:String, args:Array, callback:MethodInvocationCallback):MethodInvocationCallback {
 		if (!methodName) throw new IllegalArgumentException("Method name must not be null, undefined or an empty string.", this, arguments);

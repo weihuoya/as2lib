@@ -98,8 +98,8 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	}
 	
 	/**
-	 * @overload #EnhancedLocalConnectionByVoid(Void):Void
-	 * @overload #EnhancedLocalConnectionByTarget(*):Void
+	 * @overload #EnhancedLocalConnectionByVoid
+	 * @overload #EnhancedLocalConnectionByTarget
 	 */
 	public function EnhancedLocalConnection() {
 		var o:Overload = new Overload(this);
@@ -161,10 +161,10 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	}
 	
 	/**
-	 * @overload #sendByConnectionAndMethod(String, String):Void
-	 * @overload #sendByConnectionAndMethodAndArguments(String, String, Array):Void
-	 * @overload #sendByConnectionAndMethodandListener(String, String, MethodInvocationErrorListener):Void
-	 * @overload #sendByConnectionAndMethodAndArgumentsAndListener(String, String, Array, MethodInvocationErrorListener):Void
+	 * @overload #sendByConnectionAndMethod
+	 * @overload #sendByConnectionAndMethodAndArguments
+	 * @overload #sendByConnectionAndMethodandListener
+	 * @overload #sendByConnectionAndMethodAndArgumentsAndListener
 	 */
 	public function send():MethodInvocationErrorListener {
 		var o:Overload = new Overload(this);

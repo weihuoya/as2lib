@@ -73,7 +73,7 @@ interface org.as2lib.io.conn.core.event.MethodInvocationCallback extends BasicIn
 	 * <p>That indicates that the method was invoked successfully.
 	 *
 	 * @param returnInfo contains the return value and some other useful 
-	 *                   information about the invoked method
+	 * information about the invoked method
 	 */
 	public function onReturn(returnInfo:MethodInvocationReturnInfo):Void;
 	
@@ -89,7 +89,7 @@ interface org.as2lib.io.conn.core.event.MethodInvocationCallback extends BasicIn
 	 * <p>Remember that not all clients support this functionalities.
 	 *
 	 * @param errorInfo contains information about the error and some useful
-	 *                  information about the 'invoked' method
+	 * information about the 'invoked' method
 	 */
 	public function onError(errorInfo:MethodInvocationErrorInfo):Void;
 	

@@ -19,7 +19,7 @@ import org.as2lib.env.overload.Overload;
 
 /**
  * Offers default implementations of some methods needed when implementing
- * the ServerServiceProxy interface.
+ * the {@link ServerServiceProxy} interface.
  *
  * @author Simon Wacker
  */
@@ -47,9 +47,9 @@ class org.as2lib.io.conn.core.server.AbstractServerServiceProxy extends BasicCla
 	}
 	
 	/**
-	 * @overload #invokeMethodByNameAndArguments(String, Array):Void
-	 * @overload #invokeMethodByNameAndArgumentsAndResponseService(String, Array, String):Void
-	 * @see ServerServiceProxy#invokeMethod():Void
+	 * @overload #invokeMethodByNameAndArguments
+	 * @overload #invokeMethodByNameAndArgumentsAndResponseService
+	 * @see ServerServiceProxy#invokeMethod
 	 */
 	public function invokeMethod():Void {
 		var o:Overload = new Overload(this);

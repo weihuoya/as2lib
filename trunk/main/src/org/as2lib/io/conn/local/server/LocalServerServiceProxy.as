@@ -121,8 +121,8 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	/**
 	 * Returns the currently used connection.
 	 *
-	 * <p>This is either the connection set via #setConnection(EnhancedLocalConnection):Void
-	 * of a default EnhancedLocalConnection instance.
+	 * <p>This is either the connection set via {@link #setConnection}
+	 * of a default {@link EnhancedLocalConnection} instance.
 	 *
 	 * @return the currently used connection
 	 */
@@ -137,7 +137,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * <p>The target of the connection, that means the receiver of all remote
 	 * calls must be this instance. If it is not nothing will work properly.
 	 *
-	 * <p>If you set a connection of value null or undefined #getConnection(Void):EnhancedLocalConnection
+	 * <p>If you set a connection of value null or undefined {@link #getConnection}
 	 * will return the default connection.
 	 *
 	 * @param connection the new connection to use
@@ -149,8 +149,8 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	/**
 	 * Returns the currently used error broadcaster.
 	 *
-	 * <p>This is either the one set via #setErrorBroadcaster(EventBroadcaster):Void
-	 * or the default SpeedEventBroadcaster instance.
+	 * <p>This is either the one set via {@link #setErrorBroadcaster}
+	 * or the default {@link SpeedEventBroadcaster} instance.
 	 *
 	 * @return the currently used error broadcaster
 	 */
@@ -163,8 +163,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * Sets a new error broadcaster.
 	 *
 	 * <p>If you set an error broadcaster of value null or undefined
-	 * #getErrorBroadcaster(Void):EventBroadcaster will return the default
-	 * broadcaster.
+	 * {@link #getErrorBroadcaster} will return the default broadcaster.
 	 *
 	 * @param errorBroadcaster the new error broadcaster
 	 */
@@ -183,7 +182,6 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 *
 	 * @param host the host to run the service on
 	 * @throws ReservedServiceException if a service on the passed-in host with the service's path is already in use
-	 * @see ServerServiceProxy#run(String):Void
 	 */
 	public function run(host:String):Void {
 		if (isRunning()) this.stop();
@@ -197,9 +195,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	}
 	
 	/**
-	 * Stops the service.
-	 *
-	 * @see ServerServiceProxy#stop(Void):Void
+	 * Stops this service.
 	 */
 	public function stop(Void):Void {
 		getConnection().close();
@@ -221,7 +217,6 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 *
 	 * @param methodName the name of the method to invoke on the service
 	 * @param args the arguments to be used as parameters when invoking the method
-	 * @see ServerServiceProxy#invokeMethodByNameAndArguments(String, Array):Void
 	 */
 	public function invokeMethodByNameAndArguments(methodName:String, args:Array):Void {
 		try {
@@ -244,8 +239,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * passed though the response service's url to the client.
 	 *
 	 * <p>If the response service url is null or an empty string the
-	 * #invokeMethodByNameAndArguments(String, Array):Void method gets
-	 * invoked instead.
+	 * {@link #invokeMethodByNameAndArguments} method gets invoked instead.
 	 *
 	 * <p>The response service is supposed to define two methods with the
 	 * following signature:
@@ -275,7 +269,6 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * @param methodName the name of the method to invoke on the service
 	 * @param args the arguments to be used as parameters when invoking the method
 	 * @param responseServiceUrl the url to the service that handles the response
-	 * @see ServerServiceProxy#invokeMethodByNameAndArgumentsAndResponseService(String, Array, String):Void
 	 */
 	public function invokeMethodByNameAndArgumentsAndResponseService(methodName:String, args:Array, responseServiceUrl:String):Void {
 		if (!responseServiceUrl) {
@@ -331,7 +324,6 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * Returns the wrapped service.
 	 *
 	 * @return the wrapped service
-	 * @see ServerServiceProxy#getService(Void)
 	 */
 	public function getService(Void) {
 		return service;
@@ -339,8 +331,6 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	
 	/**
 	 * Returns the path of this service.
-	 *
-	 * @see ServerServiceProxy#getPath(Void):String
 	 */
 	public function getPath(Void):String {
 		return path;
@@ -350,7 +340,6 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * Returns whether this service is running or not.
 	 *
 	 * @return true if this service runs else false
-	 * @see ServerServiceProxy#isRunning(Void):Boolean
 	 */
 	public function isRunning(Void):Boolean {
 		return running;
@@ -363,7 +352,6 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * on the service and something went wrong.
 	 *
 	 * @param errorListener the new error listener to add
-	 * @see ServerServiceProxy#addErrorListener(MethodInvocationErrorListener):Void
 	 */
 	public function addErrorListener(errorListener:MethodInvocationErrorListener):Void {
 		getErrorBroadcaster().addListener(errorListener);
@@ -376,7 +364,6 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * on the service and something went wrong.
 	 *
 	 * @param errorListener the error listener to remove
-	 * @see ServerServiceProxy#removeErrorListener(MethodInvocationErrorListener):Void
 	 */
 	public function removeErrorListener(errorListener:MethodInvocationErrorListener):Void {
 		getErrorBroadcaster().removeListener(errorListener);
