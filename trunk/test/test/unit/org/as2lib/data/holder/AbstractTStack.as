@@ -8,6 +8,10 @@ class test.unit.org.as2lib.data.holder.AbstractTStack extends TestCase {
 	private var obj1:Object;
 	private var obj2:Object;
 	
+	public static function blockCollecting(Void):Boolean {
+		return true;
+	}
+	
 	public function AbstractTStack(Void) {
 		obj1 = {};
 		obj2 = {};
