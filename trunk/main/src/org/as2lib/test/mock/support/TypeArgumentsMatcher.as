@@ -27,6 +27,9 @@ class org.as2lib.test.mock.support.TypeArgumentsMatcher extends BasicClass imple
 	
 	/**
 	 * Constructs a new instance.
+	 *
+	 * <p>If a type is null or undefined the expected and actual argument
+	 * will be compared.
 	 * 
 	 * @param expectedTypes the expected types of the arguments
 	 */
@@ -36,6 +39,10 @@ class org.as2lib.test.mock.support.TypeArgumentsMatcher extends BasicClass imple
 	
 	/**
 	 * Compares the actual arguments only by type.
+	 *
+	 * <p>If a type is null or undefined the expected and actual
+	 * argument will be compared directly with the strict equals
+	 * operator.
 	 *
 	 * <p>False will be returned if:
 	 * <ul>
@@ -52,8 +59,14 @@ class org.as2lib.test.mock.support.TypeArgumentsMatcher extends BasicClass imple
 		if (expectedArguments.length != actualArguments.length) return false;
 		if (actualArguments.length != expectedTypes.length) return false;
 		for (var i:Number = 0; i < expectedArguments.length; i++) {
-			if (!(actualArguments[i] instanceof expectedTypes[i])) {
-				return false;
+			if (expectedTypes[i] == null) {
+				if (expectedArguments[i] !== actualArguments[i]) {
+					return false;
+				}
+			} else {
+				if (!(actualArguments[i] instanceof expectedTypes[i])) {
+					return false;
+				}
 			}
 		}
 		return true;

@@ -18,12 +18,9 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.SpeedEventBroadcaster;
-
 import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
 import org.as2lib.io.conn.core.client.MethodInvocationException;
-import org.as2lib.io.conn.local.core.ConnectionAlreadyOpenException;
-import org.as2lib.io.conn.local.core.ConnectionNotOpenException;
 import org.as2lib.io.conn.local.core.ReservedConnectionException;
 import org.as2lib.io.conn.local.core.UnknownConnectionException;
 
@@ -95,7 +92,7 @@ class org.as2lib.io.conn.local.core.LocalConnectionTemplate extends BasicClass {
 	 * @see LocalConnectionTemplate#connect()
 	 */
 	public function connect(connectionName:String):Void {
-		if (connected) throw new ConnectionAlreadyOpenException("The connection is already open.", this, arguments);
+		if (connected) close();
 		if (!LocalConnection.prototype.connect.apply(target, [connectionName]))
 			throw new ReservedConnectionException("Connection with name [" + connectionName + "] is already in use.", this, arguments);
 		connected = true;
@@ -105,7 +102,6 @@ class org.as2lib.io.conn.local.core.LocalConnectionTemplate extends BasicClass {
 	 * @see LocalConnectionTemplate#close()
 	 */
 	public function close(Void):Void {
-		if (!connected) throw new ConnectionNotOpenException("There is no open connection to close.", this, arguments);
 		LocalConnection.prototype.close.apply(target);
 		connected = false;
 	}

@@ -57,18 +57,19 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	/**
 	 * @see ClientServiceProxy#invokeByNameAndArguments()
 	 */
-	public function invokeByNameAndArguments(name:String, args:Array):Void {
-		try {
+	public function invokeByNameAndArguments(name:String, args:Array):MethodInvocationCallback {
+		return invokeByNameAndArgumentsAndCallback(name, args, new MethodInvocationCallback());
+		/*try {
 			connection.send(url, "invokeMethod", [name, args]);
 		} catch (exception:org.as2lib.io.conn.local.core.UnknownConnectionException) {
 			throw new UnknownServiceException("Service with url [" + url + "] does not exist.", this, arguments).initCause(exception);
-		}
+		}*/
 	}
 	
 	/**
 	 * @see ClientServiceProxy#invokeByNameAndArgumentsAndCallback()
 	 */
-	public function invokeByNameAndArgumentsAndCallback(name:String, args:Array, callback:MethodInvocationCallback):Void {
+	public function invokeByNameAndArgumentsAndCallback(name:String, args:Array, callback:MethodInvocationCallback):MethodInvocationCallback {
 		var responseUrl:String = generateResponseServiceUrl(url, name);
 		
 		var responseService:LocalConnectionTemplate = new LocalConnectionTemplate();
@@ -99,6 +100,8 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 		} catch (exception:org.as2lib.io.conn.local.core.UnknownConnectionException) {
 			throw new UnknownServiceException("Service with url [" + url + "] does not exist.", this, arguments).initCause(exception);
 		}
+		
+		return callback;
 	}
 	
 	/**

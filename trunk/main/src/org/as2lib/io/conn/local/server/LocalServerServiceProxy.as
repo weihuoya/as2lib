@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.overload.Overload;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.SpeedEventBroadcaster;
-
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.conn.core.server.AbstractServerServiceProxy;
 import org.as2lib.io.conn.core.server.ServerServiceProxy;
 import org.as2lib.io.conn.core.server.ReservedServiceException;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
+import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
 import org.as2lib.io.conn.local.core.LocalConnectionTemplate;
 
 /**
@@ -54,20 +54,84 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 *
 	 * @param path the path of the service
 	 * @param service object which provides the service operations
+	 * @throws IllegalArgumentException if the path is null, undefined or a blank string
+	 *                                  if the service is null or undefined
 	 */
 	public function LocalServerServiceProxy(path:String, service) {
+		if (!path || !service) throw new IllegalArgumentException("Neither the path [" + path + "] nor the service [" + service + "] are allowed to be null, undefined or a blank string.", this, arguments);
 		this.path = path;
 		this.service = service;
-		connection = new LocalConnectionTemplate(this);
-		errorBroadcaster = new SpeedEventBroadcaster();
+		running = false;
 	}
 	
 	/**
+	 * Returns the currently used connection.
+	 *
+	 * <p>This is either the connection set via #setConnection(LocalConnectionTemplate):Void
+	 * of a default LocalConnectionTemplate instance.
+	 *
+	 * @return the currently used connection
+	 */
+	public function getConnection(Void):LocalConnectionTemplate {
+		if (!connection) connection = new LocalConnectionTemplate(this);
+		return connection;
+	}
+	
+	/**
+	 * Sets a new connection.
+	 *
+	 * <p>The target of the connection, that means the receiver of all remote
+	 * calls must be this instance. If it is not nothing will work properly.
+	 *
+	 * <p>If you set a connection of value null or undefined #getConnection(Void):LocalConnectionTemplate
+	 * will return the default connection.
+	 *
+	 * @param connection the new connection to use
+	 */
+	public function setConnection(connection:LocalConnectionTemplate):Void {
+		this.connection = connection;
+	}
+	
+	/**
+	 * Returns the currently used error broadcaster.
+	 *
+	 * <p>This is either the one set via #setErrorBroadcaster(EventBroadcaster):Void
+	 * or the default SpeedEventBroadcaster instance.
+	 *
+	 * @return the currently used error broadcaster
+	 */
+	public function getErrorBroadcaster(Void):EventBroadcaster {
+		if (!errorBroadcaster) errorBroadcaster = new SpeedEventBroadcaster();
+		return errorBroadcaster;
+	}
+	
+	/**
+	 * Sets a new error broadcaster.
+	 *
+	 * <p>If you set an error broadcaster of value null or undefined
+	 * #getErrorBroadcaster(Void):EventBroadcaster will return the default
+	 * broadcaster.
+	 *
+	 * @param errorBroadcaster the new error broadcaster
+	 */
+	public function setErrorBroadcaster(errorBroadcaster:EventBroadcaster):Void {
+		this.errorBroadcaster = errorBroadcaster;
+	}
+	
+	/**
+	 * <p>The service proxy will be restarted if it is already running. That
+	 * means it first stops itself and starts it again.
+	 *
+	 * <p>Only the path of the service proxy gets used to connect if the host
+	 * is null, undefined or a blank string.
+	 *
+	 * @throws ReservedServiceException if a service on the passed-in host with the service's path is already in use
 	 * @see ServerServiceProxy#run()
 	 */
 	public function run(host:String):Void {
+		if (isRunning()) this.stop();
 		try {
-			connection.connect(generateServiceUrl(host, path));
+			getConnection().connect(generateServiceUrl(host, path));
 			running = true;
 		} catch(exception:org.as2lib.io.conn.local.core.ReservedConnectionException) {
 			throw new ReservedServiceException("Service with path [" + path + "] on host [" + host + "] is already in use.", this, arguments).initCause(exception);
@@ -78,18 +142,8 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * @see ServerServiceProxy#stop()
 	 */
 	public function stop(Void):Void {
-		connection.close();
+		getConnection().close();
 		running = false;
-	}
-	
-	/**
-	 * @see ServerServiceProxy#invokeMethod()
-	 */
-	public function invokeMethod() {
-		var o:Overload = new Overload(this);
-		o.addHandler([String, Array], invokeMethodByNameAndArguments);
-		o.addHandler([String, Array, String], invokeMethodByNameAndArgumentsAndResponseService);
-		o.forward(arguments);
 	}
 	
 	/**
@@ -100,10 +154,10 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 			if (service[name]) {
 				service[name].apply(service, args);
 			} else {
-				errorBroadcaster.dispatch(new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null));
+				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null));
 			}
 		} catch (exception) {
-			errorBroadcaster.dispatch(new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, exception));
+			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, exception));
 		}
 	}
 	
@@ -111,33 +165,39 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * @see ServerServiceProxy#invokeMethodByNameAndArgumentsAndResponseService()
 	 */
 	public function invokeMethodByNameAndArgumentsAndResponseService(name:String, args:Array, responseService:String):Void {
+		if (!responseService) {
+			invokeMethodByNameAndArguments(name, args);
+			return;
+		}
 		var listener:MethodInvocationErrorListener = new MethodInvocationErrorListener();
 		var owner:LocalServerServiceProxy = this;
 		listener.onError = function(info:MethodInvocationErrorInfo):Void {
-			owner.errorBroadcaster.dispatch(new MethodInvocationErrorInfo(owner.path, name, MethodInvocationErrorInfo.ERROR_UNKNOWN, null));
+			owner.getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(owner.getPath(), name, MethodInvocationErrorInfo.ERROR_UNKNOWN, null));
 		}
 		try {
 			if (service[name]) {
 				var returnValue = service[name].apply(service, args);
+				sendResponse(name, responseService, "onReturn", [new MethodInvocationReturnInfo(returnValue)], listener);
 			} else {
-				errorBroadcaster.dispatch(new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null));
+				sendResponse(name, responseService, "onError", [new MethodInvocationErrorInfo(getPath(), name, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null)], listener);
+				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), name, MethodInvocationErrorInfo.ERROR_UNKNOWN_METHOD, null));
 			}
-			try {
-				connection.send(responseService, "onReturn", [returnValue], listener);
-			} catch (exception:org.as2lib.io.conn.local.core.UnknownConnectionException) {
-				errorBroadcaster.dispatch(new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_UNKNOWN_SERVICE, exception));
-			} catch (exception:org.as2lib.io.conn.core.client.MethodInvocationException) {
-				errorBroadcaster.dispatch(new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_ARGUMENTS_OVERSIZED, exception));
-			}
-		} catch (exception) {
-			try {
-				connection.send(responseService, "onError", [exception], listener);
-			} catch (exception:org.as2lib.io.conn.local.core.UnknownConnectionException) {
-				errorBroadcaster.dispatch(new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_UNKNOWN_SERVICE, exception));
-			} catch (exception:org.as2lib.io.conn.core.client.MethodInvocationException) {
-				errorBroadcaster.dispatch(new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_ARGUMENTS_OVERSIZED, exception));
-			}
-			errorBroadcaster.dispatch(new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, exception));
+		} catch (serviceMethodException) {
+			sendResponse(name, responseService, "onError", [new MethodInvocationErrorInfo(path, name, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, serviceMethodException)], listener)
+			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), name, MethodInvocationErrorInfo.ERROR_SERVICE_METHOD, serviceMethodException));
+		}
+	}
+	
+	/**
+	 * Sends a response to the client.
+	 */
+	private function sendResponse(methodName:String, responseService:String, responseMethod:String, responseArguments:Array, responseListener:MethodInvocationErrorListener):Void {
+		try {
+			getConnection().send(responseService, responseMethod, responseArguments, responseListener);
+		} catch (uce:org.as2lib.io.conn.local.core.UnknownConnectionException) {
+			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, MethodInvocationErrorInfo.ERROR_UNKNOWN_SERVICE, uce));
+		} catch (mie:org.as2lib.io.conn.core.client.MethodInvocationException) {
+			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, MethodInvocationErrorInfo.ERROR_ARGUMENTS_OVERSIZED, mie));
 		}
 	}
 	
@@ -166,14 +226,14 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * @see ServerServiceProxy#addErrorListener()
 	 */
 	public function addErrorListener(listener:MethodInvocationErrorListener):Void {
-		errorBroadcaster.addListener(listener);
+		getErrorBroadcaster().addListener(listener);
 	}
 	
 	/**
 	 * @see ServerServiceProxy#removeErrorListener()
 	 */
 	public function removeErrorListener(listener:MethodInvocationErrorListener):Void {
-		errorBroadcaster.removeListener(listener);
+		getErrorBroadcaster().removeListener(listener);
 	}
 	
 }

@@ -34,33 +34,36 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicCla
 		return  url + "_" + method + "_Return";
 	}
 	
+	/**
+	 * Private constructor.
+	 */
 	private function AbstractClientServiceProxy(Void) {
 	}
 	
 	/**
 	 * @see ClientServiceProxy#invoke()
 	 */
-	public function invoke():Void {
+	public function invoke():MethodInvocationCallback {
 		var o:Overload = new Overload(this);
 		o.addHandler([String], invokeByName);
 		o.addHandler([String, Array], this["invokeByNameAndArguments"]);
 		o.addHandler([String, MethodInvocationCallback], invokeByNameAndCallback);
 		o.addHandler([String, Array, MethodInvocationCallback], this["invokeByNameAndArgumentsAndCallback"]);
-		o.forward(arguments);
+		return o.forward(arguments);
 	}
 	
 	/**
 	 * @see ClientServiceProxy#invokeByName()
 	 */
-	public function invokeByName(name:String):Void {
-		this["invokeByNameAndArguments"](name, []);
+	public function invokeByName(name:String):MethodInvocationCallback {
+		return this["invokeByNameAndArguments"](name, []);
 	}
 	
 	/**
 	 * @see ClientServiceProxy#invokeByNameAndCallback()
 	 */
-	public function invokeByNameAndCallback(name:String, callback:MethodInvocationCallback):Void {
-		this["invokeByNameAndArgumentsAndCallback"](name, [], callback);
+	public function invokeByNameAndCallback(name:String, callback:MethodInvocationCallback):MethodInvocationCallback {
+		return this["invokeByNameAndArgumentsAndCallback"](name, [], callback);
 	}
 	
 }

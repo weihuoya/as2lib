@@ -93,6 +93,11 @@ test.unit.org.as2lib.aop.joinpoint.TSetPropertyJoinPoint;
 // org.as2lib.aop.matcher
 test.unit.org.as2lib.aop.matcher.TDefaultMatcher;
 
+// org.as2lib.io.conn.local.server
+test.unit.org.as2lib.io.conn.local.server.TLocalServer;
+test.unit.org.as2lib.io.conn.local.server.TLocalServerRegistry;
+test.unit.org.as2lib.io.conn.local.server.TLocalServerServiceProxy;
+
 // org.as2lib.env.reflect
 test.unit.org.as2lib.env.reflect.TSimpleCache;
 test.unit.org.as2lib.env.reflect.TClassInfo;

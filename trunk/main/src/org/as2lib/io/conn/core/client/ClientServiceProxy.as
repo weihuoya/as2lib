@@ -32,14 +32,14 @@ interface org.as2lib.io.conn.core.client.ClientServiceProxy extends BasicInterfa
 	 * @overload #invokeByNameAndCallback()
 	 * @overload #invokeByNameAndArgumentsAndCallback()
 	 */
-	public function invoke():Void;
+	public function invoke():MethodInvocationCallback;
 	
 	/**
 	 * Invokes the given method by name passing no arguments.
 	 *
 	 * @param name the name of the method to be invoked
 	 */
-	public function invokeByName(name:String):Void;
+	public function invokeByName(name:String):MethodInvocationCallback;
 	
 	/**
 	 * Invokes the given method by name passing the given arguments.
@@ -47,7 +47,7 @@ interface org.as2lib.io.conn.core.client.ClientServiceProxy extends BasicInterfa
 	 * @param name the name of the method to be invoked
 	 * @param args the arguments to be passed to the method
 	 */
-	public function invokeByNameAndArguments(name:String, args:Array):Void;
+	public function invokeByNameAndArguments(name:String, args:Array):MethodInvocationCallback;
 	
 	/**
 	 * Invokes the given method by name passing no arguments. When the result
@@ -57,7 +57,7 @@ interface org.as2lib.io.conn.core.client.ClientServiceProxy extends BasicInterfa
 	 * @param name the name of the method to be invoked
 	 * @param callback the call to receive the response or possible failures
 	 */
-	public function invokeByNameAndCallback(name:String, callback:MethodInvocationCallback):Void;
+	public function invokeByNameAndCallback(name:String, callback:MethodInvocationCallback):MethodInvocationCallback;
 	
 	/**
 	 * Invokes the given method by name passing the given arguments. When the result
@@ -67,6 +67,6 @@ interface org.as2lib.io.conn.core.client.ClientServiceProxy extends BasicInterfa
 	 * @param name the name of the method to be invoked
 	 * @param call the callback to receive the response or possible failures
 	 */
-	public function invokeByNameAndArgumentsAndCallback(name:String, args:Array, callback:MethodInvocationCallback):Void;
+	public function invokeByNameAndArgumentsAndCallback(name:String, args:Array, callback:MethodInvocationCallback):MethodInvocationCallback;
 	
 }

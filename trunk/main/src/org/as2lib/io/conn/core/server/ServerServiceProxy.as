@@ -42,7 +42,7 @@ interface org.as2lib.io.conn.core.server.ServerServiceProxy extends BasicInterfa
 	 * @overload #invokeMethodByNameAndArguments()
 	 * @overload #invokeMethodByNameAndArgumentsAndResponseService()
 	 */
-	public function invokeMethod();
+	public function invokeMethod():Void;
 	
 	/**
 	 * Invokes the service method on the service object.

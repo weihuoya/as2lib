@@ -15,6 +15,7 @@
  */
  
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.overload.Overload;
 
 /**
  * @author Simon Wacker
@@ -24,15 +25,29 @@ class org.as2lib.io.conn.core.server.AbstractServerServiceProxy extends BasicCla
 	/**
 	 * Generates a service url with passed host and service path.
 	 *
-	 * @param host of required service
-	 * @param path of required service
-	 * @return generated service identifier
+	 * <p>If the host is null, undefined or a blank string the path will
+	 * be returned unchanged.
+	 *
+	 * @param host the host of the required service
+	 * @param path the path of the required service
+	 * @return the generated service identifier
 	 */
 	public static function generateServiceUrl(host:String, path:String):String {
+		if (!host) return path;
 		return host + "/" + path;
 	}
 	
 	private function AbstractServerServiceProxy(Void) {
+	}
+	
+	/**
+	 * @see ServerServiceProxy#invokeMethod()
+	 */
+	public function invokeMethod():Void {
+		var o:Overload = new Overload(this);
+		o.addHandler([String, Array], this["invokeMethodByNameAndArguments"]);
+		o.addHandler([String, Array, String], this["invokeMethodByNameAndArgumentsAndResponseService"]);
+		o.forward(arguments);
 	}
 	
 }
