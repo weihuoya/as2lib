@@ -40,14 +40,4 @@ interface org.as2lib.env.reflect.PackageMemberInfo extends MemberInfo {
 	 */
 	public function getFullName(Void):String;
 	
-	/**
-	 * Returns teh parent of the package member.
-	 *
-	 * <p>The parent is the package this package member is a member
-	 * of / resides in.
-	 *
-	 * @return the parent of this package member
-	 */
-	public function getParent(Void):PackageInfo;
-	
 }

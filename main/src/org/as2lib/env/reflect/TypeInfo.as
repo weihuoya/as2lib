@@ -17,6 +17,7 @@
 import org.as2lib.env.reflect.PackageMemberInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.TypeMemberFilter;
+import org.as2lib.env.reflect.PackageInfo;
 
 /**
  * TypeInfo represents a type in the Flash environment. That means either
@@ -51,6 +52,14 @@ interface org.as2lib.env.reflect.TypeInfo extends PackageMemberInfo {
 	 * @return the super types's TypeInfo instance
 	 */
 	public function getSuperType(Void):TypeInfo;
+	
+	/**
+	 * Returns the package this type, class or interface is declared
+	 * in / resides in.
+	 *
+	 * @return the package this type is declared in / resides in
+	 */
+	public function getPackage(Void):PackageInfo;
 	
 	/**
 	 * @overload #getMethodsByFlag(Boolean):Array
@@ -98,7 +107,7 @@ interface org.as2lib.env.reflect.TypeInfo extends PackageMemberInfo {
 	 * @overload #getMethodByName(String):MethodInfo
 	 * @overload #getMethodByMethod(Function):MethodInfo
 	 */
-	public function getMethod(method):MethodInfo;
+	public function getMethod():MethodInfo;
 	
 	/**
 	 * Returns the method info corresponding to the passed-in method name.
