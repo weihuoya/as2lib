@@ -8,13 +8,13 @@ import org.as2lib.aop.JoinPoint;
 class org.as2lib.aop.pointcut.KindedPointcut extends AbstractPointcut implements Pointcut {
 	private var matchingJoinPoint:Number;
 	
-	public function KindedPointcut(description:String, matchingJoinPoint:Number) {
-		setJoinPointDescription(description);
+	public function KindedPointcut(pattern:String, matchingJoinPoint:Number) {
+		setJoinPointPattern(pattern);
 		this.matchingJoinPoint = matchingJoinPoint;
 	}
 	
 	public function captures(joinPoint:JoinPoint):Boolean {
 		return (joinPoint.getType() == matchingJoinPoint
-					&& joinPoint.matches(getJoinPointDescription()));
+					&& joinPoint.matches(getJoinPointPattern()));
 	}
 }

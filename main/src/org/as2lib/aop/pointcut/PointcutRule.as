@@ -4,5 +4,5 @@
  * @author Simon Wacker
  */
 interface org.as2lib.aop.pointcut.PointcutRule extends BasicInterface {
-	public function execute(description:String):Boolean;
+	public function execute(pattern:String):Boolean;
 }

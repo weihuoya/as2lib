@@ -4,16 +4,16 @@
  * @author Simon Wacker
  */
 class org.as2lib.aop.pointcut.AbstractPointcut extends BasicClass {
-	private var joinPointDescription:String;
+	private var joinPointPattern:String;
 	
 	private function AbstractPointcut(Void) {
 	}
 	
-	private function setJoinPointDescription(description:String):Void {
-		joinPointDescription = description;
+	private function setJoinPointPattern(pattern:String):Void {
+		joinPointPattern = pattern;
 	}
 	
-	private function getJoinPointDescription(Void):String {
-		return joinPointDescription;
+	private function getJoinPointPattern(Void):String {
+		return joinPointPattern;
 	}
 }
