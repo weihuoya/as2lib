@@ -12,14 +12,14 @@ class org.as2lib.aop.advice.AbstractAroundAdvice extends AbstractAdvice {
 	}
 	
 	public function getProxy(joinPoint:JoinPoint):Function {
-		var result:Function = function() {
-			var advice:AroundAdvice = AroundAdvice(arguments.callee.advice);
-			var tempJoinPoint:JoinPoint = JoinPoint(arguments.callee.joinPoint);
-			var joinPoint:JoinPoint = tempJoinPoint.getClass().newInstance([tempJoinPoint.getInfo(), this]);
-			return advice.execute(joinPoint, arguments);
-		};
-		result.advice = this;
-		result.joinPoint = joinPoint;
-		return result;
+		var owner:AbstractAroundAdvice = this;
+		return (function() {
+			joinPoint = joinPoint.getClass().newInstance([joinPoint.getInfo(), this]);
+			return owner.executeJoinPoint(joinPoint, arguments);
+		});
+	}
+	
+	private function executeJoinPoint(joinPoint:JoinPoint, args:Array) {
+		return this["execute"](joinPoint, args);
 	}
 }
