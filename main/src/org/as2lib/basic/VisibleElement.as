@@ -1,4 +1,4 @@
-﻿import org.as2lib.exceptions.*
+﻿import org.as2lib.basic.exceptions.*
 import org.as2lib.basic.EventableElement
 
 /**
