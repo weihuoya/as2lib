@@ -27,6 +27,8 @@ test.unit.org.as2lib.data.holder.list.TArrayList;
 test.unit.org.as2lib.data.holder.TProtectedIterator;
 test.unit.org.as2lib.data.holder.map.TMapIterator;
 test.unit.org.as2lib.data.holder.map.THashMap;
+test.unit.org.as2lib.data.holder.map.TPriorityMap;
+test.unit.org.as2lib.data.holder.map.TTypedMap;
 test.unit.org.as2lib.data.holder.map.TPrimitiveTypeMap;
 test.unit.org.as2lib.io.file.TFile;
 test.unit.org.as2lib.io.file.TBitAndByteFormat;
@@ -44,8 +46,9 @@ test.unit.org.as2lib.util.TStringUtil;
 test.unit.org.as2lib.util.TCall;
 test.unit.org.as2lib.util.TClassUtil;
 test.unit.org.as2lib.util.TStopWatch;
-test.unit.org.as2lib.util.TArrayUtil;
 test.unit.org.as2lib.util.TObjectUtil;
+test.unit.org.as2lib.util.TArrayUtil;
+test.unit.org.as2lib.util.TMathUtil;
 
 // Test org.as2lib.env.bean
 test.unit.org.as2lib.env.bean.TMutablePropertyValueSet;
