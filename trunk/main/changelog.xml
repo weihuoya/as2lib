@@ -6,9 +6,11 @@
     <year value="2005">
        <month value="2">
          <day value="16">
-           <entry type="add" package="org.as2lib.env.log.LogManager" method="setLogger(Logger):Void">Offers easy to use support for singleton repositories.</entry>
-           <entry type="add" package="org.as2lib.env.log.logger.SimpleHierarchicalLogger" method="new(name:String)">Added second optional constructor argument 'broadcaster:EventBroadcaster'.</entry>
-           <entry type="remove" package="org.as2lib.env.log.logger.SimpleHierarchicalLogger" method="set-/getBroadcaster"></entry>
+           <entry type="add" package="org.as2lib.env.log.repository" class="LoggerFactory"></entry>
+           <entry type="add" package="org.as2lib.env.log.repository" class="DynamicLoggerRepository"></entry>
+           <entry type="add" package="org.as2lib.env.log" class="LogManager" method="setLogger(Logger):Void">Offers easy to use support for singleton repositories.</entry>
+           <entry type="add" package="org.as2lib.env.log.logger" class="SimpleHierarchicalLogger" method="new(name:String)">Added second optional constructor argument 'broadcaster:EventBroadcaster'.</entry>
+           <entry type="remove" package="org.as2lib.env.log.logger" class="SimpleHierarchicalLogger" method="set-/getBroadcaster"></entry>
          </day>
          <day value="15">
            <entry type="change" package="org.as2lib.env.log.repository" class="LoggerHierarchy" method="putLogger"><change-rename to="addLogger" /></entry>
