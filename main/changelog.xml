@@ -5,6 +5,14 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2004">
       <month value="10">
+        <day value="10">
+          <entry type="add" package="org.as2lib.env.reflect" class="ProxyFactory" />
+          <entry type="add" package="org.as2lib.env.reflect" class="InvocationHandler" />
+          <entry type="add" package="org.as2lib.env.reflect" class="ResolveProxyFactory" />
+        </day>
+        <day value="9">
+          <entry type="add" package="org.as2lib.env.out" class="HierarchicalOut" />
+        </day>
         <day value="8">
           <entry type="change" package="org.as2lib.env.overload" class="OverloadHandler" method="isMoreExplicitThan(handler:OverlaodHandler):Boolean"><change-rename to="isMoreExplicit" /></entry>
           <entry type="add" package="org.as2lib.env.out" class="OutAccess" method="isLogEnabled(Void):Boolean" />
@@ -13,7 +21,7 @@
           <entry type="add" package="org.as2lib.env.out" class="OutAccess" method="isWarningEnabled(Void):Boolean" />
           <entry type="add" package="org.as2lib.env.out" class="OutAccess" method="isErrorEnabled(Void):Boolean" />
           <entry type="add" package="org.as2lib.env.out" class="OutAccess" method="isFatalEnabled(Void):Boolean" />
-        <day>
+        </day>
         <day value="7">
           <entry type="change" package="org.as2lib.env.except" class="AbstractException"><change-rename to="AbstractThrowable" /></entry>
           <entry type="add" package="org.as2lib.env.out" class="OutAccess" method="isEnabled(level:OutLevel):Boolean"></entry>
@@ -25,7 +33,7 @@
           <entry type="add" package="org.as2lib.env.out" class="DefaultOutFactory" />
           <entry type="add" package="org.as2lib.env.out" class="OutRepository" />
           <entry type="add" package="org.as2lib.env.out" class="OutRepositoryManager" />
-          <entry type="add" package="org.as2lib.env.out" class="OutHierachy" />
+          <entry type="add" package="org.as2lib.env.out" class="OutHierarchy" />
           <entry type="add" package="org.as2lib.env.out" class="RootOut" />
           <entry type="add" package="org.as2lib.env.out" class="Out" method="getParent(Void):Out" />
           <entry type="add" package="org.as2lib.env.out" class="Out" method="setParent(parent:Out):Void" />
