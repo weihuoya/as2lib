@@ -109,17 +109,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @throws ClassNotFoundException if a class with the passed-in name could not be found or
 	 */
 	public static function forName(className:String):ClassInfo {
-		try {
-			return getClassAlgorithm().executeByName(className);
-			// I do not use org.as2lib.env.except.Throwable as type because Flex does not allow to
-			// use types in the catch-signature that do not extend Error.
-		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
-			e.addStackTraceElement(eval("th"+"is"), arguments.callee, arguments);
-			throw e;
-		} catch (e:org.as2lib.env.reflect.ClassNotFoundException) {
-			e.addStackTraceElement(eval("th"+"is"), arguments.callee, arguments);
-			throw e;
-		}
+		return getClassAlgorithm().executeByName(className);
 	}
 	
 	/**
