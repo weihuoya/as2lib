@@ -5,8 +5,8 @@ import org.as2lib.data.io.conn.ServiceProxy;
 import org.as2lib.data.io.conn.local.LocalClientServiceProxy;
 import org.as2lib.data.io.conn.local.LocalConfig;
 import org.as2lib.data.io.conn.local.ExtendedLocalConnection;
-import org.as2lib.data.io.conn.local.MissingServerException;
-import org.as2lib.data.io.conn.local.MissingServiceException;
+import org.as2lib.data.io.conn.local.UnknownHostException;
+import org.as2lib.data.io.conn.local.UnknownServiceException;
 
 class org.as2lib.data.io.conn.local.LocalConn extends BasicClass implements Connection {
 	private var host:String;
@@ -20,7 +20,7 @@ class org.as2lib.data.io.conn.local.LocalConn extends BasicClass implements Conn
 	public function getProxy(service:String):ServiceProxy {
 		if (opened) {
 			if (!ExtendedLocalConnection.connectionExists(host + "/" + service)) {
-				throw new MissingServiceException("The service [" + service + "] on host [" + host + "] does not exist.", this, arguments);
+				throw new UnknownServiceException("The service [" + service + "] on host [" + host + "] does not exist.", this, arguments);
 			}
 			return (new LocalClientServiceProxy(host + "/" + service));
 		}
@@ -29,7 +29,7 @@ class org.as2lib.data.io.conn.local.LocalConn extends BasicClass implements Conn
 	
 	public function open(Void):Void {
 		if (!ExtendedLocalConnection.connectionExists(host)) {
-			throw new MissingServerException("The server with host [" + host + "] is not available.", this, arguments);
+			throw new UnknownHostException("The server with host [" + host + "] is not available.", this, arguments);
 		}
 		opened = true;
 	}

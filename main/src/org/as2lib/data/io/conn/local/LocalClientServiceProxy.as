@@ -9,16 +9,16 @@ import org.as2lib.data.io.conn.local.ExtendedLocalConnection;
 class org.as2lib.data.io.conn.local.LocalClientServiceProxy extends BasicClass implements ServiceProxy {
 	private var target:String;
 	private var connection:ExtendedLocalConnection;
-	private var listenerMap:Map;
+	private var callbackMap:Map;
 	
 	public function LocalClientServiceProxy(target:String) {
 		this.target = target;
 		connection = new ExtendedLocalConnection();
-		listenerMap = new HashMap();
+		callbackMap = new HashMap();
 	}
 	
-	public function putListener(method:String, call:Call):Void {
-		listenerMap.put(method, call);
+	public function putCallback(method:String, call:Call):Void {
+		callbackMap.put(method, call);
 	}
 	
 	public function invoke():Void {
@@ -29,8 +29,8 @@ class org.as2lib.data.io.conn.local.LocalClientServiceProxy extends BasicClass i
 	}
 	
 	public function invokeWithArgs(method:String, args:Array):Void {
-		if (listenerMap.containsKey(method)) {
-			connection.send(target, "remoteCall", [method, args], listenerMap.get(method));
+		if (callbackMap.containsKey(method)) {
+			connection.send(target, "remoteCall", [method, args], callbackMap.get(method));
 			return;
 		}
 		connection.send(target, "remoteCall", [method, args]);

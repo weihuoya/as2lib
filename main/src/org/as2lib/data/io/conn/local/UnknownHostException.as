@@ -19,11 +19,11 @@ import org.as2lib.env.except.Exception;
 /**
  * @author Christoph Atteneder
  */
-class org.as2lib.data.io.conn.local.MissingServiceException extends Exception {
+class org.as2lib.data.io.conn.local.UnknownHostException extends Exception {
 	/**
 	 * @see org.as2lib.env.except.Exception#Constructor()
 	 */
-	public function MissingServiceException(message:String, thrower, args:FunctionArguments) {
+	public function UnknownHostException(message:String, thrower, args:FunctionArguments) {
 		super (message, thrower, args);
 	}
 }
