@@ -1,4 +1,4 @@
-﻿import org.as2lib.reflect.ClassInfo;
+﻿import org.as2lib.basic.reflect.ClassInfo;
 
 /**
  * Interface for each as2lib class.
