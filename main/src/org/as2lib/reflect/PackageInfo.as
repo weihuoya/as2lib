@@ -7,7 +7,7 @@ import org.as2lib.util.ObjectUtil;
 class org.as2lib.reflect.PackageInfo extends BasicClass implements ReflectInfo {
 	private var name:String;
 	private var fullName:String;
-	private var package:Object;
+	private var package;
 	private var parent:PackageInfo;
 	private var children:HashMap;
 	
@@ -33,7 +33,7 @@ class org.as2lib.reflect.PackageInfo extends BasicClass implements ReflectInfo {
 		return fullName;
 	}
 	
-	public function getPackage(Void):Object {
+	public function getPackage(Void) {
 		return package;
 	}
 	

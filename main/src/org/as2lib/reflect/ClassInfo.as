@@ -48,7 +48,7 @@ class org.as2lib.reflect.ClassInfo extends BasicClass implements ReflectInfo {
 		return superClass;
 	}
 	
-	public function newInstance(Void):Object {
+	public function newInstance(Void) {
 		return (new clazz());
 	}
 	

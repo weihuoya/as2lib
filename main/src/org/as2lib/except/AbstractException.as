@@ -8,7 +8,7 @@ class org.as2lib.except.AbstractException extends Error {
 	private var stack:Stack;
 	private var cause:Throwable;
 	private var message:String;
-	private var thrower:Object;
+	private var thrower;
 	private var args:FunctionArguments;
 	
 	private function AbstractException(message:String, thrower, args:FunctionArguments) {
@@ -48,7 +48,7 @@ class org.as2lib.except.AbstractException extends Error {
 		return message;
 	}
 	
-	public function getThrower(Void):Object {
+	public function getThrower(Void) {
 		return thrower;
 	}
 	
