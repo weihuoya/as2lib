@@ -1,14 +1,17 @@
 ﻿import org.as2lib.test.unit.Test;
 import org.as2lib.data.io.conn.local.LocalConnector;
 import org.as2lib.data.io.conn.ConnectorRequest;
+import test.org.as2lib.data.io.conn.ExampleListener;
 
 class test.org.as2lib.data.io.conn.local.TLocalConnector extends Test{
-   
+	
+	private var connector:LocalConnector;
+	
 	public function TLocalConnectorImplementation() {
 	}
    
-	public function testConnection():Void{
-	   	var connector:LocalConnector = new LocalConnector();
+	public function connectorTest(Void):Void{
+	   	connector = new LocalConnector();
 		
 		connector.setHost("www.as2lib.org");
 		connector.setPath("/testConnection");
@@ -32,5 +35,22 @@ class test.org.as2lib.data.io.conn.local.TLocalConnector extends Test{
 		var aParams:Array = connector.getParams();
 		assertEquals(aParams[0],40);
 		assertEquals(aParams[1],33);
-   }
+	}
+	
+	public function listenerTest(Void):Void {
+		
+		var remListener:ExampleListener = new ExampleListener();
+		connector.addListener(new ExampleListener());
+		connector.addListener(remListener);
+		connector.addListener(new ExampleListener());
+		
+		connector.removeListener(remListener);
+		
+		
+	}
+	
+	public function testLocalConnector(Void):Void {
+		connectorTest();
+		listenerTest();
+	}
 }
