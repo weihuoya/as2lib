@@ -23,7 +23,7 @@ import org.as2lib.env.log.LogHandler;
  *
  * <p>These is first the method to set the level {@link #setLevel} and second
  * the methods to add, remove and access handlers {@link #addHandler}, {@link #removeHandler},
- * {@link #removeAllHandler} and {@link #getAllHandler}.
+ * {@link #removeAllHandlers} and {@link #getAllHandlers}.
  *
  * <p>Log handlers are responsible for making the actual output. There
  * are a few pre-defined handlers the can be used to log to different
@@ -62,7 +62,7 @@ interface org.as2lib.env.log.ConfigurableLogger extends Logger {
 	 *
 	 * @return all added log handlers
 	 */
-	public function getAllHandler(Void):Array;
+	public function getAllHandlers(Void):Array;
 	
 	/**
 	 * Removes all occerrences of the passed-in log handler.
@@ -74,6 +74,6 @@ interface org.as2lib.env.log.ConfigurableLogger extends Logger {
 	/**
 	 * Removes all added log handlers.
 	 */
-	public function removeAllHandler(Void):Void;
+	public function removeAllHandlers(Void):Void;
 	
 }

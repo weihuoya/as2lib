@@ -121,7 +121,7 @@ interface org.as2lib.env.event.EventBroadcaster extends BasicInterface {
 	 *
 	 * @param listeners the listeners to be added
 	 */
-	public function addAllListener(listeners:Array):Void;
+	public function addAllListeners(listeners:Array):Void;
 	
 	/**
 	 * Removes a listener from the pool of listeners.
@@ -133,14 +133,14 @@ interface org.as2lib.env.event.EventBroadcaster extends BasicInterface {
 	/**
 	 * Removes all registered listeners.
 	 */
-	public function removeAllListener(Void):Void;
+	public function removeAllListeners(Void):Void;
 	
 	/**
 	 * Returns a copy of the listener pool.
 	 *
 	 * @return a copy of the listener pool
 	 */
-	public function getAllListener(Void):Array;
+	public function getAllListeners(Void):Array;
 	
 	/**
 	 * Dispatches the events associated with the name cotained in the

@@ -63,7 +63,7 @@ import org.as2lib.env.log.logger.AbstractLogger;
  *
  * <p>The actual log output gets made by log handlers. To configure and
  * access the handlers of this logger you can use the methods {@link #addHandler},
- * {@link #removeHandler}, {@link #removeAllHandler} and {@link #getAllHandler}.
+ * {@link #removeHandler}, {@link #removeAllHandlers} and {@link #getAllHandlers}.
  * There are a few pre-defined handlers for different output devices. Take a look
  * at the org.as2lib.env.log.handler package for these.
  * This logger does not only use the handlers of itself but also the
@@ -238,8 +238,8 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	/**
 	 * Removes all added log handlers.
 	 */
-	public function removeAllHandler(Void):Void {
-		broadcaster.removeAllListener();
+	public function removeAllHandlers(Void):Void {
+		broadcaster.removeAllListeners();
 	}
 	
 	/**
@@ -248,7 +248,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 * <p>These handlers are the once directly added to this logger and the
 	 * once of the parents.
 	 *
-	 * <p>The handlers of the parents are obtained via the parents getAllHandler
+	 * <p>The handlers of the parents are obtained via the parents getAllHandlers
 	 * method which is supposed to also return the handlers of its parent and
 	 * so on.
 	 *
@@ -262,18 +262,18 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * @return all added log handlers and the ones of the parents
 	 */
-	public function getAllHandler(Void):Array {
+	public function getAllHandlers(Void):Array {
 		if (!addedParentHandlers) addParentHandlers();
-		return broadcaster.getAllListener();
+		return broadcaster.getAllListeners();
 	}
 	
 	/**
 	 * Adds the parent handlers to the broadcaster.
 	 */
 	private function addParentHandlers(Void):Void {
-		var parentHandlers:Array = getParent().getAllHandler();
+		var parentHandlers:Array = getParent().getAllHandlers();
 		if (parentHandlers) {
-			broadcaster.addAllListener(parentHandlers);
+			broadcaster.addAllListeners(parentHandlers);
 		}
 		addedParentHandlers = true;
 	}
@@ -377,7 +377,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * <p>The message gets broadcasted to all log handlers of this logger
 	 * and to the ones of its parents or more specifically to the ones
-	 * returned by the parent's getAllHandler method, that normally also
+	 * returned by the parent's getAllHandlers method, that normally also
 	 * returns the handlers of its parents and so on.
 	 *
 	 * <p>Note that the handlers of the parents are resloved only once,
@@ -404,7 +404,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * <p>The message gets broadcasted to all log handlers of this logger
 	 * and to the ones of its parents or more specifically to the ones
-	 * returned by the parent's getAllHandler method, that normally also
+	 * returned by the parent's getAllHandlers method, that normally also
 	 * returns the handlers of its parents and so on.
 	 *
 	 * @param message the message object to log
@@ -422,7 +422,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * <p>The message gets broadcasted to all log handlers of this logger
 	 * and to the ones of its parents or more specifically to the ones
-	 * returned by the parent's getAllHandler method, that normally also
+	 * returned by the parent's getAllHandlers method, that normally also
 	 * returns the handlers of its parents and so on.
 	 *
 	 * @param message the message object to log
@@ -440,7 +440,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * <p>The message gets broadcasted to all log handlers of this logger
 	 * and to the ones of its parents or more specifically to the ones
-	 * returned by the parent's getAllHandler method, that normally also
+	 * returned by the parent's getAllHandlers method, that normally also
 	 * returns the handlers of its parents and so on.
 	 *
 	 * @param message the message object to log
@@ -458,7 +458,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * <p>The message gets broadcasted to all log handlers of this logger
 	 * and to the ones of its parents or more specifically to the ones
-	 * returned by the parent's getAllHandler method, that normally also
+	 * returned by the parent's getAllHandlers method, that normally also
 	 * returns the handlers of its parents and so on.
 	 *
 	 * @param message the message object to log
@@ -476,7 +476,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * <p>The message gets broadcasted to all log handlers of this logger
 	 * and to the ones of its parents or more specifically to the ones
-	 * returned by the parent's getAllHandler method, that normally also
+	 * returned by the parent's getAllHandlers method, that normally also
 	 * returns the handlers of its parents and so on.
 	 *
 	 * @param message the message object to log

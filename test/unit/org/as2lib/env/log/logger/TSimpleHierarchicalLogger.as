@@ -107,9 +107,9 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		logger.addHandler(h1);
 		logger.addHandler(h3);
 		logger.addHandler(h4);
-		assertSame(logger.getAllHandler()[0], h1);
-		assertSame(logger.getAllHandler()[1], h3);
-		assertSame(logger.getAllHandler()[2], h4);
+		assertSame(logger.getAllHandlers()[0], h1);
+		assertSame(logger.getAllHandlers()[1], h3);
+		assertSame(logger.getAllHandlers()[2], h4);
 		
 		h1c.verify();
 		h3c.verify();
@@ -119,7 +119,7 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 	public function testAddHandlerWithNullArgumentViaGetAllHandler(Void):Void {
 		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		logger.addHandler(null);
-		assertSame(logger.getAllHandler().length, 0);
+		assertSame(logger.getAllHandlers().length, 0);
 	}
 	
 	public function testRemoveHandlerVaiAddHandlerAndGetAllHandler(Void):Void {
@@ -135,25 +135,25 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		logger.addHandler(h3);
 		
 		logger.removeHandler(h2);
-		handlers = logger.getAllHandler();
+		handlers = logger.getAllHandlers();
 		assertSame(handlers[0], h1);
 		assertSame(handlers[1], h3);
 		
 		logger.removeHandler(h2);
-		handlers = logger.getAllHandler();
+		handlers = logger.getAllHandlers();
 		assertSame(handlers[0], h1);
 		assertSame(handlers[1], h3);
 		
 		logger.removeHandler(h1);
-		handlers = logger.getAllHandler();
+		handlers = logger.getAllHandlers();
 		assertSame(handlers[0], h3);
 		
 		logger.removeHandler(null);
-		handlers = logger.getAllHandler();
+		handlers = logger.getAllHandlers();
 		assertSame(handlers[0], h3);
 		
 		logger.removeHandler(h3);
-		handlers = logger.getAllHandler();
+		handlers = logger.getAllHandlers();
 		assertSame(handlers.length, 0);
 	}
 	
@@ -166,9 +166,9 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		logger.addHandler(h1);
 		logger.addHandler(h2);
 		logger.addHandler(h3);
-		assertSame(logger.getAllHandler().length, 3);
-		logger.removeAllHandler();
-		assertSame(logger.getAllHandler().length, 0);
+		assertSame(logger.getAllHandlers().length, 3);
+		logger.removeAllHandlers();
+		assertSame(logger.getAllHandlers().length, 0);
 	}
 	
 	public function testGetAllHandler(Void):Void {
@@ -180,14 +180,14 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		logger.addHandler(h1);
 		logger.addHandler(h2);
 		logger.addHandler(h3);
-		assertSame(logger.getAllHandler()[0], h1);
-		assertSame(logger.getAllHandler()[1], h2);
-		assertSame(logger.getAllHandler()[2], h3);
+		assertSame(logger.getAllHandlers()[0], h1);
+		assertSame(logger.getAllHandlers()[1], h2);
+		assertSame(logger.getAllHandlers()[2], h3);
 	}
 	
 	public function testGetAllHandlerWithNoRegisteredHandler(Void):Void {
 		var l:SimpleHierarchicalLogger = new SimpleHierarchicalLogger();
-		assertSame(l.getAllHandler().length, 0);
+		assertSame(l.getAllHandlers().length, 0);
 	}
 	
 	public function testIsEnabledWithNullArgument(Void):Void {
@@ -351,7 +351,7 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		
 		var loc:MockControl = new MockControl(SimpleHierarchicalLogger);
 		var lo:SimpleHierarchicalLogger = loc.getMock();
-		lo.getAllHandler();
+		lo.getAllHandlers();
 		loc.setReturnValue([h1, h2, h3]);
 		loc.replay();
 		
@@ -370,7 +370,7 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		
 		var bc:MockControl = new MockControl(EventBroadcaster);
 		var b:EventBroadcaster = bc.getMock();
-		b.addAllListener([h1, h2, h3]);
+		b.addAllListeners([h1, h2, h3]);
 		b.dispatch(null);
 		bc.setArgumentsMatcher(new TypeArgumentsMatcher([LogMessage]));
 		bc.replay();
@@ -395,7 +395,7 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		
 		var loc:MockControl = new MockControl(SimpleHierarchicalLogger);
 		var lo:SimpleHierarchicalLogger = loc.getMock();
-		lo.getAllHandler();
+		lo.getAllHandlers();
 		loc.setReturnValue([h4, h5, h6]);
 		loc.replay();
 		
@@ -417,7 +417,7 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		b.addListener(h1);
 		b.addListener(h2);
 		b.addListener(h3);
-		b.addAllListener([h4, h5, h6]);
+		b.addAllListeners([h4, h5, h6]);
 		b.dispatch(null);
 		bc.setArgumentsMatcher(new TypeArgumentsMatcher([LogMessage]));
 		bc.replay();
