@@ -46,11 +46,9 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	 * @see org.as2lib.env.overload.OverloadHandler#matches()
 	 */
 	public function matches(someArguments:Array):Boolean {
-		var l:Number = someArguments.length;
-		if (l != args.length) {
-			return false;
-		}
-		for (var i:Number = 0; i < l; i++) {
+		var i:Number = someArguments.length;
+		if (i != args.length) return false;
+		while (--i-(-1)) {
 			// Should ObjectUtil.typesMatch() return true for a check of null against any type?
 			if (someArguments[i] !== null) {
 				if (!ObjectUtil.typesMatch(someArguments[i], args[i])) {
@@ -72,23 +70,24 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	 * @see org.as2lib.env.overload.OverloadHandler#isMoreExplicitThan()
 	 */
 	public function isMoreExplicitThan(handler:OverloadHandler):Boolean {
-		var points:Number = 0;
+		var scores:Number = 0;
 		var args2:Array = handler.getArguments();
-		for (var i:Number = args.length-1; i >= 0; i--) {
+		var i:Number = args.length;
+		while (--i-(-1)) {
 			if (args[i] != args2[i]) {
 				if (ObjectUtil.isInstanceOf(args[i].prototype, args2[i])) {
-					points-=-1;
+					scores -= -1;
 				} else {
-					points--;
+					scores--;
 				}
 			}
 		}
-		if (points == 0) {
+		if (scores == 0) {
 			throw new SameTypeSignatureException("The two OverloadHandler [" + this + "] and [" + handler + "] have the same type signature.",
-										   this,
-										   arguments);
+												 this,
+												 arguments);
 		}
-		return (points > 0);
+		return (scores > 0);
 	}
 	
 	/**

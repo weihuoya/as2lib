@@ -61,7 +61,6 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 			}
 		}
 		if (l == 2) {
-			// Why does 'var args:Array = Array(arguments[0]);' not work?
 			var args:Array = arguments[0];
 			var func:Function = Function(arguments[1]);
 			if (args != null && func != null) {
@@ -135,12 +134,10 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 */
 	private function getMatchingHandlers(args:Array):Array {
 		var result:Array = new Array();
-		var handler:OverloadHandler;
-		for (var i:Number = 0; i < handlers.length; i++) {
-			handler = OverloadHandler(handlers[i]);
-			if (handler.matches(args)) {
-				result.push(handler);
-			}
+		var i:Number = handlers.length;
+		while (--i-(-1)) {
+			var handler:OverloadHandler = handlers[i];
+			if (handler.matches(args)) result.push(handler);
 		}
 		return result;
 	}
@@ -153,11 +150,10 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * @return the most explicit OverloadHandler
 	 */
 	private function getMatchingHandler(matchingHandlers:Array):OverloadHandler {
-		var result:OverloadHandler = OverloadHandler(matchingHandlers[0]);
-		for (var i:Number = 1; i < matchingHandlers.length; i++) {
-			if (!result.isMoreExplicitThan(OverloadHandler(matchingHandlers[i]))) {
-				result = OverloadHandler(matchingHandlers[i]);
-			}
+		var i:Number = matchingHandlers.length;
+		var result:OverloadHandler = matchingHandlers[--i];
+		while (--i-(-1)) {
+			if (!result.isMoreExplicitThan(matchingHandlers[i])) result = matchingHandlers[i];
 		}
 		return result;
 	}
