@@ -18,7 +18,7 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.test.mock.support.SimpleMockControl;
 import org.as2lib.test.mock.support.TypeArgumentsMatcher;
-import org.as2lib.env.reflect.algorithm.ChildrenAlgorithm;
+import org.as2lib.env.reflect.algorithm.ChildAlgorithm;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.CompositeMemberInfo;
@@ -31,7 +31,7 @@ import org.as2lib.data.holder.map.HashMap;
 /**
  * @author Simon Wacker
  */
-class test.unit.org.as2lib.env.reflect.algorithm.TChildrenAlgorithm extends TestCase {
+class test.unit.org.as2lib.env.reflect.algorithm.TChildAlgorithm extends TestCase {
 	
 	public function setUp(Void):Void {
 		test.unit.org.as2lib.env.reflect.treflect;
@@ -46,7 +46,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TChildrenAlgorithm extends Test
 		var c:Cache = cc.getMock();
 		cc.replay();
 		
-		var a:ChildrenAlgorithm = new ChildrenAlgorithm();
+		var a:ChildAlgorithm = new ChildAlgorithm();
 		a.setCache(c);
 		assertNull("execute(null) should return null", a.execute(null));
 		assertNull("execute(undefined) should return null", a.execute(undefined));
@@ -63,9 +63,28 @@ class test.unit.org.as2lib.env.reflect.algorithm.TChildrenAlgorithm extends Test
 		var c:Cache = cc.getMock();
 		cc.replay();
 		
-		var a:ChildrenAlgorithm = new ChildrenAlgorithm();
+		var a:ChildAlgorithm = new ChildAlgorithm();
 		a.setCache(c);
 		assertNull("execute(ClassInfo) should return null", a.execute(i));
+		
+		ic.verify(this);
+		cc.verify(this);
+	}
+	
+	public function testExecuteWithArgumentWhoseGetPackageMethodReturnsNull(Void):Void {
+		var ic:MockControl = new SimpleMockControl(PackageInfo);
+		var i:PackageInfo = ic.getMock();
+		i.getPackage();
+		ic.setReturnValue(null);
+		ic.replay();
+		
+		var cc:MockControl = new SimpleMockControl(Cache);
+		var c:Cache = cc.getMock();
+		cc.replay();
+		
+		var a:ChildAlgorithm = new ChildAlgorithm();
+		a.setCache(c);
+		assertNull(a.execute(i));
 		
 		ic.verify(this);
 		cc.verify(this);
@@ -80,7 +99,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TChildrenAlgorithm extends Test
 		pc.setReturnValue(_global.test.unit.org.as2lib.env.reflect.treflect);
 		pc.replay();
 		
-		var a:ChildrenAlgorithm = new ChildrenAlgorithm();
+		var a:ChildAlgorithm = new ChildAlgorithm();
 		var c:Array = a.execute(p);
 		assertSame("there should be 4 children", c.length, 4);
 		for (var i:Number = 0; i < c.length; i++) {
@@ -124,7 +143,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TChildrenAlgorithm extends Test
 		pc.setReturnValue(_global.testExecuteWithEmptyPackage.empty);
 		pc.replay();
 		
-		var a:ChildrenAlgorithm = new ChildrenAlgorithm();
+		var a:ChildAlgorithm = new ChildAlgorithm();
 		var c:Array = a.execute(p);
 		assertNotNull("children array should not be null", c);
 		assertSame("there should be no children", c.length, 0);

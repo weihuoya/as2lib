@@ -54,6 +54,19 @@ class test.unit.org.as2lib.env.reflect.algorithm.TMethodAlgorithm extends TestCa
 		ic.verify(this);
 	}
 	
+	public function testExecuteWithArgumentWhoseGetTypeMethodReturnsNull(Void):Void {
+		var ic:MockControl = new SimpleMockControl(ClassInfo);
+		var i:ClassInfo = ic.getMock();
+		i.getType();
+		ic.setReturnValue(null);
+		ic.replay();
+		
+		var a:MethodAlgorithm = new MethodAlgorithm();
+		assertNull(a.execute(i));
+		
+		ic.verify(this);
+	}
+	
 	public function testExecute(Void):Void {
 		var pc:MockControl = new SimpleMockControl(ClassInfo);
 		var p:ClassInfo = pc.getMock();

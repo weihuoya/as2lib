@@ -185,6 +185,9 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		c.addPackage(null);
 		cc.setDefaultReturnValue(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([PackageInfo]));
+		c.addClass(null);
+		cc.setReturnValue(null);
+		cc.setArgumentsMatcher(new TypeArgumentsMatcher([ClassInfo]));
 		cc.replay();
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
@@ -214,6 +217,9 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		c.addPackage(null);
 		cc.setDefaultReturnValue(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([PackageInfo]));
+		c.addClass(null);
+		cc.setReturnValue(null);
+		cc.setArgumentsMatcher(new TypeArgumentsMatcher([ClassInfo]));
 		cc.replay();
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
@@ -243,6 +249,9 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		c.addPackage(null);
 		cc.setDefaultReturnValue(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([PackageInfo]));
+		c.addClass(null);
+		cc.setReturnValue(null);
+		cc.setArgumentsMatcher(new TypeArgumentsMatcher([ClassInfo]));
 		cc.replay();
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
@@ -274,6 +283,9 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		c.addPackage(null);
 		cc.setDefaultReturnValue(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([PackageInfo]));
+		c.addClass(null);
+		cc.setReturnValue(null);
+		cc.setArgumentsMatcher(new TypeArgumentsMatcher([ClassInfo]));
 		cc.replay();
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
@@ -305,6 +317,9 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		c.addPackage(null);
 		cc.setDefaultReturnValue(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([PackageInfo]));
+		c.addClass(null);
+		cc.setReturnValue(null);
+		cc.setArgumentsMatcher(new TypeArgumentsMatcher([ClassInfo]));
 		cc.replay();
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
@@ -337,6 +352,9 @@ class test.unit.org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCas
 		c.addPackage(null);
 		cc.setDefaultReturnValue(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([PackageInfo]));
+		c.addClass(null);
+		cc.setReturnValue(null);
+		cc.setArgumentsMatcher(new TypeArgumentsMatcher([ClassInfo]));
 		cc.replay();
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
