@@ -1,5 +1,6 @@
 ﻿import org.as2lib.test.unit.Failure;
 import org.as2lib.util.ReflectUtil;
+import org.as2lib.core.BasicClass;
 
 /**
  * Basic Class to be Extended by all Testcases.
@@ -13,7 +14,7 @@ import org.as2lib.util.ReflectUtil;
  * @see Failure
  */
 
-class org.as2lib.test.unit.Test {
+class org.as2lib.test.unit.Test extends BasicClass {
 	
 	// Classname of the actual Class
 	private static var atClass:String = "";

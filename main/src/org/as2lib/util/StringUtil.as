@@ -1,9 +1,10 @@
 ﻿import org.as2lib.except.IllegalArgumentException;
+import org.as2lib.core.BasicClass;
 
 /*
  * Basic String Util Class, should have the Same Functionality like the base FString Class (flashforum.de Teamwork)
  */
-class org.as2lib.util.StringUtil {
+class org.as2lib.util.StringUtil extends BasicClass {
 	
 	static function replace(content:String, wath:String, to:String ):String {
 		if(typeof content == "string") {
