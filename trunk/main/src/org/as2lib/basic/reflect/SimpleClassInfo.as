@@ -13,7 +13,11 @@ class org.as2lib.basic.reflect.SimpleClassInfo implements ClassInfo {
 	 }
      
      /** 
-      * @see org.as2lib.reflect.ClassInfo
+      * You may set the name for yourself to save performance.
+      * If you set the name this way, reflections will be switched off.
+      * This value won't get validated by an internal routine.
+      *
+      * @param name of this class
       */
      public function setName(to:String):Void {
 		 
@@ -41,7 +45,8 @@ class org.as2lib.basic.reflect.SimpleClassInfo implements ClassInfo {
 	 }
      
      /**
-      * @see org.as2lib.reflect.ClassInfo
+      * Overwrite the internal array of vars.
+      * @param the TypedArray
       */
      public function setVars(to:TypedArray):Void {
 		 
@@ -55,7 +60,8 @@ class org.as2lib.basic.reflect.SimpleClassInfo implements ClassInfo {
 	 }
      
      /**
-      * @see org.as2lib.reflect.ClassInfo
+      * Sets the method array that will be returned by the call of the getMethods method.
+      * @param the TypedArray containing the definitions of the methods
       */
      public function setMethods(to:TypedArray):Void {
 		 
@@ -69,7 +75,8 @@ class org.as2lib.basic.reflect.SimpleClassInfo implements ClassInfo {
 	 }
      
      /**
-      * @see org.as2lib.reflect.ClassInfo
+      * Sets the static vars array that will be returned by the invocation of the getStaticVars method.
+      * @param the TypedArray containing the definitions of all static vars
       */
      public function setStaticVars(to:TypedArray):Void {
 		 
@@ -83,7 +90,8 @@ class org.as2lib.basic.reflect.SimpleClassInfo implements ClassInfo {
 	 }
      
      /**
-      * @see org.as2lib.reflect.ClassInfo
+      * Sets the TypedArray that will be returned by an invocation of the getStaticMethods method.
+      * @param the TypedArray that contains the definitions of the static methods.
       */
      public function setStaticMethods(to:TypedArray):Void {
 		 
