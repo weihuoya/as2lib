@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.io.conn.local.LocalConnectorException;;
+import org.as2lib.data.io.conn.local.LocalServerException;
 
 /**
  * LocalServerException is the base Exception of LocalServer class.
@@ -22,11 +22,11 @@ import org.as2lib.data.io.conn.local.LocalConnectorException;;
  *
  * @author Christoph Atteneder
  */
-class org.as2lib.data.io.conn.local.LocalServerException extends LocalConnectorException {
+class org.as2lib.data.io.conn.local.MissingClientException extends LocalServerException {
 	/**
 	 * @see org.as2lib.env.except.Exception#Constructor()
 	 */
-	public function LocalServerException(message:String, thrower, args:FunctionArguments) {
+	public function MissingClientException(message:String, thrower, args:FunctionArguments) {
 		super (message, thrower, args);
 	}
 }

@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.io.conn.local.LocalConnectorException;;
+import org.as2lib.data.io.conn.ConnectorException;;
 
 /**
- * LocalServerException is the base Exception of LocalServer class.
- * All LocalServer specific Exceptions extend it.
+ * LocalConnectorException is the base Exception of local package.
+ * All LocalConnector specific Exceptions extend it.
  *
  * @author Christoph Atteneder
  */
-class org.as2lib.data.io.conn.local.LocalServerException extends LocalConnectorException {
+class org.as2lib.data.io.conn.local.LocalConnectorException extends ConnectorException {
 	/**
 	 * @see org.as2lib.env.except.Exception#Constructor()
 	 */
-	public function LocalServerException(message:String, thrower, args:FunctionArguments) {
+	public function LocalConnectorException(message:String, thrower, args:FunctionArguments) {
 		super (message, thrower, args);
 	}
 }
