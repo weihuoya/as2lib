@@ -101,6 +101,23 @@ interface org.as2lib.data.holder.Map extends BasicInterface {
 	public function iterator(Void):Iterator;
 	
 	/**
+	 * Returns an iterator to iterate over the values of this map.
+	 *
+	 * @return an iterator to iterate over this map
+	 * @see #iterator(Void):Iterator
+	 * @see org.as2lib.data.holder.Iterator
+	 */
+	public function valueIterator(Void):Iterator;
+	
+	/**
+	 * Returns an iterator to iterate over the keys of this map.
+	 *
+	 * @return an iterator to iterate over the keys of this map
+	 * @see org.as2lib.data.holder.Iterator
+	 */
+	public function keyIterator(Void):Iterator;
+	
+	/**
 	 * Returns the amount of mappings.
 	 *
 	 * @return the amount of mappings
