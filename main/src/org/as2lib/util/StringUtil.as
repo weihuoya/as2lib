@@ -1,21 +1,49 @@
 ﻿import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.core.BasicClass;
 
-/*
+
+/**
  * Basic String Util Class, should have the Same Functionality like the base FString Class (flashforum.de Teamwork)
+ *
+ * @autor Martin Heidegger, Simon Wacker, Flashforum.de Community
  */
 class org.as2lib.util.StringUtil extends BasicClass {
+	/**
+	 * Private Constructor. (not instanceable)
+	 */
 	private function StringUtil(Void) {
 	}
 	
-	public static function replace(string:String, wath:String, to:String):String {
-		return string.split(wath).join(to);
+	/**
+	 * Replaces all occurencies of a string within a string by another string.charAt
+	 * 
+	 * @param String where the content should be replaced.
+	 * @param Searchstring.
+	 * @param Replacestring.
+	 * @return String where all occurencies are replaced.
+	 */
+	public static function replace(string:String, what:String, to:String):String {
+		return string.split(what).join(to);
 	}
 	
+	/**
+	 * Removes all empty characters at the beginning and at the end of a string.
+	 * Removed characters: Space " ", Line Forwards "\n", Extended Line Fowarding "\t\n".
+	 * 
+	 * @param String that should get trimmed.
+	 * @return The applied string, trimmed.
+	 */
 	public static function trim(string:String):String {
 		return leftTrim(rightTrim(string));
 	}
 	
+	/**
+	 * Removes all empty characters at the beginning of a string.
+	 * Removed characters: Space " ", Line Forwards "\n", Extended Linde Forwarding "\t\n".
+	 * 
+	 * @param String that should get trimmed.
+	 * @return The applied string, trimmed.
+	 */
 	public static function leftTrim(string:String):String {
 		return leftTrimForChars(string, "\n\t\n ");
 	}
@@ -28,7 +56,14 @@ class org.as2lib.util.StringUtil extends BasicClass {
 		}
 		return (from > 0 ? string.substr(from, to) : string);
 	}
-	
+
+	/**
+	 * Removes all empty characters at the beginning of a string.
+	 * Removed characters: Space " ", Line Forwards "\n", Extended Linde Forwarding "\t\n".
+	 * 
+	 * @param String that should get trimmed.
+	 * @return The applied string, trimmed.
+	 */	
 	public static function rightTrim(string:String):String {
 		return rightTrimForChars(string, "\n\t\n ");
 	}
@@ -88,6 +123,13 @@ class org.as2lib.util.StringUtil extends BasicClass {
 			if (string.indexOf(chars.charAt(i)) >= 0) {
 				return true;
 			}
+		}
+		return false;
+	}
+	
+	public static function beginsWith(string:String, chars:String):Boolean {
+		if (string.indexOf(chars) == 0) {
+			return true;
 		}
 		return false;
 	}
