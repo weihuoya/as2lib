@@ -27,7 +27,7 @@ interface org.as2lib.except.Throwable extends BasicInterface {
 	 */
 	public function getMessage(Void):String;
 	
-	public function getThrower(Void):Object;
+	public function getThrower(Void);
 	
 	public function getArguments(Void):FunctionArguments;
 }

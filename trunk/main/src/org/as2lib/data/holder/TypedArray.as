@@ -78,7 +78,7 @@ class org.as2lib.data.holder.TypedArray {
 	 * @param number
 	 * @return the value
 	 */
-	public function getValue(number:Number):Object {
+	public function getValue(number:Number) {
 		return this.array[number];
 	}
 	
@@ -92,7 +92,7 @@ class org.as2lib.data.holder.TypedArray {
 	/**
 	 * @see Array
 	 */
-	public function pop(Void):Object {
+	public function pop(Void) {
 		return this.array.pop();
 	}
 	
@@ -114,14 +114,14 @@ class org.as2lib.data.holder.TypedArray {
 	/**
 	 * @see Array
 	 */
-	public function shift(Void):Object {
+	public function shift(Void) {
 		return this.array.shift();
 	}
 	
 	/**
 	 * @see Array
 	 */
-	public function sort():Object {
+	public function sort() {
 		return this.array.sort.apply(this.array, arguments);
 	}
 	
@@ -129,7 +129,7 @@ class org.as2lib.data.holder.TypedArray {
 	 * @see Array
 	 */
 
-	 public function sortOn():Object {
+	 public function sortOn() {
 		return this.array.sortOn.apply(this.array, arguments);
 	}
 	

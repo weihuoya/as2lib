@@ -12,7 +12,7 @@ class test.org.as2lib.util.TReflectUtil extends Test {
 	private var subInfo:ClassInfo;
 	private var superInfo:ClassInfo;
 	
-	private var package:Object;
+	private var package;
 	private var packageInfo:PackageInfo;
 	
 	public function TReflectUtil(Void) {

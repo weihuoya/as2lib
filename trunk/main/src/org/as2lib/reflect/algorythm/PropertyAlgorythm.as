@@ -34,7 +34,7 @@ class org.as2lib.reflect.algorythm.PropertyAlgorythm extends AbstractContentAlgo
 		search(clazz);
 		
 		this.staticFlag = false;
-		var prototype:Object = clazz.prototype;
+		var prototype = clazz.prototype;
 		_global.ASSetPropFlags(prototype, null, 6, true);
 		_global.ASSetPropFlags(prototype, ["__proto__", "constructor", "__constructor__"], 1, true);
 		search(prototype);

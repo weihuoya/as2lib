@@ -14,7 +14,7 @@ interface org.as2lib.core.Cloneable {
       *  
       * @throws org.as2lib.core.CloneNotSupportedException if the object was not possible to clone. 
       */ 
-     public function clone():Object; 
+     public function clone(); 
 }
 
 interface org.as2lib.core.Overloading {
@@ -54,7 +54,7 @@ interface org.as2lib.reflect.ClassInfo {
      /** 
       *  
       */ 
-     public function newInstance(Void):Object; 
+     public function newInstance(Void); 
       
      /** 
       * Returns a TypedArray from type String containing all Vars that an Instance of this class has. 
@@ -87,7 +87,7 @@ interface org.as2lib.core.OverloadHandler {
      /** 
       * Executes  
       */ 
-     public function execute (target:Object, args:Array):Void; 
+     public function execute (target, args:Array):Void; 
 } 
  
 class org.as2lib.core.SimpleOverloadHandler implements org.as2lib.core.OverloadHandler {} 
@@ -101,7 +101,7 @@ interface org.as2lib.reflect.MethodInfo {
 class org.as2lib.reflect.SimpleMethodInfo implements org.as2lib.reflect.MethodInfo {} 
 
 interface org.as2lib.core.Cloneable {
-     public function clone():Object;
+     public function clone();
 }
 
 class org.as2lib.exception extends Error implements BasicInterface {
@@ -136,19 +136,19 @@ class org.as2lib.core.TypedArray extends BasicClass {
      public function TypedArray(type:Function);
      public function concat(value0:TypedArray, value1:TypedArray, ..., valueN:TypedArray):TypedArray;
      public function getType():Function;
-     public fucntion get(i:Number):Object;
-     public function set(i:Number, value:Object):Void;
+     public fucntion get(i:Number);
+     public function set(i:Number, value):Void;
      public function join(separator:String):String;
-     public function pop():Object;
-     public function push(value:Object):Number;
+     public function pop();
+     public function push(value):Number;
      public function reverse():Void;
-     public function shift():Object;
+     public function shift();
      public function slice(start:Number, end:Number):TypedArray;
-     public function sort():Object;
-     public function sortOn():Object;
-     public function splice(start:Number, deleteCount:Number, value0:Object, value1:Object...valueN:Object):Void;
+     public function sort();
+     public function sortOn();
+     public function splice(start:Number, deleteCount:Number, value0, value1...valueN):Void;
      public function toString():String;
-     public function unshift(value0:Object, value1:Object...valueN:Object):Number;
+     public function unshift(value0, value1...valueN):Number;
      public function getLength():Number;
      public function iterator():Iterator;
 }

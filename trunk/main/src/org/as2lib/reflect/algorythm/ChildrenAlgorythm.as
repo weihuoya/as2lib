@@ -24,7 +24,7 @@ class org.as2lib.reflect.algorythm.ChildrenAlgorythm extends AbstractContentAlgo
 		this.info = PackageInfo(info);
 		this.data = new HashMap();
 		
-		var package:Object = this.info.getPackage();
+		var package = this.info.getPackage();
 		search(package);
 		
 		return data;

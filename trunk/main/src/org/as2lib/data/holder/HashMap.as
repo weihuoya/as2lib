@@ -29,12 +29,12 @@ class org.as2lib.data.holder.HashMap implements Map {
 		return values.slice();
 	}
 	
-	public function get(key):Object {
+	public function get(key) {
 		return values[findKey(key)];
 	}
 	
-	public function put(key, value):Object {
-		var result:Object = null;
+	public function put(key, value) {
+		var result = null;
 		var i:Number = findKey(key);
 		if(i!=-1) {
 			result = values[i];
@@ -60,8 +60,8 @@ class org.as2lib.data.holder.HashMap implements Map {
 		}
 	}
 	
-	public function remove(key):Object {
-		var result:Object = null;
+	public function remove(key) {
+		var result = null;
 		var i:Number = findKey(key);
 		if(i!=-1) {
 			result = values[i];

@@ -5,7 +5,7 @@ import org.as2lib.data.holder.HashMap;
 class org.as2lib.data.iterator.HashMapIterator implements Iterator {
 	private var target:HashMap;
 	private var iterator:ArrayIterator;
-	private var key:Object;
+	private var key;
 	
 	public function HashMapIterator(newTarget:HashMap) {
 		target = newTarget;
@@ -16,7 +16,7 @@ class org.as2lib.data.iterator.HashMapIterator implements Iterator {
 		return iterator.hasNext();
 	}
 	
-	public function next(Void):Object {
+	public function next(Void) {
 		key = iterator.next();
 		return target.get(key);
 	}

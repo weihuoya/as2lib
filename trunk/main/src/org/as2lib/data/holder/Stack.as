@@ -4,16 +4,16 @@ import org.as2lib.data.iterator.ArrayIterator;
 class org.as2lib.data.holder.Stack {
 	private var target:Array;
 	
-	public function push(object):Object {
+	public function push(object) {
 		target.push(object);
 		return object;
 	}
 	
-	public function pop(Void):Object {
+	public function pop(Void) {
 		return target.pop();
 	}
 	
-	public function peek(Void):Object {
+	public function peek(Void) {
 		return target[target.length - 1];
 	}
 	

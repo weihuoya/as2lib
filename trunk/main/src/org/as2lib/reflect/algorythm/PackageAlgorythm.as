@@ -21,7 +21,7 @@ class org.as2lib.reflect.algorythm.PackageAlgorythm extends BasicClass implement
 	}
 	
 	public function findAndStore(info:PackageInfo, object):Boolean {
-		var package:Object = info.getPackage();
+		var package = info.getPackage();
 		var i:String;
 		for (i in package) {
 			if (ObjectUtil.isTypeOf(package[i], "object")) {

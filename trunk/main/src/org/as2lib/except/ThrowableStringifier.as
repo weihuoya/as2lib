@@ -8,7 +8,7 @@ class org.as2lib.except.ThrowableStringifier extends BasicClass implements Strin
 	public function execute(target):String {
 		var info:ClassInfo = ReflectUtil.getClassInfo(target);
 		var throwable:Throwable = Throwable(target);
-		var thrower:Object = throwable.getThrower();
+		var thrower = throwable.getThrower();
 		return "Name: " + info.getName() + "\n"
 			   + "Thrower: " + ReflectUtil.getClassInfo(thrower).getName();
 	}

@@ -13,7 +13,7 @@ class org.as2lib.data.iterator.ArrayIterator implements Iterator {
 		return (index < target.length - 1);
 	}
 	
-	public function next(Void):Object {
+	public function next(Void) {
 		return target[++index];
 	}
 	

@@ -20,7 +20,7 @@ class org.as2lib.core.BasicClass implements BasicInterface, Overload {
 	/**
 	 * @see org.as2lib.core.Overload
 	 */
-	public function overload(someArguments:Array, someOverloadHandlers:Array):Object {
+	public function overload(someArguments:Array, someOverloadHandlers:Array) {
 		return OverloadUtil.overload(this, someArguments, someOverloadHandlers);
 	}
 	

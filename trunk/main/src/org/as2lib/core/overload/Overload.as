@@ -11,7 +11,7 @@ interface org.as2lib.core.overload.Overload extends BasicInterface {
 	 * @param someArguments
 	 * @param someOverloadHandlers
 	 */
-	public function overload(someArguments:Array, someOverloadHandlers:Array):Object;
+	public function overload(someArguments:Array, someOverloadHandlers:Array);
 	
 	/**
 	 * Instantiates a new OverloadHandler.
