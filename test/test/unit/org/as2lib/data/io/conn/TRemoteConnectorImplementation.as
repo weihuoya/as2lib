@@ -6,6 +6,8 @@ import test.org.as2lib.data.io.conn.ExampleListener;
 import org.as2lib.env.event.SimpleEventInfo;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.ListenerArray;
+import org.as2lib.data.io.conn.ConnectorError;
+import org.as2lib.data.io.conn.ConnectorResponse;
 
 class test.org.as2lib.data.io.conn.TRemoteConnectorImplementation extends Test{
    private var connector:RemotingConnector;
@@ -43,16 +45,18 @@ class test.org.as2lib.data.io.conn.TRemoteConnectorImplementation extends Test{
 		myOut.info("-- Test of EventBroadcaster --");
 		myEB = con.getEventBroadcaster();
 		
-		var myListener:ListenerArray = myEB.getAllListener();
+		//var myListener:ListenerArray = myEB.getAllListener();
+		//trace(ExampleListener(myListener.get(0)).counter);
+		//trace(typeof(myListener.get(1)));
 		
-		for(var i=0; i<=myListener.length;i++){
+		/*for(var i=0; i<=myListener.length;i++){
 			var l = myListener.get(i);
 			trace("myListener.get: "+l instanceof ExampleListener);
 			myOut.info("EventBroadcaster.ListenerArray:");
 		}
-		
-		myEB.dispatch(new SimpleEventInfo("onError"));
-		//myEB.dispatch(new SimpleEventInfo("onResponse"));
+		*/
+		myEB.dispatch(new ConnectorError("TestConnectionError",this,new FunctionArguments(),true,false));
+		myEB.dispatch(new ConnectorResponse());
 		// Error Test
 		
 		
