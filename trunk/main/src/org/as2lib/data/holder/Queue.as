@@ -18,29 +18,28 @@ import org.as2lib.data.holder.Iterator;
 import org.as2lib.core.BasicInterface;
 
 /**
- * Queue is the base interface for data holders that follow the first-in,
- * first-out policy.
- *
- * <p>It offers the opposite functionality of a stack which follows the
- * last-in, first-out policy.
+ * {@code Queue} is the base interface for data holders that follow the 'first-in,
+ * first-out' policy.
  * 
- * <p>'first-in, first-out' means that the first value that has been
- * enqueued/added to the queue is the first that gets dequeued/removed.
+ * <p>It offers the opposite functionality of a stack which follows the 'last-in,
+ * first-out' policy.
+ * 
+ * <p>'first-in, first-out' means that the first value that has been enqueued/added
+ * to the queue is the first that gets dequeued/removed.
+ * 
+ * <p>The usage of a queue is quite simple. You have one method to add/enqueue values
+ * {@link #enqueue} and one method to remove/dequeue them {@link #dequeue}. You can
+ * also peek at the beginning of the queue to see what value has been added/enqueued
+ * at first without removing it {@link #peek}.
  *
- * <p>The usage of a queue is quite simple. You have one method to
- * add/enqueue values {@link #enqueue} and one method to remove/dequeue
- * them {@link #dequeue}. You can also peek at the beginning of the queue
- * to see what value has been added/enqueued at first without removing
- * it {@link #peek}.
- *
- * <p>If you want to iterate over the values of the queue you can either
- * use the iterator returned by the {@link #iterator} method or the array
- * that contains the queue's values returned by the {@link toArray} method.
- *
+ * <p>If you want to iterate over the values of the queue you can either use the
+ * iterator returned by the {@link #iterator} method or the array that contains the
+ * queue's values returned by the {@link #toArray} method.
+ * 
  * <p>The two methods {@link #isEmpty} and {@link #size} let you find
  * out whether the queue contains values and how many values it contains.
  *
- * <p>A usage example may look like this:
+ * <p>Example:
  * <code>
  *   // the queue gets set up
  *   var queue:Queue = new MyQueue();
@@ -50,10 +49,11 @@ import org.as2lib.core.BasicInterface;
  *   // the queue gets used somewhere in your application
  *   trace(queue.peek()); // traces the first element without removing it
  *   while (!queue.isEmpty()) {
- *      trace(queue.dequeue());
+ *       trace(queue.dequeue());
  *   }
  * </code>
- * <p>The output would be the following:
+ *
+ * <p>Output:
  * <pre>
  *   value1
  *   value1
@@ -66,15 +66,15 @@ import org.as2lib.core.BasicInterface;
 interface org.as2lib.data.holder.Queue extends BasicInterface {
 	
 	/**
-	 * Adds the passed-in value to this queue.
+	 * Adds the passed-in {@code value} to this queue.
 	 *
-	 * @param value the value add
+	 * @param value the value to add
 	 */
 	public function enqueue(value):Void;
 	
 	/**
-	 * Removes the firstly inserted value.
-	 *
+	 * Removes and returns the firstly inserted value.
+	 * 
 	 * @return the firstly inserted value
 	 * @throws org.as2lib.data.holder.EmptyDataHolderException if this queue is empty
 	 */
@@ -89,18 +89,17 @@ interface org.as2lib.data.holder.Queue extends BasicInterface {
 	public function peek(Void);
 	
 	/**
-	 * Returns an iterator that can be used to iterate over the values of
-	 * this queue.
+	 * Returns an iterator to iterate over the values of this queue.
 	 *
-	 * @return an iterator to iterate over this queue
+	 * @return an iterator to iterate over this queue's values
 	 * @see #toArray
 	 */
 	public function iterator(Void):Iterator;
 	
 	/**
 	 * Returns whether this queue contains any values.
-	 *
-	 * @return true if this queue contains no values else false
+	 * 
+	 * @return {@code true} if this queue contains no values else {@code false}
 	 */
 	public function isEmpty(Void):Boolean;
 	
@@ -113,11 +112,11 @@ interface org.as2lib.data.holder.Queue extends BasicInterface {
 	public function size(Void):Number;
 	
 	/**
-	 * Returns an array representation of this queue.
-	 *
-	 * <p>The elements are copied onto the array in a first-in, first-out
-	 * order, similar to the order of the elements returned by a succession 
-	 * of calls to the {@link #dequeue} method.
+	 * Returns the array representation of this queue.
+	 * 
+	 * <p>The elements are copied onto the array in a 'first-in, first-out' order,
+	 * similar to the order of the elements returned by a succession of calls to the
+	 * {@link #dequeue} method.
 	 *
 	 * @return the array representation of this queue
 	 */

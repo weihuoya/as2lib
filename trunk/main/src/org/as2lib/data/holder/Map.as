@@ -18,40 +18,38 @@ import org.as2lib.data.holder.Iterator;
 import org.as2lib.core.BasicInterface;
 
 /**
- * Map is the base interface for data holders that map keys to values.
+ * {@code Map} is the base interface for data holders that map keys to values.
+ * 
+ * <p>A map offers two methods that help you find out whether it contains a specific
+ * key or value. These two methods are {@link #containsKey} and {@link #containsValue}.
+ * 
+ * <p>To get the data stored in the map you can use the methods {@link #getKeys},
+ * {@link #getValues} and {@link #get}. If you want to iterate over the values of
+ * the map you can use the iterators returned by the methods {@link #iterator} or
+ * {@link #valueIterator}. If you want to iterate over the keys you can use the
+ * iterator returned by the {@link #keyIterator} method.
  *
- * <p>A map offers two methods that help you find out whether it contains
- * a specific key or value. These two methods are {@link #containsKey}
- * and {@link #containsValue}.
+ * <p>To add key value pairs to the map you can use the methods {@link #put} and
+ * {@link #putAll}. The {@code putAll} method lets you add all key-value pairs
+ * contained in the passed-in {@code map} to this map.
+ * 
+ * <p>To remove key-value pairs you can use the methods {@link #remove} and
+ * {@link #clear}. The {@code remove} method deletes only the key-value pair
+ * corresponding to the passed-in {@code key}, while the clear method removes all
+ * key-value pairs.
  *
- * <p>To get the data stored in the map you can use the {@link #getKeys},
- * {@link #getValues} and {@link #get} methods. If you want to iterate
- * over the values of the map you can use the iterators returned by the
- * {@link #iterator} or {@link #valueIterator} methods. If you want to
- * iterate over the keys you can use the iterator returned by the
- * {@link #keyIterator} method.
+ * <p>There are two more methods you may need. The {@link #isEmpty} and the
+ * {@link #size} method. These methods give you information about whether this
+ * map contains any mappings and how many mappings it contains.
  *
- * <p>To add key value pairs to the map you can use the {@link #put} and
- * {@link #putAll} methods. The putAll method lets you add all key-value
- * pairs contained in the passed-in map to this map.
- *
- * <p>To remove key-value pairs you can use the {@link #remove} and
- * {@link #clear} methods. The remove method deletes only the key-value
- * pair corresponding to the passed-in key, while the clear method removes
- * all key-value pairs.
- *
- * <p>There are two more methods you may need. The {@link #getSize} and
- * the {@link #isEmpty} method. These methods give you information about
- * whether this map contains any mappings and how many mappings it contains.
- *
- * <p>A map can for example be used as follows:
+ * <p>Example:
  * <code>
  *   // the map gets set up somewhere
  *   var map:Map = new MyMap();
  *   map.put("myKey", "myValue");
  *   // at some different place in your code
  *   if (map.containsKey("myKey")) {
- *     trace(map.get("myKey"));
+ *       trace(map.get("myKey"));
  *   }
  * </code>
  *
@@ -61,20 +59,20 @@ import org.as2lib.core.BasicInterface;
 interface org.as2lib.data.holder.Map extends BasicInterface {
 	
 	/**
-	 * Checks if the passed-in key exists.
+	 * Checks if the passed-in {@code key} exists.
 	 *
 	 * <p>That means whether a value has been mapped to it.
 	 *
 	 * @param key the key to be checked for availability
-	 * @return true if the key exists else false
+	 * @return {@code true} if the {@code key} exists else {@code false}
 	 */
 	public function containsKey(key):Boolean;
 	
 	/**
-	 * Checks if the passed-in value is mapped to a key.
-	 *
+	 * Checks if the passed-in {@code value} is mapped to a key.
+	 * 
 	 * @param value the value to be checked for availability
-	 * @return true if the value is mapped to a key else false
+	 * @return {@code true} if the {@code value} is mapped to a key else {@code false}
 	 */
 	public function containsValue(value):Boolean;
 	
@@ -94,34 +92,34 @@ interface org.as2lib.data.holder.Map extends BasicInterface {
 	public function getValues(Void):Array;
 	
 	/**
-	 * Returns the value that is mapped to the passed-in key.
-	 *
-	 * @param key the key to return the appropriate value for
-	 * @return the value appropriate to the key
+	 * Returns the value that is mapped to the passed-in {@code key}.
+	 * 
+	 * @param key the key to return the corresponding value for
+	 * @return the value corresponding to the passed-in {@code key}
 	 */
 	public function get(key);
 	
 	/**
-	 * Maps the specified key to the value.
+	 * Maps the given {@code key} to the {@code value}.
 	 *
-	 * @param key the key used as identifier for the value
-	 * @param value the value to map to the key
-	 * @return the value that was originally mapped to the key or null
+	 * @param key the key used as identifier for the {@code value}
+	 * @param value the value to map to the {@code key}
+	 * @return the value that was originally mapped to the {@code key}
 	 */
 	public function put(key, value);
 	
 	/**
-	 * Copies all mappings from the passed-in map to this map.
+	 * Copies all mappings from the passed-in {@code map} to this map.
 	 *
 	 * @param map the mappings to add to this map
 	 */
 	public function putAll(map:Map):Void;
 	
 	/**
-	 * Removes the mapping from the specified key to the value.
+	 * Removes the mapping from the given {@code key} to the value.
 	 *
-	 * @param key the key identifying the mapping to be removed
-	 * @return the value that was originally mapped to the key
+	 * @param key the key identifying the mapping to remove
+	 * @return the value that was originally mapped to the {@code key}
 	 */
 	public function remove(key);
 	
@@ -165,8 +163,8 @@ interface org.as2lib.data.holder.Map extends BasicInterface {
 	
 	/**
 	 * Returns whether this map contains any mappings.
-	 *
-	 * @return true if this map contains mappings else false
+	 * 
+	 * @return {@code true} if this map contains any mappings else {@code false}
 	 */
 	public function isEmpty(Void):Boolean;
 	

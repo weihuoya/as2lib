@@ -21,21 +21,21 @@ import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.NoSuchElementException;
 
 /**
- * ArrayIterator can be used to iterate over arrays.
+ * {@code ArrayIterator} can be used to iterate over arrays.
  *
- * <p>This usage of this iterator is quite simple. There is one method to check
- * whether there are more elements left to iterate over {@link #hasNext},
- * one method to get the next element {@link #next} and one to remove
- * the current element {@link #remove}.
- *
- * <p>And here is how it works:
+ * <p>The usage of this iterator is quite simple. There is one method to check
+ * whether there are more elements left to iterate over {@link #hasNext}, one method
+ * to get the next element {@link #next} and one to remove the current element
+ * {@link #remove}.
+ * 
+ * <p>Example:
  * <code>
  *   var iterator:Iterator = new ArrayIterator(["value1", "value2", "value3"]);
  *   while (iterator.hasNext()) {
- *     trace(iterator.next());
+ *       trace(iterator.next());
  *   }
  * </code>
- * <p>The output would be the following:
+ * <p>Output:
  * <pre>
  *   value1
  *   value2
@@ -55,14 +55,15 @@ import org.as2lib.data.holder.NoSuchElementException;
 	private var i:Number;
 	
 	/**
-	 * Constructs a new ArrayIterator instance.
-	 *
+	 * Constructs a new {@code ArrayIterator} instance.
+	 * 
 	 * @param target the array to iterate over
-	 * @throws IllegalArgumentException if the passed-in target array is null or undefined
+	 * @throws IllegalArgumentException if the passed-in {@code target} array is
+	 * {@code null} or {@code undefined}
 	 */
 	public function ArrayIterator(target:Array) {
 		// IllegalArgumentException if the passed array is not available.
-		if (!target) throw new IllegalArgumentException("The passed-in target array '" + target + "' is not allowed to be null or undefined.", this, arguments);
+		if (!target) throw new IllegalArgumentException("Argument 'target' [" + target + "] must not be 'null' nor 'undefined'.", this, arguments);
 
 		// Usual handling of the arguments.
 		this.t = target;
@@ -123,8 +124,8 @@ import org.as2lib.data.holder.NoSuchElementException;
 	
 	/**
 	 * Returns whether there exists another element to iterate over.
-	 *
-	 * @return true if there is at least one lement left to iterate over
+	 * 
+	 * @return {@code true} if there is at least one lement left to iterate over
 	 */
 	public function hasNext(Void):Boolean {
 		return (i < t.length-1);
@@ -132,10 +133,9 @@ import org.as2lib.data.holder.NoSuchElementException;
 	
 	/**
 	 * Returns the next element of the array.
-	 *
+	 * 
 	 * @return the next element of the array
-	 * @throws org.as2lib.data.holder.NoSuchElementException if there is
-	 * no next element
+	 * @throws NoSuchElementException if there is no next element
 	 */
 	public function next(Void) {
 		if (!hasNext()) {
@@ -145,11 +145,10 @@ import org.as2lib.data.holder.NoSuchElementException;
 	}
 	
 	/**
-	 * Removes the currently selected element from this iterator and from
-	 * the passed-in array this iterator iterates over.
-	 *
-	 * @throws org.as2lib.env.except.IllegalStateException if you try to 
-	 * remove an element when none is selected
+	 * Removes the currently selected element from this iterator and from the array this
+	 * iterator iterates over.
+	 * 
+	 * @throws IllegalStateException if you try to remove an element when none is selected
 	 */
 	public function remove(Void):Void {
 		if (i < 0) {

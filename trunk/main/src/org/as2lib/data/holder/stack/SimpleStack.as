@@ -24,52 +24,52 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.data.holder.stack.StackStringifier;
 
 /**
- * SimpleStack can be used to hold data in a last-in, first-out manner.
+ * {@code SimpleStack} holds data in a 'last-in, first-out' manner.
+ * 
+ * <p>It is a simple implementation of the {@code Stack} interface and realizes all
+ * its basic concepts.
+ * 
+ * <p>'last-in, first-out' means that the last value that has been pushed to the
+ * stack is the first that is popped from the stack.
  *
- * <p>It is a simple implementation of the Stack interface and realizes
- * all its basic concepts.
+ * <p>The usage of a stack is quite simple. You have one method to push values,
+ * {@link #push}, and one method to pop values, {@link #pop}. You can also peek at
+ * the top of the stack to see what's the last value that has been pushed to the
+ * stack without removing it {@link #peek}.
+ * 
+ * <p>If you want to iterate over the values of the stack you can either use the
+ * iterator returned by the {@link #iterator} method or the array that contains the
+ * stack's values returned by the {@link #toArray} method.
+ * 
+ * <p>The two methods {@link #isEmpty} and {@link #size} let you find out whether
+ * the stack contains values and how many values it contains.
+ * 
+ * <p>You can modify the string representation that is returned by the {@link #toString}
+ * method using the static {@link #setStringifier} method.
  *
- * <p>'last-in, first-out' means that the last value that has been pushed
- * to the stack is the first that is popped from the stack.
- *
- * <p>The usage of a stack is quite simple. You have one method to push
- * values {@link #push} and one method to pop values {@link #pop}. You
- * can also peek at the top of the stack to see what's the last value
- * that has been pushed to the stack without removing it {@link #peek}.
- *
- * <p>If you want to iterate over the values of the stack you can either
- * use the iterator returned by the {@link #iterator} method or the array
- * that contains the stack's values returned by the {@link #toArray} method.
- *
- * <p>The two methods {@link #isEmpty} and {@link #size} let you find
- * out whether the stack contains values and how many values it contains.
- *
- * <p>You can modify the string representation that gets returned by
- * the {@link #toString} method using the static {@link #setStringifier}
- * method.
- *
- * <p>You can use this stack as follows:
+ * <p>Example:
  * <code>
- *   // the stack gets constructed somewhere
+ *   // the stack is constructed somewhere
  *   var stack:Stack = new SimpleStack();
  *   stack.push("value1");
  *   stack.push("value2");
  *   stack.push("value3");
- *   // the stack gets used
- *   trace(stack.peer());
+ *   // the stack is used
+ *   trace(stack.peek());
  *   while (!stack.isEmpty()) {
- *     trace(stack.pop());
+ *       trace(stack.pop());
  *   }
  * </code>
- * <p>The output looks as follows:
+ *
+ * <p>Output:
  * <pre>
  *   value3
  *   value3
  *   value2
  *   value1
  * </pre>
- *
- * <p>You could alternatively pass-in the content of the stack on construction.
+ * 
+ * <p>You can alternatively pass-in the content of the stack on construction.
  * <code>
  *   var stack:Stack = new SimpleStack(["value1", "value2", "value3"]);
  *   // ..
@@ -79,7 +79,7 @@ import org.as2lib.data.holder.stack.StackStringifier;
  */
 class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Stack {
 	
-	/** Used to stringify stacks. */
+	/** Stringifies stacks. */
 	private static var stringifier:Stringifier;
 	
 	/** Contains the inserted values. */
@@ -88,8 +88,8 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	/**
 	 * Returns the stringifier that stringifies stacks.
 	 *
-	 * <p>If no stringifier was set manually the default stringifier gets
-	 * used which is an instance of class {@link StackStringifier}.
+	 * <p>If no stringifier has been set manually the default stringifier will be returned
+	 * which is an instance of class {@link StackStringifier}.
 	 * 
 	 * @return the stringifier that stringifies stacks
 	 */
@@ -101,9 +101,9 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	/**
 	 * Sets the new stringifier that stringifies stacks.
 	 *
-	 * <p>If you set a stringifier of value null or undefined the method
-	 * {@link #getStringifier} will return the default stringifier.
-	 *
+	 * <p>If the passed-in {@code stackStringifier} is {@code null} or {@code undefined}
+	 * the static {@link #getStringifier} method will return the default stringifier.
+	 * 
 	 * @param stackStringifier the new stack stringifier
 	 */
 	public static function setStringifier(stackStringifier:Stringifier):Void {
@@ -111,20 +111,21 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	}
 	
 	/**
-	 * Constructs a new SimpleStack instance.
+	 * Constructs a new {@code SimpleStack} instance.
 	 *
-	 * <p>The stack steps through the passed-in source beginning at position
-	 * zero and pushes all contained elements.
-	 *
+	 * <p>The stack steps through the passed-in {@code source} beginning at position
+	 * 0 and pushes all contained elements to this stack.
+	 * 
 	 * <code>
 	 *   var stack:SimpleStack = new SimpleStack([1, 2, 3]);
  	 *   while (!stack.isEmpty()) {
-	 * 	   trace(stack.pop());
+	 * 	     trace(stack.pop());
 	 *   }
 	 * </code>
-	 * The output is made in the following order: 3, 2, 1
 	 *
-	 * @param source (optional) an array that contains values to populate this new stack with
+	 * <p>The output is made in the following order: 3, 2, 1
+	 * 
+	 * @param source (optional) an array that contains values to populate this stack with
 	 */
 	public function SimpleStack(source:Array) {
 		if (source) {
@@ -135,9 +136,9 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	}
 	
 	/**
-	 * Pushes the passed-in value to this stack.
+	 * Pushes the passed-in {@code value} to this stack.
 	 *
-	 * <p>Null or undefined values are allowed.
+	 * <p>{@code null} or {@code undefined} values are allowed.
 	 *
 	 * @param value the value to push to this stack
 	 */
@@ -149,7 +150,7 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	 * Removes and returns the lastly pushed value.
 	 *
 	 * @return the lastly pushed value
-	 * @throws org.as2lib.data.holder.EmptyDataHolderException if this stack is empty
+	 * @throws EmptyDataHolderException if this stack is empty
 	 */
 	public function pop(Void) {
 		if (isEmpty()) {
@@ -162,7 +163,7 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	 * Returns the lastly pushed value without removing it.
 	 *
 	 * @return the lastly pushed value
-	 * @throws org.as2lib.data.holder.EmptyDataHolderException if this stack is empty
+	 * @throws EmptyDataHolderException if this stack is empty
 	 */
 	public function peek(Void) {
 		if (isEmpty()) {
@@ -186,7 +187,7 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	/**
 	 * Returns whether this stack is empty.
 	 *
-	 * @return true if this stack is empty else false
+	 * @return {@code true} if this stack is empty else {@code false}
 	 */
 	public function isEmpty(Void):Boolean {
 		return (values.length < 1);
@@ -203,11 +204,11 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	}
 	
 	/**
-	 * Returns an array representation of this stack.
-	 *
-	 * <p>The elements are copied onto the array in a last-in, first-out
-	 * order, similar to the order of the elements returned by a succession 
-	 * of calls to the {@link #pop} method.
+	 * Returns the array representation of this stack.
+	 * 
+	 * <p>The elements are copied onto the array in a 'last-in, first-out' order, similar
+	 * to the order of the elements returned by a succession of calls to the {@link #pop}
+	 * method.
 	 *
 	 * @return the array representation of this stack
 	 */
@@ -219,9 +220,9 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	
 	/**
 	 * Returns the string representation of this stack.
-	 *
-	 * <p>The string representation is obtained using the stringifier returned
-	 * by the stack {@link #getStringifier} method.
+	 * 
+	 * <p>The string representation is obtained using the stringifier returned by the
+	 * static {@link #getStringifier} method.
 	 *
 	 * @return the string representation of this stack
 	 */

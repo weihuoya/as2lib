@@ -17,27 +17,36 @@
 import org.as2lib.data.holder.DataHolderException;
 
 /**
- * EmptyDataHolderException gets thrown if a method is called on an empty
- * data holder that requires at least one element to be available.
- *
+ * {@code EmptyDataHolderException} is thrown if a method is called on an empty data
+ * holder that requires at least one element to be available.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.EmptyDataHolderException extends DataHolderException {
 	
 	/**
-	 * Constructs a new EmptyDataHolderException instance.
+	 * Constructs a new {@code EmptyDataHolderException} instance.
+	 * 
+	 * <p>All arguments are allowed to be {@code null} or {@code undefined}.
+	 * But if one is, the string representation returned by the {@code toString}
+	 * method will not be complete.
 	 *
-	 * <p>All arguments are allowed to be null or undefined. But if one is,
-	 * the string representation returned by the {@link #toString} method
-	 * will not be complete.
+	 * <p>The {@code args} array should be the internal arguments array of
+	 * the method that throws the throwable. The internal arguments array
+	 * exists in every method and contains its parameters, the callee method
+	 * and the caller method. You can refernce it in every method using the
+	 * name {@code 'arguments'}.
 	 *
-	 * <p>The args array should be the internal arguments array of the
-	 * method that throws the throwable. The internal arguments array exists
-	 * in every method and contains its parameters, the callee method and
-	 * the caller method. You can refernce it in every method using the name
-	 * 'arguments'.
+	 * <p>All arguments are allowed to be {@code null} or {@code undefined}. But if one
+	 * is, the string representation returned by the {@code toString} method will not
+	 * be complete.
+	 * 
+	 * <p>The {@code args} array should be the internal arguments array of the method
+	 * that throws the throwable. The internal arguments array exists in every method
+	 * and contains its parameters, the callee method and the caller method. You can
+	 * refernce it in every method using the name {@code 'arguments'}.
 	 *
-	 * @param message the message that describes in detail what the problem is
+	 * @param message the message that describes the problem in detail
 	 * @param thrower the object that declares the method that throws this exception
 	 * @param args the arguments of the throwing method
 	 */

@@ -17,21 +17,21 @@
 import org.as2lib.core.BasicInterface;
 
 /**
- * Iterator is used to iterate over data holders.
+ * {@code Iterator} is used to iterate over data holders.
  *
- * <p>An iterator is quite simple to use. There is one method to check
- * whether there are more elements left to iterate over {@link #hasNext},
- * one method to get the next element {@link #next} and one to remove
- * the current element {@link #remove}.
- *
- * <p>And here is how it works:
+ * <p>An iterator is quite simple to use. There is one method to check whether there
+ * are more elements left to iterate over {@link #hasNext}, one method to get the
+ * next element {@link #next} and one to remove the current element {@link #remove}.
+ * 
+ * <p>Example:
  * <code>
  *   var iterator:Iterator = new MyIterator("value1", "value2", "value3");
  *   while (iterator.hasNext()) {
- *     trace(iterator.next());
+ *       trace(iterator.next());
  *   }
  * </code>
- * <p>The output would be the following:
+ *
+ * <p>Output:
  * <pre>
  *   value1
  *   value2
@@ -44,29 +44,29 @@ import org.as2lib.core.BasicInterface;
 interface org.as2lib.data.holder.Iterator extends BasicInterface {
 	
 	/**
-	 * Returns whether there exists another element to iterate over.
-	 *
-	 * @return true if there is at least one lement left to iterate over
+	 * Returns whether there is another element to iterate over.
+	 * 
+	 * @return {@code true} if there is at least one element left to iterate
+	 * over
 	 */
 	public function hasNext(Void):Boolean;
 	
 	/**
 	 * Returns the next element.
-	 *
+	 * 
 	 * @return the next element
-	 * @throws org.as2lib.data.holder.NoSuchElementException if there is
-	 * no next element
+	 * @throws org.as2lib.data.holder.NoSuchElementException if there is no next element
 	 */
 	public function next(Void);
 	
 	/**
-	 * Removes the currently selected element from this iterator and from
-	 * the data holder this iterator iterates over.
-	 *
-	 * @throws org.as2lib.env.except.IllegalStateException if you try to 
-	 * remove an element when none is selected
-	 * @throws org.as2lib.env.except.UnsupportedOperationException if this
-	 * method is not supported by the concrete implementation of this interface
+	 * Removes the currently selected element from this iterator and from the data holder
+	 * this iterator iterates over.
+	 * 
+	 * @throws org.as2lib.env.except.IllegalStateException if you try to remove an element
+	 * when none is selected
+	 * @throws org.as2lib.env.except.UnsupportedOperationException if this method is not
+	 * supported by the concrete implementation of this interface
 	 */
 	public function remove(Void):Void;
 	

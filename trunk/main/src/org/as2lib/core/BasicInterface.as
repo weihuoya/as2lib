@@ -16,24 +16,24 @@
 
 
 /**
- * BasicInterface is the basic interface for each class in the as2lib
- * framework.
+ * {@code BasicInterface} is the basic interface for each class in the As2lib
+ * Framework.
  * 
- * <p>It is recommended to always implement this interface in the classes
- * of your own project but it is not a necessity. You can use all 
- * functionality of the as2lib framework without implementing it.
- *
- * <p>In enables you to call the {@link #theString} method on instances
- * that have been casted to interfaces.
- *
- * <p>The default implementation {@link BasicClass} offers an enhanced
- * {@link #toString} method implementation that returns a better string
- * representation than the default {@link Object#toString} method of Flash.
+ * <p>It is recommended to always implement this interface in the classes of your
+ * own project but it is not a necessity. You can use all functionalities of the
+ * As2lib Framework without implementing it.
+ * 
+ * <p>It enables you to call the {@link #toString} method on instances that have
+ * been casted to interfaces.
+ * 
+ * <p>The default implementation {@code BasicClass} offers an enhanced {@code toString}
+ * method implementation that returns a better string representation than the default
+ * {@code Object#toString} method of Flash.
  *
  * @author Simon Wacker
  * @author Martin Heidegger
  * @author Michael Hermann
- * @see org.as2lib.core.BasicClass for a default implementation
+ * @see org.as2lib.core.BasicClass
  */
 interface org.as2lib.core.BasicInterface {       
 	 

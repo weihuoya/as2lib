@@ -24,34 +24,34 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
- * TypedMap is used as a wrapper for {@link Map} instances that ensures
- * that only values of a specific type get added to the wrapped map.
- *
- * <p>This class simply delegates all method invocations to the wrapped
- * map. If the specific method is responsible for adding values it first
- * checks if the values to add are of the expected type. If they are the
- * method invocation gets forwarded, otherwise an {@link IllegalArgumentException}
- * gets thrown.
+ * {@code TypedMap} is a wrapper for {@link Map} instances that ensures that only
+ * values of a specific type are added to the wrapped map.
+ * 
+ * <p>This class simply delegates all method invocations to the wrapped map. If the
+ * specific method is responsible for adding values it first checks if the values
+ * to add are of the expected type. If they are the method invocation is forwarded,
+ * otherwise an {@link IllegalArgumentException} is thrown.
  *
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	
-	/** The Map the TypeMap wraps. */
+	/** The wrapped map. */
 	private var map:Map;
 	
 	/** The type of values that can be added. */
 	private var type:Function;
 	
 	/**
-	 * Constructs a new TypedMap instance.
+	 * Constructs a new {@code TypedMap} instance.
 	 *
-	 * <p>If the passed-in map does already contain values, these values
-	 * do not get type-checked.
-	 *
-	 * @param type the type of the values this map will contain
-	 * @param map the map that shall type-checked
-	 * @throws IllegalArgumentException if the passed-in type is null or undefined
+	 * <p>If the passed-in {@code map} does already contain values, these values do not
+	 * get type-checked.
+	 * 
+	 * @param type the type of the values this map is allowed to contain
+	 * @param map the map to type-check
+	 * @throws IllegalArgumentException if the passed-in {@code type} is {@code null}
+	 * or {@code undefined}
 	 */
 	public function TypedMap(type:Function, map:Map) {
 		if (!type) throw new IllegalArgumentException("The passed-in type '" + type + "' the contained values must have is not allowed to be null or undefined.", this, arguments);
@@ -61,7 +61,7 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	
 	/**
 	 * Returns the type that all values in the wrapped map have.
-	 *
+	 * 
 	 * <p>This is the type passed-in on construction.
 	 *
 	 * @return the type that all values in the wrapped map have
@@ -71,31 +71,30 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	}
 	
 	/**
-	 * Checks if the passed-in key exists.
+	 * Checks if the passed-in {@code key} exists.
 	 *
 	 * <p>That means whether a value has been mapped to it.
 	 *
 	 * @param key the key to be checked for availability
-	 * @return true if the key exists else false
+	 * @return {@code true} if the {@code key} exists else {@code false}
 	 */
 	public function containsKey(key):Boolean {
 		return map.containsKey(key);
 	}
 	
 	/**
-	 * Checks if the passed-in value is mapped to a key.
+	 * Checks if the passed-in {@code value} is mapped to a key.
 	 *
 	 * @param value the value to be checked for availability
-	 * @return true if the value is mapped to a key else false
+	 * @return {@code true} if the {@code value} is mapped to a key else {@code false}
 	 */
 	public function containsValue(value):Boolean {
 		return map.containsValue(value);
 	}
 	
 	/**
-	 * Returns an array that contains all keys that have a value mapped to
-	 * it.
-	 *
+	 * Returns an array that contains all keys that have a value mapped to it.
+	 * 
 	 * @return an array that contains all keys
 	 */
 	public function getKeys(Void):Array {
@@ -112,22 +111,23 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	}
 	
 	/**
-	 * Returns the value that is mapped to the passed-in key.
+	 * Returns the value that is mapped to the passed-in {@code key}.
 	 *
-	 * @param key the key to return the appropriate value for
-	 * @return the value appropriate to the key
+	 * @param key the key to return the corresponding value for
+	 * @return the value corresponding to the {@code key}
 	 */
 	public function get(key) {
 		return map.get(key);
 	}
 	
 	/**
-	 * Maps the specified key to the value.
+	 * Maps the given {@code key} to the {@code value}.
 	 *
-	 * @param key the key used as identifier for the value
-	 * @param value the value to map to the key
-	 * @return the value that was originally mapped to the key or null
-	 * @throws IllegalArgumentException if the type of the passed-in value is invalid
+	 * @param key the key used as identifier for the {@code value}
+	 * @param value the value to map to the {@code key}
+	 * @return the value that was originally mapped to the {@code key}
+	 * @throws IllegalArgumentException if the type of the passed-in {@code value} is
+	 * invalid
 	 */
 	public function put(key, value) {
 		validate(value);
@@ -135,8 +135,11 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	}
 	
 	/**
-	 * Copies all mappings from the passed-in map to this map.
+	 * Copies all mappings from the passed-in {@code map} to this map.
 	 *
+	 * <p>If one value in the given {@code map} is invalid, no key-value pair will be
+	 * added.
+	 * 
 	 * @param map the mappings to add to this map
 	 * @throws IllegalArgumentException if the type of any value to put is invalid
 	 */
@@ -149,10 +152,10 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	}
 	
 	/**
-	 * Removes the mapping from the specified key to the value.
+	 * Removes the mapping from the specified {@code key} to the value.
 	 *
-	 * @param key the key identifying the mapping to be removed
-	 * @return the value that was originally mapped to the key
+	 * @param key the key identifying the mapping to remove
+	 * @return the value that was originally mapped to the {@code key}
 	 */
 	public function remove(key) {
 		return map.remove(key);
@@ -209,7 +212,7 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	/**
 	 * Returns whether this map contains any mappings.
 	 *
-	 * @return true if this map contains mappings else false
+	 * @return {@code true} if this map contains no mappings else {@code false}
 	 */
 	public function isEmpty(Void):Boolean {
 		return map.isEmpty();
@@ -225,10 +228,11 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	}
 	
 	/**
-	 * Validates the passed-in value based on its type.
-	 *
+	 * Validates the passed-in {@code value} based on its type.
+	 * 
 	 * @param value the value whose type to validate
-	 * @throws IllegalArgumentException if the type of the value is not valid
+	 * @throws IllegalArgumentException if the type of the passed-in {@code value} is
+	 * not valid
 	 */
 	private function validate(value):Void {
 		if (!ObjectUtil.typesMatch(value, type)) {

@@ -20,24 +20,24 @@ import org.as2lib.data.holder.Queue;
 import org.as2lib.data.holder.Iterator;
 
 /**
- * QueueStringifier stringifies instances of type {@link Queue}.
+ * {@code QueueStringifier} stringifies instances of type {@link Queue}.
  *
  * @author Simon Wacker
- * @see Queue
  */
 class org.as2lib.data.holder.queue.QueueStringifier extends BasicClass implements Stringifier {
 	
 	/**
-	 * Returns the string representation of the passed-in {@link Queue}
-	 * instance.
+	 * Returns the string representation of the passed-in {@code target} queue.
 	 *
+	 * <p>{@code target} must be an instance of type {@code Queue}.
+	 * 
 	 * <p>The string representation is constructed as follows:
 	 * <pre>
 	 *   [firstlyAddedValue, secondlyAddedValue, ...]
 	 * </pre>
 	 *
 	 * @param target the target queue to stringifiy
-	 * @return the string representation of the passed-in queue
+	 * @return the string representation of the passed-in {@code target} queue
 	 */
 	public function execute(target):String {
 		var queue:Queue = target;
