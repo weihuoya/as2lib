@@ -5,6 +5,9 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2004">
       <month value="10">
+        <day value="7">
+          <entry type="change" package="org.as2lib.env.except" class="AbstractException"><change-rename to="AbstractThrowable" /></entry>
+        </day>
         <day value="6">
           <entry type="add" package="org.as2lib.env.out" class="OutFactory" />
           <entry type="add" package="org.as2lib.env.out" class="DefaultOutFactory" />

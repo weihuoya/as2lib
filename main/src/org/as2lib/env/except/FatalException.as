@@ -16,7 +16,7 @@
 
 import org.as2lib.env.except.Throwable;
 import org.as2lib.core.BasicInterface;
-import org.as2lib.env.except.AbstractException;
+import org.as2lib.env.except.AbstractThrowable;
 import org.as2lib.env.except.ExceptConfig;
 import org.as2lib.util.ObjectUtil;
 
@@ -27,11 +27,12 @@ import org.as2lib.util.ObjectUtil;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.except.FatalException extends AbstractException implements Throwable {
+class org.as2lib.env.except.FatalException extends AbstractThrowable implements Throwable {
+	
 	/**
 	 * Constructs a new FatalException.
 	 *
-	 * @see org.as2lib.env.except.AbstractException#Constructor()
+	 * @see org.as2lib.env.except.AbstractThrowable#new()
 	 */
 	public function FatalException(message:String, thrower, args:FunctionArguments) {
 		super(message, thrower, args);
@@ -53,4 +54,5 @@ class org.as2lib.env.except.FatalException extends AbstractException implements 
 		}
 		return ExceptConfig.getThrowableStringifier().execute(this);
 	}
+	
 }
