@@ -14,6 +14,7 @@ class org.as2lib.aop.matcher.Matcher extends BasicClass {
 	public static function matches(joinPoint:JoinPoint, description:JoinPointDescription):Boolean {
 		// wenn '+' dann alle Superklassen durchgehen und bei ihnen auf match prüfen
 		// mh....Performance?
+		var oldTime:Number = getTimer();
 		var expression = joinPoint.getInfo().getDeclaringType().getFullName() + "." + joinPoint.getInfo().getName();
 		if (description.getDescription().indexOf("+") == -1
 				&& description.getDescription().indexOf("..") == -1) {

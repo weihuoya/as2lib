@@ -12,16 +12,16 @@ class org.as2lib.aop.advice.AbstractAfterReturningAdvice extends AbstractAdvice 
 	}
 	
 	public function getProxy(joinPoint:JoinPoint):Function {
-		var result:Function = function() {
-			var advice:AfterReturningAdvice = AfterReturningAdvice(arguments.callee.advice);
-			var tempJoinPoint:JoinPoint = JoinPoint(arguments.callee.joinPoint);
-			var joinPoint:JoinPoint = tempJoinPoint.getClass().newInstance([tempJoinPoint.getInfo(), this]);
-			var returnValue = joinPoint.proceed(arguments);
-			advice.execute(joinPoint, returnValue);
-			return returnValue;
-		};
-		result.advice = this;
-		result.joinPoint = joinPoint;
+		var owner:AbstractAfterReturningAdvice = this;
+		return (function() {
+			joinPoint = joinPoint.getClass().newInstance([joinPoint.getInfo(), this]);
+			return owner.executeJoinPoint(joinPoint, arguments);
+		});
+	}
+	
+	private function executeJoinPoint(joinPoint:JoinPoint, args:Array) {
+		var result = joinPoint.proceed(args);
+		this["execute"](joinPoint, result);
 		return result;
 	}
 }

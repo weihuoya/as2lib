@@ -12,22 +12,22 @@ class org.as2lib.aop.advice.AbstractAfterAdvice extends AbstractAdvice {
 	}
 	
 	public function getProxy(joinPoint:JoinPoint):Function {
-		var result:Function = function() {
-			var advice:AfterAdvice = AfterAdvice(arguments.callee.advice);
-			var tempJoinPoint:JoinPoint = JoinPoint(arguments.callee.joinPoint);
-			var joinPoint:JoinPoint = tempJoinPoint.getClass().newInstance([tempJoinPoint.getInfo(), this]);
-			var returnValue;
-			try {
-				returnValue = joinPoint.proceed(arguments);
-			} catch (throwable:org.as2lib.env.except.Throwable) {
-				advice.execute(joinPoint);
-				throw throwable;
-			}
-			advice.execute(joinPoint, returnValue);
-			return returnValue;
-		};
-		result.advice = this;
-		result.joinPoint = joinPoint;
+		var owner:AbstractAfterAdvice = this;
+		return (function() {
+			joinPoint = joinPoint.getClass().newInstance([joinPoint.getInfo(), this]);
+			return owner.executeJoinPoint(joinPoint, arguments);
+		});
+	}
+	
+	private function executeJoinPoint(joinPoint:JoinPoint, args:Array) {
+		var result;
+		try {
+			result = joinPoint.proceed(args);
+		} catch (throwable:org.as2lib.env.except.Throwable) {
+			this["execute"](joinPoint);
+			throw throwable;
+		}
+		this["execute"](joinPoint);
 		return result;
 	}
 }
