@@ -16,7 +16,6 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.TypeInfo;
-import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.reflect.TypeMemberInfo;
@@ -38,8 +37,8 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	/** The getter operation of the property. */
 	private var getter:MethodInfo;
 	
-	/** The class that declares the property. */
-	private var declaringClass:ClassInfo;
+	/** The type that declares the property. */
+	private var declaringType:TypeInfo;
 	
 	/** A flag representing whether the operation is static. */
 	private var staticFlag:Boolean;
@@ -50,16 +49,16 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * @param name the name of the property
 	 * @param setter the setter operation of the property
 	 * @param getter the getter operation of the property
-	 * @param declaringClass the class declaring the property
+	 * @param declaringType the type declaring the property
 	 * @param static a flag saying whether the property is static
 	 */
 	public function PropertyInfo(name:String,
 								 setter:Function,
 								 getter:Function,
-								 declaringClass:ClassInfo,
+								 declaringType:TypeInfo,
 								 staticFlag:Boolean) {
 		this.name = name;
-		this.declaringClass = declaringClass;
+		this.declaringType = declaringType;
 		this.staticFlag = staticFlag;
 		setSetter(setter);
 		setGetter(getter);
@@ -116,7 +115,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * @see org.as2lib.env.reflect.TypeMemberInfo#getDeclaringType()
 	 */
 	public function getDeclaringType(Void):TypeInfo {
-		return declaringClass;
+		return declaringType;
 	}
 	
 	/**
