@@ -44,12 +44,12 @@ class org.as2lib.Config {
 	
 	/**
 	 * Returns the OutAccess instance currently used.
-	 * If out wasn't set before or was set to null it will initialize a new Out instance and
-	 * adds a TraceOutputHandler.
+	 * If it wasn't set before or was set to null a new Out instance will be
+	 * initialized and a TraceOutputHandler will be added.
 	 *
-	 * @see TraceOutputHandler
-	 * @see Out
 	 * @return the OutAccess instance used
+	 * @see org.as2lib.env.out.handler.TraceOutputHandler
+	 * @see org.as2lib.env.out.Out
 	 */
 	public static function getOut(Void):OutAccess {
 		if(!out) {
@@ -60,19 +60,19 @@ class org.as2lib.Config {
 	}
 	
 	/**
-	 * Sets a EventBroadcasterFactory for this path.
-	 * If out wasn't set before or was set to null it will initialize a new Out instance.
+	 * Sets an EventBroadcasterFactory for this path.
 	 * 
-	 * @param to EventBroadcastorFactory that should be used.
+	 * @param to EventBroadcastorFactory that shall be used.
 	 */
 	public static function setEventBroadcasterFactory(to:EventBroadcasterFactory):Void {
 		eventBroadcasterFactory = to;
 	}
 	
 	/**
-	 * Returns the config value for the EventBroadcasterFactory.
+	 * Returns the EventBroadcasterFactory set by #setEventBroadcasterFactory()
+	 * or a default EventBroadcasterFactory if a custom one hasn't been set yet.
 	 * 
-	 * @return The config value for the EventBroadcasterFactory
+	 * @return the currently used EventBroadcasterFactory
 	 */
 	public static function getEventBroadcasterFactory(Void):EventBroadcasterFactory {
 		if(!eventBroadcasterFactory) {
