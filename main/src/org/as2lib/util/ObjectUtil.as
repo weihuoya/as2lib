@@ -233,9 +233,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * @return true if the object is empty else false
 	 */
 	public static function isEmpty(object):Boolean {
-		if (object == undefined) return true;
-		if (object == null) return true;
-		return false;
+		return (object == undefined);
 	}
 	
 	/**
