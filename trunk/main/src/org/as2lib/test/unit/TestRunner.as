@@ -51,8 +51,10 @@ import org.as2lib.util.StopWatch;
  * Example:
  * <code>
  * import org.as2lib.test.unit.TestRunner;
+ * import org.as2lib.test.unit.LoggerTestListener;
  * 
  * var testRunner:TestRunner = new TestRunner();
+ * testRunner.addListener(new LoggerTestListener());
  * testRunner.run(new MyTestCase()); // alternativly you have a faster .runTestCase
  * </code>
  * 
@@ -110,9 +112,6 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	
 	/** Boolean flag if the Testrunner started work. */
 	private var started:Boolean = false;
-	
-	/** Flag if the Result should be printed by finish or not. */
-	private var doNotPrintResult:Boolean;
 	
 	/** Holder for the methodscope of the current Method. */
 	private var testCaseInstance:TestCase;
@@ -173,11 +172,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	public function run():TestRunner {
 		var o = new Overload(this);
 		o.addHandler([TestCase], runTestCase);
-		o.addHandler([TestCase, null], runTestCase);
-		o.addHandler([TestCase, Boolean], runTestCase);
 		o.addHandler([TestSuite], runTestSuite);
-		o.addHandler([TestSuite, undefined], runTestCase);
-		o.addHandler([TestSuite, Boolean], runTestSuite);
 		return o.forward(arguments);
 	}
 	
@@ -208,11 +203,9 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	 * Runs a TestCase.
 	 * 
 	 * @param test Test that should get run.
-	 * @param doNotPrintResult	true if the result should not be printed immediately.
 	 * @return The current TestRunner (contains all informations about the process).
 	 */
-	public function runTestCase(test:TestCase, doNotPrintResult:Boolean):TestRunner {
-		this.doNotPrintResult = doNotPrintResult;
+	public function runTestCase(test:TestCase):TestRunner {
 		prepareRun();
 		setTestResult(new TestCaseResult(test, this));
 		
@@ -226,11 +219,9 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	 * Runs a TestSuite.
 	 * 
 	 * @param test TestSuite that should get run.
-	 * @param doNotPrintResult	true if the result should not be printed immediately.
 	 * @return The current TestRunner (contains all informations about the process).
 	 */
-	public function runTestSuite(test:TestSuite, doNotPrintResult:Boolean):TestRunner {
-		this.doNotPrintResult = doNotPrintResult;
+	public function runTestSuite(test:TestSuite):TestRunner {
 		prepareRun();
 		setTestResult(new TestSuiteResult(test, this));
 		
@@ -390,7 +381,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 					pauseAllowed = true;
 					methodInfo.executeTo(testCaseInstance);
 				} catch (e) {
-					methodInfo.addInfo(new ExecutionError(methodInfo.getMethodInfo().toString()+" threw a unexpected exception.\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
+					methodInfo.addInfo(new ExecutionError(methodInfo.getMethodInfo().toString()+" threw a unexpected exception .\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
 				}
 				pauseAllowed = false;
 				
@@ -432,9 +423,6 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	 * Internal Method to finish the Test.
 	 */
 	private function finish(Void):Void {
-		if(!doNotPrintResult) {
-			testResult.print();
-		}
 		finished = true;
 		started = false;
 		paused = false;

@@ -78,9 +78,4 @@ interface org.as2lib.test.unit.TestResult extends BasicInterface {
 	 * Testcases get handled different (because they are a Leaf).
 	 */
 	public function getTestCaseResults(Void):TypedArray;
-	
-	/**
-	 * Method to print the TestResult.
-	 */
-	public function print(Void):Void;
 }

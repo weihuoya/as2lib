@@ -22,7 +22,6 @@ import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestCaseMethodInfo;
-import org.as2lib.test.unit.TestConfig;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.util.StringUtil;
@@ -247,13 +246,5 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		result += (errors>0) ? errors + ((errors > 1) ? " errors" : " error") + " occured" + methodResult : "no error occured";
 		
 		return result;
-	}
-	
-	/**
-	 * Prints the TestCaseResult to a standard Outputdevice.
-	 * It is possible to change the output device by @see TestConfig#setOut.
-	 */
-	public function print(Void):Void {
-		TestConfig.getOut().info(toString());
 	}
 }

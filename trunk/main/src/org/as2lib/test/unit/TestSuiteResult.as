@@ -26,10 +26,6 @@ import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.TestCaseResult;
 import org.as2lib.test.unit.TestSuite;
-import org.as2lib.test.unit.TestConfig;
-import org.as2lib.env.out.OutAccess;
-import org.as2lib.env.out.Out;
-import org.as2lib.env.out.handler.TraceHandler;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.except.IllegalArgumentException;
 
@@ -212,15 +208,6 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 		}
 		result += "\n"+StringUtil.multiply("*", titleLength);
 		return result;
-	}
-	
-	
-	/**
-	 * Prints the TestSuiteResult to a standard Outputdevice.
-	 * It is possible to change the output device by @see TestConfig#setOut.
-	 */
-	public function print(Void):Void {
-		TestConfig.getOut().info(this.toString());
 	}
 	
 }
