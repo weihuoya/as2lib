@@ -18,8 +18,6 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.ThrowableStringifier;
 import org.as2lib.env.except.StackTraceElementStringifier;
 import org.as2lib.env.except.StackTraceStringifier;
-import org.as2lib.env.except.StackTraceElementFactory;
-import org.as2lib.env.except.SimpleStackTraceElementFactory;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.util.Stringifier;
 
@@ -105,27 +103,6 @@ class org.as2lib.env.except.ExceptConfig extends BasicClass {
 	public static function getStackTraceStringifier(Void):Stringifier {
 		if (!stackTraceStringifier) stackTraceStringifier = new StackTraceStringifier();
 		return stackTraceStringifier;
-	}
-	
-	/**
-	 * Sets a new StackTraceElementFactory used to obtain StackTraceElement
-	 * instances.
-	 *
-	 * @param factory the new StackTraceElementFactory
-	 */
-	public static function setStackTraceElementFactory(factory:StackTraceElementFactory):Void {
-		stackTraceElementFactory = factory;
-	}
-	
-	/**
-	 * Returns the set StackTraceElementFactory or the default
-	 * SimpleStackTraceElementFactory.
-	 *
-	 * @return the StackTraceElementFactory used to obtain StackTraceElement instances
-	 */
-	public static function getStackTraceElementFactory(Void):StackTraceElementFactory {
-		if (!stackTraceElementFactory) stackTraceElementFactory = new SimpleStackTraceElementFactory();
-		return stackTraceElementFactory;
 	}
 	
 }
