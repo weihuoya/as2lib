@@ -85,10 +85,12 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	private function fetchTestCaseMethodInfos(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestCaseMethodInfo);
 		var methods:Array = ClassInfo.forInstance(testCase).getMethods();
-		for (var i:Number = methods.length-1; i >= 0; i--) {
-			var method:MethodInfo = methods[i];
-			if (StringUtil.startsWith(method.getName(), 'test')) {
-				result.push(new TestCaseMethodInfo(method, getTestRunner()));
+		if(methods) {
+			for (var i:Number = methods.length-1; i >= 0; i--) {
+				var method:MethodInfo = methods[i];
+				if (StringUtil.startsWith(method.getName(), 'test')) {
+					result.push(new TestCaseMethodInfo(method, getTestRunner()));
+				}
 			}
 		}
 		return result;
@@ -230,8 +232,8 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		var methodResult:String="";
 		var ms:Number=0;
 		var errors:Number=0;
-		
-		var iter:Iterator=new ArrayIterator(getMethodInfos());
+		var methodInfos:Array = getMethodInfos();
+		var iter:Iterator=new ArrayIterator(methodInfos);
 		while(iter.hasNext()) {
 			var method:TestCaseMethodInfo = TestCaseMethodInfo(iter.next());
 			ms += method.getStopWatch().getTimeInMilliSeconds();
@@ -241,7 +243,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 			}
 		}
 		
-		var result = getName()+" run in ["+ms+"ms]. ";
+		var result = getName()+" run "+methodInfos.length+" methods in ["+ms+"ms]. ";
 		
 		result += (errors>0) ? errors + ((errors > 1) ? " errors" : " error") + " occured" + methodResult : "no error occured";
 		
