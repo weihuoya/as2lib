@@ -1,9 +1,11 @@
 ﻿import org.as2lib.core.BasicClass;
+import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.data.io.conn.Connection;
 import org.as2lib.data.io.conn.ConnectionProxy;
 import org.as2lib.data.io.conn.local.LocalConnProxy;
 import org.as2lib.data.io.conn.local.LocalConfig;
-import org.as2lib.data.io.conn.local.ReservedHostException;
+import org.as2lib.data.io.conn.local.MissingServerException;
+import org.as2lib.data.io.conn.local.MissingServiceException;
 
 class org.as2lib.data.io.conn.local.LocalConn extends BasicClass implements Connection {
 	private var host:String;
@@ -14,17 +16,20 @@ class org.as2lib.data.io.conn.local.LocalConn extends BasicClass implements Conn
 		opened = false;
 	}
 	
-	public function getProxy(path:String):ConnectionProxy {
+	public function getProxy(service:String):ConnectionProxy {
 		if (opened) {
-			return (new LocalConnProxy(host + "/" + path));
+			var lc:LocalConnection = new LocalConnection();
+			if (lc.connect(host + "/" + service)) {
+				throw new MissingServiceException("The service [" + service + "] on host [" + host + "] does not exist.", this, arguments);
+			}
+			return (new LocalConnProxy(host + "/" + service));
 		}
+		throw new IllegalStateException("You must call the #open() operation before calling #getProxy().", this, arguments);
 	}
 	
 	public function open(Void):Void {
 		if (!LocalConfig.getServerRegistry().contains(host)) {
-			throw new ReservedHostException("The server with host [" + host + "] is not available.",
-											this,
-											arguments);
+			throw new MissingServerException("The server with host [" + host + "] is not available.", this, arguments);
 		}
 		opened = true;
 	}
