@@ -20,12 +20,16 @@ import org.as2lib.test.mock.ArgumentsMatcher;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.test.mock.support.DefaultArgumentsMatcher extends BasicClass implements ArgumentsMatcher {
+class org.as2lib.test.mock.support.TypeArgumentsMatcher extends BasicClass implements ArgumentsMatcher {
+	
+	/** Stores the expected types. */
+	private var expectedTypes:Array;
 	
 	/**
 	 * Constructs a new instance.
 	 */
-	public function DefaultArgumentsMatcher(Void) {
+	public function TypeArgumentsMatcher(expectedTypes:Array) {
+		this.expectedTypes = expectedTypes;
 	}
 	
 	/**
@@ -34,14 +38,8 @@ class org.as2lib.test.mock.support.DefaultArgumentsMatcher extends BasicClass im
 	public function matchArguments(expectedArguments:Array, actualArguments:Array):Boolean {
 		if (expectedArguments.length != actualArguments.length) return false;
 		for (var i:Number = 0; i < expectedArguments.length; i++) {
-			if (expectedArguments[i] !== actualArguments[i]) {
-				if (expectedArguments[i] instanceof Array) {
-					if (!matchArguments(expectedArguments[i], actualArguments[i])) {
-						return false;
-					}
-				} else {
-					return false;
-				}
+			if (!(actualArguments[i] instanceof expectedTypes[i])) {
+				return false;
 			}
 		}
 		return true;

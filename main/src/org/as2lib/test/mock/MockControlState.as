@@ -19,6 +19,7 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.MethodResponse;
+import org.as2lib.test.mock.ArgumentsMatcher;
 
 /**
  * @author Simon Wacker
@@ -44,6 +45,14 @@ interface org.as2lib.test.mock.MockControlState extends BasicInterface {
 	 * @param range stores the minimum and maximum quantity of method calls
 	 */ 
 	public function setResponse(response:MethodResponse, range:MethodCallRange):Void;
+	
+	/**
+	 * Sets the arguments matcher that will be used for the last method specified
+	 * by a method call.
+	 *
+	 * @param argumentsMatcher the arguments matcher to use for the specific method
+	 */
+	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void;
 
 	/**
 	 * Verifies that all expectations have been met.

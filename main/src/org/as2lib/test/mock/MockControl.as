@@ -16,6 +16,7 @@
 
 import org.as2lib.core.BasicInterface;
 import org.as2lib.test.unit.TestCase;
+import org.as2lib.test.mock.ArgumentsMatcher;
 
 /**
  * @author Simon Wacker
@@ -42,6 +43,14 @@ interface org.as2lib.test.mock.MockControl extends BasicInterface {
 	 * removed and that the mock object will again be in record state.
 	 */
 	public function reset(Void):Void;
+	
+	/**
+	 * Sets the arguments matcher that will be used for the last method specified
+	 * by a method call.
+	 *
+	 * @param argumentsMatcher the arguments matcher to use for the specific method
+	 */
+	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void;
 	
 	/**
 	 * Records that the mock object will by default allow the last method specified

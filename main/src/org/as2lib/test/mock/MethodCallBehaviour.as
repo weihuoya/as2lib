@@ -19,6 +19,7 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.MethodResponse;
+import org.as2lib.test.mock.ArgumentsMatcher;
 
 /**
  * @author Simon Wacker
@@ -36,5 +37,7 @@ interface org.as2lib.test.mock.MethodCallBehaviour extends BasicInterface {
 	public function response(Void);
 	
 	public function verify(testCase:TestCase):Void;
+	
+	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void;
 	
 }

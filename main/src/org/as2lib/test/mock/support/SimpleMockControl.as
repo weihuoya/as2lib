@@ -31,7 +31,6 @@ import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodResponse;
 import org.as2lib.test.mock.support.DefaultMockBehaviour;
-import org.as2lib.test.mock.support.DefaultArgumentsMatcher;
 import org.as2lib.test.mock.MockControlState;
 import org.as2lib.test.mock.support.RecordState;
 import org.as2lib.test.mock.support.ReplayState;
@@ -223,6 +222,13 @@ class org.as2lib.test.mock.support.SimpleMockControl extends BasicClass implemen
 	public function reset(Void):Void {
 		behaviour.removeAllBehaviour();
 		state = getRecordStateFactory().getMockControlState(behaviour);
+	}
+	
+	/**
+	 * @see MockControl#setArgumentsMatcher()
+	 */
+	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void {
+		state.setArgumentsMatcher(argumentsMatcher);
 	}
 	
 	/**
