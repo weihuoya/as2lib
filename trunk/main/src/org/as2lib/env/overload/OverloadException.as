@@ -17,19 +17,21 @@
 import org.as2lib.env.except.FatalException;
 
 /**
- * OverloadException is the base Throwable of the org.as2lib.env.overload package.
- * All Throwables contained in this package extend it.
+ * OverloadException is the base exception of the org.as2lib.env.overload
+ * package.
+ * 
+ * <p>All exceptions of this package extend it.
  *
  * @author Simon Wacker
  */
 class org.as2lib.env.overload.OverloadException extends FatalException {
 	
 	/**
-	 * Constructs a new OverloadException
+	 * Constructs a new OverloadException instance.
 	 * 
-	 * @param message			Message to the Exception.
-	 * @param thrower			Object where the Exception occured.
-	 * @param args				Arguments of the method where the exception occured.
+	 * @param message the message of the exception
+	 * @param thrower the object whose method threw the exception
+	 * @param args the arguments of the method that threw the exception
 	 */
 	public function OverloadException(message:String, thrower, args:Array) {
 		super (message, thrower, args);

@@ -22,10 +22,83 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.overload.SameTypeSignatureException;
 
 /**
- * You use this class to overload a method. Create a new instance of it, add the
- * possible OverloadHandlers and call the #forward() operation. If an adequate
- * OverloadHandler could be found the corresponding operation will be executed
- * and the return value will be returned.
+ * Overload is used to overload a method.
+ *
+ * <p>With overloading you have typically two or more methods with the
+ * same name. Which method gets actually invoked depends on its type
+ * signature, that means its return and arguments' types.
+ * Here is an example of what overloading may look if it would be supported
+ * by Flash (note that this code does actually not work).
+ * 
+ * <code>// MyClass.as
+ * class MyClass {
+ *   public function myMethod(number:Number, string:String):Void {
+ *     trace("myMethod(Number, String):Void");
+ *   }
+ *   public function myMethod(number:Number):Void {
+ *     trace("myMethod(Number):Void");
+ *   }
+ *   public function myMethod(string:String):Number {
+ *     trace("myMethod(String):Number");
+ *     return 1;
+ *   }
+ * }
+ * // test.fla
+ * var myInstance:MyClass = new MyClass();
+ * myInstance.myMethod(1);
+ * myInstance.myMethod(2, "myString");
+ * var number:Number = myInstance.myMethod("myString");
+ * trace(number);
+ * // the output
+ * // myMethod(Number):Void
+ * // myMethod(Number, String):Void
+ * // myMethod(String):Number
+ * // 1</code>
+ *
+ * <p>As you can see, depending on what type the passed-in arguments
+ * have a different method gets invoked. This is sadly not possible in
+ * Flash, that is what this class is for. Using the overload mechanism
+ * this class offers the overloading would look as follows:
+ *
+ * <code>// MyClass.as
+ * class MyClass {
+ *   public functino myMethod() {
+ *     var o:Overload = new Overload(this);
+ *     o.addHandler([Number, String], myMethodByNumberAndString);
+ *     o.addHandler([Number], myMethodByNumber);
+ *     o.addHandler([String], myMethodByString);
+ *     return o.forward(arguments);
+ *   }
+ *   public function myMethodByNumberAndString(number:Number, string:String):Void {
+ *     trace("myMethod(Number, String):Void");
+ *   }
+ *   public function myMethodByNumber(number:Number):Void {
+ *     trace("myMethod(Number):Void");
+ *   }
+ *   public function myMethodByString(string:String):Number {
+ *     trace("myMethod(String):Number");
+ *     return 1;
+ *   }
+ * }</code>
+ *
+ * <p>Using the above testing code the output looks the same.
+ *
+ * <p>While this is a good overloading mechanism / overloading alternative
+ * it still has some disadvantages.
+ * <ul>
+ *   <li>If not all methods the overloaded method forwards to returns a 
+ * value of the same type, return type type checking is lost.</li>
+ *   <li>The type checking of the arguments is also lost at compile time.
+ * At run-time the Overload class throws an UnknownOverloadHandlerException
+ * if the real arguments match no added overload handler.</li>
+ *   <li>The overloading slows the method execution a little bit down.</li>
+ * </ul>
+ *
+ * <p>But if you declare the methods to overload to as public, as in the
+ * example, you can still invoke them directly. Doing so, all the above
+ * problems do not hold true anymore.
+ * The overloaded methods then acts more as a convenient method that is
+ * easy to use if appropriate.
  *
  * @author Simon Wacker
  */
@@ -43,7 +116,10 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	/**
 	 * Constructs a new Overload instance.
 	 * 
-	 * @param target the target on which the operation will be invoked
+	 * <p>The target is the normally the object on which the overloading
+	 * takes place.
+	 *
+	 * @param target the target on which the method will be invoked
 	 */
 	public function Overload(target) {
 		this.handlers = new Array();
@@ -53,28 +129,31 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	/**
 	 * Sets the default handler.
 	 *
-	 * <p>This handler will be used if no other handler applies to a set of 
-	 * arguments. This handler will be passed all the arguments that were 
-	 * applied to the method.
+	 * <p>This handler will be used if no other handler applies to a list of 
+	 * arguments. All real arguments used for the overloading get passed
+	 * as parameters to the method of this default handler.
 	 *
-	 * <p>This method gets executed on the same scope as the other handlers!
+	 * <p>The method gets executed on the same scope as the other handlers.
+	 * That is the target passed-in on construction.
 	 * 
-	 * <code>
-	 *   var overload:Overload = new Overload(this);
-	 *   overload.addHandler([String], methodWithStringArgument);
-	 *   overload.addHandler([Number], methodWithNumberArgument);
-	 *   overload.setDefaultHandler(function() {
-	 *     trace(arguments.length + " arguments were used.");
-	 *   });
-	 *   return overload.forward(arguments);
-	 * </code>
+	 * <code>var overload:Overload = new Overload(this);
+	 * overload.addHandler([String], methodWithStringArgument);
+	 * overload.addHandler([Number], methodWithNumberArgument);
+	 * overload.setDefaultHandler(function() {
+	 *   trace(arguments.length + " arguments were used.");
+	 * });
+	 * return overload.forward(arguments);</code>
 	 *
-	 * @param handler the handler to use if no other handler applies
+	 * <p>If the method is null, undefined or not of type function the default
+	 * handler gets removed.
+	 *
+	 * @param method the method of the handler to invoke if no added handler
+	 * matches the real arguments
 	 * @see #removeDefaultHandler(Void):Void
 	 */
-	public function setDefaultHandler(handler:Function):Void {
-		if (typeof handler == "function") {
-			defaultHandler = new SimpleOverloadHandler(null, handler);
+	public function setDefaultHandler(method:Function):Void {
+		if (typeof(method) == "function") {
+			defaultHandler = new SimpleOverloadHandler(null, method);
 		} else {
 			removeDefaultHandler();
 		}
@@ -83,9 +162,9 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	/**
 	 * Removes the default handler.
 	 *
-	 * <p>This handler is used if no other handler applies to a set of 
+	 * <p>This handler is used if no other handler applies to a list of
 	 * arguments.
-	 * 
+	 *
 	 * @see #setDefaultHandler(Function):Void
 	 */
 	public function removeDefaultHandler(Void):Void {
@@ -93,8 +172,8 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	}
 	
 	/**
-	 * @overload #addHandlerByHandler(OverloadHandler)
-	 * @overload #addHandlerByValue(Array, Function)
+	 * @overload #addHandlerByHandler(OverloadHandler):Void
+	 * @overload #addHandlerByValue(Array, Function):OverloadHandler
 	 */
 	public function addHandler() {
 		var l:Number = arguments.length;
@@ -116,32 +195,54 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	}
 	
 	/**
-	 * Adds a new OverloadHandler to the list of handlers.
+	 * Adds a new overload handler.
 	 *
-	 * @param handler the new OverloadHandler to be added
+	 * <p>Overload handlers get used to determine the method to forward
+	 * to. This is done using the OverloadHandler#matches and
+	 * OverloadHandler#isMoreExplicit methods. If both conditions hold true
+	 * the method invocation gets forwarded to the method of the handler, that
+	 * gets returned by the OverloadHandler#getMethod method.
+	 *
+	 * @param handler the new overload handler to add
 	 */
 	public function addHandlerByHandler(handler:OverloadHandler):Void {
 		handlers.push(handler);
 	}
 	
 	/**
-	 * Adds a new SimpleOverloadHandler to the list of handlers based on the passed
-	 * arguments.
+	 * Adds a new SimpleOverloadHandler based on the passed-in arguments.
 	 *
-	 * @param args the arguments types of the OverloadHandler to be matched
-	 * @param method the method corresponding to the passed arguments types
-	 * @return the newly created OverloadHandler
+	 * <p>Overload handlers get used to determine the method to forward
+	 * to. This is done using the OverloadHandler#matches and
+	 * OverloadHandler#isMoreExplicit methods. If both conditions hold true
+	 * the method invocation gets forwarded to the method of the handler, that
+	 * gets returned by the OverloadHandler#getMethod method.
+	 *
+	 * <p>The arguments' types are the types of arguments the method expects
+	 * from the real arguments to have. The SimpleOverloadHandler does its
+	 * matches and explicity checks upon these arguments' types.
+	 *
+	 * <p>The method is the method to invoke if the added handler matches
+	 * the real arguments and if it is the most explicit handler among all
+	 * matching ones.
+	 *
+	 * @param argumentsTypes the arguments' types of the overload handler
+	 * @param method the method corresponding to the passed-in arguments' types
+	 * @return the newly created overload handler
+	 * @see SimpleOverloadHandler#Constructor
 	 */
-	public function addHandlerByValue(args:Array, method:Function):OverloadHandler {
-		var handler:OverloadHandler = new SimpleOverloadHandler(args, method);
+	public function addHandlerByValue(argumentsTypes:Array, method:Function):OverloadHandler {
+		var handler:OverloadHandler = new SimpleOverloadHandler(argumentsTypes, method);
 		handlers.push(handler);
 		return handler;
 	}
 	
 	/**
-	 * Removes an OverloadHandler from the list of handlers.
+	 * Removes the passed-in overload handler.
 	 *
-	 * @param handler the OverloadHandler to be removed
+	 * <p>All occurrences of the passed-in handler are removed.
+	 *
+	 * @param handler the overload handler to remove
 	 */
 	public function removeHandler(handler:OverloadHandler):Void {
 		var i:Number = handlers.length;
@@ -153,22 +254,54 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	}
 	
 	/**
-	 * Forwards the arguments to the corresponding OverloadHandler.
+	 * Forwards the arguments to the corresponding overload handler.
 	 *
-	 * @return the return value of the called operation
-	 * @throws org.as2lib.env.overload.UnknownOverloadHandlerException if no adequate OverloadHandler could be found
-	 * @throws org.as2lib.env.overload.SameTypeSignatureException if there exist at least two OverloadHandlers with the same type siganture
+	 * <p>This is not done by using the OverloadHandler#execute method but
+	 * manually by using apply on the method returned by the OverloadHandler#getMethod
+	 * method.
+	 * Invoking the method this way increases the amount of possible
+	 * recurions with overlaoded methods.
+	 *
+	 * <p>If the arguments array is null or undefined an empty array gets
+	 * used instead.
+	 *
+	 * <p>If no overload handler matches the default overload handler
+	 * gets used if it has been set.
+	 *
+	 * <p>Overload handlers are supposed to have the same type signature
+	 * if the OverloadHandler#isMoreExplicit method returns null.
+	 *
+	 * @return the return value of the invoked method
+	 * @throws org.as2lib.env.overload.UnknownOverloadHandlerException if
+	 * no adequate overload handler could be found
+	 * @throws org.as2lib.env.overload.SameTypeSignatureException if there
+	 * exist at least two overload handlers with the same type siganture,
+	 * that means their arguments' types are the same
 	 */
 	public function forward(args:Array) {
 		return doGetMatchingHandler(arguments.caller, args).getMethod().apply(target, args);
 	}
 	
 	/**
-	 * Returns the most explicit OverloadHandler out of the Array of matching
-	 * OverloadHandlers.
+	 * Returns the most explicit overload handler from the array of matching
+	 * handlers.
 	 *
-	 * @param args the arguments that shall match to a specific OverloadHandler
-	 * @return the most explicit OverloadHandler
+	 * <p>If the arguments array is null or undefined an empty array gets
+	 * used instead.
+	 *
+	 * <p>If no handler matches the default handler gets returned if it
+	 * has been set.
+	 *
+	 * <p>Overload handlers are supposed to have the same type signature
+	 * if the OverloadHandler#isMoreExplicit method returns null.
+	 *
+	 * @param args the arguments that shall match to a specific overload handler
+	 * @return the most explicit overload handler
+	 * @throws org.as2lib.env.overload.UnknownOverloadHandlerException if
+	 * no adequate overload handler could be found
+	 * @throws org.as2lib.env.overload.SameTypeSignatureException if there
+	 * exist at least two overload handlers with the same type siganture,
+	 * that means their arguments' types are the same
 	 */
 	public function getMatchingHandler(args:Array):OverloadHandler {
 		return doGetMatchingHandler(arguments.caller, args);
@@ -178,18 +311,30 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * Returns the most explicit OverloadHandler out of the Array of matching
 	 * OverloadHandlers.
 	 *
+	 * <p>If the arguments array is null or undefined an empty array gets
+	 * used instead.
+	 *
+	 * <p>If no handler matches the default handler gets returned if it
+	 * has been set.
+	 *
+	 * <p>Overload handlers are supposed to have the same type signature
+	 * if the OverloadHandler#isMoreExplicit method returns null.
+	 *
 	 * @param overloadedMethod the overloaded method on the target
 	 * @param overloadArguments the arguments for which the overload shall be performed
-	 * @return the most explicit OverloadHandler
-	 * @throws SameTypeSignatureException if there are two overload handlers with the same type signature
-	 * @throws UnknownOverloadHandlerException if there is no matching handler
+	 * @return the most explicit overload handler
+	 * @throws org.as2lib.env.overload.UnknownOverloadHandlerException if
+	 * no adequate overload handler could be found
+	 * @throws org.as2lib.env.overload.SameTypeSignatureException if there
+	 * exist at least two overload handlers with the same type siganture,
+	 * that means their arguments' types are the same
 	 */
 	private function doGetMatchingHandler(overloadedMethod:Function, overloadArguments:Array):OverloadHandler {
 		if (!overloadArguments) overloadArguments = [];
 		var matchingHandlers:Array = getMatchingHandlers(overloadArguments);
 		var i:Number = matchingHandlers.length;
 		if (i == 0) {
-			if(defaultHandler) {
+			if (defaultHandler) {
 				return defaultHandler;
 			}
 			throw new UnknownOverloadHandlerException("No appropriate OverloadHandler found.",
@@ -218,10 +363,12 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	}
 	
 	/**
-	 * Returns all OverloadHandlers in an Array that match the given arguments.
+	 * Returns OverloadHandler instances that match the passed-in real arguments.
+	 *
+	 * <p>The match is performed using the OverlaodHandler#matches method.
 	 * 
-	 * @param args the arguments that shall match to a specific OverloadHandler
-	 * @return an Array containing the matching OverloadHandlers
+	 * @param args the arguments that shall match to overload handlers
+	 * @return an array containing the matching OverloadHandler instances
 	 */
 	private function getMatchingHandlers(args:Array):Array {
 		var result:Array = new Array();
