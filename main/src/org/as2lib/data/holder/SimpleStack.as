@@ -72,7 +72,8 @@ class org.as2lib.data.holder.SimpleStack extends BasicClass implements Stack {
 	 * @see org.as2lib.data.holder.Stack#iterator()
 	 */
 	public function iterator(Void):Iterator {
-		var reversedValues = values.slice().reverse();
+		var reversedValues:Array = values.slice();
+		reversedValues.reverse();
 		return (new ProtectedArrayIterator(reversedValues));
 	}
 	

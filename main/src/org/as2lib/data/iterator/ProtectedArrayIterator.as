@@ -1,0 +1,70 @@
+﻿/*
+ * Copyright the original author or authors.
+ * 
+ * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.mozilla.org/MPL/MPL-1.1.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import org.as2lib.data.iterator.Iterator;
+import org.as2lib.data.iterator.NoSuchElementException;
+import org.as2lib.env.except.IllegalStateException;
+import org.as2lib.core.BasicClass;
+import org.as2lib.env.except.UnsupportedOperationException;
+
+/**
+ * The ProtectedArrayIterator is used to iterate over an Array without being able to remove elements.
+ *
+ * @author Michael Herrmann
+ */
+class org.as2lib.data.iterator.ProtectedArrayIterator extends BasicClass implements Iterator {
+	/** The target data holder. */
+	private var target:Array;
+	
+	/** The current index of the iteration. */
+	private var index:Number;
+	
+	/**
+	 * Constructs a new ProtectedArrayIterator.
+	 *
+	 * @param newTarget the Array to iterate over
+	 */
+	public function ProtectedArrayIterator(newTarget:Array) {
+		target = newTarget;
+		index = -1;
+	}
+	
+	/**
+	 * @see org.as2lib.data.iterator.Iterator#hasNext()
+	 */
+	public function hasNext(Void):Boolean {
+		return (index < target.length - 1);
+	}
+	
+	/**
+	 * @see org.as2lib.data.iterator.Iterator#next()
+	 */
+	public function next(Void) {
+		if (!hasNext()) {
+			throw new NoSuchElementException("There is no more element.",
+											 this,
+											 arguments);
+		}
+		return target[++index];
+	}
+	
+	/**
+	 * @see org.as2lib.data.iterator.Iterator#remove()
+	 */
+	public function remove(Void):Void {
+		throw new UnsupportedOperationException("This Iterator does not support the remove() method.", this, arguments);
+	}
+}
