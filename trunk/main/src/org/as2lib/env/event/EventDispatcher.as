@@ -27,6 +27,7 @@ import org.as2lib.env.event.EventInfo;
  * @see org.as2lib.env.event.DelegatingEventBroadcaster#setEventDispatcher()
  */
 interface org.as2lib.env.event.EventDispatcher extends BasicInterface {
+	
 	/**
 	 * Dispatches the event to all EventListeners with the help of the EventInfo
 	 * instance.
@@ -45,4 +46,5 @@ interface org.as2lib.env.event.EventDispatcher extends BasicInterface {
 	 * @param listeners the EventListeners to dispatch to
 	 */
 	public function dispatchConsumable(event:EventInfo, listeners:Array):Void;
+	
 }

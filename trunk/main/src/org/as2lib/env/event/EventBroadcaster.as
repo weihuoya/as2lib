@@ -24,6 +24,7 @@ import org.as2lib.env.event.EventInfo;
  * @author Martin Heidegger
  */
 interface org.as2lib.env.event.EventBroadcaster extends BasicInterface {
+	
 	/**
 	 * Adds a listener to the pool of listeners.
 	 * 
@@ -42,7 +43,6 @@ interface org.as2lib.env.event.EventBroadcaster extends BasicInterface {
 	 * Removes a listener from the pool of listeners.
 	 * 
 	 * @param listener the EventListener to be removed
-	 * @throws org.as2lib.env.except.IllegalArgumentException if the pool does not contain the passed listener
 	 */
 	public function removeListener(listener:EventListener):Void;
 	
@@ -65,4 +65,5 @@ interface org.as2lib.env.event.EventBroadcaster extends BasicInterface {
 	 * @param event the EventInfo to be passed to the operation of the EventListeners
 	 */
 	public function dispatch(event:EventInfo):Void;
+	
 }
