@@ -22,54 +22,56 @@ import org.as2lib.util.Executable;
 import org.as2lib.util.AccessPermission;
 
 /**
- * Call is used to enable another object to make a function call in another
- * scope without having to know where. This enables you to pass a Call to another
- * object and let the object execute the call.
+ * Call enables another object to make call a method in another scope
+ * without having to know where.
+ *
+ * <p>This enables you to pass a call to another object and let the object
+ * execute the call. You use the {@link #execute} method to do so.
  *
  * @author Simon Wacker
  * @author Martin Heidegger
  */
 class org.as2lib.util.Call extends BasicClass implements Executable {
 	
-	/** The object to execute the Function one. */
+	/** The object to execute the method on. */
 	private var object;
 	
-	/** The Function to be executed. */
-	private var func:Function;
+	/** The method to execute on the object. */
+	private var method:Function;
 	
 	/**
 	 * Constructs a new Call instance.
 	 *
-	 * @param object the object the Function shall be executed on
-	 * @param func the Function that shall be executed
-	 * @throws IllegalArgumentException if neigther the object or the function is not available.
+	 * @param object the object to execute the method on
+	 * @param method the method to execute
+	 * @throws IllegalArgumentException if either the object or the method is null or undefined
 	 */
-	public function Call(object, func:Function) {
-		if(object == null) {
-			throw new IllegalArgumentException("Required parameter 'object' is not available", this, arguments);
+	public function Call(object, method:Function) {
+		if (object == null) {
+			throw new IllegalArgumentException("Required parameter 'object' is null or undefined.", this, arguments);
 		}
-		if(func == null) {
-			throw new IllegalArgumentException("Required parameter 'func' is not available", this, arguments);
+		if (method == null) {
+			throw new IllegalArgumentException("Required parameter 'method' is null or undefined.", this, arguments);
 		}
 		this.object = object;
-		this.func = func;
+		this.method = method;
 	}
 	
 	/**
-	 * Executes the passed method on the passed object with the given
-	 * arguments and returns the result of the execution.
+	 * Executes the method on the object passing the given arguments and
+	 * returns the result of the execution.
 	 *
-	 * @param args the arguments that shall be passed
-	 * @return the result of the method execution
+	 * @param args the arguments to pass on method invocation
+	 * @return the result of the method invocation
 	 */
 	public function execute(args:Array) {
-		return func.apply(object, args);
+		return method.apply(object, args);
 	}
 	
 	/**
-	 * Extended Stringifier for this class.
+	 * Returns the string representation of this call.
 	 * 
-	 * @return Call as string.
+	 * @return the string representation of this call
 	 */
 	public function toString(Void):String {
 		// TODO: Refactor the code and outsource it.
@@ -77,52 +79,52 @@ class org.as2lib.util.Call extends BasicClass implements Executable {
 		result += "[type " + ReflectUtil.getTypeNameForInstance(this) + " -> ";
 		AccessPermission.set(object, null, AccessPermission.ALLOW_ALL);
 		if (ObjectUtil.isEmpty(object)) {
-			result += object.toString() + "." + ObjectUtil.getChildName(object, func);
+			result += object.toString() + "." + ObjectUtil.getChildName(object, method);
 		} else {
 			var className:String = ReflectUtil.getTypeName(object);
 			if (className) {
 				result += className;
-				result += "." + ReflectUtil.getMethodName(func, object);
+				result += "." + ReflectUtil.getMethodName(method, object);
 			} else {
-				result += object.toString() + "." + ObjectUtil.getChildName(object, func);
+				result += object.toString() + "." + ObjectUtil.getChildName(object, method);
 			}
 		}
-		result += "() ]";
+		result += "()]";
 		return result;
 	}
 	
 	/**
-	 * Iterates through the passed Object using the for..in loop and executes
-	 * the Call by passing the object, the found child and its name.
+	 * Iterates over the passed-in object using the for..in loop and executes
+	 * this call passing the found object, its name and the passed-in object.
 	 * 
-	 * Example:
-	 * <CODE>
+	 * <p>Example:
+	 * <code>
 	 *   class MyClass {
 	 * 
-         *      private var a:String;
-         *      private var b:String;
-         *      private var c:String;
+	 *     private var a:String;
+	 *     private var b:String;
+	 *     private var c:String;
 	 * 
-	 *      public function MyClass() {
-	 *          a = "1";
-	 *          b = "2";
-	 *          c = "2";
-	 *      }
+	 *     public function MyClass() {
+	 *       a = "1";
+	 *       b = "2";
+	 *       c = "2";
+	 *     }
 	 *      
-	 *      public function traceObject(value, name:String, inObject):Void {
-	 *          trace(name+": "+value);
-	 *      }
+	 *     public function traceObject(value, name:String, inObject):Void {
+	 *       trace(name + ": " + value);
+	 *     }
 	 * 
-	 *      public function listAll() {
-         *          new Call(this, traceObject).forEach(this);
-	 *      }
+	 *     public function listAll() {
+	 *       new Call(this, traceObject).forEach(this);
+	 *     }
 	 *   }
-	 * </CODE>
+	 * </code>
 	 *
-	 * Note: Only childs visible by a for-in loop will be displayed!
+	 * <p>Note that only members visible for for-in loops cause the {@link execute}
+	 * method to become invoked.
 	 *  
 	 * @param object the object to iterate over
-	 * @param call the Call to be executed for each found object
 	 */
 	public function forEach(object):Void {
 		var i:String;
