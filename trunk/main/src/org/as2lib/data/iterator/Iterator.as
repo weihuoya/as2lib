@@ -19,7 +19,7 @@ import org.as2lib.core.BasicInterface;
 /**
  * Iterators are used to iterate over data holders.
  *
- * @author Michael Hermann
+ * @author Michael Herrmann
  * @author Simon Wacker
  */
 interface org.as2lib.data.iterator.Iterator extends BasicInterface {
