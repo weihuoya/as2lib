@@ -26,7 +26,21 @@ import org.as2lib.io.conn.ConnectionException;
 class org.as2lib.io.conn.local.core.ReservedConnectionException extends ConnectionException {
 	
 	/**
-	 * @see org.as2lib.io.conn.ConnectionException#new(String, *, Array)
+	 * Constructs a new Exception instance.
+	 *
+	 * <p>All arguments are allowed to be null or undefined. But if one is,
+	 * the string representation returned by the #toString method is not
+	 * complete anymore.
+	 *
+	 * <p>The args array should be the internal arguments array of the
+	 * method that throws the throwable. The internal arguments array exists
+	 * in every method and contains its parameters, the callee method and
+	 * the caller method. You can refernce it in every method using the name
+	 * 'arguments'.
+	 *
+	 * @param message the message that describes in detail what the problem is
+	 * @param thrower the object that declares the method that throws this exception
+	 * @param args the arguments of the throwing method
 	 */
 	public function ReservedConnectionException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
