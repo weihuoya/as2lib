@@ -64,7 +64,7 @@ class test.org.as2lib.basic.TReflections extends Test {
 		var iterator:Iterator = methods.iterator()
 		while(iterator.hasNext()) {
 			var method:MethodInfo = MethodInfo(iterator.next());
-			trace (method.getName());
+			trace (method.getName() + " :method");
 		}
 		trace ("----------------------------------------------");
 	}
