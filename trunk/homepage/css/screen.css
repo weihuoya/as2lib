@@ -239,3 +239,29 @@ ol{
 .note {
   font-style: italic;
 }
+.description {
+  padding: 0px;
+}
+.description th {
+  font-weight: bold;
+  font-size: 0.625em;
+  vertical-align: top;
+  text-align: left;
+  background-color: #FFFFFF;
+  padding: 5px;
+}
+.description td {
+  font-size: 0.625em;
+  vertical-align: top;
+  padding: 5px;
+}
+table .example .good {
+  font-size: 0.625em;
+  color: #008800;
+  vertical-align: top;
+}
+table .example .bad {
+  font-size: 0.625em;
+  color: #880000;
+  vertical-align: top;
+}
