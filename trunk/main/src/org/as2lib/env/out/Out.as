@@ -20,12 +20,17 @@ import org.as2lib.env.out.OutHandler;
 import org.as2lib.env.out.OutConfig;
 import org.as2lib.env.out.handler.TraceHandler;
 import org.as2lib.env.out.level.*;
+import org.as2lib.env.out.OutRepository;
+import org.as2lib.env.out.OutHierachy;
+import org.as2lib.env.out.OutFactory;
+import org.as2lib.env.out.OutRepositoryManager;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.SimpleEventBroadcaster;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.overload.Overload;
 
 /**
  * Out is the main output class. You use this class to make your output.
@@ -42,6 +47,7 @@ import org.as2lib.env.util.ReflectUtil;
  * @author Simon Wacker
  */
 class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
+	
 	/** All output will be made. */
 	public static var ALL:OutLevel = new AllLevel();
 	
@@ -72,12 +78,98 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	/** The EventBroadcaster that is used to dispatch to all registered OutHandlers. */
 	private var broadcaster:EventBroadcaster;
 	
+	/** Stores the parent of this Out instance. */
+	private var parent:Out;
+	
+	/** The name of this Out instance. */
+	private var name:String;
+	
+	/**
+	 * @see OutRepository#getOut()
+	 */
+	public static function getOut():Out {
+		var o:Overload = new Overload(eval("th" + "is"));
+		o.addHandler([String], getOutByName);
+		o.addHandler([String, OutFactory], getOutByNameAndFactory);
+		return o.forward(arguments);
+	}
+	
+	/**
+	 * @see OutRepository#getOutByName()
+	 */
+	public static function getOutByName(name:String):Out {
+		return OutRepositoryManager.getRepository().getOutByName(name);
+	}
+	
+	/**
+	 * @see OutRepository#getOutByNameAndFactory()
+	 */
+	public static function getOutByNameAndFactory(name:String, factory:OutFactory):Out {
+		return OutRepositoryManager.getRepository().getOutByNameAndFactory(name, factory);
+	}
+	
+	/**
+	 * @see OutRepository#getRootOut()
+	 */
+	public static function getRootOut(Void):Out {
+		return OutRepositoryManager.getRepository().getRootOut();
+	}
+	 
+	/**
+	 * Adds a new OutHandler to the static list of handlers. These OutHandlers will be used
+	 * to make the output of all instances. They get invoked when output shall be made.
+	 *
+	 * @param handler the new OutHandler that shall handle output
+	 */
+	public static function addStaticHandler(aHandler:OutHandler):Void {
+		if(!staticBroadcaster) {
+			staticBroadcaster = OutConfig.getEventBroadcasterFactory().createEventBroadcaster();
+		}
+		staticBroadcaster.addListener(aHandler);
+	}
+	
+	/**
+	 * Removes the specified OutHandler from the list of static handlers. If the OutHandler
+	 * does not exist in the list the IllegalArgumentException will be thrown.
+	 *
+	 * @param handler the OutHandler to be removed from the list
+	 * @throws IllegalArgumentException the exception will be thrown when the OutHandler does not exist on the list
+	 */
+	public static function removeStaticHandler(aHandler:OutHandler):Void {
+		staticBroadcaster.removeListener(aHandler);
+	}
+	
 	/**
 	 * Constructs a new Out instance and sets the default OutLevel, ALL.
 	 */
-	public function Out(Void) {
-		level = ALL;
+	public function Out(name:String) {
+		if (name === undefined) level = ALL;
+		this.name = name;
 		broadcaster = OutConfig.getEventBroadcasterFactory().createEventBroadcaster();
+	}
+	
+	/**
+	 * @return the parent of this Out instance. It may be set via #setParent()
+	 */
+	public function getParent(Void):Out {
+		return parent;
+	}
+	
+	/**
+	 * Sets the parent of this Out instance. The parent is used to obtain the level if none is
+	 * specifically set for this instance.
+	 *
+	 * @param parent the parent Out instance
+	 */
+	public function setParent(parent:Out):Void {
+		this.parent = parent;
+	}
+	
+	/**
+	 * @return the name of this Out instance
+	 */
+	public function getName(Void):String {
+		return name;
 	}
 	
 	/**
@@ -97,20 +189,8 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	 * @return the OutLevel
 	 */
 	public function getLevel(Void):OutLevel {
+		if (!level) return getParent().getLevel();
 		return level;
-	}
-	
-	/**
-	 * Adds a new OutHandler to the static list of handlers. These OutHandlers will be used
-	 * to make the output of all instances. They get invoked when output shall be made.
-	 *
-	 * @param handler the new OutHandler that shall handle output
-	 */
-	public static function addStaticHandler(aHandler:OutHandler):Void {
-		if(!staticBroadcaster) {
-			staticBroadcaster = OutConfig.getEventBroadcasterFactory().createEventBroadcaster();
-		}
-		staticBroadcaster.addListener(aHandler);
 	}
 	
 	/**
@@ -121,17 +201,6 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	 */
 	public function addHandler(aHandler:OutHandler):Void {
 		broadcaster.addListener(aHandler);
-	}
-	
-	/**
-	 * Removes the specified OutHandler from the list of static handlers. If the OutHandler
-	 * does not exist in the list the IllegalArgumentException will be thrown.
-	 *
-	 * @param handler the OutHandler to be removed from the list
-	 * @throws IllegalArgumentException the exception will be thrown when the OutHandler does not exist on the list
-	 */
-	public static function removeStaticHandler(aHandler:OutHandler):Void {
-		staticBroadcaster.removeListener(aHandler);
 	}
 	
 	/**
@@ -160,8 +229,8 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	 * @return true if this Out instance is enabled for the given OutLevel else false
 	 */
 	public function isEnabledFor(aLevel:OutLevel):Boolean {
-		if (level == aLevel) return true;
-		return (level instanceof ReflectUtil.getClassInfo(aLevel).getType());
+		if (getLevel() == aLevel) return true;
+		return (getLevel() instanceof ReflectUtil.getClassInfo(aLevel).getType());
 	}
 	
 	/**
@@ -205,4 +274,5 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	public function fatal(message):Void {
 		level.fatal(message, broadcaster, staticBroadcaster);
 	}
+	
 }
