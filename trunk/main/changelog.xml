@@ -5,6 +5,11 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2004">
       <month value="10">
+      	<day value="28">
+	  <entry type="add" package="org.as2ib.data.holder.list" class="ListStringifier" />
+	  <entry type="change" package="org.as2ib.data.holder.list" class="ArrayList" />
+	  <entry type="change" package="org.as2ib.data.holder" class="HolderConfig" />
+	</day>
 	    <day value="27">
 		  <entry type="documentation" package="org.as2lib.util" class="ObjectUtil" method="forEach(...)">Added extended documentation</entry>
 		  <entry type="change" package="org.as2lib.util" class="ObjectUtil" method="forEach(..)">Additional submitting of the entries name.</entry>
