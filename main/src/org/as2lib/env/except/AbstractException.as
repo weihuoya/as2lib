@@ -51,7 +51,7 @@ class org.as2lib.env.except.AbstractException extends Error {
 	 * @param args the arguments of the throwing operation
 	 */
 	private function AbstractException(message:String, thrower, args:FunctionArguments) {
-		if (!message || !thrower || !args) {
+		if ((message == undefined) || !thrower || !args) {
 			throw new IllegalArgumentException("All three specified arguments [message:String, thrower, args:FunctionArguments] must be passed.",
 											   this,
 											   arguments);
