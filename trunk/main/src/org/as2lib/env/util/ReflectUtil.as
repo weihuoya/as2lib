@@ -7,37 +7,44 @@ import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.reflect.ReflectConfig;
 
 /**
+ * This util class offers the basic functionality to use reflections. All operations
+ * are static to provide an easy external access. It is not possible to instantiate
+ * the class due to its private constructor.
+ *
  * @author Simon Wacker
- * 
- * This util class offers the basic functionality to use reflections.
- * All operations are static to provide an easy external access.
- * It is not possible to instantiate the class due to its private constructor.
+ * @see org.as2lib.core.BasicClass
  */
-
 class org.as2lib.env.util.ReflectUtil extends BasicClass {
-	/** All classes and packages that have already been found will be cached here. */
+	/** All ClassInfos and PackageInfos that have already been found will be cached here. */
 	private static var cache:Cache = new Cache();
 	
 	/**
-	 * The constructor is private to prevent an instantiation.
+	 * The constructor is private to prevent instantiation.
 	 */
 	private function ReflectUtil(Void) {
 	}
 	
+	/**
+	 * Returns the cache used to cache all ClassInfos and PackageInfos that have
+	 * already been found.
+	 *
+	 * @return the cache used to cache ClassInfos and PackageInfos
+	 */
 	public static function getCache(Void):Cache {
 		return cache;
 	}
 	
 	/**
-	 * This is the core operation of the class.
-	 * It returns the ClassInfo instance appropriate to the Object containing all needed class information.
-	 * It first checks based on the Object whether an appropriate ClassInfo instance exists.
-	 * If one exists it will be returned otherwise a new will be created.
+	 * This is the core operation of the class. It returns the ClassInfo
+	 * appropriate to the instance containing all needed class information.
+	 * It first checks based on the instance whether an appropriate ClassInfo
+	 * exists. If one exists it will be returned otherwise a new will be created.
 	 * The responsibility for doing this lies in the suitable CacheAlgorythm.
-	 * By default this is the ClassAlgorythm. But you can set your own with the setClassAlgorythm() operation.
+	 * By default this is the ClassAlgorythm. But you can set your own with the
+	 * ReflectConfig#setClassAlgorythm() operation.
 	 * 
-	 * @param The Object the appropriate ClassInfo shall be found.
-	 * @return The appropriate ClassInfo instance containing all class information.
+	 * @param instance the instance the appropriate ClassInfo shall be found.
+	 * @return the appropriate ClassInfo instance containing all class information
 	 */
 	public static function getClassInfo(object):ClassInfo {
 		var info:ClassInfo = cache.getClass(object);
@@ -48,14 +55,15 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	}
 	
 	/**
-	 * This operation returns the PackageInfo instance representing the package passed in.
-	 * It first checks based on the passed in Object whether an appropriate PackageInfo instance exists.
-	 * If one exists it will be returned otherwise a new will be created.
-	 * The responsibility for doing this lies in the suitable CacheAlgorythm.
-	 * By default this is the PackageAlgorythm. But you can set your own with the setPackageAlgorythm() operation.
+	 * This operation returns the PackageInfo instance representing the package
+	 * passed in. It first checks based on the passed in package whether an
+	 * appropriate PackageInfo exists. If one exists it will be returned otherwise
+	 * a new will be created. The responsibility for doing this lies in the
+	 * suitable CacheAlgorythm. By default this is the PackageAlgorythm. But you
+	 * can set your own with the ReflectConfig#setPackageAlgorythm() operation.
 	 *
-	 * @param The package the appropriate PackageInfo shall be found.
-	 * @return The appropriate PackageInfo instance containing all package information.
+	 * @param package the package the appropriate PackageInfo shall be found.
+	 * @return the appropriate PackageInfo instance containing all package information.
 	 */
 	public static function getPackageInfo(package):PackageInfo {
 		var info:PackageInfo = cache.getPackage(package);
@@ -66,34 +74,36 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	}
 	
 	/**
-	 * This operation returns a HashMap containing the MethodInfo instances representing the methods.
-	 * The problem right now is that public and private methods are not distinguished.
-	 * This is due to the impossibility of finding out (at runtime) whether the method is private or public.
+	 * This operation returns a HashMap containing the MethodInfo instances
+	 * representing the methods. Public and private methods are not distinguished.
+	 * This is due to the impossibility of finding out (at runtime) whether the
+	 * method is private or public.
 	 *
-	 * @param The ClassInfo instance representing the class the methods shall be searched for.
-	 * @return A HashMap holding MethodInfo instances for each method.
+	 * @param info the ClassInfo instance representing the class the methods shall be searched for.
+	 * @return a HashMap holding MethodInfos for each method.
 	 */
 	public static function getMethods(info:ClassInfo):HashMap {
 		return ReflectConfig.getMethodAlgorythm().execute(info);
 	}
 	
 	/** 
-	 * This operation returns a HashMap containing the PropertyInfo instances representing the Properties.
-	 * Properties are set in Flash MX 2004 via the set and get keyword.
+	 * This operation returns a HashMap containing the PropertyInfo instance
+	 * representing the Properties. Properties are set in Flash MX 2004 via the
+	 * set and get keyword.
 	 *
-	 * @param The ClassInfo instance representing the class the methods shall be searched for.
-	 * @return A HashMap holding PropertyInfo instances for each property.
+	 * @param info the ClassInfo instance representing the class the properties shall be searched for.
+	 * @return a HashMap holding PropertyInfos for each property.
 	 */
 	public static function getProperties(info:ClassInfo):HashMap {
 		return ReflectConfig.getPropertyAlgorythm().execute(info);
 	}
 	
 	/**
-	 * This operation returns the children of a package.
-	 * Children can be either of type ClassInfo or PackageInfo.
+	 * This operation returns the children of a package. The children are of
+	 * type CacheInfo.
 	 *
-	 * @param A PackageInfo instance representing the package the children shall be returned.
-	 * @return A HashMap containing all children of the appropriate package.
+	 * @param info a PackageInfo instance representing the package the children shall be returned for
+	 * @return a HashMap containing all children of the appropriate package
 	 */
 	public static function getChildren(info:PackageInfo):HashMap {
 		return ReflectConfig.getChildrenAlgorythm().execute(info);
