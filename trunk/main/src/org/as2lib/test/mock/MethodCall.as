@@ -29,7 +29,7 @@ class org.as2lib.test.mock.MethodCall extends BasicClass {
 	private var args:FunctionArguments;
 	private var argumentsMatcher:ArgumentsMatcher;
 	
-	public function MockMethodCall(methodName:String, args:FunctionArguments) {
+	public function MethodCall(methodName:String, args:FunctionArguments) {
 		this.methodName = methodName;
 		this.args = args;
 	}
