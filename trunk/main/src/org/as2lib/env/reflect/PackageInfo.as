@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
-import org.as2lib.env.reflect.CacheInfo;
+import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.NoSuchChildException;
 import org.as2lib.env.reflect.ReflectConfig;
@@ -33,9 +33,9 @@ import org.as2lib.env.except.IllegalArgumentException;
  *
  * @author Simon Wacker
  * @see org.as2lib.core.BasicClass
- * @see org.as2lib.env.reflect.CacheInfo
+ * @see org.as2lib.env.reflect.CompositeMemberInfo
  */
-class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CacheInfo {
+class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CompositeMemberInfo {
 	/** The name of the package. */
 	private var name:String;
 	
@@ -111,7 +111,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CacheInfo
 	}
 	
 	/**
-	 * Returns a Map containing CacheInfos representing the children of the
+	 * Returns a Map containing CompositeMemberInfos representing the children of the
 	 * package. That means all classes and packages contained in the package.
 	 *
 	 * @return a Map containing the children
@@ -132,9 +132,9 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CacheInfo
 	public function getChildClasses(Void):Map {
 		var result:Map = new HashMap();
 		var iterator:Iterator = getChildren().iterator();
-		var child:CacheInfo;
+		var child:CompositeMemberInfo;
 		while (iterator.hasNext()) {
-			child = CacheInfo(iterator.next());
+			child = CompositeMemberInfo(iterator.next());
 			if (ObjectUtil.isInstanceOf(child, ClassInfo)) {
 				result.put(child.getName(), child);
 			}
@@ -151,9 +151,9 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CacheInfo
 	public function getChildPackages(Void):Map {
 		var result:Map = new HashMap();
 		var iterator:Iterator = getChildren().iterator();
-		var child:CacheInfo;
+		var child:CompositeMemberInfo;
 		while (iterator.hasNext()) {
-			child = CacheInfo(iterator.next());
+			child = CompositeMemberInfo(iterator.next());
 			if (ObjectUtil.isInstanceOf(child, PackageInfo)) {
 				result.put(child.getName(), child);
 			}
@@ -166,22 +166,22 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CacheInfo
 	 * #getChildByName()
 	 * #getChildByChild()
 	 */
-	public function getChild(child):CacheInfo {
+	public function getChild(child):CompositeMemberInfo {
 		var overload:Overload = new Overload(this);
 		overload.addHandler([String], getChildByName);
 		overload.addHandler([Object], getChildByChild);
-		return CacheInfo(overload.forward(arguments));
+		return CompositeMemberInfo(overload.forward(arguments));
 	}
 	
 	/**
-	 * Returns the CacheInfo corresponding to the name of the child.
+	 * Returns the CompositeMemberInfo corresponding to the name of the child.
 	 *
 	 * @param childName the name of the child
-	 * @return the CacheInfo corresponding to the child's name
+	 * @return the CompositeMemberInfo corresponding to the child's name
 	 * @throws org.as2lib.env.reflect.NoSuchChildException if there is no child with the passed name
 	 */
-	public function getChildByName(childName:String):CacheInfo {
-		var child:CacheInfo = getChildren().get(childName);
+	public function getChildByName(childName:String):CompositeMemberInfo {
+		var child:CompositeMemberInfo = getChildren().get(childName);
 		if (ObjectUtil.isAvailable(child)) {
 			return child;
 		}
@@ -191,14 +191,14 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CacheInfo
 	}
 	
 	/**
-	 * Returns the CacheInfo corresponding to the child.
+	 * Returns the CompositeMemberInfo corresponding to the child.
 	 *
-	 * @param child the concrete child you want the CacheInfo for
-	 * @return the CacheInfo corresponding to the child
+	 * @param child the concrete child you want the CompositeMemberInfo for
+	 * @return the CompositeMemberInfo corresponding to the child
 	 * @throws org.as2lib.env.reflect.NoSuchChildException if the child does not exist in this package
 	 * @throws org.as2lib.env.except.IllegalArgumentException if the child is neither of type function nor object
 	 */
-	public function getChildByChild(concreteChild):CacheInfo {
+	public function getChildByChild(concreteChild):CompositeMemberInfo {
 		if (ObjectUtil.isTypeOf(concreteChild, "function")) {
 			return getChildClassByClass(concreteChild);
 		}
@@ -251,7 +251,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CacheInfo
 		var iterator:Iterator = getChildClasses().iterator();
 		while (iterator.hasNext()) {
 			result = ClassInfo(iterator.next());
-			if (result.getClass() == clazz) {
+			if (result.getRepresentedClass() == clazz) {
 				return result;
 			}
 		}

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.reflect.CacheInfo;
+import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
@@ -41,7 +41,7 @@ class org.as2lib.env.reflect.algorythm.PropertyAlgorythm extends AbstractContent
 	public function PropertyAlgorythm(Void) {
 	}
 	
-	public function execute(info:CacheInfo):Map {
+	public function execute(info:CompositeMemberInfo):Map {
 		type = null;
 		
 		this.info = ClassInfo(info);
@@ -52,7 +52,7 @@ class org.as2lib.env.reflect.algorythm.PropertyAlgorythm extends AbstractContent
 		this.staticSetters = new HashMap();
 		
 		this.staticFlag = true;
-		var clazz:Function = this.info.getClass();
+		var clazz:Function = this.info.getRepresentedClass();
 		search(clazz);
 		this.staticFlag = false;
 		var prototype = clazz.prototype;

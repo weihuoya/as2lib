@@ -14,27 +14,19 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.reflect.MemberInfo;
+import org.as2lib.core.BasicInterface;
 
 /**
- * ClassMemberInfo is an interface that is extended by classes in the
- * org.as2lib.env.reflect package representing class members.
+ * MemberInfo is the base interface extended by all other classes representing
+ * members in the org.as2lib.env.reflect package.
  *
  * @author Simon Wacker
  */
-interface org.as2lib.env.reflect.ClassMemberInfo extends MemberInfo {
+interface org.as2lib.env.reflect.MemberInfo extends BasicInterface {
 	/**
-	 * Returns the declaring class of the class member.
+	 * Returns the name of the member.
 	 *
-	 * @return the class member's declaring class
+	 * @return the member's name
 	 */
-	public function getDeclaringClass(Void):ClassInfo;
-	
-	/**
-	 * Returns whether the class member is static or not.
-	 *
-	 * @return true when the property is static else false
-	 */
-	public function isStatic(Void):Boolean;
+	public function getName(Void):String;
 }

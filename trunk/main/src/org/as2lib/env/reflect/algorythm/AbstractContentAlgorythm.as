@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.reflect.CacheInfo;
+import org.as2lib.env.reflect.CompositeMemberInfo;
 
 /**
  * @author Simon Wacker

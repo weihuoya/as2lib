@@ -20,7 +20,7 @@ import org.as2lib.data.iterator.Iterator;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.reflect.CacheInfo;
+import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.ConstructorInfo;
@@ -35,7 +35,7 @@ import org.as2lib.env.overload.Overload;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
+class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CompositeMemberInfo {
 	/** The name of the class. */
 	private var name:String;
 	
@@ -106,7 +106,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	 *
 	 * @return the class represented by this ClassInfo
 	 */
-	public function getClass(Void):Function {
+	public function getRepresentedClass(Void):Function {
 		return clazz;
 	}
 	
@@ -117,7 +117,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	 */
 	public function getConstructor(Void):ConstructorInfo {
 		if (ObjectUtil.isEmpty(constructor)) {
-			constructor = new ConstructorInfo(getClass(), this);
+			constructor = new ConstructorInfo(getRepresentedClass(), this);
 		}
 		return constructor;
 	}
@@ -280,14 +280,5 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 		throw new NoSuchClassMemberException("The property [" + concreteProperty + "] you tried to obtain does not exist in this class.",
 										this,
 										arguments);
-	}
-	
-	/**
-	 * Returns null becuase a class cannot contain any children.
-	 *
-	 * @return null
-	 */
-	public function getChildren(Void):Map {
-		return null;
 	}
 }

@@ -15,23 +15,26 @@
  */
 
 import org.as2lib.env.reflect.PackageInfo;
+import org.as2lib.env.reflect.MemberInfo;
 import org.as2lib.data.holder.Map;
 
 /**
- * CacheInfo is the interface for classes residing in the Cache.
+ * CompositeMemberInfo is an interface to enable PackageInfo and ClassInfo to
+ * have a compositional relationship. PackageInfo represents the composite and
+ * ClassInfo the leaf.
  *
  * @author Simon Wacker
  */
-interface org.as2lib.env.reflect.CacheInfo {
+interface org.as2lib.env.reflect.CompositeMemberInfo extends MemberInfo {
 	/**
-	 * Returns the name of the entity this CacheInfo represents.
+	 * Returns the name of the entity this CompositeMemberInfo represents.
 	 *
 	 * @return the name of the entity
 	 */
 	public function getName(Void):String;
 	
 	/**
-	 * Returns the full name of the entity this CacheInfo represents. The full
+	 * Returns the full name of the entity this CompositeMemberInfo represents. The full
 	 * name includes the name as well as the path.
 	 *
 	 * @return the full name of the entity
@@ -40,16 +43,9 @@ interface org.as2lib.env.reflect.CacheInfo {
 	
 	/**
 	 * Returns the parent of the entity represented by a PackageInfo. The parent
-	 * is the package the entity resieds in.
+	 * is the package the entity resides in.
 	 *
 	 * @return the parent
 	 */
 	public function getParent(Void):PackageInfo;
-	
-	/**
-	 * Returns a Map containing the children of the entity.
-	 *
-	 * @return the children of the entity
-	 */
-	public function getChildren(Void):Map;
 }

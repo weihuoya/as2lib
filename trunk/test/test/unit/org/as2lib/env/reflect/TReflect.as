@@ -4,7 +4,7 @@ import org.as2lib.data.iterator.Iterator;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.reflect.CacheInfo;
+import org.as2lib.env.reflect.CompositeMemberInfo;
 import test.org.as2lib.env.reflect.treflect.SubClass;
 import test.org.as2lib.env.reflect.treflect.SuperClass;
 import test.org.as2lib.env.reflect.treflect.package0.Package0Class;

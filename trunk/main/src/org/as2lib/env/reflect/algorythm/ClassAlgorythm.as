@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.algorythm.CacheAlgorythm;
 import org.as2lib.env.reflect.Cache;
-import org.as2lib.env.reflect.CacheInfo;
+import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.util.ObjectUtil;
@@ -38,7 +38,7 @@ class org.as2lib.env.reflect.algorythm.ClassAlgorythm extends BasicClass impleme
 	public function ClassAlgorythm(Void) {
 	}
 	
-	public function execute(object):CacheInfo {
+	public function execute(object):CompositeMemberInfo {
 		cache = ReflectConfig.getCache();
 		info = null;
 		findAndStore(cache.getRoot(), object);
