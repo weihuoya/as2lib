@@ -40,7 +40,7 @@ class TestView extends BasicClass implements TestListener {
 		  
 		var result:String = info.getTestRunner().getTestResult().toString();
 		
-		info.getTestRunner().getTestResult().print();
+		trace(info.getTestRunner().getTestResult().toString());
 		
 		if(result.toLowerCase().indexOf("not fail") >= 0) {
 			trace( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"

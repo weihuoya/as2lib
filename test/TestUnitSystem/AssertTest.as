@@ -105,7 +105,7 @@ class AssertTest extends TestCase {
 		assertFalse(failMessage(3 ), assertEquals(FAIL_MESSAGE, undefined, 1));
 		assertTrue (failMessage(4 ), assertEquals(NOT_FAIL_MESSAGE, null, undefined));
 		assertFalse(failMessage(5 ), assertEquals(FAIL_MESSAGE, 1, undefined));
-		assertTrue (failMessage(6 ), assertEquals(NOT_FAIL_MESSAGE, undefined));
+		assertFalse(failMessage(6 ), assertEquals(FAIL_MESSAGE, undefined));
 		assertFalse(failMessage(7 ), assertEquals(FAIL_MESSAGE, 1, 2));
 		assertTrue (failMessage(8 ), assertEquals(NOT_FAIL_MESSAGE, 1, 1));
 		assertFalse(failMessage(9 ), assertEquals(FAIL_MESSAGE, 1));
@@ -141,7 +141,7 @@ class AssertTest extends TestCase {
 		assertTrue (failMessage(3 ), assertNotEquals(NOT_FAIL_MESSAGE, undefined, 1));
 		assertFalse(failMessage(4 ), assertNotEquals(FAIL_MESSAGE, null, undefined));
 		assertTrue (failMessage(5 ), assertNotEquals(NOT_FAIL_MESSAGE, 1, undefined));
-		assertFalse(failMessage(6 ), assertNotEquals(FAIL_MESSAGE, undefined));
+		assertTrue (failMessage(6 ), assertNotEquals(NOT_FAIL_MESSAGE, undefined));
 		assertTrue (failMessage(7 ), assertNotEquals(NOT_FAIL_MESSAGE, 1, 2));
 		assertFalse(failMessage(8 ), assertNotEquals(FAIL_MESSAGE, 1, 1));
 		assertTrue (failMessage(9 ), assertNotEquals(FAIL_MESSAGE, 1));
@@ -165,7 +165,7 @@ class AssertTest extends TestCase {
 		assertFalse(failMessage(3 ), assertSame(FAIL_MESSAGE, undefined, 1));
 		assertFalse(failMessage(4 ), assertSame(FAIL_MESSAGE, null, undefined));
 		assertFalse(failMessage(5 ), assertSame(FAIL_MESSAGE, 1, undefined));
-		assertTrue (failMessage(6 ), assertSame(FAIL_MESSAGE, undefined));
+		assertFalse(failMessage(6 ), assertSame(FAIL_MESSAGE, undefined));
 		assertFalse(failMessage(7 ), assertSame(FAIL_MESSAGE, 1, 2));
 		assertTrue (failMessage(8 ), assertSame(NOT_FAIL_MESSAGE, 1, 1));
 		assertFalse(failMessage(9 ), assertSame(FAIL_MESSAGE, 1));
@@ -187,7 +187,7 @@ class AssertTest extends TestCase {
 		assertTrue (failMessage(3 ), assertNotSame(NOT_FAIL_MESSAGE, undefined, 1));
 		assertTrue (failMessage(4 ), assertNotSame(NOT_FAIL_MESSAGE, null, undefined));
 		assertTrue (failMessage(5 ), assertNotSame(NOT_FAIL_MESSAGE, 1, undefined));
-		assertFalse(failMessage(6 ), assertNotSame(FAIL_MESSAGE, undefined));
+		assertTrue (failMessage(6 ), assertNotSame(NOT_FAIL_MESSAGE, undefined));
 		assertTrue (failMessage(7 ), assertNotSame(NOT_FAIL_MESSAGE, 1, 2));
 		assertFalse(failMessage(8 ), assertNotSame(FAIL_MESSAGE, 1, 1));
 		assertTrue (failMessage(9 ), assertNotSame(NOT_FAIL_MESSAGE, 1));
