@@ -102,6 +102,8 @@ org.as2lib.io.conn.local.client.TLocalClientServiceProxyFactory;
 // org.as2lib.env.reflect
 org.as2lib.env.reflect.TSimpleCache;
 org.as2lib.env.reflect.TClassInfo;
+org.as2lib.env.reflect.TClassInfo_Method;
+org.as2lib.env.reflect.TClassInfo_Property;
 org.as2lib.env.reflect.TPackageInfo;
 org.as2lib.env.reflect.TTypeProxyFactory;
 
