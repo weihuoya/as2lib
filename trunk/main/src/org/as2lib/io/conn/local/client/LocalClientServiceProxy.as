@@ -53,6 +53,12 @@ import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
  * for a service interface or class, which enables compiler checks.
  * For more information on this refer to the LocalClientServiceProxyFactory class.
  *
+ * <p>You must be aware of the fact that return values and exceptions
+ * that are of a complex types lose all there methods when they are
+ * passed over local connection from a remote service.
+ * This will be so till someone (maybe the as2lib team) introduces a
+ * serializing mechanism.
+ *
  * @author Simon Wacker
  * @author Christoph Atteneder
  * @see org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory
@@ -141,14 +147,15 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 		var responseService:EnhancedLocalConnection = new EnhancedLocalConnection();
 		var index:Number = responseServices.push(responseService) - 1;
 		var owner:LocalClientServiceProxy = this;
-		responseService["onReturn"] = function(returnInfo:MethodInvocationReturnInfo):Void {
+		responseService["onReturn"] = function(returnValue):Void {
 			owner.responseServices.splice(index, 1);
-			callback.onReturn(returnInfo);
+			callback.onReturn(new MethodInvocationReturnInfo(owner.url, methodName, args, returnValue));
 			this.close();
 		}
-		responseService["onError"] = function(errorInfo:MethodInvocationErrorInfo):Void {
+		responseService["onError"] = function(errorCode:Number, exception):Void {
 			owner.responseServices.splice(index, 1);
-			callback.onError(errorInfo);
+			callback.onError(new MethodInvocationErrorInfo(owner.url, methodName, args, errorCode, exception));
+			this.close();
 		}
 		try {
 			responseService.connect(responseUrl);
