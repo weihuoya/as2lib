@@ -16,7 +16,6 @@
 
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.except.AbstractThrowable;
-import org.as2lib.env.except.ExceptConfig;
 
 /**
  * FatalException is a default implementation of the Throwable interface. It is
