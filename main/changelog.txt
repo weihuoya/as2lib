@@ -42,3 +42,27 @@
           * org.as2lib.env.reflect.SimpleCache
           * org.as2lib.env.reflect.algorithm.MethodAlgorithm
           * org.as2lib.env.reflect.algorithm.PropertyAlgorithm
+
+
+
+    :: 05/30/04 :: Simon Wacker ::
+
+
+      >> org.as2lib.util
+
+        > removed Executable
+        + changed corresponding references from
+          * org.as2lib.util.Call
+
+        > changed Call's constructor from Call(object, func:Function, args:Array) to Call(object, func:Function)
+        > changed Call.execute() to execute(args:Array)
+
+        > added ObjectUtil.forEach()
+
+
+
+    :: 05/30/04 :: Simon Wacker ::
+
+      >> org.as2lib.env.reflect
+
+        > changed ClassInfo.newInstance() to newInstance(args:Array)

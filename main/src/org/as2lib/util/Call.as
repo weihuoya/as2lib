@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.util.Executable;
 
 /**
  * Call is used to enable another object to make a function call in another
@@ -24,15 +23,12 @@ import org.as2lib.util.Executable;
  *
  * @author Simon Wacker
  */
-class org.as2lib.util.Call extends BasicClass implements Executable {
+class org.as2lib.util.Call extends BasicClass {
 	/** The object to execute the Function one. */
 	private var object;
 	
 	/** The Function to be executed. */
 	private var func:Function;
-	
-	/** The arguments passed to the Function on execution. */
-	private var args:Array;
 	
 	/**
 	 * Constructs a new Call instance.
@@ -41,16 +37,19 @@ class org.as2lib.util.Call extends BasicClass implements Executable {
 	 * @param func the Function that shall be executed
 	 * @param args the arguments that shall be passed
 	 */
-	public function Call(object, func:Function, args:Array) {
+	public function Call(object, func:Function) {
 		this.object = object;
 		this.func = func;
-		this.args = args;
 	}
 	
 	/**
-	 * @see org.as2lib.util.Executable#execute()
+	 * Executes the passed method on the passed object with the given
+	 * arguments and returns the result of the execution.
+	 *
+	 * @param args the arguments that shall be passed
+	 * @return the result of the method execution
 	 */
-	public function execute(Void) {
+	public function execute(args:Array) {
 		return func.apply(object, args);
 	}
 }
