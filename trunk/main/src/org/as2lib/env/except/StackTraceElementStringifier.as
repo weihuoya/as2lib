@@ -37,20 +37,31 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 	public function execute(target):String {
 		var result:String = "";
 		var element:StackTraceElement = StackTraceElement(target);
-		var thrower:ClassInfo = element.getThrower();
-		var method:MethodInfo = element.getMethod();
 		
-		var methodName:String = method.getName();
-		if (methodName == undefined) {
-			methodName = "[not evaluateable]";
+		try {
+			var thrower:ClassInfo = element.getThrower();
+		
+			var throwerName:String = thrower.getName();
+			if (throwerName == undefined) {
+				throwerName = "[not evaluateable]";
+			}
+		} catch(e:org.as2lib.env.except.IllegalArgumentException) {
+			var throwerName:String = "["+thrower+"]";
 		}
 		
-		var throwerName:String = thrower.getName();
-		if (throwerName == undefined) {
-			throwerName = "[not evaluateable]";
+		try {
+			var method:MethodInfo = element.getMethod();
+			
+			var methodName:String = method.getName();
+			if (methodName == undefined) {
+				methodName = "[not evaluateable]";
+			}
+			result += method.isStatic() ? "[static] " : "";
+			
+		} catch(e:org.as2lib.env.except.IllegalArgumentException) {
+			var methodName:String = "["+method+"]";
 		}
 		
-		result += method.isStatic() ? "[static] " : "";
 		result += throwerName;
 		result += "." + methodName;
 		result += "(" + element.getArguments() + ")";
