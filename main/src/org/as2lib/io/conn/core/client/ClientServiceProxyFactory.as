@@ -26,10 +26,10 @@ import org.as2lib.io.conn.core.client.ClientServiceProxy;
 interface org.as2lib.io.conn.core.client.ClientServiceProxyFactory extends BasicInterface {
 	
 	/**
-	 * @overload #getServiceProxyByUrl()
-	 * @overload #getServiceProxyByUrlAndType()
+	 * @overload #getClientServiceProxyByUrl()
+	 * @overload #getClientServiceProxyByUrlAndType()
 	 */
-	public function getServiceProxy();
+	public function getClientServiceProxy();
 	
 	/**
 	 * Returns a ClientServiceProxy instance that is fully configured and ready
@@ -38,7 +38,7 @@ interface org.as2lib.io.conn.core.client.ClientServiceProxyFactory extends Basic
 	 * @param url the full url to the service
 	 * @return an instance of type ClientServiceProxy
 	 */
-	public function getServiceProxyByUrl(url:String):ClientServiceProxy;
+	public function getClientServiceProxyByUrl(url:String):ClientServiceProxy;
 	
 	/**
 	 * Returns a proxy that can be casted to the given type. A type can either
@@ -48,6 +48,6 @@ interface org.as2lib.io.conn.core.client.ClientServiceProxyFactory extends Basic
 	 * @param type the type of the service
 	 * @return a proxy that can be casted to the given type
 	 */
-	public function getServiceProxyByUrlAndType(url:String, type:Function);
+	public function getClientServiceProxyByUrlAndType(url:String, type:Function);
 	
 }
