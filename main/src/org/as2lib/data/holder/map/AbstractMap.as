@@ -19,6 +19,9 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.data.holder.map.MapStringifier;
 
 /**
+ * AbstractMap offers implementations of methods needed by most concrete
+ * {@link org.as2lib.data.holder.Map} implementations.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.map.AbstractMap extends BasicClass {
@@ -28,6 +31,9 @@ class org.as2lib.data.holder.map.AbstractMap extends BasicClass {
 	
 	/**
 	 * Returns the stringifier that stringifies maps.
+	 *
+	 * <p>If no stringifier has been set manually an instance of class
+	 * {@link MapStringifier} will be returned.
 	 *
 	 * @return the stringifier that stringifies maps
 	 */
@@ -39,6 +45,9 @@ class org.as2lib.data.holder.map.AbstractMap extends BasicClass {
 	/**
 	 * Sets the new stringifier that stringifies maps.
 	 *
+	 * <p>If you set a stringifier of value null or undefined the static
+	 * method {@link #getStringifier} will return the default stringifier.
+	 *
 	 * @param mapStringifier the new map stringifier
 	 */
 	public static function setStringifier(mapStringifier:Stringifier):Void {
@@ -46,7 +55,7 @@ class org.as2lib.data.holder.map.AbstractMap extends BasicClass {
 	}
 	
 	/**
-	 * Private constructor.
+	 * Constructs a new AbstractMap instance.
 	 */
 	private function AbstractMap(Void) {
 	}
@@ -59,8 +68,8 @@ class org.as2lib.data.holder.map.AbstractMap extends BasicClass {
 	 * value. Variables that are hidden from for..in loops will not be
 	 * added to the map.
 	 *
-	 * <p>It then uses the put(String, *):Void method to add the key
-	 * value pair.
+	 * <p>It uses the put(String, *):Void method to add the key-value
+	 * pairs.
 	 *
 	 * @param source an object that contains values to populate the new source with
 	 */

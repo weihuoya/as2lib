@@ -24,8 +24,14 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
- * TypedMap is used as a wrapper. It can not be used alone. TypedMap enables
- * you to restrict the values that can be added to a specific type.
+ * TypedMap is used as a wrapper for {@link Map} instances that ensures
+ * that only values of a specific type get added to the wrapped map.
+ *
+ * <p>This class simply delegates all method invocations to the wrapped
+ * map. If the specific method is responsible for adding values it first
+ * checks if the values to add are of the expected type. If they are the
+ * method invocation gets forwarded, otherwise an {@link IllegalArgumentException}
+ * gets thrown.
  *
  * @author Simon Wacker
  */
@@ -38,65 +44,90 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	private var type:Function;
 	
 	/**
-	 * Constructs a new TypedMap.
+	 * Constructs a new TypedMap instance.
 	 *
-	 * @param type the type of values this map contains
-	 * @param map the Map that shall be wrapped by a TypedMap
+	 * <p>If the passed-in map does already contain values, these values
+	 * do not get type-checked.
+	 *
+	 * @param type the type of the values this map will contain
+	 * @param map the map that shall type-checked
+	 * @throws IllegalArgumentException if the passed-in type is null or undefined
 	 */
 	public function TypedMap(type:Function, map:Map) {
+		if (!type) throw new IllegalArgumentException("The passed-in type '" + type + "' the contained values must have is not allowed to be null or undefined.", this, arguments);
 		this.type = type;
 		this.map = map;
 	}
 	
 	/**
-	 * Returns the type of the map all contained elements have.
+	 * Returns the type that all values in the wrapped map have.
 	 *
 	 * <p>This is the type passed-in on construction.
 	 *
-	 * @return the type of the map's elements
+	 * @return the type that all values in the wrapped map have
 	 */
 	public function getType(Void):Function {
 		return type;
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#containsKey()
+	 * Checks if the passed-in key exists.
+	 *
+	 * <p>That means whether a value has been mapped to it.
+	 *
+	 * @param key the key to be checked for availability
+	 * @return true if the key exists else false
 	 */
 	public function containsKey(key):Boolean {
 		return map.containsKey(key);
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#containsValue()
+	 * Checks if the passed-in value is mapped to a key.
+	 *
+	 * @param value the value to be checked for availability
+	 * @return true if the value is mapped to a key else false
 	 */
 	public function containsValue(value):Boolean {
 		return map.containsValue(value);
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#getKeys()
+	 * Returns an array that contains all keys that have a value mapped to
+	 * it.
+	 *
+	 * @return an array that contains all keys
 	 */
 	public function getKeys(Void):Array {
 		return map.getKeys();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#getValues()
+	 * Returns an array that contains all values that are mapped to a key.
+	 *
+	 * @return an array that contains all mapped values
 	 */
 	public function getValues(Void):Array {
 		return map.getValues();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#get()
+	 * Returns the value that is mapped to the passed-in key.
+	 *
+	 * @param key the key to return the appropriate value for
+	 * @return the value appropriate to the key
 	 */
 	public function get(key) {
 		return map.get(key);
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#put()
-	 * @throws org.as2lib.env.except.IllegalArgumentException if the type of the object is not valid
+	 * Maps the specified key to the value.
+	 *
+	 * @param key the key used as identifier for the value
+	 * @param value the value to map to the key
+	 * @return the value that was originally mapped to the key or null
+	 * @throws IllegalArgumentException if the type of the passed-in value is invalid
 	 */
 	public function put(key, value) {
 		validate(value);
@@ -104,79 +135,104 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#clear()
-	 */
-	public function clear(Void):Void {
-		map.clear();
-	}
-	
-	/**
-	 * @see org.as2lib.data.holder.Map#putAll()
-	 * @throws org.as2lib.env.except.IllegalArgumentException if the type of the object is not valid
+	 * Copies all mappings from the passed-in map to this map.
+	 *
+	 * @param map the mappings to add to this map
+	 * @throws IllegalArgumentException if the type of any value to put is invalid
 	 */
 	public function putAll(map:Map):Void {
-		var iterator:Iterator = map.iterator();
-		while (iterator.hasNext()) {
-			validate(iterator.next());
+		var array:Array = map.getValues();
+		for (var i:Number = 0; i < array.length; i++) {
+			validate(array[i]);
 		}
 		this.map.putAll(map);
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#remove()
+	 * Removes the mapping from the specified key to the value.
+	 *
+	 * @param key the key identifying the mapping to be removed
+	 * @return the value that was originally mapped to the key
 	 */
 	public function remove(key) {
 		return map.remove(key);
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#iterator()
+	 * Clears all mappings.
+	 */
+	public function clear(Void):Void {
+		map.clear();
+	}
+	
+	/**
+	 * Returns an iterator to iterate over the values of this map.
+	 *
+	 * @return an iterator to iterate over the values of this map
+	 * @see #valueIterator
+	 * @see #getValues
 	 */
 	public function iterator(Void):Iterator {
 		return map.iterator();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#valueIterator()
+	 * Returns an iterator to iterate over the values of this map.
+	 *
+	 * @return an iterator to iterate over the values of this map
+	 * @see #iterator
+	 * @see #getValues
 	 */
 	public function valueIterator(Void):Iterator {
 		return map.valueIterator();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#keyIterator()
+	 * Returns an iterator to iterate over the keys of this map.
+	 *
+	 * @return an iterator to iterate over the keys of this map
+	 * @see #getKeys
 	 */
 	public function keyIterator(Void):Iterator {
 		return map.keyIterator();
 	}
 	
 	/**
-	 * @see org.as2lib.data.holder.Map#size()
+	 * Returns the amount of mappings.
+	 *
+	 * @return the amount of mappings
 	 */
 	public function size(Void):Number {
 		return map.size();
 	}
 	
+	/**
+	 * Returns whether this map contains any mappings.
+	 *
+	 * @return true if this map contains mappings else false
+	 */
 	public function isEmpty(Void):Boolean {
 		return map.isEmpty();
 	}
 	
 	/**
-	 * @see org.as2lib.core.BasicInterface#toString()
+	 * Returns the string representation of the wrapped map.
+	 *
+	 * @return the string representation of the wrapped map
 	 */
 	public function toString(Void):String {
 		return map.toString();
 	}
 	
 	/**
-	 * Validates the passed object based on its type.
+	 * Validates the passed-in value based on its type.
 	 *
-	 * @param object the object which type shall be validated
-	 * @throws org.as2lib.env.except.IllegalArgumentException if the type of the object is not valid
+	 * @param value the value whose type to validate
+	 * @throws IllegalArgumentException if the type of the value is not valid
 	 */
-	private function validate(object):Void {
-		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between object [" + object + "] and type [" + ReflectUtil.getTypeNameForType(type) + "].", this, arguments);
+	private function validate(value):Void {
+		if (!ObjectUtil.typesMatch(value, type)) {
+			throw new IllegalArgumentException("Type mismatch between value '" + value + "' and type '" + ReflectUtil.getTypeNameForType(type) + "'.", this, arguments);
 		}
 	}
 	

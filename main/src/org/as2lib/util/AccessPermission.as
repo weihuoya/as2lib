@@ -142,7 +142,7 @@ class org.as2lib.util.AccessPermission extends BasicClass {
 	 *     <td>Protects an object from deletion</td>
 	 *   </tr>
 	 *   <tr>
-	 *     <td>#PROTECT_OVERWRITE</th>
+	 *     <th>#PROTECT_OVERWRITE</th>
 	 *     <td>Protects an object from overwriting</td>
 	 *   </tr>
 	 *   <tr>

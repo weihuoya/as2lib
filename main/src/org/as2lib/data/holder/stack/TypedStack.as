@@ -24,7 +24,7 @@ import org.as2lib.data.holder.Iterator;
  * TypedStack is used as a wrapper for {@link Stack} instances that ensures
  * that only values of a specific type can be added to the wrapped stack.
  *
- * <p>This method simply delegates all method invocations to the wrapped
+ * <p>This class simply delegates all method invocations to the wrapped
  * stack. If the specific method is responsible for adding values it first
  * checks if the values to add are of the expected type. If they are the
  * method invocation gets forwarded, otherwise an {@link IllegalArgumentException}

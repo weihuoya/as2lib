@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicInterface;
 
 /**
- * Iterators are used to iterate over data holders.
+ * Iterator is used to iterate over data holders.
  *
  * <p>An iterator is quite simple to use. There is one method to check
  * whether there are more elements left to iterate over {@link #hasNext},

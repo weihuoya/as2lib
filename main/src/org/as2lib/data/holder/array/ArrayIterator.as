@@ -23,7 +23,7 @@ import org.as2lib.data.holder.NoSuchElementException;
 /**
  * ArrayIterator can be used to iterate over arrays.
  *
- * <p>An iterator is quite simple to use. There is one method to check
+ * <p>This usage of this iterator is quite simple. There is one method to check
  * whether there are more elements left to iterate over {@link #hasNext},
  * one method to get the next element {@link #next} and one to remove
  * the current element {@link #remove}.

@@ -21,14 +21,23 @@ import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.data.holder.Iterator;
 
 /**
- * MapStringifier is the default Stringifier used to stringify Maps.
+ * MapStringifier stringifies instances of type {@link Map}.
  *
  * @author Simon Wacker
- * @see org.as2lib.data.holder.Map
+ * @see Map
  */
 class org.as2lib.data.holder.map.MapStringifier extends BasicClass implements Stringifier {
+	
 	/**
-	 * @see org.as2lib.util.string.Stringifier
+	 * Returns the string representation of the passed-in {@link Map} instance.
+	 *
+	 * <p>The string representation is constructed as follows:
+	 * <pre>
+	 *   {myFirstKey=myFirstValue, mySecondKey=mySecondValue, ..}
+	 * </pre>
+	 *
+	 * @param target the target map to stringify
+	 * @return the string representation of the passed-in map
 	 */
 	public function execute(target):String {
 		var map:Map = Map(target);
@@ -44,4 +53,5 @@ class org.as2lib.data.holder.map.MapStringifier extends BasicClass implements St
 		result += "}";
 		return result;
 	}
+	
 }
