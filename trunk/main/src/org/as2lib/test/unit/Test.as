@@ -211,8 +211,8 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	}
 	/**
 	 * overload
-	 * @see assertTrueWithMessage
-	 * @see assertTrueWithoutMessage
+	 * @see #assertTrueWithMessage
+	 * @see #assertTrueWithoutMessage
 	 */
 	private static function assertTrue():Void {
 		var that = eval("th"+"is");
@@ -226,6 +226,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * Asserts if one var is shurly True.
 	 *
 	 * @see #assertTrueWithMessage
+	 * @see #assertFalse
 	 * @see #assertFalseWithoutMessage
 	 * @see #assertFalseWithMessage
 	 * 
@@ -243,7 +244,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * @see #assertFalseWithMessage
 	 * 
 	 * @param message	Message to be displayed when an Error occured
-	 * @param var1		Var that should be true.
+	 * @param var1	Var that should be true.
 	 */
 	private static function assertTrueWithMessage (message:String, var1):Void {
 		if(var1 !== true) {
@@ -252,18 +253,32 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	}
 	
 	/**
+	 * overload
+	 * @see #assertFalseWithMessage
+	 * @see #assertFalseWithoutMessage
+	 */
+	private static function assertFalse():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that,arguments);
+		overload.addHandlerByValue([String, Object], assertFalseWithMessage);
+		overload.addHandlerByValue([Object], assertFalseWithoutMessage);
+		overload.forward();
+	}
+	
+	/**
 	 * Asserts if one var is shurly False.
 	 * 
 	 * @see #assertTrue
+	 * @see #assertTrueWithoutMessage
 	 * @see #assertTrueWithMessage
+	 * @see #assertFalse
 	 * @see #assertFalseWithMessage
 	 *
 	 * @param var1	First var.
 	 */
-	private static function assertFalse (var1):Void {
-		assertFalseWithMessage ("undefined", var1);
+	private static function assertFalseWithoutMessage (var1):Void {
+		assertFalseWithMessage ("", var1);
 	}
-	
 	
 	/**
 	 * Uses a Message to #assertFalse.
@@ -271,6 +286,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * @see #assertTrue
 	 * @see #assertTrueWithMessage
 	 * @see #assertFalse
+	 * @see #assertFalseWithoutMessage
 	 * 
 	 * @param message	Message to be displayed when an Error occured
 	 * @param var1		First Var.
@@ -282,24 +298,41 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	}
 	
 	/**
+	 * overload
+	 * @see #assertEqualsWithMessage
+	 * @see #assertEqualsWithoutMessage
+	 */
+	private static function assertEquals():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that,arguments);
+		overload.addHandlerByValue([String, Object, Object], assertEqualsWithMessage);
+		overload.addHandlerByValue([Object, Object], assertEqualsWithoutMessage);
+		overload.forward();
+	}
+	
+	/**
 	 * Asserts if two Vars are the same.
 	 *
+	 * @see #assertEquals
 	 * @see #assertEqualsWithMessage
 	 * @see #assertNotEquals
+	 * @see #assertNotEqualsWithoutMessage
 	 * @see #assertNotEqualsWithMessage
 	 * 
 	 * @param var1	First Var.
 	 * @param var2	Second Var.
 	 */
-	private static function assertEquals (var1, var2):Void {
-		assertEqualsWithMessage ("undefined", var1, var2);
+	private static function assertEqualsWithoutMessage (var1, var2):Void {
+		assertEqualsWithMessage ("", var1, var2);
 	}
 
 	/**
 	 * Uses a Message to #assertEquals.
 	 *
 	 * @see #assertEquals
+	 * @see #assertEqualsWithutMessage
 	 * @see #assertNotEquals
+	 * @see #assertNotEqualsWithoutMessage
 	 * @see #assertNotEqualsWithMessage
 	 * 
 	 * @param message	Message to be displayed when an Error occured
@@ -313,17 +346,32 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	}
 	
 	/**
-	 * Asserts if two Vars are Not the same.
+	 * overload
+	 * @see #assertNotEqualsWithMessage
+	 * @see #assertNotEqualsWithoutMessage
+	 */
+	private static function assertNotEquals():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that,arguments);
+		overload.addHandlerByValue([String, Object, Object], assertNotEqualsWithMessage);
+		overload.addHandlerByValue([Object, Object], assertNotEqualsWithoutMessage);
+		overload.forward();
+	}
+	
+	/**
+	 * Asserts if two Vars are not the same.
 	 * 
 	 * @see #assertEquals
 	 * @see #assertEqualsWithMessage
+	 * @see #assertEqualsWithoutMessage
 	 * @see #assertNotEqualsWithMessage
+	 * @see #assertNotEquals
 	 *
 	 * @param var1	First var.
 	 * @param var2	Second var.
 	 */
-	private static function assertNotEquals (var1, var2):Void {
-		assertNotEqualsWithMessage ("undefined", var1, var2);
+	private static function assertNotEqualsWithoutMessage (var1, var2):Void {
+		assertNotEqualsWithMessage ("", var1, var2);
 	}
 	
 	
@@ -331,8 +379,10 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * Uses a Message to #assertNotEquals.
 	 *
 	 * @see #assertEquals
+	 * @see #assertEqualsWithoutMessage
 	 * @see #assertEqualsWithMessage
 	 * @see #assertNotEquals
+	 * @see #assertNotEqualsWithoutMessage
 	 * 
 	 * @param message	Message to be displayed when an Error occured
 	 * @param var1		First Var.
@@ -345,24 +395,40 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	}
 	
 	/**
+	 * overload
+	 * @see #assertNotNullWithMessage
+	 * @see #assertNotNullWithoutMessage
+	 */
+	private static function assertNotNull():Void {
+		var that = eval("th"+"is");
+		var overload:Overload = new Overload(that,arguments);
+		overload.addHandlerByValue([String, Object], assertNotNullWithMessage);
+		overload.addHandlerByValue([Object], assertNotNullWithoutMessage);
+		overload.forward();
+	}
+	
+	/**
 	 * Asserts if an Var is not Null.
 	 *
+	 * @see #assertNotNull
 	 * @see #assertNotNullWithMessage
 	 * @see #assertNull
 	 * @see #assertNullWithMessage
 	 * 
 	 * @param var1	Var that should be Null.
 	 */
-	private static function assertNotNull (var1):Void {
-		assertNotNullWithMessage("undefined", var1);
+	private static function assertNotNullWithoutMessage (var1):Void {
+		assertNotNullWithMessage("", var1);
 	}	
 	
 	/**
 	 * Adds a Message to #assertNotNull.
 	 *
 	 * @see #assertNotNull
+	 * @see #assertNotNullWithoutMessage
 	 * @see #assertNull
 	 * @see #assertNullWithMessage
+	 * @see #assertNullWithoutMessage
 	 * 
 	 * @param message	Message to be displayed when an Error occured
 	 * @param var1		Var that should not be Null.
@@ -378,13 +444,14 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * Asserts if an Var is Null.
 	 *
 	 * @see #assertNotNull
+	 * @see #assertNotNullWIthoutMessage
 	 * @see #assertNotNullWithMessage
 	 * @see #assertNullWithMessage
 	 * 
 	 * @param var1	Var that should be Null.
 	 */
-	private static function assertNull (var1):Void {
-		assertNullWithMessage("undefined", var1);
+	private static function assertNullWithoutMessage (var1):Void {
+		assertNullWithMessage("", var1);
 	}
 	
 	/**
