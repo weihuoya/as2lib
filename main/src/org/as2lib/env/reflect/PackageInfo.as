@@ -415,12 +415,13 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 	 */
 	public function isParentPackage(package:PackageInfo):Boolean {
 		if (!package) return false;
-		if (package.isRoot()) return false;
 		if (package == this) return false;
-		var parent:PackageInfo = package.getParent();
-		if (!parent) return false;
-		if (parent == this) return true;
-		return isParentPackage(parent);
+		while (package) {
+			if (package.isRoot()) return false;
+			var package:PackageInfo = package.getParent();
+			if (package == this) return true;
+		}
+		return false;
 	}
 	
 }
