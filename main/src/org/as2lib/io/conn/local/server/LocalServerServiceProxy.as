@@ -80,6 +80,9 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	/** Service's status. */
 	private var running:Boolean;
 	
+	/** Stores the current service url. */
+	private var currentServiceUrl:String;
+	
 	/**
 	 * Constructs a new LocalServerServiceProxy instance.
 	 *
@@ -93,6 +96,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 		this.path = path;
 		this.service = service;
 		running = false;
+		currentServiceUrl = null;
 	}
 	
 	/**
@@ -165,10 +169,11 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	public function run(host:String):Void {
 		if (isRunning()) this.stop();
 		try {
-			getConnection().connect(generateServiceUrl(host, path));
+			currentServiceUrl = generateServiceUrl(host, path);
+			getConnection().connect(currentServiceUrl);
 			running = true;
 		} catch(exception:org.as2lib.io.conn.local.core.ReservedConnectionException) {
-			throw new ReservedServiceException("Service with path [" + path + "] on host [" + host + "] is already in use.", this, arguments).initCause(exception);
+			throw new ReservedServiceException("Service with url [" + currentServiceUrl + "] is already in use.", this, arguments).initCause(exception);
 		}
 	}
 	
@@ -180,6 +185,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	public function stop(Void):Void {
 		getConnection().close();
 		running = false;
+		currentServiceUrl = null;
 	}
 	
 	/**
@@ -203,10 +209,10 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 			if (service[methodName]) {
 				service[methodName].apply(service, args);
 			} else {
-				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(path, methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null));
+				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null));
 			}
 		} catch (exception) {
-			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(path, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, exception));
+			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, exception));
 		}
 	}
 	
@@ -222,10 +228,13 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * #invokeMethodByNameAndArguments(String, Array):Void method gets
 	 * invoked instead.
 	 *
-	 * <p>The response service is supposed to be of type MethodInvocationCallback.
-	 * And thus defines the two methods onReturn(MethodInvocationReturInfo):Void
-	 * and onError(MethodInvocationErrorInfo):Void.
-	 *
+	 * <p>The response service is supposed to define two methods with the
+	 * following signature:
+	 * <ul>
+	 *   <li>onReturn(returnValue):*</li>
+	 *   <li>onError(errorCode:Number, exception):*</li>
+	 * </ul>
+	 * 
 	 * <p>The onReturn(..) method gets invoked on the response service if
 	 * the method executed successfully.
 	 *
@@ -257,19 +266,19 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 		var listener:MethodInvocationErrorListener = new MethodInvocationErrorListener();
 		var owner:LocalServerServiceProxy = this;
 		listener.onError = function(info:MethodInvocationErrorInfo):Void {
-			owner.getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(owner.getPath(), methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR, null));
+			owner.getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(owner.currentServiceUrl, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR, null));
 		}
 		try {
 			if (service[methodName]) {
 				var returnValue = service[methodName].apply(service, args);
-				sendResponse(methodName, args, responseServiceUrl, "onReturn", [new MethodInvocationReturnInfo(getPath(), methodName, args, returnValue)], listener);
+				sendResponse(methodName, args, responseServiceUrl, "onReturn", [returnValue], listener);
 			} else {
-				sendResponse(methodName, args, responseServiceUrl, "onError", [new MethodInvocationErrorInfo(getPath(), methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null)], listener);
-				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null));
+				sendResponse(methodName, args, responseServiceUrl, "onError", [MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null], listener);
+				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null));
 			}
 		} catch (serviceMethodException) {
-			sendResponse(methodName, args, responseServiceUrl, "onError", [new MethodInvocationErrorInfo(path, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, serviceMethodException)], listener)
-			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, serviceMethodException));
+			sendResponse(methodName, args, responseServiceUrl, "onError", [MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, serviceMethodException], listener);
+			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, serviceMethodException));
 		}
 	}
 	
@@ -280,9 +289,9 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 		try {
 			getConnection().send(responseServiceUrl, responseMethod, responseArguments, responseListener);
 		} catch (uce:org.as2lib.io.conn.local.core.UnknownConnectionException) {
-			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, methodArguments, MethodInvocationErrorInfo.UNKNOWN_SERVICE_ERROR, uce));
+			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(currentServiceUrl, methodName, methodArguments, MethodInvocationErrorInfo.UNKNOWN_SERVICE_ERROR, uce));
 		} catch (mie:org.as2lib.io.conn.core.client.MethodInvocationException) {
-			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(getPath(), methodName, methodArguments, MethodInvocationErrorInfo.OVERSIZED_ARGUMENTS_ERROR, mie));
+			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(currentServiceUrl, methodName, methodArguments, MethodInvocationErrorInfo.OVERSIZED_ARGUMENTS_ERROR, mie));
 		}
 	}
 	
