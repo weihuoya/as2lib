@@ -19,14 +19,37 @@ import org.as2lib.data.holder.List;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.array.ArrayIterator;
-import org.as2lib.data.holder.HolderConfig;
+import org.as2lib.util.Stringifier;
+import org.as2lib.data.holder.list.ListStringifier;
 
 /**
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	
+	/** Stringifies lists. */
+	private static var stringifier:Stringifier;
+	
 	private var data:Array;
+	
+	/**
+	 * Returns the stringifier to stringify lists.
+	 *
+	 * @return the list stringifier
+	 */
+	public static function getStringifier(Void):Stringifier {
+		if (!stringifier) stringifier = new ListStringifier();
+		return stringifier;
+	}
+	
+	/**
+	 * Sets the stringifier to stringify lists.
+	 *
+	 * @param listStringifier the stringifier to stringify lists
+	 */
+	public static function setStringifier(listStringifier:Stringifier):Void {
+		stringifier = listStringifier;
+	}
 	
 	public function ArrayList(Void) {
 		data = new Array();
@@ -154,7 +177,7 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
 	public function toString(Void):String {
-		return HolderConfig.getListStringifier().execute(this);
+		return getStringifier().execute(this);
 	}
 	
 }

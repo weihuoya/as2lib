@@ -5,6 +5,13 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="1">
+         <day value="27>
+           <entry type="remove" package="org.as2lib.data.holder" class="HolderConfig">Moved stringifier into specific data holder to reduce unnecessary imports of stringifiers.</entry>
+           <entry type="add" package="org.as2lib.data.holder.map" class="AbstractMap">Contains the set- and getStringifier method to stringify maps.</entry>
+           <entry type="add" package="org.as2lib.data.holder.stack" class="SimpleStack" method="set-/getStringifier></entry>
+           <entry type="add" package="org.as2lib.data.holder.queue" class="LinearQueue" method="set-/getStringifier></entry>
+           <entry type="add" package="org.as2lib.data.holder.list" class="ArrayList" method="set-/getStringifier></entry>
+         </day>
          <day value="26">
            <entry type="remove" package="org.as2lib.env.except" class="StackTraceElementFactory"></entry>
            <entry type="change" package="org.as2lib.env.except" class="SimpleStackTraceElement"><change-rename to="StackTraceElement"></entry>
