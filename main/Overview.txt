@@ -129,3 +129,26 @@ class org.as2lib.basic.Exception extends Error implements BasicInterface {
      public function getMessage():String;
      public function getClass():ClassInfo;
 }
+
+class org.as2lib.basic.TypedArray extends BasicClass {
+     public static var CASEINSENSITIVE, DESCENDING, NUMERIC, RETURNINDEXDARRAY, UNIQUESORT;
+
+     public function TypedArray(type:Function);
+     public function concat(value0:TypedArray, value1:TypedArray, ..., valueN:TypedArray):TypedArray;
+     public function getType():Function;
+     public fucntion get(i:Number):Object;
+     public function set(i:Number, value:Object):Void;
+     public function join(separator:String):String;
+     public function pop():Object;
+     public function push(value:Object):Number;
+     public function reverse():Void;
+     public function shift():Object;
+     public function slice(start:Number, end:Number):TypedArray;
+     public function sort():Object;
+     public function sortOn():Object;
+     public function splice(start:Number, deleteCount:Number, value0:Object, value1:Object...valueN:Object):Void;
+     public function toString():String;
+     public function unshift(value0:Object, value1:Object...valueN:Object):Number;
+     public function getLength():Number;
+     public function iterator():Iterator;
+}
