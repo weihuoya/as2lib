@@ -7,6 +7,7 @@ import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.env.util.ReflectUtil;
 
 /**
  * Out is the main output class. You use this class to make your output.
@@ -71,6 +72,15 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	}
 	
 	/**
+	 * Returns the currently set OutLevel.
+	 *
+	 * @return the OutLevel
+	 */
+	public function getLevel(Void):OutLevel {
+		return level;
+	}
+	
+	/**
 	 * Adds a new OutHandler to the list of handlers. These OutHandlers will be used
 	 * to make the actual output. They get invoked when output shall be made.
 	 *
@@ -99,13 +109,17 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	}
 	
 	/**
-	 * Checks if messages appropriate to the passed in OutLevel can be put out.
+	 * Checks whether this Out instance is enabled for a given OutLevel passed as
+	 * parameter.
 	 *
 	 * @param level the OutLevel to make the check upon
-	 * @return true if output of the passed in OutLevel can be made else false
+	 * @return true if this Out instance is enabled for the given OutLevel else false
 	 */
-	public function isOutputable(aLevel:OutLevel):Boolean {
-		return ObjectUtil.isInstanceOf(level, aLevel.getClass().getClass());
+	public function isEnabledFor(aLevel:OutLevel):Boolean {
+		if (level == aLevel) {
+			return true;
+		}
+		return ObjectUtil.isInstanceOf(level, ReflectUtil.getClassInfo(aLevel).getClass());
 	}
 	
 	/**
