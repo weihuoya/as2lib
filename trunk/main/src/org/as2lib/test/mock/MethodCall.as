@@ -51,11 +51,14 @@ class org.as2lib.test.mock.MethodCall extends BasicClass {
 		this.argumentsMatcher = argumentsMatcher;
 	}
 	
-	public function verify(methodCall:MethodCall):Void {
+	public function matches(methodCall:MethodCall):Boolean {
 		if (methodName != methodCall.getMethodName())
 			throw new IllegalArgumentException("Method names [" + methodName + ", " + methodCall.getMethodName() + "] must be the same.", this, arguments);
-		if (!getArgumentsMatcher().matchArguments(arguments, methodCall.getArguments()))
-			throw new AssertionFailedError("Arguments [" + arguments + ", " + methodCall.getArguments() + "] do not match.", this, arguments);
+		return getArgumentsMatcher().matchArguments(args, methodCall.getArguments());
+	}
+	
+	public function toString(Void):String {
+		return (methodName + "(" + args + ")");
 	}
 	
 }

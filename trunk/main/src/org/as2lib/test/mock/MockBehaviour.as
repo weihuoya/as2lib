@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicInterface;
+import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MethodCallBehaviour;
 
 /**
@@ -30,6 +31,6 @@ interface org.as2lib.test.mock.MockBehaviour extends BasicInterface {
 	
 	public function removeAllBehaviour(Void):Void;
 	
-	public function verify(Void):Void;
+	public function verify(testCase:TestCase):Void;
 	
 }

@@ -22,6 +22,7 @@ import org.as2lib.data.holder.map.PrimitiveTypeMap;
 import org.as2lib.env.reflect.ProxyFactory;
 import org.as2lib.env.reflect.ResolveProxyFactory;
 import org.as2lib.env.reflect.InvocationHandler;
+import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.test.mock.ArgumentsMatcher;
 import org.as2lib.test.mock.MethodCallBehaviour;
@@ -220,7 +221,7 @@ class org.as2lib.test.mock.support.SimpleMockControl extends BasicClass implemen
 	 * @see MockControl#reset()
 	 */
 	public function reset(Void):Void {
-		behaviour.removeAllMethodCallBehaviour();
+		behaviour.removeAllBehaviour();
 		state = getRecordStateFactory().getMockControlState(behaviour);
 	}
 	
@@ -356,8 +357,8 @@ class org.as2lib.test.mock.support.SimpleMockControl extends BasicClass implemen
 	/**
 	 * @see MockControl#verify()
 	 */
-	public function verify(Void):Void {
-		state.verify();
+	public function verify(testCase:TestCase):Void {
+		state.verify(testCase);
 	}
 	
 }

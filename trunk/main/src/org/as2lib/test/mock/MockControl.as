@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicInterface;
+import org.as2lib.test.unit.TestCase;
 
 /**
  * @author Simon Wacker
@@ -165,9 +166,9 @@ interface org.as2lib.test.mock.MockControl extends BasicInterface {
 	/**
 	 * Verifies that all expectations have been met.
 	 *
+	 * @param testCase test case to call assert methods on
 	 * @throws org.as2lib.env.except.IllegalStateException if the mock object is in record state
-	 * @throws org.as2lib.test.mock.AssertionFailedError if any expectation has not been met
 	 */
-	public function verify(Void):Void;
+	public function verify(testCase:TestCase):Void;
 	
 }

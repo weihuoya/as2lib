@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MethodCallBehaviour;
 import org.as2lib.test.mock.MethodResponse;
 import org.as2lib.test.mock.MethodCallRange;
@@ -76,21 +77,11 @@ class org.as2lib.test.mock.support.DefaultMethodCallBehaviour extends BasicClass
 	/**
 	 * @see MethodCallBehaviour#verify()
 	 */
-	public function verify(Void):Void {
-		var errorMessage:String = "";
-		try {
-			expectedRange.verify(actualCalls.length);
-		} catch (exception:org.as2lib.test.mock.AssertionFailedError) {
-			errorMessage += exception.getMessage() + "\n";
-		}
+	public function verify(testCase:TestCase):Void {
+		testCase["assertTrue"](expectedCall.getMethodName() + ": Expected call range [" + expectedRange + "] has not been met. Actual number of calls have been: " + actualCalls.length + ".", expectedRange.contains(actualCalls.length));
 		for (var i:Number = 0; i < actualCalls.length; i++) {
-			try {
-				expectedCall.verify(actualCalls[i]);
-			} catch (exception:org.as2lib.test.mock.AssertionFailedError) {
-				errorMessage += exception.getMessage() + "\n";
-			}
+			testCase["assertTrue"](expectedCall.getMethodName() + ": Expected call [" + expectedCall + "] does not match actual call [" + actualCalls[i] + "].", expectedCall.matches(actualCalls[i]));
 		}
-		if (errorMessage) throw new AssertionFailedError(errorMessage, this, arguments);
 	}
 	
 }

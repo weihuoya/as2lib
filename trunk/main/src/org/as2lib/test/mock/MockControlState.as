@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicInterface;
+import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.MethodResponse;
@@ -47,8 +48,9 @@ interface org.as2lib.test.mock.MockControlState extends BasicInterface {
 	/**
 	 * Verifies that all expectations have been met.
 	 *
+	 * @param testCase test case to call assert methods on
 	 * @throws org.as2lib.test.mock.AssertionFailedError if any expectation has not been met
 	 */
-	public function verify(Void):Void;
+	public function verify(testCase:TestCase):Void;
 	
 }

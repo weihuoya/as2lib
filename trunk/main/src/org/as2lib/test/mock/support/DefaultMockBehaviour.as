@@ -17,11 +17,11 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.PrimitiveTypeMap;
+import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MethodCallBehaviour;
 import org.as2lib.test.mock.MockBehaviour;
 import org.as2lib.test.mock.MethodCallBehaviourFactory;
 import org.as2lib.test.mock.support.DefaultMethodCallBehaviour;
-import org.as2lib.test.mock.AssertionFailedError;
 
 /**
  * @author Simon Wacker
@@ -104,17 +104,11 @@ class org.as2lib.test.mock.support.DefaultMockBehaviour extends BasicClass imple
 	/**
 	 * @see MockBehaviour#verify()
 	 */
-	public function verify(Void):Void {
+	public function verify(testCase:TestCase):Void {
 		var behaviours:Array = methodCallBehaviours.getValues();
-		var errorMessage:String = "";
 		for (var i:Number = 0; i < behaviours.length; i++) {
-			try {
-				MethodCallBehaviour(behaviours[i]).verify();
-			} catch (exception:org.as2lib.test.mock.AssertionFailedError) {
-				errorMessage += exception.getMessage() + "\n";
-			}
+			MethodCallBehaviour(behaviours[i]).verify(testCase);
 		}
-		if (errorMessage) throw new AssertionFailedError(errorMessage, this, arguments);
 	}
 	
 }
