@@ -16,10 +16,12 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.reflect.ReflectConfig;
+import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageMemberInfo;
 import org.as2lib.env.reflect.PackageMemberFilter;
-import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.reflect.ReflectConfig;
+import org.as2lib.env.reflect.algorithm.PackageAlgorithm;
 import org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm;
 
 /**
@@ -43,6 +45,12 @@ import org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm;
  */
 class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMemberInfo {
 	
+	/** The algorithm to find packages. */
+	private static var packageAlgorithm:PackageAlgorithm;
+	
+	/** The algorithm to find members of packages, that are classes and packages. */
+	private static var packageMemberAlgorithm:PackageMemberAlgorithm;
+	
 	/** The name of the package. */
 	private var name:String;
 	
@@ -58,27 +66,24 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	/** The members of the package. That means all classes, interfaces and packages contained in the package. */
 	private var members:Array;
 	
-	/** Stores the member algorithm. */
-	private var packageMemberAlgorithm:PackageMemberAlgorithm;
-	
 	/**
 	 * Returns the package info corresponding to the passed-in name.
 	 *
 	 * <p>The package name is composed of the preceding path and the
-	 * actual package name, that means it must be fully qualified.
+	 * actual package name, that means it must be fully qualified. For
+	 * example 'org.as2lib.core'.
 	 *
-	 * <p>Null will be returned if:
-	 * <ul>
-	 *   <li>The passed-in name is null, undefined or a blank string.</li>
-	 *   <li>There is no package with the given name.</li>
-	 * </ul>
+	 * <p>This method first checks whether the package is already
+	 * contained in the cache.
 	 *
 	 * @param packageName the full name of the package
 	 * @return the package info corresponding to the passed-in name
+	 * @throws IllegalArgumentException if the passed-in name is null, undefined or an empty string or
+	 *                                  if the object corresponding to the passed-in name is not of type object
+	 * @throws PackageNotFoundException if a package with the passed-in name could not be found
 	 */
 	public static function forName(packageName:String):PackageInfo {
-		if (!packageName) return null;
-		return ReflectConfig.getPackageAlgorithm().executeByName(packageName);
+		return getPackageAlgorithm().executeByName(packageName);
 	}
 	
 	/**
@@ -87,18 +92,73 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * <p>This method first checks whether the package is already
 	 * contained in the cache.
 	 *
-	 * <p>Null will be returned if:
-	 * <ul>
-	 *   <li>The passed-in package is null or undefined.</li>
-	 *   <li>The package info corresponding to the package could not be generated.</li>
-	 * </ul>
-	 *
 	 * @param package the package you wanna get the package info for
 	 * @return the package info corresponding to the passed-in package
+	 * @throws IllegalArgumentException if the passed-in package is null or undefined
 	 */
 	public static function forPackage(package):PackageInfo {
-		if (package == null) return null;
+		if (package == null) throw new IllegalArgumentException("The passed-in package '" + package + "' is not allowed to be null or undefined.", eval("th" + "is"), arguments);
+		var packageInfo:PackageInfo = ReflectConfig.getCache().getPackage(package);
+		if (packageInfo) return packageInfo;
 		return ReflectConfig.getCache().addPackage(new PackageInfo(package));
+	}
+	
+	/**
+	 * Sets the algorithm used to find packages.
+	 *
+	 * <p>If you pass an algorithm of value null or undefined,
+	 * {@link #getPackageAlgorithm} will return the default one.
+	 *
+	 * @param newPackageAlgorithm the new algorithm to find packages
+	 * @see #getPackageAlgorithm
+	 */
+	public static function setPackageAlgorithm(newPackageAlgorithm:PackageAlgorithm):Void {
+		packageAlgorithm = newPackageAlgorithm;
+	}
+	
+	/**
+	 * Returns the algorithm used to find packages.
+	 *
+	 * <p>Either the algorithm set via {@link #setPackageAlgorithm} will be
+	 * returned or the default one which is an instance of class
+	 * {@link PackageAlgorithm}.
+	 *
+	 * @return the set or the default package algorithm
+	 * @see #setPackageAlgorithm
+	 */
+	public static function getPackageAlgorithm(Void):PackageAlgorithm {
+		if (!packageAlgorithm) packageAlgorithm = new PackageAlgorithm();
+		return packageAlgorithm;
+	}
+	
+	/**
+	 * Sets the algorithm used to find members of packages.
+	 *
+	 * <p>Members of packages are classes, interfaces and packages.
+	 *
+	 * <p>If you pass an algorithm of value null or undefined,
+	 * {@link #getPackageMemberAlgorithm} will return the default one.
+	 *
+	 * @param newPackageMemberAlgorithm the new algorithm to find members of packages
+	 * @see #getPackageMemberAlgorithm
+	 */
+	public static function setPackageMemberAlgorithm(newPackageMemberAlgorithm:PackageMemberAlgorithm):Void {
+		packageMemberAlgorithm = newPackageMemberAlgorithm;
+	}
+	
+	/**
+	 * Returns the member algorithm used to find members of packages.
+	 *
+	 * <p>Either the algorithm set via {@link #setPackageMemberAlgorithm} will be
+	 * returned or the default one which is an instance of class
+	 * {@link PackageMemberAlgorithm}.
+	 *
+	 * @return the set or the default member algorithm
+	 * @see #setPackageMemberAlgorithm
+	 */
+	public static function getPackageMemberAlgorithm(Void):PackageMemberAlgorithm {
+		if (!packageMemberAlgorithm) packageMemberAlgorithm = new PackageMemberAlgorithm();
+		return packageMemberAlgorithm;
 	}
 	
 	/**
@@ -120,41 +180,6 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 		this.package = package;
 		this.name = name;
 		this.parent = parent;
-	}
-	
-	/**
-	 * Sets the algorithm used to find members.
-	 *
-	 * <p>If you pass an algorithm of value null or undefined,
-	 * {@link #getPackageMemberAlgorithm} will return the default one.
-	 *
-	 * <p>This algorithm is used by the {@link #getMembers} method.
-	 *
-	 * @param packageMemberAlgorithm the new member algorithm to find members
-	 *
-	 * @see #getPackageMemberAlgorithm
-	 */
-	public function setPackageMemberAlgorithm(packageMemberAlgorithm:PackageMemberAlgorithm):Void {
-		this.packageMemberAlgorithm = packageMemberAlgorithm;
-	}
-	
-	/**
-	 * Returns the member algorithm used to find members of this package.
-	 *
-	 * <p>Either the algorithm set via {@link #setPackageMemberAlgorithm} will be
-	 * returned or the default member algorithm returned by the
-	 * {@link ReflectConfig#getPackageMemberAlgorithm} method.
-	 *
-	 * <p>If you set an algorithm of value null or undefined the default
-	 * one will be used.
-	 *
-	 * @return the currently used member algorithm
-	 *
-	 * @see #setPackageMemberAlgorithm
-	 */
-	public function getPackageMemberAlgorithm(Void):PackageMemberAlgorithm {
-		if (!packageMemberAlgorithm) packageMemberAlgorithm = ReflectConfig.getPackageMemberAlgorithm();
-		return packageMemberAlgorithm;
 	}
 	
 	/**
@@ -220,10 +245,10 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * Initializes the name and the parent of the represented package.
 	 *
 	 * <p>This is done using the result of an execution of the package algorithm
-	 * returned by {@link ReflectConfig#getPackageAlgorithm}.
+	 * returned by the static {@link #getPackageAlgorithm} method.
 	 */
 	private function initNameAndParent(Void):Void {
-		var info = ReflectConfig.getPackageAlgorithm().execute(getPackage());
+		var info = getPackageAlgorithm().execute(getPackage());
 		if (name === undefined) name = info.name == null ? null : info.name;
 		if (parent === undefined) parent = info.parent == null ? null : info.parent;
 	}

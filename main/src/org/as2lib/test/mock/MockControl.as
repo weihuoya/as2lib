@@ -304,6 +304,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	private function getBlankMockControlStateFactory(Void):MockControlStateFactory {
 		var result = new Object();
 		result.__proto__ = MockControlStateFactory["prototype"];
+		result.__constructor__ = MockControlStateFactory;
 		return result;
 	}
 	
@@ -354,6 +355,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	private function getBlankInvocationHandler(Void):InvocationHandler {
 		var result = new Object();
 		result.__proto__ = InvocationHandler["prototype"];
+		result.__constructor__ = InvocationHandler;
 		return result;
 	}
 	

@@ -75,6 +75,7 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 	private function getBlankMethodBehaviorFactory(Void):MethodBehaviorFactory {
 		var result = new Object();
 		result.__proto__ = MethodBehaviorFactory["prototype"];
+		result.__constructor__ = MethodBehaviorFactory;
 		return result;
 	}
 	

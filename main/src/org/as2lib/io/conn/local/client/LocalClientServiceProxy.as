@@ -197,6 +197,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	private function getBlankMethodInvocationErrorListener(Void):MethodInvocationErrorListener {
 		var result = new Object();
 		result.__proto__ = MethodInvocationErrorListener["prototype"];
+		result.__constructor__ = MethodInvocationErrorListener;
 		return result;
 	}
 	
@@ -209,6 +210,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	private function getBlankMethodInvocationCallback(Void):MethodInvocationCallback {
 		var result = new Object();
 		result.__proto__ = MethodInvocationCallback["prototype"];
+		result.__constructor__ = MethodInvocationCallback;
 		return result;
 	}
 	

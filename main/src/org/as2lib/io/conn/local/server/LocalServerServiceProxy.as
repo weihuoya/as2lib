@@ -310,6 +310,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	private function getBlankMethodInvocationErrorListener(Void):MethodInvocationErrorListener {
 		var result = new Object();
 		result.__proto__ = MethodInvocationErrorListener["prototype"];
+		result.__constructor__ = MethodInvocationErrorListener;
 		return result;
 	}
 	

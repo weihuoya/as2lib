@@ -113,6 +113,7 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 	private static function getBlankLoggerRepository(Void):LoggerRepository {
 		var result = new Object();
 		result.__proto__ = LoggerRepository["prototype"];
+		result.__constructor__ = LoggerRepository;
 		return result;
 	}
 	

@@ -15,6 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.reflect.ClassNotFoundException;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
@@ -264,24 +266,26 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 	 * of the class's path (namespace) as well as its name. For example
 	 * 'org.as2lib.core.BasicClass'.
 	 *
-	 * <p>Null gets returned if:
-	 * <ul>
-	 *   <li>The passed-in name is null, undefined or a blank string.</li>
-	 *   <li>There is no class with the given name, starting from the root 'package' that is by default _global.</li>
-	 *   <li>The object corresponding to the name is not of type function.</li>
-	 * </ul>
+	 * <p>The search starts on the package returned by the {@link Cache#getRoot}
+	 * method. If this method returns a package info whose getFullName method
+	 * returns null, undefined or an empty string '_global' is used instead.
 	 *
 	 * @param n the fully qualified name of the class
 	 * @return the class info representing the class corresponding to the name
+	 * @throws IllegalArgumentException if the passed-in name is null or undefined or an empty string or
+	 *                                  if the object corresponding to the passed-in name is not of type function
+	 * @throws ClassNotFoundException if a class with the passed-in name could not be found or
 	 */
 	public function executeByName(n:String):ClassInfo {
-		if (!n) return null;
+		if (!n) throw new IllegalArgumentException("The passed-in class name '" + n + "' is not allowed to be null, undefined or an empty string.", this, arguments);
 		var p:PackageInfo = getCache().getRoot();
-		var f:Function = eval(p.getFullName() + "." + n);
-		if (!f) return null;
+		var x:String = p.getFullName();
+		if (!x) x = "_global";
+		var f:Function = eval(g + "." + n);
+		if (!f) throw new ClassNotFoundException("A class with the name '" + n + "' could not be found.", this, arguments);
+		if (typeof(f) != "function") throw new IllegalArgumentException("The object corresponding to the passed-in class name '" + n + "' is not of type function.", this, arguments);
 		var r:ClassInfo = c.getClass(f);
 		if (r) return r;
-		if (typeof(f) != "function") return null;
 		var a:Array = n.split(".");
 		var g:Object = p.getPackage();
 		for (var i:Number = 0; i < a.length; i++) {
@@ -292,7 +296,7 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 				p = c.addPackage(new PackageInfo(g, a[i], p));
 			}
 		}
-		return null;
+		// unreachable!!!
 	}
 	
 }

@@ -189,6 +189,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Abs
 	private function getBlankInvocationHandler(Void):InvocationHandler {
 		var result = new Object();
 		result.__proto__ = InvocationHandler["prototype"];
+		result.__constructor__ = InvocationHandler;
 		return result;
 	}
 	

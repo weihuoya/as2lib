@@ -282,6 +282,7 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	private function getBlankConfigurableHierarchicalLoggerFactory(Void):ConfigurableHierarchicalLoggerFactory {
 		var result = new Object();
 		result.__proto__ = ConfigurableHierarchicalLoggerFactory["prototype"];
+		result.__constructor__ = ConfigurableHierarchicalLoggerFactory;
 		return result;
 	}
 	
