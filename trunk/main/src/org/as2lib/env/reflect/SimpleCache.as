@@ -89,7 +89,9 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 * @return the added ClassInfo
 	 */
 	public function addClass(info:ClassInfo):ClassInfo {
-		classes[info.getType().prototype.__as2lib__hashCode = hashCodeCounter++] = info;
+		var p = info.getType().prototype;
+		classes[p.__as2lib__hashCode = hashCodeCounter++] = info;
+		_global.ASSetPropFlags(p, "__as2lib__hashCode", 1, true);
 		return info;
 	}
 	
@@ -112,7 +114,9 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 * @return the added PackageInfo
 	 */
 	public function addPackage(info:PackageInfo):PackageInfo {
-		packages[info.getPackage().__as2lib__hashCode = hashCodeCounter++] = info;
+		var p = info.getPackage();
+		packages[p.__as2lib__hashCode = hashCodeCounter++] = info;
+		_global.ASSetPropFlags(p, "__as2lib__hashCode", 1, true);
 		return info;
 	}
 	
