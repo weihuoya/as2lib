@@ -112,3 +112,8 @@
       >> org.as2lib.env.except
 
         > removed UndefinedPropertyException
+
+
+      >> org.as2lib.env.out.handler
+
+        > added class SocketOutputServerHandler
