@@ -174,7 +174,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Abs
 			} else {
 				return serviceProxy.invokeByNameAndArguments(methodName, args);
 			}
-		}
+		};
 		return getTypeProxyFactory().createProxy(type, handler);
 	}
 	

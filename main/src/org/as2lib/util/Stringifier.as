@@ -31,6 +31,7 @@ interface org.as2lib.util.Stringifier extends BasicInterface {
 	 * Returns the string representation of the passed-in object.
 	 *
 	 * @param target the target object to stringify
+	 * @return the string representation of the target object
 	 */
 	public function execute(target):String;
 	
