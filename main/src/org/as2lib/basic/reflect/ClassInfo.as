@@ -2,11 +2,11 @@
 
 /**
  * Informationholder for the reflected Classinformation
- * This Interfaces defines the properties and possibilies to access
+ * This Interface defines the properties and possibilities to access
  * all informations that are stored using reflections.
  */
 
-interface org.as2lib.reflect.ClassInfo { 
+interface org.as2lib.basic.reflect.ClassInfo { 
       
      /** 
       * @return the name of the class

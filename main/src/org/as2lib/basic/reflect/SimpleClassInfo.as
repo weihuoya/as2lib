@@ -1,7 +1,10 @@
 ﻿import org.as2lib.reflect.ClassInfo;
 import org.as2lib.basic.TypedArray;
 
-class org.as2lib.reflect.SimpleClassInfo implements ClassInfo {
+/**
+ * @version 1.0
+ */
+class org.as2lib.basic.reflect.SimpleClassInfo implements ClassInfo {
      /** 
       * @see org.as2lib.reflect.ClassInfo
       */ 
