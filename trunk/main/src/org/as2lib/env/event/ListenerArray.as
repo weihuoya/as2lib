@@ -1,6 +1,6 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.env.event.EventListener;
-import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.util.ArrayUtil;
 
 class org.as2lib.env.event.ListenerArray extends BasicClass {
 	private var listeners:Array;
@@ -18,16 +18,7 @@ class org.as2lib.env.event.ListenerArray extends BasicClass {
 	}
 	
 	public function remove(listener:EventListener):Void {
-		var l:Number = length;
-		for (var i:Number = 0; i <= l; i++) {
-			if (get(i) === listener) {
-				listeners.splice(i, 1);
-				return;
-			}
-		}
-		throw new IllegalArgumentException("The specified listener [" + listener + "] is not available and could therefor not be removed.", 
-											this,
-											arguments);
+		ArrayUtil.removeElement(listeners, listener);
 	}
 	
 	public function clear(Void):Void {
