@@ -33,10 +33,26 @@ import org.as2lib.util.Call;
  * @author Martin Heideggers
  */
 class AssertTest extends TestCase {
+	
+    public var interval:Number; // Holder for testPause Method
+	
     public function AssertTest(Void) {
 		// Only for a test
 		// Strings thrown to evaluate how it acts with unexcepted Exceptiontypes.
 		// throw "My Error @ constructor";
+	}
+	
+	
+	public function testPause(Void):Void {
+		pause();
+		fail("Failed before pause.");
+		interval = setInterval(resumePause, 200, this);
+	}
+	
+	public function resumePause(that:AssertTest):Void {
+		that.fail("Failed by another Method after pause.");
+		clearInterval(that.interval);
+		that.resume();
 	}
 	
 	public function dontTestMe(Void):Void {
