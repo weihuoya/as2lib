@@ -42,8 +42,8 @@ class test.org.as2lib.env.overload.TOverload extends Test {
 		o.addHandlerByValue([Object, String], secondMethod);
 		var number:Number = Number(o.forward(["string", new Object()]));
 		assertTrue("The returned number [" + number + "] does not have the correct value [0].", (number == 0));
-		assertThrows(SameTypeSignatureException, o, "forward", [new String("firstString"), new String("secondString")]);
-		assertThrows(UnknownOverloadHandlerException, o, "forward", [0, 0]);
+		assertThrows(SameTypeSignatureException, o, "forward", [[new String("firstString"), new String("secondString")]]);
+		assertThrows(UnknownOverloadHandlerException, o, "forward", [[0, 0]]);
 	}
 	
 	private function firstMethod(string:String, object:Object):Number {
