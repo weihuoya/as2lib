@@ -1,4 +1,4 @@
-﻿import org.as2lib.basic.BasicInterface;
+﻿import org.as2lib.core.BasicInterface;
 
 /**
  * Interface for an possible Testcase as performance check.
