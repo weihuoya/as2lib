@@ -43,7 +43,7 @@ class org.as2lib.util.OverloadUtil extends BasicClass {
 	 * @param aFunction
 	 * @return an OverloadHandler instance
 	 */
-	public static function newOverloadHandler(someArguments:Array, aFunction:Function):OverloadHandler {
+	public static function newHandler(someArguments:Array, aFunction:Function):OverloadHandler {
 		return (new SimpleOverloadHandler(someArguments, aFunction));
 	}
 }

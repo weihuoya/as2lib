@@ -30,7 +30,7 @@ class org.as2lib.basic.BasicClass implements BasicInterface, Overload {
 	 * @see org.as2lib.basic.Overload
 	 */
 	public function newOverloadHandler(someArguments:Array, aFunction:Function):OverloadHandler {
-		return OverloadUtil.newOverloadHandler(someArguments, aFunction);
+		return OverloadUtil.newHandler(someArguments, aFunction);
 	}
 	
 	public function toString(Void):String {

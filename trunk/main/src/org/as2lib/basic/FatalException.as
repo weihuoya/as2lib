@@ -11,7 +11,7 @@ class org.as2lib.basic.FatalException extends AbstractException implements Throw
 	/**
 	 * Constructs a new Exception instance.
 	 */
-	public function FatalException(message:String, thrower:Object, args:FunctionArguments) {
+	public function FatalException(message:String, thrower, args:FunctionArguments) {
 		super(message, thrower, args);
 	}
 	
