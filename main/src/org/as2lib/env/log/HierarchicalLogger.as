@@ -53,7 +53,7 @@ interface org.as2lib.env.log.HierarchicalLogger extends Logger {
 	/**
 	 * Returns all handlers this logger broadcasts to when logging a message.
 	 *
-	 * <p>These handlers are the once directly added to this logger and thes
+	 * <p>These handlers are the once directly added to this logger and the
 	 * once of the parents.
 	 *
 	 * <p>Note that this is no basic rule but rather the normal functionality.

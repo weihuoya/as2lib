@@ -33,31 +33,49 @@ class org.as2lib.env.log.LogMessageStringifier extends BasicClass implements Str
 	/** Flag that determines whether to show the name of the logger in the string representation. */
 	private var showLoggerName:Boolean;
 	
+	/** Flag that determines whether to show the time in the string representation. */
+	private var showTime:Boolean;
+	
 	/**
 	 * Constructs a new LogMessageStringifier instance.
 	 *
+	 * <p>Level and logger name are shown by default.
+	 *
+	 * <p>The time is not shown by default.
+	 *
 	 * @param showLevel determines whether to show levels in the string representation
 	 * @param shoLoggerName determines whether to show the logger name in the string representation
+	 * @param showTime determines whether to show the time in the string representation
 	 */
-	public function LogMessageStringifier(showLevel:Boolean, showLoggerName:Boolean) {
+	public function LogMessageStringifier(showLevel:Boolean, showLoggerName:Boolean, showTime:Boolean) {
 		this.showLevel = showLevel == null ? true : showLevel;
 		this.showLoggerName = showLoggerName == null ? true : showLoggerName;
+		this.showTime = showTime;
 	}
 	
 	/**
 	 * Returns the string representation of the passed-in LogMessage instance.
 	 *
 	 * <p>The returned string gets composed as follows:
-	 * [theLogLevel]  [theLoggerName] - [theMessage]
+	 * [hours]:[minutes]:[seconds].[milliseconds]  [theLogLevel]  [theLoggerName] - [theMessage]
 	 *
-	 * <p>Depending on your custom settings which information to show and
-	 * which not a few parts may be left out.
+	 * <p>Depending on your custom settings, which information to show and
+	 * which not, a few parts may be left out.
+	 *
+	 * <p>The hours, minutes and seconds represent the time 
+	 *
+	 * <p>The elapsedMilliseconds are the milliseconds the elapsed since 
+	 * system start up on creation of the log message.
 	 *
 	 * @return the string representation of the log message
 	 */
 	public function execute(target):String {
 		var message:LogMessage = target;
 		var info = "";
+		if (showTime) {
+			var time:Date = new Date(message.getTimeStamp());
+			info += time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds() + "." + time.getMilliseconds() + "  ";
+		}
 		if (showLevel) info += message.getLevel() + "  ";
 		if (showLoggerName) info += message.getLoggerName() + " - ";
 		return (info + message.getMessage());

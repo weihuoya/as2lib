@@ -5,6 +5,11 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="2">
+         <day value="16">
+           <entry type="add" package="org.as2lib.env.log.LogManager" method="setLogger(Logger):Void">Offers easy to use support for singleton repositories.</entry>
+           <entry type="add" package="org.as2lib.env.log.logger.SimpleHierarchicalLogger" method="new(name:String)">Added second optional constructor argument 'broadcaster:EventBroadcaster'.</entry>
+           <entry type="remove" package="org.as2lib.env.log.logger.SimpleHierarchicalLogger" method="set-/getBroadcaster"></entry>
+         </day>
          <day value="15">
            <entry type="change" package="org.as2lib.env.log.repository" class="LoggerHierarchy" method="putLogger"><change-rename to="addLogger" /></entry>
          </day>
@@ -17,7 +22,7 @@
            <entry type="add" package="org.as2lib.env.reflect" class="PackageInfo" method="getMemberClassesByFlag(filterSubPackages:Boolean):Array">'filterSubPackages' defines whether member classes of sub-packages shall also be included in the result.</entry>
            <entry type="add" package="org.as2lib.env.reflect" class="PackageInfo" method="getMemberClassesByFilter(PackageMemberFilter):Array">Let's you filter member classes with your own set of rules.</entry>
            <entry type="add" package="org.as2lib.env.reflect" class="PackageInfo" method="getMemberPackagesByFlag(filterSubPackages:Boolean):Array">'filterSubPackages' defines whether member packages of sub-packages shall also be included in the result.</entry>
-           <entry type="add" package="org.as2lib.env.reflect" class="PackageInfo" method="getMemberPackagesByFilter(PackageMemberFilter):Array"Let's you filter member packages with your own set of rules.></entry>
+           <entry type="add" package="org.as2lib.env.reflect" class="PackageInfo" method="getMemberPackagesByFilter(PackageMemberFilter):Array">Let's you filter member packages with your own set of rules.></entry>
          </day>
          <day value="11">
            <entry type="add" package="org.as2lib.env.reflect" class="PackageMemberFilter">Filters/Excludes package members when searched for by e.g. the PackageInfo.getPackages or PackageInfo.getClasses methods.</entry>

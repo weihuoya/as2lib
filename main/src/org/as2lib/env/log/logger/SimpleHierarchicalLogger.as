@@ -106,8 +106,8 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends BasicClass impl
 	/** The fatal level as number. */
 	private var fatalLevelAsNumber:Number;
 	
-	/** Stores all added handlers. */
-	private var handlers:Array;
+	/** Says whether the handlers array already contains the parents' handlers. */
+	private var addedParentHandlers:Boolean;
 	
 	/** Stores the parent. */
 	private var parent:HierarchicalLogger;
@@ -121,11 +121,15 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends BasicClass impl
 	/**
 	 * Constructs a new SimpleHierarchicalLogger instance.
 	 *
+	 * <p>The default broadcaster is an instance of type SpeedEventBroadcaster.
+	 *
 	 * @param name the name of the new logger
+	 * @param broadcaster (optional) the broadcaster used to dispatch log messages to all handlers
 	 */
-	public function SimpleHierarchicalLogger(name:String) {
+	public function SimpleHierarchicalLogger(name:String, broadcaster:EventBroadcaster) {
 		setName(name);
-		handlers = new Array();
+		this.broadcaster = broadcaster ? broadcaster : new SpeedEventBroadcaster();
+		addedParentHandlers = false;
 		debugLevel = AbstractLogLevel.DEBUG;
 		debugLevelAsNumber = debugLevel.toNumber();
 		infoLevel = AbstractLogLevel.INFO;
@@ -136,36 +140,6 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends BasicClass impl
 		errorLevelAsNumber = errorLevel.toNumber();
 		fatalLevel = AbstractLogLevel.FATAL;
 		fatalLevelAsNumber = fatalLevel.toNumber();
-	}
-	
-	/**
-	 * Sets the broadcaster used to dispatch to all registered handlers.
-	 *
-	 * <p>If you set a broadcaster of value null or undefined the default
-	 * broadcaster will be used.
-	 *
-	 * @param broadcaster the new broadcaster used to dispatch to handlers
-	 * @see #getBroadcaster()
-	 */
-	public function setBroadcaster(broadcaster:EventBroadcaster):Void {
-		this.broadcaster = broadcaster;
-	}
-	
-	/**
-	 * Returns the currently used broadcaster.
-	 *
-	 * <p>Either the broadcaster set via #setBroadcaster(EventBroadcaster) will be
-	 * returned or the default SpeedEventBroadcaster.
-	 *
-	 * <p>The default one will be used if you set a broadcaster of value null
-	 * or undefined.
-	 *
-	 * @return the currently used broadcaster
-	 * @see #setBroadcaster(EventBroadcaster)
-	 */
-	public function getBroadcaster(Void):EventBroadcaster {
-		if (!broadcaster) broadcaster = new SpeedEventBroadcaster();
-		return broadcaster;
 	}
 	
 	/**
@@ -263,11 +237,14 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends BasicClass impl
 	 * <p>This method simply does nothing if the passed-in handler is null
 	 * or undefined.
 	 *
+	 * <p>If the passed-in handler has already been added it gets deleted
+	 * and added again.
+	 *
 	 * @param handler the new log handler to log messages
 	 */
 	public function addHandler(handler:LogHandler):Void {
 		if (handler) {
-			handlers.push(handler);
+			broadcaster.addListener(handler);
 		}
 	}
 	
@@ -281,12 +258,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends BasicClass impl
 	 */
 	public function removeHandler(handler:LogHandler):Void {
 		if (handler) {
-			var i:Number = handlers.length;
-			while (--i-(-1)) {
-				if (handlers[i] == handler) {
-					handlers.splice(i, 1);
-				}
-			}
+			broadcaster.removeListener(handler);
 		}
 	}
 	
@@ -294,24 +266,43 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends BasicClass impl
 	 * Removes all added log handlers.
 	 */
 	public function removeAllHandler(Void):Void {
-		handlers = new Array();
+		broadcaster.removeAllListener();
 	}
 	
 	/**
-	 * Returns all handlers that were directly added to this logger.
+	 * Returns all handlers this logger broadcasts to when logging a message.
 	 *
-	 * <p>If there are no added handlers an empty array gets returned.
+	 * <p>These handlers are the once directly added to this logger and the
+	 * once of the parents.
 	 *
-	 * <p>This method does never return null or undefined.
+	 * <p>The handlers of the parents are obtained via the parents getAllHandler
+	 * method which is supposed to also return the handlers of its parent and
+	 * so on.
 	 *
-	 * @return all added log handlers
+	 * <p>This method never returns null but an empty array if there are no
+	 * handlers added to this logger nor to its parents.
+	 *
+	 * <p>Note that this method stores the parents handlers by itself if it
+	 * once obtained it. That is when you first log a message. It than always
+	 * works with the stored handlers. That means that handlers added to its
+	 * parents after the handlers have once been stored are not recognized.
+	 *
+	 * @return all added log handlers and the ones of the parents
 	 */
 	public function getAllHandler(Void):Array {
+		if (!addedParentHandlers) addParentHandlers();
+		return broadcaster.getAllListener();
+	}
+	
+	/**
+	 * Adds the parent handlers to the broadcaster.
+	 */
+	private function addParentHandlers(Void):Void {
 		var parentHandlers:Array = getParent().getAllHandler();
 		if (parentHandlers) {
-			return handlers.concat(parentHandlers);
+			broadcaster.addAllListener(parentHandlers);
 		}
-		return handlers.concat();
+		addedParentHandlers = true;
 	}
 	
 	/**
@@ -416,6 +407,10 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends BasicClass impl
 	 * returned by the parent's getAllHandler method, that normally also
 	 * returns the handlers of its parents and so on.
 	 *
+	 * <p>Note that the handlers of the parents are resloved only once,
+	 * when the first message gets logged. They are stored in this logger
+	 * to reference them faster.
+	 *
 	 * @param message the message object to log
 	 * @param level the specific level at which the message shall be logged
 	 * @see #isEnabled(LogLevel):Boolean
@@ -423,10 +418,8 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends BasicClass impl
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
 			var logMessage:LogMessage = new LogMessage(message, level, name);
-			var broadcaster:EventBroadcaster = getBroadcaster();
-			broadcaster.addAllListener(getAllHandler());
+			if (!addedParentHandlers) addParentHandlers();
 			broadcaster.dispatch(logMessage);
-			broadcaster.removeAllListener();
 		}
 	}
 	
