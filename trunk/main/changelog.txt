@@ -43,7 +43,7 @@ Changed arguments to info:OutInfo.
 [-] org.as2lib.env.out.OutConfig.getErrorStringifier(Void):Stringifier (1/8/2004)
 
 [!] org.as2lib.env.reflect.algorithm.ClassAlgorithm (1/8/2004)
-It&apos;s now possible to obtain the corresponding ClassInfos of primitive types and MovieClips.
+It's now possible to obtain the corresponding ClassInfos of primitive types and MovieClips.
 
 [~] org.as2lib.test.unit (24/7/2004)
 Refactored the complete Testunit System (new API)
@@ -140,7 +140,7 @@ Important Bugfix SF-Request#996433
 
 [*] org.as2lib.util.Call.toString(Void):String (22/6/2004)
 
-[~] org.as2lib.util.?.? (22/6/2004)
+[~] org.as2lib.util. (22/6/2004)
 Change Argument Type from Function to Object
 
 [+] org.as2lib.util.ArrayUtil.indexOf(array:Array):Array (21/6/2004)
@@ -155,16 +155,13 @@ Implementation to use a for..in loop (could have sideeffects to useages).
 [~] org.as2lib.env.except.AbstractException.addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void (17/6/2004)
 Changed access specifier from private to public.
 
-[+] org.as2lib.aop (15/6/2004)
-AOP Framework added.
-
 [~] org.as2lib.env.overload.SimpleOverloadHandler.matches(args:Array):Boolean (12/6/2004)
 It now returns true if you check null against any type as expected.
 
 [+] org.as2lib.util.StringUtil.endsWith(string:String, searchString:String):Boolean (11/6/2004)
 
 [~] org.as2lib.env.except.AbstractException.new(message:String, thrower, args:FunctionArguments) (2/6/2004)
-&apos;!message&apos; to &apos;(message == undefined)&apos; because passing a blank String resulted in a failure.
+"!message" to "(message == undefined)" because passing a blank String resulted in a failure.
 
 [+] org.as2lib.util.StringUtil.addSpaceIndent(string:String, count:Number):String (25/5/2004)
 
@@ -206,7 +203,7 @@ Moved initialization of static vars into appropriate getter methods.
 It now uses the newly created classes and operations.
 
 [!] org.as2lib.env.except.SimpleStackTraceElement.getMethod():MethodInfo (5/5/2004)
-Fixed serious bug that broke the whole program if a Throwable was thrown by an operation of the superclass (the operation couldn&apos;t be found in the throwing subclass and a Throwable has thus been thrown) - it was actually no bug in the SimpleStackTraceElement but in the ClassInfo&apos;s.getMethods() operation.
+Fixed serious bug that broke the whole program if a Throwable was thrown by an operation of the superclass (the operation couldn't be found in the throwing subclass and a Throwable has thus been thrown) - it was actually no bug in the SimpleStackTraceElement but in the ClassInfo's.getMethods() operation.
 
 [~] org.as2lib.env.reflect.ClassInfo.getMethods(Void):Map (5/5/2004)
 It now also returns the operations declared by super types.
@@ -262,7 +259,7 @@ Changed arguments to args:Array.
 Renamed to algorithm.
 
 [~] org.as2lib.env.reflect.algorithm.ClassAlgorythm (28/4/2004)
-Renamed to ClassAlgorithm..
+Renamed to ClassAlgorithm.
 
 [~] org.as2lib.env.reflect.algorithm.PackageAlgorythm (28/4/2004)
 Renamed to PackageAlgorithm.

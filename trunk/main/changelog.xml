@@ -68,7 +68,6 @@
       </day>
       <day value="22">
         <entry type="enhancement" package="org.as2lib.util" class="Call" method="toString(Void):String"></entry>
-        <entry type="change" package="org.as2lib.util" class="?" method="?">Change Argument Type from Function to Object</entry>
       </day>
       <day value="21">
         <entry type="add" package="org.as2lib.util" class="ArrayUtil" method="indexOf(array:Array):Array"></entry>
