@@ -45,13 +45,10 @@ class org.as2lib.env.reflect.algorythm.MethodAlgorythm extends AbstractContentAl
 		search(clazz);
 		
 		this.staticFlag = false;
-		ObjectUtil.setAccessPermission(clazz.prototype, ObjectUtil.ACCESS_ALL_ALLOWED);
-		_global.ASSetPropFlags(clazz.prototype, ["__proto__", "constructor", "__constructor__"], 1, true);
-		/*ObjectUtil.setAccessPermission(clazz.prototype.__proto__, ObjectUtil.ACCESS_NOTHING_ALLOWED);
-		ObjectUtil.setAccessPermission(clazz.prototype.constructor, ObjectUtil.ACCESS_NOTHING_ALLOWED);
-		ObjectUtil.setAccessPermission(clazz.prototype.__constructor__, ObjectUtil.ACCESS_NOTHING_ALLOWED);*/
+		ObjectUtil.setAccessPermission(clazz.prototype, null, ObjectUtil.ACCESS_ALL_ALLOWED);
+		ObjectUtil.setAccessPermission(clazz.prototype, ["__proto__", "constructor", "__constructor__"], ObjectUtil.ACCESS_NOTHING_ALLOWED);
 		search(clazz.prototype);
-		ObjectUtil.setAccessPermission(clazz.prototype, ObjectUtil.ACCESS_IS_HIDDEN);
+		ObjectUtil.setAccessPermission(clazz.prototype, null, ObjectUtil.ACCESS_IS_HIDDEN);
 		
 		return result;
 	}

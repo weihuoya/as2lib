@@ -100,7 +100,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Sets the Access permission of an object by an access value.
+	 * Sets the access permission of an object by an access value.
 	 * Uses ASSetPropFlags to set the permissions of the Object.
 	 * You can apply the access values
 	 * <table>
@@ -128,14 +128,87 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * as fast references.
 	 * 
 	 * You can combine this values for proper using binary with:
-	 * #ACCESS_CAN_DELETE | #ACCESS_CAN_OVERWRITE
+	 * #ACCESS_PROTECT_DELETE | #ACCESS_PROTECT_OVERWRITE
 	 * to apply two access permissions.
 	 * 
 	 * @param object the object that shall be modified.
 	 * @param status the access permission that shall be applied.
 	 */
-	public static function setAccessPermission(object, access:Number):Void {
-		_global.ASSetPropFlags(object, null, access, true);
+	public static function setAccessPermission(target, objects:Array, access:Number):Void {
+		_global.ASSetPropFlags(target, objects, access, true);
+	}
+	
+	/**
+	 * Returns the current access permission of the object. The permission is
+	 * represented by a Number. Refer to http://chattyfig.figleaf.com/flashcoders-wiki/index.php?ASSetPropFlags
+	 * for a listing of these numbers and the information they represent.
+	 *
+	 * @param target the target object the object resides in
+	 * @param object the name of the object the access permission shall be returned for
+	 * @return a Number representing the access permission of the object
+	 */
+	public static function getAccessPermission(target, object:String):Number {
+		var result:Number = 0;
+		if (!isEnumerable(target, object)) result |= ACCESS_IS_HIDDEN;
+		if (!isOverwritable(target, object)) result |= ACCESS_PROTECT_OVERWRITE;
+		if (!isDeletable(target, object)) result |= ACCESS_PROTECT_DELETE;
+		return result;
+	}
+	
+	/**
+	 * Returns whether the object is enumerable.
+	 *
+	 * @param target the target object the object resides in
+	 * @param object the name of the object that shall be checked for enumerability
+	 * @return true if the object is enumerable else false
+	 * @link http://chattyfig.figleaf.com/flashcoders-wiki/index.php?ASSetPropFlags
+	 */
+	public static function isEnumerable(target, object:String):Boolean {
+		for(var i:String in target){
+			if(i == object) return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns whether the object is overwritable.
+	 * 
+	 * @param target the target object the object resides in
+	 * @param object the name of the object that shall be checked for overwritability
+	 * @return true if the object is overwritable else false
+	 * @link http://chattyfig.figleaf.com/flashcoders-wiki/index.php?ASSetPropFlags
+	 */
+	public static function isOverwritable(target, object:String):Boolean {
+		var newVal = (target[object] == 0) ? 1 : 0;
+		var tmp = target[object];
+		target[object] = newVal;
+		if(target[object] == newVal){
+			target[object] = tmp;
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns whether the object is deletable.
+	 * 
+	 * @param target the target object the object resides in
+	 * @param object the name of the object that shall be checked for deletability
+	 * @return true if the object is deletable else false
+	 * @link http://chattyfig.figleaf.com/flashcoders-wiki/index.php?ASSetPropFlags
+	 */
+	public static function isDeletable(target, object:String):Boolean {
+		var tmp = target[object];
+		if(tmp === undefined) return false;
+		var enumerable:Boolean = target.isEnumerable(object);
+		delete target[object];
+		if(target[object] === undefined){
+			target[object] = tmp;
+			_global.ASSetPropFlags(target, object, !enumerable, 1);
+			return true;
+		}
+		return false;
 	}
 	
 	/**
