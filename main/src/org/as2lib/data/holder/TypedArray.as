@@ -47,7 +47,13 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	public function concat():TypedArray {
 		var l:Number = arguments.length;
 		for (var i:Number = 0; i < l; i++) {
-			validate(arguments[i]);
+			if (ObjectUtil.isInstanceOf(arguments[i], Array)) {
+				for (var k:Number = 0; k < arguments[i].length; k++) {
+					validate(arguments[i][k]);
+				}
+			} else {
+				validate(arguments[i]);
+			}
 		}
 		var result:TypedArray = new TypedArray(this.type);
 		for (var i:Number = 0; i < length; i++) {
@@ -55,7 +61,13 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 		}
 		if (l != 0) {
 			for (var i:Number = 0; i < arguments.length; i++) {
-				result.push(arguments[i]);
+				if (ObjectUtil.isInstanceOf(arguments[i], Array)) {
+					for (var k:Number = 0; k < arguments[i].length; k++) {
+						result.push(arguments[i][k]);
+					}
+				} else {
+					result.push(arguments[i]);
+				}
 			}
 		}
 		return result;
@@ -98,13 +110,6 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	 * @throws org.as2lib.env.except.IllegalArgumentException if the type of the object is not valid
 	 */
 	private function validate(object):Void {
-		if (ObjectUtil.isInstanceOf(object, Array)) {
-			var l:Number = object.length;
-			for (var i:Number = 0; i < l; i++) {
-				validate(object[i]);
-			}
-			return;
-		}
 		if (!ObjectUtil.typesMatch(object, type)) {
 			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + type + "].");
 		}
