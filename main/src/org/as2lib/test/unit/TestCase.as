@@ -587,6 +587,62 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	
 	/**
 	 * overload
+	 * @see #assertIsNullWithMessage
+	 * @see #assertIsNullWithoutMessage
+	 */
+	private function assertNull():Boolean {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String, undefined], assertNullWithMessage);
+		overload.addHandler([String, Object], assertNullWithMessage);
+		overload.addHandler([undefined], assertNullWithoutMessage);
+		overload.addHandler([Object], assertNullWithoutMessage);
+		overload.addHandler([], assertNullWithoutMessage);
+		return overload.forward(arguments);
+	}
+	
+	/**
+	 * Asserts if a value is null else it fails.
+	 * Method to assert that a value is null.
+	 * It adds a error to the result if the value is not null.
+	 * 
+	 * Note: This method refers to the Assert Util
+	 * 
+	 * @see Assert#isNull
+	 * @see #assertNull
+	 * @see #assertNullWithMessage
+	 * @param val Object that should be null.
+	 * @return true if no error occured else false
+	 */
+	private function assertNullWithoutMessage(val):Boolean {
+		return assertNullWithMessage("", val);
+	}
+	
+	/**
+	 * Asserts if a value is null else it fails.
+	 * This method asserts the same like @see #assertNullWithoutMessage
+	 * but it adds a message to the failure.
+	 * 
+	 * @see Assert#isNull
+	 * @see #assertNull
+	 * @see #assertNullWithoutMessage
+	 * @param message Message that should be provided if the assertion fails.
+	 * @param val Object that should be null.
+	 * @return true if no error occured else false
+	 */
+	private function assertNullWithMessage(message:String, val):Boolean {
+		try {
+			Assert.isNullWithMessage(message, val);
+			return true;
+		} catch(e:org.as2lib.test.unit.AssertException) {
+			getMethodInformation().addError(e);
+		} catch(e) {
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotNull", this, arguments).initCause(e));
+		}
+		return false;
+	}
+	
+	/**
+	 * overload
 	 * @see #assertIsNotNullWithMessage
 	 * @see #assertIsNotNullWithoutMessage
 	 */

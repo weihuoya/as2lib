@@ -16,7 +16,7 @@
  
 import org.as2lib.env.except.Exception;
 import org.as2lib.test.unit.AssertException;
-import org.as2lib.test.unit.stringifier.AssertIsNotNullStringifier;
+import org.as2lib.test.unit.stringifier.AssertIsNullStringifier;
 import org.as2lib.util.string.Stringifier;
 
 /**
@@ -26,19 +26,24 @@ import org.as2lib.util.string.Stringifier;
  * 
  * @autor Martin Heidegger.
  */
-class org.as2lib.test.unit.error.AssertIsNotNullException extends Exception implements AssertException {
+class org.as2lib.test.unit.error.AssertIsNullException extends Exception implements AssertException {
 	/** Stringifier for the TestCase */
-	private static var stringifier:Stringifier = new AssertIsNotNullStringifier();
+	private static var stringifier:Stringifier = new AssertIsNullStringifier();
 		
+	/** Container for the wrong variable */
+	private var wrongVar;
+	
 	/**
-	 * Constructs a new AssertThows exception.
+	 * Constructs a new AssertIsNull exception.
 	 * 
 	 * @param message	Message appended to the Failure.
 	 * @param thrower	Object where the exception occured.
 	 * @param arguments	Argument of the method where the exception occured.
+	 * @param wrongVar	Variable that was not null.
 	 */
-	public function AssertIsNotNullException (message:String, thrower, arguments:FunctionArguments) {
+	public function AssertIsNullException (message:String, thrower, arguments:FunctionArguments, wrongVar) {
 		super(message, thrower, arguments);
+		this.wrongVar = wrongVar;
 	}
 	
 	/**
@@ -50,6 +55,15 @@ class org.as2lib.test.unit.error.AssertIsNotNullException extends Exception impl
 	 */
 	public static function setStringifier (s:Stringifier):Void {
 		stringifier = s;
+	}
+	
+	/**
+	 * Returns the value that was not null.
+	 * 
+	 * @return value that failed.
+	 */
+	public function getWrongVariable (Void) {
+		return wrongVar;
 	}
 	
 	/**
