@@ -95,3 +95,5 @@
           * org.as2lib.env.event.dispatcher.LogEventDispatcher
         + and references from
           * org.as2lib.env.event.SimpleEventBroadcaster
+
+        > added SpeedEventBroadcaster
