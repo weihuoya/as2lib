@@ -28,7 +28,7 @@ class org.as2lib.except.ExceptConfig extends BasicClass {
 		stringifier = newStringifier;
 	}
 	
-	public static function stringify(throwable:Throwable):String {
-		return stringifier.execute(Object(throwable));
+	public static function getStringifier(Void):Stringifier {
+		return stringifier;
 	}
 }
