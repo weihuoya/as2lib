@@ -354,4 +354,24 @@ class org.as2lib.util.StringUtil extends BasicClass {
 		return w.join(" ");
 	}
 	
+	/**
+	 * Returns the first character of a string.
+	 * 
+	 * @param string The string of which to get the first character from.
+	 * @return The first character of the string.
+	 */
+	public static function firstChar(string:String):String{
+		return string.charAt(0);
+	}
+	
+	/**
+	 * Returns the last character of a string.
+	 * 
+	 * @param string The string of which to get the last character from.
+	 * @return The last character of the string.
+	 */
+	public static function lastChar(string:String):String{
+		return string.charAt(string.length-1);
+	}
+	
 }
