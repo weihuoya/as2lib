@@ -463,7 +463,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * @param var1		Var that should not be Null.
 	 */
 	private static function assertNotNullWithMessage (message:String, var1):Void {
-		if(var1 == null) {
+		if(var1 === null) {
 			addError("assertNotNull failed: "+var1+" message: "+message);
 		}
 	}
@@ -509,7 +509,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * @param var1		Var that should not be Null.
 	 */
 	private static function assertNullWithMessage (message:String, var1):Void {
-		if(var1 != null) {
+		if(var1 !== null) {
 			addError("assertNull failed: "+var1+" message: "+message);
 		}
 	}
@@ -555,7 +555,7 @@ class org.as2lib.test.unit.Test extends BasicClass {
 	 * @param var1		Var that should not be Undefined.
 	 */
 	private static function assertNotUndefinedWithMessage (message:String, var1):Void {
-		if(var1 == undefined) {
+		if(var1 === undefined) {
 			addError("assertNotUndefined failed: "+var1+" message: "+message);
 		}
 	}
