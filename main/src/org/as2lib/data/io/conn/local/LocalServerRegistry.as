@@ -4,6 +4,7 @@ import org.as2lib.data.io.conn.local.ServerRegistry;
 import org.as2lib.data.io.conn.local.LocalServer;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.data.io.conn.local.ReservedHostException;
+import org.as2lib.data.io.conn.local.ExtendedLocalConnection;
 
 class org.as2lib.data.io.conn.local.LocalServerRegistry extends BasicClass implements ServerRegistry {
 	private var serverMap:HashMap;
