@@ -33,7 +33,7 @@ class org.as2lib.data.holder.stack.TTypedStack extends AbstractTStack {
 	 * @return New Instance of a TypedStack
 	 */
 	public function getStack(Void):Stack {
-		return new TypedStack(new SimpleStack(), Object);
+		return new TypedStack(Object, new SimpleStack());
 	}
 	
 	/**
@@ -41,7 +41,7 @@ class org.as2lib.data.holder.stack.TTypedStack extends AbstractTStack {
 	 */
 	public function testPush(Void):Void {
 		super.testPush();
-		var stack2:Stack = new TypedStack(new SimpleStack, String);
+		var stack2:Stack = new TypedStack(String, new SimpleStack());
 		assertThrows("stack2 should throw a exception if you push a number", stack2, "push", [1]);
 		assertTrue("stack2 should be empty, nothing has been pushed!", stack2.isEmpty());
 	}

@@ -5,6 +5,14 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="2">
+         <day value="3">
+           <entry type="add" package="org.as2lib.data.holder.stack" class="TypedStack" method="getType(Void):Function"></entry>
+           <entry type="add" package="org.as2lib.data.holder.queue" class="TypedQueue" method="getType(Void):Function"></entry>
+           <entry type="add" package="org.as2lib.data.holder.map" class="TypedMap" method="getType(Void):Function"></entry>
+           <entry type="add" package="org.as2lib.data.holder.array" class="TypedArray" method="getType(Void):Function"></entry>
+           <entry type="change" package="org.as2lib.data.holder.queue" class="TypedQueue" method="new(Stack, Function)">Changed arguments signature to new(Function, Stack).</entry>
+           <entry type="change" package="org.as2lib.data.holder.stack" class="TypedStack" method="new(Stack, Function)">Changed arguments signature to new(Function, Stack).</entry>
+         </day>
          <day value="2">
            <entry type="change" package="org.as2lib.env.reflect" class="ResolveProxyFactory"><change-rename to="TypeProxyFactory" /></entry>
            <entry type="add" package="org.as2lib.env.reflect" class="InterfaceProxyFactory">Is capable of creating proxies for interfaces and offers higher performance than TypeProxyFactory.</entry>

@@ -44,8 +44,19 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	 * @param map the Map that shall be wrapped by a TypedMap
 	 */
 	public function TypedMap(type:Function, map:Map) {
-		this.map = map;
 		this.type = type;
+		this.map = map;
+	}
+	
+	/**
+	 * Returns the type of the map all contained elements have.
+	 *
+	 * <p>This is the type passed-in on construction.
+	 *
+	 * @return the type of the map's elements
+	 */
+	public function getType(Void):Function {
+		return type;
 	}
 	
 	/**

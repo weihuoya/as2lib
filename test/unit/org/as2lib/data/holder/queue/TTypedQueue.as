@@ -32,7 +32,7 @@ class org.as2lib.data.holder.queue.TTypedQueue extends AbstractTQueue {
 	 * @returns a new instance of TypedQueue
 	 */
 	private function getQueue(Void):Queue {
-		return new TypedQueue(new LinearQueue(), Object);
+		return new TypedQueue(Object, new LinearQueue());
 	}
 	
 	/**
@@ -40,7 +40,7 @@ class org.as2lib.data.holder.queue.TTypedQueue extends AbstractTQueue {
 	 */
 	public function testEnqueue(Void):Void {
 		super.testEnqueue();
-		var queue2:Queue = new TypedQueue(new LinearQueue(), String);
+		var queue2:Queue = new TypedQueue(String, new LinearQueue());
 		assertThrows("queue2 should throw a exception if you push a number", queue2, "enqueue", [1]);
 		assertTrue("queue2 should be empty, nothing has been enqueued!", queue2.isEmpty());
 	}
