@@ -15,10 +15,11 @@
  */
 
 import org.as2lib.env.except.Throwable;
-import org.as2lib.env.except.ExceptConfig;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.StackTraceElement;
+import org.as2lib.env.except.ThrowableStringifier;
+import org.as2lib.util.Stringifier;
 
 /**
  * AbstractThrowable is an abstract class that contains sourced out functionalities
@@ -29,6 +30,9 @@ import org.as2lib.env.except.StackTraceElement;
  * @see Error
  */
 class org.as2lib.env.except.AbstractThrowable extends Error {
+	
+	/** Stringifier used to stringify throwables. */
+	private static var stringifier:Stringifier;
 	
 	/** 
 	 * Logger used to output the exception.
@@ -45,6 +49,31 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	
 	/** The message describing what was wrong. */
 	private var message:String;
+	
+	/**
+	 * Returns the stringifier to stringify throwables.
+	 *
+	 * <p>The returned stringifier is either the default ThrowableStringifier
+	 * if no custom stringifier was set or if the stringifier was set to null.
+	 *
+	 * @return the current stringifier
+	 */
+	public static function getStringifier(Void):Stringifier {
+		if (!stringifier) stringifier = new ThrowableStringifier();
+		return stringifier;
+	}
+	
+	/**
+	 * Sets the stringifier to stringify throwables.
+	 *
+	 * <p>If you set a stringifier of value null #getStringifier(Void):Stringifier
+	 * returns the default stringifier.
+	 *
+	 * @param throwableStringifier the stringifier to stringify throwables
+	 */
+	public static function setStringifier(throwableStringifier:Stringifier):Void {
+		stringifier = throwableStringifier;
+	}
 	
 	/**
 	 * Returns the logger used to output the exception.
