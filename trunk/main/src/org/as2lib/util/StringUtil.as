@@ -5,106 +5,90 @@ import org.as2lib.core.BasicClass;
  * Basic String Util Class, should have the Same Functionality like the base FString Class (flashforum.de Teamwork)
  */
 class org.as2lib.util.StringUtil extends BasicClass {
-	
-	static function replace(content:String, wath:String, to:String ):String {
-		if(typeof content == "string") {
-			var tempArray:Array;
-			tempArray = content.split(wath);
-			content = tempArray.join(to);
-		}
-		return(content);
+	private function StringUtil(Void) {
 	}
 	
-	static function leftTrimForChars (content:String, chars:String ):String {
-		var from:Number, to:Number;
-		from = 0;
-		to = content.length;
-		while( from < to && chars.indexOf(content.charAt(from)) >= 0){
+	public static function replace(string:String, wath:String, to:String):String {
+		return string.split(wath).join(to);
+	}
+	
+	public static function trim(string:String):String {
+		return leftTrim(rightTrim(string));
+	}
+	
+	public static function leftTrim(string:String):String {
+		return leftTrimForChars(string, "\n\t\n ");
+	}
+	
+	public static function leftTrimForChars(string:String, chars:String):String {
+		var from:Number = 0;
+		var to:Number = string.length;
+		while (from < to && chars.indexOf(string.charAt(from)) >= 0){
 			from++;
 		}
-		from > 0 ? content = content.substr(from, to) : false;
-		return(content);
+		return (from > 0 ? string.substr(from, to) : string);
 	}
 	
-	static function leftTrimForChar (content:String, char:String ):String {
-		return(leftTrimForChars(content, char));
+	public static function rightTrim(string:String):String {
+		return rightTrimForChars(string, "\n\t\n ");
 	}
 	
-	static function trim (content:String):String {
-		content = rightTrim(content);
-		content = leftTrim(content);
-		return(content);
-	}
-	
-	static function rightTrimForChars (content:String, chars:String):String {
-		var from:Number, to:Number;
-		from = 0;
-		to = content.length-1;
-		while( from < to && chars.indexOf(content.charAt(to)) >= 0) {
+	public static function rightTrimForChars(string:String, chars:String):String {
+		var from:Number = 0;
+		var to:Number = string.length - 1;
+		while (from < to && chars.indexOf(string.charAt(to)) >= 0) {
 			to--;
 		}
-		to >= 0 ? content = content.substr(from, to+1) : false;
-		return(content);
+		return (to >= 0 ? string.substr(from, to+1) : string);
 	}
 	
-	static function rightTrimForChar (content:String, char:String ):String {
-		return(rightTrimForChars(content, char));
+	public static function leftTrimForChar(string:String, char:String):String {
+		return leftTrimForChars(string, char);
 	}
 	
-	static function leftTrim (content:String):String {
-		return(leftTrimForChars(content, "\n\t\n "));
-	}
-	
-	static function rightTrim (content:String):String {
-		return(rightTrimForChars(content, "\n\t\n "));
+	public static function rightTrimForChar(string:String, char:String):String {
+		return rightTrimForChars(string, char);
 	}
 
-	static function checkEmail(content:String):Boolean {
+	public static function checkEmail(string:String):Boolean {
 		// The min Size of an Email is 6 Chars "a@b.cc";
-		if(content.length < 6 || content == undefined) {
-			return(false);
+		if (string.length < 6) {
+			return false;
 		}
 		// There must be exact one @ in the Content
-		var myArray:Array = content.split('@');
-		if(myArray.length > 2 || content.indexOf('@') < 0) {
-			return(false);
+		if (string.split('@').length > 2 || string.indexOf('@') < 0) {
+			return false;
 		}
 		// There must be min one . in the Content before the last @
-		if(content.lastIndexOf('@') > content.lastIndexOf('.')) {
-			return(false);
+		if (string.lastIndexOf('@') > string.lastIndexOf('.')) {
+			return false;
 		}
 		// There must be min two Characters after the last .
-		if(content.lastIndexOf('.') > content.length-3) {
-			return(false);
+		if (string.lastIndexOf('.') > string.length - 3) {
+			return false;
 		}
 		// There must be min two Characters between the @ and the last .
-		if(content.lastIndexOf('.') <= content.lastIndexOf('@')+1) {
-			return(false);
+		if (string.lastIndexOf('.') <= string.lastIndexOf('@') + 1) {
+			return false;
 		}
-		return(true);
+		return true;
 	}
 	
-	static function checkLength(content:String, len:Number):Boolean {
-		if(!content) {
-			return(false);
+	public static function assureLength(string:String, length:Number):Boolean {
+		if (length <= 0) {
+			throw new IllegalArgumentException("The Second Attribute [" + length + "] must be bigger than 0.", 
+												eval("th" + "is"), 
+												arguments);
 		}
-		if(len <= 0) {
-			throw (new IllegalArgumentException("The Second Attribute[length] has to be bigger than 0.", eval("th"+"is"), arguments));
-		}
-			
-		if (content.length >= len) {
-			return(true);
-		} else {
-			return(false);
-		}
+		return (string.length >= length);
 	}
 	
-	static function contains(content:String, chars:String):Boolean {
-		for(var i=0; i<chars.length; i++) {
-			if(content.indexOf(chars.charAt(i)) >= 0) {
-				return(true);
+	public static function contains(string:String, chars:String):Boolean {
+		for (var i:Number = 0; i < chars.length; i++) {
+			if (string.indexOf(chars.charAt(i)) >= 0) {
+				return true;
 			}
 		}
-		return(false);
+		return false;
 	}
 }

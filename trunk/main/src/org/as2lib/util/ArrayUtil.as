@@ -5,7 +5,7 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	private function ArrayUtil(Void) {
 	}
 	
-	public static function copy(array:Array):Array {
+	public static function clone(array:Array):Array {
 		return array.concat();
 	}
 	
