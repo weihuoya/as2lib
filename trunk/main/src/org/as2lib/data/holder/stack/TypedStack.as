@@ -37,12 +37,23 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	/**
 	 * Constructs a new TypedStack.
 	 *
-	 * @param stack the Stack that shall be typed checked
 	 * @param type the type of values the Stack can have
+	 * @param stack the Stack that shall be typed checked
 	 */
-	public function TypedStack(stack:Stack, type:Function) {
-		this.stack = stack;
+	public function TypedStack(type:Function, stack:Stack) {
 		this.type = type;
+		this.stack = stack;
+	}
+	
+	/**
+	 * Returns the type of the stack all contained elements have.
+	 *
+	 * <p>This is the type passed-in on construction.
+	 *
+	 * @return the type of the stack's elements
+	 */
+	public function getType(Void):Function {
+		return type;
 	}
 	
 	/**

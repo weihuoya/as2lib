@@ -39,12 +39,23 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	/**
 	 * Constructs a new TypedQueue
 	 *
-	 * @param queue the queue to be wrapped
 	 * @param type the type of values that are allowed to be added
+	 * @param queue the queue to be wrapped
 	 */
-	public function TypedQueue(queue:Queue, type:Function) {
-		this.queue = queue;
+	public function TypedQueue(type:Function, queue:Queue) {
 		this.type = type;
+		this.queue = queue;
+	}
+	
+	/**
+	 * Returns the type of the queue all contained elements have.
+	 *
+	 * <p>This is the type passed-in on construction.
+	 *
+	 * @return the type of the queue's elements
+	 */
+	public function getType(Void):Function {
+		return type;
 	}
 	
 	/**

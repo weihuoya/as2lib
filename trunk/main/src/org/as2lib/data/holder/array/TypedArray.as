@@ -38,6 +38,20 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 	 */
 	public function TypedArray(type:Function) {
 		this.type = type;
+		for (var i:Number = 1; i < arguments.length; i++) {
+			push(arguments[i]);
+		}
+	}
+	
+	/**
+	 * Returns the type of the array all contained elements have.
+	 *
+	 * <p>This is the type passed-in on construction.
+	 *
+	 * @return the type of the array's elements
+	 */
+	public function getType(Void):Function {
+		return type;
 	}
 	
 	/**
