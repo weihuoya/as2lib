@@ -62,6 +62,55 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	public static var ACCESS_NOTHING_ALLOWED = 7;
 	
 	/**
+	 * Constant for the type of string.
+	 * 
+	 * @see #isTypeOf
+	 */
+	public static var TYPE_STRING = "string";
+	
+	/**
+	 * Constant for the type of number.
+	 * 
+	 * @see #isTypeOf
+	 */
+	public static var TYPE_NUMBER = "number";
+	
+	/**
+	 * Constant for the type of object.
+	 * 
+	 * @see #isTypeOf
+	 */
+	public static var TYPE_OBJECT = "object";
+	
+	/**
+	 * Constant for the type of boolean.
+	 * 
+	 * @see #isTypeOf
+	 */
+	public static var TYPE_BOOLEAN = "boolean";
+	
+	/**
+	 * Constant for the type of movieclip.
+	 * 
+	 * @see #isTypeOf
+	 */
+	public static var TYPE_MOVIECLIP = "movieclip";
+	
+	/**
+	 * Constant for the type of undefined.
+	 * 
+	 * @see #isTypeOf
+	 */
+	public static var TYPE_UNDEFINED = "undefined";
+	
+	/**
+	 * Constant for the type of null.
+	 * 
+	 * @see #isTypeOf
+	 */
+	public static var TYPE_NULL = "null";
+	
+	/**
 	 * Private constructor.
 	 */
 	private function ObjectUtil(Void) {
@@ -258,12 +307,22 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Checks if the result of the #typeof() execution on the passed in object
+	 * Checks if the result of the typeof execution on the passed in object
 	 * matches the expression.
+	 * 
+	 * All possible types are available as static constant.
 	 *
 	 * @param object the object whose type shall be checked
 	 * @param expression a string representing the type
 	 * @return true if the object is of type expression
+	 * 
+	 * @see #TYPE_STRING
+	 * @see #TYPE_NUMBER
+	 * @see #TYPE_OBJECT
+	 * @see #TYPE_BOOLEAN
+	 * @see #TYPE_MOVIECLIP
+	 * @see #TYPE_NULL
+	 * @see #TYPE_UNDEFINED
 	 */
 	public static function isTypeOf(object, expression:String):Boolean {
 		return (typeof(object) == expression);
@@ -315,20 +374,45 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * @return true if the object is available else false
 	 */
 	public static function isAvailable(object):Boolean {
-		return !isEmpty(object);
+		return (object != undefined);
 	}
 	
 	/**
 	 * Iterates through the passed Object using the for..in loop and executes
-	 * the Call passing the found object.
-	 *
+	 * the Call passing the found object and the name of the object.
+	 * 
+	 * Example:
+	 * <CODE>
+	 *   class MyClass {
+	 * 
+     *      private var a:String;
+     *      private var b:String;
+     *      private var c:String;
+	 * 
+	 *      public function MyClass() {
+	 *          a = "1";
+	 *          b = "2";
+	 *          c = "2";
+	 *      }
+	 *      
+	 *      public function traceObject(value, name:String):Void {
+	 *          trace(name+": "+value);
+	 *      }
+	 * 
+	 *      public function listAll() {
+     *          var call:Call = new Call(this, traceObject);
+	 *          ObjectUtil.forEach(this, call);
+	 *      }
+	 *   }
+	 * </CODE>
+	 *  
 	 * @param object the object to iterate over
 	 * @param call the Call to be executed for each found object
 	 */
 	public static function forEach(object, call:Call):Void {
 		var i:String;
 		for (i in object) {
-			call.execute([object[i]]);
+			call.execute([object[i], i]);
 		}
 	}
 }
