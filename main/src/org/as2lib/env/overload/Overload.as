@@ -142,6 +142,7 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * @throws UnknownOverloadHandlerException if there is no matching handler
 	 */
 	private function doGetMatchingHandler(overloadedMethod:Function, overloadArguments:Array):OverloadHandler {
+		if (!overloadArguments) overloadArguments = [];
 		var matchingHandlers:Array = getMatchingHandlers(overloadArguments);
 		var i:Number = matchingHandlers.length;
 		if (i == 0) {

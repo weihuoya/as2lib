@@ -19,6 +19,7 @@ import org.as2lib.util.ObjectUtil;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.overload.SameTypeSignatureException;
+import org.as2lib.env.except.IllegalArgumentException;
 
 /**
  * SimpleOverloadHandler is a default implementation of the OverloadHandler interface.
@@ -40,6 +41,8 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	 * @param method the actual operation to be executed on the target if the argumetns types match
 	 */
 	public function SimpleOverloadHandler(args:Array, method:Function) {
+		if (!method) throw new IllegalArgumentException("Method to be executed by the overload handler must not be null or undefined.", this, arguments);
+		if (!args) args = [];
 		this.args = args;
 		this.method = method;
 	}
@@ -48,13 +51,18 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	 * @see org.as2lib.env.overload.OverloadHandler#matches()
 	 */
 	public function matches(someArguments:Array):Boolean {
+		if (!someArguments) someArguments = [];
 		var i:Number = someArguments.length;
 		if (i != args.length) return false;
 		while (--i-(-1)) {
 			// Should ObjectUtil.typesMatch() return true for a check of null against any type?
+			// Should also undefined values be allowed?
 			if (someArguments[i] !== null) {
-				if (!ObjectUtil.typesMatch(someArguments[i], args[i])) {
-					return false;
+				// A expected type of value null gets interpreted as: whatever. Should the same be true for an expected type of value undefined?
+				if (args[i] !== null) {
+					if (!ObjectUtil.typesMatch(someArguments[i], args[i])) {
+						return false;
+					}
 				}
 			}
 		}
