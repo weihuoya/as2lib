@@ -9,7 +9,7 @@ class org.as2lib.data.io.conn.local.LocalConnFactory extends BasicClass implemen
 	}
 	
 	public function getConnection(host:String):Connection {
-		if (LocalConfig.getServerRegistry().containsServer(host)) {
+		if (LocalConfig.getServerRegistry().contains(host)) {
 			return (new LocalConn(host));
 		}
 		// throw ... ?

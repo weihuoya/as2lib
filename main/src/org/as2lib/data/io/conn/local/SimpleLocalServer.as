@@ -28,7 +28,7 @@ class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass impleme
 				throw new ReservedHostException("Connection name [" + host + "/" + key + "] is already in use.", this, arguments);
 			}
 		}
-		LocalConfig.getServerRegistry().putServer(host, this);
+		LocalConfig.getServerRegistry().register(host);
 		running = true;
 	}
 	
