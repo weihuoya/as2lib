@@ -18,11 +18,10 @@ import org.as2lib.data.holder.Iterator;
 import org.as2lib.core.BasicInterface;
 
 /**
- * ?
- *
  * @author Simon Wacker
  */
 interface org.as2lib.data.holder.Queue extends BasicInterface {
+	
 	/**
 	 * Inserts the value into the queue.
 	 *
@@ -58,7 +57,8 @@ interface org.as2lib.data.holder.Queue extends BasicInterface {
 	 * Queue.
 	 *
 	 * @return an Iterator to iterate over this queue
-	 * @see org.as2lib.data.iterator.Iterator
+	 * @see org.as2lib.data.holder.Iterator
 	 */
 	public function iterator(Void):Iterator;
+	
 }

@@ -26,6 +26,7 @@ import org.as2lib.core.BasicClass;
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.array.ArrayIterator extends BasicClass implements Iterator {
+	
 	/** The target data holder. */
 	private var target:Array;
 	
@@ -43,14 +44,14 @@ class org.as2lib.data.holder.array.ArrayIterator extends BasicClass implements I
 	}
 	
 	/**
-	 * @see org.as2lib.data.iterator.Iterator#hasNext()
+	 * @see org.as2lib.data.holder.Iterator#hasNext()
 	 */
 	public function hasNext(Void):Boolean {
 		return (index < target.length - 1);
 	}
 	
 	/**
-	 * @see org.as2lib.data.iterator.Iterator#next()
+	 * @see org.as2lib.data.holder.Iterator#next()
 	 */
 	public function next(Void) {
 		if (!hasNext()) {
@@ -60,7 +61,7 @@ class org.as2lib.data.holder.array.ArrayIterator extends BasicClass implements I
 	}
 	
 	/**
-	 * @see org.as2lib.data.iterator.Iterator#remove()
+	 * @see org.as2lib.data.holder.Iterator#remove()
 	 */
 	public function remove(Void):Void {
 		if (index < 0) {
@@ -68,4 +69,5 @@ class org.as2lib.data.holder.array.ArrayIterator extends BasicClass implements I
 		}
 		target.splice(index--, 1);
 	}
+	
 }
