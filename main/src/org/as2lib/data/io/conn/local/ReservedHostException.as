@@ -17,9 +17,6 @@
 import org.as2lib.env.except.Exception;
 
 /**
- * ReservedHostException will be thrown if a connection identifier is
- * already used by another connection.
- *
  * @author Christoph Atteneder
  */
 class org.as2lib.data.io.conn.local.ReservedHostException extends Exception {
