@@ -70,8 +70,8 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass {
 		_global.ASSetPropFlags(p, ["__proto__", "constructor", "__constructor__"], 7, true);
 		search(p);
 		
-		_global.ASSetPropFlags(c, null, 1, true);
-		_global.ASSetPropFlags(p, null, 1, true);
+		//_global.ASSetPropFlags(c, null, 1, true);
+		//_global.ASSetPropFlags(p, null, 1, true);
 		
 		return r;
 	}
