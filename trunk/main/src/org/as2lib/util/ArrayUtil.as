@@ -16,6 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.data.holder.NoSuchElementException;
 import org.as2lib.data.holder.Stack;
 import org.as2lib.data.holder.stack.SimpleStack;
 
@@ -195,14 +196,46 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	
 	/**
 	 * Swaps 2 values of an array.
+	 * The modifications are directly made to the array.
 	 *
-	 * @param a The array to swap its values from.
+	 * @param array The array to swap its values from.
 	 * @param i The index of the first value.
 	 * @param j The index of the second value.
+	 * @return array The same instance as applied.
 	 */
-	public static function swap(a:Array, i:Number, j:Number){
-		var tmp = a[i];
-		a[i] = a[j];
-		a[j] = tmp;
+	public static function swap(array:Array, i:Number, j:Number):Array {
+		if(!array) {
+			throw new IllegalArgumentException("Array to swap content has to be available", eval("th"+"is"), arguments);
+		}
+		if(i > array.length-1 || i < 0) {
+			throw new NoSuchElementException("The first index "+i+" is not available within the array", eval("th"+"is"), arguments);
+		}
+		if(j > array.length-1 || j < 0) {
+			throw new NoSuchElementException("The second index "+j+" is not available within the array", eval("th"+"is"), arguments);
+		}
+		var tmp = array[i];
+		array[i] = array[j];
+		array[j] = tmp;
+		return array;
+	}
+	
+	/**
+	 * Compares two arrays if they contain the same values at the same positions.
+	 * 
+	 * @param a The first array to be compared
+	 * @param b The second array to be compared
+	 * @return true if the two arrays contain the same values at the same positions.
+	 */
+	public static function isSame(array1:Array, array2:Array):Boolean {
+		var i = array1.length;
+		if(i != array2.length) {
+			return false;
+		}
+		while(--i-(-1)) {
+			if(array1[i] !== array2[i]) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
