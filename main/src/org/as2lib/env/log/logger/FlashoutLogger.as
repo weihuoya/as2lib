@@ -27,12 +27,6 @@ import org.as2lib.env.log.logger.AbstractLogger;
  * application directly enables you to switch between almost every available
  * logging API without having to change the logging calls, but just the
  * underlying configuration on startup.
- * 
- * <p>Note that this class takes advantage of the As2lib {@code LogMessage}
- * class to format messages with the logger name, a timestamp, the level
- * and the actual message. You can edit the string representation generated
- * by the {@code LogMessage} class manually if you want some information
- * not to be shown.
  *
  * @author Simon Wacker
  * @see org.as2lib.env.log.handler.FlashoutHandler
@@ -49,47 +43,15 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	/** The set level as number. */
 	private var levelAsNumber:Number;
 	
-	/** The name of the logger. */
-	private var name:String;
-	
 	/**
 	 * Constructs a new {@code FlashoutLogger} instance.
 	 *
 	 * <p>The default log level is {@code ALL}. This means all messages
 	 * regardless of their level are logged.
-	 *
-	 * <p>The logger name is by default shown in the log message to identify
-	 * where the message came from.
-	 *
-	 * @param name (optional) the name of this logger
 	 */
-	public function FlashoutLogger(name:String) {
-		this.name = name;
+	public function FlashoutLogger(Void) {
 		level = ALL;
 		levelAsNumber = level.toNumber();
-	}
-	
-	/**
-	 * Returns the name of this logger.
-	 *
-	 * <p>This method returns {@code null} if no name has been set via the
-	 * {@link #setName} method and on construction.
-	 *
-	 * @return the name of this logger
-	 */
-	public function getName(Void):String {
-		return name;
-	}
-	
-	/**
-	 * Sets the name of this logger.
-	 *
-	 * <p>The name is by default shown in the log message.
-	 *
-	 * @param name the new name of this logger
-	 */
-	public function setName(name:String):Void {
-		this.name = name;
 	}
 	
 	/**
@@ -190,7 +152,7 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	 */
 	public function debug(message):Void {
 		if (isDebugEnabled()) {
-			Flashout.debug(new LogMessage(message, debugLevel, name));
+			Flashout.debug(message);
 		}
 	}
 	
@@ -207,7 +169,7 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	 */
 	public function info(message):Void {
 		if (isInfoEnabled()) {
-			Flashout.info(new LogMessage(message, infoLevel, name));
+			Flashout.info(message);
 		}
 	}
 	
@@ -224,7 +186,7 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	 */
 	public function warning(message):Void {
 		if (isWarningEnabled()) {
-			Flashout.warning(new LogMessage(message, warningLevel, name));
+			Flashout.warning(message);
 		}
 	}
 	
@@ -241,7 +203,7 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	 */
 	public function error(message):Void {
 		if (isErrorEnabled()) {
-			Flashout.error(new LogMessage(message, errorLevel, name));
+			Flashout.error(message);
 		}
 	}
 	
@@ -258,7 +220,7 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	 */
 	public function fatal(message):Void {
 		if (isFatalEnabled()) {
-			Flashout.error(new LogMessage(message, fatalLevel, name));
+			Flashout.error(message);
 		}
 	}
 	
