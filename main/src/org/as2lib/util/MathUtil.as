@@ -15,8 +15,6 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.util.ArrayUtil;
 import org.as2lib.data.type.*;
 
 /**

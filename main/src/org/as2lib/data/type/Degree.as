@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.data.type.Angle;
-import org.as2lib.util.ObjectUtil;
+import org.as2lib.Config;
 
 /**
  * Implementation of Angle for degrees
@@ -65,11 +65,12 @@ class org.as2lib.data.type.Degree extends Number implements Angle {
 	
 	/**
 	 * Returns a String representation of the instance. The String representation
-	 * is obtained via the ObjectUtil#stringify() operation.
+	 * is obtained via the Config.getObjectStringifier()#execute() operation.
 	 *
 	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
 	public function toString(Void):String {
-		return ObjectUtil.stringify(this);
+		return Config.getObjectStringifier().execute(this);
 	}
+	
 }

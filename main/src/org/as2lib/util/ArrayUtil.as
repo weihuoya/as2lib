@@ -17,8 +17,8 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.data.holder.NoSuchElementException;
-import org.as2lib.data.holder.Stack;
-import org.as2lib.data.holder.stack.SimpleStack;
+/*import org.as2lib.data.holder.Stack;
+import org.as2lib.data.holder.stack.SimpleStack;*/
 
 /**
  * ArrayUtil contains fundamental operations to manipulate Arrays.
@@ -160,7 +160,7 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	 * @param order Boolean value specifying the convertion order
 	 * @return the Stack representation of the Array
 	 */
-	public static function toStack(array:Array, order:Boolean):Stack {
+	/*public static function toStack(array:Array, order:Boolean):Stack {
 		var result:Stack = new SimpleStack();
 		var len:Number = array.length;
 		if (!order) {
@@ -173,7 +173,7 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 			}
 		}
 		return result;
-	}
+	}*/
 	
 	/**
 	 * Shuffles the passed array.
@@ -238,4 +238,5 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 		}
 		return true;
 	}
+	
 }

@@ -38,14 +38,22 @@ class org.as2lib.data.holder.map.PrimitiveTypeMap extends AbstractMap implements
 	private var values:Array;
 	
 	/**
-	 * Constructs a new PrimitiveTypeMap.
+	 * Constructs a new PrimitiveTypeMap instance.
+	 *
+	 * <p>The map iterates over the passed-in source with the for..in
+	 * loop and uses the variables' names as key and their values as
+	 * value. Variables that are hidden from for..in loops will not be
+	 * added to the map.
+	 *
+	 * @param source (optional) an object that contains values to populate the new source with
 	 */
-	public function PrimitiveTypeMap(Void) {
+	public function PrimitiveTypeMap(source) {
 		map = new Object();
 		indexMap = new Object();
 		indexMap.__proto__ = undefined;
 		keys = new Array();
 		values = new Array();
+		populate(source);
 	}
 
 	/**

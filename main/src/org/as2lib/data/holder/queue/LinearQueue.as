@@ -56,10 +56,16 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	}
 	
 	/**
-	 * Constructs a new LinearQueue.
+	 * Constructs a new LinearQueue instance.
+	 *
+	 * @param source (optional) an array that contains values to populate the new queue with
 	 */
-	public function LinearQueue(Void) {
-		data = new Array();
+	public function LinearQueue(source:Array) {
+		if (source) {
+			data = source.concat();
+		} else {
+			data = new Array();
+		}
 	}
 	
 	/**

@@ -56,10 +56,16 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	}
 	
 	/**
-	 * Constructs a new SimpleStack.
+	 * Constructs a new SimpleStack instance.
+	 *
+	 * @param source (optional) an array that contains values to populate the new stack with
 	 */
-	public function SimpleStack(Void) {
-		values = new Array();
+	public function SimpleStack(source:Array) {
+		if (source) {
+			values = source.concat();
+		} else {
+			values = new Array();
+		}
 	}
 	
 	/**

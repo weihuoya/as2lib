@@ -5,6 +5,14 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="2">
+         <day value="7">
+           <entry type="add" package="org.as2lib.data.holder.list" class="ArrayList" method="new(Array)">Constructor that populates list with contents of passed-in array.</entry>
+           <entry type="add" package="org.as2lib.data.holder.map" class="PrimitiveTypeMap" method="new(*)">Constructor that populates map with contents of passed-in object.</entry>
+           <entry type="add" package="org.as2lib.data.holder.map" class="HashMap" method="new(*)">Constructor that populates map with contents of passed-in object.</entry>
+           <entry type="add" package="org.as2lib.data.holder.queue" class="LinearQueue" method="new(Array)">Constructor that populates queue with contents of passed-in array.</entry>
+           <entry type="remove" package="org.as2lib.util" class="ArrayUtil" method="toStack(..)">The SimpleStack's new constructor can be used now.</entry>
+           <entry type="add" package="org.as2lib.data.holder.stack" class="SimpleStack" method="new(Array)">Constructor that populates stack with contents of passed-in array.</entry>
+         </day>
          <day value="6">
            <entry type="add" package="org.as2lib.env.log.logger" class="SimpleLogger">Cannot be used in a hierarchy. Simple implementation of Logger interface.</entry>
            <entry type="change" package="org.as2lib.env.log.logger" class="SimpleLogger"><change-rename to="SimpleHierarchicalLogger" /></entry>
