@@ -6,6 +6,7 @@
     <year value="2005">
        <month value="2">
          <day value="4">
+           <entry type="add" package="org.as2lib.util" class="AccessPermission"></entry>
            <entry type="change" package="static org.as2lib.env.reflect" class="ReflectUtil" method="getClassName(..)"><change-rename to="getTypeName(..)" /></entry>
            <entry type="change" package="static org.as2lib.env.reflect" class="ReflectUtil" method="getClassNameForClass(..)"><change-rename to="getTypeNameForType(..)" /></entry>
            <entry type="change" package="static org.as2lib.env.reflect" class="ReflectUtil" method="getClassNameForInstance(..)"><change-rename to="getTypeNameForInstance(..)" /></entry>
