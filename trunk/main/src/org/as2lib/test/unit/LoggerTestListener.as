@@ -61,6 +61,7 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Test
 	 * @param progressInfo Extended informations the current progress.
 	 */
 	public function onProgress(progressInfo:ProgressInfo):Void {
+		//trace(progressInfo.getRunningTestCase().getName()+"."+progressInfo.getFinishedMethodInfo().toString());
 	}
 	
 	/**
@@ -71,6 +72,7 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Test
 	public function onFinish(finishInfo:FinishInfo):Void {
 		var testRunner:TestRunner = finishInfo.getTestRunner();
 	    getLogger().info(testRunner.getTestResult().toString());
+		trace(testRunner.getTestResult().toString());
 	}
 	
 	/**
