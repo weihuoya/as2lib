@@ -45,6 +45,7 @@ class org.as2lib.data.holder.PrimitiveTypeMap extends BasicClass implements Map 
 	public function PrimitiveTypeMap(Void) {
 		map = new Object();
 		indexMap = new Object();
+		indexMap.__proto__ = undefined;
 		keys = new Array();
 		values = new Array();
 	}
