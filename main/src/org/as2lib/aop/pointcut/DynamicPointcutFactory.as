@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.data.holder.Iterator;
@@ -61,7 +62,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		factory.getPointcut = function(pattern:String):Pointcut {
 			return (new OrCompositePointcut(pattern));
 		}
-		bindFactory(rule, factory);
+		bindPointcutFactory(rule, factory);
 	}
 	
 	/**
@@ -76,7 +77,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		factory.getPointcut = function(pattern:String):Pointcut {
 			return (new AndCompositePointcut(pattern));
 		}
-		bindFactory(rule, factory);
+		bindPointcutFactory(rule, factory);
 	}
 	
 	/**
@@ -92,7 +93,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 			pattern = pattern.substring(10, pattern.length - 3);
 			return (new KindedPointcut(pattern, AbstractJoinPoint.TYPE_METHOD));
 		}
-		bindFactory(rule, factory);
+		bindPointcutFactory(rule, factory);
 	}
 	
 	/**
@@ -108,7 +109,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 			pattern = pattern.substring(4, pattern.length - 1);
 			return (new KindedPointcut(pattern, AbstractJoinPoint.TYPE_SET_PROPERTY));
 		}
-		bindFactory(rule, factory);
+		bindPointcutFactory(rule, factory);
 	}
 	
 	/**
@@ -124,7 +125,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 			pattern = pattern.substring(4, pattern.length - 1);
 			return (new KindedPointcut(pattern, AbstractJoinPoint.TYPE_GET_PROPERTY));
 		}
-		bindFactory(rule, factory);
+		bindPointcutFactory(rule, factory);
 	}
 	
 	/*private function bindWithinPointcut(Void):Void {
@@ -137,13 +138,14 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 			pattern = pattern.substring(7, pattern.length - 1);
 			return (new WithinPointcut(pattern));
 		}
-		bindFactory(rule, factory);
+		bindPointcutFactory(rule, factory);
 	}*/
 	
 	/**
 	 * @see org.as2lib.aop.pointcut.PointcutFactory#getPointcut(String):Pointcut
 	 */
 	public function getPointcut(pattern:String):Pointcut {
+		if (!pattern) return null;
 		var iterator:Iterator = new ArrayIterator(factoryMap.getKeys());
 		while (iterator.hasNext()) {
 			var rule:PointcutRule = iterator.next();
@@ -151,6 +153,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 				return factoryMap.get(rule).getPointcut(pattern);
 			}
 		}
+		return null;
 	}
 	
 	/**
@@ -158,8 +161,11 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	 *
 	 * @param rule the rule that must evaluate to true to indicate the right factory
 	 * @param factory the factory to be added
+	 * @throws IllegalArgumentException if rule is null or undefined or
+	 *                                  if factory is null or undefined
 	 */
-	public function bindFactory(rule:PointcutRule, factory:PointcutFactory):Void {
+	public function bindPointcutFactory(rule:PointcutRule, factory:PointcutFactory):Void {
+		if (!rule || !factory) throw new IllegalArgumentException("Rule and factory are not allowed to be null or undefined.", this, arguments);
 		factoryMap.put(rule, factory);
 	}
 }

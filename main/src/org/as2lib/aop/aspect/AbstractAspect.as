@@ -19,7 +19,7 @@ import org.as2lib.env.overload.Overload;
 import org.as2lib.aop.Advice;
 import org.as2lib.aop.Pointcut;
 import org.as2lib.util.Call;
-import org.as2lib.aop.advice.AdviceConfig;
+import org.as2lib.aop.AopConfig;
 
 /**
  * AbstractAspect provides convenient method implmenetations and offers
@@ -78,7 +78,7 @@ class org.as2lib.aop.aspect.AbstractAspect extends BasicClass {
 	 */
 	private function addAdviceByTypeAndStringAndMethod(type:Number, pointcut:String, method:Function):Advice {
 		var callback:Call = new Call(this, method);
-		var result:Advice = AdviceConfig.getDynamicAdviceFactory().getAdvice(type, pointcut, callback);
+		var result:Advice = AopConfig.getDynamicAdviceFactory().getAdvice(type, pointcut, callback);
 		addAdviceByAdvice(result);
 		return result;
 	}
@@ -93,7 +93,7 @@ class org.as2lib.aop.aspect.AbstractAspect extends BasicClass {
 	 */
 	private function addAdviceByTypeAndPointcutAndMethod(type:Number, pointcut:Pointcut, method:Function):Advice {
 		var callback:Call = new Call(this, method);
-		var result:Advice = AdviceConfig.getDynamicAdviceFactory().getAdvice(type, pointcut, callback);
+		var result:Advice = AopConfig.getDynamicAdviceFactory().getAdvice(type, pointcut, callback);
 		addAdviceByAdvice(result);
 		return result;
 	}

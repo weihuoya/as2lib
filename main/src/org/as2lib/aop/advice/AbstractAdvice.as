@@ -20,7 +20,7 @@ import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.Advice;
 import org.as2lib.aop.Aspect;
 import org.as2lib.aop.JoinPoint;
-import org.as2lib.aop.pointcut.PointcutConfig;
+import org.as2lib.aop.AopConfig;
 
 /**
  * @author Simon Wacker
@@ -102,7 +102,7 @@ class org.as2lib.aop.advice.AbstractAdvice extends BasicClass {
 	 * @return the evaluated pointcut
 	 */
 	private function setPointcutByString(pointcutString:String):Pointcut {
-		var result:Pointcut = PointcutConfig.getPointcutFactory().getPointcut(pointcutString);
+		var result:Pointcut = AopConfig.getPointcutFactory().getPointcut(pointcutString);
 		setPointcutByPointcut(result);
 		return result;
 	}

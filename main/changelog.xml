@@ -5,6 +5,15 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2004">
       <month value="12">
+        <day value="29">
+          <entry type="remove" package="org.as2lib.aop.matcher" class="Matcher"></entry>
+          <entry type="add" package="org.as2lib.aop.matcher" class="DefaultMatcher">The old org.as2lib.aop.matcher.Matcher class but with non-static methods.</entry>
+          <entry type="add" package="org.as2lib.aop" class="Matcher">Matcher interface.</entry>
+          <entry type="change" package="org.as2lib.aop.pointcut" class="DynamicPointcutFactory" method="bindFactory(..)"><change-rename to="bindPointcutFactory" /></entry>
+          <entry type="remove" package="org.as2lib.aop.pointcut" class="PointcutConfig">Added AopConfig instead.</entry>
+          <entry type="remove" package="org.as2lib.aop.advice" class="AdviceConfig">Added AopConfig instead.</entry>
+          <entry type="add" package="org.as2lib.aop" class="AopConfig">Replaces PointcutConfig and AdviceConfig.</entry>
+        </day>
         <day value="20">
           <entry type="add" package="org.as2lib.env.event" class="EventBroadcaster" method="addAllListener(Array):Void"></entry>
           <entry type="remove" package="org.as2lib.env.reflect" class="NoSuchChildException"></entry>

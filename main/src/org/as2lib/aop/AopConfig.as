@@ -15,17 +15,26 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.aop.pointcut.PointcutFactory;
+import org.as2lib.aop.pointcut.DynamicPointcutFactory;
 import org.as2lib.aop.advice.AdviceFactory;
 import org.as2lib.aop.advice.DynamicAdviceFactory;
 import org.as2lib.aop.advice.SimpleDynamicAdviceFactory;
+import org.as2lib.aop.Matcher;
+import org.as2lib.aop.matcher.DefaultMatcher;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.aop.advice.AdviceConfig extends BasicClass {
+class org.as2lib.aop.AopConfig extends BasicClass {
+	
+	/** Stores the set pointcut factory. */
+	private static var pointcutFactory:PointcutFactory;
 	
 	/** Stores the set DynamicAdviceFactory. */
 	private static var dynamicAdviceFactory:DynamicAdviceFactory;
+	
+	private static var matcher:Matcher;
 	
 	/**
 	 * Sets a new DynamicAdviceFactory.
@@ -48,9 +57,37 @@ class org.as2lib.aop.advice.AdviceConfig extends BasicClass {
 	}
 	
 	/**
-	 * Private constructor.
+	 * Sets a new PointcutFactory.
+	 *
+	 * @param factory the PointcutFactory to be set
 	 */
-	private function AdviceConfig(Void) {
+	public static function setPointcutFactory(factory:PointcutFactory):Void {
+		pointcutFactory = factory;
+	}
+	
+	/**
+	 * Returns the set PointcutFactory or the default DynamicPointcutFactory.
+	 *
+	 * @return the set or default PointcutFactory
+	 */
+	public static function getPointcutFactory(Void):PointcutFactory {
+		if (!pointcutFactory) pointcutFactory = new DynamicPointcutFactory();
+		return pointcutFactory;
+	}
+	
+	public static function setMatcher(newMatcher:Matcher):Void {
+		matcher = newMatcher;
+	}
+	
+	public static function getMatcher(Void):Matcher {
+		if (!matcher) matcher = new DefaultMatcher();
+		return matcher;
+	}
+	
+	/**
+	 * Private constructor to prevent instantiation.
+	 */
+	private function AopConfig(Void) {
 	}
 	
 }

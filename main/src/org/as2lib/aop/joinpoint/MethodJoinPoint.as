@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.aop.joinpoint.AbstractJoinPoint;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.TypeMemberInfo;
@@ -37,6 +38,7 @@ class org.as2lib.aop.joinpoint.MethodJoinPoint extends AbstractJoinPoint impleme
 	 * @param thiz a reference to the object the method is defined in
 	 */
 	public function MethodJoinPoint(info:MethodInfo, thiz) {
+		if (!info || !thiz) throw new IllegalArgumentException("Both arguments, info and thiz, are not allowed to be null or undefined.", this, arguments);
 		this.info = info;
 		this.thiz = thiz;
 	}

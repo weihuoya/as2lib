@@ -19,7 +19,7 @@ import org.as2lib.data.holder.stack.SimpleStack;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.aop.pointcut.CompositePointcut;
 import org.as2lib.aop.pointcut.AbstractCompositePointcut;
-import org.as2lib.aop.pointcut.PointcutConfig;
+import org.as2lib.aop.AopConfig;
 import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.JoinPoint;
 
@@ -38,7 +38,7 @@ class org.as2lib.aop.pointcut.AndCompositePointcut extends AbstractCompositePoin
 			// source this out
 			var pointcuts:Array = pointcutString.split(" && ");
 			for (var i:Number = 0; i < pointcuts.length; i++) {
-				addPointcut(PointcutConfig.getPointcutFactory().getPointcut(pointcuts[i]));
+				addPointcut(AopConfig.getPointcutFactory().getPointcut(pointcuts[i]));
 			}
 		}
 	}

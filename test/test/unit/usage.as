@@ -82,6 +82,13 @@ test.unit.org.as2lib.test.mock.support.TDefaultBehaviour;
 test.unit.org.as2lib.aop.pointcut.TKindedPointcut;
 test.unit.org.as2lib.aop.pointcut.TAndCompositePointcut;
 test.unit.org.as2lib.aop.pointcut.TOrCompositePointcut;
+test.unit.org.as2lib.aop.pointcut.TDynamicPointcutFactory;
+
+// org.as2lib.aop.joinpoint
+test.unit.org.as2lib.aop.joinpoint.TMethodJoinPoint;
+test.unit.org.as2lib.aop.joinpoint.TPropertyJoinPoint;
+test.unit.org.as2lib.aop.joinpoint.TGetPropertyJoinPoint;
+test.unit.org.as2lib.aop.joinpoint.TSetPropertyJoinPoint;
 
 // org.as2lib.env.reflect
 test.unit.org.as2lib.env.reflect.TSimpleCache;
