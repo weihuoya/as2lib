@@ -20,8 +20,8 @@ import org.as2lib.env.event.SpeedEventBroadcaster;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.ConfigurableLogger;
 import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.logger.AbstractLogger;
 
 /**
  * SimpleLogger is a simple implementation of the ConfigurableLogger
@@ -76,43 +76,16 @@ import org.as2lib.env.log.LogMessage;
  * @author Simon Wacker
  * @see org.as2lib.env.log.Logger
  */
-class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements ConfigurableLogger {
+class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements ConfigurableLogger {
+	
+	/** Makes the static variables of the super-class accessible through this class. */
+	public static var __proto__:Function = AbstractLogger;
 	
 	/** The set level. */
 	private var level:LogLevel;
 	
 	/** The set level as number. */
 	private var levelAsNumber:Number;
-	
-	/** The debug level. */
-	private var debugLevel:LogLevel;
-	
-	/** The debug level as number. */
-	private var debugLevelAsNumber:Number;
-	
-	/** The info level. */
-	private var infoLevel:LogLevel;
-	
-	/** The info level as number. */
-	private var infoLevelAsNumber:Number;
-	
-	/** The warning level. */
-	private var warningLevel:LogLevel;
-	
-	/** The warning level as number. */
-	private var warningLevelAsNumber:Number;
-	
-	/** The error level. */
-	private var errorLevel:LogLevel;
-	
-	/** The error level as number. */
-	private var errorLevelAsNumber:Number;
-	
-	/** The fatal level. */
-	private var fatalLevel:LogLevel;
-	
-	/** The fatal level as number. */
-	private var fatalLevelAsNumber:Number;
 	
 	/** The broadcaster to dispatch the messages to all handlers. */
 	private var broadcaster:EventBroadcaster;
@@ -137,18 +110,8 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 	public function SimpleLogger(name:String, broadcaster:EventBroadcaster) {
 		this.name = name;
 		this.broadcaster = broadcaster ? broadcaster : new SpeedEventBroadcaster();
-		level = AbstractLogLevel.ALL;
+		level = ALL;
 		levelAsNumber = level.toNumber();
-		debugLevel = AbstractLogLevel.DEBUG;
-		debugLevelAsNumber = debugLevel.toNumber();
-		infoLevel = AbstractLogLevel.INFO;
-		infoLevelAsNumber = infoLevel.toNumber();
-		warningLevel = AbstractLogLevel.WARNING;
-		warningLevelAsNumber = warningLevel.toNumber();
-		errorLevel = AbstractLogLevel.ERROR;
-		errorLevelAsNumber = errorLevel.toNumber();
-		fatalLevel = AbstractLogLevel.FATAL;
-		fatalLevelAsNumber = fatalLevel.toNumber();
 	}
 	
 	/**
@@ -190,7 +153,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends BasicClass implements Confi
 			this.level = level;
 			levelAsNumber = level.toNumber();
 		} else {
-			this.level = AbstractLogLevel.ALL;
+			this.level = ALL;
 			levelAsNumber = level.toNumber();
 		}
 	}

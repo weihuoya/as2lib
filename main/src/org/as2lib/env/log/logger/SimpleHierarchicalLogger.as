@@ -22,9 +22,9 @@ import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.ConfigurableLogger;
 import org.as2lib.env.log.ConfigurableHierarchicalLogger;
 import org.as2lib.env.log.HierarchicalLogger;
-import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.logger.AbstractLogger;
 
 /**
  * SimpleHierarchicalLogger is a simple implementation of the
@@ -71,40 +71,13 @@ import org.as2lib.env.log.LogMessage;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends BasicClass implements ConfigurableLogger, ConfigurableHierarchicalLogger {
+class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger implements ConfigurableLogger, ConfigurableHierarchicalLogger {
+	
+	/** Makes the static variables of the super-class accessible through this class. */
+	public static var __proto__:Function = AbstractLogger;
 	
 	/** The actual level. */
 	private var level:LogLevel;
-	
-	/** The debug level. */
-	private var debugLevel:LogLevel;
-	
-	/** The debug level as number. */
-	private var debugLevelAsNumber:Number;
-	
-	/** The info level. */
-	private var infoLevel:LogLevel;
-	
-	/** The info level as number. */
-	private var infoLevelAsNumber:Number;
-	
-	/** The warning level. */
-	private var warningLevel:LogLevel;
-	
-	/** The warning level as number. */
-	private var warningLevelAsNumber:Number;
-	
-	/** The error level. */
-	private var errorLevel:LogLevel;
-	
-	/** The error level as number. */
-	private var errorLevelAsNumber:Number;
-	
-	/** The fatal level. */
-	private var fatalLevel:LogLevel;
-	
-	/** The fatal level as number. */
-	private var fatalLevelAsNumber:Number;
 	
 	/** Says whether the handlers array already contains the parents' handlers. */
 	private var addedParentHandlers:Boolean;
@@ -130,16 +103,6 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends BasicClass impl
 		setName(name);
 		this.broadcaster = broadcaster ? broadcaster : new SpeedEventBroadcaster();
 		addedParentHandlers = false;
-		debugLevel = AbstractLogLevel.DEBUG;
-		debugLevelAsNumber = debugLevel.toNumber();
-		infoLevel = AbstractLogLevel.INFO;
-		infoLevelAsNumber = infoLevel.toNumber();
-		warningLevel = AbstractLogLevel.WARNING;
-		warningLevelAsNumber = warningLevel.toNumber();
-		errorLevel = AbstractLogLevel.ERROR;
-		errorLevelAsNumber = errorLevel.toNumber();
-		fatalLevel = AbstractLogLevel.FATAL;
-		fatalLevelAsNumber = fatalLevel.toNumber();
 	}
 	
 	/**

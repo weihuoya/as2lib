@@ -5,6 +5,9 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="2">
+         <day value="17">
+           <entry type="add" package="org.as2lib.env.log.logger" class="AbstractLogger">Provides common functionalities normally needed by loggers.</entry>
+         </day>
          <day value="16">
            <entry type="add" package="org.as2lib.env.log.repository" class="LoggerFactory"></entry>
            <entry type="add" package="org.as2lib.env.log.repository" class="DynamicLoggerRepository"></entry>
