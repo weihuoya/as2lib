@@ -17,7 +17,6 @@
 import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.util.ReflectUtil;
-import org.as2lib.util.ObjectUtil;
 
 /**
  * RootInfo represents the root of the class path. The root in the Flash environment
@@ -30,7 +29,7 @@ import org.as2lib.util.ObjectUtil;
  */
 class org.as2lib.env.reflect.RootInfo extends PackageInfo implements CompositeMemberInfo {
 	/** The onliest instance of the RootInfo class. */
-	private static var instance:RootInfo = new RootInfo();
+	private static var instance:RootInfo;
 	
 	/**
 	 * Returns the onliest instance of the RootInfo class.
@@ -38,6 +37,7 @@ class org.as2lib.env.reflect.RootInfo extends PackageInfo implements CompositeMe
 	 * @return an instance of the RootInfo class
 	 */
 	public static function getInstance(Void):RootInfo {
+		if (!instance) instance = new RootInfo();
 		return instance;
 	}
 	

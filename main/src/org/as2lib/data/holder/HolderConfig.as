@@ -16,7 +16,6 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.string.Stringifier;
-import org.as2lib.util.ObjectUtil;
 import org.as2lib.data.holder.string.MapStringifier;
 import org.as2lib.data.holder.string.StackStringifier;
 import org.as2lib.data.holder.string.QueueStringifier;
@@ -29,13 +28,13 @@ import org.as2lib.data.holder.string.QueueStringifier;
  */
 class org.as2lib.data.holder.HolderConfig extends BasicClass {
 	/** Used to stringify Maps. */
-	private static var mapStringifier:Stringifier = new MapStringifier();
+	private static var mapStringifier:Stringifier;
 	
 	/** Used to stringify Stacks. */
-	private static var stackStringifier:Stringifier = new StackStringifier();
+	private static var stackStringifier:Stringifier;
 	
 	/** Used to stringify Queues. */
-	private static var queueStringifier:Stringifier = new QueueStringifier();
+	private static var queueStringifier:Stringifier;
 	
 	/** 
 	 * Private constructor.
@@ -58,6 +57,7 @@ class org.as2lib.data.holder.HolderConfig extends BasicClass {
 	 * @return the currently used Map Stringifier
 	 */
 	public static function getMapStringifier(Void):Stringifier {
+		if (!mapStringifier) mapStringifier = new MapStringifier();
 		return mapStringifier;
 	}
 	
@@ -76,6 +76,7 @@ class org.as2lib.data.holder.HolderConfig extends BasicClass {
 	 * @return the currently used Stack Stringifier
 	 */
 	public static function getStackStringifier(Void):Stringifier {
+		if (!stackStringifier) stackStringifier = new StackStringifier();
 		return stackStringifier;
 	}
 	
@@ -94,6 +95,7 @@ class org.as2lib.data.holder.HolderConfig extends BasicClass {
 	 * @return the currently used Queues Stringifier
 	 */
 	public static function getQueueStringifier(Void):Stringifier {
+		if (!queueStringifier) queueStringifier = new QueueStringifier();
 		return queueStringifier;
 	}
 }

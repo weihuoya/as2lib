@@ -1,10 +1,12 @@
 // :: CHANGELOG :: //
 
 
+
     :: 05/18/04 :: Martin Heidegger ::
-     >> org.as2lib.util.StopWatch
-       
-       > Introduced new small class for stopping time differences.
+
+
+        > Introduced org.as2lib.util.StopWatch class to stop time differences
+
 
 
     :: 05/26/04 :: Simon Wacker ::
@@ -163,3 +165,15 @@
         > added ExceptConfig.getStackTraceElementFactory()
         > added ExceptConfig.setStackTraceElementFactory()
         + changed AbstractException.addStackTraceElement() to use this newly created classes and operations
+
+
+
+    :: 06/18/04 :: Simon Wacker ::
+
+        > moved initialization of static vars into appropriate getter methods
+          affected classes are
+          * org.as2lib.env.reflect.ReflectConfig
+          * org.as2lib.Config
+          * org.as2lib.data.holder.HolderConfig
+          * org.as2lib.env.except.ExceptConfig
+          * org.as2lib.env.reflect.RootInfo
