@@ -37,6 +37,9 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	/** The level the output has. */
 	private var level:LogLevel;
 	
+	/** The name of the logger that logs the message. */
+	private var loggerName:String;
+	
 	/**
 	 * Returns either the stringifier set via #setStringifier() or the
 	 * default one.
@@ -62,10 +65,21 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	 * 
 	 * @param message the message object that shall be written out
 	 * @param level the level of the message
+	 * @param loggerName the name of the logger that logs the message
 	 */
-	public function LogMessage(message, level:LogLevel) {
+	public function LogMessage(message, level:LogLevel, loggerName:String) {
 		this.message = message;
 		this.level = level;
+		this.loggerName = loggerName;
+	}
+	
+	/**
+	 * Returns the message object that shall be written out.
+	 *
+	 * @return message the message object that shall be written out
+	 */
+	public function getMessage(Void) {
+		return message;
 	}
 	
 	/**
@@ -78,12 +92,12 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	}
 	
 	/**
-	 * Returns the message object that shall be written out.
+	 * Returns the name of the logger that logs the message.
 	 *
-	 * @return message the message object that shall be written out
+	 * @return the name of the logging logger
 	 */
-	public function getMessage(Void) {
-		return message;
+	public function getLoggerName(Void):String {
+		return loggerName;
 	}
 	
 	/**

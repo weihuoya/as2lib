@@ -35,9 +35,9 @@ class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass impl
 	 */
 	private static function getLogger(Void) {
 		if (logger === undefined) {
-			var repositoryManager = eval("_global." + "org.as2lib.env.log.LoggerRepositoryManager");
+			var repositoryManager = eval("_global." + "org.as2lib.env.log.LogManager");
 			if (repositoryManager) {
-				logger = repositoryManager.getRepository().getLogger("org.as2lib.env.event.dispatcher.LogEventDispatcher");
+				logger = repositoryManager.getLoggerRepository().getLogger("org.as2lib.env.event.dispatcher.LogEventDispatcher");
 			} else {
 				logger = null;
 			}
