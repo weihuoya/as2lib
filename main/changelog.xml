@@ -137,7 +137,6 @@
            <entry type="add" package="org.as2lib.env.event" class="ConsumableEventInfo">SimpleEventInfo that is consumable</entry>
            <entry type="add" package="org.as2lib.env.log.handler" class="TraceHandler" method="getInstance(Void):TraceHandler">Added method for singleton access.</entry>
            <entry type="add" package="org.as2lib.env.log.logger" class="TraceLogger">Introduced simple logger that redirects to the output console</entry>
-           <entry type="add" package="org.as2lib.env.log.logger" class="VoidLogger">Introduces logger that dismisses all messages</entry>
          </day>
          <day value="22">
            <entry type="add" package="static org.as2lib.test.mock" class="MockControl" method="getDefaultArgumentsMatcher(Void):DefaultArgumentsMatcher">Matches arguments by value.</entry>
