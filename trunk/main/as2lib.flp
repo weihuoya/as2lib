@@ -10,9 +10,9 @@
                     <project_file path="./org/as2lib/basic/exceptions/info.txt" filetype="txt" />
                 </project_folder>
                 <project_folder name="interfaces" expanded="true">
-                    <project_file path="./org/as2lib/interfaces/Classifiable.as" filetype="as" />
-                    <project_file path="./org/as2lib/interfaces/Cloneable.as" filetype="as" />
-                    <project_file path="./org/as2lib/interfaces/Comparable.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/interfaces/Classifiable.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/interfaces/Cloneable.as" filetype="as" />
+                    <project_file path="./org/as2lib/basic/interfaces/Comparable.as" filetype="as" />
                 </project_folder>
                 <project_file path="./ORG/AS2LIB/BASIC/Out.as" filetype="as" />
                 <project_file path="./ORG/AS2LIB/BASIC/Exception.as" filetype="as" />
