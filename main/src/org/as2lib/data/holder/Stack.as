@@ -1,8 +1,13 @@
 ﻿import org.as2lib.data.iterator.Iterator;
 import org.as2lib.data.iterator.ArrayIterator;
+import org.as2lib.core.BasicClass;
 
-class org.as2lib.data.holder.Stack {
+class org.as2lib.data.holder.Stack extends BasicClass {
 	private var target:Array;
+	
+	public function Stack(Void) {
+		target = new Array();
+	}
 	
 	public function push(object) {
 		target.push(object);

@@ -17,7 +17,7 @@ interface org.as2lib.env.except.Throwable extends BasicInterface {
 	 *
 	 * @return a Stack containing the called operations
 	 */
-	public function getStack(Void):Stack;
+	public function getStackTrace(Void):Stack;
 	
 	/**
 	 * Initializes the cause of the Throwable. The cause can only be initialized
@@ -44,18 +44,4 @@ interface org.as2lib.env.except.Throwable extends BasicInterface {
 	 * @return the message set via the constructor
 	 */
 	public function getMessage(Void):String;
-	
-	/**
-	 * Returns the object that has thrown the Throwable.
-	 *
-	 * @return the throwing object
-	 */
-	public function getThrower(Void);
-	
-	/**
-	 * Returns the arguments of the operation that has thrown the Throwable.
-	 *
-	 * @return the arguments of the throwing operation
-	 */
-	public function getArguments(Void):FunctionArguments;
 }
