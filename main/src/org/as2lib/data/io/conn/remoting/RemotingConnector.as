@@ -22,15 +22,20 @@ class org.as2lib.data.io.conn.remoting.RemotingConnector implements Connector {
 		gatewayUrl = aUrl;
 	}
 	
-	public function addListener(l:ConnectionListener):Void {
+	public function addListener(l:ConnectorListener):Void {
 		eventBroadcaster.addListener(l);
 	}
 	
-	public function removeListener(l:ConnectionListener):Void {
+	public function removeListener(l:ConnectorListener):Void {
 		eventBroadcaster.removeListener(l);
 	}
 	
-	public function handleRequest(r:ConnectionRequest):Void {
+	// for testing
+	public function dispatch(event:EventInfo):Void{
+		eventBroadcaster.dispatch();
+	}
+	
+	public function handleRequest(r:ConnectorRequest):Void {
 		// TODO: Handle an Netconnection Request.
 	}
 }

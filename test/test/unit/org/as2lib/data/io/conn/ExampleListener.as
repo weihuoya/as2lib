@@ -4,7 +4,7 @@ import org.as2lib.data.io.conn.ConnectorError;
 import org.as2lib.data.io.conn.ConnectorResponse;
 import org.as2lib.env.out.Out;
 
-class ExampleListener extends BasicClass implements ConnectorListener {
+class test.org.as2lib.data.io.conn.ExampleListener extends BasicClass implements ConnectorListener {
 	/** Internal counter (just to do something */
 	public static var counter:Number = 0;
 	private var myOut:Out;
@@ -12,6 +12,7 @@ class ExampleListener extends BasicClass implements ConnectorListener {
 	public function ExampleListener(Void) {
 		counter++
 		myOut = new Out();
+		myOut.info("ExampleListener.counter: "+counter);
 	}
 	
 	/**
@@ -22,6 +23,6 @@ class ExampleListener extends BasicClass implements ConnectorListener {
 	}
 	
 	public function onResponse(response:ConnectorResponse):Void{
-		myOut.info(response)
+		myOut.info(response.toString());
 	}
 }
