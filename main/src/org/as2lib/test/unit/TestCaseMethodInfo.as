@@ -54,6 +54,9 @@ class org.as2lib.test.unit.TestCaseMethodInfo extends BasicClass {
 			var error = errorIterator.next();
 			result+="\n"+StringUtil.addSpaceIndent(error.toString(), 2);
 		}
+		if(hasErrors()) {
+			result+="\n";
+		}
 		return result;
 	}
 }
