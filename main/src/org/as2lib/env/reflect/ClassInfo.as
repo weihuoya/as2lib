@@ -119,8 +119,12 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @see org.as2lib.env.reflect.TypeInfo#getSuperType()
 	 */
 	public function getSuperType(Void):TypeInfo {
-		if (ObjectUtil.isEmpty(superClass)) {
-			superClass = ReflectUtil.getClassInfo(clazz.prototype);
+		if (superClass === undefined) {
+			if (clazz.prototype != undefined) {
+				superClass = ReflectUtil.getClassInfo(clazz.prototype);
+			} else {
+				superClass = null;
+			}
 		}
 		return superClass;
 	}
@@ -151,6 +155,9 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	public function getMethods(Void):Map {
 		if (ObjectUtil.isEmpty(methods)) {
 			methods = ReflectConfig.getMethodAlgorithm().execute(this);
+			if (getSuperType() != null) {
+				methods.putAll(getSuperType().getMethods());
+			}
 		}
 		return methods;
 	}
