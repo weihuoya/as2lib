@@ -5,48 +5,53 @@ import org.as2lib.core.BasicInterface;
 
 /**
  * @author Martin Heidegger, Simon Wacker
- * @version 1.0
  */
 interface org.as2lib.env.out.OutLevel extends BasicInterface {
 	/**
-	 * Log a message.
-	 * @param message
-	 * @param handler
+	 * Outputs a message.
+	 *
+	 * @param message the message to be written out
+	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
 	public function log(message:String, broadcaster:EventBroadcaster):Void;
 	
 	/**
-	 * Log a message with the DEBUG priority.
-	 * @param message
-	 * @param handler
+	 * Outputs a message.
+	 *
+	 * @param message the message to be written out
+	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
 	public function debug(message:String, broadcaster:EventBroadcaster):Void;
 	
 	/**
-	 * Log a message with the INFO priority.
-	 * @param message
-	 * @param handler
+	 * Outputs a message.
+	 *
+	 * @param message the message to be written out
+	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
 	public function info(message:String, broadcaster:EventBroadcaster):Void;
 	
 	/**
-	 * Log a message with the WARNING priority.
-	 * @param message
-	 * @param handler
+	 * Outputs a message.
+	 *
+	 * @param message the message to be written out
+	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
 	public function warning(message:String, broadcaster:EventBroadcaster):Void;
 	
 	/**
-	 * Log a message with the ERROR priority.
-	 * @param message
-	 * @param handler
+	 * Outputs a Throwable.
+	 *
+	 * @param throwable the Throwable to be written out
+	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
 	public function error(exception:Throwable, broadcaster:EventBroadcaster):Void;
 	
 	/**
-	 * Log a message with the FATAL priority.
-	 * @param message
-	 * @param handler
+	 * Outputs a Throwable.
+	 *
+	 * @param throwable the Throwable to be written out
+	 * @param broadcaster the EventBroadcaster used to dispatch to all handlers
 	 */
 	public function fatal(exception:Throwable, broadcaster:EventBroadcaster):Void;
 }
