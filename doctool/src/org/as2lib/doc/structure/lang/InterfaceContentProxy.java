@@ -14,16 +14,17 @@ import org.as2lib.doc.structure.ClassContent;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class ClassContentProxy extends AbstractContentProxy implements ClassContent {
+public class InterfaceContentProxy extends AbstractContentProxy implements ClassContent {
 
 	private ClassContent reference;
 	
-	public ClassContentProxy(String name) {
+	public InterfaceContentProxy(String name) {
 		super(name);
 	}
 	
 	public void setReference(ClassContent reference) {
-		this.reference = reference;
+		this
+		.reference = reference;
 	}
 	
 	public ClassContent getReference(){
