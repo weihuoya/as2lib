@@ -69,7 +69,7 @@ class org.as2lib.env.event.EventBroadcaster extends BasicClass {
 		var result:ListenerArray = new ListenerArray();
 		var l:Number = listeners.length;
 		for (var i:Number = 0; i < l; i++) {
-			result.push(listeners[i]);
+			result.push(listeners.get(i));
 		}
 		return result;
 	}
