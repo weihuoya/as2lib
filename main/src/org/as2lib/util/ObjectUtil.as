@@ -29,11 +29,14 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	/**
 	 * Checks if the type of object matches the given type.
 	 *
-	 * @param object the object which type shall be compared with the type
+	 * @param object the object whose type shall be compared with the type
 	 * @param type the type that shall be used for the comparison
 	 * @return true if the type of the object matches else false
 	 */
 	public static function typesMatch(anObject, aType:Function):Boolean {
+		if (aType === Object) {
+			return true;
+		}
 		if (isPrimitiveType(anObject)) {
 			if (compareTypeOf(aType(anObject), anObject)) {
 				return true;
