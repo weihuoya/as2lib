@@ -1,6 +1,4 @@
 ﻿import org.as2lib.core.BasicClass;
-import org.as2lib.data.io.conn.local.MissingServerException;
-import org.as2lib.data.io.conn.local.SyntacticallyIncorrectMethodCallException;
 import org.as2lib.data.io.conn.local.ExtendedLocalConnection;
 import org.as2lib.env.overload.Overload;
 
