@@ -39,13 +39,13 @@
 		  <entry type="change" package="org.as2lib.util" class="ObjectUtil" method="forEach(..)">Additional submitting of the entries name.</entry>
 		  <entry type="add" package="org.as2ib.test.unit" class="TestCase" method="assertTypeOf(message:String, value, type:String)" />
 		  <entry type="add" package="org.as2ib.test.unit" class="TestCase" method="assertInstanceOf(message:String, value, type)" />
-		  <entry type="add" package="org.as2ib.data.io.file" class="File" />
-		  <entry type="add" package="org.as2ib.data.io.file" class="FileListener" />
-		  <entry type="add" package="org.as2ib.data.io.file" class="FileEventInfo" />
-		  <entry type="add" package="org.as2ib.data.io.file" class="FileNotLoadedException" />
-		  <entry type="add" package="org.as2ib.data.io.file" class="SimpleFile" />
-		  <entry type="add" package="org.as2ib.data.io.file" class="BitFormat" />
-		  <entry type="add" package="org.as2ib.data.io.file" class="ByteFormat" />
+		  <entry type="add" package="org.as2ib.data.file" class="File" />
+		  <entry type="add" package="org.as2ib.data.file" class="FileListener" />
+		  <entry type="add" package="org.as2ib.data.file" class="FileEventInfo" />
+		  <entry type="add" package="org.as2ib.data.file" class="FileNotLoadedException" />
+		  <entry type="add" package="org.as2ib.data.file" class="SimpleFile" />
+		  <entry type="add" package="org.as2ib.data.file" class="BitFormat" />
+		  <entry type="add" package="org.as2ib.data.file" class="ByteFormat" />
 		</day>
         <day value="20">
           <entry type="change" package="org.as2lib.data.io.conn.core.event" class="MethodInvocationReturnListener" method="onResponse(..)"><change-rename to="onReturn" /></entry>
