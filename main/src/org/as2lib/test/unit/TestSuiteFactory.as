@@ -57,7 +57,7 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 	 */
 	public function collectTestCases(package, recursive:Boolean):TestSuite {
 		var result:TestSuite = new TestSuite("<Generated TestSuite>");
-		AccessPermission.set(package, null, AccessPermission.ALL_ALLOWED);
+		AccessPermission.set(package, null, AccessPermission.ALLOW_ALL);
 		collectAgent(package, result, recursive);
 		return result;
 	}

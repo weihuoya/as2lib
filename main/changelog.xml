@@ -5,6 +5,11 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="2">
+         <day value="20">
+           <entry type="change" package="static org.as2lib.util" class="AccessPermission" variable="NOTHING_ALLOWED"><change-rename to="ALLOW_NOTHING" /></entry>
+           <entry type="change" package="static org.as2lib.util" class="AccessPermission" variable="IS_HIDDEN"><change-rename to="HIDE" /></entry>
+           <entry type="change" package="static org.as2lib.util" class="AccessPermission" variable="ALL_ALLOWED"><change-rename to="ALLOW_ALL" /></entry>
+         </day>
          <day value="18">
            <entry type="change" package="org.as2lib.env.overload" class="OverloadHandler" method="getArguments"><change-rename to="getArgumentsTypes" /></entry>
          </day>
