@@ -1,6 +1,13 @@
 // :: CHANGELOG :: //
 
 
+    :: 05/25/04 :: Martin Heidegger ::
+       
+      >> org.as2lib.util.StringUtil
+   
+        > added a lot of Documentation
+        > added method addSpaceIndent()
+        > added method multiply()
 
     :: 05/18/04 :: Martin Heidegger ::
 
