@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.MethodResponse;
@@ -38,6 +37,6 @@ interface org.as2lib.test.mock.MethodBehaviour extends BasicInterface {
 	
 	public function response(Void);
 	
-	public function verify(testCase:TestCase):Void;
+	public function verify(Void):Void;
 	
 }

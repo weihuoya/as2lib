@@ -50,7 +50,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TPropertyAlgorithm extends Test
 		var a:PropertyAlgorithm = new PropertyAlgorithm();
 		assertNull(a.execute(i));
 		
-		ic.verify(this);
+		ic.verify();
 	}
 	
 	public function testExecute(Void):Void {
@@ -93,7 +93,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TPropertyAlgorithm extends Test
 			}
 		}
 		
-		pc.verify(this);
+		pc.verify();
 	}
 	
 	public function testExecuteByClassWithoutMethods(Void):Void {
@@ -108,7 +108,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TPropertyAlgorithm extends Test
 		assertNotNull("children array should not be null", c);
 		assertSame("there should be no children", c.length, 0);
 		
-		pc.verify(this);
+		pc.verify();
 	}
 	
 }

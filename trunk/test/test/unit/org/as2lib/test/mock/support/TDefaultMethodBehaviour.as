@@ -25,6 +25,125 @@ import org.as2lib.test.mock.MethodResponse;
  */
 class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends TestCase {
 	
+	public function testVerifyWithMultipleMethodCallRanges(Void):Void {
+		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(new MethodCall("m", []));
+		b.addMethodResponse(null, new MethodCallRange(2, 5));
+		b.addMethodResponse(null, new MethodCallRange(0, 2));
+		b.addMethodResponse(null, new MethodCallRange(3));
+		b.addMethodResponse(null, new MethodCallRange(1, 2));
+		try {
+			b.verify();
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+		b.addActualMethodCall(new MethodCall("m", []));
+		try {
+			b.verify();
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+		b.addActualMethodCall(new MethodCall("m", []));
+		try {
+			b.verify();
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+		b.addActualMethodCall(new MethodCall("m", []));
+		try {
+			b.verify();
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+		b.addActualMethodCall(new MethodCall("m", []));
+		try {
+			b.verify();
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+		b.addActualMethodCall(new MethodCall("m", []));
+		try {
+			b.verify();
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+		b.addActualMethodCall(new MethodCall("m", []));
+		b.verify();
+		b.addActualMethodCall(new MethodCall("m", []));
+		b.verify();
+		b.addActualMethodCall(new MethodCall("m", []));
+		b.verify();
+		b.addActualMethodCall(new MethodCall("m", []));
+		b.verify();
+		b.addActualMethodCall(new MethodCall("m", []));
+		b.verify();
+		b.addActualMethodCall(new MethodCall("m", []));
+		b.verify();
+		b.addActualMethodCall(new MethodCall("m", []));
+		b.verify();
+		try {
+			b.addActualMethodCall(new MethodCall("m", []));
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+		b.verify();
+	}
+	
+	public function testVerifyWithNullExpectedMethodCall(Void):Void {
+		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(null);
+		b.verify();
+		try {
+			b.addActualMethodCall(new MethodCall("m", []));
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+		b.verify();
+	}
+	
+	public function testVerify(Void):Void {
+		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(new MethodCall("m", []));
+		b.addMethodResponse(null, new MethodCallRange(2, 5));
+		try {
+			b.verify();
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+		b.addActualMethodCall(new MethodCall("m", []));
+		try {
+			b.verify();
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+		b.addActualMethodCall(new MethodCall("m", []));
+		b.verify();
+		b.addActualMethodCall(new MethodCall("m", []));
+		b.verify();
+		b.addActualMethodCall(new MethodCall("m", []));
+		b.verify();
+		b.addActualMethodCall(new MethodCall("m", []));
+		b.verify();
+		try {
+			b.addActualMethodCall(new MethodCall("m", []));
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+		b.verify();
+		try {
+			b.addActualMethodCall(new MethodCall("m", []));
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+		b.verify();
+	}
+	
+	public function testAddMethodResponseWithNullExpectedMethodCall(Void):Void {
+		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(null);
+		try {
+			b.addMethodResponse(null, null);
+			fail("Expected IllegalStateException.");
+		} catch (e:org.as2lib.env.except.IllegalStateException) {
+		}
+	}
+	
 	public function testNewWithNullArgument(Void):Void {
 		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(null);
 		assertNull(b.getExpectedMethodCall());
@@ -38,39 +157,92 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	
 	public function testAddActualMethodCallWithNullArgument(Void):Void {
 		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(null);
-		b.addActualMethodCall(null);
-		b.addActualMethodCall(null);
-		b.addActualMethodCall(null);
-		assertSame(b.getAllActualMethodCall()[0], null);
-		assertSame(b.getAllActualMethodCall()[1], null);
-		assertSame(b.getAllActualMethodCall()[2], null);
+		try {
+			b.addActualMethodCall(null);
+			fail("Expected IllegalArgumentException.");
+		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
+		}
 	}
 	
-	public function testAddActualMethodCallWithRealArgument(Void):Void {
-		var c1:MethodCall = new MethodCall("methodName", []);
-		var c2:MethodCall = new MethodCall("methodName", []);
-		var c3:MethodCall = new MethodCall("methodName", []);
-		
+	public function testAddActualMethodCallWithNotMatchingActualMethodCall(Void):Void {
+		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(new MethodCall("methodName", []));
+		try {
+			b.addActualMethodCall(new MethodCall("methodName1", [";)"]));
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+	}
+	
+	public function testAddActualMethodCallWithMatchingCall(Void):Void {
+		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(new MethodCall("methodName", []));
+		b.addActualMethodCall(new MethodCall("methodName", []));
+	}
+	
+	public function testAddActualMethodCallWithMatchingCallAndExpectedRangeOfZero(Void):Void {
+		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(new MethodCall("methodName", []));
+		b.addMethodResponse(null, new MethodCallRange(0));
+		try {
+			b.addActualMethodCall(new MethodCall("methodName", []));
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+	}
+	
+	public function testAddActualMethodCallWithMatchingCallAndExplicitCallCount(Void):Void {
+		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(new MethodCall("methodName", []));
+		b.addMethodResponse(null, new MethodCallRange(3));
+		b.addActualMethodCall(new MethodCall("methodName", []));
+		b.addActualMethodCall(new MethodCall("methodName", []));
+		b.addActualMethodCall(new MethodCall("methodName", []));
+		try {
+			b.addActualMethodCall(new MethodCall("methodName", []));
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+	}
+	
+	public function testAddActualMethodCallWithMatchingCallAndMultipleExplicitCallCounts(Void):Void {
+		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(new MethodCall("methodName", []));
+		b.addMethodResponse(null, new MethodCallRange(0));
+		b.addMethodResponse(null, new MethodCallRange(2));
+		b.addMethodResponse(null, new MethodCallRange(1));
+		b.addMethodResponse(null, new MethodCallRange(3));
+		b.addActualMethodCall(new MethodCall("methodName", []));
+		b.addActualMethodCall(new MethodCall("methodName", []));
+		b.addActualMethodCall(new MethodCall("methodName", []));
+		b.addActualMethodCall(new MethodCall("methodName", []));
+		b.addActualMethodCall(new MethodCall("methodName", []));
+		b.addActualMethodCall(new MethodCall("methodName", []));
+		try {
+			b.addActualMethodCall(new MethodCall("methodName", []));
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+	}
+	
+	public function testAddActualMethodCallWithNullExpectedMethodCall(Void):Void {
 		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(null);
-		b.addActualMethodCall(c1);
-		b.addActualMethodCall(c2);
-		b.addActualMethodCall(c3);
-		assertSame(b.getAllActualMethodCall()[0], c1);
-		assertSame(b.getAllActualMethodCall()[1], c2);
-		assertSame(b.getAllActualMethodCall()[2], c3);
+		try {
+			b.addActualMethodCall(new MethodCall("methodName", []));
+			fail("Expected MethodCallRangeError.");
+		} catch (e:org.as2lib.test.mock.MethodCallRangeError) {
+		}
+	}
+	
+	public function testExpectsAnotherMethodCallWithoutExpectedMethodCall(Void):Void {
+		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(null);
+		assertFalse(b.expectsAnotherMethodCall());
 	}
 	
 	public function testExpectsAnotherMethodCallWithoutExpectedCallRangesAndAddedMethodCalls(Void):Void {
 		var ec:MethodCall = new MethodCall("methodName", []);
 		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(ec);
-		assertFalse(b.expectsAnotherMethodCall());
+		assertTrue(b.expectsAnotherMethodCall());
 	}
 	
-	public function testExpectsAnotherMethodCallWithoutExpectedCallRangesButWithAddedMethodCalls(Void):Void {
+	public function testExpectsAnotherMethodCallWithoutExpectedCallRangesButWithAddedMethodCall(Void):Void {
 		var ec:MethodCall = new MethodCall("methodName", []);
 		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(ec);
-		b.addActualMethodCall(new MethodCall("methodName", []));
-		b.addActualMethodCall(new MethodCall("methodName", []));
 		b.addActualMethodCall(new MethodCall("methodName", []));
 		assertFalse(b.expectsAnotherMethodCall());
 	}
@@ -207,10 +379,6 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 			b.addActualMethodCall(new MethodCall("methodName", []));
 			assertSame(b.response(), "r3");
 		}
-	}
-	
-	public function testVerify(Void):Void {
-		// TODO (any tests regarding the verify method)
 	}
 	
 }

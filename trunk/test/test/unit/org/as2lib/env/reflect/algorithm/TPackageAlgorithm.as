@@ -38,7 +38,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestC
 		assertNull("Execute with null argument should return null.", a.execute(null));
 		assertNull("Execute with undefined argument should return null.", a.execute(undefined));
 		
-		cc.verify(this);
+		cc.verify();
 	}
 	
 	public function testExecuteWithStoredPackageInfo(Void):Void {
@@ -55,7 +55,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestC
 		a.setCache(c);
 		assertSame(a.execute(p), o);
 		
-		cc.verify(this);
+		cc.verify();
 	}
 	
 	public function testExecuteWithUnknownPackage(Void):Void {
@@ -77,7 +77,7 @@ class test.unit.org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestC
 		a.setCache(c);
 		assertNull(a.execute(p));
 		
-		cc.verify(this);
+		cc.verify();
 	}
 	
 	public function testExecuteWithExistingPackage(Void):Void {

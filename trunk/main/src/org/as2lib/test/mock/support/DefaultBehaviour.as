@@ -18,7 +18,6 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.PrimitiveTypeMap;
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MethodBehaviour;
 import org.as2lib.test.mock.Behaviour;
 import org.as2lib.test.mock.MethodBehaviourFactory;
@@ -141,11 +140,11 @@ class org.as2lib.test.mock.support.DefaultBehaviour extends BasicClass implement
 	/**
 	 * @see Behaviour#verify()
 	 */
-	public function verify(testCase:TestCase):Void {
+	public function verify(Void):Void {
 		var behaviours:Array = methodBehaviours.getValues();
 		for (var i:Number = 0; i < behaviours.length; i++) {
 			for (var k:Number = 0; k < behaviours[i].length; k++) {
-				MethodBehaviour(behaviours[i][k]).verify(testCase);
+				MethodBehaviour(behaviours[i][k]).verify();
 			}
 		}
 	}

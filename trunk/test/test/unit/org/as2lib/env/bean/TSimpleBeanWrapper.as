@@ -192,7 +192,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		var p:String = bw.getPropertyValue(SimpleBeanWrapper.METHOD_PREFIX + "returnProperty");
 		assertSame(p, "value");
 		
-		woC.verify(this);
+		woC.verify();
 	}
 	
 	public function testGetPropertyValueForSimpleNameWithoutPrefix(Void):Void {
@@ -206,7 +206,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		var p:String = bw.getPropertyValue("property");
 		assertSame(p, "value");
 		
-		woC.verify(this);
+		woC.verify();
 	}
 	
 	/*public function testGetPropertyValueForSimpleNestedPropertyWithPropertyPrefix(Void):Void {
@@ -245,7 +245,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		var p:String = bw.getPropertyValue(SimpleBeanWrapper.METHOD_PREFIX + "returnProperty[3]");
 		assertSame(p, "value");
 		
-		mc.verify(this);
+		mc.verify();
 	}
 	
 	public function testGetPropertyValueForPropertyKeyNumberWithoutPrefix(Void):Void {
@@ -259,7 +259,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		var p:String = bw.getPropertyValue("property[3]");
 		assertSame(p, "value");
 		
-		mc.verify(this);
+		mc.verify();
 	}
 	
 	public function testGetPropertyValueForPropertyKeyStringWithPropertyPrefix(Void):Void {
@@ -284,7 +284,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		assertSame(bw.getPropertyValue(SimpleBeanWrapper.METHOD_PREFIX + "returnProperty[\"key\"]"), "value");
 		assertSame(bw.getPropertyValue(SimpleBeanWrapper.METHOD_PREFIX + "returnProperty['key']"), "value");
 		
-		mc.verify(this);
+		mc.verify();
 	}
 	
 	public function testGetPropertyValueForPropertyKeyStringWithoutPrefix(Void):Void {
@@ -299,7 +299,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		assertSame(bw.getPropertyValue("property[\"key\"]"), "value");
 		assertSame(bw.getPropertyValue("property['key']"), "value");
 		
-		mc.verify(this);
+		mc.verify();
 	}
 	
 	/********************************************************************************/
@@ -338,7 +338,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(wo);
 		bw.setPropertyValue(SimpleBeanWrapper.METHOD_PREFIX + "putProperty", "value");
 		
-		mC.verify(this);
+		mC.verify();
 	}
 	
 	public function testSetPropertyValueBySimpleNameAndValueWithoutPrefix(Void):Void {
@@ -351,7 +351,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		var bw:SimpleBeanWrapper = new SimpleBeanWrapper(wo);
 		bw.setPropertyValue("property", "value");
 		
-		mC.verify(this);
+		mC.verify();
 	}
 	
 	public function testSetPropertyValueForKeyNumberWithPropertyPrefix(Void):Void {
@@ -374,7 +374,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		bw.setPropertyValue(SimpleBeanWrapper.METHOD_PREFIX+"putValue['3']", "value");
 		bw.setPropertyValue(SimpleBeanWrapper.METHOD_PREFIX+"putValue[\"3\"]", "value");
 		
-		mC.verify(this);
+		mC.verify();
 	}
 	
 	public function testSetPropertyValueForKeyNumberWithoutPrefix(Void):Void {
@@ -389,7 +389,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		bw.setPropertyValue("value['3']", "value");
 		bw.setPropertyValue("value[\"3\"]", "value");
 		
-		mC.verify(this);
+		mC.verify();
 	}
 	
 	public function testSetPropertyValueForKeyStringWithPropertyPrefix(Void):Void {
@@ -416,7 +416,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		bw.setPropertyValue(SimpleBeanWrapper.METHOD_PREFIX+"putValue['key']", "value");
 		bw.setPropertyValue(SimpleBeanWrapper.METHOD_PREFIX+"putValue[\"key\"]", "value");
 		
-		mC.verify(this);
+		mC.verify();
 	}
 	
 	public function testSetPropertyValueForKeyStringWithoutPrefix(Void):Void {
@@ -431,7 +431,7 @@ class test.unit.org.as2lib.env.bean.TSimpleBeanWrapper extends TestCase {
 		bw.setPropertyValue("value['key']", "value");
 		bw.setPropertyValue("value[\"key\"]", "value");
 		
-		mC.verify(this);
+		mC.verify();
 	}
 	
 	public function testSetPropertyValueWithNumberType(Void):Void {

@@ -24,7 +24,8 @@ import org.as2lib.test.mock.AssertionFailedError;
  */
 class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	
-	public static var ANY_QUANTITY:Number = Number.POSITIVE_INFINITY;
+	public static var DEFAULT_MINIMUM:Number = 0;
+	public static var DEFAULT_MAXIMUM:Number = Number.POSITIVE_INFINITY;
 	
 	private var minimum:Number;
 	private var maximum:Number;
@@ -38,17 +39,19 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	}
 	
 	private function MethodCallRangeByVoid(Void):Void {
-		MethodCallRangeByQuantity(ANY_QUANTITY);
+		MethodCallRangeByMinimumAndMaximumQuantity(null, null);
 	}
 	
 	private function MethodCallRangeByQuantity(quantity):Void {
-		if (quantity == null) quantity = ANY_QUANTITY;
+		if (quantity == null) {
+			MethodCallRangeByMinimumAndMaximumQuantity(null, null);
+		}
 		MethodCallRangeByMinimumAndMaximumQuantity(quantity, quantity);
 	}
 	
 	private function MethodCallRangeByMinimumAndMaximumQuantity(minimum:Number, maximum:Number):Void {
-		if (minimum == null) minimum = ANY_QUANTITY;
-		if (maximum == null) maximum = ANY_QUANTITY;
+		if (minimum == null) minimum = DEFAULT_MINIMUM;
+		if (maximum == null) maximum = DEFAULT_MAXIMUM;
 		if (minimum < 0) minimum = -minimum;
 		if (maximum < 0) maximum = -maximum;
 		if (minimum > maximum) {
@@ -70,17 +73,23 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	
 	public function contains(quantity:Number):Boolean {
 		if (quantity == null) return false;
-		if (minimum != ANY_QUANTITY && maximum != ANY_QUANTITY) {
-			if (quantity < 0) quantity = -quantity;
-			if (minimum > quantity || maximum < quantity) {
-				return false;
-			}
+		if (quantity < 0) quantity = -quantity;
+		if (minimum > quantity || maximum < quantity) {
+			return false;
 		}
 		return true;
 	}
 	
 	public function toString(Void):String {
-		return ("minimum: " + minimum + ", maximum: " + maximum);
+		if (minimum == maximum) return minimum.toString();
+		var interval:String = "[";
+		if (minimum == Number.POSITIVE_INFINITY) interval += "∞";
+		else interval += minimum.toString();
+		interval += ",";
+		if (maximum == Number.POSITIVE_INFINITY) interval += "∞";
+		else interval += maximum.toString();
+		interval += "]";
+		return interval;
 	}
 	
 }

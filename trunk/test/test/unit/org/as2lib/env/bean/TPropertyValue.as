@@ -35,7 +35,7 @@ class test.unit.org.as2lib.env.bean.TPropertyValue extends TestCase {
 		
 		propertyValue.apply(bean);
 		
-		beanControl.verify(this);
+		beanControl.verify();
 	}
 	
 	public function testApplyWithDefaultPrefix(Void):Void {
@@ -50,7 +50,7 @@ class test.unit.org.as2lib.env.bean.TPropertyValue extends TestCase {
 		
 		propertyValue.apply(bean);
 		
-		beanControl.verify(this);
+		beanControl.verify();
 	}
 	
 	public function testApplyWithCustomPrefix(Void):Void {
@@ -65,7 +65,7 @@ class test.unit.org.as2lib.env.bean.TPropertyValue extends TestCase {
 		
 		propertyValue.apply(bean);
 		
-		beanControl.verify(this);
+		beanControl.verify();
 	}*/
 	
 }

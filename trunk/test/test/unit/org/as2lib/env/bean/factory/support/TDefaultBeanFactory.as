@@ -115,11 +115,11 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		var names4:Array = factory.getBeanDefinitionNamesByType(BasicInterface);
 		assertSame("There should be 4 beans of type BasicInterface.", names4.length, 4);
 		
-		bd1Control.verify(this);
-		bd2Control.verify(this);
-		bd3Control.verify(this);
-		bd4Control.verify(this);
-		bd5Control.verify(this);
+		bd1Control.verify();
+		bd2Control.verify();
+		bd3Control.verify();
+		bd4Control.verify();
+		bd5Control.verify();
 	}
 	
 	public function testRegisterSingletonViaGetBeanByName(Void):Void {
@@ -146,7 +146,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		bf.registerBeanDefinition("bean", bd);
 		assertTrue("Bean wrapped by factory bean is supposed to be a singleton.", bf.isSingleton("bean"));
 		
-		bdC.verify(this);
+		bdC.verify();
 	}
 	
 	public function testIsSingletonNormal(Void):Void {
@@ -162,7 +162,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		bf.registerBeanDefinition("bean", bd);
 		assertTrue(bf.isSingleton("bean"));
 		
-		bdC.verify(this);
+		bdC.verify();
 	}
 	
 	public function testGetBeanByNameWithHierarchicalFactoryStructure(Void):Void {
@@ -199,7 +199,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		assertSame("Bean returned by bean definition should always be the same as the one returned by the factory.", returnedBean, bf.getBeanByName("bean"));
 		assertSame("Bean returned by bean definition should always be the same as the one returned by the factory.", returnedBean, bf.getBeanByName("bean"));
 		
-		bdControl.verify(this);
+		bdControl.verify();
 	}
 	
 	public function testGetBeanByNameWithFactoryBeanPrefix(Void):Void {
@@ -222,7 +222,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		assertSame(returnedFb, bf.getBeanByName(DefaultBeanFactory.FACTORY_BEAN_PREFIX + "bean"));
 		assertSame(returnedFb, bf.getBeanByName(DefaultBeanFactory.FACTORY_BEAN_PREFIX + "bean"));
 		
-		bdC.verify(this);
+		bdC.verify();
 	}
 	
 	public function testGetBeanByNameWithFactoryBeanWrappingActualBean(Void):Void {
@@ -246,7 +246,7 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		assertSame(object, bf.getBeanByName("bean"));
 		assertSame(object, bf.getBeanByName("bean"));
 		
-		bdC.verify(this);
+		bdC.verify();
 	}
 	
 	public function testGetBeanWithNotExistingName(Void):Void {
@@ -393,14 +393,14 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		assertSame("beanName does not have the expected value.", "bean", bean.beanName);
 		assertSame("referenceBean does not have the expected value.", singleton, bean.referenceBean);
 		
-		arg1C.verify(this);
-		arg2C.verify(this);
-		arg3C.verify(this);
-		cavlC.verify(this);
-		pvsC.verify(this);
-		bdC.verify(this);
-		pv1C.verify(this);
-		pv2C.verify(this);
+		arg1C.verify();
+		arg2C.verify();
+		arg3C.verify();
+		cavlC.verify();
+		pvsC.verify();
+		bdC.verify();
+		pv1C.verify();
+		pv2C.verify();
 	}
 	
 }

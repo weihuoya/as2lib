@@ -17,7 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControlState;
 import org.as2lib.test.mock.MethodBehaviour;
 import org.as2lib.test.mock.Behaviour;
@@ -72,7 +71,7 @@ class org.as2lib.test.mock.support.RecordState extends BasicClass implements Moc
 	/**
 	 * @see MockControlState#verify()
 	 */
-	public function verify(testCase:TestCase):Void {
+	public function verify(Void):Void {
 		throw new IllegalStateException("Method must not be called in record state.", this, arguments);
 	}
 	

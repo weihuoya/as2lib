@@ -23,37 +23,46 @@ import org.as2lib.test.mock.ArgumentsMatcher;
  */
 class test.unit.org.as2lib.test.mock.ArgumentsMatcherMock extends BasicClass implements ArgumentsMatcher {
 	
+	public static var RECORD:Number = 0;
+	public static var REPLAY:Number = 1;
+	
 	private var testCase:TestCase;
-	private var expectedExpectedArguments:Array;
-	private var expectedActualArguments:Array;
-	private var returnValue:Boolean;
-	private var callExpected:Boolean;
+	private var state:Number;
+	private var __matchArguments:Object;
 	
 	public function ArgumentsMatcherMock(testCase:TestCase) {
 		this.testCase = testCase;
+		state = RECORD;
+		__matchArguments = new Object();
 	}
 	
-	public function setExpectedExpectedArguments(expectedExpectedArguments:Array):Void {
-		this.expectedExpectedArguments = expectedExpectedArguments;
+	public function replay(Void):Void {
+		state = REPLAY;
 	}
 	
-	public function setExpectedActualArguments(expectedActualArguments:Array):Void {
-		this.expectedActualArguments = expectedActualArguments;
+	public function doVerify(Void):Void {
+		if (__matchArguments.callExpected != __matchArguments.called) testCase["fail"]("matchArguments(..): Expected call.");
 	}
 	
-	public function setReturnValueForMatchArguments(returnValue:Boolean):Void {
-		this.returnValue = returnValue;
-	}
-	
-	public function setExpectedCallToMatchArguments(Void):Void {
-		callExpected = true;
+	public function setMatchArgumentsReturnValue(returnValue:Boolean):Void {
+		__matchArguments.returnValue = returnValue;
 	}
 	
 	public function matchArguments(expectedArguments:Array, actualArguments:Array):Boolean {
-		testCase["assertTrue"]("Unexpected call to matchArguments(..)-method.", callExpected);
-		testCase["assertSame"]("Expected arguments are not the same.", expectedExpectedArguments, expectedArguments);
-		testCase["assertSame"]("Actual arguments are not the same.", expectedActualArguments, actualArguments);
-		return returnValue;
+		if (state == RECORD) {
+			__matchArguments.callExpected = true;
+			__matchArguments.expectedArguments = expectedArguments;
+			__matchArguments.actualArguments = actualArguments;
+		} else {
+			if (__matchArguments.callExpected) {
+				__matchArguments.called = true;
+				testCase["assertSame"]("Wrong expected arguments.", __matchArguments.expectedArguments, expectedArguments);
+				testCase["assertSame"]("Wrong actual arguments.", __matchArguments.actualArguments, actualArguments);
+				return __matchArguments.returnValue;
+			} else {
+				testCase["fail"]("matchArguments(..): Unexpected call.");
+			}
+		}
 	}
 	
 }
