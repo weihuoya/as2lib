@@ -109,12 +109,34 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	 */
 	public static function toStack(array:Array, order:Boolean):Stack {
 		var result:Stack = new SimpleStack();
+		var len:Number = array.length;
 		if (!order) {
-			array.reverse();
-		}
-		for (var i:Number = 0; i < array.length; i++) {
-			result.push(array[i]);
+			for (var i:Number = len-1; i >= 0; i--) {
+				result.push(array[i]);
+			}
+		} else {
+			for (var i:Number = 0; i < len; i-=-1) {
+				result.push(array[i]);
+			}
 		}
 		return result;
+	}
+	
+	/**
+	 * Shuffles the passed array.
+	 * 
+	 * @param array Array that should get shuffled.
+	 */
+	public static function shuffle(array:Array):Void {
+		var len:Number = array.length; 
+		var rand:Number;
+		var temp;
+		
+		for (var i:Number=len-1; i>=0; i--){ 
+			rand = Math.floor(Math.random()*len); 
+			temp = array[i]; 
+			array[i] = array[rand]; 
+			array[rand] = temp; 
+		} 
 	}
 }
