@@ -1,7 +1,7 @@
 ﻿import org.as2lib.data.io.conn.Connector;
 import org.as2lib.data.io.conn.ConnectorListener;
 import org.as2lib.data.io.conn.ConnectorRequest;
-import org.as2lib.data.io.conn.local.LocalRequest;
+//import org.as2lib.data.io.conn.local.LocalRequest;
 import org.as2lib.data.io.conn.ConnectorError;
 import org.as2lib.data.io.conn.ConnectorResponse;
 import org.as2lib.env.event.EventBroadcaster;
@@ -35,7 +35,13 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 	private var eventBroadcaster:EventBroadcaster;
 	
 	/* connection id used to identify the correct local connection */
-	private var connId:String;
+	private var host:String;
+	
+	private var path:String;
+	
+	private var method:String;
+	
+	private var params:FunctionArguments;
 	
 	/* LocalConnection object for connection */
 	private var loc:LocalConnection;
@@ -43,19 +49,47 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 	/* stores domain, used by allowDomain, for security */
 	private var domain:String;
 	
-	public function RemotingConnector(Void) {
+	public function LocalConnector(Void) {
 		eventBroadcaster = new EventBroadcaster();
 		loc = new LocalConnection();
 	}
 	
 	public function initConnection(Void):Void {
-		// Nothing to do =)
+		
 	}
-	public function getIdentifier(Void):String {
-		return connId;
+	
+	public function setHost(host:String):Void {
+		this.host = host;
 	}
-	public function setIdentifier(connId:String):Void {
-		this.connId = connId;
+	
+	public function getHost(Void):String {
+		return host;
+	}
+	
+	public function setPath(path:String):Void {
+		this.path = path;
+	}
+	
+	public function getPath(Void):String {
+		return path;
+	}
+
+	public function getMethod(Void):String {
+		return method;
+	}
+	
+	public function setMethod(method:String):Void {
+		this.method = method;
+	}
+	
+	public function getParams() {
+		return params;
+	}
+	
+	public function setParams():Void {
+		for(var i=0; i<arguments.length; i++) {
+			params.push(arguments[i]);
+		}
 	}
 	
 	public function addListener(l:ConnectorListener):Void {
@@ -68,20 +102,16 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 		eventBroadcaster.removeListener(l);
 	}
 	
-	public function onResult(data){
-		eventBroadcaster.dispatch(new ConnectorResponse(data,this,new FunctionArguments(),true,false));
-	}
-	
-	public function onStatus(info){
-		eventBroadcaster.dispatch(new ConnectorError(info.description,this,new FunctionArguments(),true,false));
-	}
-	
 	public function handleRequest(r:ConnectorRequest):Void {
-		if(LocalRequest(r).getMethod()){
+		if(r.getHost()) host = r.getHost();
+		if(r.getPath()) path = r.getPath();
+		if(r.getMethod()) path = r.getMethod();
+		
+		/*if(LocalRequest(r).getMethod()){
 			loc.send(connId,LocalRequest(r).getMethod());
 		}
 		else{
 			loc.connect(connId);
-		}
+		}*/
 	}
 }
