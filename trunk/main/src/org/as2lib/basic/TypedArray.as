@@ -30,9 +30,7 @@ class org.as2lib.basic.TypedArray {
 	public function concat():TypedArray {
 		var l:Number = arguments.length;
 		for (var i:Number = 0; i < l; i++) {
-			if (typeDoesNotMatch(arguments[i])) {
-				throw new Error();
-			}
+			validate(arguments[i]);
 		}
 		var result:TypedArray;
 		if (l == 0) {
@@ -91,9 +89,7 @@ class org.as2lib.basic.TypedArray {
 	 * @see Array
 	 */
 	public function push(value:Object):Number {
-		if (typeDoesNotMatch(value)) {
-			throw new Error();
-		}
+		validate(value);
 		return this.array.push(value);
 	}
 	
@@ -136,9 +132,7 @@ class org.as2lib.basic.TypedArray {
 	 * @see Array
 	 */
 	public function unshift(value:Object):Number {
-		if (typeDoesNotMatch(value)) {
-			throw new Error();
-		}
+		validate(value);
 		return this.array.unshift(value);
 	}
 	
@@ -161,16 +155,10 @@ class org.as2lib.basic.TypedArray {
 	 * @param object
 	 * @return true if the types do not match otherwise false
 	 */
-	private function typeDoesNotMatch(object:Object):Boolean {
-		if (ObjectUtil.isPrimitiveType(object)) {
-			if (ObjectUtil.typesMatch(this.type(object), object)) {
-				return false;
-			}
-		} else {
-			if (ObjectUtil.isInstanceOf(object, this.type)) {
-				return false;
-			}
+
+	public function validate(object:Object):Void {
+		if (!ObjectUtil.typesMatch(object, type)) {
+			throw new Error();
 		}
-		return true;
 	}
 }

@@ -10,6 +10,25 @@ class org.as2lib.util.ObjectUtil {
 	}
 	
 	/**
+	 * Checks if the type of object matches the given type.
+	 * @param anObject
+	 * @param aType
+	 * @return true if the type of the object matches else false
+	 */
+	public static function typesMatch(anObject:Object, aType:Function):Boolean {
+		if (ObjectUtil.isPrimitiveType(anObject)) {
+			if (ObjectUtil.isTypeOf(aType(anObject), anObject)) {
+				return false;
+			}
+		} else {
+			if (ObjectUtil.isInstanceOf(anObject, aType)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
 	 * Checks if the object is a primitive type.
 	 * @param anObject
 	 * @return true if the object is a primitive type else false
@@ -26,7 +45,7 @@ class org.as2lib.util.ObjectUtil {
 	 * @param secondObject
 	 * @return true if the types do match else false
 	 */
-	public static function typesMatch(firstObject:Object, secondObject:Object):Boolean {
+	public static function isTypeOf(firstObject:Object, secondObject:Object):Boolean {
 		return (typeof(firstObject) == typeof(secondObject));
 	}
 	
