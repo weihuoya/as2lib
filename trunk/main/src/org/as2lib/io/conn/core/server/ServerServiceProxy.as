@@ -18,11 +18,11 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
 
 /**
- * Proxy handles client request to a certain service and its response.
- * services, which are availiable after server is started.
+ * ServerServiceProxy handles client request to a certain service and 
+ * its response.
  *
- * @author Christoph Atteneder
  * @author Simon Wacker
+ * @author Christoph Atteneder
  */
 interface org.as2lib.io.conn.core.server.ServerServiceProxy extends BasicInterface {
 	
@@ -39,28 +39,28 @@ interface org.as2lib.io.conn.core.server.ServerServiceProxy extends BasicInterfa
 	public function stop(Void):Void;
 	
 	/**
-	 * @overload #invokeMethodByNameAndArguments()
-	 * @overload #invokeMethodByNameAndArgumentsAndResponseService()
+	 * @overload #invokeMethodByNameAndArguments(String, Array):Void
+	 * @overload #invokeMethodByNameAndArgumentsAndResponseService(String, Array, String):Void
 	 */
 	public function invokeMethod():Void;
 	
 	/**
 	 * Invokes the service method on the service object.
 	 *
-	 * @param name the name of the service's method to be invoked
+	 * @param methodName the name of the service's method to be invoked
 	 * @param args arguments to be passed to the method
 	 */
-	public function invokeMethodByNameAndArguments(name:String, args:Array):Void;
+	public function invokeMethodByNameAndArguments(methodName:String, args:Array):Void;
 	
 	/**
-	 * Invokes the service method on the service object and returns
-	 * the response to the client.
+	 * Invokes the service method on the service object and returns the
+	 * response to the client using the response service.
 	 *
-	 * @param name name of method to be invoked on the service
+	 * @param methodName name of method to be invoked on the service
 	 * @param args arguments to be passed to the method
-	 * @param responseService name of response service to which the result is sent
+	 * @param responseServiceUrl the url of response service to which the result gets sent
 	 */
-	public function invokeMethodByNameAndArgumentsAndResponseService(name:String, args:Array, responseService:String):Void;
+	public function invokeMethodByNameAndArgumentsAndResponseService(methodName:String, args:Array, responseServiceUrl:String):Void;
 	
 	/**
 	 * Returns the original service, this proxy wraps.
@@ -77,26 +77,25 @@ interface org.as2lib.io.conn.core.server.ServerServiceProxy extends BasicInterfa
 	public function getPath(Void):String;
 	
 	/**
-	 * Indicates whether the service is currently available,
-	 * that means running.
+	 * Indicates whether the service is currently running.
 	 *
-	 * @return true if the service runs
+	 * @return true if the service runs else false
 	 */
 	public function isRunning(Void):Boolean;
 	
 	/**
-	 * Adds a new MethodInvocationErrorListener to listen for errors
-	 * that might occur on an remote method invocation.
+	 * Adds a new error listener to listen for errors that might occur
+	 * when trying to invoke the method on the service.
 	 *
-	 * @param listener listener to be added
+	 * @param errorListener the error listener to add
 	 */
-	public function addErrorListener(listener:MethodInvocationErrorListener):Void;
+	public function addErrorListener(errorListener:MethodInvocationErrorListener):Void;
 	
 	/**
-	 * Removes an added MethodInvocationErrorListener.
+	 * Removes an added error listener.
 	 *
-	 * @param listener listener to be removed
+	 * @param errorListener the error listener to remove
 	 */
-	public function removeErrorListener(listener:MethodInvocationErrorListener):Void;
+	public function removeErrorListener(errorListener:MethodInvocationErrorListener):Void;
 	
 }

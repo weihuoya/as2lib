@@ -17,8 +17,11 @@
 import org.as2lib.io.conn.ConnectionException;
 
 /**
- * @author Christoph Atteneder
+ * Gets thrown if a server tries to run itself with a host that is already
+ * in use.
+ *
  * @author Simon Wacker
+ * @author Christoph Atteneder
  */
 class org.as2lib.io.conn.core.server.ReservedHostException extends ConnectionException {
 	

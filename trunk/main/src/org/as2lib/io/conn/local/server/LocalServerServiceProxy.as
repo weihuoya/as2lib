@@ -321,11 +321,11 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * <p>Error listeners get notified when a client tried to invoke a method
 	 * on the service and something went wrong.
 	 *
-	 * @param listener the new error listener to add
+	 * @param errorListener the new error listener to add
 	 * @see ServerServiceProxy#addErrorListener(MethodInvocationErrorListener):Void
 	 */
-	public function addErrorListener(listener:MethodInvocationErrorListener):Void {
-		getErrorBroadcaster().addListener(listener);
+	public function addErrorListener(errorListener:MethodInvocationErrorListener):Void {
+		getErrorBroadcaster().addListener(errorListener);
 	}
 	
 	/**
@@ -334,11 +334,11 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * <p>Error listeners get notified when a client tried to invoke a method
 	 * on the service and something went wrong.
 	 *
-	 * @param listener the error listener to remove
+	 * @param errorListener the error listener to remove
 	 * @see ServerServiceProxy#removeErrorListener(MethodInvocationErrorListener):Void
 	 */
-	public function removeErrorListener(listener:MethodInvocationErrorListener):Void {
-		getErrorBroadcaster().removeListener(listener);
+	public function removeErrorListener(errorListener:MethodInvocationErrorListener):Void {
+		getErrorBroadcaster().removeListener(errorListener);
 	}
 	
 }

@@ -18,35 +18,39 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.io.conn.core.client.ClientServiceProxy;
 
 /**
- * Interface for standardized ServiceFactories.
+ * ClientServiceProxyFactory acts as central provider of client service
+ * proxies.
  *
- * @author Christoph Atteneder
  * @author Simon Wacker
+ * @author Christoph Atteneder
  */
 interface org.as2lib.io.conn.core.client.ClientServiceProxyFactory extends BasicInterface {
 	
 	/**
-	 * @overload #getClientServiceProxyByUrl()
-	 * @overload #getClientServiceProxyByUrlAndType()
+	 * @overload #getClientServiceProxyByUrl(String):ClientServiceProxy
+	 * @overload #getClientServiceProxyByUrlAndType(String, Function)
 	 */
 	public function getClientServiceProxy();
 	
 	/**
-	 * Returns a ClientServiceProxy instance that is fully configured and ready
+	 * Returns a clien service proxy that is fully configured and ready
 	 * for usage.
-	 * 
+	 *
 	 * @param url the full url to the service
-	 * @return an instance of type ClientServiceProxy
+	 * @return a configured client service proxy
 	 */
 	public function getClientServiceProxyByUrl(url:String):ClientServiceProxy;
 	
 	/**
-	 * Returns a proxy that can be casted to the given type. A type can either
-	 * be a class or an interface.
+	 * Returns a proxy that can be casted to the passed-in type (class or
+     * interface).
+	 *
+	 * <p>The type is therefore normally the type of the 'remote' service
+	 * you wanna call methods on.
 	 *
 	 * @param url the full url to the service
 	 * @param type the type of the service
-	 * @return a proxy that can be casted to the given type
+	 * @return a proxy that can be casted to the passed-in type
 	 */
 	public function getClientServiceProxyByUrlAndType(url:String, type:Function);
 	

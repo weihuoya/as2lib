@@ -17,15 +17,15 @@
 import org.as2lib.core.BasicInterface;
 
 /**
- * Interface for a standardized ServerRegistry.
+ * ServerRegistry lets you register servers.
  *
- * @author Christoph Atteneder
  * @author Simon Wacker
+ * @author Christoph Atteneder
  */
 interface org.as2lib.io.conn.core.server.ServerRegistry extends BasicInterface {
 	
 	/**
-	 * Checks if a server with passed host exists.
+	 * Checks if a server with passed host exists / is registerd.
 	 *
 	 * @param host the name of server
 	 */
@@ -34,14 +34,14 @@ interface org.as2lib.io.conn.core.server.ServerRegistry extends BasicInterface {
 	/**
 	 * Registers a server with the given host.
 	 *
-	 * @param host the host to register
+	 * @param host the host identifying the server to register
 	 */
 	public function registerServer(host:String):Void;
 	
 	/**
 	 * Unregisters the server with the given host.
 	 *
-	 * @param host the host to unregister
+	 * @param host the host identifying the server to unregister
 	 */
 	public function removeServer(host:String):Void;
 	

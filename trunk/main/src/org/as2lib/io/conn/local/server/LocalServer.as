@@ -157,20 +157,20 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	 *
 	 * <p>If the server is running, the service proxy will be run too.
 	 *
-	 * @param proxy the proxy that wraps the actual service
+	 * @param serviceProxy the proxy that wraps the actual service
 	 * @throws IllegalArgumentException if the passed-in service proxy is null or undefined
 	 *                                  if the path of the passed-in service proxy is null, undefined or a blank string
 	 *                                  if the path of the passed-in service proxy is already in use
 	 * @see Server#addService(ServerServiceProxy):Void
 	 */
-	public function addService(proxy:ServerServiceProxy):Void {
-		if (!proxy) throw new IllegalArgumentException("Service proxy must not be null or undefined.", this, arguments);
-		var path:String = proxy.getPath();
+	public function addService(serviceProxy:ServerServiceProxy):Void {
+		if (!serviceProxy) throw new IllegalArgumentException("Service proxy must not be null or undefined.", this, arguments);
+		var path:String = serviceProxy.getPath();
 		if (!path) throw new IllegalArgumentException("Service proxy's path must not be null, undefined or a blank string.", this, arguments);
 		if (services.containsKey(path)) throw new IllegalArgumentException("Service proxy with proxy path [" + path + "] is already in use.", this, arguments);
-		services.put(path, proxy);
+		services.put(path, serviceProxy);
 		if (isRunning()) {
-			proxy.run(host);
+			serviceProxy.run(host);
 		}
 	}
 	
