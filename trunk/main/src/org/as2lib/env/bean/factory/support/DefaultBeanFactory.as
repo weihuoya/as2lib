@@ -136,7 +136,7 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 		var beanDefinition:BeanDefinition = getBeanDefinition(beanName);
 		if (beanDefinition.getBeanClass() == FactoryBean 
 				|| beanDefinition.getBeanClass().prototype instanceof FactoryBean) {
-			return FactoryBean(getBean(FACTORY_BEAN_PREFIX + beanName)).isSingleton();
+			return FactoryBean(getBeanByName(FACTORY_BEAN_PREFIX + beanName)).isSingleton();
 		} else {
 			return getBeanDefinition(beanName).isSingleton();
 		}
