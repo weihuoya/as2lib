@@ -5,7 +5,9 @@ import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.out.Out;
 
 /**
- * @author Martin Heidegger, Simon Wacker
+ * @author Martin Heidegger
+ * @author Simon Wacker
+ * @see org.as2lib.env.out.level.
  */
 class org.as2lib.env.out.level.All extends Debug {
 	/**

@@ -4,7 +4,14 @@ import org.as2lib.env.except.Throwable;
 import org.as2lib.core.BasicInterface;
 
 /**
- * @author Martin Heidegger, Simon Wacker
+ * OutLevel is the basic interface for all OutLevels. OutLevels in a descending
+ * order are: All, Debug, Info, Warning, Error, Fatal. OutLevels are used to
+ * determine if a specific output will be made or not. If you for example set
+ * the OutLevel to All all output will be made. If you set the OutLevel to Info
+ * then info, warning, error and fatal output will be made.
+ *
+ * @author Martin Heidegger
+ * @author Simon Wacker
  */
 interface org.as2lib.env.out.OutLevel extends BasicInterface {
 	/**
