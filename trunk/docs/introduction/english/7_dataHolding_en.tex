@@ -5,11 +5,12 @@
 A typical problem when using {\sl ActionScript 2} is that some data types (e.g. Array) can contain different data types (e.g. String, Number,...). This flexible notation could result, especially in teams, in misuse of these data holders.
 
 \paragraph{Solution:}
-{\sl As2lib} not only provides a strictly typed Array class(TypedArray\footnote{org.as2lib.data.holder.TypedArray}) but also a lot of other data types for data holding.
+{\sl As2lib} not only provides a strictly typed Array class(TypedArray\footnote{org.as2lib.data.holder.array.TypedArray}) but also a lot of other data types for data holding.
 
-\paragraph{TypedArray:} The TypedArray class provides strict typing of an Array.
+\paragraph{TypedArray:} The TypedArray class provides strict typing of an Array. It extends Array and also makes it possible to use a \emph{ArrayIterator}\footnote{org.as2lib.data.holder.array.ArrayIterator}.
+
 \begin{lstlisting}[frame=single]
-import org.as2lib.data.holder.TypedArray;
+import org.as2lib.data.holder.array.TypedArray;
 
 var myA:TypedArray = new TypedArray(Number);
 myA.push(2);
@@ -26,10 +27,10 @@ Additionally you can pass an existing Array as second parameter value. TypedArra
 
 More {\sl as2lib} data types are:
 \begin{itemize}
-	\item \textbf{HashMap} : A data type which holds keys and their values. It has every common method of a regular HashMap (see Java).
+	\item \textbf{Map}\footnote{org.as2lib.data.holder.Map}: A data type which holds keys and their values. It has every common method of a regular Map (see Java).
 	
 \begin{lstlisting}[frame=single]
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.map.HashMap;
 
 var aPerson:Person = new Person("Christoph",
 	"Atteneder");
@@ -49,10 +50,19 @@ ripcurlx
 mastaKaneda
 \end{verbatim}
 
-	\item \textbf{Stack} : You can add values to a Stack with the \emph{push} method and remove them with the \emph{pop} method. Only the last added value can be accessed.
+The \emph{map} package also includes:
+\begin{itemize}
+	\item MapIterator
+	\item MapStringifier
+	\item PrimitiveTypMap
+	\item PriorityMap
+	\item TypedMap
+\end{itemize}
+
+	\item \textbf{Stack}\footnote{org.as2lib.data.holder.Stack}: You can add values to a Stack with the \emph{push} method and remove them with the \emph{pop} method. Only the last added value can be accessed.
 	
 \begin{lstlisting}[frame=single]
-import org.as2lib.data.holder.SimpleStack;
+import org.as2lib.data.holder.stack.SimpleStack;
 
 var myS:SimpleStack = new SimpleStack();
 myS.push("uuuuuuup?!");
@@ -69,7 +79,13 @@ what's
 uuuuuuup?!
 \end{verbatim}
 
-\item \textbf{Queue} : In contrast to the Stack you can only access the first element. You can add values with the \emph{enqueue} method and remove them with the \emph{dequeue} method. If you don´t want to remove the first element while accessing it you can use the \emph{peek} method.
+The \emph{stack} package also includes:
+\begin{itemize}
+	\item StackStringifier
+	\item TypedStack
+\end{itemize}
+
+\item \textbf{Queue}\footnote{org.as2lib.data.holder.Queue}: In contrast to the Stack you can only access the first element. You can add values with the \emph{enqueue} method and remove them with the \emph{dequeue} method. If you don´t want to remove the first element while accessing it you can use the \emph{peek} method.
 
 \begin{lstlisting}[frame=single]
 import org.as2lib.data.holder.LinearQueue;
@@ -90,18 +106,49 @@ Hi
 whats
 uuuuup?!
 \end{verbatim}
+
+The \emph{queue} package also includes:
+\begin{itemize}
+	\item QueueStringifier
+	\item TypedQueue
 \end{itemize}
+
+\item \textbf{List}\footnote{org.as2lib.data.holder.List}: A List provides additional functionalities in opposite to a simple Array.
+
+\begin{lstlisting}[frame=single]
+import org.as2lib.data.holder.list.ArrayList;
+
+var aLQ:LinearQueue = new LinearQueue();
+aLQ.enqueue("Hi");
+aLQ.enqueue("whats");
+aLQ.enqueue("uuuuup?!");
+trace(aLQ.peek());
+trace(aLQ.dequeue());
+trace(aLQ.dequeue());
+trace(aLQ.dequeue());
+\end{lstlisting}
+\emph{Output:}
+\begin{verbatim}
+Hi
+Hi
+whats
+uuuuup?!
+\end{verbatim}
+\end{itemize}
+
 
 In addition to these data types \emph{Iterators}\footnote{An iterator makes it easier to access elements of a collection without knowing its structure.} are also provided:
 
 \begin{itemize}
 	\item \textbf{ArrayIterator} : Because of the fact that the additional data types are based internally on Arrays, every special Iterator indirectly uses the ArrayIterator{\footnote{org.as2lib.data.io.iterator.ArrayIterator}}.
 	\item \textbf{MapIterator} : If you call the \emph{iterator()} method in a HashMap it returns a MapIterator to you.
+	\item 
 \end{itemize}
 If you like to print every element of a HashMap, you can do so with a MapIterator\footnote{org.as2lib.data.iterator.MapIterator}:
 \clearpage
 \begin{lstlisting}[frame=single]
-import org.as2lib.data.holder.HashMap;
+import org.as2lib.data.holder.map.HashMap;
+import org.as2lib.data.holder.Iterator;
 
 var aPerson:Person = new Person("Christoph",
 	"Atteneder");
