@@ -30,7 +30,9 @@ class test.org.as2lib.basic.TReflections extends test.Test {
 		//_root.tempVar = tempVar;
 		
 		
-		var myTest:ReflectionObject = Reflections.findObject(this.tempVar);
+		var myTest:ReflectionObject = Reflections.findObject(this);//.tempVar);
+		
+		_global.myTest = myTest;
 		
 		trace("--> result:"+myTest);
 		
@@ -43,6 +45,9 @@ class test.org.as2lib.basic.TReflections extends test.Test {
 		}
 		
 		trace("--> instanceof:"+myTest.instanceOf);
+		
+		//throw
+		trace(new org.as2lib.basic.exceptions.WrongArgumentException("Error occured!", arguments));
 		
 		assertEquals(myTest.properties.length, 2);
 		trace("--> path: "+myTest._path);
