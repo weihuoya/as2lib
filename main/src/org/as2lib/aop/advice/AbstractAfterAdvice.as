@@ -23,11 +23,9 @@ class org.as2lib.aop.advice.AbstractAfterAdvice extends AbstractAdvice {
 		var result;
 		try {
 			result = joinPoint.proceed(args);
-		} catch (throwable:org.as2lib.env.except.Throwable) {
+		} finally {
 			this["execute"](joinPoint);
-			throw throwable;
 		}
-		this["execute"](joinPoint);
 		return result;
 	}
 }
