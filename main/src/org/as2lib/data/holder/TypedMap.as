@@ -46,7 +46,7 @@ class org.as2lib.data.holder.TypedMap extends BasicClass implements Map {
 	}
 	
 	public function putAll(map:Map):Void {
-		var iterator:Iterator = map.getIterator();
+		var iterator:Iterator = map.iterator();
 		while (iterator.hasNext()) {
 			validate(iterator.next());
 		}
@@ -61,16 +61,8 @@ class org.as2lib.data.holder.TypedMap extends BasicClass implements Map {
 		return map.iterator();
 	}
 	
-	public function getIterator(Void):Iterator {
-		return map.getIterator();
-	}
-	
 	public function size(Void):Number {
 		return map.size();
-	}
-	
-	public function getSize(Void):Number {
-		return map.getSize();
 	}
 	
 	public function isEmpty(Void):Boolean {
