@@ -752,4 +752,60 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		}
 		return false;
 	}
+	
+	/**
+	 * overload
+	 * @see #assertNotUndefinedWithMessage
+	 * @see #assertNotUndefinedWithoutMessage
+	 */
+	private function assertNotUndefined():Boolean {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String, undefined], assertNotUndefinedWithMessage);
+		overload.addHandler([String, Object], assertNotUndefinedWithMessage);
+		overload.addHandler([undefined], assertNotUndefinedWithoutMessage);
+		overload.addHandler([Object], assertNotUndefinedWithoutMessage);
+		overload.addHandler([], assertNotUndefinedWithoutMessage);
+		return overload.forward(arguments);
+	}
+	
+	/**
+	 * Asserts if a value is not undefined else it fails.
+	 * Method to assert that a value is not undefined.
+	 * It adds a error to the result if the value is undefined.
+	 * 
+	 * Note: This method refers to the Assert Util
+	 * 
+	 * @see Assert#isNotUndefined
+	 * @see #assertNotUndefined
+	 * @see #assertNotUndefinedWithMessage
+	 * @param val Object that should not be undefined.
+	 * @return true if no error occured else false
+	 */
+	private function assertNotUndefinedWithoutMessage(val):Boolean {
+		return assertNotUndefinedWithMessage("", val);
+	}
+	
+	/**
+	 * Asserts if a value is not undefined else it fails.
+	 * This method asserts the same like @see #assertNotUndefinedWithoutMessage
+	 * but it adds a message to the failure.
+	 * 
+	 * @see Assert#isNotUndefined
+	 * @see #assertNotUndefined
+	 * @see #assertNotUndefinedWithoutMessage
+	 * @param message Message that should be provided if the assertion fails.
+	 * @param val Object that should not be null.
+	 * @return true if no error occured else false
+	 */
+	private function assertNotUndefinedWithMessage(message:String, val):Boolean {
+		try {
+			Assert.isNotUndefinedWithMessage(message, val);
+			return true;
+		} catch(e:org.as2lib.test.unit.AssertException) {
+			getMethodInformation().addError(e);
+		} catch(e) {
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertUndefined", this, arguments).initCause(e));
+		}
+		return false;
+	}
 }

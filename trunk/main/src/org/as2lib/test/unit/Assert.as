@@ -435,7 +435,7 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	}
 	
 	/**
-	 * Checks that a variable is a reference to undefined.
+	 * Checks that a value contains undefined.
 	 * Checks with a === that a variable is undefined.
 	 *
 	 * @see #isUndefined
@@ -444,7 +444,7 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 * @see #isNotUndefinedWithoutMessage
 	 * @see #isNotUndefinedWithMessage
 	 * 
-	 * @throws AssertIsNullException if the assertion fails.
+	 * @throws AssertIsUndefinedException if the assertion fails.
 	 * @param var1 Variable that should be null
 	 */
 	public static function isUndefinedWithoutMessage (var1):Void {
@@ -456,8 +456,8 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 	 *
 	 * @see #isUndefined
 	 * @see #isUndefinedWithMessage
-	 * @see #isUndefinedWithMessage
 	 * @see #isNotUndefined
+	 * @see #isNotUndefinedWithMessage
 	 * @see #isNotUndefinedWithoutMessage
 	 * 
 	 * @throws AssertIsUndefinedException if the assertion fails.
@@ -469,50 +469,56 @@ class org.as2lib.test.unit.Assert extends BasicClass {
 			throw new AssertIsUndefinedException(message, eval("th"+"is"), arguments, var1);
 		}
 	}
-	
+
 	/**
 	 * overload
-	 * @see #isNotUndefinedWithMessage
 	 * @see #isNotUndefinedWithoutMessage
-	 * /
-	private static function isNotUndefined():Void {
+	 * @see #isNotUndefinedWithMessage
+	 */
+	public static function isNotUndefined():Void {
 		var that = eval("th"+"is");
 		var overload:Overload = new Overload(that);
+		overload.addHandler([String, undefined], isNotUndefinedWithMessage);
 		overload.addHandler([String, Object], isNotUndefinedWithMessage);
 		overload.addHandler([Object], isNotUndefinedWithoutMessage);
+		overload.addHandler([undefined], isNotUndefinedWithoutMessage);
+		overload.addHandler([], isNotUndefinedWithoutMessage);
 		overload.forward(arguments);
 	}
 	
 	/**
-	 * Asserts if an Var is not Undefined.
+	 * Checks that a value does not contain undefined.
+	 * Checks with a !== that a variable is not undefined.
 	 *
-	 * @see #isNotUndefinedWithMessage
 	 * @see #isNotUndefined
+	 * @see #isNotUndefinedWithMessage
 	 * @see #isUndefined
 	 * @see #isUndefinedWithoutMessage
 	 * @see #isUndefinedWithMessage
 	 * 
-	 * @param var1	Var that should not be Undefined.
-	 * /
-	private static function isNotUndefinedWithoutMessage (var1):Void {
-		isNotUndefinedWithMessage("", var1);
+	 * @throws AssertIsNotUndefinedException if the assertion fails.
+	 * @param var1 Variable that should not be undefined
+	 */
+	public static function isNotUndefinedWithoutMessage (var1):Void {
+		isNotUndefinedWithMessage ("", var1);
 	}
 	
 	/**
-	 * Adds a Message to #isNotUndefined.
+	 * Appends a Message to @see #isNotUndefined.
 	 *
 	 * @see #isNotUndefined
 	 * @see #isNotUndefinedWithoutMessage
 	 * @see #isUndefined
-	 * @see #isUndefinedWithoutMessage
 	 * @see #isUndefinedWithMessage
+	 * @see #isUndefinedWithoutMessage
 	 * 
-	 * @param message	Message to be displayed if an error occures
-	 * @param var1		Var that should not be Undefined.
-	 * /
-	private static function isNotUndefinedWithMessage (message:String, var1):Void {
+	 * @throws AssertIsNotUndefinedException if the assertion fails.
+	 * @param message	Message to be displayed if an error occurs
+	 * @param var1 Variable that should be undefined.
+	 */
+	public static function isNotUndefinedWithMessage (message:String, var1):Void {
 		if(var1 === undefined) {
-			//addError("isNotUndefined failed: "+var1+" message: "+message);
+			throw new AssertIsNotUndefinedException(message, eval("th"+"is"), arguments);
 		}
 	}
 
