@@ -11,8 +11,6 @@ import org.as2lib.env.EnvConfig;
  * to store information about the class it represents.
  *
  * @author Simon Wacker
- * @see org.as2lib.core.BasicClass
- * @see org.as2lib.env.reflect.CacheInfo
  */
 class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	/** The name of the class. */
@@ -120,10 +118,10 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	}
 	
 	/**
-	 * Returns a HashMap containing the operations represented by MethodInfos
+	 * Returns a Map containing the operations represented by MethodInfos
 	 * the class has. Lazy loading is used.
 	 *
-	 * @return a HashMap containing MethodInfos representing the operations
+	 * @return a Map containing MethodInfos representing the operations
 	 */
 	public function getMethods(Void):Map {
 		if (ObjectUtil.isEmpty(methods)) {
@@ -133,10 +131,10 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 	}
 	
 	/**
-	 * Returns a HashMap containing the properties represented by PropertyInfos
+	 * Returns a Map containing the properties represented by PropertyInfos
 	 * the class has. Lazy loading is used.
 	 *
-	 * @return a HashMap containing PropertyInfos representing the properties
+	 * @return a Map containing PropertyInfos representing the properties
 	 */
 	public function getProperties(Void):Map {
 		if (ObjectUtil.isEmpty(properties)) {

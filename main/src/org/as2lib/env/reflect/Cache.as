@@ -8,12 +8,11 @@ import org.as2lib.util.ObjectUtil;
 
 /**
  * Cache is used to cache classes and packages. The caching of classes and packages
- * leads to higher performance. You also must to cache them because for example
- * the parent of two classes residing in one package should be the same PackageInfo
+ * leads to higher performance. You also must cache them because for example the
+ * parent of two classes residing in one package should be the same PackageInfo
  * instance.
  *
  * @author Simon Wacker
- * @see org.as2lib.core.BasicClass
  */
 interface org.as2lib.env.reflect.Cache extends BasicInterface {
 	/**
