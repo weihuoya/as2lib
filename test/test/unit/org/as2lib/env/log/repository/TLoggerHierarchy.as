@@ -18,14 +18,89 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.test.mock.support.SimpleMockControl;
 import org.as2lib.env.log.Logger;
+import org.as2lib.env.log.HierarchicalLogger;
 import org.as2lib.env.log.logger.SimpleLogger;
 import org.as2lib.env.log.repository.LoggerHierarchy;
 import org.as2lib.env.log.repository.ConfigurableHierarchicalLoggerFactory;
+import org.as2lib.env.except.IllegalArgumentException;
 
 /**
  * @author Simon Wacker
  */
 class test.unit.org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
+	
+	public function testGetLoggerByFactoryWithParent(Void):Void {
+		var root:SimpleLogger = new SimpleLogger("root");
+		
+		var loggerControl:MockControl = new SimpleMockControl(SimpleLogger);
+		var loggerMock:SimpleLogger = loggerControl.getMock();
+		loggerMock.setParent(root);
+		loggerControl.setVoidCallable();
+		loggerControl.replay();
+		
+		var factoryControl:MockControl = new SimpleMockControl(ConfigurableHierarchicalLoggerFactory);
+		var factoryMock:ConfigurableHierarchicalLoggerFactory = factoryControl.getMock();
+		factoryMock.getLogger();
+		factoryControl.setReturnValue(loggerMock);
+		factoryControl.replay();
+		
+		var repository:LoggerHierarchy = new LoggerHierarchy(root);
+		var returnedLogger:HierarchicalLogger = HierarchicalLogger(repository.getLoggerByFactory("any.name", factoryMock));
+		assertSame("The returned logger [" + returnedLogger + "] and expected logger [" + loggerMock + "] should be the same.", loggerMock, returnedLogger);
+		
+		loggerControl.verify(this);
+		factoryControl.verify(this);
+	}
+	
+	public function testGetLoggerByFactoryWithChildren(Void):Void {
+		var root:SimpleLogger = new SimpleLogger("root");
+		
+		var loggerControl:MockControl = new SimpleMockControl(SimpleLogger);
+		var loggerMock:SimpleLogger = loggerControl.getMock();
+		loggerMock.setParent(root);
+		loggerControl.setVoidCallable();
+		loggerControl.replay();
+		
+		var child1Control:MockControl = new SimpleMockControl(SimpleLogger);
+		var child1Mock:SimpleLogger = loggerControl.getMock();
+		child1Mock.setParent(loggerMock);
+		child1Control.setVoidCallable();
+		child1Control.replay();
+		
+		var child2Control:MockControl = new SimpleMockControl(SimpleLogger);
+		var child2Mock:SimpleLogger = loggerControl.getMock();
+		child2Mock.setParent(loggerMock);
+		child2Control.setVoidCallable();
+		child2Control.replay();
+		
+		var factoryControl:MockControl = new SimpleMockControl(ConfigurableHierarchicalLoggerFactory);
+		var factoryMock:ConfigurableHierarchicalLoggerFactory = factoryControl.getMock();
+		factoryMock.getLogger();
+		factoryControl.setReturnValue(loggerMock);
+		factoryControl.replay();
+		
+		var repository:LoggerHierarchy = new LoggerHierarchy(root);
+		repository.putLogger("any.name.child1", child1Mock);
+		repository.putLogger("any.name.subNode1.subNode2.child2", child2Mock);
+		var returnedLogger:HierarchicalLogger = HierarchicalLogger(repository.getLoggerByFactory("any.name", factoryMock));
+		assertSame("The returned logger [" + returnedLogger + "] and expected logger [" + loggerMock + "] should be the same.", loggerMock, returnedLogger);
+		
+		loggerControl.verify(this);
+		child1Control.verify(this);
+		child2Control.verify(this);
+		factoryControl.verify(this);
+	}
+	
+	public function testPutLoggerWithReservedName(Void):Void {
+		var root:SimpleLogger = new SimpleLogger("root");
+		var repository:LoggerHierarchy = new LoggerHierarchy(root);
+		repository.putLogger("reserved.name", new SimpleLogger());
+		assertThrows("Repository should throw an exception in case passed-in name is reserved.", IllegalArgumentException, repository, repository.putLogger, ["reserved.name", new SimpleLogger()]);
+	}
+	
+	/** ----------------------------------------------------- **/
+	/** ---------- OLD TESTS. SHOULD BE REVISITED. ---------- **/
+	/** ----------------------------------------------------- **/
 	
 	public function testGetLogger(Void):Void {
 		var control:MockControl = new SimpleMockControl(ConfigurableHierarchicalLoggerFactory);

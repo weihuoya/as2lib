@@ -116,8 +116,7 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	 * @throws IllegalArgumentException if the given name is reserved
 	 */
 	public function putLogger(name:String, logger:ConfigurableHierarchicalLogger):Void {
-		if (!logger) throw new IllegalArgumentException("Passed-in logger [" + logger + "] is not allowed to be null or undefined.", this, arguments);
-		if (loggers.containsValue(name) && loggers.get(name) instanceof ConfigurableHierarchicalLogger)
+		if (loggers.containsKey(name) && loggers.get(name) instanceof ConfigurableHierarchicalLogger)
 			throw new IllegalArgumentException("Name [" + name + "] is already in use.", this, arguments);
 		getLoggerByFactory(name, getSingletonFactory(logger));
 	}
