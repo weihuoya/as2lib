@@ -6,6 +6,7 @@
 		<year value="2004">
 			<month value="9">
         <day value="15">
+          <entry type="documentation" package="org.as2lib.aop" class="*">Added documentation.</entry>
           <entry type="add" package="org.as2lib.core" class="BasicMovieClip">Basic class for classes that need to extend MovieClip.</entry>
         </day>
 			  <day value="10">
