@@ -53,11 +53,22 @@ import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
  * for a service interface or class, which enables compiler checks.
  * For more information on this refer to the LocalClientServiceProxyFactory class.
  *
- * <p>You must be aware of the fact that return values and exceptions
- * that are of a complex types lose all there methods when they are
- * passed over local connection from a remote service.
- * This will be so till someone (maybe the as2lib team) introduces a
- * serializing mechanism.
+ * <p>If the return value is not of type Number, Boolean, String or
+ * Array that get converted directly into the appropriate type you must
+ * do the following to receive a value of correct type. Otherwise the
+ * return value will be an instance of type Object that gets populated
+ * with the instance variables of the sent object.
+ * <code>Object.registerClass("MyClass", MyClass);</code>
+ *
+ * <p>The received object will now be of correct type. But you still
+ * have to be aware of some facts.
+ * Flash creates a new object in the background and sets the instance
+ * variables of the sent instance to the new object. It then registers
+ * this object to the appropriate class (if registered previously) and
+ * applies the constructor of that class to the new object passing no
+ * arguments.
+ * That means if the constructor sets instance variables it overwrites
+ * the once set previously by undefined.
  *
  * @author Simon Wacker
  * @author Christoph Atteneder

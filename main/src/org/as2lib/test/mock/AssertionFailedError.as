@@ -22,9 +22,9 @@ import org.as2lib.env.except.FatalException;
 class org.as2lib.test.mock.AssertionFailedError extends FatalException {
 	
 	/**
-	 * @see FatalException#new(String, *, FunctionArguments)
+	 * @see FatalException#new(String, *, Array)
 	 */
-	public function AssertionFailedError(message:String, thrower, args:FunctionArguments) {
+	public function AssertionFailedError(message:String, thrower, args:Array) {
 		super(message, thrower, args);
 	}
 	

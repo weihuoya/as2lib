@@ -468,7 +468,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 		if (package == this) return false;
 		while (package) {
 			if (package.isRoot()) return false;
-			var package:PackageInfo = package.getParent();
+			package = package.getParent();
 			if (package == this) return true;
 		}
 		return false;

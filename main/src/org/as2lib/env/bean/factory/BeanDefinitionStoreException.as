@@ -22,9 +22,9 @@ import org.as2lib.env.bean.FatalBeanException;
 class org.as2lib.env.bean.factory.BeanDefinitionStoreException extends FatalBeanException {
 	
 	/**
-	 * @see FatalBeanException#new(String, , FunctionArguments)
+	 * @see FatalBeanException#new(String, , Array)
 	 */
-	public function BeanDefinitionStoreException(message:String, thrower, args:FunctionArguments) {
+	public function BeanDefinitionStoreException(message:String, thrower, args:Array) {
 		super(message, thrower, args);
 	}
 	

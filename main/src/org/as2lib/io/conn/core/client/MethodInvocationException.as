@@ -27,7 +27,7 @@ class org.as2lib.io.conn.core.client.MethodInvocationException extends Connectio
 	/**
 	 * @see org.as2lib.io.conn.ConnectionException#new()
 	 */
-	public function MethodInvocationException(message:String, thrower, args:FunctionArguments) {
+	public function MethodInvocationException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
 	}
 	

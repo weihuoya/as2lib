@@ -43,7 +43,7 @@ class org.as2lib.env.overload.SameTypeSignatureException extends OverloadExcepti
 	/**
 	 * @see org.as2lib.env.overload.OverloadException#Constructor()
 	 */
-	public function SameTypeSignatureException(message:String, thrower, args:FunctionArguments, overloadTarget, overloadedMethod:Function, overloadArguments:Array, overloadHandlers:Array) {
+	public function SameTypeSignatureException(message:String, thrower, args:Array, overloadTarget, overloadedMethod:Function, overloadArguments:Array, overloadHandlers:Array) {
 		super (message, thrower, args);
 		this.overloadTarget = overloadTarget;
 		this.overloadedMethod = overloadedMethod;

@@ -30,7 +30,7 @@ class org.as2lib.data.type.NumberFormatException extends Exception {
 	 * @param thrower Object that throw the exception
 	 * @param args	Arguments that were available while throwing the exception
 	 */
-	public function NumberFormatException(message:String, thrower, args:FunctionArguments) {
+	public function NumberFormatException(message:String, thrower, args:Array) {
 		super(message, thrower, args);
 	}
 }

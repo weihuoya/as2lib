@@ -41,9 +41,9 @@ class org.as2lib.aop.advice.DynamicAroundAdvice extends AbstractAroundAdvice imp
 	/**
 	 * Executes the callback passing the passed join point and arguments.
 	 * 
-	 * @see org.as2lib.aop.advice.AroundAdvice#execute(JoinPoint, FunctionArguments):Void
+	 * @see org.as2lib.aop.advice.AroundAdvice#execute(JoinPoint, Array):Void
 	 */
-	public function execute(joinPoint:JoinPoint, args:FunctionArguments) {
+	public function execute(joinPoint:JoinPoint, args:Array) {
 		callback.execute([joinPoint, args]);
 	}
 }

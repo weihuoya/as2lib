@@ -28,7 +28,7 @@ class org.as2lib.io.conn.core.server.ReservedHostException extends ConnectionExc
 	/**
 	 * @see org.as2lib.io.conn.ConnectionException#new()
 	 */
-	public function ReservedHostException(message:String, thrower, args:FunctionArguments) {
+	public function ReservedHostException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
 	}
 	

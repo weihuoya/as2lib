@@ -27,7 +27,7 @@ class org.as2lib.data.holder.NoSuchElementException extends DataHolderException 
 	/**
 	 * @see DataHolderException#new()
 	 */
-	public function NoSuchElementException(message:String, thrower, args:FunctionArguments) {
+	public function NoSuchElementException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
 	}
 	

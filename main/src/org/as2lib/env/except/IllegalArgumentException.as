@@ -27,7 +27,7 @@ class org.as2lib.env.except.IllegalArgumentException extends FatalException {
 	/**
 	 * @see org.as2lib.env.except.FatalException#new()
 	 */
-	public function IllegalArgumentException(message:String, thrower, args:FunctionArguments) {
+	public function IllegalArgumentException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
 	}
 	

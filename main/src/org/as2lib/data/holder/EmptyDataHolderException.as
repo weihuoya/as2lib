@@ -26,7 +26,7 @@ class org.as2lib.data.holder.EmptyDataHolderException extends DataHolderExceptio
 	/**
 	 * @see org.as2lib.env.except.Exception#Constructor()
 	 */
-	public function EmptyDataHolderException(message:String, thrower, args:FunctionArguments) {
+	public function EmptyDataHolderException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
 	}
 }

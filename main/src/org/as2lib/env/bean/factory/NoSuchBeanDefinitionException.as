@@ -22,9 +22,9 @@ import org.as2lib.env.bean.BeanException;
 class org.as2lib.env.bean.factory.NoSuchBeanDefinitionException extends BeanException {
 	
 	/**
-	 * @see BeanException#new(String, , FunctionArguments)
+	 * @see BeanException#new(String, , Array)
 	 */
-	public function NoSuchBeanDefinitionException(message:String, thrower, args:FunctionArguments) {
+	public function NoSuchBeanDefinitionException(message:String, thrower, args:Array) {
 		super(message, thrower, args);
 	}
 	

@@ -26,9 +26,9 @@ import org.as2lib.io.conn.ConnectionException;
 class org.as2lib.io.conn.local.core.UnknownConnectionException extends ConnectionException {
 	
 	/**
-	 * @see org.as2lib.io.conn.ConnectionException#new(String, *, FunctionArguments)
+	 * @see org.as2lib.io.conn.ConnectionException#new(String, *, Array)
 	 */
-	public function UnknownConnectionException(message:String, thrower, args:FunctionArguments) {
+	public function UnknownConnectionException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
 	}
 	

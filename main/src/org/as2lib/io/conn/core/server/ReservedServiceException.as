@@ -28,7 +28,7 @@ class org.as2lib.io.conn.core.server.ReservedServiceException extends Connection
 	/**
 	 * @see org.as2lib.io.conn.ConnectionException#new()
 	 */
-	public function ReservedServiceException(message:String, thrower, args:FunctionArguments) {
+	public function ReservedServiceException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
 	}
 	
