@@ -18,15 +18,15 @@ import test.unit.org.as2lib.data.holder.AbstractTIterator;
 import test.unit.org.as2lib.data.holder.AbstractTList;
 import org.as2lib.data.holder.List;
 import org.as2lib.data.holder.list.PriorityList;
+import org.as2lib.data.holder.list.ArrayList;
 
 /**
- * Specific Iterator Test for the ArrayIterator
- * 
  * @author Martin Heidegger
  */
 class test.unit.org.as2lib.data.holder.list.TPriorityList extends AbstractTList {
 	
 	private function createNewList(Void):List {
-		return new PriorityList();
+		return new PriorityList(new ArrayList());
 	}
+	
 }

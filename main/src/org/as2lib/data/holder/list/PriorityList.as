@@ -53,11 +53,11 @@ class org.as2lib.data.holder.list.PriorityList extends AbstractPriority implemen
 	}
 	
 	public function insertFirst(value):Void {
-		insertByValueAndPriority(value, priorityArray[0] - 1);
+		insertByValueAndPriority(value, isNaN(priorityArray[0] - 1) ? PRIORITY_NORMAL : priorityArray[0] - 1);
 	}
 	
 	public function insertLast(value):Void {
-		insertByValueAndPriority(value, priorityArray[priorityArray.length-1] - 1);
+		insertByValueAndPriority(value, isNaN(priorityArray[priorityArray.length-1] - 1) ? PRIORITY_NORMAL : priorityArray[priorityArray.length-1] - 1);
 	}
 	
 	public function insertAll(list:List):Void {
@@ -121,7 +121,7 @@ class org.as2lib.data.holder.list.PriorityList extends AbstractPriority implemen
 	public function setAll(index:Number, list:List):Void {
 		var iterator:Iterator = list.iterator();
 		while (iterator.hasNext()) {
-			set(index++, iterator.next());
+			this.set(index++, iterator.next());
 		}
 	}
 	
@@ -140,7 +140,7 @@ class org.as2lib.data.holder.list.PriorityList extends AbstractPriority implemen
 	public function retainAll(list:List):Void {
 		for (var i:Number = 0; i < priorityArray.length; i++) {
 			if (!list.contains(this.list.get(i))) {
-				removeByIndex(i);
+				removeByIndex(i--);
 			}
 		}
 	}
