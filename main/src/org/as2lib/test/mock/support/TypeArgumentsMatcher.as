@@ -27,16 +27,30 @@ class org.as2lib.test.mock.support.TypeArgumentsMatcher extends BasicClass imple
 	
 	/**
 	 * Constructs a new instance.
+	 * 
+	 * @param expectedTypes the expected types of the arguments
 	 */
 	public function TypeArgumentsMatcher(expectedTypes:Array) {
 		this.expectedTypes = expectedTypes;
 	}
 	
 	/**
+	 * Compares the actual arguments only by type.
+	 *
+	 * <p>False will be returned if:
+	 * <ul>
+	 *   <li>The lengths of the expected and actual arguments differ.</li>
+	 *   <li>The lengths of the expected types and the actual arguments differ.</li>
+	 *   <li>Any actual argument is not of the expected type.</li>
+	 * </ul>
+	 *
+	 * @param expectedArgumens the expected arguments
+	 * @param actualArguments the actual arguments
 	 * @see ArgumentsMatcher#matchArguments()
 	 */
 	public function matchArguments(expectedArguments:Array, actualArguments:Array):Boolean {
 		if (expectedArguments.length != actualArguments.length) return false;
+		if (actualArguments.length != expectedTypes.length) return false;
 		for (var i:Number = 0; i < expectedArguments.length; i++) {
 			if (!(actualArguments[i] instanceof expectedTypes[i])) {
 				return false;

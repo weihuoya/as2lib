@@ -30,46 +30,68 @@ import org.as2lib.test.mock.ArgumentsMatcher;
  */
 class org.as2lib.test.mock.support.RecordState extends BasicClass implements MockControlState {
 	
-	/** Used to add and get method behaviors. */
+	/** Used to add and get behaviors of the mock. */
 	private var behavior:Behavior;
 	
 	/**
 	 * Constructs a new instance.
 	 *
-	 * @param behavior used to add and get method call behaviors
+	 * @param behavior used to add and get behaviors of the mock
+	 * @throws IllegalArgumentException if the passed-in behavior is null or undefined
 	 */
 	public function RecordState(behavior:Behavior) {
 		if (!behavior) throw new IllegalArgumentException("Behavior is not allowed to be null or undefined.", this, arguments);
 		this.behavior = behavior;
 	}
 	
+	/**
+	 * Returns the behavior set during instantiation.
+	 * 
+	 * @return the behavior
+	 */
 	public function getBehavior(Void):Behavior {
 		return behavior;
 	}
 	
 	/**
-	 * @see MockControlState#invokeMethod()
+	 * Adds the expected method call to the expected behavior of the mock.
+	 *
+	 * @param methodCall contains all information about the method call
+	 * @see MockControlState#invokeMethod(MethodCall)
 	 */
 	public function invokeMethod(methodCall:MethodCall) {
 		behavior.addMethodBehavior(methodCall.getMethodName(), behavior.createMethodBehavior(methodCall));
 	}
 	
 	/**
-	 * @see MockControlState#setMethodResponse()
+	 * Sets the expectation that the lastly called method gets called the
+	 * passed-in number of times. When called between that range it responses
+	 * the given way.
+	 *
+	 * @param methodResponse the response of the method during the expected call range
+	 * @param methodCallRange the expected range of method calls
+	 * @see MockControlState#setMethodResponse(MethodResponse, MethodCallRange):Void
 	 */ 
 	public function setMethodResponse(methodResponse:MethodResponse, methodCallRange:MethodCallRange):Void {
 		behavior.getLastMethodBehavior().addMethodResponse(methodResponse, methodCallRange);
 	}
 	
 	/**
-	 * @see MockControlState#setArgumentsMatcher()
+	 * Sets the arguments matcher for the lastly called method.
+	 *
+	 * <p>The arguments matcher gets used by the expected method call to
+	 * check whether it matches an actual method call.
+	 *
+	 * @param argumentsMatcher the new arguments matcher for the expected method call
+	 * @see MockControlState#setArgumentsMatcher(ArgumentsMatcher):Void
 	 */
 	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void {
 		behavior.getLastMethodBehavior().setArgumentsMatcher(argumentsMatcher);
 	}
 	
 	/**
-	 * @see MockControlState#verify()
+	 * @throws IllegalStateException
+	 * @see MockControlState#verify(Void):Void
 	 */
 	public function verify(Void):Void {
 		throw new IllegalStateException("Method must not be called in record state.", this, arguments);

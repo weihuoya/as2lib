@@ -23,6 +23,13 @@ import org.as2lib.test.mock.MethodCall;
  */
 interface org.as2lib.test.mock.MethodBehaviorFactory extends BasicInterface {
 	
+	/**
+	 * Returns a method behaviour that is configured with the passed-in
+	 * expected method call.
+	 *
+	 * @param expectedMethodCall the expected method call to configure the behaviour with
+	 * @return a method behaviour configured for the expected method call
+	 */
 	public function getMethodBehavior(expectedMethodCall:MethodCall):MethodBehavior;
 	
 }

@@ -24,12 +24,23 @@ import org.as2lib.test.mock.AssertionFailedError;
  */
 class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	
+	/** The minimum that gets used if none has been specified. */
 	public static var DEFAULT_MINIMUM:Number = 0;
+	
+	/** The maximum that gets used if none has been specified. */
 	public static var DEFAULT_MAXIMUM:Number = Number.POSITIVE_INFINITY;
 	
+	/** The minimum. Can't be negative. */
 	private var minimum:Number;
+	
+	/** The maximum. Can't be negative. */
 	private var maximum:Number;
 	
+	/**
+	 * @overload #MethodCallRangeByVoid(Void)
+	 * @overload #MethodCallRangeByQuantity(Number)
+	 * @overload #MethodCallRangeByMinimumAndMaximumQuantity(Number, Number)
+	 */
 	public function MethodCallRange() {
 		var o:Overload = new Overload(this);
 		o.addHandler([], MethodCallRangeByVoid);
@@ -38,17 +49,42 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 		o.forward(arguments);
 	}
 	
+	/**
+	 * Uses the default minimum and the default maximum value.
+	 */
 	private function MethodCallRangeByVoid(Void):Void {
 		MethodCallRangeByMinimumAndMaximumQuantity(null, null);
 	}
 	
-	private function MethodCallRangeByQuantity(quantity):Void {
+	/**
+	 * Uses the passed-in quantity as minimum and maximum.
+	 *
+	 * <p>If the passed-in quantity is null the default minimum and default
+	 * maximum gets used.
+	 *
+	 * @param quantity the quantity
+	 */
+	private function MethodCallRangeByQuantity(quantity:Number):Void {
 		if (quantity == null) {
 			MethodCallRangeByMinimumAndMaximumQuantity(null, null);
 		}
 		MethodCallRangeByMinimumAndMaximumQuantity(quantity, quantity);
 	}
 	
+	/**
+	 * Creates a new range with the passed-in minimum and maximum.
+	 *
+	 * <ul>
+	 *   <li>If the minimum is null or undefined the default one will be used.</li>
+	 *   <li>If the maximum is null or undefined the default one will be used.</li>
+	 *   <li>If the minimum is negative it will be made positive.</li>
+	 *   <li>If the maximum is negative it will be made positive.</li>
+	 *   <li>If the minimum is bigger than the maximum the two values will be exchanged.</li>
+	 * </ul>
+	 *
+	 * @param minimum the minimum
+	 * @param maximum the maximum
+	 */
 	private function MethodCallRangeByMinimumAndMaximumQuantity(minimum:Number, maximum:Number):Void {
 		if (minimum == null) minimum = DEFAULT_MINIMUM;
 		if (maximum == null) maximum = DEFAULT_MAXIMUM;
@@ -63,14 +99,36 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 		this.maximum = maximum;
 	}
 	
+	/**
+	 * @return the set minimum
+	 */
 	public function getMinimum(Void):Number {
 		return minimum;
 	}
 	
+	/**
+	 * @return the set maximum
+	 */
 	public function getMaximum(Void):Number {
 		return maximum;
 	}
 	
+	/**
+	 * Checks whether the passed-in quantity is between the minimum
+	 * and maximum.
+	 *
+	 * <p>The quantity will be made positive if it is negative.
+	 *
+	 * <p>False will be returned if:
+	 * <ul>
+	 *   <li>The passed-in quantity is null or undefined.</li>
+	 *   <li>The passed-in quantity is smaller than the minimum.</li>
+	 *   <li>The passed-in quantity is bigger than the maximum.</li>
+	 * </ul>
+	 *
+	 * @param quantity the quantity
+	 * @return true if the quantity is contained by the range else false
+	 */
 	public function contains(quantity:Number):Boolean {
 		if (quantity == null) return false;
 		if (quantity < 0) quantity = -quantity;
@@ -80,6 +138,9 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 		return true;
 	}
 	
+	/**
+	 * @see BasicInterface#toString(Void):String
+	 */
 	public function toString(Void):String {
 		if (minimum == maximum) return minimum.toString();
 		var interval:String = "[";

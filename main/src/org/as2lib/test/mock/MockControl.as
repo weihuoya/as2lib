@@ -35,6 +35,48 @@ import org.as2lib.test.mock.support.ReplayState;
 import org.as2lib.test.mock.MockControlStateFactory;
 
 /**
+ * The MockControl is the central class of the mock object framework.
+ * You use it to create your mock object, set expectations and verify
+ * whether this expectations have been met.
+ *
+ * <p>The normal workflow is creating a mock control for a specific class
+ * or interface, receiving the mock object from it, setting expectations,
+ * setting the behavior of the mock object, switching to replay state,
+ * using the mock object as if it were a normal instance of a class and
+ * verifying that all expectations have been met.
+ *
+ * <code>
+ * import org.as2lib.test.mock.MockControl;
+ *
+ * // create mock control for class MyClass
+ * var myMockControl:MockControl = new MockControl(MyClass);
+ * // receive the mock object (it is in record state)
+ * var myMock:MyClass = myMockControl.getMock();
+ * // expect a call to the setStringProperty-method with argument 'myString'.
+ * myMock.setStringProperty("myString");
+ * // expect calls to the getStringProperty-method
+ * myMock.getStringProperty();
+ * // return 'myString' for the first two calls
+ * myMockControl.setReturnValue("myString", 2);
+ * // throw MyException for any further call
+ * myMockControl.setDefaultThrowable(new MyException());
+ * // switch to replay state
+ * myMockControl.replay();
+ *
+ * // the class under test calls these methods on the mock
+ * myMock.setStringProperty("myString");
+ * myMock.getStringProperty();
+ * myMock.getStringProperty();
+ *
+ * // verify that alle expectations have been met
+ * myMockControl.verify();
+ * </code>
+ *
+ * If a expectation has not been met a AssertionFailedError will
+ * be thrown. 
+ * If a expectation violation gets discovered during execution
+ * an AssertionFailedError will be thrown immediately.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.test.mock.MockControl extends BasicClass {
@@ -48,7 +90,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/** Stores the created mock proxy. */
 	private var mock;
 	
-	/** Stores the mock behaviors. */
+	/** Stores the mock behavior. */
 	private var behavior:Behavior;
 	
 	/** Stores the state. */
@@ -61,8 +103,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	private var replayStateFactory:MockControlStateFactory;
 	
 	/**
-	 * @overload #MockControlByType()
-	 * @overload #MockControlByTypeAndBehavior()
+	 * @overload #MockControlByType(Function)
+	 * @overload #MockControlByTypeAndBehavior(Function, Behavior)
 	 */
 	public function MockControl() {
 		var o:Overload = new Overload(this);
@@ -74,6 +116,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Constrcuts a new instance using the default behavior.
 	 *
+	 * <p>The default behavior is an instance of class DefaultBehaviour.
+	 *
 	 * @param type the interface or class to create a mock object for
 	 */
 	private function MockControlByType(type:Function) {
@@ -84,7 +128,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 * Constructs a new instance.
 	 *
 	 * @param type the interface or class to create a mock object for
-	 * @param behavior the instance to store the behavior of the mock inside
+	 * @param behavior the instance to store the behavior of the mock
 	 */
 	private function MockControlByTypeAndBehavior(type:Function, behavior:Behavior):Void {
 		this.type = type;
@@ -93,10 +137,13 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Returns the currently used ProxyFactory. This is either the default
-	 * ResolveProxyFactory or the one set vie #setMockProxyFactory().
+	 * Returns the currently used proxy factory.
 	 *
-	 * @return the currently used ProxyFactory
+	 * <p>This proxy factoy is either the default ResolveProxyFactory
+	 * or the one set via #setMockProxyFactory(ProxyFactory):Void.
+	 *
+	 * @return the currently used proxy factory
+	 * @see #setMockProxyFactory(ProxyFactory):Void
 	 */
 	public function getMockProxyFactory(Void):ProxyFactory {
 		if (!proxyFactory) proxyFactory = new ResolveProxyFactory();
@@ -104,19 +151,27 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Sets the ProxyFactory used to obtain the mock proxy.
+	 * Sets the proxy factory used to obtain the mock proxy.
+	 *
+	 * <p>If you set a proxy factory of null or undefined, the
+	 * #getMockProxyFactory(Void):ProxyFactory method will use the
+	 * default one.
 	 *
 	 * @param proxyFactory factory to obtain mock proxies
+	 * @see #getMockProxyFactory(Void):ProxyFactory
 	 */
 	public function setMockProxyFactory(proxyFactory:ProxyFactory):Void {
 		this.proxyFactory = proxyFactory;
 	}
 	
 	/**
-	 * Returns either the factory set via #setRecordStateFactory() or the
-	 * default one. The record state factory gets used to obtain the record state.
+	 * Returns the currently used record state factory.
+	 *
+	 * <p>This is either the factory set via #setRecordStateFactory(MockControlStateFactory):Void
+	 * or the default one, which returns an instance of the RecordState class.
 	 *
 	 * @return the currently used record state factory
+	 * @see #setRecordStateFactory(MockControlStateFactory):Void
 	 */
 	public function getRecordStateFactory(Void):MockControlStateFactory {
 		if (!recordStateFactory) recordStateFactory = getDefaultRecordStateFactory();
@@ -137,17 +192,25 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Sets the new record state factory to be used.
 	 *
+	 * <p>If you set a factory of value null or undefined the default record
+	 * state factory gets returned by the #getRecordStateFactory(Void):MockControlStateFactory
+	 * method.
+	 *
 	 * @param recordStateFactory the new record state factory
+	 * @see #getRecordStateFactory(Void):MockControlStateFactory
 	 */
 	public function setRecordStateFactory(recordStateFactory:MockControlStateFactory):Void {
 		this.recordStateFactory = recordStateFactory;
 	}
 	
 	/**
-	 * Returns either the factory set via #setReplayStateFactory() or the
-	 * default one. The record state factory gets used to obtain the replay state.
+	 * Returns the currently used replay state factory.
+	 *
+	 * <p>This is either the factory set via #setReplayStateFactory(MockControlStateFactory):Void
+	 * or the default one, which returns an instance of the ReplayState class.
 	 *
 	 * @return the currently used replay state factory
+	 * @see #setReplayStateFactory(MockControlStateFactory):Void
 	 */
 	public function getReplayStateFactory(Void):MockControlStateFactory {
 		if (!replayStateFactory) replayStateFactory = getDefaultReplayStateFactory();
@@ -168,14 +231,20 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Sets the new replay state factory to be used.
 	 *
+	 * <p>If you set a factory of value null or undefined, #getReplayStateFactory(Void):MockControlStateFactory
+	 * will return the default replay state factory.
+	 *
 	 * @param replayStateFactory the new replay state factory
+	 * @see #getReplayStateFactory(Void):MockControlStateFactory
 	 */
 	public function setReplayStateFactory(replayStateFactory:MockControlStateFactory):Void {
 		this.replayStateFactory = replayStateFactory;
 	}
 	
 	/**
-	 * Returns the mock object. It can be casted to the defined interface.
+	 * Returns the mock object.
+	 *
+	 * <p>It can be casted to the interface defined during instantiation.
 	 *
 	 * @return the mock object
 	 */
@@ -185,7 +254,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Creates a new InvocationHandler instance that handles method
+	 * Creates a new invocation handler instance that handles method
 	 * invocations on the proxy.
 	 *
 	 * @return a delegator that handles proxy method invocations
@@ -210,9 +279,10 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Switches the mock object from record state to replay state. The mock
-	 * object is in record state as soon as it gets returned by the #getMock()
-	 * operation.
+	 * Switches the mock object from record state to replay state.
+	 *
+	 * <p>The mock object is in record state as soon as it gets returned by
+	 * the #getMock(Void) method.
 	 */
 	public function replay(Void):Void {
 		state = getReplayStateFactory().getMockControlState(behavior);
@@ -271,9 +341,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * @overload #setReturnValueByValue()
-	 * @overload #setReturnValueByValueAndQuantity()
-	 * @overload #setReturnValueByValueAndMinimumAndMaximumQuantity()
+	 * @overload #setReturnValueByValue(*)
+	 * @overload #setReturnValueByValueAndQuantity(*, Number)
+	 * @overload #setReturnValueByValueAndMinimumAndMaximumQuantity(*, Number, Number)
 	 */
 	public function setReturnValue():Void {
 		var o:Overload = new Overload(this);
@@ -321,9 +391,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * @overload #setThrowableByThrowable()
-	 * @overload #setThrowableByThrowableAndQuantity()
-	 * @overload #setThrowableByThrowableAndMinimumAndMaximumQuantity()
+	 * @overload #setThrowableByThrowable(*)
+	 * @overload #setThrowableByThrowableAndQuantity(*, Number)
+	 * @overload #setThrowableByThrowableAndMinimumAndMaximumQuantity(*, Number, Number)
 	 */
 	public function setThrowable():Void {
 		var o:Overload = new Overload(this);
@@ -371,9 +441,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * @overload #setVoidCallableByVoid()
-	 * @overload #setVoidCallableByQuantity()
-	 * @overload #setVoidCallableByMinimumAndMaximumQuantity()
+	 * @overload #setVoidCallableByVoid(Void)
+	 * @overload #setVoidCallableByQuantity(Number)
+	 * @overload #setVoidCallableByMinimumAndMaximumQuantity(Number, Number)
 	 */
 	public function setVoidCallable():Void {
 		var o:Overload = new Overload(this);
@@ -415,7 +485,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Verifies that all expectations have been met.
 	 *
-	 * @throws org.as2lib.env.except.IllegalStateException if the mock object is in record state
+	 * <p>If an expectation has not been met an AssertionFailedError will be 
+	 * thrown.
 	 */
 	public function verify(Void):Void {
 		state.verify();

@@ -30,25 +30,36 @@ import org.as2lib.test.mock.ArgumentsMatcher;
  */
 class org.as2lib.test.mock.support.ReplayState extends BasicClass implements MockControlState {
 	
-	/** Used to verify the expectations. */
+	/** Used to verify the expectations and to store actual method calls. */
 	private var behavior:Behavior;
 	
 	/**
 	 * Constructs a new instance.
 	 *
-	 * @param behavior used to verify the expectations
+	 * @param behavior used to verify the expectations and to store actual method calls
+	 * @throws IllegalArgumentException if the passed-in behavior is null or undefined
 	 */
 	public function ReplayState(behavior:Behavior) {
 		if (!behavior) throw new IllegalArgumentException("Behavior is not allowed to be null or undefined.", this, arguments);
 		this.behavior = behavior;
 	}
 	
+	/**
+	 * Returns the behavior set during instantiation.
+	 * 
+	 * @return the behavior
+	 */
 	public function getBehavior(Void):Behavior {
 		return behavior;
 	}
 	
 	/**
-	 * @see MockControlState#invokeMethod()
+	 * Registers the actual method call in the method behavior if it was
+	 * expected or registers a new unexpected method call.
+	 *
+	 * @return the value returned by the method behaviour's response method
+	 * @throws the exception thrown by the method behaviour's response method
+	 * @see MockControlState#invokeMethod(MethodCall)
 	 */
 	public function invokeMethod(methodCall:MethodCall) {
 		var methodBehavior:MethodBehavior = behavior.getMethodBehavior(methodCall);
@@ -68,21 +79,25 @@ class org.as2lib.test.mock.support.ReplayState extends BasicClass implements Moc
 	}
 	
 	/**
-	 * @see MockControlState#verify()
+	 * Forwards the verification to the behavior of the mock.
+	 *
+	 * @see MockControlState#verify(Void):Void
 	 */
 	public function verify(Void):Void {
 		behavior.verify();
 	}
 	
 	/**
-	 * @see MockControlState#setMethodResponse()
+	 * @throws IllegalStateException
+	 * @see MockControlState#setMethodResponse(MethodResponse, MethodCallRange):Void
 	 */ 
 	public function setMethodResponse(methodResponse:MethodResponse, methodCallRange:MethodCallRange):Void {
 		throw new IllegalStateException("Method must not be called in replay state.", this, arguments);
 	}
 	
 	/**
-	 * @see MockControlState#setArgumentsMatcher()
+	 * @throws IllegalStateException
+	 * @see MockControlState#setArgumentsMatcher(ArgumentsMatcher):Void
 	 */
 	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void {
 		throw new IllegalStateException("Method must not be called in replay state.", this, arguments);
