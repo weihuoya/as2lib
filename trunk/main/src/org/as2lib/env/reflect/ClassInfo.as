@@ -1,9 +1,12 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Map;
+import org.as2lib.data.iterator.Iterator;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.CacheInfo;
+import org.as2lib.env.reflect.MethodInfo;
+import org.as2lib.env.reflect.NoSuchMethodException;
 import org.as2lib.env.EnvConfig;
 
 /**
@@ -128,6 +131,27 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements CacheInfo {
 			methods = ReflectUtil.getMethods(this);
 		}
 		return methods;
+	}
+	
+	/**
+	 * Returns the MethodInfo corresponding to the passed method name.
+	 *
+	 * @param methodName the name of the method you wanna obtain
+	 * @return the MethodInfo correspoinding to the method name
+	 * @throws org.as2lib.env.reflect.NoSuchMethodException if the method you tried to obtain does not exist
+	 */
+	public function getMethod(methodName:String):MethodInfo {
+		var iterator:Iterator = getMethods().iterator();
+		var method:MethodInfo;
+		while (iterator.hasNext()) {
+			method = MethodInfo(iterator.next());
+			if (method.getName() == methodName) {
+				return method;
+			}
+		}
+		throw new NoSuchMethodException("The method with the name [" + methodName + "] you tried to obtain does not exist.",
+										this,
+										arguments);
 	}
 	
 	/**

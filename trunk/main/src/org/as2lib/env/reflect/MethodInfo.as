@@ -1,5 +1,6 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.env.reflect.ClassMemberInfo;
 
 /**
  * MethodInfo represents an operation.
@@ -7,7 +8,7 @@ import org.as2lib.env.reflect.ClassInfo;
  * @author Simon Wacker
  * @see org.as2lib.core.BasicClass
  */
-class org.as2lib.env.reflect.MethodInfo extends BasicClass {
+class org.as2lib.env.reflect.MethodInfo extends BasicClass implements ClassMemberInfo {
 	/** The name of the operation. */
 	private var name:String;
 	
@@ -39,9 +40,7 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass {
 	}
 	
 	/**
-	 * Returns the name of the operation.
-	 *
-	 * @return the name of the operation
+	 * @see org.as2lib.env.reflect.ClassMemberInfo#getName()
 	 */
 	public function getName(Void):String {
 		return name;
@@ -57,18 +56,14 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass {
 	}
 	
 	/**
-	 * Returns the class that declares the operation.
-	 *
-	 * @return the class declaring the operation
+	 * @see org.as2lib.env.reflect.ClassMemberInfo#getDeclaringClass()
 	 */
 	public function getDeclaringClass(Void):ClassInfo {
 		return declaringClass;
 	}
 	
 	/**
-	 * Returns whether the operation is static or not.
-	 *
-	 * @return true when the operation is static else false
+	 * @see org.as2lib.env.reflect.ClassMemberInfo#isStatic()
 	 */
 	public function isStatic(Void):Boolean {
 		return staticFlag;

@@ -1,4 +1,4 @@
-﻿import org.as2lib.env.except.Exception;
+﻿import org.as2lib.env.reflect.ReflectException;
 
 /**
  * ReferenceNotFoundException gets thrown to indicate that a reference to a specific
@@ -6,9 +6,9 @@
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.ReferenceNotFoundException extends Exception {
+class org.as2lib.env.reflect.ReferenceNotFoundException extends ReflectException {
 	/**
-	 * @see org.as2lib.env.except.Exception#Constructor()
+	 * @see org.as2lib.env.reflect.ReflectException#Constructor()
 	 */
 	public function ReferenceNotFoundException(message:String, thrower, args:FunctionArguments) {
 		super (message, thrower, args);

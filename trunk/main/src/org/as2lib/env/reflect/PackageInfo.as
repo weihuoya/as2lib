@@ -1,8 +1,10 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Map;
 import org.as2lib.env.reflect.CacheInfo;
+import org.as2lib.env.reflect.NoSuchChildException;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.data.iterator.Iterator;
 
 /**
  * PackageInfo represents a real package in the Flash environment. This class is
@@ -98,6 +100,27 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CacheInfo
 			children = ReflectUtil.getChildren(this);
 		}
 		return children;
+	}
+	
+	/**
+	 * Returns the CacheInfo corresponding to the name of the child.
+	 *
+	 * @param childName the name of the child
+	 * @return the CacheInfo corresponding to the child's name
+	 * @throws org.as2lib.env.reflect.NoSuchChildException if there is no child with the passed name
+	 */
+	public function getChild(childName:String):CacheInfo {
+		var iterator:Iterator = getChildren().iterator();
+		var child:CacheInfo;
+		while (iterator.hasNext()) {
+			child = CacheInfo(iterator.next());
+			if (child.getName() == childName) {
+				return child;
+			}
+		}
+		throw new NoSuchChildException("The child with the name [" + childName + "] you tried to obtain does not exist.",
+									   this,
+									   arguments);
 	}
 	
 	/**
