@@ -30,6 +30,6 @@ class test.org.as2lib.data.io.conn.ExampleListener extends BasicClass implements
 	public function onResponse(response:ConnectorResponse):Void{
 		trace("ExampleListener Nr."+cnt);
 		//trace(response.getName());
-		myOut.info(response.getName());
+		myOut.info(response.getData().toString());
 	}
 }
