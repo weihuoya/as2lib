@@ -122,7 +122,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements ClassMem
 	 *
 	 * @return true when the property is writeable else false
 	 */
-	public function isWriteable(Void):Boolean {
+	public function isWritable(Void):Boolean {
 		return ObjectUtil.isAvailable(setter);
 	}
 	

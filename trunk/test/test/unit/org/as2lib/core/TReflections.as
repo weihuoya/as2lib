@@ -84,7 +84,7 @@ class test.org.as2lib.core.TReflections extends Test {
 		while (iterator.hasNext()) {
 			prop = PropertyInfo(iterator.next());
 			trace (prop.getName());
-			trace (prop.isWriteable() + " write");
+			trace (prop.isWritable() + " write");
 			trace (prop.isReadable() + " read");
 			trace (prop.isStatic() +  " static");
 			trace ("****");
