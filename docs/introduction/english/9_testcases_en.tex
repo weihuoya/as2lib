@@ -12,8 +12,8 @@ Although two testing API's already exists for {\sl Actionscript 2}, as2unit\foot
 	\item Official documentation of {\sl as2unit} is still not available.
 	\item {\sl As2unit} is only available as a component.
 	\item {\sl As2unit} can always test only one class.
-	\item {\s1 As2unit} is not build to support different views. 
-	\item {\s1 As2unit} does not support pause() and resume() during TestCases (Tests that have a time delay like using onEnterframe). 
+	\item {\sl As2unit} is not build to support different views. 
+	\item {\sl As2unit} does not support pause() and resume() during TestCases (Tests that have a time delay like using onEnterframe). 
 \end{itemize} 
 
 \paragraph{Solution:}
@@ -26,7 +26,7 @@ new test.org.as2lib.core.TReflections().run();
 \end{lstlisting}
 
 If you have more than one TestCase you can use a simplified way:
-\begin[lstlisting}[frame=single]
+\begin{lstlisting}[frame=single]
 import org.as2lib.test.unit.TestSuiteFactory;
 import test.org.as2lib.core.* // Import Statement, to reduce the Lines.
 
@@ -36,7 +36,7 @@ TestBasicClass;
 TestEventHandling;
 
 new TestSuiteFactory().collectAllTestCases().run();
-\end
+\end{lstlisting}
 
 
 The cases to test must be invoked before the test call so that they are available while run time.
