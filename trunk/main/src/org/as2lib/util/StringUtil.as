@@ -75,8 +75,8 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	}
 	
 	public static function assureLength(string:String, length:Number):Boolean {
-		if (length <= 0) {
-			throw new IllegalArgumentException("The Second Attribute [" + length + "] must be bigger than 0.", 
+		if (length < 0 || (!length && length !== 0)) {
+			throw new IllegalArgumentException("The Second Attribute [" + length + "] must be bigger or equas 0.", 
 												eval("th" + "is"), 
 												arguments);
 		}
