@@ -120,10 +120,6 @@ class org.as2lib.tool.changelog.StandardView extends BasicClass implements Chang
 	 * @see #init adds this listener to the Stage.
 	 */
 	public function onResize(Void):Void {
-		
-		// Resizing the scrollPane.
-		scrollPane.setSize(Stage.width, Stage.height-rootMc.titleBar._height, false);
-		
 		// Holder for the lastHeight
 		var lastHeight:Number = 0;
 		
@@ -140,6 +136,9 @@ class org.as2lib.tool.changelog.StandardView extends BasicClass implements Chang
 			
 			lastHeight = tF._y+tF._height+1;
 		}
+		
+		// Resizing the scrollPane.
+		scrollPane.setSize(Stage.width, Stage.height-rootMc.titleBar._height, false);
 	}
 	
 	/** 
