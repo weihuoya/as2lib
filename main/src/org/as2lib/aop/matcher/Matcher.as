@@ -1,4 +1,20 @@
-﻿import org.as2lib.core.BasicClass;
+﻿/*
+ * Copyright the original author or authors.
+ * 
+ * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.mozilla.org/MPL/MPL-1.1.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import org.as2lib.core.BasicClass;
 import org.as2lib.util.StringUtil;
 import org.as2lib.aop.JoinPoint;
 
@@ -6,9 +22,21 @@ import org.as2lib.aop.JoinPoint;
  * @author Simon Wacker
  */
 class org.as2lib.aop.matcher.Matcher extends BasicClass {
+	
+	/**
+	 * Private constructor to prevent instantiation.
+	 */
 	private function Matcher(Void) {
 	}
 	
+	/**
+	 * Checks if the passed join point represented by a string
+	 * matches the given pattern. Supported wildcards are '*' 
+	 * and '..'.
+	 *
+	 * @param joinPoint the join point represented as a string used as the base of the match
+	 * @param pattern the pattern that shall match the join point
+	 */
 	public static function match(joinPoint:String, pattern:String):Boolean {
 		if (pattern.indexOf("*") == -1
 				&& pattern.indexOf("..") == -1) {
@@ -17,6 +45,9 @@ class org.as2lib.aop.matcher.Matcher extends BasicClass {
 		return wildcardMatch(joinPoint, pattern);
 	}
 	
+	/**
+	 * TODO: Documentation
+	 */
 	private static function wildcardMatch(jp:String, p:String):Boolean {
 		var a:Array = jp.split(".");
 		var b:Array = p.split(".");
@@ -47,6 +78,9 @@ class org.as2lib.aop.matcher.Matcher extends BasicClass {
 		return true;
 	}
 	
+	/**
+	 * TODO: Documentation
+	 */
 	private static function matchString(s:String, p:String):Boolean {
 		if (p == "*") return true;
 		if (p.indexOf("*") > -1) {
@@ -66,4 +100,5 @@ class org.as2lib.aop.matcher.Matcher extends BasicClass {
 			return (s == p);
 		}
 	}
+	
 }

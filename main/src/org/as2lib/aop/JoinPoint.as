@@ -47,9 +47,13 @@ interface org.as2lib.aop.JoinPoint extends BasicInterface {
 	public function proceed(args:Array);
 	
 	/**
-	 * Returns the object where this join point resides on.
+	 * Returns the logical this of the interception. That means if the join
+	 * point is part of a call-pointcut the result will refer to the object
+	 * where the call is made from. If the join point is part of an execution-
+	 * pointcut the result will refer to the object the represented method
+	 * resides in.
 	 *
-	 * @return the object this join point resides on
+	 * @return the logical this of the join point depending on the wrapping pointcut
 	 */
 	public function getThis(Void);
 	
