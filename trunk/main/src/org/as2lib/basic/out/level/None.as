@@ -1,10 +1,10 @@
-﻿import org.as2lib.basic.out.Level;
+﻿import org.as2lib.basic.out.OutLevel;
 
 /**
  * @author Martin Heidegger, Simon Wacker
  * @version 1.0
  */
-class org.as2lib.basic.out.level.None implements Level {
+class org.as2lib.basic.out.level.None implements OutLevel {
 	/**
 	 * @see org.as2lib.basic.out.Level
 	 */

@@ -1,10 +1,10 @@
-﻿import org.as2lib.basic.out.Handler;
+﻿import org.as2lib.basic.out.OutHandler;
 
 /**
  * @author Simon Wacker
  * @version 1.0
  */
-class org.as2lib.basic.out.handler.Trace implements Handler {
+class org.as2lib.basic.out.handler.TraceHandler implements OutHandler {
 	/**
 	 * @see org.as2lib.basic.out.Handler
 	 */

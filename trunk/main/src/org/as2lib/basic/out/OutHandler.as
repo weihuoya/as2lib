@@ -2,7 +2,7 @@
  * @author Simon Wacker
  * @version 1.0
  */
-interface org.as2lib.basic.out.Handler {
+interface org.as2lib.basic.out.OutHandler {
 	/**
 	 * Writes a message to the output target.
 	 * @param message
