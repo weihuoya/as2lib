@@ -1,13 +1,11 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.data.io.conn.local.ServerRegistry;
-import org.as2lib.data.io.conn.local.SimpleLocalServer;
 import org.as2lib.data.io.conn.local.LocalServer;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.data.io.conn.local.ReservedHostException;
 
 class org.as2lib.data.io.conn.local.LocalServerRegistry extends BasicClass implements ServerRegistry {
-
 	private var serverMap:HashMap;
 	
 	public function LocalServerRegistry(Void) {
@@ -15,23 +13,21 @@ class org.as2lib.data.io.conn.local.LocalServerRegistry extends BasicClass imple
 	}
 	
 	public function contains(host:String):Boolean {
-		var lc:LocalConnection = new LocalConnection();
-		return !lc.connect(host);
+		return !(new LocalConnection().connect(host));
 	}
 	
-	public function register(host:String):Void {
-		if(contains(host)) throw new ReservedHostException("Connection name [" + host + "] is already in use.", this, arguments);
+	public function register(server:LocalServer):Void {
+		if (contains(server.getHost())) throw new ReservedHostException("Connection with host [" + server.getHost() + "] is already in use.", this, arguments);
 		var lc = new LocalConnection();
-		lc.connect(host);
-		serverMap.put(host,lc);
+		lc.connect(server.getHost());
+		serverMap.put(server.getHost(), lc);
 	}
 	
-	public function remove(host:String):Void {
-		if(serverMap.containsKey(host)){
-			var lc:LocalConnection = serverMap.get(host);
+	public function remove(server:LocalServer):Void {
+		if(serverMap.containsKey(server.getHost())){
+			var lc:LocalConnection = serverMap.get(server.getHost());
 			lc.close();
-			serverMap.remove(host);
+			serverMap.remove(server.getHost());
 		}
-		
 	}
 }
