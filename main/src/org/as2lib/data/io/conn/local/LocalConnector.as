@@ -56,7 +56,15 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 	}
 	
 	public function initConnection(Void):Void {
-		
+		if(method){
+			var args:Array = new Array();
+			args = args.concat(params);
+			args.splice(0,0,host+path,method);
+			loc.send.apply(args);
+		}
+		else{
+			loc.connect(host+path);
+		}
 	}
 	
 	public function setHost(host:String):Void {
@@ -88,6 +96,7 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 	}
 	
 	public function setParams():Void {
+		
 		params = arguments;
 	}
 	
@@ -105,16 +114,15 @@ class org.as2lib.data.io.conn.local.LocalConnector extends BasicClass implements
 		var h:String = r.getHost();
 		var p:String = r.getPath();
 		var m:String = r.getMethod();
+		var a:Array = r.getParams();
 		
 		if(h) host = h;
 		if(p) path = p;
-		if(m) method = m;
-		
-		/*if(LocalRequest(r).getMethod()){
-			loc.send(connId,LocalRequest(r).getMethod());
+		if(m) {
+			method = m;
+			params = a;
 		}
-		else{
-			loc.connect(connId);
-		}*/
+
+		initConnection();
 	}
 }
