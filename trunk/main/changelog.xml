@@ -5,6 +5,9 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="2">
+         <day value="18">
+           <entry type="change" package="org.as2lib.env.overload" class="OverloadHandler" method="getArguments"><change-rename to="getArgumentsTypes" /></entry>
+         </day>
          <day value="17">
            <entry type="change" package="org.as2lib.env.reflect" class="ClassInfo" method="getParent"><change-rename to="getPackage" /></entry>
            <entry type="add" package="org.as2lib.env.reflect" class="TypeInfo" method="getPackage(Void):PackageInfo"></entry>
