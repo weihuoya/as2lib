@@ -21,7 +21,6 @@ import org.as2lib.env.reflect.TypeInfo;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.ConstructorInfo;
-import org.as2lib.env.reflect.NoSuchTypeMemberException;
 import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.reflect.algorithm.CacheAlgorithm;
 import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
