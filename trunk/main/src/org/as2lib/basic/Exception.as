@@ -6,7 +6,7 @@
  * @author Martin Heidegger
  */
 
-class de.flashforum.basic.Exception extends Error {
+class org.as2lib.basic.Exception extends Error {
 	// Name of the Exception
 	public var name:String;
 	// Message that has been posted to the Exception
