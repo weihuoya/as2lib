@@ -16,6 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.Config;
+import org.as2lib.util.ClassUtil;
 import org.as2lib.util.Call;
 
 /**
@@ -279,7 +280,20 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 			return true;
 		}
 		if (isPrimitiveType(anObject)) {
-			return (compareTypeOf(aType(anObject), anObject));
+			var t:String = typeof(anObject);
+			// Workaround for former used: typesMatch(aType(anObject), anObject);
+			// Casting is not a good solution, it will break if the Constructor throws a error!
+			// This solution is not the fastest but will not break by any exception.
+			if((aType === String || ClassUtil.isSubClassOf(aType, String)) && t == TYPE_STRING) {
+				return true;
+			}
+			if((aType === Boolean || ClassUtil.isSubClassOf(aType, Boolean)) && t == TYPE_BOOLEAN) {
+				return true;
+			}
+			if((aType === Number || ClassUtil.isSubClassOf(aType, Number)) && t == TYPE_NUMBER) {
+				return true;
+			}
+			return false;
 		} else {
 			return (isInstanceOf(anObject, aType));
 		}
@@ -305,7 +319,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 */
 	public static function isPrimitiveType(anObject):Boolean {
 		var t:String = typeof(anObject);
-		return (t == "string" || t == "number" || t == "boolean");
+		return (t == TYPE_STRING || t == TYPE_NUMBER || t == TYPE_BOOLEAN);
 	}
 	
 	/**
