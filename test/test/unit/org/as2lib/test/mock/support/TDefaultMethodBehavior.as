@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.support.DefaultMethodBehaviour;
+import org.as2lib.test.mock.support.DefaultMethodBehavior;
 import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodResponse;
@@ -23,10 +23,10 @@ import org.as2lib.test.mock.MethodResponse;
 /**
  * @author Simon Wacker
  */
-class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends TestCase {
+class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehavior extends TestCase {
 	
 	public function testVerifyWithMultipleMethodCallRanges(Void):Void {
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(new MethodCall("m", []));
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(new MethodCall("m", []));
 		b.addMethodResponse(null, new MethodCallRange(2, 5));
 		b.addMethodResponse(null, new MethodCallRange(0, 2));
 		b.addMethodResponse(null, new MethodCallRange(3));
@@ -89,7 +89,7 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	}
 	
 	public function testVerifyWithNullExpectedMethodCall(Void):Void {
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(null);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(null);
 		b.verify();
 		try {
 			b.addActualMethodCall(new MethodCall("m", []));
@@ -100,7 +100,7 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	}
 	
 	public function testVerify(Void):Void {
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(new MethodCall("m", []));
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(new MethodCall("m", []));
 		b.addMethodResponse(null, new MethodCallRange(2, 5));
 		try {
 			b.verify();
@@ -136,7 +136,7 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	}
 	
 	public function testAddMethodResponseWithNullExpectedMethodCall(Void):Void {
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(null);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(null);
 		try {
 			b.addMethodResponse(null, null);
 			fail("Expected IllegalStateException.");
@@ -145,18 +145,18 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	}
 	
 	public function testNewWithNullArgument(Void):Void {
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(null);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(null);
 		assertNull(b.getExpectedMethodCall());
 	}
 	
 	public function testNewWithRealArgument(Void):Void {
 		var c:MethodCall = new MethodCall("methodName", []);
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(c);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(c);
 		assertSame(b.getExpectedMethodCall(), c);
 	}
 	
 	public function testAddActualMethodCallWithNullArgument(Void):Void {
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(null);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(null);
 		try {
 			b.addActualMethodCall(null);
 			fail("Expected IllegalArgumentException.");
@@ -165,7 +165,7 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	}
 	
 	public function testAddActualMethodCallWithNotMatchingActualMethodCall(Void):Void {
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(new MethodCall("methodName", []));
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(new MethodCall("methodName", []));
 		try {
 			b.addActualMethodCall(new MethodCall("methodName1", [";)"]));
 			fail("Expected MethodCallRangeError.");
@@ -174,12 +174,12 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	}
 	
 	public function testAddActualMethodCallWithMatchingCall(Void):Void {
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(new MethodCall("methodName", []));
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(new MethodCall("methodName", []));
 		b.addActualMethodCall(new MethodCall("methodName", []));
 	}
 	
 	public function testAddActualMethodCallWithMatchingCallAndExpectedRangeOfZero(Void):Void {
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(new MethodCall("methodName", []));
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(new MethodCall("methodName", []));
 		b.addMethodResponse(null, new MethodCallRange(0));
 		try {
 			b.addActualMethodCall(new MethodCall("methodName", []));
@@ -189,7 +189,7 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	}
 	
 	public function testAddActualMethodCallWithMatchingCallAndExplicitCallCount(Void):Void {
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(new MethodCall("methodName", []));
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(new MethodCall("methodName", []));
 		b.addMethodResponse(null, new MethodCallRange(3));
 		b.addActualMethodCall(new MethodCall("methodName", []));
 		b.addActualMethodCall(new MethodCall("methodName", []));
@@ -202,7 +202,7 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	}
 	
 	public function testAddActualMethodCallWithMatchingCallAndMultipleExplicitCallCounts(Void):Void {
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(new MethodCall("methodName", []));
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(new MethodCall("methodName", []));
 		b.addMethodResponse(null, new MethodCallRange(0));
 		b.addMethodResponse(null, new MethodCallRange(2));
 		b.addMethodResponse(null, new MethodCallRange(1));
@@ -221,7 +221,7 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	}
 	
 	public function testAddActualMethodCallWithNullExpectedMethodCall(Void):Void {
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(null);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(null);
 		try {
 			b.addActualMethodCall(new MethodCall("methodName", []));
 			fail("Expected MethodCallRangeError.");
@@ -230,26 +230,26 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	}
 	
 	public function testExpectsAnotherMethodCallWithoutExpectedMethodCall(Void):Void {
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(null);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(null);
 		assertFalse(b.expectsAnotherMethodCall());
 	}
 	
 	public function testExpectsAnotherMethodCallWithoutExpectedCallRangesAndAddedMethodCalls(Void):Void {
 		var ec:MethodCall = new MethodCall("methodName", []);
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(ec);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(ec);
 		assertTrue(b.expectsAnotherMethodCall());
 	}
 	
 	public function testExpectsAnotherMethodCallWithoutExpectedCallRangesButWithAddedMethodCall(Void):Void {
 		var ec:MethodCall = new MethodCall("methodName", []);
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(ec);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(ec);
 		b.addActualMethodCall(new MethodCall("methodName", []));
 		assertFalse(b.expectsAnotherMethodCall());
 	}
 	
 	public function testExpectsAnotherMethodCallWithOneMethodCallRange(Void):Void {
 		var ec:MethodCall = new MethodCall("methodName", []);
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(ec);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(ec);
 		b.addMethodResponse(new MethodResponse(), new MethodCallRange(2, 5));
 		assertTrue(b.expectsAnotherMethodCall());
 		b.addActualMethodCall(new MethodCall("methodName", []));
@@ -266,7 +266,7 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	
 	public function testExpectsAnotherMethodCallWithExplicitCallQuantities(Void):Void {
 		var ec:MethodCall = new MethodCall("methodName", []);
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(ec);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(ec);
 		b.addMethodResponse(new MethodResponse(), new MethodCallRange(3));
 		b.addMethodResponse(new MethodResponse(), new MethodCallRange(2));
 		b.addMethodResponse(new MethodResponse(), new MethodCallRange(5));
@@ -295,7 +295,7 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	
 	public function testExpectsAnotherMethodCallWithMethodCallRanges(Void):Void {
 		var ec:MethodCall = new MethodCall("methodName", []);
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(ec);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(ec);
 		b.addMethodResponse(new MethodResponse(), new MethodCallRange(2, 3));
 		b.addMethodResponse(new MethodResponse(), new MethodCallRange(1, 2));
 		b.addMethodResponse(new MethodResponse(), new MethodCallRange(3, 5));
@@ -324,7 +324,7 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	
 	public function testExpectsAnotherMethodCallWithNullMethodCallRange(Void):Void {
 		var ec:MethodCall = new MethodCall("methodName", []);
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(ec);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(ec);
 		b.addMethodResponse(new MethodResponse(), new MethodCallRange(3));
 		b.addMethodResponse(new MethodResponse(), null);
 		for (var i:Number = 0; i < 100; i++) {
@@ -335,7 +335,7 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	
 	public function testExpectsAnotherMethodCallWithAnyQuantityMethodCallRange(Void):Void {
 		var ec:MethodCall = new MethodCall("methodName", []);
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(ec);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(ec);
 		b.addMethodResponse(new MethodResponse(), new MethodCallRange(3));
 		b.addMethodResponse(new MethodResponse(), new MethodCallRange());
 		for (var i:Number = 0; i < 100; i++) {
@@ -346,7 +346,7 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 	
 	public function testResponseWithNullResponse(Void):Void {
 		var ec:MethodCall = new MethodCall("methodName", []);
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(ec);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(ec);
 		b.addMethodResponse(null, new MethodCallRange(1, 3));
 		assertUndefined(b.response());
 		assertUndefined(b.response());
@@ -363,7 +363,7 @@ class test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour extends Tes
 		r3.setReturnValue("r3");
 		
 		var ec:MethodCall = new MethodCall("methodName", []);
-		var b:DefaultMethodBehaviour = new DefaultMethodBehaviour(ec);
+		var b:DefaultMethodBehavior = new DefaultMethodBehavior(ec);
 		b.addMethodResponse(r1, new MethodCallRange(3));
 		b.addMethodResponse(r2, new MethodCallRange(2, 5));
 		b.addMethodResponse(r3, new MethodCallRange());

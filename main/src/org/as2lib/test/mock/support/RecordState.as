@@ -18,8 +18,8 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.test.mock.MockControlState;
-import org.as2lib.test.mock.MethodBehaviour;
-import org.as2lib.test.mock.Behaviour;
+import org.as2lib.test.mock.MethodBehavior;
+import org.as2lib.test.mock.Behavior;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodResponse;
 import org.as2lib.test.mock.MethodCall;
@@ -30,42 +30,42 @@ import org.as2lib.test.mock.ArgumentsMatcher;
  */
 class org.as2lib.test.mock.support.RecordState extends BasicClass implements MockControlState {
 	
-	/** Used to add and get method behaviours. */
-	private var behaviour:Behaviour;
+	/** Used to add and get method behaviors. */
+	private var behavior:Behavior;
 	
 	/**
 	 * Constructs a new instance.
 	 *
-	 * @param behaviour used to add and get method call behaviours
+	 * @param behavior used to add and get method call behaviors
 	 */
-	public function RecordState(behaviour:Behaviour) {
-		if (!behaviour) throw new IllegalArgumentException("Behaviour is not allowed to be null or undefined.", this, arguments);
-		this.behaviour = behaviour;
+	public function RecordState(behavior:Behavior) {
+		if (!behavior) throw new IllegalArgumentException("Behavior is not allowed to be null or undefined.", this, arguments);
+		this.behavior = behavior;
 	}
 	
-	public function getBehaviour(Void):Behaviour {
-		return behaviour;
+	public function getBehavior(Void):Behavior {
+		return behavior;
 	}
 	
 	/**
 	 * @see MockControlState#invokeMethod()
 	 */
 	public function invokeMethod(methodCall:MethodCall) {
-		behaviour.addMethodBehaviour(methodCall.getMethodName(), behaviour.createMethodBehaviour(methodCall));
+		behavior.addMethodBehavior(methodCall.getMethodName(), behavior.createMethodBehavior(methodCall));
 	}
 	
 	/**
 	 * @see MockControlState#setMethodResponse()
 	 */ 
 	public function setMethodResponse(methodResponse:MethodResponse, methodCallRange:MethodCallRange):Void {
-		behaviour.getLastMethodBehaviour().addMethodResponse(methodResponse, methodCallRange);
+		behavior.getLastMethodBehavior().addMethodResponse(methodResponse, methodCallRange);
 	}
 	
 	/**
 	 * @see MockControlState#setArgumentsMatcher()
 	 */
 	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void {
-		behaviour.getLastMethodBehaviour().setArgumentsMatcher(argumentsMatcher);
+		behavior.getLastMethodBehavior().setArgumentsMatcher(argumentsMatcher);
 	}
 	
 	/**

@@ -18,8 +18,8 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.test.mock.MockControlState;
-import org.as2lib.test.mock.MethodBehaviour;
-import org.as2lib.test.mock.Behaviour;
+import org.as2lib.test.mock.MethodBehavior;
+import org.as2lib.test.mock.Behavior;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.MethodResponse;
@@ -31,39 +31,39 @@ import org.as2lib.test.mock.ArgumentsMatcher;
 class org.as2lib.test.mock.support.ReplayState extends BasicClass implements MockControlState {
 	
 	/** Used to verify the expectations. */
-	private var behaviour:Behaviour;
+	private var behavior:Behavior;
 	
 	/**
 	 * Constructs a new instance.
 	 *
-	 * @param behaviour used to verify the expectations
+	 * @param behavior used to verify the expectations
 	 */
-	public function ReplayState(behaviour:Behaviour) {
-		if (!behaviour) throw new IllegalArgumentException("Behaviour is not allowed to be null or undefined.", this, arguments);
-		this.behaviour = behaviour;
+	public function ReplayState(behavior:Behavior) {
+		if (!behavior) throw new IllegalArgumentException("Behavior is not allowed to be null or undefined.", this, arguments);
+		this.behavior = behavior;
 	}
 	
-	public function getBehaviour(Void):Behaviour {
-		return behaviour;
+	public function getBehavior(Void):Behavior {
+		return behavior;
 	}
 	
 	/**
 	 * @see MockControlState#invokeMethod()
 	 */
 	public function invokeMethod(methodCall:MethodCall) {
-		var methodBehaviour:MethodBehaviour = behaviour.getMethodBehaviour(methodCall);
-		if (methodBehaviour) {
-			methodBehaviour.addActualMethodCall(methodCall);
-			return methodBehaviour.response();
+		var methodBehavior:MethodBehavior = behavior.getMethodBehavior(methodCall);
+		if (methodBehavior) {
+			methodBehavior.addActualMethodCall(methodCall);
+			return methodBehavior.response();
 		} else {
-			methodBehaviour = behaviour.createMethodBehaviour(null);
+			methodBehavior = behavior.createMethodBehavior(null);
 			if (methodCall.getMethodName() && methodCall.getMethodName() != "") {
-				behaviour.addMethodBehaviour(methodCall.getMethodName(), methodBehaviour);
+				behavior.addMethodBehavior(methodCall.getMethodName(), methodBehavior);
 			} else {
-				behaviour.addMethodBehaviour("[unknown]", methodBehaviour);
+				behavior.addMethodBehavior("[unknown]", methodBehavior);
 			}
-			methodBehaviour.addActualMethodCall(methodCall);
-			return methodBehaviour.response();
+			methodBehavior.addActualMethodCall(methodCall);
+			return methodBehavior.response();
 		}
 	}
 	
@@ -71,7 +71,7 @@ class org.as2lib.test.mock.support.ReplayState extends BasicClass implements Moc
 	 * @see MockControlState#verify()
 	 */
 	public function verify(Void):Void {
-		behaviour.verify();
+		behavior.verify();
 	}
 	
 	/**

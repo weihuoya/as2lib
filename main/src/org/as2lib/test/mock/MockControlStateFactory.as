@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.test.mock.Behaviour;
+import org.as2lib.test.mock.Behavior;
 import org.as2lib.test.mock.MockControlState;
 
 /**
@@ -25,11 +25,11 @@ interface org.as2lib.test.mock.MockControlStateFactory extends BasicInterface {
 	
 	/**
 	 * Returns a mock control state instance, that is configured with the
-	 * passed-in behaviour.
+	 * passed-in behavior.
 	 *
-	 * @param behaviour to be used by the returned mock control state
+	 * @param behavior to be used by the returned mock control state
 	 * @return a configured mock control state
 	 */
-	public function getMockControlState(behaviour:Behaviour):MockControlState;
+	public function getMockControlState(behavior:Behavior):MockControlState;
 	
 }

@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.test.mock.MethodBehaviour;
+import org.as2lib.test.mock.MethodBehavior;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodCall;
@@ -25,7 +25,7 @@ import org.as2lib.test.mock.ArgumentsMatcher;
 /**
  * @author Simon Wacker
  */
-class test.unit.org.as2lib.test.mock.MethodBehaviourMock extends BasicClass implements MethodBehaviour {
+class test.unit.org.as2lib.test.mock.MethodBehaviorMock extends BasicClass implements MethodBehavior {
 	
 	public static var RECORD:Number = 0;
 	public static var REPLAY:Number = 1;
@@ -40,7 +40,7 @@ class test.unit.org.as2lib.test.mock.MethodBehaviourMock extends BasicClass impl
 	private var __response:Object;
 	private var __verify:Object;
 	
-	public function MethodBehaviourMock(testCase:TestCase) {
+	public function MethodBehaviorMock(testCase:TestCase) {
 		this.testCase = testCase;
 		state = RECORD;
 		__getExpectedMethodCall = new Object();

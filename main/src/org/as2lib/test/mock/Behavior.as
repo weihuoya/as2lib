@@ -15,27 +15,23 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.test.mock.MethodCallRange;
+import org.as2lib.test.mock.MethodBehavior;
 import org.as2lib.test.mock.MethodCall;
-import org.as2lib.test.mock.MethodResponse;
-import org.as2lib.test.mock.ArgumentsMatcher;
 
 /**
  * @author Simon Wacker
  */
-interface org.as2lib.test.mock.MethodBehaviour extends BasicInterface {
+interface org.as2lib.test.mock.Behavior extends BasicInterface {
 	
-	public function getExpectedMethodCall(Void):MethodCall;
+	public function addMethodBehavior(methodName:String, methodBehavior:MethodBehavior):Void;
 	
-	public function addActualMethodCall(actualMethodCall:MethodCall):Void;
+	public function createMethodBehavior(expectedMethodCall:MethodCall):MethodBehavior;
 	
-	public function addMethodResponse(methodResponse:MethodResponse, methodCallRange:MethodCallRange):Void;
+	public function getMethodBehavior(actualMethodCall:MethodCall):MethodBehavior;
 	
-	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void;
+	public function getLastMethodBehavior(Void):MethodBehavior;
 	
-	public function expectsAnotherMethodCall(Void):Boolean;
-	
-	public function response(Void);
+	public function removeAllBehavior(Void):Void;
 	
 	public function verify(Void):Void;
 	

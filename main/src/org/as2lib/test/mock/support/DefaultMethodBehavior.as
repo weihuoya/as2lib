@@ -18,7 +18,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.test.mock.MethodCallRangeError;
-import org.as2lib.test.mock.MethodBehaviour;
+import org.as2lib.test.mock.MethodBehavior;
 import org.as2lib.test.mock.MethodResponse;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodCall;
@@ -27,14 +27,14 @@ import org.as2lib.test.mock.ArgumentsMatcher;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.test.mock.support.DefaultMethodBehaviour extends BasicClass implements MethodBehaviour {
+class org.as2lib.test.mock.support.DefaultMethodBehavior extends BasicClass implements MethodBehavior {
 	
 	private var expectedMethodCall:MethodCall;
 	private var actualMethodCalls:Array;
 	private var methodCallRanges:Array;
 	private var methodResponses:Array;
 	
-	public function DefaultMethodBehaviour(expectedMethodCall:MethodCall) {
+	public function DefaultMethodBehavior(expectedMethodCall:MethodCall) {
 		this.expectedMethodCall = expectedMethodCall;
 		actualMethodCalls = new Array();
 		methodCallRanges = new Array();
@@ -142,7 +142,7 @@ class org.as2lib.test.mock.support.DefaultMethodBehaviour extends BasicClass imp
 			error.addMethodCall(expectedMethodCall, new MethodCallRange(getTotalMinimumMethodCallCount(), getTotalMaximumMethodCallCount()), new MethodCallRange(actualMethodCalls.length));
 			throw error;
 		}
-		//if (!testCase) throw new IllegalArgumentException("Test case is not allowed to be null or undefined, because method behaviour cannot be verified then.", this, arguments);
+		//if (!testCase) throw new IllegalArgumentException("Test case is not allowed to be null or undefined, because method behavior cannot be verified then.", this, arguments);
 		/*if (expectedMethodCall && methodCallRanges < 1) {
 			var message:String = "";
 			if (!expectedMethodCall.matches(actualMethodCalls[i])) {
@@ -188,7 +188,7 @@ class org.as2lib.test.mock.support.DefaultMethodBehaviour extends BasicClass imp
 			testCase["fail"](message);
 			return;
 		}
-		testCase["fail"]("Unexpected method behaviour, that has no expected method call and no actual method calls.");*/
+		testCase["fail"]("Unexpected method behavior, that has no expected method call and no actual method calls.");*/
 	}
 	
 }

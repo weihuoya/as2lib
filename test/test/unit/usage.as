@@ -75,8 +75,8 @@ test.unit.org.as2lib.test.mock.TMethodCallRange;
 // org.as2lib.test.mock.support
 test.unit.org.as2lib.test.mock.support.TRecordState;
 test.unit.org.as2lib.test.mock.support.TReplayState;
-test.unit.org.as2lib.test.mock.support.TDefaultMethodBehaviour;
-test.unit.org.as2lib.test.mock.support.TDefaultBehaviour;
+test.unit.org.as2lib.test.mock.support.TDefaultMethodBehavior;
+test.unit.org.as2lib.test.mock.support.TDefaultBehavior;
 
 // org.as2lib.aop.pointcut
 test.unit.org.as2lib.aop.pointcut.TKindedPointcut;

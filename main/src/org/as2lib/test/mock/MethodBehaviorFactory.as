@@ -15,14 +15,14 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.test.mock.MethodBehaviour;
+import org.as2lib.test.mock.MethodBehavior;
 import org.as2lib.test.mock.MethodCall;
 
 /**
  * @author Simon Wacker
  */
-interface org.as2lib.test.mock.MethodBehaviourFactory extends BasicInterface {
+interface org.as2lib.test.mock.MethodBehaviorFactory extends BasicInterface {
 	
-	public function getMethodBehaviour(expectedMethodCall:MethodCall):MethodBehaviour;
+	public function getMethodBehavior(expectedMethodCall:MethodCall):MethodBehavior;
 	
 }
