@@ -7,6 +7,9 @@
       <month value="10">
         <day value="7">
           <entry type="change" package="org.as2lib.env.except" class="AbstractException"><change-rename to="AbstractThrowable" /></entry>
+          <entry type="add" package="org.as2lib.env.out" class="OutAccess" method="isEnabled(level:OutLevel):Boolean"></entry>
+          <entry type="change" package="org.as2lib.env.out" class="Out" method="isEnabledFor(level:OutLevel):Boolean"><change-rename to="isEnabled" /></entry>
+          <entry type="add" package="org.as2lib.env.out" class="ConfigurableOut" />
         </day>
         <day value="6">
           <entry type="add" package="org.as2lib.env.out" class="OutFactory" />

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.except.Throwable;
 import org.as2lib.core.BasicInterface;
+import org.as2lib.env.out.OutLevel;
 
 /**
  * OutAccess defines all possible operations to write output at specific OutLevels.
@@ -23,6 +23,23 @@ import org.as2lib.core.BasicInterface;
  * @author Simon Wacker
  */
 interface org.as2lib.env.out.OutAccess extends BasicInterface {
+	
+	/**
+	 * Checks whether this OutAccess instance is enabled for a given OutLevel passed as
+	 * parameter.
+	 *
+	 * @param level the OutLevel to make the check upon
+	 * @return true if this Out instance is enabled for the given OutLevel else false
+	 */
+	public function isEnabled(level:OutLevel):Boolean;
+	
+	/**
+	 * Returns the currently set OutLevel.
+	 *
+	 * @return the OutLevel
+	 */
+	public function getLevel(Void):OutLevel;
+	
 	/**
 	 * Outputs a message object. The output will only be made when the OutLevel is set
 	 * to Out.ALL.
@@ -70,4 +87,5 @@ interface org.as2lib.env.out.OutAccess extends BasicInterface {
 	 * @param message the message object to be written out
 	 */
 	public function fatal(message):Void;
+	
 }
