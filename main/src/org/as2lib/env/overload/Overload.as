@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.OverloadHandler;
 import org.as2lib.env.overload.SimpleOverloadHandler;
-import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.UnknownOverloadHandlerException;
-import org.as2lib.util.ArrayUtil;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.overload.SameTypeSignatureException;
 
@@ -145,7 +144,12 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * @param handler the OverloadHandler to be removed
 	 */
 	public function removeHandler(handler:OverloadHandler):Void {
-		ArrayUtil.removeElement(handlers, handler);
+		var i:Number = handlers.length;
+		while (--i-(-1)) {
+			if (handlers[i] == handler) {
+				handlers.splice(i, 1);
+			}
+		}
 	}
 	
 	/**

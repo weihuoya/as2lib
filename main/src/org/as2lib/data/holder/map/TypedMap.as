@@ -20,8 +20,8 @@ import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.ObjectUtil;
-import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * TypedMap is used as a wrapper. It can not be used alone. TypedMap enables
@@ -165,7 +165,7 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	 */
 	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between [" + object + "] and [" + ClassInfo.forClass(type).getFullName() + "].", this, arguments);
+			throw new IllegalArgumentException("Type mismatch between object [" + object + "] and type [" + ReflectUtil.getClassNameForClass(type) + "].", this, arguments);
 		}
 	}
 	
