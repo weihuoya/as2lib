@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.Map;
-import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.CompositeMemberInfo;
+import org.as2lib.env.reflect.MethodInfo;
+import org.as2lib.env.reflect.TypeMemberFilter;
 
 /**
  * TypeInfo represents a type in the Flash environment. That means either a
@@ -43,13 +41,36 @@ interface org.as2lib.env.reflect.TypeInfo extends CompositeMemberInfo {
 	public function getSuperType(Void):TypeInfo;
 	
 	/**
-	 * Returns an Array containing the methods represented by MethodInfos
-	 * the type declares including the declared methods of all super
-	 * types.
-	 *
-	 * @return an Array containing MethodInfos representing the available methods
+	 * @overload #getMethodsByFlag(Boolean):Array
+	 * @overload #getMethodsByFilter(TypeMemberFilter):Array
 	 */
-	public function getMethods(Void):Array;
+	public function getMethods():Array;
+	
+	/**
+	 * Returns an array containing the methods represented by MethodInfos
+	 * this type declares and maybe the ones of the super types.
+	 *
+	 * <p>The super types' methods are included if you pass-in false, null
+	 * or undefined and excluded/filtered if you pass-in true.
+	 *
+	 * @param filterSuperTypes (optional) determines whether the super types'
+	 * methods shall be excluded, that means filtered (true) or included (false)
+	 * @return an array containing the methods
+	 */
+	public function getMethodsByFlag(filterSuperTypes:Boolean):Array;
+	
+	/**
+	 * Returns an array containing the methods represented by MethodInfos
+	 * this type and super types' declare that do not get filtered/excluded.
+	 *
+	 * <p>The TypeMemberFilter#filter(TypeMemberInfo):Boolean gets invoked
+	 * for every method to determine whether it shall be contained in the 
+	 * result.
+	 *
+	 * @param methodFilter the filter that filters unwanted methods out
+	 * @return an array containing the remaining methods
+	 */
+	public function getMethodsByFilter(methodFilter:TypeMemberFilter):Array;
 	
 	/**
 	 * @overload #getMethodByName(String)

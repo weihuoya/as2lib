@@ -53,7 +53,7 @@ interface org.as2lib.env.reflect.TypeMemberFilter extends BasicInterface {
 	 *
 	 * @return true if static type members shall be excluded else false
 	 */
-	public function filterStatic(Void):Boolean;
+	//public function filterStatic(Void):Boolean;
 	
 	/**
 	 * Returns true if all non-static type members shall be filtered, that
@@ -64,7 +64,7 @@ interface org.as2lib.env.reflect.TypeMemberFilter extends BasicInterface {
 	 *
 	 * @return true if non-static type members shall be excluded else false
 	 */
-	public function filterNonStatic(Void):Boolean;
+	//public function filterNonStatic(Void):Boolean;
 	
 	/**
 	 * Returns true if type members of super types shall be filtered, that
@@ -75,6 +75,6 @@ interface org.as2lib.env.reflect.TypeMemberFilter extends BasicInterface {
 	 *
 	 * @return true if super types' type members shall be excluded else false
 	 */
-	public function filterSuperType(Void):Boolean;
+	public function filterSuperTypes(Void):Boolean;
 	
 }

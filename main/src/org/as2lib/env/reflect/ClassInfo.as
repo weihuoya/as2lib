@@ -22,6 +22,7 @@ import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.ConstructorInfo;
 import org.as2lib.env.reflect.ReflectConfig;
+import org.as2lib.env.reflect.TypeMemberFilter;
 import org.as2lib.env.reflect.algorithm.ClassAlgorithm;
 import org.as2lib.env.reflect.algorithm.MethodAlgorithm;
 import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
@@ -374,19 +375,73 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * Null will be returned if the #getType() method returns null.
-	 *
-	 * @see org.as2lib.env.reflect.TypeInfo#getMethods()
+	 * @overload #getMethodsByFlag(Boolean):Array
+	 * @overload #getMethodsByFilter(TypeMemberFilter):Array
 	 */
-	public function getMethods(Void):Array {
+	public function getMethods():Array {
+		var o:Overload = new Overload(this);
+		o.addHandler([Boolean], getMethodsByFlag);
+		o.addHandler([TypeMemberFilter], getMethodsByFilter);
+		return o.forward(arguments);
+	}
+	
+	/**
+	 * Returns an array containing the methods represented by MethodInfos
+	 * this type declares and maybe the ones of the super types.
+	 *
+	 * <p>The super types' methods are included if you pass-in false, null
+	 * or undefined and excluded/filtered if you pass-in true.
+	 *
+	 * <p>Null gets returned if:
+	 * <ul>
+	 *   <li>The #getType method returns null or undefined.</li>
+	 *   <li>The method algorithm returns null or undefined.</li>
+	 * </ul>
+	 *
+	 * @param filterSuperTypes (optional) determines whether the super types'
+	 * methods shall be excluded, that means filtered (true) or included (false)
+	 * @return an array containing the methods
+	 */
+	public function getMethodsByFlag(filterSuperTypes:Boolean):Array {
 		if (!getType()) return null;
 		if (methods === undefined) {
 			methods = getMethodAlgorithm().execute(this);
+		}
+		var result:Array = methods.concat();
+		if (!filterSuperTypes) {
 			if (getSuperType() != null) {
-				methods = methods.concat(getSuperType().getMethods());
+				result = result.concat(getSuperType().getMethodsByFlag(filterSuperTypes));
 			}
 		}
-		return methods;
+		return result;
+	}
+	
+	/**
+	 * Returns an array containing the methods represented by MethodInfos
+	 * this type and super types' declare that do not get filtered/excluded.
+	 *
+	 * <p>The TypeMemberFilter#filter(TypeMemberInfo):Boolean gets invoked
+	 * for every method to determine whether it shall be contained in the 
+	 * result.
+	 *
+	 * <p>Null gets returned if:
+	 * <ul>
+	 *   <li>The #getType method returns null or undefined.</li>
+	 *   <li>The method algorithm returns null or undefined.</li>
+	 * </ul>
+	 *
+	 * @param methodFilter the filter that filters unwanted methods out
+	 * @return an array containing the remaining methods
+	 */
+	public function getMethodsByFilter(methodFilter:TypeMemberFilter):Array {
+		if (!getType()) return null;
+		var result:Array = getMethodsByFlag(methodFilter.filterSuperTypes());
+		for (var i:Number = 0; i < result.length; i++) {
+			if (methodFilter.filter(MethodInfo(result[i]))) {
+				result.splice(i, 1);
+			}
+		}
+		return result;
 	}
 	
 	/**
@@ -447,22 +502,73 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * Returns an Array containing the properties represented by PropertyInfos
-	 * the class has. As well as the properties defined by super classes.
-	 *
-	 * <p>Null will be returned if the #getType() method returns null.
-	 *
-	 * @return an Array containing PropertyInfos representing the properties
+	 * @overload #getPropertiesByFlag(Boolean):Array
+	 * @overload #getPropertiesByFilter(TypeMemberFilter):Array
 	 */
-	public function getProperties(Void):Array {
+	public functio getProperties():Array {
+		var o:Overload = new Overload(this);
+		o.addHandler([Boolean], getPropertiesByFlag);
+		o.addHandler([TypeMemberFilter], getPropertiesByFilter);
+		return o.forward(arguments);
+	}
+	
+	/**
+	 * Returns an array containing the properties represented by PropertyInfos
+	 * this type declares and maybe the ones of the super types.
+	 *
+	 * <p>The super types' properties are included if you pass-in false, null
+	 * or undefined and excluded/filtered if you pass-in true.
+	 *
+	 * <p>Null gets returned if:
+	 * <ul>
+	 *   <li>The #getType method returns null or undefined.</li>
+	 *   <li>The property algorithm returns null or undefined.</li>
+	 * </ul>
+	 *
+	 * @param filterSuperTypes (optional) determines whether the super types'
+	 * properties shall be excluded, that means filtered (true) or included (false)
+	 * @return an array containing the properties
+	 */
+	public function getPropertiesByFlag(filterSuperTypes:Boolean):Array {
 		if (!getType()) return null;
-		if (!properties) {
+		if (properties === undefined) {
 			properties = getPropertyAlgorithm().execute(this);
+		}
+		var result:Array = properties.concat();
+		if (!filterSuperTypes) {
 			if (getSuperType() != null) {
-				properties = properties.concat(ClassInfo(getSuperType()).getProperties());
+				result = result.concat(ClassInfo(getSuperType()).getPropertiesByFlag(filterSuperTypes));
 			}
 		}
-		return properties;
+		return result;
+	}
+	
+	/**
+	 * Returns an array containing the properties represented by PropertyInfos
+	 * this type and super types' declare that do not get filtered/excluded.
+	 *
+	 * <p>The TypeMemberFilter#filter(TypeMemberInfo):Boolean gets invoked
+	 * for every property to determine whether it shall be contained in the 
+	 * result.
+	 *
+	 * <p>Null gets returned if:
+	 * <ul>
+	 *   <li>The #getType method returns null or undefined.</li>
+	 *   <li>The property algorithm returns null or undefined.</li>
+	 * </ul>
+	 *
+	 * @param propertyFilter the filter that filters unwanted properties out
+	 * @return an array containing the remaining properties
+	 */
+	public function getPropertiesByFilter(propertyFilter:TypeMemberFilter):Array {
+		if (!getType()) return null;
+		var result:Array = getPropertiesByFlag(propertyFilter.filterSuperTypes());
+		for (var i:Number = 0; i < result.length; i++) {
+			if (propertyFilter.filter(PropertyInfo(result[i]))) {
+				result.splice(i, 1);
+			}
+		}
+		return result;
 	}
 	
 	/**
