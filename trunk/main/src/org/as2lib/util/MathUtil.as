@@ -23,6 +23,7 @@ import org.as2lib.data.type.*;
  * MathUtil contains fundamental math operations.
  *
  * @author Christophe Herreman
+ * @author Martin Heidegger
  */
 class org.as2lib.util.MathUtil extends BasicClass {
 	/**
@@ -37,7 +38,7 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * @param n The number to check.
 	 * @return True if the number is odd, false if not.
 	 */
-	public static function isOdd(n:Integer):Boolean{
+	public static function isOdd(n:Integer):Boolean {
 		return Boolean(n%2);
 	}
 	
@@ -47,7 +48,7 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * @param n The number to check.
 	 * @return True if the number is even, false if not.
 	 */	
-	public static function isEven(n:Integer):Boolean{
+	public static function isEven(n:Integer):Boolean {
 		return (n%2 == 0);
 	}
 	
@@ -57,7 +58,7 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * @param n The number to check.
 	 * @return True if the number is an integer, false if not.
 	 */	
-	public static function isInteger(n:Number):Boolean{
+	public static function isInteger(n:Number):Boolean {
 		return (n%1 == 0);
 	}
 
@@ -67,12 +68,8 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * @param n The number to check.
 	 * @return True if the number is a natural, false if not.
 	 */	
-	public static function isNatural(n:Number):Boolean{
-		if(n >= 0 && n%1 == 0){
-			return true;
-		}else{
-			return false;
-		}
+	public static function isNatural(n:Number):Boolean {
+		return (n >= 0 && n%1 == 0);
 	} 
 	
 	/**
@@ -83,8 +80,8 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * @param n The number to check.
 	 * @return True if the number is a prime, false if not.
 	 */	
-	public static function isPrime(n:NaturalNumber):Boolean{
-		if(n == 1) {
+	public static function isPrime(n:NaturalNumber):Boolean {
+		if(n == 1 || (n>2 && n%2 == 0) ) {
 			return false;
 		}
 		for(var i:Number=2; i<n-1; i++){
@@ -101,7 +98,7 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * @param n The number to calculate its factorial from.
 	 * @return The factorial of the number.
 	 */
-	public static function factorial(n:NaturalNumberIncludingZero):Number{
+	public static function factorial(n:NaturalNumberIncludingZero):Number {
 		if(n == 0) {
 			return 1;
 		}
@@ -120,7 +117,7 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * @param n The number to get the divisors from.
 	 * @return An array with the divisors of the number.
 	 */
-	public static function getDivisors(n:NaturalNumberIncludingZero):Array{
+	public static function getDivisors(n:NaturalNumberIncludingZero):Array {
 		var divisors:Array = new Array();
 		for(var i:Number=0; i<=n; i++) {
 			if(n%i == 0){
@@ -139,7 +136,7 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * @param c The number of values after the comma.
 	 * @returns The rounded number.
 	 */
-	public static function round(n:Number, c:Number):Number{
+	public static function round(n:Number, c:Number):Number {
 		var r:Number = Math.pow(10,c);
 		return Math.round(n*r)/r;
 	} 
