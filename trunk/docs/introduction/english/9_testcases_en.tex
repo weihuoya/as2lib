@@ -30,7 +30,7 @@ If you have more than one TestCase you can use a simplified way:
 import org.as2lib.test.unit.TestSuiteFactory;
 import test.org.as2lib.core.* // Import Statement, to reduce the Lines.
 
-// Usage to classes to include them in compile time.
+// References to classes to include them at compile-time.
 TestReflections;
 TestBasicClass;
 TestEventHandling;
@@ -39,7 +39,7 @@ new TestSuiteFactory().collectAllTestCases().run();
 \end{lstlisting}
 
 
-The cases to test must be invoked before the test call so that they are available while run time.
+The cases to test must be invoked before the test call so that they are available at run-time.
 Similar to test case APIs like: JUnit\footnote{\href{http://www.junit.org}{www.junit.org}}, a variety of methods are available for the developer (optional parameters are marked with []):
 
 \begin{itemize}
@@ -53,17 +53,17 @@ Similar to test case APIs like: JUnit\footnote{\href{http://www.junit.org}{www.j
 	\item \textbf{assertNotNull}([\textit{message:String}], \textit{testVar1}) - Error message if testVar1 is null.
 	\item \textbf{assertUndefined}([\textit{message:String}], \textit{testVar1}) - Error message if testVar1 is not undefined.
 	\item \textbf{assertNotUndefined}([\textit{message:String}], \textit{testVar1}) - Error message if testVar1 is undefined.
-	\item \textbf{assertIsEmpty}([\textit{message:String}], \textit{testVar1}) - If testVar1 is neither undefined nor null an error message will be reported.
+	\item \textbf{assertEmpty }([\textit{message:String}], \textit{testVar1}) - If testVar1 is neither undefined nor null an error message will be reported.
 	\item \textbf{assertIsNotEmpty}([\textit{message:String}], \textit{testVar1}) - If testVar1 is undefined or null an error message will be reported.
 	\item \textbf{assertInfinity}([\textit{message:String}], \textit{testVar1}) - Error message if testVar1 is not infinite.
 	\item \textbf{assertNotInfinity}([\textit{message:String}], \textit{testVar1}) - Error message if testVar1 is infinite.
 	\item \textbf{fail}(\textit{message:String}) - Adds a custom failure message to the whole error output.
 	\item \textbf{assertThrows}(\textit{exception:Function, atObject, theFunction:String, parameter:Array}) - If no exception is thrown during the execution of the passed function(theFunction) of the object(atObjekt) with the parameter values(parameter) an error message will be reported.
-	\item \textbf{assertNotThrows}(\textit{exception:Function, atObject, theFunction:String, parameter:Array}) - If an exception is thrown during the execution of the passed function(theFunction) of the object(atObjekt) with the parameter values(parameter) an error message will be reported.
+	\item \textbf{assertNotThrows}(\textit{exception:Function, atObject, theFunction:String, parameter:Array}) - If an exception is thrown during the execution of the passed function(theFunction) of the object(atObject) with the parameter values(parameter) an error message will be reported.
 \end{itemize}
 
 A test case must extend the class TestCase\footnote{org.as2lib.test.unit.TestCase}. All methods of the test case that start with ``test'' are executed by the testing API. The following coding example should show you how to use the Test Case API.
-A new instance of the Testcase will be created before each start of a method call to create a clean base for the method. .setUp will be started before each call to prepare the instance. .tearDown will be executed after each call to clear the instance(for example: to close a open serverconnection). offene Serververbindungen wieder zu schliessen).
+A new instance of the Testcase will be created before each start of a method call to create a clean base for the method. .setUp() will be executed before each call to prepare the instance. .tearDown() will be executed after each call to clear the instance(for example: to close a open server connection).
 \\begin{lstlisting}[frame=single]
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.core.BasicClass;

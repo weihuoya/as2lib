@@ -5,7 +5,7 @@
 \label{sec:ConnectionHandling}
 \paragraph{Motivation:}
 
-Connections to external data sources can be established in {\sl Flash MX 2004} in different ways. External data sources can be accessed through Flash Remoting, Web Services, XML Socket Connection. The loading of XML or text files, requests to a URL (e.g.: CGI, PHP,...) or connections between separate SWF files(LocalConnection) can be accomplished as well. The implementation of these different data interfaces can at times differ greatly so that every data interface has to be implemented individually. Although data components in {\sl Flash MX Professional 2004} are already provided for certain data interfaces (Web Services and XML files), they differ in their parameter values. Besides the fact that you have to own the Professional version, pure ActionScript 2 solutions don´t exist for every data interface and they also can´t be used the same way.
+Connections to external data sources can be established in {\sl Flash MX 2004} in different ways. External data sources can be accessed through Flash Remoting, Web Services, XML Socket Connection. The loading of XML or text files, requests to a URL (e.g.: CGI, PHP,...) or connections between separate SWF files(LocalConnection) can be accomplished as well. The implementation of these different data interfaces can at times differ greatly so that every data interface has to be implemented individually. Although data components in {\sl Flash MX Professional 2004} already provide for certain data interfaces (Web Services and XML files), they differ in their parameter values, besides the fact that you have to own the Professional version. Pure ActionScript 2 solutions don´t exist for every data interface and they also can´t be used the same way.
 
 \paragraph{Solution:}
 {\sl As2lib} provides a standard interface for each data interface. Every Connection is based on a Proxy, which in contrast to the regular Flash Remoting Proxy is strictly typed and allows for compile time checking.
@@ -15,7 +15,7 @@ Connections to external data sources can be established in {\sl Flash MX 2004} i
 
 \subsection{Requirements}
 \label{sec:Anforderungen}
-During the development of Flash applications you can use the console and the debugger. But at the moment your application is published on a web server and problems occur at this stage, it is pretty hard to identify the source of error. This circumstance costs time and money. It should be possible to print your error and status output independently from your development environment. Because of this as2lib provides an external console to offer this functionality.
+During the development of Flash applications you can use the console and the debugger. But the moment your application is published on a web server and problems occur at this stage, it is pretty hard to identify the source of error. This circumstance costs time and money. It should be possible to print your error and status output independently from your development environment. Because of this as2lib provides an external console to offer this functionality.
 
 Requirements for the {\sl as2lib console} are:
 \begin{itemize}

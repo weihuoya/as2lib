@@ -7,7 +7,7 @@ Testing applications for their performance is inevitable because success of the 
 \paragraph{Solution:}
 A speed test can be executed according to the following schema:
 \begin{itemize}
-	\item Creating of single test cases.
+	\item Creation of single test cases.
 	Example for MyAddSpeedTest:
 \begin{lstlisting}[frame=single]
 import org.as2lib.test.speed.TestCase;
@@ -57,4 +57,4 @@ test.run(true);
 	average time/call:0.2345ms; (+0.112ms)
 \end{lstlisting}
 
-The output of the SpeedTests show the quantity of calls, the elapsed overall time and the average time used. It finds the fastest test case and displays the percentage behaviour of the test cases in proportion to the fastest.
+The output of the SpeedTests show the quantity of calls, the elapsed overall time and the average time used. It identifies the fastest test case and displays the speed of the remaining test cases as percentages proportional to this test case.
