@@ -25,6 +25,8 @@ import org.as2lib.env.bean.factory.support.DefaultBeanFactory;
 import org.as2lib.env.bean.factory.config.BeanDefinition;
 import org.as2lib.env.bean.factory.BeanDefinitionStoreException;
 import org.as2lib.env.bean.factory.FactoryBean;
+import test.unit.org.as2lib.env.bean.factory.support.StubBean;
+import test.unit.org.as2lib.env.bean.factory.support.StubFactoryBean;
 
 /**
  * @author Simon Wacker
@@ -106,29 +108,15 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		var bean1:Object = new Object();
 		var bean2:Object = new Object();
 		
-		var bd1C:MockControl = new SimpleMockControl(BeanDefinition);
-		var bd2C:MockControl = new SimpleMockControl(BeanDefinition);
-		var bd1:BeanDefinition = bd1C.getMock();
-		var bd2:BeanDefinition = bd2C.getMock();
-		bd1.createBean();
-		bd2.createBean();
-		bd1C.setReturnValue(bean1);
-		bd2C.setReturnValue(bean2);
-		bd1C.replay();
-		bd2C.replay();
-		
 		var parent:DefaultBeanFactory = new DefaultBeanFactory();
-		parent.registerBeanDefinition("beanName1", new BeanDefinition());
-		parent.registerBeanDefinition("beanName2", bd2);
+		parent.registerSingleton("beanName1", new Object());
+		parent.registerSingleton("beanName2", bean2);
 		
 		var factory:DefaultBeanFactory = new DefaultBeanFactory(parent);
-		factory.registerBeanDefinition("beanName1", bd1);
+		factory.registerSingleton("beanName1", bean1);
 		
-		assertSame(factory.getBeanByName("beanName1"), bean1);
-		assertSame(factory.getBeanByName("beanName2"), bean2);
-		
-		bd1C.verify(this);
-		bd2C.verify(this);
+		assertSame("1", factory.getBeanByName("beanName1"), bean1);
+		assertSame("2", factory.getBeanByName("beanName2"), bean2);
 	}
 	
 	public function testGetBeanWithSingletonBeanDefinition(Void):Void {
@@ -136,41 +124,32 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 		var bd:BeanDefinition = bdControl.getMock();
 		bd.isSingleton();
 		bdControl.setDefaultReturnValue(true);
-		bd.createBean();
-		var bean:Object = new Object();
-		bdControl.setReturnValue(bean);
+		bd.getBeanClass();
+		bdControl.setDefaultReturnValue(Object);
 		bdControl.replay();
 		
 		var bf:DefaultBeanFactory = new DefaultBeanFactory();
 		bf.registerBeanDefinition("bean", bd);
-		assertSame("Bean returned by bean definition should always be the same as the one returned by the factory.", bean, bf.getBeanByName("bean"));
-		assertSame("Bean returned by bean definition should always be the same as the one returned by the factory.", bean, bf.getBeanByName("bean"));
+		var returnedBean = bf.getBeanByName("bean");
+		assertSame("Bean returned by bean definition should always be the same as the one returned by the factory.", returnedBean, bf.getBeanByName("bean"));
+		assertSame("Bean returned by bean definition should always be the same as the one returned by the factory.", returnedBean, bf.getBeanByName("bean"));
 		
 		bdControl.verify(this);
 	}
 	
 	public function testIsSingletonWithFactoryBean(Void):Void {
-		var fbC:MockControl = new SimpleMockControl(FactoryBean);
-		var fb:FactoryBean = fbC.getMock();
-		fb.isSingleton();
-		fbC.setReturnValue(true);
-		fbC.replay();
-		
 		var bdC:MockControl = new SimpleMockControl(BeanDefinition);
 		var bd:BeanDefinition = bdC.getMock();
 		bd.isSingleton();
 		bdC.setDefaultReturnValue(false);
-		bd.createBean();
-		bdC.setReturnValue(fb);
 		bd.getBeanClass();
-		bdC.setReturnValue(FactoryBean);
+		bdC.setDefaultReturnValue(StubFactoryBean);
 		bdC.replay();
 		
 		var bf:DefaultBeanFactory = new DefaultBeanFactory();
 		bf.registerBeanDefinition("bean", bd);
 		assertTrue("Bean wrapped by factory bean is supposed to be a singleton.", bf.isSingleton("bean"));
 		
-		fbC.verify(this);
 		bdC.verify(this);
 	}
 	
@@ -189,51 +168,40 @@ class test.unit.org.as2lib.env.bean.factory.support.TDefaultBeanFactory extends 
 	}
 	
 	public function testGetBeanByNameWithFactoryBeanPrefix(Void):Void {
-		var fbC:MockControl = new SimpleMockControl(FactoryBean);
-		var fb:FactoryBean = fbC.getMock();
-		fbC.replay();
-		
 		var bdC:MockControl = new SimpleMockControl(BeanDefinition);
 		var bd:BeanDefinition = bdC.getMock();
 		bd.isSingleton();
-		bdC.setDefaultReturnValue(false);
-		bd.createBean();
-		bdC.setReturnValue(fb, 2);
+		bdC.setDefaultReturnValue(true);
+		bd.getBeanClass();
+		bdC.setDefaultReturnValue(StubFactoryBean);
 		bdC.replay();
 		
 		var bf:DefaultBeanFactory = new DefaultBeanFactory();
 		bf.registerBeanDefinition("bean", bd);
-		assertSame(fb, bf.getBeanByName(DefaultBeanFactory.FACTORY_BEAN_PREFIX + "bean"));
-		assertSame(fb, bf.getBeanByName(DefaultBeanFactory.FACTORY_BEAN_PREFIX + "bean"));
+		var returnedFb:StubFactoryBean = bf.getBeanByName(DefaultBeanFactory.FACTORY_BEAN_PREFIX + "bean");
+		assertSame(returnedFb, bf.getBeanByName(DefaultBeanFactory.FACTORY_BEAN_PREFIX + "bean"));
+		assertSame(returnedFb, bf.getBeanByName(DefaultBeanFactory.FACTORY_BEAN_PREFIX + "bean"));
 		
-		fbC.verify(this);
 		bdC.verify(this);
 	}
 	
 	public function testGetBeanByNameWithFactoryBeanWrappingActualBean(Void):Void {
-		var fbC:MockControl = new SimpleMockControl(FactoryBean);
-		var fb:FactoryBean = fbC.getMock();
-		fb.isSingleton();
-		fbC.setDefaultReturnValue(true);
-		fb.getObject();
-		var bean:Object = new Object();
-		fbC.setReturnValue(bean, 2);
-		fbC.replay();
+		var object = new Object();
+		StubFactoryBean.object = object;
 		
 		var bdC:MockControl = new SimpleMockControl(BeanDefinition);
 		var bd:BeanDefinition = bdC.getMock();
 		bd.isSingleton();
 		bdC.setDefaultReturnValue(true);
-		bd.createBean();
-		bdC.setReturnValue(fb);
+		bd.getBeanClass();
+		bdC.setDefaultReturnValue(StubFactoryBean);
 		bdC.replay();
 		
 		var bf:DefaultBeanFactory = new DefaultBeanFactory();
 		bf.registerBeanDefinition("bean", bd);
-		assertSame(bean, bf.getBeanByName("bean"));
-		assertSame(bean, bf.getBeanByName("bean"));
+		assertSame(object, bf.getBeanByName("bean"));
+		assertSame(object, bf.getBeanByName("bean"));
 		
-		fbC.verify(this);
 		bdC.verify(this);
 	}
 	

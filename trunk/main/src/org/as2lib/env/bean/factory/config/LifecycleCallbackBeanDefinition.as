@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
-import org.as2lib.env.bean.factory.support.RootBeanDefinition;
-import org.as2lib.env.bean.factory.config.ConstructorArgumentValueList;
+import org.as2lib.core.BasicInterface;
 import org.as2lib.env.bean.PropertyValueSet;
+import org.as2lib.env.bean.factory.config.ConstructorArgumentValueList;
+import org.as2lib.env.bean.factory.config.BeanDefinition;
 
 /**
  * @author Simon Wacker
  */
-class test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition extends TestCase {
+interface org.as2lib.env.bean.factory.config.LifecycleCallbackBeanDefinition extends BeanDefinition {
+	
+	public function getDestroyMethodName(Void):String;
+	
+	public function getInitMethodName(Void):String;
 	
 }

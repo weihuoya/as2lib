@@ -14,19 +14,29 @@
  * limitations under the License.
  */
 
+import org.as2lib.util.ClassUtil;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.PrimitiveTypeMap;
+import org.as2lib.env.bean.BeanWrapper;
+import org.as2lib.env.bean.SimpleBeanWrapper;
+import org.as2lib.env.bean.PropertyValue;
 import org.as2lib.env.bean.factory.BeanFactory;
 import org.as2lib.env.bean.factory.FactoryBean;
 import org.as2lib.env.bean.factory.BeanDefinitionStoreException;
 import org.as2lib.env.bean.factory.NoSuchBeanDefinitionException;
 import org.as2lib.env.bean.factory.BeanNotOfRequiredTypeException;
+import org.as2lib.env.bean.factory.BeanNameAware;
+import org.as2lib.env.bean.factory.BeanFactoryAware;
+import org.as2lib.env.bean.factory.InitializingBean;
+import org.as2lib.env.bean.factory.DisposableBean;
 import org.as2lib.env.bean.factory.support.AbstractBeanFactory;
-import org.as2lib.env.bean.factory.support.SingletonBeanDefinition;
+import org.as2lib.env.bean.factory.support.RootBeanDefinition;
 import org.as2lib.env.bean.factory.config.BeanDefinition;
+import org.as2lib.env.bean.factory.config.LifecycleCallbackBeanDefinition;
 import org.as2lib.env.bean.factory.config.ConfigurableBeanFactory;
 import org.as2lib.env.bean.factory.config.ConfigurableListableBeanFactory;
 import org.as2lib.env.bean.factory.config.ConfigurableHierarchicalBeanFactory;
+import org.as2lib.env.bean.factory.config.RuntimeBeanReference;
 
 /**
  * @author Simon Wacker
@@ -51,6 +61,8 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	
 	private var allowBeanDefinitionOverriding:Boolean;
 	
+	private var beanWrapper:BeanWrapper;
+	
 	//---------------------------------------------------------------------
 	// Constructors
 	//---------------------------------------------------------------------
@@ -65,6 +77,15 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	//---------------------------------------------------------------------
 	// Implementation methods
 	//---------------------------------------------------------------------
+	
+	public function setBeanWrapper(beanWrapper:BeanWrapper):Void {
+		this.beanWrapper = beanWrapper;
+	}
+	
+	public function getBeanWrapper(Void):BeanWrapper {
+		if (!beanWrapper) beanWrapper = new SimpleBeanWrapper();
+		return beanWrapper;
+	}
 	
 	public function registerBeanDefinition(beanName:String, beanDefinition:BeanDefinition):Void {
 		if (!allowBeanDefinitionOverriding && beanDefinitionMap.containsKey(beanName)) {
@@ -96,6 +117,50 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 		return result;
 	}
 	
+	private function createBean(beanName:String, beanDefinition:BeanDefinition) {
+		var result = new Object();
+		result.__proto__ = beanDefinition.getBeanClass().prototype;
+		beanDefinition.getBeanClass().apply(result, beanDefinition.getConstructorArgumentValues().getArgumentValues());
+		if (result instanceof BeanNameAware) {
+			BeanNameAware(result).setBeanName(beanName);
+		}
+		if (result instanceof BeanFactoryAware) {
+			BeanFactoryAware(result).setBeanFactory(this);
+		}
+		beanWrapper.setWrappedObject(result);
+		var propertyValues:Array = beanDefinition.getPropertyValues().getPropertyValues();
+		for (var i:Number = 0; i < propertyValues.length; i++) {
+			var propertyValue:PropertyValue = propertyValues[i];
+			var value = propertyValue.getValue();
+			if (value instanceof RuntimeBeanReference) {
+				value = getBeanByName(RuntimeBeanReference(value).getBeanName());
+			}
+			beanWrapper.setPropertyValueByPropertyValue(new PropertyValue(propertyValue.getName(), value, propertyValue.getType()));
+		}
+		if (result instanceof InitializingBean) {
+			InitializingBean(result).afterPropertiesSet();
+		}
+		if (beanDefinition instanceof LifecycleCallbackBeanDefinition) {
+			var initMethodName:String = LifecycleCallbackBeanDefinition(beanDefinition).getInitMethodName();
+			if (initMethodName) {
+				result[initMethodName]();
+			}
+		}
+		return result;
+	}
+	
+	private function destroyBean(bean, beanDefinition:BeanDefinition) {
+		if (bean instanceof DisposableBean) {
+			DisposableBean(bean).destroy();
+		}
+		if (beanDefinition instanceof LifecycleCallbackBeanDefinition) {
+			var destroyMethodName:String = LifecycleCallbackBeanDefinition(beanDefinition).getDestroyMethodName();
+			if (destroyMethodName) {
+				bean[destroyMethodName]();
+			}
+		}
+	}
+	
 	//---------------------------------------------------------------------
 	// Implementation of BeanFactory
 	//---------------------------------------------------------------------
@@ -112,12 +177,12 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 				if (singletonBeanMap.containsKey(beanName)) {
 					return getBeanByNameAndBean(name, singletonBeanMap.get(beanName));
 				} else {
-					var result = beanDefinition.createBean();
-					singletonBeanMap.put(beanName, result);
-					return getBeanByNameAndBean(name, result);
+					var bean = createBean(beanName, beanDefinition);
+					singletonBeanMap.put(beanName, bean);
+					return getBeanByNameAndBean(name, bean);
 				}
 			} else {
-				return getBeanByNameAndBean(name, beanDefinition.createBean());
+				return getBeanByNameAndBean(name, createBean(beanName, beanDefinition));
 			}
 		} catch (exception:org.as2lib.env.bean.factory.NoSuchBeanDefinitionException) {
 			return getParentBeanFactory().getBeanByName(name);
@@ -134,8 +199,7 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	
 	public function isSingleton(beanName:String):Boolean {
 		var beanDefinition:BeanDefinition = getBeanDefinition(beanName);
-		if (beanDefinition.getBeanClass() == FactoryBean 
-				|| beanDefinition.getBeanClass().prototype instanceof FactoryBean) {
+		if (ClassUtil.isImplementationOf(beanDefinition.getBeanClass(), FactoryBean)) {
 			return FactoryBean(getBeanByName(FACTORY_BEAN_PREFIX + beanName)).isSingleton();
 		} else {
 			return getBeanDefinition(beanName).isSingleton();
@@ -147,7 +211,8 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	//---------------------------------------------------------------------
 	
 	public function registerSingleton(beanName:String, singleton):Void {
-		registerBeanDefinition(beanName, new SingletonBeanDefinition(beanName, this, singleton));
+		registerBeanDefinition(beanName, new RootBeanDefinition(singleton.__constructor__));
+		singletonBeanMap.put(beanName, singleton);
 	}
 	
 	//---------------------------------------------------------------------

@@ -14,16 +14,28 @@
  * limitations under the License.
  */
 
-import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.SimpleMockControl;
-import org.as2lib.env.bean.factory.support.RootBeanDefinition;
-import org.as2lib.env.bean.factory.config.ConstructorArgumentValueList;
-import org.as2lib.env.bean.PropertyValueSet;
+import org.as2lib.env.bean.AbstractPropertyValueConverter;
+import org.as2lib.env.bean.PropertyValueConverter;
 
 /**
  * @author Simon Wacker
  */
-class test.unit.org.as2lib.env.bean.factory.support.TRootBeanDefinition extends TestCase {
+class org.as2lib.env.bean.converter.ClassConverter extends AbstractPropertyValueConverter implements PropertyValueConverter {
+	
+	public function ClassConverter(Void) {
+	}
+	
+	public function convertPropertyValueByStringValue(value:String) {
+		var result:Function = eval("_global." + value);
+		if (result) {
+			return result;
+		} else {
+			return null;
+		}
+	}
+	
+	public function convertPropertyValueByStringValueAndType(value:String, type:Function) {
+		return convertPropertyValueByStringValue(value);
+	}
 	
 }

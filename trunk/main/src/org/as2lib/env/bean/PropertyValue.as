@@ -15,20 +15,32 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.overload.Overload;
 
 /**
  * @author Simon Wacker
  */
 class org.as2lib.env.bean.PropertyValue extends BasicClass {
 	
-	private var prefix:String;
 	private var name:String;
 	private var value;
+	private var type:Function;
 	
-	public function PropertyValue(name:String, value, prefix) {
+	public function PropertyValue() {
+		var o:Overload = new Overload(this);
+		o.addHandler([String, Object], PropertyValueByNameAndValue);
+		o.addHandler([String, Object, Function], PropertyValueByNameAndValueAndType);
+		o.forward(arguments);
+	}
+	
+	private function PropertyValueByNameAndValue(name:String, value):Void {
+		PropertyValueByNameAndValueAndType(name, value, null);
+	}
+	
+	private function PropertyValueByNameAndValueAndType(name:String, value, type:Function):Void {
 		this.name = name;
 		this.value = value;
-		this.prefix = prefix === undefined ? "set" : prefix;
+		this.type = type;
 	}
 	
 	public function getName(Void):String {
@@ -39,17 +51,8 @@ class org.as2lib.env.bean.PropertyValue extends BasicClass {
 		return value;
 	}
 	
-	public function getPrefix(Void):String {
-		return prefix;
-	}
-	
-	public function apply(bean):Void {
-		if (prefix == "") {
-			bean[name](value);
-		} else {
-			var fullName:String = prefix + name.charAt(0).toUpperCase() + name.substring(1, name.length);
-			bean[fullName](value);
-		}
+	public function getType(Void):Function {
+		return type;
 	}
 	
 	public function toString(Void):String {

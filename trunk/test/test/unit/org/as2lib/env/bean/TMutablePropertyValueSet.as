@@ -25,7 +25,7 @@ import org.as2lib.env.bean.PropertyValue;
  */
 class test.unit.org.as2lib.env.bean.TMutablePropertyValueSet extends TestCase {
 	
-	public function testApplyWithMultiplePropertyValues(Void):Void {
+	/*public function testApplyWithMultiplePropertyValues(Void):Void {
 		var bean:Object = new Object();
 		
 		var valueControl:MockControl = new SimpleMockControl(PropertyValue);
@@ -41,6 +41,6 @@ class test.unit.org.as2lib.env.bean.TMutablePropertyValueSet extends TestCase {
 		valueSet.apply(bean);
 		
 		valueControl.verify(this);
-	}
+	}*/
 	
 }

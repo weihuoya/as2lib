@@ -25,6 +25,5 @@ interface org.as2lib.env.bean.PropertyValueSet extends BasicInterface {
 	public function contains(propertyName:String):Boolean;
 	public function getPropertyValue(propertyName:String):PropertyValue;
 	public function getPropertyValues(Void):Array;
-	public function apply(bean):Void;
 	
 }
