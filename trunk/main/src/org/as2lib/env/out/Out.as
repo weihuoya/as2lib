@@ -15,13 +15,15 @@
  */
 
 import org.as2lib.env.out.ConfigurableOut;
+import org.as2lib.env.out.HierarchicalOut;
+import org.as2lib.env.out.OutAccess;
 import org.as2lib.env.out.OutLevel;
 import org.as2lib.env.out.OutHandler;
 import org.as2lib.env.out.OutConfig;
 import org.as2lib.env.out.handler.TraceHandler;
 import org.as2lib.env.out.level.*;
 import org.as2lib.env.out.OutRepository;
-import org.as2lib.env.out.OutHierachy;
+import org.as2lib.env.out.OutHierarchy;
 import org.as2lib.env.out.OutFactory;
 import org.as2lib.env.out.OutRepositoryManager;
 import org.as2lib.env.event.EventBroadcaster;
@@ -46,7 +48,7 @@ import org.as2lib.env.overload.Overload;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.out.Out extends BasicClass implements ConfigurableOut {
+class org.as2lib.env.out.Out extends BasicClass implements ConfigurableOut, HierarchicalOut {
 	
 	/** All output will be made. */
 	public static var ALL:OutLevel = new AllLevel();
@@ -79,7 +81,7 @@ class org.as2lib.env.out.Out extends BasicClass implements ConfigurableOut {
 	private var broadcaster:EventBroadcaster;
 	
 	/** Stores the parent of this Out instance. */
-	private var parent:Out;
+	private var parent:HierarchicalOut;
 	
 	/** The name of this Out instance. */
 	private var name:String;
@@ -151,24 +153,21 @@ class org.as2lib.env.out.Out extends BasicClass implements ConfigurableOut {
 	}
 	
 	/**
-	 * @return the parent of this Out instance. It may be set via #setParent()
+	 * @see HierarchicalOut#getParent()
 	 */
-	public function getParent(Void):Out {
+	public function getParent(Void):HierarchicalOut {
 		return parent;
 	}
 	
 	/**
-	 * Sets the parent of this Out instance. The parent is used to obtain the level if none is
-	 * specifically set for this instance.
-	 *
-	 * @param parent the parent Out instance
+	 * @see HierarchicalOut#setParent()
 	 */
-	public function setParent(parent:Out):Void {
+	public function setParent(parent:HierarchicalOut):Void {
 		this.parent = parent;
 	}
 	
 	/**
-	 * @return the name of this Out instance
+	 * @see HierarchicalOut#getName()
 	 */
 	public function getName(Void):String {
 		return name;
@@ -208,6 +207,13 @@ class org.as2lib.env.out.Out extends BasicClass implements ConfigurableOut {
 	 */
 	public function removeAllHandler(Void):Void {
 		broadcaster.removeAllListener();
+	}
+	
+	/**
+	 * @see HierarchicalOut#getAllHandler()
+	 */
+	public function getAllHandler(Void):Array {
+		return broadcaster.getAllListener();
 	}
 	
 	/**
