@@ -3,55 +3,71 @@
   This is a example changelog file to test the functionality of the reader.
   It contains various entries with different content.
 -->
-<changelog xmlns="as2lib" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="as2lib ../changelog.xsd">
-	<release day="20" month="7" year="2004" name="example">
-		<year value="1999">
-			<month value="12">
+<changelog xmlns="as2lib" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="as2lib http://www.as2lib.org/changelog_0.91.xsd">
+	<release day="20" month="9" year="2004" name="example">
+		<year value="2004">
+			<month value="9">
+				<day value="13">
+				    <!-- Example for a simple change entry -->
+					<entry type="change" package="com.myproject" class="MyClass2" method="myMethod1()">Changed mehtod name to myFunction.</entry>
+					
+				    <!-- Example for a simple remove entry -->
+					<entry type="remove" package="com.myproject" class="MyInterface">Removed for reducing complexity.</entry>
+					
+				    <!-- Example for a simple add entry -->
+					<entry type="add" package="com.myproject" class="MyClass2" variable="myContent">Added missing content container.</entry>
+					
+				    <!-- Example for a simple bugfix entry, using a link to refer to -->
+					<entry type="bugfix" package="com.myproject" class="MyInterface" method="myMethod2()" link="http://www.google.de">Removed bug with Movieclips.</entry>
+					
+					<!-- Example for a simple documentation entry -->
+					<entry type="documentation" package="com.myproject.core" class="MyContainer">Documentation added.</entry>
+				</day>
+				<day value="12">
+				
+				    <!-- Examples for the different arguments of entry -->
+				    
+				    <!-- Example without package or class description -->
+					<entry type="add">Added example XML file: "changelog.xml".</entry>
+					
+					<!-- Example for packages -->
+					<entry type="remove" package="com.myproject">Removed Package documentation</entry>
+					
+					<!-- Example for classes -->
+					<entry type="change" package="com.myproject" class="MyClass">Changed Classname to MyClass2</entry>
+					
+					<!-- Example for variables -->
+					<entry type="remove" package="com.myproject" class="MyClass" variable="myVariable">Useless variable removed.</entry>
+					
+					<!-- Example for methods -->
+					<entry type="add" package="com.myproject" class="MyClass1" method="myMethod()">New Method to evaluate something.</entry>
+					
+					<!-- Extended example for methods with added throws argument -->
+					<entry type="add" package="com.myproject" class="MyClass1" method="myMethod()" throws="SpecialException">New Exceptiontype thrown.</entry>
+				</day>
 				<day value="11">
-					<entry type="change" package="stuff" class="MyClass2" method="myMethod1()">Somethingchanged.</entry>
-					<entry type="remove" package="stuff" class="MyClass3" method="myMethod2()">Something removed.</entry>
-				</day>
-				<!-- Direction test, if its sorted or not -->
-				<day value="12">
-					<entry type="add">Something added.</entry>
-					<entry type="add" package="stuff">Something added.</entry>
-					<entry type="add" package="stuff" class="MyClass">Something added.</entry>
-					<entry type="add" package="stuff" class="MyClass" variable="myVariable">Something added.</entry>
-					<entry type="add" package="stuff" class="MyClass1" method="myMethod()">Something added.</entry>
-					<entry type="add" package="stuff" class="MyClass1" method="myMethod()" throws="SpecialException">Something added.</entry>
-				</day>
-				<day value="10">
-					<entry type="bugfix" package="stuff" class="MyClass4" method="myMethod3()">Some important bug fixed.</entry>
-					<entry type="documentation" package="stuff" class="MyClass5" method="myMethod4()">Some documentation changed or added.</entry>
-					<entry type="enhancement" package="stuff" class="MyClass6" method="myMethod5()">Enhanced something.</entry>
-					<entry type="bugfix" package="stuff" class="MyClass7" method="myMethod6()">Multiline test.
-This is some stupid dummie test, lets see what it does.</entry>
-				</day>
-				<day value="12">
-					<entry type="documentation" link="http://www.google.de">Hello<change-arguments from="a" to="b">Hello</change-arguments>
-					</entry>
-					<entry type="documentation" link="http://www.amazon.de">Hello<change-move from="a" to="b">Hello</change-move>
-					</entry>
-					<entry type="documentation" link="http://www.gmx.de">Hello<change-rename from="a" to="b">Hello</change-rename>
-					</entry>
-					<entry type="documentation" link="http://www.hotmail.de">Hello<change-returnType from="a" to="b">Hello</change-returnType>
-					</entry>
-					<entry type="documentation" link="http://www.yahoo.de">Hello<change-returnValue from="a" to="b">Hello</change-returnValue>
-					</entry>
-					<entry type="documentation" link="http://www.gmail.com">Hello<change-throws from="a" to="b">Hello</change-throws>
-					</entry>
-					<entry type="documentation" link="http://www.macromedia.com">Hello<change-type from="a" to="b">Hello</change-type>
-					</entry>
-				</day>
-				<day value="9">
-					<entry type="change">More entries with more content</entry>
-					<entry type="remove">Another entry.</entry>
-					<entry type="remove">Another entry.</entry>
-					<entry type="remove">Another entry.</entry>
-					<entry type="remove">Another entry.</entry>
-					<entry type="remove">Another entry.</entry>
-					<entry type="remove">Another entry.</entry>
-					<entry type="remove">Another entry.</entry>
+				
+				    <!-- Examples for auto-generated Text -->
+				    
+				    <!-- change-arguments example -->
+					<entry type="change" package="com.myproject.ext" class="MyExample()"><change-arguments from="a:String" to="a:Object"></change-arguments>String restriction was to strict.</entry>
+					
+					<!-- change-move example -->
+					<entry type="change" package="com.myproject" class="AnotherExample">Sourcepackage contained to many classes.<change-move to=".event"></change-move></entry>
+					
+					<!-- change-rename example -->
+					<entry type="change" package="com.aproject"><change-rename to="myproject"></change-rename> New naming for the basic package.</entry>
+					
+					<!-- change-returnType example -->
+					<entry type="change" package="com.aproject" class="AnotherExample" method="contains()"><change-returnType from="String" to="Object"></change-returnType> Simple Objects could be returned by inactive parameter holders.</entry>
+					
+					<!-- change-returnValue example -->
+					<entry type="change" package="com.aproject" class="AnotherExample" method="contains()"><change-returnValue from="Coordinates" to="Point"></change-returnValue></entry>
+					<!-- change-throws example -->
+					<entry type="change" package="com.aproject" class="AnotherExample" method="contains()" throws="NotifyException"><change-throws from="NotifyException" to="ContainsException, NotifyException"></change-throws> Because of a implementation change.</entry>
+					
+					<!-- change-type example -->
+					<entry type="change" package="com.aproject" class="AnotherExample" variable="name"><change-type from="Object" to="String"></change-type></entry>
 				</day>
 			</month>
 		</year>
