@@ -64,13 +64,9 @@ class org.as2lib.env.except.AbstractException extends Error {
 	}
 	
 	/**
-	 * Adds a StackTraceElement to the Stack trace.
-	 *
-	 * @param thrower the object that threw the Throwable
-	 * @param method the operation that thew the Throwable
-	 * @param args the arguments that caused the operation to throw the Throwable
+	 * @see org.as2lib.env.except.Throwable#addStackTraceElement()
 	 */
-	private function addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void {
+	public function addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void {
 		var element:StackTraceElement = ExceptConfig.getStackTraceElementFactory().getStackTraceElement(thrower, method, args);
 		stackTrace.push(element);
 	}

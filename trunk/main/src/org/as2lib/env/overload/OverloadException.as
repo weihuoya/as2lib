@@ -33,8 +33,7 @@ class org.as2lib.env.overload.OverloadException extends FatalException {
 	 * @param targetMethod		Method where the overloading got used.
 	 * @param targetArguments	TargetArguments of the Method where overloading got used.
 	 */
-	public function OverloadException(message:String, thrower, args:FunctionArguments, target, targetMethod:Function, targetArguments:FunctionArguments) {
+	public function OverloadException(message:String, thrower, args:FunctionArguments) {
 		super (message, thrower, args);
-		this.addStackTraceElement(target, targetMethod, targetArguments)
 	}
 }
