@@ -29,12 +29,8 @@ import org.as2lib.data.io.conn.local.SimpleLocalServer;
 class org.as2lib.data.io.conn.local.LocalServerFactory extends BasicClass implements ServerFactory {
 	
 	/**
-	 * Returns a SimpleLocalServer instance.
-	 * 
-	 * @param host the name of the server
-	 * @return a SimpleLocalServer instance
-	 */
-	 
+	 * @see org.as2lib.data.io.conn.local.ServerFactory
+	*/
 	public function getServer(host:String):LocalServer {
 		return (new SimpleLocalServer(host));
 	}
