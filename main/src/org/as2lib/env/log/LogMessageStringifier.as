@@ -20,18 +20,47 @@ import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogMessage;
 
 /**
- * LogMessageStringifier is the default stringifier used by log messages.
+ * LogMessageStringifier is the default stringifier to stringify LogMessage
+ * instances.
  * 
  * @author Simon Wacker
  */
 class org.as2lib.env.log.LogMessageStringifier extends BasicClass implements Stringifier {
 	
+	/** Flag that determines whether to show the level in the string representation. */
+	private var showLevel:Boolean;
+	
+	/** Flag that determines whether to show the name of the logger in the string representation. */
+	private var showLoggerName:Boolean;
+	
 	/**
-	 * @see org.as2lib.util.Stringifier
+	 * Constructs a new LogMessageStringifier instance.
+	 *
+	 * @param showLevel determines whether to show levels in the string representation
+	 * @param shoLoggerName determines whether to show the logger name in the string representation
+	 */
+	public function LogMessageStringifier(showLevel:Boolean, showLoggerName:Boolean) {
+		this.showLevel = showLevel == null ? true : showLevel;
+		this.showLoggerName = showLoggerName == null ? true : showLoggerName;
+	}
+	
+	/**
+	 * Returns the string representation of the passed-in LogMessage instance.
+	 *
+	 * <p>The returned string gets composed as follows:
+	 * [theLogLevel]  [theLoggerName] - [theMessage]
+	 *
+	 * <p>Depending on your custom settings which information to show and
+	 * which not a few parts may be left out.
+	 *
+	 * @return the string representation of the log message
 	 */
 	public function execute(target):String {
 		var message:LogMessage = target;
-		return (message.getLevel() + "  " + message.getLoggerName() + " - " + message.getMessage());
+		var info = "";
+		if (showLevel) info += message.getLevel() + "  ";
+		if (showLoggerName) info += message.getLoggerName() + " - ";
+		return (info + message.getMessage());
 	}
 	
 }
