@@ -86,16 +86,20 @@ class org.as2lib.test.unit.info.AssertThrowsInfo extends AbstractAssertInfo {
 		if(hasMessage()) {
 			result += " with message: "+message;
 		}
-		result += "!\n  - Expected exception:\n      ";
-		if(typeof type == "function") {
-			result += ClassInfo.forClass(type).getFullName();
+		if(type == null) {
+			result += "!\n  No exception thrown - Any exception expected";
 		} else {
-			result += type;
-		}
-		if(exceptionThrown) {
-			result += "\n  - Thrown exception:\n"+StringUtil.addSpaceIndent(exception.toString(), 6);
-		} else {
-			result += "\n  - No exception thrown.";
+			result += "!\n  - Expected exception:\n      ";
+			if(typeof type == "function") {
+				result += ClassInfo.forClass(type).getFullName();
+			} else {
+				result += type;
+			}
+			if(exceptionThrown) {
+				result += "\n  - Thrown exception:\n"+StringUtil.addSpaceIndent(exception.toString(), 6);
+			} else {
+				result += "\n  - No exception thrown.";
+			}
 		}
 		return result;
 	}
