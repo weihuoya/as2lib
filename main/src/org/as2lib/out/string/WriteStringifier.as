@@ -5,6 +5,6 @@ import org.as2lib.out.info.OutWriteInfo;
 
 class org.as2lib.out.string.WriteStringifier extends BasicClass implements Stringifier {
 	public function execute(target:Object):String {
-		return "Write: " + OutWriteInfo(target).getMessage();
+		return "** "+OutWriteInfo(target).getLevel().getClass().getName()+" **" + OutWriteInfo(target).getMessage();
 	}
 }
