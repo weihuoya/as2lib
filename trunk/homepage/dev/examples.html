@@ -85,6 +85,8 @@
                                   <tr>
                                     <th>Packagenames</th>
                                     <td>Like normal Methods we write them. Packagenames should be contain one word(avoid using more), written in lowercase letters.<br>
+                                      A packagename should be inverse the same name like the domain where it is provided. In our case we use <b>org.as2lib</b>. So users won't have any problem with it.<br>
+                                      Packages or classes that won't get provided (like Testcases) should not be in this package.
                                       <br>
                                       Good example:
                                       <table class="example">
@@ -142,18 +144,58 @@
                                   </tr>
                                   <tr>
                                     <th>Constants</th>
-                                    <td>Constants should always be written with capitals using an underscore to seperate.</td>
+                                    <td>Constants should always be written with capitals, using an underscore to seperate. Constants should always be static &amp; if nothing speaks against it public.
+                                      <br>
+                                      Good example:
+                                      <table class="example">
+                                        <tr>
+                                          <td class="good">public static var USE_FONT:Number;</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="good">private static var HIDE_COLUMN:String;</td>
+                                        </tr>
+                                      </table><br>
+                                      <br>
+                                      Bad example:
+                                      <table class="example">
+                                        <tr>
+                                          <td class="bad">private static var Use_Font:Number;</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bad">private static var USEFONT:Number;</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bad">public static var useFont:Number;</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bad">private var Ignore:String;</td>
+                                        </tr>
+                                        <tr>
+                                          <td class="bad">private var $hide:String;</td>
+                                        </tr>
+                                      </table>
+                                    </td>
                                   </tr>
                                 </table>
                               </li>
                               <li><h3>Codeformat</h3>
                                 <ul>
                                   <li>No indents by tabs, all indents by two spaces.</li>
-                                  <li>A line should be max. about 120 chars. (try to limit it to 100 chars)</li>
+                                  <li>A line should be max. about 120 chars. (try to limit it to about 100 chars)</li>
+                                  <li>Use no braces with the return statement if you have no operation.elseway use them.<pre class="code">function doesSomething (a:String, b:String) {
+  if(a == b) {
+    return (a-b);
+  }
+  return a;
+}</pre></li>
                                   <li>Braces behind methods and classes are always in the same line, using a space for seperation:
                                     <pre class="code">class A {
   function A () {
   }
+}</pre>
+                                  </li>
+                                  <li>Between the condition keyword and the condition should not be a character free. Seperations only between characters.
+                                    <pre class="code">if(a == b && b == c) {
 }</pre>
                                   </li>
                                   <li>Braces for conditions or loops should also be within the same line:
@@ -182,9 +224,88 @@
   }
 }</pre>
                                   </li>
+                                  <li>Use Void if an Method returns nothing or uses no argument. This will increase the readability.<pre class="code">function doAllIWant( Void ):Void {
+}</pre></li>
                                 </ul>
                               </li>
+                              <li><h3>Good practise:</h3>
+                                <ul>
+                                  <li>Don't (never!) use as2 internal Setter and Getter (call them "bad"!). You won't be able to define them within interfaces and you will have a naming problem (everytime!). We suggest you that you use:<pre class="code">private var a:String;
+public function setA (to:Number):Void {
+  this.a = to;
+}
+public function getA ( Void ):Number {
+  return(this.a);
+}</pre> This allows you a pretty setting of vars.</li>
+                                  <li>Never use public vars. Variables are not controlable, every user of your class can create not planned actions!</li>
+                                  <li>Your constructor should not do the work for initializing. If you wan't to provide clear constructing use and init method. This allows you even by extending an class to do some operations <b>before</b> you call the super constructor. <pre class="code">class A {
+  function A () {
+    this.init();
+  }
+  private function init () {
+    // Does something.
+  }
+}
+class B extends A {
+  function B () {
+    this.init();
+  }
+  private function init() {
+    // prepares some stuff
+    super.init();
+  }
+}</pre></li>
+                                  <li>Try to avoid overloading. If you can't avoid it, use the as2lib overloading handling(see <a href="conceptBasic.html#Overloading">basic concept</a>). So you can pretty documentate youre method.</li>
+                                  <li>Try to avoid counting of any variables name and dont abbrevate names. All names can have a good name that describes it's value.</li>
+                                  <li>Don't try to hide mistakes by the user from your class. Throwing Exceptions is always prefered &amp; often faster.</li>
+                                  <li>Use less bigger interfaces instead of many small, you loose the overview and it's often not clear wheter to use one or more.</li>
+                                  <li>Try to use the same names for the same things like the others in the project does. This allows all getting faster into the materia.<br>
+                                    Examples:
+                                    <table class="description">
+                                      <tr>
+                                        <th>owner</th>
+                                        <td>The owner from an Instance.</td>
+                                      </tr>
+                                      <tr>
+                                        <th>i, j, k</th>
+                                        <td>Primary, secondary and tertiary counter.</td>
+                                      </tr>
+                                      <tr>
+                                        <th>returnValue</th>
+                                        <td>Value that gets returned.</td>
+                                      </tr>
+                                      <tr>
+                                        <th>to</th>
+                                        <td>Setting something <b>to</b> something else. (by using setting &amp; getting)</td>
+                                      </tr>
+                                      <tr>
+                                        <th>e</th>
+                                        <td>Exception variable. Use the whole name of the excpetiontype if you have more than one. Try to avoid counting.</td>
+                                      </tr>
+                                    </table>
+                                  </li>
+                                </ul>
+                              </li>
+                              <li><h3>Testcases</h3>
+                                Testcases help us finding errors by refactoring and to notice if all functions are running perfectly. Use testcases for your classes as exactly as possible. Try to find every obscure way to use your class, and if an error occurs that another one notices, add it to the testcase! For internal uses, take the Testcase System defined in the basic concept (see <a href="conceptBasic.html#Testcases" title="Provided Testcase solution">here</a>). 
+                              </li>
                             </ul>
+                          </li>
+                          <li><h2>Documentation<h2>
+                            We differ between 3 kinds of documentation (sorted by priority):
+                            <ol>
+                              <li><h3>Incode documentation</h3>
+                                The most important part of the documentation is "incode documentation". With JavaDoc like Documenation we will have soon a big, detailed documentation for all classes. If you define precise and completly what your method/class exactly does noone will have problems with it.<br>
+                                That has to be done by the class developer. It's the mightiest tool for our documentation. 
+                              </li>
+                              <li><h3>Examples</h3>
+                                As second step for showing others how your class works you may provide Examples for your class. Soon you will find here how your examples should be provided.<br>
+                                Of course, that can be a lot of work, but it helps all understanding your thoughts and the power of your work.
+                              </li>
+                              <li><h3>Describing documentation</h3>
+                                As an additional step we will be able to take our concepts for the classes to provide a good overview and the big picture on our homepage, so all customer know how to use our stuff and what is makes possible.
+                              </li>
+                            </ol>
                           </li>
                         </ol>
                       </td>
