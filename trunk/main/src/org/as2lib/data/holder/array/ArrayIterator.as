@@ -113,7 +113,7 @@ import org.as2lib.data.holder.NoSuchElementException;
 			remove = function() {
 				if (g < 0) {
 					arguments.callee = p.remove;
-					throw new IllegalStateException("You tried to remove an element before calling the #next() method. Thus there is no element selected to remove.", this, arguments);
+					throw new IllegalStateException("You tried to remove an element before calling the 'next' method. There is thus no element selected to remove.", this, arguments);
 				}
 				t.splice(g--, 1);
 			}
@@ -152,7 +152,7 @@ import org.as2lib.data.holder.NoSuchElementException;
 	 */
 	public function remove(Void):Void {
 		if (i < 0) {
-			throw new IllegalStateException("You tried to remove an element before calling the #next() method. Thus there is no element selected to remove.", this, arguments);
+			throw new IllegalStateException("You tried to remove an element before calling the 'next' method. There is thus no element selected to remove.", this, arguments);
 		}
 		t.splice(i--, 1);
 	}
