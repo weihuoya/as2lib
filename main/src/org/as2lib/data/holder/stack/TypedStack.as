@@ -83,6 +83,13 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	}
 	
 	/**
+	 * @see org.as2lib.data.holder.Stack#size()
+	 */
+	public function size(Void):Number {
+		return stack.size();
+	}
+	
+	/**
 	 * @see org.as2lib.data.holder.Stack#toArray()
 	 */
 	public function toArray(Void):Array {

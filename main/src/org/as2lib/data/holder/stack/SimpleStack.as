@@ -83,6 +83,13 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	}
 	
 	/**
+	 * @see org.as2lib.data.holder.Stack#size()
+	 */
+	public function size(Void):Number {
+		return values.length;
+	}
+	
+	/**
 	 * @see org.as2lib.data.holder.Stack#toArray()
 	 */
 	public function toArray(Void):Array {

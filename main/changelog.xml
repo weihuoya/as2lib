@@ -5,6 +5,10 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="1">
+         <day value="22">
+           <entry type="add" package="org.as2lib.data.holder" class="Stack" method="size(Void):Number"></entry>
+           <entry type="add" package="org.as2lib.data.holder" class="Queue" method="size(Void):Number"></entry>
+         </day>
          <day value="19">
            <entry type="remove" package="org.as2lib.data.holder.map" class="MapIterator">Added KeyMapIterator and ValueMapIterator instead.</entry>
            <entry type="add" package="org.as2lib.data.holder.map" class="KeyMapIterator">Iterates over the keys of a map.</entry>

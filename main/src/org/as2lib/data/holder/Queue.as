@@ -62,6 +62,14 @@ interface org.as2lib.data.holder.Queue extends BasicInterface {
 	public function isEmpty(Void):Boolean;
 	
 	/**
+	 * Returns the number of enqueued elements.
+	 *
+	 * @return the number of enqueued elements
+	 * @see #enqueue(*):Void
+	 */
+	public function size(Void):Number;
+	
+	/**
 	 * Returns an array representation of this queue.
 	 *
 	 * <p>The elements are copied onto the array in a first-in-first-out

@@ -151,6 +151,27 @@ class test.unit.org.as2lib.data.holder.AbstractTStack extends TestCase {
 		assertTrue("A Exception should not manipulate the isEmpty result", stack.isEmpty());
 	}
 	
+	/**
+	 * Tests if size() returns the right number of elements.
+	 */
+	public function testSize(Void):Void {
+		// empty stack
+		assertSame("No elements added -> size = 0.", stack.size(), 0);
+		
+		// filled stack
+		stack.push(1);
+		assertSame("One element added", stack.size(), 1);
+		stack.push("second");
+		assertSame("Two elements added", stack.size(), 2);
+		stack.push(new Object());
+		assertSame("Three elements added", stack.size(), 3);
+		stack.pop();
+		assertSame("Two elements left", stack.size(), 2);
+		stack.pop();
+		stack.pop();
+		assertSame("Null elements left", stack.size(), 0);
+	}
+	
 	public function testToArray(Void):Void {
 		var obj:Object = new Object();
 		
