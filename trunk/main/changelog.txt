@@ -1,244 +1,302 @@
-﻿// :: CHANGELOG :: //
+﻿[~] org.as2lib.env.out.OutAccess.*(message:String):Void (1/8/2004)
+Changed arguments to message.
 
-    :: 23/07/04 :: Martin Heidegger ::
+[~] org.as2lib.env.out.OutAccess.*(throwable:Throwable):Void (1/8/2004)
+Changed arguments to error.
 
-      >> Important Bugfix SF-Request#996433
-      
-      >> org.as2lib.util.ArrayUtil
-        + added method shuffle().
+[~] org.as2lib.env.out.OutLevel.*(message:String, broadcaster:EventBroadcaster):Void (1/8/2004)
+Changed arguments to message, broadcaster:EventBroadcaster.
 
+[~] org.as2lib.env.out.OutLevel.*(throwable:Throwable, broadcaster:EventBroadcaster):Void (1/8/2004)
+Changed arguments to error, broadcaster:EventBroadcaster.
 
-    :: 22/07/04 :: Martin Heidegger ::
-    
-      >> Enhanced the toString Method of org.as2lib.Call
+[~] org.as2lib.env.out.handler.SocketOutputServerHandler (1/8/2004)
+Renamed to XmlSocketHandler.
 
-      >> org.as2lib.util.ObjectUtil
-        > getChildName changed from type Function 
+[-] org.as2lib.env.out.info (1/8/2004)
+Removed the package and its content. The classes OutErrorInfo and OutWriteInfo have been replaced by the org.as2lib.env.out.OutInfo class.
 
-      >> org.as2lib.util.ArrayUtil
-        + added method indexOf().
+[+] org.as2lib.env.out.info.OutInfo (1/8/2004)
+The OutInfo class replaces the OutError- and OutWriteInfo classes.
 
-      >> org.as2lib.env.reflect.SimpleCache
-        > allowed using of movieclip.
+[-] org.as2lib.env.out.string (1/8/2004)
+Removed the package and its content. The classes WriteStringifier and ErrorStringifier have been replaced by the org.as2lib.env.out.OutInfoStringifier class.
 
-    :: 21/07/04 :: Martin Heidegger ::
-     
-      >> Added indexOf Method to ArrayUtil
-      >> Changed the Implementation of ArrayUtil.contains to a for-in loop (could have sideeffects to implementations)
+[+] org.as2lib.env.out.OutInfoStringifier (1/8/2004)
+This class replaces the two classes WriteStringifier and ErrorStringifier.
 
-    :: 18/07/04 :: Martin Heidegger ::
-     
-      >> Introduced org.as2lib.util.ClassUtil.createCleanInstance(clazz:Function):Object
+[-] org.as2lib.env.out.OutHandler.error(info:OutErrorInfo):Void (1/8/2004)
 
-    :: 15/07/04 :: Simon Wacker ::
+[~] org.as2lib.env.out.OutHandler.write(info:OutWriteInfo):Void (1/8/2004)
+Changed arguments to info:OutInfo.
 
-      >> AOP Package (org.as2lib.aop)
+[+] org.as2lib.env.out.OutConfig.setInfoStringifier(Stringifier):Void (1/8/2004)
 
-    :: 05/25/04 :: Martin Heidegger ::
-       
-      >> org.as2lib.util.StringUtil
-   
-        > added a lot of Documentation
-        > added method addSpaceIndent()
-        > added method multiply()
+[+] org.as2lib.env.out.OutConfig.getInfoStringifier(Void):Stringifier (1/8/2004)
 
-    :: 05/18/04 :: Martin Heidegger ::
+[-] org.as2lib.env.out.OutConfig.setWriteStringifier(OutInfoStringifier):Void (1/8/2004)
 
+[-] org.as2lib.env.out.OutConfig.getWriteStringifier(Void):Stringifier (1/8/2004)
 
-        + Introduced org.as2lib.util.StopWatch class to stop time differences
+[-] org.as2lib.env.out.OutConfig.setErrorStringifier(OutInfoStringifier):Void (1/8/2004)
 
+[-] org.as2lib.env.out.OutConfig.getErrorStringifier(Void):Stringifier (1/8/2004)
 
+[!] org.as2lib.env.reflect.algorithm.ClassAlgorithm (1/8/2004)
+It&apos;s now possible to obtain the corresponding ClassInfos of primitive types and MovieClips.
 
-    :: 05/26/04 :: Simon Wacker ::
-  
+[~] org.as2lib.test.unit (24/7/2004)
+Refactored the complete Testunit System (new API)
 
-      >> org.as2lib.env.reflect
+[~] org.as2lib.data.holder.ArrayList (24/7/2004)
+Moved to org.as2lib.data.holder.list.
 
-        > removed CompositeMemberInfo.getName():String [is already defined in interface MemberInfo]
-        > removed TypeInfo.getParent():PackageInfo [is already defined in interface CompositeMemberInfo]
+[~] org.as2lib.data.holder.HashMap (24/7/2004)
+Moved to org.as2lib.data.holder.map.
 
+[~] org.as2lib.data.holder.LinearQueue (24/7/2004)
+Moved to org.as2lib.data.holder.queue.
 
+[~] org.as2lib.data.holder.PrimitiveTypeMap (24/7/2004)
+Moved to org.as2lib.data.holder.map.
 
-    :: 05/28/04 :: Simon Wacker ::
+[~] org.as2lib.data.holder.PriorityList (24/7/2004)
+Moved to org.as2lib.data.holder.list.
 
+[~] org.as2lib.data.holder.PriorityMap (24/7/2004)
+Moved to org.as2lib.data.holder.map.
 
-      >> org.as2lib.env.reflect
+[~] org.as2lib.data.holder.SimpleStack (24/7/2004)
+Moved to org.as2lib.data.holder.stack.
 
-        > renamed algorythm to algorithm
-        > renamed algorithm.ClassAlgorythm to ClassAlgorithm
-        > renamed algorithm.PackageAlgorythm to PackageAlgorithm
-        > renamed algorithm.MethodAlgorythm to MethodAlgorithm
-        > renamed algorithm.PropertyAlgorythm to PropertyAlgorithm
-        > renamed algorithm.ChildrenAlgorythm to ChildrenAlgorithm
-        > renamed algorithm.AbstractContentAlgorythm to AbstractContentAlgorithm
-        > renamed algorithm.ContentAlgorythm to ContentAlgorithm
-        > renamed algorithm.CacheAlgorythm to CacheAlgorithm
-        + changed corresponding references from
-          * org.as2lib.env.reflect.ReflectConfig
+[~] org.as2lib.data.holder.TypedArray (24/7/2004)
+Moved to org.as2lib.data.holder.array.
 
-        > renamed ReflectConfig.get-/set*Algorythm to get-/set*Algorithm
-        + changed corresponding references from
-          * org.as2lib.env.reflect.ClassInfo
-          * org.as2lib.env.reflect.PackageInfo
-          * org.as2lib.env.util.ReflectUtil
+[~] org.as2lib.data.holder.TypedMap (24/7/2004)
+Moved to org.as2lib.data.holder.map.
 
-        > renamed TypeInfo.getRepresentedType() to getType()
-        > renamed ClassInfo.getRepresentedType() to getType()
-        + changed corresponding references from
-          * org.as2lib.env.out.Out
-          * org.as2lib.env.reflect.SimpleCache
-          * org.as2lib.env.reflect.algorithm.MethodAlgorithm
-          * org.as2lib.env.reflect.algorithm.PropertyAlgorithm
+[~] org.as2lib.data.holder.TypedQueue (24/7/2004)
+Moved to org.as2lib.data.holder.queue.
 
+[~] org.as2lib.data.holder.TypedStack (24/7/2004)
+Moved to org.as2lib.data.holder.stack.
 
+[~] org.as2lib.data.holder.string.MapStringifier (24/7/2004)
+Moved to org.as2lib.data.holder.map.
 
-    :: 05/30/04 :: Simon Wacker ::
+[~] org.as2lib.data.holder.string.StackStringifier (24/7/2004)
+Moved to org.as2lib.data.holder.stack.
 
+[~] org.as2lib.data.holder.string.QueueStringifier (24/7/2004)
+Moved to org.as2lib.data.holder.queue.
 
-      >> org.as2lib.util
+[~] org.as2lib.data.iterator.Iterator (24/7/2004)
+Moved to org.as2lib.data.holder.
 
-        > removed Executable
-        + changed corresponding references from
-          * org.as2lib.util.Call
+[~] org.as2lib.data.iterator.ArrayIterator (24/7/2004)
+Moved to org.as2lib.data.holder.array.
 
-        > changed Call's constructor from Call(object, func:Function, args:Array) to Call(object, func:Function)
-        > changed Call.execute() to execute(args:Array)
+[~] org.as2lib.data.iterator.MapIterator (24/7/2004)
+Moved to org.as2lib.data.holder.map.
 
-        > added ObjectUtil.forEach()
+[-] org.as2lib.data.iterator.ProtectedArrayIterator (24/7/2004)
 
+[+] org.as2lib.data.holder.ProtectedIterator (24/7/2004)
+Acts as a general protected iterator for all iterator types.
 
+[~] org.as2lib.data.iterator.NoSuchElementException (24/7/2004)
+Moved to org.as2lib.data.holder.
 
-    :: 05/31/04 :: Simon Wacker ::
+[~] org.as2lib.util.string.Stringifier (24/7/2004)
+Moved to org.as2lib.util.
 
+[~] org.as2lib.util.string.ObjectStringifier (24/7/2004)
+Moved to org.as2lib.core.
 
-      >> org.as2lib.env.reflect
+[-] org.as2lib.util.string (24/7/2004)
 
-        > changed ClassInfo.newInstance() to newInstance(args:Array)
+[~] org.as2lib.env.reflect.algorithm.ContentAlgorithm.execute(info:CompositeMemberInfo):Map (20/7/2004)
+Changed return type to Array.
 
+[~] org.as2lib.env.reflect.PackageInfo.getChildPackages(Void):Map (20/7/2004)
+Changed return type to Array.
 
-      >> org.as2lib.env.event
+[~] org.as2lib.env.reflect.PackageInfo.getChildClasses(Void):Map (20/7/2004)
+Changed return type to Array.
 
-        > corrected overall documentation
-        > changed field SimpleEventBroadcaster.listeners:ListenerArray to listeners:Array
-        > changed operation EventBroadcaster.getAllListener():ListenerArray to getAllListener():Array
-        + changed corresponding implementations in
-          * org.as2lib.env.event.SimpleEventBroadcaster
+[~] org.as2lib.env.reflect.PackageInfo.getChildren(Void):Map (20/7/2004)
+Changed return type to Array.
 
-        > changed constant SimpleEventBroadcaster.normalDispatcher to NORMAL_DISPATCHER
-        > changed constant SimpleEventBroadcaster.logDispatcher to LOG_DISPATCHER
-        > changed operation EventDispatcher.dispatch(event:EventInfo, listeners:ListenerArray) to dispatch(event:EventInfo, listeners:Array)
-        + changed corresponding implementations in
-          * org.as2lib.env.event.dispatcher.NormalEventDispatcher
-          * org.as2lib.env.event.dispatcher.LogEventDispatcher
+[~] org.as2lib.env.reflect.ClassInfo.getProperties(Void):Map (20/7/2004)
+Changed return type to Array.
 
-        > removed ListenerArray
-        > renamed Consumeable to Consumable
-        + changed corresponding references from
-          * org.as2lib.env.event.dispatcher.NormalEventDispatcher
-          * org.as2lib.env.event.dispatcher.LogEventDispatcher
+[~] org.as2lib.env.reflect.TypeInfo.getMethods(Void):Map (20/7/2004)
+Changed return type to Array.
 
-        > renamed EventDispatcher.dispatchConsumeable() to dispatchConsumable()
-        + changed corresponding implementations in
-          * org.as2lib.env.event.dispatcher.NormalEventDispatcher
-          * org.as2lib.env.event.dispatcher.LogEventDispatcher
-        + and references from
-          * org.as2lib.env.event.SimpleEventBroadcaster
+[!] (23/6/2004)
+Important Bugfix SF-Request#996433
 
-        > added SpeedEventBroadcaster
+[+] org.as2lib.util.ArrayUtil.shuffle(array:Array):Array (23/6/2004)
 
+[*] org.as2lib.util.Call.toString(Void):String (22/6/2004)
 
+[~] org.as2lib.util.?.? (22/6/2004)
+Change Argument Type from Function to Object
 
-    :: 06/03/04 :: Simon Wacker ::
+[+] org.as2lib.util.ArrayUtil.indexOf(array:Array):Array (21/6/2004)
 
+[~] org.as2lib.util.ArrayUtil.contains(array:Array, object):Boolean (21/6/2004)
+Implementation to use a for..in loop (could have sideeffects to useages).
 
-      >> org.as2lib.env.event
+[+] org.as2lib.env.reflect.ClassUtil.createCleanInstance(clazz:Function):Object (18/6/2004)
 
-        > changed throwed Throwable in DynamicEventBroadcasterFactory.createEventBroadcaster() from org.as2lib.env.except.UndefinedPropertyExceptiont to org.as2lib.env.except.IllegalStateException
+[+] org.as2lib.env.except.Throwable.addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void (17/6/2004)
 
-      
-      >> org.as2lib.env.except
+[~] org.as2lib.env.except.AbstractException.addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void (17/6/2004)
+Changed access specifier from private to public.
 
-        > removed UndefinedPropertyException
+[+] org.as2lib.aop (15/6/2004)
+AOP Framework added.
 
+[~] org.as2lib.env.overload.SimpleOverloadHandler.matches(args:Array):Boolean (12/6/2004)
+It now returns true if you check null against any type as expected.
 
-      >> org.as2lib.env.out.handler
+[+] org.as2lib.util.StringUtil.endsWith(string:String, searchString:String):Boolean (11/6/2004)
 
-        > added class SocketOutputServerHandler
+[~] org.as2lib.env.except.AbstractException.new(message:String, thrower, args:FunctionArguments) (2/6/2004)
+&apos;!message&apos; to &apos;(message == undefined)&apos; because passing a blank String resulted in a failure.
 
+[+] org.as2lib.util.StringUtil.addSpaceIndent(string:String, count:Number):String (25/5/2004)
 
+[+] org.as2lib.util.StringUtil.multiply(string:String, count:Number):String (25/5/2004)
 
-    :: 06/05/04 :: Simon Wacker ::
+[?] org.as2lib.util.StringUtil (25/5/2004)
 
+[+] org.as2lib.util.StopWatch (18/5/2004)
+to stop time differences.
 
-      >> org.as2lib.env.except
+[~] org.as2lib.env.reflect.ReflectConfig (18/5/2004)
+Moved initialization of static vars into appropriate getter methods.
 
-        > fixed serious bug in SimpleStackTraceElement.getMethod() that broke the whole program if a Throwable was thrown by an operation of the superclass (the operation couldn't be found in the throwing subclass and a Throwable was thus being thrown)
-        - it was actually no bug in the SimpleStackTraceElement but in the ClassInfo's.getMethods() operation
+[~] org.as2lib.Config (18/5/2004)
+Moved initialization of static vars into appropriate getter methods.
 
+[~] org.as2lib.data.holder.HolderConfig (18/5/2004)
+Moved initialization of static vars into appropriate getter methods.
 
-      >> org.as2lib.env.reflect
+[~] org.as2lib.env.except.ExceptConfig (18/5/2004)
+Moved initialization of static vars into appropriate getter methods.
 
-        > changed ClassInfo.getMethods() it now also returns the operations declared by the super type
+[~] org.as2lib.env.reflect.RootInfo (18/5/2004)
+Moved initialization of static vars into appropriate getter methods.
 
+[+] org.as2lib.env.out.info.OutErrorInfo.toString(Void):String (6/5/2004)
 
+[+] org.as2lib.env.out.info.OutWriteInfo.toString(Void):String (6/5/2004)
 
-    :: 06/06/04 :: Simon Wacker ::
+[+] org.as2lib.env.except.StackTraceElementFactory (6/5/2004)
 
+[+] org.as2lib.env.except.SimpleStackTraceElementFactory (6/5/2004)
 
-      >> org.as2lib.env.out.info
+[+] org.as2lib.env.except.ExceptConfig.getStackTraceElementFactory(Void):StackTraceElementFactory (6/5/2004)
 
-        > added OutErrorInfo.toString()
-        + changed the following OutHandlers to use this toString() operation
-          * org.as2lib.env.out.handler.TraceHandler
-          * org.as2lib.env.out.handler.SocketOutputServerHandler
+[+] org.as2lib.env.except.ExceptConfig.setStackTraceElementFactory(factory:StackTraceElementFactory):Void (6/5/2004)
 
-        > added OutWriteInfo.toString()
-        + changed the following OutHandlers to use this toString() operation
-          * org.as2lib.env.out.handler.TraceHandler
-          * org.as2lib.env.out.handler.SocketOutputServerHandler
+[~] org.as2lib.env.except.AbstractException.addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void (6/5/2004)
+It now uses the newly created classes and operations.
 
+[!] org.as2lib.env.except.SimpleStackTraceElement.getMethod():MethodInfo (5/5/2004)
+Fixed serious bug that broke the whole program if a Throwable was thrown by an operation of the superclass (the operation couldn&apos;t be found in the throwing subclass and a Throwable has thus been thrown) - it was actually no bug in the SimpleStackTraceElement but in the ClassInfo&apos;s.getMethods() operation.
 
-      >> org.as2lib.env.except
+[~] org.as2lib.env.reflect.ClassInfo.getMethods(Void):Map (5/5/2004)
+It now also returns the operations declared by super types.
 
-        > added StackTraceElementFactory
-        > added SimpleStackTraceElementFactory
-        > added ExceptConfig.getStackTraceElementFactory()
-        > added ExceptConfig.setStackTraceElementFactory()
-        + changed AbstractException.addStackTraceElement() to use this newly created classes and operations
+[~] org.as2lib.env.event.DynamicEventBroadcasterFactory.createEventBroadcaster(Void):EventBroadcaster throws org.as2lib.env.except.UndefinedPropertyExceptiont (3/5/2004)
+Changed thrown exception to org.as2lib.env.except.IllegalStateException.
 
+[-] org.as2lib.env.except.UndefinedPropertyException (3/5/2004)
 
+[+] org.as2lib.out.handler.SocketOutputServerHandler (3/5/2004)
 
-    :: 06/18/04 :: Simon Wacker ::
+[?] org.as2lib.env.event (31/4/2004)
+Improved overall documentation.
 
-        > moved initialization of static vars into appropriate getter methods
-          affected classes are
-          * org.as2lib.env.reflect.ReflectConfig
-          * org.as2lib.Config
-          * org.as2lib.data.holder.HolderConfig
-          * org.as2lib.env.except.ExceptConfig
-          * org.as2lib.env.reflect.RootInfo
+[~] org.as2lib.env.event.SimpleEventBroadcaster.listeners:ListenerArray (31/4/2004)
+Changed type to Array.
 
+[~] org.as2lib.env.event.EventBroadcaster.getAllListener(Void):ListenerArray (31/4/2004)
+Changed return type to Array.
 
+[~] org.as2lib.env.event.SimpleEventBroadcaster.normalDispatcher:EventDispatcher (31/4/2004)
+Renamed to NORMAL_DISPATCHER.
 
-    :: 07/02/04 :: Simon Wacker ::
+[~] org.as2lib.env.event.SimpleEventBroadcaster.logDispatcher:EventDispatcher (31/4/2004)
+Renamed to LOG_DISPATCHER:EventDispatcher.
 
-        > changed '!message' in org.as2lib.env.except.AbstractException.new() to '(message == undefined)' because passing a blank String resulted in a failure
+[~] org.as2lib.env.event.EventDispatcher.dispatch(event:EventInfo, listeners:ListenerArray):Void (31/4/2004)
+Changed arguments to event:EventInfo, listeners:Array.
 
+[-] org.as2lib.env.event.ListenerArray (31/4/2004)
 
+[~] org.as2lib.env.event.Consumeable (31/4/2004)
+Renamed to Consumable.
 
-    :: 07/11/04 :: Simon Wacker ::
+[~] org.as2lib.env.event.EventDispatcher.dispatchConsumeable(event:EventInfo, listeners:Array):Void (31/4/2004)
+Renamed to dispatchConsumable.
 
-        > added org.as2lib.util.StringUtil.endsWith()
+[+] org.as2lib.env.event.SpeedEventBroadcaster (31/4/2004)
+for fast broadcasting.
 
+[~] org.as2lib.env.reflect.ClassInfo.newInstance(Void) (31/4/2004)
+Changed arguments to newInstance(args:Array).
 
+[-] org.as2lib.util.Executeable (30/4/2004)
 
-    :: 07/12/04 :: Simon Wacker ::
+[~] org.as2lib.util.Call.new(object, func:Function, args:Array) (30/4/2004)
+Changed arguments to object, func:Function.
 
-        > changed org.as2lib.env.overload.Overload.matches() it returns true now if you check null against any type as expected
+[~] org.as2lib.util.Call.execute(Void) (30/4/2004)
+Changed arguments to args:Array.
 
+[~] org.as2lib.env.reflect.algorythm (28/4/2004)
+Renamed to algorithm.
 
+[~] org.as2lib.env.reflect.algorithm.ClassAlgorythm (28/4/2004)
+Renamed to ClassAlgorithm..
 
-    :: 07/23/04 :: Simon Wacker ::
+[~] org.as2lib.env.reflect.algorithm.PackageAlgorythm (28/4/2004)
+Renamed to PackageAlgorithm.
 
-        > added addStackTraceElement() to org.as2lib.env.except.Throwable
-        + changed the addStackTraceElement() access specifier in org.as2lib.env.except.AbstractException from private to public
+[~] org.as2lib.env.reflect.algorithm.ChildrenAlgorythm (28/4/2004)
+Renamed to ChildrenAlgorithm.
+
+[~] org.as2lib.env.reflect.algorithm.MethodAlgorythm (28/4/2004)
+Renamed to MethodAlgorithm.
+
+[~] org.as2lib.env.reflect.algorithm.PropertyAlgorythm (28/4/2004)
+Renamed to PropertyAlgorithm.
+
+[~] org.as2lib.env.reflect.algorithm.AbstractContentAlgorythm (28/4/2004)
+Renamed to AbstractContentAlgorithm.
+
+[~] org.as2lib.env.reflect.algorithm.ContentAlgorythm (28/4/2004)
+Renamed to ContentAlgorithm.
+
+[~] org.as2lib.env.reflect.algorithm.CacheAlgorythm (28/4/2004)
+Renamed to CacheAlgorithm.
+
+[~] org.as2lib.env.reflect.ReflectConfig.get-/set*Algorythm(*):* (28/4/2004)
+Renamed to get-/set*Algorithm.
+
+[~] org.as2lib.env.reflect.TypeInfo.getRepresentedType(Void):Function (28/4/2004)
+Renamed to getType.
+
+[~] org.as2lib.env.reflect.ClassInfo.getRepresentedType(Void):Function (28/4/2004)
+Renamed to getType.
+
+[-] org.as2lib.env.reflect.CompositeMemberInfo.getName(Void):String (26/4/2004)
+[is already defined in interface MemberInfo].
+
+[-] org.as2lib.env.reflect.TypeInfo.getParent(Void):PackageInfo (26/4/2004)
+[is already defined in interface CompositeMemberInfo].
+
