@@ -5,6 +5,10 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="3">
+         <day value="31">
+           <entry type="add" package="org.as2lib.env.log.handler" class="LuminicBoxHandler">Support for LuminicBox Logging Console.</entry>
+           <entry type="add" package="org.as2lib.env.log.logger" class="LuminicBoxLogger">Support for whole LuminicBox Logging API.</entry>
+         </day>
          <day value="29">
            <entry type="add" package="org.as2lib.util" class="DateFormatter">Formats a date according to a string pattern.</entry>
          </day>
