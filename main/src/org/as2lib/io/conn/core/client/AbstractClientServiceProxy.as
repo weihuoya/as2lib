@@ -28,7 +28,7 @@ import org.as2lib.io.conn.core.event.MethodInvocationCallback;
 class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicClass {
 	
 	/**
-	 * Generates response urls with passed service url and method name.
+	 * Generates the response url for a service.
 	 *
 	 * <p>The response url gets composed as follows:
 	 * [serviceUrl]_[methodName]_Return
@@ -42,7 +42,7 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicCla
 	 * @return the generated response url
 	 * @throws IllegalArgumentException if the passed-in service url is null, undefined or an empty stirng
 	 */
-	public static function generateResponseUrl(serviceUrl:String, methodName:String):String {
+	public static function generateResponseServiceUrl(serviceUrl:String, methodName:String):String {
 		if (!serviceUrl) throw new IllegalArgumentException("Service url must not be null, undefined or an empty string.");
 		if (!methodName) return serviceUrl + "_Return";
 		return serviceUrl + "_" + methodName + "_Return";
