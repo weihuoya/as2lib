@@ -98,11 +98,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 */
 	public static function forPackage(package):PackageInfo {
 		if (package == null) return null;
-		var info:PackageInfo = ReflectConfig.getCache().getPackage(package);
-		if (!info) {
-			info = ReflectConfig.getPackageAlgorithm().execute(package);
-		}
-		return info;
+		return ReflectConfig.getPackageAlgorithm().execute(package);
 	}
 	
 	/**
