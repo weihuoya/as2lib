@@ -16,15 +16,15 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.ExceptConfig;
-import org.as2lib.env.except.StackTraceElement;
 
 /**
- * Simple implementation of the StackTraceElement interface.
+ * StackTraceElement represents an element in the stack trace returned by
+ * Throwable#getStackTrace().
  *
  * @author Simon Wacker
  * @author Martin Heidegger
  */
-class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implements StackTraceElement {
+class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass {
 	
 	/** The thrower. */
 	private var thrower;
@@ -38,8 +38,8 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 	/**
 	 * Constructs a new SimpleStackTraceElement instance.
 	 * 
-	 * @param thrower the class that threw the Throwable
-	 * @param method the method that threw the Throwabele
+	 * @param thrower the class that threw the throwable
+	 * @param method the method that threw the throwabele
 	 * @param args the arguments passed to the throwing method
 	 */
 	public function SimpleStackTraceElement(thrower, method:Function, args:Array) {
@@ -49,21 +49,28 @@ class org.as2lib.env.except.SimpleStackTraceElement extends BasicClass implement
 	}
 	
 	/**
-	 * @see org.as2lib.env.except.StackTraceElement#getThrower()
+	 * Returns the object that threw the exception.
+	 *
+	 * @return the object that threw the exception
 	 */
 	public function getThrower(Void) {
 		return thrower;
 	}
 	
 	/**
-	 * @see org.as2lib.env.except.StackTraceElement#getMethod()
+	 * Returns the method that threw the exception.
+	 *
+	 * @return the method that threw the exception
 	 */
 	public function getMethod(Void):Function {
 		return method;
 	}
 	
 	/**
-	 * @see org.as2lib.env.except.StackTraceElement#getArguments()
+	 * Returns the arguments that have been passed to the method that threw
+	 * the exception.
+	 *
+	 * @return the arguments passed to the method that threw the exception
 	 */
 	public function getArguments(Void):Array {
 		return args;

@@ -35,17 +35,17 @@ class org.as2lib.env.except.Exception extends AbstractThrowable implements Throw
 	}
 	
 	/**
-	 * Returns a blank String if the operation is not called out of an operation.
-	 * This operation should only be called by the virtual machine. We use it to
-	 * determine when the Exception has reached the final level and now terminates
-	 * the current thread.
+	 * Returns a string representation of this exception.
 	 *
-	 * @return a blank String if the operation is not called out of an operation, otherwise the result of ExceptConfig#getThrowableStringifier()#execute(this) will be returned
+	 * <p>If you do not call this method out of another method, it also
+	 * executes the logger's error-method passing this because it thinks
+	 * that the virtual machine called this method.
+	 *
+	 * @return a string representation of this exception
 	 */
 	public function toString(Void):String {
 		if (!arguments.caller && getLogger()) {
 			getLogger().error(this);
-			return "";
 		}
 		return ExceptConfig.getThrowableStringifier().execute(this);
 	}
