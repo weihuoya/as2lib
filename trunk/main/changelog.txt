@@ -1,6 +1,11 @@
 // :: CHANGELOG :: //
 
 
+    :: 05/18/04 :: Martin Heidegger ::
+     >> org.as2lib.util.StopWatch
+       
+       > Introduced new small class for stopping time differences.
+
 
     :: 05/26/04 :: Simon Wacker ::
   
