@@ -49,7 +49,7 @@
                       </td>
                       <td><img src="../images/seperatorVertical.gif" class="imageSeparatorVertical" alt=""></td>
                       <td class="contentTd">
-                        <h1>Basic Classes (worksheet 0.1)</h1>
+                        <h1>Basic Classes (worksheet 0.2)</h1>
                         For the success of an project with ActionScript 2.0 it is necessary to integrate additional functions that are low-level in Flash.<br>
                         <br>
                         Low-level called in this connection means that many features work in an "usually not suggested" way to handle operations so that other features don't have to use this techniques.<br>
@@ -59,59 +59,163 @@
                             <th>Content</th>
                           </tr>
                           <tr>
-                            <td><a href="#OutputHandling" title="Handling different Output during an project">Output-Handling</a></td>
+                            <td><a href="#OutputHandling" title="Handling different Output during an project">Output handling</a></td>
                           </tr>
                           <tr>
-                            <td>Exception Handling (to come)</td>
+                            <td><a href="#ExceptionHandling" title="Better Handling for Exceptions">Exception handling</a></td>
                           </tr>
                           <tr>
-                            <td>Reflection Handling (to come)</td>
+                            <td><a href="#ReflectionHandling" title="Handling of Reflections within Classes">Reflection handling</a></td>
                           </tr>
                           <tr>
                             <td>Event Handling (to come)</td>
                           </tr>
+                          <tr>
+                            <td>Typed Array (to come)</td>
+                          </tr>
+                          <tr>
+                            <td>Overloading (to come)</td>
+                          </tr>
                         </table>
-                        <a name="OutputHandling"></a><h2>Output-Handling</h2>
-                        Usual output from an Application runs over <code>trace();</code> or an Exception. The Problem of this way is that most Applications work within an Environment where there is no "trace" defined.
-                        <h3>Solution</h3>
-                        To make sure that all Output can be dynamically handled within any application we create a basic bridge for accessing those Output:
-                        <code>class org.as2lib.basic.Out {}</code>
-                        that handle all accessing output requests.
-                        <h3>Featured Output requests</h3>
-                        <ul>
-                          <li><h4>.write([String])</h4>
-                            To Write stuff out. (equally to Trace)
-                          </li>
-                          <li><h4>.error([Exception])</h4>
-                            Exceptions are usually not available in an .swf, this should declare them as Exception.
-                          </li>
-                          <li><h4>.log([String])</h4>
-                            Log's differ from usually Output that it's not necessary for developing (you don't need to see them).
-                          </li>
-                        </ul>
-                        <h3>Handling Outputs</h3>
-                        As you maybe have recognized, this Method only allows access to one function. To implement the main usage from an bridge we use different OutputWriter.<br>
-                        <br>
-                        OutputWriter are defined as Classes that implement an Interfaces for delegating the functionality. It should be possible to define one OutputWriter that handles this requests.
-                        <code>.setOutputWriter([OutputWriter])</code> should handle this.
-                        <h3>Output Level</h3>
-                        There should be a mechanism to restrict the output level(to save performance or for publishing).
-                        <code>.setOutputLevel([Number])</code>
-                        The Number should be set as binary Digit:<br>
-                        <pre>(0) 000 = No output.
+                        <ol class="conceptList">
+                          <li><a name="OutputHandling"></a><h2>Output handling</h2>
+                            Usual output from an Application runs over <code>trace();</code> or an Exception. The Problem of this way is that most Applications work within an Environment where there is no "trace" defined.
+                            <ul>
+                              <li><h3>Solution</h3>
+                                To make sure that all Output can be dynamically handled within any application we create a basic bridge for accessing those Output:
+                                <code>class org.as2lib.basic.Out {}</code>
+                                that handle all accessing output requests.
+                              </li>
+                              <li><h3>Featured Output requests</h3>
+                                <ul>
+                                  <li><h4>.write([String])</h4>
+                                    To Write stuff out. (equally to Trace)
+                                  </li>
+                                  <li><h4>.error([Exception])</h4>
+                                    Exceptions are usually not available in an .swf, this should declare them as Exception.
+                                  </li>
+                                  <li><h4>.log([String])</h4>
+                                    Log's differ from usually Output that it's not necessary for developing (you don't need to see them).
+                                  </li>
+                                </ul>
+                              </li>
+                              <li><h3>Handling Outputs</h3>
+                                As you maybe have recognized, this Method only allows access to one function. To implement the main usage from an bridge we use different OutputWriter.<br>
+                                <br>
+                                OutputWriter are defined as Classes that implement an Interfaces for delegating the functionality. It should be possible to define one OutputWriter that handles this requests.
+                                <code>.setOutputWriter([OutputWriter])</code> should handle this.
+                              </li>
+                              <li><h3>Output Level</h3>
+                                There should be a mechanism to restrict the output level(to save performance or for publishing).
+                                <code>.setOutputLevel([Number])</code>
+                                The Number should be set as binary Digit:<br>
+                                <pre>(0) 000 = No output.
 (1) 001 = Exceptions showing.
 (2) 010 = Writing Logs.
 (4) 100 = Warnings showing.</pre>
 and each combinition:
 <pre>(7) 111 = Complete Output</pre>
-                        <h3>Exception Handling</h3>
-                        Exceptions shall be thrown when ...
-                        <ul>
-                          <li>no Exception was defined (<code>.error()</code>)</li>
-                          <li>the given String was empty (<code>.write()</code>,<code>.log()</code>)</li>
-                          <li>no OutputWriter was available (default value is an "TraceOutputWriter")</li>
-                        </ul>
+                              </li>
+                              <li><h3>Exception Handling</h3>
+                                Exceptions shall be thrown when ...
+                                <ul>
+                                  <li>no Exception was defined (<code>.error()</code>)</li>
+                                  <li>the given String was empty (<code>.write()</code>,<code>.log()</code>)</li>
+                                  <li>no OutputWriter was available (default value is an "TraceOutputWriter")</li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                          <li><a name="ExceptionHandling"></a><h2>Exception handling</h2>
+                            Usual Exceptions within as2 throws output directly to to trace. The Problem is that a usual exception has no standard layout and there are some features missing.<br>
+                            We build an Basic Exception Class that handles some various problems for us:
+                            <ul>
+                              <li><h3>Problem with the stacktrace</h3>
+                                Actually its not possible to have an stacktrace when an exception gets thrown. The only acceptable solution can be reached by <a href="#ReflectionHandling" title="Handling informations for classes">Reflections</a>. It will be possible (that has been well testet) that it's not neccesary to insert "place" and "inFunction" var for getting the info's from the object that would be called.<br>
+                                <br>
+                                So we generate the classname (where the exception occured, <code>this</code>), the name of the function (where the exception occured <code>arguments.callee</code>) and all supplied arguments by the statement <code>arguments</code> that is setted by flash for each function.<br>
+                                There is an additional possibility for knowing the formerCall from the Object.</li>
+                              <li><h3>Naming problem</h3>
+                                Within as2 its not with the standard possible to fetch the name from an exception. Using <a href="#ReflectionHandling" title="Handling informations for classes">Reflections</a> we won't be used to this anymore. The Exception class should set its .name with the help from <a href="#ReflectionHandling" title="Handling informations for classes">Reflections</a> self.
+                              </li>
+                              <li><h3>Output problem</h3>
+                                The standard output when an exception occurs is in as2 very "small-sized". The Standardoutput should only be improved in case to have an little better solution (for example:<code>[Exception WrongArgumentsException]</code>). Of course, using this way won't be very nice to view an exception. To really put out an Exception the Exception should redirect itself to the <a href="#OutputHandling" title="StandardOutput Device defined by this project">OutputInterface</a>. This should handle the Exception. There should be an possibility for preventing this functionality but i don't see bigger problems with that (mail to me if think there is an problems with that:<a href="mailto:mastakaneda@sourceforge.net" title="Martin Heidegger">mastakaneda@sourceforge.net</a>)
+                              </li>
+                              <li><h3>Exception Conversion</h3>
+                                You might have the used case that an Exception from type "a" that has been thrown should be transformed to a exception from type "b".<br>
+                                <br>
+                                It should be a quite comfortable way if an exception handles this with an standard function.
+                                <code>myException.convertTo(org.as2lib.basic.exceptions.WrongArgumentsException);</code>
+                                <p class="note">Note: Java handles this with an overloaded constructor. Quite not a fine way for as2.</p>
+                              </li>
+                              <li><h3>Spoken in Code</h3>
+                                <ul>
+                                  <li><h4>Enduser</h4>The enduser will see an exception similar to this by the OutputHandler (formed by the OutputHandler):
+                                    <pre>--- Exception Occured ---
+  type: org.as2lib.basic.exceptions.WrongArgumentsException
+  message: You did something wrong.
+  by: org.as2lib.basic.StringUtil.trim([String 'home'], [Array 'my', 'yours', 'them']);
+  formerCall: org.as2lib.basic.StringUtil.trimLeft(&lt;unknown&gt;);</pre>
+                                  </li>
+                                  <li><h4>Developers</h4>
+                                    The developer will have to code this:
+                                    <code>throw new org.as2lib.basic.exceptions.WrongArgumentsException('You did something wrong.', arguments);</code>
+                                  </li>
+                                  <li><h4>ExceptionDeveloper</h4>
+                                   The Exceptiondeveloper will have to code an exception like this:
+                                  <code>class org.as2lib.basic.exceptions.WrongArgumentsException extends Exception {
+  function WrongArgumentsException (message:String, infoArguments:Array) {
+    super(message, infoArguments);
+  }
+}</code>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                          <li><a name="ReflectionHandling"></a><h2>Reflection handling</h2>
+                            Java has a functionality for getting a classes name, methods and properties.<br>
+                            Actually it's inbuilt in Java. Flash hasn't got something like that "inbuilt". This might be a serious problem, so to solve this is very near.
+                            <h3>two Systems</h3>
+                            For using Reflections there will be a two way System:
+                            <ul>
+                              <li><h4>The Reflections Class</h4>
+                                There will be a basic class that handles all functionality that Reflections Support.
+                              </li>
+                              <li><h4>The Basic Class</h4>
+                                There will be a basic class that every class should support (in Java this would an abstract class). One of its functionality will be to allow direct access to Reflection-Functionality:
+                                <code>.getClass().getName();</code>
+                              </li>
+                            </ul>
+                            <h3>Logical Description</h3>
+                            The question i've heard most about this is "How the hell should this work?". There is an simple Answer: I use all scopeable areas that are available (starting with _level0 and _global), then i save all informations and step the name throught until i find the first instance, from there i will get the path. With the Path and "eval" i'm able to fetch everything else.
+                            <h3>Implemented Functionality</h3>
+                            <ul>
+                              <li><h3>Class Fetching</h3>
+                                It should be possible to fetch informations about an class.
+                                <code>Reflections.getClass([Class]/[Instance]);</code>
+                                The result should be an Instance of an ReflectionObject. This object contains informations about static vars, methods, name and the extended class.
+                                <code>ReflectionObject.getStaticVars():Array
+ReflectionObject.getMethods():Array
+ReflectionObject.getExtendedClass():ReflectionObject
+ReflectionObject.getName():String
+ReflectionObject.getVars():Array</code>
+                                <p class="note">Note: All functions use "lacy creation" so that no performance won't be lost.</p>
+                              </li>
+                              <li><h3>Instance Fetching</h3>
+                                Very different to class fetching is instance fetching, major because it creates a lot of troubles with recursion and there should be really all cases checked. More details will follow after more tests.
+                              </li>
+                            </ul>
+                          </li>
+                          <li><a name="#EventHandling"></a><h2>Event Handling (to come)</h2>
+                          </li>
+                          <li><a name="#TypedArray"></a><h2>Typed Array (to come)</h2>
+                          </li>
+                          <li><a name="#Overloading"></a><h2>Overloading (to come)</h2>
+                          </li>
+                        </ol>
                         
+                       
                         
                         <!--
                         System.out(); -> this.outputHandler.out();
