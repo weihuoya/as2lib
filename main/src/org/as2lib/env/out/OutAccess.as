@@ -76,9 +76,7 @@ interface org.as2lib.env.out.OutAccess extends BasicInterface {
 	public function isFatalEnabled(Void):Boolean;
 	
 	/**
-	 * Returns the currently set OutLevel.
-	 *
-	 * @return the OutLevel
+	 * @return the currently active OutLevel
 	 */
 	public function getLevel(Void):OutLevel;
 	
