@@ -1,0 +1,122 @@
+#sidebar {
+  display: block;
+  position: relative;
+  width: 154px;
+  left: 495px;
+}
+#sidebarContent {
+  position: absolute;
+  width: 154px;
+}
+#footer {
+  padding: 5px;
+  font-size: 0.625em;
+  color: #FFFFFF;
+  text-align: center;
+}
+#wrapper {
+  margin: 0 auto;
+  width: 651px;
+  display: block;
+  text-align: left;
+  border: 1px solid #FFFFFF;
+  border-top: 0px;
+  background-image: url(../../img/background.gif);
+  background-repeat: repeat-x;
+  background-color: #77B321;
+}
+#content {
+  display: block;
+  width: 491px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+#mainNavigationFlashWrapper {
+  padding: 2px;
+  padding-top: 0px;
+}
+.contentArea {
+  display: block;
+  background-color: #FFFFFF;
+  border: 3px solid #CADEAC;
+  margin-bottom: 2px;
+}
+.hr {
+  width: 123px;
+  height: 1px;
+  overflow: hidden;
+  display: block;
+  border: 0;
+  padding: 0px;
+  margin: 0px;
+  background-image: url(../../img/line.gif);
+}
+.text {
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: block;
+  font-size: 0.625em;
+  color: #666666;
+}
+.links {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  padding-top: 3px;
+  padding-bottom: 5px;
+}
+.links li {
+  font-size: 0.625em;
+  color: #666666;
+}
+.links li a {
+  padding: 0px;
+  padding-left: 16px;
+  background-image: url(../../img/arrow.gif);
+  background-repeat: no-repeat;
+  background-position: 5px 3px;
+  color: #666666;
+  text-decoration: none;
+}
+.links li a:hover {
+  background-image: url(../../img/arrowRollOver.gif);
+  color: #FF9900;
+  text-decoration: none;
+}
+.button {
+  display: run-in;
+  border: 3px double;
+  border-left-color: #999999;
+  border-top-color: #888888;
+  border-bottom-color: #555555;
+  border-right-color: #666666;
+  background-color: #DCDCDC;
+  padding: 1px;
+  margin: 2px;
+  margin-left: 0px;
+}
+.button:active {
+  border: 3px double;
+  border-right-color: #999999;
+  border-bottom-color: #888888;
+  border-top-color: #555555;
+  border-left-color: #666666;
+}
+.levelUp {
+  display: block;
+  padding-left: 18px;
+  padding-top: 3px;
+  background-image: url(../../img/levelUp.gif);
+  background-repeat: no-repeat;
+  background-position: 2px 4px;
+  font-size: 0.8em;
+  height: 20px;
+  vertical-align: center;
+  text-decoration: none;
+}
+.levelUp:hover {
+  background-image: url(../../img/levelUpRollOver.gif);
+  color: #FF9900;
+}
