@@ -18,8 +18,6 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
-import org.as2lib.data.holder.Iterator;
-import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.pointcut.OrCompositePointcut;
 import org.as2lib.aop.pointcut.AndCompositePointcut;
@@ -170,11 +168,12 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	 */
 	public function getPointcut(pattern:String):Pointcut {
 		if (!pattern) return null;
-		var iterator:Iterator = new ArrayIterator(factoryMap.getKeys());
-		while (iterator.hasNext()) {
-			var rule:PointcutRule = iterator.next();
+		var rules:Array = factoryMap.getKeys();
+		var factories:Array = factoryMap.getValues();
+		for (var i:Number = 0; i < rules.length; i++) {
+			var rule:PointcutRule = rules[i];
 			if (rule.execute(pattern)) {
-				return factoryMap.get(rule).getPointcut(pattern);
+				return PointcutFactory(factories[i]).getPointcut(pattern);
 			}
 		}
 		return null;
@@ -192,4 +191,5 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		if (!rule || !factory) throw new IllegalArgumentException("Rule and factory are not allowed to be null or undefined.", this, arguments);
 		factoryMap.put(rule, factory);
 	}
+	
 }

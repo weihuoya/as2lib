@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.holder.Stack;
-import org.as2lib.data.holder.stack.SimpleStack;
-import org.as2lib.data.holder.Iterator;
 import org.as2lib.aop.pointcut.CompositePointcut;
 import org.as2lib.aop.pointcut.AbstractCompositePointcut;
 import org.as2lib.aop.AopConfig;
@@ -55,10 +52,9 @@ class org.as2lib.aop.pointcut.AndCompositePointcut extends AbstractCompositePoin
 	 */
 	public function captures(joinPoint:JoinPoint):Boolean {
 		if (!joinPoint) return false;
-		if (pointcutStack.isEmpty()) return false;
-		var iterator:Iterator = pointcutStack.iterator();
-		while (iterator.hasNext()) {
-			var pointcut:Pointcut = iterator.next();
+		if (pointcutArray.length < 1) return false;
+		for (var i:Number = 0; i < pointcutArray.length; i++) {
+			var pointcut:Pointcut = pointcutArray[i];
 			if (!pointcut.captures(joinPoint)) {
 				return false;
 			}
