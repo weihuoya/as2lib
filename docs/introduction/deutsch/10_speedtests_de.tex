@@ -1,0 +1,55 @@
+\chapter{Speed Tests}
+\label{sec:SpeedTests}
+
+\paragraph{Beweggrund:}
+Das Testen von Applikationen auf dessen Performanz ist unumgänglich, da diese meistens direkt mit dem Erfolg der Applikation zusammenhängt.
+
+\paragraph{Lösungsansatz:}
+Die Durchführung eines Speed Testes lässt sich nach folgendem Schema durchführen:
+\begin{itemize}
+	\item Erstellen der einzelnen Testfälle.
+	Beispiel für MyAddSpeedTest:
+\begin{lstlisting}[frame=single]
+import org.as2lib.test.speed.TestCase;
+
+class MyAddSpeedTest implements TestCase {
+	private var a:Number = 0;
+	public function run (Void):Void {
+		a++;
+	}
+}
+\end{lstlisting}
+	\item Importieren der SpeedTest und der Config Klasse.
+\begin{lstlisting}[frame=single]
+import org.as2lib.test.speed.Test;
+import org.as2lib.Config;
+\end{lstlisting}
+	\item Erstellen einer Instanz der Test Klasse und Übergabe des Output Handlers.
+\begin{lstlisting}[frame=single]
+var test:Test = new Test();
+test.setOut(Config.getOut());
+\end{lstlisting}
+	\item Setzen der Anzahl der durchzuführenden Test Fälle.
+\begin{lstlisting}[frame=single]
+test.setCalls(1000);
+\end{lstlisting}
+	\item Nachdem die durchzuführenden Testfälle hinzugefügt worden sind kann der Test durchgeführt werden. Der Übergabeparameter \emph{true} in \emph{test.run(}) bewirkt eine sofortig Ausgabe des Testergebnisses.
+\begin{lstlisting}[frame=single]
+test.addTestCase(new MyAddSpeedTest());
+test.addTestCase(new MyMinusSpeedTest());
+test.run(true);
+\end{lstlisting}
+\end{itemize} 
+
+\emph{Ausgabe:}
+\begin{verbatim}
+** InfoLevel ** 
+	
+ * Testresult [1000 calls] * 
+ 116\% MyAddSpeedTest: total time:29ms; 
+	calls/second:34482; 
+	average time:0.029ms; (+0.004ms)
+[fastest] 100\% MyMinusSpeedTest: total time:25ms;
+	calls/second:40000;
+	average time:0.025ms; 
+\end{verbatim}Die Ausgabe des SpeedTests zeigt die Anzahl der Aufrufe, die verstrichene Gesamtzeit und den durchschnittlichen Zeitbedarf. Sie findet den schnellsten Testfall und gibt das prozentuelle Verhalten der anderen Testfälle im Verhältnis zum Schnellsten aus.

@@ -1,0 +1,55 @@
+\chapter{Ausblick}
+\label{sec:Ausblick}
+
+\section{Connection Handling}
+\label{sec:ConnectionHandling}
+\paragraph{Beweggrund:}
+Verbindungen mit externen Datenquellen kann in {\sl {Flash MX 2004}} auf verschiedene Art und Weise erstellt werden. Externe Datenquellen können zB.: über \emph{Flash Remoting}, \emph{Web Services}, \emph{XML Socket Connection} angesprochen werden. Aber auch XML- oder Text-Dateien, Anfragen über die URL(zB.: CGI, PHP,...) oder auch Verbindungen zwischen unterschiedlichen SWF-Dateien(LocalConnection) können durchgeführt werden. Die Implementierung dieser unterschiedlichen Datenschnittstellen unterscheidet sich jedoch teilweise massiv und muss für jede Datenquelle speziell durchgeführt werden. Zwar bestehen in {\sl Flash MX 2004 Professional} für bestimmte Datenquellen Verbindungskomponenten(Web Services und XML Dateien), jedoch können sie nur von Flash MX Professional Besitzern verwendet werden und unterscheiden sich in ihren Übergabeparametern. Reine {\sl Actionscript 2} Lösungen bestehen nicht für alle Datenschnittstellen und es kann auch keine standardmäßige Implementierung für alle Datenquellen durchgeführt werden. 
+
+\paragraph{Lösungsansatz:}
+Die {\sl as2lib} stellt eine standardisierte Datenschnittstelle zur Verfügung, die alle Datenschnittstellen beinhaltet. Jeder Verbindung liegt ein Proxy zugrunde, dass im Gegensatz zum normalen Flash Remoting Proxy der Verbindung entsprechend typisiert ist und so Überprüfung zur Compile-Time ermöglicht.
+
+\section{as2lib Debug Konsole}
+\label{sec:as2libDebugKonsole}
+
+\subsection{Anforderungen}
+\label{sec:Anforderungen}
+Bei der Entwicklung von Flash Applikationen steht dem Entwickler nur die Konsolenausgabe zur Verfügung. Wird jedoch die Applikation auf einem Webserver veröffentlicht und es treten in dieser Phase Probleme auf ist es nur sehr schwer möglich schnell die Fehlerquelle zu ermitteln. Dieser Umstand kostet Zeit und Geld. Es sollte eine zusätzliche Ausgabe von Fehler- und Statusmeldungen außerhalb der Enwicklungsumgebung möglich sein. Aus diesem Grund stellt die {\sl as2lib} eine externe Konsole zur Verfügung die diese Funktionalitäten bietet.
+Die Anforderungen an die {\sl as2lib console} sind:
+\begin{itemize}
+	\item Ausgabe des {\sl as2lib} Output Handling, siehe Kapitel \ref{sec:OutputHandling} auf Seite \pageref{sec:OutputHandling} soll sowohl in der Entwicklungsumgebung als auch in online Flashapplikationen möglich sein.
+	\item Anzeige und Debugging von Verbindungen zu externen Datenquellen einer Flashapplikation.
+	\item Anzeige und Debugging von Events in einer Flashapplikation
+	\item Darstellung aller Objekte einer Flashapplikation in Baumform
+	\item Informationen zu einzelnen MovieClips
+	\item Speicherverbrauch einzelner Elemente
+\end{itemize}
+
+\subsection{Die as2lib console}
+\label{sec:DieAs2libConsole}
+Im ersten Prototypen der {\sl as2lib console} wird vor allem das {\sl as2lib} Output Handling, siehe Kapitel \ref{sec:OutputHandling} auf Seite \pageref{sec:OutputHandling}, und Connection Handling, siehe Abschnitt \ref{sec:ConnectionHandling} auf Seite \pageref{sec:ConnectionHandling} verwendet. 
+
+Die grundlegende Funktionalität der {\sl as2lib} Debug Konsole wird in Abbildung \ref{fig:as2libVerwendung} auf Seite \pageref{fig:as2libVerwendung} dargestellt. Im Prototypen werden Debugausgaben(zB.: \emph{Out.debug()}, \emph{Out.info()},...) mehrerer Flashapplikationen die sich zur Debug Konsole verbinden können in der Konsole ausgegeben. Die Flashapplikationen können sich im Browser im Flash Player oder auch in der Flash Entwicklungsumgebung befinden.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=1\textwidth]{uml/as2lib/console.eps}
+\caption{Verwendung der {\sl as2lib console}}
+\label{fig:as2libVerwendung}
+\end{center}
+\end{figure}
+
+Ausgehend von diesen Anforderungen wurde ein erster grafischer Entwurf erstellt, der die erste geforderte Funktionalität beinhaltet(siehe Abb.\ \ref{fig:entwurf}, S.\ \pageref{fig:entwurf}). Die Konsole besteht aus mehreren Karteireiter(Tabs) in denen jeweils nur die Informationen ausgegeben werden die das jeweilige OutLevel besitzen. Nur im Karteireiter All werden alle Informationen dargestellt.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=1\textwidth]{uml/as2lib/as2libconsole.eps}
+\caption{Grafischer Entwurf der {\sl as2lib} Debug Konsole}
+\label{fig:entwurf}
+\end{center}
+\end{figure}
+
+\section{Roadmap}
+\label{sec:Roadmap}
+
+siehe \href{http://www.as2lib.org/roadmap.php}{www.as2lib.org/roadmap.php}
