@@ -20,6 +20,8 @@ class org.as2lib.basic.reflect.algorythm.PropertyAlgorythm extends AbstractConte
 	}
 	
 	public function execute(info:ReflectInfo):Hashtable {
+		type = null;
+		
 		this.info = ClassInfo(info);
 		this.data = new Hashtable();
 		this.getters = new Hashtable();
