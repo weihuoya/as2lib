@@ -1,0 +1,9 @@
+This Package should contain all Testcases for the as2lib. It provides additionally the
+Basic classes for the Testcases.
+
+Packagemaster: Martin Heidegger
+
+Contain (should Status):
+
+Failure - Class for Failure occured by working an TestCase
+Test - Basic Class for Testcases.
