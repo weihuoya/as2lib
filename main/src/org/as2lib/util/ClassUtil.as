@@ -36,7 +36,7 @@ class org.as2lib.util.ClassUtil extends BasicClass {
 	 */
 	public static function isImplementationOf(clazz:Function, interfaceObject:Function):Boolean {
 		var o:Object = new Object();
-		o.__proto__ = clazz..prototype;
+		o.__proto__ = clazz.prototype;
 		return (o instanceof interfaceObject);
 	}
 }
