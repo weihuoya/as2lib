@@ -16,6 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalStateException;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControlState;
 import org.as2lib.test.mock.MethodBehaviour;
@@ -39,7 +40,12 @@ class org.as2lib.test.mock.support.ReplayState extends BasicClass implements Moc
 	 * @param behaviour used to verify the expectations
 	 */
 	public function ReplayState(behaviour:Behaviour) {
+		if (!behaviour) throw new IllegalArgumentException("Behaviour is not allowed to be null or undefined.", this, arguments);
 		this.behaviour = behaviour;
+	}
+	
+	public function getBehaviour(Void):Behaviour {
+		return behaviour;
 	}
 	
 	/**
@@ -52,7 +58,11 @@ class org.as2lib.test.mock.support.ReplayState extends BasicClass implements Moc
 			return methodBehaviour.response();
 		} else {
 			methodBehaviour = behaviour.createMethodBehaviour(null);
-			behaviour.addMethodBehaviour(methodCall.getMethodName(), methodBehaviour);
+			if (methodCall.getMethodName() && methodCall.getMethodName() != "") {
+				behaviour.addMethodBehaviour(methodCall.getMethodName(), methodBehaviour);
+			} else {
+				behaviour.addMethodBehaviour("[unknown]", methodBehaviour);
+			}
 			methodBehaviour.addActualMethodCall(methodCall);
 			return methodBehaviour.response();
 		}

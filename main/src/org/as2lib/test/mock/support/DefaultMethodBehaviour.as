@@ -47,6 +47,10 @@ class org.as2lib.test.mock.support.DefaultMethodBehaviour extends BasicClass imp
 		actualMethodCalls.push(actualMethodCall);
 	}
 	
+	public function getActualMethodCalls(Void):Array {
+		return actualMethodCalls.concat();
+	}
+	
 	public function addMethodResponse(methodResponse:MethodResponse, methodCallRange:MethodCallRange):Void {
 		methodResponses.push(methodResponse);
 		methodCallRanges.push(methodCallRange);
@@ -55,7 +59,7 @@ class org.as2lib.test.mock.support.DefaultMethodBehaviour extends BasicClass imp
 	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void {
 		expectedMethodCall.setArgumentsMatcher(argumentsMatcher);
 	}
-
+	
 	public function expectsAnotherMehodCall(Void):Boolean {
 		return (getCurrentMethodCallRangeIndex() > -1)
 	}
@@ -63,7 +67,12 @@ class org.as2lib.test.mock.support.DefaultMethodBehaviour extends BasicClass imp
 	private function getCurrentMethodCallRangeIndex(Void):Number {
 		var maximum:Number = 0;
 		for (var i:Number = 0; i < methodCallRanges.length; i++) {
-			maximum += MethodCallRange(methodCallRanges[i]).getMaximum();
+			var methodCallRange:MethodCallRange = methodCallRanges[i];
+			if (methodCallRange) {
+				maximum += methodCallRange.getMaximum();
+			} else {
+				maximum += MethodCallRange.ANY_QUANTITY;
+			}
 			if (actualMethodCalls.length < maximum) {
 				return i;
 			}
@@ -85,14 +94,6 @@ class org.as2lib.test.mock.support.DefaultMethodBehaviour extends BasicClass imp
 		}
 		return -1;
 	}
-	
-	/*private function getTotalExpectedMethodCallNumber(Void):Void {
-		var result:Number = 0;
-		for (var i:Number = 0; i < methodCallRanges.length; i++) {
-			result += MethodCallRange(methodCallRanges[i]).getMaximum();
-		}
-		return result;
-	}*/
 	
 	public function verify(testCase:TestCase):Void {
 		if (expectedMethodCall) {
