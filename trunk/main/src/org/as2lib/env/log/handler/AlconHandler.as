@@ -40,12 +40,23 @@ class org.as2lib.env.log.handler.AlconHandler extends BasicClass implements LogH
 	 *
 	 * <p>This method always returns the same instance.
 	 *
+	 * <p>Note that the two arguments {@code decorateMethod} and {@code recursiveTracing}
+	 * are only recognized on first call of this method.
+	 *
+	 * @param decorateMethod (optional) determines whether to use the string
+	 * returned by {@code LogMessage.toString} or only the original message
+	 * returned by {@code LogMessage.getMessage} for logging
+	 * @param recursiveTracing (optional) determines whether messages shall
+	 * be traced recursively or not
 	 * @return a alcon handler
 	 */
-	public static function getInstance(Void):AlconHandler {
-		if (!alconHandler) alconHandler = new AlconHandler();
+	public static function getInstance(decorateMethod:Boolean, recursiveTracing:Boolean):AlconHandler {
+		if (!alconHandler) alconHandler = new AlconHandler(decorateMethod, recursiveTracing);
 		return alconHandler;
 	}
+	
+	/** Determines whether to decorate the message. */
+	private var decorateMethod:Boolean;
 	
 	/** Determines whether to trace recursively or not. */
 	private var recursiveTracing:Boolean;
@@ -55,32 +66,36 @@ class org.as2lib.env.log.handler.AlconHandler extends BasicClass implements LogH
 	 *
 	 * <p>You can use one and the same instance for multiple loggers. So
 	 * think about using the handler returned by the static {@link #getInstance}
-	 * method.
-	 * Using this instance prevents the instantiation of unnecessary alcon
-	 * handlers and and saves storage.
+	 * method. Using this instance prevents the instantiation of unnecessary
+	 * alcon handlers and saves storage.
 	 *
+	 * <p>{@code decorateMethod} is by default {@code true} and {@code recursiveTracing}
+	 * {@code false}.
+	 *
+	 * <p>Note that {@code recursiveTracing} is turned off when {@code decorateMethod}
+	 * is turned on.
+	 *
+	 * @param decorateMethod (optional) determines whether to use the string
+	 * returned by {@code LogMessage.toString} or only the original message
+	 * returned by {@code LogMessage.getMessage} for logging
 	 * @param recursiveTracing (optional) determines whether messages shall
 	 * be traced recursively or not
 	 */
-	public function AlconHandler(recursiveTracing:Boolean) {
-		this.recursiveTracing = recursiveTracing;
+	public function AlconHandler(decorateMethod:Boolean, recursiveTracing:Boolean) {
+		this.decorateMethod = decorateMethod == null ? true : decorateMethod;
+		this.recursiveTracing = !recursiveTracing ? false : true;
 	}
 	
 	/**
-	 * Uses the {@code AlconHandler} class to log the message.
-	 *
-	 * <p>If recursive tracing is turned on, only the original message returned
-	 * by {@link LogMessage#getMessage} is passed to the {@code Alcon.trace}
-	 * method as parameter, otherwise the string returned by {@link LogMessage#toString}
-	 * is used.
+	 * Uses the {@code AlconHandler} class to log the {@code message}.
 	 *
 	 * @param message the message to log
 	 */
 	public function write(message:LogMessage):Void {
-		if (this.recursiveTracing) {
-			Alcon.trace(message.getMessage(), convertLevel(message.getLevel()), true);
+		if (this.decorateMethod) {
+			Alcon.trace(message.toString(), convertLevel(message.getLevel()), this.recursiveTracing);
 		} else {
-			Alcon.trace(message.toString(), convertLevel(message.getLevel()), false);
+			Alcon.trace(message.getMessage(), convertLevel(message.getLevel()), this.recursiveTracing);
 		}
 	}
 	
