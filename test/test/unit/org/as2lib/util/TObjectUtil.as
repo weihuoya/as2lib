@@ -1,9 +1,26 @@
-﻿import org.as2lib.core.BasicClass;
+﻿/*
+ * Copyright the original author or authors.
+ * 
+ * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.mozilla.org/MPL/MPL-1.1.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import org.as2lib.core.BasicClass;
 import org.as2lib.core.BasicInterface;
 import org.as2lib.core.BasicMovieClip;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.Test;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.util.Call;
 
 /**
  * Testcase for massive ObjectUtil testing.
@@ -255,7 +272,9 @@ class test.unit.org.as2lib.util.TObjectUtil extends TestCase {
 		assertFalse("'test9' is a extended movieclip, so it should not match 'undefined'", ObjectUtil.typesMatch(test8, undefined));
 	}
 	
-	
+	/**
+	 * Tests if compareTypeOf works properly.
+	 */
 	public function testCompareTypeOf(Void):Void {
 		var test1:String = "a";
 		var test2:String = "b";
@@ -278,24 +297,156 @@ class test.unit.org.as2lib.util.TObjectUtil extends TestCase {
 		assertTrue("'test3' & 'test4' are numbers", ObjectUtil.compareTypeOf(test3, test4));
 	}
 	
+	/**
+	 * Test of primitive and complex types used with ObjectUtil.isPrimitiveType(...).
+	 */
 	public function testIsPrimitiveType(Void):Void {
+		var primitiveString:String = "a";
+		var primitiveNumber:Number = 1;
+		var primitiveBoolean:Boolean = true;
+		var complexObject:Object = {};
+		var complexObject2:Object = new BasicClass();
+		var func:Function = function() {}
+		var nullValue:Object = null;
+		var undefinedValue:Object = undefined;
+		
+		assertTrue("'primitiveString' is type of string, so it should be a primitive", ObjectUtil.isPrimitiveType(primitiveString));
+		assertTrue("'primitiveNumber' is type of number, so it should be a primitive", ObjectUtil.isPrimitiveType(primitiveNumber));
+		assertTrue("'primitiveBoolean' is type of boolean, so it should be a primitive", ObjectUtil.isPrimitiveType(primitiveBoolean));
+		assertFalse("'func' is type of function, so it should not be a primitive", ObjectUtil.isPrimitiveType(func));
+		assertFalse("'complexObject' is type of object, so it should not be a primitive", ObjectUtil.isPrimitiveType(complexObject));
+		assertFalse("'complexObject2' is type of BasicClass, so it should not be a primitive", ObjectUtil.isPrimitiveType(complexObject2));
+		assertFalse("'nullValue' is type of null, so it should not be a primitive", ObjectUtil.isPrimitiveType(nullValue));
+		assertFalse("'undefinedValue' is type of undefined, so it should not be a primitive", ObjectUtil.isPrimitiveType(undefinedValue));
 	}
 	
+	/**
+	 * Type of tests, test if type of matches
+	 */
 	public function testIsTypeOf(Void):Void {
+		var string:String = "a";
+		var number:Number = 1;
+		var boolean:Boolean = true;
+		var object:Object = {};
+		var movieClip:MovieClip = _root;
+		var func:Function = function() {};
+		var nullValue:Object = null;
+		var undefinedValue:Object = undefined;
+		
+		assertTrue("'string' should be typeof String", ObjectUtil.isTypeOf(string, ObjectUtil.TYPE_STRING));
+		assertTrue("'number' should be typeof Number", ObjectUtil.isTypeOf(number, ObjectUtil.TYPE_NUMBER));
+		assertTrue("'boolean' should be typeof Boolean", ObjectUtil.isTypeOf(boolean, ObjectUtil.TYPE_BOOLEAN));
+		assertTrue("'object' should be typeof Object", ObjectUtil.isTypeOf(object, ObjectUtil.TYPE_OBJECT));
+		assertTrue("'movieClip' should be typeof MovieClip", ObjectUtil.isTypeOf(movieClip, ObjectUtil.TYPE_MOVIECLIP));
+		assertTrue("'func' should be typeof Function", ObjectUtil.isTypeOf(func, ObjectUtil.TYPE_FUNCTION));
+		assertTrue("'nullValue' should be typeof null", ObjectUtil.isTypeOf(nullValue, ObjectUtil.TYPE_NULL));
+		assertTrue("'undefinedValue' should be typeof undefined", ObjectUtil.isTypeOf(undefinedValue, ObjectUtil.TYPE_UNDEFINED));
+		
+		assertFalse("'string' should not be a type of Number", ObjectUtil.isTypeOf(string, ObjectUtil.TYPE_NUMBER));
+		assertFalse("'number' should not be a type of String", ObjectUtil.isTypeOf(number, ObjectUtil.TYPE_STRING));
+		assertFalse("'boolean' should not be a type of Object", ObjectUtil.isTypeOf(boolean, ObjectUtil.TYPE_OBJECT));
+		assertFalse("'object' should not be a type of Boolean", ObjectUtil.isTypeOf(object, ObjectUtil.TYPE_BOOLEAN));
+		assertFalse("'movieClip' should not be a type of Function", ObjectUtil.isTypeOf(movieClip, ObjectUtil.TYPE_FUNCTION));
+		assertFalse("'func' should not be a type of MovieClip", ObjectUtil.isTypeOf(func, ObjectUtil.TYPE_MOVIECLIP));
+		assertFalse("'nullValue' should not be a type of undefined", ObjectUtil.isTypeOf(nullValue, ObjectUtil.TYPE_UNDEFINED));
+		assertFalse("'undefinedValue' should not be a type of null", ObjectUtil.isTypeOf(undefinedValue, ObjectUtil.TYPE_NULL));
 	}
 	
+	/**
+	 * Instance of tests.
+	 */
 	public function testIsInstanceOf(Void):Void {
+		var primitive:Boolean = true;
+		var object:Object = {};
+		var inst:Object = new BasicClass();
+		
+		assertTrue("'primitive' is a instance of Object", ObjectUtil.isInstanceOf(primitive, Object));
+		assertTrue("'object' is a instance of Object", ObjectUtil.isInstanceOf(object, Object));
+		assertTrue("'inst' is a instance of Object", ObjectUtil.isInstanceOf(inst, Object));
+		assertTrue("'inst' is a instance of BasicClass", ObjectUtil.isInstanceOf(inst, BasicClass));
+		assertTrue("'inst' is a instance of BasicInterface", ObjectUtil.isInstanceOf(inst, BasicInterface));
+		assertFalse("'inst' is not a instance of Test", ObjectUtil.isInstanceOf(inst, Test));
+		assertFalse("'inst' is not a instance of null, its a instance of Object", ObjectUtil.isInstanceOf(inst, null));
+		assertTrue("'this' should be a instance of "+getClass().getFullName(), ObjectUtil.isInstanceOf(this, getClass().getType()));
 	}
 	
+	/**
+	 * Tests for a explicit instance of a Element
+	 */
 	public function testIsExplicitInstanceOf(Void):Void {
+		var inst:Object = new BasicClass();
+		var string:String = "a";
+		var number:Number = 0;
+		var boolean:Boolean = true;
+		
+		assertTrue("'inst' should be the explicit instance of BasicClass", ObjectUtil.isExplicitInstanceOf(inst, BasicClass));
+		assertFalse("'inst' should not be the explicit instance of Object", ObjectUtil.isExplicitInstanceOf(inst, Object));
+		assertTrue("'inst' should not be the explicit instance of BasicInterface because BasicClass is directly implementing it", ObjectUtil.isExplicitInstanceOf(inst, BasicClass));
+		assertTrue("'string' should be a explicit instance of String", ObjectUtil.isExplicitInstanceOf(string, String));
+		assertFalse("'string' should not be a explicit instance of Object", ObjectUtil.isExplicitInstanceOf(string, Object));
+		assertTrue("'number' should be a explicit instance of Number", ObjectUtil.isExplicitInstanceOf(number, Number));
+		assertFalse("'number' should not be a explicit instance of Object", ObjectUtil.isExplicitInstanceOf(number, Object));
+		assertTrue("'boolean' should be a explicit instance of Boolean", ObjectUtil.isExplicitInstanceOf(boolean, Boolean));
+		assertFalse("'boolean' should not be a explicit instance of Object", ObjectUtil.isExplicitInstanceOf(boolean, Object));
+		assertFalse("'this' should not be a explicit instance of BasicClass", ObjectUtil.isExplicitInstanceOf(this, BasicClass));
+		assertFalse("'this' should not be a explicit instance of BasicInterface", ObjectUtil.isExplicitInstanceOf(this, BasicInterface));
+		assertFalse("'this' should not be a explicit instance of Test", ObjectUtil.isExplicitInstanceOf(this, Test));
+		assertTrue("'this' should be a explicit instance of "+getClass().getFullName(), ObjectUtil.isExplicitInstanceOf(this, getClass().getType()));
 	}
 	
+	/**
+	 * Tests the isEmpty method with a positive and negative case.
+	 */
 	public function testIsEmpty(Void):Void {
+		var string:String = "a";
+		var nullValue:Object = null;
+		var undefinedValue:Object = undefined;
+		
+		assertFalse("'string' is not empty", ObjectUtil.isEmpty(string));
+		assertTrue("'nullValue' is empty", ObjectUtil.isEmpty(nullValue));
+		assertTrue("'undefinedValue' is empty", ObjectUtil.isEmpty(undefinedValue));
 	}
 	
+	/**
+	 * Tests the .isAvailable method. (Inversion of the isEmpty test)
+	 */
 	public function testIsAvailable(Void):Void {
+		var string:String = "a";
+		var nullValue:Object = null;
+		var undefinedValue:Object = undefined;
+		
+		assertTrue("'string' is not empty", ObjectUtil.isAvailable(string));
+		assertFalse("'nullValue' is empty", ObjectUtil.isAvailable(nullValue));
+		assertFalse("'undefinedValue' is empty", ObjectUtil.isAvailable(undefinedValue));
 	}
 	
+	
+	/**
+	 * Tests the .isAvailable method.
+	 */
 	public function testForEach(Void):Void {
+		var call:Call = new Call(this, forEachCall);
+		var obj:Object = new Object();
+		obj.test1 = "a";
+		obj.test2 = "b";
+		obj.test3 = "c";
+		
+		ObjectUtil.forEach(obj, call);
+	}
+	
+	
+	/**
+	 * Call to be executed by forEach.
+	 */
+	private function forEachCall(object, name:String):Void {
+		if(name == "test1") {
+			assertEquals("'test1' should be 'a'", object, "a");
+		} else if(name == "test2") {
+			assertEquals("'test2' should be 'b'", object, "b");
+		} else if(name == "test3") {
+			assertEquals("'test3' should be 'c'", object, "c");
+		} else {
+			fail("Unexpected name: '"+name+"' occured in object")
+		}
 	}
 }
