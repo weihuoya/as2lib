@@ -13,9 +13,14 @@ class org.as2lib.basic.TypedArray {
 	private var array:Array;
 	private var type:Function;
 	
+	/**
+	 * Constructs a new TypedArray instance.
+	 * @param type
+	 */
 	public function TypedArray(type:Function, array:Array) {
-		this.array = new Array();
-		this.array.concat(array);
+		// Problem: The types the array passed as a parameter don't get checked.
+		if (array != null) this.array = array;
+		else this.array = new Array();
 		this.type = type;
 	}
 	
@@ -26,15 +31,17 @@ class org.as2lib.basic.TypedArray {
 		var l:Number = arguments.length;
 		for (var i:Number = 0; i < l; i++) {
 			if (typeDoesNotMatch(arguments[i])) {
-				// throw ...
+				throw new Error();
 			}
 		}
+		var result:TypedArray;
 		if (l == 0) {
 			// TODO: Replace with .clone when ready
-			return new TypedArray(this.type, new Array(this.array));
+			result = new TypedArray(this.type, this.array.concat());
 		} else {
-			this.array.concat.apply(null, arguments);
+			result = new TypedArray(this.type, this.array.concat(arguments));
 		}
+		return result;
 	}
 	
 	/**
@@ -85,7 +92,7 @@ class org.as2lib.basic.TypedArray {
 	 */
 	public function push(value:Object):Number {
 		if (typeDoesNotMatch(value)) {
-			// throw ...
+			throw new Error();
 		}
 		return this.array.push(value);
 	}
@@ -108,21 +115,21 @@ class org.as2lib.basic.TypedArray {
 	 * @see Array
 	 */
 	public function sort():Object {
-		return this.array.sort.apply(null, arguments);
+		return this.array.sort.apply(this.array, arguments);
 	}
 	
 	/**
 	 * @see Array
 	 */
 	public function sortOn():Object {
-		return this.array.sortOn.apply(null, arguments);
+		return this.array.sortOn.apply(this.array, arguments);
 	}
 	
 	/**
 	 * @see Array
 	 */
 	public function splice(index:Number, count:Number):Void {
-		this.array.splice.apply(null, arguments);
+		this.array.splice.apply(this.array, arguments);
 	}
 	
 	/**
@@ -130,7 +137,7 @@ class org.as2lib.basic.TypedArray {
 	 */
 	public function unshift(value:Object):Number {
 		if (typeDoesNotMatch(value)) {
-			// throw ...
+			throw new Error();
 		}
 		return this.array.unshift(value);
 	}
@@ -156,14 +163,14 @@ class org.as2lib.basic.TypedArray {
 	 */
 	public function typeDoesNotMatch(object:Object):Boolean {
 		if (ObjectUtil.isPrimitiveType(object)) {
-			if (ObjectUtil.typesMatch(type(object), object)) {
-				return true;
+			if (ObjectUtil.typesMatch(this.type(object), object)) {
+				return false;
 			}
 		} else {
-			if (ObjectUtil.isInstanceOf(object, type)) {
-				return true;
+			if (ObjectUtil.isInstanceOf(object, this.type)) {
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 }
