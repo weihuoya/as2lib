@@ -42,14 +42,10 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 	/* EventBroadcaster for onResponse and onError - events */
 	private var eventBroadcaster:EventBroadcaster;
 	
-	/** 
-	 * Defines domain of which server should be allowed
-	 */
+	/* Defines domain of which server should be allowed */
 	private var host:String;
 	
-	/** 
-	 * Defines additional domain of which server should be allowed
-	 */
+	/* Additional Parameter, which can be used */
 	private var path:String;
 	
 	/* name of method, which should be passed to a server */
@@ -148,17 +144,16 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 	}
 	
 	/**
-	 * Sets additional path. In case of LocalConnection a possible second domain
-	 *  to restrict domain access.
-	 * @param path an url representing allowed domain (e.g. "www.as2lib.org")
+	 * Sets additional transer parameter.
+	 * @param path optional parameter
 	 */
 	public function setPath(path:String):Void {
 		this.path = path;
 	}
 	
 	/**
-	 * Returns path/domain
-	 * @return path an url representing allowed domain (e.g. "www.as2lib.org")
+	 * Returns path
+	 * @return path optional parameter
 	 */
 	public function getPath(Void):String {
 		return path;
@@ -209,6 +204,9 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 		
 		args.push(serverID);
 		args.push(serverMethod);
+		
+		if(path)args.push(path);
+		
 		args.push(connID);
 		args.push(method);
 		args = args.concat(params);
@@ -237,9 +235,8 @@ class org.as2lib.data.io.conn.local.LocalClient extends LocalConnection implemen
 	public function allowDomain(serverDomain:String){
 		aOut.debug(getClass().getName()+".allowDomain: "+serverDomain);
 		aOut.debug(getClass().getName()+".host: "+host);
-		aOut.debug(getClass().getName()+".path: "+path);
 		if(host){
-			if(serverDomain == host || serverDomain == path){
+			if(serverDomain == host){
 				return true;
 			}
 			else{

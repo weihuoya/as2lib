@@ -18,11 +18,14 @@ import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.out.OutHandler;
 import org.as2lib.env.out.info.OutWriteInfo;
 import org.as2lib.env.out.info.OutErrorInfo;
-import org.as2lib.env.out.OutConfig;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.io.conn.local.LocalClient;
 import org.as2lib.data.io.conn.listener.SimpleListener;
 import org.as2lib.data.io.conn.ConnectorRequest;
+import org.as2lib.env.out.level.AllLevel;
+import org.as2lib.env.out.OutConfig;
+import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.out.OutLevel;
 
 /**
  * ExternalConsoleHandler is a concrete instance of the OutHandler interface. It uses e.g. the
@@ -51,7 +54,8 @@ class org.as2lib.env.out.handler.ExternalConsoleHandler extends BasicClass imple
 	 * @see org.as2lib.env.out.OutHandler
 	 */
 	public function write(info:OutWriteInfo):Void {
-		client.handleRequest(new ConnectorRequest("","",OutConfig.getWriteStringifier().execute(info)));
+		var level:String = ReflectUtil.getClassInfo(info.getLevel()).getName();
+		client.handleRequest(new ConnectorRequest("localhost","Output",level,info.getMessage()));
 	}
 	
 	/**
@@ -62,6 +66,8 @@ class org.as2lib.env.out.handler.ExternalConsoleHandler extends BasicClass imple
 	 * @see org.as2lib.env.out.OutHandler
 	 */
 	public function error(info:OutErrorInfo):Void {
-		client.handleRequest(new ConnectorRequest("","",OutConfig.getErrorStringifier().execute(info)));
+		trace("**:: ExternalConsoleHandler.error: "+info.getThrowable().getMessage());
+		var level:String = ReflectUtil.getClassInfo(info.getLevel()).getName();
+		client.handleRequest(new ConnectorRequest("localhost","Output",level,info.getThrowable().getMessage()));
 	}
 }
