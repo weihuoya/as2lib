@@ -84,7 +84,7 @@ class org.as2lib.basic.ReflectionObject {
 			this.getPropertiesAndMethods(this.realObject.prototype);
 			// InstanceFunctions.
 			if(/*this._name != "undefined" && !this._name &&*/ this.parentObject._name != "__constructor__" && !this.realObject.__blockReflection__){
-				trace('-----> Calling: '+this_._name);
+				trace('-----> Calling: '+this._name);
 				var instance = new this.realObject();
 				if(!instance.__blockReflection__) {
 					this.getPropertiesAndMethods(instance);
