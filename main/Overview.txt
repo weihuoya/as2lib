@@ -36,7 +36,7 @@ interface org.as2lib.basic.Overloading {
      public function createOverloadHandler(matches:TypedArray,forwardsTo:Function):OverloadHandler;
 }
  
-class org.as2lib.basic.BasicClass implements org.as2lib.basic.BasicInterface {}
+class org.as2lib.basic.BasicClass implements org.as2lib.basic.BasicInterface, org.as2lib.basic.Cloneable, org.as2lib.basic.Overloading {}
  
  
 interface org.as2lib.basic.reflect.ClassInfo { 
