@@ -31,8 +31,7 @@ interface org.as2lib.test.unit.Test extends BasicInterface {
 	/**
 	 * Runs the Test.
 	 * 
-	 * @param doNotPrintResult [Optional Parameter, null interpreted as false] Boolean if the Result should be printed immediately or not.
 	 * @return TestRunner that run this test (including all informations about the run).
 	 */
-	public function run(doNotPrintResult:Boolean):TestRunner;
+	public function run():TestRunner;
 }

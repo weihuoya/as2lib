@@ -24,6 +24,7 @@ import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.util.Call;
+import org.as2lib.util.Executable;
 import org.as2lib.util.ClassUtil;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.reflect.ClassInfo;
@@ -216,14 +217,10 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * Runs all methods of this testcase in an new container.
 	 * 
 	 * @see TestRunner.run
-	 * @param doNotPrintResult Parameter to prevent immediately printing of the Result.
 	 * @return Runner of the Testcases (containing all informations about the run)
 	 */
-	public function run(doNotPrintResult:Boolean):TestRunner {
-		if(!doNotPrintResult) {
-			 doNotPrintResult = false;
-		}
-		return new TestRunner().run(ClassUtil.createCleanInstance(ClassInfo.forInstance(this).getType()), doNotPrintResult);
+	public function run():TestRunner {
+		return new TestRunner().run(this);
 	}
 	
 	/**
@@ -1084,16 +1081,16 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertThrows():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([Call, Array], assertThrowsWithCall);
+		overload.addHandler([Executable, Array], assertThrowsWithCall);
 		overload.addHandler([Object, String, Array], assertThrowsWithString);
 		overload.addHandler([Object, Function, Array], assertThrowsWithFunction);
-		overload.addHandler([Object, Call, Array], assertThrowsWithCallAndType);
+		overload.addHandler([Object, Executable, Array], assertThrowsWithCallAndType);
 		overload.addHandler([Object, Object, String, Array], assertThrowsWithStringAndType);
 		overload.addHandler([Object, Object, Function, Array], assertThrowsWithFunctionAndType);
-		overload.addHandler([String, Call, Array], assertThrowsWithCallAndMessage);
+		overload.addHandler([String, Executable, Array], assertThrowsWithCallAndMessage);
 		overload.addHandler([String, Object, String, Array], assertThrowsWithStringAndMessage);
 		overload.addHandler([String, Object, Function, Array], assertThrowsWithFunctionAndMessage);
-		overload.addHandler([String, Object, Call, Array], assertThrowsWithCallAndMessageAndType);
+		overload.addHandler([String, Object, Executable, Array], assertThrowsWithCallAndMessageAndType);
 		overload.addHandler([String, Object, Object, String, Array], assertThrowsWithStringAndMessageAndType);
 		overload.addHandler([String, Object, Object, Function, Array], assertThrowsWithFunctionAndMessageAndType);
 		return overload.forward(arguments);
@@ -1109,7 +1106,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
 	 */
-	private function assertThrowsWithCall(call:Call, args:Array):Boolean {
+	private function assertThrowsWithCall(call:Executable, args:Array):Boolean {
 		return assertThrowsWithCallAndMessage("", call, args);
 	}
 	
@@ -1125,7 +1122,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
 	 */
-	private function assertThrowsWithCallAndType(type, call:Call, args:Array):Boolean {
+	private function assertThrowsWithCallAndType(type, call:Executable, args:Array):Boolean {
 		return assertThrowsWithCallAndMessageAndType("", type, call, args);
 	}
 	
@@ -1199,7 +1196,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
 	 */
-	private function assertThrowsWithCallAndMessage(message:String, call:Call, args:Array):Boolean {
+	private function assertThrowsWithCallAndMessage(message:String, call:Executable, args:Array):Boolean {
 		return assertThrowsWithCallAndMessageAndType(message, null, call, args);
 	}
 	
@@ -1212,7 +1209,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
 	 */
-	private function assertThrowsWithCallAndMessageAndType(message:String, type, call:Call, args:Array):Boolean {
+	private function assertThrowsWithCallAndMessageAndType(message:String, type, call:Executable, args:Array):Boolean {
 		var info:ExecutionInfo = new AssertThrowsInfo(message, type, call, args);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();
@@ -1303,16 +1300,16 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertNotThrows():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([Call, Array], assertNotThrowsWithCall);
+		overload.addHandler([Executable, Array], assertNotThrowsWithCall);
 		overload.addHandler([Object, String, Array], assertNotThrowsWithString);
 		overload.addHandler([Object, Function, Array], assertNotThrowsWithFunction);
-		overload.addHandler([Object, Call, Array], assertNotThrowsWithCallAndType);
+		overload.addHandler([Object, Executable, Array], assertNotThrowsWithCallAndType);
 		overload.addHandler([Object, Object, String, Array], assertNotThrowsWithStringAndType);
 		overload.addHandler([Object, Object, Function, Array], assertNotThrowsWithFunctionAndType);
-		overload.addHandler([String, Call, Array], assertNotThrowsWithCallAndMessage);
+		overload.addHandler([String, Executable, Array], assertNotThrowsWithCallAndMessage);
 		overload.addHandler([String, Object, String, Array], assertNotThrowsWithStringAndMessage);
 		overload.addHandler([String, Object, Function, Array], assertNotThrowsWithFunctionAndMessage);
-		overload.addHandler([String, Object, Call, Array], assertNotThrowsWithCallAndMessageAndType);
+		overload.addHandler([String, Object, Executable, Array], assertNotThrowsWithCallAndMessageAndType);
 		overload.addHandler([String, Object, Object, String, Array], assertNotThrowsWithStringAndMessageAndType);
 		overload.addHandler([String, Object, Object, Function, Array], assertNotThrowsWithFunctionAndMessageAndType);
 		return overload.forward(arguments);
@@ -1329,7 +1326,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
 	 */
-	private function assertNotThrowsWithCall(call:Call, args:Array):Boolean {
+	private function assertNotThrowsWithCall(call:Executable, args:Array):Boolean {
 		return assertNotThrowsWithCallAndMessage("", call, args);
 	}
 	
@@ -1344,7 +1341,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
 	 */
-	private function assertNotThrowsWithCallAndType(type, call:Call, args:Array):Boolean {
+	private function assertNotThrowsWithCallAndType(type, call:Executable, args:Array):Boolean {
 		return assertNotThrowsWithCallAndMessageAndType("", type, call, args);
 	}
 	
@@ -1418,7 +1415,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
 	 */
-	private function assertNotThrowsWithCallAndMessage(message:String, call:Call, args:Array):Boolean {
+	private function assertNotThrowsWithCallAndMessage(message:String, call:Executable, args:Array):Boolean {
 		return assertNotThrowsWithCallAndMessageAndType(message, null, call, args);
 	}
 	
@@ -1431,7 +1428,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
 	 */
-	private function assertNotThrowsWithCallAndMessageAndType(message:String, type, call:Call, args:Array):Boolean {
+	private function assertNotThrowsWithCallAndMessageAndType(message:String, type, call:Executable, args:Array):Boolean {
 		var info:ExecutionInfo = new AssertNotThrowsInfo(message, type, call, args);
 		getMethodInformation().addInfo(info);
 		return !info.isFailed();

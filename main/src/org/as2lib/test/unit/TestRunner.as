@@ -88,6 +88,21 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	/** Internal EventBroadcaster holder. */
 	private var eB:EventBroadcaster;
 	
+	/** Internal Startinfo holder. */
+	private var startInfo:StartInfo;
+	
+	/** Internal Pauseinfo holder. */
+	private var pauseInfo:PauseInfo;
+	
+	/** Internal Resumeinfo holder. */
+	private var resumeInfo:ResumeInfo;
+	
+	/** Internal ProgressInfo holder. */
+	private var progressInfo:ProgressInfo;
+	
+	/** Internal FinishInfo holder. */
+	private var finishInfo:FinishInfo;
+	
 	/** Result Holder for a TestResult. */
 	private var testResult:TestResult;
 	
@@ -129,6 +144,11 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	 */
 	public function TestRunner(Void) {
 		eB = new SimpleEventBroadcaster();
+		startInfo = new StartInfo(this);
+		pauseInfo = new PauseInfo(this);
+		progressInfo = new ProgressInfo(this);
+		resumeInfo = new ResumeInfo(this);
+		finishInfo = new FinishInfo(this);
 	}
 	
 	/**
@@ -200,7 +220,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 		started = true;
 		
 		// Dispatches the event for the view.
-		eB.dispatch(new StartInfo(this));
+		eB.dispatch(startInfo);
 		processQueue();
 	}
 	
@@ -279,7 +299,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 			methodInfo.addInfo(new PauseError("IMPORTANT: Pause is not available before the execution of a testcase method. Action failed."))
 		} else {
 			paused = true;
-			eB.dispatch(new PauseInfo(this));
+			eB.dispatch(pauseInfo);
 		}
 	}
 	
@@ -290,7 +310,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	 */
 	public function resume(Void):Void {
 		paused = false;
-		eB.dispatch(new ResumeInfo(this));
+		eB.dispatch(resumeInfo);
 		processQueue();
 	}
 	
@@ -419,7 +439,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 		processedTestCaseMethods.push(methodInfo);
 		
 		// Dispatch the actual progress information
-		eB.dispatch(new ProgressInfo(this, currentTestCase, methodInfo));
+		eB.dispatch(progressInfo);
 		
 		delete methodInfo;
 	}
@@ -431,6 +451,6 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 		finished = true;
 		started = false;
 		paused = false;
-		eB.dispatch(new FinishInfo(this));
+		eB.dispatch(finishInfo);
 	}		
 }
