@@ -31,28 +31,30 @@ class org.as2lib.data.holder.ProtectedIterator extends BasicClass implements Ite
 	private var iterator:Iterator;
 	
 	/**
-	 * @see org.as2lib.data.iterator.ArrayIterator#new()
+	 * Constructs a new instance.
+	 * 
+	 * @param iterator the iterator to protect
 	 */
 	public function ProtectedIterator(iterator:Iterator) {
 		this.iterator = iterator;
 	}
 	
 	/**
-	 * @see org.as2lib.data.iterator.Iterator#hasNext(Void):Boolean
+	 * @see org.as2lib.data.holder.Iterator#hasNext(Void):Boolean
 	 */
 	public function hasNext(Void):Boolean {
 		return iterator.hasNext();
 	}
 	
 	/**
-	 * @see org.as2lib.data.iterator.Iterator#next(Void)
+	 * @see org.as2lib.data.holder.Iterator#next(Void)
 	 */
 	public function next(Void) {
 		return iterator.next();
 	}
 	
 	/**
-	 * @see org.as2lib.data.iterator.Iterator#remove()
+	 * @see org.as2lib.data.holders.Iterator#remove()
 	 */
 	public function remove(Void):Void {
 		throw new UnsupportedOperationException("This Iterator does not support the remove() method.", this, arguments);
