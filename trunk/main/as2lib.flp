@@ -2,14 +2,15 @@
     <project_folder name="org" expanded="true">
         <project_folder name="as2lib" expanded="true">
             <project_folder name="basic" expanded="true">
-                <project_folder name="exceptions" expanded="false">
+                <project_folder name="exceptions" expanded="true">
                     <project_file path="./ORG/AS2LIB/BASIC/exceptions/ObjectNotFoundException.as" filetype="as" />
                     <project_file path="./ORG/AS2LIB/BASIC/exceptions/ObjectNotDefinedException.as" filetype="as" />
                     <project_file path="./ORG/AS2LIB/BASIC/exceptions/ObjectAllreadyDefinedException.as" filetype="as" />
                     <project_file path="./ORG/AS2LIB/BASIC/exceptions/WrongArgumentException.as" filetype="as" />
                     <project_file path="./org/as2lib/basic/exceptions/info.txt" filetype="txt" />
+                    <project_file path="./org/as2lib/basic/exceptions/MissingArgumentsException.as" filetype="as" />
                 </project_folder>
-                <project_folder name="interfaces" expanded="true">
+                <project_folder name="interfaces" expanded="false">
                     <project_file path="./org/as2lib/basic/interfaces/Classifiable.as" filetype="as" />
                     <project_file path="./org/as2lib/basic/interfaces/Cloneable.as" filetype="as" />
                     <project_file path="./org/as2lib/basic/interfaces/Comparable.as" filetype="as" />
@@ -19,6 +20,9 @@
                 <project_file path="./ORG/AS2LIB/BASIC/EventableElement.as" filetype="as" />
                 <project_file path="./ORG/AS2LIB/BASIC/VisibleElement.as" filetype="as" />
                 <project_file path="./org/as2lib/basic/info.txt" filetype="txt" />
+                <project_file path="./org/as2lib/basic/Reflections.as" filetype="as" />
+                <project_file path="./org/as2lib/basic/ReflectionObject.as" filetype="as" />
+                <project_file path="./org/as2lib/basic/ReflectionReference.as" filetype="as" />
             </project_folder>
             <project_folder name="math" expanded="false">
             </project_folder>
@@ -31,14 +35,25 @@
             <project_folder name="util" expanded="true">
                 <project_folder name="project" expanded="false">
                 </project_folder>
+                <project_file path="./org/as2lib/util/List.as" filetype="as" />
+                <project_file path="./org/as2lib/util/Enumeration.as" filetype="as" />
+                <project_file path="./org/as2lib/util/info.txt" filetype="txt" />
             </project_folder>
         </project_folder>
     </project_folder>
     <project_folder name="test" expanded="true">
+        <project_folder name="org" expanded="true">
+            <project_folder name="as2lib" expanded="true">
+                <project_folder name="basic" expanded="true">
+                    <project_file path="./test/org/as2lib/basic/TReflections.as" filetype="as" />
+                </project_folder>
+            </project_folder>
+        </project_folder>
         <project_file path="./TEST/Test.as" filetype="as" />
         <project_file path="./TEST/Failure.as" filetype="as" />
     </project_folder>
     <project_folder name="example" expanded="false">
     </project_folder>
     <project_file path="./license.txt" filetype="txt" />
+    <project_file path="./Tests.fla" filetype="fla" profile="" def_file="true" />
 </flash_project>
