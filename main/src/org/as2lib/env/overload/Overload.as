@@ -10,8 +10,7 @@ import org.as2lib.util.ArrayUtil;
  * OverloadHandler could be found the corresponding operation will be executed
  * and the return value will be returned.
  *
- * @author: Simon Wacker
- * @see org.as2lib.core.BasicClass
+ * @author Simon Wacker
  */
 class org.as2lib.env.overload.Overload extends BasicClass {
 	/** The list of registered handlers. */
@@ -24,7 +23,6 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * Constructs a new Overload instance.
 	 * 
 	 * @param target the target on which the operation will be invoked
-	 * @param args the arguments whose types shall be matched to a specific handler
 	 */
 	public function Overload(target) {
 		this.handlers = new Array();
@@ -34,7 +32,7 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	/**
 	 * Adds a new OverloadHandler to the list of handlers.
 	 *
-	 * @param handler the new OverloadHandler to be registered
+	 * @param handler the new OverloadHandler to be added
 	 */
 	public function addHandler(handler:OverloadHandler):Void {
 		handlers.push(handler);
@@ -42,8 +40,7 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	
 	/**
 	 * Adds a new SimpleOverloadHandler to the list of handlers based on the passed
-	 * arguments. You can use this operation if you just wanna use the default
-	 * OverloadHandler.
+	 * arguments.
 	 *
 	 * @param args the arguments types of the OverloadHandler to be matched
 	 * @param func the function corresponding to the passed arguments types
@@ -70,11 +67,11 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * Forwards the arguments to the corresponding OverloadHandler. The
 	 * UnknownOverloadHandlerException will be thrown if no adequate OverloadHandler
 	 * could be found. If there exist at least to OverloadHandlers with the same
-	 * type signature a IllegalTypeException will be thrown.
+	 * type signature a SameTypeSignatureException will be thrown.
 	 *
 	 * @return the return value of the called operation
 	 * @throws org.as2lib.env.overload.UnknownOverloadHandlerException if no adequate OverloadHandler could be found
-	 * @throws org.as2lib.env.overload.IllegalTypeException if there exist at least two OverloadHandlers with the same type siganture
+	 * @throws org.as2lib.env.overload.SameTypeSignatureException if there exist at least two OverloadHandlers with the same type siganture
 	 */
 	public function forward(args:Array) {
 		var matchingHandlers:Array = getMatchingHandlers(args);
