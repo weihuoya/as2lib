@@ -6,7 +6,6 @@ import org.as2lib.core.BasicClass;
 /**
  * @author Martin Heidegger
  * @author Simon Wacker
- * @see org.as2lib.env.except.OutLevel
  */
 class org.as2lib.env.out.level.NoneLevel extends BasicClass implements OutLevel {
 	/**

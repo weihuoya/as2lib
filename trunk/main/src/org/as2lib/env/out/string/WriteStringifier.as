@@ -9,8 +9,6 @@ import org.as2lib.env.out.OutLevel;
  * operation.
  * 
  * @author Simon Wacker
- * @see org.as2lib.core.BasicClass
- * @see org.as2lib.core.string.Stringifier
  */
 class org.as2lib.env.out.string.WriteStringifier extends BasicClass implements Stringifier {
 	/**

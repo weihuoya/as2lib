@@ -7,7 +7,6 @@ import org.as2lib.env.out.Out;
 /**
  * @author Martin Heidegger
  * @author Simon Wacker
- * @see org.as2lib.env.out.level.InfoLevel
  */
 class org.as2lib.env.out.level.DebugLevel extends InfoLevel {
 	/**
