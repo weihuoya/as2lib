@@ -1,8 +1,10 @@
 ﻿import org.as2lib.env.except.Exception;
 
 /**
+ * NoSuchElementException will be thrown if the element you tried to obtain does
+ * not exist.
+ *
  * @author Simon Wacker
- * @see org.as2lib.env.except.Exception
  */
 class org.as2lib.data.iterator.NoSuchElementException extends Exception {
 	/**
