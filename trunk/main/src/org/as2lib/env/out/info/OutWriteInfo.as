@@ -17,6 +17,7 @@
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.out.OutLevel;
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.out.OutConfig;
 
 /**
  * OutWriteInfo is a dumb model that contains all the information needed by the OutHandlers
@@ -66,5 +67,15 @@ class org.as2lib.env.out.info.OutWriteInfo extends BasicClass implements EventIn
 	 */
 	public function getName(Void):String {
 		return "write";
+	}
+	
+	/**
+	 * Uses the Stringifier returned by OutConfig#getWriteStringifier()
+	 * to stringify this OutWriteInfo.
+	 *
+	 * @see org.as2lib.core.BasicInterface
+	 */
+	public function toString(Void):String {
+		return OutConfig.getWriteStringifier().execute(this);
 	}
 }

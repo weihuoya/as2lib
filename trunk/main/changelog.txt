@@ -132,3 +132,20 @@
       >> org.as2lib.env.reflect
 
         > changed ClassInfo.getMethods() it now also returns the operations declared by the super type
+
+
+
+    :: 06/06/04 :: Simon Wacker ::
+
+
+      >> org.as2lib.env.out.info
+
+        > added OutErrorInfo.toString()
+        + changed the following OutHandlers to use this toString() operation
+          * org.as2lib.env.out.handler.TraceHandler
+          * org.as2lib.env.out.handler.SocketOutputServerHandler
+
+        > added OutWriteInfo.toString()
+        + changed the following OutHandlers to use this toString() operation
+          * org.as2lib.env.out.handler.TraceHandler
+          * org.as2lib.env.out.handler.SocketOutputServerHandler

@@ -18,7 +18,6 @@ import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.out.OutHandler;
 import org.as2lib.env.out.info.OutWriteInfo;
 import org.as2lib.env.out.info.OutErrorInfo;
-import org.as2lib.env.out.OutConfig;
 import org.as2lib.core.BasicClass;
 
 /**
@@ -43,24 +42,22 @@ class org.as2lib.env.out.handler.SocketOutputServerHandler extends BasicClass im
 	}
 	
 	/**
-	 * Uses the XMLSocket connection for the output. The String representation is obtained via
-	 * the OutUtil.stringifyWriteInfo(OutWriteInfo) operation. You can modify the Stringifier
-	 * used by this operation in the OutConfig class.
+	 * Uses the XMLSocket connection for the output. Uses the toString()
+	 * operation of the OutWriteInfo to obtain the String representation.
 	 *
 	 * @see org.as2lib.env.out.OutHandler
 	 */
 	public function write(info:OutWriteInfo):Void {
-		socket.send(OutConfig.getWriteStringifier().execute(info) + "\n");
+		socket.send(info.toString() + "\n");
 	}
 	
 	/**
-	 * Uses the XMLSocket connection for the output. The String representation is obtained via
-	 * the OutUtil.stringifyErrorInfo(OutErrorInfo) operation. You can modify the Stringifier
-	 * used by this operation in the OutConfig class.
+	 * Uses the XMLSocket connection for the output. Uses the toString()
+	 * operation of the OutErrorInfo to obtain the String representation.
 	 *
 	 * @see org.as2lib.env.out.OutHandler
 	 */
 	public function error(info:OutErrorInfo):Void {
-		socket.send(OutConfig.getErrorStringifier().execute(info) + "\n");
+		socket.send(info.toString() + "\n");
 	}
 }
