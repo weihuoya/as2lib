@@ -1,4 +1,4 @@
-﻿import org.as2lib.test.unit.Test;
+﻿import org.as2lib.test.unit.TestCase;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.except.FatalException;
 import org.as2lib.env.except.IllegalStateException;
@@ -8,21 +8,21 @@ import org.as2lib.data.holder.Stack;
 /**
  * @author Simon Wacker
  */
-class test.org.as2lib.env.except.TFatalException extends Test {
+class test.org.as2lib.env.except.TFatalException extends TestCase {
 	public function TFatalException(Void) {
 	}
 	
 	public function testGetMessage(Void):Void {
 		var e:Throwable = new FatalException("message", this, arguments);
 		var m:String = e.getMessage();
-		assertTrue("The received message [" + m + "] is not correct.", (m == "message"));
+		assertEquals("The received message [" + m + "] is not correct.", m , "message");
 	}
 	
 	public function testInitCause(Void):Void {
 		var cause:Throwable = new FatalException("cause", this, arguments);
-		var e:Throwable = new FatalException("message", this, arguments);
-		assertNotThrows(e, "initCause", [cause]);
-		assertThrows(IllegalStateException, e, "initCause", [cause]);
+		  var e:Throwable = new FatalException("message", this, arguments);
+		assertNotThrows("No IllegalStateException expected.", IllegalStateException, e, "initCause", [cause]);
+		assertThrows("IllegalStateException expected", IllegalStateException, e, "initCause", [cause]);
 	}
 	
 	public function testGetCause(Void):Void {

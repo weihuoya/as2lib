@@ -1,23 +1,20 @@
-﻿import org.as2lib.test.unit.Test;
+﻿import org.as2lib.test.unit.TestCase ;
 import org.as2lib.env.out.Out;
 import org.as2lib.env.except.Exception;
 import org.as2lib.env.except.FatalException;
 import test.org.as2lib.env.out.handler.UIAlertHandler;
 
-class test.org.as2lib.env.out.TOutImplementation extends Test{
+class test.org.as2lib.env.out.TOutImplementation extends TestCase {
 	
 	private var aOut:Out;
 	
-	public function TOutImplementation(Void){
+	public function TOutImplementation(Void){}
+	
+	public function setUp(Void):Void {
 		aOut = new Out();
 	}
 	
-	public function testOut(Void):Void {
-		levelTest();
-		outHandlerTest();
-	}
-	
-	private function levelTest(Void):Void{
+	private function testLevel(Void):Void{
 		
 		trace("----------------------------------------");
 		trace("---- Out.ALL ----");
@@ -104,7 +101,7 @@ class test.org.as2lib.env.out.TOutImplementation extends Test{
 		aOut.setLevel(Out.ALL);
 	}
 	
-	private function outHandlerTest(Void):Void {
+	private function testOutHandler(Void):Void {
 		trace("----------------------------------------");
 		trace("---- UIAlertHandler ----");
 		

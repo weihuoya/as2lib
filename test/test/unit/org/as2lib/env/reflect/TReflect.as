@@ -1,4 +1,4 @@
-﻿import org.as2lib.test.unit.Test;
+﻿import org.as2lib.test.unit.TestCase;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.iterator.Iterator;
 import org.as2lib.env.util.ReflectUtil;
@@ -10,7 +10,7 @@ import test.org.as2lib.env.reflect.treflect.SuperClass;
 import test.org.as2lib.env.reflect.treflect.package0.Package0Class;
 import test.org.as2lib.env.reflect.treflect.package1.Package1Class;
 
-class test.org.as2lib.env.reflect.TReflect extends Test {
+class test.org.as2lib.env.reflect.TReflect extends TestCase {
 	private var subClass:SubClass;
 	private var superClass:SuperClass;
 	
@@ -25,7 +25,9 @@ class test.org.as2lib.env.reflect.TReflect extends Test {
 	private var methods:Map;
 	private var properties:Map;
 	
-	public function TReflect(Void) {
+	public function TReflect(Void) {}
+	
+	public function setUp(Void):Void {
 		subClass = new SubClass();
 		superClass = new SuperClass();
 		

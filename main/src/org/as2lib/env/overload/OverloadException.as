@@ -24,9 +24,17 @@ import org.as2lib.env.except.FatalException;
  */
 class org.as2lib.env.overload.OverloadException extends FatalException {
 	/**
-	 * @see org.as2lib.env.except.FatalException#Constructor()
+	 * Constructs a new OverloadException
+	 * 
+	 * @param message			Message to the Exception.
+	 * @param thrower			Object where the Exception occured.
+	 * @param args				Arguments of the method where the exception occured.
+	 * @param target			Instance where the overloading should be used.
+	 * @param targetMethod		Method where the overloading got used.
+	 * @param targetArguments	TargetArguments of the Method where overloading got used.
 	 */
-	public function OverloadException(message:String, thrower, args:FunctionArguments) {
+	public function OverloadException(message:String, thrower, args:FunctionArguments, target, targetMethod:Function, targetArguments:FunctionArguments) {
 		super (message, thrower, args);
+		this.addStackTraceElement(target, targetMethod, targetArguments)
 	}
 }
