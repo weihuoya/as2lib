@@ -1,0 +1,104 @@
+\chapter{Exception Handling}
+\label{sec:ExceptionHandling}
+
+\paragraph{Motivation:}
+Uncaught failure messages are output with\footnote{Online documentation on \href{http://livedocs.macromedia.com/flash/mx2004/main/12_as217.htm}{livedocs.macromedia.com/flash/mx2004/main/12\_as217.htm}}:
+\begin{lstlisting}[frame=single]
+trace(Error.toString());
+\end{lstlisting}
+Besides the fact that the printed out information is only little or not at all informative (Only ``Error'' or the passed String to the constructor is printed out. See fig.\ \ref{fig:fehleroutput}, p.\ \pageref{fig:fehleroutput}) the display of the failure message is only possible in {\sl Flash MX 2004}.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics{uml/as2lib/fehleroutput.eps}
+\caption{Output of an Error (\emph{throw new Error(``Failure occured!'');}) in Flash MX 2004.}
+\label{fig:fehleroutput}
+\end{center}
+\end{figure}
+
+\paragraph{Solution:}
+{\sl As2lib} contains classes based on the {\sl Macromedia} native {\sl Error} class, which implement the methods of the \emph{Throwable}\footnote{org.as2lib.env.except.Throwable} interface.
+The new functionalities of Exception Handling are:
+
+\begin{itemize}
+	\item All operations that are called before the exception is thrown are saved in a Stack to accelerate the search for failures. With the help of \emph{Reflections}, see chapter \ref{sec:Reflections}, the name of the failure message is automatically generated.
+	\item Exceptions can be easily wrapped into other exceptions.
+\end{itemize}
+
+The following predefined exception classes are provided:
+
+\begin{itemize}
+	\item \emph{AbstractException}: All exception classes are derived from the AbstractException class. It implements the methods that the Throwable interface defines (see fig.\ \ref{fig:exception}, p.\ \pageref{fig:exception}).
+	\item \emph{Throwable}: Is an interface that enforces the implementation of the following methods:
+		\begin{itemize}
+			\item \textbf{getStackTrace(Void):}\textit{Stack} - Returns all operations that have been called before the exception is thrown.
+			\item \textbf{initCause(cause:Throwable):}\textit{Throwable} - Declares the reason for the exception and can only be set once. This method is normally used in order not to lose information when an exception is the cause of another exception.
+			\item \textbf{getCause(Void):}\textit{Throwable} - Returns the cause of the exception.
+			\item \textbf{getMessage(Void):}\textit{String} - Returns the message that was passed to the constructor of the exception.
+		\end{itemize}
+	\item \emph{Exception}: Is a standard implementation of the Throwable interface and extends the AbstractException class.
+	\item \emph{FatalException}: FatalException is of higher priority then Exception.
+	\item {\sl As2lib} already defines some exceptions:
+	\begin{itemize}
+		\item IllegalArgumentException
+		\item IllegalStateException
+		\item UndefinedPropertyException
+		\item ...
+	\end{itemize}
+\end{itemize}
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics{uml/as2lib/exception.eps}
+\caption{Basic hierachy of the {\sl as2lib} \emph{Exception} package}
+\label{fig:exception}
+\end{center}
+\end{figure}
+
+\paragraph{Usage:}
+
+In the case of an incorrectly passed parameter, an IllegalArgumentException can be thrown with the following code:
+
+\begin{lstlisting}[frame=single]
+import org.as2lib.env.except.IllegalArgumentException;
+...
+throw new IllegalArgumentException("Wrong Parameter.",
+	this,
+	arguments);
+\end{lstlisting}
+For all exceptions three parameters are necessary:
+\begin{enumerate}
+	\item \emph{message} e.g.: ``Wrong Parameter.''- A text which makes the reason of the exception clear.
+	\item \emph{thrower} e.g.: ``this'' - Reference to the class or the object that threw the exception.
+	\item \emph{arguments} - An intrinsic variable of Flash, which contains parameters passed to the method.
+\end{enumerate}
+A thrown IllegalArgumentException can be caught in the calling code with a \emph{try-catch} block.
+\begin{lstlisting}[frame=single]
+import org.diplomarbeit.ExceptionTest;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.out.Out;
+
+try {
+	var myOut:Out = new Out();
+	var myET:ExceptionTest = new ExceptionTest();
+	myOut.info(myET.getString());
+}
+catch(e:IllegalArgumentException){
+	myOut.error(e);
+}
+\end{lstlisting}
+
+You can define as many of your own exceptions as you want. If you for example want to throw an OutOfTimeException you must do the following implementation:
+\clearpage
+\begin{lstlisting}[frame=single]
+import org.as2lib.env.except.Exception;
+
+class OutOfTimeException extends Exception {
+
+public function OutOfTimeException(message:String,
+	thrower, args:FunctionArguments) {
+	super (message, thrower, args);
+}
+}
+\end{lstlisting}
+The Exception class is extended and the constructor of the Exception class is called.

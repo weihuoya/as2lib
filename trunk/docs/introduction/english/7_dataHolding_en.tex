@@ -1,0 +1,135 @@
+\chapter{Data Holding}
+\label{sec:DataHolding}
+
+\paragraph{Motivation:}
+A typical problem when using {\sl ActionScript 2} is that some data types (e.g. Array) can contain different data types (e.g. String, Number,...). This flexible notation could result, especially in teams, in misuse of these data holders.
+
+\paragraph{Solution:}
+{\sl As2lib} not only provides a strictly typed Array class(TypedArray\footnote{org.as2lib.data.holder.TypedArray}) but also a lot of other data types for data holding.
+
+\paragraph{TypedArray:} The TypedArray class provides strict typing of an Array.
+\begin{lstlisting}[frame=single]
+import org.as2lib.data.holder.TypedArray;
+
+var myA:TypedArray = new TypedArray(Number);
+myA.push(2);
+myA.push("Hello");
+\end{lstlisting}
+In this code snippet an Array of type Number is created. If you try to add a string to the TypedArray(\emph{myA.push}(``\textit{Hello}'')) the compiler throws the following exception:
+\begin{verbatim}
+** FatalLevel ** 
+org.as2lib.env.except.IllegalArgumentException: 
+Type mismatch between [Hello] and [[type Function]].
+  at TypedArray.validate(Hello)
+\end{verbatim}
+Additionally you can pass an existing Array as second parameter value. TypedArray provides the same functionality as a regular {\sl Macromedia} Array class.
+
+More {\sl as2lib} data types are:
+\begin{itemize}
+	\item \textbf{HashMap} : A data type which holds keys and their values. It has every common method of a regular HashMap (see Java).
+	
+\begin{lstlisting}[frame=single]
+import org.as2lib.data.holder.HashMap;
+
+var aPerson:Person = new Person("Christoph",
+	"Atteneder");
+var bPerson:Person = new Person("Martin",
+	"Heidegger");
+
+var nickNames:HashMap = new HashMap();
+nickNames.put(aPerson,"ripcurlx");
+nickNames.put(bPerson,"mastaKaneda");
+
+trace(nickNames.get(aPerson));
+trace(nickNames.get(bPerson));
+\end{lstlisting}
+\emph{Output:}
+\begin{verbatim}
+ripcurlx
+mastaKaneda
+\end{verbatim}
+
+	\item \textbf{Stack} : You can add values to a Stack with the \emph{push} method and remove them with the \emph{pop} method. Only the last added value can be accessed.
+	
+\begin{lstlisting}[frame=single]
+import org.as2lib.data.holder.SimpleStack;
+
+var myS:SimpleStack = new SimpleStack();
+myS.push("uuuuuuup?!");
+myS.push("what's");
+myS.push("Hi");
+trace(myS.pop());
+trace(myS.pop());
+trace(myS.pop());
+\end{lstlisting}
+\emph{Output:}
+\begin{verbatim}
+Hi
+what's
+uuuuuuup?!
+\end{verbatim}
+
+\item \textbf{Queue} : In contrast to the Stack you can only access the first element. You can add values with the \emph{enqueue} method and remove them with the \emph{dequeue} method. If you don´t want to remove the first element while accessing it you can use the \emph{peek} method.
+
+\begin{lstlisting}[frame=single]
+import org.as2lib.data.holder.LinearQueue;
+
+var aLQ:LinearQueue = new LinearQueue();
+aLQ.enqueue("Hi");
+aLQ.enqueue("whats");
+aLQ.enqueue("uuuuup?!");
+trace(aLQ.peek());
+trace(aLQ.dequeue());
+trace(aLQ.dequeue());
+trace(aLQ.dequeue());
+\end{lstlisting}
+\emph{Output:}
+\begin{verbatim}
+Hi
+Hi
+whats
+uuuuup?!
+\end{verbatim}
+\end{itemize}
+
+In addition to these data types \emph{Iterators}\footnote{An iterator makes it easier to access elements of a collection without knowing its structure.} are also provided:
+
+\begin{itemize}
+	\item \textbf{ArrayIterator} : Because of the fact that the additional data types are based internally on Arrays, every special Iterator indirectly uses the ArrayIterator{\footnote{org.as2lib.data.io.iterator.ArrayIterator}}.
+	\item \textbf{MapIterator} : If you call the \emph{iterator()} method in a HashMap it returns a MapIterator to you.
+\end{itemize}
+If you like to print every element of a HashMap, you can do so with a MapIterator\footnote{org.as2lib.data.iterator.MapIterator}:
+\clearpage
+\begin{lstlisting}[frame=single]
+import org.as2lib.data.holder.HashMap;
+
+var aPerson:Person = new Person("Christoph",
+	"Atteneder");
+var bPerson:Person = new Person("Martin",
+	"Heidegger");
+
+var nickNames:HashMap = new HashMap();
+nickNames.put(aPerson,"ripcurlx");
+nickNames.put(bPerson,"mastaKaneda");
+
+var it:Iterator = myH.getIterator();
+
+while(it.hasNext()){
+	trace(it.next());
+}
+\end{lstlisting}
+\emph{Output:}
+\begin{verbatim}
+Christoph,Atteneder
+Martin,Heidegger
+\end{verbatim}
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics{uml/as2lib/dataholder.eps}
+\caption{data holders of \emph{holder} package}
+\label{fig:as2libdataholder}
+\end{center}
+\end{figure}
+
+Figure \ref{fig:as2libdataholder} on page \pageref{fig:as2libdataholder} shows a hierarchical structure of data holders in the \emph{holder} package.

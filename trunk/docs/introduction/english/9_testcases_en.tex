@@ -1,0 +1,78 @@
+\chapter{Test Cases}
+\label{sec:TestCases}
+
+A \emph{Test Case} is a class/method that verifies the correct behaviour of a specific class/method. Every developer has to create test cases for his or her own classes and is assisted by a test case API that offers functionality for automated testing.
+
+\paragraph{Motivation:}
+Although a testing API already exists for {\sl Actionscript 2}, as2unit\footnote{\href{http://www.as2unit.org}{www.as2unit.org}}, our own testing API was created because the following reasons:
+
+\begin{itemize}
+	\item {\sl As2unit} supports only few functionalities (as2unit 7 test methods - as2lib 15 test methods).
+	\item {\sl As2unit} is in spite of the disclosure of the source code still not open source.
+	\item Official documentation of {\sl as2unit} is still not available.
+	\item {\sl As2unit} is only available as a component.
+	\item {\sl As2unit} can always test only one class.
+	\item {\sl As2unit} permits output only through trace.
+\end{itemize}
+
+\paragraph{Solution:}
+
+Two actions shouldn't be necessary (including the Flash component, setting the parameters) to perform test cases, as it is presently the case with {\sl as2unit}. It should be possible for the developer to execute a test case through only one method call. A direct call of a class as well as a call of a whole package is possible. 
+\clearpage
+\begin{lstlisting}[frame=single]
+import org.as2lib.test.unit.Test;
+// Add your Tests here.
+test.org.as2lib.core.TReflections;
+Test.run("test.org");
+\end{lstlisting}
+
+The cases to test must be invoked before the call to the test so that they are available during run time.
+Similar to test case APIs like: JUnit\footnote{\href{http://www.junit.org}{www.junit.org}}, a variety of methods are available to the developer (optional parameters are marked with []):
+
+\begin{itemize}
+	\item \textbf{assertTrue}([\textit{message:String}], \textit{testVar1:Boolean}) - An error message will be reported if testVar1 is false.
+	\item \textbf{assertFalse}([\textit{message:String}],\textit{ testVar1:Boolean}) - An error message will be reported if testVar1 is true.
+	\item \textbf{assertEquals}([\textit{message:String}], \textit{testVar1}, \textit{testVar2}) - An error message will be reported if the passed parameters are not equal.
+	\item \textbf{assertNotEquals}([\textit{message:String}], \textit{testVar1}, \textit{testVar2}) - An error message will be reported if the passed parameters are equal.
+	\item \textbf{assertNull}([\textit{message:String}], \textit{testVar1}) - An error message will be reported if testVar1 is not null.
+	\item \textbf{assertNotNull}([\textit{message:String}], \textit{testVar1}) - Error message if testVar1 is null.
+	\item \textbf{assertUndefined}([\textit{message:String}], \textit{testVar1}) - Error message if testVar1 is not undefined.
+	\item \textbf{assertNotUndefined}([\textit{message:String}], \textit{testVar1}) - Error message if testVar1 is undefined.
+	\item \textbf{assertIsEmpty}([\textit{message:String}], \textit{testVar1}) - If testVar1 is neither undefined nor null an error message will be reported.
+	\item \textbf{assertIsNotEmpty}([\textit{message:String}], \textit{testVar1}) - If testVar1 is undefined or null an error message will be reported.
+	\item \textbf{assertInfinity}([\textit{message:String}], \textit{testVar1}) - Error message if testVar1 is not infinite.
+	\item \textbf{assertNotInfinity}([\textit{message:String}], \textit{testVar1}) - Error message if testVar1 is infinite.
+	\item \textbf{fail}(\textit{message:String}) - Adds a custom failure message to the whole error output.
+	\item \textbf{assertThrows}(\textit{exception:Function, atObject, theFunction:String, parameter:Array}) - If no exception is thrown during the execution of the passed function(theFunction) of the object(atObjekt) with the parameter values(parameter) an error message will be reported.
+	\item \textbf{assertNotThrows}(\textit{exception:Function, atObject, theFunction:String, parameter:Array}) - If an exception is thrown during the execution of the passed function(theFunction) of the object(atObjekt) with the parameter values(parameter) an error message will be reported.
+\end{itemize}
+
+A test case must extend the class Test\footnote{org.as2lib.test.unit.Test}. All methods of the test case that start with ``test'' are executed by the testing API. Look at the following coding example to better understand the TestCase API:
+\begin{lstlisting}[frame=single]
+import org.as2lib.test.unit.Test;
+import org.as2lib.core.BasicClass;
+import org.as2lib.env.reflect.ClassInfo;
+
+class test.org.as2lib.core.TReflections extends Test {
+	private var clazz:BasicClass;
+	
+	public function TReflections(Void) {
+			clazz = new BasicClass();
+	}
+	
+	public function testGetClass(Void):Void {
+		trace (":: testGetClass");
+		var info:ClassInfo = clazz.getClass();
+		assertEquals(
+		"The name of the basic class changed",
+		info.getName(),
+		"BasicClass");
+		assertEquals(
+		"Problems evaluating the full name",
+		info.getFullName(),
+		"org.as2lib.core.BasicClass");
+		trace ("------------------");
+	}
+}
+\end{lstlisting}
+

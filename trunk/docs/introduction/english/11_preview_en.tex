@@ -1,0 +1,56 @@
+\chapter{Preview}
+\label{sec:Ausblick}
+
+\section{Connection Handling}
+\label{sec:ConnectionHandling}
+\paragraph{Motivation:}
+
+Connections to external data sources can be established in {\sl Flash MX 2004} in different ways. External data sources can be accessed through Flash Remoting, Web Services, XML Socket Connection. The loading of XML or text files, requests to a URL (e.g.: CGI, PHP,...) or connections between separate SWF files(LocalConnection) can be accomplished as well. The implementation of these different data interfaces can at times differ greatly so that every data interface has to be implemented individually. Although data components in {\sl Flash MX Professional 2004} are already provided for certain data interfaces (Web Services and XML files), they differ in their parameter values. Besides the fact that you have to own the Professional version, pure ActionScript 2 solutions don´t exist for every data interface and they also can´t be used the same way.
+
+\paragraph{Solution:}
+{\sl As2lib} provides a standard interface for each data interface. Every Connection is based on a Proxy, which in contrast to the regular Flash Remoting Proxy is strictly typed and allows for compile time checking.
+
+\section{as2lib console}
+\label{sec:as2libDebugKonsole}
+
+\subsection{Requirements}
+\label{sec:Anforderungen}
+During the development of Flash applications you can use the console and the debugger. But at the moment your application is published on a web server and problems occur at this stage, it is pretty hard to identify the source of error. This circumstance costs time and money. It should be possible to print your error and status output independently from your development environment. Because of this as2lib provides an external console to offer this functionality.
+
+Requirements for the {\sl as2lib console} are:
+\begin{itemize}
+	\item Display of {\sl as2lib} Output Handling, see chapter \ref{sec:OutputHandling} on page \pageref{sec:OutputHandling}, should be possible inside your development environment and also in online Flash applications.
+	\item Display and debugging of connections to external data sources in your Flash application.
+	\item Display and debugging of events in your Flash application.
+	\item Display of all objects in your Flash applicaton in an object tree.
+	\item Detailed information about every single MovieClip.
+	\item RAM usage of each element.
+\end{itemize}
+
+\subsection{The as2lib console}
+\label{sec:DieAs2libConsole}
+In the first prototype of the {\sl as2lib console} we use {\sl as2lib} Output Handling, see chapter \ref{sec:OutputHandling} on page \pageref{sec:OutputHandling}, and Connection Handling, see section \ref{sec:ConnectionHandling} on page \pageref{sec:ConnectionHandling}.
+The first basic functionality we support in the {\sl as2lib console} is shown in figure \ref{fig:as2libVerwendung} on page \pageref{fig:as2libVerwendung}. The prototype supports debug output(e.g.: \emph{Out.debug()}, \emph{Out.info()},...) of different Flash applications that are connected to the {\sl as2lib console}. Flash applications can be located in a browser {\sl Flash Player} as well as in the Flash development environment.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=1\textwidth]{uml/as2lib/console.eps}
+\caption{Usage of the {\sl as2lib console}}
+\label{fig:as2libVerwendung}
+\end{center}
+\end{figure}
+
+Starting from this requirement a tentative draft was made which provides the desired functionality(see fig.\ \ref{fig:entwurf}, p.\ \pageref{fig:entwurf}). The console consists of different tabs to display the output for each \emph{OutLevel}. Tab \emph{All} displays all Output.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=1\textwidth]{uml/as2lib/as2libconsole.eps}
+\caption{tentative draft of the {\sl as2lib} console}
+\label{fig:entwurf}
+\end{center}
+\end{figure}
+
+\section{Roadmap}
+\label{sec:Roadmap}
+
+see \href{http://www.as2lib.org/roadmap.php}{www.as2lib.org/roadmap.php}
