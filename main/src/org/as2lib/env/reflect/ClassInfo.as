@@ -97,9 +97,9 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * @see org.as2lib.env.reflect.TypeInfo#getRepresentedType()
+	 * @see org.as2lib.env.reflect.TypeInfo#getType()
 	 */
-	public function getRepresentedType(Void):Function {
+	public function getType(Void):Function {
 		return clazz;
 	}
 	
@@ -110,7 +110,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 */
 	public function getConstructor(Void):ConstructorInfo {
 		if (ObjectUtil.isEmpty(constructor)) {
-			constructor = new ConstructorInfo(getRepresentedType(), this);
+			constructor = new ConstructorInfo(getType(), this);
 		}
 		return constructor;
 	}

@@ -1,14 +1,19 @@
 // :: CHANGELOG :: //
 
 
+
     :: 05/26/04 :: Simon Wacker ::
   
+
       >> org.as2lib.env.reflect
 
         > removed CompositeMemberInfo.getName():String [is already defined in interface MemberInfo]
         > removed TypeInfo.getParent():PackageInfo [is already defined in interface CompositeMemberInfo]
 
+
+
     :: 05/28/04 :: Simon Wacker ::
+
 
       >> org.as2lib.env.reflect
 
@@ -21,3 +26,19 @@
         > renamed algorithm.AbstractContentAlgorythm to AbstractContentAlgorithm
         > renamed algorithm.ContentAlgorythm to ContentAlgorithm
         > renamed algorithm.CacheAlgorythm to CacheAlgorithm
+        + changed corresponding references from
+          * org.as2lib.env.reflect.ReflectConfig
+
+        > renamed ReflectConfig.get-/set*Algorythm to get-/set*Algorithm
+        + changed corresponding references from
+          * org.as2lib.env.reflect.ClassInfo
+          * org.as2lib.env.reflect.PackageInfo
+          * org.as2lib.env.util.ReflectUtil
+
+        > renamed TypeInfo.getRepresentedType() to getType()
+        > renamed ClassInfo.getRepresentedType() to getType()
+        + changed corresponding references from
+          * org.as2lib.env.out.Out
+          * org.as2lib.env.reflect.SimpleCache
+          * org.as2lib.env.reflect.algorithm.MethodAlgorithm
+          * org.as2lib.env.reflect.algorithm.PropertyAlgorithm

@@ -32,7 +32,7 @@ interface org.as2lib.env.reflect.TypeInfo extends CompositeMemberInfo {
 	 *
 	 * @return the type represented by this TypeInfo
 	 */
-	public function getRepresentedType(Void):Function;
+	public function getType(Void):Function;
 	
 	/**
 	 * Returns the super types's TypeInfo.
