@@ -1,0 +1,23 @@
+// :: CHANGELOG :: //
+
+
+    :: 05/26/04 :: Simon Wacker ::
+  
+      >> org.as2lib.env.reflect
+
+        > removed CompositeMemberInfo.getName():String [is already defined in interface MemberInfo]
+        > removed TypeInfo.getParent():PackageInfo [is already defined in interface CompositeMemberInfo]
+
+    :: 05/28/04 :: Simon Wacker ::
+
+      >> org.as2lib.env.reflect
+
+        > renamed algorythm to algorithm
+        > renamed algorithm.ClassAlgorythm to ClassAlgorithm
+        > renamed algorithm.PackageAlgorythm to PackageAlgorithm
+        > renamed algorithm.MethodAlgorythm to MethodAlgorithm
+        > renamed algorithm.PropertyAlgorythm to PropertyAlgorithm
+        > renamed algorithm.ChildrenAlgorythm to ChildrenAlgorithm
+        > renamed algorithm.AbstractContentAlgorythm to AbstractContentAlgorithm
+        > renamed algorithm.ContentAlgorythm to ContentAlgorithm
+        > renamed algorithm.CacheAlgorythm to CacheAlgorithm
