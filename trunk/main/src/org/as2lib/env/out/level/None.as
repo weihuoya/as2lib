@@ -4,7 +4,9 @@ import org.as2lib.env.except.Throwable;
 import org.as2lib.core.BasicClass;
 
 /**
- * @author Martin Heidegger, Simon Wacker
+ * @author Martin Heidegger
+ * @author Simon Wacker
+ * @see org.as2lib.env.except.OutLevel
  */
 class org.as2lib.env.out.level.None extends BasicClass implements OutLevel {
 	/**

@@ -5,10 +5,12 @@ import org.as2lib.env.out.info.OutErrorInfo;
 import org.as2lib.env.util.ExceptUtil;
 
 /**
- * ErrorStringifier is the default Stringifier used by the
- * OutUtil.stringifyErrorInfo(OutErrorInfo) operation.
+ * ErrorStringifier is the default Stringifier used by the OutUtil#stringifyErrorInfo()
+ * operation.
  * 
  * @author Simon Wacker
+ * @see org.as2lib.core.BasicClass
+ * @see org.as2lib.core.string.Stringifier
  */
 class org.as2lib.env.out.string.ErrorStringifier extends BasicClass implements Stringifier {
 	/**
