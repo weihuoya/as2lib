@@ -2,7 +2,7 @@
 import org.as2lib.env.out.OutHandler;
 import org.as2lib.env.out.info.OutWriteInfo;
 import org.as2lib.env.out.info.OutErrorInfo;
-import org.as2lib.env.util.OutUtil;
+import org.as2lib.env.out.OutConfig;
 import org.as2lib.core.BasicClass;
 
 /**
@@ -23,7 +23,7 @@ class org.as2lib.env.out.handler.TraceHandler extends BasicClass implements OutH
 	 * @see org.as2lib.env.out.OutHandler
 	 */
 	public function write(info:OutWriteInfo):Void {
-		trace (OutUtil.stringifyWriteInfo(info));
+		trace (OutConfig.getWriteStringifier().execute(info));
 	}
 	
 	/**
@@ -34,6 +34,6 @@ class org.as2lib.env.out.handler.TraceHandler extends BasicClass implements OutH
 	 * @see org.as2lib.env.out.OutHandler
 	 */
 	public function error(info:OutErrorInfo):Void {
-		trace (OutUtil.stringifyErrorInfo(info));
+		trace (OutConfig.getErrorStringifier().execute(info));
 	}
 }

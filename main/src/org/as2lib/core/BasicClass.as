@@ -30,6 +30,6 @@ class org.as2lib.core.BasicClass implements BasicInterface {
 	 * @return a String representation of the instance
 	 */
 	public function toString(Void):String {
-		return ObjectUtil.stringify(this);
+		return ObjectUtil.getStringifier().execute(this);
 	}
 }

@@ -22,8 +22,8 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 		stringifier = newStringifier;
 	}
 	
-	public static function stringify(object):String {
-		return stringifier.execute(object);
+	public static function getStringifier(Void):Stringifier {
+		return stringifier;
 	}
 	
 	/**
