@@ -1,15 +1,15 @@
 ﻿import org.as2lib.test.unit.TestCase;
 
-import org.as2lib.data.io.conn.local.core.LocalConnectionTemplate;
-import org.as2lib.data.io.conn.local.core.ReservedConnectionException;
-import org.as2lib.data.io.conn.local.core.ConnectionAlreadyOpenException;
-import org.as2lib.data.io.conn.local.core.ConnectionNotOpenException;
-import org.as2lib.data.io.conn.local.core.UnknownConnectionException;
+import org.as2lib.io.conn.local.core.LocalConnectionTemplate;
+import org.as2lib.io.conn.local.core.ReservedConnectionException;
+import org.as2lib.io.conn.local.core.ConnectionAlreadyOpenException;
+import org.as2lib.io.conn.local.core.ConnectionNotOpenException;
+import org.as2lib.io.conn.local.core.UnknownConnectionException;
 
 /**
  * @author Simon Wacker
  */
-class test.unit.org.as2lib.data.io.conn.local.core.TLocalConnectionTemplate extends TestCase {
+class test.unit.org.as2lib.io.conn.local.core.TLocalConnectionTemplate extends TestCase {
 	
 	public function TLocalConnectionTemplate(Void) {
 	}
