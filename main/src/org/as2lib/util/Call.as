@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
@@ -25,6 +26,7 @@ import org.as2lib.util.ObjectUtil;
  * object and let the object execute the call.
  *
  * @author Simon Wacker
+ * @author Martin Heidegger
  */
 class org.as2lib.util.Call extends BasicClass {
 	/** The object to execute the Function one. */
@@ -39,8 +41,15 @@ class org.as2lib.util.Call extends BasicClass {
 	 * @param object the object the Function shall be executed on
 	 * @param func the Function that shall be executed
 	 * @param args the arguments that shall be passed
+	 * @throws IllegalArgumentException if neigther the object or the function is not available.
 	 */
 	public function Call(object, func:Function) {
+		if(object == null) {
+			throw new IllegalArgumentException("Required parameter 'object' is not available", this, arguments);
+		}
+		if(func == null) {
+			throw new IllegalArgumentException("Required parameter 'func' is not available", this, arguments);
+		}
 		this.object = object;
 		this.func = func;
 	}
