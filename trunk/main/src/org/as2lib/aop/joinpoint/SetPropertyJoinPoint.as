@@ -25,8 +25,8 @@ class org.as2lib.aop.joinpoint.SetPropertyJoinPoint extends PropertyJoinPoint {
 	/**
 	 * @see org.as2lib.aop.joinpoint.PropertyJoinPoint#new(PropertyInfo, Object)
 	 */
-	public function PropertyJoinPoint(info:PropertyInfo, thiz) {
-		super(info, thiz);
+	public function SetPropertyJoinPoint(info:PropertyInfo, thiz) {
+		super (info, thiz);
 	}
 	
 	/**

@@ -14,33 +14,20 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.reflect.PropertyInfo;
-import org.as2lib.aop.joinpoint.PropertyJoinPoint;
+import org.as2lib.core.BasicInterface;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.aop.joinpoint.GetPropertyJoinPoint extends PropertyJoinPoint {
+interface org.as2lib.aop.Matcher extends BasicInterface {
 	
 	/**
-	 * @see org.as2lib.aop.joinpoint.PropertyJoinPoint#new(PropertyInfo, Object)
+	 * Checks if the passed join point represented by a string matches
+	 * the given pattern.
+	 *
+	 * @param joinPoint the join point represented as a string used as the base of the match
+	 * @param pattern the pattern that shall match the join point
 	 */
-	public function GetPropertyJoinPoint(info:PropertyInfo, thiz) {
-		super (info, thiz);
-	}
-	
-	/**
-	 * @see org.as2lib.aop.JoinPoint#proceed(Array)
-	 */
-	public function proceed(args:Array) {
-		return PropertyInfo(getInfo()).getGetter().getMethod().apply(getThis(), args);
-	}
-	
-	/**
-	 * @see org.as2lib.aop.JoinPoint#proceed(Void):Number
-	 */
-	public function getType(Void):Number {
-		return TYPE_GET_PROPERTY;
-	}
+	public function match(joinPoint:String, pattern:String):Boolean;
 	
 }

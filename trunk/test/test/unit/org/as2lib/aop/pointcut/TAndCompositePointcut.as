@@ -20,7 +20,7 @@ import org.as2lib.aop.pointcut.AndCompositePointcut;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.pointcut.PointcutFactory;
 import org.as2lib.aop.Pointcut;
-import org.as2lib.aop.pointcut.PointcutConfig;
+import org.as2lib.aop.AopConfig;
 
 /**
  * @author Simon Wacker
@@ -30,11 +30,11 @@ class test.unit.org.as2lib.aop.pointcut.TAndCompositePointcut extends TestCase {
 	private var oldPointcutFactory:PointcutFactory;
 	
 	public function setUp(Void):Void {
-		oldPointcutFactory = PointcutConfig.getPointcutFactory();
+		oldPointcutFactory = AopConfig.getPointcutFactory();
 	}
 	
 	public function tearDown(Void):Void {
-		PointcutConfig.setPointcutFactory(oldPointcutFactory);
+		AopConfig.setPointcutFactory(oldPointcutFactory);
 	}
 	
 	public function testNewWithNullStringPattern(Void):Void {
@@ -42,7 +42,7 @@ class test.unit.org.as2lib.aop.pointcut.TAndCompositePointcut extends TestCase {
 		var f:PointcutFactory = fc.getMock();
 		fc.replay();
 		
-		PointcutConfig.setPointcutFactory(f);
+		AopConfig.setPointcutFactory(f);
 		
 		var p:AndCompositePointcut = new AndCompositePointcut(null);
 		
@@ -55,7 +55,7 @@ class test.unit.org.as2lib.aop.pointcut.TAndCompositePointcut extends TestCase {
 		var f:PointcutFactory = fc.getMock();
 		fc.replay();
 		
-		PointcutConfig.setPointcutFactory(f);
+		AopConfig.setPointcutFactory(f);
 		
 		var p:AndCompositePointcut = new AndCompositePointcut("");
 		
@@ -70,7 +70,7 @@ class test.unit.org.as2lib.aop.pointcut.TAndCompositePointcut extends TestCase {
 		fc.setReturnValue(new Pointcut());
 		fc.replay();
 		
-		PointcutConfig.setPointcutFactory(f);
+		AopConfig.setPointcutFactory(f);
 		
 		var p:AndCompositePointcut = new AndCompositePointcut("org.as2lib.core.*.*()");
 		// test wether the pointcut really has been added
@@ -90,7 +90,7 @@ class test.unit.org.as2lib.aop.pointcut.TAndCompositePointcut extends TestCase {
 		fc.setReturnValue(new Pointcut());
 		fc.replay();
 		
-		PointcutConfig.setPointcutFactory(f);
+		AopConfig.setPointcutFactory(f);
 		
 		var p:AndCompositePointcut = new AndCompositePointcut("org.as2lib.core.*.*() && org.as2lib.env.reflect.*.*() && org.as2lib.test.Juhu.lol()");
 		// test wether the pointcut really has been added
@@ -110,7 +110,7 @@ class test.unit.org.as2lib.aop.pointcut.TAndCompositePointcut extends TestCase {
 		fc.setReturnValue(p);
 		fc.replay();
 		
-		PointcutConfig.setPointcutFactory(f);
+		AopConfig.setPointcutFactory(f);
 		
 		var p:AndCompositePointcut = new AndCompositePointcut("org.as2lib.core.*.*()");
 		assertFalse(p.captures(null));

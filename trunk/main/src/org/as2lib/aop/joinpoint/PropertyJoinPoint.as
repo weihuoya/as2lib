@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.aop.joinpoint.AbstractJoinPoint;
 import org.as2lib.env.except.UnsupportedOperationException;
 import org.as2lib.env.reflect.PropertyInfo;
@@ -38,6 +39,7 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 	 * @param thiz a reference to the object the property is defined in
 	 */
 	public function PropertyJoinPoint(info:PropertyInfo, thiz) {
+		if (!info || !thiz) throw new IllegalArgumentException("Both arguments, info and thiz, are not allowed to be null or undefined.", this, arguments);
 		this.info = info;
 		this.thiz = thiz;
 	}
@@ -60,7 +62,7 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 	 * @see org.as2lib.aop.JoinPoint#getInfo(Array)
 	 */
 	public function proceed(args:Array) {
-		throw new UnsupportedOperationException("The execute operation is not supported by PropertyJoinPoints [" + this + "].", this, arguments);
+		throw new UnsupportedOperationException("The execute operation is not supported by PropertyJoinPoint instances [" + this + "].", this, arguments);
 	}
 	
 	/**

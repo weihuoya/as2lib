@@ -15,7 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.aop.matcher.Matcher;
+import org.as2lib.aop.Matcher;
+import org.as2lib.aop.AopConfig;
 
 /**
  * AbstractJoinPoint offers default implementations of methods needed
@@ -38,16 +39,28 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	/** Number value that indicates that it the used join point a get-property join point. */
 	public static var TYPE_GET_PROPERTY:Number = 3;
 	
+	private var matcher:Matcher;
+	
 	/**
 	 * Abstract constructor that prevents initialization.
 	 */
 	private function AbstractJoinPoint(Void) {
 	}
 	
+	public function setMatcher(matcher:Matcher):Void {
+		this.matcher = matcher;
+	}
+	
+	public function getMatcher(Void):Matcher {
+		if (!matcher) matcher = AopConfig.getMatcher();
+		return matcher;
+	}
+	
 	/**
 	 * @see org.as2lib.aop.JoinPoint#matches(String):Boolean
 	 */
 	public function matches(pattern:String):Boolean {
-		return Matcher.match((this["getInfo"]().getDeclaringType().getFullName() + "." + this["getInfo"]().getName()), pattern);
+		return getMatcher().match((this["getInfo"]().getDeclaringType().getFullName() + "." + this["getInfo"]().getName()), pattern);
 	}
+	
 }
