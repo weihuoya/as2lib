@@ -23,6 +23,7 @@ import org.as2lib.data.io.conn.local.ReservedConnectionException;
 import org.as2lib.data.io.conn.local.MissingClientsException;
 import org.as2lib.data.io.conn.local.MissingClientException;
 import org.as2lib.data.io.conn.local.NotAllowedDomainException;
+import org.as2lib.data.io.conn.local.ClientStatusListener;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.data.iterator.Iterator;
 import org.as2lib.env.event.EventBroadcaster;
@@ -119,8 +120,8 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		
 		if(clients.containsKey(id)) return;
 
-		clients.put(id,new Object());
-		eventBroadcaster.dispatch(new ConnectorResponse(getClass().getName()+".addClient on "+id+" with an Object"));
+		clients.put(id,new ClientStatusListener(this));
+		eventBroadcaster.dispatch(new ConnectorResponse(getClass().getName()+".addClient on "+id+" with an ClientStatusListener"));
 	}
 	
 	/**
@@ -148,9 +149,10 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		var it:Iterator = clients.iterator();
 		
 		while(it.hasNext()){
-			var obj:Object = it.next();
+			var listenerObj:Object = it.next();
 			var key:String = String(keys.shift());
-			aOut.debug(getClass().getName()+".dispatch: "+obj+" @ "+key);
+			aOut.debug(getClass().getName()+".dispatch: "+listenerObj.getClass().getName()+" @ "+key);
+			//listenerObj.send.apply(null,[key].concat(args));
 			sender.send.apply(this,[key].concat(args));
 		}
 	}
