@@ -4,7 +4,7 @@ import org.as2lib.core.BasicClass;
 
 /**
  * OutWriteInfo is a dumb model that contains all the information needed by the OutHandlers
- * write(OutWriteInfo) operation. These information include the OutLevel the output has as 
+ * #write() operation. These information include the OutLevel the output has as 
  * well as the message that shall be written out.
  *
  * @author Simon Wacker

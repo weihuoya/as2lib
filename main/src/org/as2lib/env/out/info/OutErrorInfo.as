@@ -5,7 +5,7 @@ import org.as2lib.core.BasicClass;
 
 /**
  * OutErrorInfo is a dumb model that contains all the information needed by the OutHandlers
- * error(OutErrorInfo) operation. These information include the OutLevel the output has as 
+ * error() operation. These information include the OutLevel the output has as 
  * well as the Throwable that shall be written out.
  *
  * @author Simon Wacker
