@@ -133,11 +133,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	public static function forObject(object):ClassInfo {
 		// not '!object' because parameter 'object' could be a blank string
 		if (object == null) return null;
-		var info:ClassInfo = ReflectConfig.getCache().getClass(object);
-		if (!info) {
-			info = ReflectConfig.getClassAlgorithm().execute(object);
-		}
-		return info;
+		return ReflectConfig.getClassAlgorithm().execute(object);
 	}
 	
 	/**
