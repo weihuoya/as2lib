@@ -80,6 +80,18 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	}
 	
 	/**
+	 * Possibility to call this method to a different scope.
+	 * Allows fast executiont to a Object.
+	 * 
+	 * @param scope "this"-Scope for the Method call.
+	 * @param arguments Arguments to be applied with this method call.
+	 * @return Returnvalue of the method.
+	 */
+	public function applyTo(scope, arguments:Array) {
+		method.apply(scope, arguments);
+	}
+	
+	/**
 	 * @see org.as2lib.env.reflect.TypeMemberInfo#isStatic()
 	 */
 	public function isStatic(Void):Boolean {
