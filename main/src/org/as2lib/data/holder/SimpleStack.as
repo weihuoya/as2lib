@@ -50,8 +50,8 @@ class org.as2lib.data.holder.SimpleStack extends BasicClass implements Stack {
 	public function pop(Void) {
 		if (isEmpty()) {
 			throw new EmptyDataHolderException("You tried to pop an element from an empty Stack.",
-										  this,
-										  arguments);
+											   this,
+											   arguments);
 		}
 		return values.pop();
 	}
@@ -62,8 +62,8 @@ class org.as2lib.data.holder.SimpleStack extends BasicClass implements Stack {
 	public function peek(Void) {
 		if (values.length == 0) {
 			throw new EmptyDataHolderException("You tried to peek an element from an empty Stack.",
-										  this,
-										  arguments);
+											   this,
+											   arguments);
 		}
 		return values[values.length-1];
 	}

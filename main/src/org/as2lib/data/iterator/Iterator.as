@@ -41,6 +41,9 @@ interface org.as2lib.data.iterator.Iterator extends BasicInterface {
 	/**
 	 * Removes the presently selected object from the data holder the Iterator
 	 * iterates over.
+	 *
+	 * @throws org.as2lib.env.except.IllegalStateException if you try to remove an element when none is selected
+	 * @throws org.as2lib.env.except.UnsupportedOperationException if the operation is not supported by the given Iterator
 	 */
 	public function remove(Void):Void;
 }
