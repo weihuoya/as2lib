@@ -27,6 +27,7 @@ class org.as2lib.env.reflect.ResolveProxyFactory extends BasicClass implements P
 	 * @see ProxyFactory#createProxy()
 	 */
 	public function createProxy(type:Function, handler:InvocationHandler) {
+		if (!type) return null;
 		var result:Object = new Object();
 		result.__proto__ = type.prototype;
 		var prototype:Object = type.prototype;
