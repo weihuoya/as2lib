@@ -1,9 +1,10 @@
 ﻿import org.as2lib.env.except.Throwable;
-import org.as2lib.data.holder.Stack;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.except.IllegalStateException;
+import org.as2lib.env.except.StackTraceElement;
+import org.as2lib.data.holder.Stack;
 
 /**
  * AbstractException is an abstract class that contains rolled out functionalities
@@ -14,19 +15,13 @@ import org.as2lib.env.except.IllegalStateException;
  */
 class org.as2lib.env.except.AbstractException extends Error {
 	/** The saved stack of operation calls. */
-	private var stack:Stack;
+	private var stackTrace:Stack;
 	
 	/** The Throwable that caused this Throwable to be thrown. */
 	private var cause:Throwable;
 	
 	/** The message describing what was wrong. */
 	private var message:String;
-	
-	/** The instance that was throwing the Throwable. */
-	private var thrower;
-	
-	/** The arguments of the operation that throwed the Throwable. */
-	private var args:FunctionArguments;
 	
 	/**
 	 * The private constructor.
@@ -36,24 +31,21 @@ class org.as2lib.env.except.AbstractException extends Error {
 	 * @param args the arguments of the throwing operation
 	 */
 	private function AbstractException(message:String, thrower, args:FunctionArguments) {
-		stack = new Stack();
+		stackTrace = new Stack();
 		this.message = message;
-		this.args = args;
-		initThrower(thrower);
+		addStackTraceElement(thrower, args.callee);
 	}
 	
-	/**
-	 * @see org.as2lib.env.except.Throwable#initThrower()
-	 */
-	private function initThrower(thrower):Void {
-		this.thrower = thrower;
+	private function addStackTraceElement(thrower, method:Function):Void {
+		var element:StackTraceElement = new StackTraceElement(thrower, method);
+		stackTrace.push(element);
 	}
 	
 	/**
 	 * @see org.as2lib.env.except.Throwable#getStack()
 	 */
-	public function getStack(Void):Stack {
-		return stack;
+	public function getStackTrace(Void):Stack {
+		return stackTrace;
 	}
 	
 	/**
@@ -80,20 +72,6 @@ class org.as2lib.env.except.AbstractException extends Error {
 	 */
 	public function getMessage(Void):String {
 		return message;
-	}
-	
-	/**
-	 * @see org.as2lib.env.except.Throwable#getThrower()
-	 */
-	public function getThrower(Void) {
-		return thrower;
-	}
-	
-	/**
-	 * @see org.as2lib.env.except.Throwable#getArguments()
-	 */
-	public function getArguments(Void):FunctionArguments {
-		return args;
 	}
 	
 	/**
