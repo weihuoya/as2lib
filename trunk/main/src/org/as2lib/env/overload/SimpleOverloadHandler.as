@@ -22,7 +22,8 @@ import org.as2lib.env.overload.SameTypeSignatureException;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
- * SimpleOverloadHandler is a default implementation of the OverloadHandler interface.
+ * SimpleOverloadHandler is a default implementation of the OverloadHandler
+ * interface.
  *
  * @author Simon Wacker
  */
@@ -48,6 +49,12 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	}
 	
 	/**
+	 * If the passed-in arguments array equals null or undefined it will
+	 * be used as it were an empy array.
+	 * An argument value of null or undefined matches any type.
+	 * An argument-type of null or undefined will be interpreted as any
+	 * type allowed.
+	 *
 	 * @see org.as2lib.env.overload.OverloadHandler#matches()
 	 */
 	public function matches(someArguments:Array):Boolean {
@@ -76,13 +83,21 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	}
 	
 	/**
+	 * If the handler is null or undefined, true will be returned.
+	 * If the handler's getArguments-method returns null or undefined an
+	 * empty array will be used instead.
+	 * If the arguments' lengths do not match, true will be returned.
+	 *
 	 * @see org.as2lib.env.overload.OverloadHandler#isMoreExplicit()
 	 */
 	public function isMoreExplicit(handler:OverloadHandler):Boolean {
-		// null, undefined -> Object -> Number -> ...
+		// explicity range: null, undefined -> Object -> Number -> ...
+		if (!handler) return true;
 		var scores:Number = 0;
 		var args2:Array = handler.getArguments();
+		if (!args2) args2 = [];
 		var i:Number = args.length;
+		if (i != args2.length) return true;
 		while (--i-(-1)) {
 			if (args[i] != args2[i]) {
 				var object = new Object();

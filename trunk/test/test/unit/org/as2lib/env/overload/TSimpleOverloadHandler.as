@@ -18,6 +18,7 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.test.mock.support.SimpleMockControl;
 import org.as2lib.env.overload.SimpleOverloadHandler;
+import org.as2lib.env.overload.OverloadHandler;
 import org.as2lib.core.BasicInterface;
 import org.as2lib.core.BasicClass;
 
@@ -37,6 +38,14 @@ class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase 
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 			fail("Constructor should not have thrown an IllegalArgumentException.");
 		}
+	}
+	
+	public function testMatchesWithNullArgument(Void):Void {
+		var h:SimpleOverloadHandler = new SimpleOverloadHandler([], function() {});
+		assertTrue("A value of null should be interpreted as an empty array.", h.matches(null));
+		
+		h = new SimpleOverloadHandler([String], function() {});
+		assertFalse("Null should be interpreted as an empty array, that means that the two arrays are completely different.", h.matches(null));
 	}
 	
 	public function testMatchesForPrimitiveTypes(Void):Void {
@@ -155,6 +164,27 @@ class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase 
 		assertTrue("5_11", h.matches([undefined]));
 		
 		_root.testMatchesForPrimitiveTypes_mc.removeMovieClip();
+	}
+	
+	public function testIsMoreExplicitWithNullArgument(Void):Void {
+		var h:SimpleOverloadHandler = new SimpleOverloadHandler([], function() {});
+		assertTrue("If the passed in overload handler is null this overload handler is supposed to be more explicit.", h.isMoreExplicit(null));
+	}
+	
+	public function testIsMoreExplicitWithNullReturningGetArgumentsMethod(Void):Void {
+		var hc:MockControl = new SimpleMockControl(OverloadHandler);
+		var mh:OverloadHandler = hc.getMock();
+		mh.getArguments();
+		hc.setReturnValue(null);
+		hc.replay();
+		
+		var h:SimpleOverloadHandler = new SimpleOverloadHandler([], function() {});
+		assertNull("Arguments with value null should be interpreted as blank array.", h.isMoreExplicit(mh));
+		
+		h = new SimpleOverloadHandler([String], function() {});
+		assertTrue("isMoreExplicit should return true if the lengths of the arguments do not match.", h.isMoreExplicit(mh));
+		
+		hc.verify(this);
 	}
 	
 	public function testIsMoreExplicit(Void):Void {
