@@ -16,28 +16,38 @@
  
 import org.as2lib.env.except.Exception;
 import org.as2lib.test.unit.AssertException;
-import org.as2lib.test.unit.stringifier.AssertIsNotNullStringifier;
+import org.as2lib.test.unit.stringifier.AssertIsSameStringifier;
 import org.as2lib.util.string.Stringifier;
 
 /**
  * Failure class for Failures occur during a Testcase.
- * It is the simples possible Failute that could be thrown.
- * The Single Special Property is @see #message.
+ * It marks that the arguments are not equal.
  * 
  * @autor Martin Heidegger.
  */
-class org.as2lib.test.unit.error.AssertIsNotNullException extends Exception implements AssertException {
+class org.as2lib.test.unit.error.AssertIsSameException extends Exception implements AssertException {
 	/** Stringifier for the TestCase */
-	private static var stringifier:Stringifier = new AssertIsNotNullStringifier();
-		
+	private static var stringifier:Stringifier = new AssertIsSameStringifier();
+	
+	/** Compared Var Holder */
+	private var comparedVar;
+	
+	/** Error Holder */
+	private var mainVar;
+
 	/**
-	 * Constructs a new AssertThows exception.
-	 * 
-	 * @param inTest	TestCase where the Failure occured.
-	 * @param message	Message appended to the Failure.
+	 * Constructs a new AssertIsSameException.
+     *
+	 * @param message		Message appended to the Failure.
+	 * @param mainVar		Variable that was handled to root.
+	 * @param comparedVar	Variable that got compared with the mainVar.
+	 * @param thrower		Thrower for the Exception
+	 * @param arguments		Arguments for the Exception
 	 */
-	public function AssertIsNotNullException (message:String, thrower, arguments:FunctionArguments) {
-		super(message, thrower, arguments);
+	public function AssertIsSameException (message:String, mainVar, comparedVar, thrower, args:FunctionArguments) {
+		super(message, thrower, args);
+		this.mainVar = mainVar;
+		this.comparedVar = comparedVar;
 	}
 	
 	/**
@@ -62,6 +72,21 @@ class org.as2lib.test.unit.error.AssertIsNotNullException extends Exception impl
 		return stringifier;
 	}
 	
+	/** 
+	 * @return The main variable that the var was compared with.
+	 */
+	public function getMainVariable(Void) {
+		return mainVar;
+	}
+	
+	
+	/**
+	 * @return The variable that was compared.
+	 */
+	public function getComparedVariable(Void) {
+		return comparedVar;
+	}
+	
 	/**
 	 * Executes the static stringifier and returns the result.
 	 * 
@@ -69,5 +94,5 @@ class org.as2lib.test.unit.error.AssertIsNotNullException extends Exception impl
 	 */
 	public function toString (Void):String {
 		return getStringifier().execute(this);
-	}
+	}	
 }
