@@ -1,4 +1,5 @@
 ﻿import org.as2lib.core.BasicClass;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.data.io.conn.local.ServerRegistry;
 import org.as2lib.data.io.conn.local.LocalServer;
@@ -18,18 +19,23 @@ class org.as2lib.data.io.conn.local.LocalServerRegistry extends BasicClass imple
 	}
 	
 	public function register(server:LocalServer):Void {
-		if (contains(server.getHost())) throw new ReservedHostException("Connection with host [" + server.getHost() + "] is already in use.", this, arguments);
-		var lc = new LocalConnection();
-		lc.connect(server.getHost());
+		var lc = new ExtendedLocalConnection();
+		try {
+			lc.connect(server.getHost());
+		} catch (e:org.as2lib.data.io.conn.local.ReservedConnectionException) {
+			throw (new ReservedHostException("Connection with host [" + server.getHost() + "] is already in use.", this, arguments)).initCause(e);
+		}
 		serverMap.put(server.getHost(), lc);
 	}
 	
 	public function remove(server:LocalServer):Void {
 		if(serverMap.containsKey(server.getHost())){
-			var lc:LocalConnection = serverMap.get(server.getHost());
+			var lc:ExtendedLocalConnection = ExtendedLocalConnection(serverMap.get(server.getHost()));
 			lc.close();
 			serverMap.remove(server.getHost());
 		}
-		// Exception werfen falls Server nicht vorhanden um Programmierer darauf hinzuweisen
+		throw new IllegalArgumentException("You tried to remove a server [" + server + "] with host [" + server.getHost() + "] from the registry that has not been registered.",
+										   this,
+										   arguments);
 	}
 }

@@ -35,8 +35,7 @@ class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass impleme
 	}
 	
 	public function putService(name:String, service):Void {
-		var proxy:LocalServerServiceProxy = new LocalServerServiceProxy(service, name, host);
-		serviceArray.push(proxy);
+		serviceArray.push(new LocalServerServiceProxy(service, name, host));
 	}
 	
 	public function isRunning(Void):Boolean {
