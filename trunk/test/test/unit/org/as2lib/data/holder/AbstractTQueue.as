@@ -156,6 +156,27 @@ class test.unit.org.as2lib.data.holder.AbstractTQueue extends TestCase {
 	}
 	
 	/**
+	 * Tests if size() returns the right number of elements.
+	 */
+	public function testSize(Void):Void {
+		// empty queue
+		assertSame("No elements added -> size = 0.", queue.size(), 0);
+		
+		// filled queue
+		queue.enqueue(1);
+		assertSame("One element added", queue.size(), 1);
+		queue.enqueue("second");
+		assertSame("Two elements added", queue.size(), 2);
+		queue.enqueue(new Object());
+		assertSame("Three elements added", queue.size(), 3);
+		queue.dequeue();
+		assertSame("Two elements left", queue.size(), 2);
+		queue.dequeue();
+		queue.dequeue();
+		assertSame("Null elements left", queue.size(), 0);
+	}
+	
+	/**
 	 * Validates that iterator() returns always a proper iterator.
 	 */
 	public function testIterator(Void):Void {

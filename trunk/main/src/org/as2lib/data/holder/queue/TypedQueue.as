@@ -86,6 +86,13 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	}
 	
 	/**
+	 * @see org.as2lib.data.holder.Queue#size()
+	 */
+	public function size(Void):Number {
+		return queue.size();
+	}
+	
+	/**
 	 * @see org.as2lib.data.holder.Queue#toArray()
 	 */
 	public function toArray(Void):Array {

@@ -61,6 +61,14 @@ interface org.as2lib.data.holder.Stack extends BasicInterface {
 	public function isEmpty(Void):Boolean;
 	
 	/**
+	 * Returns the number of pushed elements.
+	 *
+	 * @return the number of pushed elements
+	 * @see #push(*):Void
+	 */
+	public function size(Void):Number;
+	
+	/**
 	 * Returns an array representation of this stack.
 	 *
 	 * <p>The elements are copied onto the array in a last-in-first-out

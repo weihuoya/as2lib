@@ -81,6 +81,13 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	}
 	
 	/**
+	 * @see org.as2lib.data.holder.Queue#size()
+	 */
+	public function size(Void):Number {
+		return data.length;
+	}
+	
+	/**
 	 * @see org.as2lib.data.holder.Queue#toArray()
 	 */
 	public function toArray(Void):Array {
