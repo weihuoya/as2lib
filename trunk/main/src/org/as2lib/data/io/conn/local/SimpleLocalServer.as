@@ -24,8 +24,8 @@ import org.as2lib.data.io.conn.local.LocalConfig;
 import org.as2lib.data.io.conn.local.LocalServerServiceProxy;
 
 /**
- * SimpleLocalServer provides functionalities for adding
- * services, which are availiable after server is started.
+ * Provides functionalities for adding services,
+ * which are availiable after server is started.
  *
  * @author Christoph Atteneder
  * @author Simon Wacker
