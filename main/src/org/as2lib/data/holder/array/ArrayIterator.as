@@ -72,11 +72,12 @@ import org.as2lib.data.holder.NoSuchElementException;
 		var t:Array = target;
 		var g:Number = -1;
 		var p = ArrayIterator.prototype;
+		var s:ArrayIterator = this;
 		
 		// Replacement of internal methods as performance upgrade.
 		// - Only if this class is used, else the OOP functionality would be broken.
 		// - With more than 50 elements, else this method would be slower
-		if(this.__proto__ == p && t.length > 25) {
+		if (this["__proto__"] == p && t.length > 25) {
 			
 			// Replace for .next() if .hasNext was not called
 			var y:Function = function() {
@@ -88,12 +89,12 @@ import org.as2lib.data.holder.NoSuchElementException;
 			}
 			// Replace for .next() if .hasNext was called and there is something next
 			var x:Function = function() {
-				next = y;
+				s.next = y;
 				return t[++g];
 			}
 			// Replace for .next() if .hasNext found that there is no next
 			var z:Function = function() {
-				next = y;
+				s.next = y;
 				arguments.callee = p.next;
 				throw new NoSuchElementException("There is no more element.", this, arguments);
 			}
@@ -102,10 +103,10 @@ import org.as2lib.data.holder.NoSuchElementException;
 			// .hasNext replacement
 			hasNext = function() {
 				if(g < t.length-1) {
-					next = x;
+					s.next = x;
 					return true;
 				} else {
-					next = z;
+					s.next = z;
 					return false; 
 				}
 			}
