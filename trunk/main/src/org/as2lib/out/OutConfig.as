@@ -5,11 +5,11 @@ import org.as2lib.core.string.Stringifier;
 import org.as2lib.out.string.WriteStringifier;
 import org.as2lib.out.string.ErrorStringifier;
 
-class org.as2lib.util.OutUtil extends BasicClass {
+class org.as2lib.out.OutConfig extends BasicClass {
 	private static var writeStringifier:Stringifier = new WriteStringifier();
 	private static var errorStringifier:Stringifier = new ErrorStringifier();
 	
-	private function OutUtil(Void) {
+	private function OutConfig(Void) {
 	}
 	
 	public static function stringifyWriteInfo(info:OutWriteInfo):String {

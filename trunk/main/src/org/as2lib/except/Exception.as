@@ -1,7 +1,7 @@
 ﻿import org.as2lib.except.Throwable;
 import org.as2lib.core.BasicInterface;
 import org.as2lib.except.AbstractException;
-import org.as2lib.Config;
+import org.as2lib.except.ExceptConfig;
 
 /**
  * @author Simon Wacker
@@ -16,7 +16,7 @@ class org.as2lib.except.Exception extends AbstractException implements Throwable
 	}
 	
 	public function toString(Void):String {
-		Config.out.error(this);
+		ExceptConfig.getOut().error(this);
 		return "";
 	}
 }
