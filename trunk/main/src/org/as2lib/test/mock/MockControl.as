@@ -20,7 +20,7 @@ import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.PrimitiveTypeMap;
 import org.as2lib.env.reflect.ProxyFactory;
-import org.as2lib.env.reflect.ResolveProxyFactory;
+import org.as2lib.env.reflect.TypeProxyFactory;
 import org.as2lib.env.reflect.InvocationHandler;
 import org.as2lib.test.mock.ArgumentsMatcher;
 import org.as2lib.test.mock.support.DefaultArgumentsMatcher;
@@ -161,14 +161,14 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Returns the currently used proxy factory.
 	 *
-	 * <p>This proxy factoy is either the default ResolveProxyFactory
+	 * <p>This proxy factoy is either the default TypeProxyFactory
 	 * or the one set via #setMockProxyFactory(ProxyFactory):Void.
 	 *
 	 * @return the currently used proxy factory
 	 * @see #setMockProxyFactory(ProxyFactory):Void
 	 */
 	public function getMockProxyFactory(Void):ProxyFactory {
-		if (!proxyFactory) proxyFactory = new ResolveProxyFactory();
+		if (!proxyFactory) proxyFactory = new TypeProxyFactory();
 		return proxyFactory;
 	}
 	

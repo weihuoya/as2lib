@@ -1,11 +1,11 @@
 ﻿import org.as2lib.test.unit.TestCase;
-import org.as2lib.env.reflect.ResolveProxyFactory;
+import org.as2lib.env.reflect.TypeProxyFactory;
 import org.as2lib.env.reflect.ProxyFactory;
 import org.as2lib.env.reflect.InvocationHandler;
 import org.as2lib.core.BasicInterface;
 import org.as2lib.env.bean.PropertyValue;
 
-class org.as2lib.env.reflect.TResolveProxyFactory extends TestCase {
+class org.as2lib.env.reflect.TTypeProxyFactory extends TestCase {
 
 	private function getBlankInvocationHandler(Void):InvocationHandler {
 		var result = new Object();
@@ -14,21 +14,21 @@ class org.as2lib.env.reflect.TResolveProxyFactory extends TestCase {
 	}
 	
 	public function testCreateProxyWithTypeOfValueNullAndUndefined(Void):Void {
-		var factory:ProxyFactory = new ResolveProxyFactory();
+		var factory:ProxyFactory = new TypeProxyFactory();
 		assertNull(factory.createProxy(null));
 		assertNull(factory.createProxy(undefined));
 	}
 	
 	public function testTypeCast(Void):Void {
-		var factory:ProxyFactory = new ResolveProxyFactory();
+		var factory:ProxyFactory = new TypeProxyFactory();
 		assertNotNull(BasicInterface(factory.createProxy(BasicInterface, getBlankInvocationHandler())));
 	}
 	
 	public function testInvocationPropagationWithInterface(Void):Void {
-		var factory:ProxyFactory = new ResolveProxyFactory();
+		var factory:ProxyFactory = new TypeProxyFactory();
 		var proxy1:BasicInterface;
 		var handler:InvocationHandler = getBlankInvocationHandler();
-		var owner:TResolveProxyFactory = this;
+		var owner:TTypeProxyFactory = this;
 		handler.invoke = function(proxy, method:String, args:FunctionArguments) {
 			owner.assertSame(proxy1, proxy);
 			owner.assertSame("toString", method);
@@ -40,10 +40,10 @@ class org.as2lib.env.reflect.TResolveProxyFactory extends TestCase {
 	}
 	
 	public function testInvocationPropagationWithClass(Void):Void {
-		var factory:ProxyFactory = new ResolveProxyFactory();
+		var factory:ProxyFactory = new TypeProxyFactory();
 		var proxy1:PropertyValue;
 		var handler:InvocationHandler = getBlankInvocationHandler();
-		var owner:TResolveProxyFactory = this;
+		var owner:TTypeProxyFactory = this;
 		handler["count"] = 0;
 		handler.invoke = function(proxy, method:String, args:FunctionArguments) {
 			owner.assertSame(proxy1, proxy);
