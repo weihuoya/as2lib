@@ -594,24 +594,25 @@ a["monkey"] = "true";
                               </li>
                             </ul>
                           </li>
-                          <li><a name="TestCases"></a><h2>Test Cases</h2>
-                            After a lot discussion we decided to use our own test system instead of the <a href="http://www.as2unit.org" title="Testcases by iteration:two">as2unit</a>, specially because they use components and don't support a lot of methods.
-                            <h3>What are Testcases</h3>
-                            A Testcase is a Class/Method that checks a different method if it works correctly. A Developer has to write a Testcase alone for his class, a Testcase system has to provide the functionality for automated testing
-                            <h3>What we do like other systems</h3>
-                            We have (like all other System too) a basic Class that should be extended. This class will support different functionalities to compare values and define wether a testcase failed or not (for example: assertEquals(), assertTrue() etc.). For all this functionality there should be a inverse functionality to check the difference (example: assertNotEquals(), assertFalse(), etc.).<br>Usually a TestcaseSystem works with overloading, but in fact, we decided to use this as rare as posible so each method should have an additional method to provide a message to the failure (for example: assertTrueWithMessage(), assertFalseWithMessage(), etc.). <p class="note">Note: with as2unit you have also to make different notations to the testcase itself, we will avoid this.</p>
-                            <h3>Running Code</h3>
-                            To run Testcases you should not have to do two different things(as as2unit has). Developers should be able to start a testcase within a call(not add a whole component to the stage). This should work with &lt;basicClass&gt;.run(&quot;&lt;path&gt;&quot;) this way is usual and simple but within flash it doesn't compile the testcase if you use a string. So we will provide a second access to run a testcase seperatly with &lt;basicClass&gt;.runClass(&lt;path&gt;) so the Class itself will be compiled because it is defined as is within the call.
-                            <h3>Handling Output</h3>
-                            The Output Handling should run over the standard OutputHandling. Simple Text Output to Asccii graphics. Another difference to other testsystems should be defined by displaying more details within the result (like which testcases were found and which work correctly), mostly because it's often not clear whether a testcase is found or not.
-                          </li>
-                          <li><a name="RegExp"></a><h2>Regulary Expressions</h2>
-                            Regulary Expression might count to the StringUtils but in my opinion Regulary Expressions can handle a lot and improve the work well, so i put it to the Basic Concept.<br>
-                            <h3>What are Regulary Expressions?</h3>
-                            Regulary Expressions are a simple but mighty way to search within Strings. JavaScript supports Regulary Expressions well and i got no idea why flash not.
-                            <h3>How will they be supported?</h3>
-                            Support will come within a Util Class. One Accesspoint (at least) will handle a Regulary Expression. Further details will come during real concept and Worksheet for this.
-                            <p class="note">Note: This has the lowest priority.</p>
+                          <li><a name="Testcases"></a><h2>Testcases</h2>
+                            A Testcase is a Class/Method that checks a different method if it works correctly. A Developer has to write a Testcase alone for his class, a Testcase system has to provide the functionality for automated testing.
+                            <ul>
+                              <li><a name="TestcasesReason"></a><h3>Reason</h3>
+                                After a lot discussion we decided to use our own test system instead of the <a href="http://www.as2unit.org" title="Testcases by iteration:two">as2unit</a>, specially because they use components, don't support a lot of methods and are not opensource (they got opensource, but the source is still not available).
+                              </li>
+                              <li><a name="TestcasesSolution"></a><h3>Solution</h3>
+                                We will provide our own Testcase Class to extend, this should (except the run call and additional Methods) not differ from as2unit in most cases.
+                              </li>
+                              <li><a name="TestcasesDifferences"></a><h3>Differences</h3>
+                                <ul>
+                                  <li><a name="TestcasesDifferencesRunningCode"></a><h3>Running code</h3>
+                                    To run Testcases you should not have to do two different things(as as2unit has). Developers should be able to start a testcase within a call(not add a whole component to the stage). This should work with &lt;basicClass&gt;.run(&quot;&lt;path&gt;&quot;) this way is usual and simple but within flash it doesn't compile the testcase if you use a string. So we will provide a second access to run a testcase seperatly with &lt;basicClass&gt;.runClass(&lt;path&gt;) so the Class itself will be compiled because it is defined as is within the call.
+                                  </li>
+                                  <li><a name="TestcasesDifferencesHandlingOutput"></a><h3>Handling Output</h3>
+                                    The Output Handling should run over the standard OutputHandling. Simple Text Output to Asccii graphics. Another difference to other testsystems should be defined by displaying more details within the result (like which testcases were found and which work correctly), mostly because it's often not clear whether a testcase is found or not.
+                                </ul>
+                              </li>
+                            </ul>
                           </li>
                         </ol>
                       </td>
