@@ -15,28 +15,23 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.RootInfo;
-import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.reflect.Cache;
 
 /**
- * A simple implementation of the Cache interface.
+ * A simple implementation of the Cache interface. This implementation
+ * sets a property with name '__as2lib__hashCode' on every cached class
+ * and package to offer high performance.
  *
  * @author Simon Wacker
  * @see org.as2lib.env.reflect.Cache
  */
 class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
-	
-	/** The cached ClassInfos. */
-	private var classes:Object;
-	
-	/** The cache PackageInfos. */
-	private var packages:Object;
+
+	/** Stores added infos. */
+	private var cache:Array;
 	
 	/** Stores the amount of generated hash codes. */
 	private var hashCodeCounter:Number;
@@ -48,85 +43,97 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 * Constructs a new Cache instance.
 	 */
 	public function SimpleCache(Void) {
-		classes = new Object();
-		packages = new Object();
-		hashCodeCounter = 0;
 		root = RootInfo.getInstance();
-		addPackage(root);
+		releaseAll();
 	}
 	
 	/**
 	 * @see Cache#releaseAll()
 	 */
 	public function releaseAll(Void):Void {
-		classes = new Object();
-		packages = new Object();
+		cache = new Array();
 		hashCodeCounter = 0;
 		addPackage(root);
 	}
 	
 	/**
 	 * Returns the ClassInfo representing either the class the object was instantiated
-	 * of or the class that was passed in. If there is no corresponding ClassInfo
-	 * cached nothing will be returned.
+	 * of or the class that was passed in.
+	 *
+	 * <p>Null or undefined will be returned if:
+	 * <ul>
+	 *   <li>There is no corresponding class info cached.</li>
+	 *   <li>The passed-in argument is null or undefined.</li>
+	 * </ul>
 	 *
 	 * @param object the instance or class the appropriate ClassInfo shall be returned
-	 * @return the ClassInfo representing the class
-	 * @throws IllegalArgumentException if the passed in object is neither of type function nor object
+	 * @return the ClassInfo representing the class or null or undefined
 	 */
 	public function getClass(object):ClassInfo {
+		if (object == null) return null;
 		if (typeof(object) == "function") {
 			var p:Object = object.prototype;
 			var c:Number = p.__as2lib__hashCode;
+			if (c == undefined) return null;
 			if (c == p.__proto__.__as2lib__hashCode) {
 				return null;
 			}
-			return classes[c];
+			return cache[c];
 		} else {
 			var p:Object = object.__proto__;
 			var c:Number = p.__as2lib__hashCode;
+			if (c == undefined) return null;
 			if (c == p.__proto__.__as2lib__hashCode) {
 				return null;
 			}
-			return classes[c];
+			return cache[c];
 		}
 	}
 	
 	/**
 	 * Adds a ClassInfo to the list of cached ClassInfos and returns the added
-	 * ClassInfo.
+	 * ClassInfo. If the ClassInfo to add is null or undefined, null will be
+	 * returned.
 	 * 
 	 * @param info the ClassInfo that shall be added
-	 * @return the added ClassInfo
+	 * @return the added ClassInfo or null
 	 */
 	public function addClass(info:ClassInfo):ClassInfo {
+		if (!info) return null;
 		var p = info.getType().prototype;
-		classes[p.__as2lib__hashCode = hashCodeCounter++] = info;
+		cache[p.__as2lib__hashCode = hashCodeCounter++] = info;
 		_global.ASSetPropFlags(p, "__as2lib__hashCode", 1, true);
 		return info;
 	}
 	
 	/**
-	 * Returns the PackageInfo representing the package. If the appropriate PackageInfo
-	 * has not been cached already and does thus not exist nothing will be returned.
+	 * Returns the PackageInfo representing the package.
+	 *
+	 * <p>Null or undefined will be returned if:
+	 * <ul>
+	 *   <li>The appropriate package info has not been cached already.</li>
+	 *   <li>The passed-in argument is null or undefined.</li>
+	 * </ul>
 	 *
 	 * @param package the package the appropriate PackageInfo shall be found
-	 * @return the PackageInfo representing the package
+	 * @return the PackageInfo representing the package or null or undefined
 	 */
 	public function getPackage(package):PackageInfo {
-		return packages[package.__as2lib__hashCode];
+		if (!package) return null;
+		return cache[package.__as2lib__hashCode];
 	}
 	
 	/**
-	 * Adds a PackageInfo to the list of cache PackageInfos and returns teh added
-	 * PackageInfo.
+	 * Adds a PackageInfo to the list of cache PackageInfos and returns the added
+	 * PackageInfo. If the PackageInfo is null or undefined, null will be returned.
 	 *
 	 * @param info the PackageInfo that shall be added
-	 * @return the added PackageInfo
+	 * @return the added PackageInfo or null
 	 */
 	public function addPackage(info:PackageInfo):PackageInfo {
+		if (!info) return null;
 		var p = info.getPackage();
-		packages[p.__as2lib__hashCode = hashCodeCounter++] = info;
+		cache[p.__as2lib__hashCode = hashCodeCounter++] = info;
 		_global.ASSetPropFlags(p, "__as2lib__hashCode", 1, true);
 		return info;
 	}
