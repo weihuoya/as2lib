@@ -17,21 +17,19 @@
 import org.as2lib.core.BasicInterface;
 
 /**
- * Definition for a Information about a Assertion.
- * All informations about assertions have to implement this interface.
+ * Interface for all Informations occured during the execution of a method of a testcase.
  * 
  * @autor Martin Heidegger
  */
-interface org.as2lib.test.unit.AssertInfo extends BasicInterface {
+interface org.as2lib.test.unit.ExecutionInfo extends BasicInterface {
 	
 	/**
-	 * @return true if the assertion failed.
+	 * @return true if the information should be recognized as failure
 	 */
 	public function isFailed(Void):Boolean;
 	
 	/**
-	 * Returns the message to the assertion.
-	 * If this assertion failed it should return the errorinfo, else the successinfo.
+	 * Returns the message to the information.
 	 * 
 	 * @return Message to the assertion.
 	 */
