@@ -41,7 +41,7 @@ class org.as2lib.data.holder.SimpleStack extends BasicClass implements Stack {
 	 * @see org.as2lib.data.holder.Stack#push()
 	 */
 	public function push(value):Void {
-		target.push(value);
+		target.unshift(value);
 	}
 	
 	/**
@@ -53,7 +53,7 @@ class org.as2lib.data.holder.SimpleStack extends BasicClass implements Stack {
 										  this,
 										  arguments);
 		}
-		return target.pop();
+		return target.shift();
 	}
 	
 	/**
