@@ -22,6 +22,10 @@ class org.as2lib.data.io.conn.local.LocalClientServiceProxy extends BasicClass i
 	}
 	
 	public function invoke(method:String, args:Array):Void {
+		// use overloading
+		if (!args) {
+			args = new Array();
+		}
 		if (listenerMap.containsKey(method)) {
 			connection.send(target, "remoteCall", [method, args], listenerMap.get(method));
 			return;
