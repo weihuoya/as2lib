@@ -15,16 +15,18 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.test.unit.Test;
-import org.as2lib.test.unit.TestResult;
-import org.as2lib.test.unit.TestRunner;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.overload.Overload;
+import org.as2lib.test.unit.error.*;
 import org.as2lib.test.unit.Assert;
 import org.as2lib.test.unit.AssertException;
-import org.as2lib.test.unit.error.*;
+import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestCaseMethodInfo;
-import org.as2lib.env.overload.Overload;
-import org.as2lib.util.ObjectUtil;
+import org.as2lib.test.unit.TestResult;
+import org.as2lib.test.unit.TestRunner;
+import org.as2lib.util.Call;
 import org.as2lib.util.ClassUtil;
+import org.as2lib.util.ObjectUtil;
 
 /**
  * Basic Testcase class to be extended.
@@ -804,8 +806,284 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		} catch(e:org.as2lib.test.unit.AssertException) {
 			getMethodInformation().addError(e);
 		} catch(e) {
-			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertUndefined", this, arguments).initCause(e));
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotUndefined", this, arguments).initCause(e));
 		}
 		return false;
 	}
+	
+	/**
+	 * overload
+	 * @see #assertInfinityWithMessage
+	 * @see #assertInfinityWithoutMessage
+	 */
+	private function assertInfinity():Boolean {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String, undefined], assertInfinityWithMessage);
+		overload.addHandler([String, Object], assertInfinityWithMessage);
+		overload.addHandler([undefined], assertInfinityWithoutMessage);
+		overload.addHandler([Object], assertInfinityWithoutMessage);
+		overload.addHandler([], assertInfinityWithoutMessage);
+		return overload.forward(arguments);
+	}
+	
+	/**
+	 * Asserts that a value is infinity else it fails.
+	 * Method to assert that a value is infinity.
+	 * It adds a error to the result if the value is not infinity.
+	 * 
+	 * Note: This method refers to the Assert Util
+	 * 
+	 * @see Assert#isInfinity
+	 * @see #assertInfinity
+	 * @see #assertInfinityWithMessage
+	 * @param val Object that should be Infinity.
+	 * @return true if no error occured else false
+	 */
+	private function assertInfinityWithoutMessage(val):Boolean {
+		return assertInfinityWithMessage("", val);
+	}
+	
+	/**
+	 * Asserts that a value is infinity else it fails.
+	 * This method asserts the same like @see #assertInfinityWithoutMessage
+	 * but it adds a message to the failure.
+	 * 
+	 * @see Assert#isInfinity
+	 * @see #assertInfinity
+	 * @see #assertInfinityWithoutMessage
+	 * @param message Message that should be provided if the assertion fails.
+	 * @param val Object that should be Infinity.
+	 * @return true if no error occured else false
+	 */
+	private function assertInfinityWithMessage(message:String, val):Boolean {
+		try {
+			Assert.isInfinityWithMessage(message, val);
+			return true;
+		} catch(e:org.as2lib.test.unit.AssertException) {
+			getMethodInformation().addError(e);
+		} catch(e) {
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertInfinity", this, arguments).initCause(e));
+		}
+		return false;
+	}
+	
+	/**
+	 * overload
+	 * @see #assertNotInfinityWithMessage
+	 * @see #assertNotInfinityWithoutMessage
+	 */
+	private function assertNotInfinity():Boolean {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String, undefined], assertNotInfinityWithMessage);
+		overload.addHandler([String, Object], assertNotInfinityWithMessage);
+		overload.addHandler([undefined], assertNotInfinityWithoutMessage);
+		overload.addHandler([Object], assertNotInfinityWithoutMessage);
+		overload.addHandler([], assertNotInfinityWithoutMessage);
+		return overload.forward(arguments);
+	}
+	
+	/**
+	 * Asserts that a value is not Infinity else it fails.
+	 * Method to assert that a value is not Infinity.
+	 * It adds a error to the result if the value is not Infinity.
+	 * 
+	 * Note: This method refers to the Assert Util
+	 * 
+	 * @see Assert#isNotInfinity
+	 * @see #assertNotInfinity
+	 * @see #assertNotInfinityWithMessage
+	 * @param val Object that should not be Infinity.
+	 * @return true if no error occured else false
+	 */
+	private function assertNotInfinityWithoutMessage(val):Boolean {
+		return assertNotInfinityWithMessage("", val);
+	}
+	
+	/**
+	 * Asserts that a value is not infinity else it fails.
+	 * This method asserts the same like @see #assertInfinityWithoutMessage
+	 * but it adds a message to the failure.
+	 * 
+	 * @see Assert#isNotInfinity
+	 * @see #assertNotInfinity
+	 * @see #assertNotInfinityWithoutMessage
+	 * @param message Message that should be provided if the assertion fails.
+	 * @param val Object that should not be Infinity.
+	 * @return true if no error occured else false
+	 */
+	private function assertNotInfinityWithMessage(message:String, val):Boolean {
+		try {
+			Assert.isNotInfinityWithMessage(message, val);
+			return true;
+		} catch(e:org.as2lib.test.unit.AssertException) {
+			getMethodInformation().addError(e);
+		} catch(e) {
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertNotInfinity", this, arguments).initCause(e));
+		}
+		return false;
+	}
+	
+	/**
+	 * overload
+	 * @see #assertEmptyWithMessage
+	 * @see #assertEmptyWithoutMessage
+	 */
+	private function assertEmpty():Boolean {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String, undefined], assertEmptyWithMessage);
+		overload.addHandler([String, Object], assertEmptyWithMessage);
+		overload.addHandler([undefined], assertEmptyWithoutMessage);
+		overload.addHandler([Object], assertEmptyWithoutMessage);
+		overload.addHandler([], assertEmptyWithoutMessage);
+		return overload.forward(arguments);
+	}
+	
+	/**
+	 * Asserts that a value is empty else it fails.
+	 * Method to assert that a value is empty, in sense of
+	 * is null or undefined.
+	 * It adds a error to the result if the value is not empty.
+	 * 
+	 * Note: This method refers to the Assert Util
+	 * 
+	 * @see Assert#isEmpty
+	 * @see #assertEmpty
+	 * @see #assertEmptyWithMessage
+	 * @param val Object that should be empty.
+	 * @return true if no error occured else false
+	 */
+	private function assertEmptyWithoutMessage(val):Boolean {
+		return assertEmptyWithMessage("", val);
+	}
+	
+	/**
+	 * Asserts that a value is empty else it fails.
+	 * This method asserts the same like @see #assertEmptyWithoutMessage
+	 * but it adds a message to the failure.
+	 * 
+	 * @see Assert#isEmpty
+	 * @see #assertEmpty
+	 * @see #assertEmptyWithoutMessage
+	 * @param message Message that should be provided if the assertion fails.
+	 * @param val Object that should be empty.
+	 * @return true if no error occured else false
+	 */
+	private function assertEmptyWithMessage(message:String, val):Boolean {
+		try {
+			Assert.isEmptyWithMessage(message, val);
+			return true;
+		} catch(e:org.as2lib.test.unit.AssertException) {
+			getMethodInformation().addError(e);
+		} catch(e) {
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertEmpty", this, arguments).initCause(e));
+		}
+		return false;
+	}
+	
+	/**
+	 * overload
+	 * @see #assertNotEmptyWithMessage
+	 * @see #assertNotEmptyWithoutMessage
+	 */
+	private function assertNotEmpty():Boolean {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([String, undefined], assertNotEmptyWithMessage);
+		overload.addHandler([String, Object], assertNotEmptyWithMessage);
+		overload.addHandler([undefined], assertNotEmptyWithoutMessage);
+		overload.addHandler([Object], assertNotEmptyWithoutMessage);
+		overload.addHandler([], assertNotEmptyWithoutMessage);
+		return overload.forward(arguments);
+	}
+	
+	/**
+	 * Asserts that a value is not empty else it fails.
+	 * Method to assert that a value is not empty, in sense of
+	 * neither null or undefined.
+	 * It adds a error to the result if the value is empty.
+	 * 
+	 * Note: This method refers to the Assert Util
+	 * 
+	 * @see Assert#isNotEmpty
+	 * @see #assertNotEmpty
+	 * @see #assertNotEmptyWithMessage
+	 * @param val Object that should not be empty.
+	 * @return true if no error occured else false
+	 */
+	private function assertNotEmptyWithoutMessage(val):Boolean {
+		return assertNotEmptyWithMessage("", val);
+	}
+	
+	/**
+	 * Asserts that a value is not empty else it fails.
+	 * This method asserts the same like @see #assertNotEmptyWithoutMessage
+	 * but it adds a message to the failure.
+	 * 
+	 * @see Assert#isNotEmpty
+	 * @see #assertNotEmpty
+	 * @see #assertNotEmptyWithoutMessage
+	 * @param message Message that should be provided if the assertion fails.
+	 * @param val Object that should not be empty.
+	 * @return true if no error occured else false
+	 */
+	private function assertNotEmptyWithMessage(message:String, val):Boolean {
+		try {
+			Assert.isNotEmpty(message, val);
+			return true;
+		} catch(e:org.as2lib.test.unit.AssertException) {
+			getMethodInformation().addError(e);
+		} catch(e) {
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertEmpty", this, arguments).initCause(e));
+		}
+		return false;
+	}
+	
+	private function assertThrows():Boolean {
+		var overload:Overload = new Overload(this);
+		overload.addHandler([Object, Call, Array], assertThrowsWithCall);
+		overload.addHandler([Object, String, Array], assertThrowsWithString);
+		overload.addHandler([Object, Function, Array], assertThrowsWithFunction);
+		overload.addHandler([String, Object, Call, Array], assertThrowsWithCallAndMessage);
+		overload.addHandler([String, Object, String, Array], assertThrowsWithStringAndMessage);
+		overload.addHandler([String, Object, Function, Array], assertThrowsWithFunctionAndMessage);
+		return overload.forward(arguments);
+	}
+	
+	private function assertThrowsWithCall(object, call:Call, args:Array):Boolean {
+		return assertThrowsWithCallAndMessage("", object, call, args);
+	}
+	
+	private function assertThrowsWithString(object, string:String, args:Array):Boolean {
+		return assertThrowsWithStringAndMessage("", object, string, args);
+	}
+	
+	private function assertThrowsWithFunction(object, func:Function, args:Array):Boolean {
+		return assertThrowsWithFunctionAndMessage("", object, func, args);
+	}
+	
+	private function assertThrowsWithCallAndMessage(message:String, object, call:Call, args:Array):Boolean {
+		try {
+			Assert.isThrowing(message, object, call, args);
+			return true;
+		} catch(e:org.as2lib.test.unit.AssertException) {
+			getMethodInformation().addError(e);
+		} catch(e) {
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertEmpty", this, arguments).initCause(e));
+		}
+		return false;
+	}
+	
+	private function assertThrowsWithStringAndMessage(message:String, object, string:String, args:Array):Boolean {
+		if(ObjectUtil.isTypeOf(this[string], "function")) {
+			return assertThrowsWithCallAndMessage(message, object, new Call(this, this[string]), args);
+		} else {
+			var e:IllegalArgumentException = new IllegalArgumentException("The method '"+string+"' is not available within "+toString(), this, arguments);
+			getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrows", this, arguments).initCause(e));	
+			return false;
+		}
+	}
+	
+	private function assertThrowsWithFunctionAndMessage(message:String, object, func:Function, args:Array):Boolean {
+		return assertThrowsWithCallAndMessage(message, object, new Call(this, func), args);
+	}
+	
 }
