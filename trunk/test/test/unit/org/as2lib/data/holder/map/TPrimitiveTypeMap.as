@@ -5,7 +5,7 @@ import org.as2lib.data.holder.map.PrimitiveTypeMap;
 /**
  * @author Simon Wacker
  */
-class test.unit.org.as2lib.data.holder.TPrimitiveTypeMap extends AbstractTMap {
+class test.unit.org.as2lib.data.holder.map.TPrimitiveTypeMap extends AbstractTMap {
 	
 	public function TPrimitiveTypeMap(Void) {
 	}

@@ -30,6 +30,7 @@ test.unit.org.as2lib.data.holder.list.TArrayList;
 test.unit.org.as2lib.data.holder.TProtectedIterator;
 test.unit.org.as2lib.data.holder.map.TMapIterator;
 test.unit.org.as2lib.data.holder.map.THashMap;
+test.unit.org.as2lib.data.holder.map.TPrimitiveTypeMap;
 test.unit.org.as2lib.io.file.TFile;
 test.unit.org.as2lib.io.file.TBitAndByteFormat;
 test.unit.org.as2lib.env.reflect.TReflect;

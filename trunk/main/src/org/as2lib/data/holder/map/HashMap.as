@@ -155,7 +155,7 @@ class org.as2lib.data.holder.map.HashMap extends BasicClass implements Map {
 	 */
 	private function findValue(value):Number {
 		var l = values.length;
-		while (values[--l] != value && l>-1);
+		while (values[--l] !== value && l>-1);
 		return l;
 	}
 	
@@ -166,7 +166,7 @@ class org.as2lib.data.holder.map.HashMap extends BasicClass implements Map {
 	 */
 	private function findKey(key):Number {
 		var l = keys.length;
-		while (keys[--l] != key && l>-1);
+		while (keys[--l] !== key && l>-1);
 		return l;
 	}
 	
