@@ -51,8 +51,8 @@ public class Documentation {
 	}
 	
 	public void addFile(File file) {
-		log.add(lang.parse(file, this));
-		//System.out.println(lang.parse(file, this));
+		//log.add(lang.parse(file, this));
+		System.out.println(lang.parse(file, this));
 	}
 	
 	/**
