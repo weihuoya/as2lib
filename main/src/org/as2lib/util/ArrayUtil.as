@@ -23,6 +23,7 @@ import org.as2lib.data.holder.stack.SimpleStack;
  * ArrayUtil contains fundamental operations to manipulate Arrays.
  *
  * @author Simon Wacker
+ * @author Martin Heidegger
  * @author Christophe Herreman
  */
 class org.as2lib.util.ArrayUtil extends BasicClass {
@@ -43,23 +44,72 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	}
 	
 	/**
-	 * Removes a specific element out of the Array.
+	 * Removes a specific element out of a array.
 	 *
-	 * @param array the Array to remove the element out of
+	 * @param array the array to remove the element out of
 	 * @param element the element to be removed
-	 * @throws IllegalArgumentException if the element could not be found in the Array
+	 * @return true if the element was removed. false if the element was not available
 	 */
-	public static function removeElement(array:Array, element):Void {
-		var l:Number = array.length;
-		for (var i:Number = 0; i <= l; i++) {
-			if (array[i] === element) {
+	public static function removeElement(array:Array, element):Boolean {
+		return removeAllOccurances(array, element);
+	}
+	
+	
+	/**
+	 * Removes all occurances of a specific element out of a array.
+	 *
+	 * @param array the array to remove the element out of
+	 * @param element the element to be removed
+	 * @return true if the element was removed. false if the element was not available
+	 */
+	public static function removeAllOccurances(array:Array, element):Boolean {
+		var i:Number = array.length;
+		var found:Boolean = false;
+		while(--i-(-1)) {
+			if(array[i] === element) {
+				found = true;
 				array.splice(i, 1);
-				return;
 			}
 		}
-		throw new IllegalArgumentException("The specified element [" + element + "] is not available in the array [" + array + "] and could therefore not be removed.", 
-											eval("th" + "is"),
-											arguments);
+		return found;
+	}
+	
+	/**
+	 * Removes the last occurance of a specific element out of a array.
+	 *
+	 * @param array the array to remove the element out of
+	 * @param element the element to be removed
+	 * @return true if the element was removed. false if the element was not available
+	 */
+	public static function removeLastOccurance(array:Array, element):Boolean {
+		var i:Number = array.length;
+		while(--i-(-1)) {
+			if(array[i] === element) {
+				array.splice(i, 1);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Removes the first occurance a specific element out of the array.
+	 *
+	 * @param array the array to remove the element out of
+	 * @param element the element to be removed
+	 * @return true if the element was removed. false if the element was not available
+	 */
+	public static function removeFirstOccurance(array:Array, element):Boolean {
+		var l:Number = array.length;
+		var i:Number = 0;
+		while(i<l) {
+			if (array[i] === element) {
+				array.splice(i, 1);
+				return true;
+			}
+			i-=-1;
+		}
+		return false;
 	}
 	
 	/**
