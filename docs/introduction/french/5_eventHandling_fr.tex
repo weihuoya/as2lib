@@ -1,0 +1,52 @@
+\chapter{Event Handling}
+\label{sec:EventHandling}
+
+\paragraph{Motivation:}
+
+Les événements en {\sl Flash} sont très intensif sur la performance et sont une partie essentielle de l'interface de l'usager. La plupart des développeurs utilisent cette fonctionnalité à l'aide de la classe intrinsic \emph{AsBroadcaster}(une fonctionnalité non documenté de Flash) ou la classe \emph{EventDispatcher}\footnote{mx.events.EventDispatcher} de {\sl Macromedia}. Il n'y a pas de définition exacte de disponible pour un \emph{EventListener} ou pour les événements ou les arguments. Il manque des informations et définitions à propos des événements pour les développeurs.
+
+\paragraph{Solution:}
+
+Voici les problèmes à faire face:
+
+\begin{itemize}
+	\item Les développeurs d'objets doivent définir quels événements seront attrapés.
+	\item Les développeurs d'écouteur doivent implémenter tous les événements.
+	\item Les développeurs d'objets doivent être capable de déclencher des événements.
+	\item Les développeurs d'objets doivent pouvoir ajouter de l'information à un événement.
+\end{itemize}
+
+{\sl As2lib} supporte la gestion des événements car c'est une partie essentielle du développement d'une application. Si vous utilisez la classe intrinsic {\sl AsBroadCaster}, cela peut devenir une implémentation déficiente. La classe \emph{EventDispatcher} de {\sl Macromedia} n'est pas gratuite, ex: elle est seulement disponible lorsque vous achetez {\sl Macromedia Flash}, et elle ne supporte pas toutes les fonctionnalités requises.
+
+L'interface la plus importante du package \emph{event} que le développeur utilise est \emph{EventBroadcaster}\footnote{org.as2lib.env.event.EventBroadcaster}. Vous pouvez ajouter autant d'écouteurs que vous voulez,
+\begin{lstlisting}[frame=single]
+addListener(listener:EventListener)
+\end{lstlisting}
+et les enlever si vous le souhaitez.
+\begin{lstlisting}[frame=single]
+removeListener(listener:EventListener)
+\end{lstlisting}
+
+Les objets écouteurs doivent implémenter l'interface \emph{EventListener}. Pour vos propres projets, il est recommandé d'utiliser et implémenter votre propre interface \emph{EventListener}.
+Si vous aimez utiliser \emph{EventBroadcaster}, voici comment procédé. La figure \ref{fig:as2libeventhandling} à la page \pageref{fig:as2libeventhandling} montre un exemple simple de la gestion des événements avec {\sl as2lib}. Mis à part la classe SimpleEventListener, il n'y a que des classes d'{\sl as2lib} qui sont utilisés.
+
+\begin{lstlisting}[frame=single][caption=SimpleEventListener]
+import org.as2lib.env.event.EventListener;
+import org.as2lib.core.BasicClass;
+
+class com.myproject.SimpleEventListener 
+	extends BasicClass implements EventListener {
+	
+	public function onTest(){
+		trace("onTest");
+	}
+}
+\end{lstlisting}
+
+\begin{figure}
+\begin{center}
+\includegraphics{uml/as2lib/eventhandling.eps}
+\caption{Exemple du procédé de la gestion des événements avec {\sl as2lib}.}
+\label{fig:as2libeventhandling}
+\end{center}
+\end{figure}
