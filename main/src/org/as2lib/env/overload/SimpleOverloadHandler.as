@@ -87,6 +87,8 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	 * If the handler's getArguments-method returns null or undefined an
 	 * empty array will be used instead.
 	 * If the arguments' lengths do not match, true will be returned.
+	 * If one argument-type is null or undefined it is less explicit
+	 * than no matter what type it gets compared with.
 	 *
 	 * @see org.as2lib.env.overload.OverloadHandler#isMoreExplicit()
 	 */
