@@ -36,4 +36,14 @@ class test.unit.org.as2lib.data.holder.stack.TTypedStack extends AbstractTStack 
 		return new TypedStack(new SimpleStack(), Object);
 	}
 	
+	/**
+	 * Extends .testPush and tests if pushing of wrong types work proper.
+	 */
+	public function testPush(Void):Void {
+		super.testPush();
+		var stack2:Stack = new TypedStack(new SimpleStack, String);
+		assertThrows("stack2 should throw a exception if you push a number", stack2, "push", [1]);
+		assertTrue("stack2 should be empty, nothing has been pushed!", stack2.isEmpty());
+	}
+	
 }
