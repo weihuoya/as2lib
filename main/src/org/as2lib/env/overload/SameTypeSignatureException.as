@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.env.overload.OverloadException;
+import org.as2lib.env.util.ReflectUtil;
 
 /**
  * SameTypeSignatureException is thrown when two or more OverloadHandlers have
@@ -23,10 +24,59 @@ import org.as2lib.env.overload.OverloadException;
  * @author Simon Wacker
  */
 class org.as2lib.env.overload.SameTypeSignatureException extends OverloadException {
+	
+	/** Exception printed as string */
+	private var asString:String;
+	
+	/** Arguments used by overloading */
+	private var overloadArguments:Array;
+	
+	/** Handlers that where available by the unknown overloadHandler */
+	private var overloadHandlers:Array;
+	
+	/** The object on which the overload should have taken place. */
+	private var overloadTarget;
+	
+	/** The method that performs the overloading. */
+	private var overloadedMethod;
+	
 	/**
 	 * @see org.as2lib.env.overload.OverloadException#Constructor()
 	 */
-	public function SameTypeSignatureException(message:String, thrower, args:FunctionArguments) {
+	public function SameTypeSignatureException(message:String, thrower, args:FunctionArguments, overloadTarget, overloadedMethod:Function, overloadArguments:Array, overloadHandlers:Array) {
 		super (message, thrower, args);
+		this.overloadTarget = overloadTarget;
+		this.overloadedMethod = overloadedMethod;
+		this.overloadArguments = overloadArguments;
+		this.overloadHandlers = overloadHandlers;
 	}
+	
+	/**
+	 * Extended toString method that displayes the content of this exception lazy.
+	 * 
+	 * @return Exception as string.
+	 */
+	public function toString():String {
+		// Lazy construction of the string,
+		// Because it takes pretty much time to construct it (using Reflections)
+		// it would take unnecessary much time to construct it if you catch it (and it
+		// won't be displayed).
+		if (!asString) {
+			asString = message;
+			asString += "\n  Overloaded Method: " + ReflectUtil.getClassInfo(overloadTarget).getMethodByMethod(overloadedMethod);
+			asString += "\n  Used Arguments["+overloadArguments.length+"]: ";
+			for(var i:Number = 0; i < overloadArguments.length; i++) {
+				if(i != 0) {
+					asString += ", ";
+				}
+				asString += overloadArguments[i];
+			}
+			asString += "\n  Used Handlers: ";
+			for(var i:Number = 0; i < overloadHandlers.length; i++) {
+				asString += "\n    "+overloadHandlers[i].toString();
+			}
+		}
+		return asString;
+	}
+	
 }

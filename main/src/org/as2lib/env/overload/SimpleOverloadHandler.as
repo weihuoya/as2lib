@@ -84,9 +84,7 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 			}
 		}
 		if (scores == 0) {
-			throw new SameTypeSignatureException("The two OverloadHandler [" + this + "] and [" + handler + "] have the same type signature.",
-												 this,
-												 arguments);
+			return null;
 		}
 		return (scores > 0);
 	}

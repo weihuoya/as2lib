@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.env.overload.OverloadException;
+import org.as2lib.env.util.ReflectUtil;
 
 /**
  * UnknownOverloadHandlerException will be thrown if no appropriate OverloadHandler
@@ -34,6 +35,9 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 	/** Exception printed as string */
 	private var asString:String;
 	
+	/** The object on which the overload should have taken place. */
+	private var target;
+	
 	/**
 	 * Constructs a new OverloadException
 	 * 
@@ -42,8 +46,9 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 	 * @param args				Arguments of the method where the exception occured.
 	 * @param handlers			Available Handlers due to the unhandable exception.
 	 */
-	public function UnknownOverloadHandlerException(message:String, thrower, args:FunctionArguments, handlers:Array) {
+	public function UnknownOverloadHandlerException(message:String, thrower, args:FunctionArguments, target, handlers:Array) {
 		super (message, thrower, args);
+		this.target = target;
 		this.handlers = handlers;
 		this.overloadArguments = args;
 	}
@@ -54,21 +59,21 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 	 * @return Exception as string.
 	 */
 	public function toString():String {
-		
 		// Lacy construction of the string,
 		// Because it takes pretty much time to construct it (using Reflections)
 		// it would take unnecessary much time to construct it if you catch it (and it
 		// won't be displayed).
 		if(!asString) {
 			asString = message;
-			asString += "\n  Used Arguments["+overloadArguments.length+"]: ";
-			for(var i:Number = 0; i < overloadArguments.length; i++) {
+			asString += "\n  Overloaded Method: " + ReflectUtil.getClassInfo(target).getMethodByMethod(overloadArguments.caller);
+			asString += "\n  Used Arguments["+overloadArguments[0].length+"]: ";
+			for(var i:Number = 0; i < overloadArguments[0].length; i++) {
 				if(i != 0) {
 					asString += ", ";
 				}
-				asString += overloadArguments[i];
+				asString += overloadArguments[0][i];
 			}
-			asString += ";\n  Available Handlers: ";
+			asString += "\n  Available Handlers: ";
 			for(var i:Number = 0; i < handlers.length; i++) {
 				asString += "\n    "+handlers[i].toString();
 			}
