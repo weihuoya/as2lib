@@ -93,7 +93,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	 * @return the name of the type defining the prototype of {@code null}
 	 */
 	private static function getTypeNameForPrototypeByPackage(c, p, n:String):String {
-		if (c == null || p == null) return null;
+		//if (c == null || p == null) return null; // why is this causing trouble?
 		if (n == null) n = "";
 		for (var r:String in p) {
 			try {
