@@ -5,14 +5,12 @@
  * object could not be found.
  *
  * @author Simon Wacker
- * @see org.as2lib.env.except.Exception
  */
 class org.as2lib.env.reflect.ReferenceNotFoundException extends Exception {
 	/**
 	 * @see org.as2lib.env.except.Exception#Constructor()
 	 */
-	public function ReferenceNotFoundException(message:String, thrower
-											 , args:FunctionArguments) {
+	public function ReferenceNotFoundException(message:String, thrower, args:FunctionArguments) {
 		super (message, thrower, args);
 	}
 }

@@ -88,10 +88,10 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements CacheInfo
 	}
 	
 	/**
-	 * Returns a HashMap containing CacheInfos representing the children of the
+	 * Returns a Map containing CacheInfos representing the children of the
 	 * package. That means all classes and packages contained in the package.
 	 *
-	 * @return a HashMap containing the children
+	 * @return a Map containing the children
 	 */
 	public function getChildren(Void):Map {
 		if (children == undefined) {

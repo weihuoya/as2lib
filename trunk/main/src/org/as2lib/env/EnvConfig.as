@@ -5,12 +5,11 @@ import org.as2lib.env.out.OutAccess;
 import org.as2lib.util.ObjectUtil;
 
 /**
- * EnvConfig is the fundamental configuration class for all classes in the env
+ * EnvConfig is the fundamental configuration class for all classes in the org.as2lib.env
  * package.
  *
  * @author Simon Wacker
  * @author Martin Heidegger
- * @see org.as2lib.core.BasicClass
  */
 class org.as2lib.env.EnvConfig extends BasicClass {
 	/** The OutAccess instance basically used by classes in the env package to do their output. */

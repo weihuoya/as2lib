@@ -9,13 +9,10 @@ import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.reflect.Cache;
 
 /**
- * Cache is used to cache classes and packages. The caching of classes and packages
- * leads to higher performance. You also must to cache them because for example
- * the parent of two classes residing in one package should be the same PackageInfo
- * instance.
+ * A simple implementation of the Cache interface.
  *
  * @author Simon Wacker
- * @see org.as2lib.core.BasicClass
+ * @see org.as2lib.env.reflect.Cache
  */
 class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	/** The cached ClassInfos. */

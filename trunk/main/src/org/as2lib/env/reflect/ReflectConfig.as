@@ -18,7 +18,6 @@ import org.as2lib.env.reflect.SimpleCache;
  * work the classes of the reflect package try to solve.
  *
  * @author Simon Wacker
- * @see org.as2lib.core.BasicClass
  */
 class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	/** The CacheAlgorythm used to find classes. */
@@ -151,6 +150,11 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 		return cache;
 	}
 	
+	/**
+	 * Sets the new cache used to cache ClassInfos and PackageInfos.
+	 *
+	 * @param cache the new cache to be used
+	 */
 	public static function setCache(newCache:Cache):Void {
 		cache = newCache;
 	}

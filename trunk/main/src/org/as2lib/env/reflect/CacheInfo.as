@@ -31,7 +31,7 @@ interface org.as2lib.env.reflect.CacheInfo {
 	public function getParent(Void):PackageInfo;
 	
 	/**
-	 * Returns a HashMap containing the children of the entity.
+	 * Returns a Map containing the children of the entity.
 	 *
 	 * @return the children of the entity
 	 */
