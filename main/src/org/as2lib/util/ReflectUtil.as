@@ -48,10 +48,11 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	 * @return The appropriate ClassInfo instance containing all class information.
 	 */
 	public static function getClassInfo(object:Object):ClassInfo {
-		if (ObjectUtil.isEmpty(cache.getClass(object))) {
-			classAlgorythm.execute(object);
+		var info:ClassInfo = cache.getClass(object);
+		if (ObjectUtil.isEmpty(info)) {
+			info = ClassInfo(classAlgorythm.execute(object));
 		}
-		return cache.getClass(object);
+		return info;
 	}
 	
 	/**
@@ -65,10 +66,11 @@ class org.as2lib.util.ReflectUtil extends BasicClass {
 	 * @return The appropriate PackageInfo instance containing all package information.
 	 */
 	public static function getPackageInfo(package:Object):PackageInfo {
-		if (ObjectUtil.isEmpty(cache.getPackage(package))) {
-			packageAlgorythm.execute(package);
+		var info:PackageInfo = cache.getPackage(package);
+		if (ObjectUtil.isEmpty(info)) {
+			info = PackageInfo(packageAlgorythm.execute(package));
 		}
-		return cache.getPackage(package);
+		return info;
 	}
 	
 	/**
