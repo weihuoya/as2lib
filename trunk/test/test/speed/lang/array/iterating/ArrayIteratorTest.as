@@ -1,6 +1,6 @@
 ﻿import org.as2lib.test.speed.TestCase;
-import org.as2lib.data.iterator.Iterator;
-import org.as2lib.data.iterator.ArrayIterator;
+import org.as2lib.data.holder.Iterator;
+import org.as2lib.data.holder.array.ArrayIterator;
 
 /**
  * Tests the performance of the ArrayIterator.

@@ -1,5 +1,5 @@
 ﻿import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.TypedArray;
+import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.data.holder.Stack;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.ArrayUtil;

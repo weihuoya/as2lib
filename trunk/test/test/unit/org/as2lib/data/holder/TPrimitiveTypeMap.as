@@ -1,6 +1,6 @@
 ﻿import test.unit.org.as2lib.data.holder.AbstractTMap
 import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.PrimitiveTypeMap;
+import org.as2lib.data.holder.map.PrimitiveTypeMap;
 
 /**
  * @author Simon Wacker

@@ -1,5 +1,5 @@
 ﻿import org.as2lib.core.BasicInterface;
-import org.as2lib.data.holder.TypedArray;
+import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.util.string.Stringifier;
 
 interface org.as2lib.test.unit.TestResult extends BasicInterface {
