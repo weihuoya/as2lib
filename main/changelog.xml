@@ -5,6 +5,9 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="2">
+         <day value="9">
+           
+         </day>
          <day value="8">
            <entry type="add" package="org.as2lib.env.reflect" class="TypeMemberFilter">Filters type members when searched for by e.g. the ClassInfo.getMethods() method.</entry>
            <entry type="add" package="org.as2lib.env.log" class="LogUtil">Offers the basic functionalities of a logger, but it is not directly dependent on the other parts of the logging api. See its documentation for more information.</entry>
