@@ -1,37 +1,14 @@
 ﻿import org.as2lib.data.iterator.Iterator;
-import org.as2lib.data.iterator.ArrayIterator;
-import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.HolderConfig;
+import org.as2lib.core.BasicInterface;
 
-class org.as2lib.data.holder.Stack extends BasicClass {
-	private var target:Array;
+interface org.as2lib.data.holder.Stack extends BasicInterface {
+	public function push(value):Void;
 	
-	public function Stack(Void) {
-		target = new Array();
-	}
+	public function pop(Void);
 	
-	public function push(object) {
-		target.push(object);
-		return object;
-	}
+	public function peek(Void);
 	
-	public function pop(Void) {
-		return target.pop();
-	}
+	public function iterator(Void):Iterator;
 	
-	public function peek(Void) {
-		return target[target.length - 1];
-	}
-	
-	public function iterator(Void):Iterator {
-		return (new ArrayIterator(target));
-	}
-	
-	public function isEmpty() {
-		return (target.length == 0);
-	}
-	
-	public function toString(Void):String {
-		return HolderConfig.getStackStringifier().execute(this);
-	}
+	public function isEmpty(Void):Boolean;
 }

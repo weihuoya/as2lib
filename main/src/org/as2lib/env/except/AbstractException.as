@@ -6,6 +6,7 @@ import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.env.except.SimpleStackTraceElement;
 import org.as2lib.data.holder.Stack;
+import org.as2lib.data.holder.SimpleStack;
 
 /**
  * AbstractException is an abstract class that contains rolled out functionalities
@@ -32,7 +33,7 @@ class org.as2lib.env.except.AbstractException extends Error {
 	 * @param args the arguments of the throwing operation
 	 */
 	private function AbstractException(message:String, thrower, args:FunctionArguments) {
-		stackTrace = new Stack();
+		stackTrace = new SimpleStack();
 		this.message = message;
 		addStackTraceElement(thrower, args.callee, args);
 		// TODO: Implement findMethod to display the next line correctly.
