@@ -1,6 +1,6 @@
 ﻿import org.as2lib.core.BasicInterface;
 import org.as2lib.data.holder.array.TypedArray;
-import org.as2lib.util.string.Stringifier;
+import org.as2lib.util.Stringifier;
 
 interface org.as2lib.test.unit.TestResult extends BasicInterface {
 	public function getPercentage(Void):Number;

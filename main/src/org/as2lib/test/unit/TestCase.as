@@ -160,8 +160,6 @@ import org.as2lib.util.ObjectUtil;
  *   </tbody>
  * </table>
  * 
- * Note: All assertions refer to @see Assert methods. 
- * 
  * You have also got the possibility to simple fail the Testcase by @see #fail.
  *
  * @see org.as2lib.test.unit.TestSuite
@@ -294,16 +292,12 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	
 	/**
 	 * Asserts if a value is true.
-	 * This methods adds a Failure to TestResult if you submit a parameter
-	 * that is not "true".
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isTrue
+	 * @see #assertFalse
 	 * @see #assertTrue
 	 * @see #assertTrueWithMessage
 	 * @param val Boolean that should be "true".
-	 * @return true if no error occured else false
+	 * @return true if no error occured else false.
 	 */
 	private function assertTrueWithoutMessage(val:Boolean):Boolean {
 		return assertTrueWithMessage("", val);
@@ -314,14 +308,12 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * This methods asserts the same like @see #assertTrueWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isTrue
+	 * @see #assertFalse
 	 * @see #assertTrue
 	 * @see #assertTrueWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
 	 * @param val Boolean that should be "true".
-	 * @return true if no error occured else false
+	 * @return true if no error occured else false.
 	 */
 	private function assertTrueWithMessage(message:String, val:Boolean):Boolean {
 		var info:AssertInfo = new AssertTrueInfo(message, val);
@@ -346,12 +338,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	
 	/**
 	 * Asserts if a value is false else it fails.
-	 * This methods adds a Failure to TestResult if you submit a parameter
-	 * that is not "false".
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isFalse
+	 * @see #assertTrue
 	 * @see #assertFalse
 	 * @see #assertFalseWithMessage
 	 * @param val Boolean that should be "false".
@@ -366,11 +354,12 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * This method asserts the same like @see #assertFalseWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
+	 * @see #assertTrue
 	 * @see #assertFalse
 	 * @see #assertFalseWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
 	 * @param val Boolean that should be "false".
-	 * @return true if no error occured else false
+	 * @return true if no error occured else false.
 	 */
 	private function assertFalseWithMessage(message:String, val:Boolean):Boolean {
 		var info:AssertInfo = new AssertFalseInfo(message, val);
@@ -407,16 +396,13 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * It compares the two variables with "==". @see #assertSame compares
 	 * two variables with "===" as exact reference match.
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * Note: This method is completly the same method like @see #assertSame.
-	 * 
-	 * @see Assert#isEqual
-	 * @see Assert#isSame
+	 * @see #assertSame
+	 * @see #assertNotEquals
 	 * @see #assertEquals
 	 * @see #assertEqualsWithMessage
 	 * @param val Object that should be compared.
 	 * @param compareTo Object to compare with val.
-	 * @return true if no error occured else false
+	 * @return true if no error occured else false.
 	 */
 	private function assertEqualsWithoutMessage(val, compareTo):Boolean {
 		return assertEqualsWithMessage("", val, compareTo);
@@ -427,8 +413,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * This method asserts the same like @see #assertEqualsWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
-	 * @see Assert#isEqual
-	 * @see Assert#isSame
+	 * @see #assertSame
+	 * @see #assertNotEquals
 	 * @see #assertEquals
 	 * @see #assertEqualsWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
@@ -471,10 +457,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * It compares the two variables with "!=". @see #assertNotSame compares
 	 * two variables with "!==" as exact reference match.
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isNotEqual
-	 * @see Assert#isNotSame
+	 * @see #assertNotSame
+	 * @see #assertEquals
 	 * @see #assertNotEquals
 	 * @see #assertNotEqualsWithMessage
 	 * @param val Object that should be compared.
@@ -490,8 +474,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * This method asserts the same like @see #assertNotEqualsWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
-	 * @see Assert#isNotEqual
-	 * @see Assert#isNotSame
+	 * @see #assertNotSame
+	 * @see #assertEquals
 	 * @see #assertNotEquals
 	 * @see #assertNotEqualsWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
@@ -534,10 +518,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * It compares the two variables with "===". @see #assertEquals compares
 	 * two variables with "==" as value match.
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isEqual
-	 * @see Assert#isSame
+	 * @see #assertNotSame
+	 * @see #assertEquals
 	 * @see #assertSame
 	 * @see #assertSameWithMessage
 	 * @param val Object that should be compared.
@@ -553,8 +535,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * This method asserts the same like @see #assertSameWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
-	 * @see Assert#isEqual
-	 * @see Assert#isSame
+	 * @see #assertNotSame
+	 * @see #assertEquals
 	 * @see #assertSame
 	 * @see #assertSameWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
@@ -597,10 +579,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * It compares the two variables with "!==". @see #assertNotEquals compares
 	 * two variables with "!=" as value match.
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isNotEqual
-	 * @see Assert#isNotSame
+	 * @see #assertSame
+	 * @see #assertNotEquals
 	 * @see #assertNotSame
 	 * @see #assertNotSameWithMessage
 	 * @param val Object that should be compared.
@@ -616,8 +596,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * This method asserts the same like @see #assertNotSameWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
-	 * @see Assert#isNotEqual
-	 * @see Assert#isNotSame
+	 * @see #assertSame
+	 * @see #assertNotEquals
 	 * @see #assertNotSame
 	 * @see #assertNotSameWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
@@ -647,13 +627,11 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts if a value is null else it fails.
-	 * Method to assert that a value is null.
-	 * It adds a error to the result if the value is not null.
+	 * Asserts if a value is (===) null else it fails.
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isNull
+	 * @see #assertNotNull
+	 * @see #assertUndefined
+	 * @see #assertEmpty
 	 * @see #assertNull
 	 * @see #assertNullWithMessage
 	 * @param val Object that should be null.
@@ -664,11 +642,13 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts if a value is null else it fails.
+	 * Asserts if a value is (===) null else it fails.
 	 * This method asserts the same like @see #assertNullWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
-	 * @see Assert#isNull
+	 * @see #assertNotNull
+	 * @see #assertUndefined
+	 * @see #assertEmpty
 	 * @see #assertNull
 	 * @see #assertNullWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
@@ -697,13 +677,11 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts if a value is not null else it fails.
-	 * Method to assert that a value is not null.
-	 * It adds a error to the result if the value is null.
+	 * Asserts if a value is not (!==) null else it fails.
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isNotNull
+	 * @see #assertNull
+	 * @see #assertNotUndefined
+	 * @see #assertNotEmpty
 	 * @see #assertNotNull
 	 * @see #assertNotNullWithMessage
 	 * @param val Object that should not be null.
@@ -714,11 +692,13 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts if a value is not null else it fails.
+	 * Asserts if a value is not (!==) null else it fails.
 	 * This method asserts the same like @see #assertNotNullWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
-	 * @see Assert#isNotNull
+	 * @see #assertNull
+	 * @see #assertNotUndefined
+	 * @see #assertNotEmpty
 	 * @see #assertNotNull
 	 * @see #assertNotNullWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
@@ -747,13 +727,11 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts if a value is undefined else it fails.
-	 * Method to assert that a value is undefined.
-	 * It adds a error to the result if the value is not undefined.
+	 * Asserts if a value is (===) undefined else it fails.
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isUndefined
+	 * @see #assertNotUndefined
+	 * @see #assertNull
+	 * @see #assertEmpty
 	 * @see #assertUndefined
 	 * @see #assertUndefinedWithMessage
 	 * @param val Object that should be undefined.
@@ -768,7 +746,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * This method asserts the same like @see #assertUndefinedWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
-	 * @see Assert#isUndefined
+	 * @see #assertNotUndefined
+	 * @see #assertNull
+	 * @see #assertEmpty
 	 * @see #assertUndefined
 	 * @see #assertUndefinedWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
@@ -798,12 +778,10 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	
 	/**
 	 * Asserts if a value is not undefined else it fails.
-	 * Method to assert that a value is not undefined.
-	 * It adds a error to the result if the value is undefined.
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isNotUndefined
+	 * @see #assertUndefined
+	 * @see #assertNotNull
+	 * @see #assertNotEmpty
 	 * @see #assertNotUndefined
 	 * @see #assertNotUndefinedWithMessage
 	 * @param val Object that should not be undefined.
@@ -818,7 +796,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * This method asserts the same like @see #assertNotUndefinedWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
-	 * @see Assert#isNotUndefined
+	 * @see #assertUndefined
+	 * @see #assertNotNull
+	 * @see #assertNotEmpty
 	 * @see #assertNotUndefined
 	 * @see #assertNotUndefinedWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
@@ -848,12 +828,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	
 	/**
 	 * Asserts that a value is infinity else it fails.
-	 * Method to assert that a value is infinity.
-	 * It adds a error to the result if the value is not infinity.
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isInfinity
+	 * @see #assertNotInfinity
 	 * @see #assertInfinity
 	 * @see #assertInfinityWithMessage
 	 * @param val Object that should be Infinity.
@@ -868,7 +844,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * This method asserts the same like @see #assertInfinityWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
-	 * @see Assert#isInfinity
+	 * @see #assertNotInfinity
 	 * @see #assertInfinity
 	 * @see #assertInfinityWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
@@ -898,12 +874,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	
 	/**
 	 * Asserts that a value is not Infinity else it fails.
-	 * Method to assert that a value is not Infinity.
-	 * It adds a error to the result if the value is not Infinity.
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isNotInfinity
+	 * @see #assertInfinity
 	 * @see #assertNotInfinity
 	 * @see #assertNotInfinityWithMessage
 	 * @param val Object that should not be Infinity.
@@ -918,7 +890,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * This method asserts the same like @see #assertInfinityWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
-	 * @see Assert#isNotInfinity
+	 * @see #assertInfinity
 	 * @see #assertNotInfinity
 	 * @see #assertNotInfinityWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
@@ -949,12 +921,11 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	/**
 	 * Asserts that a value is empty else it fails.
 	 * Method to assert that a value is empty, in sense of
-	 * is null or undefined.
-	 * It adds a error to the result if the value is not empty.
+	 * is null or undefined. (== null || == undefined)
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isEmpty
+	 * @see #assertNull
+	 * @see #assertUndefined
+	 * @see #assertNotEmpty
 	 * @see #assertEmpty
 	 * @see #assertEmptyWithMessage
 	 * @param val Object that should be empty.
@@ -969,7 +940,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * This method asserts the same like @see #assertEmptyWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
-	 * @see Assert#isEmpty
+	 * @see #assertNull
+	 * @see #assertUndefined
+	 * @see #assertNotEmpty
 	 * @see #assertEmpty
 	 * @see #assertEmptyWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
@@ -1000,12 +973,11 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	/**
 	 * Asserts that a value is not empty else it fails.
 	 * Method to assert that a value is not empty, in sense of
-	 * neither null or undefined.
-	 * It adds a error to the result if the value is empty.
+	 * neither null or undefined. (!= null || != undefined)
 	 * 
-	 * Note: This method refers to the Assert Util
-	 * 
-	 * @see Assert#isNotEmpty
+	 * @see #assertNotNull
+	 * @see #assertNotUndefined
+	 * @see #assertEmpty
 	 * @see #assertNotEmpty
 	 * @see #assertNotEmptyWithMessage
 	 * @param val Object that should not be empty.
@@ -1020,7 +992,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * This method asserts the same like @see #assertNotEmptyWithoutMessage
 	 * but it adds a message to the failure.
 	 * 
-	 * @see Assert#isNotEmpty
+	 * @see #assertNotNull
+	 * @see #assertNotUndefined
+	 * @see #assertEmpty
 	 * @see #assertNotEmpty
 	 * @see #assertNotEmptyWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
