@@ -126,12 +126,16 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
-	 * Creates a new instance of the class.
+	 * Creates a new instance of the class passing the constructor arguments.
 	 *
+	 * @param args the constructor arguments
 	 * @return a new instance of the class
 	 */
-	public function newInstance(Void) {
-		return (new clazz());
+	public function newInstance(args:Array) {
+		var result:Object = new Object();
+		result.__proto__ = clazz.prototype;
+		clazz.apply(result, args);
+		return result;
 	}
 	
 	/**
