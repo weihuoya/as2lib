@@ -3,6 +3,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="aslib http://www.as2lib.org/changelog_0.91.xsd">
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
+    <year value="2005">
+       <month value="1">
+         <day value="16">
+           <entry type="add" package="org.as2lib.env.overload" class="Overload" method="setDefaultHandler(handler:Function):Void">Allows alternative handling if no matching handler was found.</entry>
+           <entry type="add" package="org.as2lib.env.overload" class="Overload" method="removeDefaultHandler(handler:Function):Void">Allows removing of the alternative handler.</entry>
+         </day>
+       </month>
+    </year>
     <year value="2004">
       <month value="12">
         <day value="31">
