@@ -29,7 +29,7 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 		for(i in package) {
 			var child = package[i];
 			if(typeof child == "function" && ClassUtil.isSubClassOf(child, TestCase)) {
-				result.addTest(new child());
+				result.addTest(TestCase(ClassUtil.createCleanInstance(child)));
 			}
 			if(typeof child == "object" && recursive) {
 				collectAgent(child, result, recursive);
