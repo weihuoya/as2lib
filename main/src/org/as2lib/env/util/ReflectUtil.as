@@ -51,6 +51,7 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 		var info:ClassInfo = cache.getClass(object);
 		if (ObjectUtil.isEmpty(info)) {
 			info = ClassInfo(ReflectConfig.getClassAlgorythm().execute(object));
+			getCache().addClass(info);
 		}
 		return info;
 	}
@@ -70,6 +71,7 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 		var info:PackageInfo = cache.getPackage(package);
 		if (ObjectUtil.isEmpty(info)) {
 			info = PackageInfo(ReflectConfig.getPackageAlgorythm().execute(package));
+			getCache().addPackage(info);
 		}
 		return info;
 	}
