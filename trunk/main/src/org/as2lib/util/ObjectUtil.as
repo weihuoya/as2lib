@@ -30,6 +30,13 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	private static var stringifier:Stringifier = new ObjectStringifier();
 	
 	/**
+	 * Constant for allowing everything to an object.
+	 * 
+	 * @see #setAccessPermission()
+     */
+	public static var ACCESS_ALL_ALLOWED = 0;
+	
+	/**
 	 * Constant for hiding an object from for-in loops.
 	 * 
 	 * @see #setAccessPermission()
@@ -37,32 +44,25 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	public static var ACCESS_IS_HIDDEN = 1
 	
 	/**
-	 * Constant for setting an object deletable.
+	 * Constant to protect an object from deletion.
 	 * 
 	 * @see #setAccessPermission()
      */
-	public static var ACCESS_CAN_DELETE = 2;
+	public static var ACCESS_PROTECT_DELETE = 2;
 	
 	/**
-	 * Constant for setting an object overwritable.
+	 * Constant to protect an object from overwriting.
 	 * 
 	 * @see #setAccessPermission()
      */
-	public static var ACCESS_CAN_OVERWRITE = 4;
+	public static var ACCESS_PROTECT_OVERWRITE = 4;
 	
 	/**
-	 * Constant for allowing everything to an object.
+	 * Constant for allowing nothing.
 	 * 
 	 * @see #setAccessPermission()
      */
-	public static var ACCESS_ALL_ALLOWED = ACCESS_CAN_DELETE | ACCESS_CAN_OVERWRITE;
-	
-	/**
-	 * Constant for allowing nothing..
-	 * 
-	 * @see #setAccessPermission()
-     */
-	public static var ACCESS_NOTHING_ALLOWED = ACCESS_IS_HIDDEN;
+	public static var ACCESS_NOTHING_ALLOWED = 7;
 	
 	/**
 	 * Private constructor.
@@ -109,12 +109,12 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 *     <td>Hides Object from for-in loops.</td>
 	 *   </tr>
 	 *   <tr>
-	 *     <th>#ACCESS_CAN_DELETE</th>
-	 *     <td>Marks the Object as Deleteable</td>
+	 *     <th>#ACCESS_PROTECT_DELETE</th>
+	 *     <td>Protects an Object from deletion</td>
 	 *   </tr>
 	 *   <tr>
-	 *     <td>#ACCESS_CAN_OVERWRITE</th>
-	 *     <td>Marks the Object as Overwriteable</td>
+	 *     <td>#ACCESS_PROTECT_OVERWRITE</th>
+	 *     <td>Protects an Object from overwriting</td>
 	 *   </tr>
 	 *   <tr>
 	 *     <th>#ACCESS_ALL_ALLOWED</th>
