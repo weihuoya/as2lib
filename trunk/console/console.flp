@@ -1,0 +1,19 @@
+﻿<flash_project name="as2lib console" version="1">
+    <project_folder name="org" expanded="true">
+        <project_folder name="as2lib" expanded="true">
+            <project_folder name="tool" expanded="true">
+                <project_folder name="console" expanded="true">
+                    <project_folder name="out" expanded="true">
+                        <project_file path="./org/as2lib/tool/console/out/OutFilter.as" filetype="as" />
+                        <project_file path="./org/as2lib/tool/console/out/OutView.as" filetype="as" />
+                    </project_folder>
+                    <project_file path="./org/as2lib/tool/console/ConsoleConnection.as" filetype="as" />
+                    <project_file path="./org/as2lib/tool/console/ConsoleController.as" filetype="as" />
+                    <project_file path="./org/as2lib/tool/console/ConsoleView.as" filetype="as" />
+                </project_folder>
+            </project_folder>
+        </project_folder>
+    </project_folder>
+    <project_file path="./info.txt" filetype="txt" />
+    <project_file path="./console.fla" filetype="fla" profile="" def_file="true" />
+</flash_project>
