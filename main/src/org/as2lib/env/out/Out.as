@@ -219,6 +219,48 @@ class org.as2lib.env.out.Out extends BasicClass implements ConfigurableOut {
 	}
 	
 	/**
+	 * @see OutAccess#isLogEnabled()
+	 */
+	public function isLogEnabled(Void):Boolean {
+		return isEnabled(ALL);
+	}
+	
+	/**
+	 * @see OutAccess#isDebugEnabled()
+	 */
+	public function isDebugEnabled(Void):Boolean {
+		return isEnabled(DEBUG);
+	}
+	
+	/**
+	 * @see OutAccess#isInfoEnabled()
+	 */
+	public function isInfoEnabled(Void):Boolean {
+		return isEnabled(INFO);
+	}
+	
+	/**
+	 * @see OutAccess#isWarningEnabled()
+	 */
+	public function isWarningEnabled(Void):Boolean {
+		return isEnabled(WARNING);
+	}
+	
+	/**
+	 * @see OutAccess#isErrorEnabled()
+	 */
+	public function isErrorEnabled(Void):Boolean {
+		return isEnabled(ERROR);
+	}
+	
+	/**
+	 * @see OutAccess#isFatalEnabled()
+	 */
+	public function isFatalEnabled(Void):Boolean {
+		return isEnabled(FATAL);
+	}
+	
+	/**
 	 * @see OutAccess#log()
 	 */
 	public function log(message):Void {

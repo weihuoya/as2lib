@@ -5,12 +5,20 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2004">
       <month value="10">
+        <day value="8">
+          <entry type="change" package="org.as2lib.env.overload" class="OverloadHandler" method="isMoreExplicitThan(handler:OverlaodHandler):Boolean"><change-rename to="isMoreExplicit" /></entry>
+          <entry type="add" package="org.as2lib.env.out" class="OutAccess" method="isLogEnabled(Void):Boolean" />
+          <entry type="add" package="org.as2lib.env.out" class="OutAccess" method="isDebugEnabled(Void):Boolean" />
+          <entry type="add" package="org.as2lib.env.out" class="OutAccess" method="isInfoEnabled(Void):Boolean" />
+          <entry type="add" package="org.as2lib.env.out" class="OutAccess" method="isWarningEnabled(Void):Boolean" />
+          <entry type="add" package="org.as2lib.env.out" class="OutAccess" method="isErrorEnabled(Void):Boolean" />
+          <entry type="add" package="org.as2lib.env.out" class="OutAccess" method="isFatalEnabled(Void):Boolean" />
+        <day>
         <day value="7">
           <entry type="change" package="org.as2lib.env.except" class="AbstractException"><change-rename to="AbstractThrowable" /></entry>
           <entry type="add" package="org.as2lib.env.out" class="OutAccess" method="isEnabled(level:OutLevel):Boolean"></entry>
           <entry type="change" package="org.as2lib.env.out" class="Out" method="isEnabledFor(level:OutLevel):Boolean"><change-rename to="isEnabled" /></entry>
           <entry type="add" package="org.as2lib.env.out" class="ConfigurableOut" />
-          <entry type="change" package="org.as2lib.env.overload" class="OverloadHandler" method="isMoreExplicitThan(handler:OverlaodHandler):Boolean"><change-rename to="isMoreExplicit" /></entry>
         </day>
         <day value="6">
           <entry type="add" package="org.as2lib.env.out" class="OutFactory" />
