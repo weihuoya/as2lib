@@ -91,7 +91,8 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 		this.message = message;
 		this.level = level;
 		this.loggerName = loggerName;
-		this.timeStamp = timeStamp == null ? new Date().getTime() : timeStamp;
+		// new Date().getTime() is not mtasc compatible
+		this.timeStamp = timeStamp == null ? (new Date()).getTime() : timeStamp;
 	}
 	
 	/**
