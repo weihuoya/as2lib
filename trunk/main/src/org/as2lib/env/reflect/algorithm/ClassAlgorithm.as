@@ -22,7 +22,6 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ReflectConfig;
-import org.as2lib.env.reflect.ReferenceNotFoundException;
 
 /**
  * ClassAlgorithm searches for the class of a specific instance and returns a
@@ -31,22 +30,30 @@ import org.as2lib.env.reflect.ReferenceNotFoundException;
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass implements CacheAlgorithm {
+	
 	private var c:Cache;
 	private var r:ClassInfo;
 	
 	public function ClassAlgorithm(Void) {
 	}
 	
+	public function setCache(cache:Cache):Void {
+		c = cache;
+	}
+	
+	public function getCache(Void):Cache {
+		if (!c) c = ReflectConfig.getCache();
+		return c;
+	}
+	
 	public function execute(d):CompositeMemberInfo {
-		c = ReflectConfig.getCache();
-		r = null;
-		var b:PackageInfo = c.getRoot();
+		if (d == null) return null;
+		r = getCache().getClass(d);
+		if (r) return r;
+		var b:PackageInfo = getCache().getRoot();
 		var a:Object = b.getPackage();
 		_global.ASSetPropFlags(a, null, 0, true);
 		findAndStore(b, d);
-		if (!r) {
-			throw new ReferenceNotFoundException("The class corresponding to the instance [" + d + "] could not be found.", this, arguments);
-		}
 		return r;
 	}
 	
@@ -64,6 +71,7 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass impleme
 			} else if (typeof(f) == "object") {
 				var e:PackageInfo = c.getPackage(f);
 				if (!e) {
+					// Shall we really add all found packages?
 					e = c.addPackage(new PackageInfo(i, f, a));
 				}
 				if (!a.isParentPackage(e)) {
@@ -76,4 +84,5 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass impleme
 		}
 		return false;
 	}
+	
 }

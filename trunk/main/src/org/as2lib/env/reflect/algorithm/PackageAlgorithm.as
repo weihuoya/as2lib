@@ -21,7 +21,6 @@ import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ReflectConfig;
-import org.as2lib.env.reflect.ReferenceNotFoundException;
 
 /**
  * PackageAlgorithm searches for the specified package and returns a PackageInfo
@@ -30,19 +29,27 @@ import org.as2lib.env.reflect.ReferenceNotFoundException;
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass implements CacheAlgorithm {
+	
 	private var c:Cache;
 	private var p:PackageInfo;
 	
 	public function PackageAlgorithm(Void) {
 	}
 	
+	public function setCache(cache:Cache):Void {
+		c = cache;
+	}
+	
+	public function getCache(Void):Cache {
+		if (!c) c = ReflectConfig.getCache();
+		return c;
+	}
+	
 	public function execute(o):CompositeMemberInfo {
-		c = ReflectConfig.getCache();
-		p = null;
+		if (o == null) return null;
+		p = getCache().getPackage(o);
+		if (p) return p;
 		findAndStore(c.getRoot(), o);
-		if (!p) {
-			throw new ReferenceNotFoundException("The package [" + o + "] could not be found.", this, arguments);
-		}
 		return p;
 	}
 	
@@ -52,10 +59,7 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass imple
 		for (i in b) {
 			var e:Object = b[i];
 			if (typeof(e) == "object") {
-				var d:PackageInfo = c.getPackage(e);
-				if (!d) {
-					d = c.addPackage(new PackageInfo(i, e, a));
-				}
+				var d:PackageInfo = c.addPackage(new PackageInfo(i, e, a));
 				if (e == o) {
 					p = d;
 					return true;
@@ -70,4 +74,5 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass imple
 		}
 		return false;
 	}
+	
 }

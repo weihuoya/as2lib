@@ -17,7 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
 import org.as2lib.env.except.StackTraceElement;
-import org.as2lib.env.reflect.ReferenceNotFoundException;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.StringUtil;
@@ -31,6 +30,7 @@ import org.as2lib.env.reflect.MethodInfo;
  * @author Martin Heidegger
  */
 class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass implements Stringifier {
+	
 	/**
 	 * @see org.as2lib.util.string.Stringifier#execute()
 	 */
@@ -38,15 +38,9 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 		var result:String = "";
 		var element:StackTraceElement = StackTraceElement(target);
 		
-		try {
-			var thrower:ClassInfo = element.getThrower();
-		
-			var throwerName:String = thrower.getName();
-			if (throwerName == undefined) {
-				throwerName = "[not evaluateable]";
-			}
-		} catch(e:org.as2lib.env.except.IllegalArgumentException) {
-			var throwerName:String = "["+thrower+"]";
+		var throwerName:String = element.getThrower().getName();
+		if (throwerName == undefined) {
+			throwerName = "[not evaluateable]";
 		}
 		
 		try {
@@ -68,4 +62,5 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 	
 		return result;
 	}
+	
 }

@@ -24,6 +24,7 @@ import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass implements ContentAlgorithm {
+	
 	private var r:Array;
 	private var i:ClassInfo;
 	private var s:Boolean;
@@ -32,7 +33,10 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass implem
 	}
 	
 	public function execute(i:CompositeMemberInfo):Array {
+		if (i == null) return null;
+		
 		this.i = ClassInfo(i);
+		if (this.i == null) return null;
 		this.r = new Array();
 		
 		this.s = true;
@@ -46,6 +50,7 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass implem
 		_global.ASSetPropFlags(p, null, 0, true);
 		_global.ASSetPropFlags(p, ["__proto__", "constructor", "__constructor__"], 7, true);
 		search(p);
+		
 		_global.ASSetPropFlags(c, null, 1, true);
 		_global.ASSetPropFlags(p, null, 1, true);
 		
@@ -62,4 +67,5 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass implem
 			}
 		}
 	}
+	
 }

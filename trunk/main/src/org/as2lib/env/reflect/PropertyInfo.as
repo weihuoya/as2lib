@@ -82,7 +82,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 */
 	private function setGetter(concreteGetter:Function):Void {
 		if (concreteGetter != undefined) {
-			setter = new MethodInfo("__get__" + getName(), concreteGetter, getDeclaringType(), isStatic());
+			getter = new MethodInfo("__get__" + getName(), concreteGetter, getDeclaringType(), isStatic());
 		}
 	}
 	

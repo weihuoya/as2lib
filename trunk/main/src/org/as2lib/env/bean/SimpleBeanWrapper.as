@@ -84,7 +84,11 @@ class org.as2lib.env.bean.SimpleBeanWrapper extends AbstractBeanWrapper implemen
 		}
 		try {
 			if (keyName) {
-				return object[methodName](keyName);
+				if (isNaN(keyName)) {
+					return object[methodName](keyName);
+				} else {
+					return object[methodName](Number(keyName));
+				}
 			}
 			return object[methodName]();
 		} catch (unknownException) {
@@ -124,7 +128,11 @@ class org.as2lib.env.bean.SimpleBeanWrapper extends AbstractBeanWrapper implemen
 		}
 		try {
 			if (keyName) {
-				object[methodName](keyName, propertyValue);
+				if (isNaN(keyName)) {
+					object[methodName](keyName, propertyValue);
+				} else {
+					object[methodName](Number(keyName), propertyValue);
+				}
 			} else {
 				object[methodName](propertyValue);
 			}

@@ -27,36 +27,45 @@ import org.as2lib.env.reflect.ReflectConfig;
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.ChildrenAlgorithm extends BasicClass implements ContentAlgorithm {
+	
+	private var c:Cache;
+	
 	public function ChildrenAlgorithm(Void) {
 	}
 	
+	public function setCache(cache:Cache):Void {
+		c = cache;
+	}
+	
+	public function getCache(Void):Cache {
+		if (!c) c = ReflectConfig.getCache();
+		return c;
+	}
+	
 	public function execute(g:CompositeMemberInfo):Array {
-		var c:Cache = ReflectConfig.getCache();
-		
+		if (g == null) return null;
 		var p:PackageInfo = PackageInfo(g);
+		if (p == null) return null;
+		getCache();
 		var r:Array = new Array();
-		
 		var t:Object = p.getPackage();
-		
 		var i:String;
 		for (i in t) {
 			if (typeof(t[i]) == "function") {
 				var b:ClassInfo = c.getClass(t[i]);
 				if (!b) {
-					b = new ClassInfo(i, t[i], p);
-					c.addClass(b);
+					b = c.addClass(new ClassInfo(i, t[i], p));
 				}
 				r[r.length] = b;
 			} else if (typeof(t[i]) == "object") {
 				var a:PackageInfo = c.getPackage(t[i]);
 				if (!a) {
-					a = new PackageInfo(i, t[i], p);
-					c.addPackage(a);
+					a = c.addPackage(new PackageInfo(i, t[i], p));
 				}
 				r[r.length] = a;
 			}
 		}
-		
 		return r;
 	}
+	
 }

@@ -31,6 +31,7 @@ import org.as2lib.env.reflect.Cache;
  * @see org.as2lib.env.reflect.Cache
  */
 class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
+	
 	/** The cached ClassInfos. */
 	private var classes:Object;
 	
@@ -55,6 +56,16 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	}
 	
 	/**
+	 * @see Cache#releaseAll()
+	 */
+	public function releaseAll(Void):Void {
+		classes = new Object();
+		packages = new Object();
+		hashCodeCounter = 0;
+		addPackage(root);
+	}
+	
+	/**
 	 * Returns the ClassInfo representing either the class the object was instantiated
 	 * of or the class that was passed in. If there is no corresponding ClassInfo
 	 * cached nothing will be returned.
@@ -68,14 +79,14 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 			var p:Object = object.prototype;
 			var c:Number = p.__as2lib__hashCode;
 			if (c == p.__proto__.__as2lib__hashCode) {
-				return;
+				return null;
 			}
 			return classes[c];
 		} else {
 			var p:Object = object.__proto__;
 			var c:Number = p.__as2lib__hashCode;
 			if (c == p.__proto__.__as2lib__hashCode) {
-				return;
+				return null;
 			}
 			return classes[c];
 		}
@@ -128,4 +139,5 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	public function getRoot(Void):RootInfo {
 		return root;
 	}
+	
 }

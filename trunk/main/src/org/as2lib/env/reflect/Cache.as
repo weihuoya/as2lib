@@ -31,6 +31,13 @@ import org.as2lib.util.ObjectUtil;
  * @author Simon Wacker
  */
 interface org.as2lib.env.reflect.Cache extends BasicInterface {
+	
+	/**
+	 * Releases all class and package infos that have been cached so
+	 * far.
+	 */
+	public function releaseAll(Void):Void;
+	
 	/**
 	 * Returns the ClassInfo representing either the class the object was instantiated
 	 * of or the class that was passed in. If there is no corresponding ClassInfo
@@ -75,4 +82,5 @@ interface org.as2lib.env.reflect.Cache extends BasicInterface {
 	 * @return the root
 	 */
 	public function getRoot(Void):RootInfo;
+	
 }
