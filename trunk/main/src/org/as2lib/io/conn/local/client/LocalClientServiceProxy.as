@@ -55,25 +55,6 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	}
 	
 	/**
-	 * @see ClientServiceProxy#invoke()
-	 */
-	public function invoke():Void {
-		var o:Overload = new Overload(this);
-		o.addHandler([String], invokeByName);
-		o.addHandler([String, Array], invokeByNameAndArguments);
-		o.addHandler([String, MethodInvocationCallback], invokeByNameAndCallback);
-		o.addHandler([String, Array, MethodInvocationCallback], invokeByNameAndArgumentsAndCallback);
-		o.forward(arguments);
-	}
-	
-	/**
-	 * @see ClientServiceProxy#invokeByName()
-	 */
-	public function invokeByName(name:String):Void {
-		invokeByNameAndArguments(name, []);
-	}
-	
-	/**
 	 * @see ClientServiceProxy#invokeByNameAndArguments()
 	 */
 	public function invokeByNameAndArguments(name:String, args:Array):Void {
@@ -82,13 +63,6 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 		} catch (exception:org.as2lib.io.conn.local.core.UnknownConnectionException) {
 			throw new UnknownServiceException("Service with url [" + url + "] does not exist.", this, arguments).initCause(exception);
 		}
-	}
-	
-	/**
-	 * @see ClientServiceProxy#invokeByNameAndCallback()
-	 */
-	public function invokeByNameAndCallback(name:String, callback:MethodInvocationCallback):Void {
-		invokeByNameAndArgumentsAndCallback(name, [], callback);
 	}
 	
 	/**

@@ -15,6 +15,8 @@
  */
  
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.overload.Overload;
+import org.as2lib.io.conn.core.event.MethodInvocationCallback;
 
 /**
  * @author Simon Wacker
@@ -33,6 +35,32 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicCla
 	}
 	
 	private function AbstractClientServiceProxy(Void) {
+	}
+	
+	/**
+	 * @see ClientServiceProxy#invoke()
+	 */
+	public function invoke():Void {
+		var o:Overload = new Overload(this);
+		o.addHandler([String], invokeByName);
+		o.addHandler([String, Array], this["invokeByNameAndArguments"]);
+		o.addHandler([String, MethodInvocationCallback], invokeByNameAndCallback);
+		o.addHandler([String, Array, MethodInvocationCallback], this["invokeByNameAndArgumentsAndCallback"]);
+		o.forward(arguments);
+	}
+	
+	/**
+	 * @see ClientServiceProxy#invokeByName()
+	 */
+	public function invokeByName(name:String):Void {
+		this["invokeByNameAndArguments"](name, []);
+	}
+	
+	/**
+	 * @see ClientServiceProxy#invokeByNameAndCallback()
+	 */
+	public function invokeByNameAndCallback(name:String, callback:MethodInvocationCallback):Void {
+		this["invokeByNameAndArgumentsAndCallback"](name, [], callback);
 	}
 	
 }
