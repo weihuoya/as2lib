@@ -22,5 +22,6 @@ import org.as2lib.env.bean.factory.BeanFactory;
 interface org.as2lib.env.bean.factory.config.ConfigurableBeanFactory extends BeanFactory {
 	
 	public function destroySingletons(Void):Void;
+	public function registerSingleton(beanName:String, singleton):Void;
 	
 }

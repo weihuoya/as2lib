@@ -21,6 +21,7 @@ import org.as2lib.env.bean.factory.BeanDefinitionStoreException;
 import org.as2lib.env.bean.factory.NoSuchBeanDefinitionException;
 import org.as2lib.env.bean.factory.BeanNotOfRequiredTypeException;
 import org.as2lib.env.bean.factory.support.AbstractBeanFactory;
+import org.as2lib.env.bean.factory.support.SingletonBeanDefinition;
 import org.as2lib.env.bean.factory.config.BeanDefinition;
 import org.as2lib.env.bean.factory.config.ConfigurableBeanFactory;
 import org.as2lib.env.bean.factory.config.ConfigurableListableBeanFactory;
@@ -111,6 +112,10 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 			getBeanDefinition(beanNames[i]).destroyBean(singletonBeanMap.get(beanNames[i]));
 		}
 		singletonBeanMap.clear();
+	}
+	
+	public function registerSingleton(beanName:String, singleton):Void {
+		registerBeanDefinition(beanName, new SingletonBeanDefinition(beanName, this, singleton));
 	}
 	
 	//---------------------------------------------------------------------
