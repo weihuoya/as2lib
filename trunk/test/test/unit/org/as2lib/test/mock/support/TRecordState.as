@@ -29,6 +29,18 @@ import test.unit.org.as2lib.test.mock.MethodBehaviorMock;
  */
 class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 	
+	private function getBlankBehavior(Void):Behavior {
+		var result = new Object();
+		result.__proto__ = Behavior["prototype"];
+		return result;
+	}
+	
+	private function getBlankArgumentsMatcher(Void):ArgumentsMatcher {
+		var result = new Object();
+		result.__proto__ = ArgumentsMatcher["prototype"];
+		return result;
+	}
+	
 	public function testNewWithNullArgument(Void):Void {
 		try {
 			var s:RecordState = new RecordState(null);
@@ -38,7 +50,7 @@ class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 	}
 	
 	public function testNewWithRealArgument(Void):Void {
-		var b:Behavior = new Behavior();
+		var b:Behavior = getBlankBehavior();
 		var s:RecordState = new RecordState(b);
 		assertSame(s.getBehavior(), b);
 	}
@@ -193,7 +205,7 @@ class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 	}
 	
 	public function testSetArgumentsMatcherWithRealArgument(Void):Void {
-		var a:ArgumentsMatcher = new ArgumentsMatcher();
+		var a:ArgumentsMatcher = getBlankArgumentsMatcher();
 		
 		var m:MethodBehaviorMock = new MethodBehaviorMock(this);
 		m.setArgumentsMatcher(a);
@@ -212,7 +224,7 @@ class test.unit.org.as2lib.test.mock.support.TRecordState extends TestCase {
 	}
 	
 	public function testVerify(Void):Void {
-		var s:RecordState = new RecordState(new Behavior());
+		var s:RecordState = new RecordState(getBlankBehavior());
 		try {
 			s.verify();
 			fail("exception should be thrown");

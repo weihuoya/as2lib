@@ -61,17 +61,18 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass {
 		
 		this.s = true;
 		_global.ASSetPropFlags(c, null, 0, true);
-		_global.ASSetPropFlags(c, ["__proto__", "constructor", "prototype"], 7, true);
+		_global.ASSetPropFlags(c, ["__proto__", "constructor", "prototype"], 1, true);
 		search(c);
 		
 		this.s = false;
 		var p:Object = c.prototype;
 		_global.ASSetPropFlags(p, null, 0, true);
-		_global.ASSetPropFlags(p, ["__proto__", "constructor", "__constructor__"], 7, true);
+		_global.ASSetPropFlags(p, ["__proto__", "constructor", "__constructor__"], 1, true);
 		search(p);
 		
-		//_global.ASSetPropFlags(c, null, 1, true);
-		//_global.ASSetPropFlags(p, null, 1, true);
+		// ASSetPropFlags must be restored because unexpected behaviours get caused otherwise
+		_global.ASSetPropFlags(c, null, 1, true);
+		_global.ASSetPropFlags(p, null, 1, true);
 		
 		return r;
 	}
@@ -79,7 +80,7 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass {
 	private function search(t):Void {
 		var k:String;
 		for (k in t) {
-			if (t[k] instanceof Function
+			if (typeof(t[k]) == "function"
 					&& k.indexOf("__get__") < 0
 					&& k.indexOf("__set__") < 0) {
 				r[r.length] = new MethodInfo(k, t[k], i, s);

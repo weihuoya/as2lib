@@ -29,6 +29,12 @@ import org.as2lib.io.conn.core.event.MethodInvocationCallback;
  */
 class test.unit.org.as2lib.io.conn.local.client.TLocalClientServiceProxyFactory extends TestCase {
 	
+	private function getBlankMethodInvocationCallback(Void):MethodInvocationCallback {
+		var result = new Object();
+		result.__proto__ = MethodInvocationCallback["prototype"];
+		return result;
+	}
+	
 	public function testGetClientServiceProxyByUrlWithNullUrl(Void):Void {
 		var pc:MockControl = new MockControl(ClientServiceProxy);
 		var p:ClientServiceProxy = pc.getMock();
@@ -151,8 +157,8 @@ class test.unit.org.as2lib.io.conn.local.client.TLocalClientServiceProxyFactory 
 	public function testGetClientServiceProxyByUrlAndTypeWithDefaultTypeProxyFactory(Void):Void {
 		var Type:Function = function() {};
 		var arg3:Object = new Object();
-		var c1:MethodInvocationCallback = new MethodInvocationCallback();
-		var c2:MethodInvocationCallback = new MethodInvocationCallback();
+		var c1:MethodInvocationCallback = getBlankMethodInvocationCallback();
+		var c2:MethodInvocationCallback = getBlankMethodInvocationCallback();
 		
 		var pc:MockControl = new MockControl(ClientServiceProxy);
 		var p:ClientServiceProxy = pc.getMock();

@@ -20,7 +20,6 @@ import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.array.ArrayIterator;
-import org.as2lib.data.holder.HolderConfig;
 
 /**
  * @author Simon Wacker

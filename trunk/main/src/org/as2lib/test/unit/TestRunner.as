@@ -20,6 +20,7 @@ import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.data.holder.map.TypedMap;
 import org.as2lib.data.holder.Iterator;
+import org.as2lib.test.unit.info.*;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.TestSuite;
 import org.as2lib.test.unit.TestResult;
@@ -32,7 +33,6 @@ import org.as2lib.test.unit.FinishInfo;
 import org.as2lib.test.unit.PauseInfo;
 import org.as2lib.test.unit.ResumeInfo;
 import org.as2lib.test.unit.TestCaseMethodInfo;
-import org.as2lib.test.unit.info.*;
 import org.as2lib.env.event.EventBroadcaster;
 import org.as2lib.env.event.SimpleEventBroadcaster;
 import org.as2lib.env.overload.Overload;
@@ -361,7 +361,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 				testCaseInstance = TestCase(ClassInfo.forInstance(currentTestCase.getTestCase()).newInstance());
 				testCaseInstance.setTestRunner(this);
 			} catch(e) {
-				methodInfo.addInfo(new InstanciationError("IMPORTANT: Testcase threw an error by instanciation.\n"+StringUtil.addSpaceIndent(e.toString(), 2), this, arguments));
+				methodInfo.addInfo(new InstantiationError("IMPORTANT: Testcase threw an error by instanciation.\n"+StringUtil.addSpaceIndent(e.toString(), 2), this, arguments));
 			}
 			
 			// Prepare the execution of the method by setUp

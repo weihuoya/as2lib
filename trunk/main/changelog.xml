@@ -6,6 +6,8 @@
     <year value="2005">
        <month value="1">
          <day value="28>
+           <entry type="change" package="org.as2lib.test.unit.info" class="InstanciationError"><change-rename to="InstantiationError"></entry>
+           <entry type="change" package="org.as2lib.aop.advice" class="AfterThrowingAdvice" method="execute(JoinPoint, Throwable):Void>Changed arguments types to execute(JoinPoint, *):Void.</entry>
            <entry type="change" package="org.as2lib.env.except" class="Throwable" method="getStackTrace(Void):Stack">Changed return type to Array to reduce dependencies.</entry>
          </day>
          <day value="27>

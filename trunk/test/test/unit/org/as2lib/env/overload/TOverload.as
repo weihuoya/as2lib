@@ -29,9 +29,15 @@ import org.as2lib.env.except.IllegalArgumentException;
  */
 class test.unit.org.as2lib.env.overload.TOverload extends TestCase {
 	
+	private function getBlankOverloadHandler(Void):OverloadHandler {
+		var result = new Object();
+		result.__proto__ = OverloadHandler["prototype"];
+		return result;
+	}
+	
 	public function testAddHandlerForOverloadability(Void):Void {
 		var o:Overload = new Overload(this);
-		var oh:OverloadHandler = new OverloadHandler();
+		var oh:OverloadHandler = getBlankOverloadHandler();
 		o.addHandler(oh);
 		assertNotThrows(o, "removeHandler", [oh]);
 	}

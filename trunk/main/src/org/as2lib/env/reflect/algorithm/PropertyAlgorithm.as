@@ -72,9 +72,10 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass {
 		this.a = false;
 		var d:Object = b.prototype;
 		_global.ASSetPropFlags(d, null, 0, true);
-		_global.ASSetPropFlags(d, ["__proto__", "constructor", "__constructor__"], 7, true);
+		_global.ASSetPropFlags(d, ["__proto__", "constructor", "__constructor__"], 1, true);
 		search(d);
-		//_global.ASSetPropFlags(d, null, 1, true);
+		// ASSetPropFlags must be restored because unexpected behaviours get caused otherwise
+		_global.ASSetPropFlags(d, null, 1, true);
 		
 		return r;
 	}

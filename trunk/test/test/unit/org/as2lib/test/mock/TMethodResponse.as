@@ -47,7 +47,7 @@ class test.unit.org.as2lib.test.mock.TMethodResponse extends TestCase {
 		try {
 			r.response();
 			fail("exception should be thrown");
-		} catch (e:Object) {
+		} catch (e) {
 			assertSame(e, t);
 		}
 	}
@@ -74,7 +74,7 @@ class test.unit.org.as2lib.test.mock.TMethodResponse extends TestCase {
 		try {
 			r.response();
 			fail("exception should be thrown");
-		} catch (e:Object) {
+		} catch (e) {
 			assertSame(e, t);
 		}
 	}

@@ -204,7 +204,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 * @return the default record state factory
 	 */
 	private function getDefaultRecordStateFactory(Void):MockControlStateFactory {
-		var result:MockControlStateFactory = new MockControlStateFactory();
+		var result:MockControlStateFactory = getBlankMockControlStateFactory();
 		result.getMockControlState = function(behavior:Behavior):MockControlState {
 			return new RecordState(behavior);
 		}
@@ -243,7 +243,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 * @return the default replay state factory
 	 */
 	private function getDefaultReplayStateFactory(Void):MockControlStateFactory {
-		var result:MockControlStateFactory = new MockControlStateFactory();
+		var result:MockControlStateFactory = getBlankMockControlStateFactory();
 		result.getMockControlState = function(behavior:Behavior):MockControlState {
 			return new ReplayState(behavior);
 		}
@@ -261,6 +261,18 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 */
 	public function setReplayStateFactory(replayStateFactory:MockControlStateFactory):Void {
 		this.replayStateFactory = replayStateFactory;
+	}
+	
+	/**
+	 * Returns a blank mock control state factory. That is a factory with no
+	 * initialized methods.
+	 *
+	 * @return a blank mock control state factory
+	 */
+	private function getBlankMockControlStateFactory(Void):MockControlStateFactory {
+		var result = new Object();
+		result.__proto__ = MockControlStateFactory["prototype"];
+		return result;
 	}
 	
 	/**
@@ -282,11 +294,23 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 * @return a delegator that handles proxy method invocations
 	 */
 	private function createDelegator(Void):InvocationHandler {
-		var result:InvocationHandler = new InvocationHandler();
+		var result:InvocationHandler = getBlankInvocationHandler();
 		var owner:MockControl = this;
 		result.invoke = function(proxy, method:String, args:Array) {
 			return owner.invokeMethod(method, args);
 		}
+		return result;
+	}
+	
+	/**
+	 * Returns a blank invocation handler. That is a handler with no initialized
+	 * methods.
+	 *
+	 * @return a blank invocation handler
+	 */
+	private function getBlankInvocationHandler(Void):InvocationHandler {
+		var result = new Object();
+		result.__proto__ = InvocationHandler["prototype"];
 		return result;
 	}
 	

@@ -28,6 +28,18 @@ import test.unit.org.as2lib.env.overload.SubTypeOfBasicInterface;
  */
 class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase {
 	
+	private function getBasicInterface(Void):BasicInterface {
+		var result = new Object();
+		result.__proto__ = BasicInterface["prototype"];
+		return result;
+	}
+	
+	private function getOverloadHandler(Void):OverloadHandler {
+		var result = new Object();
+		result.__proto__ = OverloadHandler["prototype"];
+		return result;
+	}
+	
 	public function testNewWithNullValues(Void):Void {
 		try {
 			new SimpleOverloadHandler([], null);
@@ -111,12 +123,12 @@ class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase 
 		_root.createEmptyMovieClip("testMatchesForPrimitiveTypes_mc", _root.getNextHighestDepth())
 		
 		var h:SimpleOverloadHandler = new SimpleOverloadHandler([Object, BasicInterface, BasicClass, Array], function() {});
-		assertTrue("1_0", h.matches([new BasicClass(), new BasicInterface(), new BasicClass(), new Array()]));
+		assertTrue("1_0", h.matches([new BasicClass(), getBasicInterface(), new BasicClass(), new Array()]));
 		
 		h = new SimpleOverloadHandler([Object], function() {});
 		assertTrue("2_0", h.matches([new Object()]));
 		assertTrue("2_1", h.matches([new BasicClass()]));
-		assertTrue("2_2", h.matches([new BasicInterface()]));
+		assertTrue("2_2", h.matches([getBasicInterface()]));
 		assertTrue("2_3", h.matches(["test"]));
 		assertTrue("2_4", h.matches([3]));
 		assertTrue("2_5", h.matches([false]));
@@ -128,7 +140,7 @@ class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase 
 		h = new SimpleOverloadHandler([BasicClass], function() {});
 		assertTrue("3_0", h.matches([new BasicClass()]));
 		assertTrue("3_1", h.matches([new SubTypeOfBasicClass()]));
-		assertFalse("3_2", h.matches([new BasicInterface()]));
+		assertFalse("3_2", h.matches([getBasicInterface()]));
 		assertFalse("3_3", h.matches(["test"]));
 		assertFalse("3_4", h.matches([3]));
 		assertFalse("3_5", h.matches([false]));
@@ -140,8 +152,8 @@ class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase 
 		h = new SimpleOverloadHandler([BasicInterface], function() {});
 		assertTrue("4_0", h.matches([new BasicClass()]));
 		assertTrue("4_1", h.matches([new SimpleOverloadHandler([], function() {})]));
-		assertTrue("4_2", h.matches([new BasicInterface()]));
-		assertTrue("4_3", h.matches([new OverloadHandler()]));
+		assertTrue("4_2", h.matches([getBasicInterface()]));
+		assertTrue("4_3", h.matches([getOverloadHandler()]));
 		assertFalse("4_4", h.matches([3]));
 		assertFalse("4_5", h.matches([false]));
 		assertFalse("4_6", h.matches([Function]));
@@ -153,8 +165,8 @@ class test.unit.org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase 
 		h = new SimpleOverloadHandler([Array], function() {});
 		assertTrue("5_0", h.matches([new Array()]));
 		assertTrue("5_1", h.matches([["Position 0", "Position 1"]]));
-		assertFalse("5_2", h.matches([new BasicInterface()]));
-		assertFalse("5_3", h.matches([new OverloadHandler()]));
+		assertFalse("5_2", h.matches([getBasicInterface()]));
+		assertFalse("5_3", h.matches([getOverloadHandler()]));
 		assertFalse("5_4", h.matches([3]));
 		assertFalse("5_5", h.matches([false]));
 		assertFalse("5_6", h.matches([Function]));

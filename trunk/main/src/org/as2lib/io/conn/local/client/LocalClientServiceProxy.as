@@ -151,7 +151,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	public function invokeByNameAndArgumentsAndCallback(methodName:String, args:Array, callback:MethodInvocationCallback):MethodInvocationCallback {
 		if (!methodName) throw new IllegalArgumentException("Method name must not be null, undefined or an empty string.", this, arguments);
 		if (!args) args = new Array();
-		if (!callback) callback = new MethodInvocationCallback();
+		if (!callback) callback = getBlankMethodInvocationCallback();
 		
 		var responseUrl:String = generateResponseServiceUrl(url, methodName);
 		
@@ -174,7 +174,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 			throw new ReservedServiceException("Service with url [" + url + "] does already exist.", this, arguments).initCause(exception);
 		}
 		
-		var errorListener:MethodInvocationErrorListener = new MethodInvocationErrorListener();
+		var errorListener:MethodInvocationErrorListener = getBlankMethodInvocationErrorListener();
 		errorListener.onError = function(info:MethodInvocationErrorInfo) {
 			callback.onError(info);
 		}
@@ -186,6 +186,30 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 		}
 		
 		return callback;
+	}
+	
+	/**
+	 * Returns a blank method invocation error listener. That is
+	 * a error listern with no initialized methods.
+	 *
+	 * @return a blank method invocation error listener
+	 */
+	private function getBlankMethodInvocationErrorListener(Void):MethodInvocationErrorListener {
+		var result = new Object();
+		result.__proto__ = MethodInvocationErrorListener["prototype"];
+		return result;
+	}
+	
+	/**
+	 * Returns a blank method invocation callback. That is a
+	 * callback with no initialized methods.
+	 *
+	 * @return a blank method invocation callback
+	 */
+	private function getBlankMethodInvocationCallback(Void):MethodInvocationCallback {
+		var result = new Object();
+		result.__proto__ = MethodInvocationCallback["prototype"];
+		return result;
 	}
 	
 	/**

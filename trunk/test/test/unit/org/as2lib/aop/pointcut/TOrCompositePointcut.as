@@ -37,6 +37,18 @@ class test.unit.org.as2lib.aop.pointcut.TOrCompositePointcut extends TestCase {
 		AopConfig.setPointcutFactory(oldPointcutFactory);
 	}
 	
+	private function getBlankPointcut(Void):Pointcut {
+		var result = new Object();
+		result.__proto__ = Pointcut["prototype"];
+		return result;
+	}
+	
+	private function getBlankJoinPoint(Void):JoinPoint {
+		var result = new Object();
+		result.__proto__ = JoinPoint["prototype"];
+		return result;
+	}
+	
 	public function testNewWithNullStringPattern(Void):Void {
 		var fc:MockControl = new MockControl(PointcutFactory);
 		var f:PointcutFactory = fc.getMock();
@@ -67,7 +79,7 @@ class test.unit.org.as2lib.aop.pointcut.TOrCompositePointcut extends TestCase {
 		var fc:MockControl = new MockControl(PointcutFactory);
 		var f:PointcutFactory = fc.getMock();
 		f.getPointcut("org.as2lib.core.*.*()");
-		fc.setReturnValue(new Pointcut());
+		fc.setReturnValue(getBlankPointcut());
 		fc.replay();
 		
 		AopConfig.setPointcutFactory(f);
@@ -83,11 +95,11 @@ class test.unit.org.as2lib.aop.pointcut.TOrCompositePointcut extends TestCase {
 		var fc:MockControl = new MockControl(PointcutFactory);
 		var f:PointcutFactory = fc.getMock();
 		f.getPointcut("org.as2lib.core.*.*()");
-		fc.setReturnValue(new Pointcut());
+		fc.setReturnValue(getBlankPointcut());
 		f.getPointcut("org.as2lib.env.reflect.*.*()");
-		fc.setReturnValue(new Pointcut());
+		fc.setReturnValue(getBlankPointcut());
 		f.getPointcut("org.as2lib.test.Juhu.lol()");
-		fc.setReturnValue(new Pointcut());
+		fc.setReturnValue(getBlankPointcut());
 		fc.replay();
 		
 		AopConfig.setPointcutFactory(f);
@@ -122,11 +134,11 @@ class test.unit.org.as2lib.aop.pointcut.TOrCompositePointcut extends TestCase {
 	
 	public function testCapturesWithEmptyPointcutStack(Void):Void {
 		var p:OrCompositePointcut = new OrCompositePointcut(null);
-		assertFalse(p.captures(new JoinPoint()));
+		assertFalse(p.captures(getBlankJoinPoint()));
 	}
 	
 	public function testCapturesWithNoPointcutCapturingTheJoinPoint(Void):Void {
-		var j:JoinPoint = new JoinPoint();
+		var j:JoinPoint = getBlankJoinPoint();
 		
 		var pc1:MockControl = new MockControl(Pointcut);
 		var p1:Pointcut = pc1.getMock();
@@ -158,7 +170,7 @@ class test.unit.org.as2lib.aop.pointcut.TOrCompositePointcut extends TestCase {
 	}
 	
 	public function testCapturesWithTheLastPointcutCapturingTheJoinPoint(Void):Void {
-		var j:JoinPoint = new JoinPoint();
+		var j:JoinPoint = getBlankJoinPoint();
 		
 		var pc1:MockControl = new MockControl(Pointcut);
 		var p1:Pointcut = pc1.getMock();
@@ -186,7 +198,7 @@ class test.unit.org.as2lib.aop.pointcut.TOrCompositePointcut extends TestCase {
 	}
 	
 	public function testCapturesWithTheMiddlePointcutCapturingTheJoinPoint(Void):Void {
-		var j:JoinPoint = new JoinPoint();
+		var j:JoinPoint = getBlankJoinPoint();
 		
 		var pc1:MockControl = new MockControl(Pointcut);
 		var p1:Pointcut = pc1.getMock();

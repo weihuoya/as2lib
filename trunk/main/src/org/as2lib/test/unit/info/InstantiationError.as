@@ -1,4 +1,4 @@
-﻿/*
+﻿/**
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -13,20 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-import org.as2lib.env.except.StackTraceElement;
-import org.as2lib.env.except.SimpleStackTraceElement;
-import test.unit.org.as2lib.env.except.AbstractTStackTraceElement;
+
+import org.as2lib.test.unit.AbstractAssertInfo;
 
 /**
- * @author Jayaprakash A
+ * Failure to be appended if the instantiation of a testcase fails.
+ * 
+ * @author Martin Heidegger.
  */
-class test.unit.org.as2lib.env.except.TSimpleStackTraceElement extends AbstractTStackTraceElement{
+class org.as2lib.test.unit.info.InstantiationError extends AbstractAssertInfo {
+	
 	/**
-	 * Overriding Template Method to return SimpleStackTraceElement.
+	 * Constructs a new InstantiationError.
+	 * 
+	 * @param message Message to the error.
 	 */
-	public function getStackTraceElement (thrower:Object, method:Function, args:FunctionArguments):StackTraceElement {	
-		return new SimpleStackTraceElement(thrower, method, args);
+	public function InstantiationError(message:String) {
+		super(message);
 	}
 	
+	/**
+	 * Implementation of @see AbstractAssertInfo#getFailureMessage
+	 * 
+	 * @return Message on failure
+	 */
+	private function getFailureMessage(Void):String {
+		return message;
+	}
 }
