@@ -2,12 +2,17 @@
     <project_folder name="org" expanded="true">
         <project_folder name="as2lib" expanded="true">
             <project_folder name="basic" expanded="true">
-                <project_folder name="exceptions" expanded="true">
+                <project_folder name="exceptions" expanded="false">
                     <project_file path="./ORG/AS2LIB/BASIC/exceptions/ObjectNotFoundException.as" filetype="as" />
                     <project_file path="./ORG/AS2LIB/BASIC/exceptions/ObjectNotDefinedException.as" filetype="as" />
                     <project_file path="./ORG/AS2LIB/BASIC/exceptions/ObjectAllreadyDefinedException.as" filetype="as" />
                     <project_file path="./ORG/AS2LIB/BASIC/exceptions/WrongArgumentException.as" filetype="as" />
                     <project_file path="./org/as2lib/basic/exceptions/info.txt" filetype="txt" />
+                </project_folder>
+                <project_folder name="interfaces" expanded="true">
+                    <project_file path="./org/as2lib/interfaces/Classifiable.as" filetype="as" />
+                    <project_file path="./org/as2lib/interfaces/Cloneable.as" filetype="as" />
+                    <project_file path="./org/as2lib/interfaces/Comparable.as" filetype="as" />
                 </project_folder>
                 <project_file path="./ORG/AS2LIB/BASIC/Out.as" filetype="as" />
                 <project_file path="./ORG/AS2LIB/BASIC/Exception.as" filetype="as" />
