@@ -3,7 +3,7 @@ import org.as2lib.data.iterator.ArrayIterator;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.HolderConfig;
 import org.as2lib.data.holder.Stack;
-import org.as2lib.data.holder.EmptyStackException;
+import org.as2lib.data.holder.EmptyDataHolderException;
 
 class org.as2lib.data.holder.SimpleStack extends BasicClass implements Stack {
 	private var target:Array;
@@ -18,7 +18,7 @@ class org.as2lib.data.holder.SimpleStack extends BasicClass implements Stack {
 	
 	public function pop(Void) {
 		if (target.length == 0) {
-			throw new EmptyStackException("You tried to pop an element from an empty Stack.",
+			throw new EmptyDataHolderException("You tried to pop an element from an empty Stack.",
 										  this,
 										  arguments);
 		}
@@ -27,7 +27,7 @@ class org.as2lib.data.holder.SimpleStack extends BasicClass implements Stack {
 	
 	public function peek(Void) {
 		if (target.length == 0) {
-			throw new EmptyStackException("You tried to peek an element from an empty Stack.",
+			throw new EmptyDataHolderException("You tried to peek an element from an empty Stack.",
 										  this,
 										  arguments);
 		}
