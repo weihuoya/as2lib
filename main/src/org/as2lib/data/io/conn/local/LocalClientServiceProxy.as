@@ -1,34 +1,34 @@
 ﻿import org.as2lib.core.BasicClass;
 import org.as2lib.data.io.conn.ServiceProxy;
+import org.as2lib.util.Call;
+import org.as2lib.data.holder.Map;
+import org.as2lib.data.holder.HashMap;
 
 class org.as2lib.data.io.conn.local.LocalClientServiceProxy extends BasicClass implements ServiceProxy {
 	private var target:String;
 	private var connection:LocalConnection;
+	private var listenerMap:Map;
 	
 	public function LocalClientServiceProxy(target:String) {
 		this.target = target;
-		this.connection = new LocalConnection();
+		connection = new LocalConnection();
+		listenerMap = new HashMap();
 	}
 	
-	public function __resolve(methodName:String):Function {
-		var result:Function = function() {
-			connection["responseFlag"] = true;
-			connection["onResponse"] = function(response) {
-				trace("onResponse");
-				this.response = response;
-				this.responseFlag = false;
+	public function putListener(method:String, call:Call):Void {
+		listenerMap.put(method, call);
+	}
+	
+	public function invoke(method:String, args:Array):Void {
+		if (listenerMap.containsKey(method)) {
+			var responseServer = new LocalConnection();
+			responseServer.listener = listenerMap.get(method);
+			responseServer.onResponse = function(response):Void {
+				this.listener.execute([response]);
+				this.close();
 			}
-			connection.connect(target + "." + methodName + "_Return");
-			connection.send(target, "remoteCall", methodName, arguments, target + "." + methodName + "_Return");
-			
-			/*while (connection["responseFlag"]) {
-			}*/
-			for (var i:Number = 0; i < 1000; i++) {
-				trace(i);
-			}
-			
-			return connection["response"];
+			responseServer.connect(target + "." + method + "_Return");
 		}
-		return result;
+		connection.send(target, "remoteCall", method, args, (target + "." + method + "_Return"));
 	}
 }
