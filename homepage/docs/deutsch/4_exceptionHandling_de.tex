@@ -1,0 +1,106 @@
+\chapter{Exception Handling}
+\label{sec:ExceptionHandling}
+
+\paragraph{Beweggrund:}
+Nicht abgefangene Fehlermeldungen werden von der Entwicklungsumgebung mit
+\begin{lstlisting}[frame=single]
+trace(Error.toString());
+\end{lstlisting}
+ausgegeben\footnote{Online Dokumentation unter \href{http://livedocs.macromedia.com/flash/mx2004/main/12_as217.htm}{livedocs.macromedia.com/flash/mx2004/main/12\_as217.htm}}. Neben der Tatsache, dass die ausgegebene Information nur wenig bis gar nicht aufschlussreich ist (Es wird nur "`Error"' bzw. der dem Konstruktor übergebene String ausgegeben. Siehe Abb.\ \ref{fig:fehleroutput}) ist eine Anzeige der Fehlermeldungen nur in {\sl Flash MX 2004} möglich.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics{fehleroutput.eps}
+\caption{Ausgabe eines Errors(\emph{throw new Error("`Fehler ist aufgetreten"');}) in Flash MX 2004.}
+\label{fig:fehleroutput}
+\end{center}
+\end{figure}
+
+\paragraph{Lösungsansatz:}
+In der {\sl as2lib} stehen, basierend auf der {\sl Macromedia} internen {\sl Error} Klasse, unterschiedliche \emph{Exception} Klassen zur Verfügung, die die Methoden des \emph{Throwable}\footnote{org.as2lib.env.except.Throwable} Interfaces implementieren.
+Die neuen Funktionalitäten des Exception Handlings sind:
+
+\begin{itemize}
+	\item Alle Operationen die aufgerufen werden, bevor die Exception geworfen wurde, werden in einem Stack abgespeichert, um die Fehlersuche zu beschleunigen.
+		Mit Hilfe von \emph{Reflections}, siehe Kapitel \ref{sec:Reflections}, wird der Name der Fehlermeldung in der {\sl as2lib} automatisch generiert.
+	\item Exceptions können als Ursache anderer Exceptions gespeichert werden.
+\end{itemize}
+
+Folgene Vordefinierte Exception Klassen und Interfaces stehen zur Verfügung:
+
+\begin{itemize}
+	\item \emph{AbstractException}: Alle Exception Klassen werden von der AbstractException Klasse abgeleitet. Sie implementiert die Methoden, die das Throwable Interface definiert (siehe Abb.\ \ref{fig:exception}, S.\ \pageref{fig:exception}).
+	\item \emph{Throwable}: Ist ein Interface, dass die Implementierung folgender Methoden erzwingt:
+		\begin{itemize}
+			\item \textbf{getStackTrace(Void):}\textit{Stack} - Gibt einen Stack aller Operationen zurück, die aufgerufen wurden, bevor diese Exception geworfen wurde.
+			\item \textbf{initCause(cause:Throwable):}\textit{Throwable} - Gibt den Grund der Exception an und kann nur einmal gesetzt werden. Die Methode wird normalerweise verwendet wenn eine Exception in eine andere Exception umgewandelt und weitergeworfen wird, um keine Information zu verlieren.
+			\item \textbf{getCause(Void):}\textit{Throwable} - Gibt den Grund der Exception zurück.
+			\item \textbf{getMessage(Void):}\textit{String} - Gibt die Nachricht, die bei der Erstellung des Exception Objektes im Konstruktor übergeben wurde, zurück.
+		\end{itemize}
+	\item \emph{Exception}: Ist eine Standard-Implementierung des Throwable Interfaces und wird von der AbstractException Klasse abgeleitet.
+	\item \emph{FatalException}: Zum Unterschied einer Exception Implementierung, hat eine FatalException eine höhere Priorität bzw. ein höheres Level als eine normale Exception, das abgefragt werden kann.
+	\item In der {\sl as2lib} sind bereits einige Exceptions definiert:
+	\begin{itemize}
+		\item IllegalArgumentException
+		\item IllegalStateException
+		\item UndefinedPropertyException
+		\item ...
+	\end{itemize}
+\end{itemize}
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics{exception.eps}
+\caption{Grundlegende Hierarchie des {\sl as2lib} \emph{Exception} Packages}
+\label{fig:exception}
+\end{center}
+\end{figure}
+
+\paragraph{Anwendung:}
+
+Bei einer fehlerhaften Parameterübergabe kann mit folgendem Code eine IllegalArgumentException geworfen werden:
+
+\begin{lstlisting}[frame=single]
+import org.as2lib.env.except.IllegalArgumentException;
+...
+throw new IllegalArgumentException("Falscher Parameter",
+	this,
+	arguments);
+\end{lstlisting}
+\begin{enumerate}
+	\item \textbf{message} - Ein beliebiger Text, der den Grund der Exception deutlicher hervorbringen soll.
+	\item \textbf{thrower} - Referenz auf die Klasse bzw. das Objekt, dass die Exception geworfen hat.
+	\item \textbf{arguments} - ist eine intrinsische Variable von Flash, die alle Parameter einer Funktion beinhaltet
+\end{enumerate}
+Eine geworfene IllegalArgumentException kann im ausführenden Code mit einem \emph{try-catch} Block abgefangen wird. 
+\clearpage
+\begin{lstlisting}[frame=single]
+import com.tests.ExceptionTest;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.out.Out;
+
+try {
+	var myOut:Out = new Out();
+	var myET:ExceptionTest = new ExceptionTest();
+	myOut.info(myET.getString());
+}
+catch(e:IllegalArgumentException){
+	myOut.error(e);
+}
+\end{lstlisting}
+
+Es können beliebig viele eigene Exception definiert werden. Möchte man zB.: eine OutOfTimeException werfen, muss man folgende Implementierung vornehmen:
+
+\begin{lstlisting}[frame=single]
+import org.as2lib.env.except.Exception;
+
+class org.as2lib.env.except.OutOfTimeException 
+	extends Exception {
+
+public function OutOfTimeException(message:String,
+	thrower, args:FunctionArguments) {
+	super (message, thrower, args);
+}
+}
+\end{lstlisting}
+In dem vorhergehenden Codebeispiel wird die Exception Klasse abgeleitet und der Konstruktor der Exception Klasse aufgerufen.

@@ -1,0 +1,82 @@
+\chapter{Test Cases}
+\label{sec:TestCases}
+
+Ein \emph{Test Case}(Testfall) ist eine Klasse/Methode, die eine bestimmte Klasse/Methode auf ihre korrekte Funktionsweise überprüft. Jeder Entwickler muss für seine Klassen Testfälle erstellen und wird von einem Test Case System unterstützt, das Funktionalitäten für ein automatisches Testen zur Verfügung stellt.
+
+\paragraph{Beweggrund:}
+Obwohl bereits ein Testsystem für {\sl Actionscript 2} Klassen existiert, as2unit\footnote{\href{http://www.as2unit.org}{www.as2unit.org}}, wurde aus folgenden Gründen ein eigenes Testsystem erstellt:
+
+\begin{itemize}
+	\item {\sl as2unit} unterstützt nur wenige Funktionalitäten({\sl as2unit} \textbf{7} Testmethoden -- {\sl as2lib} \textbf{15} Testmethoden).
+	\item {\sl as2unit} ist trotz verkündeter Offenlegung des Quellcodes immer noch nicht Open Source.
+	\item Es gibt immer noch keine offizielle Dokumentation der {\sl as2unit}.
+	\item {\sl as2unit} ist nur als Komponente vorhanden.
+	\item {\sl as2unit} kann immer nur eine Klasse testen.
+	\item {\sl as2unit} erlaubt eine Ausgabe nur über trace.
+\end{itemize}
+
+\paragraph{Lösungsansatz:}
+
+Um Testfälle durchführen zu können, sollen nicht zwei unterschiedliche Aktionen notwendig sein(Einbinden der Flashkomponente, setzen der Parameter ), wie es momentan bei der {\sl as2unit} der Fall ist. Es soll dem Entwickler möglich sein einen Testfall durch einen einfachen Methodenaufruf durchführen zu können. Sowohl ein direkter Aufruf einer Klasse, als auch ein Aufruf eines gesamten Packages, falls mehrere Test Fälle durchzuführen sind, ist möglich.
+\begin{lstlisting}[frame=single]
+import org.as2lib.test.unit.Test;
+
+// Hier Testfälle einfügen.
+test.org.as2lib.core.TReflections;
+test.org.as2lib.util.TReflectUtil;
+test.org.as2lib.util.TStringUtil;
+
+Test.run("test.org");
+\end{lstlisting}
+
+Die zu testenden Fälle müssen vor dem Testaufruf angeführt werden, damit sie zur Laufzeit verfügbar sind.
+Ähnlich wie bei Test Case Systemen zB.: JUnit\footnote{http://www.junit.org} stehen dem Entwickler in der {\sl as2lib} bereits eine Vielzahl von Methoden zu Verfügung(optionale Parameter sind durch [] gekennzeichnet):
+
+\begin{itemize}
+	\item \textbf{assertTrue}([\textit{message:String}], \textit{testVar1:Boolean}) - Ist testVar1 false wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertFalse}([\textit{message:String}],\textit{ testVar1:Boolean}) - Ist testVar1 true wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertEquals}([\textit{message:String}], \textit{testVar1}, \textit{testVar2}) - Sind die übergebenen Parameter nicht gleich wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertNotEquals}([\textit{message:String}], \textit{testVar1}, \textit{testVar2}) - Sind die übergebenen Parameter gleich wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertNull}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 nicht null wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertNotNull}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 gleich null wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertUndefined}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 nicht undefined wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertNotUndefined}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 gleich undefined wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertIsEmpty}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 weder undefined noch null wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertIsNotEmpty}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 undefined oder null wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertInifinity}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 nicht unendlich(d.h. != Infinity) wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertNotInfinity}([\textit{message:String}], \textit{testVar1}) - Ist testVar1 unendlich(d.h. == Infinity) wird eine Fehlermeldung ausgegeben.
+	\item \textbf{fail}(\textit{message:String}) - Fügt eine selbst definierte Fehlermeldung zu allen Error-Ausgaben hinzu.
+	\item \textbf{assertThrows}(\textit{exception:Function, atObject, theFunction:String, parameter:Array}) - Wird beim Ausführen der übergebenen Funktion(theFunction) des Objektes(atObjekt) mit den Übergabeparametern(parameter) keine Exception geworfen wird eine Fehlermeldung ausgegeben.
+	\item \textbf{assertNotThrows}(\textit{exception:Function, atObject, theFunction:String, parameter:Array}) - Wird beim Ausführen der übergebenen Funktion(theFunction) des Objektes(atObjekt) mit den Übergabeparametern(parameter) eine Exception geworfen wird eine Fehlermeldung ausgegeben.
+\end{itemize}
+
+Ein Testfall muss von der \emph{Test} Klasse\footnote{org.as2lib.test.unit.Test} abgeleitet werden. Jede Methode des Testfalles, die mit "`test"' beginnt, wird von dem Testsystem aufgerufen. Wie genau ein erstellter Testfall aussehen könnte wir in folgendem Codebeispiel gezeigt:
+\clearpage
+\begin{lstlisting}[frame=single]
+import org.as2lib.test.unit.Test;
+import org.as2lib.core.BasicClass;
+import org.as2lib.env.reflect.ClassInfo;
+ 
+class test.org.as2lib.core.TReflections extends Test {
+	private var clazz:BasicClass;
+	
+	public function TReflections(Void) {
+			clazz = new BasicClass();
+	}
+	
+	public function testGetClass(Void):Void {
+		trace (":: testGetClass");
+		var info:ClassInfo = clazz.getClass();
+		assertEquals(
+		"The name of the basic class changed",
+		info.getName(),
+		"BasicClass");
+		assertEquals(
+		"Problems evaluating the full name",
+		info.getFullName(),
+		"org.as2lib.core.BasicClass");
+		trace ("------------------");
+	}
+}
+\end{lstlisting}
+

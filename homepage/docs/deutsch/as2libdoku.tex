@@ -1,0 +1,41 @@
+\documentclass[a4paper,11pt,oneside]{book}
+\usepackage[latin1]{inputenc}
+\usepackage[dvips]{graphicx}
+\usepackage{ngerman}
+\usepackage{listings}
+\usepackage[dvips]{hyperref}
+\hypersetup{backref,  
+pdfpagemode=UseOutlines,  
+colorlinks=true}
+\usepackage[usenames,dvips]{color}
+\usepackage{multicol}
+\lstset{tabsize=2}
+\lstset{morecomment=[s][\color{LimeGreen}]{/*}{*/},morecomment=[l][\color{LimeGreen}]{//}}
+\lstset{morestring=[b][\color{RoyalBlue}]"}
+\lstset{emph={[26]class,extends,var,private,public,throw,new,try,catch,import,function,static,trace,interface,arguments,this,Codepage,true,send,else,if,target,connect,data,flush,addEventListener}, emphstyle={[26]\color{MidnightBlue}},
+emph={[12]MovieClip,Object,Array,LocalConnection,XMLSocket,String,Void,Error,SharedObject,Boolean,Number,System},emphstyle={[12]\color{blue}}}
+\graphicspath{{images/}} 
+
+\date{24. Mai 2004}
+\author{Christoph Atteneder, Martin Heidegger,\\Michael Herrmann, Alexander Schliebner und Simon Wacker}
+\title{as2lib - eine kleine Einführung}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\input{1_foundinghistory_de.tex}
+\input{2_corePackage_de.tex}
+\input{3_ouputHandling_de.tex}
+\input{4_exceptionHandling_de.tex}
+\input{5_eventHandling_de.tex}
+\input{6_reflectionHandling_de.tex}
+\input{7_dataHolding_de.tex}
+\input{8_overloading_de.tex}
+\input{9_testcases_de.tex}
+\input{10_speedtests_de.tex}
+\input{11_preview_de.tex}
+
+\end{document}
