@@ -2,7 +2,7 @@
 import org.as2lib.env.overload.OverloadHandler;
 import org.as2lib.env.overload.SimpleOverloadHandler;
 import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.util.OverloadUtil;
+import org.as2lib.env.util.OverloadUtil;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.util.ObjectUtil;
 
