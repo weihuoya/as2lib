@@ -41,7 +41,7 @@ class org.as2lib.Config extends BasicClass {
 	/**
 	 * Sets a new stringifier used to stringify objects.
 	 *
-	 * <p>If you set a stringifier of value null or undefined #getObjectStringifier
+	 * <p>If you set a stringifier of value null or undefined {@link #getObjectStringifier}
 	 * returns the default stringifier.
 	 *
 	 * @param stringifier the new object stringifier
@@ -54,7 +54,7 @@ class org.as2lib.Config extends BasicClass {
 	 * Returns the stringifier used to stringify objects.
 	 *
 	 * <p>If no stringifier is set the default stringifier gets returned.
-	 * That is an instance of class ObjectStringifier.
+	 * That is an instance of class {@link ObjectStringifier}.
 	 *
 	 * @return the currently used object stringifier
 	 */

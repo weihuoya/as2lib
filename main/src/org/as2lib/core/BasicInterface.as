@@ -23,12 +23,12 @@
  * of your own project but it is not a necessity. You can use all 
  * functionality of the as2lib framework without implementing it.
  *
- * <p>In enables you to call the #theString method on instances that
- * have been casted to interfaces.
+ * <p>In enables you to call the {@link #theString} method on instances
+ * that have been casted to interfaces.
  *
- * <p>The default implementation BasicClass offers an enhanced #toString
- * method implementation that returns a better string representation
- * than the default Object#toString method of Flash.
+ * <p>The default implementation {@link BasicClass} offers an enhanced
+ * {@link #toString} method implementation that returns a better string
+ * representation than the default {@link Object#toString} method of Flash.
  *
  * @author Simon Wacker
  * @author Martin Heidegger
@@ -38,9 +38,9 @@
 interface org.as2lib.core.BasicInterface {       
 	 
 	/**
-	 * Returns a String representation of this instance.
+	 * Returns the string representation of this instance.
 	 *
-	 * @return the String representation of this instance
+	 * @return the string representation of this instance
 	 */
 	public function toString(Void):String;
 	
