@@ -17,14 +17,20 @@
 import org.as2lib.env.reflect.CompositeMemberInfo;
 
 /**
+ * Base interface for algorithms that search for classes, interfaces and
+ * packages.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.env.reflect.algorithm.CacheAlgorithm {
+	
 	/**
-	 * Executes the algorithm and returns the searched for CompositeMemberInfo.
+	 * Executes the algorithm and returns the searched for CompositeMemberInfo
+	 * instance.
 	 *
-	 * @param object the object you search for
-	 * @return the searched for CompositeMemberInfo
+	 * @param object the object to search for
+	 * @return the CompositeMemberInfo instance representing the searched for object
 	 */
 	public function execute(object):CompositeMemberInfo;
+	
 }

@@ -15,18 +15,22 @@
  */
 
 import org.as2lib.env.reflect.CompositeMemberInfo;
-import org.as2lib.data.holder.Map;
 
 /**
+ * Base interface for algorithms that search for the contents of a class
+ * or package.
+ *
  * @author Simon Wacker
  */
 interface org.as2lib.env.reflect.algorithm.ContentAlgorithm {
+	
 	/**
-	 * Executes the algorithm and returns a HashMap containing the searched for
+	 * Executes the algorithm and returns an array containing the searched for
 	 * values.
 	 *
-	 * @param info a CompositeMemberInfo used as the basis of the search
-	 * @return a HashMap containing the searched for values
+	 * @param info a CompositeMemberInfo instance used as the basis of the search
+	 * @return an array containing the searched for values
 	 */
 	public function execute(info:CompositeMemberInfo):Array;
+	
 }
