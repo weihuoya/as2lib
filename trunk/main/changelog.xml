@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog xmlns="as2lib-changelog"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="changelog.xsd">
+          xsi:noSchemaLocation="changelog.xsd">
   <year value="2004">
     <month value="8">
+      <day value="24">
+        <entry type="change" package="org.as2lib.test.unit">Refactored the complete Testunit System (new API)</entry>
+      </day>
       <day value="20">
         <entry type="change" package="org.as2lib.env.reflect.algorithm" class="ContentAlgorithm" method="execute(info:CompositeMemberInfo):Map">to execute(info:CompositeMemberInfo):Array</entry>
         <entry type="change" package="org.as2lib.env.reflect" class="PackageInfo" method="getChildPackages(Void):Map">to getChildPackages(Void):Array</entry>
@@ -67,7 +70,7 @@
         <entry type="add" package="org.as2lib.env.except" class="SimpleStackTraceElementFactory"></entry>
         <entry type="add" package="org.as2lib.env.except" class="ExceptConfig" method="getStackTraceElementFactory(Void):StackTraceElementFactory"></entry>
         <entry type="add" package="org.as2lib.env.except" class="ExceptConfig" method="setStackTraceElementFactory(factory:StackTraceElementFactory):Void"></entry>
-        <entry type="change" package="org.as2lib.env.except" class="AbstractException" method="addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void">to use the newly created classes and operations.<entry>
+        <entry type="change" package="org.as2lib.env.except" class="AbstractException" method="addStackTraceElement(thrower, method:Function, args:FunctionArguments):Void">to use the newly created classes and operations.</entry>
       </day>
       <day value="5">
         <entry type="bugfix" package="org.as2lib.env.except" class="SimpleStackTraceElement" method="getMethod():MethodInfo">Fixed serious bug that broke the whole program if a Throwable was thrown by an operation of the superclass (the operation couldn't be found in the throwing subclass and a Throwable has thus been thrown) - it was actually no bug in the SimpleStackTraceElement but in the ClassInfo's.getMethods() operation.</entry>
