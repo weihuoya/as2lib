@@ -1,7 +1,8 @@
 ﻿import org.as2lib.data.io.conn.ConnectorListener;
 import org.as2lib.data.io.conn.ConnectorRequest;
+import org.as2lib.core.BasicInterface;
 
-interface org.as2lib.data.io.conn.Connector {
+interface org.as2lib.data.io.conn.Connector extends BasicInterface {
 	public function initConnection(Void):Void;
 	public function getIdentifier(Void):String;
 	public function setIdentifier(path:String):Void;
