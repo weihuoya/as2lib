@@ -46,7 +46,7 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 			// source string 'new' out, to a constant
 			methodName = "new";
 		} else {
-			var methodName:String = ReflectUtil.getMethodName(method, thrower);
+			methodName = ReflectUtil.getMethodName(method, thrower);
 			if (methodName == null) {
 				methodName = "[unknown]";
 			}
@@ -55,7 +55,7 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 		
 		result += throwerName;
 		result += "." + methodName;
-		result += "(" + (element.getArguments() ? element.getArguments() : "[unknown]") + ")";
+		result += "(" + (element.getArguments().toString() ? element.getArguments().toString() : "[unknown]") + ")";
 	
 		return result;
 	}

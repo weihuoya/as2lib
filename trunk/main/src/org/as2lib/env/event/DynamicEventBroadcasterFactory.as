@@ -20,6 +20,7 @@ import org.as2lib.env.event.EventBroadcasterFactory;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.util.ClassUtil;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * DynamicEventBroadcasterFactory implements the EventBroadcasterFactory
@@ -50,7 +51,7 @@ class org.as2lib.env.event.DynamicEventBroadcasterFactory extends BasicClass imp
 	 */
 	public function setEventBroadcasterClass(clazz:Function) {
 		if (!ClassUtil.isImplementationOf(clazz, EventBroadcaster)){
-			var className:String = ClassInfo.forClass(clazz).getName();
+			var className:String = ReflectUtil.getClassNameForClass(clazz);
 			if (!className) className = "unknown";
 			throw new IllegalArgumentException("The argument clazz ["+clazz+":"+className+"] is not an Implementation of org.as2lib.env.event.EventBroadcaster.",this,arguments);
 		}

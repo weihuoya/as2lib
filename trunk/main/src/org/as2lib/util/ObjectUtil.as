@@ -369,14 +369,14 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * @return true if the object is an explicit instance of the class else false
 	 */
 	public static function isExplicitInstanceOf(object, clazz:Function):Boolean {
-		if(clazz == String) {
-			return typeof object == TYPE_STRING;
+		if (clazz == String) {
+			return (typeof(object) == TYPE_STRING);
 		}
-		if(clazz == Number) {
-			return typeof object == TYPE_NUMBER;
+		if (clazz == Number) {
+			return (typeof(object) == TYPE_NUMBER);
 		}
-		if(clazz == Boolean) {
-			return typeof object == TYPE_BOOLEAN;
+		if (clazz == Boolean) {
+			return (typeof(object) == TYPE_BOOLEAN);
 		}
 		return (object instanceof clazz &&
 				!(object.__proto__ instanceof clazz));

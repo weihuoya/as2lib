@@ -151,7 +151,8 @@ class org.as2lib.util.StopWatch {
 	public function toString(Void):String {
 		var result:String;
 		result = "\n------- [STOPWATCH] -------";
-		for(var i:Number=0; i<startTimeKeys.length; i++) {
+		var i:Number
+		for(i=0; i<startTimeKeys.length; i++) {
 			result += "\n started["+startTimeKeys[i]+"ms] stopped["+stopTimeKeys[i]+"ms]";
 		}
 		if(i==0) {
