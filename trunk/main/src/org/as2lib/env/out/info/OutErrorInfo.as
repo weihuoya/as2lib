@@ -28,8 +28,8 @@ import org.as2lib.env.out.OutConfig;
  * @author Simon Wacker
  */
 class org.as2lib.env.out.info.OutErrorInfo extends BasicClass implements EventInfo {
-	/** The Throwable that shall be written out. */
-	private var throwable:Throwable;
+	/** The error object that shall be written out. */
+	private var error;
 	
 	/** The OutLevel the output has. */
 	private var level:OutLevel;
@@ -37,12 +37,12 @@ class org.as2lib.env.out.info.OutErrorInfo extends BasicClass implements EventIn
 	/**
 	 * Constructs a new OutInfo instance.
 	 *
-	 * @param throwable the Throwable that shall be written out
+	 * @param error the error object that shall be written out
 	 * @param level the level of the output
 	 */
-	public function OutErrorInfo(aThrowable:Throwable, aLevel:OutLevel) {
-		throwable = aThrowable;
-		level = aLevel;
+	public function OutErrorInfo(error, level:OutLevel) {
+		this.error = error;
+		this.level = level;
 	}
 	
 	/**
@@ -55,13 +55,13 @@ class org.as2lib.env.out.info.OutErrorInfo extends BasicClass implements EventIn
 	}
 	
 	/**
-	 * Returns the Throwable that shall be written out. This Throwable has been set during
-	 * instantiation.
+	 * Returns the error object that shall be written out. This error object has been set
+	 * during instantiation.
 	 *
-	 * @return the throwable that shall be written out
+	 * @return the error object that shall be written out
 	 */
-	public function getThrowable(Void):Throwable {
-		return throwable;
+	public function getError(Void) {
+		return error;
 	}
 	
 	/**

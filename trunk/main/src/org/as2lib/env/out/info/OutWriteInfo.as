@@ -27,8 +27,8 @@ import org.as2lib.env.out.OutConfig;
  * @author Simon Wacker
  */
 class org.as2lib.env.out.info.OutWriteInfo extends BasicClass implements EventInfo {
-	/** The message that shall be written out. */
-	private var message:String;
+	/** The message object that shall be written out. */
+	private var message;
 	
 	/** The OutLevel the output has. */
 	private var level:OutLevel;
@@ -36,12 +36,12 @@ class org.as2lib.env.out.info.OutWriteInfo extends BasicClass implements EventIn
 	/**
 	 * Constructs a new OutInfo instance.
 	 * 
-	 * @param message the message that shall be written out
+	 * @param message the message object that shall be written out
 	 * @param level the level of the output
 	 */
-	public function OutWriteInfo(aMessage:String, aLevel:OutLevel) {
-		message = aMessage;
-		level = aLevel;
+	public function OutWriteInfo(message, level:OutLevel) {
+		this.message = message;
+		this.level = level;
 	}
 	
 	/**
@@ -54,11 +54,12 @@ class org.as2lib.env.out.info.OutWriteInfo extends BasicClass implements EventIn
 	}
 	
 	/**
-	 * Returns the message that shall be written out. This message has been set during instantiation.
+	 * Returns the message object that shall be written out. This message has been set
+	 * during instantiation
 	 *
-	 * @return message the message that shall be written out
+	 * @return message the message object that shall be written out
 	 */
-	public function getMessage(Void):String {
+	public function getMessage(Void) {
 		return message;
 	}
 	

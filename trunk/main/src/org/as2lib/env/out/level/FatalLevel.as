@@ -29,8 +29,7 @@ class org.as2lib.env.out.level.FatalLevel extends NoneLevel {
 	/**
 	 * @see org.as2lib.env.out.OutLevel
 	 */
-	public function fatal(throwable:Throwable, broadcaster:EventBroadcaster):Void {
-		var event:EventInfo = new OutErrorInfo(throwable, Out.FATAL);
-		broadcaster.dispatch(event);
+	public function fatal(error, broadcaster:EventBroadcaster):Void {
+		broadcaster.dispatch(new OutErrorInfo(error, Out.FATAL));
 	}
 }

@@ -133,51 +133,49 @@ class org.as2lib.env.out.Out extends BasicClass implements OutAccess {
 	 * @return true if this Out instance is enabled for the given OutLevel else false
 	 */
 	public function isEnabledFor(aLevel:OutLevel):Boolean {
-		if (level == aLevel) {
-			return true;
-		}
-		return ObjectUtil.isInstanceOf(level, ReflectUtil.getClassInfo(aLevel).getType());
+		if (level == aLevel) return true;
+		return (level instanceof ReflectUtil.getClassInfo(aLevel).getType());
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
 	public function log(message):Void {
-		level.log(message.toString(), broadcaster);
+		level.log(message, broadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
 	public function debug(message):Void {
-		level.debug(message.toString(), broadcaster);
+		level.debug(message, broadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
 	public function info(message):Void {
-		level.info(message.toString(), broadcaster);
+		level.info(message, broadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
 	public function warning(message):Void {
-		level.warning(message.toString(), broadcaster);
+		level.warning(message, broadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
-	public function error(throwable:Throwable):Void {
-		level.error(throwable, broadcaster);
+	public function error(error):Void {
+		level.error(error, broadcaster);
 	}
 	
 	/**
 	 * @see org.as2lib.core.OutAccess
 	 */
-	public function fatal(throwable:Throwable):Void {
-		level.fatal(throwable, broadcaster);
+	public function fatal(error):Void {
+		level.fatal(error, broadcaster);
 	}
 }

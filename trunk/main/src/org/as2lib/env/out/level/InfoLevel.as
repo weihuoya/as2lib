@@ -28,8 +28,7 @@ class org.as2lib.env.out.level.InfoLevel extends WarningLevel {
 	/**
 	 * @see org.as2lib.env.out.OutLevel
 	 */
-	public function info(message:String, broadcaster:EventBroadcaster):Void {
-		var event:EventInfo = new OutWriteInfo(message, Out.INFO);
-		broadcaster.dispatch(event);
+	public function info(message, broadcaster:EventBroadcaster):Void {
+		broadcaster.dispatch(new OutWriteInfo(message, Out.INFO));
 	}
 }
