@@ -1,0 +1,11 @@
+This Package should contain utils for working with ActionScript2.0 Classes that can be used often.
+
+Packagemaster: Martin Heidegger, Michael Herrmann
+
+Contain (should Status):
+Enumeration - 
+List -
+ListElement -
+StringUtils -
+ArrayUtils -
+MovieClipUti
