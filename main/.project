@@ -7,5 +7,13 @@
 	<buildSpec>
 	</buildSpec>
 	<natures>
+		<nature>org.asdt.ASNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>core</name>
+			<type>2</type>
+			<location>core</location>
+		</link>
+	</linkedResources>
 </projectDescription>

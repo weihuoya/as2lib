@@ -40,8 +40,12 @@ interface org.as2lib.core.BasicInterface {
 	/**
 	 * Returns the string representation of this instance.
 	 *
+	 * <p>We do not use {@code Void} as argument here because this causes
+	 * problems with the {@link Object#toString} method that does also not
+	 * declare a {@code Void} argument.
+	 *
 	 * @return the string representation of this instance
 	 */
-	public function toString(Void):String;
+	public function toString():String;
 	
 }
