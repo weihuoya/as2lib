@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
 
@@ -37,8 +38,14 @@ class org.as2lib.env.log.handler.XmlSocketHandler extends BasicClass implements 
 	 *
 	 * @param host a fully qualified DNS domain name
 	 * @param port the TCP port number on the host used to establish a connection
+	 * @throws IllegalArgumentException if the passed-in {@code port} is
+	 * {@code null} or less than 1024
+	 * @todo throw exception when unable to connect
 	 */
 	public function XmlSocketHandler(host:String, port:Number) {
+		if (port == null || port < 1024) {
+			throw new IllegalArgumentException("Argument 'port' [" + port "] must not be 'null' nor less than 1024.", this, arguments);
+		}
 		socket = new XMLSocket();
 		socket.connect(host, port);
 	}
