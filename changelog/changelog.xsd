@@ -22,8 +22,9 @@
 
   EXAMPLE
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  <changelog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noSchemaNamespaceLocation="http://www.as2lib.org/changelog.xsd">
+  <changelog xmlns="as2lib"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="aslib http://www.as2lib.org/changelog.xsd">
     <release day="21" month="12" year="2004" name="testRelease">
       <year value="2004">
         <month value="6">
