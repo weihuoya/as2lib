@@ -20,7 +20,7 @@ class org.as2lib.util.OverloadUtil extends BasicClass {
 	 * @param someArguments
 	 * @param someOverloadHandlers
 	 */
-	public static function overload(anObject:Object, someArguments:Array, someOverloadHandlers:Array):Object {
+	public static function overload(anObject, someArguments:Array, someOverloadHandlers:Array):Object {
 		var handler:OverloadHandler;
 		var l:Number = someOverloadHandlers.length;
 		for (var i:Number = 0; i < l; i++) {

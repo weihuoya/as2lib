@@ -30,7 +30,7 @@ class org.as2lib.reflect.algorythm.ChildrenAlgorythm extends AbstractContentAlgo
 		return data;
 	}
 	
-	private function validate(target:Object, name:String):Boolean {
+	private function validate(target, name:String):Boolean {
 		if (ObjectUtil.isTypeOf(target[name], "function")) {
 			type = "class";
 			return true;
@@ -42,7 +42,7 @@ class org.as2lib.reflect.algorythm.ChildrenAlgorythm extends AbstractContentAlgo
 		return false;
 	}
 	
-	private function store(name:String, target:Object):Void {
+	private function store(name:String, target):Void {
 		if (type == "class") {
 			var clazz:ClassInfo = cache.getClass(target[name]);
 			if (ObjectUtil.isEmpty(clazz)) {

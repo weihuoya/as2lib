@@ -47,7 +47,7 @@ class org.as2lib.data.holder.TypedArray {
 	 * @param object
 	 * @return True if the array contains the object else false
 	 */
-	public function contains(object:Object):Boolean {
+	public function contains(object):Boolean {
 		var l:Number = array.length;
 		for (var i:Number = 0; i < l; i++) {
 			if (array[i] === object) {
@@ -69,7 +69,7 @@ class org.as2lib.data.holder.TypedArray {
 	 * @param number
 	 * @param value
 	 */
-	public function setValue(number:Number, value:Object):Void {
+	public function setValue(number:Number, value):Void {
 		this.array[number] = value;
 	}
 	
@@ -99,7 +99,7 @@ class org.as2lib.data.holder.TypedArray {
 	/**
 	 * @see Array
 	 */
-	public function push(value:Object):Number {
+	public function push(value):Number {
 		validate(value);
 		return this.array.push(value);
 	}
@@ -143,7 +143,7 @@ class org.as2lib.data.holder.TypedArray {
 	/**
 	 * @see Array
 	 */
-	public function unshift(value:Object):Number {
+	public function unshift(value):Number {
 		validate(value);
 		return this.array.unshift(value);
 	}
@@ -174,7 +174,7 @@ class org.as2lib.data.holder.TypedArray {
 	 * @param object
 	 * @return true if the types do not match otherwise false
 	 */
-	private function validate(object:Object):Void {
+	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
 			throw new Error("Type Missmatch between " + object + " & " + type);
 		}

@@ -13,11 +13,11 @@ class org.as2lib.data.holder.HashMap implements Map {
 		keys[-1] = values[-1] = null;
 	}
 	
-	public function containsKey(key:Object):Boolean {
+	public function containsKey(key):Boolean {
 		return (findKey(key) != -1);
 	}
 	
-	public function containsValue(value:Object):Boolean {
+	public function containsValue(value):Boolean {
 		return (findValue(value) != -1);
 	}
 	
@@ -29,11 +29,11 @@ class org.as2lib.data.holder.HashMap implements Map {
 		return values.slice();
 	}
 	
-	public function get(key:Object):Object {
+	public function get(key):Object {
 		return values[findKey(key)];
 	}
 	
-	public function put(key:Object, value:Object):Object {
+	public function put(key, value):Object {
 		var result:Object = null;
 		var i:Number = findKey(key);
 		if(i!=-1) {
@@ -60,7 +60,7 @@ class org.as2lib.data.holder.HashMap implements Map {
 		}
 	}
 	
-	public function remove(key:Object):Object {
+	public function remove(key):Object {
 		var result:Object = null;
 		var i:Number = findKey(key);
 		if(i!=-1) {
@@ -83,13 +83,13 @@ class org.as2lib.data.holder.HashMap implements Map {
 		return (size() == 0);
 	}
 	
-	private function findValue(value:Object):Number {
+	private function findValue(value):Number {
 		var l = values.length;
 		while (values[--l] != value && l>-1);
 		return l;
 	}
 	
-	private function findKey(key:Object):Number {
+	private function findKey(key):Number {
 		var l = keys.length;
 		while (keys[--l] != key && l>-1);
 		return l;

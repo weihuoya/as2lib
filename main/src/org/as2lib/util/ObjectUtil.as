@@ -19,7 +19,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 		stringifier = newStringifier;
 	}
 	
-	public static function stringify(object:Object):String {
+	public static function stringify(object):String {
 		return stringifier.execute(object);
 	}
 	
@@ -29,7 +29,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	 * @param aType
 	 * @return true if the type of the object matches else false
 	 */
-	public static function typesMatch(anObject:Object, aType:Function):Boolean {
+	public static function typesMatch(anObject, aType:Function):Boolean {
 		if (isPrimitiveType(anObject)) {
 			if (compareTypeOf(aType(anObject), anObject)) {
 				return true;
@@ -42,7 +42,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 		return false;
 	}
 	
-	public static function compareTypeOf(firstObject:Object, secondObject:Object):Boolean {
+	public static function compareTypeOf(firstObject, secondObject):Boolean {
 		return (typeof(firstObject) == typeof(secondObject));
 	}
 	
@@ -51,7 +51,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	 * @param anObject
 	 * @return true if the object is a primitive type else false
 	 */
-	public static function isPrimitiveType(anObject:Object):Boolean {
+	public static function isPrimitiveType(anObject):Boolean {
 		return (typeof(anObject) == "string"
 				|| typeof(anObject) == "number"
 				|| typeof(anObject) == "boolean");
@@ -63,7 +63,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	 * @param secondObject
 	 * @return true if the types do match else false
 	 */
-	public static function isTypeOf(object:Object, expression:String):Boolean {
+	public static function isTypeOf(object, expression:String):Boolean {
 		return (typeof(object) == expression);
 	}
 	
@@ -73,14 +73,14 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	 * @param aClass
 	 * @return true if the object is an instance of the class otherwise false
 	 */
-	public static function isInstanceOf(anObject:Object, aClass:Function):Boolean {
+	public static function isInstanceOf(anObject, aClass:Function):Boolean {
 		return (anObject instanceof aClass);
 	}
 	
 	/**
 	 *
 	 */
-	public static function isExplicitInstanceOf(object:Object, clazz:Function):Boolean {
+	public static function isExplicitInstanceOf(object, clazz:Function):Boolean {
 		return (isInstanceOf(object, clazz) &&
 				!isInstanceOf(object.__proto__, clazz));
 	}
@@ -88,7 +88,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	/**
 	 *
 	 */
-	public static function isEmpty(object:Object):Boolean {
+	public static function isEmpty(object):Boolean {
 		if (object == undefined) return true;
 		if (object == null) return true;
 		return false;
@@ -97,7 +97,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass{
 	/**
 	 *
 	 */
-	public static function isAvailable(object:Object):Boolean {
+	public static function isAvailable(object):Boolean {
 		return !isEmpty(object);
 	}
 }

@@ -43,7 +43,7 @@ class org.as2lib.reflect.algorythm.PropertyAlgorythm extends AbstractContentAlgo
 		return data;
 	}
 	
-	private function validate(target:Object, name:String):Boolean {
+	private function validate(target, name:String):Boolean {
 		if (typeof(prototype[name] == "function")) {
 			var coreName = name.substring(7);
 			if (name.indexOf("__get__") == 0) {
@@ -66,7 +66,7 @@ class org.as2lib.reflect.algorythm.PropertyAlgorythm extends AbstractContentAlgo
 		return false;
 	}
 	
-	private function store(name:String, target:Object):Void {
+	private function store(name:String, target):Void {
 		var coreName = name.substring(7);
 		var property:PropertyInfo;
 		if (type == "__get__") {
