@@ -55,11 +55,10 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 		var i:Number = someArguments.length;
 		if (i != args.length) return false;
 		while (--i-(-1)) {
-			// Should ObjectUtil.typesMatch() return true for a check of null against any type?
-			// Should also undefined values be allowed?
-			if (someArguments[i] !== null) {
-				// A expected type of value null gets interpreted as: whatever. Should the same be true for an expected type of value undefined?
-				if (args[i] !== null) {
+			// null == undefined
+			if (someArguments[i] != null) {
+				// An expected type of value null or undefined gets interpreted as: whatever.
+				if (args[i] != null) {
 					if (!ObjectUtil.typesMatch(someArguments[i], args[i])) {
 						return false;
 					}
@@ -80,12 +79,19 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	 * @see org.as2lib.env.overload.OverloadHandler#isMoreExplicit()
 	 */
 	public function isMoreExplicit(handler:OverloadHandler):Boolean {
+		// null, undefined -> Object -> Number -> ...
 		var scores:Number = 0;
 		var args2:Array = handler.getArguments();
 		var i:Number = args.length;
 		while (--i-(-1)) {
 			if (args[i] != args2[i]) {
-				if (ObjectUtil.isInstanceOf(args[i].prototype, args2[i])) {
+				var object = new Object();
+				object.__proto__ = args[i].prototype;
+				if (!args[i]) {
+					scores--;
+				} else if (!args2[i]) {
+					scores -= -1;
+				} else if (ObjectUtil.isInstanceOf(object, args2[i])) {
 					scores -= -1;
 				} else {
 					scores--;
