@@ -90,6 +90,6 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
 	public function toString(Void):String {
-		return ReflectConfig.getMethodInfoStringifier().execute();
+		return ReflectConfig.getMethodInfoStringifier().execute(this);
 	}
 }
