@@ -68,7 +68,7 @@ class org.as2lib.env.except.Exception extends AbstractThrowable implements Throw
 	 * 'arguments'.
 	 *
 	 * @param message the message that describes in detail what the problem is
-	 * @param thrower the object that declares the method that throws this throwable
+	 * @param thrower the object that declares the method that throws this exception
 	 * @param args the arguments of the throwing method
 	 */
 	public function Exception(message:String, thrower, args:Array) {
