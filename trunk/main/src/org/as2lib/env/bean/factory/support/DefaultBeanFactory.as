@@ -121,7 +121,9 @@ class org.as2lib.env.bean.factory.support.DefaultBeanFactory extends AbstractBea
 	
 	private function createBean(beanName:String, beanDefinition:BeanDefinition) {
 		var result = new Object();
-		result.__proto__ = beanDefinition.getBeanClass().prototype;
+		var beanClass:Function = beanDefinition.getBeanClass();
+		result.__proto__ = beanClass.prototype;
+		result.__constructor__ = beanClass;
 		var constructorArguments:Array = beanDefinition.getConstructorArgumentValues().getArgumentValues();
 		for (var i:Number = 0; i < constructorArguments.length; i++) {
 			var argument:ConstructorArgumentValue = constructorArguments[i];

@@ -57,6 +57,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	private function getBlankPointcutRule(Void):PointcutRule {
 		var result = new Object();
 		result.__proto__ = PointcutRule["prototype"];
+		result.__constructor__ = PointcutRule;
 		return result;
 	}
 	
@@ -69,6 +70,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	private function getBlankPointcutFactory(Void):PointcutFactory {
 		var result = new Object();
 		result.__proto__ = PointcutFactory["prototype"];
+		result.__constructor__ = PointcutFactory;
 		return result;
 	}
 	

@@ -69,6 +69,7 @@ class org.as2lib.util.ClassUtil extends BasicClass {
 	public static function createCleanInstance(clazz:Function):Object {
 		var result:Object = new Object();
 		result.__proto__ = clazz.prototype;
+		result.__constructor__ = clazz;
 		return result;
 	}
 }

@@ -107,6 +107,7 @@ class org.as2lib.env.log.repository.DynamicLoggerRepository extends BasicClass i
 	private function getBlankLoggerFactory(Void):LoggerFactory {
 		var result = new Object();
 		result.__proto__ = LoggerFactory["prototype"];
+		result.__constructor__ = LoggerFactory;
 		return result;
 	}
 	

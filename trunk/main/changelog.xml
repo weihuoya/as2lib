@@ -5,6 +5,22 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="2">
+         <day value="27">
+           <entry type="add" package="org.as2lib.env.reflect" class="PackageNotFoundException"></entry>
+           <entry type="add" package="org.as2lib.env.reflect" class="ClassNotFoundException"></entry>
+           <entry type="add" package="org.as2lib.env.reflect" class="NoSuchPropertyException"></entry>
+           <entry type="add" package="org.as2lib.env.reflect" class="NoSuchMethodException"></entry>
+           <entry type="add" package="org.as2lib.env.reflect" class="ReflectionException">Base exception of all exception regarding reflections.</entry>
+           <entry type="change" package="static org.as2lib.env.reflect" class="ReflectConfig" method="set-/getPackageMemberAlgorithm"><change-move to="PackageInfo" /></entry>
+           <entry type="change" package="static org.as2lib.env.reflect" class="ReflectConfig" method="set-/getPackageAlgorithm"><change-move to="PackageInfo" /></entry>
+           <entry type="change" package="static org.as2lib.env.reflect" class="ReflectConfig" method="set-/getPropertyAlgorithm"><change-move to="ClassInfo" /></entry>
+           <entry type="change" package="static org.as2lib.env.reflect" class="ReflectConfig" method="set-/getMethodAlgorithm"><change-move to="ClassInfo" /></entry>
+           <entry type="change" package="static org.as2lib.env.reflect" class="ReflectConfig" method="set-/getClassAlgorithm"><change-move to="ClassInfo" /></entry>
+           <entry type="remove" package="org.as2lib.env.reflect" class="PackageInfo" method="set-/getPackageMemberAlgorithm"></entry>
+           <entry type="remove" package="org.as2lib.env.reflect" class="ClassInfo" method="set-/getClassAlgorithm"></entry>
+           <entry type="remove" package="org.as2lib.env.reflect" class="ClassInfo" method="set-/getMethodAlgorithm"></entry>
+           <entry type="remove" package="org.as2lib.env.reflect" class="ClassInfo" method="set-/getPropertyAlgorithm"></entry>
+         </day>
          <day value="20">
            <entry type="change" package="static org.as2lib.util" class="AccessPermission" variable="NOTHING_ALLOWED"><change-rename to="ALLOW_NOTHING" /></entry>
            <entry type="change" package="static org.as2lib.util" class="AccessPermission" variable="IS_HIDDEN"><change-rename to="HIDE" /></entry>
