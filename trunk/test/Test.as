@@ -24,49 +24,130 @@ class test.Test {
 	private static var paths:Array;
 	// Starttime for a run
 	private static var startTime:Number;
+	// Function that started the Test
+	private static var startedAt:String;
+	// Path where the Action Started
+	private static var startedPath:String;
+	
+	/**
+	 * Starts a Testcase (useful with different Methods to start an Testcase)
+	 *
+	 * @see #exitTest
+	 *
+	 * @param at	Method that starts the Testcase
+	 * @param path	Path where the Testcase has started
+	 */
+	private static function initTest (at:String, path:String):Void {
+		if(!startTime) {
+			startedAt = at;
+			if(!path) {
+				startedPath = "unknown";
+			} else {
+				startedPath = path;
+			}
+			startTime = getTimer();
+			errors = new Array();
+			paths = new Array();
+		}
+	}
+	
+	/**
+	 * Exits an started Testcase if it started within the same method
+	 * 
+	 * @see #initTest
+	 *
+	 * @param at	Method where the Testcase should have started
+	 */
+	private static function exitTest (at:String):Void {
+		if(at == startedAt) {
+			printResult();
+			delete(startedPath);
+			delete(startedAt);
+			delete(startTime);
+			delete(errors);
+			delete(paths);
+		}
+	}
 	
 	/**
 	 * Basic Method for Testruns. path Should be a String of Classes
 	 * where the Test should run. All Objects that extend This Class will be used.
+	 * The Method checks if the Object to this Path is an Method (Class) or an Object (Instance)
+     * So you can use "run(test.className)" or "run(test)".
 	 *
 	 * @see #runPath
 	 *
 	 * @param path	Path where the Testcase should run (for example: test.org.as2lib)
 	 */
 	public static function run(path:String):Void {
-		startTime = getTimer();
-		errors = new Array();
-		paths = new Array();
-		runPath(eval("_global."+path));
-		printResult(path);
+		initTest("run", path);
+		var myObject = eval("_global."+path);
+		if(typeof myObject == "object") {
+			runObject(myObject, path);
+		} else if(typeof myObject == "function") {
+			runClass(myObject, path);
+		}
+		exitTest("run");
 	}
 	
 	/**
-	 * Internal Method to Run all TestcaseMethods inside an Object. The Methods are
-	 * defined with "test" in the Name at beginning.
-	 * (this Function also checks if the Object is an Instance of this Class.)
+	 * Method to run a Testcase for Classes (type == function).
+	 * This Method creates an Instance of the Class and runs a Testcase for that.
 	 *
-	 * @param pathObject	Object where testMethods should be inside
+	 * @param useClass	
 	 */
-	private static function runPath(pathObject:Object):Void {
-		for(var i:String in pathObject) {
-			if(typeof pathObject[i] == "function") {
-				var tempVar = new pathObject[i]();
-				if(tempVar instanceof test.Test) {
-					var myObject = tempVar.__proto__;
-					atClass = i;
-					paths.push(i);
-					
-					// Setting the right Properties to get all Functions!
-					_global.ASSetPropFlags(myObject,null,6,true);					
-					for(var j:String in myObject) {
-						if(j.indexOf("test") == 0 && typeof myObject[j] == "function") {
-							atFunction = j;
-							myObject[j]();
-							paths.push(i+"."+j+"()");
-						}
-					}
+	public static function runClass(useClass, myPath:String):Void {
+		initTest("runClass");
+		if(myPath.indexOf("__constructor__") < 0 || !myPath) {
+			var tempVar = new useClass();
+			runObject(tempVar, myPath);
+		}
+		exitTest("runClass");
+	}
+	
+	/**
+	 * Method to run a Testcase for an Object.
+	 *
+	 * @pathObject	Object that should be used for an Testcase.
+	 * @myPath		Pathstring to check.
+	 */
+	public static function runObject(pathObject, myPath:String):Void {
+		initTest("runObject");
+		if(pathObject instanceof test.Test) {
+			runTest(pathObject, myPath);
+		} else {
+			for(var i:String in pathObject) {
+				if(typeof pathObject[i] == "function") {
+					runClass (pathObject[i], myPath+i);
 				}
+			}
+		}
+		exitTest("runObject");
+	}
+	
+	/**
+	 * Method to run an Test.
+	 *
+	 * @pathObject	Test that should be run.
+	 * @myPath		Path where the Test runs.
+	 */
+	private static function runTest (pathObject, myPath:String):Void {
+		if(!myPath) {
+			myPath = "unknown";
+		}
+		paths.push(myPath);
+		
+		var toMyObject = pathObject.__proto__;
+		atClass = myPath;
+		
+		// Setting the right Properties to get all Functions!
+		_global.ASSetPropFlags(toMyObject,null,6,true);			
+		
+		for(var j:String in toMyObject) {
+			if(j.indexOf("test") == 0 && typeof toMyObject[j] == "function") {
+				atFunction = j;
+				pathObject[j]();
+				paths.push(myPath+"."+j+"()");
 			}
 		}
 	}
@@ -78,8 +159,8 @@ class test.Test {
 	 * 
 	 * @param path	Initial Runpath of the Testcase
 	 */
-	private static function printResult(path:String):Void {
-		trace(" Testcaseresult for "+path+" ["+(getTimer()-startTime)+"ms]:");
+	private static function printResult(Void):Void {
+		trace(" Testcaseresult for "+startedPath+" ["+(getTimer()-startTime)+"ms]:");
 		if(paths.length > 0) {
 			for(var i:Number = 0; i<paths.length ; i++) {
 				trace("  Testcase found:"+paths[i]);
@@ -94,7 +175,7 @@ class test.Test {
 				trace("  -- No Error occured --");
 			}
 		} else {
-			trace("  -- No Testcases found @ "+path+" --");
+			trace("  -- No Testcases found @ "+startedPath+"--");
 		}
 		trace("");
 	}
@@ -110,17 +191,16 @@ class test.Test {
 	}
 	
 	/**
-	 * Asserts if two Vars are the same.
+	 * Asserts if one var is shurly True.
 	 *
 	 * @see #assertTrueWithMessage
 	 * @see #assertFalse
 	 * @see #assertFalseWithMessage
 	 * 
-	 * @param var1	First Var.
-	 * @param var2	Second Var.
+	 * @param var1		Var that should be true.
 	 */
-	private static function assertTrue (var1, var2):Void {
-		assertTrueWithMessage ("undefined", var1, var2);
+	private static function assertTrue (var1):Void {
+		assertTrueWithMessage ("undefined", var1);
 	}
 
 	/**
@@ -131,27 +211,25 @@ class test.Test {
 	 * @see #assertFalseWithMessage
 	 * 
 	 * @param message	Message to be displayed when an Error occured
-	 * @param var1		First Var.
-	 * @param var2		Second Var.
+	 * @param var1		Var that should be true.
 	 */
-	private static function assertTrueWithMessage (message:String, var1, var2):Void {
-		if(var1 != var2) {
-			addError("assertTrue failed: "+var1+" != "+var2+" message: "+message);
+	private static function assertTrueWithMessage (message:String, var1):Void {
+		if(var1 != true) {
+			addError("assertTrue failed: "+var1+" != true message: "+message);
 		}
 	}
 	
 	/**
-	 * Asserts if two Vars are Not the same.
+	 * Asserts if one var is shurly False.
 	 * 
 	 * @see #assertTrue
 	 * @see #assertTrueWithMessage
 	 * @see #assertFalseWithMessage
 	 *
 	 * @param var1	First var.
-	 * @param var2	Second var.
 	 */
-	private static function assertFalse (var1, var2):Void {
-		assertFalseWithMessage ("undefined", var1, var2);
+	private static function assertFalse (var1):Void {
+		assertFalseWithMessage ("undefined", var1);
 	}
 	
 	
@@ -164,20 +242,82 @@ class test.Test {
 	 * 
 	 * @param message	Message to be displayed when an Error occured
 	 * @param var1		First Var.
+	 */
+	private static function assertFalseWithMessage (message:String, var1):Void {
+		if(var1 != false) {
+			addError("assertFalse failed: "+var1+" != false message: "+message);
+		}
+	}
+	
+	/**
+	 * Asserts if two Vars are the same.
+	 *
+	 * @see #assertEqualsWithMessage
+	 * @see #assertNotEquals
+	 * @see #assertNotEqualsWithMessage
+	 * 
+	 * @param var1	First Var.
+	 * @param var2	Second Var.
+	 */
+	private static function assertEquals (var1, var2):Void {
+		assertEqualsWithMessage ("undefined", var1, var2);
+	}
+
+	/**
+	 * Uses a Message to #assertEquals.
+	 *
+	 * @see #assertEquals
+	 * @see #assertNotEquals
+	 * @see #assertNotEqualsWithMessage
+	 * 
+	 * @param message	Message to be displayed when an Error occured
+	 * @param var1		First Var.
 	 * @param var2		Second Var.
 	 */
-	private static function assertFalseWithMessage (message:String, var1, var2):Void {
+	private static function assertEqualsWithMessage (message:String, var1, var2):Void {
+		if(var1 != var2) {
+			addError("assertEquals failed: "+var1+" != "+var2+" message: "+message);
+		}
+	}
+	
+	/**
+	 * Asserts if two Vars are Not the same.
+	 * 
+	 * @see #assertEquals
+	 * @see #assertEqualsWithMessage
+	 * @see #assertNotEqualsWithMessage
+	 *
+	 * @param var1	First var.
+	 * @param var2	Second var.
+	 */
+	private static function assertNotEquals (var1, var2):Void {
+		assertNotEqualsWithMessage ("undefined", var1, var2);
+	}
+	
+	
+	/**
+	 * Uses a Message to #assertNotEquals.
+	 *
+	 * @see #assertEquals
+	 * @see #assertEqualsWithMessage
+	 * @see #assertNotEquals
+	 * 
+	 * @param message	Message to be displayed when an Error occured
+	 * @param var1		First Var.
+	 * @param var2		Second Var.
+	 */
+	private static function assertNotEqualsWithMessage (message:String, var1, var2):Void {
 		if(var1 == var2) {
-			addError("assertFalse failed: "+var1+" == "+var2+" message: "+message);
+			addError("assertNotEquals failed: "+var1+" == "+var2+" message: "+message);
 		}
 	}
 	
 	/**
 	 * Asserts if an Var is not Null.
 	 *
-	 * @see assertNotNullWithMessage
-	 * @see assertNull
-	 * @see assertNullWithMessage
+	 * @see #assertNotNullWithMessage
+	 * @see #assertNull
+	 * @see #assertNullWithMessage
 	 * 
 	 * @param var1	Var that should be Null.
 	 */
@@ -188,9 +328,9 @@ class test.Test {
 	/**
 	 * Adds a Message to #assertNotNull.
 	 *
-	 * @see assertNotNull
-	 * @see assertNull
-	 * @see assertNullWithMessage
+	 * @see #assertNotNull
+	 * @see #assertNull
+	 * @see #assertNullWithMessage
 	 * 
 	 * @param message	Message to be displayed when an Error occured
 	 * @param var1		Var that should not be Null.
@@ -205,9 +345,9 @@ class test.Test {
 	/**
 	 * Asserts if an Var is Null.
 	 *
-	 * @see assertNotNull
-	 * @see assertNotNullWithMessage
-	 * @see assertNullWithMessage
+	 * @see #assertNotNull
+	 * @see #assertNotNullWithMessage
+	 * @see #assertNullWithMessage
 	 * 
 	 * @param var1	Var that should be Null.
 	 */
@@ -218,9 +358,9 @@ class test.Test {
 	/**
 	 * Adds a Message to #assertNull.
 	 *
-	 * @see assertNotNull
-	 * @see assertNull
-	 * @see assertNullWithMessage
+	 * @see #assertNotNull
+	 * @see #assertNull
+	 * @see #assertNullWithMessage
 	 * 
 	 * @param message	Message to be displayed when an Error occured
 	 * @param var1		Var that should not be Null.
@@ -234,9 +374,9 @@ class test.Test {
 	/**
 	 * Asserts if an Var is not Undefined.
 	 *
-	 * @see assertNotUndefinedWithMessage
-	 * @see assertUndefined
-	 * @see assertUndefinedWithMessage
+	 * @see #assertNotUndefinedWithMessage
+	 * @see #assertUndefined
+	 * @see #assertUndefinedWithMessage
 	 * 
 	 * @param var1	Var that should not be Undefined.
 	 */
@@ -247,9 +387,9 @@ class test.Test {
 	/**
 	 * Adds a Message to #assertNotUndefined.
 	 *
-	 * @see assertNotUndefined
-	 * @see assertUndefined
-	 * @see assertUndefinedWithMessage
+	 * @see #assertNotUndefined
+	 * @see #assertUndefined
+	 * @see #assertUndefinedWithMessage
 	 * 
 	 * @param message	Message to be displayed when an Error occured
 	 * @param var1		Var that should not be Undefined.
@@ -263,9 +403,9 @@ class test.Test {
 	/**
 	 * Asserts if an Var is undefined.
 	 *
-	 * @see assertNotUndefined
-	 * @see assertNotUndefinedWithMessage
-	 * @see assertUndefinedWithMessage
+	 * @see #assertNotUndefined
+	 * @see #assertNotUndefinedWithMessage
+	 * @see #assertUndefinedWithMessage
 	 * 
 	 * @param var1	Var that should be Undefined.
 	 */
@@ -276,9 +416,9 @@ class test.Test {
 	/**
 	 * Adds a Message to #assertUndefined.
 	 *
-	 * @see assertNotUndefinedWithMessage
-	 * @see assertNotUndefined
-	 * @see assertUndefined
+	 * @see #assertNotUndefinedWithMessage
+	 * @see #assertNotUndefined
+	 * @see #assertUndefined
 	 * 
 	 * @param message	Message to be displayed when an Error occured
 	 * @param var1		Var that should not be Undefined.
@@ -292,9 +432,9 @@ class test.Test {
 	/**
 	 * Asserts if an Var is Infinity.
 	 *
-	 * @see assertNotInifityWithMessage
-	 * @see assertInfinity
-	 * @see assertInfinityWithMessage
+	 * @see #assertNotInifityWithMessage
+	 * @see #assertInfinity
+	 * @see #assertInfinityWithMessage
 	 * 
 	 * @param var1	Var that should not be Infinity.
 	 */	
@@ -305,9 +445,9 @@ class test.Test {
 	/**
 	 * Adds a Message to #assertNotInfinity.
 	 *
-	 * @see assertNotInifity
-	 * @see assertInfinity
-	 * @see assertInfinityWithMessage
+	 * @see #assertNotInifity
+	 * @see #assertInfinity
+	 * @see #assertInfinityWithMessage
 	 * 
 	 * @param message	Message to be displayed when an Error occured
 	 * @param var1		Var that should not be Infinity.
@@ -322,9 +462,9 @@ class test.Test {
 	/**
 	 * Asserts if an Var is not Infinity.
 	 *
-	 * @see assertNotInfinity
-	 * @see assertNotInifityWithMessage
-	 * @see assertInfinityWithMessage
+	 * @see #assertNotInfinity
+	 * @see #assertNotInifityWithMessage
+	 * @see #assertInfinityWithMessage
 	 * 
 	 * @param var1	Var that should be Infinity.
 	 */	
@@ -335,9 +475,9 @@ class test.Test {
 	/**
 	 * Adds a Message to #assertInfinity.
 	 *
-	 * @see assertNotInifity
-	 * @see assertNotInfinityWithMessage
-	 * @see assertInfinity
+	 * @see #assertNotInifity
+	 * @see #assertNotInfinityWithMessage
+	 * @see #assertInfinity
 	 * 
 	 * @param message	Message to be displayed when an Error occured.
 	 * @param var1		Var that should not be Infinity.
