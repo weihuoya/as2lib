@@ -25,9 +25,7 @@ class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass impleme
 			var proxy:LocalServerServiceProxy = serviceIterator.next();
 			var key:String = String(keys.shift());
 			// source out: 'host + "/" + key'
-			if (!proxy.connect(host + "/" + key)){
-				throw new ReservedHostException("Connection with name [" + host + "/" + key + "] is already in use.", this, arguments);
-			}
+			proxy.connect(host + "/" + key);
 		}
 		LocalConfig.getServerRegistry().register(this);
 		running = true;
