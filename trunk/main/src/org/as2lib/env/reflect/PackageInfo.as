@@ -241,7 +241,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements Composite
 		var iterator:Iterator = getChildClasses().iterator();
 		while (iterator.hasNext()) {
 			result = ClassInfo(iterator.next());
-			if (result.getRepresentedType() == clazz) {
+			if (result.getType() == clazz) {
 				return result;
 			}
 		}

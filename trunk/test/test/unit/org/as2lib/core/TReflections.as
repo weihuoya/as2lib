@@ -33,7 +33,7 @@ class test.org.as2lib.core.TReflections extends Test {
 		var info:ClassInfo = clazz.getClass();
 		assertEqualsWithMessage("The name of the basic class changed", info.getName(), "BasicClass");
 		assertEqualsWithMessage("Problems evaluating the full name", info.getFullName(), "org.as2lib.core.BasicClass");
-		assertEqualsWithMessage("getRepresentedType() does not return the correct class", info.getRepresentedType(), BasicClass);
+		assertEqualsWithMessage("getType() does not return the correct class", info.getType(), BasicClass);
 		assertEqualsWithMessage("The Root Package is not at the correct place", PackageInfo(info.getParent().getParent().getParent().getParent()).getPackage(), _global);
 		assertEqualsWithMessage("For a Strange reason the parent package isn't core.", info.getParent().getName(), "core");
 		trace ("----------------------------------------------");

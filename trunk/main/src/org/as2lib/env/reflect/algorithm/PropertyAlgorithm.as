@@ -55,7 +55,7 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends AbstractContent
 		this.staticSetters = new HashMap();
 		
 		this.staticFlag = true;
-		var clazz:Function = this.info.getRepresentedType();
+		var clazz:Function = this.info.getType();
 		search(clazz);
 		
 		this.staticFlag = false;

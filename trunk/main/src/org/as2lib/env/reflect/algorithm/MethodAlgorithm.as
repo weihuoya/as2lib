@@ -41,7 +41,7 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends AbstractContentAl
 		this.result = new HashMap();
 		
 		this.staticFlag = true;
-		var clazz:Function = this.info.getRepresentedType();
+		var clazz:Function = this.info.getType();
 		search(clazz);
 		
 		this.staticFlag = false;
