@@ -19,7 +19,6 @@ import org.as2lib.env.reflect.algorithm.CacheAlgorithm;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.reflect.ReferenceNotFoundException;
@@ -31,53 +30,42 @@ import org.as2lib.env.reflect.ReferenceNotFoundException;
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass implements CacheAlgorithm {
-	private var cache:Cache;
-	private var info:PackageInfo;
+	private var c:Cache;
+	private var p:PackageInfo;
 	
 	public function PackageAlgorithm(Void) {
 	}
 	
-	public function execute(object):CompositeMemberInfo {
-		cache = ReflectConfig.getCache();
-		info = null;
-		findAndStore(cache.getRoot(), object);
-		if (ObjectUtil.isEmpty(info)) {
-			throw new ReferenceNotFoundException("The package [" + object + "] could not be found.",
-												 this,
-												 arguments);
+	public function execute(o):CompositeMemberInfo {
+		c = ReflectConfig.getCache();
+		p = null;
+		findAndStore(c.getRoot(), o);
+		if (!p) {
+			throw new ReferenceNotFoundException("The package [" + o + "] could not be found.", this, arguments);
 		}
-		return info;
+		return p;
 	}
 	
-	public function findAndStore(info:PackageInfo, object):Boolean {
-		var package = info.getPackage();
+	public function findAndStore(a:PackageInfo, o):Boolean {
+		var b = a.getPackage();
 		var i:String;
-		for (i in package) {
-			if (ObjectUtil.isTypeOf(package[i], "object")) {
-				if (validateAndStorePackage(i, package[i], info, object)) {
+		for (i in b) {
+			var e:Object = b[i];
+			if (typeof(e) == "object") {
+				var d:PackageInfo = c.getPackage(e);
+				if (!d) {
+					d = c.addPackage(new PackageInfo(i, e, a));
+				}
+				if (e == o) {
+					p = d;
+					return true;
+				}
+				// replace recursion with loop
+				if (findAndStore(d, o)) {
 					return true;
 				}
 			}
 		}
 		return false;
-	}
-	
-	private function validateAndStorePackage(name:String, package, parent:PackageInfo, object):Boolean {
-		var sp:PackageInfo = cache.getPackage(package);
-		if (ObjectUtil.isEmpty(sp)) {
-			sp = storePackage(name, package, parent);
-		}
-		if (package == object) {
-			info = sp;
-			return true;
-		}
-		if (findAndStore(sp, object)) {
-			return true;
-		}
-		return false;
-	}
-	
-	private function storePackage(name:String, package, parent:PackageInfo):PackageInfo {
-		return cache.addPackage(new PackageInfo(name, package, parent));
 	}
 }

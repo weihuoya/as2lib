@@ -14,94 +14,65 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
-import org.as2lib.env.reflect.algorithm.AbstractContentAlgorithm;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
-import org.as2lib.util.ObjectUtil;
-import org.as2lib.util.StringUtil;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends AbstractContentAlgorithm implements ContentAlgorithm {
-	public static var TYPE_GETTER:Number = 0;
-	public static var TYPE_SETTER:Number = 1;
-	
-	private var result:Map;
-	private var getters:Map;
-	private var setters:Map;
-	private var staticGetters:Map;
-	private var staticSetters:Map;
-	private var info:ClassInfo;
-	private var staticFlag:Boolean;
-	private var type:Number;
+class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass implements ContentAlgorithm {
+	private var r:Map;
+	private var g:Map;
+	private var s:Map;
+	private var c:ClassInfo;
+	private var a:Boolean;
 	
 	public function PropertyAlgorithm(Void) {
 	}
 	
-	public function execute(info:CompositeMemberInfo):Map {
-		type = null;
+	public function execute(c:CompositeMemberInfo):Map {
+		this.c = ClassInfo(c);
+		this.r = new HashMap();
+		this.g = new HashMap();
+		this.s = new HashMap();
 		
-		this.info = ClassInfo(info);
-		this.result = new HashMap();
-		this.getters = new HashMap();
-		this.setters = new HashMap();
-		this.staticGetters = new HashMap();
-		this.staticSetters = new HashMap();
+		this.a = true;
+		var b:Function = this.c.getType();
+		search(b);
 		
-		this.staticFlag = true;
-		var clazz:Function = this.info.getType();
-		search(clazz);
+		this.a = false;
+		var d:Object = b.prototype;
+		_global.ASSetPropFlags(d, null, 0, true);
+		_global.ASSetPropFlags(d, ["__proto__", "constructor", "__constructor__"], 7, true);
+		search(d);
+		_global.ASSetPropFlags(d, null, 1, true);
 		
-		this.staticFlag = false;
-		ObjectUtil.setAccessPermission(clazz.prototype, null, ObjectUtil.ACCESS_ALL_ALLOWED);
-		ObjectUtil.setAccessPermission(clazz.prototype, ["__proto__", "constructor", "__constructor__"], ObjectUtil.ACCESS_NOTHING_ALLOWED);
-		search(clazz.prototype);
-		ObjectUtil.setAccessPermission(clazz.prototype, null, ObjectUtil.ACCESS_IS_HIDDEN);
-		
-		return result;
+		return r;
 	}
 	
-	private function validate(target, name:String):Boolean {
-		if (ObjectUtil.isTypeOf(target[name], "function")) {
-			var coreName = name.substring(7);
-			if (StringUtil.startsWith(name, "__get__")) {
-				getters.put(coreName, true);
-				if (!setters.get(coreName)) {
-					type = TYPE_GETTER;
-					return true;
+	public function search(t):Void {
+		var i:String;
+		for (i in t) {
+			if (typeof(t[i]) == "function") {
+				var n = i.substring(7);
+				if (i.indexOf("__get__") == 0) {
+					g.put(n, true);
+					if (!s.get(n)) {
+						r.put(n, new PropertyInfo(n, t["__set__" + n], t[i], c, a));
+					}
+				} else if (i.indexOf("__set__") == 0) {
+					s.put(n, true);
+					if (!g.get(n)) {
+						r.put(n, new PropertyInfo(n, t[i], t["__get__" + n], c, a));
+					}
 				}
-				return false;
-			} 
-			if (StringUtil.startsWith(name, "__set__")) {
-				setters.put(coreName, true);
-				if (!getters.get(coreName)) {
-					type = TYPE_SETTER;
-					return true;
-				}
-				return false;
 			}
-		}
-		return false;
-	}
-	
-	private function store(name:String, target):Void {
-		var coreName = name.substring(7);
-		var property:PropertyInfo;
-		if (type == TYPE_GETTER) {
-			property = new PropertyInfo(coreName, target["__set__" + coreName], target[name], info, staticFlag);
-			result.put(coreName, property);
-			return;
-		}
-		if (type == TYPE_SETTER) {
-			property = new PropertyInfo(coreName, target[name], target["__get__" + coreName], info, staticFlag);
-			result.put(coreName, property);
-			return;
 		}
 	}
 }

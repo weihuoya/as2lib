@@ -10,6 +10,8 @@ import test.org.as2lib.env.reflect.treflect.SuperClass;
 import test.org.as2lib.env.reflect.treflect.package0.Package0Class;
 import test.org.as2lib.env.reflect.treflect.package1.Package1Class;
 
+import org.as2lib.core.BasicClass;
+
 class test.org.as2lib.env.reflect.TReflect extends TestCase {
 	private var subClass:SubClass;
 	private var superClass:SuperClass;
@@ -93,7 +95,7 @@ class test.org.as2lib.env.reflect.TReflect extends TestCase {
 		}
 		
 		var amount:Number = methdosArray.length;
-		assertEquals("The amount of methods found [" + amount + "] does not match the actual amount [4] of methods.", methdosArray.length, 4);
+		assertEquals("The amount of methods found [" + amount + "] does not match the actual amount [14] of methods.", methdosArray.length, 14);
 	}
 	
 	public function testGetProperties(Void):Void {

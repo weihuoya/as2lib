@@ -47,7 +47,7 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 		var overload:Overload = new Overload(eval("th" + "is"));
 		overload.addHandler([Object], getClassInfoByObject);
 		overload.addHandler([String], getClassInfoByName);
-		return ClassInfo(overload.forward(arguments));
+		return overload.forward(arguments);
 	}
 	
 	/**
@@ -65,7 +65,7 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 */
 	public static function getClassInfoByObject(object):ClassInfo {
 		var info:ClassInfo = ReflectConfig.getCache().getClass(object);
-		if (ObjectUtil.isEmpty(info)) {
+		if (!info) {
 			info = ClassInfo(ReflectConfig.getClassAlgorithm().execute(object));
 			ReflectConfig.getCache().addClass(info);
 		}
@@ -115,7 +115,7 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 */
 	public static function getPackageInfoByPackage(package):PackageInfo {
 		var info:PackageInfo = ReflectConfig.getCache().getPackage(package);
-		if (ObjectUtil.isEmpty(info)) {
+		if (!info) {
 			info = PackageInfo(ReflectConfig.getPackageAlgorithm().execute(package));
 			ReflectConfig.getCache().addPackage(info);
 		}

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
-import org.as2lib.env.reflect.algorithm.AbstractContentAlgorithm;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.util.ObjectUtil;
@@ -29,61 +29,37 @@ import org.as2lib.env.reflect.ReflectConfig;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorithm.ChildrenAlgorithm extends AbstractContentAlgorithm implements ContentAlgorithm {
-	public static var TYPE_CLASS:Number = 0;
-	public static var TYPE_PACKAGE:Number = 1;
-	
-	private var cache:Cache;
-	private var result:Map;
-	private var info:PackageInfo;
-	private var type:Number;
-	
+class org.as2lib.env.reflect.algorithm.ChildrenAlgorithm extends BasicClass implements ContentAlgorithm {
 	public function ChildrenAlgorithm(Void) {
 	}
 	
-	public function execute(info:CompositeMemberInfo):Map {
-		cache = ReflectConfig.getCache();
-		type = null;
+	public function execute(g:CompositeMemberInfo):Map {
+		var c:Cache = ReflectConfig.getCache();
 		
-		this.info = PackageInfo(info);
-		this.result = new HashMap();
+		var p:PackageInfo = PackageInfo(g);
+		var r:Map = new HashMap();
 		
-		var package = this.info.getPackage();
-		search(package);
+		var t:Object = p.getPackage();
 		
-		return result;
-	}
-	
-	private function validate(target, name:String):Boolean {
-		if (ObjectUtil.isTypeOf(target[name], "function")) {
-			type = TYPE_CLASS;
-			return true;
-		}
-		if (ObjectUtil.isTypeOf(target[name], "object")) {
-			type = TYPE_PACKAGE;
-			return true;
-		}
-		return false;
-	}
-	
-	private function store(name:String, target):Void {
-		if (type == TYPE_CLASS) {
-			var clazz:ClassInfo = cache.getClass(target[name]);
-			if (ObjectUtil.isEmpty(clazz)) {
-				clazz = new ClassInfo(name, target[name], info);
-				cache.addClass(clazz);
+		var i:String;
+		for (i in t) {
+			if (typeof(t[i]) == "function") {
+				var b:ClassInfo = c.getClass(t[i]);
+				if (!b) {
+					b = new ClassInfo(i, t[i], p);
+					c.addClass(b);
+				}
+				r.put(i, b);
+			} else if (typeof(t[i]) == "object") {
+				var a:PackageInfo = c.getPackage(t[i]);
+				if (!a) {
+					a = new PackageInfo(i, t[i], p);
+					c.addPackage(a);
+				}
+				r.put(i, a);
 			}
-			result.put(name, clazz);
-			return;
 		}
-		if (type == TYPE_PACKAGE) {
-			var package:PackageInfo = cache.getPackage(target[name]);
-			if (ObjectUtil.isEmpty(package)) {
-				package = new PackageInfo(name, target[name], info);
-				cache.addPackage(package);
-			}
-			result.put(name, package);
-			return;
-		}
+		
+		return r;
 	}
 }
