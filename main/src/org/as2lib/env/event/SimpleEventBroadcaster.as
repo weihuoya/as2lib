@@ -32,6 +32,7 @@ import org.as2lib.util.ArrayUtil;
  * @author Simon Wacker
  */
 class org.as2lib.env.event.SimpleEventBroadcaster extends BasicClass implements DelegatingEventBroadcaster {
+	
 	/** A reference to the NormalEventDispatcher. */
 	public static var NORMAL_DISPATCHER:EventDispatcher = new NormalEventDispatcher();
 	
@@ -53,31 +54,45 @@ class org.as2lib.env.event.SimpleEventBroadcaster extends BasicClass implements 
 	}
 	
 	/**
+	 * Dispatcher will only be set if it is not null or undefined.
+	 *
 	 * @see org.as2lib.env.event.DelegatingEventBroadcaster#setDispatcher()
 	 */
 	public function setDispatcher(newDispatcher:EventDispatcher):Void {
-		dispatcher = newDispatcher;
+		if (newDispatcher)
+			dispatcher = newDispatcher;
 	}
 	
 	/**
+	 * Listener will only be added if it is not null or undefined.
+	 *
 	 * @see org.as2lib.env.event.EventBroadcaster#addListener()
 	 */
 	public function addListener(listener:EventListener):Void {
-		listeners.push(listener);
+		if (listener)
+			listeners.push(listener);
 	}
 	
 	/**
+	 * Null or undefined argument will be interpreted as empty
+	 * listener array.
+	 * 
+	 * <p>The listeners in the array will not be checked for correct
+	 * type nor for being undefined or null.
+	 *
 	 * @see org.as2lib.env.event.EventBroadcaster#addAllListener()
 	 */
 	public function addAllListener(listeners:Array):Void {
-		this.listeners = this.listeners.concat(listeners);
+		if (listeners)
+			this.listeners = this.listeners.concat(listeners);
 	}
 	
 	/**
 	 * @see org.as2lib.env.event.EventBroadcaster#removeListener()
 	 */
 	public function removeListener(listener:EventListener):Void {
-		ArrayUtil.removeElement(listeners, listener);
+		if (listener)
+			ArrayUtil.removeElement(listeners, listener);
 	}
 	
 	/**
@@ -100,8 +115,9 @@ class org.as2lib.env.event.SimpleEventBroadcaster extends BasicClass implements 
 	public function dispatch(event:EventInfo):Void {
 		if (event instanceof Consumable) {
 			dispatcher.dispatchConsumable(event, listeners);
-			return;
+		} else {
+			dispatcher.dispatch(event, listeners);
 		}
-		dispatcher.dispatch(event, listeners);
 	}
+	
 }

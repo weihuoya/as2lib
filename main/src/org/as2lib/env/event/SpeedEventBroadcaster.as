@@ -27,13 +27,14 @@ import org.as2lib.env.event.EventListener;
  * @author Simon Wacker
  */
 class org.as2lib.env.event.SpeedEventBroadcaster extends BasicClass implements EventBroadcaster {	
+
 	/** Contains all registered EventListeners. */
 	private var l:Object;
 	
 	/**
 	 * Constructs a new SpeedEventBroadcaster.
 	 *
-	 * @param listeners optional argument that can be used to configure the broadcaster
+	 * @param listeners argument that can be used to configure the broadcaster
 	 */
 	public function SpeedEventBroadcaster(listeners:Array) {
 		l = new Object();
@@ -45,21 +46,24 @@ class org.as2lib.env.event.SpeedEventBroadcaster extends BasicClass implements E
 	 * @see org.as2lib.env.event.EventBroadcaster#addListener()
 	 */
 	public function addListener(listener:EventListener):Void {
-		l.addListener(listener);
+		if (listener)
+			l.addListener(listener);
 	}
 	
 	/**
 	 * @see org.as2lib.env.event.EventBroadcaster#addAllListener()
 	 */
 	public function addAllListener(listeners:Array):Void {
-		l = l.concat(listeners);
+		if (listeners)
+			l = l.concat(listeners);
 	}
 	
 	/**
 	 * @see org.as2lib.env.event.EventBroadcaster#removeListener()
 	 */
 	public function removeListener(listener:EventListener):Void {
-		l.removeListener(listener);
+		if (listener)
+			l.removeListener(listener);
 	}
 	
 	/**
@@ -80,6 +84,12 @@ class org.as2lib.env.event.SpeedEventBroadcaster extends BasicClass implements E
 	 * @see org.as2lib.env.event.EventBroadcaster#dispatch()
 	 */
 	public function dispatch(e:EventInfo):Void {
-		l.broadcastMessage(e.getName(), e);
+		if (e) {
+			if (l._listeners.length > 0) {
+				var n:String = e.getName();
+				if (n) l.broadcastMessage(n, e);
+			}
+		}
 	}
+	
 }
