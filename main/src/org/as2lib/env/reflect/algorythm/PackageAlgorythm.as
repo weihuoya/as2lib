@@ -54,7 +54,7 @@ class org.as2lib.env.reflect.algorythm.PackageAlgorythm extends BasicClass imple
 		var i:String;
 		for (i in package) {
 			if (ObjectUtil.isTypeOf(package[i], "object")) {
-				if (executePackageLogic(i, package[i], info, object)) {
+				if (validateAndStorePackage(i, package[i], info, object)) {
 					return true;
 				}
 			}
@@ -62,7 +62,7 @@ class org.as2lib.env.reflect.algorythm.PackageAlgorythm extends BasicClass imple
 		return false;
 	}
 	
-	private function executePackageLogic(name:String, package, parent:PackageInfo, object):Boolean {
+	private function validateAndStorePackage(name:String, package, parent:PackageInfo, object):Boolean {
 		var sp:PackageInfo = cache.getPackage(package);
 		if (ObjectUtil.isEmpty(sp)) {
 			sp = storePackage(name, package, parent);

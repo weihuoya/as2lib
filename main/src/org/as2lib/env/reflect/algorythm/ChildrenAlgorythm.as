@@ -30,10 +30,13 @@ import org.as2lib.env.reflect.ReflectConfig;
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorythm.ChildrenAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
+	public static var TYPE_CLASS:Number = 0;
+	public static var TYPE_PACKAGE:Number = 1;
+	
 	private var cache:Cache;
-	private var data:Map;
+	private var result:Map;
 	private var info:PackageInfo;
-	private var type:String;
+	private var type:Number;
 	
 	public function ChildrenAlgorythm(Void) {
 	}
@@ -43,43 +46,43 @@ class org.as2lib.env.reflect.algorythm.ChildrenAlgorythm extends AbstractContent
 		type = null;
 		
 		this.info = PackageInfo(info);
-		this.data = new HashMap();
+		this.result = new HashMap();
 		
 		var package = this.info.getPackage();
 		search(package);
 		
-		return data;
+		return result;
 	}
 	
 	private function validate(target, name:String):Boolean {
 		if (ObjectUtil.isTypeOf(target[name], "function")) {
-			type = "class";
+			type = TYPE_CLASS;
 			return true;
 		}
 		if (ObjectUtil.isTypeOf(target[name], "object")) {
-			type = "package";
+			type = TYPE_PACKAGE;
 			return true;
 		}
 		return false;
 	}
 	
 	private function store(name:String, target):Void {
-		if (type == "class") {
+		if (type == TYPE_CLASS) {
 			var clazz:ClassInfo = cache.getClass(target[name]);
 			if (ObjectUtil.isEmpty(clazz)) {
 				clazz = new ClassInfo(name, target[name], info);
 				cache.addClass(clazz);
 			}
-			data.put(name, clazz);
+			result.put(name, clazz);
 			return;
 		}
-		if (type == "package") {
+		if (type == TYPE_PACKAGE) {
 			var package:PackageInfo = cache.getPackage(target[name]);
 			if (ObjectUtil.isEmpty(package)) {
 				package = new PackageInfo(name, target[name], info);
 				cache.addPackage(package);
 			}
-			data.put(name, package);
+			result.put(name, package);
 			return;
 		}
 	}

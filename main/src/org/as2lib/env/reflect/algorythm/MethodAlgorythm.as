@@ -29,7 +29,7 @@ import org.as2lib.util.StringUtil;
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorythm.MethodAlgorythm extends AbstractContentAlgorythm implements ContentAlgorythm {
-	private var data:Map;
+	private var result:Map;
 	private var info:ClassInfo;
 	private var staticFlag:Boolean;
 	
@@ -38,7 +38,7 @@ class org.as2lib.env.reflect.algorythm.MethodAlgorythm extends AbstractContentAl
 	
 	public function execute(info:CompositeMemberInfo):Map {
 		this.info = ClassInfo(info);
-		this.data = new HashMap();
+		this.result = new HashMap();
 		
 		this.staticFlag = true;
 		var clazz:Function = this.info.getRepresentedClass();
@@ -47,10 +47,13 @@ class org.as2lib.env.reflect.algorythm.MethodAlgorythm extends AbstractContentAl
 		this.staticFlag = false;
 		ObjectUtil.setAccessPermission(clazz.prototype, ObjectUtil.ACCESS_ALL_ALLOWED);
 		_global.ASSetPropFlags(clazz.prototype, ["__proto__", "constructor", "__constructor__"], 1, true);
+		/*ObjectUtil.setAccessPermission(clazz.prototype.__proto__, ObjectUtil.ACCESS_NOTHING_ALLOWED);
+		ObjectUtil.setAccessPermission(clazz.prototype.constructor, ObjectUtil.ACCESS_NOTHING_ALLOWED);
+		ObjectUtil.setAccessPermission(clazz.prototype.__constructor__, ObjectUtil.ACCESS_NOTHING_ALLOWED);*/
 		search(clazz.prototype);
-		_global.ASSetPropFlags(clazz.prototype, null, 1, true);
+		ObjectUtil.setAccessPermission(clazz.prototype, ObjectUtil.ACCESS_IS_HIDDEN);
 		
-		return data;
+		return result;
 	}
 	
 	private function validate(target, name:String):Boolean {
@@ -65,6 +68,6 @@ class org.as2lib.env.reflect.algorythm.MethodAlgorythm extends AbstractContentAl
 	
 	private function store(name:String, target):Void {
 		var method:MethodInfo = new MethodInfo(name, target[name], info, staticFlag);
-		data.put(name, method);
+		result.put(name, method);
 	}
 }
