@@ -32,24 +32,22 @@ import org.as2lib.core.BasicClass;
  */
 class org.as2lib.env.out.handler.TraceHandler extends BasicClass implements OutHandler {
 	/**
-	 * Uses #trace(String) to make the output. The String representation is obtained via
-	 * the OutUtil.stringifyWriteInfo(OutWriteInfo) operation. You can modify the Stringifier
-	 * used by this operation in the OutConfig class.
+	 * Uses #trace(String) to make the output. The String representation
+	 * is obtained via the OutWriteInfo#toString() operation.
 	 *
 	 * @see org.as2lib.env.out.OutHandler
 	 */
 	public function write(info:OutWriteInfo):Void {
-		trace (OutConfig.getWriteStringifier().execute(info));
+		trace(info);
 	}
 	
 	/**
-	 * Uses #trace(String) to make the output. The String representation is obtained via
-	 * the OutUtil.stringifyErrorInfo(OutErrorInfo) operation. You can modify the Stringifier
-	 * used by this operation in the OutConfig class.
+	 * Uses #trace(String) to make the output. The string representation
+	 * is obtained via the OutErrorInfo#toString() operation.
 	 *
 	 * @see org.as2lib.env.out.OutHandler
 	 */
 	public function error(info:OutErrorInfo):Void {
-		trace (OutConfig.getErrorStringifier().execute(info));
+		trace(info);
 	}
 }

@@ -18,6 +18,7 @@ import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.out.OutLevel;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.out.OutConfig;
 
 /**
  * OutErrorInfo is a dumb model that contains all the information needed by the OutHandlers
@@ -68,5 +69,15 @@ class org.as2lib.env.out.info.OutErrorInfo extends BasicClass implements EventIn
 	 */
 	public function getName(Void):String {
 		return "error";
+	}
+	
+	/**
+	 * Uses the Stringifier returned by OutConfig#getErrorStringifier()
+	 * to stringify this OutErrorInfo.
+	 *
+	 * @see org.as2lib.core.BasicInterface
+	 */
+	public function toString(Void):String {
+		return OutConfig.getErrorStringifier().execute(this);
 	}
 }
