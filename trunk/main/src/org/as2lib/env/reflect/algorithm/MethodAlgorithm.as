@@ -15,17 +15,15 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
 
 /**
  * Searches for all methods of a specific class.
  * 
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass implements ContentAlgorithm {
+class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass {
 	
 	private var r:Array;
 	private var i:ClassInfo;
@@ -45,7 +43,6 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass implem
 	 * <p>This method will return null if:
 	 * <ul>
 	 *   <li>The argument is null or undefined.</li>
-	 *   <li>The argument is not of type ClassInfo.</li>
 	 *   <li>The argument's getType() method returns null or undefined.</li>
 	 * </ul>
 	 *
@@ -55,13 +52,11 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass implem
 	 * @param i the ClassInfo instance representing the class to search through
 	 * @return the found methods, a blank array or null
 	 */
-	public function execute(i:CompositeMemberInfo):Array {
+	public function execute(i:ClassInfo):Array {
 		if (i == null) return null;
-		
-		this.i = ClassInfo(i);
-		if (this.i == null) return null;
-		var c:Function = this.i.getType();
+		var c:Function = i.getType();
 		if (!c) return null;
+		this.i = i;
 		this.r = new Array();
 		
 		this.s = true;

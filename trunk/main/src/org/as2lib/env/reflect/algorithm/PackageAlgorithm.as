@@ -15,11 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.reflect.algorithm.CacheAlgorithm;
 import org.as2lib.env.reflect.Cache;
-import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ReflectConfig;
 
 /**
@@ -28,7 +25,7 @@ import org.as2lib.env.reflect.ReflectConfig;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass implements CacheAlgorithm {
+class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 	
 	private var c:Cache;
 	private var p:PackageInfo;
@@ -78,7 +75,7 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass imple
 	 * @param o the package to find
 	 * @return a PckageInfo instance representing the package or null
 	 */
-	public function execute(o):CompositeMemberInfo {
+	public function execute(o):PackageInfo {
 		if (o == null) return null;
 		p = getCache().getPackage(o);
 		if (p) return p;

@@ -15,12 +15,10 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.ReflectConfig;
-import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
 
 /**
  * Searches for children, that means classes and packages, of a specific
@@ -28,7 +26,7 @@ import org.as2lib.env.reflect.algorithm.ContentAlgorithm;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass implements ContentAlgorithm {
+class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass {
 	
 	private var c:Cache;
 	
@@ -69,7 +67,6 @@ class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass impleme
 	 * <p>This method will return null if:
 	 * <ul>
 	 *   <li>The argument is null or undefined.</li>
-	 *   <li>The argument is not of type PackageInfo.</li>
 	 *   <li>The argument's getPackage() method returns null or undefined.</li>
 	 * </ul>
 	 *
@@ -81,9 +78,7 @@ class org.as2lib.env.reflect.algorithm.ChildAlgorithm extends BasicClass impleme
 	 * @param g the PackageInfo instance representing the package to search through
 	 * @return the children of the package, a blank array or null
 	 */
-	public function execute(g:CompositeMemberInfo):Array {
-		if (g == null) return null;
-		var p:PackageInfo = PackageInfo(g);
+	public function execute(p:PackageInfo):Array {
 		if (p == null) return null;
 		var t:Object = p.getPackage();
 		if (!t) return null;

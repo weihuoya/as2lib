@@ -54,7 +54,7 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 * class information.
 	 * It first checks based on the object whether an appropriate ClassInfo
 	 * exists. If one exists it will be returned otherwise a new will be created.
-	 * The responsibility for doing this lies in the suitable CacheAlgorithm.
+	 * The responsibility for doing this lies in the suitable ClassAlgorithm.
 	 * By default this is the ClassAlgorithm. But you can set your own with the
 	 * ReflectConfig#setClassAlgorithm() operation.
 	 * 
@@ -65,7 +65,6 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 		var info:ClassInfo = ReflectConfig.getCache().getClass(object);
 		if (!info) {
 			info = ClassInfo(ReflectConfig.getClassAlgorithm().execute(object));
-			ReflectConfig.getCache().addClass(info);
 		}
 		return info;
 	}
@@ -103,7 +102,7 @@ class org.as2lib.env.util.ReflectUtil extends BasicClass {
 	 * passed in. It first checks based on the passed in package whether an
 	 * appropriate PackageInfo exists. If one exists it will be returned otherwise
 	 * a new will be created. The responsibility for doing this lies in the
-	 * suitable CacheAlgorithm. By default this is the PackageAlgorithm. But you
+	 * suitable PackageAlgorithm. By default this is the PackageAlgorithm. But you
 	 * can set your own with the ReflectConfig#setPackageAlgorithm() operation.
 	 *
 	 * @param package the package the appropriate PackageInfo shall be found.

@@ -15,12 +15,9 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.reflect.algorithm.CacheAlgorithm;
 import org.as2lib.env.reflect.Cache;
-import org.as2lib.env.reflect.CompositeMemberInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.util.ReflectUtil;
 import org.as2lib.env.reflect.ReflectConfig;
 
 /**
@@ -29,7 +26,7 @@ import org.as2lib.env.reflect.ReflectConfig;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass implements CacheAlgorithm {
+class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 	
 	private var c:Cache;
 	private var r:ClassInfo;
@@ -80,11 +77,11 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass impleme
 	 *          the class itself
 	 * @return a ClassInfo instance representing the class or null
 	 */
-	public function execute(d):CompositeMemberInfo {
+	public function execute(d):ClassInfo {
 		if (d == null) return null;
 		r = getCache().getClass(d);
 		if (r) return r;
-		var b:PackageInfo = getCache().getRoot();
+		var b:PackageInfo = c.getRoot();
 		var a:Object = b.getPackage();
 		_global.ASSetPropFlags(a, null, 0, true);
 		findAndStore(b, d);
