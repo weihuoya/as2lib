@@ -8,19 +8,19 @@ import org.as2lib.data.io.conn.local.ReservedHostException;
 
 class org.as2lib.data.io.conn.local.LocalServerRegistry extends BasicClass implements ServerRegistry {
 
-	var private serverMap:HashMap;
+	private var serverMap:HashMap;
 	
 	public function LocalServerRegistry(Void) {
 		serverMap = new HashMap();
 	}
 	
 	public function contains(host:String):Boolean {
-		var lc = new LocalConnection();
+		var lc:LocalConnection = new LocalConnection();
 		return !lc.connect(host);
 	}
 	
 	public function register(host:String):Void {
-		if(contains(host)) throw throw new ReservedHostException("Connection name [" + host + "] is already in use.", this, arguments);
+		if(contains(host)) throw new ReservedHostException("Connection name [" + host + "] is already in use.", this, arguments);
 		var lc = new LocalConnection();
 		lc.connect(host);
 		serverMap.put(host,lc);
