@@ -7,9 +7,10 @@
 package org.as2lib.doc;
 
 import java.io.File;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.as2lib.doc.parser.as2.AS2ClassParser;
+import org.as2lib.doc.parser.as2.AS2FileParser;
 import org.as2lib.doc.structure.Documentation;
 
 /**
@@ -22,8 +23,9 @@ public class Main {
 
 	
 	public static void main(String[] args) {
+		
 		Documentation doc = new Documentation(args[1]);
-		doc.setLanguage(new AS2ClassParser());
+		doc.setLanguage(new AS2FileParser());
 		
 			File file = new File(args[0]);
 			if(file.exists()) {

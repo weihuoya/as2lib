@@ -8,6 +8,8 @@ package org.as2lib.doc.structure.lang;
 
 import java.util.List;
 
+import org.as2lib.doc.structure.ClassContent;
+
 /**
  * @author main
  *

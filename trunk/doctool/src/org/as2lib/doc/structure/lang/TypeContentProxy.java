@@ -7,6 +7,7 @@
 package org.as2lib.doc.structure.lang;
 
 import org.as2lib.doc.structure.ClassContent;
+import org.as2lib.doc.structure.TypeContent;
 
 /**
  * @author main
@@ -14,19 +15,19 @@ import org.as2lib.doc.structure.ClassContent;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class ClassContentProxy extends AbstractContentProxy implements ClassContent {
+public class TypeContentProxy extends AbstractContentProxy implements ClassContent {
 
-	private ClassContent reference;
+	private TypeContent reference;
 	
-	public ClassContentProxy(String name) {
+	public TypeContentProxy(String name) {
 		super(name);
 	}
 	
-	public void setReference(ClassContent reference) {
+	public void setReference(TypeContent reference) {
 		this.reference = reference;
 	}
 	
-	public ClassContent getReference(){
+	public TypeContent getReference(){
 		return reference;
 	}
 }

@@ -22,7 +22,7 @@ import org.as2lib.doc.structure.lang.SimpleClassContent;
  */
 public class Documentation {
 	private String title;
-	private ClassContentCache classes;
+	private TypeCache types;
 	private PackageCache packages;
 	private Language lang;
 	private List ignoredFiles;
@@ -31,7 +31,7 @@ public class Documentation {
 	public Documentation(String title) {
 		this.title = title;
 		log = new ArrayList();
-		classes = new ClassContentCache(this);
+		types = new TypeCache(this);
 		packages = new PackageCache(this);
 	}
 	
@@ -51,8 +51,8 @@ public class Documentation {
 	}
 	
 	public void addFile(File file) {
-		//log.add(lang.parse(file, this));
-		System.out.println(lang.parse(file, this));
+		log.add(lang.parse(file, this));
+		//System.out.println(lang.parse(file, this));
 	}
 	
 	/**
@@ -81,10 +81,10 @@ public class Documentation {
 		this.lang = lang;
 	}
 	/**
-	 * @return Returns the classes.
+	 * @return Returns the types.
 	 */
-	public ClassContentCache getClasses() {
-		return classes;
+	public TypeCache getTypes() {
+		return types;
 	}
 	/**
 	 * @return Returns the packages.

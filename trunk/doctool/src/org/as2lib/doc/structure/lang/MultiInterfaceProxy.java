@@ -6,6 +6,8 @@
  */
 package org.as2lib.doc.structure.lang;
 
+import java.util.List;
+
 import org.as2lib.doc.structure.ClassContent;
 
 /**
@@ -14,19 +16,21 @@ import org.as2lib.doc.structure.ClassContent;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class ClassContentProxy extends AbstractContentProxy implements ClassContent {
+public class MultiInterfaceProxy implements InterfaceContent {
 
-	private ClassContent reference;
-	
-	public ClassContentProxy(String name) {
-		super(name);
+	public MultiInterfaceProxy(String name, List imports) {
+		
 	}
 	
-	public void setReference(ClassContent reference) {
-		this.reference = reference;
+	public Package getParent() {
+		return null;
 	}
 	
-	public ClassContent getReference(){
-		return reference;
+	public String getName() {
+		return null;
+	}
+	
+	public String getFullName() {
+		return null;
 	}
 }

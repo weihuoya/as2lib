@@ -9,8 +9,7 @@ package org.as2lib.doc.structure;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.as2lib.doc.structure.lang.ClassContent;
-import org.as2lib.doc.structure.lang.ClassContentProxy;
+import org.as2lib.doc.structure.lang.TypeContentProxy;
 import org.as2lib.doc.structure.Documentation;
 import org.as2lib.doc.structure.lang.Package;
 
@@ -20,18 +19,30 @@ import org.as2lib.doc.structure.lang.Package;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class ClassContentCache {
-	private Map classes;
+public class TypeCache {
+	private Map types;
 	private Documentation documentation;
 	
-	public ClassContentCache(Documentation documentation) {
+	public TypeCache(Documentation documentation) {
 		this.documentation = documentation;
-		classes = new HashMap();
+		types = new HashMap();
+	}
+	
+	public void addType(TypeContent type) {
+		String fullName = type.getFullName();
+		if(containsType(fullName)) {
+			throw new IllegalArgumentException("Given classContent for '"+fullName+"' has already been added to the classcache");
+		}
+		types.put(fullName, type);
+	}
+	
+	public boolean containsType(String fullPath) {
+		return types.containsKey(fullPath);
 	}
 	
 	public ClassContent getClass(String fullPath) {
-		ClassContent classContent = (ClassContent)classes.get(fullPath);
-		if(classContent == null) {
+		ClassContent type = (ClassContent)types.get(fullPath);
+		if(type == null) {
 			String name;
 			Package parent;
 			if(fullPath.indexOf(".") > 0) {
@@ -42,10 +53,11 @@ public class ClassContentCache {
 				parent = documentation.getPackages().getRoot();
 			}
 				
-			ClassContentProxy classContentProxy = new ClassContentProxy(name);
-			classContentProxy.setParent(parent);
-			classContent = classContentProxy;
+			TypeContentProxy typeProxy = new TypeContentProxy(name);
+			typeProxy.setParent(parent);
+			type = typeProxy;
+			types.put(fullPath, type);
 		}
-		return classContent;
+		return type;
 	}
 }
