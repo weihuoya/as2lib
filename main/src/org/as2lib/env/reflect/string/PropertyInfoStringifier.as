@@ -14,19 +14,28 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.reflect.ReflectException;
+import org.as2lib.core.BasicClass;
+import org.as2lib.core.string.Stringifier;
+import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.PropertyInfo;
 
 /**
- * NoSuchClassMemberException gets thrown to indicate that the specified class
- * member could not be found.
+ * PropertyInfoStringifier is used to stringify PropertyInfos.
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.NoSuchClassMemberException extends ReflectException {
+class org.as2lib.env.reflect.string.PropertyInfoStringifier extends BasicClass implements Stringifier {
 	/**
-	 * @see org.as2lib.env.reflect.ReflectException#Constructor()
+	 * @see org.as2lib.core.string.Stringifier#execute()
 	 */
-	public function NoSuchClassMemberException(message:String, thrower, args:FunctionArguments) {
-		super (message, thrower, args);
+	public function execute(target):String {
+		var property:PropertyInfo = PropertyInfo(target);
+		var result:String = "";
+		if (property.isStatic()) {
+			result += "static ";
+		}
+		result += property.getDeclaringType().getFullName();
+		result += "." + property.getName();
+		return result;
 	}
 }

@@ -20,6 +20,7 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.reflect.TypeMemberInfo;
+import org.as2lib.env.reflect.ReflectConfig;
 
 /**
  * PropertyInfo represents a property.
@@ -141,5 +142,12 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 */
 	public function isStatic(Void):Boolean {
 		return staticFlag;
+	}
+	
+	/**
+	 * @see org.as2lib.core.BasicInterface#toString()
+	 */
+	public function toString(Void):String {
+		return ReflectConfig.getPropertyInfoStringifier().execute();
 	}
 }

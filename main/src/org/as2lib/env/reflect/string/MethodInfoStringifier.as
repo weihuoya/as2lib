@@ -14,27 +14,28 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.reflect.MemberInfo;
+import org.as2lib.core.BasicClass;
+import org.as2lib.core.string.Stringifier;
+import org.as2lib.env.util.ReflectUtil;
+import org.as2lib.env.reflect.MethodInfo;
 
 /**
- * ClassMemberInfo is an interface that is extended by classes in the
- * org.as2lib.env.reflect package representing class members.
+ * MethodInfoStringifier is used to stringify MethodInfos.
  *
  * @author Simon Wacker
  */
-interface org.as2lib.env.reflect.ClassMemberInfo extends MemberInfo {
+class org.as2lib.env.reflect.string.MethodInfoStringifier extends BasicClass implements Stringifier {
 	/**
-	 * Returns the declaring class of the class member.
-	 *
-	 * @return the class member's declaring class
+	 * @see org.as2lib.core.string.Stringifier#execute()
 	 */
-	public function getDeclaringClass(Void):ClassInfo;
-	
-	/**
-	 * Returns whether the class member is static or not.
-	 *
-	 * @return true when the property is static else false
-	 */
-	public function isStatic(Void):Boolean;
+	public function execute(target):String {
+		var method:MethodInfo = MethodInfo(target);
+		var result:String = "";
+		if (method.isStatic()) {
+			result += "static ";
+		}
+		result += method.getDeclaringType().getFullName();
+		result += "." + method.getName() + "()";
+		return result;
+	}
 }

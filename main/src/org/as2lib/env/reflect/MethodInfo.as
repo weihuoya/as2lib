@@ -17,6 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.TypeInfo;
 import org.as2lib.env.reflect.TypeMemberInfo;
+import org.as2lib.env.reflect.ReflectConfig;
 
 /**
  * MethodInfo represents an operation.
@@ -83,5 +84,12 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	 */
 	public function isStatic(Void):Boolean {
 		return staticFlag;
+	}
+	
+	/**
+	 * @see org.as2lib.core.BasicInterface#toString()
+	 */
+	public function toString(Void):String {
+		return ReflectConfig.getMethodInfoStringifier().execute();
 	}
 }
