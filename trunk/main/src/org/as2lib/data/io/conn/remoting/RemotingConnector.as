@@ -23,7 +23,7 @@ class org.as2lib.data.io.conn.remoting.RemotingConnector extends BasicClass impl
 		//serviceLoc = ServiceLocator.getInstance(gatewayUrl,this);
 	}
 	
-	public function initConnection():Void {
+	public function initConnection(Void):Void {
 		NetServices.setGatewayUrl(gatewayUrl);
 		//ServiceLocator.getServiceInstance(serviceId);
 	}
