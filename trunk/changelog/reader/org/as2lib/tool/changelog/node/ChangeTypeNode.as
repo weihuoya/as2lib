@@ -49,11 +49,16 @@ class org.as2lib.tool.changelog.node.ChangeTypeNode extends BasicClass {
 	 * @return Entry as html.
 	 */
 	public function toHTML(Void):String {
+		var result:String = "<b>Changed type</b>";
 		if(from) {
-			return ("<b>Type changed</b> from <i>"+from+"</i> to <i>"+to+"</i> ("+annotation+").");
-		} else {
-			return ("<b>Type set</b> to <i>"+to+"</i> ("+annotation+").");
+			result += " from <i>"+from+"</i>";
 		}
+		result += " to <i>"+to+"</i>";
+		if(annotation.length > 0) {
+			result += "("+annotation+")";
+		}
+		result += ".";
+		return result;
 	}
 	
 	/**
@@ -62,10 +67,15 @@ class org.as2lib.tool.changelog.node.ChangeTypeNode extends BasicClass {
 	 * @return Entry as string.
 	 */
 	public function toString(Void):String {
+		var result:String = "Changed type";
 		if(from) {
-			return ("Type changed from "+from+" to "+to+" ("+annotation+").");
-		} else {
-			return ("Type set to "+to+" ("+annotation+").");
+			result += " from "+from;
 		}
+		result += " to "+to;
+		if(annotation.length > 0) {
+			result += "("+annotation+")";
+		}
+		result += ".";
+		return result;
 	}
 }

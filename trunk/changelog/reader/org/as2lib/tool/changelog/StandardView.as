@@ -162,33 +162,50 @@ class org.as2lib.tool.changelog.StandardView extends BasicClass implements Chang
 		tF.embedFonts = false;
 		
 		// <start> Content Generation for one entry
-		var content:String = "<b>";
 	    var package:String = entry.getPackage();
 	    var clazz:String = entry.getClass();
 	    var method:String = entry.getMethod();
 		var variable:String = entry.getVariable();
+		var somethingWrittenBeforeDate = false;
+		var link:String = entry.getLink();
+		var content:String = "";
+		if(link.length > 0) {
+			content += "<a href=\""+link+"\">";
+		}
+		content += "<b>";
 		if(package) {
 			content += package;
+			somethingWrittenBeforeDate = true;
 		}
 		if(clazz) {
 			if(package) {
 				content += ".";
 			}
 			content += entry.getClass();
+			somethingWrittenBeforeDate = true;
 		}
 		if(method) {
 			if(clazz || package) {
 				content += ".";
 			}
 			content += method();
+			somethingWrittenBeforeDate = true;
 		} else if (variable) {
 			if(clazz || package) {
 				content += ".";
 			}
 			content += variable();
+			somethingWrittenBeforeDate = true;
 		}
 		var date:Date = entry.getDate();
-		content += "</b> ("+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+")<br />"+entry.toHTML();
+		content += "</b>"
+		if(somethingWrittenBeforeDate) {
+			content += " ";
+		}
+		content += "("+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+")<br />"+entry.toHTML();
+		if(link.length > 0) {
+			content += "</a>";
+		}
 		// <end> Content generation.
 		
 		tF.htmlText = content;
