@@ -1,15 +1,15 @@
 ﻿import org.as2lib.test.unit.Test;
 import org.as2lib.basic.BasicClass;
-import org.as2lib.basic.reflect.ClassInfo;
-import org.as2lib.basic.reflect.PackageInfo;
-import org.as2lib.basic.reflect.MethodInfo;
-import org.as2lib.basic.reflect.PropertyInfo;
+import org.as2lib.reflect.ClassInfo;
+import org.as2lib.reflect.PackageInfo;
+import org.as2lib.reflect.MethodInfo;
+import org.as2lib.reflect.PropertyInfo;
 import org.as2lib.data.holder.HashMap;
 import org.as2lib.data.iterator.Iterator;
-import org.as2lib.basic.reflect.ReflectInfo;
+import org.as2lib.reflect.ReflectInfo;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.ReflectUtil;
-import test.org.as2lib.basic.reflect.*;
+import test.org.as2lib.reflect.*;
 import org.as2lib.basic.Out;
 import org.as2lib.Config;
 
@@ -47,7 +47,7 @@ class test.org.as2lib.basic.TReflections extends Test {
 	}
 	
 	public function testGetChildren(Void):Void {
-		var info = ReflectUtil.getPackageInfo(_global.test.org.as2lib.basic.reflect);
+		var info = ReflectUtil.getPackageInfo(_global.test.org.as2lib.reflect);
 		var children:HashMap = info.getChildren();
 		var iterator:Iterator = children.iterator();
 		while (iterator.hasNext()) {

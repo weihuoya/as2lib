@@ -1,6 +1,6 @@
 ﻿import org.as2lib.basic.BasicClass;
 import org.as2lib.event.EventListener;
-import org.as2lib.basic.except.IllegalArgumentException;
+import org.as2lib.except.IllegalArgumentException;
 
 class org.as2lib.event.ListenerArray extends BasicClass {
 	private var listeners:Array;
