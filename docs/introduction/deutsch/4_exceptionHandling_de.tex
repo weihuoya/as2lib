@@ -26,7 +26,7 @@ Die neuen Funktionalitäten des Exception Handlings sind:
 	\item Exceptions können als Ursache anderer Exceptions gespeichert werden.
 \end{itemize}
 
-Folgene Vordefinierte Exception Klassen und Interfaces stehen zur Verfügung:
+Folgene vordefinierte Exception Klassen und Interfaces stehen zur Verfügung:
 
 \begin{itemize}
 	\item \emph{AbstractException}: Alle Exception Klassen werden von der AbstractException Klasse abgeleitet. Sie implementiert die Methoden, die das Throwable Interface definiert (siehe Abb.\ \ref{fig:exception}, S.\ \pageref{fig:exception}).
@@ -77,10 +77,12 @@ Eine geworfene IllegalArgumentException kann im ausführenden Code mit einem \emp
 \begin{lstlisting}[frame=single]
 import com.tests.ExceptionTest;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.out.handler.TraceHandler;
 import org.as2lib.env.out.Out;
 
 try {
 	var myOut:Out = new Out();
+	myOut.addHandler(new TraceHandler());
 	var myET:ExceptionTest = new ExceptionTest();
 	myOut.info(myET.getString());
 }
