@@ -34,9 +34,6 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	public static var RETURNINDEXDARRAY = Array.RETURNINDEXEDARRAY;
 	public static var UNIQUESORT = Array.UNIQUESORT;*/
 	
-	/** The Array the TypedArray wraps. */
-	private var array:Array;
-	
 	/** The type of values that can be added. */
 	private var type:Function;
 	
@@ -46,9 +43,8 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	 * @param type the type of the values this TypedArray contains
 	 * @param array the Array that shall be wrapped
 	 */
-	public function TypedArray(type:Function, array:Array) {
+	public function TypedArray(type:Function) {
 		this.type = type;
-		this.array = array;
 	}
 	
 	/**
@@ -59,11 +55,14 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 		for (var i:Number = 0; i < l; i++) {
 			validate(arguments[i]);
 		}
-		var result:TypedArray;
-		if (l == 0) {
-			result = new TypedArray(this.type, this.array.concat());
-		} else {
-			result = new TypedArray(this.type, this.array.concat(arguments));
+		var result:TypedArray = new TypedArray(this.type);
+		for (var i:Number = 0; i < length; i++) {
+			result.push(this[i]);
+		}
+		if (l != 0) {
+			for (var i:Number = 0; i < arguments.length; i++) {
+				result.push(arguments[i]);
+			}
 		}
 		return result;
 	}
@@ -71,59 +70,9 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	/**
 	 * @see Array
 	 */
-	public function join(seperator:String):String {
-		return this.array.join(seperator);
-	}
-	
-	/**
-	 * @see Array
-	 */
-	public function pop(Void) {
-		return this.array.pop();
-	}
-	
-	/**
-	 * @see Array
-	 */
 	public function push(value):Number {
 		validate(value);
-		return this.array.push(value);
-	}
-	
-	/**
-	 * @see Array
-	 */
-	public function reverse(Void):Void {
-		this.array.reverse();
-	}
-	
-	/**
-	 * @see Array
-	 */
-	public function shift(Void) {
-		return this.array.shift();
-	}
-	
-	/**
-	 * @see Array
-	 */
-	public function sort() {
-		return this.array.sort.apply(this.array, arguments);
-	}
-	
-	/**
-	 * @see Array
-	 */
-
-	 public function sortOn() {
-		return this.array.sortOn.apply(this.array, arguments);
-	}
-	
-	/**
-	 * @see Array
-	 */
-	public function splice(index:Number, count:Number):Void {
-		this.array.splice.apply(this.array, arguments);
+		return super.push(value);
 	}
 	
 	/**
@@ -131,20 +80,19 @@ class org.as2lib.data.holder.TypedArray extends Array implements BasicInterface 
 	 */
 	public function unshift(value):Number {
 		validate(value);
-		return this.array.unshift(value);
+		return super.unshift(value);
 	}
 	
 	/**
-	 * @see Array
+	 * @see org.as2lib.core.BasicInterface
 	 */
-	public function get length():Number {
-		return this.array.length;
-	}
-	
 	public function getClass(Void):ClassInfo {
 		return ReflectUtil.getClassInfo(this);
 	}
 	
+	/**
+	 * @see org.as2lib.core.BasicInterface
+	 */
 	public function toString(Void):String {
 		return "";
 	}
