@@ -20,9 +20,9 @@ class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass impleme
 	
 	public function run(Void):Void {
 		var keys:Array = serviceMap.getKeys();
-		var iterator:Iterator = serviceMap.iterator();
-		while (iterator.hasNext()){
-			var proxy:LocalServerServiceProxy = iterator.next();
+		var serviceIterator:Iterator = serviceMap.iterator();
+		while (serviceIterator.hasNext()){
+			var proxy:LocalServerServiceProxy = serviceIterator.next();
 			var key:String = String(keys.shift());
 			// source out: 'host + "/" + key'
 			if (!proxy.connect(host + "/" + key)){
@@ -34,6 +34,11 @@ class org.as2lib.data.io.conn.local.SimpleLocalServer extends BasicClass impleme
 	}
 	
 	public function stop(Void):Void {
+		var serviceIterator:Iterator = serviceMap.iterator();
+		while (serviceIterator.hasNext()) {
+			var service:LocalServerServiceProxy = LocalServerServiceProxy(serviceIterator.next());
+			service.close();
+		}
 		LocalConfig.getServerRegistry().remove(this);
 		running = false;
 	}

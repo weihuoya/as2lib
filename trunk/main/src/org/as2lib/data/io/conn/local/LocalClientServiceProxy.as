@@ -9,6 +9,7 @@ class org.as2lib.data.io.conn.local.LocalClientServiceProxy extends BasicClass i
 	private var connection:LocalConnection;
 	private var listenerMap:Map;
 	
+	// wenn nicht Instanzvariable gehts nicht. Komische Sache!
 	private var responseServer;
 	
 	public function LocalClientServiceProxy(target:String) {
@@ -30,7 +31,9 @@ class org.as2lib.data.io.conn.local.LocalClientServiceProxy extends BasicClass i
 				this.close();
 			}
 			responseServer.connect(target + "." + method + "_Return");
+			connection.send(target, "remoteCall", method, args, (target + "." + method + "_Return"));
+			return;
 		}
-		connection.send(target, "remoteCall", method, args, (target + "." + method + "_Return"));
+		connection.send(target, "remoteCall", method, args);
 	}
 }
