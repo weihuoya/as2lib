@@ -64,7 +64,7 @@ Similar to test case APIs like: JUnit\footnote{\href{http://www.junit.org}{www.j
 
 A test case must extend the class TestCase\footnote{org.as2lib.test.unit.TestCase}. All methods of the test case that start with ``test'' are executed by the testing API. The following coding example should show you how to use the Test Case API.
 A new instance of the Testcase will be created before each start of a method call to create a clean base for the method. .setUp() will be executed before each call to prepare the instance. .tearDown() will be executed after each call to clear the instance(for example: to close a open server connection).
-\\begin{lstlisting}[frame=single]
+\begin{lstlisting}[frame=single]
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.ClassInfo;
