@@ -34,6 +34,48 @@ interface org.as2lib.env.out.OutAccess extends BasicInterface {
 	public function isEnabled(level:OutLevel):Boolean;
 	
 	/**
+	 * Checks if this instance is enabled for log level output.
+	 *
+	 * @return true if log output can be made
+	 */
+	public function isLogEnabled(Void):Boolean;
+	
+	/**
+	 * Checks if this instance is enabled for debug level output.
+	 *
+	 * @return true if debug output can be made
+	 */
+	public function isDebugEnabled(Void):Boolean;
+	
+	/**
+	 * Checks if this instance is enabled for info level output.
+	 *
+	 * @return true if info output can be made
+	 */
+	public function isInfoEnabled(Void):Boolean;
+	
+	/**
+	 * Checks if this instance is enabled for warning level output.
+	 *
+	 * @return true if warning output can be made
+	 */
+	public function isWarningEnabled(Void):Boolean;
+	
+	/**
+	 * Checks if this instance is enabled for error level output.
+	 *
+	 * @return true if error output can be made
+	 */
+	public function isErrorEnabled(Void):Boolean;
+	
+	/**
+	 * Checks if this instance is enabled for fatal level output.
+	 *
+	 * @return true if fatal output can be made
+	 */
+	public function isFatalEnabled(Void):Boolean;
+	
+	/**
 	 * Returns the currently set OutLevel.
 	 *
 	 * @return the OutLevel
