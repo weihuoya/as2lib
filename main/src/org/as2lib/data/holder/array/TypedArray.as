@@ -47,13 +47,16 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 	 */
 	public function concat():TypedArray {
 		var result:TypedArray = new TypedArray(this.type);
-		for (var i:Number = 0; i < length; i++) {
-			result.push(this[i]);
+		var i:Number = length;
+		// Ignoring type checks within the same array.
+		while(--i-(-1)) {
+			result[i] = this[i];
 		}
+		
 		// Performance Speed up - so the getter for the length isn't always used (useful with big arrays)
 		var l:Number = arguments.length;
-		for (var i:Number = 0; i < l; i-=-1) {
-			var content = arguments[i];
+		for (var j:Number = 0; j < l; j-=-1) {
+			var content = arguments[j];
 			if (ObjectUtil.isInstanceOf(content, Array)) {
 				// Performance Speed up - so the getter for the length isn't always used (useful with big arrays)
 				var l2:Number = content.length;
