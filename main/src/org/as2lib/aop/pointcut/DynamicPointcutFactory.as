@@ -7,6 +7,7 @@ import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.pointcut.OrCompositePointcut;
 import org.as2lib.aop.pointcut.AndCompositePointcut;
 import org.as2lib.aop.pointcut.KindedPointcut;
+//import org.as2lib.aop.pointcut.WithinPointcut;
 import org.as2lib.aop.pointcut.PointcutFactory;
 import org.as2lib.aop.pointcut.PointcutRule;
 import org.as2lib.aop.joinpoint.AbstractJoinPoint;
@@ -24,6 +25,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		bindMethodPointcut();
 		bindSetPropertyPointcut();
 		bindGetPropertyPointcut();
+		//bindWithinPointcut();
 	}
 	
 	private function bindOrCompositePointcut(Void):Void {
@@ -88,6 +90,19 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		}
 		bindFactory(rule, factory);
 	}
+	
+	/*private function bindWithinPointcut(Void):Void {
+		var rule:PointcutRule = new PointcutRule();
+		rule.execute = function(description:String):Boolean {
+			return (description.indexOf("within") == 0);
+		}
+		var factory:PointcutFactory = new PointcutFactory();
+		factory.getPointcut = function(description:String):Pointcut {
+			description = description.substring(7, description.length - 1);
+			return (new WithinPointcut(description));
+		}
+		bindFactory(rule, factory);
+	}*/
 	
 	public function getPointcut(description:String):Pointcut {
 		var iterator:Iterator = new ArrayIterator(factoryMap.getKeys());
