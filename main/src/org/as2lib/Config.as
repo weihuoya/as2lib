@@ -22,8 +22,6 @@ import org.as2lib.env.event.EventBroadcasterFactory;
 import org.as2lib.env.event.SimpleEventBroadcasterFactory;
 import org.as2lib.util.string.ObjectStringifier;
 import org.as2lib.util.string.Stringifier;
-import org.as2lib.core.HashCodeGenerator;
-import org.as2lib.core.SimpleHashCodeGenerator;
 
 /**
  * Basic configuration class for all classes.
