@@ -28,6 +28,6 @@ interface org.as2lib.test.mock.ArgumentsMatcher extends BasicInterface {
 	 * @param actualArguments the actual arguments
 	 * @return true if the arguments match, false otherwise
 	 */
-	public function matchArguments(expectedArguments:FunctionArguments, actualArguments:FunctionArguments):Boolean;
+	public function matchArguments(expectedArguments:Array, actualArguments:Array):Boolean;
 	
 }

@@ -31,7 +31,7 @@ class org.as2lib.test.mock.support.DefaultArgumentsMatcher extends BasicClass im
 	/**
 	 * @see ArgumentsMatcher#matchArguments()
 	 */
-	public function matchArguments(expectedArguments:FunctionArguments, actualArguments:FunctionArguments):Boolean {
+	public function matchArguments(expectedArguments:Array, actualArguments:Array):Boolean {
 		if (expectedArguments.length != actualArguments.length) return false;
 		for (var i:Number = 0; i < expectedArguments.length; i++) {
 			if (expectedArguments[i] != actualArguments[i]) {
