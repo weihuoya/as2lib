@@ -172,6 +172,13 @@ class AssertTest extends TestCase {
 	}
 	
 	public function testNotUndefined(Void):Void {
+		assertTrue ("NOT FAIL! 1 ", assertNotUndefined(null));
+		assertFalse("NOT FAIL! 2 ", assertNotUndefined(undefined));
+		assertTrue ("NOT FAIL! 3 ", assertNotUndefined("NOT FAIL!", null));
+		assertFalse("NOT FAIL! 4 ", assertNotUndefined("fail", undefined));
+		assertTrue ("NOT FAIL! 5 ", assertNotUndefined("NOT FAIL!", 3));
+		assertTrue ("NOT FAIL! 6 ", assertNotUndefined("NOT FAIL!"));
+		assertTrue ("NOT FAIL! 7 ", assertNotUndefined(2));
 	}
 
 	public function testInfinity(Void):Void {
