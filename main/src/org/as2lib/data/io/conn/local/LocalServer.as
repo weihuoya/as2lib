@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ 
 import org.as2lib.data.io.conn.Connector;
 import org.as2lib.data.io.conn.ConnectorListener;
 import org.as2lib.data.io.conn.ConnectorRequest;
@@ -63,7 +64,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	 * String, which method on the clients is accessed 
 	 * @see LocalServer constructor
 	 */
-	private static var CLIENT_METHOD:String = "clientMethod";
+	private var clientMethod:String = "clientMethod";
 	
 	/* LocalConnection object for broadcasting messages */
 	private var sender:LocalConnection;
@@ -76,8 +77,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 	
 	/**
 	 * Constructs a new LocalServer instance.
-	 * Initializes array for parameters, list of clients, the out object and
-	 * the method, which is called on the clients.
+	 * Initializes EventBroadcaster, array for parameters, list of clients and the out object.
 	 */
 	public function LocalServer(Void) {
 		aOut = Config.getOut();
@@ -131,7 +131,7 @@ class org.as2lib.data.io.conn.local.LocalServer extends LocalConnection implemen
 		
 		aOut.debug(getClass().getName()+".clients.length:"+clients.size());
 		
-		args.push(CLIENT_METHOD);
+		args.push(clientMethod);
 		args.push(method);
 		args = args.concat(params);
 		
