@@ -7,19 +7,20 @@ import org.as2lib.env.out.Out;
 class test.org.as2lib.data.io.conn.ExampleListener extends BasicClass implements ConnectorListener {
 	/** Internal counter (just to do something */
 	public static var counter:Number = 0;
+	private var cnt:Number;
 	private var myOut:Out;
 	
 	public function ExampleListener(Void) {
-		counter++
+		cnt=counter++;
 		myOut = new Out();
-		myOut.info("ExampleListener.counter: "+counter);
+		myOut.info("ExampleListener.instance: "+counter);
 	}
 	
 	/**
 	 * Executes a call.
 	 */
 	public function onError(error:ConnectorError):Void{
-		trace("onError");
+		trace("onError "+cnt);
 		myOut.error(error);
 	}
 	
