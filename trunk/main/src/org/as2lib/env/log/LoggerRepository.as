@@ -18,15 +18,42 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.env.log.Logger;
 
 /**
+ * LoggerRepository gets used to obtain Logger instances.
+ *
+ * <p>What logger instances get returned and how they are organized
+ * depends on the specific implementation.
+ *
+ * <p>There are simple implementations that just always returns instances
+ * of the same class that are configured with the passed-in name.
+ *
+ * <p>Other implementations organize the loggers in a more complex way
+ * like in a hierarchy.
+ *
+ * <p>All implementations have their strengths and weaknesses. You most
+ * cases you have to decide between performance and functionality, like
+ * ease of configuration. Take a look at the org.as2lib.env.log.repository
+ * package on what logger repositories are supported.
+ *
+ * <p>When working with logger repositories you normally store them
+ * in the log manager using the static LogManager#setLoggerRepository
+ * method.
+ * You can then use the static LogManager#getLogger method to obtain
+ * loggers from the set repository.
+ *
  * @author Simon Wacker
  */
 interface org.as2lib.env.log.LoggerRepository extends BasicInterface {
 	
 	/**
-	 * Returns a pre-configured logger depending on the name.
+	 * Returns a pre-configured logger for the passed-in name.
+	 *
+	 * <p>The implementation of this method can be simple and only return
+	 * new logger instances or complex and structuring the loggers in a
+	 * hierarchy. Thus invoking this method can be very fast or not that
+	 * fast. So it is proposed to store the received logger by yourself.
 	 *
 	 * @param name the name of the logger to obtain
-	 * @return a specific logger depending on the passed name
+	 * @return a specific logger depending on the passed-in name
 	 */
 	public function getLogger(name:String):Logger;
 	

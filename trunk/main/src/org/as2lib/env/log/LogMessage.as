@@ -22,7 +22,15 @@ import org.as2lib.env.log.LogMessageStringifier;
 
 /**
  * LogMessage is a dumb model that contains all the information about the
- * message to log. That is at least the message itself plus its level.
+ * message to log.
+ *
+ * <p>These information are the the message to log, its level and the
+ * name of the logger that is responsible for logging the message.
+ *
+ * <p>The LogMessage#toString method uses the set stringifier to obtain
+ * its string representation. If you want a different appearance of the
+ * log message you can use the static #setStringifier method to set your
+ * custom stringifier.
  *
  * @author Simon Wacker
  */
@@ -47,7 +55,7 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	 * @return the currently used stringifier
 	 */
 	public static function getStringifier(Void):Stringifier {
-		if (!stringifier) stringifier = new LogMessageStringifier();
+		if (!stringifier) stringifier = new LogMessageStringifier(true, true);
 		return stringifier;
 	}
 	
@@ -101,7 +109,11 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	}
 	
 	/**
-	 * @see org.as2lib.env.event.EventInfo
+	 * Returns the name of the event to fire on registered listeners.
+	 *
+	 * <p>This method always returns the string 'write'.
+	 *
+	 * @return the name of the event
 	 */
 	public function getName(Void):String {
 		return "write";
@@ -111,7 +123,7 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	 * Uses the stringifier returned by #getStringifier() to stringify
 	 * this instance.
 	 *
-	 * @see org.as2lib.core.BasicInterface
+	 * @return the string representation of this log message
 	 */
 	public function toString(Void):String {
 		return getStringifier().execute(this);

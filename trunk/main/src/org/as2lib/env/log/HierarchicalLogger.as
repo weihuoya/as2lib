@@ -17,21 +17,42 @@
 import org.as2lib.env.log.Logger;
 
 /**
+ * HierarchicalLogger gets implemented to enable to logger to take part
+ * in a Hierarchy.
+ *
+ * <p>This functionality is needed by the LoggerHierarchy, a repository
+ * that stores loggers hierarchical.
+ *
  * @author Simon Wacker
  */
 interface org.as2lib.env.log.HierarchicalLogger extends Logger {
 	
 	/**
+	 * Returns the parent of this logger that must also be a hierarchical
+	 * logger.
+	 *
+	 * <p>This logger normally uses the parent to get the log level, if no
+	 * one has been set to this logger manually and to get the handlers of
+	 * its parents to write the log messages.
+	 *
 	 * @return the parent of this logger
 	 */
 	public function getParent(Void):HierarchicalLogger;
 	
 	/**
+	 * Returns the name of this logger.
+	 *
+	 * <p>The name is a fully qualified name and the different parts must
+	 * be separated by periods or other characters depending on the usage.
+	 * The name could for example be 'org.as2lib.core.BasicClass'.
+	 *
 	 * @return the name of this logger
 	 */
 	public function getName(Void):String;
 	
 	/**
+	 * Returns all handlers that are directly registered at this logger.
+	 *
 	 * @return all registered log handlers
 	 */
 	public function getAllHandler(Void):Array;

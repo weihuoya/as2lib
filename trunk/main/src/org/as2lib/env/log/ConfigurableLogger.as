@@ -19,35 +19,48 @@ import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogHandler;
 
 /**
+ * ConfigurableLogger declares methods needed to configure most loggers.
+ *
+ * <p>These is first the method to set the level #setLevel and second
+ * the methods to add and remove handlers #addHandler, #removeHandler,
+ * #removeAllHandler.
+ *
+ * <p>Loggers normally get configured once.
+ *
  * @author Simon Wacker
  */
 interface org.as2lib.env.log.ConfigurableLogger extends Logger {
 	
 	/**
-	 * Sets a new level. The level determines which output will be made.
+	 * Sets the log level.
+	 *
+	 * <p>The level determines which output to make and and which to make
+	 * not.
 	 *
 	 * @param level the new level to control the output
-	 * @see LogLevel
+	 * @see Logger#getLevel(Void):LogLevel
 	 */
 	public function setLevel(level:LogLevel):Void;
 	
 	/**
-	 * Adds a new log handler. These handlers will be used to make the
-	 * actual output.
+	 * Adds a new log handler.
 	 *
-	 * @param handler the new log handler that shall write output
+	 * <p>Log handlers get used to actually log the messages. They determine
+	 * what information to log and to which output device.
+	 *
+	 * @param handler the new log handler to log messages
 	 */
 	public function addHandler(handler:LogHandler):Void;
 	
 	/**
-	 * Removes the specified log handler.
+	 * Removes all occerrences of the passed-in log handler.
 	 *
 	 * @param handler the log handler to remove
 	 */
 	public function removeHandler(handler:LogHandler):Void;
 	
 	/**
-	 * Removes all registered log handlers.
+	 * Removes all added log handlers.
 	 */
 	public function removeAllHandler(Void):Void;
 	

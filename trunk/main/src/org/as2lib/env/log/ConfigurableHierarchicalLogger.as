@@ -17,24 +17,38 @@
 import org.as2lib.env.log.HierarchicalLogger;
 
 /**
+ * ConfigurableHierarchicalLogger declares methods needed to configure
+ * hierarchical loggers.
+ *
+ * <p>Loggers that shall be used with the LoggerHierarchy mus implement
+ * this interface.
+ *
  * @author Simon Wacker
  */
 interface org.as2lib.env.log.ConfigurableHierarchicalLogger extends HierarchicalLogger {
 	
 	/**
-	 * Sets the parent of this logger. The parent can be used to obtain
-	 * needed configuration.
+	 * Sets the parent of this logger.
 	 *
-	 * @param parent of this logger
+	 * <p>The parent gets used to obtain needed configuration like handlers
+	 * and levels.
+	 *
+	 * @param parent the parent of this logger
 	 */
 	public function setParent(parent:HierarchicalLogger):Void;
 	
 	/**
-	 * Sets the name of this logger. The name normally exists of the path
-	 * as well as the actual identifier. The dot-syntax is used to separate
-	 * the individual nodes.
+	 * Sets the name of this logger.
 	 *
-	 * @param name to be set for this logger
+	 * <p>The name normally exists of the path as well as the actual identifier.
+	 * That means it is fully qualified.
+	 * 
+	 * <p>The LoggerHierarchy prescribes that the different parts of the
+	 * name must be separated by periods. If you do not want to use it
+	 * with the LoggerHierarchy you can of course separate the different
+	 * parts as you please.
+	 *
+	 * @param name the name of this logger
 	 */
 	public function setName(name:String):Void;
 	
