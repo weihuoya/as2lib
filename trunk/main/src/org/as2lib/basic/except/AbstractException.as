@@ -1,4 +1,4 @@
-﻿import org.as2lib.basic.Throwable;
+﻿import org.as2lib.basic.except.Throwable;
 import org.as2lib.data.holder.Stack;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.ReflectUtil;
