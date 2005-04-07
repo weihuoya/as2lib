@@ -14,8 +14,6 @@
 
 import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
 import org.as2lib.env.log.logger.TraceLogger;
-import org.as2lib.env.log.logger.VoidLogger;
-import org.as2lib.env.log.logger.RootLogger;
 import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.handler.TraceHandler;
 import org.as2lib.env.log.repository.LoggerHierarchy;
