@@ -107,7 +107,7 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	}
 	
 	/**
-	 * Constructs a new {@code EnhancedLocalConnectionByVoid} instance.
+	 * Constructs a new {@code EnhancedLocalConnection} instance.
 	 *
 	 * <p>The target is set to {@code this}.
 	 */
@@ -116,7 +116,7 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	}
 	
 	/**
-	 * Constructs a new {@code EnhancedLocalConnectionByTarget} instance with target.
+	 * Constructs a new {@code EnhancedLocalConnection} instance with target.
 	 * 
 	 * <p>If the passed-in {@code target} is {@code null} or {@code undefined}, the it
 	 * will be set to {@code this}.
