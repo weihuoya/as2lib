@@ -18,18 +18,18 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
 
 /**
- * Offers default implementations of some methods needed when implementing
- * the {@link ServerServiceProxy} interface.
- *
+ * {@code AbstractServerServiceProxy} offers default implementations of some methods
+ * needed when implementing the {@link ServerServiceProxy} interface.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.io.conn.core.server.AbstractServerServiceProxy extends BasicClass {
 	
 	/**
-	 * Generates a service url with passed host and service path.
-	 *
-	 * <p>If the host is null, undefined or a blank string the path will
-	 * be returned unchanged.
+	 * Generates a service url with passed-in {@code host} and service {@code path}.
+	 * 
+	 * <p>If the passed-in {@code host} is {@code null}, {@code undefined} or an empty
+	 * string the passed-in {@code path} will be returned unchanged.
 	 *
 	 * @param host the host of the required service
 	 * @param path the path of the required service
@@ -47,8 +47,8 @@ class org.as2lib.io.conn.core.server.AbstractServerServiceProxy extends BasicCla
 	}
 	
 	/**
-	 * @overload #invokeMethodByNameAndArguments
-	 * @overload #invokeMethodByNameAndArgumentsAndResponseService
+	 * @overload {@code invokeMethodByNameAndArguments}
+	 * @overload {@code invokeMethodByNameAndArgumentsAndResponseService}
 	 * @see ServerServiceProxy#invokeMethod
 	 */
 	public function invokeMethod():Void {

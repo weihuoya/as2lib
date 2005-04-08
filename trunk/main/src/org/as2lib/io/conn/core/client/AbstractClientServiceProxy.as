@@ -21,30 +21,31 @@ import org.as2lib.io.conn.core.event.MethodInvocationCallback;
 import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
 
 /**
- * Offers default implementations of some methods needed when implemnting
- * the {@link ClientServiceProxy} interface.
- *
+ * {@code AbstractClientServiceProxy} offers default implementations of some methods
+ * needed when implemnting the {@link ClientServiceProxy} interface.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicClass {
 	
 	/**
 	 * Generates the response url for a service.
+	 * 
+	 * <p>The response url is composed as follows:
+	 * <pre>theServiceUrl.theMethodName_Return_theIndex</pre>
+	 * 
+	 * <p>If the passed-in {@code methodName} is {@code null}, {@code undefined} or an
+	 * empty string the response url will be composed as follows:
+	 * <pre>theServiceUrl_Return_theIndex</pre>
 	 *
-	 * <p>The response url gets composed as follows:
-	 * <pre>[serviceUrl].[methodName]_Return_[index]</pre>
-	 *
-	 * <p>If the methodName is null, undefined or an empty string it will
-	 * be composed as follows:
-	 * [serviceUrl]_Return_[index]
-	 *
-	 * <p>Index is a number from null to infinite depending on how many
-	 * responses are pending.
-	 *
+	 * <p>{@code index} is a number from 0 to infinite depending on how many responses
+	 * are pending.
+	 * 
 	 * @param serviceUrl the url to the service
-	 * @param methodName the responsing method
+	 * @param methodName the name of the responsing method
 	 * @return the generated response url
-	 * @throws IllegalArgumentException if the passed-in service url is null, undefined or an empty stirng
+	 * @throws IllegalArgumentException if the passed-in {@code serviceUrl} is {@code null},
+	 * {@code undefined} or an empty stirng
 	 */
 	public static function generateResponseServiceUrl(serviceUrl:String, methodName:String):String {
 		if (!serviceUrl) throw new IllegalArgumentException("Service url must not be null, undefined or an empty string.", eval("th" + "is"), arguments);
@@ -75,45 +76,67 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicCla
 	 * @overload #invokeByName
 	 * @overload #invokeByNameAndArguments
 	 * @overload #invokeByNameAndCallback
-	 * @overload #invokeByNameAndArgumentsAndCallback
+	 * @overload {@code invokeByNameAndArgumentsAndCallback}
+	 * @see ClientServiceProxy#invoke
 	 */
 	public function invoke():MethodInvocationCallback {
 		var o:Overload = new Overload(this);
 		o.addHandler([String], invokeByName);
-		o.addHandler([String, Array], this["invokeByNameAndArguments"]);
+		o.addHandler([String, Array], invokeByNameAndArguments);
 		o.addHandler([String, MethodInvocationCallback], invokeByNameAndCallback);
 		o.addHandler([String, Array, MethodInvocationCallback], this["invokeByNameAndArgumentsAndCallback"]);
 		return o.forward(arguments);
 	}
 	
 	/**
-	 * Invokes the passed-in method on the service.
-	 *
-	 * <p>The invocation is done by forwardning to the {@link #invokeByNameAndArguments}
+	 * Invokes the method with passed-in {@code methodName} on the service.
+	 * 
+	 * <p>The invocation is done by forwardning to the {@code #invokeByNameAndArgumentsAndCallback}
 	 * method passing an empty arguments array.
 	 *
 	 * @param methodName the name of the method to invoke
 	 * @return a callback that can be used to get informed of the response
+	 * @see ClientServiceProxy#invokeByName
 	 */
 	public function invokeByName(methodName:String):MethodInvocationCallback {
-		return this["invokeByNameAndArguments"](methodName, []);
+		return this["invokeByNameAndArgumentsAndCallback"](methodName, [], null);
 	}
 	
 	/**
-	 * Invokes the passed-in method on the service.
+	 * Invokes the method with passed-in {@code methodName} and {@code args} on the
+	 * service.
+	 * 
+	 * <p>The response of the method invocation is delegated to the appropriate method
+	 * on the returned callback. This is either the {@code onReturn} method when no
+	 * error occured. Or the {@code onError} method in case something went wrong.
 	 *
-	 * <p>When the response arrives the appropriate callback method gets
-	 * invoked.
-	 *
-	 * <p>If the passed-in callback is not null, the returned callback
-	 * should be the same.
-	 *
-	 * <p>The invocation is done by forwardning to the {@link #invokeByNameAndArgumentsAndCallback}
+	 * <p>The invocation is done by forwardning to the {@code #invokeByNameAndArgumentsAndCallback}
 	 * method passing an empty arguments array.
 	 *
+	 * @param methodName the name of the method to invoke on the service
+	 * @param args the arguments that are passed to the method as parameters
+	 * @return the callback that handles the response
+	 * @see ClientServiceProxy#invokeByNameAndArguments
+	 */
+	public function invokeByNameAndArguments(methodName:String, args:Array):MethodInvocationCallback {
+		return this["invokeByNameAndArgumentsAndCallback"](methodName, args, null);
+	}
+	
+	/**
+	 * Invokes the the method with passed-in {@code method} on the service.
+	 *
+	 * <p>When the response arrives the appropriate callback method is invoked.
+	 * 
+	 * <p>If the passed-in {@code callback} is not {@code null}, the returned callback
+	 * is the same instance.
+	 *
+	 * <p>The invocation is done by forwardning to the {@code #invokeByNameAndArgumentsAndCallback}
+	 * method passing an empty arguments array.
+	 * 
 	 * @param methodName the name of the method to invoke
 	 * @param callback the callback that receives the return value or errors
 	 * @return a callback that can be used to get informed of the response
+	 * @see ClientServiceProxy#invokeByNameAndCallback
 	 */
 	public function invokeByNameAndCallback(methodName:String, callback:MethodInvocationCallback):MethodInvocationCallback {
 		return this["invokeByNameAndArgumentsAndCallback"](methodName, [], callback);

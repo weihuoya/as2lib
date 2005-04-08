@@ -18,10 +18,10 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.event.EventInfo;
 
 /**
- * MethodInvocationReturnInfo gets used to inform clients that the method
- * invocation completed successfully.
- *
- * <p>This class gets used in conjunction with the {@link MethodInvocationCallback}
+ * {@code MethodInvocationReturnInfo} informs clients that the method invocation
+ * returned successfully.
+ * 
+ * <p>This class is used in conjunction with the {@link MethodInvocationCallback}
  * and {@link MethodInvocationReturnListener} classes.
  *
  * @author Simon Wacker
@@ -31,22 +31,22 @@ class org.as2lib.io.conn.core.event.MethodInvocationReturnInfo extends BasicClas
 	/** The return value returned by the invoked method. */
 	private var returnValue;
 	
-	/** Url of the service the method should have been invoked on. */
+	/** Url of the service the method was invoked on. */
 	private var serviceUrl:String;
 	
-	/** The name of the method to be executed. */
+	/** The name of the method that was invoked. */
 	private var methodName:String;
 	
 	/** The arguments used for the invocation. */
 	private var methodArguments:Array;
 	
 	/**
-	 * Constructs a new MethodInvocationReturnInfo instance.
-	 *
-	 * @param serviceUrl the url to the service the method should be or was invoked on
-	 * @param methodName the name of the method to be executed
+	 * Constructs a new {@code MethodInvocationReturnInfo} instance.
+	 * 
+	 * @param serviceUrl the url to the service the method was invoked on
+	 * @param methodName the name of the method that was invoked
 	 * @param methodArguments the arguments used as parameters for the method invocation
-	 * @param returnValue the result of the invoked method
+	 * @param returnValue the result of the method invocation
 	 */
 	public function MethodInvocationReturnInfo(serviceUrl:String, methodName:String, methodArguments:Array, returnValue) {
 		this.serviceUrl = serviceUrl;
@@ -56,18 +56,18 @@ class org.as2lib.io.conn.core.event.MethodInvocationReturnInfo extends BasicClas
 	}
 	
 	/**
-	 * Returns the url to the service the method was executed on.
+	 * Returns the url to the service the method was invoked on.
 	 *
-	 * @return the url to the service the method was executed on
+	 * @return the url to the service the method was invoked on
 	 */
 	public function getServiceUrl(Void):String {
 		return serviceUrl;
 	}
 	
 	/**
-	 * Returns the name of the method that was executed on the service
+	 * Returns the name of the method that was invoked on the service
 	 *
-	 * @return the name of the method that was executed on the service
+	 * @return the name of the method that was invoked on the service
 	 */
 	public function getMethodName(Void):String {
 		return methodName;
@@ -83,19 +83,21 @@ class org.as2lib.io.conn.core.event.MethodInvocationReturnInfo extends BasicClas
 	}
 	
 	/*
-	 * Returns the return value of the invoked method.
+	 * Returns the return value of the method invocation.
 	 *
-	 * @return the return value of the invoked method
+	 * @return the return value of the method invocation
 	 */
 	public function getReturnValue(Void) {
 		return returnValue;
 	}
 	
 	/**
-	 * @see EventInfo
+	 * Returns the name of the event {@code 'onReturn'}.
+	 *
+	 * @return {@code 'onReturn'}
 	 */
 	public function getName(Void):String {
-		return "onResponse";
+		return "onReturn";
 	}
 	
 }

@@ -26,89 +26,87 @@ import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
 import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
 
 /**
- * LocalServerServiceProxy handles client requests to a certain service
- * and its response.
- *
- * <p>This client requests normally come from a client service proxy
- * because this class is designed to interact with this type of client.
+ * {@code LocalServerServiceProxy} handles client requests to a certain service and
+ * its responses.
+ * 
+ * <p>This client requests normally come from a client service proxy because this
+ * class is designed to interact with this type of client.
  *
  * <p>You can setup your service proxy as follows to await client requests:
  * <code>
- * var service:LocalServerServiceProxy = new LocalServerServiceProxy("myService", new MyService());
- * service.run();
+ *   var service:LocalServerServiceProxy = new LocalServerServiceProxy("myService", new MyService());
+ *   service.run();
  * </code>
- *
- * <p>A client may then call the invoke method on this service proxy.
+ * 
+ * <p>A client may then invoke a method on this service proxy.
  * <code>
- * var client = new LocalClientServiceProxy("local.as2lib.org/myService");
- * var callback:MethodInvocationCallback = client.myMethod("firstArgument", "secondArgument");
+ *   var client = new LocalClientServiceProxy("myService");
+ *   var callback:MethodInvocationCallback = client.myMethod("firstArgument", "secondArgument");
  * </code>
- *
- * <p>You may choose to combine multiple services in one server for
- * easier usage.
+ * 
+ * <p>You may choose to combine multiple services in one server for easier usage.
  * <code>
- * var server:LocalServer = new LocalServer("local.as2lib.org");
- * server.addService(new LocalServerServiceProxy("myServiceOne", new MyServiceOne()));
- * server.addService(new LocalServerServiceProxy("myServiceTwo", new MyServiceTwo()));
- * server.run();
+ *   var server:LocalServer = new LocalServer("local.as2lib.org");
+ *   server.addService(new LocalServerServiceProxy("myServiceOne", new MyServiceOne()));
+ *   server.addService(new LocalServerServiceProxy("myServiceTwo", new MyServiceTwo()));
+ *   server.run();
  * </code>
  *
- * <p>A client would then need to prefix the service's name with the
- * host of the server.
+ * <p>A client must then prefix the service's name with the host of the server.
  * <code>
- * var client = new LocalClientServiceProxy("local.as2lib.org/myService");
- * var callback:MethodInvocationCallback = client.myMethod("firstArgument", "secondArgument");
+ *   var client = new LocalClientServiceProxy("local.as2lib.org/myService");
+ *   var callback:MethodInvocationCallback = client.myMethod("firstArgument", "secondArgument");
  * </code>
- *
- * <p>If the client invokes a method with arguments on this service
- * that are not of type Number, String, Boolean or Array that get
- * converted dynamically to the correct type, flash just creates a new
- * object of type Object and populates it with the instance variables
- * of the passed object.
- * To receive an instance of correct type you must thus register the
- * class.
- * <code>Object.registerClass("MyClass", MyClass);</code>
- *
- * <p>The received object will now be of correct type. But you still
- * have to be aware of some facts.
- * Flash creates a new object in the background and sets the instance
- * variables of the sent instance to the new object. It then registers
- * this object to the appropriate class (if registered previously) and
- * applies the constructor of that class to the new object passing no
- * arguments.
- * That means if the constructor sets instance variables it overwrites
- * the once set previously by undefined.
+ * 
+ * <p>If the client invokes a method with arguments on this service that are not of
+ * type {@code Number}, {@code String}, {@code Boolean} or {@code Array} which are
+ * converted dynamically to the correct type, Flash just creates a new object of type
+ * {@code Object} and populates it with the instance variables of the passed object.
+ * To receive an instance of correct type you must thus register the class. Note
+ * that the client must register the same class with the same name. This registration
+ * must also be done for return values on the client and the server.
+ * <code>
+ *   Object.registerClass("MyClass", MyClass);
+ * </code>
+ * 
+ * <p>The received object will now be of correct type. But you still have to be aware
+ * of some facts.<br>
+ * Flash creates a new object in the background and sets the instance variables of
+ * the sent instance to the new object. It then registers this object to the appropriate
+ * class (if registered previously) and applies the constructor of that class to the
+ * new object passing no arguments. This means if the constructor sets instance variables
+ * it overwrites the ones set previously by {@code undefined}.
  *
  * @author Simon Wacker
  * @author Christoph Atteneder
  */
 class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractServerServiceProxy implements ServerServiceProxy {
 	
-	/** Wrapped service object. */
+	/** The wrapped service object. */
 	private var service;
 	
-	/** Service path. */
+	/** The service path. */
 	private var path:String;
 	
-	/** Used to set up the service. */
+	/** Used to run this service. */
 	private var connection:EnhancedLocalConnection;
 	
-	/** Stores set error listener. */
+	/** Stores set error listeners. */
 	private var errorBroadcaster:EventBroadcaster;
 	
-	/** Service's status. */
+	/** This service's status. */
 	private var running:Boolean;
 	
 	/** Stores the current service url. */
 	private var currentServiceUrl:String;
 	
 	/**
-	 * Constructs a new LocalServerServiceProxy instance.
-	 *
-	 * @param path the path of the service
-	 * @param service object which provides the service operations
-	 * @throws IllegalArgumentException if the path is null, undefined or a blank string
-	 *                                  if the service is null or undefined
+	 * Constructs a new {@code LocalServerServiceProxy} instance.
+	 * 
+	 * @param path the path of this service
+	 * @param service object that provides the service's operations
+	 * @throws IllegalArgumentException if {@code path} is {@code null}, {@code undefined}
+	 * or an empty string or if {@code service} is {@code null} or {@code undefined}
 	 */
 	public function LocalServerServiceProxy(path:String, service) {
 		if (!path || !service) throw new IllegalArgumentException("Neither the path [" + path + "] nor the service [" + service + "] are allowed to be null, undefined or a blank string.", this, arguments);
@@ -121,9 +119,9 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	/**
 	 * Returns the currently used connection.
 	 *
-	 * <p>This is either the connection set via {@link #setConnection}
-	 * of a default {@link EnhancedLocalConnection} instance.
-	 *
+	 * <p>This is either the connection set via the {@link #setConnection} method or
+	 * the default one which is an instance of class {@link EnhancedLocalConnection}.
+	 * 
 	 * @return the currently used connection
 	 */
 	public function getConnection(Void):EnhancedLocalConnection {
@@ -134,13 +132,10 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	/**
 	 * Sets a new connection.
 	 *
-	 * <p>The target of the connection, that means the receiver of all remote
-	 * calls must be this instance. If it is not nothing will work properly.
-	 *
-	 * <p>If you set a connection of value null or undefined {@link #getConnection}
+	 * <p>If {@code connection} is {@code null} or {@code undefined}, {@link #getConnection}
 	 * will return the default connection.
-	 *
-	 * @param connection the new connection to use
+	 * 
+	 * @param connection the new connection
 	 */
 	public function setConnection(connection:EnhancedLocalConnection):Void {
 		this.connection = connection;
@@ -149,9 +144,9 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	/**
 	 * Returns the currently used error broadcaster.
 	 *
-	 * <p>This is either the one set via {@link #setErrorBroadcaster}
-	 * or the default {@link SpeedEventBroadcaster} instance.
-	 *
+	 * <p>This is either the one set via the {@link #setErrorBroadcaster} method or the
+	 * default one which is an instance of class {@link SpeedEventBroadcaster}.
+	 * 
 	 * @return the currently used error broadcaster
 	 */
 	public function getErrorBroadcaster(Void):EventBroadcaster {
@@ -162,9 +157,9 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	/**
 	 * Sets a new error broadcaster.
 	 *
-	 * <p>If you set an error broadcaster of value null or undefined
+	 * <p>If {@code errorBroadcaster} is {@code null} or {@code undefined},
 	 * {@link #getErrorBroadcaster} will return the default broadcaster.
-	 *
+	 * 
 	 * @param errorBroadcaster the new error broadcaster
 	 */
 	public function setErrorBroadcaster(errorBroadcaster:EventBroadcaster):Void {
@@ -172,16 +167,17 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	}
 	
 	/**
-	 * Runs the service proxy on the passed-in host.
+	 * Runs this service proxy on the passed-in {@code host}.
 	 *
-	 * <p>The service proxy will be restarted if it is already running. That
-	 * means it first stops itself and starts it again.
-	 *
-	 * <p>Only the path of the service proxy gets used to connect if the host
-	 * is null, undefined or a blank string.
-	 *
+	 * <p>This service proxy will be restarted if it is already running. This means it
+	 * it first stops itself and starts itself again.
+	 * 
+	 * <p>Only the path of this service proxy is used to connect if the passed-in {@code host}
+	 * is {@code null}, {@code undefined} or an empty string.
+	 * 
 	 * @param host the host to run the service on
-	 * @throws ReservedServiceException if a service on the passed-in host with the service's path is already in use
+	 * @throws ReservedServiceException if a service on the passed-in {@code host} with
+	 * the service's path is already in use
 	 */
 	public function run(host:String):Void {
 		if (isRunning()) this.stop();
@@ -204,19 +200,22 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	}
 	
 	/**
-	 * Handles an incoming 'remote' method invocation to the service.
-	 *
-	 * <p>The method corresponding to the passed-in method name gets
-	 * executed on the service.
+	 * Handles incoming 'remote' method invocations on the service.
+	 * 
+	 * <p>The method corresponding to the passed-in {@code methodName} is invoked on the
+	 * wrapped service.
 	 *
 	 * <p>The error listeners will be informed of a failure if:
 	 * <ul>
-	 *   <li>A method with the passed-in name does not exist on the service.</li>
+	 *   <li>
+	 *     A method with the passed-in {@code methodName} does not exist on the wrapped
+	 *     service.
+	 *   </li>
 	 *   <li>The service method threw an exception.</li>
 	 * </ul>
-	 *
+	 * 
 	 * @param methodName the name of the method to invoke on the service
-	 * @param args the arguments to be used as parameters when invoking the method
+	 * @param args the arguments to use as parameters when invoking the method
 	 */
 	public function invokeMethodByNameAndArguments(methodName:String, args:Array):Void {
 		try {
@@ -231,27 +230,27 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	}
 	
 	/**
-	 * Handles incoming 'remote' method invocations to the service and
-	 * responses through the response service url.
+	 * Handles incoming 'remote' method invocations on the service and responses through
+	 * the {@code responseServiceUrl}.
+	 * 
+	 * <p>The method corresponding to the passed-in {@code methodName} is invoked on the
+	 * service and the response of this invocation is passed through the
+	 * {@code responseServiceUrl} to the client.
 	 *
-	 * <p>The method corresponding to the passed-in method name gets
-	 * executed on the service and the response of this execution gets
-	 * passed though the response service's url to the client.
-	 *
-	 * <p>If the response service url is null or an empty string the
-	 * {@link #invokeMethodByNameAndArguments} method gets invoked instead.
-	 *
-	 * <p>The response service is supposed to define two methods with the
-	 * following signature:
+	 * <p>If the response service url is {@code null} or an empty string the 
+	 * {@link #invokeMethodByNameAndArguments} method is invoked instead.
+	 * 
+	 * <p>The response service is supposed to implement two methods with the following
+	 * signature:
 	 * <ul>
-	 *   <li>onReturn(returnValue):*</li>
-	 *   <li>onError(errorCode:Number, exception):*</li>
+	 *   <li>onReturn(returnValue):Void</li>
+	 *   <li>onError(errorCode:Number, exception):Void</li>
 	 * </ul>
 	 * 
-	 * <p>The onReturn(..) method gets invoked on the response service if
-	 * the method executed successfully.
-	 *
-	 * <p>The onError(..) method gets invoked on the response service if:
+	 * <p>The {@code onReturn} method is invoked on the response service if the method
+	 * returned successfully.
+	 * 
+	 * <p>The {@code onError} method is invoked on the response service if:
 	 * <ul>
 	 *   <li>The method threw an exception.</li>
 	 *   <li>The method does not exist on the service.</li>
@@ -259,15 +258,20 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 *
 	 * <p>The error listeners will be informed of a failure if:
 	 * <ul>
-	 *   <li>A method with the passed-in name does not exist on the service.</li>
+	 *   <li>
+	 *     A method with the passed-in {@code methodName} does not exist on the wrapped
+	 *     service.
+	 *   </li>
 	 *   <li>The service method threw an exception.</li>
-	 *   <li>The response server with the given url does not exist.</li>
-	 *   <li>The return value is to big to send over a local connection.</li>
+	 *   <li>
+	 *     The response server with the given {@code responseServiceUrl} does not exist.
+	 *   </li>
+	 *   <li>The return value is too big to send over a local connection.</li>
 	 *   <li>An unknown failure occured when trying to send the response.</li>
 	 * </ul>
-	 *
+	 * 
 	 * @param methodName the name of the method to invoke on the service
-	 * @param args the arguments to be used as parameters when invoking the method
+	 * @param args the arguments to use as parameters when invoking the method
 	 * @param responseServiceUrl the url to the service that handles the response
 	 */
 	public function invokeMethodByNameAndArgumentsAndResponseService(methodName:String, args:Array, responseServiceUrl:String):Void {
@@ -295,9 +299,9 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	}
 	
 	/**
-	 * Returns a blank method invocation error listener. That is
-	 * a error listern with no initialized methods.
-	 *
+	 * Returns a blank method invocation error listener. This is an error listern with
+	 * no implemented methods.
+	 * 
 	 * @return a blank method invocation error listener
 	 */
 	private function getBlankMethodInvocationErrorListener(Void):MethodInvocationErrorListener {
@@ -309,6 +313,14 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	
 	/**
 	 * Sends a response to the client.
+	 * 
+	 * @param methodName the name of the method
+	 * @param methodArguments the arguments used for the method invocation
+	 * @param responseServiceUrl the url of the response service
+	 * @param responseMethod the response method to invoke on the response service
+	 * @param responseArguments the arguments to pass to the response method
+	 * @param responseListener the listener that listens for failures that may occur when
+	 * sending the response
 	 */
 	private function sendResponse(methodName:String, methodArguments:Array, responseServiceUrl:String, responseMethod:String, responseArguments:Array, responseListener:MethodInvocationErrorListener):Void {
 		try {
@@ -339,7 +351,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	/**
 	 * Returns whether this service is running or not.
 	 *
-	 * @return true if this service runs else false
+	 * @return {@code true} if this service is running else {@code false}
 	 */
 	public function isRunning(Void):Boolean {
 		return running;
@@ -348,9 +360,9 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	/**
 	 * Adds an error listener.
 	 * 
-	 * <p>Error listeners get notified when a client tried to invoke a method
-	 * on the service and something went wrong.
-	 *
+	 * <p>Error listeners are notified when a client tried to invoke a method on this
+	 * service and something went wrong.
+	 * 
 	 * @param errorListener the new error listener to add
 	 */
 	public function addErrorListener(errorListener:MethodInvocationErrorListener):Void {
@@ -360,8 +372,8 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	/**
 	 * Removes an error listener.
 	 *
-	 * <p>Error listeners get notified when a client tried to invoke a method
-	 * on the service and something went wrong.
+	 * <p>Error listeners are notified when a client tried to invoke a method on this
+	 * service and something went wrong.
 	 *
 	 * @param errorListener the error listener to remove
 	 */

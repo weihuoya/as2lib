@@ -19,9 +19,9 @@ import org.as2lib.env.overload.Overload;
 import org.as2lib.env.except.UnsupportedOperationException;
 
 /**
- * Offers default implementations of methods needed when implementing
- * the {@link ClientServiceProxyFactory} interface.
- *
+ * {@code AbstractClientServiceProxyFactory} offers default implementations of
+ * methods needed when implementing the {@link ClientServiceProxyFactory} interface.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.io.conn.core.client.AbstractClientServiceProxyFactory extends BasicClass {
@@ -33,8 +33,9 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxyFactory extends B
 	}
 	
 	/**
-	 * @overload #getClientServiceProxyByUrl
+	 * @overload getClientServiceProxyByUrl
 	 * @overload #getClientServiceProxyByUrlAndType
+	 * @see ClientServiceProxyFactory#getClientServiceProxy
 	 */
 	public function getClientServiceProxy() {
 		var o:Overload = new Overload(this);
@@ -47,6 +48,7 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxyFactory extends B
 	 * This method is by default not supported.
 	 *
 	 * @throws UnsupportedOperationException
+	 * @see ClientServiceProxyFactory#getClientServiceProxyByUrlAndType
 	 */
 	public function getClientServiceProxyByUrlAndType(url:String, type:Function) {
 		throw new UnsupportedOperationException("This operation is not supported by this client service proxy factory.", this, arguments);

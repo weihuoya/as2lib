@@ -20,15 +20,15 @@ import org.as2lib.io.conn.core.client.AbstractClientServiceProxyFactory;
 import org.as2lib.io.conn.local.client.LocalClientServiceProxy;
 
 /**
- * SimpleClientServiceProxyFactory is the simplest implementation of
- * a client service proxy factory.
+ * {@code SimpleClientServiceProxyFactory} is the simplest implementation of a client
+ * service proxy factory.
+ * 
+ * <p>It allows only the {@link #getClientServiceProxyByUrl} method to be used and
+ * not the {@code getClientServiceProxyByUrlAndType} method.
  *
- * <p>It allows only for the {@link #getClientServiceProxyByUrl} method
- * to be used and not for the {@link #getClientServiceProxyByUrlAndType}
- * method.
  * <code>
- * var clientFactory:SimpleClientServiceProxyFactory = new SimpleClientServiceProxyFactory();
- * var client:ClientServiceProxy = clientFactory.getClientServiceProxy("local.as2lib.org/myService");
+ *   var clientFactory:SimpleClientServiceProxyFactory = new SimpleClientServiceProxyFactory();
+ *   var client:ClientServiceProxy = clientFactory.getClientServiceProxy("local.as2lib.org/myService");
  * </code>
  *
  * @author Simon Wacker
@@ -36,20 +36,21 @@ import org.as2lib.io.conn.local.client.LocalClientServiceProxy;
 class org.as2lib.io.conn.local.client.SimpleClientServiceProxyFactory extends AbstractClientServiceProxyFactory implements ClientServiceProxyFactory {
 	
 	/**
-	 * Constructs a new SimpleClientServiceProxyFactory instance.
+	 * Constructs a new {@code SimpleClientServiceProxyFactory} instance.
 	 */
 	public function SimpleClientServiceProxyFactory(Void) {
 	}
 	
 	/**
-	 * Returns a client service proxy for the service specified by the url.
+	 * Returns a client service proxy for the service specified by the passed-in
+	 * {@code url}.
+	 * 
+	 * <p>You can use this proxy to invoke methods on the 'remote' service and to handle
+	 * responses. The returned client service proxy is an instance of class
+	 * {@link LocalClientServiceProxy}.
 	 *
-	 * <p>You can use this proxy to invoke methods on the 'remote' service
-	 * and to handle responses. The client service proxy is an instance of
-	 * the class {@link LocalClientServiceProxy}.
-	 *
-	 * @param url the url of teh 'remote' service
-	 * @return a client service proxy used to call methods on the 'remote' service
+	 * @param url the url of the 'remote' service
+	 * @return a client service proxy to invoke methods on the 'remote' service
 	 */
 	public function getClientServiceProxyByUrl(url:String):ClientServiceProxy {
 		return new LocalClientServiceProxy(url);

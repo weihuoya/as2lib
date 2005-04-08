@@ -26,15 +26,15 @@ import org.as2lib.io.conn.local.server.LocalServerServiceProxy;
 import org.as2lib.io.conn.local.LocalConfig;
 
 /**
- * LocalServer acts as a composite for for many services that all get
- * combined in one domain.
- *
- * <p>The general use case looks as follows:
+ * {@code LocalServer} acts as a composite for many services that are all combined
+ * in one domain.
+ * 
+ * <p>Example:
  * <code>
- * var server:LocalServer = new LocalServer("local.as2lib.org");
- * server.putService("myServiceOne", new MyServiceOne());
- * server.putService("myServiceTwo", new MyServiceTwo());
- * server.run();
+ *   var server:LocalServer = new LocalServer("local.as2lib.org");
+ *   server.putService("myServiceOne", new MyServiceOne());
+ *   server.putService("myServiceTwo", new MyServiceTwo());
+ *   server.run();
  * </code>
  *
  * @author Simon Wacker
@@ -42,10 +42,10 @@ import org.as2lib.io.conn.local.LocalConfig;
  */
 class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements Server {
 	
-	/** Name of the server. */
+	/** Name of this server. */
 	private var host:String;
 	
-	/** Contains all services. */
+	/** All services. */
 	private var services:Map;
 	
 	/** Server status. */
@@ -55,13 +55,14 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	private var serverRegistry:ServerRegistry;
 	
 	/**
-	 * Constructs a new LocalServer instance.
+	 * Constructs a new {@code LocalServer} instance.
 	 *
-	 * @param host the name of server
-	 * @throws IllegalArgumentException if the passed-in host is null, undefined or an empty string
+	 * @param host the name of this server
+	 * @throws IllegalArgumentException if the passed-in {@code host} is {@code null},
+	 * {@code undefined} or an empty string
 	 */
 	public function LocalServer(host:String) {
-		if (!host) throw new IllegalArgumentException("Host must not be null, undefined or a blank string.", this, arguments);
+		if (!host) throw new IllegalArgumentException("Argument 'host' must not be null, undefined or a blank string.", this, arguments);
 		this.host = host;
 		services = new PrimitiveTypeMap();
 		running = false;
@@ -70,10 +71,9 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	/**
 	 * Returns the currently used server registry.
 	 *
-	 * <p>That is either the server registry set via {@link #setServerRegistry}
-	 * or the default registry returned by the {@link LocalConfig#getServerRegistry}
-	 * method.
-	 *
+	 * <p>This is either the server registry set via {@link #setServerRegistry} or the
+	 * default registry returned by the {@link LocalConfig#getServerRegistry} method.
+	 * 
 	 * @return the currently used server registry
 	 */
 	public function getServerRegistry(Void):ServerRegistry {
@@ -84,9 +84,9 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	/**
 	 * Sets a new server registry.
 	 *
-	 * <p>If the new server registry is null or undefined the {@link #getServerRegistry}
-	 * method will return the default server registry.
-	 *
+	 * <p>If {@code serverRegistry} is {@code null} or {@code undefined} the
+	 * {@link #getServerRegistry} method will return the default server registry.
+	 * 
 	 * @param serverRegistry the new server registry
 	 */
 	public function setServerRegistry(serverRegistry:ServerRegistry):Void {
@@ -94,11 +94,13 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	}
 	
 	/**
-	 * Registers itself at the server registry and runs all added services
-	 * with the host.
+	 * Runs this server.
 	 *
-	 * <p>If the server is already running a restart will be made. That means
-	 * it will be stopped and run again.
+	 * <p>This involves registering itself at the server registry and running all added
+	 * services with this host.
+	 * 
+	 * <p>If this server is already running a restart will be made. This means it will
+	 * be stopped and run again.
 	 */
 	public function run(Void):Void {
 		if (isRunning()) this.stop();
@@ -113,7 +115,9 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	}
 	
 	/**
-	 * Stops all services and removes itself from the server registry.
+	 * Stops this server.
+	 * 
+	 * <p>This involves stopping all services and removing itself from the server registry.
 	 */
 	public function stop(Void):Void {
 		if (services.size() > 0) {
@@ -129,16 +133,19 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	}
 	
 	/**
-	 * Adds the service for the passed-in path.
-	 *
-	 * <p>Service and path get wrapped in a {@link ServerServiceProxy} instance.
-	 * This service proxy may throw an {@link IllegalArgumentException} if the
-	 * service is null.
+	 * Puts the passed-in {@code service} to the passed-in {@code path} on this server.
+	 * 
+	 * <p>{@code service} and {@code path} are wrapped in a {@link ServerServiceProxy}
+	 * instance.
 	 *
 	 * @param path that path to the service on the host
 	 * @param service the service to make locally available
-	 * @return the newly created server service proxy that wraps the service and the path
-	 * @throws IllegalArgumentException if the passed-in path is null, undefined or an empty string
+	 * @return the newly created server service proxy that wraps {@code service} and 
+	 * {@code path}
+	 * @throws IllegalArgumentException if the passed-in {@code path} is {@code null}, 
+	 * {@code undefined} or an empty string or if the passed-in {@code service} is
+	 * {@code null} or {@code undefined}
+	 * @see #addService
 	 */
 	public function putService(path:String, service):ServerServiceProxy {
 		// source out instantiation
@@ -148,14 +155,17 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	}
 	
 	/**
-	 * Adds the passed-in service.
+	 * Adds the passed-in {@code serviceProxy} to this service.
 	 *
-	 * <p>If the server is running, the service proxy will be run too.
-	 *
+	 * <p>If this server is running, the {@code serviceProxy} will be run immediately
+	 * too.
+	 * 
 	 * @param serviceProxy the proxy that wraps the actual service
-	 * @throws IllegalArgumentException if the passed-in service proxy is null or undefined
-	 *                                  if the path of the passed-in service proxy is null, undefined or a blank string
-	 *                                  if the path of the passed-in service proxy is already in use
+	 * @throws IllegalArgumentException if the passed-in {@code serviceProxy} is
+	 * {@code null} or {@code undefined} or if the path of the passed-in {@code serviceProxy}
+	 * is {@code null}, {@code undefined} or an empty string or if the path of the passed-in
+	 * {@code serviceProxy} is already in use
+	 * @see #putService
 	 */
 	public function addService(serviceProxy:ServerServiceProxy):Void {
 		if (!serviceProxy) throw new IllegalArgumentException("Service proxy must not be null or undefined.", this, arguments);
@@ -169,14 +179,14 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	}
 	
 	/**
-	 * Removes the service registered for the passed-in path.
-	 *
+	 * Removes the service registered wiht the passed-in {@code path}.
+	 * 
 	 * <p>If the service is running it will be stopped.
 	 *
-	 * <p>Null will be returned if:
+	 * <p>{@code null} will be returned if:
 	 * <ul>
-	 *   <li>The passed-in path is null or and empty string.</li>
-	 *   <li>There is no registered service for the passed-in path.</li>
+	 *   <li>The passed-in {@code path} is {@code null} or an empty string.</li>
+	 *   <li>There is no registered service with the passed-in {@code path}.</li>
 	 * </ul>
 	 *
 	 * @param path the path of the service to remove
@@ -190,15 +200,15 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	}
 	
 	/**
-	 * Returns the service registered for the passed-in path.
-	 *
-	 * <p>Null will be returned if:
+	 * Returns the service registered with the passed-in {@code path}.
+	 * 
+	 * <p>{@code null} will be returned if:
 	 * <ul>
-	 *   <li>The passed-in path is null or an empty string.</li>
-	 *   <li>There is no service registered for the passed-in path.</li>
+	 *   <li>The passed-in {@code path} is {@code null} or an empty string.</li>
+	 *   <li>There is no service registered with the passed-in {@code path}.</li>
 	 * </ul>
 	 *
-	 * @param path the path of the service that gets returned
+	 * @param path the path of the service to return
 	 * @return the server service proxy wrapping the actual service
 	 */
 	public function getService(path:String):ServerServiceProxy {
@@ -207,13 +217,12 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	}
 	
 	/**
-	 * Returns whether the server is running.
+	 * Returns whether this server is running.
 	 *
-	 * <p>The server is by default not running. It runs as soon as you call
-	 * the {@link #run} method. And stops when you call the {@ink #stop}
-	 * method.
-	 *
-	 * @return true if the server runs else false
+	 * <p>This server is by default not running. It runs as soon as you call the
+	 * {@link #run} method. And stops when you call the {@ink #stop} method.
+	 * 
+	 * @return {@code true} if this server is running else {@code false}
 	 */
 	public function isRunning(Void):Boolean {
 		return running;
@@ -222,7 +231,7 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	/**
 	 * Returns the host of this server.
 	 *
-	 * @return this server's host
+	 * @return this host of this server
 	 */
 	public function getHost(Void):String {
 		return host;

@@ -26,41 +26,39 @@ import org.as2lib.io.conn.local.core.ReservedConnectionException;
 import org.as2lib.io.conn.local.core.UnknownConnectionException;
 
 /**
- * EnhancedLocalConnection provides enhanced local connection
- * functionalities.
- *
- * <p>These functionalities are proper listener support for asynchronous
- * failures and comprehensible exceptions on synchronous errors like
- * reserved and unknown connections and oversized arguments.
- * Refer to the specific method for further explanations.
- *
- * <p>You set up a connection to receive 'remote' method invocations
- * as follows:
+ * {@code EnhancedLocalConnection} provides enhanced local connection functionalities.
+ * 
+ * <p>These functionalities are proper listener support for asynchronous failures
+ * and comprehensible exceptions on synchronous errors like reserved and unknown
+ * connections and oversized arguments. Refer to the specific method for further
+ * descriptions.
+ * 
+ * <p>You can set up a connection to receive 'remote' method invocations as follows:
  * <code>
- * var service:EnhancedLocalConnection = new EnhancedLocalConnection();
- * service["myMethod"] = function(myArg1:String, myArg2:String):Void {
- *   trace("invoked myMethod(" + myArg1 + ", " + myArg2 + ")");
- * }
- * service.connect("myService");
+ *   var service:EnhancedLocalConnection = new EnhancedLocalConnection();
+ *   service["myMethod"] = function(myArg1:String, myArg2:String):Void {
+ *       trace("invoked myMethod(" + myArg1 + ", " + myArg2 + ")");
+ *   }
+ *   service.connect("myService");
  * </code>
- *
- * <p>While the above example works it is not as neat as it can be. It
- * would be better to use another instance as service and the connection
- * only to set it up to receive 'remote' method calls.
+ * 
+ * <p>While the above example works it is not as neat as it could be. It would be
+ * better to use another instance as service and the connection only to set it up
+ * to receive 'remote' method calls.
  * <code>
- * var service:MyService = new MyService();
- * var connection:EnhancedLocalConnection = new EnhancedLocalConnection(service);
- * connection.connect("myService");
+ *   var service:MyService = new MyService();
+ *   var connection:EnhancedLocalConnection = new EnhancedLocalConnection(service);
+ *   connection.connect("myService");
  * </code>
- *
- * <p>The service is set up now to receive 'remote' method invocations.
- * You can now invoke a method on it as follows:
+ * 
+ * <p>The service is set up now to receive 'remote' method invocations. You can now
+ * invoke a method on it as follows:
  * <code>
- * var client:EnhancedLocalConnection = new EnhancedLocalConnection();
- * var listener:MethodInvocationErrorListener = client.send("myService", "myMethod", ["arg1", "arg2"]);
- * listener.onError = function(errorInfo:MethodInvocationErrorInfo):Void {
- *   trace("Error occured: " + errorInfo); 
- * }
+ *   var client:EnhancedLocalConnection = new EnhancedLocalConnection();
+ *   var listener:MethodInvocationErrorListener = client.send("myService", "myMethod", ["arg1", "arg2"]);
+ *   listener.onError = function(errorInfo:MethodInvocationErrorInfo):Void {
+ *       trace("Error occured: " + errorInfo); 
+ *   }
  * </code>
  *
  * @author Simon Wacker
@@ -68,26 +66,26 @@ import org.as2lib.io.conn.local.core.UnknownConnectionException;
  */
 class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	
-	/** Target that gets used as server. */
+	/** Target that is used as server. */
 	private var target:Object;
 	
-	/** Indicates whether the connection is open (true) or closed (false). */
+	/** Indicates whether this connection is open {@code true} or closed {@code false}. */
 	private var connected:Boolean;
 	
-	/** Stores added MethodInvocationErrorListener. */
+	/** Stores added error listeners. */
 	private var errorBroadcaster:EventBroadcaster;
 	
 	/** Stores clients waiting for status reports. */
 	private var clientArray:Array;
 	
 	/**
-	 * Checks if a connection with the passed-in connection name exists.
-	 *
-	 * <p>Returns false if the connection name is null, undefined or a blank
-	 * string.
+	 * Checks if a connection with the passed-in {@code connectionName} exists.
+	 * 
+	 * <p>{@code false} will always be returned if the {@code connectionName} is {@code null}, 
+	 * {@code undefined} or an empty string.
 	 * 
 	 * @param connectionName the name of the connection
-	 * @return true if connection exists else false
+	 * @return {@code true} if the connection exists else {@code false}
 	 */
 	public static function connectionExists(connectionName:String):Boolean {
 		if (!connectionName) return false;
@@ -109,20 +107,21 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	}
 	
 	/**
-	 * Constructs a new EnhancedLocalConnectionByVoid instance.
+	 * Constructs a new {@code EnhancedLocalConnectionByVoid} instance.
 	 *
-	 * <p>The target gets set to this.
+	 * <p>The target is set to {@code this}.
 	 */
 	private function EnhancedLocalConnectionByVoid(Void):Void {
 		EnhancedLocalConnectionByTarget(this);
 	}
 	
 	/**
-	 * Constructs a new EnhancedLocalConnectionByTarget instance with target.
-	 *
-	 * <p>If the target is null or undefined, the target will be set to this.
+	 * Constructs a new {@code EnhancedLocalConnectionByTarget} instance with target.
 	 * 
-	 * @param target to be used as server when creating a new connection
+	 * <p>If the passed-in {@code target} is {@code null} or {@code undefined}, the it
+	 * will be set to {@code this}.
+	 * 
+	 * @param target the target to use as server when creating a new connection
 	 */
 	private function EnhancedLocalConnectionByTarget(target):Void {
 		this.target = target ? target : this;
@@ -132,17 +131,18 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	}
 	
 	/**
-	 * Prepares the connection to receive 'remote' method invocations.
+	 * Prepares this connection to receive 'remote' method invocations.
 	 *
-	 * <p>Closes the connection if it is currenlty running and opens the
-	 * new one.
-	 *
-	 * <p>If you specified a target, the 'remote' method invocations will
-	 * be led directly to it.
-	 *
+	 * <p>Closes this connection if it is currenlty running and opens a new one.
+	 * 
+	 * <p>If you specified a target, the 'remote' method invocations will be led directly
+	 * to it.
+	 * 
 	 * @param connectionName name of the connection the client uses to send method calls
-	 * @throws IllegalArgumentException if the connection name is null, undefined or an empty string
-	 * @throws ReservedConnectionException if a connection with the passed-in name is already in use
+	 * @throws IllegalArgumentException if the passed-in {@code connectionName} is 
+	 * {@code null}, {@code undefined} or an empty string
+	 * @throws ReservedConnectionException if a connection with the passed-in
+	 * {@code connectionName} is already in use
 	 */
 	public function connect(connectionName:String):Void {
 		if (!connectionName) throw new IllegalArgumentException("Name of connection must not be null, undefined or an empty string.", this, arguments);
@@ -153,7 +153,7 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	}
 	
 	/**
-	 * Closes the connection.
+	 * Closes this connection.
 	 */
 	public function close(Void):Void {
 		LocalConnection.prototype.close.apply(target);
@@ -163,7 +163,7 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	/**
 	 * @overload #sendByConnectionAndMethod
 	 * @overload #sendByConnectionAndMethodAndArguments
-	 * @overload #sendByConnectionAndMethodandListener
+	 * @overload #sendByConnectionAndMethodAndListener
 	 * @overload #sendByConnectionAndMethodAndArgumentsAndListener
 	 */
 	public function send():MethodInvocationErrorListener {
@@ -176,96 +176,106 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	}
 	
 	/**
-	 * Invokes a method remotely on the connection specified by the connection
-	 * name passing the arguments as parameters.
-	 *
-	 * <p>Error listeners get informed if the 'remote' method invocation
-	 * failed asynchron of an unknown reason.
-	 *
-	 * <p>A new MethodInvocationErrorListener instance gets created and
-	 * returned. You can set the onError(..) method on it to get informed
-	 * of occuring errors.
-	 *
-	 * @param connectionName the name of the connection to invoke a method on
+	 * Invokes a method remotely on the connection specified by the passed-in
+	 * {@code connectionName}, passing no arguments.
+	 * 
+	 * <p>Error listeners are informed if the 'remote' method invocation failed asynchron
+	 * of an unknown reason.
+	 * 
+	 * <p>A new {@code MethodInvocationErrorListener} instance is created and returned.
+	 * You can set the {@code onError} method on it to be informed of occuring errors.
+	 * 
+	 * @param connectionName the name of the connection to invoke the method on
 	 * @param methodName the name of the method to invoke on the connection
-	 * @return an error listener that informs you of occuring errors if you set the onError(..) method on it
-	 * @throws IllegalArgumentException if the connection name is null, undefined or an empty string
-	 *                                  if the method name is null, undefined or an empty string
-	 * @throws UnknownConnectionException if a connection with the passed-in connection name does not exist
-	 * @throws MethodInvocationException if the arguments you try to pass or out of size
+	 * @return an error listener that informs you of occuring errors if you set the
+	 * {@code onError} method on it
+	 * 
+	 * @throws IllegalArgumentException if {@code connectionName} or {@code methodName}
+	 * are {@code null}, {@code undefined} or an empty string
+	 * @throws UnknownConnectionException if a connection with the passed-in
+	 * {@code connectionName} does not exist
 	 */
 	public function sendByConnectionAndMethod(connectionName:String, methodName:String):MethodInvocationErrorListener {
 		return sendByConnectionAndMethodAndArgumentsAndListener(connectionName, methodName, [], null);
 	}
 	
 	/**
-	 * Invokes a method remotely on the connection specified by the connection
-	 * name passing the arguments as parameters.
-	 *
-	 * <p>Error listeners get informed if the 'remote' method invocation
-	 * failed asynchron of an unknown reason.
-	 *
-	 * <p>A new MethodInvocationErrorListener instance gets created and
-	 * returned. You can set the onError(..) method on it to get informed
-	 * of occuring errors.
-	 *
-	 * @param connectionName the name of the connection to invoke a method on
+	 * Invokes a method remotely on the connection specified by the passed-in
+	 * {@code connectionName} passing {@code args} as parameters.
+	 * 
+	 * <p>Error listeners are informed if the 'remote' method invocation failed asynchron
+	 * of an unknown reason.
+	 * 
+	 * <p>A new {@code MethodInvocationErrorListener} instance is created and returned.
+	 * You can set the {@code onError} method on it to be informed of occuring errors.
+	 * 
+	 * @param connectionName the name of the connection to invoke the method on
 	 * @param methodName the name of the method to invoke on the connection
 	 * @param args the arguments to pass as parameters when invoking the connection
-	 * @return an error listener that informs you of occuring errors if you set the onError(..) method on it
-	 * @throws IllegalArgumentException if the connection name is null, undefined or an empty string
-	 *                                  if the method name is null, undefined or an empty string
-	 * @throws UnknownConnectionException if a connection with the passed-in connection name does not exist
-	 * @throws MethodInvocationException if the arguments you try to pass or out of size
+	 * @return an error listener that informs you of occuring errors if you set the 
+	 * {@code onError} method on it
+	 * @throws IllegalArgumentException if {@code connectionName} or {@code methodName}
+	 * are {@code null}, {@code undefined} or an empty string
+	 * @throws UnknownConnectionException if a connection with the passed-in 
+	 * {@code connectionName} does not exist
+	 * @throws MethodInvocationException if the arguments you try to pass are out of size
 	 */
 	public function sendByConnectionAndMethodAndArguments(connectionName:String, methodName:String, args:Array):MethodInvocationErrorListener {
 		return sendByConnectionAndMethodAndArgumentsAndListener(connectionName, methodName, args, null);
 	}
 	
 	/**
-	 * Invokes a method remotely on the connection specified by the connection
-	 * name passing the arguments as parameters.
-	 *
-	 * <p>Error listeners get informed if the 'remote' method invocation
-	 * failed asynchron of an unknown reason.
-	 *
-	 * <p>A new MethodInvocationErrorListener instance gets created and
-	 * returned. You can set the onError(..) method on it to get informed
-	 * of occuring errors.
-	 *
+	 * Invokes a method remotely on the connection specified by the passed-in
+	 * {@code connectionName} passing {@code args} as parameters.
+	 * 
+	 * <p>Error listeners are informed if the 'remote' method invocation failed asynchron
+	 * of an unknown reason.
+	 * 
+	 * <p>A new {@code MethodInvocationErrorListener} instance is created and returned,
+	 * if the passed-in {@code listener} is {@code null}. Otherwise the passed-in one
+	 * is returned. You can set the {@code onError} method on it to be informed of
+	 * occuring errors.
+	 * 
 	 * @param connectionName the name of the connection to invoke a method on
 	 * @param methodName the name of the method to invoke on the connection
-	 * @param listener the listener to notify if the method invocation failed out of an asynchron unknwon reason
-	 * @return an error listener that informs you of occuring errors if you set the onError(..) method on it
-	 * @throws IllegalArgumentException if the connection name is null, undefined or an empty string
-	 *                                  if the method name is null, undefined or an empty string
-	 * @throws UnknownConnectionException if a connection with the passed-in connection name does not exist
-	 * @throws MethodInvocationException if the arguments you try to pass or out of size
+	 * @param listener the listener to notify if the method invocation failed out of an
+	 * asynchron unknwon reason
+	 * @return either the passed-in listener if it was not {@code null} or {@code undefined},
+	 * or a new listener
+	 * @throws IllegalArgumentException if {@code connectionName} or {@code methodName}
+	 * are {@code null}, {@code undefined} or an empty string
+	 * @throws UnknownConnectionException if a connection with the passed-in 
+	 * {@code connectionName} does not exist
+	 * @throws MethodInvocationException if the arguments you try to pass are out of size
 	 */
 	public function sendByConnectionAndMethodAndListener(connectionName:String, methodName:String, listener:MethodInvocationErrorListener):MethodInvocationErrorListener {
 		return sendByConnectionAndMethodAndArgumentsAndListener(connectionName, methodName, [], listener);
 	}
 	
 	/**
-	 * Invokes a method remotely on the connection specified by the connection
-	 * name passing the arguments as parameters.
-	 *
-	 * <p>Error listeners get informed if the 'remote' method invocation
-	 * failed asynchron of an unknown reason.
-	 *
-	 * <p>If the passed-in listener is null a new gets created and returned.
-	 * You can still set the onError(..) method on it even after this method
-	 * was invoked.
-	 *
+	 * Invokes a method remotely on the connection specified by the passed-in
+	 * {@code connectionName} passing {@code args} as parameters.
+	 * 
+	 * <p>Error listeners are informed if the 'remote' method invocation failed asynchron
+	 * of an unknown reason.
+	 * 
+	 * <p>A new {@code MethodInvocationErrorListener} instance is created and returned,
+	 * if the passed-in {@code listener} is {@code null}. Otherwise the passed-in one
+	 * is returned. You can set the {@code onError} method on it to be informed of
+	 * occuring errors.
+	 * 
 	 * @param connectionName the name of the connection to invoke a method on
 	 * @param methodName the name of the method to invoke on the connection
-	 * @param args the arguments to pass as parameters when invoking the connection
-	 * @param listener the listener to notify if the method invocation failed out of an asynchron unknwon reason
-	 * @return either the passed-in listener if it was not null or undefined, or a new listener of type MethodInvocationErrorListener
-	 * @throws IllegalArgumentException if the connection name is null, undefined or an empty string
-	 *                                  if the method name is null, undefined or an empty string
-	 * @throws UnknownConnectionException if a connection with the passed-in connection name does not exist
-	 * @throws MethodInvocationException if the arguments you try to pass or out of size
+	 * @param args the arguments to pass as parameters when invoking the method
+	 * @param listener the listener to notify if the method invocation failed out of an
+	 * asynchron unknwon reason
+	 * @return either the passed-in listener if it was not {@code null} or {@code undefined},
+	 * or a new listener
+	 * @throws IllegalArgumentException if {@code connectionName} or {@code methodName}
+	 * are {@code null}, {@code undefined} or an empty string
+	 * @throws UnknownConnectionException if a connection with the passed-in 
+	 * {@code connectionName} does not exist
+	 * @throws MethodInvocationException if the arguments you try to pass are out of size
 	 */
 	public function sendByConnectionAndMethodAndArgumentsAndListener(connectionName:String, methodName:String, args:Array, listener:MethodInvocationErrorListener):MethodInvocationErrorListener {
 		if (!connectionName || !methodName) throw new IllegalArgumentException("Neither the connection name [" + connectionName + "] nor the method name [" + methodName + "] are allowed to be null, undefined or an empty string.", this, arguments);
@@ -290,9 +300,9 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	}
 	
 	/**
-	 * Returns a blank method invocation error listener. That is
-	 * a error listern with no initialized methods.
-	 *
+	 * Returns a blank method invocation error listener. This is an error listener with
+	 * no implemented methods.
+	 * 
 	 * @return a blank method invocation error listener
 	 */
 	private function getBlankMethodInvocationErrorListener(Void):MethodInvocationErrorListener {
@@ -314,9 +324,9 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	/**
 	 * Adds a new error listener.
 	 *
-	 * <p>Error listener get invoked if an asynchron error occured. That is
-	 * mostly when you try to invoke a remote method.
-	 *
+	 * <p>Error listener is invoked if an asynchron error occured. This is mostly when
+	 * you try to invoke a remote method.
+	 * 
 	 * @param listener the new error listener to add
 	 */
 	public function addErrorListener(listener:MethodInvocationErrorListener):Void {
@@ -326,9 +336,9 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	/**
 	 * Removes an error listener.
 	 *
-	 * <p>Error listener get invoked if an asynchron error occured. That is
-	 * mostly when you try to invoke a remote method.
-	 *
+	 * <p>Error listener is invoked if an asynchron error occured. This is mostly when
+	 * you try to invoke a remote method.
+	 * 
 	 * @param listener the error listener to remove
 	 */
 	public function removeErrorListener(listener:MethodInvocationErrorListener):Void {

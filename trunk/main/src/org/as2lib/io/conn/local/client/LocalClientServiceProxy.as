@@ -27,48 +27,49 @@ import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
 import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
 
 /**
- * LocalClientServiceProxy handles client requests to a certain service
- * and its response.
+ * {@code LocalClientServiceProxy} handles client requests to a certain service
+ * and its responses.
  * 
- * <p>You can use the proxy as follows:
+ * <p>Example:
  * <code>
- * var client:LocalClientServiceProxy = new LocalClientServiceProxy("local.as2lib.org/myService");
- * var callback:MethodInvocationCallback = client.invoke("myMethod", ["firstArgument", "secondArgument"]);
- * callback.onReturn = function(returnInfo:MethodInvocationReturnInfo):Void {
- *   trace("myMethod - return value: " + returnInfo.getReturnValue());
- * }
- * callback.onError = function(errorInfo:MethodInvocationErrorInfo):Void {
- *   trace("myMethod - error: " + errorInfo.getException());
- * }
+ *   var client:LocalClientServiceProxy = new LocalClientServiceProxy("local.as2lib.org/myService");
+ *   var callback:MethodInvocationCallback = client.invoke("myMethod", ["firstArgument", "secondArgument"]);
+ *   callback.onReturn = function(returnInfo:MethodInvocationReturnInfo):Void {
+ *       trace("myMethod - return value: " + returnInfo.getReturnValue());
+ *   }
+ *   callback.onError = function(errorInfo:MethodInvocationErrorInfo):Void {
+ *       trace("myMethod - error: " + errorInfo.getException());
+ *   }
  * </code>
- *
+ * 
  * <p>It is also possible to call the method directly on the proxy. But you can't
  * type the proxy then.
  * <code>
- * var client = new LocalClientServiceProxy("local.as2lib.org/myService");
- * var callback:MethodInvocationCallback = client.myMethod("firstArgument", "secondArgument");
+ *   var client = new LocalClientServiceProxy("local.as2lib.org/myService");
+ *   var callback:MethodInvocationCallback = client.myMethod("firstArgument", "secondArgument");
  * </code>
  *
- * <p>The neatest way is to use LocalClientServiceProxyFactory to get a proxy
- * for a service interface or class, which enables compiler checks.
- * For more information on this refer to the LocalClientServiceProxyFactory class.
- *
- * <p>If the return value is not of type Number, Boolean, String or
- * Array that get converted directly into the appropriate type you must
- * do the following to receive a value of correct type. Otherwise the
- * return value will be an instance of type Object that gets populated
- * with the instance variables of the sent object.
- * <code>Object.registerClass("MyClass", MyClass);</code>
- *
- * <p>The received object will now be of correct type. But you still
- * have to be aware of some facts.
- * Flash creates a new object in the background and sets the instance
- * variables of the sent instance to the new object. It then registers
- * this object to the appropriate class (if registered previously) and
- * applies the constructor of that class to the new object passing no
- * arguments.
- * That means if the constructor sets instance variables it overwrites
- * the once set previously by undefined.
+ * <p>The neatest way is to use {@code LocalClientServiceProxyFactory} to get a proxy
+ * for a service interface or class, which enables compiler checks. For more
+ * information on this refer to the {@link LocalClientServiceProxyFactory} class.
+ * 
+ * <p>If the return value is not of type {@code Number}, {@code Boolean}, {@code String}
+ * or {@code Array} that are converted directly into the appropriate type you must
+ * do the following to receive a value of correct type. Otherwise the return value
+ * will be an instance of type Object that is populated with the instance variables
+ * of the sent object. Note that this must be done on the client as well as on the
+ * server and the 'symbolId' in this case {@code "MyClass"} must be the same.
+ * <code>
+ *   Object.registerClass("MyClass", MyClass);
+ * </code>
+ * 
+ * <p>The received object will now be of correct type. But you still have to be aware
+ * of some facts:<br>
+ * Flash creates a new object in the background and sets the instance variables of
+ * the sent instance to the new object. It then registers this object with the
+ * appropriate class (if registered previously) and applies the constructor of that
+ * class to the new object passing no arguments. This means if the constructor sets
+ * instance variables it overwrites the ones set previously by {@code undefined}.
  *
  * @author Simon Wacker
  * @author Christoph Atteneder
@@ -86,68 +87,52 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	private var responseServices:Array;
 	
 	/**
-	 * Constructs a new LocalClientServiceProxy instance.
+	 * Constructs a new {@code LocalClientServiceProxy} instance.
 	 * 
-	 * @param url the url to the service
-	 * @throws IllegalArgumentException if the url is null, undefined or an empty string
+	 * @param url the url of the service
+	 * @throws IllegalArgumentException if {@code url} is {@code null}, {@code undefined}
+	 * or an empty string
 	 */
 	public function LocalClientServiceProxy(url:String) {
-		if (!url) throw new IllegalArgumentException("Url must not be null, undefined or an empty string.", this, arguments);
+		if (!url) throw new IllegalArgumentException("Argument 'url' must not be null, undefined or an empty string.", this, arguments);
 		this.url = url;
 		connection = new EnhancedLocalConnection();
 		responseServices = new Array();
 	}
 	
 	/**
-	 * Returns the url of the service this proxy connects to.
+	 * Returns the url of the service this proxy invokes methods on.
+	 * 
+	 * <p>The returned url is never {@code null}, {@code undefined} or an empty string.
 	 *
-	 * <p>The url is never null, undefined or an empty string.
-	 *
-	 * @return the url of the service to connect to
+	 * @return the url of the service this proxy invokes methods on
 	 */
 	public function getUrl(Void):String {
 		return url;
 	}
 	
 	/**
-	 * Invokes the method with the passed-in arguments on the 'remote'
-	 * service.
-	 *
-	 * <p>The response of the method invocation gets delegated to the
-	 * appropriate method on the returned callback. That is either the
-	 * onReturn-method when no error occured. Or the onError-method in
-	 * case something went wrong.
-	 *
-	 * @param methodName the name of the method to invoke on the 'remote' service
-	 * @param args the arguments that get passed to the method as parameters
-	 * @return the callback that handles the response
-	 * @throws IllegalArgumentException if the passed-in method name is null or an empty string
-	 */
-	public function invokeByNameAndArguments(methodName:String, args:Array):MethodInvocationCallback {
-		return invokeByNameAndArgumentsAndCallback(methodName, args, null);
-	}
-	
-	/**
-	 * Invokes the method with the passed-in arguments on the 'remote'
-	 * service.
+	 * Invokes the method with passed-in {@code methodName} on the 'remote' service,
+	 * passing the elements of the passed-in {@code args} as parameters and invokes
+	 * the appropriate method on the passed-in {@code callback} on response.
 	 * 
-	 * <p>The response of the method invocation gets delegated to the
-	 * appropriate method on the passed-in callback. That is either the
-	 * onReturn-method when no error occured. Or the onError-method in
-	 * case something went wrong.
+	 * <p>The response of the method invocation is delegated to the appropriate method
+	 * on the passed-in {@code callback}. This is either the {@code onReturn} when no
+	 * error occured, or the {@code onError} method in case something went wrong.
 	 *
-	 * <p>If the passed-in callback is null a new MethodInvocationCallback
-	 * instance will be created and returned. It is possible to still set 
-	 * the callback methods there, after invoking this method.
-	 *
+	 * <p>If the passed-in {@code callback} is {@code null} a new {@code MethodInvocationCallback}
+	 * instance will be created and returned. It is possible to still set the callback
+	 * methods there, after invoking this method.
+	 * 
 	 * @param methodName the name of the method to invoke on the 'remote' service
-	 * @param args the arguments that get passed to the method as parameters
+	 * @param args the arguments that are passed to the method as parameters
 	 * @param callback the callback that handles the response
-	 * @return either the passed-in callback or a new callback if null
-	 * @throws IllegalArgumentException if the passed-in method name is null or an empty string
+	 * @return either the passed-in callback or a new callback if {@code null}
+	 * @throws IllegalArgumentException if the passed-in {@code methodName} is {@code null},
+	 * {@code undefined} or an empty string
 	 */
 	public function invokeByNameAndArgumentsAndCallback(methodName:String, args:Array, callback:MethodInvocationCallback):MethodInvocationCallback {
-		if (!methodName) throw new IllegalArgumentException("Method name must not be null, undefined or an empty string.", this, arguments);
+		if (!methodName) throw new IllegalArgumentException("Argument 'methodName' must not be null, undefined or an empty string.", this, arguments);
 		if (!args) args = new Array();
 		if (!callback) callback = getBlankMethodInvocationCallback();
 		
@@ -187,9 +172,9 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	}
 	
 	/**
-	 * Returns a blank method invocation error listener. That is
-	 * a error listern with no initialized methods.
-	 *
+	 * Returns a blank method invocation error listener. This is an error listern with
+	 * no implemented methods.
+	 * 
 	 * @return a blank method invocation error listener
 	 */
 	private function getBlankMethodInvocationErrorListener(Void):MethodInvocationErrorListener {
@@ -200,9 +185,9 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	}
 	
 	/**
-	 * Returns a blank method invocation callback. That is a
-	 * callback with no initialized methods.
-	 *
+	 * Returns a blank method invocation callback. This is a callback with no implemented
+	 * methods.
+	 * 
 	 * @return a blank method invocation callback
 	 */
 	private function getBlankMethodInvocationCallback(Void):MethodInvocationCallback {
@@ -213,9 +198,9 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	}
 	
 	/**
-	 * Enables you to invoke the method to be invoked on the 'remote' service
-	 * directly on this proxy.
-	 *
+	 * Enables you to invoke the method to be invoked on the 'remote' service directly
+	 * on this proxy.
+	 * 
 	 * <p>The usage is mostly the same.
 	 * <code>myProxy.myMethod("myArg1");</code>
 	 * <code>myProxy.myMethod("myArg1", myCallback);</code>

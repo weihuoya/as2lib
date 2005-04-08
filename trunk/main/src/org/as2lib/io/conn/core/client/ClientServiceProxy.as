@@ -18,9 +18,9 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.io.conn.core.event.MethodInvocationCallback;
 
 /**
- * ClientServiceProxy handles client requests to a certain service and
- * its response.
- *
+ * {@code ClientServiceProxy} handles client requests to a certain service and its
+ * responses.
+ * 
  * @author Simon Wacker
  * @author Christoph Atteneder
  */
@@ -35,31 +35,31 @@ interface org.as2lib.io.conn.core.client.ClientServiceProxy extends BasicInterfa
 	public function invoke():MethodInvocationCallback;
 	
 	/**
-	 * Invokes the passed-in method on the service.
-	 *
+	 * Invokes the method with passed-in {@code methodName} on the service.
+	 * 
 	 * @param methodName the name of the method to invoke
 	 * @return a callback that can be used to get informed of the response
 	 */
 	public function invokeByName(methodName:String):MethodInvocationCallback;
 	
 	/**
-	 * Invokes the passed-in method passing the given arguments.
-	 *
+	 * Invokes the method with passed-in {@code methodName} on the service, passing the
+	 * given {@code args}.
+	 * 
 	 * @param methodName the name of the method to invoke
-	 * @param args the arguments to be passed to the method
+	 * @param args the arguments to pass to the method
 	 * @return a callback that can be used to get informed of the response
 	 */
 	public function invokeByNameAndArguments(methodName:String, args:Array):MethodInvocationCallback;
 	
 	/**
-	 * Invokes the passed-in method on the service.
+	 * Invokes the method with passed-in {@code methodName} on the service.
+	 * 
+	 * <p>When the response arrives the appropriate callback method is invoked.
 	 *
-	 * <p>When the response arrives the appropriate callback method gets
-	 * invoked.
-	 *
-	 * <p>If the passed-in callback is not null, the returned callback
-	 * should be the same.
-	 *
+	 * <p>If the passed-in {@code callback} is not {@code null} or {@code undefined},
+	 * the returned callback is the same.
+	 * 
 	 * @param methodName the name of the method to invoke
 	 * @param callback the callback that receives the return value or errors
 	 * @return a callback that can be used to get informed of the response
@@ -67,13 +67,13 @@ interface org.as2lib.io.conn.core.client.ClientServiceProxy extends BasicInterfa
 	public function invokeByNameAndCallback(methodName:String, callback:MethodInvocationCallback):MethodInvocationCallback;
 	
 	/**
-	 * Invokes the passed-in method on the service, passing the arguments.
+	 * Invokes the method with passed-in {@code methodName} on the service, passing the
+	 * arguments.
+	 * 
+	 * <p>When the response arrives the appropriate callback method is invoked.
 	 *
-	 * <p>When the response arrives the appropriate callback method gets
-	 * invoked.
-	 *
-	 * <p>If the passed-in callback is not null, the returned callback
-	 * should be the same.
+	 * <p>If the passed-in {@code callback} is not {@code null} or {@code undefined},
+	 * the returned callback is the same.
 	 *
 	 * @param methodName the name of the method to be invoked
 	 * @param args the arguments to pass to the method

@@ -17,27 +17,27 @@
 import org.as2lib.io.conn.ConnectionException;
 
 /**
- * Gets thrown if you try to operate on a service that does not exist.
- *
+ * {@code UnknownServiceException} is thrown if you try to connect to or operate on
+ * a service that does not exist.
+ * 
  * @author Simon Wacker
  * @author Christoph Atteneder
  */
 class org.as2lib.io.conn.core.client.UnknownServiceException extends ConnectionException {
 	
 	/**
-	 * Constructs a new Exception instance.
+	 * Constructs a new {@code UnknownServiceException} instance.
 	 *
-	 * <p>All arguments are allowed to be null or undefined. But if one is,
-	 * the string representation returned by the {@link #toString] method
-	 * is not complete anymore.
+	 * <p>All arguments are allowed to be {@code null} or {@code undefined}. But if one
+	 * is, the string representation returned by the {@code toString} method will not
+	 * be complete.
+	 * 
+	 * <p>The {@code args} array should be the internal arguments array of the method
+	 * that throws the throwable. The internal arguments array exists in every method
+	 * and contains its parameters, the callee method and the caller method. You can
+	 * refernce it in every method using the name {@code 'arguments'}.
 	 *
-	 * <p>The args array should be the internal arguments array of the
-	 * method that throws the throwable. The internal arguments array exists
-	 * in every method and contains its parameters, the callee method and
-	 * the caller method. You can refernce it in every method using the name
-	 * 'arguments'.
-	 *
-	 * @param message the message that describes in detail what the problem is
+	 * @param message the message that describes the problem in detail
 	 * @param thrower the object that declares the method that throws this exception
 	 * @param args the arguments of the throwing method
 	 */

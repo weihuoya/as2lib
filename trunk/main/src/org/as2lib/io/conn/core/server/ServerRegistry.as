@@ -17,29 +17,29 @@
 import org.as2lib.core.BasicInterface;
 
 /**
- * ServerRegistry lets you register servers.
- *
+ * {@code ServerRegistry} keeps track of running servers.
+ * 
  * @author Simon Wacker
  * @author Christoph Atteneder
  */
 interface org.as2lib.io.conn.core.server.ServerRegistry extends BasicInterface {
 	
 	/**
-	 * Checks if a server with passed host exists / is registerd.
-	 *
+	 * Checks if a server with passed-in {@code host} exists / is registerd.
+	 * 
 	 * @param host the name of server
 	 */
 	public function containsServer(host:String):Boolean;
 	
 	/**
-	 * Registers a server with the given host.
-	 *
+	 * Registers a server with the given {@code host}.
+	 * 
 	 * @param host the host identifying the server to register
 	 */
 	public function registerServer(host:String):Void;
 	
 	/**
-	 * Unregisters the server with the given host.
+	 * Unregisters the server with the given {@code host}.
 	 *
 	 * @param host the host identifying the server to unregister
 	 */
