@@ -18,9 +18,9 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
 
 /**
- * ServerServiceProxy handles client request to a certain service and 
- * its response.
- *
+ * {@code ServerServiceProxy} handles client requests to a certain service and its
+ * responses.
+ * 
  * @author Simon Wacker
  * @author Christoph Atteneder
  */
@@ -29,12 +29,12 @@ interface org.as2lib.io.conn.core.server.ServerServiceProxy extends BasicInterfa
 	/**
 	 * Runs the service and listens for requests of clients.
 	 *
-	 * @param host the host to run the service on
+	 * @param host the host to run this service on
 	 */
 	public function run(host:String):Void;
 	
 	/**
-	 * Stops the service.
+	 * Stops this service.
 	 */
 	public function stop(Void):Void;
 	
@@ -45,49 +45,52 @@ interface org.as2lib.io.conn.core.server.ServerServiceProxy extends BasicInterfa
 	public function invokeMethod():Void;
 	
 	/**
-	 * Invokes the service method on the service object.
-	 *
-	 * @param methodName the name of the service's method to be invoked
-	 * @param args arguments to be passed to the method
+	 * Invokes the service method corresponding to the passed-in {@code methodName} on
+	 * the actaul service object, passing the content of {@code args} array as parameters.
+	 * 
+	 * @param methodName the name of the service method to invoke
+	 * @param args arguments to pass-to the method
 	 */
 	public function invokeMethodByNameAndArguments(methodName:String, args:Array):Void;
 	
 	/**
-	 * Invokes the service method on the service object and returns the
-	 * response to the client using the response service.
+	 * Invokes the service method corresponding to the passed-in {@code methodName} on
+	 * the actual service object and returns the response to the client using the
+	 * passed-in {@code responseServiceUrl}.
 	 *
-	 * @param methodName name of method to be invoked on the service
-	 * @param args arguments to be passed to the method
-	 * @param responseServiceUrl the url of response service to which the result gets sent
+	 * @param methodName name of method to invoke on the service
+	 * @param args arguments to pass to the method
+	 * @param responseServiceUrl the url of response service to which the result is sent
 	 */
 	public function invokeMethodByNameAndArgumentsAndResponseService(methodName:String, args:Array, responseServiceUrl:String):Void;
 	
 	/**
-	 * Returns the original service, this proxy wraps.
+	 * Returns the actual service this proxy wraps.
 	 *
-	 * @return the original service
+	 * @return the wrapped service
 	 */
 	public function getService(Void);
 	
 	/**
-	 * Returns the path on the host of the service.
+	 * Returns the path on the host of this service.
 	 *
-	 * @return the path of the service
+	 * @return the path of this service
 	 */
 	public function getPath(Void):String;
 	
 	/**
-	 * Indicates whether the service is currently running.
+	 * Indicates whether this service is currently running.
 	 *
-	 * @return true if the service runs else false
+	 * @return {@code true} if this service runs else {@code false}
 	 */
 	public function isRunning(Void):Boolean;
 	
 	/**
-	 * Adds a new error listener to listen for errors that might occur
-	 * when trying to invoke the method on the service.
-	 *
+	 * Adds a new error listener to listen for errors that may occur when trying to
+	 * invoke a method on this service.
+	 * 
 	 * @param errorListener the error listener to add
+	 * @see #removeErrorListener
 	 */
 	public function addErrorListener(errorListener:MethodInvocationErrorListener):Void;
 	
@@ -95,6 +98,7 @@ interface org.as2lib.io.conn.core.server.ServerServiceProxy extends BasicInterfa
 	 * Removes an added error listener.
 	 *
 	 * @param errorListener the error listener to remove
+	 * @see #addErrorListener
 	 */
 	public function removeErrorListener(errorListener:MethodInvocationErrorListener):Void;
 	

@@ -19,48 +19,59 @@ import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
 
 /**
- * MethodInvocationCallback awaits the response of a remote method
- * invocation.
- *
+ * {@code MethodInvocationCallback} awaits the response of a method invocation.
+ * 
  * <p>There are two types of responses.
  * <dl>
- *   <dt>Return response:</dt>
- *   <dd>Indicates that the method was invoked successfully without
- *       throwing an exception.</dd>
- *   <dt>Error response:</dt>
- *   <dd>Indicates that an error occured when trying to invoke the method.
- *       That error can be an exception the method threw or
- *       the unavailability of the method to invoke.</dd>
+ *   <dt>Return Response:</dt>
+ *   <dd>
+ *     Indicates that the method has been invoked successfully without throwing an
+ *     exception.
+ *   </dd>
+ *   <dt>Error Response:</dt>
+ *   <dd>
+ *     Indicates that an error occured when trying to invoke the method. This error
+ *     can for example be an exception the method threw or the unavailability of the
+ *     method to invoke. For further details take a look at the '*_Error' constants
+ *     declared by {@link MethodInvocationErrorInfo}.
+ *   </dd>
  * </dl>
  *
- * <p>Depending on the client and remote service used, that are
- * responsible to propagate this callback methods, there may be other
- * circumstances the specific callback method gets invoked.
+ * <p>Depending on the client and service used, that are responsible for propagating
+ * the methods on this callback, there may be other circumstances on which a specific
+ * callback method is invoked.
  * 
- * <p>This interface can either be instantiated directly or implemented
- * by a class. If you instantiate it directly you must overwrite the
- * callback methods you wanna get informed of with anonymous functions.
+ * <p>This interface can either be instantiated directly or implemented by a class.
+ * If you instantiate it directly you must overwrite the callback methods you wanna
+ * be informed of with anonymous functions.
+ * 
+ * <p>Note that implementing this interface is much cleaner and less error-prone. It
+ * is thus recommended to implement this interface whenever possible, instead of
+ * overwriting the methods with anonymous functions. Note also that the direct
+ * instantiation of interfaces is not permitted in Flex.
+ *
  * <code>
- * var callback:MethodInvocationCallback = new MethodInvocationCallback();
- * callback.onReturn = function(returnInfo:MethodInvocationReturnInfo):Void) {
- *   trace("Invoked method successfully: " + returnInfo); 
- * }
- * callback.onError = function(errorInfo:MethodInvocationErrorInfo):Void {
- *   trace("Error occured when trying to invoke the method: " + errorInfo);
- * }
+ *   var callback:MethodInvocationCallback = new MethodInvocationCallback();
+ *   callback.onReturn = function(returnInfo:MethodInvocationReturnInfo):Void) {
+ *       trace("Invoked method successfully: " + returnInfo); 
+ *   }
+ *   callback.onError = function(errorInfo:MethodInvocationErrorInfo):Void {
+ *       trace("Error occured when trying to invoke the method: " + errorInfo);
+ *   }
  * </code>
  *
- * <p>Implementing the interface by a class is a much neater way. But
- * sometimes it adds unnecessary complexity.
+ * <p>Implementing the interface by a class is a much neater way. But sometimes it
+ * adds unnecessary complexity.
+ * 
  * <code>
- * class MyCallback implements MethodInvocationCallback {
- *   public function onReturn(returnInfo:MethodInvocationReturnInfo):Void {
- *     trace("Invoked method successfully: " + returnInfo); 
+ *   class MyCallback implements MethodInvocationCallback {
+ *       public function onReturn(returnInfo:MethodInvocationReturnInfo):Void {
+ *           trace("Invoked method successfully: " + returnInfo); 
+ *       }
+ *       public function onError(errorInfo:MethodInvocationErrorInfo):Void {
+ *           trace("Error occured when trying to invoke the method: " + errorInfo);
+ *       }
  *   }
- *   public function onError(errorInfo:MethodInvocationErrorInfo):Void {
- *     trace("Error occured when trying to invoke the method: " + errorInfo);
- *   }
- * }
  * </code>
  *
  * @author Simon Wacker
@@ -68,17 +79,17 @@ import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
 interface org.as2lib.io.conn.core.event.MethodInvocationCallback extends BasicInterface {
 	
 	/**
-	 * Gets executed when the return value of the method invocation arrives.
+	 * Is executed when the return value of the method invocation arrives.
 	 *
-	 * <p>That indicates that the method was invoked successfully.
+	 * <p>This indicates that the method was invoked successfully.
 	 *
-	 * @param returnInfo contains the return value and some other useful 
-	 * information about the invoked method
+	 * @param returnInfo contains the return value and some other useful information about
+	 * the invoked method
 	 */
 	public function onReturn(returnInfo:MethodInvocationReturnInfo):Void;
 	
 	/**
-	 * Gets executed when a method invocation fails.
+	 * Is executed when a method invocation fails.
 	 *
 	 * <p>Known issues are:
 	 * <ul>
@@ -88,8 +99,8 @@ interface org.as2lib.io.conn.core.event.MethodInvocationCallback extends BasicIn
 	 *
 	 * <p>Remember that not all clients support this functionalities.
 	 *
-	 * @param errorInfo contains information about the error and some useful
-	 * information about the 'invoked' method
+	 * @param errorInfo contains information about the error and some useful information
+	 * about the called method
 	 */
 	public function onError(errorInfo:MethodInvocationErrorInfo):Void;
 	

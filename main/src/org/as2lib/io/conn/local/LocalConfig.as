@@ -19,11 +19,10 @@ import org.as2lib.io.conn.core.server.ServerRegistry;
 import org.as2lib.io.conn.local.server.LocalServerRegistry;
 
 /**
- * LocalConfig is the basic configuration class for the local connection
- * api.
- *
- * <p>It can be used to configure static parts, that means parts that
- * get globally used.
+ * {@code LocalConfig} is the basic configuration class of the Local Connection API.
+ * 
+ * <p>It can be used to configure static parts, that means parts that are shared
+ * globally.
  *
  * @author Simon Wacker
  */
@@ -41,9 +40,9 @@ class org.as2lib.io.conn.local.LocalConfig extends BasicClass {
 	/**
 	 * Returns the currently used server registry.
 	 *
-	 * <p>That is either the server registry set via {@link #setServerRegistry}
-	 * or a default {@link LocalServerRegistry} instance.
-	 *
+	 * <p>That is either the server registry set via {@link #setServerRegistry} or the
+	 * default on which is an instance of class {@link LocalServerRegistry}.
+	 * 
 	 * @return the currenlty used server registry
 	 * @see #setServerRegistry
 	 */
@@ -55,9 +54,9 @@ class org.as2lib.io.conn.local.LocalConfig extends BasicClass {
 	/**
 	 * Sets a new server registry.
 	 *
-	 * <p>If you set a server registry of value null or undefined
+	 * <p>If you set a server registry of value {@code null} or {@code undefined}
 	 * {@link #getServerRegistry} will return the default server registry.
-	 *
+	 * 
 	 * @param newServerRegistry the new server registry
 	 * @see #getServerRegistry
 	 */

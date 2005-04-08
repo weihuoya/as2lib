@@ -18,30 +18,35 @@ import org.as2lib.env.event.EventListener;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
 
 /**
- * MethodInvocationErrorListener awaits an error response of a remote
- * method invocation.
+ * {@code MethodInvocationErrorListener} awaits an error response of a method
+ * invocation.
+ * 
+ * <p>When and why the event method is invoked depends on the used client.
  *
- * <p>When and why the callback method gets invoked depends on the client
- * you use.
+ * <p>This interface can either be instantiated directly or implemented by a class.
+ * If you instantiate it directly you must overwrite the event methods with
+ * anonymous function.
  *
- * <p>This interface can either be instantiated directly or implemented
- * by a class. If you instantiate it directly you must overwrite the
- * callback method with an anonymous function.
+ * <p>Note that overwriting the event method with a anonymous function is error-prone,
+ * because the arguments' types and the return type are not type-checked. Instantiating
+ * an interface directly is also not permitted in Flex.
+ * 
  * <code>
- * var listener:MethodInvocationErrorListener = new MethodInvocationErrorListener();
- * listener.onError = function(errorInfo:MethodInvocationErrorInfo):Void {
- *   trace("Error occured when trying to invoke the method: " + errorInfo);
- * }
- * </code>
- *
- * <p>Implementing the interface by a class is a much neater way. But
- * sometimes adds is unnecessary complexity.
- * <code>
- * class MyListener implements MethodInvocationErrorListener {
- *   public function onError(errorInfo:MethodInvocationErrorInfo):Void {
- *     trace("Error occured when trying to invoke the method: " + errorInfo);
+ *   var listener:MethodInvocationErrorListener = new MethodInvocationErrorListener();
+ *   listener.onError = function(errorInfo:MethodInvocationErrorInfo):Void {
+ *       trace("Error occured when trying to invoke the method: " + errorInfo);
  *   }
- * }
+ * </code>
+ * 
+ * <p>Implementing the interface by a class is a much neater way, but sometimes adds
+ * unnecessary complexity.
+ *
+ * <code>
+ *   class MyListener implements MethodInvocationErrorListener {
+ *       public function onError(errorInfo:MethodInvocationErrorInfo):Void {
+ *           trace("Error occured when trying to invoke the method: " + errorInfo);
+ *       }
+ *   }
  * </code>
  *
  * @author Simon Wacker
@@ -49,7 +54,7 @@ import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
 interface org.as2lib.io.conn.core.event.MethodInvocationErrorListener extends EventListener {
 	
 	/**
-	 * Gets executed when the method invocation failed.
+	 * Is executed when a method invocation fails.
 	 *
 	 * <p>Known issues are:
 	 * <ul>
@@ -59,8 +64,8 @@ interface org.as2lib.io.conn.core.event.MethodInvocationErrorListener extends Ev
 	 *
 	 * <p>Remember that not all clients support this functionalities.
 	 *
-	 * @param errorInfo contains information about the error and some useful
-	 * information about the 'invoked' method
+	 * @param errorInfo contains information about the error and some useful information
+	 * about the called method
 	 */
 	public function onError(errorInfo:MethodInvocationErrorInfo):Void;
 	

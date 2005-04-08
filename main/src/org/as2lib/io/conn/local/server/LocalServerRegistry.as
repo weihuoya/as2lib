@@ -21,27 +21,26 @@ import org.as2lib.io.conn.core.server.ReservedHostException;
 import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
 
 /**
- * LocalServerRegistry lets you register servers.
+ * {@code LocalServerRegistry} keeps track of running servers.
  *
- * <p>That means that servers get registered to be aware of all servers
- * that are currently running. The servers get registered in a kind of
- * gloabl registry, even if you instantiate different instances of this
- * class and in different swfs.
- *
- * <p>Servers are expected to register themselves at this registry when
- * they start running and unregister themselves when they stop running.
- *
- * <p>The usage is quite simple:
+ * <p>This means that servers are registered to be aware of all servers that are
+ * currently running. The servers are registered in a kind of gloabl registry, even
+ * if you instantiate different instances of this class and in different swfs.
+ * 
+ * <p>Servers are expected to register themselves at this registry when they start
+ * running and unregister themselves when they stop running.
+ * 
+ * <p>Example:
  * <code>
- * var serverRegistry:LocalServerRegistry = new LocalServerRegistry();
- * serverRegistry.registerServer("local.as2lib.org");
- * serverRegistry.containsServer("local.as2lib.org");
- * serverRegistry.removeServer("local.as2lib.org");
+ *   var serverRegistry:LocalServerRegistry = new LocalServerRegistry();
+ *   serverRegistry.registerServer("local.as2lib.org");
+ *   serverRegistry.containsServer("local.as2lib.org");
+ *   serverRegistry.removeServer("local.as2lib.org");
  * </code>
  *
- * <p>As you can see in the above example, not servers are registered
- * but hosts, that represent servers.
- *
+ * <p>As you can see in the above example, not servers are registered but hosts,
+ * that represent servers.
+ * 
  * @author Simon Wacker
  * @author Christoph Atteneder
  */
@@ -51,35 +50,38 @@ class org.as2lib.io.conn.local.server.LocalServerRegistry extends BasicClass imp
 	private var serverRegistry:Object;
 	
 	/**
-	 * Constructs a new LocalServerRegistry instance.
+	 * Constructs a new {@code LocalServerRegistry} instance.
 	 */
 	public function LocalServerRegistry(Void) {
 		serverRegistry = new Object();
 	}
 	
 	/**
-	 * Returns whether a server with the passed-in host is registered in
-	 * some registry.
-	 *
-	 * <p>This does not mean that the server is registered in this registry.
-	 * It can be registered in another registry maybe in another swf.
-	 *
+	 * Returns whether a server with the passed-in {@code host} is registered in some
+	 * registry.
+	 * 
+	 * <p>This does not mean that the server is registered in this registry. It can be
+	 * registered in another registry, even in another swf.
+	 * 
 	 * @param host the host that acts as an identifier for the server
-	 * @return true if the server with the given host is regitered else false
+	 * @return {@code true} if the server with the given {@code host} is regitered else
+	 * {@code false}
 	 */
 	public function containsServer(host:String):Boolean {
 		return EnhancedLocalConnection.connectionExists(host);
 	}
 	
 	/**
-	 * Registers a server at the server registry.
+	 * Registers the server with the given {@code host} at this server registry.
 	 *
-	 * <p>The server gets registered gloablly, that means that registries
-	 * in other swfs can check whether the server is registered.
-	 *
+	 * <p>The server is registered gloablly, that means that registries in other swfs
+	 * can check whether the server is registered.
+	 * 
 	 * @param host the host that acts as an identifier for the server
-	 * @throws IllegalArgumentException if the host is null, undefined or a blank string
-	 * @throws ReservedHostException if a server with the passed-in host is already running
+	 * @throws IllegalArgumentException if {@code host} is {@code null}, {@code undefined}
+	 * or an empty string
+	 * @throws ReservedHostException if a server with the passed-in {@code host} is already
+	 * running
 	 */
 	public function registerServer(host:String):Void {
 		if (!host) throw new IllegalArgumentException("Host must not be null, undefined or a blank string.", this, arguments);
@@ -93,13 +95,13 @@ class org.as2lib.io.conn.local.server.LocalServerRegistry extends BasicClass imp
 	}
 	
 	/**
-	 * Removes a server from the registry.
-	 *
-	 * <p>Only servers that have been registered directly at this registry
-	 * can be removed.
-	 *
+	 * Removes the server with the given {@code host} from this server registry.
+	 * 
+	 * <p>Only servers that have been registered directly at this registry can be removed.
+	 * 
 	 * @param host the host that acts as an identifier for the server to remove
-	 * @throws IllegalArgumentException if you tried to unregister a server that has not been registered directly at this registry but at another one
+	 * @throws IllegalArgumentException if you try to unregister a server that has not
+	 * been registered directly at this registry but at another one
 	 */
 	public function removeServer(host:String):Void {
 		if (serverRegistry[host]) {
