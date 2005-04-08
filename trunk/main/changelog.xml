@@ -5,6 +5,10 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="3">
+         <day value="8">
+           <entry type="remove" package="static org.as2lib.util" class="ObjectUtil" method="isAvailable"></entry>
+           <entry type="remove" package="static org.as2lib.util" class="ObjectUtil" method="isEmpty"></entry>
+         </day>
          <day value="5">
            <entry type="add" package="org.as2lib.test.mock" class="MockControl" method="areToStringInvocationsHandled">Returns whether handling of toString method invocations on mock is turned on or off.</entry>
            <entry type="add" package="org.as2lib.test.mock" class="MockControl" method="setHandleToStringInvocations">Turn handling of toString method invocations on mock on or off.</entry>

@@ -17,39 +17,33 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.data.holder.NoSuchElementException;
-/*import org.as2lib.data.holder.Stack;
-import org.as2lib.data.holder.stack.SimpleStack;*/
 
 /**
- * ArrayUtil contains fundamental operations to manipulate Arrays.
- *
+ * {@code ArrayUtil} contains fundamental methods to manipulate {@code Array}s.
+ * 
  * @author Simon Wacker
  * @author Martin Heidegger
  * @author Christophe Herreman
  */
 class org.as2lib.util.ArrayUtil extends BasicClass {
-	/**
-	 * Private constructor.
-	 */
-	private function ArrayUtil(Void) {
-	}
 	
 	/**
-	 * Clones an Array.
+	 * Clones an array.
 	 *
-	 * @param array the Array to be cloned
-	 * @return a clone of the passed in Array
+	 * @param array the array to clone
+	 * @return a clone of the passed-in {@code array}
 	 */
 	public static function clone(array:Array):Array {
 		return array.concat();
 	}
 	
 	/**
-	 * Removes a specific element out of a array.
-	 *
+	 * Removes the given {@code element} out of the passed-in {@code array}.
+	 * 
 	 * @param array the array to remove the element out of
-	 * @param element the element to be removed
-	 * @return true if the element was removed. false if the element was not available
+	 * @param element the element to remove
+	 * @return {@code true} if {@code element} was removed and {@code false} if it was
+	 * not contained in the passed-in {@code array}
 	 */
 	public static function removeElement(array:Array, element):Boolean {
 		return removeAllOccurances(array, element);
@@ -57,17 +51,19 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	
 	
 	/**
-	 * Removes all occurances of a specific element out of a array.
-	 *
+	 * Removes all occurances of a the given {@code element} out of the passed-in
+	 * {@code array}.
+	 * 
 	 * @param array the array to remove the element out of
-	 * @param element the element to be removed
-	 * @return true if the element was removed. false if the element was not available
+	 * @param element the element to remove
+	 * @return {@code true} if {@code element} was removed and {@code false} if it was
+	 * not contained in the passed-in {@code array}
 	 */
 	public static function removeAllOccurances(array:Array, element):Boolean {
 		var i:Number = array.length;
 		var found:Boolean = false;
-		while(--i-(-1)) {
-			if(array[i] === element) {
+		while (--i-(-1)) {
+			if (array[i] === element) {
 				found = true;
 				array.splice(i, 1);
 			}
@@ -76,11 +72,13 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	}
 	
 	/**
-	 * Removes the last occurance of a specific element out of a array.
-	 *
+	 * Removes the last occurance of the given {@code element} out of the passed-in
+	 * {@code array}.
+	 * 
 	 * @param array the array to remove the element out of
-	 * @param element the element to be removed
-	 * @return true if the element was removed. false if the element was not available
+	 * @param element the element to remove
+	 * @return {@code true} if {@code element} was removed and {@code false} if it was
+	 * not contained in the passed-in {@code array}
 	 */
 	public static function removeLastOccurance(array:Array, element):Boolean {
 		var i:Number = array.length;
@@ -94,11 +92,13 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	}
 	
 	/**
-	 * Removes the first occurance a specific element out of the array.
-	 *
+	 * Removes the first occurance of the given {@code element} out of the passed-in
+	 * {@code array}.
+	 * 
 	 * @param array the array to remove the element out of
-	 * @param element the element to be removed
-	 * @return true if the element was removed. false if the element was not available
+	 * @param element the element to remove
+	 * @return {@code true} if {@code element} was removed and {@code false} if it was
+	 * not contained in the passed-in {@code array}
 	 */
 	public static function removeFirstOccurance(array:Array, element):Boolean {
 		var l:Number = array.length;
@@ -114,13 +114,15 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	}
 	
 	/**
-	 * Checks if the array already contains the passed object.
-	 * It checks the content with a for-in loop. In this way all arrays can
-	 * be passed in.
-	 *
-	 * @param array The array that shall contain the object.
-	 * @param object The object that shall be checked for availability.
-	 * @return true if the array contains the object else false
+	 * Checks if the passed-in {@code array} contains the given {@code object}.
+	 * 
+	 * <p>The content is searched through with a for..in loop. This enables any type of
+	 * array to be passed-in, indexed and associative arrays.
+	 * 
+	 * @param array the array that may contain the {@code object}
+	 * @param object the object that may be contained in the {@code array}
+	 * @return {@code true} if the {@code array} contains the {@code object} else
+	 * {@code false}
 	 */
 	public static function contains(array:Array, object):Boolean {
 		for (var i:String in array) {
@@ -132,19 +134,21 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	}
 	
 	/**
-	 * Checks the index of a object within a array.
-	 * It checks the content of a array by counting to the array length.
-	 * It will return the first occurency of the object within the array.
-	 * If the object wasn't found -1 will be returned.
-	 *
-	 * @param array The array that shall contain the object.
-	 * @param object The object to get the position from.
-	 * @return The number of the object within the array (if it was not found -1)
+	 * Returns the index of the given {@code object} within the passed-in {@code array}.
+	 * 
+	 * <p>The content of the {@code array} is searched through by iterating through the
+	 * array. This method returns the first occurence of the passed-in {@code object}
+	 * within the {@code array}. If the object could not be found {@code -1} will be
+	 * returned.
+	 * 
+	 * @param array the array to search through
+	 * @param object the object to return the position of
+	 * @return the position of the {@code object} within the {@code array} or {@code -1}
 	 */
 	public static function indexOf(array:Array, object):Number{
 	    var i:Number = array.length;
-		while(--i-(-1)) {
-			if(array[i] === object) {
+		while (--i-(-1)) {
+			if (array[i] === object) {
 				return i;
 			}
 		}
@@ -152,40 +156,15 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	}
 	
 	/**
-	 * Converts the passed Array to a Stack. The Boolean determines whether
-	 * the Array shall be converted in asceding or descending order. Pass true
-	 * for ascending and false for descending order.
-	 *
-	 * @param array the Array to be converted
-	 * @param order Boolean value specifying the convertion order
-	 * @return the Stack representation of the Array
-	 */
-	/*public static function toStack(array:Array, order:Boolean):Stack {
-		var result:Stack = new SimpleStack();
-		var len:Number = array.length;
-		if (!order) {
-			for (var i:Number = len-1; i >= 0; i--) {
-				result.push(array[i]);
-			}
-		} else {
-			for (var i:Number = 0; i < len; i-=-1) {
-				result.push(array[i]);
-			}
-		}
-		return result;
-	}*/
-	
-	/**
-	 * Shuffles the passed array.
+	 * Shuffles the passed-in {@code array}.
 	 * 
-	 * @param array Array that should get shuffled.
+	 * @param array the array to shuffle
 	 */
 	public static function shuffle(array:Array):Void {
 		var len:Number = array.length; 
 		var rand:Number;
 		var temp;
-		
-		for (var i:Number=len-1; i>=0; i--){ 
+		for (var i:Number = len-1; i >= 0; i--){ 
 			rand = Math.floor(Math.random()*len); 
 			temp = array[i]; 
 			array[i] = array[rand]; 
@@ -195,22 +174,27 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	
 	
 	/**
-	 * Swaps 2 values of an array.
-	 * The modifications are directly made to the array.
+	 * Swaps the value at position {@code i} with the value at position {@code j} of the
+	 * passed-in {@code array}.
 	 *
-	 * @param array The array to swap its values from.
-	 * @param i The index of the first value.
-	 * @param j The index of the second value.
-	 * @return array The same instance as applied.
+	 * <p>The modifications are directly made to the passed-in {@code array}.
+	 * 
+	 * @param array the array whose elements to swap
+	 * @param i the index of the first value
+	 * @param j the index of the second value
+	 * @return array the passed-in {@code array}
+	 * @throws IllegalArgumentException if the argument {@code array} is {@code null}
+	 * @throws NoSuchElementException if the passed-in positions {@code i} and {@code j}
+	 * are less than 0 or greater than the array's length
 	 */
 	public static function swap(array:Array, i:Number, j:Number):Array {
-		if(!array) {
+		if (!array) {
 			throw new IllegalArgumentException("Array to swap content has to be available", eval("th"+"is"), arguments);
 		}
-		if(i > array.length-1 || i < 0) {
+		if (i > array.length-1 || i < 0) {
 			throw new NoSuchElementException("The first index "+i+" is not available within the array", eval("th"+"is"), arguments);
 		}
-		if(j > array.length-1 || j < 0) {
+		if (j > array.length-1 || j < 0) {
 			throw new NoSuchElementException("The second index "+j+" is not available within the array", eval("th"+"is"), arguments);
 		}
 		var tmp = array[i];
@@ -220,23 +204,31 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	}
 	
 	/**
-	 * Compares two arrays if they contain the same values at the same positions.
+	 * Compares the two arrays {@code array1} and {@code array2}, whether they contain
+	 * the same values at the same positions.
 	 * 
-	 * @param a The first array to be compared
-	 * @param b The second array to be compared
-	 * @return true if the two arrays contain the same values at the same positions.
+	 * @param array1 the first array for the comparison
+	 * @param array2 the second array for the comparison
+	 * @return {@code true} if the two arrays contain the same values at the same
+	 * positions else {@code false}
 	 */
 	public static function isSame(array1:Array, array2:Array):Boolean {
 		var i = array1.length;
-		if(i != array2.length) {
+		if (i != array2.length) {
 			return false;
 		}
-		while(--i-(-1)) {
-			if(array1[i] !== array2[i]) {
+		while (--i-(-1)) {
+			if (array1[i] !== array2[i]) {
 				return false;
 			}
 		}
 		return true;
+	}
+	
+	/**
+	 * Private constructor.
+	 */
+	private function ArrayUtil(Void) {
 	}
 	
 }

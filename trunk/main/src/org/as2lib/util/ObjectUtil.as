@@ -17,12 +17,11 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.Config;
 import org.as2lib.util.ClassUtil;
-//import org.as2lib.util.Call;
 
 /**
- * ObjectUtil contains fundamental methods to efficiently and easily work
+ * {@code ObjectUtil} contains fundamental methods to efficiently and easily work
  * with any type of object.
- *
+ * 
  * @author Simon Wacker
  * @author Martin Heidegger
  */
@@ -85,17 +84,11 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	public static var TYPE_NULL = "null";
 	
 	/**
-	 * Private constructor.
-	 */
-	private function ObjectUtil(Void) {
-	}
-	
-	/**
-	 * Stringifies the passed-in object using the stringifier returned by
-	 * the static {@link Config#getObjectStringifier} method.
+	 * Stringifies the passed-in {@code object} using the stringifier returned by the
+	 * static {@link Config#getObjectStringifier} method.
 	 * 
 	 * @param object the object to stringify
-	 * @return the string representation of the passed-in object
+	 * @return the string representation of the passed-in {@code object}
 	 */
 	public static function stringify(object):String {
 		return Config.getObjectStringifier().execute(object);
@@ -124,17 +117,19 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Checks if the type of the passed-in object matches the passed-in type.
+	 * Checks if the type of the passed-in {@code object} matches the passed-in 
+	 * {@code type}.
 	 * 
-	 * <p>Every value (even 'null' and 'undefined') matches type "Object".
+	 * <p>Every value (even {@code null} and {@code undefined}) matches type
+	 * {@code Object}.
 	 *
-	 * <p>Instances as well as their primitive correspondent match the types
+	 * <p>Instances as well as their primitive correspondent match the types 
 	 * {@link String}, {@link Number} or {@link Boolean}.
-	 *
-	 * @param object the object whose type to compare with the passed-in type
+	 * 
+	 * @param object the object whose type to compare with the passed-in {@code type}
 	 * @param type the type to use for the comparison
-	 * @return true if the type of the object matches the passed-in type else
-	 * false
+	 * @return {@code true} if the type of the {@code object} matches the passed-in
+	 * {@code type} else {@code false}
 	 */
 	public static function typesMatch(object, type:Function):Boolean {
 		if (type === Object) {
@@ -161,28 +156,28 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Compares the results of an execution of the {@link #typeof} method
-	 * applied to both passed-in objects.
-	 *
+	 * Compares the results of an execution of the {@code typeof} method applied to
+	 * both passed-in objects.
+	 * 
 	 * @param firstObject the first object of the comparison
 	 * @param secondObject the second object of the comparison
-	 * @return true if the execution to the {@link #typeof} method returns
-	 * the same else false
+	 * @return {@code true} if the execution of the {@code typeof} method returns the 
+	 * same else {@code false}
 	 */
 	public static function compareTypeOf(firstObject, secondObject):Boolean {
 		return (typeof(firstObject) == typeof(secondObject));
 	}
 	
 	/**
-	 * Checks if the passed-in object is a primitive type.
+	 * Checks if the passed-in {@code object} is a primitive type.
 	 *
-	 * <p>Primitive types are strings, numbers and booleans that are not
-	 * created via the new operator. For example 'myString', 3 and true are
-	 * primitive types. But "new String('myString')", "new Number(3)" and
-	 * "new Boolean(true)" are not.
-	 *
+	 * <p>Primitive types are strings, numbers and booleans that are not created via the
+	 * new operator. For example {@code "myString"}, {@code 3} and {@code true} are
+	 * primitive types, but {@code new String("myString")}, {@code new Number(3)} and
+	 * {@code new Boolean(true)} are not.
+	 * 
 	 * @param object the object to check whether it is a prmitive type
-	 * @return true if the object is a primitive type else false
+	 * @return {@code true} if {@code object} is a primitive type else {@code false}
 	 */
 	public static function isPrimitiveType(object):Boolean {
 		var t:String = typeof(object);
@@ -190,14 +185,14 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Checks if the result of an execution of the {@link #typeof} method
-	 * on the passed-in object matches the passed-in type.
+	 * Checks if the result of an execution of the {@code typeof} method on the
+	 * passed-in {@code object} matches the passed-in {@code type}.
 	 * 
-	 * <p>All possible types are available as static constant.
+	 * <p>All possible types are available as constants.
 	 *
 	 * @param object the object whose type to check
 	 * @param type the string representation of the type
-	 * @return true if the object is of type the specified type
+	 * @return {@code true} if the object is of the given {@code type}
 	 * @see #TYPE_STRING
 	 * @see #TYPE_NUMBER
 	 * @see #TYPE_OBJECT
@@ -211,16 +206,17 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Checks if the passed-in object is an instance of the passed-in type.
-	 *
-	 * <p>If the passed-in type is {@link Object} true will be returned,
-	 * because every object is an instance of {@link Object}, event null
-	 * and undefined.
-	 *
+	 * Checks if the passed-in {@code object} is an instance of the passed-in
+	 * {@code type}.
+	 * 
+	 * <p>If the passed-in {@code type} is {@code Object}, {@code true} will always be
+	 * returned, because every object is an instance of {@code Object}, even {@code null}
+	 * and {@code undefined}.
+	 * 
 	 * @param object the object to check
-	 * @param type the type used for the instance of check
-	 * @return true if the passed-in object is an instance of the specified
-	 * type else false
+	 * @param type the type to check whether the {@code object} is an instance of
+	 * @return {@code true} if the passed-in {@code object} is an instance of the given
+	 * {@code type} else {@code false}
 	 */
 	public static function isInstanceOf(object, type:Function):Boolean {
 		if (type === Object) {
@@ -230,17 +226,16 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Checks if the passed-in object is an explicit instance of the passed-in
-	 * class.
-	 *
-	 * <p>That means that true will only be returned if the object was instantiated
-	 * from the specified class.
-	 *
-	 * @param object the object to check whether it is an explicit instance of
-	 * the class
+	 * Checks if the passed-in {@code object} is an explicit instance of the passed-in
+	 * {@code clazz}.
+	 * 
+	 * <p>That means that {@code true} will only be returned if the object was instantiated
+	 * directly from the given {@code clazz}.
+	 * 
+	 * @param object the object to check whether it is an explicit instance of {@code clazz}
 	 * @param clazz the class to use as the basis for the check
-	 * @return true if the object is an explicit instance of the class else
-	 * false
+	 * @return {@code true} if the object is an explicit instance of {@code clazz} else
+	 * {@code false}
 	 */
 	public static function isExplicitInstanceOf(object, clazz:Function):Boolean {
 		if (clazz == String) {
@@ -257,26 +252,9 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Checks if the passed-in object is empty.
-	 *
-	 * <p>The object is classified as empty when its value is either undefined
-	 * or null.
-	 *
-	 * @param object the object that shall be checked for emptyness
-	 * @return true if the object is empty else false
+	 * Private constructor.
 	 */
-	public static function isEmpty(object):Boolean {
-		return (object == undefined);
-	}
-	
-	/**
-	 * Checks if the passed in object is not empty and thus available.
-	 *
-	 * @param object the object that shall be checked for availability
-	 * @return true if the object is available else false
-	 */
-	public static function isAvailable(object):Boolean {
-		return (object != undefined);
+	private function ObjectUtil(Void) {
 	}
 	
 }

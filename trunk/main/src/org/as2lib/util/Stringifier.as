@@ -17,21 +17,22 @@
 import org.as2lib.core.BasicInterface;
 
 /**
- * Stringifiers are used to stringify any kind of object.
- *
- * <p>The concrete stringifier should specify in its documentation what
- * type of object it epects, that means from which type it expects the
- * object to be an instance of.
+ * {@code Stringifier} is the basic interface for classes that are responsible for
+ * creating string representations of objects.
+ * 
+ * <p>The concrete stringifier should specify in its documentation what type of
+ * object it epects, that means from which type it expects the object to be an
+ * instance of.
  *
  * @author Simon Wacker
  */
 interface org.as2lib.util.Stringifier extends BasicInterface {
 	
 	/**
-	 * Returns the string representation of the passed-in object.
+	 * Returns the string representation of the passed-in {@code target} object.
 	 *
 	 * @param target the target object to stringify
-	 * @return the string representation of the target object
+	 * @return the string representation of the {@code target} object
 	 */
 	public function execute(target):String;
 	
