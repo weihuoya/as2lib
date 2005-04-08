@@ -17,19 +17,22 @@
 import org.as2lib.core.BasicClass;
 
 /**
- * ClassUtil contains fundamental operations to efficiently and easily work
+ * {@code ClassUtil} contains fundamental operations to efficiently and easily work
  * with any class. All methods here are supposed to be used with functions treated
  * as classes.
- *
+ * 
  * @author Martin Heidegger
+ * @author Simon Wacker
  */
 class org.as2lib.util.ClassUtil extends BasicClass {
+	
 	/**
-	 * Checks if the fistly passed class is extended by the secondly passed class.
+	 * Checks if the passed-in {@code subClass} is extended by the passed-in
+	 * {@code superClass}.
 	 * 
-	 * @param subClass class that shall be checked.
-	 * @param superClass class that shall be matched
-	 * @return true if subClass is a subclass of superClass
+	 * @param subClass the class to check
+	 * @param superClass the class to match
+	 * @return {@code true} if {@code subClass} is a sub-class of {@code superClass}
 	 */
 	public static function isSubClassOf(subClass:Function, superClass:Function):Boolean {
 		var base = subClass.prototype;
@@ -44,25 +47,28 @@ class org.as2lib.util.ClassUtil extends BasicClass {
 	}
 	
 	/**
-	 * Checks if the passed class implements the interface.
+	 * Checks if the passed-in {@code clazz} implements the passed-in {@code interfaze}.
 	 * 
-	 * @param clazz class that shall be checked.
-	 * @param interfaceObject interface that the class shall implement
+	 * @param clazz the class to check
+	 * @param interfaze the interface the {@code clazz} may implement
+	 * @return {@code true} if the passed-in {@code clazz} implements the passed-in
+	 * {@code interfaze} else {@code false}
 	 */
-	public static function isImplementationOf(clazz:Function, interfaceObject:Function):Boolean {
+	public static function isImplementationOf(clazz:Function, interfaze:Function):Boolean {
 		var base = clazz.prototype;
 		// A interface must not be in the prototype chain.
-		if(isSubClassOf(clazz, interfaceObject)) {
+		if (isSubClassOf(clazz, interfaze)) {
 			return false;
 		}
-		// If its a interface then it has to be not extended but the thing has to be a instance of it
-		return (createCleanInstance(clazz) instanceof interfaceObject);
+		// If it's an interface then it must not be extended but the class has to be an instance of it
+		return (createCleanInstance(clazz) instanceof interfaze);
 	}
 	
 	/**
-	 * Creates a new Instance of a class without calling the constructor.
+	 * Creates a new instance of the passed-in {@code clazz} without invoking its 
+	 * constructor.
 	 * 
-	 * @param clazz	class to create a new Instance.
+	 * @param clazz the	class to create a new instance of
 	 * @author Martin Heidegger
 	 * @author Ralf Bokelberg (www.qlod.com)
 	 */
@@ -72,4 +78,5 @@ class org.as2lib.util.ClassUtil extends BasicClass {
 		result.__constructor__ = clazz;
 		return result;
 	}
+	
 }

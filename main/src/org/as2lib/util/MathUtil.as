@@ -18,72 +18,69 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.data.type.*;
 
 /**
- * MathUtil contains fundamental math operations.
+ * {@code MathUtil} contains fundamental math operations.
  *
  * @author Christophe Herreman
  * @author Martin Heidegger
+ * @author Simon Wacker
  */
 class org.as2lib.util.MathUtil extends BasicClass {
-	/**
-	 * Private constructor.
-	 */
-	private function MathUtil() {
-	}
 	
 	/**
-	 * Checks if a integer is odd.
-	 *
-	 * @param n The number to check.
-	 * @return True if the number is odd, false if not.
+	 * Checks if the passed-in integer {@code n} is odd.
+	 * 
+	 * @param n the integer to check
+	 * @return {@code true} if {@code n} is odd else {@code false}
 	 */
 	public static function isOdd(n:Integer):Boolean {
 		return Boolean(n%2);
 	}
 	
 	/**
-	 * Checks if a integer is even.
+	 * Checks if the passed-in integer {@code n} is even.
 	 *
-	 * @param n The number to check.
-	 * @return True if the number is even, false if not.
+	 * @param n the integer to check
+	 * @return {@code true} if {@code n} is even else {@code false}
 	 */	
 	public static function isEven(n:Integer):Boolean {
 		return (n%2 == 0);
 	}
 	
 	/**
-	 * Checks if a number is an integer.
+	 * Checks if the passed-in number {@code n} is an integer.
 	 *
-	 * @param n The number to check.
-	 * @return True if the number is an integer, false if not.
+	 * @param n the number to check
+	 * @return {@code true} if {@code n} is an integer else {@code false}
 	 */	
 	public static function isInteger(n:Number):Boolean {
 		return (n%1 == 0);
 	}
 
 	/**
-	 * Checks if a number is natural.
+	 * Checks if the passed-in number {@code n} is natural.
 	 *
-	 * @param n The number to check.
-	 * @return True if the number is a natural, false if not.
+	 * @param n the number to check
+	 * @return {@code true} if {@code n} is natural else {@code false}
 	 */	
 	public static function isNatural(n:Number):Boolean {
 		return (n >= 0 && n%1 == 0);
 	} 
 	
 	/**
-	 * Checks if a number is a prime number.
-	 * A prime number is a positive integer that has no positive integer
-	 * divisors other than 1 and itself.
-	 *
-	 * @param n The number to check.
-	 * @return True if the number is a prime, false if not.
+	 * Checks if the passed-in number {@code n} is a prime.
+	 * 
+	 * <p>A prime number is a positive integer that has no positive integer divisors
+	 * other than 1 and itself.
+	 * 
+	 * @param n the number to check
+	 * @return {@code true} if {@code n} is a prime else {@code false}
 	 */	
 	public static function isPrime(n:NaturalNumber):Boolean {
-		if(n == 1 || (n>2 && n%2 == 0) ) {
+		if (n == 1 || (n>2 && n%2 == 0)) {
 			return false;
 		}
-		for(var i:Number=2; i<n-1; i++){
-			if(n%i == 0){
+		for (var i:Number = 2; i < n-1; i++) {
+			if (n%i == 0){
 				return false;
 			}
 		}
@@ -91,34 +88,34 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	}
 		
 	/**
-	 * Calculates the factorial of a given number.
+	 * Calculates the factorial of the passed-in number {@code n}.
 	 *
-	 * @param n The number to calculate its factorial from.
-	 * @return The factorial of the number.
+	 * @param n the number to calculate the factorial of
+	 * @return the factorial of {@code n}
 	 */
 	public static function factorial(n:NaturalNumberIncludingZero):Number {
-		if(n == 0) {
+		if (n == 0) {
 			return 1;
 		}
 		var d:Number = n.valueOf(); // Performance Speed up (this way the instance will not be used anymore
 		var i:Number = d-1;
-		while(i) {
-			d=d*i;
+		while (i) {
+			d = d*i;
 			i--;
 		}
 		return d;
 	}
 		
 	/**
-	 * Returns an array with all the divisors of a given number.
-	 *
-	 * @param n The number to get the divisors from.
-	 * @return An array with the divisors of the number.
+	 * Returns an array with all divisors of the passed-in number {@code n}
+	 * 
+	 * @param n the number to return the divisors of
+	 * @return an array that contains the divisors of {@code n}
 	 */
 	public static function getDivisors(n:NaturalNumberIncludingZero):Array {
 		var divisors:Array = new Array();
-		for(var i:Number=0; i<=n; i++) {
-			if(n%i == 0){
+		for (var i:Number = 0; i <= n; i++) {
+			if (n%i == 0){
 				divisors.push(i);
 			}
 		}
@@ -126,17 +123,24 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	}
 	
 	/**
-	 * Rounds a number to the nearest value.
-	 * It works the same as the Math.round() method,
-	 * but is adds a new argument, specifying the number of values after the comma.
+	 * Rounds the passed-in number {@code n} to the nearest value.
 	 * 
-	 * @param n The number to round.
-	 * @param c The number of values after the comma.
-	 * @returns The rounded number.
+	 * <p>It works basically the same as the {@code Math.round} method, but it adds a
+	 * new argument to specify the number of decimal spaces.
+	 * 
+	 * @param n the number to round
+	 * @param c the number of decimal spaces
+	 * @returns the rounded number
 	 */
 	public static function round(n:Number, c:Number):Number {
 		var r:Number = Math.pow(10,c);
 		return Math.round(n*r)/r;
 	} 
+	
+	/**
+	 * Private constructor.
+	 */
+	private function MathUtil() {
+	}
 	
 }

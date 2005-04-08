@@ -17,20 +17,19 @@
 import org.as2lib.core.BasicClass;
 
 /**
- * AccessPermission lets you adjust the access permissions of members like
- * methods and properties in one specific context.
+ * {@code AccessPermission} adjusts the access permissions of members like methods
+ * and properties in a specific context.
+ * 
+ * <p>You can hide methods from for..in loops and protect them from deletion and
+ * from being overwritten.
  *
- * <p>You can hide methods from for..in loops, protect them from
- * deletion and from being overwritten.
- *
- * <p>Note that no matter what access permissions you set they can be over-
- * written.
- *
- * <p>Also note that the access permissions are not applied to the object
- * but to the reference to the object. That means that the object can for
- * example be enumerable in one reference but not in another. Here's a little
- * example.
- *
+ * <p>Note that no matter what access permissions you set they can be overwritten.
+ * 
+ * <p>Also note that the access permissions are not applied to the object but to
+ * the reference to the object. That means that the object can for example be
+ * enumerable in one reference but not in another.
+ * 
+ * <p>Example:
  * <code>
  *   var object:Object = new Object();
  *   object.myProperty = new Object();
@@ -46,7 +45,7 @@ import org.as2lib.core.BasicClass;
  *   trace("mySecondReference:   Value: " + object.mySecondReference);
  * </code>
  *
- * <p>The output of the above example looks as follows:
+ * <p>Output:
  * <pre>
  *   myProperty:          Value: [object Object]
  *   mySecondReference:   Value: [object Object]
@@ -56,15 +55,15 @@ import org.as2lib.core.BasicClass;
  *   mySecondReference:   Value: undefined
  * </pre>
  *
- * <p>As you can see, the above statement holds true. We have two references
- * that reference the same object. We set the access permission of one
- * reference. We can then not delete the reference the access permission
- * was applied to, but the other reference.
+ * <p>As you can see, the above statement holds true. We have two references that
+ * reference the same object. We set the access permission of one reference. We can
+ * then not delete the reference the access permission was applied to, but the other
+ * reference.
+ * 
+ * <p>Following is another example with a property in its normal state and another
+ * protected property we applied the {@link #ALLOW_NOTHING} access permission to.
  *
- * <p>Following is another example with a property in its normal state
- * and another protected property we applied the {@link #ALLOW_NOTHING}
- * access permission to.
- *
+ * <p>Example:
  * <code>
  *   var object:Object = new Object();
  *   object.myNormalProperty = "myNormalPropertyValue";
@@ -86,7 +85,7 @@ import org.as2lib.core.BasicClass;
  *   trace("myProtectedProperty:   Value After Deletion: " + object.myProtectedProperty);
  * </code>
  *
- * <p>The output of this example looks as follows:
+ * <p>Output:
  * <pre>
  *   myNormalProperty:      Default Permission: 0
  *   myProtectedProperty:   Default Permission: 0
@@ -98,13 +97,13 @@ import org.as2lib.core.BasicClass;
  *   myProtectedProperty:   Value After Deletion: myProtectedPropertyValue
  * </pre>
  *
- * <p>As you can see the protected property cannot be deleted, overwritten
- * and is hidden from for..in loops, while the non-protected property
- * can be deleted, can be overwritten and can be enumerated.
- *
- * <p>Besides the {@link #get} method you can check properties for specific
- * access permissions using the {@link #isEnumerable}, {@link #isDeletable}
- * and {@link #isOverwritable} methods.
+ * <p>As you can see the protected property cannot be deleted, overwritten and is
+ * hidden from for..in loops, while the non-protected property can be deleted, can
+ * be overwritten and can be enumerated.
+ * 
+ * <p>Besides the {@link #get} method you can check up on properties for specific
+ * access permissions using the {@link #isEnumerable}, {@link #isDeletable} and
+ * {@link #isOverwritable} methods.
  *
  * @author Simon Wacker
  */
@@ -136,98 +135,100 @@ class org.as2lib.util.AccessPermission extends BasicClass {
 	public static var ALLOW_NOTHING = 7;
 	
 	/**
-	 * Sets the access permission of an object by an access value.
+	 * Sets the access permission of a reference by an access code.
 	 * 
-	 * <p>Uses ASSetPropFlags to set the permissions of the object.
-	 * You can apply the access values
+	 * <p>The following access codes are applicable:
 	 * <table>
 	 *   <tr>
 	 *     <th>{@link #HIDE}</th>
-	 *     <td>Hides object from for-in loops.</td>
+	 *     <td>Hides the reference from for-in loops.</td>
 	 *   </tr>
 	 *   <tr>
 	 *     <th>{@link #PROTECT_DELETE}</th>
-	 *     <td>Protects an object from deletion</td>
+	 *     <td>Protects the reference from deletion</td>
 	 *   </tr>
 	 *   <tr>
 	 *     <th>{@link #PROTECT_OVERWRITE}</th>
-	 *     <td>Protects an object from overwriting</td>
+	 *     <td>Protects the reference from overwriting</td>
 	 *   </tr>
 	 *   <tr>
-	 *     <th>{@link #ALLOW_EVERYTHING}</th>
-	 *     <td>Allows everything (reading, deleting, over-writing)</td>
+	 *     <th>{@link #ALLOW_ALL}</th>
+	 *     <td>Allows everything to be done with the reference.</td>
 	 *   </tr>
 	 *   <tr>
 	 *     <th>{@link #ALLOW_NOTHING}</th>
-	 *     <td>Allows nothing (reading, deleting, over-writing)</td>
+	 *     <td>Allows nothing to be done with the reference.</td>
 	 *   </tr>
 	 * </table>
-	 * as fast references.
 	 * 
-	 * You can combine these values as follows:
-	 * {@link #PROTECT_DELETE} | {@link #PROTECT_OVERWRITE}
-	 * to apply two access permissions.
+	 * <p>These access codes can be combined as follows to apply multiple access
+	 * permissions.
+	 * <code>
+	 *   AccessPermission.PROTECT_DELETE | AccessPermission.PROTECT_OVERWRITE
+	 * </code>
 	 *
-	 * @param target the object that holds references to the objects the access permissions shall be applied
-	 * @param objects the array of reference names the access permission shall be applied to
-	 * @param access the access permissions that shall be applied.
+	 * <p>Note that every new invocation of this method simply overwrites the old access
+	 * permissions of the reference.
+	 * 
+	 * @param target the object that holds references to the objects the access permissions
+	 * shall be applied to
+	 * @param referenceNames the names of the references to apply the access permission to
+	 * @param access the access permissions to apply
 	 */
-	public static function set(target, objects:Array, access:Number):Void {
-		_global.ASSetPropFlags(target, objects, access, true);
+	public static function set(target, referenceNames:Array, access:Number):Void {
+		_global.ASSetPropFlags(target, referenceNames, access, true);
 	}
 	
 	/**
-	 * Returns the current access permission of the object. The permission is
-	 * represented by a Number. Refer to http://chattyfig.figleaf.com/flashcoders-wiki/index.php?ASSetPropFlags
-	 * for a listing of these numbers and the information they represent.
+	 * Returns the current access permission of the reference.
 	 *
-	 * <p>You can also find out what the returned access permission number
-	 * means using the constants {@link #ALLOW_EVERYTHING}, {@link #ALLOW_NOTHING}, {@link #HIDE},
-	 * {@link #PROTECT_DELETE} and {@link #PROTECT_OVERWRITE}. The returned number must be
-	 * either of these constants or a bitwise or combination of them.
-	 *
-	 * @param target the target object the object resides in
-	 * @param object the name of the object the access permission shall be returned for
-	 * @return a number representing the access permission of the object
+	 * <p>The permission is represented by a {@code Number}. This number is a bitwise
+	 * combination of the three access specifier {@link #HIDE}, {@link #PROTECT_DELETE}
+	 * and {@link #PROTECT_OVERWRITE}. You can find out what the returned access
+	 * permission number means using these constants.
+	 * 
+	 * @param target the target object that holds the reference
+	 * @param referenceName the name of the reference to return the access permission for
+	 * @return a number representing the access permission of the reference
 	 */
-	public static function get(target, object:String):Number {
+	public static function get(target, referenceName:String):Number {
 		var result:Number = 0;
-		if (!isEnumerable(target, object)) result |= HIDE;
-		if (!isOverwritable(target, object)) result |= PROTECT_OVERWRITE;
-		if (!isDeletable(target, object)) result |= PROTECT_DELETE;
+		if (!isEnumerable(target, referenceName)) result |= HIDE;
+		if (!isOverwritable(target, referenceName)) result |= PROTECT_OVERWRITE;
+		if (!isDeletable(target, referenceName)) result |= PROTECT_DELETE;
 		return result;
 	}
 	
 	/**
-	 * Returns whether the object is enumerable.
-	 *
-	 * @param target the target object the object resides in
-	 * @param object the name of the object that shall be checked for enumerability
-	 * @return true if the object is enumerable else false
+	 * Returns whether the reference is enumerable.
+	 * 
+	 * @param target the target object that holds the reference
+	 * @param referenceName the name of the reference to return whether it is enumerable
+	 * @return {@code true} if the reference is enumerable else {@code false}
 	 * @link http://chattyfig.figleaf.com/flashcoders-wiki/index.php?ASSetPropFlags
 	 */
-	public static function isEnumerable(target, object:String):Boolean {
-		// Why not use target.isPropertyEnumerable(object)?
-		for(var i:String in target){
-			if(i == object) return true;
+	public static function isEnumerable(target, referenceName:String):Boolean {
+		// Why not use target.isPropertyEnumerable(referenceName)?
+		for (var i:String in target){
+			if (i == referenceName) return true;
 		}
 		return false;
 	}
 	
 	/**
-	 * Returns whether the object is overwritable.
+	 * Returns whether the reference is overwritable.
 	 * 
-	 * @param target the target object the object resides in
-	 * @param object the name of the object that shall be checked for overwritability
-	 * @return true if the object is overwritable else false
+	 * @param target the target object that holds the reference
+	 * @param referenceName the name of the reference to return whether it is overwritable
+	 * @return {@code true} if the reference is overwritable else {@code false}
 	 * @link http://chattyfig.figleaf.com/flashcoders-wiki/index.php?ASSetPropFlags
 	 */
-	public static function isOverwritable(target, object:String):Boolean {
-		var tmp = target[object];
+	public static function isOverwritable(target, referenceName:String):Boolean {
+		var tmp = target[referenceName];
 		var newVal = (tmp == 0) ? 1 : 0;
-		target[object] = newVal;
-		if(target[object] == newVal){
-			target[object] = tmp;
+		target[referenceName] = newVal;
+		if(target[referenceName] == newVal){
+			target[referenceName] = tmp;
 			return true;
 		}else{
 			return false;
@@ -235,21 +236,21 @@ class org.as2lib.util.AccessPermission extends BasicClass {
 	}
 	
 	/**
-	 * Returns whether the object is deletable.
+	 * Returns whether the reference is deletable.
 	 * 
-	 * @param target the target object the object resides in
-	 * @param object the name of the object that shall be checked for deletability
-	 * @return true if the object is deletable else false
+	 * @param target the target object that holds the reference
+	 * @param referenceName the name of the reference to return whether it is deletable
+	 * @return {@code true} if the reference is deletable else {@code false}
 	 * @link http://chattyfig.figleaf.com/flashcoders-wiki/index.php?ASSetPropFlags
 	 */
-	public static function isDeletable(target, object:String):Boolean {
-		var tmp = target[object];
+	public static function isDeletable(target, referenceName:String):Boolean {
+		var tmp = target[referenceName];
 		if (tmp === undefined) return false;
-		var enumerable:Boolean = isEnumerable(target, object);
-		delete target[object];
-		if(target[object] === undefined){
-			target[object] = tmp;
-			_global.ASSetPropFlags(target, object, !enumerable, 1);
+		var enumerable:Boolean = isEnumerable(target, referenceName);
+		delete target[referenceName];
+		if(target[referenceName] === undefined){
+			target[referenceName] = tmp;
+			_global.ASSetPropFlags(target, referenceName, !enumerable, 1);
 			return true;
 		}
 		return false;

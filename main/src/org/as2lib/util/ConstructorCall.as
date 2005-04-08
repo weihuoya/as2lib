@@ -19,21 +19,22 @@ import org.as2lib.util.ClassUtil;
 import org.as2lib.util.Call;
 
 /**
- * Constructor Call is to call a constructor by remote.
- * It default application is within Testcases where you try if a constructor throws a exception.
- *
+ * {@code ConstructorCall} enables you to create instances of a class without having
+ * to know the class itself.
+ * 
  * @author Martin Heidegger
  * @author Christoph Atteneder
+ * @author Simon Wacker
  */
 class org.as2lib.util.ConstructorCall extends Call {
 	
-	/** The Class to be instanciated. */
+	/** The class to instantiate. */
 	private var clazz:Function;
 	
 	/**
-	 * Constructs a new Call instance.
+	 * Constructs a new {@code ConstructorCall} instance.
 	 *
-	 * @param clazz Class to be constructed.
+	 * @param clazz the class to instantiate
 	 */
 	public function ConstructorCall(clazz:Function) {
 		super (this, clazz);
@@ -41,11 +42,11 @@ class org.as2lib.util.ConstructorCall extends Call {
 	}
 	
 	/**
-	 * Executes the passed method on the passed object with the given
-	 * arguments and returns the result of the execution.
-	 *
-	 * @param args the arguments that shall be passed
-	 * @return the result of the method execution
+	 * Creates a new instance of the class specified on construction passing the given
+	 * {@code args} as parameters.
+	 * 
+	 * @param args the arguments to pass as parameters to the class's constructor
+	 * @return a new instance of the class specified on construction
 	 */
 	public function execute(args:Array) {
 		var instance = ClassUtil.createCleanInstance(clazz);

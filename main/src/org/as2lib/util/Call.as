@@ -22,11 +22,11 @@ import org.as2lib.util.Executable;
 import org.as2lib.util.AccessPermission;
 
 /**
- * Call enables another object to make call a method in another scope
- * without having to know where.
- *
- * <p>This enables you to pass a call to another object and let the object
- * execute the call. You use the {@link #execute} method to do so.
+ * {@code Call} enables another object to call a method in another scope without
+ * having to know the scope.
+ * 
+ * <p>This enables you to pass a call to another object and let the object execute
+ * the call without losing its scope. You use the {@link #execute} method to do so.
  *
  * @author Simon Wacker
  * @author Martin Heidegger
@@ -40,11 +40,12 @@ class org.as2lib.util.Call extends BasicClass implements Executable {
 	private var method:Function;
 	
 	/**
-	 * Constructs a new Call instance.
+	 * Constructs a new {@code Call} instance.
 	 *
 	 * @param object the object to execute the method on
 	 * @param method the method to execute
-	 * @throws IllegalArgumentException if either the object or the method is null or undefined
+	 * @throws IllegalArgumentException if either {@code object} or {@code method} is 
+	 * {@code null} or {@code undefined}
 	 */
 	public function Call(object, method:Function) {
 		if (object == null) {
@@ -58,14 +59,54 @@ class org.as2lib.util.Call extends BasicClass implements Executable {
 	}
 	
 	/**
-	 * Executes the method on the object passing the given arguments and
-	 * returns the result of the execution.
-	 *
-	 * @param args the arguments to pass on method invocation
-	 * @return the result of the method invocation
+	 * Executes the method on the object passing the given {@code args} and returns the
+	 * result of the execution.
+	 * 
+	 * @param args the arguments to pass to the method on execution
+	 * @return the result of the method execution
 	 */
 	public function execute(args:Array) {
 		return method.apply(object, args);
+	}
+	
+	/**
+	 * Iterates over the passed-in {@code object} using the for..in loop and executes
+	 * this call passing the found member, its name and the passed-in {@code object}.
+	 * 
+	 * <p>Example:
+	 * <code>
+	 *   class MyClass {
+	 * 
+	 *       private var a:String;
+	 *       private var b:String;
+	 *       private var c:String;
+	 * 
+	 *       public function MyClass() {
+	 *           a = "1";
+	 *           b = "2";
+	 *           c = "2";
+	 *       }
+	 *      
+	 *       public function traceObject(value, name:String, inObject):Void {
+	 *           trace(name + ": " + value);
+	 *       }
+	 * 
+	 *       public function listAll() {
+	 *           new Call(this, traceObject).forEach(this);
+	 *       }
+	 *   }
+	 * </code>
+	 *
+	 * <p>Note that only members visible to for..in loops cause the {@link execute}
+	 * method to be invoked.
+	 * 
+	 * @param object the object to iterate over
+	 */
+	public function forEach(object):Void {
+		var i:String;
+		for (i in object) {
+			execute([object[i], i, object]);
+		}
 	}
 	
 	/**
@@ -78,7 +119,7 @@ class org.as2lib.util.Call extends BasicClass implements Executable {
 		var result:String="";
 		result += "[type " + ReflectUtil.getTypeNameForInstance(this) + " -> ";
 		AccessPermission.set(object, null, AccessPermission.ALLOW_ALL);
-		if (ObjectUtil.isEmpty(object)) {
+		if (object == null) {
 			result += object.toString() + "." + ObjectUtil.getChildName(object, method);
 		} else {
 			var className:String = ReflectUtil.getTypeName(object);
@@ -91,46 +132,6 @@ class org.as2lib.util.Call extends BasicClass implements Executable {
 		}
 		result += "()]";
 		return result;
-	}
-	
-	/**
-	 * Iterates over the passed-in object using the for..in loop and executes
-	 * this call passing the found object, its name and the passed-in object.
-	 * 
-	 * <p>Example:
-	 * <code>
-	 *   class MyClass {
-	 * 
-	 *     private var a:String;
-	 *     private var b:String;
-	 *     private var c:String;
-	 * 
-	 *     public function MyClass() {
-	 *       a = "1";
-	 *       b = "2";
-	 *       c = "2";
-	 *     }
-	 *      
-	 *     public function traceObject(value, name:String, inObject):Void {
-	 *       trace(name + ": " + value);
-	 *     }
-	 * 
-	 *     public function listAll() {
-	 *       new Call(this, traceObject).forEach(this);
-	 *     }
-	 *   }
-	 * </code>
-	 *
-	 * <p>Note that only members visible for for-in loops cause the {@link execute}
-	 * method to become invoked.
-	 *  
-	 * @param object the object to iterate over
-	 */
-	public function forEach(object):Void {
-		var i:String;
-		for (i in object) {
-			execute([object[i], i, object]);
-		}
 	}
 	
 }
