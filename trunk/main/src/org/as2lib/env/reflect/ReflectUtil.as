@@ -17,10 +17,10 @@
 import org.as2lib.core.BasicClass;
 
 /**
- * ReflectUtil is used to obtain simple information about members.
- *
- * <p>It is independent on any module of the as2lib. And thus does not
- * include them and does not dramatically increase the file size.
+ * {@code ReflectUtil} obtains simple information about members.
+ * 
+ * <p>It is independent on any module of the As2lib. And thus does not include them
+ * and does not dramatically increase the file size.
  *
  * @author Simon Wacker
  */
@@ -77,10 +77,10 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Searches for the passed-in {@code c} (prototype) in the passed-in
-	 * {code p} (package) and sub-packages and returns the name of the type
-	 * that declares the prototype.
-	 *
+	 * Searches for the passed-in {@code c} (prototype) in the passed-in {code p}
+	 * (package) and sub-packages and returns the name of the type that declares the
+	 * prototype.
+	 * 
 	 * <p>{@code null} will be returned if:
 	 * <ul>
 	 *   <li>The prototype or package is {@code null} or {@code undefined}</li>
@@ -187,9 +187,9 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Returns the name of the {@code method} on the prototype chain starting
-	 * from the passed-in {@code prototype}.
-	 *
+	 * Returns the name of the {@code method} on the prototype chain starting from the
+	 * passed-in {@code prototype}.
+	 * 
 	 * <p>{@code null} will be returned if:
 	 * <ul>
 	 *   <li>The passed-in {@code method} or {@code prototype} are {@code null}</li>
@@ -233,12 +233,11 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Returns whether the method with the passed-in {@code methodName} is
-	 * static, that means a per type method.
-	 *
-	 * <p>{@code false} will always be returned if the passed-in {@code methodName}
-	 * is {@code null} or an empty string or if the passed-in {@code instance}
-	 * is {@code null}.
+	 * Returns whether the method with the passed-in {@code methodName} is static, that
+	 * means a per type method.
+	 * 
+	 * <p>{@code false} will always be returned if the passed-in {@code methodName} is
+	 * {@code null} or an empty string or if the passed-in {@code instance} is {@code null}.
 	 *
 	 * @param methodName the name of the method to check whether it is static
 	 * @param instance the instance of the type that implements the method
@@ -254,12 +253,11 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Returns whether the method with the passed-in {@code methodName} is
-	 * static, that means a per type method.
-	 *
-	 * <p>{@code false} will always be returned if the passed-in {@code methodName}
-	 * is {@code null} or an empty string or if the passed-in {@code type}
-	 * is {@code null}.
+	 * Returns whether the method with the passed-in {@code methodName} is static, that
+	 * means a per type method.
+	 * 
+	 * <p>{@code false} will always be returned if the passed-in {@code methodName} is
+	 * {@code null} or an empty string or if the passed-in {@code type} is {@code null}.
 	 *
 	 * @param methodName the name of the method to check whether it is static
 	 * @param type the type that implements the method
@@ -287,18 +285,17 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Returns whether the passed-in {@code method} is the constructor of
-	 * the passed-in {@code instance}.
+	 * Returns whether the passed-in {@code method} is the constructor of the passed-in
+	 * {@code instance}.
+	 * 
+	 * <p>{@code false} will always be returned if the passed-in {@code method} is
+	 * {@code null} or if the passed-in {@code instance} is {@code null}.
 	 *
-	 * <p>{@code false} will always be returned if the passed-in {@code method}
-	 * is {@code null} or if the passed-in {@code instance} is {@code null}.
-	 *
-	 * @param method the method to check whether it is the constructor of
-	 * the passed-in {@code instance}
-	 * @param instance the instance that might be instantiated by the passed-in
-	 * {@code method}
-	 * @return true if {@code method} is the constructor of {@code instance}
-	 * else false
+	 * @param method the method to check whether it is the constructor of the passed-in
+	 * {@code instance}
+	 * @param instance the instance that might be instantiated by the passed-in {@code method}
+	 * @return {@code true} if {@code method} is the constructor of {@code instance}
+	 * else {@code false}
 	 */
 	public static function isConstructorByInstance(method:Function, instance):Boolean {
 		if (!method || instance == null) return false;
@@ -310,20 +307,19 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Returns whether the passed-in {@code method} is the constructor of
-	 * the passed-in {@code type}.
-	 *
+	 * Returns whether the passed-in {@code method} is the constructor of the passed-in
+	 * {@code type}.
+	 * 
 	 * <p>Note that in Flash the constructor is the same as the type.
 	 *
-	 * <p>{@code false} will always be returned if the passed-in {@code method}
-	 * is {@code null} or if the passed-in {@code type} is {@code null}.
+	 * <p>{@code false} will always be returned if the passed-in {@code method} is
+	 * {@code null} or if the passed-in {@code type} is {@code null}.
 	 *
-	 * @param method the method to check whether it is the constructor of
-	 * the passed-in {@code type}
-	 * @param type the type that might declare the passed-in {@code method}
-	 * as constructor
-	 * @return true if {@code method} is the constructor of {@code type} else
-	 * false
+	 * @param method the method to check whether it is the constructor of the passed-in
+	 * {@code type}
+	 * @param type the type that might declare the passed-in {@code method} as constructor
+	 * @return {@code true} if {@code method} is the constructor of {@code type} else
+	 * {@code false}
 	 */
 	public static function isConstructorByType(method:Function, type:Function):Boolean {
 		if (!method || !type) return false;

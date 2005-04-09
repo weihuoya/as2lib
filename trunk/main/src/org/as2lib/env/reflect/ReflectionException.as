@@ -17,31 +17,40 @@
 import org.as2lib.env.except.Exception;
 
 /**
- * ReflectionException is the super-class of all exceptions of the reflection
- * api.
- *
- * <p>Use this exception as type in your catch-block if you want to catch
- * every non-fatal exception thrown by the reflection api.
+ * {@code ReflectionException} is the super-class of all exceptions of the Reflection
+ * API.
+ * 
+ * <p>Use this exception as type in your catch-block if you want to catch every
+ * non-fatal exception thrown by the Reflection API.
  *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.ReflectionException extends Exception {
 	
 	/**
-	 * Constructs a new ReflectionException instance.
+	 * Constructs a new {@code ReflectionException} instance.
 	 *
-	 * <p>All arguments are allowed to be null or undefined. But if one is,
-	 * the string representation returned by the {@link #toString} method
-	 * will not be complete.
+	 * <p>All arguments are allowed to be {@code null} or {@code undefined}.
+	 * But if one is, the string representation returned by the {@code toString}
+	 * method will not be complete.
 	 *
-	 * <p>The args array should be the internal arguments array of the
-	 * method that throws this exception. The internal arguments array exists
-	 * in every method and contains its parameters, the callee method and
-	 * the caller method. You can refernce it in every method using the name
-	 * 'arguments'.
+	 * <p>The {@code args} array should be the internal arguments array of
+	 * the method that throws the throwable. The internal arguments array
+	 * exists in every method and contains its parameters, the callee method
+	 * and the caller method. You can refernce it in every method using the
+	 * name {@code 'arguments'}.
 	 *
-	 * @param message the message that describes in detail what the problem is
-	 * @param thrower the object that declares the method that throws this throwable
+	 * <p>All arguments are allowed to be {@code null} or {@code undefined}. But if one
+	 * is, the string representation returned by the {@code toString} method will not
+	 * be complete.
+	 * 
+	 * <p>The {@code args} array should be the internal arguments array of the method
+	 * that throws the throwable. The internal arguments array exists in every method
+	 * and contains its parameters, the callee method and the caller method. You can
+	 * refernce it in every method using the name {@code 'arguments'}.
+	 *
+	 * @param message the message that describes the problem in detail
+	 * @param thrower the object that declares the method that throws this exception
 	 * @param args the arguments of the throwing method
 	 */
 	public function ReflectionException(message:String, thrower, args:Array) {

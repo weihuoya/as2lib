@@ -17,11 +17,11 @@
 import org.as2lib.core.BasicInterface;
 
 /**
- * InvocationHandler handles method invocations that took place on dynamic
+ * {@code InvocationHandler} handles method invocations that took place on dynamic
  * proxies.
- *
- * <p>It is passed all the needed information to respond appropriately
- * to the incovation.
+ * 
+ * <p>It is passed all the needed information to respond appropriately to the
+ * incovation.
  *
  * @author Simon Wacker
  * @see org.as2lib.env.reflect.ProxyFactory
@@ -29,12 +29,13 @@ import org.as2lib.core.BasicInterface;
 interface org.as2lib.env.reflect.InvocationHandler extends BasicInterface {
 	
 	/**
-	 * Gets called when a method invocation on a proxy took place.
-	 *
-	 * @param proxy the proxy the method was called on
+	 * Is invoked when a method invocation on a proxy took place and returns the result
+	 * of the invocation.
+	 * 
+	 * @param proxy the proxy the {@code method} was invoked on
 	 * @param method the method that was invoked
-	 * @param args the arguments that were passed-in on invocation
-	 * @return the result of the actual method invocation
+	 * @param args the arguments that were passed to the {@code method} on invocation
+	 * @return the result of the method invocation
 	 */
 	public function invoke(proxy, method:String, args:Array);
 	

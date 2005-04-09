@@ -18,24 +18,25 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.MethodInfo;
 
 /**
- * ConstructorInfo represents the constrcutor of a class.
+ * {@code ConstructorInfo} represents the constrcutor of a class.
  *
- * <p>The name of a constructor is always 'new', see #NAME.
- *
+ * <p>The name of a constructor is always {@code "new"}. This name can be obtained
+ * through the constant {@link #NAME}.
+ * 
  * <p>Constructors are also not static.
  *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.ConstructorInfo extends MethodInfo {
 	
-	/** The name of all constructors. */
+	/** The name of constructors. */
 	public static var NAME:String = "new";
 	
 	/**
-	 * Constructs a new ConstructorInfo instance.
+	 * Constructs a new {@code ConstructorInfo} instance.
 	 *
-	 * @param constructor the actual constructor
-	 * @param declaringClass the class that declares the constructor
+	 * @param constructor the concrete constructor
+	 * @param declaringClass the class that declares the {@code constructor}
 	 */
 	public function ConstructorInfo(constructor:Function, declaringClass:ClassInfo) {
 		super (NAME, constructor, declaringClass, false);

@@ -23,55 +23,65 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.ReflectConfig;
 
 /**
- * ClassAlgorithm searches for the class of a specific instance or class
+ * {@code ClassAlgorithm} searches for the class of a specific instance or class
  * and returns information about that class.
+ * 
+ * <p>This class is rather cumbersome to use. It is recommended to use the static
+ * {@link ClassInfo#forObject}, {@link ClassInfo#forInstance}, {@link ClassInfo#forClass}
+ * and {@link ClassInfo#forName} methods instead. They offer more sophisticated
+ * return values and do also store {@code ClassInfo} instances retrieved by classes
+ * or instances and not only those by name like this algorithm does.
  *
- * <p>This class is rather cumbersome to use. It is recommended to use
- * the static {@link ClassInfo#forObject}, {@link ClassInfo#forInstance},
- * {@link ClassInfo#forClass} and {@link ClassInfo#forName} methods instead.
- * They offer more sophisticated return values and do also store ClassInfo
- * instances retrieved by classes or instances and not only these by
- * name like this algorithm does.
- *
- * <p>To obtain information corresponding to an instance or a class 
- * you can use this class as follows.
- *
- * <code>var myInstance:MyClass = new MyClass();
- * var classAlgorithm:ClassAlgorithm = new ClassAlgorithm();
- * var infoByInstance:Object = classAlgorithm.execute(myInstance);
- * var infoByClass:Object = classAlgorithm.execute(MyClass);</code>
+ * <p>To obtain information corresponding to an instance or a class you can use
+ * this class as follows.
+ * 
+ * <code>
+ *   var myInstance:MyClass = new MyClass();
+ *   var classAlgorithm:ClassAlgorithm = new ClassAlgorithm();
+ *   var infoByInstance:Object = classAlgorithm.execute(myInstance);
+ *   var infoByClass:Object = classAlgorithm.execute(MyClass);
+ * </code>
  *
  * <p>It is also possible to retrieve a class info by name.
  *
- * <code>classInfoByName:ClassInfo = classAlgorithm.executeByName("MyClass");</code>
+ * <code>
+ *   classInfoByName:ClassInfo = classAlgorithm.executeByName("MyClass");
+ * </code>
  *
- * <p>If the class is not contained in the root/default package you must
- * specify the whole path / its namespace.
+ * <p>If the class is not contained in the root/default package you must specify
+ * the whole path / its namespace.
+ * 
+ * <code>
+ *   classInfoByName:ClassInfo = classAlgorithm.executeByName("org.as2lib.MyClass");
+ * </code>
  *
- * <code>classInfoByName:ClassInfo = classAlgorithm.executeByName("org.as2lib.MyClass");</code>
- *
- * <p>Already retrieved class infos are stored in a cache. There thus 
- * exists only one ClassInfo instance per class. Note that the {@link #execute}
- * method does not return ClassInfo instances and does thus not store
- * the found information.
- *
+ * <p>Already retrieved class infos are stored in a cache. There thus exists only
+ * one {@code ClassInfo} instance per class. Note that the {@link #execute} method
+ * does not return {@code ClassInfo} instances and does thus not store the found
+ * information.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 	
+	/** The cache to store class and package infos. */
 	private var c:Cache;
+	
+	/** The temporary result. */
 	private var r;
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new {@code ClassAlgorithm} instance.
 	 */
 	public function ClassAlgorithm(Void) {
 	}
 	
 	/**
-	 * Sets the cache that gets used by the {@link #execute} method to
-	 * look whether the class the shall be found is already stored.
+	 * Sets the cache that is used by the {@link #executeByName} method to look whether
+	 * the class the shall be found is already stored.
 	 *
+	 * <p>This cache also determines where the search for a class starts.
+	 * 
 	 * @param cache the new cache
 	 */
 	public function setCache(cache:Cache):Void {
@@ -79,9 +89,9 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 	}
 	
 	/**
-	 * Returns the cache set via the {@link #setCache} method or the default
-	 * cache that gets returned by the {@link ReflectConfig#getCache} method.
-	 *
+	 * Returns the cache set via the {@link #setCache} method or the default cache that
+	 * is returned by the {@link ReflectConfig#getCache} method.
+	 * 
 	 * @return the currently used cache
 	 */
 	public function getCache(Void):Cache {
@@ -93,7 +103,7 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 	 * @overload #executeByClass
 	 * @overload #executeByInstance
 	 */
-	public function execute(d):ClassInfo {
+	public function execute(d) {
 		if (typeof(d) == "function") {
 			return executeByClass(d);
 		}
@@ -101,114 +111,108 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 	}
 	
 	/**
-	 * Executes the search for the passed-in class and returns information
-	 * about that class.
-	 *
+	 * Executes the search for the passed-in class {@code d} and returns information
+	 * about this class.
+	 * 
 	 * <p>The returned object has the following properties:
 	 * <dl>
 	 *   <dt>clazz</dt>
-	 *   <dd>The class as Function that has been searched for, that is the
-	 *       passed-in class.</dd>
+	 *   <dd>The class as {@code Function} that has been searched for, this is the
+	 *       passed-in class {@code d}.</dd>
 	 *   <dt>name</dt>
-	 *   <dd>The name as String of the searched for class.</dd>
+	 *   <dd>The name as {@code String} of the searched for class.</dd>
 	 *   <dt>package</dt>
-	 *   <dd>The package represented by a {@ling PackageInfo} instance the
-	 *       class is declared in / resides in, that is the namespace of 
-	 *       the class.</dd>
+	 *   <dd>The package represented by a {@link PackageInfo} instance the class is
+	 *       a member of.</dd>
 	 * </dl>
 	 *
-	 * <p>Null will be returned if:
+	 * <p>{@code null} will be returned if:
 	 * <ul>
-	 *   <li>The passed-in class is null or undefined.</li>
-	 *   <li>The passed-in class could not be found.</li>
+	 *   <li>The passed-in class {@code d} is {@code null} or {@code undefined}.</li>
+	 *   <li>The passed-in class {@code d} could not be found.</li>
 	 * </ul>
 	 *
-	 * <p>The search starts on the package returned by the {@link Cache#getRoot}
-	 * method. If this method returns a package info whose getPackage method
-	 * returns null or undefined _global is used instead.
-	 *
+	 * <p>The search starts on the package returned by the {@link Cache#getRoot} method
+	 * of the set cache. If this method returns a package info whose {@code getPackage}
+	 * method returns {@code null} or {@code undefined} {@code _global} is used instead.
+	 * 
 	 * @param d the class to return information about
-	 * @return an object that contains information about the passed-in class
+	 * @return an object that contains information about the passed-in class {@code d}
 	 * @see #getCache
 	 */
 	public function executeByClass(d:Function) {
 		if (!d) return null;
 		return executeByComparator(function(f:Function) {
-								       return f == d;
-								   });
+			return f == d;
+		});
 	}
 	
 	/**
-	 * Executes the search for the class the passed-in object is an instance
+	 * Executes the search for the class the passed-in object {@code d} is an instance
 	 * of and returns information about that class.
-	 *
+	 * 
 	 * <p>The returned object has the following properties:
 	 * <dl>
 	 *   <dt>clazz</dt>
-	 *   <dd>The class as Function that has been searched for.</dd>
+	 *   <dd>The class as {@code Function} that has been searched for.</dd>
 	 *   <dt>name</dt>
-	 *   <dd>The name as String of the searched for class.</dd>
+	 *   <dd>The name as {@code String} of the searched for class.</dd>
 	 *   <dt>package</dt>
-	 *   <dd>The package represented by a {@ling PackageInfo} instance the
-	 *       class is declared in / resides in, that is the namespace of 
-	 *       the class.</dd>
+	 *   <dd>The package represented by a {@link PackageInfo} instance the class is
+	 *       a member of.</dd>
 	 * </dl>
 	 *
-	 * <p>Null will be returned if:
+	 * <p>{@code null} will be returned if:
 	 * <ul>
-	 *   <li>The passed-in instance is null or undefined.</li>
-	 *   <li>The passed-in class could not be found.</li>
+	 *   <li>The passed-in instance {@code d} is {@code null} or {@code undefined}.</li>
+	 *   <li>The class of the passed-in instance could not be found.</li>
 	 * </ul>
 	 *
-	 * <p>The search starts on the package returned by the {@link Cache#getRoot}
-	 * method. If this method returns a package info whose getPackage method
-	 * returns null or undefined _global is used instead.
+	 * <p>The search starts on the package returned by the {@link Cache#getRoot} method
+	 * of the set cache. If this method returns a package info whose {@code getPackage}
+	 * method returns {@code null} or {@code undefined} {@code _global} is used instead.
 	 *
 	 * @param d the instance of the class to return information about
-	 * @return an object that contains information about the class the passed-in
-	 * object is an instance of
+	 * @return an object that contains information about the class the passed-in object
+	 * {@code d} is an instance of
 	 * @see #getCache
 	 */
 	public function executeByInstance(d) {
 		// not 'if (!d)' because 'd' could be en empty string or a boolean
 		if (d == null) return null;
 		return executeByComparator(function(f:Function) {
-								       return f.prototype === d.__proto__;
-								   });
+			return f.prototype === d.__proto__;
+		});
 	}
 	
 	/**
-	 * Executes the search for the class and returns information about that
-	 * class.
-	 *
+	 * Executes the search for a class and returns information about that class.
+	 * 
 	 * <p>The returned object has the following properties:
 	 * <dl>
 	 *   <dt>clazz</dt>
-	 *   <dd>The class as Function that has been searched for.</dd>
+	 *   <dd>The class as {@code Function} that has been searched for.</dd>
 	 *   <dt>name</dt>
-	 *   <dd>The name as String of the searched for class.</dd>
+	 *   <dd>The name as {@code String} of the searched for class.</dd>
 	 *   <dt>package</dt>
-	 *   <dd>The package represented by a {@ling PackageInfo} instance the
-	 *       class is declared in / resides in, that is the namespace of 
-	 *       the class.</dd>
+	 *   <dd>The package represented by a {@ling PackageInfo} instance the class is
+	 *       a member of.</dd>
 	 * </dl>
 	 *
-	 * <p>Null will be returned if:
+	 * <p>{@code null} will be returned if:
 	 * <ul>
-	 *   <li>The passed-in comparator method is null or undefined.</li>
+	 *   <li>The passed-in comparator {@code v} method is {@code null} or {@code undefined}.</li>
 	 *   <li>The searched for class could not be found.</li>
 	 * </ul>
+	 * 
+	 * <p>The search starts on the package returned by the {@link Cache#getRoot} method
+	 * of the set cache. If this method returns a package info whose {@code getPackage}
+	 * method returns {@code null} or {@code undefined} {@code _global} is used instead.
 	 *
-	 * <p>The search starts on the package returned by the {@link Cache#getRoot}
-	 * method. If this method returns a package info whose getPackage method
-	 * returns null or undefined _global is used instead.
-	 *
-	 * <p>The passed-in comparator gets invoked for every found class to
-	 * determine whether it is the right one or not. The comparator method
-	 * gets passed the found class and must return true or false. If it
-	 * returns true the algorithm stops and returns the information about
-	 * this class.
-	 *
+	 * <p>The passed-in comparator is invoked for every found class to determine whether
+	 * it is the right one or not. The comparator method gets passed the found class and
+	 * must return {@code true} or {@code false}. If it returns {@code true} the
+	 * algorithm stops and returns the information about this class.
 	 * @param v the comparator to determine the correct class
 	 * @return an object that contains information about the class
 	 * @see #getCache
@@ -259,22 +263,22 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 	}
 	
 	/**
-	 * Returns the class info representing the class corresponding to the
-	 * passed-in class name.
+	 * Returns the class info representing the class corresponding to the passed-in
+	 * class name {@code n}.
+	 * 
+	 * <p>The class name must be fully qualified, that means it must consist of the
+	 * class's path (namespace) as well as its name. For example 'org.as2lib.core.BasicClass'.
 	 *
-	 * <p>The class name must be fully qualified, that means it must consist
-	 * of the class's path (namespace) as well as its name. For example
-	 * 'org.as2lib.core.BasicClass'.
-	 *
-	 * <p>The search starts on the package returned by the {@link Cache#getRoot}
-	 * method. If this method returns a package info whose getFullName method
-	 * returns null, undefined or an empty string '_global' is used instead.
-	 *
+	 * <p>The search starts on the package returned by the {@link Cache#getRoot} method
+	 * of the set cache. If this method returns a package info whose {@code getFullName}
+	 * method returns {@code null} or {@code undefined} {@code "_global"} is used instead.
+	 * 
 	 * @param n the fully qualified name of the class
-	 * @return the class info representing the class corresponding to the name
-	 * @throws IllegalArgumentException if the passed-in name is null or undefined or an empty string or
-	 *                                  if the object corresponding to the passed-in name is not of type function
-	 * @throws ClassNotFoundException if a class with the passed-in name could not be found or
+	 * @return the class info representing the class corresponding to the passed-in name
+	 * @throws IllegalArgumentException if the passed-in name is {@code null}, {@code undefined}
+	 * or an empty string or if the object corresponding to the passed-in name is not of
+	 * type function
+	 * @throws ClassNotFoundException if a class with the passed-in name could not be found
 	 */
 	public function executeByName(n:String):ClassInfo {
 		if (!n) throw new IllegalArgumentException("The passed-in class name '" + n + "' is not allowed to be null, undefined or an empty string.", this, arguments);
@@ -296,6 +300,7 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 				p = c.addPackage(new PackageInfo(g, a[i], p));
 			}
 		}
+		return null;
 		// unreachable!!!
 	}
 	

@@ -21,41 +21,45 @@ import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.ReflectConfig;
 
 /**
- * Searches for members, that means types and packages, of a specific
- * package. Sub-packages are not searched through.
- *
- * <p>This class is mostly used internally. If you wanna obtain the members
- * of a package you need its representing PackageInfo. You can then also
- * use the {@link PackageInfo#getMembers}, {@link PackageInfo#getMemberClasses} and
+ * {@code PackageMemberAlgorithm} searches for members, that means types and packages,
+ * of a specific package. Sub-packages are not searched through.
+ * 
+ * <p>This class is mostly used internally. If you wanna obtain the members of a 
+ * package you need its representing {@code PackageInfo}. You can then also use the
+ * {@link PackageInfo#getMembers}, {@link PackageInfo#getMemberClasses} and
  * {@link PackageInfo#getMemberPackages} methods directly and do not have to make
- * the detour over this method. The PackageInfo's methods are also easier
- * to use and offer some extra functionalities.
+ * the detour over this method. The PackageInfo's methods are also easier to use and
+ * offer some extra functionalities.
  *
  * <p>If you nevertheless want to use this class here is how it works.
  *
- * <code>var packageInfo:PackageInfo = PackageInfo.forPackage(org.as2lib.core);
- * var packageMemberAlgorithm:PackageMemberAlgorithm = new PackageMemberAlgorithm();
- * var members:Array = packageMemberAlgorithm.execute(packageInfo);</code>
+ * <code>
+ *   var packageInfo:PackageInfo = PackageInfo.forPackage(org.as2lib.core);
+ *   var packageMemberAlgorithm:PackageMemberAlgorithm = new PackageMemberAlgorithm();
+ *   var members:Array = packageMemberAlgorithm.execute(packageInfo);
+ * </code>
  *
- * <p>Refer to the {@link #execute} methods documentation for details on how to
- * get data from the members array appropriately.
+ * <p>Refer to the {@link #execute} method for details on how to get data from the
+ * members array appropriately.
  *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass {
 	
+	/** The cache. */
 	private var c:Cache;
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new {@code PackageMemberAlgorithm} instance.
 	 */
 	public function PackageMemberAlgorithm(Void) {
 	}
 	
 	/**
-	 * Sets the cache that gets used by the {@link #execute} method to
-	 * look whether the member package or class is already stored.
-	 *
+	 * Sets the cache that is used by the {@link #execute} method to look whether the
+	 * member package or class is already stored and to get the root package to start the
+	 * search if not.
+	 * 
 	 * @param cache the new cache
 	 */
 	public function setCache(cache:Cache):Void {
@@ -63,9 +67,9 @@ class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass
 	}
 	
 	/**
-	 * Returns the cache set via the {@link #setCache} method or the default
-	 * cache that gets returned by the {@link ReflectConfig#getCache} method.
-	 *
+	 * Returns the cache set via the {@link #setCache} method or the default cache that
+	 * is returned by the {@link ReflectConfig#getCache} method.
+	 * 
 	 * @return the currently used cache
 	 */
 	public function getCache(Void):Cache {
@@ -74,11 +78,11 @@ class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass
 	}
 	
 	/**
-	 * Executes the search for the members, that means member types and
-	 * packages, in the passed-in package.
-	 *
-	 * <p>The resulting array contains instances of type PackageMemberInfo,
-	 * that is either of type ClassInfo or PackageInfo.
+	 * Executes the search for the members, that means member types and packages, in
+	 * the passed-in package {@code p}.
+	 * 
+	 * <p>The resulting array contains instances of type {@link PackageMemberInfo}, that
+	 * is either of type {@link ClassInfo} or {@link PackageInfo}.
 	 *
 	 * <p>The specific members can be either referenced by index or by name.
 	 * <dl>
@@ -96,19 +100,19 @@ class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass
 	 *   <dd><code>myMembers.packages.mypackage;</code></dd>
 	 * </dl>
 	 *
-	 * <p>This method will return null if:
+	 * <p>{@code null} will be returned if:
 	 * <ul>
-	 *   <li>The argument is null or undefined.</li>
-	 *   <li>The argument's getPackage() method returns null or undefined.</li>
+	 *   <li>The passed-in package {@code p} is {@code null} or {@code undefined}.</li>
+	 *   <li>The {@code getPackage} method of the passed-in package returns {@code null}.</li>
 	 * </ul>
 	 *
-	 * <p>Only the passed-in package will be searched through.
+	 * <p>Only the passed-in package {@code p} will be searched through, no sub-packages.
 	 *
-	 * <p>In case the cache already contains a specific member class or package
-	 * info it will be added to the members array.
-	 *
-	 * @param g the PackageInfo instance representing the package to search through
-	 * @return the members of the package, a blank array or null
+	 * <p>In case the cache already contains a specific member class or package the
+	 * contained info it will be added to the resulting members array.
+	 * 
+	 * @param g the package info instance representing the package to search through
+	 * @return the members of the package, an empty array or {@code null}
 	 */
 	public function execute(p:PackageInfo):Array {
 		if (p == null) return null;

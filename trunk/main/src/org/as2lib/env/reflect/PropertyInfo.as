@@ -22,25 +22,29 @@ import org.as2lib.env.reflect.TypeMemberInfo;
 import org.as2lib.env.reflect.string.PropertyInfoStringifier;
 
 /**
- * PropertyInfo represents a property.
- *
- * <p>The term property means only properties added via Object#addProperty
- * or the ones added with the 'get' and 'set' keywords, not variables.
- *
- * <p>PropertyInfo instances for specific properties can be obtained using
- * the {@link ClassInfo#getProperties} or {@link ClassInfo#getProperty} methods. That means
- * you first have to get a class info for the class that declares or
- * inherits the property. You can therefor use the {@link ClassInfo#forObject},
- * {@link ClassInfo#forClass}, {@link ClassInfo#forInstance} or {@link ClassInfo#forName} methods.
+ * {@code PropertyInfo} represents a property.
  * 
- * <p>When you have obtained the property info you can use it to get
- * information about the property.
+ * <p>The term property means only properties added via {@code Object.addProperty}
+ * or the ones added with the {@code get} and {@code set} keywords, that are implicit
+ * getters and setters, not variables.
+ * 
+ * <p>{@code PropertyInfo} instances for specific properties can be obtained using
+ * the methods {@link ClassInfo#getProperties} or {@link ClassInfo#getProperty}.
+ * That means you first have to get a class info for the class that declares or
+ * inherits the property. You can therefor use the {@link ClassInfo#forObject},
+ * {@link ClassInfo#forClass}, {@link ClassInfo#forInstance} and {@link ClassInfo#forName}
+ * methods.
+ * 
+ * <p>When you have obtained the property info you can use it to get information
+ * about the property.
  *
- * <code>trace("Property name: " + propertyInfo.getName());
- * trace("Declaring type: " + propertyInfo.getDeclaringType().getFullName());
- * trace("Is Static?: " + propertyInfo.isStatic());
- * trace("Is Writable?: " + propertyInfo.isWritable());
- * trace("Is Readable?: " + propertyInfo.isReadable());</code>
+ * <code>
+ *   trace("Property name: " + propertyInfo.getName());
+ *   trace("Declaring type: " + propertyInfo.getDeclaringType().getFullName());
+ *   trace("Is Static?: " + propertyInfo.isStatic());
+ *   trace("Is Writable?: " + propertyInfo.isWritable());
+ *   trace("Is Readable?: " + propertyInfo.isReadable());
+ * </code>
  *
  * @author Simon Wacker
  */
@@ -49,27 +53,12 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	/** The property info stringifier. */
 	private static var stringifier:Stringifier;
 	
-	/** The name of the property. */
-	private var name:String;
-	
-	/** The setter operation of the property. */
-	private var setter:MethodInfo;
-	
-	/** The getter operation of the property. */
-	private var getter:MethodInfo;
-	
-	/** The type that declares the property. */
-	private var declaringType:TypeInfo;
-	
-	/** A flag representing whether the operation is static. */
-	private var staticFlag:Boolean;
-	
 	/**
 	 * Returns the stringifier used to stringify property infos.
 	 *
-	 * <p>If no custom stringifier has been set via the {@link #setStringifier}
-	 * method, a instance of the default PropertyInfoStringifier gets returned.
-	 *
+	 * <p>If no custom stringifier has been set via the {@link #setStringifier} method,
+	 * an instance of the default {@link PropertyInfoStringifier} class is returned.
+	 * 
 	 * @return the stringifier that stringifies property infos
 	 */
 	public static function getStringifier(Void):Stringifier {
@@ -80,26 +69,41 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	/**
 	 * Sets the stringifier used to stringify property infos.
 	 *
-	 * <p>If you set a stringifier of value null or undefined {@link #getStringifier}
-	 * will return the default stringifier.
-	 *
+	 * <p>If {@code propertyInfoStringifier} is {@code null} or {@code undefined} the
+	 * {@link #getStringifier} method will return the default stringifier.
+	 * 
 	 * @param propertyInfoStringifier the stringifier that stringifies property infos
 	 */
 	public static function setStringifier(propertyInfoStringifier:PropertyInfoStringifier):Void {
 		stringifier = propertyInfoStringifier;
 	}
 	
+	/** The name of this property. */
+	private var name:String;
+	
+	/** The setter method of this property. */
+	private var setter:MethodInfo;
+	
+	/** The getter method of this property. */
+	private var getter:MethodInfo;
+	
+	/** The type that declares this property. */
+	private var declaringType:TypeInfo;
+	
+	/** A flag representing whether this property is static. */
+	private var staticFlag:Boolean;
+	
 	/**
-	 * Constructs a new PropertyInfo instance.
+	 * Constructs a new {@code PropertyInfo} instance.
 	 *
-	 * <p>All arguments are allowed to be null. But keep in mind that not
-	 * all methods will function properly if one is.
-	 *
+	 * <p>All arguments are allowed to be {@code null}. But keep in mind that not all
+	 * methods will function properly if one is.
+	 * 
 	 * @param name the name of the property
 	 * @param setter the setter method of the property
 	 * @param getter the getter method of the property
 	 * @param declaringType the type declaring the property
-	 * @param static a flag saying whether the property is static
+	 * @param static a flag that determines whether the property is static
 	 */
 	public function PropertyInfo(name:String,
 								 setter:Function,
@@ -114,50 +118,46 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	}
 	
 	/**
-	 * Returns the name of the property.
+	 * Returns the name of this property.
 	 *
-	 * <p>If you want the getter or setter methods' name you must use the
-	 * getGetter()#getName or getSetter()#getName method. The name of the
-	 * getter or setter method is the prefix '__set__' or '__get__' plus
-	 * the name of the property.
-	 *
-	 * @return the name of the property
+	 * <p>If you want the getter or setter methods' name you must use the {@code getName}
+	 * method of the {@code getGetter} or {@code getSetter} method respectively. The
+	 * name of this getter or setter method is the prefix '__get__' or '__set__' plus
+	 * the name of this property.
+	 * 
+	 * @return the name of this property
 	 */
 	public function getName(Void):String {
 		return name;
 	}
 	
 	/**
-	 * Returns the setter method of the property.
-	 *
-	 * <p>The setter method of a property takes one argument, that is the
-	 * new value that shall be assigned to the property. You can invoke
-	 * it the same as every other method.
-	 *
-	 * <p>The name of a setter method is the prefix '__set__' plus the name
-	 * of the property.
-	 *
-	 * <p>Property setter methods are also known under the name implicit
-	 * setters.
+	 * Returns the setter method of this property.
 	 * 
-	 * @return the setter method of the property
+	 * <p>The setter method of a property takes one argument, that is the new value that
+	 * shall be assigned to the property. You can invoke it the same as every other method.
+	 *
+	 * <p>The name of this setter method is the prefix '__set__' plus the name of this
+	 * property.
+	 *
+	 * <p>Property setter methods are also known under the name implicit setters.
+	 * 
+	 * @return the setter method of this property
 	 */
 	public function getSetter(Void):MethodInfo {
 		return setter;
 	}
 	
 	/**
-	 * Returns the getter method of the property.
+	 * Returns the getter method of this property.
 	 * 
-	 * <p>The getter method of a property takes no arguments, but returns
-	 * the value of the property. You can invoke it the same as every other
-	 * method.
+	 * <p>The getter method of a property takes no arguments, but returns the value of
+	 * the property. You can invoke it the same as every other method.
+	 * 
+	 * <p>The name of this getter method is the prefix '__get__' plus the name of this
+	 * property.
 	 *
-	 * <p>The name of a getter method is the prefix '__get__' plus the name
-	 * of the property.
-	 *
-	 * <p>Property get methods are also known under the name implicit
-	 * getters.
+	 * <p>Property getter methods are also known under the name implicit getters.
 	 *
 	 * @return the getter method of the property
 	 */
@@ -166,48 +166,47 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	}
 	
 	/**
-	 * Returns the type that declares the property.
+	 * Returns the type that declares this property.
 	 *
-	 * <p>At this time interfaces are not allowed to declare properties.
-	 * The declaring type is thus allways an instance of type ClassInfo,
-	 * a class.
-	 *
-	 * @return the type that declares the property
+	 * <p>At this time interfaces are not allowed to declare properties. The declaring
+	 * type is thus allways an instance of type {@link ClassInfo}, a class.
+	 * 
+	 * @return the type that declares this property
 	 */
 	public function getDeclaringType(Void):TypeInfo {
 		return declaringType;
 	}
 	
 	/**
-	 * Returns whether the property is writable.
+	 * Returns whether this property is writable.
 	 *
-	 * <p>The property is writable when its setter is not null.
-	 *
-	 * @return true when the property is writable else false
+	 * <p>This property is writable when its setter is not {@code null}.
+	 * 
+	 * @return {@code true} if this property is writable else {@code false}
 	 */
 	public function isWritable(Void):Boolean {
 		return (setter != null);
 	}
 	
 	/**
-	 * Returns whether the property is readable.
+	 * Returns whether this property is readable.
 	 *
-	 * <p>The property is readable when its getter is not null.
+	 * <p>This property is readable when its getter is not {@code null}.
 	 *
-	 * @return true when the property is readable else false
+	 * @return {@code true} when this property is readable else {@code false}
 	 */
 	public function isReadable(Void):Boolean {
 		return (getter != null);
 	}
 	
 	/**
-	 * Returns whether the property is static or not.
+	 * Returns whether this property is static or not.
 	 *
 	 * <p>Static properties are properties per type.
 	 *
 	 * <p>Non-Static properties are properties per instance.
 	 *
-	 * @return true when the property is static else false
+	 * @return {@code true} if this property is static else {@code false}
 	 */
 	public function isStatic(Void):Boolean {
 		return staticFlag;
@@ -216,9 +215,9 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	/**
 	 * Returns the string representation of this property.
 	 *
-	 * <p>The string representation is obtained via the stringifier returned
-	 * by the static {@link #getStringifier} method.
-	 *
+	 * <p>The string representation is obtained via the stringifier returned by the
+	 * static {@link #getStringifier} method.
+	 * 
 	 * @return the string representation of this property
 	 */
 	public function toString(Void):String {
