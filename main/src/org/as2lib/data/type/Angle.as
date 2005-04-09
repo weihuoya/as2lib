@@ -17,23 +17,23 @@
 import org.as2lib.core.BasicInterface;
 
 /**
- * Interface to work with, if you want to work with Angles.
+ * {@code Angle} declares methods that convert objects, mostly numbers, into angles.
  * 
  * @author Martin Heidegger
  */
 interface org.as2lib.data.type.Angle extends BasicInterface {
 	
 	/**
-	 * Getter for the angle value represented in radian.
+	 * Returns the angle in radian.
 	 * 
-	 * @return Angle value in radian.
+	 * @return the angle in radian
 	 */
 	public function toRadian(Void):Number;
 	
 	/**
-	 * Getter for the angle value represented in degree.
+	 * Returns the angle in degree.
 	 * 
-	 * @return Angle value in degree.
+	 * @return the angle in degree
 	 */
 	public function toDegree(Void):Number;
 }

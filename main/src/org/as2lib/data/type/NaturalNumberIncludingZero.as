@@ -18,11 +18,10 @@ import org.as2lib.data.type.Integer;
 import org.as2lib.data.type.NumberFormatException;
 
 /**
- * Format for Natural Numbers.
- * This class works as definition class if your method only works with Natural Numbers and you would have to throw a exception if
- * this doesn't match. If you dont allow Zero then take NaturalNumber. 
- * 
- * Note: This difference is because of Definition problems with the term "Natural Number"
+ * {@code NaturalNumberIncludingZero} represents a natural number including zero.
+ *
+ * <p>Natural numbers are positive integers including 0. If you do not want to allow
+ * 0 use {@code NaturalNumber} instead.
  * 
  * @author Martin Heidegger
  * @see org.as2lib.data.type.NaturalNumber
@@ -30,16 +29,18 @@ import org.as2lib.data.type.NumberFormatException;
 class org.as2lib.data.type.NaturalNumberIncludingZero extends Integer {
 	
 	/**
-	 * Constructs a new NaturalNumber.
-	 * It crops post comma digits and throws a Exception if you use Infinity.
-	 * Additionally it can't work with negative numbers.
+	 * Constructs a new {@code NaturalNumberIncludingZero} instance.
 	 * 
-	 * @param number Number to be used as NaturalNumber.
-	 * @throws NumberFormatException if you apply a negative number or (-)Infinity.
+	 * <p>Decimal places are cropped from the passed-in {@code number} if it has at least
+	 * one. The passed-in {@code number} must also not be negative.
+	 * 
+	 * @param number the natural number
+	 * @throws NumberFormatException if the passed-in {@code number} is negative number
+	 * or (-)infinity
 	 */
 	public function NaturalNumberIncludingZero(number:Number) {
-		super(number);
-		if(int < 0) {
+		super (number);
+		if (int < 0) {
 			throw new NumberFormatException("Natural numbers don't inlude negative numbers like: "+number+".", this, arguments);
 		}
 	}

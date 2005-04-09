@@ -18,45 +18,49 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.data.type.NumberFormatException;
 
 /**
- * Class to be used if you have a method that only works with integers. 
- * A integer is a positive or negative natural number including zero.
+ * {@code Integer} represents an integer value.
+ *
+ * <p>A integer is a positive or negative natural number including 0.
  * 
  * @author Martin Heidegger.
  */
 class org.as2lib.data.type.Integer extends Number implements BasicInterface {
 	
-	/** Internal holder for the integer */
+	/** The actual integer. */
 	private var int:Number;
 	
 	/**
-	 * Transforms the applied number to a integer.
-	 * It will floor the number so that only the base is used
-	 * as integer (if post-comma-digits are available).
+	 * Constructs a new {@code Integer} instance.
+	 *
+	 * <p>The passed-in {@code number} is transformed into an integer. The {@code number}
+	 * will be floored so that only the base will be used as integer, if it has decimal
+	 * places.
 	 * 
-	 * @param number Number to be used as integer.
-	 * @throws NumberFormatException if you apply Infinity or -Infinity.
+	 * @param number the number to convert to an integer
+	 * @throws NumberFormatException if the passed-in {@code number} is infinity or
+	 * -infinity.
 	 */
 	public function Integer(number:Number) {
-		if(number == Infinity || number == -Infinity) {
+		if (number == Infinity || number == -Infinity) {
 			throw new NumberFormatException("Infinity is not evaluateable as integer", this, arguments);
 		} else {
-			int = number-number%1;
+			int = number - number%1;
 		}
 	}
 	
 	/**
-	 * Returns the value of the integer (not the instance of this class.
+	 * Returns this integer as number.
 	 * 
-	 * @return Value of the integer.
+	 * @return this integer as number
 	 */
 	public function valueOf(Void):Number {
 		return int;
 	}
 	
 	/**
-	 * Returns the string representation of the integer.
+	 * Returns the string representation of this integer.
 	 * 
-	 * @return String representation of the integer.
+	 * @return the string representation of this integer
 	 */
 	public function toString(Void):String {
 		return int.toString();
