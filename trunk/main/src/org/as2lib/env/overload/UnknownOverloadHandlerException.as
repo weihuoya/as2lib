@@ -18,11 +18,11 @@ import org.as2lib.env.overload.OverloadException;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
- * UnknownOverloadHandlerException will be thrown if no appropriate
- * overload handler for a list of real arguments could be found.
+ * {@code UnknownOverloadHandlerException} will be thrown if no appropriate overload
+ * handler for a list of real arguments could be found.
  *
- * <p>Whether an overload handler matches a given list of real arguments
- * is determined by the {@link OverloadHandler#matches} method.
+ * <p>Whether an overload handler matches a given list of real arguments is determined
+ * by the {@link OverloadHandler#matches} method.
  *
  * @author Simon Wacker
  * @author Martin Heidegger
@@ -45,15 +45,16 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 	private var overloadedMethod;
 	
 	/**
-	 * Constructs a new UnknownOverloadHandlerException instance.
+	 * Constructs a new {@code UnknownOverloadHandlerException} instance.
 	 * 
 	 * @param message the message of the exception
 	 * @param thrower the object whose method threw the exception
 	 * @param args the arguments of the method that threw the exception
-	 * @param overloadTarget the target object the method should be invoked on / on which the overload is performed
+	 * @param overloadTarget the target object the method should be invoked on / on
+	 * which the overload is performed
 	 * @param overloadedMethod the method that is overloaded
 	 * @param overloadArguments the real arguments used to perform the overloading
-	 * @param overloadHandlers an array containing all OverloadHandler instances
+	 * @param overloadHandlers an array containing all {@code OverloadHandler} instances
 	 * that do not match the overload arguments
 	 */
 	public function UnknownOverloadHandlerException(message:String, thrower, args:Array, overloadTarget, overloadedMethod:Function, overloadArguments:Array, overloadHandlers:Array) {
@@ -64,8 +65,7 @@ class org.as2lib.env.overload.UnknownOverloadHandlerException extends OverloadEx
 		this.overloadHandlers = overloadHandlers;
 	}
 	/**
-	 * Returns a well formatted informative string representation of this
-	 * exceptions.
+	 * Returns a well formatted informative string representation of this exception.
 	 * 
 	 * @return the string representation of this exception
 	 */

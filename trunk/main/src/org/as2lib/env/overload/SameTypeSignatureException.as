@@ -18,11 +18,11 @@ import org.as2lib.env.overload.OverloadException;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
- * SameTypeSignatureException is thrown when two or more overload handlers
+ * {@code SameTypeSignatureException} is thrown when two or more overload handlers
  * have the same type signature.
  *
- * <p>Compared are the arguments' types of two overload handlers. This
- * is mostly done using the {@link OverloadHandler#isMoreExplicit} method.
+ * <p>Compared are the arguments' types of two overload handlers. This is mostly done
+ * using the {@link OverloadHandler#isMoreExplicit} method.
  *
  * @author Simon Wacker
  */
@@ -44,15 +44,16 @@ class org.as2lib.env.overload.SameTypeSignatureException extends OverloadExcepti
 	private var overloadedMethod;
 	
 	/**
-	 * Constructs a new SameTypeSignatureException instance.
+	 * Constructs a new {@code SameTypeSignatureException} instance.
 	 * 
 	 * @param message the message of the exception
 	 * @param thrower the object whose method threw the exception
 	 * @param args the arguments of the method that threw the exception
-	 * @param overloadTarget the target object the method should be invoked on / on which the overload is performed
+	 * @param overloadTarget the target object the method should be invoked on / on
+	 * which the overload is performed
 	 * @param overloadedMethod the method that is overloaded
 	 * @param overloadArguments the real arguments used to perform the overloading
-	 * @param overloadHandlers an array containing OverloadHandler instances
+	 * @param overloadHandlers an array containing {@code OverloadHandler} instances
 	 * that have the same type signature
 	 */
 	public function SameTypeSignatureException(message:String, thrower, args:Array, overloadTarget, overloadedMethod:Function, overloadArguments:Array, overloadHandlers:Array) {
@@ -64,8 +65,7 @@ class org.as2lib.env.overload.SameTypeSignatureException extends OverloadExcepti
 	}
 	
 	/**
-	 * Returns a well formatted informative string representation of this
-	 * exceptions.
+	 * Returns a well formatted informative string representation of this exception.
 	 * 
 	 * @return the string representation of this exception
 	 */
