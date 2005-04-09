@@ -19,17 +19,17 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.env.except.StackTraceElementStringifier;
 
 /**
- * StackTraceElement represents an element in the stack trace returned
- * by the Throwable#getStackTrace method.
+ * {@code StackTraceElement} represents an element in the stack trace returned by the
+ * {@link Throwable#getStackTrace} method.
  *
- * <p>A stack trace element is simply a data holder. It holds the thrower,
- * the method that threw the throwable and the arguments passed to the
- * method that threw the throwable.
+ * <p>A stack trace element is simply a data holder. It holds the thrower, the method
+ * that threw the throwable and the arguments passed to the method that threw the
+ * throwable.
  *
- * <p>This class is also responsible for stringifying itself. This
- * functionality is used by the ThrowableStringifier. You can set your
- * own stringifier to get a custom string representation of the stack
- * trace element via the static #setStringifier method.
+ * <p>This class is also responsible for stringifying itself. This functionality is
+ * used by the {@link ThrowableStringifier}. You can set your own stringifier to get a
+ * custom string representation of the stack trace element via the static
+ * {@code #setStringifier} method.
  *
  * @author Simon Wacker
  * @author Martin Heidegger
@@ -39,7 +39,7 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	/** Stringifier to stringify stack trace elements. */
 	private static var stringifier:Stringifier;
 	
-	/** The thrower. */
+	/** The object that declares the method that thew the throwable. */
 	private var thrower;
 	
 	/** The throwing method. */
@@ -51,11 +51,11 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	/**
 	 * Returns the stringifier to stringify stack trace elements.
 	 *
-	 * <p>The returned stringifier is either the default StackTraceElementStringifier
-	 * if no custom stringifier was set or if the stringifier was set to null
-	 * or the set stringifier.
+	 * <p>The returned stringifier is either the default
+	 * {@link StackTraceElementStringifier} if no custom stringifier was set or if the
+	 * stringifier was set to {@code null} or the set stringifier.
 	 *
-	 * @return the default StackTraceElementStringifier or a custom stringifier
+	 * @return the default or the custom stringifier
 	 */
 	public static function getStringifier(Void):Stringifier {
 		if (!stringifier) stringifier = new StackTraceElementStringifier();
@@ -65,17 +65,18 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	/**
 	 * Sets the stringifier to stringify stack trace elements.
 	 *
-	 * <p>If you set a stringifier of value null the #getStringifier method
-	 * returns the default stringifier.
+	 * <p>If {@code stackTraceElementStringifier} is {@code null} the static
+	 * {@link #getStringifier} method returns the default stringifier.
 	 *
-	 * @param stackTraceElementStringifier the stringifier to stringify stack trace elements
+	 * @param stackTraceElementStringifier the stringifier to stringify stack trace
+	 * elements
 	 */
 	public static function setStringifier(stackTraceElementStringifier:Stringifier):Void {
 		stringifier = stackTraceElementStringifier;
 	}
 	
 	/**
-	 * Constructs a new SimpleStackTraceElement instance.
+	 * Constructs a new {@code SimpleStackTraceElement} instance.
 	 *
 	 * @param thrower the object that declares the method that threw the throwable
 	 * @param method the method that threw the throwable
@@ -106,8 +107,8 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	}
 	
 	/**
-	 * Returns the arguments that have been passed to the method that threw
-	 * the throwable.
+	 * Returns the arguments that have been passed to the method that threw the
+	 * throwable.
 	 *
 	 * @return the arguments passed to the method that threw the throwable
 	 */
@@ -118,8 +119,8 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	/**
 	 * Returns the string representation of this stack trace element.
 	 *
-	 * <p>The string representation is obtained via the stringifier returned
-	 * by the static #getStringifier method.
+	 * <p>The string representation is obtained via the stringifier returned by the
+	 * static {@link #getStringifier} method.
 	 *
 	 * @return the string representation of this stack trace element
 	 */

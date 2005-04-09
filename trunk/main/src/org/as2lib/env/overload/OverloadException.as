@@ -28,24 +28,15 @@ class org.as2lib.env.overload.OverloadException extends FatalException {
 	/**
 	 * Constructs a new {@code OverloadException} instance.
 	 * 
-	 * <p>All arguments are allowed to be {@code null} or {@code undefined}.
-	 * But if one is, the string representation returned by the {@code toString}
+	 * <p>All arguments are allowed to be {@code null} or {@code undefined}. But
+	 * if one is, the string representation returned by the {@code toString}
 	 * method will not be complete.
 	 *
-	 * <p>The {@code args} array should be the internal arguments array of
-	 * the method that throws the throwable. The internal arguments array
-	 * exists in every method and contains its parameters, the callee method
-	 * and the caller method. You can refernce it in every method using the
-	 * name {@code "arguments"}.
-	 *
-	 * <p>All arguments are allowed to be {@code null} or {@code undefined}. But if one
-	 * is, the string representation returned by the {@code toString} method will not
-	 * be complete.
-	 * 
-	 * <p>The {@code args} array should be the internal arguments array of the method
-	 * that throws the throwable. The internal arguments array exists in every method
-	 * and contains its parameters, the callee method and the caller method. You can
-	 * refernce it in every method using the name {@code "arguments"}.
+	 * <p>The {@code args} array should be the internal arguments array of the
+	 * method that throws the throwable. The internal arguments array exists in
+	 * every method and contains its parameters, the callee method and the caller
+	 * method. You can refernce it in every method using the name
+	 * {@code "arguments"}.
 	 *
 	 * @param message the message that describes the problem in detail
 	 * @param thrower the object that declares the method that throws this fatal
@@ -55,4 +46,5 @@ class org.as2lib.env.overload.OverloadException extends FatalException {
 	public function OverloadException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
 	}
+	
 }
