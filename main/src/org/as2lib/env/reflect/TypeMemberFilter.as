@@ -18,40 +18,39 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.env.reflect.TypeMemberInfo;
 
 /**
- * TypeMemberFilter gets used to filter the result of type members' searches.
+ * {@code TypeMemberFilter} filters the result of searches for type members.
+ * 
+ * <p>You can pass it for example to the {@link ClassInfo#getMethodsByFilter} method
+ * to receive only methods that match your criteria.
  *
- * <p>You can pass it for example in the {@link ClassInfo#getMethodsByFilter}
- * method to receive only methods that match your criteria.
- *
- * <p>Using this filter can mean a performance boost. Refer to the specific
- * filter and search methods for more information.
- *
+ * <p>Using this filter can mean a performance boost. Refer to the specific filter
+ * and search methods for more information.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.env.reflect.TypeMemberFilter extends BasicInterface {
 	
 	/**
-	 * Returns true if the passed-in type member shall be filtered, that
+	 * Returns {@code true} if the passed-in {@code typeMember} shall be filtered, that
 	 * means excluded from the result.
+	 * 
+	 * <p>This method slows the whole algorithm down because it is invoked for every
+	 * found type member that is not excluded by any of the other filter methods. So if
+	 * you use it try to keep the checks simple.
 	 *
-	 * <p>This method slows the whole algorithm down because it gets invoked
-	 * for every found type member that is not excluded by any of the other
-	 * filter methods.
-	 * So if you use it try to keep the checks simple.
-	 *
-	 * @param typeMember the type member to exclude or to include from the result
-	 * @return true if the type member shall be excluded else false
+	 * @param typeMember the type member to exclude from or to include in the result
+	 * @return {@code true} if the {@code typeMember} shall be excluded else {@code false}
 	 */
 	public function filter(typeMember:TypeMemberInfo):Boolean;
 	
 	/**
-	 * Returns true if type members of super types shall be filtered, that
-	 * means excluded from the result.
+	 * Returns {@code true} if type members of super-types shall be filtered, that means
+	 * excluded from the result.
+	 * 
+	 * <p>Returning {@code true} can mean a performance boost because the algorithm does
+	 * then not search for type members of super types.
 	 *
-	 * <p>Returning true can mean a performance boost because the algorithm
-	 * does then not search for type members of super types.
-	 *
-	 * @return true if super types' type members shall be excluded else false
+	 * @return {@code true} if super types' type members shall be excluded else {@code false}
 	 */
 	public function filterSuperTypes(Void):Boolean;
 	

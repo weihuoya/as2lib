@@ -19,33 +19,34 @@ import org.as2lib.env.reflect.ProxyFactory;
 import org.as2lib.env.reflect.InvocationHandler;
 
 /**
- * InterfaceProxyFacotry creates proxies for interfaces. It can only be
- * used in conjunction with interfaces.
- *
- * <p>It offers a higher performance than the TypeProxyFactory which can
+ * {@code InterfaceProxyFacotry} creates proxies for interfaces. It can only be
+ * used in conjunction with interfaces, not classes.
+ * 
+ * <p>It offers a higher performance than the {@code TypeProxyFactory} which can
  * also be used with classes.
  *
  * @author Simon Wacker
+ * @see org.as2lib.env.reflect.TypeProxyFactory
  */
 class org.as2lib.env.reflect.InterfaceProxyFactory extends BasicClass implements ProxyFactory {
 	
 	/**
 	 * Creates proxies for interfaces.
 	 *
-	 * <p>You can cast the returned proxy to the interface.
+	 * <p>You can cast the returned proxy to the passed-in {@code interfaze}.
+	 * 
+	 * <p>{@code null} will be returned if the passed-in {@code interfaze} is {@code null}
+	 * or {@code undefined}.
+	 * 
+	 * <p>The returned proxy catches method invocations by using {@code __resolve}.
 	 *
-	 * <p>Null gets returned if you pass in an interface of value null or
-	 * undefined.
-	 *
-	 * <p>The proxy catches method invocations by using __resolve.
-	 *
-	 * <p>Note that also methods that are not declared on the interface but
-	 * get invoked on the proxy, get forwarded to the handler.
-	 *
+	 * <p>Note that also methods that are not declared on the passed-in {@code interfaze}
+	 * but that are invoked on the returned proxy, get forwarded to the passed-in
+	 * {@code handler}.
+	 * 
 	 * @param interfaze the interface to create the proxy for
-	 * @param handler the handler to invoke on proxy method invocations
+	 * @param handler the handler to invoke on method invocations on the returned proxy
 	 * @return the created interface proxy
-	 * @see ProxyFactory#createProxy
 	 */
 	public function createProxy(interfaze:Function, handler:InvocationHandler) {
 		if (!interfaze) return null;

@@ -20,57 +20,56 @@ import org.as2lib.env.reflect.TypeMemberFilter;
 import org.as2lib.env.reflect.PackageInfo;
 
 /**
- * TypeInfo represents a type in the Flash environment. That means either
- * a class or an interface.
- *
- * <p>Note that it is not possible right now to distinguish between
- * interfaces and classes at run-time. Therefore are both classes and
- * interfaces represented by ClassInfo instances. This is going to
- * change as soon is a differentiation is possible.
+ * {@code TypeInfo} represents a type a ActionScript type, that is either a class
+ * or an interface.
+ * 
+ * <p>Note that it is not possible right now to distinguish between classes and
+ * interfaces at run-time. Therefore are both classes and interfaces represented by
+ * {@link ClassInfo} instances. This is going to change as soon is a differentiation
+ * is possible.
  *
  * @author Simon Wacker
  */
 interface org.as2lib.env.reflect.TypeInfo extends PackageMemberInfo {
 	
 	/**
-	 * Returns the type this TypeInfo instance represents.
-	 *
+	 * Returns the type this instance represents.
+	 * 
 	 * @return the type represented by this instance
 	 */
 	public function getType(Void):Function;
 	
 	/**
-	 * Returns the super types's TypeInfo instance.
-	 *
-	 * <p>Talking of classes the super-type is the class's super-class, that
-	 * means the class it extends and with interfaces its the interface's
-	 * super-interface, that means the interface it extends.
-	 *
-	 * <p>A super-type is not an implemented interface. Note the difference
-	 * between extending and implementing.
+	 * Returns the super type of this type.
 	 * 
-	 * @return the super types's TypeInfo instance
+	 * <p>Talking of classes the super-type is the class's super-class, that means the
+	 * class it extends and with interfaces it is the interface's super-interface, that
+	 * means the interface it extends.
+	 *
+	 * <p>A super-type is not an implemented interface. Note the difference between
+	 * extending and implementing.
+	 * 
+	 * @return the super types of this type
 	 */
 	public function getSuperType(Void):TypeInfo;
 	
 	/**
-	 * Returns the package this type, class or interface is declared
-	 * in / resides in.
-	 *
-	 * @return the package this type is declared in / resides in
+	 * Returns the package this type is a member of.
+	 * 
+	 * @return the package this type is a member of
 	 */
 	public function getPackage(Void):PackageInfo;
 	
 	/**
-	 * Returns whether this type or any super-type has a method with the
-	 * passed-in method name.
-	 *
-	 * <p>Static methods are not filtered by default. That means {@code filterStaticMethods}
+	 * Returns whether this type or any super-type has a method with the passed-in
+	 * {@code methodName}.
+	 * 
+	 * <p>Static methods are not filtered by default. This means {@code filterStaticMethods}
 	 * is by default set to {@code false}.
 	 *
 	 * @param methodName the name of the method to search for
-	 * @param filterStaticMethods (optional) determines whether static methods
-	 * are filtered, that means excluded from the search
+	 * @param filterStaticMethods (optional) determines whether static methods are
+	 * filtered, this means excluded from the search
 	 * @return {@code true} if the method exists else {@code false}
 	 */
 	public function hasMethod(methodName:String, filterStaticMethods:Boolean):Boolean;
@@ -82,37 +81,40 @@ interface org.as2lib.env.reflect.TypeInfo extends PackageMemberInfo {
 	public function getMethods():Array;
 	
 	/**
-	 * Returns an array containing the methods represented by MethodInfos
+	 * Returns an array containing the methods represented by {@code MethodInfo} instances
 	 * this type declares and maybe the ones of the super types.
-	 *
-	 * <p>The super types' methods are included if you pass-in false, null
-	 * or undefined and excluded/filtered if you pass-in true.
-	 *
-	 * <p>Note that methods of interfaces cannot be evaluated at run-time.
-	 * They thus have no declared methods for the reflection api.
-	 *
-	 * @param filterSuperTypes (optional) determines whether the super types'
-	 * methods shall be excluded, that means filtered (true) or included (false)
-	 * @return an array containing the methods
+	 * 
+	 * <p>The super types' methods are included if you pass-in {@code false}, {@code null}
+	 * or {@code undefined} and excluded/filtered if you pass-in {@code true}. This means
+	 * super-types are by default included.
+	 * 
+	 * <p>Note that methods of interfaces cannot be evaluated at run-time. They thus
+	 * have no methods for the Reflection API.
+	 * 
+	 * @param filterSuperTypes (optional) determines whether to filter/exclude the super
+	 * types' methods
+	 * @return an array containing the methods represented by {@code MethodInfo} instances
 	 */
 	public function getMethodsByFlag(filterSuperTypes:Boolean):Array;
 	
 	/**
-	 * Returns an array containing the methods represented by MethodInfos
-	 * this type and super types' declare that do not get filtered/excluded.
+	 * Returns an array containing the methods represented by {@code MethodInfo} instances
+	 * this type and super types' declare that are not filtered/excluded.
+	 * 
+	 * <p>The {@link TypeMemberFilter#filter} method of the passed-in {@code methodFilter}
+	 * is invoked for every method to determine whether it shall be contained in the
+	 * result.
 	 *
-	 * <p>The {@link TypeMemberFilter#filter} gets invoked for every method
-	 * to determine whether it shall be contained in the result.
+	 * <p>If the passed-in {@code methodFilter} is {@code null} or {@code undefined} the
+	 * result of an invocation of the {@link #getMethodsByFlag} method with argument
+	 * {@code false} will be returned.
 	 *
-	 * <p>If the passed-in methodFilter argument is null or undefined the
-	 * result of an invocation of {@link #getMethodsByFlag} with argument
-	 * false gets returned.
-	 *
-	 * <p>Note that methods of interfaces cannot be evaluated at run-time.
-	 * They thus have no declared methods for the reflection api.
-	 *
+	 * <p>Note that methods of interfaces cannot be evaluated at run-time. They thus
+	 * have no methods for the Reflection API.
+	 * 
 	 * @param methodFilter the filter that filters unwanted methods out
-	 * @return an array containing the remaining methods
+	 * @return an array containing the remaining methods represented by {@code MethodInfo}
+	 * instances
 	 */
 	public function getMethodsByFilter(methodFilter:TypeMemberFilter):Array;
 	
@@ -123,36 +125,37 @@ interface org.as2lib.env.reflect.TypeInfo extends PackageMemberInfo {
 	public function getMethod():MethodInfo;
 	
 	/**
-	 * Returns the method info corresponding to the passed-in method name.
+	 * Returns the method info corresponding to the passed-in {@code methodName}.
 	 *
-	 * <p>Null will be returned if:
+	 * <p>{@code null} will be returned if:
 	 * <ul>
-	 *   <li>The passed-in method name is null or undefined.</li>
+	 *   <li>The passed-in {@code methodName} is {@code null} or {@code undefined}.</li>
 	 *   <li>The method does not exist in the represented type or any super-type.</li>
 	 * </ul>
-	 *
-	 * <p>Note that methods of interfaces cannot be evaluated at run-time.
-	 * They thus have no declared methods for the reflection api.
+	 * 
+	 * <p>Note that methods of interfaces cannot be evaluated at run-time. They thus
+	 * have no methods for the Reflection API.
 	 *
 	 * @param methodName the name of the method you wanna obtain
-	 * @return the method info correspoinding to the method name
+	 * @return the method info correspoinding to the passed-in {@code methodName}
 	 */
 	public function getMethodByName(methodName:String):MethodInfo;
 	
 	/**
-	 * Returns the method info corresponding to the passed-in concrete method.
-	 *
-	 * <p>Null will be returned if:
+	 * Returns the method info corresponding to the passed-in {@code concreteMethod}.
+	 * 
+	 * <p>{@code null} will be returned if:
 	 * <ul>
-	 *   <li>The passed-in concrete method is null or undefined.</li>
+	 *   <li>The passed-in {@code concreteMethod} is {@code null} or {@code undefined}.</li>
 	 *   <li>The method does not exist in the represented type or any super-type.</li>
 	 * </ul>
 	 *
-	 * <p>Note that methods of interfaces cannot be evaluated at run-time.
-	 * They thus have no declared methods for the reflection api.
-	 *
+	 * <p>Note that methods of interfaces cannot be evaluated at run-time. They thus
+	 * have no methods for the Reflection API.
+	 * 
 	 * @param concreteMethod the method you wanna obtain the corresponding method info
-	 * @return the method info correspoinding to the concrete method
+	 * for
+	 * @return the method info correspoinding to the passed-in {@code concreteMethod}
 	 */
 	public function getMethodByMethod(concreteMethod:Function):MethodInfo;
 	

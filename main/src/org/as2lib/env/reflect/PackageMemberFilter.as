@@ -18,42 +18,41 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.env.reflect.PackageMemberInfo;
 
 /**
- * PackageMemberInfo gets used to filter the result of searches for package
- * members, that are types and packages.
- *
- * <p>You can pass it for example in the {@link PackageInfo#getMemberClasses} or
+ * {@code PackageMemberInfo} filters the result of searches for package members,
+ * that are types and packages.
+ * 
+ * <p>You can pass it for example to the {@link PackageInfo#getMemberClasses} or
  * {@link PackageInfo#getMemberPackages} methods to receive only classes or packages
  * that match your criteria.
  *
- * <p>Using this filter can mean a performance boost. Refer to the specific
- * filter and search methods for more information.
+ * <p>Using this filter can mean a performance boost. Refer to the specific filter
+ * and search methods for more information.
  *
  * @author Simon Wacker
  */
 interface org.as2lib.env.reflect.PackageMemberFilter extends BasicInterface {
 	
 	/**
-	 * Returns true if the passed-in package member shall be filtered, that
-	 * means excluded from the result.
+	 * Returns {@code true} if the passed-in {@code packageMember} shall be filtered,
+	 * that means excluded from the result.
+	 * 
+	 * <p>This method slows the whole algorithm down because it is invoked for every
+	 * found package member that is not excluded by any of the other filter methods. So
+	 * if you use it try to keep the checks simple.
 	 *
-	 * <p>This method slows the whole algorithm down because it gets invoked
-	 * for every found package member that is not excluded by any of the other
-	 * filter methods.
-	 * So if you use it try to keep the checks simple.
-	 *
-	 * @param packageMember the package member to exclude or to include from the result
-	 * @return true if the package member shall be excluded else false
+	 * @param packageMember the package member to exclude from or to include in the result
+	 * @return {@code true} if the {@code packageMember} shall be excluded else {@code false}
 	 */
 	public function filter(packageMember:PackageMemberInfo):Boolean;
 	
 	/**
-	 * Returns true if package members of sub-packages shall be filtered,
-	 * that means excluded from the result.
+	 * Returns {@code true} if package members of sub-packages shall be filtered, that
+	 * means excluded from the result.
+	 * 
+	 * <p>Returning {@code true} can mean a performance boost because the algorithm does
+	 * then not search for package members of sub-packages.
 	 *
-	 * <p>Returning true can mean a performance boost because the algorithm
-	 * does then not search for package members of sub-packages.
-	 *
-	 * @return true if sub-packages' package members shall be excluded else false
+	 * @return {@code true} if sub-packages' package members shall be excluded else {@code false}
 	 */
 	public function filterSubPackages(Void):Boolean;
 	

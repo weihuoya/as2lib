@@ -19,27 +19,27 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.env.reflect.PropertyInfo;
 
 /**
- * PropertyInfoStringifier stringifies {@link PropertyInfo} instances.
+ * {@code PropertyInfoStringifier} stringifies {@link PropertyInfo} instances.
  *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.string.PropertyInfoStringifier extends BasicClass implements Stringifier {
 	
 	/**
-	 * Returns a string representation of the passed-in {@link PropertyInfo}
-	 * instance.
-	 *
+	 * Returns the string representation of the passed-in {@link PropertyInfo} instance.
+	 * 
 	 * <p>The string representation is composed as follows:
 	 * <pre>
 	 *   fullQualifiedDeclaringTypeName.propertyName
 	 * </pre>
-	 * or if static:
+	 *
+	 * <p>Or if static:
 	 * <pre>
 	 *   static fullQualifiedDeclaringTypeName.propertyName
 	 * </pre>
 	 *
-	 * @param target an instance of type {@link PropertyInfo} that shall be stringified
-	 * @return the string representation of the passed-in property info
+	 * @param target an instance of type {@link PropertyInfo} to stringify
+	 * @return the string representation of the passed-in {@code target} property info
 	 */
 	public function execute(target):String {
 		var property:PropertyInfo = PropertyInfo(target);

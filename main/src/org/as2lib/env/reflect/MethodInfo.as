@@ -21,20 +21,22 @@ import org.as2lib.env.reflect.TypeMemberInfo;
 import org.as2lib.env.reflect.string.MethodInfoStringifier;
 
 /**
- * MethodInfo represents a method.
- *
- * <p>MethodInfo instances for specific methods can be obtained using
- * the {@link ClassInfo#getMethods} or {@link ClassInfo#getMethod} methods. That means
- * you first have to get a class info for the class that declares or
- * inherits the method. You can therefor use the {@link ClassInfo#forObject},
- * {@link ClassInfo#forClass}, {@link ClassInfo#forInstance} or {@link ClassInfo#forName} methods.
+ * {@code MethodInfo} represents a method.
  * 
- * <p>When you have obtained the method info you can use it to get
- * information about the method.
+ * <p>{@code MethodInfo} instances for specific methods can be obtained using the
+ * {@link ClassInfo#getMethods} or {@link ClassInfo#getMethod} methods. That means
+ * you first have to get a class info for the class that declares or inherits the
+ * method. You can therefor use the {@link ClassInfo#forObject}, {@link ClassInfo#forClass},
+ * {@link ClassInfo#forInstance} and {@link ClassInfo#forName} methods.
+ * 
+ * <p>When you have obtained the method info you can use it to get information about
+ * the method.
  *
- * <code>trace("Method name: " + methodInfo.getName());
- * trace("Declaring type: " + methodInfo.getDeclaringType().getFullName());
- * trace("Is Static?: " + methodInfo.isStatic());</code>
+ * <code>
+ *   trace("Method name: " + methodInfo.getName());
+ *   trace("Declaring type: " + methodInfo.getDeclaringType().getFullName());
+ *   trace("Is Static?: " + methodInfo.isStatic());
+ * </code>
  *
  * @author Simon Wacker
  */
@@ -43,24 +45,12 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	/** The method info stringifier. */
 	private static var stringifier:Stringifier;
 	
-	/** The name of the method. */
-	private var name:String;
-	
-	/** The actual method. */
-	private var method:Function;
-	
-	/** The type that declares the method. */
-	private var declaringType:TypeInfo;
-	
-	/** A flag representing whether the method is static or not. */
-	private var staticFlag:Boolean;
-	
 	/**
 	 * Returns the stringifier used to stringify method infos.
 	 *
-	 * <p>If no custom stringifier has been set via the {@link #setStringifier}
-	 * method, a instance of the default MethodInfoStringifier gets returned.
-	 *
+	 * <p>If no custom stringifier has been set via the {@link #setStringifier} method,
+	 * a instance of the default {@code MethodInfoStringifier} class is returned.
+	 * 
 	 * @return the stringifier that stringifies method infos
 	 */
 	public static function getStringifier(Void):Stringifier {
@@ -71,23 +61,35 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	/**
 	 * Sets the stringifier used to stringify method infos.
 	 *
-	 * <p>If you set a stringifier of value null or undefined {@link #getStringifier}
-	 * will return the default stringifier.
-	 *
+	 * <p>If {@code methodInfoStringifier} is {@code null} or {@code undefined}
+	 * {@link #getStringifier} will return the default stringifier.
+	 * 
 	 * @param methodInfoStringifier the stringifier that stringifies method infos
 	 */
 	public static function setStringifier(methodInfoStringifier:MethodInfoStringifier):Void {
 		stringifier = methodInfoStringifier;
 	}
 	
+	/** The name of this method. */
+	private var name:String;
+	
+	/** The concrete method. */
+	private var method:Function;
+	
+	/** The type that declares this method. */
+	private var declaringType:TypeInfo;
+	
+	/** A flag representing whether this method is static or not. */
+	private var staticFlag:Boolean;
+	
 	/**
-	 * Constructs a new MethodInfo instance.
+	 * Constructs a new {@code MethodInfo} instance.
 	 *
-	 * <p>All arguments are allowed to be null. But keep in mind that not
-	 * all methods will function properly if one is.
-	 *
+	 * <p>All arguments are allowed to be {@code null}. But keep in mind that not all
+	 * methods will function properly if one is.
+	 * 
 	 * @param name the name of the method
-	 * @param method the actual method
+	 * @param method the concrete method
 	 * @param declaringType the declaring type of the method
 	 * @param static a flag representing whether the method is static
 	 */
@@ -102,56 +104,54 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	}
 	
 	/**
-	 * Returns the name of the method.
+	 * Returns the name of this method.
 	 *
-	 * @return the name of the method
+	 * @return the name of this method
 	 */
 	public function getName(Void):String {
 		return name;
 	}
 	
 	/**
-	 * Returns the actual method this instance represents.
+	 * Returns the concrete method this instance represents.
 	 *
-	 * @return the actual method
+	 * @return the concrete method
 	 */
 	public function getMethod(Void):Function {
 		return method;
 	}
 	
 	/**
-	 * Returns the type that declares the method.
+	 * Returns the type that declares this method.
 	 *
-	 * @return the type that declares the method
+	 * @return the type that declares this method
 	 */
 	public function getDeclaringType(Void):TypeInfo {
 		return declaringType;
 	}
 	
 	/**
-	 * Invokes this method on a different scope that is on any object you
-	 * want, passing the specified arguments.
-	 *
-	 * <p>All methods the method calls get invoked on the new scope. The
-	 * object referenced by 'this' is the object this method gets invoked
-	 * on, its scope.
+	 * Invokes this method on the passed-in {@code scope} passing the given {@code args}.
 	 * 
-	 * @param scope 'this'-scope for the method execution
-	 * @param args arguments to be used for the method invocation
-	 * @return the return value of the method execution
+	 * <p>The object referenced by {@code this} in this method is the object this method
+	 * is invoked on, its / the passed-in {@code scope}.
+	 * 
+	 * @param scope the {@code this}-scope for the method invocation
+	 * @param args the arguments to pass-to the method on invocation
+	 * @return the return value of the method invocation
 	 */
 	public function invoke(scope, args:Array) {
 		return method.apply(scope, args);
 	}
 	
 	/**
-	 * Returns whether the method is static or not.
-	 *
+	 * Returns whether this method is static or not.
+	 * 
 	 * <p>Static methods are methods per type.
 	 *
 	 * <p>Non-Static methods are methods per instance.
 	 *
-	 * @return true when the method is static else false
+	 * @return {@code true} if this method is static else {@code false}
 	 */
 	public function isStatic(Void):Boolean {
 		return staticFlag;
@@ -160,9 +160,9 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	/**
 	 * Returns the string representation of this method.
 	 *
-	 * <p>The string representation is obtained via the stringifier returned
-	 * by the static {@link #getStringifier} method.
-	 *
+	 * <p>The string representation is obtained via the stringifier returned by the
+	 * static {@link #getStringifier} method.
+	 * 
 	 * @return the string representation of this method
 	 */
 	public function toString(Void):String {

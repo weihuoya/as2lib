@@ -19,60 +19,66 @@ import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.ClassInfo;
 
 /**
- * Searches for all methods of a specific class.
- *
- * <p>This class is mostly used internally. If you wanna obtain the methods
- * of a class you need its representing ClassInfo. You can then also use
- * the {@link ClassInfo#getMethods} method directly and do not have to make the detour
+ * {@code MethodAlgorithm} searches for all methods of a specific class.
+ * 
+ * <p>This class is mostly used internally. If you wanna obtain the methods of a
+ * class you need its representing ClassInfo. You can then also use the
+ * {@link ClassInfo#getMethods} method directly and do not have to make the detour
  * over this class. The {@link ClassInfo#getMethods} method is also easier to use
  * and offers some extra functionalities.
  *
  * <p>If you nevertheless want to use this class here is how it works.
  *
- * <code>var classInfo:ClassInfo = ClassInfo.forClass(MyClass);
- * var methodAlgorithm:MethodAlgorithm = new MethodAlgorithm();
- * var methods:Array = methodAlgorithm.execute(classInfo);</code>
+ * <code>
+ *   var classInfo:ClassInfo = ClassInfo.forClass(MyClass);
+ *   var methodAlgorithm:MethodAlgorithm = new MethodAlgorithm();
+ *   var methods:Array = methodAlgorithm.execute(classInfo);
+ * </code>
  *
- * <p>Refer to the {@link #execute} methods documentation for details on how to
- * get data from the methods array appropriately.
+ * <p>Refer to the {@link #execute} method for details on how to get data from the
+ * methods array appropriately.
  * 
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass {
 	
+	/** The temporary result. */
 	private var r:Array;
+	
+	/** The class to return methods for. */
 	private var i:ClassInfo;
+	
+	/** Determines whether the method is static or not. */
 	private var s:Boolean;
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new {@code MethodAlgorithm} instance.
 	 */
 	public function MethodAlgorithm(Void) {
 	}
 	
 	/**
-	 * Searches for all methods of a class.
+	 * Searches for all methods of the passed-in class {@code i}.
 	 * 
-	 * <p>The resulting array contains instances of type MethodInfo.
-	 *
-	 * <p>This method will return null if:
+	 * <p>The resulting array contains instances of type {@link MethodInfo}.
+	 * 
+	 * <p>{@code null} will be returned if:
 	 * <ul>
-	 *   <li>The argument is null or undefined.</li>
-	 *   <li>The argument's getType() method returns null or undefined.</li>
+	 *   <li>The passed-in class {@code i} is {@code null} or {@code undefined}.</li>
+	 *   <li>The {@code getType} method of the passed-in class returns {@code null}.</li>
 	 * </ul>
 	 *
-	 * <p>Only the passed in class will be searched through, no
-	 * super classes.
+	 * <p>Only the passed in class will be searched through, no super classes.
 	 *
-	 * <p>The found methods are stored in the resulting array by index as
-	 * well as by name. That means you can obtain MethodInfo instances either
-	 * by index:
+	 * <p>The found methods are stored in the resulting array by index as well as by
+	 * name. This means you can obtain {@code MethodInfo} instances either by index:
 	 * <code>var myMethod:MethodInfo = myMethods[0];</code>
-	 * or by name:
-	 * <code>var myMethod:MethodInfo = myMethods["myMethodName"];</code>
 	 *
-	 * @param i the ClassInfo instance representing the class to search through
-	 * @return the found methods, a blank array or null
+	 * <p>Or by name:
+	 * <code>var myMethod:MethodInfo = myMethods["myMethodName"];</code>
+	 * 
+	 * @param i the class info instance representing the class to search through
+	 * @return the found methods, an empty array or {@code null}
 	 */
 	public function execute(i:ClassInfo):Array {
 		if (i == null) return null;

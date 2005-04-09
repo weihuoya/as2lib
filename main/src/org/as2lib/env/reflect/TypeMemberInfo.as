@@ -18,36 +18,36 @@ import org.as2lib.env.reflect.TypeInfo;
 import org.as2lib.env.reflect.MemberInfo;
 
 /**
- * TypeMemberInfo represents a type member.
+ * {@code TypeMemberInfo} represents a type member.
+ * 
+ * <p>Type members are methods, implicit get/set methods (referred to as properties)
+ * and variables (not supported right now).
  *
- * <p>Type members are methods, implicit get/set methods (refered to as
- * properties by the reflection api) and variables (not supported).
- *
- * <p>Class or instance variables are not supported because they can
- * only be evaluated if the got initialized previously. Therefore results
- * could vary dramatically.
- *
+ * <p>Class or instance variables are not supported because they can only be
+ * evaluated if they got initialized previously. Therefore results could vary
+ * dramatically.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.env.reflect.TypeMemberInfo extends MemberInfo {
 	
 	/**
-	 * Returns the declaring type of the type member.
+	 * Returns the declaring type of this type member.
 	 *
-	 * @return the type member's declaring type
+	 * @return this type member's declaring type
 	 */
 	public function getDeclaringType(Void):TypeInfo;
 	
 	/**
-	 * Returns whether the type member is static or not.
+	 * Returns whether this type member is static or not.
+	 * 
+	 * <p>Static type members are members per type. Speaking of classes static type
+	 * members are class variables or class methods.
 	 *
-	 * <p>Static type members are members per type. Speaking of classes static
-	 * type members are class variables or class methods.
+	 * <p>Non-Static type members are members per instance. For example instance
+	 * variables or instance methods.
 	 *
-	 * <p>Non-Static type members are members per instance. For example
-	 * instance variables or instance methods.
-	 *
-	 * @return true when the type member is static else false
+	 * @return {@code true} if this type member is static else {@code false}
 	 */
 	public function isStatic(Void):Boolean;
 	

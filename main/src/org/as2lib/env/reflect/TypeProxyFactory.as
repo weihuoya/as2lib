@@ -19,30 +19,30 @@ import org.as2lib.env.reflect.ProxyFactory;
 import org.as2lib.env.reflect.InvocationHandler;
 
 /**
- * TypeProxyFactory can be used to create proxies of types, that means
- * classes or interfaces.
- *
- * <p>If you know that you only need interface proxies you could think
- * about using {@link InterfaceProxyFactory} because it offers higher
- * performance.
+ * {@code TypeProxyFactory} creates proxies of types, that means classes or
+ * interfaces.
+ * 
+ * <p>If you know that you only need interface proxies you could think of using
+ * {@link InterfaceProxyFactory} because it offers better performance.
  *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.TypeProxyFactory extends BasicClass implements ProxyFactory {
 	
 	/**
-	 * Creates proxies for types, that means classes and interfaces.
+	 * Creates proxies for the passed-in {@code type}, that are classes and interfaces.
+	 * 
+	 * <p>You can cast the returned proxy to the passed-in {@code type}.
 	 *
-	 * <p>You can cast the returned proxy to the passed-in type.
+	 * <p>{@code null} will be returned if the passed-in {@code type} is {@code null}
+	 * or {@code undefined}.
 	 *
-	 * <p>Null gets returned if you pass-in a typ of value null or undefined.
-	 *
-	 * <p>The proxy catches method invocations by creating proxy methods for
-	 * every method of the type that forward the invocations to the handler.
-	 * Unknown, that means not defined methods get catched by using __resolve.
-	 *
-	 * <p>Note that also methods that are not declared on the type but
-	 * get invoked on the proxy, get forwarded to the handler.
+	 * <p>This proxy catches method invocations by creating proxy methods for every
+	 * method of the {@code type} that forward the invocations to the handler. Unknown,
+	 * that means not declared or implemented methods are catched by {@code __resolve}.
+	 * 
+	 * <p>Note that also methods that are not declared on the {@code type} but get
+	 * invoked on the proxy, are forwarded to the passed-in {@code handler}.
 	 *
 	 * @param type the type to create the proxy for
 	 * @param handler the handler to invoke on proxy method invocations

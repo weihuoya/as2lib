@@ -22,42 +22,50 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ReflectConfig;
 
 /**
- * PackageAlgorithm searches for the specified package and returns a
- * PackageInfo representing the found package.
+ * {@code PackageAlgorithm} searches for the specified package and returns the
+ * package info representing the found package.
+ * 
+ * <p>To obtain the package info corresponding to package you use this class as
+ * follows.
  *
- * <p>To obtain the package info corresponding to package you use the
- * PackageAlgorithm class as follows.
- *
- * <code>var packageAlgorithm:PackageAlgorithm = new PackageAlgorithm();
- * var packageInfoByPackage:PackageInfo = packageAlgorithm.execute(org.as2lib.core);</code>
+ * <code>
+ *   var packageAlgorithm:PackageAlgorithm = new PackageAlgorithm();
+ *   var packageInfoByPackage:PackageInfo = packageAlgorithm.execute(org.as2lib.core);
+ * </code>
  *
  * <p>It is also possible to retrieve a package info by name.
  *
- * <code>packageInfoByName:PackageInfo = packageAlgorithm.executeByName("org.as2lib.core");</code>
+ * <code>
+ *   packageInfoByName:PackageInfo = packageAlgorithm.executeByName("org.as2lib.core");
+ * </code>
  *
- * <p>Already retrieved package infos are stored in a cache. There thus 
- * exists only one PackageInfo instance per package. The following returns
- * true.
- *
- * <code>trace(packageInfoByPackage == packageInfoByName);</code>
+ * <p>Already retrieved package infos are stored in a cache. There thus exists only
+ * one {@code PackageInfo} instance per package. The following traces {@code true}.
+ * 
+ * <code>
+ *   trace(packageInfoByPackage == packageInfoByName);
+ * </code>
  *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 	
+	/** The chache. */
 	private var c:Cache;
+	
+	/** The found packages. */
 	private var p;
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new {@code PackageAlgorithm} instance.
 	 */
 	public function PackageAlgorithm(Void) {
 	}
 	
 	/**
-	 * Sets the cache that gets used by the {@link #execute} method to
-	 * look whether the package the shall be found is already stored.
-	 *
+	 * Sets the cache that is used by the {@link #execute} method to look whether the
+	 * package to find is already stored and where to start the search if not.
+	 * 
 	 * @param cache the new cache
 	 */
 	public function setCache(cache:Cache):Void {
@@ -65,9 +73,9 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 	}
 	
 	/**
-	 * Returns the cache set via the {@link #setCache} method or the default
-	 * cache that gets returned by the {@link ReflectConfig#getCache} method.
-	 *
+	 * Returns the cache set via the {@link #setCache} method or the default cache that
+	 * is returned by the {@link ReflectConfig#getCache} method.
+	 * 
 	 * @return the currently used cache
 	 */
 	public function getCache(Void):Cache {
@@ -76,30 +84,30 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 	}
 	
 	/**
-	 * Executes the search for the passed-in package and returns information
-	 * about that package.
-	 *
+	 * Executes the search for the passed-in package {@code o} and returns information
+	 * about this package.
+	 * 
 	 * <p>The returned object has the following properties:
 	 * <dl>
 	 *   <dt>package</dt>
-	 *   <dd>The package as Object that has been searched for, that is the
-	 *       passed-in package.</dd>
+	 *   <dd>The package as {@code Object} that has been searched for, this is the
+	 *       passed-in package {@code o}.</dd>
 	 *   <dt>name</dt>
-	 *   <dd>The name as String of the searched for package.</dd>
+	 *   <dd>The name as {@code String} of the searched for package.</dd>
 	 *   <dt>parent</dt>
-	 *   <dd>The parent represented by a {@ling PackageInfo} instance the
-	 *       package is declared in / resides in.</dd>
+	 *   <dd>The parent represented by a {@ling PackageInfo} instance the searched for
+	 *       package is a member of.</dd>
 	 * </dl>
 	 *
-	 * <p>Null will be returned if:
+	 * <p>{@code null} will be returned if:
 	 * <ul>
-	 *   <li>The passed-in package is null or undefined.</li>
-	 *   <li>The searched for package could not be found.</li>
+	 *   <li>The passed-in package {@code o} is {@code null} or {@code undefined}.</li>
+	 *   <li>The searched for package {@code o} could not be found.</li>
 	 * </ul>
 	 *
-	 * <p>The search starts on the package returned by the cache's getRoot()
-	 * method, that is by default _global.
-	 *
+	 * <p>The search starts on the package returned by the cache's {@code getRoot}
+	 * method, this is by default {@code _global}.
+	 * 
 	 * @param o the package to return information about
 	 * @return an object that contains information about the passed-in package
 	 */
@@ -139,22 +147,25 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 	}
 	
 	/**
-	 * Returns the package info representing the package corresponding to the
-	 * passed-in package name.
+	 * Returns the package info representing the package corresponding to the passed-in
+	 * package name {@code n}.
+	 * 
+	 * <p>The name must be fully qualified, that means it must consist of the package's
+	 * path as well as its name. For example 'org.as2lib.core'.
 	 *
-	 * <p>The name must be fully qualified, that means it must consist
-	 * of the package's path as well as its name. For example
-	 * 'org.as2lib.core'.
-	 *
-	 * <p>The search starts on the package returned by the {@link Cache#getRoot}
-	 * method. If this method returns a package info whose getFullName method
-	 * returns null, undefined or an empty string '_global' is used instead
-	 *
+	 * <p>The search starts on the package returned by the {@link Cache#getRoot} method
+	 * of the set cache. If this method returns a package info whose {@code getFullName}
+	 * method returns {@code null}, {@code undefined} or an empty string {@code "_global"}
+	 * is used instead
+	 * 
 	 * @param n the fully qualified name of the package
-	 * @return the package info representing the package corresponding to the name
-	 * @throws IllegalArgumentException if the passed-in name is null or undefined or an empty string or
-	 *                                  if the object corresponding to the passed-in name is not of type object
-	 * @throws PackageNotFoundException if a package with the passed-in name could not be found or
+	 * @return the package info representing the package corresponding to the passed-in
+	 * name
+	 * @throws IllegalArgumentException if the passed-in name is {@code null},
+	 * {@code undefined} or an empty string or if the object corresponding to the
+	 * passed-in name is not of type {@code "object"}
+	 * @throws PackageNotFoundException if a package with the passed-in name could not
+	 * be found
 	 */
 	public function executeByName(n:String):PackageInfo {
 		if (!n) throw new IllegalArgumentException("The passed-in package name '" + n + "' is not allowed to be null, undefined or an empty string.", this, arguments);

@@ -18,25 +18,25 @@ import org.as2lib.env.reflect.MemberInfo;
 import org.as2lib.env.reflect.PackageInfo;
 
 /**
- * PackageMemberInfo is the super interface for members of packages.
- *
+ * {@code PackageMemberInfo} is the super interface for members of packages.
+ * 
  * <p>Members of packages are classes, interfaces and packages themselves.
- *
- * <p>Accoring to this classes and interfaces can be seen as leafs in
- * a compositional structure and packages as composites. This design
- * pattern is known under the name Composite.
+ * 
+ * <p>Accoring to this classes and interfaces can be seen as leafs in a compositional
+ * structure and packages as composites. This design pattern is known under the name
+ * Composite.
  *
  * @author Simon Wacker
  */
 interface org.as2lib.env.reflect.PackageMemberInfo extends MemberInfo {
 	
 	/**
-	 * Returns the full name of the package member.
+	 * Returns the fully qualified name of this package member.
 	 * 
-	 * <p>A full qualified name is a name that consists of the members
-	 * name as well as its path.
+	 * <p>A fully qualified name is a name that consists of the member's name as well
+	 * as its preceding package structure.
 	 *
-	 * @return the full name of the package member
+	 * @return the fully qualified name of this package member
 	 */
 	public function getFullName(Void):String;
 	
