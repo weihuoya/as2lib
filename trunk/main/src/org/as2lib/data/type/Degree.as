@@ -18,56 +18,58 @@ import org.as2lib.data.type.Angle;
 import org.as2lib.Config;
 
 /**
- * Implementation of Angle for degrees
+ * {@code Degree} represents a angle in degree.
  * 
  * @author Martin Heidegger
  */
 class org.as2lib.data.type.Degree extends Number implements Angle {
 	
-	/** Value of angle in degree */
+	/** Angle in degree. */
 	private var degree:Number;
 	
 	/**
-	 * Constructcs a degree content
+	 * Constructs a new {@code Degree} instance.
 	 * 
-	 * @param degree Value of degree for the instance.
+	 * @param degree the angle in degree
 	 */
 	public function Degree(degree:Number) {
 		this.degree = degree;
 	}
 	
 	/**
-	 * Value of the degree content
+	 * Returns the angle in degree as number.
 	 * 
-	 * @return degrees value
+	 * @return the angle in degree as number
 	 */
 	public function valueOf(Void):Number {
 		return degree;
 	}
 	
 	/**
-	 * Getter for the degrees as radian
+	 * Returns the angle in radian.
 	 * 
-	 * @return degrees as radian.
+	 * @return the angle in radian
 	 */
 	public function toRadian(Void):Number {
-		return degree*Math.PI/180;
+		return (degree * Math.PI/180);
 	}
 	
 	/**
-	 * Getter for the degrees
+	 * Returns the angle in degree.
 	 * 
-	 * @return degrees
+	 * @return the angle in degree
 	 */
 	public function toDegree(Void):Number {
 		return degree;
 	}
 	
 	/**
-	 * Returns a String representation of the instance. The String representation
-	 * is obtained via the Config.getObjectStringifier()#execute() operation.
+	 * Returns the string representation of this instance.
 	 *
-	 * @see org.as2lib.core.BasicInterface#toString()
+	 * <p>The string representation is obtained via the stringifier returned by the
+	 * {@link Config#getObjectStringifier} method.
+	 * 
+	 * @return the string representation of this instance
 	 */
 	public function toString(Void):String {
 		return Config.getObjectStringifier().execute(this);

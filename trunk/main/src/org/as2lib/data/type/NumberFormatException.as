@@ -17,20 +17,31 @@
 import org.as2lib.env.except.Exception;
 
 /**
- * Exception to be thrown if a Number is not possible to convert into a different number.
+ * {@code NumberFormatException} is thrown if it is not possible to format a given
+ * number into the expected type.
  * 
  * @author Martin Heidegger
  */
 class org.as2lib.data.type.NumberFormatException extends Exception {
 	
 	/**
-	 * Constructs a new NumberFormatException
+	 * Constructs a new {@code NumberFormatException} instance.
 	 * 
-	 * @param message Message to the exception
-	 * @param thrower Object that throw the exception
-	 * @param args	Arguments that were available while throwing the exception
+	 * <p>All arguments are allowed to be {@code null} or {@code undefined}. But if one
+	 * is, the string representation returned by the {@code toString} method will not
+	 * be complete.
+	 * 
+	 * <p>The {@code args} array should be the internal arguments array of the method
+	 * that throws the throwable. The internal arguments array exists in every method
+	 * and contains its parameters, the callee method and the caller method. You can
+	 * refernce it in every method using the name {@code 'arguments'}.
+	 *
+	 * @param message the message that describes the problem in detail
+	 * @param thrower the object that declares the method that throws this exception
+	 * @param args the arguments of the throwing method
 	 */
 	public function NumberFormatException(message:String, thrower, args:Array) {
-		super(message, thrower, args);
+		super (message, thrower, args);
 	}
+	
 }

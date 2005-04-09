@@ -18,56 +18,58 @@ import org.as2lib.data.type.Angle;
 import org.as2lib.Config;
 
 /**
- * Implementation of Angle for radian
+ * {@code Radian} represents a angle in radian.
  * 
  * @author Martin Heidegger
  */
 class org.as2lib.data.type.Radian extends Number implements Angle {
 	
-	/** Value of the angle in radian */
+	/** The angle in radian. */
 	private var radian:Number;
 	
 	/**
-	 * Constructcs a radian content
+	 * Constructs a new {@code Radian} instance.
 	 * 
-	 * @param radian Value of radian for the instance.
+	 * @param radian the angle in radian
 	 */
 	public function Radian(radian:Number) {
 		this.radian = radian;
 	}
 	
 	/**
-	 * Value of the radian content
+	 * Returns the angle in radian as number.
 	 * 
-	 * @return radian value
+	 * @return the angle in radian as number
 	 */
 	public function valueOf(Void):Number {
 		return radian;
 	}
 	
 	/**
-	 * Getter for the radian
+	 * Returns the angle in radian.
 	 * 
-	 * @return radian
+	 * @return the angle in radian
 	 */
 	public function toRadian(Void):Number {
 		return radian;
 	}
 	
 	/**
-	 * Getter for the radian as degrees
+	 * Returns the angle in degree.
 	 * 
-	 * @return radian as degrees.
+	 * @return the angle in degree
 	 */
 	public function toDegree(Void):Number {
 		return radian*180/Math.PI;
 	}
 	
 	/**
-	 * Returns a String representation of the instance. The String representation
-	 * is obtained via the Config.getObjectStringifier()#execute() operation.
+	 * Returns the string representation of this instance.
 	 *
-	 * @see org.as2lib.core.BasicInterface#toString()
+	 * <p>The string representation is obtained via the stringifier returned by the
+	 * {@link Config#getObjectStringifier} method.
+	 * 
+	 * @return the string representation of this instance
 	 */
 	public function toString(Void):String {
 		return Config.getObjectStringifier().execute(this);
