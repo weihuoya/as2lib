@@ -20,7 +20,8 @@ import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
- * StackTraceElementStringifier stringifies StackTraceElement instances.
+ * {@code StackTraceElementStringifier} stringifies {@link StackTraceElement}
+ * instances.
  *
  * @author Simon Wacker
  * @author Martin Heidegger
@@ -31,42 +32,45 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 	private var showArgumentsValues:Boolean;
 	
 	/**
-	 * Constructs a new StackTraceElementStringifier instance.
+	 * Constructs a new {@code StackTraceElementStringifier} instance.
 	 *
-	 * <p>By default the types of the arguments are shown and not their
-	 * value.
+	 * <p>By default the types of the arguments are shown and not their value.
 	 *
 	 * @param showArgumentsValues determines whether to show a string representation
-	 * of the arguments' values, that is the string that gets returned by their
-	 * toString methods, (true) or only the types of the arguments (false).
+	 * of the arguments' values, that is the string that is returned by their
+	 * {@code toString} methods ({@code true}) or only the types of the arguments
+	 * ({@code false}).
 	 */
 	public function StackTraceElementStringifier(showArgumentsValues:Boolean) {
 		this.showArgumentsValues = showArgumentsValues;
 	}
 	
 	/**
-	 * Returns the string representation of the passed-in StackTraceElement
+	 * Returns the string representation of the passed-in {@link StackTraceElement}
 	 * instance.
 	 *
 	 * <p>The string representation is composed as follows:
-	 * <pre>static theFullQualifiedNameOfTheThrower.theMethodName(theFirstArgument, ..)</pre>
+	 * <pre>
+	 *   static theFullQualifiedNameOfTheThrower.theMethodName(theFirstArgument, ..)
+	 * </pre>
 	 *
-	 * <p>Depending on the settings arguments are either represented by their
-	 * types of by the result of their toString methods.
+	 * <p>Depending on the settings arguments are either represented by their types of
+	 * by the result of their {@code toString} methods.
 	 *
 	 * <p>A real string representation could look like this:
 	 * <pre>org.as2lib.data.holder.MyDataHolder.setMaximumLength(Number)</pre>
-	 * or this:
+	 * 
+	 * <p>Or this:
 	 * <pre>org.as2lib.data.holder.MyDataHolder.setMaximumLength(-2)</pre>
 	 *
-	 * <p>If an element is null, undefined or its string representation could
-	 * not been obtained the string '[unknown]' gets used.
+	 * <p>If an element is {@code null} or its string representation could not been
+	 * obtained the string '[unknown]' is used.
 	 *
-	 * <p>If the method of the stack trace element is the constructor of the
-	 * thrower the string 'new' gets used.
+	 * <p>If the method of the stack trace element is the constructor of the thrower
+	 * the string {@code "new"} is used.
 	 *
-	 * @param target the StackTraceElement instance to stringify
-	 * @return the string representation of the passed-in StackTraceElement
+	 * @param target the {@code StackTraceElement} instance to stringify
+	 * @return the string representation of the passed-in {@code target} element
 	 */
 	public function execute(target):String {
 		var element:StackTraceElement = target;
