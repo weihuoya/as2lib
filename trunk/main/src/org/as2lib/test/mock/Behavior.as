@@ -19,35 +19,40 @@ import org.as2lib.test.mock.MethodBehavior;
 import org.as2lib.test.mock.MethodCall;
 
 /**
+ * {@code Behavior} stores expected behaviors and exposes them for verification.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.test.mock.Behavior extends BasicInterface {
 	
 	/**
-	 * Adds a new method behavior for the passed-in method.
+	 * Adds the given {@code methodBehavior} behavior for the passed-in
+	 * {@code methodName}.
 	 *
-	 * @param methodName the method name to register the method behavior for
+	 * @param methodName the name of the method to register the {@code methodBehavior}
+	 * with
 	 * @param methodBehavior the method behavior to register
 	 */
 	public function addMethodBehavior(methodName:String, methodBehavior:MethodBehavior):Void;
 	
 	/**
-	 * Creates a new method behavior for the expected method call.
+	 * Creates a new method behavior for the passed-in {@code expectedMethodCall}.
 	 *
 	 * @param expectedMethodCall the method call to create a behavior for
-	 * @return the newly created method behavior
+	 * @return the created method behavior
 	 */
 	public function createMethodBehavior(expectedMethodCall:MethodCall):MethodBehavior;
 	
 	/**
-	 * Returns the method behavior that matches the given actual method
-	 * call.
+	 * Returns a method behavior that matches the given {@code actualMethodCall}.
 	 *
 	 * @return a matching method behavior
 	 */
 	public function getMethodBehavior(actualMethodCall:MethodCall):MethodBehavior;
 	
 	/**
+	 * Returns the lastly added method behavior.
+	 *
 	 * @return the lastly added method behavior
 	 */
 	public function getLastMethodBehavior(Void):MethodBehavior;
@@ -58,7 +63,7 @@ interface org.as2lib.test.mock.Behavior extends BasicInterface {
 	public function removeAllBehaviors(Void):Void;
 	
 	/**
-	 * Verifies every behavior.
+	 * Verifies all added behaviors.
 	 */
 	public function verify(Void):Void;
 	

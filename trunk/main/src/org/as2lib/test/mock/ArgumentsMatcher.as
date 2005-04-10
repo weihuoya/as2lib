@@ -17,16 +17,20 @@
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code ArgumentsMatcher} matches a list of expected arguments agains a list of
+ * actual arguments.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.test.mock.ArgumentsMatcher extends BasicInterface {
 	
 	/**
-	 * Checks if the passed-in arguments match each other.
-	 *
+	 * Checks if the passed-in {@code expectedArguments} match the
+	 * {@code actualArguments}.
+	 * 
 	 * @param expectedArguments the arguments that are expected
 	 * @param actualArguments the actual arguments
-	 * @return true if the arguments match, false otherwise
+	 * @return {@code true} if the arguments match else {@code false}
 	 */
 	public function matchArguments(expectedArguments:Array, actualArguments:Array):Boolean;
 	

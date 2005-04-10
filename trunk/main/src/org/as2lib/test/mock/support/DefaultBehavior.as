@@ -25,28 +25,32 @@ import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.support.DefaultMethodBehavior;
 
 /**
+ * {@code DefaultBehavior} stores expected behaviors and exposes them for
+ * verification.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements Behavior {
 	
-	/** Stores added method call behaviors. */
+	/** The added method call behaviors. */
 	private var methodBehaviors:Map;
 	
-	/** Currently used factory to create method call behaviors. */
+	/** The currently used factory to create method call behaviors. */
 	private var methodBehaviorFactory:MethodBehaviorFactory;
 	
+	/** The name of the lastly added method. */
 	private var lastMethodName:String;
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new {@code DefaultBehavior} instance.
 	 */
 	public function DefaultBehavior(Void) {
 		methodBehaviors = new PrimitiveTypeMap();
 	}
 	
 	/**
-	 * Returns either the factory set via #setMethodBehaviorFactory()
-	 * or the default one which returns an instance of DefaultMethodBehavior.
+	 * Returns either the factory set via {@link #setMethodBehaviorFactory} or the
+	 * default one which returns an instance of class {@link DefaultMethodBehavior}.
 	 *
 	 * @return the currently used factory to obtain method call behaviors
 	 */
@@ -56,6 +60,9 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 	}
 	
 	/**
+	 * Returns the default method call behavior factory that returns instances of
+	 * class {@link DefaultMethodBehavior}.
+	 *
 	 * @return the default method call behavior factory
 	 */
 	private function getDefaultMethodBehaviorFactory(Void):MethodBehaviorFactory {
@@ -67,8 +74,8 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 	}
 	
 	/**
-	 * Returns a blank method behavior factory. That is a factory
-	 * with no initialized methods.
+	 * Returns a blank method behavior factory. That is a factory with no implemented
+	 * methods.
 	 *
 	 * @return a blank method behavior factory
 	 */
@@ -82,8 +89,8 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 	/**
 	 * Sets the factory used to obtain method call behaviors to store state.
 	 *
-	 * <p>If you set a factory of null or undefined #getMethodBehaviorFactory(Void):MethodBehaviorFactory
-	 * returns the default one.
+	 * <p>If {@code methodBehaviorFactory} is {@code null} the
+	 * {@link #getMethodBehaviorFactory} method will return the default factory.
 	 *
 	 * @param methodBehaviorFactory the new factory
 	 */
@@ -92,13 +99,15 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 	}
 	
 	/**
-	 * If the method name is null, undefined or a blank string the one
-	 * returned by the method behaviour's expected method call will be used.
-	 * If this is also null, undefined or a blank string a '[unknown]' will
-	 * be used.
+	 * Adds the given {@code methodBehavior} behavior for the passed-in
+	 * {@code methodName}.
 	 *
-	 * @throws IllegalArgumentException if the passed-in method behavior is null or undefined
-	 * @see Behavior#addMethodBehavior()
+	 * <p>If the passed-in {@code methodName} is {@code null} or an empty string the one
+	 * returned by the method behaviour's expected method call will be used. If this
+	 * is also {@code null} or an empty string {@code "[unknown]"} will be used.
+	 *
+	 * @throws IllegalArgumentException if the passed-in {@code methodBehavior} is
+	 * {@code null}
 	 */
 	public function addMethodBehavior(methodName:String, methodBehavior:MethodBehavior):Void {
 		if (!methodBehavior) throw new IllegalArgumentException("Method behavior must not be null or undefined.", this, arguments);
@@ -111,20 +120,26 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 	}
 	
 	/**
-	 * @see Behavior#createMethodBehavior()
+	 * Creates a new method behavior for the passed-in {@code expectedMethodCall}.
+	 *
+	 * @param expectedMethodCall the method call to create a behavior for
+	 * @return the created method behavior
+	 * @see #getMethodBehaviorFactory
 	 */
 	public function createMethodBehavior(expectedMethodCall:MethodCall):MethodBehavior {
 		return getMethodBehaviorFactory().getMethodBehavior(expectedMethodCall);
 	}
 	
 	/**
-	 * <p>Null will be returned if:
+	 * Returns a method behavior that matches the given {@code actualMethodCall}.
+	 * 
+	 * <p>{@code null} will be returned if:
 	 * <ul>
-	 *   <li>The actual method call is null or undefined.</li>
+	 *   <li>The passed-in {@code actualMethodCall} is {@code null}.</li>
 	 *   <li>There is no matching behavior registered.</li>
 	 * </ul>
 	 *
-	 * @see Behavior#getMethodBehavior()
+	 * @return a matching method behavior
 	 */
 	public function getMethodBehavior(actualMethodCall:MethodCall):MethodBehavior {
 		if (!actualMethodCall) return null;
@@ -151,7 +166,9 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 	}
 	
 	/**
-	 * @see Behavior#getLastMethodBehavior()
+	 * Returns the lastly added method behavior.
+	 *
+	 * @return the lastly added method behavior
 	 */
 	public function getLastMethodBehavior(Void):MethodBehavior {
 		var behaviors:Array = methodBehaviors.get(lastMethodName);
@@ -159,14 +176,14 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 	}
 	
 	/**
-	 * @see Behavior#removeAllBehaviors()
+	 * Removes all added behaviors.
 	 */
 	public function removeAllBehaviors(Void):Void {
 		methodBehaviors.clear();
 	}
 	
 	/**
-	 * @see Behavior#verify()
+	 * Verifies all added behaviors.
 	 */
 	public function verify(Void):Void {
 		var behaviors:Array = methodBehaviors.getValues();

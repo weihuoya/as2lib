@@ -36,74 +36,93 @@ import org.as2lib.test.mock.support.ReplayState;
 import org.as2lib.test.mock.MockControlStateFactory;
 
 /**
- * The MockControl is the central class of the mock object framework.
- * You use it to create your mock object, set expectations and verify
- * whether this expectations have been met.
+ * {@code MockControl} is the central class of the mock object framework. You use
+ * it to create your mock object, set expectations and verify whether these
+ * expectations have been met.
  *
- * <p>The normal workflow is creating a mock control for a specific class
- * or interface, receiving the mock object from it, setting expectations,
- * setting the behavior of the mock object, switching to replay state,
- * using the mock object as if it were a normal instance of a class and
- * verifying that all expectations have been met.
- *
+ * <p>The normal workflow is creating a mock control for a specific class or
+ * interface, receiving the mock object from it, setting expectations, setting the
+ * behavior of the mock object, switching to replay state, using the mock object as
+ * if it were a normal instance of a class and verifying that all expectations have
+ * been met.
+ * 
  * <code>
- * import org.as2lib.test.mock.MockControl;
+ *   import org.as2lib.test.mock.MockControl;
  *
- * // create mock control for class MyClass
- * var myMockControl:MockControl = new MockControl(MyClass);
- * // receive the mock object (it is in record state)
- * var myMock:MyClass = myMockControl.getMock();
- * // expect a call to the setStringProperty-method with argument 'myString'.
- * myMock.setStringProperty("myString");
- * // expect calls to the getStringProperty-method
- * myMock.getStringProperty();
- * // return 'myString' for the first two calls
- * myMockControl.setReturnValue("myString", 2);
- * // throw MyException for any further call
- * myMockControl.setDefaultThrowable(new MyException());
- * // switch to replay state
- * myMockControl.replay();
+ *   // create mock control for class MyClass
+ *   var myMockControl:MockControl = new MockControl(MyClass);
+ *   // receive the mock object (it is in record state)
+ *   var myMock:MyClass = myMockControl.getMock();
+ *   // expect a call to the setStringProperty-method with argument 'myString'.
+ *   myMock.setStringProperty("myString");
+ *   // expect calls to the getStringProperty-method
+ *   myMock.getStringProperty();
+ *   // return 'myString' for the first two calls
+ *   myMockControl.setReturnValue("myString", 2);
+ *   // throw MyException for any further call
+ *   myMockControl.setDefaultThrowable(new MyException());
+ *   // switch to replay state
+ *   myMockControl.replay();
  *
- * // the class under test calls these methods on the mock
- * myMock.setStringProperty("myString");
- * myMock.getStringProperty();
- * myMock.getStringProperty();
+ *   // the class under test calls these methods on the mock
+ *   myMock.setStringProperty("myString");
+ *   myMock.getStringProperty();
+ *   myMock.getStringProperty();
  *
- * // verify that alle expectations have been met
- * myMockControl.verify();
+ *   // verify that all expectations have been met
+ *   myMockControl.verify();
  * </code>
  *
- * <p>If an expectation has not been met a AssertionFailedError will
- * be thrown. 
- * If an expectation violation gets discovered during execution
- * an AssertionFailedError will be thrown immediately.
- *
- * <p>If you called the setStringProperty method in the above example
- * with another string like 'unexpectedString' an AssertFailedError
- * would be thrown immediately.
- * If you called the setStringProperty method a second time, what has
- * not been expected, an AssertionFailedError would also be thrown
- * immediately.
- * If you did not call the setStringProperty method at all, an
- * AssertionFailedError would be thrown on verification.
+ * <p>If an expectation has not been met an {@link AssertionFailedError} will be
+ * thrown. If an expectation violation is discovered during execution an
+ * {@code AssertionFailedError} will be thrown immediately.
+ * 
+ * <p>If you had called the {@code setStringProperty} method in the above example
+ * with another string like {@code "unexpectedString"} an {@code AssertFailedError}
+ * would have been thrown immediately. If you had called the {@code setStringProperty}
+ * method a second time, what has not been expected, an {@code AssertionFailedError}
+ * would also have been thrown immediately. If you had not called the
+ * {@code setStringProperty} method at all, an {@code AssertionFailedError} would
+ * have been thrown on verification.
  *
  * @author Simon Wacker
  */
 class org.as2lib.test.mock.MockControl extends BasicClass {
 	
-	/** Stores the type of the mock proxy. */
+	/**
+	 * Returns a new default arguments matcher.
+	 *
+	 * @return a new default arguments matcher
+	 */
+	public static function getDefaultArgumentsMatcher(Void):DefaultArgumentsMatcher {
+		return new DefaultArgumentsMatcher();
+	}
+	
+	/**
+	 * Returns a new type arguments matcher that is configured with the passed-in
+	 * {@code expectedType}.
+	 * 
+	 * <p>Type arguments matcher matches arguments by type and not by value.
+	 *
+	 * @return a type arguments matcher
+	 */
+	public static function getTypeArgumentsMatcher(expectedTypes:Array):TypeArgumentsMatcher {
+		return new TypeArgumentsMatcher(expectedTypes);
+	}
+	
+	/** The type of the mock proxy. */
 	private var type:Function;
 	
 	/** Used to create a new mock proxy. */
 	private var proxyFactory:ProxyFactory;
 	
-	/** Stores the created mock proxy. */
+	/** The created mock proxy. */
 	private var mock;
 	
-	/** Stores the mock behavior. */
+	/** The mock behavior. */
 	private var behavior:Behavior;
 	
-	/** Stores the state. */
+	/** The current state. */
 	private var state:MockControlState;
 	
 	/** Factory used to obtain the record state. */
@@ -114,26 +133,6 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	
 	/** Determines whether to handle {@code toString} method invocations. */
 	private var handleToStringInvocations:Boolean;
-	
-	/**
-	 * Returns a default arguments matcher.
-	 *
-	 * @return a default arguments matcher
-	 */
-	public static function getDefaultArgumentsMatcher(Void):DefaultArgumentsMatcher {
-		return new DefaultArgumentsMatcher();
-	}
-	
-	/**
-	 * Returns a type arguments matcher.
-	 * 
-	 * <p>Type arguments matcher match arguments by type and not by value.
-	 *
-	 * @return a type arguments matcher
-	 */
-	public static function getTypeArgumentsMatcher(expectedTypes:Array):TypeArgumentsMatcher {
-		return new TypeArgumentsMatcher(expectedTypes);
-	}
 	
 	/**
 	 * @overload #MockControlByType
@@ -147,40 +146,41 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Constrcuts a new MockControl instance using the default behavior.
+	 * Constrcuts a new {@code MockControl} instance using the default behavior.
 	 *
-	 * <p>The default behavior is an instance of class DefaultBehaviour.
+	 * <p>The default behavior is an instance of class {@link DefaultBehaviour}.
 	 *
-	 * <p>This instance is in reset state after creation. That means it is
-	 * ready to to receive expectations and to record them.
+	 * <p>This instance is in reset state after creation. That means it is ready to
+	 * receive expectations and to record them.
 	 *
-	 * <p>When you have finished recording you must switch to replay state
-	 * using the #replay method.
+	 * <p>When you have finished recording you must switch to replay state using the
+	 * {@link #replay} method.
 	 *
 	 * @param type the interface or class to create a mock object for
-	 * @throws IllegalArgumentException if the passed-in type is null or undefined
+	 * @throws IllegalArgumentException if the passed-in {@code type} is {@code null}
 	 */
 	private function MockControlByType(type:Function):Void {
 		MockControlByTypeAndBehavior(type, null);
 	}
 	
 	/**
-	 * Constructs a new MockControl instance.
+	 * Constructs a new {@code MockControl} instance using the passed-in
+	 * {@code bahvior}.
 	 *
-	 * <p>If the passed-in behavior is null or undefined the default behavior
-	 * that is of type DefaultBehavior gets used instead.
+	 * <p>If the passed-in {@code behavior} is {@code null} the default behavior that
+	 * is of type {@link DefaultBehavior} is used instead.
 	 *
-	 * <p>This instance is in reset state after creation. That means it is
-	 * ready to to receive expectations and to record them.
+	 * <p>This instance is in reset state after creation. That means it is ready to
+	 * to receive expectations and to record them.
 	 *
-	 * <p>When you have finished recording you must switch to replay state
-	 * using the #replay method.
+	 * <p>When you have finished recording you must switch to replay state using the
+	 * {@link #replay} method.
 	 *
 	 * <p>{@code toString} invocations on the mock are by default not handled.
 	 *
 	 * @param type the interface or class to create a mock object for
 	 * @param behavior the instance to store the behavior of the mock
-	 * @throws IllegalArgumentException if the passed-in type is null or undefined
+	 * @throws IllegalArgumentException if the passed-in {@code type} is {@code null}
 	 * @see #setHandleToStringInvocations
 	 */
 	private function MockControlByTypeAndBehavior(type:Function, behavior:Behavior):Void {
@@ -194,16 +194,15 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Sets whether to handle {@code toString} invocations on mocks or not.
 	 *
-	 * <p>Handling {@code toString} invocations means that these invocations
-	 * are added to the expected or actual behavior. This means if you set
-	 * {@code handleToStringInvocations} to {@code true} calling this method
-	 * on the mock in replay state results in an added expection and in record
-	 * state in a verification whether the call was expected. If you set
-	 * it to {@code false} the result of an invocation of the mock's {@code toString}
-	 * method is returned.
-	 *
-	 * <p>If {@code handleToStringInvocations} is {@code null}, it is interpreted
-	 * as {@code false}.
+	 * <p>Handling {@code toString} invocations means that these invocations are
+	 * added to the expected or actual behavior. This means if you set
+	 * {@code handleToStringInvocations} to {@code true} calling this method on the
+	 * mock in replay state results in an added expection and in record state in a
+	 * verification whether the call was expected. If you set it to {@code false} the
+	 * result of an invocation of the mock's {@code toString} method is returned.
+	 * 
+	 * <p>If {@code handleToStringInvocations} is {@code null}, it is interpreted as
+	 * {@code false}.
 	 *
 	 * @param handleToStringInvocations determines whether to handle {@code toStirng}
 	 * method invocations
@@ -215,14 +214,14 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Returns whether {@code toString} invocations on the mock are handled.
 	 *
-	 * <p>Handling {@code toString} invocations means that these invocations
-	 * are added to the expected or actual behavior. This means if they are
-	 * handled, calling the {@code toString} method on the mock in replay
-	 * state results in an added expection and in record state in a verification
-	 * whether the call was expected. If they are not handled, the result of
-	 * an invocation of the mock's {@code toString} method is returned.
+	 * <p>Handling {@code toString} invocations means that these invocations are
+	 * added to the expected or actual behavior. This means if they are handled,
+	 * calling the {@code toString} method on the mock in replay state results in an
+	 * added expection and in record state in a verification whether the call was
+	 * expected. If they are not handled, the result of an invocation of the mock's
+	 * {@code toString} method is returned.
 	 *
-	 * @return {@code true} if {@code toString} invocations are handled, else
+	 * @return {@code true} if {@code toString} invocations are handled else
 	 * {@code false}
 	 * @see #setHandleToStringInvocations
 	 */
@@ -233,8 +232,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Returns the currently used mock proxy factory.
 	 *
-	 * <p>This proxy factoy is either the default TypeProxyFactory or the
-	 * one set via #setMockProxyFactory.
+	 * <p>This proxy factoy is either the default {@link TypeProxyFactory} or the one
+	 * set via {@code setMockProxyFactory}.
 	 *
 	 * @return the currently used proxy factory
 	 * @see #setMockProxyFactory
@@ -245,10 +244,10 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Sets the proxy factory used to obtain the mock proxy / mocks.
+	 * Sets the proxy factory used to obtain the mock proxis / mocks.
 	 *
-	 * <p>If you set a proxy factory of null or undefined, the
-	 * #getMockProxyFactory method will use the default factory.
+	 * <p>If {@code proxyFactory} is {@code null} the {@code getMockProxyFactory}
+	 * method will use the default factory.
 	 *
 	 * @param proxyFactory factory to obtain mock proxies / mocks
 	 * @see #getMockProxyFactory
@@ -260,11 +259,11 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Returns the currently used record state factory.
 	 *
-	 * <p>This is either the factory set via #setRecordStateFactory or the
-	 * default one, which returns instances of the RecordState class.
+	 * <p>This is either the factory set via {@code setRecordStateFactory} or the
+	 * default one, which returns instances of the {@link RecordState} class.
 	 *
 	 * @return the currently used record state factory
-	 * @see #setRecordStateFactory(MockControlStateFactory):Void
+	 * @see #setRecordStateFactory
 	 */
 	public function getRecordStateFactory(Void):MockControlStateFactory {
 		if (!recordStateFactory) recordStateFactory = getDefaultRecordStateFactory();
@@ -274,7 +273,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Returns the default record state factory.
 	 *
-	 * <p>The default record state factory returns instances of type RecordState.
+	 * <p>The default record state factory returns instances of class
+	 * {@link RecordState}.
 	 *
 	 * @return the default record state factory
 	 */
@@ -287,10 +287,10 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Sets the new record state factory to be used.
+	 * Sets the new record state factory.
 	 *
-	 * <p>If you set a factory of value null or undefined the default record
-	 * state factory gets returned by the #getRecordStateFactory method.
+	 * <p>If {@code recordStateFactory} is {@code null} the default record state
+	 * factory gets returned by the {@code getRecordStateFactory} method.
 	 *
 	 * @param recordStateFactory the new record state factory
 	 * @see #getRecordStateFactory
@@ -302,8 +302,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Returns the currently used replay state factory.
 	 *
-	 * <p>This is either the factory set via #setReplayStateFactory of the
-	 * default one, which returns instances of the ReplayState class.
+	 * <p>This is either the factory set via {@code setReplayStateFactory} or the
+	 * default one, which returns instances of the {@link ReplayState} class.
 	 *
 	 * @return the currently used replay state factory
 	 * @see #setReplayStateFactory
@@ -316,7 +316,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Returns the default replay state factory.
 	 *
-	 * <p>The default replay state factory returns instances of type ReplayState.
+	 * <p>The default replay state factory returns instances of class
+	 * {@link ReplayState}.
 	 *
 	 * @return the default replay state factory
 	 */
@@ -329,10 +330,11 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Sets the new replay state factory to be used.
+	 * Sets the new replay state factory.
 	 *
-	 * <p>If you set a factory of value null or undefined, #getReplayStateFactory
-	 * will return the default replay state factory.
+	 * <p>If {@code replayStateFactory} is {@code null} the
+	 * {@code getReplayStateFactory} method will return the default replay state
+	 * factory.
 	 *
 	 * @param replayStateFactory the new replay state factory
 	 * @see #getReplayStateFactory
@@ -342,8 +344,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Returns a blank mock control state factory. That is a factory with
-	 * no initialized methods.
+	 * Returns a blank mock control state factory. That is a factory with no
+	 * implemented methods.
 	 *
 	 * @return a blank mock control state factory
 	 */
@@ -357,14 +359,14 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Returns the mock object.
 	 *
-	 * <p>The mock can be casted and typed to the interface or class defined
-	 * during instantiation.
+	 * <p>The mock can be casted and typed to the interface or class specified
+	 * on instantiation.
 	 *
-	 * <p>The mock gets created using the mock proxy factory returned by the
-	 * #getMockProxyFactory method.
+	 * <p>The mock is created using the mock proxy factory returned by the
+	 * {@link #getMockProxyFactory} method.
 	 *
-	 * <p>Once the mock object has been created it gets cached. That means
-	 * this method always returns the same mock object for this mock control.
+	 * <p>Once the mock object has been created it is cached. That means this method
+	 * always returns the same mock object for this mock control.
 	 *
 	 * @return the mock object
 	 */
@@ -374,8 +376,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Creates a new invocation handler instance that handles method
-	 * invocations on the mock proxy.
+	 * Creates a new invocation handler instance that handles method invocations on
+	 * the mock proxy.
 	 *
 	 * @return a delegator that handles proxy method invocations
 	 */
@@ -394,7 +396,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Returns a blank invocation handler. That is a handler with no initialized
+	 * Returns a blank invocation handler. That is a handler with no implemented
 	 * methods.
 	 *
 	 * @return a blank invocation handler
@@ -407,7 +409,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Gets called when a method gets invoked on the proxy.
+	 * Is called when a method is invoked on the proxy.
 	 *
 	 * @param methodName the name of the invoked method
 	 * @param args the arguments passed to the invoked method
@@ -419,18 +421,17 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Switches the mock object from record state to replay state.
 	 *
-	 * <p>The mock object is in record state as soon as it gets returned by
-	 * the #getMock method.
+	 * <p>The mock object is in record state as soon as it gets returned by the
+	 * {@link #getMock} method.
 	 *
-	 * <p>You cannot record expectations in replay state. In replay state
-	 * you verify that all your expectations have been met, by using the
-	 * mock as it were a real instance.
+	 * <p>You cannot record expectations in replay state. In replay state you verify
+	 * that all your expectations have been met, by using the mock as it were a real
+	 * instance.
 	 *
-	 * <p>If an expectations does not get met an AssertionFailedError gets
-	 * thrown. This is either done during execution of your test or on
-	 * verification.
-	 * Take a look at the example provided in the class declaration to see
-	 * when what AssertFailedError gets thrown.
+	 * <p>If an expectations is not met an {@link AssertionFailedError} is thrown.
+	 * This is either done during execution of your test or on verification. Take a
+	 * look at the example provided in the class documentation to see when what
+	 * {@code AssertFailedError} is thrown.
 	 */
 	public function replay(Void):Void {
 		state = getReplayStateFactory().getMockControlState(behavior);
@@ -440,8 +441,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 * Resets the mock control and the mock object to the state directly after
 	 * creation.
 	 *
-	 * <p>That means that all previously made expectations will be removed
-	 * and that the mock object will again be in record state.
+	 * <p>That means that all previously made expectations will be removed and that
+	 * the mock object will be again in record state.
 	 */
 	public function reset(Void):Void {
 		behavior.removeAllBehaviors();
@@ -449,8 +450,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Sets the arguments matcher that will be used for the last method
-	 * specified by a method call.
+	 * Sets the arguments matcher that will be used for the last method specified by
+	 * a method call.
 	 *
 	 * @param argumentsMatcher the arguments matcher to use for the specific method
 	 * @throws IllegalStateException if this mock control is in replay state
@@ -460,12 +461,11 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Records that the mock object will by default allow the last method
-	 * specified by a method call and will react by returning the provided
-	 * return value.
+	 * Records that the mock object will by default allow the last method specified
+	 * by a method call and will react by returning the provided return value.
 	 *
-	 * <p>Default means that the method can be called zero to infinite times
-	 * without expectation errors.
+	 * <p>Default means that the method can be called 0 to infinite times without
+	 * expectation errors.
 	 *
 	 * @param value the return value to return
 	 * @throws IllegalStateException if this mock control is in replay state
@@ -477,12 +477,11 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Records that the mock object will by default allow the last method 
-	 * specified by a method call, and will react by throwing the provided
-	 * throwable.
+	 * Records that the mock object will by default allow the last method specified
+	 * by a method call, and will react by throwing the provided throwable.
 	 *
-	 * <p>Default means that the method can be called zero to infinite times
-	 * without expectation errors.
+	 * <p>Default means that the method can be called zero to infinite times without
+	 * expectation errors.
 	 *
 	 * @param throwable the throwable to throw
 	 * @throws IllegalStateException if this mock control is in replay state
@@ -494,15 +493,14 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Recards that the mock object will by default allow the last method
-	 * specified by a method call.
+	 * Recards that the mock object will by default allow the last method specified
+	 * by a method call.
 	 *
-	 * <p>Default means that the method can be called zero to infinite times
-	 * without expectation errors.
+	 * <p>Default means that the method can be called zero to infinite times without
+	 * expectation errors.
 	 *
-	 * <p>Calling this method is not necessary. The mock control expects
-	 * the last method specified by a method call as soon as this method
-	 * call occured.
+	 * <p>Calling this method is not necessary. The mock control expects the last
+	 * method specified by a method call as soon as this method call occured.
 	 *
 	 * @throws IllegalStateException if this mock control is in replay state
 	 */
@@ -524,8 +522,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call once
-	 * and will react by returning the provided return value.
+	 * Records that the mock object will expect the last method call once and will
+	 * react by returning the provided return value.
 	 *
 	 * @param value the return value to return
 	 * @throws IllegalStateException if this mock control is in replay state
@@ -535,8 +533,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call a fixed
-	 * number of times and will react by returning the provided return value.
+	 * Records that the mock object will expect the last method call a fixed number
+	 * of times and will react by returning the provided return value.
 	 *
 	 * @param value the return value to return
 	 * @param quantity the number of times the method is allowed to be invoked
@@ -550,8 +548,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	
 	/**
 	 * Records that the mock object will expect the last method call between
-	 * minimumQuantity and maximumQuantity times and will react by returning
-	 * the provided return value.
+	 * {@code minimumQuantity} and {@code maximumQuantity} times and will react by
+	 * returning the provided return value.
 	 *
 	 * @param value the return value to return
 	 * @param minimumQuantity the minimum number of times the method must be called
@@ -578,8 +576,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call once
-	 * and will react by throwing the provided throwable.
+	 * Records that the mock object will expect the last method call once and will
+	 * react by throwing the provided throwable.
 	 *
 	 * @param throwable the throwable to throw
 	 * @throws IllegalStateException if this mock control is in replay state
@@ -589,8 +587,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call a fixed 
-	 * number of times and will react by throwing the provided throwable.
+	 * Records that the mock object will expect the last method call a fixed number
+	 * of times and will react by throwing the provided throwable.
 	 *
 	 * @param throwable the throwable to throw
 	 * @param quantity the number of times the method is allowed to be invoked
@@ -604,8 +602,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	
 	/**
 	 * Records that the mock object will expect the last method call between 
-	 * minimumQuantity and maximumQuantity times, and will react by throwing
-	 * the provided throwable.
+	 * {@code minimumQuantity} and {@code maximumQuantity times} and will react by
+	 * throwing the provided throwable.
 	 *
 	 * @param throwable the throwable to throw
 	 * @param minimumQuantity the minimum number of times the method must be called
@@ -632,8 +630,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call once
-	 * and will react by returning silently.
+	 * Records that the mock object will expect the last method call once and will
+	 * react by returning silently.
 	 *
 	 * @throws IllegalStateException if this mock control is in replay state
 	 */
@@ -642,8 +640,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Records that the mock object will expect the last method call a fixed 
-	 * number of times and will react by returning silently.
+	 * Records that the mock object will expect the last method call a fixed number
+	 * of times and will react by returning silently.
 	 *
 	 * @param quantity the number of times the method is allowed to be invoked
 	 * @throws IllegalStateException if this mock control is in replay state
@@ -654,8 +652,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	
 	/**
 	 * Records that the mock object will expect the last method call between 
-	 * minimumQuantity and maximumQuantity times and will react by returning
-	 * silently.
+	 * {@code minimumQuantity} and {@code maximumQuantity} times and will react by
+	 * returning silently.
 	 *
 	 * @param minimumQuantity the minimum number of times the method must be called
 	 * @param maximumQuantity the maximum number of times the method can be called
@@ -666,7 +664,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	}
 	
 	/**
-	 * Verifies that all expectations have been met that could not been verified during execution.
+	 * Verifies that all expectations have been met that could not been verified
+	 * during execution.
 	 *
 	 * @throws IllegalStateException if this mock control is in record state
 	 * @throws AssertionFailedError if an expectation has not been met

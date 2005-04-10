@@ -21,11 +21,16 @@ import org.as2lib.test.mock.MethodResponse;
 import org.as2lib.test.mock.ArgumentsMatcher;
 
 /**
+ * {@code MethodBehavior} stores the expected and actual behaviors of one method
+ * and verifies the expectation against the actual method calls.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.test.mock.MethodBehavior extends BasicInterface {
 	
 	/**
+	 * Returns the expected method call.
+	 *
 	 * @return the expected method call
 	 */
 	public function getExpectedMethodCall(Void):MethodCall;
@@ -34,24 +39,25 @@ interface org.as2lib.test.mock.MethodBehavior extends BasicInterface {
 	 * Adds a new actual method call.
 	 * 
 	 * @param actualMethodCall the new actual method call
-	 * @throws AssertionFailedException if the maximum number of actual method calls has been passed
+	 * @throws AssertionFailedError if the maximum number of expected actual method
+	 * calls has been passed
 	 */
 	public function addActualMethodCall(actualMethodCall:MethodCall):Void;
 	
 	/**
-	 * Adds a new method response together with the range that indicates
-	 * when the response shall take place.
+	 * Adds the new {@code methodResponse} together with the {@code methodCallRange}
+	 * that indicates when and how often the response shall take place.
 	 *
-	 * <p>If you set no response gets set the behavior expects exactly
-	 * one method call.
+	 * <p>If you set no response, the behavior expects exactly one method call.
 	 *
 	 * @param methodResponse the response to do a given number of times
-	 * @param methodCallRange the range that indicates how often the response can take place
+	 * @param methodCallRange the range that indicates how often the response can take
+	 * place
 	 */
 	public function addMethodResponse(methodResponse:MethodResponse, methodCallRange:MethodCallRange):Void;
 	
 	/**
-	 * Sets the arguments matcher for the expected method call.
+	 * Sets the passed-in {@code argumentsMatcher} for the expected method call.
 	 * 
 	 * @param argumentsMatcher the arguments matcher for the expected method call
 	 */
@@ -60,7 +66,7 @@ interface org.as2lib.test.mock.MethodBehavior extends BasicInterface {
 	/**
 	 * Checks whether this behavior expects another method call.
 	 *
-	 * @return true if a further method call is expected else false
+	 * @return {@code true} if a further method call is expected else {@code false}
 	 */
 	public function expectsAnotherMethodCall(Void):Boolean;
 	
@@ -75,8 +81,7 @@ interface org.as2lib.test.mock.MethodBehavior extends BasicInterface {
 	/**
 	 * Verifies that the expactations have been met.
 	 *
-	 * <p>That is that there haven't been to many or to little method calls.
-	 * @throws AssertionFailedException if the verification fails
+	 * @throws AssertionFailedError if the verification fails
 	 */
 	public function verify(Void):Void;
 	

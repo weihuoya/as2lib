@@ -19,13 +19,16 @@ import org.as2lib.test.mock.Behavior;
 import org.as2lib.test.mock.MockControlState;
 
 /**
+ * {@code MockControlStateFactory} creates and returns configured mock control
+ * states.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.test.mock.MockControlStateFactory extends BasicInterface {
 	
 	/**
-	 * Returns a mock control state instance, that is configured with the
-	 * passed-in behavior.
+	 * Returns a mock control state instance that is configured with the passed-in
+	 * {@code behavior}.
 	 *
 	 * @param behavior to be used by the returned mock control state
 	 * @return a configured mock control state

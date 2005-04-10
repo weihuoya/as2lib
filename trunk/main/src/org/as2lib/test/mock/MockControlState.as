@@ -21,61 +21,73 @@ import org.as2lib.test.mock.MethodResponse;
 import org.as2lib.test.mock.ArgumentsMatcher;
 
 /**
- * The actual behavior of the specific methods depends largely on the
- * implementing state. Thus refer to these implementation classes.
- *
+ * {@code MockControlState} determines most of the actual behavior of the
+ * {@link MockControl} class.
+ * 
+ * <p>The actual behavior of the specific methods of this class depends largely on
+ * the implementing class. Thus refer to these implementation classes.
+ * 
  * @author Simon Wacker
+ * @see org.as2lib.test.mock.support.ReplayState
+ * @see org.as2lib.test.mock.support.RecordState
  */
 interface org.as2lib.test.mock.MockControlState extends BasicInterface {
 	
 	/**
-	 * Gets called when a method is called on the mock proxy.
+	 * Is called when a method is called on the mock proxy.
 	 *
 	 * @param call contains all information about the method call
-	 * @return replay state: the return value of the method invocation
-	 * @throws replay state: Object if the method is set up to throw a throwable
+	 * @return the return value of the method invocation in replay state
+	 * @throws * if the method is set up to throw a throwable in replay state
 	 */
 	public function invokeMethod(call:MethodCall);
 	
 	/**
+	 * Sets a new method response.
+	 *
 	 * <dl>
-	 *   <dt>Record State:</dt>
+	 *   <dt>Record State</dt>
 	 *   <dd>Records that the mock object will expect the last method call the
 	 *       specified number of times, and will react by either returning the
 	 *       return value, throwing an exception or just doing nothing.</dd>
-	 *   <dt>Replay State:</dt>
-	 *   <dd>Throws an IllegalStateException.</dd>
+	 *   <dt>Replay State</dt>
+	 *   <dd>Throws an {@code IllegalStateException}.</dd>
 	 * </dl>
 	 *
 	 * @param methodResponse handles incoming requests appropriately
 	 * @param methodCallRange stores the minimum and maximum quantity of method calls
-	 * @throws replay state: IllegalArgumentException
+	 * @throws org.as2lib.env.except.IllegalArgumentException when in replay state
 	 */ 
 	public function setMethodResponse(methodResponse:MethodResponse, methodCallRange:MethodCallRange):Void;
 	
 	/**
+	 * Sets a new arguments matcher.
+	 *
 	 * <dl>
-	 *   <dt>Record State:</dt>
+	 *   <dt>Record State</dt>
 	 *   <dd>Sets the arguments matcher that will be used for the last method specified
 	 *       by a method call.</dd>
-	 *   <dt>Replay State:</dt>
-	 *   <dd>Throws an IllegalStateException.</dd>
+	 *   <dt>Replay State</dt>
+	 *   <dd>Throws an {@code IllegalStateException}.</dd>
 	 * </dl>
 	 *
 	 * @param argumentsMatcher the arguments matcher to use for the specific method
-	 * @throws replay state: IllegalStateException
+	 * @throws org.as2lib.env.except.IllegalArgumentException when in replay state
 	 */
 	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void;
 
 	/**
-	 * <dl>
-	 *   <dt>Replay State:</dt>
-	 *   <dd>Verifies that all expectations have been met.</dd>
-	 *   <dt>Record State:</dt>
-	 *   <dd>Throws an IllegalStateException.</dd>
+	 * Verifies the beahvior.
 	 *
-	 * @throws replay state: org.as2lib.test.mock.AssertionFailedError if any expectation has not been met
-	 * @throws record state: IllegalArgumentException
+	 * <dl>
+	 *   <dt>Replay State</dt>
+	 *   <dd>Verifies that all expectations have been met.</dd>
+	 *   <dt>Record State</dt>
+	 *   <dd>Throws an {@code IllegalStateException}.</dd>
+	 *
+	 * @throws org.as2lib.test.mock.AssertionFailedError if any expectation has not
+	 * been met in replay state
+	 * @throws org.as2lib.env.except.IllegalArgumentException when in record state
 	 */
 	public function verify(Void):Void;
 	
