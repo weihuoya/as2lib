@@ -1,13 +1,16 @@
 ﻿import org.as2lib.core.BasicClass;
-import org.as2lib.env.out.OutAccess;
-import org.as2lib.env.out.Out;
+import org.as2lib.env.log.ConfigurableLogger;
+import org.as2lib.env.log.logger.SimpleLogger;
 
 class org.as2lib.tool.console.ConsoleConnection extends BasicClass {
-	private static var out:OutAccess;
-	public function getOut(Void):OutAccess {
-		if(!out) {
-			out = new Out();
+	
+	private static var logger:ConfigurableLogger;
+	
+	public function getLogger(Void):ConfigurableLogger {
+		if (!logger) {
+			logger = new SimpleLogger("ConsoleLogger");
 		}
-		return out;
+		return logger;
 	}
+	
 }
