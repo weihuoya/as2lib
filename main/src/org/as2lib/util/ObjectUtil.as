@@ -95,28 +95,6 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Returns the name of the reference on the target object that points
-	 * to the member object.
-	 *
-	 * @param targetObject the target object that holds the reference
-	 * @param memberObject the member object to find
-	 * @return the name of the reference to the member object if it has been
-	 * found else null
-	 */
-	public static function getChildName(targetObject, memberObject):String {
-		for(var i:String in targetObject) {
-			try {
-				if(targetObject[i] == memberObject) {
-					return i;
-				}
-			} catch(e) {
-				// Catches the exception a property may throw.
-			}
-		}
-		return null;
-	}
-	
-	/**
 	 * Checks if the type of the passed-in {@code object} matches the passed-in 
 	 * {@code type}.
 	 * 

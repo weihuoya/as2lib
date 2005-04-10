@@ -119,17 +119,21 @@ class org.as2lib.util.Call extends BasicClass implements Executable {
 		var result:String="";
 		result += "[type " + ReflectUtil.getTypeNameForInstance(this) + " -> ";
 		AccessPermission.set(object, null, AccessPermission.ALLOW_ALL);
+		var methodName:String = ReflectUtil.getMethodName(method, object);
+		if (ReflectUtil.isMethodStatic(methodName, object)) {
+			result += "static ";
+		}
 		if (object == null) {
-			result += object.toString() + "." + ObjectUtil.getChildName(object, method);
+			result += object.toString();
 		} else {
 			var className:String = ReflectUtil.getTypeName(object);
 			if (className) {
 				result += className;
-				result += "." + ReflectUtil.getMethodName(method, object);
 			} else {
-				result += object.toString() + "." + ObjectUtil.getChildName(object, method);
+				result += object.toString();
 			}
 		}
+		result += "." + methodName;
 		result += "()]";
 		return result;
 	}
