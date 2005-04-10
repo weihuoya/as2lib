@@ -19,9 +19,9 @@ import org.as2lib.env.log.LogMessage;
 import org.as2lib.core.BasicClass;
 
 /**
- * TraceHandler uses trace to log the message. Or better to output the
- * message to Flash's output console.
- *
+ * {@code TraceHandler} uses trace to log the message. Or better to output the
+ * message to Flash's Output Panel.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.env.log.handler.TraceHandler extends BasicClass implements LogHandler {
@@ -42,13 +42,12 @@ class org.as2lib.env.log.handler.TraceHandler extends BasicClass implements LogH
 	}
 	
 	/**	
-	 * Constructs a new TraceHandler instance.
+	 * Constructs a new {@code TraceHandler} instance.
 	 *
-	 * <p>You can use one and the same instance for multiple loggers. So
-	 * think about using the handler returned by the static {@link #getInstance}
-	 * method.
-	 * Using this instance prevents the instantiation of unnecessary trace
-	 * handlers and and saves storage.
+	 * <p>You can use one and the same instance for multiple loggers. So think about
+	 * using the handler returned by the static {@link #getInstance} method. Using this
+	 * instance prevents the instantiation of unnecessary trace handlers and saves
+	 * storage.
 	 */
 	public function TraceHandler(Void) {
 	}
@@ -56,8 +55,8 @@ class org.as2lib.env.log.handler.TraceHandler extends BasicClass implements LogH
 	/**
 	 * Uses trace to write the log message out.
 	 *
-	 * <p>Uses the {@link LogMessage#toString} method to obtain the string that
-	 * gets written out.
+	 * <p>Uses the {@link LogMessage#toString} method to obtain the string that is
+	 * written out.
 	 *
 	 * @param message the log message to write out
 	 */

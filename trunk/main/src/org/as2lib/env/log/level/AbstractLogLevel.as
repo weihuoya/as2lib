@@ -19,10 +19,10 @@ import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
- * AbstractLogLevel acts as a basic access point for the pre-defined levels
+ * {@code AbstractLogLevel} acts as a basic access point for the pre-defined levels
  * {@link #ALL}, {@link #DEBUG}, {@link #INFO}, {@link #WARNING}, {@link #ERROR},
  * {@link #FATAL} and {@link #NONE}.
- *
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.env.log.level.AbstractLogLevel extends BasicClass implements LogLevel {
@@ -55,11 +55,12 @@ class org.as2lib.env.log.level.AbstractLogLevel extends BasicClass implements Lo
 	private var name:String;
 	
 	/**
-	 * Private constructor.
+	 * Constructs a new {@code AbstractLogLevel} instance.
 	 *
 	 * @param level the level represented by a number
 	 * @param name the name of the level
-	 * @throws IllegalArgumentException if passed-in level is null or undefined
+	 * @throws IllegalArgumentException if passed-in {@code level} is {@code null} or
+	 * {@code undefined}
 	 */
 	private function AbstractLogLevel(level:Number, name:String) {
 		if (level == null) throw new IllegalArgumentException("Level is not allowed to be null or undefined.", this, arguments);
@@ -68,17 +69,18 @@ class org.as2lib.env.log.level.AbstractLogLevel extends BasicClass implements Lo
 	}
 	
 	/**
-	 * Compares the number representation of this level with the one of the
-	 * passed-in level using the is greater or equal operator.
+	 * Compares the number representation of this level with the one of the passed-in
+	 * {@code level} using the is greater or equal operator.
 	 *
-	 * True will be returned if:
+	 * <p>{@code true} will be returned if:
 	 * <ul>
-	 *   <li>This level is greater or equal than the passed-in one.</li>
-	 *   <li>The passed-in level is null or undefined.</li>
+	 *   <li>This level is greater or equal than the passed-in {@code level}.</li>
+	 *   <li>The passed-in {@code level} is {@code null} or {@code undefined}.</li>
 	 * </ul>
 	 *
 	 * @param level the level to compare this level with
-	 * @return true if this level is greater or equal than the passed-in one else false
+	 * @return {@code true} if this level is greater or equal than the passed-in
+	 * {@code level} else {@code false}
 	 */
 	public function isGreaterOrEqual(level:LogLevel):Boolean {
 		return (this.level >= level.toNumber());
@@ -87,7 +89,7 @@ class org.as2lib.env.log.level.AbstractLogLevel extends BasicClass implements Lo
 	/**
 	 * Returns the number representation of this level.
 	 *
-	 * <p>The return value is never null or undefined.
+	 * <p>The return value is never {@code null} or {@code undefined}.
 	 *
 	 * @return the number representation of this level
 	 */

@@ -20,16 +20,15 @@ import org.as2lib.env.log.Logger;
 import net.hiddenresource.util.alcon.Alcon;
 
 /**
- * AlconLogger delegates all messages to the {@code trace} method of
- * the {@code net.hiddenresource.util.alcon.Alcon} class.
+ * {@code AlconLogger} delegates all messages to the
+ * {@code net.hiddenresource.util.alcon.Alcon.trace} method.
+ * 
+ * <p>Using this class instead of the {@code Alcon} class in your application
+ * directly enables you to switch between almost every available Logging API without
+ * having to change the logging calls but just the configuration on startup.
  *
- * <p>Using this class instead of the {@code Alcon} class in your
- * application directly enables you to switch between almost every available
- * logging API without having to change the logging calls, but just the
- * configuration on startup.
- *
- * <p>Every global configuration must be done via the static methods on
- * the {@code Alcon} class itself.
+ * <p>Every global configuration must be done via the static methods on the
+ * {@code Alcon} class itself.
  *
  * @author Simon Wacker
  * @see org.as2lib.env.log.handler.AlconHandler
@@ -78,8 +77,8 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 *
 	 * <p>The default value for {@code recursiveTracing} is {@code true}.
 	 *
-	 * @param recursiveTracing (optional) determines whether messages shall
-	 * be traced recursively or not
+	 * @param recursiveTracing (optional) determines whether to trace messages
+	 * recursively
 	 */
 	public function AlconLogger(recursiveTracing:Boolean) {
 		this.recursiveTracing = recursiveTracing == null ? true : recursiveTracing;
@@ -142,12 +141,12 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	}
 	
 	/**
-	 * Logs the message object at debug level.
+	 * Logs the passed-in {@code message} at debug level.
 	 *
-	 * <p>The message is only logged when the level is set to debug or
-	 * a level above.
+	 * <p>The {@code message} is only logged when the level is set to debug or a level
+	 * above.
 	 *
-	 * <p>The message is logged using the {@code Alcon.trace} method, passing
+	 * <p>The {@code message} is logged using the {@code Alcon.trace} method, passing
 	 * the debug level number.
 	 *
 	 * @param message the message object to log
@@ -158,12 +157,12 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	}
 	
 	/**
-	 * Logs the message object at info level.
+	 * Logs the passed-in {@code message} at info level.
 	 *
-	 * <p>The message is only logged when the level is set to info or
-	 * a level above.
+	 * <p>The {@code message} is only logged when the level is set to info or a level
+	 * above.
 	 *
-	 * <p>The message is logged using the {@code Alcon.trace} method, passing
+	 * <p>The {@code message} is logged using the {@code Alcon.trace} method, passing
 	 * the info level number.
 	 *
 	 * @param message the message object to log
@@ -174,12 +173,12 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	}
 	
 	/**
-	 * Logs the message object at warning level.
+	 * Logs the passed-in {@code message} at warning level.
 	 *
-	 * <p>The message is only logged when the level is set to warning or
-	 * a level above.
+	 * <p>The {@code message} is only logged when the level is set to warning or a
+	 * level above.
 	 *
-	 * <p>The message is logged using the {@code Alcon.trace} method, passing
+	 * <p>The {@code message} is logged using the {@code Alcon.trace} method, passing
 	 * the warn level number.
 	 *
 	 * @param message the message object to log
@@ -190,12 +189,12 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	}
 	
 	/**
-	 * Logs the message object at error level.
+	 * Logs the passed-in {@code message} at error level.
 	 *
-	 * <p>The message is only logged when the level is set to error or a
-	 * level above.
+	 * <p>The {@code message} is only logged when the level is set to error or a level
+	 * above.
 	 *
-	 * <p>The message is logged using the {@code Alcon.trace} method, passing
+	 * <p>The {@code message} is logged using the {@code Alcon.trace} method, passing
 	 * the error level number.
 	 *
 	 * @param message the message object to log
@@ -206,12 +205,12 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	}
 	
 	/**
-	 * Logs the message object at fatal level.
+	 * Logs the passed-in {@code message} at fatal level.
 	 *
-	 * <p>The message is only logged when the level is set to fatal or a
-	 * level above.
+	 * <p>The {@code message} is only logged when the level is set to fatal or a level
+	 * above.
 	 *
-	 * <p>The message is logged using the {@code Alcon.trace} method, passing
+	 * <p>The {@code message} is logged using the {@code Alcon.trace} method, passing
 	 * the fatal level number.
 	 *
 	 * @param message the message object to log

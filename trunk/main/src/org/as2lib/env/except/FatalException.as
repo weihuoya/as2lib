@@ -56,16 +56,15 @@ class org.as2lib.env.except.FatalException extends AbstractThrowable implements 
 	/**
 	 * Constructs a new {@code FatalException} instance.
 	 *
-	 * <p>All arguments are allowed to be {@code null} or {@code undefined}. But
-	 * if one is, the string representation returned by the {@code toString}
-	 * method will not be complete.
+	 * <p>All arguments are allowed to be {@code null} or {@code undefined}. But if
+	 * one is, the string representation returned by the {@code toString} method will
+	 * not be complete.
 	 *
-	 * <p>The {@code args} array should be the internal arguments array of the
-	 * method that throws the throwable. The internal arguments array exists in
-	 * every method and contains its parameters, the callee method and the caller
-	 * method. You can refernce it in every method using the name
-	 * {@code "arguments"}.
-	 *
+	 * <p>The {@code args} array should be the internal arguments array of the method
+	 * that throws the throwable. The internal arguments array exists in every method
+	 * and contains its parameters, the callee method and the caller method. You can
+	 * refernce it in every method using the name {@code "arguments"}.
+	 * 
 	 * @param message the message that describes the problem in detail
 	 * @param thrower the object that declares the method that throws this fatal
 	 * exception

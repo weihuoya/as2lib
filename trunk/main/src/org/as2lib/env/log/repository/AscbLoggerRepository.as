@@ -20,16 +20,15 @@ import org.as2lib.env.log.LoggerRepository;
 import org.as2lib.env.log.logger.AscbLogger;
 
 /**
- * AscbLoggerRepository returns loggers of type {@code AscbLogger}.
+ * {@code AscbLoggerRepository} returns loggers of type {@link AscbLogger}.
  *
- * <p>Configuring your global registry, like {@code LogManager} with
- * this repository, enables you to work externally with the As2lib
- * Logging API, which allows you to change between different other
- * Logging Frameworks, but internally with the Ascb Logging API. You
- * also configure the Ascb Logging API as if you would use it directly.
- *
- * <p>Already received loggers are cached by name. Thus there exists
- * only one logger instance per logger name.
+ * <p>Configuring your global registry, like {@code LogManager} with this repository,
+ * enables you to work externally with the As2lib Logging API, which allows you to
+ * change between different other Logging APIs, but internally with the ASCB Logging
+ * API. You also configure the ASCB Logging API as if you would use it directly.
+ * 
+ * <p>Already received loggers are cached by name. Thus there exists only one logger
+ * instance per logger name.
  *
  * @author Simon Wacker
  * @see org.as2lib.env.log.logger.AscbLogger
@@ -49,9 +48,9 @@ class org.as2lib.env.log.repository.AscbLoggerRepository extends BasicClass impl
 	/**
 	 * Returns a pre-configured logger for the passed-in {@code name}.
 	 *
-	 * <p>A new logger is created for names to which no logger has been
-	 * assigned yet. The new logger is configured with the {@code name}.
-	 * The logger is then cached by name and returned for usage.
+	 * <p>A new logger is created for names to which no logger has been assigned yet.
+	 * The new logger is configured with the {@code name}. The logger is then cached by
+	 * name and returned for usage.
 	 *
 	 * @param name the name of the logger to return
 	 * @return the logger corresponding to the passed-in {@code name}

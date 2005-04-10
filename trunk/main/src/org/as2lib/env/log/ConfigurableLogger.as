@@ -19,18 +19,17 @@ import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogHandler;
 
 /**
- * ConfigurableLogger declares methods needed to configure most loggers.
- *
- * <p>These is first the method to set the level {@link #setLevel} and
- * second the methods to add, remove and access handlers {@link #addHandler},
+ * {@code ConfigurableLogger} declares methods needed to configure most loggers.
+ * 
+ * <p>This is first the method to set the level {@link #setLevel} and second the
+ * methods to add, remove and access handlers {@link #addHandler},
  * {@link #removeHandler}, {@link #removeAllHandlers} and {@link #getAllHandlers}.
  *
- * <p>Log handlers are responsible for making the actual output. There
- * are a few pre-defined handlers that can be used to log to different
- * output devices. Take a look at the org.as2lib.env.log.handler package
- * for these.
+ * <p>Log handlers are responsible for making the actual output. There are a few
+ * pre-defined handlers that can be used to log to different output devices. Take
+ * a look at the {@code org.as2lib.env.log.handler} package for these.
  *
- * <p>Loggers normally get configured once.
+ * <p>Loggers are normally configured only once.
  *
  * @author Simon Wacker
  */
@@ -47,33 +46,32 @@ interface org.as2lib.env.log.ConfigurableLogger extends Logger {
 	/**
 	 * Sets the log level.
 	 *
-	 * <p>The level determines which output to make and and which to make
-	 * not.
-	 *
+	 * <p>The level determines which output to make and and which to make not.
+	 * 
 	 * @param level the new level to control the output
 	 * @see Logger#getLevel
 	 */
 	public function setLevel(level:LogLevel):Void;
 	
 	/**
-	 * Adds a new log handler.
+	 * Adds the passed-in log {@code handler}.
 	 *
-	 * <p>Log handlers get used to actually log the messages. They determine
-	 * what information to log and to which output device.
+	 * <p>Log handlers are used to actually log the messages. They determine what
+	 * information to log and to which output device.
 	 *
 	 * @param handler the new log handler to log messages
 	 */
 	public function addHandler(handler:LogHandler):Void;
 	
 	/**
-	 * Returns all handlers that were directly added to this logger.
+	 * Returns all handlers that were added to this logger.
 	 *
 	 * @return all added log handlers
 	 */
 	public function getAllHandlers(Void):Array;
 	
 	/**
-	 * Removes all occerrences of the passed-in log handler.
+	 * Removes all occerrences of the passed-in {@code handler}.
 	 *
 	 * @param handler the log handler to remove
 	 */

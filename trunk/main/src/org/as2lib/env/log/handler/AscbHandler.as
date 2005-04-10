@@ -24,9 +24,9 @@ import ascb.util.logging.LogManager;
 import ascb.util.logging.Level
 
 /**
- * AscbHandler delegates the log message to the {@code LogManager.log}
+ * {@code AscbHandler} delegates the log message to the {@code LogManager.log}
  * method of the ASCB Logging API.
- *
+ * 
  * @author Simon Wacker
  * @see org.as2lib.env.log.logger.AscbLogger
  * @see <a href="http://www.person13.com/ascblibrary">ASCB Library</a>
@@ -52,29 +52,29 @@ class org.as2lib.env.log.handler.AscbHandler extends BasicClass implements LogHa
 	private var manager:LogManager;
 	
 	/**	
-	 * Constructs a new AscbHandler instance.
-	 *
-	 * <p>You can use one and the same instance for multiple loggers. So
-	 * think about using the handler returned by the static {@link #getInstance}
-	 * method. Using this instance prevents the instantiation of unnecessary
-	 * ascb handlers and and saves storage.
+	 * Constructs a new {@code AscbHandler} instance.
+	 * 
+	 * <p>You can use one and the same instance for multiple loggers. So think about
+	 * using the handler returned by the static {@link #getInstance} method. Using this
+	 * instance prevents the instantiation of unnecessary ascb handlers and saves
+	 * storage.
 	 */
 	public function AscbHandler(Void) {
 		this.manager = LogManager.getLogManager();
 	}
 	
 	/**
-	 * Converts the passed-in {@code message} to a format that is expected
-	 * formatters of the ASCB Logging API and passes the converted message
-	 * to the {@code LogManager.log} method of the ASCB Logging API.
+	 * Converts the passed-in {@code message} to a format that is expected formatters
+	 * of the ASCB Logging API and passes the converted message to the
+	 * {@code LogManager.log} method of the ASCB Logging API.
 	 *
 	 * <p>The converted object has the following variables:
 	 * <dl>
 	 *   <dt>level</dt>
 	 *   <dd>
 	 *     ASCB Logging API level number of the message. The former As2lib
-	 *     {@code LogLevel} returned by {@code LogMessage.getLevel} was
-	 *     converted to this level number by the {@link #convertLevel} method.
+	 *     {@code LogLevel} returned by {@code LogMessage.getLevel} was converted to
+	 *     this level number by the {@link #convertLevel} method.
 	 *   </dd>
 	 *   <dt>message</dt>
 	 *   <dd>
@@ -88,15 +88,15 @@ class org.as2lib.env.log.handler.AscbHandler extends BasicClass implements LogHa
 	 *   </dd>
 	 *   <dt>time</dt>
 	 *   <dd>
-	 *     The time when the logging took place. This is a {@code Date}
-	 *     instance configured with the timestamp returned by the method
+	 *     The time when the logging took place. This is a {@code Date} instance
+	 *     configured with the timestamp returned by the method 
 	 *     {@code LogMessage.getTimeStamp}.
 	 *   </dd>
 	 *   <dt>logMessage</dt>
 	 *   <dd>
-	 *     The passed-in {@code message} instance. This variable may be used
-	 *     by your own formatter if you want to take advantage of the
-	 *     stringifier of the {@code LogMessage}.
+	 *     The passed-in {@code message} instance. This variable may be used by your
+	 *     own formatter if you want to take advantage of the stringifier of the
+	 *     {@code LogMessage}.
 	 *   </dd>
 	 * </dl>
 	 *
@@ -132,11 +132,10 @@ class org.as2lib.env.log.handler.AscbHandler extends BasicClass implements LogHa
 	 *   <dd>Is converted to {@code Level.OFF}.</dd>
 	 * </dl>
 	 *
-	 * <p>If the passed-in {@code level} is none of the above, {@code null}
-	 * is returned.
+	 * <p>If the passed-in {@code level} is none of the above, {@code null} is returned.
 	 *
 	 * @param level the As2lib log level to convert
-	 * @return the equivalent ASCB level number or null
+	 * @return the equivalent ASCB level number or {@code null}
 	 */
 	private function convertLevel(level:LogLevel):Number {
 		switch (level) {

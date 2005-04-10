@@ -18,9 +18,9 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.env.log.Logger;
 
 /**
- * LoggerFactory is used to obtain loggers.
+ * {@code LoggerFactory} is used to obtain loggers.
  *
- * <p>What loggers get returned depends on the specific implementation.
+ * <p>What loggers are returned depends on the specific implementation.
  *
  * @author Simon Wacker
  */

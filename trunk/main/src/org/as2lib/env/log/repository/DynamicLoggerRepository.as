@@ -20,31 +20,32 @@ import org.as2lib.env.log.LoggerRepository;
 import org.as2lib.env.log.repository.LoggerFactory;
 
 /**
- * DynamicLoggerRepository gets used to obtain Logger instances.
+ * {@code DynamicLoggerRepository} is used to obtain loggers.
  *
- * <p>The actual class of these loggers is determined by you at runtime.
- * You can therefor either use the constructors logger class argument or
- * the {@link #setLoggerFactory} method.
+ * <p>The actual class of these loggers is determined by you at runtime. You can
+ * therefor either use the constructors logger class argument or the
+ * {@link #setLoggerFactory} method.
+ * 
+ * <p>This repository is very performant. What it does is quite simple. It only
+ * instantiates logger instances passing-in the given name, stores these instances
+ * by name for retrieval later on and returns them.
  *
- * <p>This repository is very performant. What it does is quite simple.
- * It only instantiates logger instances passing-in the given name, stores
- * these instances by name for retrieval later on and returns them.
+ * <p>When working with logger repositories you normally store them in the log
+ * manager using the static {@link LogManager#setLoggerRepository} method. You can
+ * then use the static {@link LogManager#getLogger} method to obtain loggers from
+ * the set repository.
  *
- * <p>When working with logger repositories you normally store them
- * in the log manager using the static {@link LogManager#setLoggerRepository}
- * method.
- * You can then use the static {@link LogManager#getLogger} method to obtain
- * loggers from the set repository.
- *
- * <p>Here is how you could use it:
- * <code>// configuration: on system start-up
- * var repository:LoggerRepository = new DynamicLoggerRepository(MyLogger);
- * LogManager.setLoggerRepository(repository);
- * // usage: in the org.mydomain.MyClass class
- * var myLogger:Logger = LogManager.getLogger("org.mydomain.MyClass");
- * if (myLogger.isWarningEnabled()) {
- *   myLogger.warning("Pay attention please!");
- * }</code>
+ * <p>Example:
+ * <code>
+ *   // configuration: on system start-up
+ *   var repository:LoggerRepository = new DynamicLoggerRepository(MyLogger);
+ *   LogManager.setLoggerRepository(repository);
+ *   // usage: in the org.mydomain.MyClass class
+ *   var myLogger:Logger = LogManager.getLogger("org.mydomain.MyClass");
+ *   if (myLogger.isWarningEnabled()) {
+ *       myLogger.warning("Pay attention please!");
+ *   }
+ * </code>
  *
  * @author Simon Wacker
  */
@@ -57,18 +58,18 @@ class org.as2lib.env.log.repository.DynamicLoggerRepository extends BasicClass i
 	private var loggerFactory:LoggerFactory;
 	
 	/**
-	 * Constructs a new DynamicLoggerRepository instance.
+	 * Constructs a new {@code DynamicLoggerRepository} instance.
 	 *
-	 * <p>If you do not pass a logger class you must set the logger factory
-	 * via the {@link #setLoggerFactory} method. Otherwise the logger returned by
-	 * {@link #getLogger} will always be null.
+	 * <p>If you do not pass a {@code loggerClass} you must set the logger factory via
+	 * the {@link #setLoggerFactory} method. Otherwise the logger returned by
+	 * {@link #getLogger} will always be {@code null}.
 	 *
-	 * <p>The logger gets wrapped into a factory and the factory gets set.
-	 * The factory then instantiates the logger class passing-in the name
-	 * of the logger on calls to {@link #getLogger}.
+	 * <p>The logger is wrapped into a factory and the factory is set. The factory
+	 * then instantiates the logger class passing-in the name of the logger on calls
+	 * to {@link #getLogger}.
 	 *
-	 * <p>Already received loggers get cached by name. Thus there exists
-	 * only one logger instance per name.
+	 * <p>Already received loggers are cached by name. Thus there exists only one
+	 * logger instance per name.
 	 *
 	 * @param loggerClass (optional) the class to create loggers of
 	 */
@@ -82,9 +83,8 @@ class org.as2lib.env.log.repository.DynamicLoggerRepository extends BasicClass i
 	/**
 	 * Returns a new dynamic logger factory.
 	 *
-	 * <p>This factory creates new instances of the passed-in logger class.
-	 * It passes the logger name as parameter to the constructor of the class
-	 * on creation.
+	 * <p>This factory creates new instances of the passed-in {@code loggerClass}. It
+	 * passes the logger name as parameter to the constructor of the class on creation.
 	 *
 	 * @return a new dynamic logger factory
 	 */
@@ -99,8 +99,8 @@ class org.as2lib.env.log.repository.DynamicLoggerRepository extends BasicClass i
 	/**
 	 * Returns a blank logger factory.
 	 *
-	 * <p>That is a factory without initialized methods. All methods have
-	 * still to be set.
+	 * <p>That is a factory without implemented methods. All methods have still to be
+	 * set.
 	 *
 	 * @return a blank logger factory
 	 */
@@ -123,8 +123,8 @@ class org.as2lib.env.log.repository.DynamicLoggerRepository extends BasicClass i
 	/**
 	 * Sets a new logger factory.
 	 *
-	 * <p>This logger factory gets used to create loggers for given names,
-	 * that get returned by the {@link #getLogger} method.
+	 * <p>This logger factory is used to create loggers for given names, that are
+	 * returned by the {@link #getLogger} method.
 	 *
 	 * @param loggerFactory the new logger factory
 	 */
@@ -133,22 +133,22 @@ class org.as2lib.env.log.repository.DynamicLoggerRepository extends BasicClass i
 	}
 	
 	/**
-	 * Returns a pre-configured logger for the passed-in name.
+	 * Returns a pre-configured logger for the passed-in {@code name}.
 	 *
-	 * <p>A new logger gets created for names to which no logger has been
-	 * assigned yet. The new logger is configured with the name, either by
-	 * the custom factory or by the default one, which passes the name as
-	 * parameter to the constructor of the logger class. The logger then
-	 * gets cached by name and returned for usage.
+	 * <p>A new logger is created for names to which no logger has been assigned yet.
+	 * The new logger is configured with the {@code name}, either by the custom
+	 * factory or by the default one, which passes the {@code name} as parameter to
+	 * the constructor of the logger class. The logger is then cached by name and
+	 * returned for usage.
 	 *
-	 * <p>Null gets returned if:
+	 * <p>{@code null} will be returned if:
 	 * <ul>
 	 *   <li>No logger factory has been set.</li>
-	 *   <li>The set logger factory returns null or undefined.</li>
+	 *   <li>The set logger factory returns {@code null} or {@code undefined}.</li>
 	 * </ul>
 	 *´
-	 * @param name the name of the logger to obtain
-	 * @return the logger appropriate on the passed-in name
+	 * @param name the name of the logger to return
+	 * @return the logger appropriate to the passed-in {@code name}
 	 */
 	public function getLogger(name:String):Logger {
 		if (loggers[name]) return loggers[name];

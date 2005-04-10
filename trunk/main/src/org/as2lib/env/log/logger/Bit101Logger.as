@@ -20,13 +20,13 @@ import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.logger.AbstractLogger;
 
 /**
- * Bit101Logger delegates all log messages to the {@code trace} method
- * of the {@code Debug} class from Keith Peter's Debug Panel.
- *
- * <p>Using this class instead of the {@code Debug} class in your
- * application directly enables you to switch between almost every available
- * logging API without having to change the logging calls, but just the
- * underlying configuration on startup.
+ * {@code Bit101Logger} delegates all log messages to the {@code Debug.trace}
+ * method from Keith Peter's Debug Panel.
+ * 
+ * <p>Using this class instead of the {@code Debug} class in your application
+ * directly enables you to switch between almost every available Logging API
+ * without having to change the logging calls but just the underlying configuration
+ * on startup.
  *
  * @author Simon Wacker
  * @see org.as2lib.env.log.handler.Bit101Handler
@@ -56,19 +56,19 @@ class org.as2lib.env.log.logger.Bit101Logger extends AbstractLogger implements L
 	/**
 	 * Constructs a new {@code Bit101Logger} instance.
 	 *
-	 * <p>The default log level is {@code ALL}. This means all messages
-	 * regardless of their level are logged.
+	 * <p>The default log level is {@code ALL}. This means all messages regardless of
+	 * their level are logged.
 	 *
-	 * <p>{@code traceObject} is by default {@code false}. Refer to the
-	 * {@code Debug} class for information on the default {@code recursionDepth}
-	 * and {@code indentation}.
+	 * <p>{@code traceObject} is by default {@code false}. Refer to the {@code Debug}
+	 * class for information on the default {@code recursionDepth} and
+	 * {@code indentation}.
 	 *
-	 * @param traceObject (optional) determines whether to trace object
-	 * recursively or to use the result of their {@code toString} method
+	 * @param traceObject (optional) determines whether to trace objects recursively
+	 * or to use the result of their {@code toString} method
 	 * @param recursionDepth (optional) determines the count of recursions for
 	 * recursively traced objects
-	 * @param indentation (optional) determines the indentation number for
-	 * recursively traced objects
+	 * @param indentation (optional) determines the indentation number for recursively
+	 * traced objects
 	 */
 	public function Bit101Logger(traceObject:Boolean, recursionDepth:Number, indentation:Number) {
 		this.traceObject = !traceObject ? false : true;
@@ -81,22 +81,20 @@ class org.as2lib.env.log.logger.Bit101Logger extends AbstractLogger implements L
 	/**
 	 * Sets the log level.
 	 *
-	 * <p>The log level determines which messages are logged and which are
-	 * not.
+	 * <p>The log level determines which messages are logged and which are not.
 	 *
-	 * <p>A level of value {@code null} or {@code undefined} os interpreted
-	 * as level {@code ALL}, which is also the default level.
+	 * <p>A level of value {@code null} or {@code undefined} is interpreted as level
+	 * {@code ALL}, which is also the default level.
 	 *
 	 * @param level the new log level
 	 */
 	public function setLevel(level:LogLevel):Void {
 		if (level) {
 			this.level = level;
-			levelAsNumber = level.toNumber();
 		} else {
 			this.level = ALL;
-			levelAsNumber = level.toNumber();
 		}
+		this.levelAsNumber = this.level.toNumber();
 	}
 	
 	/**
@@ -165,10 +163,10 @@ class org.as2lib.env.log.logger.Bit101Logger extends AbstractLogger implements L
 	
 	/**
 	 * Logs the {@code message} using the {@code Debug.trace} method if
-	 * {@code traceObject} is turned off or if the {@code message} is of
-	 * type {@code 'string'}, {@code 'number'}, {@code 'boolean'},
-	 * {@code 'undefined'} or {@code 'null'} and using the {@code Debug.traceObject}
-	 * method if neither of the above cases holds true.
+	 * {@code traceObject} is turned off or if the {@code message} is of type
+	 * {@code "string"}, {@code "number"}, {@code "boolean"}, {@code "undefined"} or
+	 * {@code "null"} and using the {@code Debug.traceObject} method if neither of the
+	 * above cases holds {@code true}.
 	 *
 	 * @param message the message to log
 	 */
@@ -186,9 +184,9 @@ class org.as2lib.env.log.logger.Bit101Logger extends AbstractLogger implements L
 	}
 	
 	/**
-	 * Logs the message object at debug level.
+	 * Logs the passed-in {@code message} at debug level.
 	 *
-	 * <p>The message is only logged when the level is set to debug or
+	 * <p>The {@code message} is only logged when the level is set to {@code DEBUG} or
 	 * a level above.
 	 *
 	 * @param message the message object to log
@@ -201,9 +199,9 @@ class org.as2lib.env.log.logger.Bit101Logger extends AbstractLogger implements L
 	}
 	
 	/**
-	 * Logs the message object at info level.
+	 * Logs the passed-in {@code message} object at info level.
 	 *
-	 * <p>The message is only logged when the level is set to info or
+	 * <p>The {@code message} is only logged when the level is set to {@code INFO} or
 	 * a level above.
 	 *
 	 * @param message the message object to log
@@ -216,10 +214,10 @@ class org.as2lib.env.log.logger.Bit101Logger extends AbstractLogger implements L
 	}
 	
 	/**
-	 * Logs the message object at warning level.
+	 * Logs the passed-in {@code message} object at warning level.
 	 *
-	 * <p>The message is only logged when the level is set to warning or
-	 * a level above.
+	 * <p>The {@code message} is only logged when the level is set to {@code WARNING}
+	 * or a level above.
 	 *
 	 * @param message the message object to log
 	 * @see #isWarningEnabled
@@ -231,9 +229,9 @@ class org.as2lib.env.log.logger.Bit101Logger extends AbstractLogger implements L
 	}
 	
 	/**
-	 * Logs the message object at error level.
+	 * Logs the passed-in {@code message} object at error level.
 	 *
-	 * <p>The message is only logged when the level is set to error or a
+	 * <p>The {@code message} is only logged when the level is set to {@code ERROR} or a
 	 * level above.
 	 *
 	 * @param message the message object to log
@@ -246,10 +244,10 @@ class org.as2lib.env.log.logger.Bit101Logger extends AbstractLogger implements L
 	}
 	
 	/**
-	 * Logs the message object at fatal level.
+	 * Logs the passed-in {@code message} object at fatal level.
 	 *
-	 * <p>The message is only logged when the level is set to fatal or a
-	 * level above.
+	 * <p>The {@code message} is only logged when the level is set to {@code FATAL} or
+	 * a level above.
 	 *
 	 * @param message the message object to log
 	 * @see #isFatalEnabled

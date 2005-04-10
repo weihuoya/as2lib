@@ -27,51 +27,49 @@ import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.logger.AbstractLogger;
 
 /**
- * SimpleHierarchicalLogger is a simple implementation of the
+ * {@code SimpleHierarchicalLogger} is a simple implementation of the
  * {@code ConfigurableLogger} and {@code ConfigurableHierarchicalLogger}
  * interfaces.
- *
- * <p>This logger is thus capable of functioning correctly in a hierarchy.
- * It is normally used with the {@code LoggerHierarchy} repository.
+ * 
+ * <p>This logger is thus capable of functioning correctly in a hierarchy. It is
+ * normally used with the {@code LoggerHierarchy} repository.
  *
  * <p>The basic methods to write log messages are {@link #log}, {@link #debug},
  * {@link #info}, {@link #warning} and {@link #fatal}.
+ * 
+ * <p>The first thing to note is that you can log messages at different levels.
+ * These levels are {@code DEBUG}, {@code INFO}, {@code WARNING}, {@code ERROR} and
+ * {@code FATAL}. Depending on what level has been set only messages at a given
+ * level are logged. The levels are organized in a hierarchical manner. This means
+ * if you set the log level to {@code ALL} every messages is logged. If you set it
+ * to {@code ERROR} only messages at {@code ERROR} and {@code FATAL} level are
+ * logged and so on. It is also possible to define your own set of levels. You can
+ * therefor use the {@link #isEnabled} and {@link #log} methods. If you do not set
+ * a log level the level of its parent is used to decide whether the message shall
+ * be logged.
  *
- * <p>The first thing to note is that you can log messages at different
- * levels. These levels are {@link #DEBUG}, {@link #INFO}, {@link #WARNING},
- * {@link #ERROR} and {@link #FATAL}. Depending on what level has been
- * set only messages at a given level are logged. The levels are organized
- * in a hierarchical manner. That means if you set the log level to {@link #ALL}
- * every messages is logged. If you set it to {@link #ERROR} only messages
- * at {@link #ERROR} and {@link #FATAL} level are logged and so on.
- * It is also possible to define your own set of levels. You can therefor
- * use the {@link #isEnabled} and {@link #log} methods.
- * If you do not set a log level the level of its parent is used to
- * decide whether the message shall be logged.
- *
- * <p>To do not waste unnecessary performance in constructing log messages
- * that are not logged you can use the {@link #isEnabled}, {@link #isDebugEnabled},
+ * <p>To do not waste unnecessary performance in constructing log messages that
+ * are not logged you can use the {@link #isEnabled}, {@link #isDebugEnabled},
  * {@link #isInfoEnabled}, {@link #isWarningEnabled}, {@link #isErrorEnabled}
  * and {@link #isFatalEnabled} methods.
+ * 
+ * <p>Note that the message does in neither case have to be a string. That means
+ * you can pass-in messages and let the actual handler or logger decide how to
+ * produce a string representation of the message. That is in most cases done by
+ * using the {@code toString} method of the specific message. You can use this
+ * method to do not lose performance in cases where the message is not logged.
  *
- * <p>Note that the message does in neither case have to be a string.
- * That means you can pass-in messages and let the actual handler or
- * logger decide how to produce a string representation of the message.
- * That is in most cases done by using the toString method of the specific
- * message. You can use this method to do not lose performance in cases
- * where the message is not logged.
- *
- * <p>The actual logging is made by log handlers. To configure and access
- * the handlers of this logger you can use the methods {@link #addHandler},
+ * <p>The actual logging is made by log handlers. To configure and access the
+ * handlers of this logger you can use the methods {@link #addHandler},
  * {@link #removeHandler}, {@link #removeAllHandlers} and {@link #getAllHandlers}.
  * There are a few pre-defined handlers for different output devices. Take a look
- * at the {@code org.as2lib.env.log.handler} package for these.
- * This logger does not only use the handlers of itself but also the
- * ones of its parents.
+ * at the {@code org.as2lib.env.log.handler} package for these. This logger does
+ * not only use the handlers of itself but also the ones of its parents.
+ * 
+ * <p>Note that advantage of this class's hierarchical support is not taken in the
+ * following example. Take a look at the class documentation of the
+ * {@code LoggerHierarchy} for an example that uses this support.
  *
- * <p>Note that advantage of this class's hierarchical support is not
- * taken in the following example. Take a look at the class documentation
- * of the {@code LoggerHierarchy} for an example that uses this support.
  * <code>
  *   var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("myLogger");
  *   logger.setLevel(SimpleHierarchicalLogger.ALL);
@@ -105,12 +103,13 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	private var broadcaster:EventBroadcaster;
 	
 	/**
-	 * Constructs a new SimpleHierarchicalLogger instance.
+	 * Constructs a new {@code SimpleHierarchicalLogger} instance.
+	 * 
+	 * <p>The default broadcaster is an instance of class {@link SpeedEventBroadcaster}.
 	 *
-	 * <p>The default broadcaster is an instance of type {@link SpeedEventBroadcaster}.
-	 *
-	 * @param name the name of the new logger
-	 * @param broadcaster (optional) the broadcaster used to dispatch log messages to all handlers
+	 * @param name the name of this new logger
+	 * @param broadcaster (optional) the broadcaster used to dispatch log messages to
+	 * all handlers
 	 */
 	public function SimpleHierarchicalLogger(name:String, broadcaster:EventBroadcaster) {
 		setName(name);
@@ -119,12 +118,10 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Returns the parent of this logger that must also be a hierarchical
-	 * logger.
+	 * Returns the parent of this logger.
 	 *
-	 * <p>This logger uses the parent to get the log level, if no
-	 * one has been set to this logger manually and to get the handlers of
-	 * its parents to write the log messages out.
+	 * <p>This logger uses the parent to get the log level, if no one has been set to
+	 * this logger manually and to get the handlers of its parents to log messages.
 	 *
 	 * @return the parent of this logger
 	 */
@@ -135,8 +132,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	/**
 	 * Sets the parent of this logger.
 	 *
-	 * <p>The parent gets used to obtain needed configuration like handlers
-	 * and levels.
+	 * <p>The parent is used to obtain needed configuration like handlers and levels.
 	 *
 	 * @param parent the parent of this logger
 	 */
@@ -147,9 +143,8 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	/**
 	 * Returns the name of this logger.
 	 *
-	 * <p>The name is a fully qualified name and the different parts are
-	 * be separated by periods.
-	 * The name could for example be 'org.as2lib.core.BasicClass'.
+	 * <p>The name is a fully qualified name and the different parts are separated by
+	 * periods. The name could for example be {@code "org.as2lib.core.BasicClass"}.
 	 *
 	 * @return the name of this logger
 	 */
@@ -160,11 +155,11 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	/**
 	 * Sets the name of this logger.
 	 *
-	 * <p>The name must exists of the path as well as the actual identifier.
-	 * That means it must be fully qualified.
+	 * <p>The name must exist of the path as well as the actual identifier. That means
+	 * it must be fully qualified.
 	 * 
-	 * <p>The LoggerHierarchy prescribes that the different parts of the
-	 * name must be separated by periods.
+	 * <p>The {@link LoggerHierarchy} prescribes that the different parts of the name
+	 * must be separated by periods.
 	 *
 	 * @param name the name of this logger
 	 */
@@ -175,13 +170,12 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	/**
 	 * Sets the log level.
 	 *
-	 * <p>The level determines which output to make and and which to make
-	 * not.
+	 * <p>The {@code level} determines which messages to log and which not.
 	 *
-	 * <p>The level is allowed to be set to null or undefined. If you do
-	 * so the {@link #getLevel} method returns the level of the parent.
+	 * <p>The {@code level} is allowed to be set to {@code null} or {@code undefined}.
+	 * If you do so the {@link #getLevel} method returns the level of the parent.
 	 *
-	 * @param level the new level to control the output
+	 * @param level the new level to control the logging of messages
 	 * @see #getLevel
 	 */
 	public function setLevel(level:LogLevel):Void {
@@ -191,11 +185,12 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	/**
 	 * Returns the log level of this logger.
 	 *
-	 * <p>If the level has not been set, that means is undefined, the level of
+	 * <p>If the level has not been set, that means is {@code undefined}, the level of
 	 * the parent will be returned.
 	 *
-	 * <p>Null or undefined will only be returned if this level is not defined
-	 * and the parent's getLevel method returns null or undefined.
+	 * <p>{@code null} or {@code undefined} will only be returned if this level is not
+	 * defined and the parent's {@code getLevel} method returns {@code null} or
+	 * {@code undefined}.
 	 *
 	 * @return the log level of this logger
 	 */
@@ -205,16 +200,13 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Adds a new log handler.
+	 * Adds the new {@code handler}.
 	 *
-	 * <p>Log handlers get used to actually log the messages. They determine
-	 * what information to log and to which output device.
+	 * <p>Log handlers are used to actually log the messages. They determine what
+	 * information to log and to which output device.
 	 *
-	 * <p>This method simply does nothing if the passed-in handler is null
-	 * or undefined.
-	 *
-	 * <p>If the passed-in handler has already been added it gets deleted
-	 * and added again.
+	 * <p>This method simply does nothing if the passed-in handler is {@code null} or
+	 * {@code undefined}.
 	 *
 	 * @param handler the new log handler to log messages
 	 */
@@ -225,10 +217,10 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Removes all occerrences of the passed-in log handler.
+	 * Removes all occerrences of the passed-in {@code handler}.
 	 *
-	 * <p>If the passed-in handler is null or undefined the method invocation
-	 * simply gets ignored.
+	 * <p>If the passed-in {@code handler} is {@code null} or {@code undefined} the
+	 * method invocation is simply ignored.
 	 *
 	 * @param handler the log handler to remove
 	 */
@@ -248,20 +240,20 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	/**
 	 * Returns all handlers this logger broadcasts to when logging a message.
 	 *
-	 * <p>These handlers are the once directly added to this logger and the
-	 * once of the parents.
+	 * <p>These handlers are the once directly added to this logger and the once of
+	 * its parents.
 	 *
-	 * <p>The handlers of the parents are obtained via the parents getAllHandlers
-	 * method which is supposed to also return the handlers of its parent and
-	 * so on.
+	 * <p>The handlers of the parents are obtained via the parents
+	 * {@code getAllHandlers} method which is supposed to also return the handlers of
+	 * its parent and so on.
 	 *
-	 * <p>This method never returns null but an empty array if there are no
+	 * <p>This method never returns {@code null} but an empty array if there are no
 	 * handlers added to this logger nor to its parents.
 	 *
-	 * <p>Note that this method stores the parents handlers by itself if it
-	 * once obtained it. That is when you first log a message. It than always
-	 * works with the stored handlers. That means that handlers added to its
-	 * parents after the handlers have once been stored are not recognized.
+	 * <p>Note that this method stores the parents handlers itself if it once obtained
+	 * them. That is when you first log a message. It then always works with the
+	 * stored handlers. That means that handlers added to its parents after the
+	 * handlers have once been stored are not recognized.
 	 *
 	 * @return all added log handlers and the ones of the parents
 	 */
@@ -282,19 +274,20 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Checks whether this logger is enabled for the passed-in log level.
+	 * Checks whether this logger is enabled for the passed-in {@code level}.
 	 *
-	 * False will be returned if:
+	 * {@code false} will be returned if:
 	 * <ul>
-	 *   <li>This logger is not enabled for the passed-in level.</li>
-	 *   <li>The passed-in level is null or undefined.</li>
+	 *   <li>This logger is not enabled for the passed-in {@code level}.</li>
+	 *   <li>The passed-in {@code level} is {@code null} or {@code undefined}.</li>
 	 * </ul>
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
 	 * @param level the level to make the check upon
-	 * @return true if this logger is enabled for the given level else false
+	 * @return {@code true} if this logger is enabled for the given level else
+	 * {@code false}
 	 * @see #log
 	 */
 	public function isEnabled(level:LogLevel):Boolean {
@@ -303,12 +296,12 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Checks if this logger is enabled for debug level output.
+	 * Checks if this logger is enabled for debug level log messages.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * @return true if debug output gets made
+	 * @return {@code true} if debug messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#DEBUG
 	 * @see #debug
 	 */
@@ -317,12 +310,12 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Checks if this logger is enabled for info level output.
+	 * Checks if this logger is enabled for info level log messages.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * @return true if info output gets made
+	 * @return {@code true} if info messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#INFO
 	 * @see #info
 	 */
@@ -331,12 +324,12 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Checks if this logger is enabled for warning level output.
+	 * Checks if this logger is enabled for warning level log messages.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * @return true if warning output gets made
+	 * @return {@code true} if warning messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#WARNING
 	 * @see #warning
 	 */
@@ -345,12 +338,12 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Checks if this logger is enabled for error level output.
+	 * Checks if this logger is enabled for error level log messages.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * @return true if error output gets made
+	 * @return {@code true} if error messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#ERROR
 	 * @see #error
 	 */
@@ -359,12 +352,12 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Checks if this logger is enabled for fatal level output.
+	 * Checks if this logger is enabled for fatal level log messages.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * @return true if fatal output gets made
+	 * @return {@code true} if fatal messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#FATAL
 	 * @see #fatal
 	 */
@@ -373,22 +366,21 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Logs the message object at the given level.
+	 * Logs the passed-in {@code message} at the given {@code level}.
 	 *
-	 * <p>The message gets only logged when this logger is enabled for
-	 * the passed-in log level.
+	 * <p>The {@code message} is only logged when this logger is enabled for the
+	 * passed-in {@code level}.
 	 *
-	 * <p>The message gets broadcasted to all log handlers of this logger
-	 * and to the ones of its parents or more specifically to the ones
-	 * returned by the parent's getAllHandlers method, that normally also
-	 * returns the handlers of its parents and so on.
+	 * <p>The {@code message} is broadcasted to all log handlers of this logger and to
+	 * the ones of its parents or more specifically to the ones returned by the 
+	 * parent's {@code getAllHandlers} method, that normally also returns the handlers
+	 * of its parents and so on.
 	 *
-	 * <p>Note that the handlers of the parents are resloved only once,
-	 * when the first message gets logged. They are stored in this logger
-	 * to reference them faster.
+	 * <p>Note that the handlers of the parents are resloved only once, when the first
+	 * message is logged. They are stored in this logger to reference them faster.
 	 *
 	 * @param message the message object to log
-	 * @param level the specific level at which the message shall be logged
+	 * @param level the specific level at which the {@code message} shall be logged
 	 * @see #isEnabled
 	 */
 	public function log(message, level:LogLevel):Void {
@@ -400,15 +392,18 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Logs the message object at debug level.
+	 * Logs the passed-in {@code message} at debug level.
 	 *
-	 * <p>The message gets only logged when the level is set to debug or
+	 * <p>The {@code message} is only logged when the level is set to {@code DEBUG} or
 	 * a level above.
 	 *
-	 * <p>The message gets broadcasted to all log handlers of this logger
-	 * and to the ones of its parents or more specifically to the ones
-	 * returned by the parent's getAllHandlers method, that normally also
-	 * returns the handlers of its parents and so on.
+	 * <p>The {@code message} is broadcasted to all log handlers of this logger and to
+	 * the ones of its parents or more specifically to the ones returned by the 
+	 * parent's {@code getAllHandlers} method, that normally also returns the handlers
+	 * of its parents and so on.
+	 *
+	 * <p>Note that the handlers of the parents are resloved only once, when the first
+	 * message is logged. They are stored in this logger to reference them faster.
 	 *
 	 * @param message the message object to log
 	 * @see #isDebugEnabled
@@ -418,15 +413,18 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Logs the message object at info level.
+	 * Logs the passed-in {@code message} at info level.
 	 *
-	 * <p>The message gets only logged when the level is set to info or
+	 * <p>The {@code message} is only logged when the level is set to {@code INFO} or
 	 * a level above.
 	 *
-	 * <p>The message gets broadcasted to all log handlers of this logger
-	 * and to the ones of its parents or more specifically to the ones
-	 * returned by the parent's getAllHandlers method, that normally also
-	 * returns the handlers of its parents and so on.
+	 * <p>The {@code message} is broadcasted to all log handlers of this logger and to
+	 * the ones of its parents or more specifically to the ones returned by the 
+	 * parent's {@code getAllHandlers} method, that normally also returns the handlers
+	 * of its parents and so on.
+	 *
+	 * <p>Note that the handlers of the parents are resloved only once, when the first
+	 * message is logged. They are stored in this logger to reference them faster.
 	 *
 	 * @param message the message object to log
 	 * @see #isInfoEnabled
@@ -436,15 +434,18 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Logs the message object at warning level.
+	 * Logs the passed-in {@code message} at warning level.
 	 *
-	 * <p>The message gets only logged when the level is set to warning or
-	 * a level above.
+	 * <p>The {@code message} is only logged when the level is set to {@code WARNING}
+	 * or a level above.
 	 *
-	 * <p>The message gets broadcasted to all log handlers of this logger
-	 * and to the ones of its parents or more specifically to the ones
-	 * returned by the parent's getAllHandlers method, that normally also
-	 * returns the handlers of its parents and so on.
+	 * <p>The {@code message} is broadcasted to all log handlers of this logger and to
+	 * the ones of its parents or more specifically to the ones returned by the 
+	 * parent's {@code getAllHandlers} method, that normally also returns the handlers
+	 * of its parents and so on.
+	 *
+	 * <p>Note that the handlers of the parents are resloved only once, when the first
+	 * message is logged. They are stored in this logger to reference them faster.
 	 *
 	 * @param message the message object to log
 	 * @see #isWarningEnabled
@@ -454,15 +455,18 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Logs the message object at error level.
+	 * Logs the passed-in {@code message} at error level.
 	 *
-	 * <p>The message gets only logged when the level is set to error or a
-	 * level above.
+	 * <p>The {@code message} is only logged when the level is set to {@code ERROR} or
+	 * a level above.
 	 *
-	 * <p>The message gets broadcasted to all log handlers of this logger
-	 * and to the ones of its parents or more specifically to the ones
-	 * returned by the parent's getAllHandlers method, that normally also
-	 * returns the handlers of its parents and so on.
+	 * <p>The {@code message} is broadcasted to all log handlers of this logger and to
+	 * the ones of its parents or more specifically to the ones returned by the 
+	 * parent's {@code getAllHandlers} method, that normally also returns the handlers
+	 * of its parents and so on.
+	 *
+	 * <p>Note that the handlers of the parents are resloved only once, when the first
+	 * message is logged. They are stored in this logger to reference them faster.
 	 *
 	 * @param message the message object to log
 	 * @see #isErrorEnabled
@@ -472,15 +476,18 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	}
 	
 	/**
-	 * Logs the message object at fatal level.
+	 * Logs the passed-in {@code message} at fatal level.
 	 *
-	 * <p>The message gets only logged when the level is set to fatal or a
-	 * level above.
+	 * <p>The {@code message} is only logged when the level is set to {@code FATAL} or
+	 * a level above.
 	 *
-	 * <p>The message gets broadcasted to all log handlers of this logger
-	 * and to the ones of its parents or more specifically to the ones
-	 * returned by the parent's getAllHandlers method, that normally also
-	 * returns the handlers of its parents and so on.
+	 * <p>The {@code message} is broadcasted to all log handlers of this logger and to
+	 * the ones of its parents or more specifically to the ones returned by the 
+	 * parent's {@code getAllHandlers} method, that normally also returns the handlers
+	 * of its parents and so on.
+	 *
+	 * <p>Note that the handlers of the parents are resloved only once, when the first
+	 * message is logged. They are stored in this logger to reference them faster.
 	 *
 	 * @param message the message object to log
 	 * @see #isFatalEnabled

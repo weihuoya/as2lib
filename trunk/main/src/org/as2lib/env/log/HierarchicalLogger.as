@@ -18,23 +18,22 @@ import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogLevel;
 
 /**
- * HierarchicalLogger gets implemented to enable to logger to take part
- * in a hierarchy.
- *
- * <p>This functionality is needed by the {@link LoggerHierarchy}, a repository
- * that stores loggers hierarchical.
+ * {@code HierarchicalLogger} is implemented to enable to logger to take part in a
+ * hierarchy.
+ * 
+ * <p>This functionality is needed by the {@link LoggerHierarchy}, a repository that
+ * stores loggers hierarchical.
  *
  * @author Simon Wacker
  */
 interface org.as2lib.env.log.HierarchicalLogger extends Logger {
 	
 	/**
-	 * Returns the parent of this logger that must also be a hierarchical
-	 * logger.
+	 * Returns the parent of this logger.
 	 *
-	 * <p>This logger normally uses the parent to get the log level, if no
-	 * one has been set to this logger manually and to get the handlers of
-	 * its parents to write the log messages.
+	 * <p>This logger normally uses the parent to get the log level, if no one has been
+	 * set to this logger manually and to get the handlers of its parents to write the
+	 * log messages.
 	 *
 	 * @return the parent of this logger
 	 */
@@ -43,9 +42,9 @@ interface org.as2lib.env.log.HierarchicalLogger extends Logger {
 	/**
 	 * Returns the name of this logger.
 	 *
-	 * <p>The name is a fully qualified name and the different parts must
-	 * be separated by periods or other characters depending on the usage.
-	 * The name could for example be 'org.as2lib.core.BasicClass'.
+	 * <p>The name is fully qualified and the different parts must be separated by
+	 * periods or other characters depending on the usage. The name could for example
+	 * be {@code "org.as2lib.core.BasicClass"}.
 	 *
 	 * @return the name of this logger
 	 */
@@ -61,12 +60,8 @@ interface org.as2lib.env.log.HierarchicalLogger extends Logger {
 	/**
 	 * Returns all handlers this logger broadcasts to when logging a message.
 	 *
-	 * <p>These handlers are the once directly added to this logger and the
-	 * once of the parents.
-	 *
-	 * <p>Note that this is no basic rule but rather the normal functionality.
-	 * There are also hierarchical loggers that do not return the handlers
-	 * of parents or do not return any handlers at all.
+	 * <p>These handlers are the once directly added to this logger and the once of the
+	 * parents.
 	 *
 	 * @return all added log handlers and the ones of the parents
 	 */

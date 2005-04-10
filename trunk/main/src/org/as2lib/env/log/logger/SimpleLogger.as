@@ -24,33 +24,31 @@ import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.logger.AbstractLogger;
 
 /**
- * SimpleLogger is a simple implementation of the ConfigurableLogger
+ * {@code SimpleLogger} is a simple implementation of the {@code ConfigurableLogger}
  * interface.
+ * 
+ * <p>The basic methods to write the log messages are {@link #log}, {@link #debug},
+ * {@link #info}, {@link #warning} and {@link #fatal}.
  *
- * <p>The basic methods to write the log messages are {@link #log},
- * {@link #debug}, {@link #info}, {@link #warning} and {@link #fatal}.
+ * <p>The first thing to note is that you can log messages at different levels.
+ * These levels are {@code DEBUG}, {@code INFO}, {@code WARNING}, {@code ERROR}
+ * and {@code FATAL}. Depending on what level has been set only messages at a
+ * given level are logged. The levels are organized in a hierarchical manner. That
+ * means if you set the log level to {@code ALL} every messages is logged. If you
+ * set it to {@code ERROR} only messages at {@code ERROR} and {@code FATAL} level
+ * are logged and so on. It is also possible to define your own set of levels. You
+ * can therefor use the {@link #isEnabled} and {@link #log} methods.
  *
- * <p>The first thing to note is that you can log messages at different
- * levels. These levels are {@link #DEBUG}, {@link #INFO}, {@link #WARNING},
- * {@link #ERROR} and {@link #FATAL}. Depending on what level has been
- * set only messages at a given level are logged. The levels are organized
- * in a hierarchical manner. That means if you set the log level to {@link #ALL}
- * every messages is logged. If you set it to {@link #ERROR} only messages
- * at {@link #ERROR} and {@link #FATAL} level are logged and so on.
- * It is also possible to define your own set of levels. You can therefor
- * use the {@link #isEnabled} and {@link #log} methods.
- *
- * <p>To do not waste unnecessary performance in constructing log messages
- * that are not logged you can use the {@link #isEnabled}, {@link #isDebugEnabled},
+ * <p>To do not waste unnecessary performance in constructing log messages that are
+ * not logged you can use the methods {@link #isEnabled}, {@link #isDebugEnabled},
  * {@link #isInfoEnabled}, {@link #isWarningEnabled}, {@link #isErrorEnabled}
- * and {@link #isFatalEnabled} methods.
- *
- * <p>Note that the message does in neither case have to be a string.
- * That means you can pass-in messages and let the actual log handler
- * decide how to produce a string representation of the message. This
- * is in most cases done by using the {@code toString} method of the
- * specific message. You can use this method to do not lose performance
- * in cases where the message is not logged.
+ * and {@link #isFatalEnabled}.
+ * 
+ * <p>Note that the message does in neither case have to be a string. That means
+ * you can pass-in messages and let the actual log handler decide how to produce a
+ * string representation of the message. This is in most cases done by using the
+ * {@code toString} method of the specific message. You can use this method to do
+ * not lose performance in cases where the message is not logged.
  *
  * <p>The actaul log output is made by log handlers. To configure and
  * access the handlers of this logger you can use the methods {@link #addHandler},
@@ -58,7 +56,7 @@ import org.as2lib.env.log.logger.AbstractLogger;
  * There are a few pre-defined handlers for different output devices.
  * Take a look at the {@code org.as2lib.env.log.handler} package for these.
  *
- * <p>This logger can simply be used as follows:
+ * <p>Example:
  * <code>
  *   var logger:SimpleLogger = new SimpleLogger("mySimpleLogger");
  *   // adds a trace handler that is responsible for making the output
@@ -70,10 +68,10 @@ import org.as2lib.env.log.logger.AbstractLogger;
  *   }
  * </code>
  *
- * <p>This logger cannot be used with the {@code LoggerHierarchy} because
- * it does not offer hierarchy support. If you want to use your logger
- * in a hierarchy use the {@link #SimpleHierarchicalLogger} instead.
- *
+ * <p>This logger cannot be used with the {@code LoggerHierarchy} because it does
+ * not offer hierarchy support. If you want to use your logger in a hierarchy use
+ * the {@link SimpleHierarchicalLogger} instead.
+ * 
  * @author Simon Wacker
  * @see org.as2lib.env.log.repository.LoggerHierarchy
  */
@@ -91,22 +89,23 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	/** The broadcaster to dispatch the messages to all handlers. */
 	private var broadcaster:EventBroadcaster;
 	
-	/** The name of the logger. */
+	/** The name of this logger. */
 	private var name:String;
 	
 	/**
-	 * Constructs a new SimpleLogger instance.
+	 * Constructs a new {@code SimpleLogger} instance.
 	 *
-	 * <p>The default log level is ALL. This means all messages regardless
-	 * of their level get logged.
+	 * <p>The default log level is {@code ALL}. This means all messages regardless of
+	 * their level are logged.
+	 * 
+	 * <p>The default broadcaster is of type {@code SpeedEventBroadcaster}.
 	 *
-	 * <p>The default broadcaster is of type SpeedEventBroadcaster.
-	 *
-	 * <p>The logger name is by default shown in the log message to identify
+	 * <p>The logger {@code name} is by default shown in the log message to identify
 	 * where the message came from.
 	 *
 	 * @param name (optional) the name of this logger
-	 * @param broadcaster (optional) the broadcaster used to broadcast to the added handlers
+	 * @param broadcaster (optional) the broadcaster used to broadcast to the added
+	 * handlers
 	 */
 	public function SimpleLogger(name:String, broadcaster:EventBroadcaster) {
 		this.name = name;
@@ -118,8 +117,8 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	/**
 	 * Returns the name of this logger.
 	 *
-	 * <p>This method returns null if no name has been set via the
-	 * {@link #setName} method.
+	 * <p>This method returns {@code null} if no name has been set via the
+	 * {@link #setName} method nor on construction.
 	 *
 	 * @return the name of this logger
 	 */
@@ -141,11 +140,10 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	/**
 	 * Sets the log level.
 	 *
-	 * <p>The log level determines which messages get logged and which do
-	 * not get logged.
+	 * <p>The log level determines which messages are logged and which are not.
 	 *
-	 * <p>A level of value null or undefined gets interpreted as level ALL,
-	 * which is also the default level.
+	 * <p>A level of value {@code null} or {@code undefined} is interpreted as level
+	 * {@code ALL} which is also the default level.
 	 *
 	 * @param level the new log level
 	 */
@@ -171,11 +169,11 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	/**
 	 * Adds a new log handler.
 	 *
-	 * <p>Log handlers get used to actually log the messages. They determine
-	 * what information to log and to which output device.
+	 * <p>Log handlers are used to actually log the messages. They determine what
+	 * information to log and to which output device.
 	 *
-	 * <p>This method simply does nothing if the passed-in handler is null
-	 * or undefined.
+	 * <p>This method simply does nothing if the passed-in handler is {@code null} or
+	 * {@code undefined}.
 	 *
 	 * @param handler the new log handler to log messages
 	 */
@@ -186,10 +184,10 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	}
 	
 	/**
-	 * Removes all occerrences of the passed-in log handler.
+	 * Removes all occerrences of the passed-in log {@code handler}.
 	 *
-	 * <p>If the passed-in handler is null or undefined the method invocation
-	 * simply gets ignored.
+	 * <p>If the passed-in {@code handler} is {@code null} or {@code undefined} the
+	 * method invocation is simply ignored.
 	 *
 	 * @param handler the log handler to remove
 	 */
@@ -207,9 +205,9 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	}
 	
 	/**
-	 * Returns all handlers that were directly added to this logger.
+	 * Returns all handlers that were added to this logger.
 	 *
-	 * <p>If there are no added handlers an empty array gets returned.
+	 * <p>If there are no added handlers an empty array is returned.
 	 *
 	 * @return all added log handlers
 	 */
@@ -218,19 +216,20 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	}
 	
 	/**
-	 * Checks whether this logger is enabled for the passed-in log level.
+	 * Checks whether this logger is enabled for the passed-in {@code level}.
 	 *
-	 * False will be returned if:
+	 * <p>{@code false} will be returned if:
 	 * <ul>
-	 *   <li>This logger is not enabled for the passed-in level.</li>
-	 *   <li>The passed-in level is null or undefined.</li>
+	 *   <li>This logger is not enabled for the passed-in {@code level}.</li>
+	 *   <li>The passed-in {@code level} is {@code null} or {@code undefined}.</li>
 	 * </ul>
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
 	 * @param level the level to make the check upon
-	 * @return true if this logger is enabled for the given level else false
+	 * @return {@code true} if this logger is enabled for the given {@code level} else
+	 * {@code false}
 	 * @see #log
 	 */
 	public function isEnabled(level:LogLevel):Boolean {
@@ -239,12 +238,12 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	}
 	
 	/**
-	 * Checks if this logger is enabled for debug level output.
+	 * Checks if this logger is enabled for debug level log messages.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * @return true if debug output gets made
+	 * @return {@code true} if debug messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#DEBUG
 	 * @see #debug
 	 */
@@ -253,12 +252,12 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	}
 	
 	/**
-	 * Checks if this logger is enabled for info level output.
+	 * Checks if this logger is enabled for info level log messages.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * @return true if info output gets made
+	 * @return {@code true} if info messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#INFO
 	 * @see #info
 	 */
@@ -267,12 +266,12 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	}
 	
 	/**
-	 * Checks if this logger is enabled for warning level output.
+	 * Checks if this logger is enabled for warning level log messages.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * @return true if warning output gets made
+	 * @return {@code true} if warning messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#WARNING
 	 * @see #warning
 	 */
@@ -281,12 +280,12 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	}
 	
 	/**
-	 * Checks if this logger is enabled for error level output.
+	 * Checks if this logger is enabled for error level log messages.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * @return true if error output gets made
+	 * @return {@code true} if error messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#ERROR
 	 * @see #error
 	 */
@@ -295,12 +294,12 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	}
 	
 	/**
-	 * Checks if this logger is enabled for fatal level output.
+	 * Checks if this logger is enabled for fatal level log messages.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * @return true if fatal output gets made
+	 * @return {@code true} if fatal messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#FATAL
 	 * @see #fatal
 	 */
@@ -309,13 +308,13 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	}
 	
 	/**
-	 * Logs the message object at the given level.
+	 * Logs the {@code message} at the given {@code level}.
 	 *
-	 * <p>The message gets only logged when this logger is enabled for
-	 * the passed-in log level.
+	 * <p>The {@code message} is only logged when this logger is enabled for the
+	 * passed-in {@code level}.
 	 *
 	 * @param message the message object to log
-	 * @param level the specific level at which the message shall be logged
+	 * @param level the specific level at which the {@code message} shall be logged
 	 * @see #isEnabled
 	 */
 	public function log(message, level:LogLevel):Void {
@@ -325,9 +324,9 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	}
 	
 	/**
-	 * Logs the message object at debug level.
+	 * Logs the {@code message} object at debug level.
 	 *
-	 * <p>The message gets only logged when the level is set to debug or
+	 * <p>The {@code message} is only logged when the level is set to {@code DEBUG} or
 	 * a level above.
 	 *
 	 * @param message the message object to log
@@ -340,10 +339,10 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	}
 	
 	/**
-	 * Logs the message object at info level.
+	 * Logs the {@code message} object at info level.
 	 *
-	 * <p>The message gets only logged when the level is set to info or
-	 * a level above.
+	 * <p>The {@code message} gets only logged when the level is set to {@code INFO}
+	 * or a level above.
 	 *
 	 * @param message the message object to log
 	 * @see #isInfoEnabled
@@ -355,10 +354,10 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	}
 	
 	/**
-	 * Logs the message object at warning level.
+	 * Logs the {@code message} object at warning level.
 	 *
-	 * <p>The message gets only logged when the level is set to warning or
-	 * a level above.
+	 * <p>The {@code message} gets only logged when the level is set to {@code WARNING}
+	 * or a level above.
 	 *
 	 * @param message the message object to log
 	 * @see #isWarningEnabled
@@ -370,10 +369,10 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	}
 	
 	/**
-	 * Logs the message object at error level.
+	 * Logs the {@code message} object at error level.
 	 *
-	 * <p>The message gets only logged when the level is set to error or a
-	 * level above.
+	 * <p>The {@code message} gets only logged when the level is set to {@code ERROR}
+	 * or a level above.
 	 *
 	 * @param message the message object to log
 	 * @see #isErrorEnabled
@@ -385,10 +384,10 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	}
 	
 	/**
-	 * Logs the message object at fatal level.
+	 * Logs the {@code message} object at fatal level.
 	 *
-	 * <p>The message gets only logged when the level is set to fatal or a
-	 * level above.
+	 * <p>The {@code message} gets only logged when the level is set to {@code FATAL}
+	 * or a level above.
 	 *
 	 * @param message the message object to log
 	 * @see #isFatalEnabled

@@ -19,14 +19,14 @@ import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
 
 /**
- * RootLogger represents the root in a logger hierarchy.
+ * {@code RootLogger} represents the root in a logger hierarchy.
  *
- * <p>The name of a root logger is by default 'root'.
+ * <p>The name of a root logger is by default {@code "root"}.
  *
- * <p>You must set a log level because otherwise the level in the hierarchy
- * could be null which could cause unexpected behavior.
+ * <p>You must set a log level because otherwise the level in the hierarchy could
+ * be {@code null} which could cause unexpected behavior.
  *
- * <p>This class gets normally used in conjunction with the LoggerHierarchy.
+ * <p>This class is normally used in conjunction with the {@link LoggerHierarchy}.
  *
  * @author Simon Wacker
  */
@@ -36,12 +36,13 @@ class org.as2lib.env.log.logger.RootLogger extends SimpleHierarchicalLogger {
 	private static var __proto__:Function = SimpleHierarchicalLogger;
 	
 	/**
-	 * Constructs a new RootLogger instance.
+	 * Constructs a new {@code RootLogger} instance.
 	 *
-	 * <p>The name gets automatically set to 'root'.
+	 * <p>The name is automatically set to {@code "root"}.
 	 *
 	 * @param level the level of this logger
-	 * @throws IllegalArgumentException if the passed-in level is null or undefined
+	 * @throws IllegalArgumentException if the passed-in {@code level} is {@code null}
+	 * or {@code undefined}
 	 */
 	public function RootLogger(level:LogLevel) {
 		super("root");
@@ -51,10 +52,11 @@ class org.as2lib.env.log.logger.RootLogger extends SimpleHierarchicalLogger {
 	/**
 	 * Sets the level of this logger.
 	 *
-	 * <p>A level of value null or undefined is not allowed.
+	 * <p>A level of value {@code null} or {@code undefined} is not allowed.
 	 *
-	 * @param level the level of this logger
-	 * @throws IllegalArgumentException when you try to set a level of value null or undefined
+	 * @param level the new level of this logger
+	 * @throws IllegalArgumentException when {@code level} is {@code null} or
+	 * {@code undefined}
 	 */
 	public function setLevel(level:LogLevel):Void {
 		if (!level) throw new IllegalArgumentException("The instance [" + this + "] is not allowed to have a level value of null.", this, arguments);
