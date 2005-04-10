@@ -21,7 +21,7 @@ import org.as2lib.core.BasicClass;
  * 
  * <p>It is independent on any module of the As2lib. And thus does not include them
  * and does not dramatically increase the file size.
- *
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
