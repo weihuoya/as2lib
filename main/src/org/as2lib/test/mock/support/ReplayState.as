@@ -26,6 +26,8 @@ import org.as2lib.test.mock.MethodResponse;
 import org.as2lib.test.mock.ArgumentsMatcher;
 
 /**
+ * {@code ReplayState} replays behavior.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.test.mock.support.ReplayState extends BasicClass implements MockControlState {
@@ -34,10 +36,12 @@ class org.as2lib.test.mock.support.ReplayState extends BasicClass implements Moc
 	private var behavior:Behavior;
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new {@code ReplayState} instance.
 	 *
-	 * @param behavior used to verify the expectations and to store actual method calls
-	 * @throws IllegalArgumentException if the passed-in behavior is null or undefined
+	 * @param behavior used to verify the expectations and to store actual method
+	 * calls
+	 * @throws IllegalArgumentException if the passed-in {@code behavior} is
+	 * {@code null}
 	 */
 	public function ReplayState(behavior:Behavior) {
 		if (!behavior) throw new IllegalArgumentException("Behavior is not allowed to be null or undefined.", this, arguments);
@@ -54,12 +58,11 @@ class org.as2lib.test.mock.support.ReplayState extends BasicClass implements Moc
 	}
 	
 	/**
-	 * Registers the actual method call in the method behavior if it was
+	 * Registers the actual {@code methodCall} in the method behavior if it was
 	 * expected or registers a new unexpected method call.
 	 *
 	 * @return the value returned by the method behaviour's response method
-	 * @throws the exception thrown by the method behaviour's response method
-	 * @see MockControlState#invokeMethod(MethodCall)
+	 * @throws * the exception thrown by the method behaviour's response method
 	 */
 	public function invokeMethod(methodCall:MethodCall) {
 		var methodBehavior:MethodBehavior = behavior.getMethodBehavior(methodCall);
@@ -80,8 +83,6 @@ class org.as2lib.test.mock.support.ReplayState extends BasicClass implements Moc
 	
 	/**
 	 * Forwards the verification to the behavior of the mock.
-	 *
-	 * @see MockControlState#verify(Void):Void
 	 */
 	public function verify(Void):Void {
 		behavior.verify();
@@ -89,7 +90,6 @@ class org.as2lib.test.mock.support.ReplayState extends BasicClass implements Moc
 	
 	/**
 	 * @throws IllegalStateException
-	 * @see MockControlState#setMethodResponse(MethodResponse, MethodCallRange):Void
 	 */ 
 	public function setMethodResponse(methodResponse:MethodResponse, methodCallRange:MethodCallRange):Void {
 		throw new IllegalStateException("Method must not be called in replay state.", this, arguments);
@@ -97,7 +97,6 @@ class org.as2lib.test.mock.support.ReplayState extends BasicClass implements Moc
 	
 	/**
 	 * @throws IllegalStateException
-	 * @see MockControlState#setArgumentsMatcher(ArgumentsMatcher):Void
 	 */
 	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void {
 		throw new IllegalStateException("Method must not be called in replay state.", this, arguments);

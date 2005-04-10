@@ -18,18 +18,27 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.test.mock.ArgumentsMatcher;
 
 /**
+ * {@code DefaultArgumentsMatcher} matches the expected arguments agains the actual
+ * arguments. If an argument is itself an array the elements of this array are
+ * matched, not the array as object itself.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.test.mock.support.DefaultArgumentsMatcher extends BasicClass implements ArgumentsMatcher {
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new {@code DefaultArgumentsMatcher} instance.
 	 */
 	public function DefaultArgumentsMatcher(Void) {
 	}
 	
 	/**
-	 * @see ArgumentsMatcher#matchArguments()
+	 * Matches the passed-in {@code expectedArguments} against the
+	 * {@code actualArguments}. Inner arrays are stepped through recursively.
+	 *
+	 * @param expectedArguments the expected arguments
+	 * @param actualArguments the actual arguments
+	 * @return {@code true} if the passed-in arguments match else {@code false}
 	 */
 	public function matchArguments(expectedArguments:Array, actualArguments:Array):Boolean {
 		if (expectedArguments.length != actualArguments.length) return false;

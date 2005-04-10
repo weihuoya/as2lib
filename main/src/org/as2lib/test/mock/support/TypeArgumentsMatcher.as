@@ -18,18 +18,20 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.test.mock.ArgumentsMatcher;
 
 /**
+ * {@code TypeArgumentsMatcher} matches the actual arguments agains a list of types.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.test.mock.support.TypeArgumentsMatcher extends BasicClass implements ArgumentsMatcher {
 	
-	/** Stores the expected types. */
+	/** The expected types. */
 	private var expectedTypes:Array;
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new {@code TypeArgumentsMatcher} instance.
 	 *
-	 * <p>If a type is null or undefined the expected and actual argument
-	 * will be compared.
+	 * <p>If a type in the {@code expectedType} array is {@code null} or
+	 * {@code undefined} the expected and actual argument will be compared.
 	 * 
 	 * @param expectedTypes the expected types of the arguments
 	 */
@@ -38,13 +40,14 @@ class org.as2lib.test.mock.support.TypeArgumentsMatcher extends BasicClass imple
 	}
 	
 	/**
-	 * Compares the actual arguments only by type.
+	 * Compares the actual arguments only by type against the expected types given on
+	 * contruction.
 	 *
-	 * <p>If a type is null or undefined the expected and actual
-	 * argument will be compared directly with the strict equals
+	 * <p>If a type of the expected types is {@code null} or {@code undefined} the
+	 * expected and actual argument will be compared directly with the strict equals
 	 * operator.
 	 *
-	 * <p>False will be returned if:
+	 * <p>{@code false} will be returned if:
 	 * <ul>
 	 *   <li>The lengths of the expected and actual arguments differ.</li>
 	 *   <li>The lengths of the expected types and the actual arguments differ.</li>
@@ -53,7 +56,6 @@ class org.as2lib.test.mock.support.TypeArgumentsMatcher extends BasicClass imple
 	 *
 	 * @param expectedArgumens the expected arguments
 	 * @param actualArguments the actual arguments
-	 * @see ArgumentsMatcher#matchArguments()
 	 */
 	public function matchArguments(expectedArguments:Array, actualArguments:Array):Boolean {
 		if (expectedArguments.length != actualArguments.length) return false;

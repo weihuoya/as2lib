@@ -19,6 +19,8 @@ import org.as2lib.test.mock.ArgumentsMatcher;
 import org.as2lib.test.mock.support.DefaultArgumentsMatcher;
 
 /**
+ * {@code MethodCall} stores all information available about a method call.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.test.mock.MethodCall extends BasicClass {
@@ -33,7 +35,9 @@ class org.as2lib.test.mock.MethodCall extends BasicClass {
 	private var argumentsMatcher:ArgumentsMatcher;
 	
 	/**
-	 * Constructs a new MethodCall instance.
+	 * Constructs a new {@code MethodCall} instance.
+	 *
+	 * <p>If {@code args} is {@code null} an empty array will be used instead.
 	 *
 	 * @param methodName the name of the called method
 	 * @param args the arguments used for the method call
@@ -44,6 +48,8 @@ class org.as2lib.test.mock.MethodCall extends BasicClass {
 	}
 	
 	/**
+	 * Returns the name of the called method.
+	 *
 	 * @return the name of the called method
 	 */
 	public function getMethodName(Void):String {
@@ -51,6 +57,8 @@ class org.as2lib.test.mock.MethodCall extends BasicClass {
 	}
 	
 	/**
+	 * Returns the arguments used for the method call.
+	 *
 	 * @return the arguments used for the method call
 	 */
 	public function getArguments(Void):Array {
@@ -60,8 +68,9 @@ class org.as2lib.test.mock.MethodCall extends BasicClass {
 	/**
 	 * Returns the currently used arguments matcher.
 	 * 
-	 * <p>That is either the arguments matcher set via setArgumentsMatcher(ArgumentsMatcher):Void
-	 * or an instance of the default DefaultArgumentsMatcher.
+	 * <p>That is either the arguments matcher set via the
+	 * {@link #setArgumentsMatcher} method or an instance of the default
+	 * {@link DefaultArgumentsMatcher} class.
 	 *
 	 * @return the currently used arguments matcher
 	 */
@@ -73,9 +82,8 @@ class org.as2lib.test.mock.MethodCall extends BasicClass {
 	/**
 	 * Sets the new arguments matcher.
 	 * 
-	 * <p>If you set an arguments matcher of value null or undefined the
-	 * #getArgumentsMatcher(Void):ArgumentsMatcher method returns the default
-	 * one.
+	 * <p>If {@code argumentsMatcher} is {@code null} the {@link #getArgumentsMatcher}
+	 * method returns the default arguments matcher.
 	 *
 	 * @param argumentsMatcher the new arguments matcher
 	 */
@@ -84,11 +92,11 @@ class org.as2lib.test.mock.MethodCall extends BasicClass {
 	}
 	
 	/**
-	 * Checks whether this method call matches the passed-in one.
+	 * Checks whether this method call matches the passed-in {@code methodCall}.
 	 *
-	 * <p>Falls will be returned if:
+	 * <p>{@code false} will be returned if:
 	 * <ul>
-	 *   <li>The passed-in method call is null or undefined.</li>
+	 *   <li>The passed-in {@code methodCall} is {@code null}.</li>
 	 *   <li>The method names do not match.</li>
 	 *   <li>The arguments do not match.</li>
 	 * </ul>
@@ -102,7 +110,14 @@ class org.as2lib.test.mock.MethodCall extends BasicClass {
 	}
 	
 	/**
-	 * @see BasicInterface#toString(Void):String
+	 * Returns the string representation of this method call.
+	 *
+	 * <p>The returned string is constructed as follows:
+	 * <pre>
+	 *   theMethodName(theFirstArgument, ..)
+	 * </pre>
+	 *
+	 * @return the string representation of this method call
 	 */
 	public function toString(Void):String {
 		return (methodName + "(" + args + ")");

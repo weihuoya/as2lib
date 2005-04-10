@@ -26,6 +26,8 @@ import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.ArgumentsMatcher;
 
 /**
+ * {@code RecordState} records behaviors.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.test.mock.support.RecordState extends BasicClass implements MockControlState {
@@ -34,10 +36,11 @@ class org.as2lib.test.mock.support.RecordState extends BasicClass implements Moc
 	private var behavior:Behavior;
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new {@code RecordState} instance.
 	 *
-	 * @param behavior used to add and get behaviors of the mock
-	 * @throws IllegalArgumentException if the passed-in behavior is null or undefined
+	 * @param behavior the behavior to add and get behaviors of the mock
+	 * @throws IllegalArgumentException if the passed-in {@code behavior} is
+	 * {@code null}
 	 */
 	public function RecordState(behavior:Behavior) {
 		if (!behavior) throw new IllegalArgumentException("Behavior is not allowed to be null or undefined.", this, arguments);
@@ -54,23 +57,21 @@ class org.as2lib.test.mock.support.RecordState extends BasicClass implements Moc
 	}
 	
 	/**
-	 * Adds the expected method call to the expected behavior of the mock.
+	 * Adds the expected {@code methodCall} to the expected behavior of the mock.
 	 *
 	 * @param methodCall contains all information about the method call
-	 * @see MockControlState#invokeMethod(MethodCall)
 	 */
 	public function invokeMethod(methodCall:MethodCall) {
 		behavior.addMethodBehavior(methodCall.getMethodName(), behavior.createMethodBehavior(methodCall));
 	}
 	
 	/**
-	 * Sets the expectation that the lastly called method gets called the
-	 * passed-in number of times. When called between that range it responses
-	 * the given way.
+	 * Sets the expectation that the lastly called method is called the passed-in
+	 * number of times. When called between that range it responses the given way.
 	 *
-	 * @param methodResponse the response of the method during the expected call range
+	 * @param methodResponse the response of the method during the expected call
+	 * range
 	 * @param methodCallRange the expected range of method calls
-	 * @see MockControlState#setMethodResponse(MethodResponse, MethodCallRange):Void
 	 */ 
 	public function setMethodResponse(methodResponse:MethodResponse, methodCallRange:MethodCallRange):Void {
 		behavior.getLastMethodBehavior().addMethodResponse(methodResponse, methodCallRange);
@@ -79,11 +80,10 @@ class org.as2lib.test.mock.support.RecordState extends BasicClass implements Moc
 	/**
 	 * Sets the arguments matcher for the lastly called method.
 	 *
-	 * <p>The arguments matcher gets used by the expected method call to
-	 * check whether it matches an actual method call.
+	 * <p>The arguments matcher is used by the expected method call to check whether
+	 * it matches an actual method call.
 	 *
 	 * @param argumentsMatcher the new arguments matcher for the expected method call
-	 * @see MockControlState#setArgumentsMatcher(ArgumentsMatcher):Void
 	 */
 	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void {
 		behavior.getLastMethodBehavior().setArgumentsMatcher(argumentsMatcher);
@@ -91,7 +91,6 @@ class org.as2lib.test.mock.support.RecordState extends BasicClass implements Moc
 	
 	/**
 	 * @throws IllegalStateException
-	 * @see MockControlState#verify(Void):Void
 	 */
 	public function verify(Void):Void {
 		throw new IllegalStateException("Method must not be called in record state.", this, arguments);

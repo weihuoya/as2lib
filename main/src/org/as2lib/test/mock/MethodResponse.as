@@ -18,6 +18,8 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalStateException;
 
 /**
+ * {@code MethodResponse} holds and carries out the response if requested.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.test.mock.MethodResponse extends BasicClass {
@@ -29,14 +31,14 @@ class org.as2lib.test.mock.MethodResponse extends BasicClass {
 	private var throwable;
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new {@code MethodResponse} instance.
 	 */
 	public function MethodResponse(Void) {
 	}
 	
 	/**
-	 * Sets the return value that gets returned when calling the
-	 * #response(Void) method.
+	 * Sets the return value that is returned when invoking the {@link #response}
+	 * method.
 	 *
 	 * <p>Setting a return value disables the throwable behavior.
 	 *
@@ -48,8 +50,7 @@ class org.as2lib.test.mock.MethodResponse extends BasicClass {
 	}
 	
 	/**
-	 * Sets the throwable to throw when the #response(Void) method gets
-	 * invoked.
+	 * Sets the throwable to throw when the {@link #response} method is invoked.
 	 *
 	 * <p>Setting a throwable disables the return value behavior.
 	 *
@@ -61,9 +62,8 @@ class org.as2lib.test.mock.MethodResponse extends BasicClass {
 	}
 	
 	/**
-	 * Returns the set return value or throws the set throwable. If
-	 * both have been set, the one that has been set at last will
-	 * be used.
+	 * Returns the set return value or throws the set throwable. If both have been set
+	 * the one that has been set at last will be used.
 	 *
 	 * @return the set return value
 	 * @throws the set throwable

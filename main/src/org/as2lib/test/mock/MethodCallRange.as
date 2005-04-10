@@ -20,26 +20,28 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.test.mock.AssertionFailedError;
 
 /**
+ * {@code MethodCallRange} represents the number of expected method calls.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	
-	/** The minimum that gets used if none has been specified. */
+	/** The minimum that is used if none has been specified. */
 	public static var DEFAULT_MINIMUM:Number = 0;
 	
-	/** The maximum that gets used if none has been specified. */
+	/** The maximum that is used if none has been specified. */
 	public static var DEFAULT_MAXIMUM:Number = Number.POSITIVE_INFINITY;
 	
-	/** The minimum. Can't be negative. */
+	/** The minimum. */
 	private var minimum:Number;
 	
-	/** The maximum. Can't be negative. */
+	/** The maximum. */
 	private var maximum:Number;
 	
 	/**
-	 * @overload #MethodCallRangeByVoid(Void)
-	 * @overload #MethodCallRangeByQuantity(Number)
-	 * @overload #MethodCallRangeByMinimumAndMaximumQuantity(Number, Number)
+	 * @overload #MethodCallRangeByVoid
+	 * @overload #MethodCallRangeByQuantity
+	 * @overload #MethodCallRangeByMinimumAndMaximumQuantity
 	 */
 	public function MethodCallRange() {
 		var o:Overload = new Overload(this);
@@ -57,10 +59,10 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	}
 	
 	/**
-	 * Uses the passed-in quantity as minimum and maximum.
+	 * Uses the passed-in {@code quantity} as minimum and maximum.
 	 *
-	 * <p>If the passed-in quantity is null the default minimum and default
-	 * maximum gets used.
+	 * <p>If the passed-in {@code quantity} is {@code null} {@link #DEFAULT_MINIMUM}
+	 * and {@link DEFAULT_MAXIMUM} is used.
 	 *
 	 * @param quantity the quantity
 	 */
@@ -72,14 +74,17 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	}
 	
 	/**
-	 * Creates a new range with the passed-in minimum and maximum.
+	 * Creates a new range with the passed-in {@code minimum} and {@code maximum}.
 	 *
 	 * <ul>
-	 *   <li>If the minimum is null or undefined the default one will be used.</li>
-	 *   <li>If the maximum is null or undefined the default one will be used.</li>
-	 *   <li>If the minimum is negative it will be made positive.</li>
-	 *   <li>If the maximum is negative it will be made positive.</li>
-	 *   <li>If the minimum is bigger than the maximum the two values will be exchanged.</li>
+	 *   <li>If {@code minimum} is {@code null} {@link #DEFAULT_MINIMUM} will be used.</li>
+	 *   <li>If {@code maximum} is {@code null} {@link #DEFAULT_MAXIMUM} will be used.</li>
+	 *   <li>If {@code minimum} is negative it will be made positive.</li>
+	 *   <li>If {@code maximum} is negative it will be made positive.</li>
+	 *   <li>
+	 *     If {@code minimum} is bigger than {@code maximum} the two values will be
+	 *     exchanged.
+	 *   </li>
 	 * </ul>
 	 *
 	 * @param minimum the minimum
@@ -100,6 +105,8 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	}
 	
 	/**
+	 * Returns the minimum of this range.
+	 *
 	 * @return the set minimum
 	 */
 	public function getMinimum(Void):Number {
@@ -107,6 +114,8 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	}
 	
 	/**
+	 * Returns the maximum of this range.
+	 *
 	 * @return the set maximum
 	 */
 	public function getMaximum(Void):Number {
@@ -114,20 +123,21 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	}
 	
 	/**
-	 * Checks whether the passed-in quantity is between the minimum
-	 * and maximum.
+	 * Checks whether the passed-in {@code quantity} is between the minimum and
+	 * maximum.
 	 *
 	 * <p>The quantity will be made positive if it is negative.
 	 *
-	 * <p>False will be returned if:
+	 * <p>{@code false} will be returned if:
 	 * <ul>
-	 *   <li>The passed-in quantity is null or undefined.</li>
-	 *   <li>The passed-in quantity is smaller than the minimum.</li>
-	 *   <li>The passed-in quantity is bigger than the maximum.</li>
+	 *   <li>The passed-in {@code quantity} is {@code null}.</li>
+	 *   <li>The passed-in {@code quantity} is smaller than the minimum.</li>
+	 *   <li>The passed-in {@code quantity} is bigger than the maximum.</li>
 	 * </ul>
 	 *
 	 * @param quantity the quantity
-	 * @return true if the quantity is contained by the range else false
+	 * @return {@code true} if the quantity is contained by this range else
+	 * {@code false}
 	 */
 	public function contains(quantity:Number):Boolean {
 		if (quantity == null) return false;
@@ -139,7 +149,9 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	}
 	
 	/**
-	 * @see BasicInterface#toString(Void):String
+	 * Returns the string representation of this range.
+	 *
+	 * @return the string representation of this range
 	 */
 	public function toString(Void):String {
 		if (minimum == maximum) return minimum.toString();

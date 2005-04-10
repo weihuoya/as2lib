@@ -25,30 +25,34 @@ import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.ArgumentsMatcher;
 
 /**
+ * {@code DefaultMethodBehavior} stores the expected and actual behaviors of one
+ * method and verifies the expectation against the actual method calls.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.test.mock.support.DefaultMethodBehavior extends BasicClass implements MethodBehavior {
 	
-	/** Stores the expected method call. */
+	/** The expected method call. */
 	private var expectedMethodCall:MethodCall;
 	
-	/** Stores the actual method calls. */
+	/** The actual method calls. */
 	private var actualMethodCalls:Array;
 	
-	/** Stores the method call ranges. */
+	/** The method call ranges. */
 	private var methodCallRanges:Array;
 	
-	/** Stores the method responses. */
+	/** The method responses. */
 	private var methodResponses:Array;
 	
 	/**
-	 * Constructs a new DefaultMethodBehavior instance with the passed-in
-	 * method call.
+	 * Constructs a new {@code DefaultMethodBehavior} instance with the passed-in
+	 * {@code methodCall}.
 	 *
-	 * <p>An expected method call of value null or undefined means
-	 * that this behavior expects no actual method calls.
+	 * <p>A {@code expectedMethodCall} of value {@code null} means that this behavior
+	 * expects no actual method calls.
 	 * 
-	 * @param expectedMethodCall the expected method call this behavior registers expectations, actual calls and responses for
+	 * @param expectedMethodCall the expected method call this behavior registers
+	 * expectations, actual calls and responses for
 	 */
 	public function DefaultMethodBehavior(expectedMethodCall:MethodCall) {
 		this.expectedMethodCall = expectedMethodCall;
@@ -58,7 +62,9 @@ class org.as2lib.test.mock.support.DefaultMethodBehavior extends BasicClass impl
 	}
 	
 	/**
-	 * @see MethodBehavior#getExpectedMethodCall(Void):MethodCall
+	 * Returns the expected method call.
+	 *
+	 * @return the expected method call
 	 */
 	public function getExpectedMethodCall(Void):MethodCall {
 		return expectedMethodCall;
@@ -67,14 +73,15 @@ class org.as2lib.test.mock.support.DefaultMethodBehavior extends BasicClass impl
 	/**
 	 * Adds an actual method call.
 	 *
-	 * <p>The method call gets added if it is not null, undefined and if
-	 * if matches the expected method call.
+	 * <p>The method call is added if it is not {@code null} and if it matches the
+	 * expected method call.
 	 *
 	 * @param actualMethodCall the new actual method call to add
-	 * @throws IllegalArgumentException if the passed-in method call is null or undefined
-	 * @throws AssertionFailedError if no method call was expected
-	 *                              if the actual method call does not match the expected method call
-	 *                              if the total maximum call count has been passed
+	 * @throws IllegalArgumentException if the passed-in {@code methodCall} is
+	 * {@code null}
+	 * @throws AssertionFailedError if no method call was expected or if the
+	 * {@code actualMethodCall} does not match the expected method call or if the
+	 * total maximum call count has been exceeded
 	 */
 	public function addActualMethodCall(actualMethodCall:MethodCall):Void {
 		if (!actualMethodCall) throw new IllegalArgumentException("Actual method call is not allowed to be null or undefined.", this, arguments);
@@ -98,6 +105,8 @@ class org.as2lib.test.mock.support.DefaultMethodBehavior extends BasicClass impl
 	}
 	
 	/**
+	 * Returns the total minimum call count.
+	 *
 	 * @return the total minimum call count
 	 */
 	private function getTotalMinimumMethodCallCount(Void):Number {
@@ -111,6 +120,8 @@ class org.as2lib.test.mock.support.DefaultMethodBehavior extends BasicClass impl
 	}
 	
 	/**
+	 * Returns the total maximum call count.
+	 *
 	 * @return the total maximum call count
 	 */
 	private function getTotalMaximumMethodCallCount(Void):Number {
@@ -124,8 +135,16 @@ class org.as2lib.test.mock.support.DefaultMethodBehavior extends BasicClass impl
 	}
 
 	/**
-	 * @throws IllegalStateException if the expected method call is null or undefined
-	 * @see MethodBehavior#addMethodResponse(MethodResponse, MethodCallRange):Void
+	 * Adds the new {@code methodResponse} together with the {@code methodCallRange}
+	 * that indicates when and how often the response shall take place.
+	 *
+	 * <p>If you set no response, the behavior expects exactly one method call.
+	 *
+	 * @param methodResponse the response to do a given number of times
+	 * @param methodCallRange the range that indicates how often the response can take
+	 * place
+	 *
+	 * @throws IllegalStateException if the expected method call is {@code null}
 	 */
 	public function addMethodResponse(methodResponse:MethodResponse, methodCallRange:MethodCallRange):Void {
 		if (!expectedMethodCall) throw new IllegalStateException("It is not possible to set a response for an not-expected method call.", this, arguments);
@@ -134,15 +153,18 @@ class org.as2lib.test.mock.support.DefaultMethodBehavior extends BasicClass impl
 	}
 	
 	/**
-	 * @see MethodBehavior#addArgumentsMatcher(ArgumentsMatcher):Void
+	 * Sets the passed-in {@code argumentsMatcher} for the expected method call.
+	 * 
+	 * @param argumentsMatcher the arguments matcher for the expected method call
 	 */
 	public function setArgumentsMatcher(argumentsMatcher:ArgumentsMatcher):Void {
 		expectedMethodCall.setArgumentsMatcher(argumentsMatcher);
 	}
 	
 	/**
-	 * Returns false if the expected method call is null or undefined.
-	 * @see MethodBehavior#expectsAnotherMethodCall(Void):Boolean
+	 * Checks whether this behavior expects another method call.
+	 *
+	 * @return {@code true} if a further method call is expected else {@code false}
 	 */
 	public function expectsAnotherMethodCall(Void):Boolean {
 		if (!expectedMethodCall) return false;
@@ -154,6 +176,8 @@ class org.as2lib.test.mock.support.DefaultMethodBehavior extends BasicClass impl
 	}
 	
 	/**
+	 * Returns the current position in the method call range array.
+	 *
 	 * @return the current position in the method call range array
 	 */
 	private function getCurrentMethodCallRangeIndex(Void):Number {
@@ -173,13 +197,18 @@ class org.as2lib.test.mock.support.DefaultMethodBehavior extends BasicClass impl
 	}
 	
 	/**
-	 * @see MethodBehavior#response(Void)
+	 * Responses depending on the current number of actual method calls.
+	 *
+	 * @return the response's return value
+	 * @throw the response's throwable
 	 */
 	public function response(Void) {
 		return MethodResponse(methodResponses[getCurrentMethodResponseIndex()]).response();
 	}
 	
 	/**
+	 * Returns the current position in the method response array.
+	 *
 	 * @return the current position in the method response array
 	 */
 	private function getCurrentMethodResponseIndex(Void):Number {
@@ -194,7 +223,9 @@ class org.as2lib.test.mock.support.DefaultMethodBehavior extends BasicClass impl
 	}
 	
 	/**
-	 * @see MethodBehavior#verify(Void):Void
+	 * Verifies that the expactations have been met.
+	 *
+	 * @throws AssertionFailedError if the verification fails
 	 */
 	public function verify(Void):Void {
 		if (actualMethodCalls.length < getTotalMinimumMethodCallCount()) {
