@@ -19,7 +19,7 @@ import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
 
 /**
- * Bit101Handler logs messages to the Bit-101 Debug Panel.
+ * {@code Bit101Handler} logs messages to the Bit-101 Debug Panel.
  *
  * <p>The {@code Debug} class is needed.
  *
@@ -38,17 +38,16 @@ class org.as2lib.env.log.handler.Bit101Handler extends BasicClass implements Log
 	 *
 	 * <p>This method always returns the same instance.
 	 *
-	 * <p>Note that the arguments are only recognized on first call of this
-	 * method and are in this case used for construction of the {@code Bit101Handler}
-	 * instance.
+	 * <p>Note that the arguments are only recognized on first call of this method and
+	 * are in this case used for construction of the {@code Bit101Handler} instance.
 	 *
-	 * @param decorateMessage (optional) determines whether to log the string
-	 * returned by the {@code LogMessage.toString} method or just the message
-	 * returned by {@code LogMessage.getMessage}
+	 * @param decorateMessage (optional) determines whether to log the string returned
+	 * by the {@code LogMessage.toString} method or just the message returned by
+	 * {@code LogMessage.getMessage}
 	 * @param recursionDepth (optional) determines the count of recursions for
 	 * recursively traced objects
-	 * @param indentation (optional) determines the indentation number for
-	 * recursively traced objects
+	 * @param indentation (optional) determines the indentation number for recursively
+	 * traced objects
 	 * @return a bit-101 handler
 	 */
 	public static function getInstance(decorateMessage:Boolean, recursionDepth:Number, indentation:Number):Bit101Handler {
@@ -68,25 +67,25 @@ class org.as2lib.env.log.handler.Bit101Handler extends BasicClass implements Log
 	/**	
 	 * Constructs a new {@code Bit101Handler} instance.
 	 *
-	 * <p>You can use one and the same instance for multiple loggers. So
-	 * think about using the handler returned by the static {@link #getInstance}
-	 * method. Using this instance prevents the instantiation of unnecessary
-	 * bit-101 handlers and and saves storage.
+	 * <p>You can use one and the same instance for multiple loggers. So think about
+	 * using the handler returned by the static {@link #getInstance} method. Using
+	 * this instance prevents the instantiation of unnecessary bit-101 handlers and
+	 * saves storage.
 	 *
 	 * <p>{@code decorateMessage} is by default {@code true}. Refer to the
-	 * {@code Debug} class for information on the default {@code recursionDepth}
-	 * and {@code indentation}.
+	 * {@code Debug} class for information on the default {@code recursionDepth} and
+	 * {@code indentation}.
 	 *
-	 * <p>Note that messages are only logged recursively if {@code decorateMessage}
-	 * is set to {@code false}.
+	 * <p>Note that messages are only logged recursively if {@code decorateMessage} is
+	 * set to {@code false}.
 	 *
-	 * @param decorateMessage (optional) determines whether to log the string
-	 * returned by the {@code LogMessage.toString} method or just the message
-	 * returned by {@code LogMessage.getMessage}
+	 * @param decorateMessage (optional) determines whether to log the string returned
+	 * by the {@code LogMessage.toString} method or just the message returned by
+	 * {@code LogMessage.getMessage}
 	 * @param recursionDepth (optional) determines the count of recursions for
 	 * recursively traced objects
-	 * @param indentation (optional) determines the indentation number for
-	 * recursively traced objects
+	 * @param indentation (optional) determines the indentation number for recursively
+	 * traced objects
 	 */
 	public function Bit101Handler(decorateMessage:Boolean, recursionDepth:Number, indentation:Number) {
 		this.decorateMessage = decorateMessage == null ? true : decorateMessage;
@@ -97,12 +96,12 @@ class org.as2lib.env.log.handler.Bit101Handler extends BasicClass implements Log
 	/**
 	 * Writes log messages to the Bit-101 Debug Panel.
 	 *
-	 * <p>Uses the {@link LogMessage#toString} method to obtain the string that
-	 * is logged if {@code decorateMessage} is turned on. Otherwise the string
-	 * returned by the original message's {@code toString} method is logged if
-	 * it is of type {@code 'string'}, {@code 'number'}, {@code 'boolean'},
-	 * {@code 'undefined'} or {@code 'null'} or the original method is logged
-	 * recursively if it is not of one of the above types.
+	 * <p>Uses the {@link LogMessage#toString} method to obtain the string that is
+	 * logged if {@code decorateMessage} is turned on. Otherwise the string returned
+	 * by the original message's {@code toString} method is logged if it is of type
+	 * {@code 'string'}, {@code 'number'}, {@code 'boolean'}, {@code 'undefined'} or
+	 * {@code 'null'} or the original method is logged recursively if it is not of one
+	 * of the above types.
 	 *
 	 * @param message the message to log
 	 */

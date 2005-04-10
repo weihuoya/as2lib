@@ -21,19 +21,17 @@ import LuminicBox.Log.Level;
 import LuminicBox.Log.IPublisher;
 
 /**
- * LuminicBoxLogger acts as a wrapper for a {@code Logger} instance of
- * the LuminicBox Logging API.
+ * {@code LuminicBoxLogger} acts as a wrapper for a {@code Logger} instance of the
+ * LuminicBox Logging API.
+ * 
+ * <p>Configure the LuminicBox Logging API as normally and just use this class in
+ * your application to log messages or objects. This enables you to switch between
+ * almost every available Logging API without having to change the logs in your
+ * application but just the underlying configuration on startup.
  *
- * <p>Configure the LuminicBox Logging API as normally and just use this
- * class in your application to log messages or objects. This enables
- * you to switch between almost every available logging API without
- * having to change the logs in your application, but just the underlying
- * configuration on startup.
- *
- * <p>All functionalities that the LuminicBox Logging API offers are
- * delegated to it. Other functionalities are performed by this class
- * directly.
- *
+ * <p>All functionalities that the LuminicBox Logging API offers are delegated to
+ * it. Other functionalities are performed by this class directly.
+ * 
  * @author Simon Wacker
  * @see org.as2lib.env.log.handler.LuminicBoxHandler
  * @see <a href="http://www.luminicbox.com/dev/flash/log">LuminicBox Logging API</a>
@@ -109,7 +107,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	}
 	
 	/**
-	 * Adds a publisher to the wrapped LuminicBox {@code Logger}.
+	 * Adds the {@code publisher} to the wrapped LuminicBox {@code Logger}.
 	 *
 	 * @param publisher the publisher to add
 	 */
@@ -118,7 +116,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	}
 	
 	/** 
-	 * Removes a publisher from the wrapped LuminicBox {@code Logger}.
+	 * Removes the {@code publisher} from the wrapped LuminicBox {@code Logger}.
 	 *
 	 * @param publisher the publisher to remove
 	 */
@@ -139,7 +137,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	/**
 	 * Checks if this logger is enabled for debug level log messages.
 	 *
-	 * @return true if debug messages are logged
+	 * @return {@code true} if debug messages are logged
 	 * @see #debug
 	 */
 	public function isDebugEnabled(Void):Boolean {
@@ -149,7 +147,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	/**
 	 * Checks if this logger is enabled for info level log messages.
 	 *
-	 * @return true if info messages are logged
+	 * @return {@code true} if info messages are logged
 	 * @see #info
 	 */
 	public function isInfoEnabled(Void):Boolean {
@@ -159,7 +157,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	/**
 	 * Checks if this logger is enabled for warning level log messages.
 	 *
-	 * @return true if warning messages are logged
+	 * @return {@code true} if warning messages are logged
 	 * @see #warning
 	 */
 	public function isWarningEnabled(Void):Boolean {
@@ -169,7 +167,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	/**
 	 * Checks if this logger is enabled for error level log messages.
 	 *
-	 * @return true if error messages are logged
+	 * @return {@code true} if error messages are logged
 	 * @see #error
 	 */
 	public function isErrorEnabled(Void):Boolean {
@@ -179,7 +177,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	/**
 	 * Checks if this logger is enabled for fatal level log messages.
 	 *
-	 * @return true if fatal messages are logged
+	 * @return {@code true} if fatal messages are logged
 	 * @see #fatal
 	 */
 	public function isFatalEnabled(Void):Boolean {
@@ -187,7 +185,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	}
 	
 	/**
-	 * Logs the message object to LuminicBox {@code Logger} at debug level.
+	 * Logs the passed-in {@code message} to LuminicBox {@code Logger} at debug level.
 	 *
 	 * @param message the message object to log
 	 * @see #isDebugEnabled
@@ -197,7 +195,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	}
 	
 	/**
-	 * Logs the message object to LuminicBox {@code Logger} at info level.
+	 * Logs the passed-in {@code message} to LuminicBox {@code Logger} at info level.
 	 *
 	 * @param message the message object to log
 	 * @see #isInfoEnabled
@@ -207,7 +205,8 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	}
 	
 	/**
-	 * Logs the message object to LuminicBox {@code Logger} at warning level.
+	 * Logs the passed-in {@code message} to LuminicBox {@code Logger} at warning
+	 * level.
 	 *
 	 * @param message the message object to log
 	 * @see #isWarningEnabled
@@ -217,7 +216,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	}
 	
 	/**
-	 * Logs the message object to LuminicBox {@code Logger} at error level.
+	 * Logs the passed-in {@code message} to LuminicBox {@code Logger} at error level.
 	 *
 	 * @param message the message object to log
 	 * @see #isErrorEnabled
@@ -227,7 +226,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	}
 	
 	/**
-	 * Logs the message object to LuminicBox {@code Logger} at fatal level.
+	 * Logs the passed-in {@code message} to LuminicBox {@code Logger} at fatal level.
 	 *
 	 * @param message the message object to log
 	 * @see #isFatalEnabled

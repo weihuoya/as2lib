@@ -23,9 +23,9 @@ import org.as2lib.env.log.level.AbstractLogLevel;
 import net.hiddenresource.util.alcon.Alcon;
 
 /**
- * AlconHandler uses the {@code net.hiddenresource.util.alcon.Alcon}
- * class from Sascha Balkau to log messages.
- *
+ * {@code AlconHandler} uses the {@code net.hiddenresource.util.alcon.Alcon} class
+ * from Sascha Balkau to log messages.
+ * 
  * @author Simon Wacker
  * @see org.as2lib.env.log.logger.AlconLogger
  * @see <a href="http://hiddenresource.corewatch.net/index.php?itemid=17">Alcon</a>
@@ -42,12 +42,12 @@ class org.as2lib.env.log.handler.AlconHandler extends BasicClass implements LogH
 	 *
 	 * <p>Note that the two arguments {@code decorateMethod} and {@code recursiveTracing}
 	 * are only recognized on first call of this method.
-	 *
-	 * @param decorateMethod (optional) determines whether to use the string
-	 * returned by {@code LogMessage.toString} or only the original message
-	 * returned by {@code LogMessage.getMessage} for logging
-	 * @param recursiveTracing (optional) determines whether messages shall
-	 * be traced recursively or not
+	 * 
+	 * @param decorateMethod (optional) determines whether to use the string returned
+	 * by {@code LogMessage.toString} or only the original message returned by
+	 * {@code LogMessage.getMessage} for logging
+	 * @param recursiveTracing (optional) determines whether messages shall be traced
+	 * recursively or not
 	 * @return a alcon handler
 	 */
 	public static function getInstance(decorateMethod:Boolean, recursiveTracing:Boolean):AlconHandler {
@@ -64,10 +64,10 @@ class org.as2lib.env.log.handler.AlconHandler extends BasicClass implements LogH
 	/**	
 	 * Constructs a new {@code AlconHandler} instance.
 	 *
-	 * <p>You can use one and the same instance for multiple loggers. So
-	 * think about using the handler returned by the static {@link #getInstance}
-	 * method. Using this instance prevents the instantiation of unnecessary
-	 * alcon handlers and saves storage.
+	 * <p>You can use one and the same instance for multiple loggers. So think about
+	 * using the handler returned by the static {@link #getInstance} method. Using
+	 * this instance prevents the instantiation of unnecessary alcon handlers and
+	 * saves storage.
 	 *
 	 * <p>{@code decorateMethod} is by default {@code true} and {@code recursiveTracing}
 	 * {@code false}.
@@ -75,11 +75,11 @@ class org.as2lib.env.log.handler.AlconHandler extends BasicClass implements LogH
 	 * <p>Note that {@code recursiveTracing} is turned off when {@code decorateMethod}
 	 * is turned on.
 	 *
-	 * @param decorateMethod (optional) determines whether to use the string
-	 * returned by {@code LogMessage.toString} or only the original message
-	 * returned by {@code LogMessage.getMessage} for logging
-	 * @param recursiveTracing (optional) determines whether messages shall
-	 * be traced recursively or not
+	 * @param decorateMethod (optional) determines whether to use the string returned
+	 * by {@code LogMessage.toString} or only the original message returned by
+	 * {@code LogMessage.getMessage} for logging
+	 * @param recursiveTracing (optional) determines whether messages shall be traced
+	 * recursively or not
 	 */
 	public function AlconHandler(decorateMethod:Boolean, recursiveTracing:Boolean) {
 		this.decorateMethod = decorateMethod == null ? true : decorateMethod;
@@ -100,8 +100,7 @@ class org.as2lib.env.log.handler.AlconHandler extends BasicClass implements LogH
 	}
 	
 	/**
-	 * Converts the As2lib {@code level} into the corresponding Alcon level
-	 * number.
+	 * Converts the As2lib {@code level} into the corresponding Alcon level number.
 	 * 
 	 * @param level the As2lib level to convert
 	 * @return the corresponding Alcon level number or {@code null}

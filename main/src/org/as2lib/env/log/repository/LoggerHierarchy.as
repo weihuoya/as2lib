@@ -26,56 +26,59 @@ import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.repository.ConfigurableHierarchicalLoggerFactory;
 
 /**
- * LoggerHierarchy organizes loggers in a hierarchical structure.
+ * {@code LoggerHierarchy} organizes loggers in a hierarchical structure.
  *
- * <p>It works only with loggers that are capable of acting properly in
- * a hierarchy. These loggers must implement the ConfigurableHierarchicalLogger
+ * <p>It works only with loggers that are capable of acting properly in a hierarchy.
+ * These loggers must implement the {@link ConfigurableHierarchicalLogger}
  * interface.
+ * 
+ * <p>The names of the loggers must be fully qualified and the differnt parts of
+ * the preceding structure/path must be separated by periods.
  *
- * <p>The names of the loggers must be fully qualified and the differnt
- * parts of the structure/path must be separated by periods.
+ * <p>This repository takes care that the parents of all loggers are correct and
+ * updates them if necessary. The hierarchical loggers themselves are responsible
+ * of obtaining the level and handlers from its parents if necessary and desired.
  *
- * <p>This repository takes care that the parents of all loggers are
- * correct and updates them if necessary. The hierarchical loggers themselves
- * are responsible of obtaining the level and handlers from its parents
- * if necessary and desired.
- *
- * <p>This repository can be used as follows:
- * <code>var repository:LoggerHierarchy = new LoggerHierarchy();
- * LogManager.setLoggerRepository(repository);
- * var traceLogger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("org.as2lib");
- * traceLogger.addHandler(new TraceHandler());
- * repository.addLogger(traceLogger);
- * // in some other class or something
- * var myLogger:Logger = LogManager.getLogger("org.as2lib.mypackage.MyClass");
- * myLogger.warning("Someone did something he should not do.");</code>
- *
- * <p>The message gets traced because the namespace of myLogger is the same
- * as the one of our traceLogger. You can of course at multiple handlers to
+ * <p>Example:
+ * <code>
+ *   var repository:LoggerHierarchy = new LoggerHierarchy();
+ *   LogManager.setLoggerRepository(repository);
+ *   var traceLogger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("org.as2lib");
+ *   traceLogger.addHandler(new TraceHandler());
+ *   repository.addLogger(traceLogger);
+ *   // in some other class or something
+ *   var myLogger:Logger = LogManager.getLogger("org.as2lib.mypackage.MyClass");
+ *   myLogger.warning("Someone did something he should not do.");
+ * </code>
+ * 
+ * <p>The message is traced because the namespace of {@code myLogger} is the same
+ * as the one of {@code traceLogger}. You can of course add multiple handlers to
  * one logger and also multiple loggers to different namespaces.
  *
  * @author Simon Wacker
  */
 class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implements LoggerRepository {
 	
-	/** Stores the root of the hierarchy. */
+	/** Stores the root of this hierarchy. */
 	private var root:ConfigurableHierarchicalLogger;
 	
 	/** Stores added loggers. */
 	private var loggers:Array;
 	
-	/** This factory gets used when no custom factory is specified. */
+	/** This factory is used when no custom factory is specified. */
 	private var defaultLoggerFactory:ConfigurableHierarchicalLoggerFactory;
 	
 	/**
-	 * Constructs a new LoggerHierarchy instance.
+	 * Constructs a new {@code LoggerHierarchy} instance.
 	 *
-	 * <p>Registers the root logger with name 'root' if the root's getName
-	 * method returns null or undefined. Otherwise it will be registered
-	 * with the name returned by the root's getName method.
+	 * <p>Registers the root logger with name {@code "root"} if the {@code root}'s
+	 * {@code getName} method returns {@code null} or {@code undefined}. Otherwise it
+	 * will be registered with the name returned by the {@code root}'s {@code getName}
+	 * method.
 	 *
-	 * <p>If the passed-in root is null or undefined an instance of type
-	 * RootLogger with name 'root' and log level ALL gets used.
+	 * <p>If the passed-in {@code root} is {@code null} or {@code undefined} an
+	 * instance of type {@link RootLogger} with name {@code "root"} and log level
+	 * {@code ALL} will be used instead.
 	 *
 	 * @param root the root of the hierarchy
 	 */
@@ -94,7 +97,8 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	 * Returns either the factory set via {@link #setDefaultLoggerFactory} or the
 	 * default one.
 	 *
-	 * <p>The default factory returns instances of type {@link SimpleHierarchicalLogger}.
+	 * <p>The default factory returns instances of type
+	 * {@link SimpleHierarchicalLogger}.
 	 *
 	 * @return the factory used as default
 	 */
@@ -104,6 +108,9 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	}
 	
 	/**
+	 * Returns the normal factory that returns instances of class
+	 * {@link SimpleHierarchicalLogger}.
+	 *
 	 * @return the normal factory
 	 */
 	private function getNormalLoggerFactory(Void):ConfigurableHierarchicalLoggerFactory {
@@ -117,8 +124,7 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	}
 	
 	/**
-	 * Sets the factory used to obtain loggers that have not been set
-	 * manually before.
+	 * Sets the factory used to obtain loggers that have not been set manually before.
 	 *
 	 * @param defaultLoggerFactory the factory to use as default
 	 */
@@ -127,24 +133,24 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	}
 	
 	/**
-	 * Returns the root logger of the hierarchy.
+	 * Returns the root logger of this hierarchy.
 	 *
-	 * @return the root logger of the hierarchy
+	 * @return the root logger of this hierarchy
 	 */
 	public function getRootLogger(Void):Logger {
 		return root;
 	}
 	
 	/**
-	 * Adds a new logger to the hierarchical repository.
+	 * Adds a new logger to this hierarchical repository.
 	 *
-	 * <p>The logger gets automatically integrated into the hierarchy.
+	 * <p>The logger is automatically integrated into the hierarchy.
 	 *
-	 * @param name the name under which the logger to add shall be referenced
-	 * @param logger the logger to be registered with the passed-in name
-	 * @throws IllegalArgumentException if the passed-in logger is null or undefined or
-	 *                                  if the passed-in logger's getName() method returns null or undefined or
-	 *                                  if a logger with the given name is already in use
+	 * @param logger the logger to add to this hierarchy
+	 * @throws IllegalArgumentException if the passed-in {@code logger} is {@code null}
+	 * or {@code undefined} or if the passed-in {@code logger}'s {@code getName} method
+	 * returns {@code null} or {@code undefined} or if a logger with the {@code logger}'s
+	 * name is already in use
 	 */
 	public function addLogger(logger:ConfigurableHierarchicalLogger):Void {
 		if (!logger) throw new IllegalArgumentException("Logger to add is not allowed to be null or undefined.", this, arguments);
@@ -157,10 +163,10 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	}
 	
 	/**
-	 * Returns a factory used to obtain the passed-in logger.
+	 * Returns the factory used to obtain the passed-in {@code logger}.
 	 *
-	 * @param logger that shall be returned when asked for
-	 * @return a factory that returns the passed-in logger
+	 * @param logger the logger to be returned by the returned factory
+	 * @return a factory that returns the passed-in {@code logger}
 	 */
 	private function getSingletonFactory(logger:ConfigurableHierarchicalLogger):ConfigurableHierarchicalLoggerFactory {
 		var result:ConfigurableHierarchicalLoggerFactory = getBlankConfigurableHierarchicalLoggerFactory();
@@ -171,18 +177,18 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	}
 	
 	/**
-	 * Returns the logger appropriate to the specified name.
+	 * Returns the logger appropriate to the given {@code name}.
 	 *
-	 * <p>The name can exist of a path as well as the actual specifier,
-	 * e.g. org.as2lib.core.BasicClass. In case no logger instance has
-	 * been put for the passed-in name a new will be created by the set
-	 * factory, that by default obtains all its configuration from the
-	 * parent logger.
+	 * <p>The {@code name} can exist of a path as well as the actual specifier, for
+	 * example {@code org.as2lib.core.BasicClass}. In case no logger instance has been
+	 * put for the passed-in {@code name} a new will be created by the set factory,
+	 * that by default obtains all its configuration from the parent logger.
 	 *
-	 * <p>Null will be returned if passed-in name is null or undefined.
+	 * <p>{@code null} will be returned if passed-in {@code name} is {@code null} or
+	 * {@code undefined}.
 	 *
-	 * @param name the specifier of the logger to obtain
-	 * @return the logger appropriate to the name
+	 * @param name the name of the logger to obtain
+	 * @return the logger corresponding to the {@code name}
 	 */
 	public function getLogger(name:String):Logger {
 		if (name == null) return null;
@@ -190,24 +196,25 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	}
 	
 	/**
-	 * Returns the logger appropriate to the specified name.
+	 * Returns the logger corresponding to the passed-in {@code name}.
 	 *
-	 * <p>If a logger with the passed-in name is not explicitely registered
-	 * the logger returned by the factory gets registered with the passed-in
-	 * name, integrated in the hierarchy and returned.
+	 * <p>If a logger with the passed-in name is not explicitely registered the logger
+	 * returned by the factory is registered with the passed-in {@code name},
+	 * integrated in the hierarchy and returned.
 	 *
-	 * <p>The name can exist of a path as well as the actual specifier,
-	 * e.g. org.as2lib.core.BasicClass. In case no logger instance has
-	 * been put for the passed-in name a new will be created by the set
-	 * factory, that by default obtains all its configuration from the
-	 * parent logger.
+	 * <p>The {@code name} can exist of a path as well as the actual specifier, for
+	 * example {@code org.as2lib.core.BasicClass}. In case no logger instance has been
+	 * put for the passed-in {@code name} a new will be created by the set factory,
+	 * that by default obtains all its configuration from the parent logger.
+	 * 
+	 * <p>{@code null} will be returned if the passed-in {@code name} is {@code null}
+	 * or {@code undefined}.
 	 *
-	 * <p>Null will be returned if the passed-in name is null or undefined.
-	 *
-	 * <p>If the passed-in factory is null or undefined the default one will be used.
+	 * <p>If the passed-in {@code factory} is {@code null} or {@code undefined} the
+	 * default one will be used.
 	 *
 	 * @param name the name of the logger to return
-	 * @return the logger appropriate to the passed-in name
+	 * @return the logger appropriate to the passed-in {@code name}
 	 */
 	public function getLoggerByFactory(name:String, factory:ConfigurableHierarchicalLoggerFactory):Logger {
 		if (name == null) return null;
@@ -274,8 +281,8 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 	}
 	
 	/**
-	 * Returns a blank configurable hierarchical logger factory. That is
-	 * a logger factory with no initialized methods.
+	 * Returns a blank configurable hierarchical logger factory. That is a logger
+	 * factory with no implemented methods.
 	 *
 	 * @return a blank configurable hierarchical logger factory
 	 */

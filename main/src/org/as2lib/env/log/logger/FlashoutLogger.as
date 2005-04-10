@@ -20,13 +20,13 @@ import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.logger.AbstractLogger;
 
 /**
- * FlashoutLogger delegates all log messages to the appropriate methods
- * of the {@code Flashout} class.
- *
- * <p>Using this class instead of the {@code Flashout} class in your
- * application directly enables you to switch between almost every available
- * logging API without having to change the logging calls, but just the
- * underlying configuration on startup.
+ * {@code FlashoutLogger} delegates all log messages to the appropriate methods on
+ * the {@code Flashout} class.
+ * 
+ * <p>Using this class instead of the {@code Flashout} class in your application
+ * directly enables you to switch between almost every available Logging API without
+ * having to change the logging calls, but just the underlying configuration on
+ * startup.
  *
  * @author Simon Wacker
  * @see org.as2lib.env.log.handler.FlashoutHandler
@@ -46,8 +46,8 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	/**
 	 * Constructs a new {@code FlashoutLogger} instance.
 	 *
-	 * <p>The default log level is {@code ALL}. This means all messages
-	 * regardless of their level are logged.
+	 * <p>The default log level is {@code ALL}. This means all messages regardless of
+	 * their level are logged.
 	 */
 	public function FlashoutLogger(Void) {
 		level = ALL;
@@ -57,11 +57,10 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	/**
 	 * Sets the log level.
 	 *
-	 * <p>The log level determines which messages are logged and which are
-	 * not.
+	 * <p>The log level determines which messages are logged and which are not.
 	 *
-	 * <p>A level of value {@code null} or {@code undefined} os interpreted
-	 * as level {@code ALL}, which is also the default level.
+	 * <p>A level of value {@code null} or {@code undefined} os interpreted as level
+	 * {@code ALL} which is also the default level.
 	 *
 	 * @param level the new log level
 	 */
@@ -85,9 +84,9 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	}
 	
 	/**
-	 * Checks if this logger is enabled for debug level output.
+	 * Checks if this logger is enabled for debug level log messages.
 	 *
-	 * @return {@code true} if debug output is made
+	 * @return {@code true} if debug messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#DEBUG
 	 * @see #debug
 	 */
@@ -96,9 +95,9 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	}
 	
 	/**
-	 * Checks if this logger is enabled for info level output.
+	 * Checks if this logger is enabled for info level log messages.
 	 *
-	 * @return {@code true} if info output is made
+	 * @return {@code true} if info messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#INFO
 	 * @see #info
 	 */
@@ -107,9 +106,9 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	}
 	
 	/**
-	 * Checks if this logger is enabled for warning level output.
+	 * Checks if this logger is enabled for warning level log messages.
 	 *
-	 * @return {@code true} if warning output is made
+	 * @return {@code true} if warning messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#WARNING
 	 * @see #warning
 	 */
@@ -118,9 +117,9 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	}
 	
 	/**
-	 * Checks if this logger is enabled for error level output.
+	 * Checks if this logger is enabled for error level log messages.
 	 *
-	 * @return {@code true} if error output is made
+	 * @return {@code true} if error messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#ERROR
 	 * @see #error
 	 */
@@ -129,9 +128,9 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	}
 	
 	/**
-	 * Checks if this logger is enabled for fatal level output.
+	 * Checks if this logger is enabled for fatal level log messages.
 	 *
-	 * @return {@code true} if fatal output is made
+	 * @return {@code true} if fatal messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#FATAL
 	 * @see #fatal
 	 */
@@ -140,12 +139,12 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	}
 	
 	/**
-	 * Logs the message object at debug level.
+	 * Logs the passed-in {@code message} at debug level.
 	 *
-	 * <p>The message is only logged when the level is set to debug or
+	 * <p>The {@code message} is only logged when the level is set to {@code DEBUG} or
 	 * a level above.
 	 *
-	 * <p>The message is logged using the {@code Flashout.debug} method.
+	 * <p>The {@code message} is logged using the {@code Flashout.debug} method.
 	 *
 	 * @param message the message object to log
 	 * @see #isDebugEnabled
@@ -157,12 +156,12 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	}
 	
 	/**
-	 * Logs the message object at info level.
+	 * Logs the passed-in {@code message} object at info level.
 	 *
-	 * <p>The message is only logged when the level is set to info or
+	 * <p>The {@code message} is only logged when the level is set to {@code INFO} or
 	 * a level above.
 	 *
-	 * <p>The message is logged using the {@code Flashout.info} method.
+	 * <p>The {@code message} is logged using the {@code Flashout.info} method.
 	 *
 	 * @param message the message object to log
 	 * @see #isInfoEnabled
@@ -174,12 +173,12 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	}
 	
 	/**
-	 * Logs the message object at warning level.
+	 * Logs the passed-in {@code message} object at warning level.
 	 *
-	 * <p>The message is only logged when the level is set to warning or
-	 * a level above.
+	 * <p>The {@code message} is only logged when the level is set to {@code WARNING}
+	 * or a level above.
 	 *
-	 * <p>The message is logged using the {@code Flashout.warning} method.
+	 * <p>The {@code message} is logged using the {@code Flashout.warning} method.
 	 *
 	 * @param message the message object to log
 	 * @see #isWarningEnabled
@@ -191,12 +190,12 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	}
 	
 	/**
-	 * Logs the message object at error level.
+	 * Logs the passed-in {@code message} object at error level.
 	 *
-	 * <p>The message is only logged when the level is set to error or a
-	 * level above.
+	 * <p>The {@code message} is only logged when the level is set to {@code ERROR} or
+	 * a level above.
 	 *
-	 * <p>The message is logged using the {@code Flashout.error} method.
+	 * <p>The {@code message} is logged using the {@code Flashout.error} method.
 	 *
 	 * @param message the message object to log
 	 * @see #isErrorEnabled
@@ -208,12 +207,12 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	}
 	
 	/**
-	 * Logs the message object at fatal level.
+	 * Logs the passed-in {@code message} object at fatal level.
 	 *
-	 * <p>The message is only logged when the level is set to fatal or a
-	 * level above.
+	 * <p>The {@code message} is only logged when the level is set to {@code FATAL} or
+	 * a level above.
 	 *
-	 * <p>The message is logged using the {@code Flashout.error} method.
+	 * <p>The {@code message} is logged using the {@code Flashout.error} method.
 	 *
 	 * @param message the message object to log
 	 * @see #isFatalEnabled

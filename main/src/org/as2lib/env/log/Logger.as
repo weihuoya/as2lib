@@ -18,31 +18,30 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.env.log.LogLevel;
 
 /**
- * Logger declares all methods needed to log messages in a well defined
- * and performant way.
- *
+ * Logger declares all methods needed to log messages in a well defined and
+ * performant way.
+ * 
  * <p>The basic methods to log messages are {@link #debug}, {@link #info},
  * {@link #warning} and {@link #fatal}.
  *
- * <p>The first thing to note is that you can log messages at different
- * levels. These levels are {@link #DEBUG}, {@link #INFO}, {@link #WARNING},
- * {@link #ERROR} and {@link #FATAL}. Depending on what level has been
- * set only messages at a given level are logged. The levels are organized
- * in a hierarchical manner. That means if you set the log level to {@link #ALL}
- * every messages is logged. If you set it to {@link #ERROR} only messages
- * at {@link #ERROR} and {@link #FATAL} level are logged and so on.
+ * <p>The first thing to note is that you can log messages at different levels.
+ * These levels are {@link #DEBUG}, {@link #INFO}, {@link #WARNING}, {@link #ERROR}
+ * and {@link #FATAL}. Depending on what level has been set only messages at a
+ * given level are logged. The levels are organized in a hierarchical manner. That
+ * means if you set the log level to {@link #ALL} every messages is logged. If you
+ * set it to {@link #ERROR} only messages at {@link #ERROR} and {@link #FATAL}
+ * level are logged and so on.
  *
- * <p>To do not waste unnecessary performance in constructing log messages
- * that are not logged you can use the {@link #isDebugEnabled}, {@link #isInfoEnabled},
+ * <p>To do not waste unnecessary performance in constructing log messages that are
+ * not logged you can use the {@link #isDebugEnabled}, {@link #isInfoEnabled},
  * {@link #isWarningEnabled}, {@link #isErrorEnabled} and {@link #isFatalEnabled}
  * methods.
  *
- * <p>Note that the message does in neither case have to be a string.
- * That means you can pass-in messages and let the actual handler or logger
- * decide how to produce a string representation of the message. That is
- * in most cases done by using the {@code toString} method of the specific
- * message. You can use this method to do not lose performance in cases
- * where the message is not logged.
+ * <p>Note that the message does in neither case have to be a string. That means
+ * you can pass-in messages and let the actual handler or logger decide how to
+ * produce a string representation of the message. That is in most cases done by
+ * using the {@code toString} method of the specific message. You can use this
+ * method to do not lose performance in cases where the message is not logged.
  *
  * <p>The basic workflow of using loggers is as follows:
  * <code>
@@ -53,82 +52,81 @@ import org.as2lib.env.log.LogLevel;
  *   }
  * </code>
  *
- * <p>Note that we are in the above example not setting a log level.
- * This depends on what configuration methods the implementation of this
- * interface offers.
+ * <p>Note that we are in the above example not setting a log level. This depends
+ * on what configuration methods the implementation of this interface offers.
  * 
- * <p>Note also that depending on the concrete implementation and the message
- * it may be faster to do not call any of the {@code is*Enabled} methods.
+ * <p>Note also that depending on the concrete implementation and the message it
+ * may be faster to do not call any of the {@code is*Enabled} methods.
  *
  * @author Simon Wacker
  */
 interface org.as2lib.env.log.Logger extends BasicInterface {
 	
 	/**
-	 * Checks if this logger is enabled for debug level output.
+	 * Checks if this logger is enabled for debug level log messages.
+	 * 
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
-	 *
-	 * @return true if debug output gets made
+	 * @return {@code true} if debug messagess are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#DEBUG
 	 * @see #debug
 	 */
 	public function isDebugEnabled(Void):Boolean;
 	
 	/**
-	 * Checks if this logger is enabled for info level output.
+	 * Checks if this logger is enabled for info level log messages.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * @return true if info output gets made
+	 * @return {@code true} if info messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#INFO
 	 * @see #info
 	 */
 	public function isInfoEnabled(Void):Boolean;
 	
 	/**
-	 * Checks if this logger is enabled for warning level output.
+	 * Checks if this logger is enabled for warning level log messages.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * @return true if warning output gets made
+	 * @return {@code true} if warning messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#WARNING
 	 * @see #warning
 	 */
 	public function isWarningEnabled(Void):Boolean;
 	
 	/**
-	 * Checks if this logger is enabled for error level output.
+	 * Checks if this logger is enabled for error level log messages.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * @return true if error output gets made
+	 * @return {@code true} if error messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#ERROR
 	 * @see #error
 	 */
 	public function isErrorEnabled(Void):Boolean;
 	
 	/**
-	 * Checks if this logger is enabled for fatal level output.
+	 * Checks if this logger is enabled for fatal level log messages.
 	 *
-	 * <p>Using this method as shown in the class documentation may improve
-	 * performance depending on how long the log message construction takes.
+	 * <p>Using this method as shown in the class documentation may improve performance
+	 * depending on how long the log message construction takes.
 	 *
-	 * @return true if fatal output gets made
+	 * @return {@code true} if fatal messages are logged
 	 * @see org.as2lib.env.log.level.AbstractLogLevel#FATAL
 	 * @see #fatal
 	 */
 	public function isFatalEnabled(Void):Boolean;
 	
 	/**
-	 * Logs the message object at debug level.
+	 * Logs the passed-in {@code message} at debug level.
 	 *
-	 * <p>The message gets only logged when the level is set to debug or
-	 * a level above.
+	 * <p>The message is only logged when the level is set to {@code DEBUG} or a level
+	 * above.
 	 *
 	 * @param message the message object to log
 	 * @see #isDebugEnabled
@@ -136,10 +134,10 @@ interface org.as2lib.env.log.Logger extends BasicInterface {
 	public function debug(message):Void;
 	
 	/**
-	 * Logs the message object at info level.
+	 * Logs the passed-in {@code message} at info level.
 	 *
-	 * <p>The message gets only logged when the level is set to info or
-	 * a level above.
+	 * <p>The message is only logged when the level is set to {@code INFO} or a level
+	 * above.
 	 *
 	 * @param message the message object to log
 	 * @see #isInfoEnabled
@@ -147,10 +145,10 @@ interface org.as2lib.env.log.Logger extends BasicInterface {
 	public function info(message):Void;
 	
 	/**
-	 * Logs the message object at warning level.
+	 * Logs the passed-in {@code message} at warning level.
 	 *
-	 * <p>The message gets only logged when the level is set to warning or
-	 * a level above.
+	 * <p>The message is only logged when the level is set to {@code WARNING} or a
+	 * level above.
 	 *
 	 * @param message the message object to log
 	 * @see #isWarningEnabled
@@ -158,10 +156,10 @@ interface org.as2lib.env.log.Logger extends BasicInterface {
 	public function warning(message):Void;
 	
 	/**
-	 * Logs the message object at error level.
+	 * Logs the passed-in {@code message} at error level.
 	 *
-	 * <p>The message gets only logged when the level is set to error or a
-	 * level above.
+	 * <p>The message is only logged when the level is set to {@code ERROR} or a level
+	 * above.
 	 *
 	 * @param message the message object to log
 	 * @see #isErrorEnabled
@@ -169,10 +167,10 @@ interface org.as2lib.env.log.Logger extends BasicInterface {
 	public function error(message):Void;
 	
 	/**
-	 * Logs the message object at fatal level.
+	 * Logs the passed-in {@code message} at fatal level.
 	 *
-	 * <p>The message gets only logged when the level is set to fatal or a
-	 * level above.
+	 * <p>The message is only logged when the level is set to {@code FATAL} or a level
+	 * above.
 	 *
 	 * @param message the message object to log
 	 * @see #isFatalEnabled

@@ -25,10 +25,10 @@ import LuminicBox.Log.LogEvent;
 import LuminicBox.Log.Level;
 
 /**
- * LuminicBoxHandler is a wrapper of the {@code ConsolePublisher} class
- * from the LuminicBox Logging API. It can be used to write log messages
- * to the LuminicBox console.
- *
+ * {@code LuminicBoxHandler} is a wrapper of the {@code ConsolePublisher} class
+ * from the LuminicBox Logging API. It can be used to write log messages to the
+ * LuminicBox console.
+ * 
  * @author Simon Wacker
  * @see <a href="http://www.luminicbox.com/dev/flash/log">LuminicBox Logging API</a>
  */
@@ -42,11 +42,10 @@ class org.as2lib.env.log.handler.LuminicBoxHandler extends BasicClass implements
 	 *
 	 * <p>This method always returns the same instance.
 	 *
-	 * <p>The {@code maximalInspectionDepth} is only recognized when this
-	 * method is invoked the first time.
+	 * <p>The {@code maximalInspectionDepth} is only recognized when this method is
+	 * invoked the first time.
 	 *
-	 * @param maximalInspectionDepth (optional) the maximal depth of object
-	 * inspection
+	 * @param maximalInspectionDepth (optional) the maximal depth of object inspection
 	 * @return a luminic box handler
 	 */
 	public static function getInstance(maximalInspectionDepth:Number):LuminicBoxHandler {
@@ -60,13 +59,12 @@ class org.as2lib.env.log.handler.LuminicBoxHandler extends BasicClass implements
 	/**	
 	 * Constructs a new {@code LuminicBoxHandler} instance.
 	 *
-	 * <p>You can use one and the same instance for multiple loggers. So
-	 * think about using the handler returned by the static {@link #getInstance}
-	 * method. Using this instance prevents the instantiation of unnecessary
-	 * luminic box handlers and and saves storage.
+	 * <p>You can use one and the same instance for multiple loggers. So think about
+	 * using the handler returned by the static {@link #getInstance} method. Using
+	 * this instance prevents the instantiation of unnecessary luminic box handlers
+	 * and saves storage.
 	 *
-	 * @param maximalInspectionDepth (optional) the maximal depth of object
-	 * inspection
+	 * @param maximalInspectionDepth (optional) the maximal depth of object inspection
 	 */
 	public function LuminicBoxHandler(maximalInspectionDepth:Number) {
 		consolePublisher = new ConsolePublisher();
@@ -78,8 +76,8 @@ class org.as2lib.env.log.handler.LuminicBoxHandler extends BasicClass implements
 	/**
 	 * Writes directly to the LuminicBox console.
 	 *
-	 * <p>The {@code ConsolePublisher} determines how the string representation
-	 * is constructed.
+	 * <p>The {@code ConsolePublisher} determines how the string representation is
+	 * constructed.
 	 *
 	 * @param message the log message to write out
 	 */

@@ -20,12 +20,12 @@ import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
 
 /**
- * XmlSocketHandler uses the XMLSocket to log the received data.
+ * {@code XmlSocketHandler} uses the {@code XMLSocket} to log the message.
  *
- * <p>It was originally designed to work with the POWERFLASHER's SOS 
- * XML-Socket-Server but you can use it for any output device that is
- * accessible over the XML socket.
- *
+ * <p>It was originally designed to work with the POWERFLASHER's SOS
+ * XML-Socket-Server but you can use it for any output device that is accessible
+ * over the XML socket.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.env.log.handler.XmlSocketHandler extends BasicClass implements LogHandler {
@@ -34,12 +34,12 @@ class org.as2lib.env.log.handler.XmlSocketHandler extends BasicClass implements 
 	private var socket:XMLSocket;
 	
 	/**
-	 * Constructs a new XmlSocketHandler instance.
+	 * Constructs a new {@code XmlSocketHandler} instance.
 	 *
 	 * @param host a fully qualified DNS domain name
 	 * @param port the TCP port number on the host used to establish a connection
-	 * @throws IllegalArgumentException if the passed-in {@code port} is
-	 * {@code null} or less than 1024
+	 * @throws IllegalArgumentException if the passed-in {@code port} is {@code null}
+	 * or less than 1024
 	 * @todo throw exception when unable to connect
 	 */
 	public function XmlSocketHandler(host:String, port:Number) {
@@ -53,8 +53,7 @@ class org.as2lib.env.log.handler.XmlSocketHandler extends BasicClass implements 
 	/**
 	 * Uses the xml socket connection to log the passed-in message.
 	 *
-	 * <p>Uses the {@link LogMessage#toString} method to obtain the string to
-	 * log.
+	 * <p>Uses the {@link LogMessage#toString} method to obtain the string to log.
 	 *
 	 * @param message the message to log
 	 */

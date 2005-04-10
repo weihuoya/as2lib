@@ -21,20 +21,18 @@ import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogMessageStringifier;
 
 /**
- * LogMessage is a dumb model that contains all the information about the
- * message to log.
+ * {@code LogMessage} is a dumb data holder that contains all the information about
+ * the message to log.
+ * 
+ * <p>These information are the the message to log, its level and the name of the
+ * logger that is responsible for logging the message.
  *
- * <p>These information are the the message to log, its level and the
- * name of the logger that is responsible for logging the message.
+ * <p>The {@link #toString} method uses the set stringifier to obtain its string
+ * representation. If you want a different appearance of the log message you can
+ * use the static {@link #setStringifier} method to set your custom stringifier.
  *
- * <p>The {@link #toString} method uses the set stringifier to obtain
- * its string representation. If you want a different appearance of the
- * log message you can use the static {@link #setStringifier} method to set your
- * custom stringifier.
- *
- * <p>The LogMessageStringifier supports different presentation styles.
- * It allows to switch the log level, the logger name and the time on
- * and off.
+ * <p>The {@link LogMessageStringifier} supports different presentation styles. It
+ * allows to switch the log level, the logger name and the time on and off.
  *
  * @author Simon Wacker
  */
@@ -43,10 +41,10 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	/** The currently used stringifier. */
 	private static var stringifier:Stringifier;
 	
-	/** The message object that shall be written out. */
+	/** The message object to log. */
 	private var message;
 	
-	/** The level the output has. */
+	/** The level the of the log message. */
 	private var level:LogLevel;
 	
 	/** The name of the logger that logs the message. */
@@ -56,8 +54,8 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	private var timeStamp:Number;
 	
 	/**
-	 * Returns either the stringifier set via {@link #setStringifier} or the
-	 * default one.
+	 * Returns either the stringifier set via {@link #setStringifier} or the default
+	 * one which is an instance of class {@link LogMessageStringifier}.
 	 *
 	 * @return the currently used stringifier
 	 */
@@ -67,7 +65,10 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	}
 	
 	/**
-	 * Sets a new stringifier to be used by the {@link #toString} operation.
+	 * Sets a new stringifier to be used by the {@link #toString} method.
+	 *
+	 * <p>If {@code newStringifier} is {@code null} the {@link getStringifier} method
+	 * will return the default stringifier.
 	 *
 	 * @param newStringifier the new stringifier to be used
 	 */
@@ -76,16 +77,16 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	}
 	
 	/**
-	 * Constructs a new instance.
+	 * Constructs a new {@code LogMessage} instance.
 	 * 
-	 * <p>If you do not specify a time stamp the constructor calls the sets
-	 * it by itself using the current construction time. That does it in
-	 * most cases.
+	 * <p>If {@code timeStamp} is {@code null} or {@code undefined} this constructor
+	 * sets it by itself using the current time.
 	 *
-	 * @param message the message object that shall be written out
-	 * @param level the level of the message
-	 * @param loggerName the name of the logger that logs the message
-	 * @param timeStamp (optional) the number of milliseconds elapsed from 1/1/1970 until log message was created
+	 * @param message the message object to log
+	 * @param level the level of the passed-in {@code message}
+	 * @param loggerName the name of the logger that logs the {@code message}
+	 * @param timeStamp (optional) the number of milliseconds elapsed from 1/1/1970
+	 * until log this message was created
 	 */
 	public function LogMessage(message, level:LogLevel, loggerName:String, timeStamp:Number) {
 		this.message = message;
@@ -96,9 +97,9 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	}
 	
 	/**
-	 * Returns the message object that shall be written out.
+	 * Returns the message object to log
 	 *
-	 * @return message the message object that shall be written out
+	 * @return message the message object to log
 	 */
 	public function getMessage(Void) {
 		return message;
@@ -123,10 +124,11 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	}
 	
 	/**
-	 * Returns the number of milliseconds elapsed from 1/1/1970 until log
-	 * message was created.
+	 * Returns the number of milliseconds elapsed from 1/1/1970 until message was
+	 * created.
 	 *
-	 * @returns the number of milliseconds elapsed from 1/1/1970 until log message was created.
+	 * @returns the number of milliseconds elapsed from 1/1/1970 until message was
+	 * created.
 	 */
 	public function getTimeStamp(Void):Number {
 		return timeStamp;
@@ -135,17 +137,17 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	/**
 	 * Returns the name of the event to fire on registered listeners.
 	 *
-	 * <p>This method always returns the string 'write'.
+	 * <p>This method always returns the string {@code "write"}.
 	 *
-	 * @return the name of the event
+	 * @return {@code "write"}
 	 */
 	public function getName(Void):String {
 		return "write";
 	}
 	
 	/**
-	 * Uses the stringifier returned by {@link #getStringifier} to stringify
-	 * this instance.
+	 * Uses the stringifier returned by the static {@link #getStringifier} method
+	 * to stringify this instance.
 	 *
 	 * @return the string representation of this log message
 	 */

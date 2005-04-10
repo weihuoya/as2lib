@@ -19,10 +19,10 @@ import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.level.AbstractLogLevel;
 
 /**
- * AbstractLogger offers support for simple logger tasks.
+ * {@code AbstractLogger} offers support for simple logger tasks.
  *
  * <p>Classes that extend this class are expected to / must implement the
- * Logger interface.
+ * {@link Logger} interface.
  *
  * @author Simon Wacker
  */
@@ -80,14 +80,12 @@ class org.as2lib.env.log.logger.AbstractLogger extends BasicClass {
 	private var fatalLevelAsNumber:Number;
 	
 	/**
-	 * Constructs a new AbstractLogger instance.
+	 * Constructs a new {@code AbstractLogger} instance.
 	 *
-	 * <p>The AbstractLogger class cannot be instatiated directly. You must
-	 * sub-class it first.
+	 * <p>This class class cannot be instatiated directly. You must sub-class it first.
 	 * 
-	 * <p>This constructor initializes the level instance variables that
-	 * can be used for fast access. Static access is relatively slow in
-	 * comparison.
+	 * <p>This constructor initializes the level instance variables that can be used
+	 * for fast access. Static access is relatively slow in comparison.
 	 */
 	private function AbstractLogger(Void) {
 		debugLevel = DEBUG;

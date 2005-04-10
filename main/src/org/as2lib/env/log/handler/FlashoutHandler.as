@@ -20,7 +20,7 @@ import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.level.AbstractLogLevel;
 
 /**
- * FlashoutHandler logs messages to the Flashout console.
+ * {@code FlashoutHandler} logs messages to the Flashout console.
  *
  * <p>The {@code Flashout} class is needed.
  *
@@ -46,13 +46,12 @@ class org.as2lib.env.log.handler.FlashoutHandler extends BasicClass implements L
 	}
 	
 	/**	
-	 * Constructs a new FlashoutHandler instance.
+	 * Constructs a new {@code FlashoutHandler} instance.
 	 *
-	 * <p>You can use one and the same instance for multiple loggers. So
-	 * think about using the handler returned by the static {@link #getInstance}
-	 * method.
-	 * Using this instance prevents the instantiation of unnecessary flashout
-	 * handlers and and saves storage.
+	 * <p>You can use one and the same instance for multiple loggers. So think about
+	 * using the handler returned by the static {@link #getInstance} method. Using this
+	 * instance prevents the instantiation of unnecessary flashout handlers and
+	 * saves storage.
 	 */
 	public function FlashoutHandler(Void) {
 	}
@@ -60,8 +59,8 @@ class org.as2lib.env.log.handler.FlashoutHandler extends BasicClass implements L
 	/**
 	 * Writes log messages to the Flashout console.
 	 *
-	 * <p>Uses the {@link LogMessage#toString} method to obtain the string that
-	 * is logged.
+	 * <p>Uses the {@link LogMessage#toString} method to obtain the string that is
+	 * logged.
 	 *
 	 * @param message the message to log
 	 */
