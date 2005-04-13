@@ -19,8 +19,7 @@ import org.as2lib.env.log.LogMessage;
 import org.as2lib.core.BasicClass;
 
 /**
- * {@code TraceHandler} uses trace to log the message. Or better to output the
- * message to Flash's Output Panel.
+ * {@code TraceHandler} uses {@code trace} to log messages.
  * 
  * @author Simon Wacker
  */
@@ -37,7 +36,7 @@ class org.as2lib.env.log.handler.TraceHandler extends BasicClass implements LogH
 	 * @return a trace handler
 	 */
 	public static function getInstance(Void):TraceHandler {
-		if(!traceHandler) traceHandler = new TraceHandler();
+		if (!traceHandler) traceHandler = new TraceHandler();
 		return traceHandler;
 	}
 	
@@ -53,10 +52,10 @@ class org.as2lib.env.log.handler.TraceHandler extends BasicClass implements LogH
 	}
 	
 	/**
-	 * Uses trace to write the log message out.
+	 * Writes the passed-in {@code message} using {@code trace}.
 	 *
-	 * <p>Uses the {@link LogMessage#toString} method to obtain the string that is
-	 * written out.
+	 * <p>The string to write out is obtained via the {@link LogMessage#toString}
+	 * method of the passed-in {@code message}.
 	 *
 	 * @param message the log message to write out
 	 */
