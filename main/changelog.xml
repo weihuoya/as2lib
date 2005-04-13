@@ -5,6 +5,10 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="3">
+         <day value="13">
+           <entry type="add" package="org.as2lib.env.log.logger" class="MusicTheoryLogger">Logger support for the Musictheory SWF Console.</entry>
+           <entry type="add" package="org.as2lib.env.log.handler" class="MusicTheoryHandler">Handler support for the Musictheory SWF Console.</entry>
+         </day>
          <day value="10">
            <entry type="remove" package="static org.as2lib.util" class="ObjectUtil" method="getChildName">Use static methods of the "org.as2lib.env.reflect.ReflectUtil" class instead.</entry>
          </day>
