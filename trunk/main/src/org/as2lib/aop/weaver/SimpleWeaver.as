@@ -22,7 +22,6 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.TypeMemberInfo;
-import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.joinpoint.MethodJoinPoint;
 import org.as2lib.aop.joinpoint.GetPropertyJoinPoint;
@@ -69,7 +68,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 		while (--i-(-1)) {
 			var a:Array = y[i];
 			if (!a) {
-				weaveByPackage(ReflectConfig.getRootPackage());
+				weaveByPackage(PackageInfo.getRootPackage());
 			} else {
 				var k:Number = a.length;
 				while (--k-(-1)) weaveByClassAndAspect(a[k], z[i]);
