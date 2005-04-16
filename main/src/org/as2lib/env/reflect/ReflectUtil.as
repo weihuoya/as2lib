@@ -172,7 +172,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 		if (!method || !type) return null;
 		var m:String = getMethodNameByPrototype(method, type.prototype);
 		if (m != null) return m;
-		var s = _global.ASSetPropFlags;
+		var s:Function = _global.ASSetPropFlags;
 		for (var n:String in type) {
 			s(type, null, 0, true);
 			s(type, ["__proto__", "constructor", "prototype"], 7, true);
@@ -203,7 +203,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	private static function getMethodNameByPrototype(method:Function, prototype):String {
 		if (method == null || prototype == null) return null;
 		var p = prototype;
-		var s = _global.ASSetPropFlags;
+		var s:Function = _global.ASSetPropFlags;
 		while (p) {
 			s(p, null, 0, true);
 			s(p, ["__proto__", "__constructor__"], 7, true);
@@ -324,6 +324,43 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	public static function isConstructorByType(method:Function, type:Function):Boolean {
 		if (!method || !type) return false;
 		return (method == type);
+	}
+	
+	/**
+	 * Returns an array that contains the names of the variables of the passed-in
+	 * {@code instance} as {@code String}s.
+	 *
+	 * <p>The resulting array contains all variables' names even those hidden from
+	 * for..in loops. Excluded are only {@code "__proto__"}, {@code "prototype"},
+	 * {@code "__constructor__"} and {@code "constructor"} and members that are of
+	 * type {@code "function"}.
+	 *
+	 * <p>Note that it is not possible to get variables that have been declared in the
+	 * class but have not been initialized yet. These variables' names are thus not
+	 * contained in the resulting array.
+	 *
+	 * <p>This method will never return {@code null}. If the passed-in {@code instance}
+	 * has no variables an empty array will be returned.
+	 *
+	 * @param instance the instance whose varaibles to return
+	 * @return all initialized variables of the passed-in {@code instance}
+	 */
+	public static function getVariableNames(instance):Array {
+		var result:Array = new Array();
+		var s:Function = _global.ASSetPropFlags;
+		s(instance, null, 0, true);
+		s(instance, ["__proto__", "prototype", "__constructor__", "constructor"], 7, true);
+		for (var i:String in instance) {
+			try {
+				if (typeof(instance[i]) != "function") {
+					result.push(i);
+				}
+			} catch (e) {
+				// catches exceptions that may be thrown by properties
+			}
+		}
+		s(instance, null, 1, true);
+		return result;
 	}
 	
 	/**

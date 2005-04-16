@@ -5,6 +5,9 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="3">
+         <day value="16">
+           <entry type="add" package="static org.as2lib.env.reflect" class="ReflectUtil" method="getVariableNames(instance:*):Array">Returns the names of all initialized variables of the "instance".</entry>
+         </day>
          <day value="13">
            <entry type="add" package="org.as2lib.env.log.logger" class="MusicTheoryLogger">Logger support for the Musictheory SWF Console.</entry>
            <entry type="add" package="org.as2lib.env.log.handler" class="MusicTheoryHandler">Handler support for the Musictheory SWF Console.</entry>
