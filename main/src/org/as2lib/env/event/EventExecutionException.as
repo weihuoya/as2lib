@@ -31,8 +31,7 @@ class org.as2lib.env.event.EventExecutionException extends Exception {
 	 * @param scope Scope where the exception was thrown.
 	 * @param args Arguments of the scope.
 	 */
-	public function EventExecutionException(error, message:String, scope, args:FunctionArguments) {
+	public function EventExecutionException(message:String, scope, args:FunctionArguments) {
 		super (message, scope, args);
-		initCause(error);
 	}
 }

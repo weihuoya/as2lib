@@ -296,9 +296,10 @@ class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
 	 */
 	public function toString(Void):String {
 		var result:String;
+		// without braces around "new ByteFormat.." not MTASC compatible
 		result = "[type " + ReflectUtil.getTypeNameForInstance(this)
 				 + " | Location: " + getLocation()
-				 + "; Size: " + new ByteFormat(getBytesTotal()).toString(false, 2)
+				 + "; Size: " + (new ByteFormat(getBytesTotal())).toString(false, 2)
 				 + "; ]";
 		return result;
 	}

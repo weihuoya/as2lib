@@ -97,8 +97,9 @@ class org.as2lib.env.event.SpeedEventBroadcaster extends BasicClass implements E
 				var n:String = e.getName();
 				try {
 					if (n) l.broadcastMessage(n, e);
-				} catch(e) {
-					throw new EventExecutionException(e, "Unexpected Exception thrown during broadcast of "+n, this, arguments);
+				} catch(exception) {
+					// braces are around "new EventExecutionException..." because otherwise it wouldn't be MTASC compatible
+					throw (new EventExecutionException("Unexpected Exception thrown during broadcast of " + n, this, arguments)).initCause(exception);
 				}
 			}
 		}

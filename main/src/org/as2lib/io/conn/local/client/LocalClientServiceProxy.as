@@ -77,6 +77,44 @@ import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
  */
 class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractClientServiceProxy implements ClientServiceProxy {
 	
+	/**
+	 * Generates the response url for a service.
+	 * 
+	 * <p>The response url is composed as follows:
+	 * <pre>theServiceUrl.theMethodName_Return_theIndex</pre>
+	 * 
+	 * <p>If the passed-in {@code methodName} is {@code null}, {@code undefined} or an
+	 * empty string the response url will be composed as follows:
+	 * <pre>theServiceUrl_Return_theIndex</pre>
+	 *
+	 * <p>{@code index} is a number from 0 to infinite depending on how many responses
+	 * are pending.
+	 * 
+	 * @param serviceUrl the url to the service
+	 * @param methodName the name of the responsing method
+	 * @return the generated response url
+	 * @throws IllegalArgumentException if the passed-in {@code serviceUrl} is {@code null},
+	 * {@code undefined} or an empty stirng
+	 */
+	public static function generateResponseServiceUrl(serviceUrl:String, methodName:String):String {
+		if (!serviceUrl) throw new IllegalArgumentException("Service url must not be null, undefined or an empty string.", eval("th" + "is"), arguments);
+		if (!methodName) {
+			var result:String = serviceUrl + "_Return";
+			var i:Number = 0;
+			while (EnhancedLocalConnection.connectionExists(result + "_" + i)) {
+				i++;
+			}
+			return (result + "_" + i);
+		} else {
+			var result:String = serviceUrl + "_" + methodName + "_Return";
+			var i:Number = 0;
+			while (EnhancedLocalConnection.connectionExists(result + "_" + i)) {
+				i++;
+			}
+			return (result + "_" + i);
+		}
+	}
+	
 	/** The url of the service. */
 	private var url:String;
 	
@@ -142,19 +180,24 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 		var index:Number = responseServices.push(responseService) - 1;
 		var owner:LocalClientServiceProxy = this;
 		responseService["onReturn"] = function(returnValue):Void {
-			owner.responseServices.splice(index, 1);
-			callback.onReturn(new MethodInvocationReturnInfo(owner.url, methodName, args, returnValue));
+			// "owner.responseServices" is not MTASC compatible because "responseServices" is private
+			owner["responseServices"].splice(index, 1);
+			// "owner.url" is not MTASC compatible because "url" is private
+			callback.onReturn(new MethodInvocationReturnInfo(owner["url"], methodName, args, returnValue));
 			this.close();
 		}
 		responseService["onError"] = function(errorCode:Number, exception):Void {
-			owner.responseServices.splice(index, 1);
-			callback.onError(new MethodInvocationErrorInfo(owner.url, methodName, args, errorCode, exception));
+			// "owner.responseServices" is not MTASC compatible because "responseServices" is private
+			owner["responseServices"].splice(index, 1);
+			// "owner.url" is not MTASC compatible because "url" is private
+			callback.onError(new MethodInvocationErrorInfo(owner["url"], methodName, args, errorCode, exception));
 			this.close();
 		}
 		try {
 			responseService.connect(responseUrl);
 		} catch (exception:org.as2lib.io.conn.local.core.ReservedConnectionException) {
-			throw new ReservedServiceException("Response service with url [" + responseUrl + "] does already exist.", this, arguments).initCause(exception);
+			// "new ReservedServiceException" without braces is not MTASC compatible
+			throw (new ReservedServiceException("Response service with url [" + responseUrl + "] does already exist.", this, arguments)).initCause(exception);
 		}
 		
 		var errorListener:MethodInvocationErrorListener = getBlankMethodInvocationErrorListener();
@@ -165,7 +208,8 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 		try {
 			connection.send(url, "invokeMethod", [methodName, args, responseUrl], errorListener);
 		} catch (exception:org.as2lib.io.conn.local.core.UnknownConnectionException) {
-			throw new UnknownServiceException("Service with url [" + url + "] does not exist.", this, arguments).initCause(exception);
+			// "new UnknownServiceException" without braces is not MTASC compatible
+			throw (new UnknownServiceException("Service with url [" + url + "] does not exist.", this, arguments)).initCause(exception);
 		}
 		
 		return callback;

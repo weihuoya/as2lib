@@ -49,7 +49,7 @@ class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass impl
 		var name:String = event.getName();
 		var l:Number = listeners.length;
 		for (var i:Number = 0; i < l; i++) {
-			if (getLogger()) getLogger().log("Forwarding event #" + i + " with name " + name);
+			if (getLogger()) getLogger().info("Forwarding event #" + i + " with name " + name);
 			else trace("Forwarding event #" + i + " with name " + name);
 			listeners[i][name](event);
 		}
@@ -62,7 +62,7 @@ class org.as2lib.env.event.dispatcher.LogEventDispatcher extends BasicClass impl
 		var name:String = event.getName();
 		var l:Number = listeners.length;
 		for (var i:Number = 0; i < l && !event.isConsumed(); i++) {
-			if (getLogger()) getLogger().log("Forwarding event #" + i + " with name " + name);
+			if (getLogger()) getLogger().info("Forwarding event #" + i + " with name " + name);
 			else trace("Forwarding event #" + i + " with name " + name);
 			listeners[i][name](event);
 		}
