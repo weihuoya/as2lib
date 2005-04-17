@@ -89,7 +89,8 @@ class org.as2lib.io.conn.local.server.LocalServerRegistry extends BasicClass imp
 		try {
 			connection.connect(host);
 		} catch(exception:org.as2lib.io.conn.local.core.ReservedConnectionException) {
-			throw new ReservedHostException("Server with host [" + host + "] is already running.", this, arguments).initCause(exception);
+			// without braces around "new ReservedHostException.." not MTASC compatible
+			throw (new ReservedHostException("Server with host [" + host + "] is already running.", this, arguments)).initCause(exception);
 		}
 		serverRegistry[host] = connection;
 	}

@@ -288,9 +288,11 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 		// the onStatus-event would get invoked.
 		var index:Number = clientArray.push(client) - 1;
 		client.onStatus = function(info) {
-			owner.clientArray.splice(index, 1);
+			// "owner.clientArray" is not MTASC compatible because "clientArray" is private
+			owner["clientArray"].splice(index, 1);
 			if (info.level == "error") {
-				owner.dispatchError(new MethodInvocationErrorInfo(connectionName, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR));
+				// "owner.dispatchError" is not MTASC compatible because "dispatchError" is private
+				owner["dispatchError"](new MethodInvocationErrorInfo(connectionName, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR));
 				listener.onError(new MethodInvocationErrorInfo(connectionName, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR));
 			}
 		}

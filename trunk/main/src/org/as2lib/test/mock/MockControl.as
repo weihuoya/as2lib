@@ -390,7 +390,8 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 			if (method == "toString" && !owner.areToStringInvocationsHandled()) {
 				return owner.getMock().__proto__.toString.apply(owner.getMock());
 			}
-			return owner.invokeMethod(method, args);
+			// calling private methods from an inner anonymous method is not allowed by MTASC
+			return owner["invokeMethod"](method, args);
 		}
 		return result;
 	}

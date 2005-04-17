@@ -112,8 +112,9 @@ class org.as2lib.env.event.SimpleConsumableEventBroadcaster extends BasicClass i
 						for(var i:Number = 0; i<len; i++) {
 							l[i][n](e);
 						}
-					} catch(e) {
-						throw new EventExecutionException(e, "Unexpected Exception thrown during broadcast of "+n, this, arguments);
+					} catch(exception) {
+						// "new EventExecutionException" without braces is not MTASC compatible because of the following method call to "initCause"
+						throw (new EventExecutionException("Unexpected Exception thrown during broadcast of " + n, this, arguments)).initCause(exception);
 					}
 				}
 			}
@@ -134,8 +135,9 @@ class org.as2lib.env.event.SimpleConsumableEventBroadcaster extends BasicClass i
 						for(var i:Number=0; i<len && !e.isConsumed(); i++) {
 							l[i][n](e);
 						}
-					} catch(e) {
-						throw new EventExecutionException(e, "Unexpected Exception thrown during broadcast of "+n, this, arguments);
+					} catch(exception) {
+						// "new EventExecutionException" without braces is not MTASC compatible because of the following method call to "initCause"
+						throw (new EventExecutionException("Unexpected Exception thrown during broadcast of " + n, this, arguments)).initCause(exception);
 					}
 				}
 			}

@@ -18,7 +18,6 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.conn.core.event.MethodInvocationCallback;
-import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
 
 /**
  * {@code AbstractClientServiceProxy} offers default implementations of some methods
@@ -27,44 +26,6 @@ import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
  * @author Simon Wacker
  */
 class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicClass {
-	
-	/**
-	 * Generates the response url for a service.
-	 * 
-	 * <p>The response url is composed as follows:
-	 * <pre>theServiceUrl.theMethodName_Return_theIndex</pre>
-	 * 
-	 * <p>If the passed-in {@code methodName} is {@code null}, {@code undefined} or an
-	 * empty string the response url will be composed as follows:
-	 * <pre>theServiceUrl_Return_theIndex</pre>
-	 *
-	 * <p>{@code index} is a number from 0 to infinite depending on how many responses
-	 * are pending.
-	 * 
-	 * @param serviceUrl the url to the service
-	 * @param methodName the name of the responsing method
-	 * @return the generated response url
-	 * @throws IllegalArgumentException if the passed-in {@code serviceUrl} is {@code null},
-	 * {@code undefined} or an empty stirng
-	 */
-	public static function generateResponseServiceUrl(serviceUrl:String, methodName:String):String {
-		if (!serviceUrl) throw new IllegalArgumentException("Service url must not be null, undefined or an empty string.", eval("th" + "is"), arguments);
-		if (!methodName) {
-			var result:String = serviceUrl + "_Return";
-			var i:Number = 0;
-			while (EnhancedLocalConnection.connectionExists(result + "_" + i)) {
-				i++;
-			}
-			return (result + "_" + i);
-		} else {
-			var result:String = serviceUrl + "_" + methodName + "_Return";
-			var i:Number = 0;
-			while (EnhancedLocalConnection.connectionExists(result + "_" + i)) {
-				i++;
-			}
-			return (result + "_" + i);
-		}
-	}
 	
 	/**
 	 * Private constructor.

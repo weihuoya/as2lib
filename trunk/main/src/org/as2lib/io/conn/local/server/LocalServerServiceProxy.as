@@ -186,7 +186,8 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 			getConnection().connect(currentServiceUrl);
 			running = true;
 		} catch(exception:org.as2lib.io.conn.local.core.ReservedConnectionException) {
-			throw new ReservedServiceException("Service with url [" + currentServiceUrl + "] is already in use.", this, arguments).initCause(exception);
+			// "new ReservedServiceException" without braces is not MTASC compatible
+			throw (new ReservedServiceException("Service with url [" + currentServiceUrl + "] is already in use.", this, arguments)).initCause(exception);
 		}
 	}
 	
@@ -282,7 +283,8 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 		var listener:MethodInvocationErrorListener = getBlankMethodInvocationErrorListener();
 		var owner:LocalServerServiceProxy = this;
 		listener.onError = function(info:MethodInvocationErrorInfo):Void {
-			owner.getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(owner.currentServiceUrl, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR, null));
+			// "owner.getErrorBroadcaster" and "owner.currentServiceUrl" are not MTASC compatible
+			owner["getErrorBroadcaster"]().dispatch(new MethodInvocationErrorInfo(owner["currentServiceUrl"], methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR, null));
 		}
 		try {
 			if (service[methodName]) {
