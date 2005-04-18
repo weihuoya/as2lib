@@ -213,10 +213,10 @@ class org.as2lib.env.event.AbstractEventDistributionService extends BasicClass {
 		result.__proto__ = this.t.prototype;
 		result.__constructor__ = this.t;
 		var e:AbstractEventDistributionService = this;
+		var d:Function = e["distribute"];
 		result.__resolve = function(n:String):Function {
 			return (function():Void {
-				// "e.distribute" is not MTASC compatible because method "distribute" is private
-				e["distribute"].apply(e, [n].concat(arguments));
+				d.apply(e, [n].concat(arguments));
 			});
 		}
 		return result;
