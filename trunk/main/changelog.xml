@@ -5,6 +5,14 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="3">
+         <day value="18">
+           <entry type="add" package="org.as2lib.env.event" class="EventListenerSource">Declares methods to manipulate a collection of listeners.</entry>
+           <entry type="add" package="org.as2lib.env.event" class="EventDistributionService">Provides method to get a type safe distributor.</entry>
+           <entry type="add" package="org.as2lib.env.event" class="ConsumableEventDistributionService">Marks the 'EventDistributionService' interface as consumable.</entry>
+           <entry type="add" package="org.as2lib.env.event" class="AbstractEventDistributionService">Provides implementations for most methods needed when implementing the 'EventDistributionService' interface.</entry>
+           <entry type="add" package="org.as2lib.env.event" class="Event">Implemenation of 'EventDistributionService'.</entry>
+           <entry type="add" package="org.as2lib.env.event" class="ConsumableEvent">Implementation of 'ConsumableEventDistributionService'.</entry>
+         </day>
          <day value="16">
            <entry type="add" package="static org.as2lib.env.reflect" class="ReflectUtil" method="getVariableNames(instance:*):Array">Returns the names of all initialized variables of the "instance".</entry>
          </day>
