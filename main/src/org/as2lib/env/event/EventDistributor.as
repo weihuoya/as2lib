@@ -1,4 +1,5 @@
-﻿/*
+﻿
+/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -17,22 +18,29 @@
 import org.as2lib.env.event.EventListenerSource;
 
 /**
- * {@code EventDistributionService} services the distribution of events by declaring
- * methods to add, remove and get listeners and to get a distributor that handles
- * the actual distribution in a type-safe manner.
+ * {@code EventDistributor} distributes events to listeners in a compiler-safe
+ * manner.
+ *
+ * <p>You can get a distributor via the {@link getDistributor} method that can be
+ * casted to your listener type. This enables you to distribute events in a
+ * compiler-safe manner.
  * 
  * @author Simon Wacker
  * @author Martin Heidegger
  */
-interface org.as2lib.env.event.EventDistributionService extends EventListenerSource {
+interface org.as2lib.env.event.EventDistributor extends EventListenerSource {
 	
 	/**
-	 * Returns the distributor to distribute the event to all added listeners.
-	 *
+	 * Returns the typed distributor to distribute the event to all added listeners.
+	 * 
 	 * <p>The returned distributor can be casted to the type all added listeners have.
 	 * You can then invoke the event method on it to distribute it to all added
 	 * listeners. This event distribution approach has the advantage of proper
-	 * compile-time type-checking.
+	 * compile-time checking.
+	 *
+	 * <p>Note that the type of the returned distributor depends on the concrete
+	 * implementation of this interface. Most implementations will probably expect the
+	 * listener type to be passed-in on construction.
 	 * 
 	 * @return the distributor to distribute the event
 	 */
