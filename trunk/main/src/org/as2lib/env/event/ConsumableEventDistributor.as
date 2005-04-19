@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.EventDistributionService;
+import org.as2lib.env.event.EventDistributor;
 
 /**
- * {@code ConsumableEventDistributionService} services the distribution of events
- * by declaring methods to add, remove and get listeners and to get a distributor
- * that handles the actual distribution in a type-safe manner.
- *
- * <p>The difference to the {@code EventDistributionService} interface is that a
- * distribution service that implements this interface allows for consumable events.
+ * {@code ConsumableEventDistributor} marks the {@code EventDistributor} interface
+ * as consumable.
+ * 
+ * <p>A distributor that implements this interface allows for consumable events.
  * This means that the event distribution is stopped as soon as an event is
  * consumed.
- *
+ * 
  * <p>An event is consumed if a listener's event method returns {@code true}. If it
  * returns nothing, {@code null} or {@code undefined} or {@code false} the event
  * will further be distributed.
@@ -33,6 +31,6 @@ import org.as2lib.env.event.EventDistributionService;
  * @author Simon Wacker
  * @author Martin Heidegger
  */
-interface org.as2lib.env.event.ConsumableEventDistributionService extends EventDistributionService {
+interface org.as2lib.env.event.ConsumableEventDistributor extends EventDistributor {
 	
 }
