@@ -7,6 +7,7 @@
        <month value="3">
          <day value="19">
            <entry type="add" package="org.as2lib.env.event" class="TypeSafeEventListenerSource">Manages event listeners in a type-safe way.</entry>
+           <entry type="change" package="org.as2lib.env.event" class="ConsumableEventDistributionService"><change-rename to="ConsumableEventDistributor" /></entry>
            <entry type="change" package="org.as2lib.env.event" class="EventDistributionService"><change-rename to="EventDistributor" /></entry>
            <entry type="change" package="org.as2lib.env.event" class="AbstractEventDistributionService"><change-rename to="AbstractEventDistributor" /></entry>
          </day>
