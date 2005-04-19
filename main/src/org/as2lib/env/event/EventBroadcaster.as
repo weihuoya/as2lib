@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicInterface;
-import org.as2lib.env.event.EventListener;
+import org.as2lib.env.event.EventListenerSource;
 import org.as2lib.env.event.EventInfo;
 
 /**
@@ -107,47 +106,17 @@ import org.as2lib.env.event.EventInfo;
  * @see org.as2lib.env.event.ConsumableEventBroadcaster;
  * @see org.as2lib.env.event.DelegatingEventBroadcaster;
  */
-interface org.as2lib.env.event.EventBroadcaster extends BasicInterface {
+interface org.as2lib.env.event.EventBroadcaster extends EventListenerSource {
 	
 	/**
-	 * Adds a listener to the pool of listeners.
+	 * Dispatches the passed-in {@code event} to all added listeners.
 	 * 
-	 * @param listener the EventListener to be added to the pool
-	 */
-	public function addListener(listener:EventListener):Void;
-	
-	/**
-	 * Adds all listeners to the pool of listeners.
-	 *
-	 * @param listeners the listeners to be added
-	 */
-	public function addAllListeners(listeners:Array):Void;
-	
-	/**
-	 * Removes a listener from the pool of listeners.
+	 * <p>The name returned by the {@link EventInfo#getName} method of the passed-in
+	 * {@code event} is used as event method name to invoke on the listeners.
 	 * 
-	 * @param listener the EventListener to be removed
-	 */
-	public function removeListener(listener:EventListener):Void;
-	
-	/**
-	 * Removes all registered listeners.
-	 */
-	public function removeAllListeners(Void):Void;
-	
-	/**
-	 * Returns a copy of the listener pool.
-	 *
-	 * @return a copy of the listener pool
-	 */
-	public function getAllListeners(Void):Array;
-	
-	/**
-	 * Dispatches the events associated with the name cotained in the
-	 * EventInfo instance.
-	 * 
-	 * @param event the EventInfo to be passed to the operation of the EventListeners
-	 * @throws EventExecutionException if a Listener throws a Exception
+	 * @param event the event to dispatch to all listeners
+	 * @throws EventExecutionException if a listener threw an exception during
+	 * dispatching
 	 */
 	public function dispatch(event:EventInfo):Void;
 	
