@@ -79,30 +79,31 @@ class org.as2lib.env.event.ConsumableEvent extends AbstractEventDistributionServ
 	 *
 	 * <p>The distribution will be stopped immediately if an event method of a listener
 	 * returns {@code true} and thus consumes the event.
+	 *
+	 * <p>If {@code args} is {@code null} or {@code undefined} nor parameters will be
+	 * passed to the listeners' event methods.
 	 * 
 	 * @param eventName the name of the event method to execute on the added listeners
-	 * @param .. any number of further arguments that are used as parameters on execution
-	 * of the event on the listeners
+	 * @param args any number of arguments that are used as parameters on execution of
+	 * the event on the listeners
 	 * @throws EventExecutionException if an event method on a listener threw an
 	 * exception
 	 */
-	private function distribute(eventName:String):Void {
+	private function distribute(eventName:String, args:Array):Void {
 		if (eventName != null) {
 			if (this.l.length > 0) {
 				var h:Number = this.l.length;
-				var a:Array = arguments.concat();
-				a.shift();
 				try {
 					for (var i:Number = 0; i < h; i++) {
 						// check "true" explicitely because only an object or something similar
 						// does not suffice, but would also result in "true" for the if-statement
-						if (this.l[i][eventName].apply(this.l[i], a) == true) {
+						if (this.l[i][eventName].apply(this.l[i], args) == true) {
 							return;
 						}
 					}
 				} catch (e) {
 					// "new EventExecutionException" without braces is not MTASC compatible because of the following method call to "initCause"
-					throw (new EventExecutionException("Unexpected exception was thrown during distribution of event [" + eventName + "] on listener [" + this.l[i] + "] with arguments [" + a + "].", this, arguments)).initCause(e);
+					throw (new EventExecutionException("Unexpected exception was thrown during distribution of event [" + eventName + "] on listener [" + this.l[i] + "] with arguments [" + args + "].", this, arguments)).initCause(e);
 				}
 			}
 		}

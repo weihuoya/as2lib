@@ -17,7 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.except.AbstractOperationException;
-import org.as2lib.env.event.EventListener;
 
 /**
  * {@code AbstractEventDistributionService} offers default implementations of
@@ -38,7 +37,7 @@ class org.as2lib.env.event.AbstractEventDistributionService extends BasicClass {
 	private var c:Boolean;
 	
 	/** The distributor to distribute events. */
-	private var d:EventListener;
+	private var d;
 	
 	/**
 	 * Constructs a new {@code AbstractEventDistributionService} instance.
@@ -74,7 +73,7 @@ class org.as2lib.env.event.AbstractEventDistributionService extends BasicClass {
 	 * @throws IllegalArgumentException if the passed-in {@code listener} is not of the
 	 * expected type specified on construction
 	 */
-	public function addListener(listener:EventListener):Void {
+	public function addListener(listener):Void {
 		if (listener) {
 			if (this.c) {
 				if (!(listener instanceof this.t)) {
@@ -151,7 +150,7 @@ class org.as2lib.env.event.AbstractEventDistributionService extends BasicClass {
 	 * 
 	 * @param listener the listener to remove
 	 */
-	public function removeListener(listener:EventListener):Void {
+	public function removeListener(listener):Void {
 		if (listener) {
 			var i:Number = this.l.length;
 			while (--i > -1) {
@@ -194,7 +193,7 @@ class org.as2lib.env.event.AbstractEventDistributionService extends BasicClass {
 	 * 
 	 * @return the distributor to distribute the event
 	 */
-	public function getDistributor(Void):EventListener {
+	public function getDistributor(Void) {
 		if (!this.d) this.d = createDistributor();
 		return this.d;
 	}
@@ -208,7 +207,7 @@ class org.as2lib.env.event.AbstractEventDistributionService extends BasicClass {
 	 * 
 	 * @return the new distributor
 	 */
-	private function createDistributor(Void):EventListener {
+	private function createDistributor(Void) {
 		var result = new Object();
 		result.__proto__ = this.t.prototype;
 		result.__constructor__ = this.t;
@@ -216,7 +215,7 @@ class org.as2lib.env.event.AbstractEventDistributionService extends BasicClass {
 		var d:Function = e["distribute"];
 		result.__resolve = function(n:String):Function {
 			return (function():Void {
-				d.apply(e, [n].concat(arguments));
+				d.apply(e, n, arguments);
 			});
 		}
 		return result;
@@ -227,12 +226,12 @@ class org.as2lib.env.event.AbstractEventDistributionService extends BasicClass {
 	 * the arguments after {@code eventName} as parameters.
 	 * 
 	 * @param eventName the name of the event method to execute on the added listeners
-	 * @param .. any number of further arguments that are used as parameters on execution
-	 * of the event on the listeners
+	 * @param args any number of arguments that are used as parameters on execution of
+	 * the event on the listeners
 	 * @throws EventExecutionException if an event method on a listener threw an
 	 * exception
 	 */
-	private function distribute(eventName:String):Void {
+	private function distribute(eventName:String, args:Array):Void {
 		throw new AbstractOperationException("This method is marked as abstract and must be overwritten.", this, arguments);
 	}
 	

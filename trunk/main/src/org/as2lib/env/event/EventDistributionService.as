@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.env.event.EventListenerSource;
-import org.as2lib.env.event.EventListener;
 
 /**
  * {@code EventDistributionService} services the distribution of events by declaring
@@ -37,6 +36,6 @@ interface org.as2lib.env.event.EventDistributionService extends EventListenerSou
 	 * 
 	 * @return the distributor to distribute the event
 	 */
-	public function getDistributor(Void):EventListener;
+	public function getDistributor(Void);
 	
 }

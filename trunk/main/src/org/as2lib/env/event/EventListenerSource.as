@@ -15,11 +15,10 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.env.event.EventListener;
 
 /**
- * {@code EventListenerSource} acts as a source for {@link EventListener} instances.
- * It declares basic methods to add, remove and get listeners.
+ * {@code EventListenerSource} acts as a source for listeners by declaring basic
+ * methods to add, remove and get listeners.
  * 
  * @author Simon Wacker
  */
@@ -30,11 +29,10 @@ interface org.as2lib.env.event.EventListenerSource extends BasicInterface {
 	 * 
 	 * @param listener the listener to add
 	 */
-	public function addListener(listener:EventListener):Void;
+	public function addListener(listener):Void;
 	
 	/**
-	 * Adds all listeners contained in the passed-in {@code listeners} array. The
-	 * individual listeners must be instances of type {@link EventListener}.
+	 * Adds all listeners contained in the passed-in {@code listeners} array.
 	 * 
 	 * @param listeners the listeners to add
 	 */
@@ -45,7 +43,7 @@ interface org.as2lib.env.event.EventListenerSource extends BasicInterface {
 	 * 
 	 * @param listener the listener to remove
 	 */
-	public function removeListener(listener:EventListener):Void;
+	public function removeListener(listener):Void;
 	
 	/**
 	 * Removes all added listeners.
@@ -53,8 +51,8 @@ interface org.as2lib.env.event.EventListenerSource extends BasicInterface {
 	public function removeAllListeners(Void):Void;
 	
 	/**
-	 * Returns all added listeners that are of type {@link EventListener}.
-	 * 
+	 * Returns all added listeners.
+	 *
 	 * @return all added listeners
 	 */
 	public function getAllListeners(Void):Array;
