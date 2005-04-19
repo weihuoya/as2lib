@@ -81,18 +81,21 @@ class org.as2lib.env.event.Event extends AbstractEventDistributionService implem
 	 *
 	 * <p>If {@code eventName} is {@code null} or {@code undefined} the distribution
 	 * will be omited.
+	 *
+	 * <p>If {@code args} is {@code null} or {@code undefined} nor parameters will be
+	 * passed to the listeners' event methods.
 	 * 
 	 * @param eventName the name of the event method to execute on the added listeners
-	 * @param .. any number of further arguments that are used as parameters on execution
-	 * of the event on the listeners
+	 * @param args any number of arguments that are used as parameters on execution of
+	 * the event on the listeners
 	 * @throws EventExecutionException if an event method on a listener threw an
 	 * exception
 	 */
-	private function distribute(eventName:String):Void {
+	private function distribute(eventName:String, args:Array):Void {
 		if (eventName != null) {
 			if (this.l.length > 0) {
 				try {
-					this.b.broadcastMessage.apply(this.b, arguments);
+					this.b.broadcastMessage.apply(this.b, [eventName].concat(args));
 				} catch (e) {
 					// "new EventExecutionException" without braces is not MTASC compatible because of the following method call to "initCause"
 					throw (new EventExecutionException("Unexpected exception was thrown during distribution of event [" + eventName + "].", this, arguments)).initCause(e);
