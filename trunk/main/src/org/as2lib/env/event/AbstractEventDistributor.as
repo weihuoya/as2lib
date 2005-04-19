@@ -19,13 +19,13 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.except.AbstractOperationException;
 
 /**
- * {@code AbstractEventDistributionService} offers default implementations of
- * methods needed when implementing the {@link EventDistributionService} interface
- * or any sub-interface.
+ * {@code AbstractEventDistributor} offers default implementations of methods
+ * needed when implementing the {@link EventDistributor} interface or any
+ * sub-interface.
  * 
  * @author Simon Wacker
  */
-class org.as2lib.env.event.AbstractEventDistributionService extends BasicClass {
+class org.as2lib.env.event.AbstractEventDistributor extends BasicClass {
 	
 	/** The expected listener type. */
 	private var t:Function;
@@ -40,7 +40,7 @@ class org.as2lib.env.event.AbstractEventDistributionService extends BasicClass {
 	private var d;
 	
 	/**
-	 * Constructs a new {@code AbstractEventDistributionService} instance.
+	 * Constructs a new {@code AbstractEventDistributor} instance.
 	 *
 	 * <p>{@code checkListenerType} is by default set to {@code true}.
 	 *
@@ -50,7 +50,7 @@ class org.as2lib.env.event.AbstractEventDistributionService extends BasicClass {
 	 * @throws IllegalArgumentException if the passed-in {@code listenerType} is
 	 * {@code null} or {@code undefined}
 	 */
-	public function AbstractEventDistributionService(listenerType:Function, checkListenerType:Boolean) {
+	public function AbstractEventDistributor(listenerType:Function, checkListenerType:Boolean) {
 		if (!listenerType) throw new IllegalArgumentException("Argument 'listenerType' [" + listenerType + "] must not be 'null' nor 'undefined'.", this, arguments);
 		this.t = listenerType;
 		this.c = checkListenerType == null ? true : checkListenerType;
@@ -211,7 +211,7 @@ class org.as2lib.env.event.AbstractEventDistributionService extends BasicClass {
 		var result = new Object();
 		result.__proto__ = this.t.prototype;
 		result.__constructor__ = this.t;
-		var e:AbstractEventDistributionService = this;
+		var e:AbstractEventDistributor = this;
 		var d:Function = e["distribute"];
 		result.__resolve = function(n:String):Function {
 			return (function():Void {

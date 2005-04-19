@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.AbstractEventDistributionService;
-import org.as2lib.env.event.EventDistributionService;
+import org.as2lib.env.event.AbstractEventDistributor;
+import org.as2lib.env.event.EventDistributor;
 import org.as2lib.env.event.EventExecutionException;
 
 /**
- * {@code ConsumableEvent} acts as a listener source and event distribution service.
+ * {@code ConsumableEvent} acts as a listener source and event distributor.
  * It enables you to distribute and handle events in the safest way possible.
  *
  * <p>Note that unlike the {@link Event} class, this class supports the consumption
@@ -47,7 +47,7 @@ import org.as2lib.env.event.EventExecutionException;
  * @author Simon Wacker
  * @authro Martin Heidegger
  */
-class org.as2lib.env.event.ConsumableEvent extends AbstractEventDistributionService implements EventDistributionService {
+class org.as2lib.env.event.ConsumableEvent extends AbstractEventDistributor implements EventDistributor {
 	
 	/**
 	 * Constructs a new {@code ConsumableEvent} instance.
