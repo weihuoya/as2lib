@@ -22,7 +22,6 @@ import org.as2lib.env.event.DelegatingConsumableEventBroadcaster;
 import org.as2lib.env.event.ConsumableEventDispatcher;
 import org.as2lib.env.event.EventInfo;
 import org.as2lib.env.event.ConsumableEventInfo;
-import org.as2lib.env.event.EventListener;
 
 /**
  * SimpleConsumableEventBroadcaster is an EventBroadcaster implementation that supports
@@ -68,7 +67,7 @@ class org.as2lib.env.event.SimpleDelegatingConsumableEventBroadcaster extends Ba
 	 *
 	 * @see org.as2lib.env.event.ConsumableEventBroadcaster#addListener()
 	 */
-	public function addListener(listener:EventListener):Void {
+	public function addListener(listener):Void {
 		removeListener(listener);
 		if (listener)
 			listeners.push(listener);
@@ -95,7 +94,7 @@ class org.as2lib.env.event.SimpleDelegatingConsumableEventBroadcaster extends Ba
 	/**
 	 * @see org.as2lib.env.event.ConsumableEventBroadcaster#removeListener()
 	 */
-	public function removeListener(listener:EventListener):Void {
+	public function removeListener(listener):Void {
 		if (listener && listeners.length > 0) {
 			var i:Number = listeners.length;
 			while(--i-(-1)) {
