@@ -14,17 +14,29 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicInterface;
+import org.as2lib.env.event.broadcaster.EventInfo;
 
 /**
+ * {@code ConsumableEventInfo} allows for consuming events.
+ *
+ * <p>You can consume an event using the {@link #consume} method. The method
+ * {@link #isConsumed} checks whether this event info is already consumed.
+ * 
+ * @author Martin Heidegger
  * @author Simon Wacker
  */
-interface org.as2lib.env.event.EventInfo extends BasicInterface {
+interface org.as2lib.env.event.broadcaster.ConsumableEventInfo extends EventInfo {
+	
 	/**
-	 * Returns the name of the event. The name of the event equals the
-	 * name of the operation that will be called on the EventListeners.
-	 *
-	 * @return the specified name
+	 * Marks this event as consumed.
 	 */
-	public function getName(Void):String;
+	public function consume(Void):Void;
+	
+	/**
+	 * Returns whether this event is consumed.
+	 *
+	 * @return {@code true} is this event is consumed else {@code false}
+	 */
+	public function isConsumed(Void):Boolean;
+	
 }

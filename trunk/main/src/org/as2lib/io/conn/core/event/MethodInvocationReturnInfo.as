@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.event.EventInfo;
+import org.as2lib.env.event.broadcaster.EventInfo;
 
 /**
  * {@code MethodInvocationReturnInfo} informs clients that the method invocation

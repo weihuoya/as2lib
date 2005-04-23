@@ -28,7 +28,7 @@ import org.as2lib.env.event.EventListenerSource;
  * @author Simon Wacker
  * @author Martin Heidegger
  */
-interface org.as2lib.env.event.EventDistributor extends EventListenerSource {
+interface org.as2lib.env.event.distributor.EventDistributor extends EventListenerSource {
 	
 	/**
 	 * Returns the typed distributor to distribute the event to all added listeners.

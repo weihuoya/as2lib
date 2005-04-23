@@ -17,21 +17,32 @@
 import org.as2lib.env.except.Exception;
 
 /**
- * Exception as Wrapper for a exception thrown during execution of a event.
- *
+ * {@code EventExecutionException} is thrown when the execution of an event failed.
+ * This is for example when an event method of a listener throws an exception.
+ * 
  * @author Martin Heidegger
+ * @author Simon Wacker
  */
 class org.as2lib.env.event.EventExecutionException extends Exception {
 	
 	/**
-	 * Constructs a new EventExecutionExceptions
+	 * Constructs a new {@code EventExecutionException} instance.
 	 *
-	 * @param error Generic error to wrap
-	 * @param message Message to the exception.
-	 * @param scope Scope where the exception was thrown.
-	 * @param args Arguments of the scope.
+	 * <p>All arguments are allowed to be {@code null} or {@code undefined}. But if one
+	 * is, the string representation returned by the {@code toString} method will not
+	 * be complete.
+	 *
+	 * <p>The {@code args} array should be the internal arguments array of the method
+	 * that throws the throwable. The internal arguments array exists in every method
+	 * and contains its parameters, the callee method and the caller method. You can
+	 * refernce it in every method using the name {@code "arguments"}.
+	 *
+	 * @param message the message that describes the problem in detail
+	 * @param thrower the object that declares the method that throws this exception
+	 * @param args the arguments of the throwing method
 	 */
-	public function EventExecutionException(message:String, scope, args:FunctionArguments) {
-		super (message, scope, args);
+	public function EventExecutionException(message:String, thrower, args:FunctionArguments) {
+		super (message, thrower, args);
 	}
+	
 }

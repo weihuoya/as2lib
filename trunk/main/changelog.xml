@@ -5,6 +5,16 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="3">
+         <day value="23">
+           <entry type="remove" package="org.as2lib.env.event.dispatcher"></entry>
+           <entry type="change" package="org.as2lib.env.event" class="*Event"><change-move to="org.as2lib.env.event.distributor"/></entry>
+           <entry type="change" package="org.as2lib.env.event" class="*EventDistributor"><change-move to="org.as2lib.env.event.distributor"/></entry>
+           <entry type="change" package="org.as2lib.env.event" class="*EventBroadcasterFactory"><change-move to="org.as2lib.env.event.broadcaster"/></entry>
+           <entry type="change" package="org.as2lib.env.event" class="*EventInfo"><change-move to="org.as2lib.env.event.broadcaster"/></entry>
+           <entry type="change" package="org.as2lib.env.event" class="*EventBroadcaster"><change-move to="org.as2lib.env.event.broadcaster"/></entry>
+           <entry type="add" package="org.as2lib.env.event.multicaster">Allows for multicasting events with custom arguments.</entry>
+           <entry type="add" package="org.as2lib.env.event" class="SimpleEventListenerSource"></entry>
+         </day>
          <day value="19">
            <entry type="add" package="org.as2lib.env.event" class="TypeSafeEventListenerSource">Manages event listeners in a type-safe way.</entry>
            <entry type="change" package="org.as2lib.env.event" class="ConsumableEventDistributionService"><change-rename to="ConsumableEventDistributor" /></entry>

@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.env.event.EventInfo;
+import org.as2lib.env.event.broadcaster.EventInfo;
 import org.as2lib.test.unit.TestRunner;
 
 /**

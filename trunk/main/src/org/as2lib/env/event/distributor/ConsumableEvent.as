@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.AbstractEventDistributor;
-import org.as2lib.env.event.EventDistributor;
 import org.as2lib.env.event.EventExecutionException;
+import org.as2lib.env.event.distributor.AbstractEventDistributor;
+import org.as2lib.env.event.distributor.EventDistributor;
 
 /**
  * {@code ConsumableEvent} acts as a listener source and event distributor.
@@ -47,7 +47,7 @@ import org.as2lib.env.event.EventExecutionException;
  * @author Simon Wacker
  * @authro Martin Heidegger
  */
-class org.as2lib.env.event.ConsumableEvent extends AbstractEventDistributor implements EventDistributor {
+class org.as2lib.env.event.distributor.ConsumableEvent extends AbstractEventDistributor implements EventDistributor {
 	
 	/**
 	 * Constructs a new {@code ConsumableEvent} instance.
@@ -93,8 +93,9 @@ class org.as2lib.env.event.ConsumableEvent extends AbstractEventDistributor impl
 		if (eventName != null) {
 			if (this.l.length > 0) {
 				var h:Number = this.l.length;
+				var i:Number;
 				try {
-					for (var i:Number = 0; i < h; i++) {
+					for (i = 0; i < h; i++) {
 						// check "true" explicitely because only an object or something similar
 						// does not suffice, but would also result in "true" for the if-statement
 						if (this.l[i][eventName].apply(this.l[i], args) == true) {

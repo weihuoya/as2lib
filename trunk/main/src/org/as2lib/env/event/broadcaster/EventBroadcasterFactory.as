@@ -15,25 +15,20 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.env.event.EventInfo;
+import org.as2lib.env.event.broadcaster.EventBroadcaster;
 
 /**
- * EventDispatchers are used to dispatch to EventListeners.
- * Implement the EventDispatcher for different ways to dispatch events.
- * It is possible to add an EventDispatcher instance to a DelegatingEventBroadcaster.
+ * {@code EventBroadcasterFactory} creates and returns new event broadcasters.
  * 
- * @author Simon Wacker
  * @author Martin Heidegger
- * @see org.as2lib.env.event.DelegatingEventBroadcaster#setEventDispatcher()
  */
-interface org.as2lib.env.event.EventDispatcher extends BasicInterface {
+interface org.as2lib.env.event.broadcaster.EventBroadcasterFactory extends BasicInterface {
 	
 	/**
-	 * Dispatches the event to all EventListeners with the help of the EventInfo
-	 * instance.
-	 *
-	 * @param info the EventInfo to be passed to the event
-	 * @param listeners the EventListeners to dispatch to
+	 * Creates and returns a new event broadcaster.
+	 * 
+	 * @return a new event broadcaster
 	 */
-	public function dispatch(event:EventInfo, listeners:Array):Void;
+	public function createEventBroadcaster(Void):EventBroadcaster;
+	
 }

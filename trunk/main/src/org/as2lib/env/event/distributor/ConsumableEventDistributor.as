@@ -14,25 +14,23 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.EventInfo;
+import org.as2lib.env.event.distributor.EventDistributor;
 
 /**
- * Extension of usual EventInfo including consume functionality.
+ * {@code ConsumableEventDistributor} marks the {@code EventDistributor} interface
+ * as consumable.
+ * 
+ * <p>A distributor that implements this interface allows for consumable events.
+ * This means that the event distribution is stopped as soon as an event is
+ * consumed.
+ * 
+ * <p>An event is consumed if a listener's event method returns {@code true}. If it
+ * returns nothing, {@code null} or {@code undefined} or {@code false} the event
+ * will further be distributed.
  *
+ * @author Simon Wacker
  * @author Martin Heidegger
- * @see EventInfo
  */
-interface org.as2lib.env.event.ConsumableEventInfo extends EventInfo {
+interface org.as2lib.env.event.distributor.ConsumableEventDistributor extends EventDistributor {
 	
-	/**
-	 * Marks the Consumable as consumed.
-	 */
-	public function consume(Void):Void;
-	
-	/**
-	 * Returns whether the Consumable has already been consumed.
-	 *
-	 * @return true if the Consumable is marked as consumed else false
-	 */
-	public function isConsumed(Void):Boolean;
 }

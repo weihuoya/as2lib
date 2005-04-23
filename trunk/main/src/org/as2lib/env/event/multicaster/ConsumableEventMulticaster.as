@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.EventDistributor;
+import org.as2lib.env.event.multicaster.EventMulticaster;
 
 /**
- * {@code ConsumableEventDistributor} marks the {@code EventDistributor} interface
- * as consumable.
- * 
- * <p>A distributor that implements this interface allows for consumable events.
- * This means that the event distribution is stopped as soon as an event is
- * consumed.
+ * {@code ConsumableEventMulticaster} multicasts an event to all added listeners
+ * with custom arguments until the event is consumed.
+ *
+ * <p>A multicaster that implements this interface allows for consumable events.
+ * This means that the event dispatch is stopped as soon as an event is consumed.
  * 
  * <p>An event is consumed if a listener's event method returns {@code true}. If it
  * returns nothing, {@code null} or {@code undefined} or {@code false} the event
- * will further be distributed.
- *
+ * will further be dispatched.
+ * 
  * @author Simon Wacker
- * @author Martin Heidegger
  */
-interface org.as2lib.env.event.ConsumableEventDistributor extends EventDistributor {
+interface org.as2lib.env.event.multicaster.ConsumableEventMulticaster extends EventMulticaster {
 	
 }
