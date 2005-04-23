@@ -14,30 +14,23 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
-import org.as2lib.env.event.EventInfo;
+import org.as2lib.env.event.EventListenerSource;
 
 /**
- * A simple implementation of the EventInfo interface. You can use this class
- * if you do not want to pass any specific information to the EventListener.
- *
+ * {@code EventMulticaster} multicasts an event to all added listeners with custom
+ * arguments.
+ * 
  * @author Simon Wacker
  */
-class org.as2lib.env.event.SimpleEventInfo extends BasicClass implements EventInfo {
-	/** Name of the event */
-	private var name:String;
+interface org.as2lib.env.event.multicaster.EventMulticaster extends EventListenerSource {
 	
 	/**
-	 * Constructs a SimpleEventInfo.
+	 * Dispatches the event to all added listeners passing the given arguments as
+	 * parameters to the listeners' event methods.
+	 *
+	 * @param .. any number of arguments to pass to the listeners' event methods
+	 * @throws EventExecutionException if a listener's event method threw an exception
 	 */
-	public function SimpleEventInfo(name:String) {
-		this.name = name;
-	}
+	public function dispatch():Void;
 	
-	/**
-	 * @see org.as2lib.env.event.EventInfo
-	 */
-	public function getName(Void):String {
-		return this.name;
-	}
 }

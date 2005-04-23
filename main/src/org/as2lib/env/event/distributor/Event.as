@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.AbstractEventDistributor;
-import org.as2lib.env.event.EventDistributor;
 import org.as2lib.env.event.EventExecutionException;
+import org.as2lib.env.event.distributor.AbstractEventDistributor;
+import org.as2lib.env.event.distributor.EventDistributor;
 
 /**
  * {@code Event} acts as a listener source and event distributor. It enables you to
@@ -38,7 +38,7 @@ import org.as2lib.env.event.EventExecutionException;
  * @author Simon Wacker
  * @authro Martin Heidegger
  */
-class org.as2lib.env.event.Event extends AbstractEventDistributor implements EventDistributor {
+class org.as2lib.env.event.distributor.Event extends AbstractEventDistributor implements EventDistributor {
 	
 	/** The wrapped {@code AsBroadcaster} needed for actual distribution. */
 	private var b;

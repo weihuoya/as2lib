@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.ConsumableEventBroadcaster;
-import org.as2lib.env.event.ConsumableEventDispatcher;
+import org.as2lib.env.event.broadcaster.EventBroadcaster;
 
 /**
- * Special form of EventBroadcaster that delegates the dispatching process
- * to a EventDispatcher. You can implement your own EventDispatcher and
- * have thus the freedom to dispatch events at your will.
+ * {@code ConsumableEventBroadcaster} dispatches events to all listeners with the
+ * help of an {@link EventInfo} or {@link ConsumableEventInfo} until the event has
+ * been consumed.
+ *
+ * <p>The dispatching of the event will be stopped as soon as the event is consumed.
+ * The event can be consumed by calling the appropriate method on the
+ * {@code ConsumableEventInfo} instance passed to the {@code dispatch} method and
+ * from there to the appropriate event method on the listeners.
  * 
  * @author Martin Heidegger
  * @author Simon Wacker
  */
-interface org.as2lib.env.event.DelegatingConsumableEventBroadcaster extends ConsumableEventBroadcaster {
-	/**
-	 * Sets the EventDispatcher to delegate to.
-	 * 
-	 * @param eventDispatcher EventDispatcher instance to delegate to
-	 */
-	public function setDispatcher(eventDispatcher:ConsumableEventDispatcher):Void;
+interface org.as2lib.env.event.broadcaster.ConsumableEventBroadcaster extends EventBroadcaster {
+	
 }

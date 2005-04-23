@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.SimpleEventInfo;
+import org.as2lib.env.event.broadcaster.SimpleEventInfo;
 import org.as2lib.io.file.File;
 
 /**

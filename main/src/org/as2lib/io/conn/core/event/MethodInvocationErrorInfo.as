@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.event.EventInfo;
+import org.as2lib.env.event.broadcaster.EventInfo;
 
 /**
  * {@code MethodInvocationErrorInfo} informs the client of an error that occured on

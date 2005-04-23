@@ -24,7 +24,7 @@ import org.as2lib.env.event.TypeSafeEventListenerSource;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.env.event.AbstractEventDistributor extends TypeSafeEventListenerSource {
+class org.as2lib.env.event.distributor.AbstractEventDistributor extends TypeSafeEventListenerSource {
 	
 	/** The distributor to distribute events. */
 	private var d;

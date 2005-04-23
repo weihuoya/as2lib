@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.event.EventBroadcaster;
-import org.as2lib.env.event.SimpleEventInfo;
-import org.as2lib.env.event.SpeedEventBroadcaster;
+import org.as2lib.env.event.broadcaster.EventBroadcaster;
+import org.as2lib.env.event.broadcaster.SimpleEventInfo;
+import org.as2lib.env.event.broadcaster.SpeedEventBroadcaster;
 import org.as2lib.io.file.File;
 import org.as2lib.io.file.ByteFormat;
 import org.as2lib.io.file.FileListener;

@@ -1,4 +1,4 @@
-﻿import org.as2lib.env.event.SimpleEventInfo;
+﻿import org.as2lib.env.event.broadcaster.SimpleEventInfo;
 import org.as2lib.app.exec.Process;
 
 class org.as2lib.app.exec.ProcessInfo extends SimpleEventInfo {

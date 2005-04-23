@@ -1,5 +1,5 @@
-﻿import org.as2lib.env.event.EventBroadcaster;
-import org.as2lib.env.event.SpeedEventBroadcaster;
+﻿import org.as2lib.env.event.broadcaster.EventBroadcaster;
+import org.as2lib.env.event.broadcaster.SpeedEventBroadcaster;
 import org.as2lib.app.exec.Process;
 import org.as2lib.app.exec.ProcessInfo;
 import org.as2lib.app.exec.ProcessListener;

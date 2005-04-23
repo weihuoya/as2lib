@@ -15,19 +15,23 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.env.event.EventBroadcaster;
 
 /**
- * EventBroadcasterFactory creates new EventBroadcasters.
+ * {@code EventInfo} provides at least information about the name of the event and
+ * possibly further information.
  * 
- * @author Martin Heidegger
+ * @author Simon Wacker
  */
-interface org.as2lib.env.event.EventBroadcasterFactory extends BasicInterface {
+interface org.as2lib.env.event.broadcaster.EventInfo extends BasicInterface {
+	
 	/**
-	 * Creates and returns a new instance of an implementation of the
-	 * EventBroadcaster interface.
+	 * Returns the name of the event.
+	 *
+	 * <p>The name of the event must be the same as the method to invoke on the listener
+	 * this event serves.
 	 * 
-	 * @return a new instance of a class that implements the EventBroadcaster interface
+	 * @return the name of the event
 	 */
-	public function createEventBroadcaster(Void):EventBroadcaster;
+	public function getName(Void):String;
+	
 }

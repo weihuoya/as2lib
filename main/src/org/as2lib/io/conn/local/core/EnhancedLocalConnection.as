@@ -16,8 +16,8 @@
  
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.env.event.EventBroadcaster;
-import org.as2lib.env.event.SpeedEventBroadcaster;
+import org.as2lib.env.event.broadcaster.EventBroadcaster;
+import org.as2lib.env.event.broadcaster.SpeedEventBroadcaster;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;

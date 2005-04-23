@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.EventBroadcaster;
-import org.as2lib.env.event.SpeedEventBroadcaster;
+import org.as2lib.env.event.broadcaster.EventBroadcaster;
+import org.as2lib.env.event.broadcaster.SpeedEventBroadcaster;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.conn.core.server.AbstractServerServiceProxy;
 import org.as2lib.io.conn.core.server.ServerServiceProxy;
