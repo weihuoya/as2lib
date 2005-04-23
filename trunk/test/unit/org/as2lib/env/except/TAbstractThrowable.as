@@ -22,7 +22,6 @@ import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.data.holder.Stack;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.env.except.StackTraceElement;
-import org.as2lib.env.except.ExceptConfig;
 
 /**
  * Basic validation of all 

@@ -41,17 +41,17 @@ import org.as2lib.test.unit.TestSuiteFactory;
 //    * org.as2lib.env.log.LogManager
 //
   
-  // Use a LoggerHierarchy as repository and takes a RootLogger with level All
+  // Use a LoggerHierarchy as repository and take a TraceLogger by default
   var loggerHierarchy:LoggerHierarchy = new LoggerHierarchy(new RootLogger(AbstractLogLevel.ALL));
   
   // Tell the Logger Repository to use the loggerHierarchy for default.
   LogManager.setLoggerRepository(loggerHierarchy); 
   
-  var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("org.as2lib");
-  //logger.addHandler(new TraceHandler());
+  var traceLogger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("org.as2lib");
+  traceLogger.addHandler(new TraceHandler());
   
   // Log to trace console in org.as2lib package
-  loggerHierarchy.addLogger(logger);
+  loggerHierarchy.addLogger(traceLogger);
   
   // Example for your package
   /*

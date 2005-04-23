@@ -15,14 +15,14 @@
  */
 
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.env.event.EventBroadcaster;
+import org.as2lib.env.event.broadcaster.EventBroadcaster;
 import org.as2lib.env.event.EventListener;
-import org.as2lib.env.event.SampleEventListener;
-import org.as2lib.env.event.ConsumableEventBroadcaster;
-import org.as2lib.env.event.ConsumableEventInfo;
-import org.as2lib.env.event.AbstractTEventBroadcaster;
+import org.as2lib.env.event.broadcaster.SampleEventListener;
+import org.as2lib.env.event.broadcaster.ConsumableEventBroadcaster;
+import org.as2lib.env.event.broadcaster.ConsumableEventInfo;
+import org.as2lib.env.event.broadcaster.AbstractTEventBroadcaster;
 
-class org.as2lib.env.event.AbstractTConsumableEventBroadcaster extends AbstractTEventBroadcaster {
+class org.as2lib.env.event.broadcaster.AbstractTConsumableEventBroadcaster extends AbstractTEventBroadcaster {
 	
 	public static function blockCollecting(Void):Boolean {
 		return true;
@@ -60,7 +60,7 @@ class org.as2lib.env.event.AbstractTConsumableEventBroadcaster extends AbstractT
 		
 		eb.addListener(list1);
 		eb.addListener(list2);
-		eb.dispatchConsumable(info);
+		eb.dispatch(info);
 		
 		infoControl.verify();
 		list1Control.verify();

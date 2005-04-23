@@ -17,7 +17,7 @@
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.test.mock.support.TypeArgumentsMatcher;
-import org.as2lib.env.event.EventBroadcaster;
+import org.as2lib.env.event.broadcaster.EventBroadcaster;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
 import org.as2lib.io.conn.local.server.LocalServerServiceProxy;
