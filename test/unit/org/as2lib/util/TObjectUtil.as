@@ -33,7 +33,7 @@ class org.as2lib.util.TObjectUtil extends TestCase {
 	/**
 	 * Tests if .getChildName really returns the childname or returns null.
 	 */
-	public function testGetChildName(Void):Void {
+	/*public function testGetChildName(Void):Void {
 		var complexObject:Object = new Object();
 		complexObject.test = "c";
 		
@@ -46,7 +46,7 @@ class org.as2lib.util.TObjectUtil extends TestCase {
 		assertEquals("The childname of 'b' should be test", ObjectUtil.getChildName(inObject, "b"), "test");
 		assertEquals("The childname of 'complexObject' should be test2", ObjectUtil.getChildName(inObject, complexObject), "test2");
 		assertNull("The Subchild 'c' shoud not be found!", ObjectUtil.getChildName(inObject, "c"));
-	}
+	}*/
 	
 	/**
 	 * Compares the types of different cases.
@@ -245,7 +245,7 @@ class org.as2lib.util.TObjectUtil extends TestCase {
 	/**
 	 * Tests the isEmpty method with a positive and negative case.
 	 */
-	public function testIsEmpty(Void):Void {
+	/*public function testIsEmpty(Void):Void {
 		var string:String = "a";
 		var nullValue:Object = null;
 		var undefinedValue:Object = undefined;
@@ -253,12 +253,12 @@ class org.as2lib.util.TObjectUtil extends TestCase {
 		assertFalse("'string' is not empty", ObjectUtil.isEmpty(string));
 		assertTrue("'nullValue' is empty", ObjectUtil.isEmpty(nullValue));
 		assertTrue("'undefinedValue' is empty", ObjectUtil.isEmpty(undefinedValue));
-	}
+	}*/
 	
 	/**
 	 * Tests the .isAvailable method. (Inversion of the isEmpty test)
 	 */
-	public function testIsAvailable(Void):Void {
+	/*public function testIsAvailable(Void):Void {
 		var string:String = "a";
 		var nullValue:Object = null;
 		var undefinedValue:Object = undefined;
@@ -266,7 +266,7 @@ class org.as2lib.util.TObjectUtil extends TestCase {
 		assertTrue("'string' is not empty", ObjectUtil.isAvailable(string));
 		assertFalse("'nullValue' is empty", ObjectUtil.isAvailable(nullValue));
 		assertFalse("'undefinedValue' is empty", ObjectUtil.isAvailable(undefinedValue));
-	}
+	}*/
 	
 	
 	/**

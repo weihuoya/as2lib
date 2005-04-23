@@ -21,7 +21,7 @@ import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
-import org.as2lib.env.event.EventBroadcaster;
+import org.as2lib.env.event.broadcaster.EventBroadcaster;
 
 /**
  * @author Simon Wacker

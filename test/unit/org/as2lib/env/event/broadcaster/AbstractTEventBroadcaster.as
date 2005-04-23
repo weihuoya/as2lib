@@ -15,12 +15,12 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.env.event.EventBroadcaster;
+import org.as2lib.env.event.broadcaster.EventBroadcaster;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.event.EventListener;
-import org.as2lib.env.event.EventInfo;
+import org.as2lib.env.event.broadcaster.EventInfo;
 
-class org.as2lib.env.event.AbstractTEventBroadcaster extends TestCase {
+class org.as2lib.env.event.broadcaster.AbstractTEventBroadcaster extends TestCase {
 	
 	public static function blockCollecting(Void):Boolean {
 		return true;
