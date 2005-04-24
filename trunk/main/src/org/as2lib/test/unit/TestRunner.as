@@ -50,8 +50,8 @@ import org.as2lib.env.reflect.ClassInfo;
  * This is the heart of the TestSystem. All Tests get executed here.
  * It contains a execution service for TestSuites and TestCase.
  * 
- * To use the TestRunner you simple have to instanciate it and run some
- * @see TestCase to it.
+ * <p>To use the TestRunner you simple have to instanciate it and run some
+ * {@link TestCase} to it.
  * 
  * Example:
  * <code>
@@ -63,23 +63,23 @@ import org.as2lib.env.reflect.ClassInfo;
  * testRunner.run(new MyTestCase()); // alternativly you have a faster .runTestCase
  * </code>
  * 
- * You can get the result of the running testcase(s) by @see #getTestResult.
+ * <p>You can get the result of the running testcase(s) by @see #getTestResult.
  * It contains all Informations about the resulted testcases.
  * 
- * It is also possible to add Listener to the TestRunner by @see #addListener.
+ * <p>It is also possible to add Listener to the TestRunner by @see #addListener.
  * In this way it is possible to build a graphical view to the TestRunner
  * (TestRunner is the Controller and TestResult the Model -> MVC). The Listener
- * definition is made with @see org.as2lib.test.unit.TestListener.
+ * definition is made with {@link org.as2lib.test.unit.TestListener}.
+ *
+ * <p>Note: There is currently no better abstraction Level Possible so we have to differ
+ *       between TestCase & TestSuite. The current implementation of .run allows only those
+ *       two classes.
  * 
  * The current State of the testrunner can be evaluated by:
  * @see #isRunning
  * @see #isPaused
  * @see #isStarted
  * @see #isFinished
- * 
- * Note: There is currently no better abstraction Level Possible so we have to differ
- *       between TestCase & TestSuite. The current implementation of .run allows only those
- *       two classes.
  * 
  * @author Martin Heidegger
  */
@@ -393,7 +393,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 				try {
 					testCaseInstance.setUp();
 				} catch (e) {
-					methodInfo.addInfo(new SetUpError("IMPORTANT: Error occured during set up. (Testcase won't get executed!)\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
+					methodInfo.addInfo(new SetUpError("IMPORTANT: Error occured during set up(Testcase wasn't executed):\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
 				}
 			}
 			
@@ -406,7 +406,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 					pauseAllowed = true;
 					methodInfo.executeTo(testCaseInstance);
 				} catch (e) {
-					methodInfo.addInfo(new ExecutionError(methodInfo.getMethodInfo().toString()+" threw a unexpected exception .\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
+					methodInfo.addInfo(new ExecutionError(methodInfo.getMethodInfo().toString()+" threw a unexpected exception:\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
 				}
 				pauseAllowed = false;
 				
@@ -432,7 +432,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 			try {
 				testCaseInstance.tearDown();
 			} catch(e) {
-				methodInfo.addInfo(new TearDownError("IMPORTANT: Error occured during tear down.\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
+				methodInfo.addInfo(new TearDownError("IMPORTANT: Error occured during tear down:\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
 			}
 		}
 		
