@@ -70,8 +70,7 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Test
 	 * @param finishInfo Informations about the TestRunner that finished.
 	 */
 	public function onFinish(finishInfo:FinishInfo):Void {
-		var testRunner:TestRunner = finishInfo.getTestRunner();
-	    getLogger().info(testRunner.getTestResult().toString());
+		getLogger().info("\n"+finishInfo.getTestRunner().getTestResult().toString());
 	}
 	
 	/**
