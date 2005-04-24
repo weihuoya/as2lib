@@ -134,7 +134,8 @@ org.as2lib.env.bean.factory.support.TRootBeanDefinition;
 // org.as2lib.env.event.broadcaster
 org.as2lib.env.event.broadcaster.TSpeedEventBroadcaster;
 org.as2lib.env.event.broadcaster.TSimpleConsumableEventBroadcaster;
-//org.as2lib.env.event.broadcaster.TSimpleEventBroadcaster;
+org.as2lib.env.event.TSimpleEventListenerSource;
+org.as2lib.env.event.TTypeSafeEventListenerSource;
  
 // org.as2lib.env.except
 // - TODO some problem with TIllegalStateException and TUnsupportedOperationException exceeds 256 levels of recursion -

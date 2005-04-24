@@ -19,6 +19,7 @@ import org.as2lib.env.event.broadcaster.EventBroadcaster;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.event.EventListener;
 import org.as2lib.env.event.broadcaster.EventInfo;
+import org.as2lib.env.event.broadcaster.SampleEventListener;
 
 class org.as2lib.env.event.broadcaster.AbstractTEventBroadcaster extends TestCase {
 	
@@ -37,16 +38,21 @@ class org.as2lib.env.event.broadcaster.AbstractTEventBroadcaster extends TestCas
 	}
 	
 	public function testDispatchWithNullEventInfo(Void):Void {
-		var lc:MockControl = new MockControl(EventListener);
-		var l:EventListener = lc.getMock();
-		lc.replay();
+		var l1c:MockControl = new MockControl(EventListener);
+		var l1:EventListener = l1c.getMock();
+		l1c.replay();
+		
+		var l2c:MockControl = new MockControl(SampleEventListener);
+		var l2:EventListener = l2c.getMock();
+		l2c.replay();
 		
 		var b:EventBroadcaster = getEventBroadcaster();
-		b.addListener(l);
-		b.addListener(l);
+		b.addListener(l1);
+		b.addListener(l2);
 		b.dispatch(null);
 		
-		lc.verify();
+		l1c.verify();
+		l2c.verify();
 	}
 	
 	// error with simple event broadcaster
@@ -57,17 +63,46 @@ class org.as2lib.env.event.broadcaster.AbstractTEventBroadcaster extends TestCas
 		ec.setReturnValue(null);
 		ec.replay();
 		
-		var lc:MockControl = new MockControl(EventListener);
-		var l:EventListener = lc.getMock();
-		lc.replay();
+		var l1c:MockControl = new MockControl(SampleEventListener);
+		var l1:EventListener = l1c.getMock();
+		l1c.replay();
+		
+		var l2c:MockControl = new MockControl(SampleEventListener);
+		var l2:EventListener = l2c.getMock();
+		l2c.replay();
 		
 		var b:EventBroadcaster = getEventBroadcaster();
-		b.addListener(l);
-		b.addListener(l);
-		b.addListener(l);
+		b.addListener(l1);
+		b.addListener(l2);
 		b.dispatch(e);
 		
-		lc.verify();
+		l1c.verify();
+		l2c.verify();
+		ec.verify();
+	}
+	
+	public function testDispatchWithEmptyStringName(Void):Void {
+		var ec:MockControl = new MockControl(EventInfo);
+		var e:EventInfo = ec.getMock();
+		e.getName();
+		ec.setReturnValue("");
+		ec.replay();
+		
+		var l1c:MockControl = new MockControl(SampleEventListener);
+		var l1:EventListener = l1c.getMock();
+		l1c.replay();
+		
+		var l2c:MockControl = new MockControl(SampleEventListener);
+		var l2:EventListener = l2c.getMock();
+		l2c.replay();
+		
+		var b:EventBroadcaster = getEventBroadcaster();
+		b.addListener(l1);
+		b.addListener(l2);
+		b.dispatch(e);
+		
+		l1c.verify();
+		l2c.verify();
 		ec.verify();
 	}
 	
@@ -76,26 +111,21 @@ class org.as2lib.env.event.broadcaster.AbstractTEventBroadcaster extends TestCas
 		var ec:MockControl = new MockControl(EventInfo);
 		var e:EventInfo = ec.getMock();
 		e.getName();
-		ec.setReturnValue("toString");
+		ec.setReturnValue("onTest");
 		ec.replay();
 		
-		var lc:MockControl = new MockControl(EventListener);
-		var l:EventListener = lc.getMock();
-		l.toString(e);
-		lc.setVoidCallable(1);
+		var lc:MockControl = new MockControl(SampleEventListener);
+		var l:SampleEventListener = lc.getMock();
+		l.onTest(e);
 		lc.replay();
 		
-		var lc2:MockControl = new MockControl(EventListener);
-		var l2:EventListener = lc2.getMock();
-		l2.toString(e);
-		lc2.setVoidCallable(1);
+		var lc2:MockControl = new MockControl(SampleEventListener);
+		var l2:SampleEventListener = lc2.getMock();
+		l2.onTest(e);
 		lc2.replay();
 		
 		var b:EventBroadcaster = getEventBroadcaster();
 		b.addListener(l);
-		b.addListener(l);
-		b.addListener(l);
-		b.addListener(l2);
 		b.addListener(l2);
 		b.dispatch(e);
 		
@@ -104,7 +134,42 @@ class org.as2lib.env.event.broadcaster.AbstractTEventBroadcaster extends TestCas
 		ec.verify();
 	}
 	
-	public function testAddListenerWithNullArgument(Void):Void {
+	public function testDispatchWithExceptionThrowingListener(Void):Void {
+		var ec:MockControl = new MockControl(EventInfo);
+		var e:EventInfo = ec.getMock();
+		e.getName();
+		ec.setReturnValue("onTest");
+		ec.replay();
+		
+		var lc:MockControl = new MockControl(SampleEventListener);
+		var l:SampleEventListener = lc.getMock();
+		l.onTest(e);
+		lc.replay();
+		
+		var error:Error = new Error("error");
+		
+		var lc2:MockControl = new MockControl(SampleEventListener);
+		var l2:SampleEventListener = lc2.getMock();
+		l2.onTest(e);
+		lc2.setThrowable(error);
+		lc2.replay();
+		
+		var b:EventBroadcaster = getEventBroadcaster();
+		b.addListener(l);
+		b.addListener(l2);
+		try {
+			b.dispatch(e);
+			fail("expected org.as2lib.env.event.EventExecutionException exception");
+		} catch (exception:org.as2lib.env.event.EventExecutionException) {
+			assertSame("cause not initialized correctly", exception.getCause(), error);
+		}
+		
+		lc.verify();
+		lc2.verify();
+		ec.verify();
+	}
+	
+	/*public function testAddListenerWithNullArgument(Void):Void {
 		var b:EventBroadcaster = getEventBroadcaster();
 		b.addListener(null);
 		b.addListener(null);
@@ -191,5 +256,6 @@ class org.as2lib.env.event.broadcaster.AbstractTEventBroadcaster extends TestCas
 		assertSame(b.getAllListeners().length, 3);
 		b.removeAllListeners();
 		assertSame(b.getAllListeners().length, 0);
-	}
+	}*/
+	
 }

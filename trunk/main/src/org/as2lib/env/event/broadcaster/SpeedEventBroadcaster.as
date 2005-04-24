@@ -76,7 +76,7 @@ class org.as2lib.env.event.broadcaster.SpeedEventBroadcaster extends SimpleEvent
 					if (n) this.b.broadcastMessage(n, eventInfo);
 				} catch (e) {
 					// braces are around "new EventExecutionException..." because otherwise it wouldn't be MTASC compatible
-					throw (new EventExecutionException("Unexpected Exception thrown during dispatch of " + n, this, arguments)).initCause(e);
+					throw (new EventExecutionException("Unexpected exception was thrown during dispatch of event [" + n + "] with event info [" + eventInfo + "].", this, arguments)).initCause(e);
 				}
 			}
 		}

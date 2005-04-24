@@ -12,16 +12,10 @@
 //  Implementations of the interfaces for different functionality and settings.
 // 
 
-import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
-/*
-import org.as2lib.env.log.logger.TraceLogger;
-import org.as2lib.env.log.logger.VoidLogger;
-*/
-import org.as2lib.env.log.logger.RootLogger;
-import org.as2lib.env.log.handler.TraceHandler;
-import org.as2lib.env.log.level.AbstractLogLevel;
-import org.as2lib.env.log.repository.LoggerHierarchy;
 import org.as2lib.env.log.LogManager;
+import org.as2lib.env.log.handler.TraceHandler;
+import org.as2lib.env.log.repository.LoggerHierarchy;
+import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
 import org.as2lib.test.unit.LoggerTestListener;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestSuiteFactory;
@@ -41,11 +35,14 @@ import org.as2lib.test.unit.TestSuiteFactory;
 //    * org.as2lib.env.log.LogManager
 //
   
+  // configure the log message stringifier to show nothing but the actual message
+  //LogMessage.setStringifier(new LogMessageStringifier(false, false));
+  
   // Use a LoggerHierarchy as repository and take a TraceLogger by default
-  var loggerHierarchy:LoggerHierarchy = new LoggerHierarchy(new RootLogger(AbstractLogLevel.ALL));
+  var loggerHierarchy:LoggerHierarchy = new LoggerHierarchy();
   
   // Tell the Logger Repository to use the loggerHierarchy for default.
-  LogManager.setLoggerRepository(loggerHierarchy); 
+  LogManager.setLoggerRepository(loggerHierarchy);
   
   var traceLogger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("org.as2lib");
   traceLogger.addHandler(new TraceHandler());

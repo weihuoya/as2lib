@@ -67,6 +67,9 @@ class org.as2lib.env.reflect.TypeProxyFactory extends BasicClass implements Prox
 			}
 			prototype = prototype.__proto__;
 		}
+		result.toString = function() {
+			return handler.invoke(this, "toString", arguments);
+		};
 		result.__resolve = function(methodName:String):Function {
 			return (function() {
 				return handler.invoke(this, methodName, arguments);

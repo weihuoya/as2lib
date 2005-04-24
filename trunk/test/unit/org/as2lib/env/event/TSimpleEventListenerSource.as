@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.broadcaster.AbstractTEventBroadcaster;
-import org.as2lib.env.event.broadcaster.SpeedEventBroadcaster;
-import org.as2lib.env.event.broadcaster.EventBroadcaster;
+import org.as2lib.env.event.EventListenerSource;
+import org.as2lib.env.event.SimpleEventListenerSource;
+import org.as2lib.env.event.AbstractTEventListenerSource;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.env.event.broadcaster.TSpeedEventBroadcaster extends AbstractTEventBroadcaster {
+class org.as2lib.env.event.TSimpleEventListenerSource extends AbstractTEventListenerSource {
 	
-	private function getEventBroadcaster(Void):EventBroadcaster {
-		return new SpeedEventBroadcaster();
+	private function getEventListenerSource(Void):EventListenerSource {
+		return new SimpleEventListenerSource();
 	}
 	
 }
