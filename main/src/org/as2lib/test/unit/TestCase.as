@@ -35,12 +35,12 @@ import org.as2lib.env.reflect.ClassInfo;
  * 
  * It is handled as an abstract class this means you have to extend it if you 
  * want to work with the system (similar to the most other testunit systems).
- * [CODE]
+ * <code>
  * import org.as2lib.test.unit.TestCase;
  * 
  * class MyTestCase extends TestCase {
  * }
- * [/CODE]
+ * </code>
  * 
  * A testcase usually gets processed by {@link #run}. 
  * The System will fetch all Methods starting with "test" and execute them in
@@ -49,7 +49,7 @@ import org.as2lib.env.reflect.ClassInfo;
  *
  * Example:
  *   Testcase:
- *   [CODE]
+ *   <code>
  * import org.as2lib.test.unit.TestCase;
  * 
  * class MyTestCase extends TestCase {
@@ -69,13 +69,13 @@ import org.as2lib.env.reflect.ClassInfo;
  *     trace('tear down');
  *   }
  * }
- *   [/CODE]
+ *   </code>
  *   Call:
- *   [CODE]
+ *   <code>
  * new MyTestCase().run(true);
- *   [/CODE]
+ *   </code>
  *   Result:
- *   [CODE]
+ *   <code>
  * new instance
  * set up
  * myFirstTest
@@ -84,7 +84,7 @@ import org.as2lib.env.reflect.ClassInfo;
  * set up
  * mySecondTest
  * tear down
- *   [/CODE]
+ *   </code>
  * 
  * Within the "test"-methods you have access to different assert methods:
  * <table>
@@ -263,7 +263,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * 
 	 * @return Current testrunner.
 	 */
-	private function getTestRunner(Void):TestRunner {
+	public function getTestRunner(Void):TestRunner {
 		return testRunner;
 	}
 	
