@@ -15,12 +15,12 @@
  */
 
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.env.event.broadcaster.EventBroadcaster;
 import org.as2lib.env.event.EventListener;
-import org.as2lib.env.event.broadcaster.SampleEventListener;
+import org.as2lib.env.event.broadcaster.EventBroadcaster;
 import org.as2lib.env.event.broadcaster.ConsumableEventBroadcaster;
 import org.as2lib.env.event.broadcaster.ConsumableEventInfo;
 import org.as2lib.env.event.broadcaster.AbstractTEventBroadcaster;
+import org.as2lib.env.event.broadcaster.SampleConsumableEventListener;
 
 class org.as2lib.env.event.broadcaster.AbstractTConsumableEventBroadcaster extends AbstractTEventBroadcaster {
 	
@@ -36,7 +36,7 @@ class org.as2lib.env.event.broadcaster.AbstractTConsumableEventBroadcaster exten
 		return null;
 	}
 	
-	public function testBroadcastConsumable(Void):Void {
+	public function testDispatchWithConsumableEventInfo(Void):Void {
 		var eb:ConsumableEventBroadcaster = getConsumableEventBroadcaster();
 		
 		var infoControl:MockControl = new MockControl(ConsumableEventInfo);
@@ -45,26 +45,39 @@ class org.as2lib.env.event.broadcaster.AbstractTConsumableEventBroadcaster exten
 		infoControl.setReturnValue("onTest");
 		info.isConsumed();
 		infoControl.setReturnValue(false);
-		info.isConsumed();
+		infoControl.setReturnValue(false);
 		infoControl.setReturnValue(true);
 		infoControl.replay();
 		
-		var list1Control:MockControl = new MockControl(SampleEventListener);
-		var list1:SampleEventListener = list1Control.getMock();
+		var list1Control:MockControl = new MockControl(SampleConsumableEventListener);
+		var list1:SampleConsumableEventListener = list1Control.getMock();
 		list1.onTest(info);
 		list1Control.replay();
 		
-		var list2Control:MockControl = new MockControl(EventListener);
-		var list2:SampleEventListener = list2Control.getMock();
+		var list2Control:MockControl = new MockControl(SampleConsumableEventListener);
+		var list2:SampleConsumableEventListener = list2Control.getMock();
+		list2.onTest(info);
 		list2Control.replay();
+		
+		var list3Control:MockControl = new MockControl(SampleConsumableEventListener);
+		var list3:SampleConsumableEventListener = list3Control.getMock();
+		list3Control.replay();
+		
+		var list4Control:MockControl = new MockControl(SampleConsumableEventListener);
+		var list4:SampleConsumableEventListener = list4Control.getMock();
+		list4Control.replay();
 		
 		eb.addListener(list1);
 		eb.addListener(list2);
+		eb.addListener(list3);
+		eb.addListener(list4);
 		eb.dispatch(info);
 		
 		infoControl.verify();
 		list1Control.verify();
 		list2Control.verify();
+		list3Control.verify();
+		list4Control.verify();
 	}
 	
 	/*
@@ -94,4 +107,5 @@ class org.as2lib.env.event.broadcaster.AbstractTConsumableEventBroadcaster exten
 		list1Control.verify();
 		list2Control.verify();
 	}*/
+	
 }

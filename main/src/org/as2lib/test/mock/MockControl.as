@@ -416,6 +416,15 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 * @param args the arguments passed to the invoked method
 	 */
 	private function invokeMethod(methodName:String, args:Array) {
+		/*if (mock[methodName] == null) {
+			if (state instanceof RecordState) {
+				var owner:MockControl = this;
+				mock[methodName] = function() {
+					// calling private methods out of inner anonymous methods is not allowed with MTASC
+					return owner["invokeMethod"](methodName, arguments);
+				};
+			}
+		}*/
 		return state.invokeMethod(new MethodCall(methodName, args));
 	}
 	
