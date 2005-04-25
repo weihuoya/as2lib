@@ -136,6 +136,8 @@ org.as2lib.env.event.broadcaster.TSpeedEventBroadcaster;
 org.as2lib.env.event.broadcaster.TSimpleConsumableEventBroadcaster;
 org.as2lib.env.event.TSimpleEventListenerSource;
 org.as2lib.env.event.TTypeSafeEventListenerSource;
+org.as2lib.env.event.multicaster.TSimpleEventMulticaster;
+org.as2lib.env.event.multicaster.TSimpleConsumableEventMulticaster;
  
 // org.as2lib.env.except
 // - TODO some problem with TIllegalStateException and TUnsupportedOperationException exceeds 256 levels of recursion -
