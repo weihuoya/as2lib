@@ -5,6 +5,13 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="3">
+         <day value="27">
+           <entry type="change" package="org.as2lib.env.event" class="AbstractEventDistributor"><change-rename to="AbstractEventDistributorControl"/></entry>
+           <entry type="change" package="org.as2lib.env.event" class="ConsumableEvent"><change-rename to="SimpleConsumableEventDistributorControl"/></entry>
+           <entry type="change" package="org.as2lib.env.event" class="Event"><change-rename to="SimpleEventDistributorControl"/></entry>
+           <entry type="change" package="org.as2lib.env.event" class="ConsumableEventDistributor"><change-rename to="ConsumableEventDistributorControl"/></entry>
+           <entry type="change" package="org.as2lib.env.event" class="EventDistributor"><change-rename to="EventDistributorControl"/></entry>
+         </day>
          <day value="23">
            <entry type="remove" package="org.as2lib.env.event.dispatcher"></entry>
            <entry type="change" package="org.as2lib.env.event" class="*Event"><change-move to="org.as2lib.env.event.distributor"/></entry>

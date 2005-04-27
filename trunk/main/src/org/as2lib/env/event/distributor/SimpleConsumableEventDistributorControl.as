@@ -15,13 +15,14 @@
  */
 
 import org.as2lib.env.event.EventExecutionException;
-import org.as2lib.env.event.distributor.AbstractEventDistributor;
-import org.as2lib.env.event.distributor.EventDistributor;
+import org.as2lib.env.event.distributor.AbstractEventDistributorControl;
+import org.as2lib.env.event.distributor.ConsumableEventDistributorControl;
 
 /**
- * {@code ConsumableEvent} acts as a listener source and event distributor.
- * It enables you to distribute and handle events in the safest way possible.
- *
+ * {@code SimpleConsumableEventDistributorControl} acts as a listener source and
+ * event distributor. It enables you to distribute and handle events in the safest
+ * way possible.
+ * 
  * <p>Note that unlike the {@link Event} class, this class supports the consumption
  * of events. An event is consumed if an event method on a listener returns
  * {@code true}. This means that the distribution of the event will be stopped
@@ -29,13 +30,13 @@ import org.as2lib.env.event.distributor.EventDistributor;
  * 
  * <p>Example:
  * <code>
- *   // creates an event with the expected listener type
- *   var event:Event = new Event(ErrorListener);
+ *   // creates a distributor control with the expected listener type
+ *   var distributorControl:SimpleConsumableEventDistributorControl = new SimpleConsumableEventDistributorControl(ErrorListener);
  *   // adds new listeners that must be of the expected type
- *   event.addListener(new MyErrorListener());
- *   event.addListener(new SimpleErrorListener());
+ *   distributorControl.addListener(new MyErrorListener());
+ *   distributorControl.addListener(new SimpleErrorListener());
  *   // gets a distributor to distribute the event to all listeners
- *   var distributor:ErrorListener = ErrorListener(event.getDistributor());
+ *   var distributor:ErrorListener = ErrorListener(distributorControl.getDistributor());
  *   // distributes the event with custom arguments
  *   distributor.onError(myErrorCode, myException);
  * </code>
@@ -47,12 +48,10 @@ import org.as2lib.env.event.distributor.EventDistributor;
  * @author Simon Wacker
  * @authro Martin Heidegger
  */
-class org.as2lib.env.event.distributor.ConsumableEvent extends AbstractEventDistributor implements EventDistributor {
+class org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControl extends AbstractEventDistributorControl implements ConsumableEventDistributorControl {
 	
 	/**
-	 * Constructs a new {@code ConsumableEvent} instance.
-	 *
-	 * <p>Note that {@code listenerType} must be an interface; classes are not supported.
+	 * Constructs a new {@code SimpleConsumableEventDistributorControl} instance.
 	 *
 	 * <p>{@code checkListenerType} is by default set to {@code true}.
 	 * 
@@ -63,7 +62,7 @@ class org.as2lib.env.event.distributor.ConsumableEvent extends AbstractEventDist
 	 * @throws IllegalArgumentException if the passed-in {@code listenerType} is
 	 * {@code null} or {@code undefined}
 	 */
-	public function Event(listenerType:Function, checkListenerType:Boolean, listeners:Array) {
+	public function SimpleConsumableEventDistributorControl(listenerType:Function, checkListenerType:Boolean, listeners:Array) {
 		super (listenerType, checkListenerType);
 		if (listeners) {
 			addAllListeners(listeners);

@@ -18,19 +18,19 @@ import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.env.event.TypeSafeEventListenerSource;
 
 /**
- * {@code AbstractEventDistributor} offers default implementations of methods
- * needed when implementing the {@link EventDistributor} interface or any
- * sub-interface.
+ * {@code AbstractEventDistributorControl} offers default implementations of
+ * methods needed when implementing the {@link EventDistributorControl} interface
+ * or any sub-interface.
  * 
  * @author Simon Wacker
  */
-class org.as2lib.env.event.distributor.AbstractEventDistributor extends TypeSafeEventListenerSource {
+class org.as2lib.env.event.distributor.AbstractEventDistributorControl extends TypeSafeEventListenerSource {
 	
 	/** The distributor to distribute events. */
 	private var d;
 	
 	/**
-	 * Constructs a new {@code AbstractEventDistributor} instance.
+	 * Constructs a new {@code AbstractEventDistributorControl} instance.
 	 *
 	 * <p>{@code checkListenerType} is by default set to {@code true}.
 	 *
@@ -40,7 +40,7 @@ class org.as2lib.env.event.distributor.AbstractEventDistributor extends TypeSafe
 	 * @throws IllegalArgumentException if the passed-in {@code listenerType} is
 	 * {@code null} or {@code undefined}
 	 */
-	public function AbstractEventDistributor(listenerType:Function, checkListenerType:Boolean) {
+	public function AbstractEventDistributorControl(listenerType:Function, checkListenerType:Boolean) {
 		super (listenerType, checkListenerType);
 	}
 	
@@ -78,12 +78,23 @@ class org.as2lib.env.event.distributor.AbstractEventDistributor extends TypeSafe
 		var t:Function = getListenerType();
 		result.__proto__ = t.prototype;
 		result.__constructor__ = t;
-		var e:AbstractEventDistributor = this;
-		var d:Function = e["distribute"];
+		var e:AbstractEventDistributorControl = this;
+		//var d:Function = e["distribute"];
 		result.__resolve = function(n:String):Function {
 			return (function():Void {
-				d.apply(e, n, arguments);
+				//d.apply(e, n, arguments); causes 255 recursion error
+				e.distribute(n, arguments);
 			});
+		}
+		var p:Object = t.prototype;
+		while (p != Object.prototype) {
+			for (var i:String in p) {
+				result[i] = function():Void {
+					e.distribute(arguments.callee.n, arguments);
+				};
+				result[i].n = i;
+			}
+			p = p.__proto__;
 		}
 		return result;
 	}
