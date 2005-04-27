@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.distributor.EventDistributor;
+import org.as2lib.env.event.distributor.EventDistributorControl;
 
 /**
- * {@code ConsumableEventDistributor} marks the {@code EventDistributor} interface
- * as consumable.
+ * {@code ConsumableEventDistributorControl} marks the {@code EventDistributorControl}
+ * interface as consumable.
  * 
  * <p>A distributor that implements this interface allows for consumable events.
  * This means that the event distribution is stopped as soon as an event is
@@ -31,6 +31,6 @@ import org.as2lib.env.event.distributor.EventDistributor;
  * @author Simon Wacker
  * @author Martin Heidegger
  */
-interface org.as2lib.env.event.distributor.ConsumableEventDistributor extends EventDistributor {
+interface org.as2lib.env.event.distributor.ConsumableEventDistributorControl extends EventDistributorControl {
 	
 }

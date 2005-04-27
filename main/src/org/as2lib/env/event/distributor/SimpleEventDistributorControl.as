@@ -15,22 +15,23 @@
  */
 
 import org.as2lib.env.event.EventExecutionException;
-import org.as2lib.env.event.distributor.AbstractEventDistributor;
-import org.as2lib.env.event.distributor.EventDistributor;
+import org.as2lib.env.event.distributor.AbstractEventDistributorControl;
+import org.as2lib.env.event.distributor.EventDistributorControl;
 
 /**
- * {@code Event} acts as a listener source and event distributor. It enables you to
- * distribute and handle events in the safest way possible.
+ * {@code SimpleEventDistributorControl} acts as a listener source and event
+ * distributor control. It enables you to distribute and handle events in the
+ * safest way possible by providing a compiler-safe distributor.
  * 
  * <p>Example:
  * <code>
- *   // creates an event with the expected listener type
- *   var event:Event = new Event(ErrorListener);
+ *   // creates a distributor control with the expected listener type
+ *   var distributorControl:SimpleEventDistributorControl = new SimpleEventDistributorControl(ErrorListener);
  *   // adds new listeners that must be of the expected type
- *   event.addListener(new MyErrorListener());
- *   event.addListener(new SimpleErrorListener());
+ *   distributorControl.addListener(new MyErrorListener());
+ *   distributorControl.addListener(new SimpleErrorListener());
  *   // gets a distributor to distribute the event to all listeners
- *   var distributor:ErrorListener = ErrorListener(event.getDistributor());
+ *   var distributor:ErrorListener = ErrorListener(distributorControl.getDistributor());
  *   // distributes the event with custom arguments
  *   distributor.onError(myErrorCode, myException);
  * </code>
@@ -38,15 +39,13 @@ import org.as2lib.env.event.distributor.EventDistributor;
  * @author Simon Wacker
  * @authro Martin Heidegger
  */
-class org.as2lib.env.event.distributor.Event extends AbstractEventDistributor implements EventDistributor {
+class org.as2lib.env.event.distributor.SimpleEventDistributorControl extends AbstractEventDistributorControl implements EventDistributorControl {
 	
 	/** The wrapped {@code AsBroadcaster} needed for actual distribution. */
 	private var b;
 	
 	/**
-	 * Constructs a new {@code Event} instance.
-	 *
-	 * <p>Note that {@code listenerType} must be an interface; classes are not supported.
+	 * Constructs a new {@code SimpleEventDistributorControl} instance.
 	 *
 	 * <p>{@code checkListenerType} is by default set to {@code true}.
 	 * 
@@ -57,7 +56,7 @@ class org.as2lib.env.event.distributor.Event extends AbstractEventDistributor im
 	 * @throws IllegalArgumentException if the passed-in {@code listenerType} is
 	 * {@code null} or {@code undefined}
 	 */
-	public function Event(listenerType:Function, checkListenerType:Boolean, listeners:Array) {
+	public function SimpleEventDistributorControl(listenerType:Function, checkListenerType:Boolean, listeners:Array) {
 		super (listenerType, checkListenerType);
 		this.b = new Object();
 		AsBroadcaster.initialize(this.b);
