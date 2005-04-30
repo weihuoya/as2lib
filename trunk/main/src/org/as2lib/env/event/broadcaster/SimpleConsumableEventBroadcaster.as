@@ -36,8 +36,14 @@ class org.as2lib.env.event.broadcaster.SimpleConsumableEventBroadcaster extends 
 	
 	/**
 	 * Constructs a new {@code SimpleConsumableEventBroadcaster} instance.
+	 *
+	 * @param listeners (optional) an array of listeners to populate this broadcaster
+	 * with
 	 */
-	public function SimpleConsumableEventBroadcaster(Void) {
+	public function SimpleConsumableEventBroadcaster(listeners:Array) {
+		if (listeners) {
+			addAllListeners(listeners);
+		}
 	}
 	
 	/**
