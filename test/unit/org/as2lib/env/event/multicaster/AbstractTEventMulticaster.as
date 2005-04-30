@@ -33,12 +33,6 @@ class org.as2lib.env.event.multicaster.AbstractTEventMulticaster extends TestCas
 		return null;
 	}
 	
-	private function getEventListener(Void):EventListener {
-		var result = new Object();
-		result.__proto__ = EventListener["prototype"];
-		return result;
-	}
-	
 	public function testDispatchWithMultipleListeners(Void):Void {
 		var s:String = new String("testString");
 		var o:Object = new Object();
