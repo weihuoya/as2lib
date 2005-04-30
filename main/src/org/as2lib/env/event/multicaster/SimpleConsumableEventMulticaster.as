@@ -47,15 +47,20 @@ class org.as2lib.env.event.multicaster.SimpleConsumableEventMulticaster extends 
 	private var eventName:String;
 	
 	/**
-	 * Constructs a new {@code SimpleConsumableEventMulticaster}.
+	 * Constructs a new {@code SimpleConsumableEventMulticaster} instance.
 	 * 
 	 * @param eventName the name of the event to execute on listeners
+	 * @param listeners (optional) an array of listeners to populate this broadcaster
+	 * with
 	 * @throws IllegalArgumentException if passed-in {@code eventName} is {@code null},
 	 * {@code undefined} or an empty string
 	 */
-	public function SimpleConsumableEventMulticaster(eventName:String) {
+	public function SimpleConsumableEventMulticaster(eventName:String, listeners:Array) {
 		if (!eventName) throw new IllegalArgumentException("Argument 'eventName' [" + eventName + "] must not be 'null' nor 'undefined'.", this, arguments);
 		this.eventName = eventName;
+		if (listeners) {
+			addAllListeners(listeners);
+		}
 	}
 	
 	/**
