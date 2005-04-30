@@ -55,7 +55,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 		_global.ASSetPropFlags(_global, null, 0, true);
 		// The '__constructor__' or 'constructor' properties may not be correct with dynamic instances.
 		// We thus use the '__proto__' property that referes to the prototype of the type.
-		return getTypeNameForPrototypeByPackage(instance.__proto__, _global, "");
+		return getTypeNameForPrototypeByPackage(instance.__proto__, _global, "", [_global]);
 	}
 	
 	/**
@@ -73,7 +73,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	public static function getTypeNameForType(type:Function):String {
 		if (!type) return null;
 		_global.ASSetPropFlags(_global, null, 0, true);
-		return getTypeNameForPrototypeByPackage(type.prototype, _global, "");
+		return getTypeNameForPrototypeByPackage(type.prototype, _global, "", [_global]);
 	}
 	
 	/**
@@ -90,9 +90,10 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	 * @param c the prototype to search for
 	 * @param p the package to find the type that defines the prototype in
 	 * @param n the name of the preceding path separated by periods
+	 * @param a already searched through packages
 	 * @return the name of the type defining the prototype of {@code null}
 	 */
-	private static function getTypeNameForPrototypeByPackage(c, p, n:String):String {
+	private static function getTypeNameForPrototypeByPackage(c, p, n:String, a:Array):String {
 		//if (c == null || p == null) return null; // why is this causing trouble?
 		if (n == null) n = "";
 		for (var r:String in p) {
@@ -102,8 +103,16 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 				// the first part of the if-clause excludes these extra stored classes
 				if ((!eval("_global." + r.split("_").join(".")) || r.indexOf("_") < 0) && p[r].prototype == c) return (n + r);
 				if (p[r].__constructor__ == Object) {
-					r = getTypeNameForPrototypeByPackage(c, p[r], n + r + ".");
-					if (r) return r;
+					// prevents recursion on back-reference
+					var f:Boolean = false;
+					for (var i:Number = 0; i < a.length; i++) {
+						if (a[i] == p[r]) f = true;
+					}
+					if (!f) {
+						a.push(p[r]);
+						r = getTypeNameForPrototypeByPackage(c, p[r], n + r + ".", a);
+						if (r) return r;
+					}
 				}
 			} catch (e) {
 			}
