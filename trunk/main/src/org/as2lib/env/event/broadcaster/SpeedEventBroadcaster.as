@@ -29,7 +29,7 @@ import org.as2lib.env.event.broadcaster.EventInfo;
  */
 class org.as2lib.env.event.broadcaster.SpeedEventBroadcaster extends SimpleEventListenerSource implements EventBroadcaster {	
 
-	/** All registered listeners. */
+	/** The wrapped {@code AsBroadcaster} needed for actual distribution. */
 	private var b:Object;
 	
 	/**
