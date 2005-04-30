@@ -41,16 +41,27 @@ class org.as2lib.env.event.multicaster.SimpleEventMulticaster extends SimpleEven
 	/** The name of the event. */
 	private var eventName:String;
 	
+	/** The wrapped {@code AsBroadcaster} needed for actual distribution. */
+	private var b:Object;
+	
 	/**
-	 * Constructs a new {@code SimpleEventMulticaster}.
+	 * Constructs a new {@code SimpleEventMulticaster} instance.
 	 * 
 	 * @param eventName the name of the event to execute on all added listeners
+	 * @param listeners (optional) an array of listeners to populate this broadcaster
+	 * with
 	 * @throws IllegalArgumentException if passed-in {@code eventName} is {@code null},
 	 * {@code undefined} or an empty string
 	 */
-	public function SimpleEventMulticaster(eventName:String) {
+	public function SimpleEventMulticaster(eventName:String, listeners:Array) {
 		if (!eventName) throw new IllegalArgumentException("Argument 'eventName' [" + eventName + "] must not be 'null' nor 'undefined'.", this, arguments);
 		this.eventName = eventName;
+		this.b = new Object();
+		AsBroadcaster.initialize(this.b);
+		this.b._listeners = this.l;
+		if (listeners) {
+			addAllListeners(listeners);
+		}
 	}
 	
 	/**
@@ -63,6 +74,14 @@ class org.as2lib.env.event.multicaster.SimpleEventMulticaster extends SimpleEven
 	}
 	
 	/**
+	 * Removes all added listeners.
+	 */
+	public function removeAllListeners(Void):Void {
+		super.removeAllListeners();
+		this.b._listeners = this.l;
+	}
+	
+	/**
 	 * Dispatches the event to all added listeners passing the given arguments as
 	 * parameters to the listeners' event methods.
 	 *
@@ -72,13 +91,13 @@ class org.as2lib.env.event.multicaster.SimpleEventMulticaster extends SimpleEven
 	public function dispatch():Void {
 		var i:Number = this.l.length;
 		if (i > 0) {
-			try {
-				while (--i > -1) {
-					this.l[i][this.eventName].apply(this.l[i], arguments);
+			if (this.l.length > 0) {
+				try {
+					this.b.broadcastMessage.apply(this.b, [eventName].concat(arguments));
+				} catch (e) {
+					// braces are around "new EventExecutionException..." because otherwise it wouldn't be MTASC compatible
+					throw (new EventExecutionException("Unexpected exception was thrown during dispatch of event [" + eventName + "] with arguments [" + arguments + "].", this, arguments)).initCause(e);
 				}
-			} catch (e) {
-				// "new EventExecutionException" without braces is not MTASC compatible because of the following method call to "initCause"
-				throw (new EventExecutionException("Unexpected exception was thrown during dispatch of event [" + this.eventName + "] on listener [" + this.l[i] + "] with arguments [" + arguments + "].", this, arguments)).initCause(e);
 			}
 		}
 	}
