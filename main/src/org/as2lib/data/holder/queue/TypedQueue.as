@@ -47,10 +47,14 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	 * 
 	 * @param type the type of the values that are allowed to be added
 	 * @param queue the queue to wrap
-	 * @throws IllegalArgumentException if the passed-in type is {@code null} or
+	 * @throws IllegalArgumentException if the passed-in {@code type} is {@code null}
+	 * or {@code undefined}
+	 * @throws IllegalArgumentException if {@code queue} is {@code null} or
 	 * {@code undefined}
 	 */
 	public function TypedQueue(type:Function, queue:Queue) {
+		if (!type) throw new IllegalArgumentException("Argument 'type' [" + type + "] must not be 'null' nor 'undefined'.", this, arguments);
+		if (!queue) throw new IllegalArgumentException("Argument 'queue' [" + queue + "] must not be 'null' nor 'undefined'.", this, arguments);
 		this.type = type;
 		this.queue = queue;
 	}
