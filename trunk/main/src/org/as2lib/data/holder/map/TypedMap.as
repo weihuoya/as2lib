@@ -52,9 +52,12 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	 * @param map the map to type-check
 	 * @throws IllegalArgumentException if the passed-in {@code type} is {@code null}
 	 * or {@code undefined}
+	 * @throws IllegalArgumentException if {@code map} is {@code null} or
+	 * {@code undefined}
 	 */
 	public function TypedMap(type:Function, map:Map) {
-		if (!type) throw new IllegalArgumentException("The passed-in type '" + type + "' the contained values must have is not allowed to be null or undefined.", this, arguments);
+		if (!type) throw new IllegalArgumentException("Argument 'type' [" + type + "] must not be 'null' nor 'undefined'.", this, arguments);
+		if (!map) throw new IllegalArgumentException("Argument 'map' [" + map + "] must not be 'null' nor 'undefined'.", this, arguments);
 		this.type = type;
 		this.map = map;
 	}

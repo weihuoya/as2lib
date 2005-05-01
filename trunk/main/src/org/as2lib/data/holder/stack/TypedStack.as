@@ -49,9 +49,12 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	 * @param stack the stack to type-check
 	 * @throws IllegalArgumentException if the passed-in {@code type} is {@code null}
 	 * or {@code undefined}
+	 * @throws IllegalArgumentException if {@code stack} is {@code null} or
+	 * {@code undefined}
 	 */
 	public function TypedStack(type:Function, stack:Stack) {
-		if (!type) throw new IllegalArgumentException("The passed-in type '" + type + "' the contained values must have is not allowed to be null or undefined.", this, arguments);
+		if (!type) throw new IllegalArgumentException("Argument 'type' [" + type + "] must not be 'null' nor 'undefined'.", this, arguments);
+		if (!stack) throw new IllegalArgumentException("Argument 'stack' [" + stack + "] must not be 'null' nor 'undefined'.", this, arguments);
 		this.type = type;
 		this.stack = stack;
 	}
