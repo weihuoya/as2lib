@@ -30,7 +30,7 @@ import org.as2lib.env.log.logger.AbstractLogger;
  *
  * @author Simon Wacker
  * @see org.as2lib.env.log.handler.Bit101Handler
- * @see <a href="www.bit-101.com/DebugPanel">Flash Debug Panel Source</a>
+ * @see <a href="http://www.bit-101.com/DebugPanel">Flash Debug Panel Source</a>
  * @see <a href="http://www.bit-101.com/blog/archives/000119.html">Flash Debug Panel Article</a>
  */
 class org.as2lib.env.log.logger.Bit101Logger extends AbstractLogger implements Logger {
