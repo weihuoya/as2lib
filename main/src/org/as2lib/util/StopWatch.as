@@ -44,7 +44,7 @@ import org.as2lib.env.except.IllegalStateException;
  * 
  * @author Martin Heidegger
  */
-class org.as2lib.util.StopWatch {
+class org.as2lib.util.StopWatch extends BasicClass {
 	
 	/** Starttime of the last start */
 	private var started:Boolean = false;
