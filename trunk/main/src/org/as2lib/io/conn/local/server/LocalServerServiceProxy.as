@@ -22,7 +22,6 @@ import org.as2lib.io.conn.core.server.ServerServiceProxy;
 import org.as2lib.io.conn.core.server.ReservedServiceException;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
-import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
 import org.as2lib.io.conn.local.core.EnhancedLocalConnection;
 
 /**

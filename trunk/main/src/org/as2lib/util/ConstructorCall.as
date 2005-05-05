@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
 import org.as2lib.util.ClassUtil;
 import org.as2lib.util.Call;
 

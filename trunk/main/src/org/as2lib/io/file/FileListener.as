@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import org.as2lib.io.file.File;
 import org.as2lib.io.file.FileEventInfo;
 import org.as2lib.env.event.EventListener;
 

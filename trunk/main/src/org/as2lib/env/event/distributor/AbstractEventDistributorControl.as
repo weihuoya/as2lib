@@ -83,14 +83,16 @@ class org.as2lib.env.event.distributor.AbstractEventDistributorControl extends T
 		result.__resolve = function(n:String):Function {
 			return (function():Void {
 				//d.apply(e, n, arguments); causes 255 recursion error
-				e.distribute(n, arguments);
+				// e.distribute is not MTASC compatible because "distribute" is private
+				e["distribute"](n, arguments);
 			});
 		}
 		var p:Object = t.prototype;
 		while (p != Object.prototype) {
 			for (var i:String in p) {
 				result[i] = function():Void {
-					e.distribute(arguments.callee.n, arguments);
+					// e.distribute is not MTASC compatible because "distribute" is private
+					e["distribute"](arguments.callee.n, arguments);
 				};
 				result[i].n = i;
 			}

@@ -17,7 +17,6 @@
 
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.Iterator;
-import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.except.IllegalArgumentException;

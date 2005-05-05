@@ -16,7 +16,6 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.test.unit.TestRunnerInfo;
-import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestCaseResult;
 import org.as2lib.test.unit.TestCaseMethodInfo;

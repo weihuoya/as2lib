@@ -21,13 +21,10 @@ import org.as2lib.test.unit.ExecutionInfo;
 import org.as2lib.test.unit.info.*;
 import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestCaseMethodInfo;
-import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.util.Call;
 import org.as2lib.util.Executable;
-import org.as2lib.util.ClassUtil;
 import org.as2lib.util.ObjectUtil;
-import org.as2lib.env.reflect.ClassInfo;
 
 /**
  * Basic Testcase class to be extended.

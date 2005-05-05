@@ -17,7 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
 import org.as2lib.data.holder.Stack;
-import org.as2lib.data.holder.Iterator;
 
 /**
  * {@code StackStringifier} stringifies instances of type {@link Stack}.

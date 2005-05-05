@@ -2,7 +2,6 @@
 import org.as2lib.data.holder.List;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.data.holder.Iterator;
-import org.as2lib.data.holder.array.ArrayIterator;
 
 /**
  * @author Simon Wacker

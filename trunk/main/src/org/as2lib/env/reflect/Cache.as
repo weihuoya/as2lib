@@ -15,11 +15,8 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.util.ObjectUtil;
 
 /**
  * Cache chaches classes and packages.

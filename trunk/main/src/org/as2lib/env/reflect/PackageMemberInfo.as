@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.env.reflect.MemberInfo;
-import org.as2lib.env.reflect.PackageInfo;
 
 /**
  * {@code PackageMemberInfo} is the super interface for members of packages.
