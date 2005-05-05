@@ -18,19 +18,19 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.env.log.LogLevel;
 
 /**
- * Logger declares all methods needed to log messages in a well defined and
- * performant way.
+ * {@code Logger} declares all methods needed to log messages in a well defined
+ * and performant way.
  * 
  * <p>The basic methods to log messages are {@link #debug}, {@link #info},
  * {@link #warning} and {@link #fatal}.
  *
  * <p>The first thing to note is that you can log messages at different levels.
- * These levels are {@link #DEBUG}, {@link #INFO}, {@link #WARNING}, {@link #ERROR}
- * and {@link #FATAL}. Depending on what level has been set only messages at a
+ * These levels are {@code DEBUG}, {@code INFO}, {@code WARNING}, {@code ERROR}
+ * and {@code FATAL}. Depending on what level has been set only messages at a
  * given level are logged. The levels are organized in a hierarchical manner. That
- * means if you set the log level to {@link #ALL} every messages is logged. If you
- * set it to {@link #ERROR} only messages at {@link #ERROR} and {@link #FATAL}
- * level are logged and so on.
+ * means if you set the log level to {@code ALL} every messages is logged. If you
+ * set it to {@code ERROR} only messages at {@code ERROR} and {@code FATAL} level
+ * are logged and so on.
  *
  * <p>To do not waste unnecessary performance in constructing log messages that are
  * not logged you can use the {@link #isDebugEnabled}, {@link #isInfoEnabled},
