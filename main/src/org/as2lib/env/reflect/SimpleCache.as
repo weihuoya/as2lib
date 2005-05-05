@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.Cache;

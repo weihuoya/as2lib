@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.except.IllegalStateException;
 
 /**
  * {@code MethodResponse} holds and carries out the response if requested.

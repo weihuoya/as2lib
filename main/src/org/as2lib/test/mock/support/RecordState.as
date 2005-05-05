@@ -18,7 +18,6 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.test.mock.MockControlState;
-import org.as2lib.test.mock.MethodBehavior;
 import org.as2lib.test.mock.Behavior;
 import org.as2lib.test.mock.MethodCallRange;
 import org.as2lib.test.mock.MethodResponse;

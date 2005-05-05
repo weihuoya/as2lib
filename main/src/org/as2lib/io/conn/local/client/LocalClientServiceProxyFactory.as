@@ -20,7 +20,6 @@ import org.as2lib.env.reflect.InvocationHandler;
 import org.as2lib.io.conn.core.client.ClientServiceProxy;
 import org.as2lib.io.conn.core.client.ClientServiceProxyFactory;
 import org.as2lib.io.conn.core.client.AbstractClientServiceProxyFactory;
-import org.as2lib.io.conn.local.client.LocalClientServiceProxy;
 import org.as2lib.io.conn.local.client.SimpleClientServiceProxyFactory;
 import org.as2lib.io.conn.core.event.MethodInvocationCallback;
 

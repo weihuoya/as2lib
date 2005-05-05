@@ -15,10 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.event.EventListener;
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogManager;
-import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestListener;
 import org.as2lib.test.unit.StartInfo;
 import org.as2lib.test.unit.ProgressInfo;

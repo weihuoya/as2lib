@@ -18,8 +18,6 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ClassNotFoundException;
-import org.as2lib.env.reflect.NoSuchMethodException;
-import org.as2lib.env.reflect.NoSuchPropertyException;
 import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.TypeInfo;

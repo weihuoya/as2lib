@@ -16,7 +16,6 @@
  
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.conn.core.event.MethodInvocationCallback;
 
 /**

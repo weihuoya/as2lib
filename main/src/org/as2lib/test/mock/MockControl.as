@@ -16,7 +16,6 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ProxyFactory;
 import org.as2lib.env.reflect.TypeProxyFactory;
@@ -24,7 +23,6 @@ import org.as2lib.env.reflect.InvocationHandler;
 import org.as2lib.test.mock.ArgumentsMatcher;
 import org.as2lib.test.mock.support.DefaultArgumentsMatcher;
 import org.as2lib.test.mock.support.TypeArgumentsMatcher;
-import org.as2lib.test.mock.MethodBehavior;
 import org.as2lib.test.mock.Behavior;
 import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.MethodCallRange;

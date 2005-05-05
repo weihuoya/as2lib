@@ -16,12 +16,8 @@
  
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.array.TypedArray;
-import org.as2lib.data.holder.Stack;
-import org.as2lib.util.ObjectUtil;
-import org.as2lib.util.ArrayUtil;
 import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestRunner;
-import org.as2lib.test.unit.TestResult;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**

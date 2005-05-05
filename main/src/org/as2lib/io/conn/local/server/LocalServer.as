@@ -21,7 +21,6 @@ import org.as2lib.data.holder.map.PrimitiveTypeMap;
 import org.as2lib.io.conn.core.server.Server;
 import org.as2lib.io.conn.core.server.ServerServiceProxy;
 import org.as2lib.io.conn.core.server.ServerRegistry;
-import org.as2lib.io.conn.core.server.ReservedHostException;
 import org.as2lib.io.conn.local.server.LocalServerServiceProxy;
 import org.as2lib.io.conn.local.LocalConfig;
 

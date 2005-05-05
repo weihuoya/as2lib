@@ -16,7 +16,6 @@
 
 import org.as2lib.core.BasicInterface;
 import org.as2lib.data.holder.array.TypedArray;
-import org.as2lib.util.Stringifier;
 
 /**
  * Basic Interface for all Results produced by the run a Test.

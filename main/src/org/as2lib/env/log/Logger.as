@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.env.log.LogLevel;
 
 /**
  * {@code Logger} declares all methods needed to log messages in a well defined

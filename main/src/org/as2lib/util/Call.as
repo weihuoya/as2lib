@@ -17,7 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ReflectUtil;
-import org.as2lib.util.ObjectUtil;
 import org.as2lib.util.Executable;
 import org.as2lib.util.AccessPermission;
 

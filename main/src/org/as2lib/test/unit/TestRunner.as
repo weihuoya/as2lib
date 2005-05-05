@@ -17,8 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.data.holder.array.ArrayIterator;
-import org.as2lib.data.holder.map.HashMap;
-import org.as2lib.data.holder.map.TypedMap;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.test.unit.info.InstantiationError;
 import org.as2lib.test.unit.info.SetUpError;

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.overload.Overload;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.conn.core.client.ClientServiceProxy;
 import org.as2lib.io.conn.core.client.AbstractClientServiceProxy;
