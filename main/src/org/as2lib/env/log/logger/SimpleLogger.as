@@ -15,8 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.event.broadcaster.EventBroadcaster;
-import org.as2lib.env.event.broadcaster.SpeedEventBroadcaster;
+import org.as2lib.env.event.distributor.EventDistributorControl;
+import org.as2lib.env.event.distributor.SimpleEventDistributorControl;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.ConfigurableLogger;
 import org.as2lib.env.log.LogLevel;
@@ -86,8 +86,11 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	/** The set level as number. */
 	private var levelAsNumber:Number;
 	
-	/** The broadcaster to dispatch the messages to all handlers. */
-	private var broadcaster:EventBroadcaster;
+	/** Distributor control that controls the distributor. */
+	private var distributorControl:EventDistributorControl;
+	
+	/** Typed distributor to distribute messages to all log handlers. */
+	private var distributor:LogHandler;
 	
 	/** The name of this logger. */
 	private var name:String;
@@ -98,18 +101,19 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * <p>The default log level is {@code ALL}. This means all messages regardless of
 	 * their level are logged.
 	 * 
-	 * <p>The default broadcaster is of type {@code SpeedEventBroadcaster}.
-	 *
+	 * <p>The default {@code distributorControl} is of type {@code SimpleEventDistributorControl}.
+	 * 
 	 * <p>The logger {@code name} is by default shown in the log message to identify
 	 * where the message came from.
-	 *
+	 * 
 	 * @param name (optional) the name of this logger
-	 * @param broadcaster (optional) the broadcaster used to broadcast to the added
-	 * handlers
+	 * @param distributorControl (optional) the distributor control used to get the
+	 * distributor to distribute messages to all added log handlers
 	 */
-	public function SimpleLogger(name:String, broadcaster:EventBroadcaster) {
+	public function SimpleLogger(name:String, distributorControl:EventDistributorControl) {
 		this.name = name;
-		this.broadcaster = broadcaster ? broadcaster : new SpeedEventBroadcaster();
+		this.distributorControl = distributorControl ? distributorControl : new SimpleEventDistributorControl(LogHandler);
+		this.distributor = this.distributorControl.getDistributor();
 		level = ALL;
 		levelAsNumber = level.toNumber();
 	}
@@ -179,7 +183,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 */
 	public function addHandler(handler:LogHandler):Void {
 		if (handler) {
-			broadcaster.addListener(handler);
+			distributorControl.addListener(handler);
 		}
 	}
 	
@@ -193,7 +197,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 */
 	public function removeHandler(handler:LogHandler):Void {
 		if (handler) {
-			broadcaster.removeListener(handler);
+			distributorControl.removeListener(handler);
 		}
 	}
 	
@@ -201,7 +205,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * Removes all added log handlers.
 	 */
 	public function removeAllHandlers(Void):Void {
-		broadcaster.removeAllListeners();
+		distributorControl.removeAllListeners();
 	}
 	
 	/**
@@ -212,7 +216,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * @return all added log handlers
 	 */
 	public function getAllHandlers(Void):Array {
-		return broadcaster.getAllListeners();
+		return distributorControl.getAllListeners();
 	}
 	
 	/**
@@ -319,7 +323,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			broadcaster.dispatch(new LogMessage(message, level, name));
+			distributor.write(new LogMessage(message, level, name));
 		}
 	}
 	
@@ -334,7 +338,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 */
 	public function debug(message):Void {
 		if (isDebugEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, debugLevel, name));
+			distributor.write(new LogMessage(message, debugLevel, name));
 		}
 	}
 	
@@ -349,7 +353,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 */
 	public function info(message):Void {
 		if (isInfoEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, infoLevel, name));
+			distributor.write(new LogMessage(message, infoLevel, name));
 		}
 	}
 	
@@ -364,7 +368,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 */
 	public function warning(message):Void {
 		if (isWarningEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, warningLevel, name));
+			distributor.write(new LogMessage(message, warningLevel, name));
 		}
 	}
 	
@@ -379,7 +383,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 */
 	public function error(message):Void {
 		if (isErrorEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, errorLevel, name));
+			distributor.write(new LogMessage(message, errorLevel, name));
 		}
 	}
 	
@@ -394,7 +398,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 */
 	public function fatal(message):Void {
 		if (isFatalEnabled()) {
-			broadcaster.dispatch(new LogMessage(message, fatalLevel, name));
+			distributor.write(new LogMessage(message, fatalLevel, name));
 		}
 	}
 	

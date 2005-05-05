@@ -16,7 +16,6 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
-import org.as2lib.env.event.broadcaster.EventInfo;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogMessageStringifier;
 
@@ -36,7 +35,7 @@ import org.as2lib.env.log.LogMessageStringifier;
  *
  * @author Simon Wacker
  */
-class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
+class org.as2lib.env.log.LogMessage extends BasicClass {
 	
 	/** The currently used stringifier. */
 	private static var stringifier:Stringifier;
@@ -132,17 +131,6 @@ class org.as2lib.env.log.LogMessage extends BasicClass implements EventInfo {
 	 */
 	public function getTimeStamp(Void):Number {
 		return timeStamp;
-	}
-	
-	/**
-	 * Returns the name of the event to fire on registered listeners.
-	 *
-	 * <p>This method always returns the string {@code "write"}.
-	 *
-	 * @return {@code "write"}
-	 */
-	public function getName(Void):String {
-		return "write";
 	}
 	
 	/**
