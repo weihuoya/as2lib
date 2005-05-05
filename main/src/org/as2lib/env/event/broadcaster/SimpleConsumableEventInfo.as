@@ -15,48 +15,55 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.event.EventInfo;
-import org.as2lib.env.event.Consumable;
+import org.as2lib.env.event.broadcaster.ConsumableEventInfo;
 
 /**
- * Simple implementation of a EventInfo including Consumable functionality
+ * {@code SimpleConsumableEventInfo} offers support for consuming events.
  *
  * @author Martin Heidegger
- * @see org.as2lib.env.event.Consumable
+ * @author Simon Wacker
  */
-class org.as2lib.env.event.ConsumableEventInfo extends BasicClass implements EventInfo, Consumable {
-	/** Name of the event */
-	private var name:String;
+class org.as2lib.env.event.broadcaster.SimpleConsumableEventInfo extends BasicClass implements ConsumableEventInfo {
 	
-	/** Flag if the Event is consumed */
+	/** The name of the event */
+	private var eventName:String;
+	
+	/** Determines whether this event is consumed. */
 	private var consumed:Boolean;
 	
 	/**
-	 * Constructs a SimpleEventInfo.
+	 * Constructs a {@code SimpleConsumableEventInfo} instance.
+	 *
+	 * @param eventName the name of the event
 	 */
-	public function SimpleEventInfo(name:String) {
-		this.name = name;
-		consumed = false;
+	public function SimpleConsumableEventInfo(eventName:String) {
+		this.eventName = eventName;
+		this.consumed = false;
 	}
 	
 	/**
-	 * @see org.as2lib.env.event.EventInfo
+	 * Returns the name of the event.
+	 *
+	 * @return the name of the event
 	 */
 	public function getName(Void):String {
-		return this.name;
+		return this.eventName;
 	}
 	
 	/**
-	 * @see org.as2lib.env.event.Consumable#isConsumed
+	 * Returns whether the event is consumed.
+	 *
+	 * @return {@code true} if the event is consumed else {@code false}
 	 */
 	public function isConsumed(Void):Boolean {
-		return consumed;
+		return this.consumed;
 	}
 	
 	/**
-     * @see org.as2lib.env.event.Consumable#consume
+     * Consumes the represented event.
 	 */
 	public function consume(Void):Void {
-		consumed = true;
+		this.consumed = true;
 	}
+	
 }
