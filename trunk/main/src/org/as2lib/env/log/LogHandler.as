@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.EventListener;
+import org.as2lib.core.BasicInterface;
 import org.as2lib.env.log.LogMessage;
 
 /**
@@ -34,7 +34,7 @@ import org.as2lib.env.log.LogMessage;
  *
  * @author Simon Wacker
  */
-interface org.as2lib.env.log.LogHandler extends EventListener {
+interface org.as2lib.env.log.LogHandler extends BasicInterface {
 	
 	/**
 	 * Writes information obtained from the passed-in {@code message} as well as 

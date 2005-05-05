@@ -15,9 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.overload.Overload;
-import org.as2lib.env.event.broadcaster.EventBroadcaster;
-import org.as2lib.env.event.broadcaster.SpeedEventBroadcaster;
+import org.as2lib.env.event.distributor.EventDistributorControl;
+import org.as2lib.env.event.distributor.SimpleEventDistributorControl;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.ConfigurableLogger;
 import org.as2lib.env.log.ConfigurableHierarchicalLogger;
@@ -99,21 +98,25 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	/** The name of this logger. */
 	private var name:String;
 	
-	/** Stores the broadcaster to broadcast to all added handlers. */
-	private var broadcaster:EventBroadcaster;
+	/** Distributor control that controls the distributor. */
+	private var distributorControl:EventDistributorControl;
+	
+	/** Typed distributor to distribute messages to all log handlers. */
+	private var distributor:LogHandler;
 	
 	/**
 	 * Constructs a new {@code SimpleHierarchicalLogger} instance.
 	 * 
-	 * <p>The default broadcaster is an instance of class {@link SpeedEventBroadcaster}.
+	 * <p>The default {@code distributorControl} is of type {@code SimpleEventDistributorControl}.
 	 *
 	 * @param name the name of this new logger
-	 * @param broadcaster (optional) the broadcaster used to dispatch log messages to
-	 * all handlers
+	 * @param distributorControl (optional) the distributor control used to get the
+	 * distributor to distribute messages to all added log handlers
 	 */
-	public function SimpleHierarchicalLogger(name:String, broadcaster:EventBroadcaster) {
+	public function SimpleHierarchicalLogger(name:String, distributorControl:EventDistributorControl) {
 		setName(name);
-		this.broadcaster = broadcaster ? broadcaster : new SpeedEventBroadcaster();
+		this.distributorControl = distributorControl ? distributorControl : new SimpleEventDistributorControl(LogHandler);
+		this.distributor = this.distributorControl.getDistributor();
 		addedParentHandlers = false;
 	}
 	
@@ -212,7 +215,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 */
 	public function addHandler(handler:LogHandler):Void {
 		if (handler) {
-			broadcaster.addListener(handler);
+			distributorControl.addListener(handler);
 		}
 	}
 	
@@ -226,7 +229,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 */
 	public function removeHandler(handler:LogHandler):Void {
 		if (handler) {
-			broadcaster.removeListener(handler);
+			distributorControl.removeListener(handler);
 		}
 	}
 	
@@ -234,7 +237,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 * Removes all added log handlers.
 	 */
 	public function removeAllHandlers(Void):Void {
-		broadcaster.removeAllListeners();
+		distributorControl.removeAllListeners();
 	}
 	
 	/**
@@ -259,16 +262,16 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 */
 	public function getAllHandlers(Void):Array {
 		if (!addedParentHandlers) addParentHandlers();
-		return broadcaster.getAllListeners();
+		return distributorControl.getAllListeners();
 	}
 	
 	/**
-	 * Adds the parent handlers to the broadcaster.
+	 * Adds the parent handlers to the distributor.
 	 */
 	private function addParentHandlers(Void):Void {
 		var parentHandlers:Array = getParent().getAllHandlers();
 		if (parentHandlers) {
-			broadcaster.addAllListeners(parentHandlers);
+			distributorControl.addAllListeners(parentHandlers);
 		}
 		addedParentHandlers = true;
 	}
@@ -385,9 +388,8 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			var logMessage:LogMessage = new LogMessage(message, level, name);
 			if (!addedParentHandlers) addParentHandlers();
-			broadcaster.dispatch(logMessage);
+			distributor.write(new LogMessage(message, level, name));
 		}
 	}
 	

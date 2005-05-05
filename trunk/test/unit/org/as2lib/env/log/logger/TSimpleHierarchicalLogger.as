@@ -21,7 +21,7 @@ import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
-import org.as2lib.env.event.broadcaster.EventBroadcaster;
+import org.as2lib.env.event.distributor.EventDistributorControl;
 
 /**
  * @author Simon Wacker
@@ -243,14 +243,21 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 	}
 	
 	public function testLogWithNullLevel(Void):Void {
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
+		var dc:MockControl = new MockControl(LogHandler);
+		var d:LogHandler = dc.getMock();
+		dc.replay();
+		
+		var bc:MockControl = new MockControl(EventDistributorControl);
+		var b:EventDistributorControl = bc.getMock();
+		b.getDistributor();
+		bc.setReturnValue(d);
 		bc.replay();
 		
 		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null, b);
 		logger.log("message", null);
 		
 		bc.verify();
+		dc.verify();
 	}
 	
 	public function testLogWithDisabledLevel(Void):Void {
@@ -266,8 +273,14 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		lc.setReturnValue(0);
 		lc.replay();
 		
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
+		var dc:MockControl = new MockControl(LogHandler);
+		var d:LogHandler = dc.getMock();
+		dc.replay();
+		
+		var bc:MockControl = new MockControl(EventDistributorControl);
+		var b:EventDistributorControl = bc.getMock();
+		b.getDistributor();
+		bc.setReturnValue(d);
 		bc.replay();
 		
 		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null, b);
@@ -276,6 +289,7 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		
 		bc.verify();
 		lc.verify();
+		dc.verify();
 	}
 	
 	public function testLogWithEnabledLevelNoHandlersAndNullParent(Void):Void {
@@ -292,10 +306,16 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		lc.setReturnValue(60);
 		lc.replay();
 		
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		b.dispatch(null);
-		bc.setArgumentsMatcher(new TypeArgumentsMatcher([LogMessage]));
+		var dc:MockControl = new MockControl(LogHandler);
+		var d:LogHandler = dc.getMock();
+		d.write(null);
+		dc.setArgumentsMatcher(MockControl.getTypeArgumentsMatcher([LogMessage]));
+		dc.replay();
+		
+		var bc:MockControl = new MockControl(EventDistributorControl);
+		var b:EventDistributorControl = bc.getMock();
+		b.getDistributor();
+		bc.setReturnValue(d);
 		bc.replay();
 		
 		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null, b);
@@ -304,6 +324,7 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		
 		bc.verify();
 		lc.verify();
+		dc.verify();
 	}
 	
 	public function testLogWithEnabledLevelAndHandlersAndNullParent(Void):Void {
@@ -324,13 +345,19 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		lc.setReturnValue(30);
 		lc.replay();
 		
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
+		var dc:MockControl = new MockControl(LogHandler);
+		var d:LogHandler = dc.getMock();
+		d.write(null);
+		dc.setArgumentsMatcher(MockControl.getTypeArgumentsMatcher([LogMessage]));
+		dc.replay();
+		
+		var bc:MockControl = new MockControl(EventDistributorControl);
+		var b:EventDistributorControl = bc.getMock();
 		b.addListener(h1);
 		b.addListener(h2);
 		b.addListener(h3);
-		b.dispatch(null);
-		bc.setArgumentsMatcher(new TypeArgumentsMatcher([LogMessage]));
+		b.getDistributor();
+		bc.setReturnValue(d);
 		bc.replay();
 		
 		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null, b);
@@ -342,6 +369,7 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		
 		bc.verify();
 		lc.verify();
+		dc.verify();
 	}
 	
 	public function testLogWithEnabledLevelNoHandlersAndDefinedParents(Void):Void {
@@ -368,11 +396,17 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		lc.setReturnValue(2);
 		lc.replay();
 		
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
+		var dc:MockControl = new MockControl(LogHandler);
+		var d:LogHandler = dc.getMock();
+		d.write(null);
+		dc.setArgumentsMatcher(MockControl.getTypeArgumentsMatcher([LogMessage]));
+		dc.replay();
+		
+		var bc:MockControl = new MockControl(EventDistributorControl);
+		var b:EventDistributorControl = bc.getMock();
 		b.addAllListeners([h1, h2, h3]);
-		b.dispatch(null);
-		bc.setArgumentsMatcher(new TypeArgumentsMatcher([LogMessage]));
+		b.getDistributor();
+		bc.setReturnValue(d);
 		bc.replay();
 		
 		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null, b);
@@ -383,6 +417,7 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		bc.verify();
 		lc.verify();
 		loc.verify();
+		dc.verify();
 	}
 	
 	public function testLogWithEnabledLevelHandlersAndDefinedParents(Void):Void {
@@ -412,14 +447,20 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		lc.setReturnValue(18);
 		lc.replay();
 		
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
+		var dc:MockControl = new MockControl(LogHandler);
+		var d:LogHandler = dc.getMock();
+		d.write(null);
+		dc.setArgumentsMatcher(MockControl.getTypeArgumentsMatcher([LogMessage]));
+		dc.replay();
+		
+		var bc:MockControl = new MockControl(EventDistributorControl);
+		var b:EventDistributorControl = bc.getMock();
 		b.addListener(h1);
 		b.addListener(h2);
 		b.addListener(h3);
 		b.addAllListeners([h4, h5, h6]);
-		b.dispatch(null);
-		bc.setArgumentsMatcher(new TypeArgumentsMatcher([LogMessage]));
+		b.getDistributor();
+		bc.setReturnValue(d);
 		bc.replay();
 		
 		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null, b);
@@ -434,6 +475,7 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 		lc.verify();
 		loc.verify();
 		loc.verify();
+		dc.verify();
 	}
 	
 }
