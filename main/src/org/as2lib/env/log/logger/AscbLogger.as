@@ -162,7 +162,9 @@ class org.as2lib.env.log.logger.AscbLogger extends AbstractLogger implements Log
 	 * @see #isDebugEnabled
 	 */
 	public function debug(message):Void {
-		logger.debug(message);
+		if (isDebugEnabled()) {
+			logger.debug(message);
+		}
 	}
 	
 	/**
@@ -172,7 +174,9 @@ class org.as2lib.env.log.logger.AscbLogger extends AbstractLogger implements Log
 	 * @see #isInfoEnabled
 	 */
 	public function info(message):Void {
-		logger.info(message);
+		if (isInfoEnabled()) {
+			logger.info(message);
+		}
 	}
 	
 	/**
@@ -182,7 +186,9 @@ class org.as2lib.env.log.logger.AscbLogger extends AbstractLogger implements Log
 	 * @see #isWarningEnabled
 	 */
 	public function warning(message):Void {
-		logger.warning(message);
+		if (isWarningEnabled()) {
+			logger.warning(message);
+		}
 	}
 	
 	/**
@@ -192,7 +198,9 @@ class org.as2lib.env.log.logger.AscbLogger extends AbstractLogger implements Log
 	 * @see #isErrorEnabled
 	 */
 	public function error(message):Void {
-		logger.severe(message);
+		if (isErrorEnabled()) {
+			logger.severe(message);
+		}
 	}
 	
 	/**
@@ -202,7 +210,9 @@ class org.as2lib.env.log.logger.AscbLogger extends AbstractLogger implements Log
 	 * @see #isFatalEnabled
 	 */
 	public function fatal(message):Void {
-		logger.log(Level.ALL, message);
+		if (isFatalEnabled()) {
+			logger.log(Level.ALL, message);
+		}
 	}
 	
 }
