@@ -89,7 +89,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	/** Distributor control that controls the distributor. */
 	private var distributorControl:EventDistributorControl;
 	
-	/** Typed distributor to distribute messages to all log handlers. */
+	/** Typed distributor that distributes messages to all log handlers. */
 	private var distributor:LogHandler;
 	
 	/** The name of this logger. */
@@ -101,19 +101,15 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * <p>The default log level is {@code ALL}. This means all messages regardless of
 	 * their level are logged.
 	 * 
-	 * <p>The default {@code distributorControl} is of type {@code SimpleEventDistributorControl}.
-	 * 
 	 * <p>The logger {@code name} is by default shown in the log message to identify
 	 * where the message came from.
 	 * 
 	 * @param name (optional) the name of this logger
-	 * @param distributorControl (optional) the distributor control used to get the
-	 * distributor to distribute messages to all added log handlers
 	 */
-	public function SimpleLogger(name:String, distributorControl:EventDistributorControl) {
+	public function SimpleLogger(name:String) {
 		this.name = name;
-		this.distributorControl = distributorControl ? distributorControl : new SimpleEventDistributorControl(LogHandler);
-		this.distributor = this.distributorControl.getDistributor();
+		distributorControl = new SimpleEventDistributorControl(LogHandler, false);
+		distributor = this.distributorControl.getDistributor();
 		level = ALL;
 		levelAsNumber = level.toNumber();
 	}
