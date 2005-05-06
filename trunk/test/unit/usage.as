@@ -94,7 +94,7 @@ org.as2lib.aop.matcher.TDefaultMatcher;
 // org.as2lib.io.conn.local.server
 org.as2lib.io.conn.local.server.TLocalServer;
 org.as2lib.io.conn.local.server.TLocalServerRegistry;
-org.as2lib.io.conn.local.server.TLocalServerServiceProxy;
+//org.as2lib.io.conn.local.server.TLocalServerServiceProxy; does not work correctly because of known problem with mocks and AsBroadcaster
 
 // org.as2lib.io.conn.local.client
 org.as2lib.io.conn.local.client.TLocalClientServiceProxy;
