@@ -101,22 +101,18 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	/** Distributor control that controls the distributor. */
 	private var distributorControl:EventDistributorControl;
 	
-	/** Typed distributor to distribute messages to all log handlers. */
+	/** Typed distributor that distributes messages to all log handlers. */
 	private var distributor:LogHandler;
 	
 	/**
 	 * Constructs a new {@code SimpleHierarchicalLogger} instance.
-	 * 
-	 * <p>The default {@code distributorControl} is of type {@code SimpleEventDistributorControl}.
 	 *
 	 * @param name the name of this new logger
-	 * @param distributorControl (optional) the distributor control used to get the
-	 * distributor to distribute messages to all added log handlers
 	 */
-	public function SimpleHierarchicalLogger(name:String, distributorControl:EventDistributorControl) {
+	public function SimpleHierarchicalLogger(name:String) {
 		setName(name);
-		this.distributorControl = distributorControl ? distributorControl : new SimpleEventDistributorControl(LogHandler);
-		this.distributor = this.distributorControl.getDistributor();
+		distributorControl = new SimpleEventDistributorControl(LogHandler, false);
+		distributor = distributorControl.getDistributor();
 		addedParentHandlers = false;
 	}
 	

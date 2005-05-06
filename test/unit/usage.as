@@ -118,7 +118,7 @@ org.as2lib.env.reflect.algorithm.TMethodAlgorithm;
 org.as2lib.env.reflect.algorithm.TPropertyAlgorithm;*/
 
 // org.as2lib.env.log
-org.as2lib.env.log.logger.TSimpleHierarchicalLogger;
+//org.as2lib.env.log.logger.TSimpleHierarchicalLogger; does not work correctly because of known problem with mocks and AsBroadcaster
 org.as2lib.env.log.repository.TLoggerHierarchy;
 org.as2lib.env.log.level.TDynamicLogLevel;
 
