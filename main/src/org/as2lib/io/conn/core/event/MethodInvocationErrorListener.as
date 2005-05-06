@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.EventListener;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
 
 /**
@@ -51,7 +50,7 @@ import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
  *
  * @author Simon Wacker
  */
-interface org.as2lib.io.conn.core.event.MethodInvocationErrorListener extends EventListener {
+interface org.as2lib.io.conn.core.event.MethodInvocationErrorListener {
 	
 	/**
 	 * Is executed when a method invocation fails.

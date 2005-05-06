@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.event.broadcaster.EventInfo;
 
 /**
  * {@code MethodInvocationErrorInfo} informs the client of an error that occured on
@@ -28,7 +27,7 @@ import org.as2lib.env.event.broadcaster.EventInfo;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.io.conn.core.event.MethodInvocationErrorInfo extends BasicClass implements EventInfo {
+class org.as2lib.io.conn.core.event.MethodInvocationErrorInfo extends BasicClass {
 	
 	/** Indicates an error of unknown origin. */
 	public static var UNKNOWN_ERROR:Number = 0;
@@ -129,15 +128,6 @@ class org.as2lib.io.conn.core.event.MethodInvocationErrorInfo extends BasicClass
 	 */
 	public function getException(Void) {
 		return exception;
-	}
-	
-	/**
-	 * Returns the name of the event {@code 'onError'}.
-	 *
-	 * @return {@code 'onError'}
-	 */
-	public function getName(Void):String {
-		return "onError";
 	}
 	
 }

@@ -16,8 +16,8 @@
  
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.env.event.broadcaster.EventBroadcaster;
-import org.as2lib.env.event.broadcaster.SpeedEventBroadcaster;
+import org.as2lib.env.event.distributor.EventDistributorControl;
+import org.as2lib.env.event.distributor.SimpleEventDistributorControl;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
@@ -72,8 +72,8 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	/** Indicates whether this connection is open {@code true} or closed {@code false}. */
 	private var connected:Boolean;
 	
-	/** Stores added error listeners. */
-	private var errorBroadcaster:EventBroadcaster;
+	/** Stores added error listeners and provides distribution functionality. */
+	private var errorDistributorControl:EventDistributorControl;
 	
 	/** Stores clients waiting for status reports. */
 	private var clientArray:Array;
@@ -126,7 +126,7 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	private function EnhancedLocalConnectionByTarget(target):Void {
 		this.target = target ? target : this;
 		connected = false;
-		errorBroadcaster = new SpeedEventBroadcaster();
+		errorDistributorControl = new SimpleEventDistributorControl(MethodInvocationErrorListener, false);
 		clientArray = new Array();
 	}
 	
@@ -320,7 +320,8 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	 * @param info that contains further information about the error
 	 */
 	private function dispatchError(info:MethodInvocationErrorInfo) {
-		errorBroadcaster.dispatch(info);
+		var distributor:MethodInvocationErrorListener = errorDistributorControl.getDistributor();
+		distributor.onError(info);
 	}
 	
 	/**
@@ -332,7 +333,7 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	 * @param listener the new error listener to add
 	 */
 	public function addErrorListener(listener:MethodInvocationErrorListener):Void {
-		errorBroadcaster.addListener(listener);
+		errorDistributorControl.addListener(listener);
 	}
 	
 	/**
@@ -344,7 +345,7 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	 * @param listener the error listener to remove
 	 */
 	public function removeErrorListener(listener:MethodInvocationErrorListener):Void {
-		errorBroadcaster.removeListener(listener);
+		errorDistributorControl.removeListener(listener);
 	}
 	
 }
