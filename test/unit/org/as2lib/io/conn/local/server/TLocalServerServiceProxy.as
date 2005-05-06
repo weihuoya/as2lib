@@ -17,7 +17,6 @@
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.test.mock.support.TypeArgumentsMatcher;
-import org.as2lib.env.event.broadcaster.EventBroadcaster;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
 import org.as2lib.io.conn.local.server.LocalServerServiceProxy;
@@ -175,68 +174,68 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 	}
 	
 	public function testInvokeMethodByNameAndArgumentsWithNullName(Void):Void {
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		b.dispatch(null);
-		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		l.onError(null);
+		lc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
+		lc.replay();
 		
 		var sc:MockControl = new MockControl(getService());
 		var s = sc.getMock();
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.invokeMethodByNameAndArguments(null, []);
 		
-		bc.verify();
+		lc.verify();
 		sc.verify();
 	}
 	
 	public function testInvokeMethodByNameAndArgumentsWithEmptyStringName(Void):Void {
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		b.dispatch(null);
-		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		l.onError(null);
+		lc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
+		lc.replay();
 		
 		var sc:MockControl = new MockControl(getService());
 		var s = sc.getMock();
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.invokeMethodByNameAndArguments("", []);
 		
-		bc.verify();
+		lc.verify();
 		sc.verify();
 	}
 	
 	public function testInvokeMethodByNameAndArgumentsWithUnknownMethod(Void):Void {
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		b.dispatch(null);
-		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		l.onError(null);
+		lc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
+		lc.replay();
 		
 		var sc:MockControl = new MockControl(getService());
 		var s = sc.getMock();
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.invokeMethodByNameAndArguments("unknownMethod", []);
 		
-		bc.verify();
+		lc.verify();
 		sc.verify();
 	}
 	
 	public function testInvokeMethodByNameAndArgumentsWithKnownMethodAndArguments(Void):Void {
 		var arg3:Object = new Object();
 		
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		lc.replay();
 		
 		var sc:MockControl = new MockControl(getService());
 		var s = sc.getMock();
@@ -244,17 +243,17 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.invokeMethodByNameAndArguments("method", ["arg1", 2, arg3]);
 		
-		bc.verify();
+		lc.verify();
 		sc.verify();
 	}
 	
 	public function testInvokeMethodByNameAndArgumentsWithKnownMethodButWithNullArguments(Void):Void {
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		lc.replay();
 		
 		var sc:MockControl = new MockControl(getService());
 		var s = sc.getMock();
@@ -262,21 +261,21 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.invokeMethodByNameAndArguments("method", null);
 		
-		bc.verify();
+		lc.verify();
 		sc.verify();
 	}
 	
 	public function testInvokeMethodByNameAndArgumentsWithExceptionThrowingMethod(Void):Void {
 		var arg3:Object = new Object();
 		
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		b.dispatch(null);
-		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		l.onError(null);
+		lc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
+		lc.replay();
 		
 		var sc:MockControl = new MockControl(getService());
 		var s = sc.getMock();
@@ -285,10 +284,10 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.invokeMethodByNameAndArguments("method", ["arg1", 2, arg3]);
 		
-		bc.verify();
+		lc.verify();
 		sc.verify();
 	}
 	
@@ -299,9 +298,9 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 	public function testInvokeMethodByNameAndArgumentsAndResponseServiceWithNullResponseService(Void):Void {
 		var arg3:Object = new Object();
 		
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		lc.replay();
 		
 		var sc:MockControl = new MockControl(getService());
 		var s = sc.getMock();
@@ -309,19 +308,19 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s, null);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.invokeMethodByNameAndArgumentsAndResponseService("method", ["a1", 2, arg3]);
 		
-		bc.verify();
+		lc.verify();
 		sc.verify();
 	}
 	
 	public function testInvokeMethodByNameAndArgumentsAndResponseServiceWithNullName(Void):Void {
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		b.dispatch(null);
-		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		l.onError(null);
+		lc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
+		lc.replay();
 		
 		var cc:MockControl = new MockControl(EnhancedLocalConnection);
 		var c:EnhancedLocalConnection = cc.getMock();
@@ -334,21 +333,21 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.setConnection(c);
 		p.invokeMethodByNameAndArgumentsAndResponseService(null, [], "responseService");
 		
-		bc.verify();
+		lc.verify();
 		cc.verify();
 		sc.verify();
 	}
 	
 	public function testInvokeMethodByNameAndArgumentsAndResponseServiceWithEmptyStringName(Void):Void {
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		b.dispatch(null);
-		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		l.onError(null);
+		lc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
+		lc.replay();
 		
 		var cc:MockControl = new MockControl(EnhancedLocalConnection);
 		var c:EnhancedLocalConnection = cc.getMock();
@@ -361,21 +360,21 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.setConnection(c);
 		p.invokeMethodByNameAndArgumentsAndResponseService("", [], "responseService");
 		
-		bc.verify();
+		lc.verify();
 		cc.verify();
 		sc.verify();
 	}
 	
 	public function testInvokeMethodByNameAndArgumentsAndResponseServiceWithUnknownMethod(Void):Void {
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		b.dispatch(null);
-		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		l.onError(null);
+		lc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
+		lc.replay();
 		
 		var cc:MockControl = new MockControl(EnhancedLocalConnection);
 		var c:EnhancedLocalConnection = cc.getMock();
@@ -388,11 +387,11 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.setConnection(c);
 		p.invokeMethodByNameAndArgumentsAndResponseService("unknownMethod", [], "responseService");
 		
-		bc.verify();
+		lc.verify();
 		cc.verify();
 		sc.verify();
 	}
@@ -401,9 +400,9 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 		var returnValue:Object = new Object();
 		var arg3:Object = new Object();
 		
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		lc.replay();
 		
 		var cc:MockControl = new MockControl(EnhancedLocalConnection);
 		var c:EnhancedLocalConnection = cc.getMock();
@@ -418,11 +417,11 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.setConnection(c);
 		p.invokeMethodByNameAndArgumentsAndResponseService("method", ["arg1", 2, arg3], "responseService");
 		
-		bc.verify();
+		lc.verify();
 		cc.verify();
 		sc.verify();
 	}
@@ -430,9 +429,9 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 	public function testInvokeMethodByNameAndArgumentsAndResponseServiceWithKnownMethodButWithNullArguments(Void):Void {
 		var returnValue:Object = new Object();
 		
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		lc.replay();
 		
 		var cc:MockControl = new MockControl(EnhancedLocalConnection);
 		var c:EnhancedLocalConnection = cc.getMock();
@@ -447,21 +446,21 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.setConnection(c);
 		p.invokeMethodByNameAndArgumentsAndResponseService("method", null, "responseService");
 		
-		bc.verify();
+		lc.verify();
 		cc.verify();
 		sc.verify();
 	}
 	
 	public function testInvokeMethodByNameAndArgumentsAndResponseServiceWithExceptionThrowingMethod(Void):Void {
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		b.dispatch(null);
-		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		l.onError(null);
+		lc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
+		lc.replay();
 		
 		var cc:MockControl = new MockControl(EnhancedLocalConnection);
 		var c:EnhancedLocalConnection = cc.getMock();
@@ -476,21 +475,21 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.setConnection(c);
 		p.invokeMethodByNameAndArgumentsAndResponseService("method", [], "responseService");
 		
-		bc.verify();
+		lc.verify();
 		cc.verify();
 		sc.verify();
 	}
 	
 	public function testInvokeMethodByNameAndArgumentsAndResponseServiceWithUnknownResponseService(Void):Void {
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		b.dispatch(null);
-		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		l.onError(null);
+		lc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
+		lc.replay();
 		
 		var cc:MockControl = new MockControl(EnhancedLocalConnection);
 		var c:EnhancedLocalConnection = cc.getMock();
@@ -505,21 +504,21 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.setConnection(c);
 		p.invokeMethodByNameAndArgumentsAndResponseService("method", [], "unknownResponseService");
 		
-		bc.verify();
+		lc.verify();
 		cc.verify();
 		sc.verify();
 	}
 	
 	public function testInvokeMethodByNameAndArgumentsAndResponseServiceWithOversizedArguments(Void):Void {
-		var bc:MockControl = new MockControl(EventBroadcaster);
-		var b:EventBroadcaster = bc.getMock();
-		b.dispatch(null);
-		bc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
-		bc.replay();
+		var lc:MockControl = new MockControl(MethodInvocationErrorListener);
+		var l:MethodInvocationErrorListener = lc.getMock();
+		l.onError(null);
+		lc.setArgumentsMatcher(new TypeArgumentsMatcher([MethodInvocationErrorInfo]));
+		lc.replay();
 		
 		var cc:MockControl = new MockControl(EnhancedLocalConnection);
 		var c:EnhancedLocalConnection = cc.getMock();
@@ -534,11 +533,11 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 		sc.replay();
 		
 		var p:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", s);
-		p.setErrorBroadcaster(b);
+		p.addErrorListener(l);
 		p.setConnection(c);
 		p.invokeMethodByNameAndArgumentsAndResponseService("method", [], "responseService");
 		
-		bc.verify();
+		lc.verify();
 		cc.verify();
 		sc.verify();
 	}
