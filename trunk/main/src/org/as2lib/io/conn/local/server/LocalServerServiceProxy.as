@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.broadcaster.EventBroadcaster;
-import org.as2lib.env.event.broadcaster.SpeedEventBroadcaster;
+import org.as2lib.env.event.distributor.EventDistributorControl;
+import org.as2lib.env.event.distributor.SimpleEventDistributorControl;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.conn.core.server.AbstractServerServiceProxy;
 import org.as2lib.io.conn.core.server.ServerServiceProxy;
@@ -90,8 +90,11 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	/** Used to run this service. */
 	private var connection:EnhancedLocalConnection;
 	
-	/** Stores set error listeners. */
-	private var errorBroadcaster:EventBroadcaster;
+	/** Stores set error listeners and controls the {@code errorDistributor}. */
+	private var errorDistributorControl:EventDistributorControl;
+	
+	/** Distributes to all added error listeners. */
+	private var errorDistributor:MethodInvocationErrorListener;
 	
 	/** This service's status. */
 	private var running:Boolean;
@@ -113,6 +116,8 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 		this.service = service;
 		running = false;
 		currentServiceUrl = null;
+		errorDistributorControl = new SimpleEventDistributorControl(MethodInvocationErrorListener, false);
+		errorDistributor = errorDistributorControl.getDistributor();
 	}
 	
 	/**
@@ -138,31 +143,6 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 */
 	public function setConnection(connection:EnhancedLocalConnection):Void {
 		this.connection = connection;
-	}
-	
-	/**
-	 * Returns the currently used error broadcaster.
-	 *
-	 * <p>This is either the one set via the {@link #setErrorBroadcaster} method or the
-	 * default one which is an instance of class {@link SpeedEventBroadcaster}.
-	 * 
-	 * @return the currently used error broadcaster
-	 */
-	public function getErrorBroadcaster(Void):EventBroadcaster {
-		if (!errorBroadcaster) errorBroadcaster = new SpeedEventBroadcaster();
-		return errorBroadcaster;
-	}
-	
-	/**
-	 * Sets a new error broadcaster.
-	 *
-	 * <p>If {@code errorBroadcaster} is {@code null} or {@code undefined},
-	 * {@link #getErrorBroadcaster} will return the default broadcaster.
-	 * 
-	 * @param errorBroadcaster the new error broadcaster
-	 */
-	public function setErrorBroadcaster(errorBroadcaster:EventBroadcaster):Void {
-		this.errorBroadcaster = errorBroadcaster;
 	}
 	
 	/**
@@ -222,10 +202,10 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 			if (service[methodName]) {
 				service[methodName].apply(service, args);
 			} else {
-				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null));
+				errorDistributor.onError(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null));
 			}
 		} catch (exception) {
-			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, exception));
+			errorDistributor.onError(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, exception));
 		}
 	}
 	
@@ -282,8 +262,8 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 		var listener:MethodInvocationErrorListener = getBlankMethodInvocationErrorListener();
 		var owner:LocalServerServiceProxy = this;
 		listener.onError = function(info:MethodInvocationErrorInfo):Void {
-			// "owner.getErrorBroadcaster" and "owner.currentServiceUrl" are not MTASC compatible
-			owner["getErrorBroadcaster"]().dispatch(new MethodInvocationErrorInfo(owner["currentServiceUrl"], methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR, null));
+			// "owner.errorDistributor" and "owner.currentServiceUrl" are not MTASC compatible
+			owner["errorDistributor"].onError(new MethodInvocationErrorInfo(owner["currentServiceUrl"], methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR, null));
 		}
 		try {
 			if (service[methodName]) {
@@ -291,11 +271,11 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 				sendResponse(methodName, args, responseServiceUrl, "onReturn", [returnValue], listener);
 			} else {
 				sendResponse(methodName, args, responseServiceUrl, "onError", [MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null], listener);
-				getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null));
+				errorDistributor.onError(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null));
 			}
 		} catch (serviceMethodException) {
 			sendResponse(methodName, args, responseServiceUrl, "onError", [MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, serviceMethodException], listener);
-			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, serviceMethodException));
+			errorDistributor.onError(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, serviceMethodException));
 		}
 	}
 	
@@ -327,9 +307,9 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 		try {
 			getConnection().send(responseServiceUrl, responseMethod, responseArguments, responseListener);
 		} catch (uce:org.as2lib.io.conn.local.core.UnknownConnectionException) {
-			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(currentServiceUrl, methodName, methodArguments, MethodInvocationErrorInfo.UNKNOWN_SERVICE_ERROR, uce));
+			errorDistributor.onError(new MethodInvocationErrorInfo(currentServiceUrl, methodName, methodArguments, MethodInvocationErrorInfo.UNKNOWN_SERVICE_ERROR, uce));
 		} catch (mie:org.as2lib.io.conn.core.client.MethodInvocationException) {
-			getErrorBroadcaster().dispatch(new MethodInvocationErrorInfo(currentServiceUrl, methodName, methodArguments, MethodInvocationErrorInfo.OVERSIZED_ARGUMENTS_ERROR, mie));
+			errorDistributor.onError(new MethodInvocationErrorInfo(currentServiceUrl, methodName, methodArguments, MethodInvocationErrorInfo.OVERSIZED_ARGUMENTS_ERROR, mie));
 		}
 	}
 	
@@ -367,7 +347,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * @param errorListener the new error listener to add
 	 */
 	public function addErrorListener(errorListener:MethodInvocationErrorListener):Void {
-		getErrorBroadcaster().addListener(errorListener);
+		errorDistributorControl.addListener(errorListener);
 	}
 	
 	/**
@@ -379,7 +359,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 * @param errorListener the error listener to remove
 	 */
 	public function removeErrorListener(errorListener:MethodInvocationErrorListener):Void {
-		getErrorBroadcaster().removeListener(errorListener);
+		errorDistributorControl.removeListener(errorListener);
 	}
 	
 }

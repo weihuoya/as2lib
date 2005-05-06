@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.EventListener;
 import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
 
 /**
@@ -48,7 +47,7 @@ import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
  *
  * @author Simon Wacker
  */
-interface org.as2lib.io.conn.core.event.MethodInvocationReturnListener extends EventListener {
+interface org.as2lib.io.conn.core.event.MethodInvocationReturnListener {
 	
 	/**
 	 * Is executed when the return value of the method invocation arrives.

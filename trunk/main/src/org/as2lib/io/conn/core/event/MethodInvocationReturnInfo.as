@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.event.broadcaster.EventInfo;
 
 /**
  * {@code MethodInvocationReturnInfo} informs clients that the method invocation
@@ -26,7 +25,7 @@ import org.as2lib.env.event.broadcaster.EventInfo;
  *
  * @author Simon Wacker
  */
-class org.as2lib.io.conn.core.event.MethodInvocationReturnInfo extends BasicClass implements EventInfo {
+class org.as2lib.io.conn.core.event.MethodInvocationReturnInfo extends BasicClass {
 	
 	/** The return value returned by the invoked method. */
 	private var returnValue;
@@ -89,15 +88,6 @@ class org.as2lib.io.conn.core.event.MethodInvocationReturnInfo extends BasicClas
 	 */
 	public function getReturnValue(Void) {
 		return returnValue;
-	}
-	
-	/**
-	 * Returns the name of the event {@code 'onReturn'}.
-	 *
-	 * @return {@code 'onReturn'}
-	 */
-	public function getName(Void):String {
-		return "onReturn";
 	}
 	
 }
