@@ -18,6 +18,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
 import org.as2lib.util.DateFormatter;
 import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.LogLevel;
 
 /**
  * {@code LogMessageStringifier} is the default stringifier to stringify
@@ -75,10 +76,23 @@ class org.as2lib.env.log.LogMessageStringifier extends BasicClass implements Str
 		var message:LogMessage = target;
 		var info = "";
 		if (timeFormatter) {
-			info += timeFormatter.format(new Date(message.getTimeStamp())) + "  ";
+			var timeStamp:Number = message.getTimeStamp();
+			if (timeStamp != null) {
+				info += timeFormatter.format(new Date(timeStamp)) + "  ";
+			}
 		}
-		if (showLevel) info += message.getLevel() + "  ";
-		if (showLoggerName) info += message.getLoggerName() + " - ";
+		if (showLevel) {
+			var level:LogLevel = message.getLevel();
+			if (level) {
+				info += level.toString() + "  ";
+			}
+		}
+		if (showLoggerName) {
+			var name:String = message.getLoggerName();
+			if (name != null) {
+				info += name + " - ";
+			}
+		}
 		return (info + message.getMessage());
 	}
 	
