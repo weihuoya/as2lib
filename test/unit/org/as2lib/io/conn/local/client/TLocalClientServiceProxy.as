@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.MockControl;
 import org.as2lib.io.conn.local.client.LocalClientServiceProxy;
 import org.as2lib.io.conn.core.event.MethodInvocationCallback;
 
@@ -32,7 +31,7 @@ class org.as2lib.io.conn.local.client.TLocalClientServiceProxy extends TestCase 
 	
 	public function testNewWithNullUrl(Void):Void {
 		try {
-			new LocalClientServiceProxy(null);
+			var local:LocalClientServiceProxy = new LocalClientServiceProxy(null);
 			fail("Expected IllegalArgumentException.");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
@@ -40,7 +39,7 @@ class org.as2lib.io.conn.local.client.TLocalClientServiceProxy extends TestCase 
 	
 	public function testNewWithEmptyStringUrl(Void):Void {
 		try {
-			new LocalClientServiceProxy("");
+			var local:LocalClientServiceProxy = new LocalClientServiceProxy("");
 			fail("Expected IllegalArgumentException.");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}

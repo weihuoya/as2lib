@@ -27,7 +27,7 @@ class org.as2lib.io.conn.local.server.TLocalServer extends TestCase {
 	
 	public function testNewWithNullHost(Void):Void {
 		try {
-			new LocalServer(null);
+			var local:LocalServer = new LocalServer(null);
 			fail("Expected IllegalArgumentException");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
@@ -35,7 +35,7 @@ class org.as2lib.io.conn.local.server.TLocalServer extends TestCase {
 	
 	public function testNewWithBlankStringHost(Void):Void {
 		try {
-			new LocalServer("");
+			var local:LocalServer = new LocalServer("");
 			fail("Expected IllegalArgumentException");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}

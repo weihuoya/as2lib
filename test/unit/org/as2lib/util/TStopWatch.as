@@ -16,7 +16,6 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.util.StopWatch;
-import org.as2lib.env.except.IllegalArgumentException;
 
 /**
  * Validates the most common use cases for the StringUtil.
@@ -58,17 +57,17 @@ class org.as2lib.util.TStopWatch extends TestCase {
 		stopWatch.start();
 		for(var i=0; i<10000; i++);
 		assertTrue("The new time has to be bigger or equals than the former time", formerTimeInMilliSeconds <= stopWatch.getTimeInMilliSeconds());
-		assertTrue("The stopwatch has to be still running even if you called for the milliseconds", stopWatch.isStarted());
+		assertTrue("The stopwatch has to be still running even if you called for the milliseconds", stopWatch.hasStarted());
 	}
 	
 	/**
-	 * Validates the isStarted States in different conditions.
+	 * Validates the hasStarted States in different conditions.
 	 */
-	public function testIsStarted(Void):Void {
-		assertFalse("The stopwatch has been stopped but it is defined as started", stopWatch.isStarted());
+	public function testhasStarted(Void):Void {
+		assertFalse("The stopwatch has been stopped but it is defined as started", stopWatch.hasStarted());
 		stopWatch.start();
-		assertTrue("The stopwatch has been started but it is not defined as started", stopWatch.isStarted());
+		assertTrue("The stopwatch has been started but it is not defined as started", stopWatch.hasStarted());
 		stopWatch.stop();
-		assertFalse("The stopwatch has been stopped again but is still defined as started", stopWatch.isStarted());
+		assertFalse("The stopwatch has been stopped again but is still defined as started", stopWatch.hasStarted());
 	}
 }

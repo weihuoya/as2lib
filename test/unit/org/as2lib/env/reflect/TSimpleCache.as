@@ -15,8 +15,8 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.reflect.SimpleCache;
+import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
 
@@ -30,7 +30,6 @@ class org.as2lib.env.reflect.TSimpleCache extends TestCase {
 		assertNull("c.getClass(null) should return null", c.getClass(null));
 		assertNull("c.getClass(undefined) should return null", c.getClass(undefined));
 	}
-	
 	public function testGetClassWithNotStoredClassInfoByObject(Void):Void {
 		var c:SimpleCache = new SimpleCache();
 		assertEmpty(c.getClass(new Object()));
@@ -42,7 +41,7 @@ class org.as2lib.env.reflect.TSimpleCache extends TestCase {
 	}
 	
 	public function testGetClassWithCachedClassInfo(Void):Void {
-		var Type:Function = function(Void) {
+		var Type:Function = function() {
 		}
 		
 		var ic:MockControl = new MockControl(ClassInfo);
@@ -54,7 +53,8 @@ class org.as2lib.env.reflect.TSimpleCache extends TestCase {
 		var c:SimpleCache = new SimpleCache();
 		assertSame("added and returned ClassInfo should be the same", c.addClass(i), i);
 		assertNull("no ClassInfo regitered for this class", c.getClass(function() {}));
-		assertNull("no ClassInfo regitered for this instance", c.getClass(new function() {}()));
+		var f = function() {};
+		assertNull("no ClassInfo regitered for this instance", c.getClass(new f()));
 		assertSame("returned ClassInfo should match the added one: c.getClass(new Type())", c.getClass(new Type()), i);
 		assertSame("returned ClassInfo should match the added one: c.getClass(Type)", c.getClass(Type), i);
 		
@@ -62,9 +62,9 @@ class org.as2lib.env.reflect.TSimpleCache extends TestCase {
 	}
 	
 	public function testGetClassWithCachedSuperClassInfo(Void):Void {
-		var SuperType:Function = function(Void) {
+		var SuperType:Function = function() {
 		}
-		var SubType:Function = function(Void) {
+		var SubType:Function = function() {
 		}
 		SubType.prototype = new SuperType();
 		
@@ -147,7 +147,7 @@ class org.as2lib.env.reflect.TSimpleCache extends TestCase {
 	}
 	
 	public function testReleaseAllForClasses(Void):Void {
-		var Type:Function = function(Void) {
+		var Type:Function = function() {
 		}
 		
 		var ic:MockControl = new MockControl(ClassInfo);
@@ -159,7 +159,8 @@ class org.as2lib.env.reflect.TSimpleCache extends TestCase {
 		var c:SimpleCache = new SimpleCache();
 		assertSame("added and returned ClassInfo should be the same", c.addClass(i), i);
 		assertNull("no class info regitered for this class", c.getClass(function() {}));
-		assertNull("no class info regitered for this instance", c.getClass(new function() {}()));
+		var f = function() {};
+		assertNull("no class info regitered for this instance", c.getClass(new f()));
 		assertSame("returned ClassInfo should match the added one: c.getClass(new Type())", c.getClass(new Type()), i);
 		assertSame("returned ClassInfo should match the added one: c.getClass(Type)", c.getClass(Type), i);
 		
@@ -174,5 +175,4 @@ class org.as2lib.env.reflect.TSimpleCache extends TestCase {
 		
 		ic.verify();
 	}
-	
 }

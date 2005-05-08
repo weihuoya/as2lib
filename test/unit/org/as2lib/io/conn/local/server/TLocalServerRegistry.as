@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.MockControl;
 import org.as2lib.io.conn.local.server.LocalServerRegistry;
 
 /**

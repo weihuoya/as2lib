@@ -15,17 +15,23 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.MethodInfo;
-import org.as2lib.env.reflect.TypeMemberFilter;
 import org.as2lib.env.reflect.algorithm.ClassAlgorithm;
 
 /**
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.TClassInfo extends TestCase {
+	
+	private var formerClassAlgorithm:ClassAlgorithm;
+	
+	public function setUp() {
+		Flashout.log("setup!");
+		formerClassAlgorithm = ClassInfo.getClassAlgorithm();
+	}
 	
 	public function testNewWithNullArguments(Void):Void {
 		var i:ClassInfo = new ClassInfo(null, null, null);
@@ -113,7 +119,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		assertNull("prototype is set to null", i.getSuperType());
 		
 		Type.prototype = undefined;
-		var i:ClassInfo = new ClassInfo(Type, null, null);
+		i = new ClassInfo(Type, null, null);
 		assertNull("prototype is set to undefined", i.getSuperType());
 	}
 	
@@ -129,20 +135,22 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		a.execute(Type.prototype);
 		ac.setReturnValue(i);
 		ac.replay();
-		
 		var o:ClassInfo = new ClassInfo(Type, null, null);
-		o.setClassAlgorithm(a);
+		Flashout.log("here0");
+		ClassInfo.setClassAlgorithm(a);
+		Flashout.log("here1");
 		assertSame(o.getSuperType(), i);
 		
 		ic.verify();
 		ac.verify();
+		Flashout.log("here2");
 	}
 	
-	public function testNewInstanceWithNotDefinedClass(Void):Void {
+/*	public function testNewInstanceWithNotDefinedClass(Void):Void {
 		var i:ClassInfo = new ClassInfo(null, null, null);
 		assertNull("class == null", i.newInstance(null));
 		
-		var i:ClassInfo = new ClassInfo(null, undefined, null);
+		i = new ClassInfo(null, undefined, null);
 		assertNull("class == undefined", i.newInstance(null));
 	}
 	
@@ -150,7 +158,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var parent:TestCase = this;
 		var Type:Function = function() {
 			this.invoked = true;
-			parent.assertSame(arguments.length, 0);
+			parent["assertSame"](arguments.length, 0);
 		};
 		
 		var i:ClassInfo = new ClassInfo(Type, null, null);
@@ -171,16 +179,20 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		var parent:TestCase = this;
 		var Type:Function = function() {
 			this.invoked = true;
-			parent.assertSame(arguments.length, 3);
-			parent.assertSame(arguments[0], "arg1");
-			parent.assertSame(arguments[1], 2);
-			parent.assertSame(arguments[2], arg3);
+			parent["assertSame"](arguments.length, 3);
+			parent["assertSame"](arguments[0], "arg1");
+			parent["assertSame"](arguments[1], 2);
+			parent["assertSame"](arguments[2], arg3);
 		};
 		
 		var i:ClassInfo = new ClassInfo(Type, null, null);
 		var o = i.newInstance(["arg1", 2, arg3])
 		assertNotNull(o);
 		assertTrue(o.invoked);
-	}
+	}*/
 	
+	public function tearDown() {
+		Flashout.log("tearDown");
+		ClassInfo.setClassAlgorithm(formerClassAlgorithm);
+	}
 }

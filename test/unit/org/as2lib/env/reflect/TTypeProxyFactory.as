@@ -30,10 +30,10 @@ class org.as2lib.env.reflect.TTypeProxyFactory extends TestCase {
 		var handler:InvocationHandler = getBlankInvocationHandler();
 		var owner:TTypeProxyFactory = this;
 		handler.invoke = function(proxy, method:String, args:FunctionArguments) {
-			owner.assertSame(proxy1, proxy);
-			owner.assertSame("toString", method);
-			owner.assertSame("arg1", args[0]);
-			owner.assertSame("arg2", args[1]);
+			owner["assertSame"](proxy1, proxy);
+			owner["assertSame"]("toString", method);
+			owner["assertSame"]("arg1", args[0]);
+			owner["assertSame"]("arg2", args[1]);
 		}
 		proxy1 = BasicInterface(factory.createProxy(BasicInterface, handler));
 		proxy1.toString("arg1", "arg2");
@@ -46,15 +46,15 @@ class org.as2lib.env.reflect.TTypeProxyFactory extends TestCase {
 		var owner:TTypeProxyFactory = this;
 		handler["count"] = 0;
 		handler.invoke = function(proxy, method:String, args:FunctionArguments) {
-			owner.assertSame(proxy1, proxy);
+			owner["assertSame"](proxy1, proxy);
 			if (this["count"] == 0) {
-				owner.assertSame("toString", method);
-				owner.assertSame("arg1", args[0]);
-				owner.assertSame("arg2", args[1]);
+				owner["assertSame"]("toString", method);
+				owner["assertSame"]("arg1", args[0]);
+				owner["assertSame"]("arg2", args[1]);
 			}
 			if (this["count"] == 1) {
-				owner.assertSame("getName", method);
-				owner.assertSame(args.length, 0);
+				owner["assertSame"]("getName", method);
+				owner["assertSame"](args.length, 0);
 			}
 			this["count"]++;
 		}

@@ -16,28 +16,25 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.reflect.PackageMemberInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.SimpleCache;
-import org.as2lib.env.reflect.ReflectConfig;
-import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.map.HashMap;
 
 /**
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.TPackageMemberAlgorithm extends TestCase {
 	
+	private function use(cls:Function):Void {
+	}
+	
 	public function setUp(Void):Void {
-		org.as2lib.env.reflect.treflect;
-		org.as2lib.env.reflect.treflect.SubClass;
-		org.as2lib.env.reflect.treflect.SuperClass;
-		org.as2lib.env.reflect.treflect.package0.Package0Class;
-		org.as2lib.env.reflect.treflect.package1.Package1Class;
+		use(org.as2lib.env.reflect.treflect.SubClass);
+		use(org.as2lib.env.reflect.treflect.SuperClass);
+		use(org.as2lib.env.reflect.treflect.package0.Package0Class);
+		use(org.as2lib.env.reflect.treflect.package1.Package1Class);
 	}
 	
 	public function testExecuteWithNullAndUndefinedArguments(Void):Void {
@@ -89,10 +86,11 @@ class org.as2lib.env.reflect.algorithm.TPackageMemberAlgorithm extends TestCase 
 		var a:PackageMemberAlgorithm = new PackageMemberAlgorithm();
 		a.setCache(new SimpleCache(r));
 		var c:Array = a.execute(p);
+		var k:ClassInfo;
 		assertSame("there should be 4 members", c.length, 4);
 		for (var i:Number = 0; i < c.length; i++) {
 			if (c[i] instanceof ClassInfo) {
-				var k:ClassInfo = c[i];
+				k = c[i];
 				var found:Boolean = false;
 				for (var y:Number = 0; y < c["classes"].length; y++) {
 					if (c["classes"][y] == k) {
@@ -104,11 +102,11 @@ class org.as2lib.env.reflect.algorithm.TPackageMemberAlgorithm extends TestCase 
 				if (k.getName() == "SubClass") {
 					assertSame("SubClass: storage by name failed", k, c["classes"][k.getName()]);
 					assertSame("SubClass: wrong type", k.getType(),org.as2lib.env.reflect.treflect.SubClass);
-					assertSame("SubClass: wrong parent", k.getParent(), p);
+					assertSame("SubClass: wrong parent", k.getPackage(), p);
 				} else if (k.getName() == "SuperClass") {
 					assertSame("SuperClass: storage by name failed", k, c["classes"][k.getName()]);
 					assertSame("SuperClass: wrong type", k.getType(),org.as2lib.env.reflect.treflect.SuperClass);
-					assertSame("SuperClass: wrong parent", k.getParent(), p);
+					assertSame("SuperClass: wrong parent", k.getPackage(), p);
 				} else {
 					fail("unkown class '" + k + "'");
 				}
@@ -124,11 +122,11 @@ class org.as2lib.env.reflect.algorithm.TPackageMemberAlgorithm extends TestCase 
 				assertTrue(k.getName() + ": second storage by index failed", found);
 				if (j.getName() == "package0") {
 					assertSame("package0: storage by name failed", j, c["packages"][j.getName()]);
-					assertSame("package0: wrong object", j.getPackage(),org.as2lib.env.reflect.treflect.package0);
+					assertSame("package0: wrong object", j.getPackage(),_global.org.as2lib.env.reflect.treflect.package0);
 					assertSame("package0: wrong parent", j.getParent(), p);
 				} else if (j.getName() == "package1") {
 					assertSame("package1: storage by name failed", j, c["packages"][j.getName()]);
-					assertSame("package1: wrong object", j.getPackage(),org.as2lib.env.reflect.treflect.package1);
+					assertSame("package1: wrong object", j.getPackage(),_global.org.as2lib.env.reflect.treflect.package1);
 					assertSame("package1: wrong parent", j.getParent(), p);
 				} else {
 					fail("unkown package '" + k + "'");

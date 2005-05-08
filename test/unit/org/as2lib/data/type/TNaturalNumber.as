@@ -30,10 +30,11 @@
 	 * Test the Natural Number if you apply a positive integer.
 	 */
 	public function testPositiveInteger() {
-		assertEquals("1 should return 1, without modification", new NaturalNumber(1), 1);
+		var nat:NaturalNumber = new NaturalNumber(1);
+		assertEquals("1 should return 1, without modification", nat, 1);
 		assertThrows("1/3 is not allowed in natural because rounded down it would be 0", NumberFormatException, new ConstructorCall(NaturalNumber), [1/3]);
-		assertEquals("The addition of 2 to 1 should be 3", new NaturalNumber(1)+2, 3);
-		assertEquals("The addition of 2.2 to 1 should be 3.2", new NaturalNumber(1)+2.2, 3.2);
+		assertEquals("The addition of 2 to 1 should be 3", nat+2, 3);
+		assertEquals("The addition of 2.2 to 1 should be 3.2", nat+2.2, 3.2);
 	}
 	
 	/**
@@ -63,9 +64,11 @@
 	 * Test the Natural Number if you apply Floating points.
 	 */
 	public function testPositiveFloatingPoint() {
-		assertEquals("1.2 shoudld be 1", new NaturalNumber(1.2), 1);
-		assertEquals("1.2+1 should be 2", new NaturalNumber(1.2)+1, 2);
-		assertEquals("1/3+1 should be 1 1/3", new NaturalNumber(1/3+1), 1);
+		var nat:NaturalNumber = new NaturalNumber(1.2);
+		var nat2:NaturalNumber = new NaturalNumber(1/3+1);
+		assertEquals("1.2 shoudld be 1", nat, 1);
+		assertEquals("1.2+1 should be 2", nat+1, 2);
+		assertEquals("1/3+1 should be 1", nat2, 1);
 	}
 	
 	/**

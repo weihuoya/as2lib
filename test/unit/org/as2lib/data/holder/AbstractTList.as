@@ -406,6 +406,7 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 	public function testIterator(Void):Void {
 		
 		var iter:Iterator;
+		var i:Number
 		
 		// Test for a proper iterator from a empty list
 		iter = list.iterator();
@@ -417,7 +418,7 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 		list.insert(2);
 		assertEquals("Size of 3 expected within the list", list.size(), 3);
 		iter = list.iterator();
-		for(var i:Number = 0; iter.hasNext(); i++) {
+		for(i = 0; iter.hasNext(); i++) {
 			assertEquals("Iteration content should match list content #"+i, iter.next(), i);
 		}
 		
@@ -427,16 +428,15 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 		list.set(2, 4);
 		assertEquals("Size of 3 expected within the list", list.size(), 3);
 		iter = list.iterator();
-		for(var i:Number = 2; iter.hasNext(); i++) {
+		for(i = 2; iter.hasNext(); i++) {
 			assertEquals("Setted Iteration content should match list content #"+i, iter.next(), i);
 		}
-		
 		// Iteration over a undefined and null entry
 		list.clear();
 		list.insert(null);
 		list.insert(undefined);
 		iter = list.iterator();
-		for(var i:Number = 0; iter.hasNext(); i++) {
+		for(i = 0; iter.hasNext(); i++) {
 			if(i == 0) {
 				assertNull("Content 0 should be null", iter.next());
 			} else if(i == 1) {
@@ -450,6 +450,8 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 	 * Tests if a index of different entries work properly
 	 */
 	public function testIndexOf(Void):Void {
+		var obj:Object = {};
+		var func:Function = function() {}
 		
 		// Test for a empty list.
 		assertEquals("List index of 'a' should be -1", list.indexOf("a"), -1);
@@ -462,8 +464,6 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 		
 		
 		// Prepare list for a test with a filled list
-		var obj:Object = {};
-		var func:Function = function() {}
 		list.insert("a");
 		list.insert(1);
 		list.insert(true);

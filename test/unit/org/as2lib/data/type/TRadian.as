@@ -39,8 +39,9 @@ class org.as2lib.data.type.TRadian extends TAngle {
 	 * Tests that value of returns the value of the angle.
 	 */
 	public function testValue(Void):Void {
-		assertEquals("The valueof the instance should be the same like given to the instance", new Radian(90), 90);
-		assertEquals("The getDegree the instance should be the same like given to the instance", new Radian(90).toDegree(), 90*180/Math.PI);
-		assertEquals("The getRadian the instance should be the same like given to the instance", new Radian(90).toRadian(), 90);
+		var rad:Radian = new Radian(90);
+		assertEquals("The valueof the instance should be the same like given to the instance", rad, 90);
+		assertEquals("The getDegree the instance should be the same like given to the instance", rad.toDegree(), 90*180/Math.PI);
+		assertEquals("The getRadian the instance should be the same like given to the instance", rad.toRadian(), 90);
 	}
 }

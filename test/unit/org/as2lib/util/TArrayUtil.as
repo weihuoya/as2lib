@@ -16,7 +16,6 @@
  
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.util.ArrayUtil;
-import org.as2lib.data.holder.Stack;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.data.holder.NoSuchElementException;
 

@@ -22,7 +22,6 @@ import org.as2lib.env.overload.OverloadException;
 import org.as2lib.env.overload.SimpleOverloadHandler;
 import org.as2lib.env.overload.UnknownOverloadHandlerException;
 import org.as2lib.env.overload.SameTypeSignatureException;
-import org.as2lib.env.except.IllegalArgumentException;
 
 /**
  * @author Simon Wacker
