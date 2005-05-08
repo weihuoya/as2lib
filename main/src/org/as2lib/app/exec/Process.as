@@ -8,7 +8,7 @@ interface org.as2lib.app.exec.Process extends BasicInterface{
 	public function addAllProcessListener(list:Array):Void;
 	public function getAllProcessListener(Void):Array;
     public function getPercent(Void):Number; // may return null - equal to not evaluable
-    public function isFinished(Void):Boolean;
-    public function isStarted(Void):Boolean;
+    public function hasFinished(Void):Boolean;
+    public function hasStarted(Void):Boolean;
     public function start(Void):Void;
 }

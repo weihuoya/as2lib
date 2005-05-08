@@ -147,7 +147,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		var i:Number = a.length;
 		
 		while(--i-(-1)) {
-			if(a[i].isFinished()) {
+			if(a[i].hasFinished()) {
 				finished ++;
 			}
 		}
@@ -158,11 +158,11 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	/**
 	 * @return true if the TestCase has been finished.
 	 */
-	public function isFinished(Void):Boolean {
+	public function hasFinished(Void):Boolean {
 		if(finished) return true; // Caching of a true result as performance enhancement.
 		var methodIterator:Iterator = new ArrayIterator(getMethodInfos());
 		while(methodIterator.hasNext()) {
-			if(!methodIterator.next().isFinished()) {
+			if(!methodIterator.next().hasFinished()) {
 				return false;
 			}
 		}
@@ -172,11 +172,11 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	/**
 	 * @return true if the TestCase has been started.
 	 */
-	public function isStarted(Void):Boolean {
+	public function hasStarted(Void):Boolean {
 		if(started) return true; // Caching of a true result as performance enhancement.
 		var methodIterator:Iterator = new ArrayIterator(getMethodInfos());
 		while(methodIterator.hasNext()) {
-			if(methodIterator.next().isFinished()) {
+			if(methodIterator.next().hasFinished()) {
 				return (started=true);
 			}
 		}

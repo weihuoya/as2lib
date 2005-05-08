@@ -15,8 +15,6 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.util.StringUtil;
-import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.Matcher;
 
 /**

@@ -33,7 +33,7 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 	/**
 	 * Constructs a new Factory.
 	 */
-	public function TestSuiteFactory(Void) {}
+	public function TestSuiteFactory() {}
 	
 	/**
 	 * Collects all TestCases that are available.

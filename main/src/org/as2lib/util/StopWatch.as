@@ -71,7 +71,7 @@ class org.as2lib.util.StopWatch extends BasicClass {
 	 * @throws IllegalStateException if the stopwatch has already been started
 	 */
 	public function start(Void):Void {
-		if(isStarted()) {
+		if(hasStarted()) {
 			throw new IllegalStateException("Stopwatch is already started.", this, arguments);
 		}
 		started = true;
@@ -84,7 +84,7 @@ class org.as2lib.util.StopWatch extends BasicClass {
 	 * @throws IllegalStateException if the stopwatch has not been already started
 	 */
 	public function stop(Void):Void {
-		if (!isStarted()) {
+		if (!hasStarted()) {
 			throw new IllegalStateException("Stopwatch isn't started yet.", this, arguments);
 		}
 		var stopTime:Number = getTimer();
@@ -97,7 +97,7 @@ class org.as2lib.util.StopWatch extends BasicClass {
 	 * 
 	 * @return {@code true} if this stopwatch has been started else {@code false}
 	 */
-	public function isStarted(Void):Boolean {
+	public function hasStarted(Void):Boolean {
 		return started;
 	}
 	
@@ -120,7 +120,7 @@ class org.as2lib.util.StopWatch extends BasicClass {
 	 * @see #getTimeInSeconds
 	 */
 	public function getTimeInMilliSeconds(Void):Number {
-		if (isStarted()) {
+		if (hasStarted()) {
 			stopTimeKeys[startTimeKeys.length-1] = getTimer();
 		}
 		var result:Number = 0;
