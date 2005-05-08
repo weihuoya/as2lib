@@ -39,12 +39,12 @@ interface org.as2lib.test.unit.TestResult extends BasicInterface {
 	/**
 	 * @return True if the Test has finished.
 	 */
-	public function isFinished(Void):Boolean;
+	public function hasFinished(Void):Boolean;
 	
 	/**
 	 * @return True if the Test has started.
 	 */
-	public function isStarted(Void):Boolean;
+	public function hasStarted(Void):Boolean;
 	
 	/**
 	 * Getter for the name of the test.

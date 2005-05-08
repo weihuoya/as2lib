@@ -76,8 +76,8 @@ import org.as2lib.env.reflect.ClassInfo;
  * The current State of the testrunner can be evaluated by:
  * @see #isRunning
  * @see #isPaused
- * @see #isStarted
- * @see #isFinished
+ * @see #hasStarted
+ * @see #hasFinished
  * 
  * @author Martin Heidegger
  */
@@ -260,7 +260,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	/**
 	 * @return true if the process has finished. (false if the process hasn't started yet)
 	 */
-	public function isFinished(Void):Boolean {
+	public function hasFinished(Void):Boolean {
 		return finished;
 	}
 	
@@ -274,7 +274,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	/**
 	 * @return true if the process has started.
 	 */
-	public function isStarted(Void):Boolean {
+	public function hasStarted(Void):Boolean {
 		return started;
 	}
 	
@@ -282,7 +282,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	 * @return true if the process is running.
 	 */
 	public function isRunning(Void):Boolean {
-		return(!isPaused() && isStarted());
+		return(!isPaused() && hasStarted());
 	}
 	
 	/**

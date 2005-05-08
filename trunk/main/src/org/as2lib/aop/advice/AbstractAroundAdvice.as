@@ -16,7 +16,6 @@
 
 import org.as2lib.aop.Aspect;
 import org.as2lib.aop.advice.AbstractAdvice;
-import org.as2lib.aop.advice.AroundAdvice;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.env.reflect.ClassInfo;
 
@@ -39,7 +38,8 @@ class org.as2lib.aop.advice.AbstractAroundAdvice extends AbstractAdvice {
 		var owner:AbstractAroundAdvice = this;
 		return (function() {
 			joinPoint = ClassInfo.forInstance(joinPoint).newInstance([joinPoint.getInfo(), this]);
-			return owner.executeJoinPoint(joinPoint, arguments);
+			// MTASC doesn't allow access to private "executeJoinPoint"
+			return owner["executeJoinPoint"](joinPoint, arguments);
 		});
 	}
 	

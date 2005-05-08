@@ -68,10 +68,10 @@ class org.as2lib.app.exec.ExecutableProcess extends BasicClass implements Proces
     public function getPercent(Void):Number {
 		return null;
 	}
-    public function isFinished(Void):Boolean {
+    public function hasFinished(Void):Boolean {
 		return finished;
 	}
-    public function isStarted(Void):Boolean {
+    public function hasStarted(Void):Boolean {
 		return started;
 	}
 }

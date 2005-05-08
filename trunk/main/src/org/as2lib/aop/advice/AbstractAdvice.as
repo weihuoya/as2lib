@@ -17,7 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.aop.Pointcut;
-import org.as2lib.aop.Advice;
 import org.as2lib.aop.Aspect;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.AopConfig;

@@ -17,7 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.aop.pointcut.PointcutFactory;
 import org.as2lib.aop.pointcut.DynamicPointcutFactory;
-import org.as2lib.aop.advice.AdviceFactory;
 import org.as2lib.aop.advice.DynamicAdviceFactory;
 import org.as2lib.aop.advice.SimpleDynamicAdviceFactory;
 import org.as2lib.aop.Matcher;

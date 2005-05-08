@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.aop.Advice;
 
 /**
  * Aspect represents an aspect in AOP. The only method this

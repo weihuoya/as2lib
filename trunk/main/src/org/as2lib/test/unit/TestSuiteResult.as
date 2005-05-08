@@ -88,7 +88,7 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	/**
 	 * @return True if the TestSuite is finished.
 	 */
-	public function isFinished(Void):Boolean {
+	public function hasFinished(Void):Boolean {
 		for(var i=this.testResults.length-1; i>=0; i--) {
 			if(!this.testResults[i].isFinished()) {
 				return false;
@@ -100,9 +100,9 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	/**
 	 * @return True if the TestSuite is started.
 	 */
-	public function isStarted(Void):Boolean {
+	public function hasStarted(Void):Boolean {
 		for(var i=this.testResults.length-1; i>=0; i--) {
-			if(this.testResults[i].isStarted()) {
+			if(this.testResults[i].hasStarted()) {
 				return true;
 			}
 		}
