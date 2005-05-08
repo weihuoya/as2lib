@@ -29,7 +29,7 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 	
 	public function testNewWithNullPath(Void):Void {
 		try {
-			new LocalServerServiceProxy(null, new Object());
+			var local:LocalServerServiceProxy = new LocalServerServiceProxy(null, new Object());
 			fail("Expected IllegalArgumentException.");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
@@ -37,7 +37,7 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 	
 	public function testNewWithEmptyStringPath(Void):Void {
 		try {
-			new LocalServerServiceProxy("", new Object());
+			var local:LocalServerServiceProxy = new LocalServerServiceProxy("", new Object());
 			fail("Expected IllegalArgumentException.");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
@@ -45,7 +45,7 @@ class org.as2lib.io.conn.local.server.TLocalServerServiceProxy extends TestCase 
 	
 	public function testNewWithNullService(Void):Void {
 		try {
-			new LocalServerServiceProxy("myPath", null);
+			var local:LocalServerServiceProxy = new LocalServerServiceProxy("myPath", null);
 			fail("Expected IllegalArgumentException.");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}

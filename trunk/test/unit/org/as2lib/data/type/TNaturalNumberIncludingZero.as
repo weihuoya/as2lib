@@ -30,10 +30,12 @@
 	 * Test the Natural Number if you apply a positive integer.
 	 */
 	public function testPositiveInteger() {
-		assertEquals("1 should return 1, without modification", new NaturalNumberIncludingZero(1), 1);
-		assertEquals("1/3 should return 0, rounded down", new NaturalNumberIncludingZero(1/3), 0);
-		assertEquals("The addition of 2 to 1 should be 3", new NaturalNumberIncludingZero(1)+2, 3);
-		assertEquals("The addition of 2.2 to 1 should be 3.2", new NaturalNumberIncludingZero(1)+2.2, 3.2);
+		var nat:NaturalNumberIncludingZero = NaturalNumberIncludingZero(1);
+		var nat2:NaturalNumberIncludingZero = NaturalNumberIncludingZero(1/3);
+		assertEquals("1 should return 1, without modification", nat, 1);
+		assertEquals("1/3 should return 0, rounded down", nat2, 0);
+		assertEquals("The addition of 2 to 1 should be 3", nat+2, 3);
+		assertEquals("The addition of 2.2 to 1 should be 3.2", nat+2.2, 3.2);
 	}
 	
 	/**
@@ -48,7 +50,8 @@
 	 * Test the Natural Number if you apply zero.
 	 */
 	public function testZero() {
-		assertEquals("Zero is allowed in natural", new NaturalNumberIncludingZero(0), 0);
+		var nat:NaturalNumberIncludingZero = new NaturalNumberIncludingZero(0);
+		assertEquals("Zero is allowed in natural", nat, 0);
 	}
 	
 	/**
@@ -63,16 +66,19 @@
 	 * Test the Natural Number if you apply Floating points.
 	 */
 	public function testPositiveFloatingPoint() {
-		assertEquals("1.2 shoudld be 1", new NaturalNumberIncludingZero(1.2), 1);
-		assertEquals("1.2+1 should be 2", new NaturalNumberIncludingZero(1.2)+1, 2);
-		assertEquals("1/3+1 should be 1 1/3", new NaturalNumberIncludingZero(1/3+1), 1);
+		var nat:NaturalNumberIncludingZero = NaturalNumberIncludingZero(1.2);
+		var nat2:NaturalNumberIncludingZero = NaturalNumberIncludingZero(1/3+1);
+		assertEquals("1.2 shoudld be 1", nat, 1);
+		assertEquals("1.2+1 should be 2", nat+1, 2);
+		assertEquals("1/3+1 should be 1 1/3", nat2, 1);
 	}
 	
 	/**
 	 * Test the Natural Number if you apply negative Floating points.
 	 */
 	public function testNegativeFloatingPoint() {
-		assertEquals("-1/3 is allowed because it is rounded down 0", new NaturalNumberIncludingZero(-1/3), 0);
+		var nat:NaturalNumberIncludingZero = new NaturalNumberIncludingZero(-1/3);
+		assertEquals("-1/3 is allowed because it is rounded down 0", nat, 0);
 		assertThrows("-1.2 is not allowed in natural", NumberFormatException, new ConstructorCall(NaturalNumberIncludingZero), [-1.2]);
 		assertThrows("-1 1/3 is not allowed in natural", NumberFormatException, new ConstructorCall(NaturalNumberIncludingZero), [-1-1/3]);
 	}

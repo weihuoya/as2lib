@@ -18,9 +18,6 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.support.ReplayState;
 import org.as2lib.test.mock.Behavior;
 import org.as2lib.test.mock.MethodCall;
-import org.as2lib.test.mock.MethodCallRange;
-import org.as2lib.test.mock.MethodResponse;
-import org.as2lib.test.mock.ArgumentsMatcher;
 import org.as2lib.test.mock.BehaviorMock;
 import org.as2lib.test.mock.MethodBehaviorMock;
 

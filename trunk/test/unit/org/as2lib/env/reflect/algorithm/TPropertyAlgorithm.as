@@ -16,21 +16,21 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.TypeArgumentsMatcher;
-import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
-import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
 import org.as2lib.env.reflect.PropertyInfo;
-import org.as2lib.env.reflect.PackageMemberInfo;
 
 /**
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.TPropertyAlgorithm extends TestCase {
 	
+	private function use(cls:Function):Void {
+	}
+	
 	public function setUp(Void):Void {
-		org.as2lib.env.reflect.treflect.SubClass;
-		org.as2lib.env.reflect.treflect.SuperClass;
+		use(org.as2lib.env.reflect.treflect.SubClass);
+		use(org.as2lib.env.reflect.treflect.SuperClass);
 	}
 	
 	public function testExecuteWithNullAndUndefinedArguments(Void):Void {

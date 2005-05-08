@@ -97,8 +97,9 @@ class org.as2lib.io.file.TFile extends TestCase implements FileListener {
 	private function validateLines(file:File):Void {
 		var content = file.getContent();
 		var lineCount = file.countLines();
+		var i:Number;
 		assertEquals("Incorrect Amount of lines found in "+file.getLocation(), lineCount, 5);
-		for(var i=0; i<lineCount; i++) {
+		for(i=0; i<lineCount; i++) {
 			assertTypeOf("Line not found in "+file.getLocation(), file.getLine(i), ObjectUtil.TYPE_STRING);
 		}
 		assertUndefined("Index of line out of bounds in "+file.getLocation(), file.getLine(i));

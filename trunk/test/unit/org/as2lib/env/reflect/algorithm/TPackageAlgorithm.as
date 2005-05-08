@@ -22,7 +22,6 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.SimpleCache;
 import org.as2lib.env.reflect.PackageMemberInfo;
-import org.as2lib.env.reflect.ReflectConfig;
 
 /**
  * @author Simon Wacker
@@ -68,7 +67,7 @@ class org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestCase {
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([Object]));
 		cc.setDefaultReturnValue(null);
 		c.getRoot();
-		cc.setReturnValue(ReflectConfig.getRootPackage());
+		cc.setReturnValue(PackageInfo.getRootPackage());
 		c.addPackage(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([PackageInfo]));
 		cc.setDefaultReturnValue(null);
@@ -128,7 +127,7 @@ class org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestCase {
 		var c:Cache = cc.getMock();
 		c.getRoot();
 		cc.setReturnValue(r);
-		c.getPackage(org.as2lib.core);
+		c.getPackage(_global.org.as2lib.core);
 		cc.setReturnValue(i);
 		cc.replay();
 		

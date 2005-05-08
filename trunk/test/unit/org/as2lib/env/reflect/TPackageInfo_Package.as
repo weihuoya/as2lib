@@ -26,6 +26,12 @@ import org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm;
  */
 class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 	
+	private var fpma:PackageMemberAlgorithm;
+	
+	public function setUp() {
+		fpma = PackageInfo.getPackageMemberAlgorithm();
+	}
+	
 	public function testGetMemberPackagesByFlagWithNullMembers(Void):Void {
 		var i:PackageInfo = new PackageInfo(null, null, null);
 		assertNull(i.getMemberPackages());
@@ -35,7 +41,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 	
 	public function testGetMemberPackagesByFlagWithMembersOfTypeClassInfoAndPackageInfo(Void):Void {
 		var p:Object = new Object();
-		var i:PackageInfo = new PackageInfo(null, p, null);
+		var i:PackageInfo = new PackageInfo(p, null, null);
 		
 		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
@@ -69,9 +75,9 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		ac.setReturnValue(members);
 		ac.replay();
 		
-		i.setPackageMemberAlgorithm(a);
+		PackageInfo.setPackageMemberAlgorithm(a);
 		
-		var members:Array = i.getMemberPackages();
+		members = i.getMemberPackages();
 		assertSame(members.length, 3);
 		assertSame(members[0], p1);
 		assertSame(members[1], p2);
@@ -88,7 +94,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 	
 	public function testGetMemberPackagesByFlagWithMembersOfSubPackages(Void):Void {
 		var p:Object = new Object();
-		var i:PackageInfo = new PackageInfo(null, p, null);
+		var i:PackageInfo = new PackageInfo(p, null, null);
 		
 		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
@@ -130,9 +136,9 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		ac.setReturnValue(members);
 		ac.replay();
 		
-		i.setPackageMemberAlgorithm(a);
+		PackageInfo.setPackageMemberAlgorithm(a);
 		
-		var members:Array = i.getMemberPackages(false);
+		members = i.getMemberPackages(false);
 		assertSame(members.length, 5);
 		assertSame(members[0], p1);
 		assertSame(members[1], p2);
@@ -162,7 +168,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 	
 	public function testGetMemberPackagesByFilterWithNullFilter(Void):Void {
 		var p:Object = new Object();
-		var i:PackageInfo = new PackageInfo(null, p, null);
+		var i:PackageInfo = new PackageInfo(p, null, null);
 		
 		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
@@ -196,9 +202,9 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		ac.setReturnValue(members);
 		ac.replay();
 		
-		i.setPackageMemberAlgorithm(a);
+		PackageInfo.setPackageMemberAlgorithm(a);
 		
-		var members:Array = i.getMemberPackagesByFilter(null);
+		members = i.getMemberPackagesByFilter(null);
 		assertSame(members.length, 3);
 		assertSame(members[0], p1);
 		assertSame(members[1], p2);
@@ -215,7 +221,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 	
 	public function testGetMemberPackagesByFilterWithFilteredSubpackages(Void):Void {
 		var p:Object = new Object();
-		var i:PackageInfo = new PackageInfo(null, p, null);
+		var i:PackageInfo = new PackageInfo(p, null, null);
 		
 		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
@@ -261,7 +267,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		ac.setReturnValue(members);
 		ac.replay();
 		
-		i.setPackageMemberAlgorithm(a);
+		PackageInfo.setPackageMemberAlgorithm(a);
 		
 		var fc:MockControl = new MockControl(PackageMemberFilter);
 		var f:PackageMemberFilter = fc.getMock();
@@ -281,7 +287,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		fc.setReturnValue(false);
 		fc.replay();
 		
-		var members:Array = i.getMemberPackages(f);
+		members = i.getMemberPackages(f);
 		assertSame(members.length, 4);
 		assertSame(members[0], p2);
 		assertSame(members[1], p3);
@@ -303,7 +309,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 	
 	public function testGetMemberPackagesByFilterWithMembersOfSubpackages(Void):Void {
 		var p:Object = new Object();
-		var i:PackageInfo = new PackageInfo(null, p, null);
+		var i:PackageInfo = new PackageInfo(p, null, null);
 		
 		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
@@ -355,7 +361,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		ac.setReturnValue(members);
 		ac.replay();
 		
-		i.setPackageMemberAlgorithm(a);
+		PackageInfo.setPackageMemberAlgorithm(a);
 		
 		var fc:MockControl = new MockControl(PackageMemberFilter);
 		var f:PackageMemberFilter = fc.getMock();
@@ -375,7 +381,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		fc.setReturnValue(true);
 		fc.replay();
 		
-		var members:Array = i.getMemberPackages(f);
+		members = i.getMemberPackages(f);
 		assertSame(members.length, 4);
 		assertSame(members[0], p1);
 		assertSame(members[1], p2);
@@ -400,8 +406,8 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		var a:PackageMemberAlgorithm = ac.getMock();
 		ac.replay();
 		
-		var i:PackageInfo = new PackageInfo(null, new Object(), null);
-		i.setPackageMemberAlgorithm(a);
+		var i:PackageInfo = new PackageInfo(new Object(), null, null);
+		PackageInfo.setPackageMemberAlgorithm(a);
 		assertNull(i.getMemberPackageByName(null));
 		assertNull(i.getMemberPackageByName(undefined));
 		
@@ -415,7 +421,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 	
 	public function testGetMemberPackageByNameWithKnownMemberPackages(Void):Void {
 		var p:Object = new Object();
-		var i:PackageInfo = new PackageInfo(null, p, null);
+		var i:PackageInfo = new PackageInfo(p, null, null);
 		
 		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
@@ -460,7 +466,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		ac.setReturnValue(members);
 		ac.replay();
 		
-		i.setPackageMemberAlgorithm(a);
+		PackageInfo.setPackageMemberAlgorithm(a);
 		
 		assertNull(i.getMemberPackageByName("class1"));
 		assertNull(i.getMemberPackageByName("class2"));
@@ -478,7 +484,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 	
 	public function testGetMemberPackageByNameWithMembersInSubPackages(Void):Void {
 		var p:Object = new Object();
-		var i:PackageInfo = new PackageInfo(null, p, null);
+		var i:PackageInfo = new PackageInfo(p, null, null);
 		
 		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
@@ -547,7 +553,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		ac.setReturnValue(members);
 		ac.replay();
 		
-		i.setPackageMemberAlgorithm(a);
+		PackageInfo.setPackageMemberAlgorithm(a);
 		
 		assertNull(i.getMemberPackageByName("class2"));
 		assertSame(i.getMemberPackageByName("package1"), p1);
@@ -574,8 +580,8 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		var a:PackageMemberAlgorithm = ac.getMock();
 		ac.replay();
 		
-		var i:PackageInfo = new PackageInfo(null, new Object(), null);
-		i.setPackageMemberAlgorithm(a);
+		var i:PackageInfo = new PackageInfo(new Object(), null, null);
+		PackageInfo.setPackageMemberAlgorithm(a);
 		assertNull(i.getMemberPackageByPackage(null));
 		assertNull(i.getMemberPackageByPackage(undefined));
 		
@@ -597,7 +603,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		var up:Object = new Object();
 		
 		var p:Object = new Object();
-		var i:PackageInfo = new PackageInfo(null, p, null);
+		var i:PackageInfo = new PackageInfo(p, null, null);
 		
 		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
@@ -649,7 +655,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		ac.setReturnValue(members);
 		ac.replay();
 		
-		i.setPackageMemberAlgorithm(a);
+		PackageInfo.setPackageMemberAlgorithm(a);
 		
 		assertSame(i.getMemberPackageByPackage(cp1), p1);
 		assertSame(i.getMemberPackageByPackage(cp2), p2);
@@ -676,7 +682,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		var up:Object = new Object();
 		
 		var p:Object = new Object();
-		var i:PackageInfo = new PackageInfo(null, p, null);
+		var i:PackageInfo = new PackageInfo(p, null, null);
 		
 		var c1c:MockControl = new MockControl(ClassInfo);
 		var c1:ClassInfo = c1c.getMock();
@@ -740,7 +746,7 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		ac.setReturnValue(members);
 		ac.replay();
 		
-		i.setPackageMemberAlgorithm(a);
+		PackageInfo.setPackageMemberAlgorithm(a);
 		
 		assertSame(i.getMemberPackageByPackage(cp1), p1);
 		assertSame(i.getMemberPackageByPackage(cp2), p2);
@@ -758,6 +764,10 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		p4c.verify();
 		p5c.verify();
 		p6c.verify();
+	}
+	
+	public function tearDown() {
+		PackageInfo.setPackageMemberAlgorithm(fpma);
 	}
 	
 }

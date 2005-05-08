@@ -1,5 +1,4 @@
 ﻿import org.as2lib.test.unit.TestCase;
-import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.file.ByteFormat;
 import org.as2lib.io.file.BitFormat;

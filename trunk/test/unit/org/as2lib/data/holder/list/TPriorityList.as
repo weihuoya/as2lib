@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import org.as2lib.data.holder.AbstractTIterator;
 import org.as2lib.data.holder.AbstractTList;
 import org.as2lib.data.holder.List;
 import org.as2lib.data.holder.list.PriorityList;

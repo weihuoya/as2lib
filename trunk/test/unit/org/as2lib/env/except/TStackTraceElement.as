@@ -16,7 +16,6 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.env.except.StackTraceElement;
-import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.except.SimpleTestClass;
 
 /**

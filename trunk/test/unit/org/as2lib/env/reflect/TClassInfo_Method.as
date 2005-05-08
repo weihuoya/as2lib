@@ -27,6 +27,14 @@ import org.as2lib.env.reflect.algorithm.MethodAlgorithm;
  */
 class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 	
+	private var fma:MethodAlgorithm;
+	private var fca:ClassAlgorithm;
+	
+	public function setUp() {
+		fma = ClassInfo.getMethodAlgorithm();
+		fca = ClassInfo.getClassAlgorithm();
+	}
+	
 	public function testGetMethodsByFlagWithNullClass(Void):Void {
 		var i:ClassInfo = new ClassInfo(null, null, null);
 		assertNull(i.getMethods());
@@ -36,7 +44,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 	
 	public function testGetMethodsByFlagWithType(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
@@ -50,8 +58,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		cac.setReturnValue(null);
 		cac.replay();
 		
-		i.setMethodAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setMethodAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getMethods(false);
 		assertSame("unexpected amount of methods", m.length, 6);
 		assertSame(m[0], "method1");
@@ -67,7 +75,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 	
 	public function testGetMethodsByFlagWithTypeAndSuperType(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var sic:MockControl = new MockControl(ClassInfo);
 		var si:ClassInfo = sic.getMock();
@@ -87,8 +95,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		cac.setReturnValue(si);
 		cac.replay();
 		
-		i.setMethodAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setMethodAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getMethods(false);
 		assertSame("unexpected amount of methods", m.length, 6);
 		assertSame(m[0], "method1");
@@ -105,7 +113,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 	
 	public function testGetMethodsByFlagWithTypeAndSuperTypeButTrueFilterFlag(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
@@ -117,8 +125,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		var ca:ClassAlgorithm = cac.getMock();
 		cac.replay();
 		
-		i.setMethodAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setMethodAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getMethods(true);
 		assertSame("unexpected amount of methods", m.length, 3);
 		assertSame(m[0], "method1");
@@ -166,7 +174,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		m6c.replay();
 		
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
@@ -186,14 +194,14 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		sic.setReturnValue([m4, m5, m6]);
 		sic.replay();
 		
-		var cac:MockControl = new MockControl(ClassAlgorithm);
-		var ca:ClassAlgorithm = cac.getMock();
+		cac = new MockControl(ClassAlgorithm);
+		ca = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(si);
 		cac.replay();
 		
-		i.setMethodAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setMethodAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getMethodsByFilter(null);
 		assertSame("unexpected amount of methods", m.length, 6);
 		assertSame(m[0], m1);
@@ -228,7 +236,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		m3c.replay();
 		
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
@@ -251,8 +259,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		fc.setReturnValue(false);
 		fc.replay();
 		
-		i.setMethodAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setMethodAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getMethods(f);
 		assertSame("unexpected amount of methods", m.length, 3);
 		assertSame(m[0], m1);
@@ -293,7 +301,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		m6c.replay();
 		
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
@@ -325,8 +333,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		fc.setReturnValue(false);
 		fc.replay();
 		
-		i.setMethodAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setMethodAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getMethods(f);
 		assertSame("unexpected amount of methods", m.length, 2);
 		assertSame(m[0], m3);
@@ -369,7 +377,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		m6c.replay();
 		
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
@@ -389,8 +397,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		sic.setReturnValue([m4, m5, m6]);
 		sic.replay();
 		
-		var cac:MockControl = new MockControl(ClassAlgorithm);
-		var ca:ClassAlgorithm = cac.getMock();
+		cac = new MockControl(ClassAlgorithm);
+		ca = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(si);
 		cac.replay();
@@ -413,8 +421,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		fc.setReturnValue(false);
 		fc.replay();
 		
-		i.setMethodAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setMethodAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getMethods(f);
 		assertSame("unexpected amount of methods", m.length, 2);
 		assertSame(m[0], m3);
@@ -446,7 +454,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		m3c.replay();
 		
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var mac:MockControl = new MockControl(MethodAlgorithm);
 		var ma:MethodAlgorithm = mac.getMock();
@@ -460,8 +468,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		cac.setReturnValue(null);
 		cac.replay();
 		
-		var cac:MockControl = new MockControl(ClassAlgorithm);
-		var ca:ClassAlgorithm = cac.getMock();
+		cac = new MockControl(ClassAlgorithm);
+		ca = cac.getMock();
 		cac.replay();
 		
 		var fc:MockControl = new MockControl(TypeMemberFilter);
@@ -476,8 +484,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		fc.setReturnValue(true);
 		fc.replay();
 		
-		i.setMethodAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setMethodAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getMethods(f);
 		assertSame("unexpected amount of methods", m.length, 2);
 		assertSame(m[0], m1);
@@ -497,13 +505,13 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 	}
 	
 	public function testGetMethodByNameWithNullName(Void):Void {
-		var i:ClassInfo = new ClassInfo(null, function() {}, null);
+		var i:ClassInfo = new ClassInfo(function() {}, null, null);
 		assertNull(i.getMethodByName(null));
 	}
 	
 	public function testGetMethodByNameWithUnknownMethod(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var m1c:MockControl = new MockControl(MethodInfo);
 		var m1:MethodInfo = m1c.getMock();
@@ -533,8 +541,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		cac.setReturnValue(null);
 		cac.replay();
 		
-		i.setMethodAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setMethodAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		assertNull(i.getMethodByName("unkownMethod"));
 		
 		mac.verify();
@@ -546,7 +554,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 	
 	public function testGetMethodByNameForExistingMethod(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var m1c:MockControl = new MockControl(MethodInfo);
 		var m1:MethodInfo = m1c.getMock();
@@ -574,8 +582,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		var ca:ClassAlgorithm = cac.getMock();
 		cac.replay();
 		
-		i.setMethodAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setMethodAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		assertSame(i.getMethodByName("method2"), m2);
 		assertSame(i.getMethodByName("method3"), m3);
 		assertSame(i.getMethodByName("method1"), m1);
@@ -589,7 +597,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 	
 	public function testGetMethodByNameForSubClassMethodOverwritingSuperClassMethod(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var m1c:MockControl = new MockControl(MethodInfo);
 		var m1:MethodInfo = m1c.getMock();
@@ -633,8 +641,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		cac.setReturnValue(sc);
 		cac.replay();
 		
-		i.setMethodAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setMethodAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		assertSame(i.getMethodByName("method2"), m2);
 		assertSame(i.getMethodByName("method5"), sm5);
 		
@@ -649,7 +657,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 	}
 	
 	public function testGetMethodByMethodWithNullMethod(Void):Void {
-		var i:ClassInfo = new ClassInfo(null, function() {}, null);
+		var i:ClassInfo = new ClassInfo(function() {}, null, null);
 		assertNull(i.getMethodByMethod(null));
 	}
 	
@@ -660,7 +668,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 	
 	public function testGetMethodByMethodWithUnknownMethod(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var m1c:MockControl = new MockControl(MethodInfo);
 		var m1:MethodInfo = m1c.getMock();
@@ -692,8 +700,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		cac.setReturnValue(null);
 		cac.replay();
 		
-		i.setMethodAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setMethodAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		assertNull(i.getMethodByMethod(function() {}));
 		
 		mac.verify();
@@ -710,7 +718,7 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		var cm4:Function = function() {};
 		
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var m1c:MockControl = new MockControl(MethodInfo);
 		var m1:MethodInfo = m1c.getMock();
@@ -754,8 +762,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		cac.setReturnValue(sc);
 		cac.replay();
 		
-		i.setMethodAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setMethodAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		assertSame("m3", i.getMethodByMethod(cm3), m3);
 		assertSame("m1", i.getMethodByMethod(cm1), m1);
 		assertSame("m2", i.getMethodByMethod(cm2), m2);
@@ -769,4 +777,8 @@ class org.as2lib.env.reflect.TClassInfo_Method extends TestCase {
 		m3c.verify();
 	}
 	
+	public function tearDown() {
+		ClassInfo.setMethodAlgorithm(fma);
+		ClassInfo.setClassAlgorithm(fca);
+	}
 }

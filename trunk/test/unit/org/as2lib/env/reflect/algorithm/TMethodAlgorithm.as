@@ -16,23 +16,21 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.reflect.algorithm.MethodAlgorithm;
-import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.MethodInfo;
-import org.as2lib.env.reflect.PackageMemberInfo;
-import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.map.HashMap;
 
 /**
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.algorithm.TMethodAlgorithm extends TestCase {
 	
+	private function use(cls:Function):Void {
+	}
+	
 	public function setUp(Void):Void {
-		org.as2lib.env.reflect.treflect.SubClass;
-		org.as2lib.env.reflect.treflect.SuperClass;
+		use(org.as2lib.env.reflect.treflect.SubClass);
+		use(org.as2lib.env.reflect.treflect.SuperClass);
 	}
 	
 	public function testExecuteWithNullAndUndefinedArguments(Void):Void {

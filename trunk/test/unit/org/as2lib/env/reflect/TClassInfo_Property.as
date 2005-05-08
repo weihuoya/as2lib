@@ -26,6 +26,14 @@ import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
+
+	private var fpa:PropertyAlgorithm;
+	private var fca:ClassAlgorithm;
+	
+	public function setUp() {
+		fpa = ClassInfo.getPropertyAlgorithm();
+		fca = ClassInfo.getClassAlgorithm();
+	}
 	
 	public function testGetPropertiesByFlagWithNullClass(Void):Void {
 		var i:ClassInfo = new ClassInfo(null, null, null);
@@ -36,7 +44,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 	
 	public function testGetPropertiesByFlagWithType(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var mac:MockControl = new MockControl(PropertyAlgorithm);
 		var ma:PropertyAlgorithm = mac.getMock();
@@ -50,8 +58,8 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		cac.setReturnValue(null);
 		cac.replay();
 		
-		i.setPropertyAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setPropertyAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getProperties(false);
 		assertSame("unexpected amount of properties", m.length, 6);
 		assertSame(m[0], "property1");
@@ -67,7 +75,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 	
 	public function testGetPropertiesByFalseFlagWithTypeAndSuperType(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var sic:MockControl = new MockControl(ClassInfo);
 		var si:ClassInfo = sic.getMock();
@@ -87,8 +95,8 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		cac.setReturnValue(si);
 		cac.replay();
 		
-		i.setPropertyAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setPropertyAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getProperties(false);
 		assertSame("unexpected amount of properties", m.length, 6);
 		assertSame(m[0], "property1");
@@ -105,7 +113,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 	
 	public function testGetPropertiesByTrueFlagWithTypeAndSuperType(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var mac:MockControl = new MockControl(PropertyAlgorithm);
 		var ma:PropertyAlgorithm = mac.getMock();
@@ -117,8 +125,8 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		var ca:ClassAlgorithm = cac.getMock();
 		cac.replay();
 		
-		i.setPropertyAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setPropertyAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getProperties(true);
 		assertSame("unexpected amount of properties", m.length, 3);
 		assertSame(m[0], "property1");
@@ -166,7 +174,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		m6c.replay();
 		
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var mac:MockControl = new MockControl(PropertyAlgorithm);
 		var ma:PropertyAlgorithm = mac.getMock();
@@ -186,14 +194,14 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		sic.setReturnValue([m4, m5, m6]);
 		sic.replay();
 		
-		var cac:MockControl = new MockControl(ClassAlgorithm);
-		var ca:ClassAlgorithm = cac.getMock();
+		cac = new MockControl(ClassAlgorithm);
+		ca = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(si);
 		cac.replay();
 		
-		i.setPropertyAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setPropertyAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getPropertiesByFilter(null);
 		assertSame("unexpected amount of properties", m.length, 6);
 		assertSame(m[0], m1);
@@ -228,7 +236,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		m3c.replay();
 		
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var mac:MockControl = new MockControl(PropertyAlgorithm);
 		var ma:PropertyAlgorithm = mac.getMock();
@@ -251,8 +259,8 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		fc.setReturnValue(false);
 		fc.replay();
 		
-		i.setPropertyAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setPropertyAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getProperties(f);
 		assertSame("unexpected amount of methods", m.length, 3);
 		assertSame(m[0], m1);
@@ -293,7 +301,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		m6c.replay();
 		
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var mac:MockControl = new MockControl(PropertyAlgorithm);
 		var ma:PropertyAlgorithm = mac.getMock();
@@ -325,8 +333,8 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		fc.setReturnValue(false);
 		fc.replay();
 		
-		i.setPropertyAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setPropertyAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getProperties(f);
 		assertSame("unexpected amount of methods", m.length, 2);
 		assertSame(m[0], m3);
@@ -369,7 +377,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		m6c.replay();
 		
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var mac:MockControl = new MockControl(PropertyAlgorithm);
 		var ma:PropertyAlgorithm = mac.getMock();
@@ -389,8 +397,8 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		sic.setReturnValue([m4, m5, m6]);
 		sic.replay();
 		
-		var cac:MockControl = new MockControl(ClassAlgorithm);
-		var ca:ClassAlgorithm = cac.getMock();
+		cac = new MockControl(ClassAlgorithm);
+		ca = cac.getMock();
 		ca.execute(Type.prototype);
 		cac.setReturnValue(si);
 		cac.replay();
@@ -413,8 +421,8 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		fc.setReturnValue(false);
 		fc.replay();
 		
-		i.setPropertyAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setPropertyAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getProperties(f);
 		assertSame("unexpected amount of methods", m.length, 2);
 		assertSame(m[0], m3);
@@ -446,7 +454,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		m3c.replay();
 		
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var mac:MockControl = new MockControl(PropertyAlgorithm);
 		var ma:PropertyAlgorithm = mac.getMock();
@@ -460,8 +468,8 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		cac.setReturnValue(null);
 		cac.replay();
 		
-		var cac:MockControl = new MockControl(ClassAlgorithm);
-		var ca:ClassAlgorithm = cac.getMock();
+		cac = new MockControl(ClassAlgorithm);
+		ca = cac.getMock();
 		cac.replay();
 		
 		var fc:MockControl = new MockControl(TypeMemberFilter);
@@ -476,8 +484,8 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		fc.setReturnValue(true);
 		fc.replay();
 		
-		i.setPropertyAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setPropertyAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		var m:Array = i.getProperties(f);
 		assertSame("unexpected amount of methods", m.length, 2);
 		assertSame(m[0], m1);
@@ -497,13 +505,13 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 	}
 	
 	public function testGetPropertyByNameWithNullName(Void):Void {
-		var i:ClassInfo = new ClassInfo(null, function() {}, null);
+		var i:ClassInfo = new ClassInfo(function() {}, null, null);
 		assertNull(i.getPropertyByName(null));
 	}
 	
 	public function testGetPropertyByNameWithUnknownProperty(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var m1c:MockControl = new MockControl(PropertyInfo);
 		var m1:PropertyInfo = m1c.getMock();
@@ -533,8 +541,8 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		cac.setReturnValue(null);
 		cac.replay();
 		
-		i.setPropertyAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setPropertyAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		assertNull(i.getPropertyByName("unkownProperty"));
 		
 		mac.verify();
@@ -546,7 +554,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 	
 	public function testGetPropertyByNameForExistingProperty(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var m1c:MockControl = new MockControl(PropertyInfo);
 		var m1:PropertyInfo = m1c.getMock();
@@ -574,8 +582,8 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		var ca:ClassAlgorithm = cac.getMock();
 		cac.replay();
 		
-		i.setPropertyAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setPropertyAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		assertSame(i.getPropertyByName("property2"), m2);
 		assertSame(i.getPropertyByName("property3"), m3);
 		assertSame(i.getPropertyByName("property1"), m1);
@@ -589,7 +597,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 	
 	public function testGetPropertyByNameForSubClassMethodOverwritingSuperClassProperty(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var m1c:MockControl = new MockControl(PropertyInfo);
 		var m1:PropertyInfo = m1c.getMock();
@@ -629,8 +637,8 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		cac.setReturnValue(sc);
 		cac.replay();
 		
-		i.setPropertyAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setPropertyAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		assertSame(i.getPropertyByName("property2"), m2);
 		assertSame(i.getPropertyByName("property5"), sm2);
 		
@@ -644,7 +652,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 	}
 	
 	public function testGetPropertyByPropertyWithNullProperty(Void):Void {
-		var i:ClassInfo = new ClassInfo(null, function() {}, null);
+		var i:ClassInfo = new ClassInfo(function() {}, null, null);
 		assertNull(i.getPropertyByProperty(null));
 	}
 	
@@ -655,7 +663,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 	
 	public function testGetPropertyByPropertyWithUnknownProperty(Void):Void {
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var m1c:MockControl = new MockControl(PropertyInfo);
 		var m1:PropertyInfo = m1c.getMock();
@@ -693,8 +701,8 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		cac.setReturnValue(null);
 		cac.replay();
 		
-		i.setPropertyAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setPropertyAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		assertNull(i.getPropertyByProperty(function() {}));
 		
 		mac.verify();
@@ -711,7 +719,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		var cm4:Function = function() {};
 		
 		var Type:Function = function() {};
-		var i:ClassInfo = new ClassInfo(null, Type, null);
+		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
 		var m1c:MockControl = new MockControl(PropertyInfo);
 		var m1:PropertyInfo = m1c.getMock();
@@ -759,8 +767,8 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		cac.setReturnValue(sc);
 		cac.replay();
 		
-		i.setPropertyAlgorithm(ma);
-		i.setClassAlgorithm(ca);
+		ClassInfo.setPropertyAlgorithm(ma);
+		ClassInfo.setClassAlgorithm(ca);
 		assertSame(i.getPropertyByProperty(cm3), m3);
 		assertSame(i.getPropertyByProperty(cm1), m1);
 		assertSame(i.getPropertyByProperty(cm2), m2);
@@ -775,4 +783,9 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		m3c.verify();
 	}
 	
+	
+	public function tearDown() {
+		ClassInfo.setPropertyAlgorithm(fpa);
+		ClassInfo.setClassAlgorithm(fca);
+	}
 }

@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-import org.as2lib.test.unit.TestCase;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.TypedMap;
 import org.as2lib.data.holder.map.HashMap;
-import org.as2lib.data.holder.Iterator;
 import org.as2lib.util.ArrayUtil;
 import org.as2lib.data.holder.AbstractTMap;
 import org.as2lib.env.except.IllegalArgumentException;

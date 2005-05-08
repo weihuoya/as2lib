@@ -17,10 +17,8 @@
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.aop.joinpoint.GetPropertyJoinPoint;
-import org.as2lib.aop.Matcher;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.MethodInfo;
-import org.as2lib.env.reflect.TypeInfo;
 
 /**
  * @author Simon Wacker
