@@ -17,12 +17,10 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogManager;
-import org.as2lib.test.unit.TestListener;
-import org.as2lib.test.unit.StartInfo;
-import org.as2lib.test.unit.ProgressInfo;
-import org.as2lib.test.unit.FinishInfo;
-import org.as2lib.test.unit.PauseInfo;
-import org.as2lib.test.unit.ResumeInfo;
+import org.as2lib.app.exec.Process;
+import org.as2lib.test.unit.TestRunner;
+import org.as2lib.app.exec.ProcessListener;
+import org.as2lib.env.except.IllegalArgumentException;
 
 /**
  * Default listener for TestRunner.
@@ -32,7 +30,7 @@ import org.as2lib.test.unit.ResumeInfo;
  * @see LogManager#getLoggerRepository
  * @see Logger
  */
-class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements TestListener {
+class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements ProcessListener {
 	
 	/** Stores the logger used to do the output. */
 	private static var logger:Logger;
@@ -50,7 +48,8 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Test
 	 * 
 	 * @param startInfo Informations about the TestRunner that started.
 	 */
-	public function onStart(startInfo:StartInfo):Void {
+	public function onStartProcess(process:Process):Void {
+		getLogger().info("TestRunner started execution.");
 	}
 	
 	/**
@@ -58,8 +57,9 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Test
 	 * 
 	 * @param progressInfo Extended informations the current progress.
 	 */
-	public function onProgress(progressInfo:ProgressInfo):Void {
-		//trace(progressInfo.getRunningTestCase().getName()+"."+progressInfo.getFinishedMethodInfo().toString());
+	public function onUpdateProcess(process:Process):Void {
+		//var testRunner:TestRunner = TestRunner(process);
+		//getLogger().info(testRunner.getPercentage()+"% ... executing "+testRunner.getCurrentTestCaseMethodInfo().getName());
 	}
 	
 	/**
@@ -67,8 +67,13 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Test
 	 * 
 	 * @param finishInfo Informations about the TestRunner that finished.
 	 */
-	public function onFinish(finishInfo:FinishInfo):Void {
-		getLogger().info("\n"+finishInfo.getTestRunner().getTestResult().toString());
+	public function onFinishProcess(process:Process):Void {
+		var testRunner:TestRunner = TestRunner(process);
+		if(testRunner) {
+			getLogger().info("TestRunner finished with the result: \n"+testRunner.getTestResult().toString());
+		} else {
+			throw new IllegalArgumentException("LoggerTestListener added to a different Process", this, arguments);
+		}
 	}
 	
 	/**
@@ -76,7 +81,8 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Test
 	 * 
 	 * @param pauseInfo Informations about the TestRunner that paused.
 	 */
-	public function onPause(pauseInfo:PauseInfo):Void {
+	public function onPauseProcess(process:Process):Void {
+		getLogger().info("<TestRunner paused execution>");
 	}
 	
 	/**
@@ -84,6 +90,7 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Test
 	 * 
 	 * @param resumeInfo Informations about the TestRunner that resumed working.
 	 */
-	public function onResume(resumeInfo:ResumeInfo):Void {
+	public function onResumeProcess(process:Process):Void {
+		getLogger().info("<TestRunner resumed execution>");
 	}
 }
