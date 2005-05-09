@@ -18,6 +18,8 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestRunner;
+import org.as2lib.test.unit.TestResultFactory;
+import org.as2lib.test.unit.TestSuiteResultFactory;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
@@ -34,6 +36,12 @@ class org.as2lib.test.unit.TestSuite extends BasicClass implements Test {
 	
 	/** Name of the TestSuite. */
 	private var name:String;
+	
+	private var resultFactory:TestResultFactory;
+
+	public function getResultFactory(test:Test, runner:TestRunner):TestResultFactory {
+		return new TestSuiteResultFactory(TestSuite(test), runner);
+	}
 
 	/**
 	 * Constructs a new TestSuite.
