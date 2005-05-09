@@ -29,12 +29,6 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	/** BatchBroadcaster holder */
 	private var bB:EventBroadcaster;
 	
-	/** Process info for updates */
-	private var processUpdateInfo:ProcessInfo;
-	
-	/** Batch info for updates */
-	private var batchUpdateInfo:BatchInfo;
-	
 	/** List that contains all processes **/
 	private var list:Array;
 	
