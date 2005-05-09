@@ -29,7 +29,6 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 	private var formerClassAlgorithm:ClassAlgorithm;
 	
 	public function setUp() {
-		Flashout.log("setup!");
 		formerClassAlgorithm = ClassInfo.getClassAlgorithm();
 	}
 	
@@ -136,14 +135,11 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		ac.setReturnValue(i);
 		ac.replay();
 		var o:ClassInfo = new ClassInfo(Type, null, null);
-		Flashout.log("here0");
 		ClassInfo.setClassAlgorithm(a);
-		Flashout.log("here1");
 		assertSame(o.getSuperType(), i);
 		
 		ic.verify();
 		ac.verify();
-		Flashout.log("here2");
 	}
 	
 /*	public function testNewInstanceWithNotDefinedClass(Void):Void {
@@ -192,7 +188,6 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 	}*/
 	
 	public function tearDown() {
-		Flashout.log("tearDown");
 		ClassInfo.setClassAlgorithm(formerClassAlgorithm);
 	}
 }
