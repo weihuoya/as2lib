@@ -196,4 +196,8 @@ class org.as2lib.test.unit.TestCaseMethodInfo extends BasicClass {
 		}
 		return result;
 	}
+	
+	public function getName(Void):String {
+		return methodInfo.getFullName();
+	}
 }
