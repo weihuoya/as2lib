@@ -17,11 +17,13 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.test.unit.ExecutionInfo;
 import org.as2lib.test.unit.info.*;
+import org.as2lib.test.unit.ExecutionInfo;
 import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.test.unit.TestRunner;
+import org.as2lib.test.unit.TestResultFactory;
+import org.as2lib.test.unit.TestCaseResultFactory;
 import org.as2lib.util.Call;
 import org.as2lib.util.Executable;
 import org.as2lib.util.ObjectUtil;
@@ -182,12 +184,24 @@ import org.as2lib.util.ObjectUtil;
 
 class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	
+	// Holder for the resultFactory.
+	private static var resultFactory:TestCaseResultFactory;
+	
 	// Defaut maximal difference used in assertAlmostEquals
 	public static var DEFAULT_MAX_DIFF:Number = 0.0000001;
 	
 	// Internal Holder for the TestRunner context the method is running in.
 	private var testRunner:TestRunner;
 	
+	/**
+	 * Returns a factory to create a Result
+	 * 
+	 * @return Factory for a result for this test.
+	 */
+	public function getResultFactory(Void):TestResultFactory {
+		if(!resultFactory) resultFactory = new TestCaseResultFactory();
+		return resultFactory;
+	}
 	
 	/**
 	 * Abstract constructor. You should extend this class to use the API.

@@ -16,6 +16,7 @@
 
 import org.as2lib.core.BasicInterface;
 import org.as2lib.test.unit.TestRunner;
+import org.as2lib.test.unit.TestResultFactory;
 
 /**
  * Basic Class to be Extended by all Testcases.
@@ -34,4 +35,13 @@ interface org.as2lib.test.unit.Test extends BasicInterface {
 	 * @return TestRunner that run this test (including all informations about the run).
 	 */
 	public function run():TestRunner;
+	
+	/**
+	 * Returns the Information information sheet for the Result.
+	 * <p>Warning: The Result might be not complete! The Result will get filled
+	 * during the execution of the Testcase.
+	 * 
+	 * @return Informations about the test.
+	 */
+	public function getResultFactory():TestResultFactory;
 }
