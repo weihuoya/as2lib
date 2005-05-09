@@ -14,7 +14,8 @@
  * limitations under the License.
  */
  
-import org.as2lib.core.BasicClass;
+import org.as2lib.app.exec.Process;
+import org.as2lib.app.exec.AbstractProcess;
 import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.data.holder.Iterator;
@@ -23,21 +24,11 @@ import org.as2lib.test.unit.info.SetUpError;
 import org.as2lib.test.unit.info.ExecutionError;
 import org.as2lib.test.unit.info.TearDownError;
 import org.as2lib.test.unit.info.PauseError;
+import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.unit.TestSuite;
 import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestCaseResult;
-import org.as2lib.test.unit.TestSuiteResult;
-import org.as2lib.test.unit.TestListener;
-import org.as2lib.test.unit.StartInfo;
-import org.as2lib.test.unit.ProgressInfo;
-import org.as2lib.test.unit.FinishInfo;
-import org.as2lib.test.unit.PauseInfo;
-import org.as2lib.test.unit.ResumeInfo;
 import org.as2lib.test.unit.TestCaseMethodInfo;
-import org.as2lib.env.event.broadcaster.EventBroadcaster;
-import org.as2lib.env.event.broadcaster.SpeedEventBroadcaster;
-import org.as2lib.env.overload.Overload;
 import org.as2lib.util.ArrayUtil;
 import org.as2lib.util.StringUtil;
 import org.as2lib.util.StopWatch;
@@ -57,17 +48,17 @@ import org.as2lib.env.reflect.ClassInfo;
  * import org.as2lib.test.unit.LoggerTestListener;
  * 
  * var testRunner:TestRunner = new TestRunner();
- * testRunner.addListener(new LoggerTestListener());
+ * testRunner.addProcessListener(new LoggerTestListener());
  * testRunner.run(new MyTestCase()); // alternativly you have a faster .runTestCase
  * </code>
  * 
  * <p>You can get the result of the running testcase(s) by @see #getTestResult.
  * It contains all Informations about the resulted testcases.
  * 
- * <p>It is also possible to add Listener to the TestRunner by @see #addListener.
- * In this way it is possible to build a graphical view to the TestRunner
- * (TestRunner is the Controller and TestResult the Model -> MVC). The Listener
- * definition is made with {@link org.as2lib.test.unit.TestListener}.
+ * <p>The Testrunner is designed as process so its possible to add Listener to the
+ * TestRunner by {@link #addProcessListener}. In this way it is possible to build a
+ * graphical view to the TestRunner (TestRunner is the Controller and TestResult the
+ * Model -> MVC).
  *
  * <p>Note: There is currently no better abstraction Level Possible so we have to differ
  *       between TestCase & TestSuite. The current implementation of .run allows only those
@@ -81,25 +72,7 @@ import org.as2lib.env.reflect.ClassInfo;
  * 
  * @author Martin Heidegger
  */
-class org.as2lib.test.unit.TestRunner extends BasicClass {
-	
-	/** Internal EventBroadcaster holder. */
-	private var eB:EventBroadcaster;
-	
-	/** Internal Startinfo holder. */
-	private var startInfo:StartInfo;
-	
-	/** Internal Pauseinfo holder. */
-	private var pauseInfo:PauseInfo;
-	
-	/** Internal Resumeinfo holder. */
-	private var resumeInfo:ResumeInfo;
-	
-	/** Internal ProgressInfo holder. */
-	private var progressInfo:ProgressInfo;
-	
-	/** Internal FinishInfo holder. */
-	private var finishInfo:FinishInfo;
+class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process {
 	
 	/** Result Holder for a TestResult. */
 	private var testResult:TestResult;
@@ -121,51 +94,12 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	
 	/** Interator for the methods of the current Testcase. */
 	private var currentTestCaseMethodIterator:Iterator;
-	
-	/** Boolean flag if the Testrunner has already finished work. */
-	private var finished:Boolean = false;
-	
-	/** Boolean flag if the instance is currently paused. */
-	private var paused:Boolean = false;
-	
-	/** Boolean flag if the Testrunner started work. */
-	private var started:Boolean = false;
-	
+		
 	/** Holder for the methodscope of the current Method. */
 	private var testCaseInstance:TestCase;
 	
 	/** Pause Flag (if pause is allowed or not. */
 	private var pauseAllowed:Boolean;
-	
-	/**
-	 * Constructs a new Testrunner
-	 */
-	public function TestRunner(Void) {
-		eB = new SpeedEventBroadcaster();
-		startInfo = new StartInfo(this);
-		pauseInfo = new PauseInfo(this);
-		progressInfo = new ProgressInfo(this);
-		resumeInfo = new ResumeInfo(this);
-		finishInfo = new FinishInfo(this);
-	}
-	
-	/**
-	 * Adds a listener to the TestRunner instance.
-	 * 
-	 * @param l Listener to be added.
-	 */
-	public function addListener(l:TestListener) {
-		eB.addListener(l);
-	}
-	
-	/**
-	 * Removes a listener from the TestRunner instance.
-	 * 
-	 * @param l Listener to be removed.
-	 */
-	public function removeListener(l:TestListener) {
-		eB.removeListener(l);
-	}
 	
 	/**
 	 * Getter for the Testresult.
@@ -185,104 +119,39 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	 */
 	private function setTestResult(result:TestResult):Void {
 		testResult = result;
+		// TODO: Check consistance.
+		testCases = result.getTestCaseResults();
+		testCaseIterator = new ArrayIterator(testCases);
+	}
+	
+	public function start():TestRunner {
+		return run.apply(this, arguments);
 	}
 	
 	/**
-	 * overload
-	 * @see #runTestCase
-	 * @see #runTestSuite
+	 * Runs a test.
+	 * 
+	 * @param test Test to run.
 	 */
-	public function run():TestRunner {
-		var o = new Overload(this);
-		o.addHandler([TestCase], runTestCase);
-		o.addHandler([TestSuite], runTestSuite);
-		return o.forward(arguments);
+	public function run(test:Test):TestRunner {
+		prepare();
+		setTestResult(test.getResultFactory().createResult(test, this));
+		
+		started = true;
+		// Dispatches the event for the view.
+		event.onStartProcess(this);
+		
+		processQueue();
+		return this;
 	}
 	
 	/**
 	 * Prepares the Testcase to run the TestCase/TestSuite.
 	 */
-	private function prepareRun(Void):Void {
+	private function prepare(Void):Void {
 		testCases = new TypedArray(TestCaseResult);
 		processedTestCaseMethods = new TypedArray(TestCaseMethodInfo);
-		finished = false;
-		started = false;
-		paused = false;
-	}
-	
-	/**
-	 * Starts the Test.
-	 */
-	private function startRun(Void):Void {
-		testCaseIterator = new ArrayIterator(this.testCases);
-		started = true;
-		
-		// Dispatches the event for the view.
-		eB.dispatch(startInfo);
-		processQueue();
-	}
-	
-	/**
-	 * Runs a TestCase.
-	 * 
-	 * @param test Test that should get run.
-	 * @return The current TestRunner (contains all informations about the process).
-	 */
-	public function runTestCase(test:TestCase):TestRunner {
-		prepareRun();
-		setTestResult(new TestCaseResult(test, this));
-		
-		testCases.push(getTestResult());
-		
-		startRun();
-		return this;
-	}
-	
-	/**
-	 * Runs a TestSuite.
-	 * 
-	 * @param test TestSuite that should get run.
-	 * @return The current TestRunner (contains all informations about the process).
-	 */
-	public function runTestSuite(test:TestSuite):TestRunner {
-		prepareRun();
-		setTestResult(new TestSuiteResult(test, this));
-		
-		var testCaseResultIterator:Iterator = new ArrayIterator(this.testResult.getTestCaseResults());
-		while(testCaseResultIterator.hasNext()){
-			testCases.push(testCaseResultIterator.next());
-		}
-		
-		startRun();
-		return this;
-	}
-	
-	/**
-	 * @return true if the process has finished. (false if the process hasn't started yet)
-	 */
-	public function hasFinished(Void):Boolean {
-		return finished;
-	}
-	
-	/**
-	 * @return true if the process is paused.
-	 */
-	public function isPaused(Void):Boolean {
-		return paused;
-	}
-	
-	/**
-	 * @return true if the process has started.
-	 */
-	public function hasStarted(Void):Boolean {
-		return started;
-	}
-	
-	/**
-	 * @return true if the process is running.
-	 */
-	public function isRunning(Void):Boolean {
-		return(!isPaused() && hasStarted());
+		super.prepare();
 	}
 	
 	/**
@@ -297,7 +166,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 			methodInfo.addInfo(new PauseError("IMPORTANT: Pause is not available before the execution of a testcase method. Action failed."))
 		} else {
 			paused = true;
-			eB.dispatch(pauseInfo);
+			event.onPauseProcess(this);
 		}
 	}
 	
@@ -308,7 +177,7 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 	 */
 	public function resume(Void):Void {
 		paused = false;
-		eB.dispatch(resumeInfo);
+		event.onResumeProcess(this);
 		processQueue();
 	}
 	
@@ -437,18 +306,12 @@ class org.as2lib.test.unit.TestRunner extends BasicClass {
 		processedTestCaseMethods.push(methodInfo);
 		
 		// Dispatch the actual progress information
-		eB.dispatch(progressInfo);
+		event.onUpdateProcess(this);
 		
 		delete methodInfo;
-	}
-	
-	/**
-	 * Internal Method to finish the Test.
-	 */
-	private function finish(Void):Void {
-		finished = true;
-		started = false;
-		paused = false;
-		eB.dispatch(finishInfo);
 	}		
+	
+	public function getPercentage(Void):Number {
+		return testResult.getPercentage();
+	}
 }
