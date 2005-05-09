@@ -112,6 +112,16 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 		return name;
 	}
 	
+	
+	/**
+	 * Returns the full name of this method.
+	 *
+	 * @return the full name of this method
+	 */
+	public function getFullName(Void):String {
+		return declaringType.getFullName()+"."+name+"()";
+	}
+	
 	/**
 	 * Returns the concrete method this instance represents.
 	 *

@@ -80,6 +80,7 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 		var result:Number = 0;
 		var unit:Number = 100/this.testResults.length;
 		for(var i=this.testResults.length-1; i>=0; i--) {
+			Flashout.log(this.testResults[i].getPercentage());
 			result += (unit/100*this.testResults[i].getPercentage());
 		}
 		return result;
