@@ -273,7 +273,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 					pauseAllowed = true;
 					methodInfo.executeTo(testCaseInstance);
 				} catch (e) {
-					methodInfo.addInfo(new ExecutionError(methodInfo.getMethodInfo().toString()+" threw a unexpected exception:\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
+					methodInfo.addInfo(new ExecutionError("Unexpected exception thrown during execution:\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
 				}
 				pauseAllowed = false;
 				

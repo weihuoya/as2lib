@@ -83,7 +83,7 @@ class org.as2lib.test.unit.TestCaseMethodInfo extends BasicClass {
 	 * 
 	 * @return true if the method has been executed.
 	 */
-	public function isFinished(Void):Boolean {
+	public function hasFinished(Void):Boolean {
 		return getTestRunner().isTestCaseMethodFinished(this);
 	}
 	
