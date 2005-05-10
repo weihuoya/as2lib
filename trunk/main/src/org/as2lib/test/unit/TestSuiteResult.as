@@ -195,7 +195,7 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	 * 
 	 * @return TestSuiteResult as well formated String.
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		var result:String;
 		var titleLength:Number;
 		result = "*** TestSuite "+getName()+" ("+testResults.length+" Tests) ["+getOperationTime()+"ms] ***";

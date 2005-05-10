@@ -225,7 +225,7 @@ class org.as2lib.data.holder.map.TypedMap extends BasicClass implements Map {
 	 *
 	 * @return the string representation of the wrapped map
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return map.toString();
 	}
 	

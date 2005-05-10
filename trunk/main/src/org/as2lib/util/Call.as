@@ -113,7 +113,7 @@ class org.as2lib.util.Call extends BasicClass implements Executable {
 	 * 
 	 * @return the string representation of this call
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		// TODO: Refactor the code and outsource it.
 		var result:String="";
 		result += "[type " + ReflectUtil.getTypeNameForInstance(this) + " -> ";

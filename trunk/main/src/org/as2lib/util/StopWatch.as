@@ -149,7 +149,7 @@ class org.as2lib.util.StopWatch extends BasicClass {
 	 * 
 	 * @return the string representation of this stopwatch
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		var result:String;
 		result = "\n------- [STOPWATCH] -------";
 		var i:Number

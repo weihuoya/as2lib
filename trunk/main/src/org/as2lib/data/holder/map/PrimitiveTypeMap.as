@@ -306,7 +306,7 @@ class org.as2lib.data.holder.map.PrimitiveTypeMap extends AbstractMap implements
 	 *
 	 * @return the string representation of this map
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return getStringifier().execute(this);
 	}
 	

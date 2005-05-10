@@ -226,7 +226,7 @@ class org.as2lib.data.holder.stack.SimpleStack extends BasicClass implements Sta
 	 *
 	 * @return the string representation of this stack
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return getStringifier().execute(this);
 	}
 	

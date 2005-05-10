@@ -151,7 +151,7 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	 *
 	 * @return the string representation of this range
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		if (minimum == maximum) return minimum.toString();
 		var interval:String = "[";
 		if (minimum == Number.POSITIVE_INFINITY) interval += "∞";

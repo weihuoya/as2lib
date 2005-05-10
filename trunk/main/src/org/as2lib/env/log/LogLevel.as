@@ -59,13 +59,4 @@ interface org.as2lib.env.log.LogLevel extends BasicInterface {
 	 */
 	public function toNumber(Void):Number;
 	
-	/**
-	 * Returns the string representation of this level.
-	 *
-	 * <p>Is used when the level shall be shown together with the log message.
-	 *
-	 * @return the string representation of this level
-	 */
-	public function toString(Void):String;
-	
 }

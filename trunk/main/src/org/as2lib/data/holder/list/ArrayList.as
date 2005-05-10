@@ -185,7 +185,7 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	/**
 	 * @see org.as2lib.core.BasicInterface#toString()
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return getStringifier().execute(this);
 	}
 	

@@ -227,7 +227,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	 * 
 	 * @return TestCaseResult as well formated String.
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		var result:String;
 		var methodResult:String="";
 		var ms:Number=0;

@@ -62,7 +62,7 @@ class org.as2lib.data.type.Integer extends Number implements BasicInterface {
 	 * 
 	 * @return the string representation of this integer
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return int.toString();
 	}
 

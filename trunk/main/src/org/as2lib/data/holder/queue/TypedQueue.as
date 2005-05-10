@@ -150,7 +150,7 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	 *
 	 * @return the string representation of the wrapped queue
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return queue.toString();
 	}
 	

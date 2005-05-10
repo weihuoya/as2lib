@@ -25,7 +25,7 @@ class org.as2lib.data.math.vector.Vector2D extends LimitedVector {
 		return getValue(1);
 	}
 	
-	public function toString(Void):String {
+	public function toString():String {
 		var result:String ="";
 		
 		result += "x = "+getX()+"\n";

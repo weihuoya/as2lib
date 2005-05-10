@@ -202,7 +202,7 @@ class org.as2lib.data.holder.map.PriorityMap extends AbstractPriority implements
 		return map.isEmpty();
 	}
 	
-	public function toString(Void):String {
+	public function toString():String {
 		return map.toString();
 	}
 	private function findKey(key):Number {

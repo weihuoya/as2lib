@@ -119,7 +119,7 @@ class org.as2lib.test.mock.MethodCall extends BasicClass {
 	 *
 	 * @return the string representation of this method call
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return (methodName + "(" + args + ")");
 	}
 	
