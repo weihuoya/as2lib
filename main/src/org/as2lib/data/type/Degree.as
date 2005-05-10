@@ -71,7 +71,7 @@ class org.as2lib.data.type.Degree extends Number implements Angle {
 	 * 
 	 * @return the string representation of this instance
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return Config.getObjectStringifier().execute(this);
 	}
 	

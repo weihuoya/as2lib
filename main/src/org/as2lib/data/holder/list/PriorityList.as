@@ -236,7 +236,7 @@ class org.as2lib.data.holder.list.PriorityList extends AbstractPriority implemen
 		return list.toArray();
 	}
 	
-	public function toString(Void):String {
+	public function toString():String {
 		return list.toString();
 	}
 	

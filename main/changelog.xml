@@ -4,6 +4,11 @@
     xsi:schemaLocation="aslib http://www.as2lib.org/changelog_0.91.xsd">
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
+       <month value="5">
+         <day value="10">
+           <entry type="change" package="org.as2lib.core" class="BasicInterface" method="toString(Void):String">Removed parameter 'Void' because it lead to strange error message because of a conflict with the Object.toString method that does not declare a 'Void' parameter.</entry>
+         </day>
+       </month>
        <month value="3">
          <day value="27">
            <entry type="change" package="org.as2lib.env.event" class="AbstractEventDistributor"><change-rename to="AbstractEventDistributorControl"/></entry>

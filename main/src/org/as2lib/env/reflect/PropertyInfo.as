@@ -220,7 +220,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * 
 	 * @return the string representation of this property
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return getStringifier().execute(this);
 	}
 	

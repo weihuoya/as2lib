@@ -34,7 +34,7 @@ class org.as2lib.data.math.vector.Vector3D extends LimitedVector {
 		return getValue(2);
 	}
 	
-	public function toString(Void):String {
+	public function toString():String {
 		var result:String ="";
 		
 		result += "x = "+getX()+"\n";

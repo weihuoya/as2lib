@@ -225,7 +225,7 @@ class org.as2lib.data.holder.queue.LinearQueue extends BasicClass implements Que
 	 * 
 	 * @return the string representation of this queue
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return getStringifier().execute(this);
 	}
 	

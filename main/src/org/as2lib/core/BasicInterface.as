@@ -35,13 +35,13 @@
  * @author Michael Hermann
  * @see org.as2lib.core.BasicClass
  */
-interface org.as2lib.core.BasicInterface {       
+interface org.as2lib.core.BasicInterface {
 	 
 	/**
 	 * Returns the string representation of this instance.
 	 *
 	 * @return the string representation of this instance
 	 */
-	public function toString(Void):String;
+	public function toString():String;
 	
 }

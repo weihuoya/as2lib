@@ -293,7 +293,7 @@ class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
 	 * 
 	 * @return The file as string.
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		var result:String;
 		// without braces around "new ByteFormat.." not MTASC compatible
 		result = "[type " + ReflectUtil.getTypeNameForInstance(this)

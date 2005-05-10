@@ -139,7 +139,7 @@ class org.as2lib.env.log.LogMessage extends BasicClass {
 	 *
 	 * @return the string representation of this log message
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return getStringifier().execute(this);
 	}
 	

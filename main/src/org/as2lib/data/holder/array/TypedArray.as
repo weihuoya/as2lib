@@ -183,7 +183,7 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 	 *
 	 * @return the string representation of this array
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return super.toString();
 	}
 

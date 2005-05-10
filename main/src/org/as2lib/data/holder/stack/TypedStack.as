@@ -151,7 +151,7 @@ class org.as2lib.data.holder.stack.TypedStack extends BasicClass implements Stac
 	 *
 	 * @return the string representation of the wrapped stack
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return stack.toString();
 	}
 	

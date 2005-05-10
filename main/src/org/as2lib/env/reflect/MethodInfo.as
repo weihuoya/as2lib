@@ -175,7 +175,7 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	 * 
 	 * @return the string representation of this method
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return getStringifier().execute(this);
 	}
 	

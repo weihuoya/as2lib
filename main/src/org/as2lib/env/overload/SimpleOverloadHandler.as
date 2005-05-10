@@ -246,7 +246,7 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	 * 
 	 * @returns the string representation of this overload handler
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		// TODO: Extract into a Stringifier.
 		var result:String = "[object SimpleOverloadHandler";
 		var l:Number = argumentsTypes.length;

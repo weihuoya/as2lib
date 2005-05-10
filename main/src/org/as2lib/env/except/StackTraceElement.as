@@ -124,7 +124,7 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	 *
 	 * @return the string representation of this stack trace element
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return getStringifier().execute(this);
 	}
 	

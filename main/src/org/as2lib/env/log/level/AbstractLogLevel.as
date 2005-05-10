@@ -102,7 +102,7 @@ class org.as2lib.env.log.level.AbstractLogLevel extends BasicClass implements Lo
 	 *
 	 * @return the string representation of this level
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return name;
 	}
 	

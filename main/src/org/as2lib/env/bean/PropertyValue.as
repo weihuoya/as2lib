@@ -55,7 +55,7 @@ class org.as2lib.env.bean.PropertyValue extends BasicClass {
 		return type;
 	}
 	
-	public function toString(Void):String {
+	public function toString():String {
 		return (name + "=" + value);
 	}
 	

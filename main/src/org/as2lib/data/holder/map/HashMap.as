@@ -303,7 +303,7 @@ class org.as2lib.data.holder.map.HashMap extends AbstractMap implements Map {
 	 * 
 	 * @return the string representation of this map
 	 */
-	public function toString(Void):String {
+	public function toString():String {
 		return getStringifier().execute(this);
 	}
 	
