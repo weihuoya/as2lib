@@ -19,6 +19,7 @@ import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogManager;
 import org.as2lib.app.exec.Process;
 import org.as2lib.test.unit.TestRunner;
+import org.as2lib.test.unit.TestCaseResult;
 import org.as2lib.app.exec.ProcessListener;
 import org.as2lib.env.except.IllegalArgumentException;
 
@@ -34,6 +35,9 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Proc
 	
 	/** Stores the logger used to do the output. */
 	private static var logger:Logger;
+	
+	/** Stores former displayed TestCase. */
+	private var formerTest:TestCaseResult;
 	
 	/**
 	 * @return the logger used to do the output
@@ -58,8 +62,12 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Proc
 	 * @param progressInfo Extended informations the current progress.
 	 */
 	public function onUpdateProcess(process:Process):Void {
-		//var testRunner:TestRunner = TestRunner(process);
-		//getLogger().info(testRunner.getPercentage()+"% ... executing "+testRunner.getCurrentTestCaseMethodInfo().getName());
+		var testRunner:TestRunner = TestRunner(process);
+		var currentTest:TestCaseResult = testRunner.getCurrentTestCase();
+		if(formerTest != currentTest) {
+			getLogger().info(Math.round(testRunner.getPercentage())+"% ... executing "+currentTest.getName());
+		}
+		formerTest = currentTest;
 	}
 	
 	/**
@@ -82,7 +90,8 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Proc
 	 * @param pauseInfo Informations about the TestRunner that paused.
 	 */
 	public function onPauseProcess(process:Process):Void {
-		getLogger().info("<TestRunner paused execution>");
+		var test:TestRunner = TestRunner(process);
+		getLogger().info("<TestRunner paused execution at "+test.getCurrentTestCaseMethodInfo().getName()+">");
 	}
 	
 	/**
