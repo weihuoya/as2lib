@@ -13,14 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import org.as2lib.app.exec.AbstractProcess;
 import org.as2lib.app.exec.Process;
 import org.as2lib.util.ClassUtil;
 
 /**
  * Helper class for a simpler creation of Configurations.
+ * <p>Helper to start processes that might be useful within a configuration: like starting
+ * a TestRunner or predefined action templates.
  *
  * @author Martin Heidegger
+ * @version 1.0
  */
 class org.as2lib.app.conf.AbstractConfiguration extends AbstractProcess {
 	
@@ -67,6 +71,5 @@ class org.as2lib.app.conf.AbstractConfiguration extends AbstractProcess {
 	 *
 	 * @param cls Class to be referenced. 
 	 */
-	private function use(cls:Function):Void {
-	}
+	private function use(cls:Function):Void {}
 }

@@ -14,61 +14,47 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
-//import org.as2lib.env.log.logger.TraceLogger;
 import org.as2lib.env.log.logger.RootLogger;
 import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.handler.FlashoutHandler;
 import org.as2lib.env.log.repository.LoggerHierarchy;
 import org.as2lib.env.log.LogManager;
-import org.as2lib.env.log.LogMessage;
-import org.as2lib.env.log.stringifier.FlashoutLogMessageStringifier;
-import main.Configuration;
 
 /**
- * Example class for a configuration in a MTASC & Flashout context.
- * Configuration File for the execution of Testcases with MTASC & Flashout to set up the 
- * logging settings and run the testcases.
+ * {@code Mtasc} ist open for your configuration in a Mtasc context.
+ * <p>It allows you to define all Mtasc specific configurations similar to the configuration
+ * in {@link main.Configuration}.
  * 
- * @author Martin Heidegger.
+ * <p>The current code contains a example that might match to usual cases. If you have additional
+ * configuration you have to overwrite (not extend!) this class in your directory. All that has to
+ * stay to be compatible is {@link #init}.
+ * 
+ * @see main.Configuration
+ * @author Martin Heidegger
+ * @version 1.0
  */
 class main.Mtasc {
 	
 	/**
 	 * Initialisation method for the configuration
 	 */
-	public static function main():Void {
+	public static function init():Void {
 		// Set up for logging
 		setUpLogging();
-		
-		// Execute the non-plattform specific configuration
-		Configuration.init();
 	}
 	
 	/**
 	 * Mtasc specific Logging settings.
 	 */
 	private static function setUpLogging(Void:Void):Void {
-		
-		// Setting special stringifier in a Flashout system
-		LogMessage.setStringifier(new FlashoutLogMessageStringifier());
 
-		// Use a LoggerHierarchy as repository and take a TraceLogger by default
-		var loggerHierarchy:LoggerHierarchy = new LoggerHierarchy(new RootLogger(AbstractLogLevel.ALL));
+		// Default Logging settings.
+		var root:RootLogger = new RootLogger(AbstractLogLevel.ALL);
+		
+		// TODO: Create a Mtasc - only working logger ...
+		root.addHandler(new FlashoutHandler());
 		  
-		// Tell the Logger Repository to use the loggerHierarchy for default.
-		LogManager.setLoggerRepository(loggerHierarchy); 
-		  
-		var traceLogger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("org.as2lib");
-		traceLogger.addHandler(new FlashoutHandler());
-		  
-		// Log to trace console in org.as2lib package
-		loggerHierarchy.addLogger(traceLogger);
-		  
-		var exceptLogger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("org.as2lib.env.except");
-		exceptLogger.setLevel(AbstractLogLevel.NONE);
-		  
-		// Disables logging of exceptions.
-		loggerHierarchy.addLogger(exceptLogger);
+		// Definition of default logging hierarchy. 
+		LogManager.setLoggerRepository(new LoggerHierarchy(root)); 
 	}
 }

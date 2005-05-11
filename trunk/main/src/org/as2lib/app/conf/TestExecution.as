@@ -1,4 +1,18 @@
-﻿
+﻿/*
+ * Copyright the original author or authors.
+ * 
+ * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.mozilla.org/MPL/MPL-1.1.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 import org.as2lib.app.exec.Process;
 import org.as2lib.app.exec.AbstractProcess;
@@ -10,23 +24,35 @@ import org.as2lib.test.unit.TestSuiteFactory;
  * Prepared configuration to execute Testcases.
  * <p>Use this class to simplify your configuration for the execution of Testcases.
  * <p>As common for as2lib configuration you can use this configuration within your application
- * execution.
+ * execution to start and configure a TestSystem.
+ * 
+ * Example:
+ * <code>
+ *   import org.as2lib.app.conf.AbstractConfiguration;
+ *   import com.domain.test.*
+ *   
+ *   class main.Configuration extends AbstractConfiguration {
+ *     public static function init(Void):Void {
+ *       init(TestExecution);
+ *     }
+ *     
+ *     public function setReferences(Void):Void {
+ *       use(MyTestCase);
+ *       use(MyTestCase2);
+ *       use(MyTestCase3);
+ *     }
+ *   }
+ * </code>
  *
  * @author Martin Heidegger
+ * @version 1.0
  */
 class org.as2lib.app.conf.TestExecution extends AbstractProcess implements Process {
 	
 	/**
-	 * Start of the TestCase.
-	 */
-	public function run(Void):Void {
-		runTestCases();
-	}
-	
-	/**
 	 * Runs all available Testcases.
 	 */
-	public function runTestCases(Void):Void {
+	public function run(Void):Void {
 		// Testrunner to work with
 		var testRunner:TestRunner = new TestRunner();
 			  
@@ -36,6 +62,7 @@ class org.as2lib.app.conf.TestExecution extends AbstractProcess implements Proce
 		// Execute all Testcases that are available at runtime
 		var factory:TestSuiteFactory = new TestSuiteFactory();
 		
+		// Starts the Runner as a subprocess.
 		startSubProcess(testRunner, [factory.collectAllTestCases()]);
 	}
 }
