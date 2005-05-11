@@ -124,7 +124,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 		testCaseIterator = new ArrayIterator(testCases);
 	}
 	
-	public function start():TestRunner {
+	public function start() {
 		return run.apply(this, arguments);
 	}
 	

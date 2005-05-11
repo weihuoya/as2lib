@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -39,8 +39,9 @@ class org.as2lib.test.unit.TestSuite extends BasicClass implements Test {
 	
 	private var resultFactory:TestResultFactory;
 
-	public function getResultFactory(test:Test, runner:TestRunner):TestResultFactory {
-		return new TestSuiteResultFactory(TestSuite(test), runner);
+	public function getResultFactory(Void):TestResultFactory {
+		if(!resultFactory) resultFactory = new TestSuiteResultFactory();
+		return resultFactory;
 	}
 
 	/**
