@@ -21,7 +21,7 @@ import org.as2lib.env.log.repository.LoggerHierarchy;
 import org.as2lib.env.log.LogManager;
 
 /**
- * {@code Flash} is intended for configuration in Flash.
+ * {@code Flash} is intended for configuration of applications compiled with Flash.
  * 
  * <p>It allows you to define all Flash specific configurations similar to the
  * configuration in {@link main.Configuration}.
@@ -37,7 +37,7 @@ import org.as2lib.env.log.LogManager;
 class main.Flash {
 	
 	/**
-	 * Initializes the Flash configuration.
+	 * Initializes and starts the Flash configuration.
 	 * 
 	 * @see org.as2lib.app.conf.FlashApplication
 	 */
