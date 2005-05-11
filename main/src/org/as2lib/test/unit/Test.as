@@ -43,5 +43,5 @@ interface org.as2lib.test.unit.Test extends BasicInterface {
 	 * 
 	 * @return Informations about the test.
 	 */
-	public function getResultFactory():TestResultFactory;
+	public function getResultFactory(Void):TestResultFactory;
 }

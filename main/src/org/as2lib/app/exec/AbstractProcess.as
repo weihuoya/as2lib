@@ -1,4 +1,4 @@
-import org.as2lib.env.except.AbstractOperationException;
+﻿import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.env.event.distributor.EventDistributorControl;
 import org.as2lib.env.event.distributor.SimpleEventDistributorControl;
 import org.as2lib.app.exec.Process;
@@ -37,7 +37,7 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 		if(!ArrayUtil.contains(subProcesses, process)) {
 			subProcesses.push(process);
 			process.addProcessListener(this);
-			process.start.apply(process, args);
+			process["start"].apply(process, args);
 		}
 	}
 	
