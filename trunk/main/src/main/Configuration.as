@@ -59,7 +59,7 @@
 class main.Configuration {
 	
 	/**
-	 * Method to be used by {@link org.as2lib.app.conf.FlashoutMain}, {@link org.as2lib.app.conf.FlashMain}, {@link org.as2lib.app.conf.MtascMain}
+	 * Method to be used by {@link org.as2lib.app.conf.FlashoutApplication}, {@link org.as2lib.app.conf.FlashApplication}, {@link org.as2lib.app.conf.MtascApplication}
 	 * in their init/main method. 
 	 */
 	public static function init(Void):Void {}
