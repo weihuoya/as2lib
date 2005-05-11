@@ -21,41 +21,40 @@ import org.as2lib.env.log.repository.LoggerHierarchy;
 import org.as2lib.env.log.LogManager;
 
 /**
- * {@code Flash} ist open for your configuration in a Flash context.
- * <p>It allows you to define all Flash specific configurations similar to the configuration
- * in {@link main.Configuration}.
+ * {@code Flash} is intended for configuration in Flash.
  * 
- * <p>The current code contains a example that might match to usual cases. If you have additional
- * configuration you have to overwrite (not extend!) this class in your directory. All that has to
- * stay to be compatible is {@link #init}.
+ * <p>It allows you to define all Flash specific configurations similar to the
+ * configuration in {@link main.Configuration}.
  * 
- * @see main.Configuration
+ * <p>The current code uses a common configuration. If you have additional configuration
+ * you have to overwrite (not extend!) this class in your application directory. The
+ * only method that must be declared to be compatible is {@link #init}.
+ * 
  * @author Martin Heidegger
  * @version 1.0
+ * @see main.Configuration
  */
 class main.Flash {
 	
 	/**
-	 * Initialisation of the flash configuration.
+	 * Initializes the Flash configuration.
 	 * 
 	 * @see org.as2lib.app.conf.FlashApplication
 	 */
 	public static function init(Void):Void {
-		
-		// Init of logging setup (abstrahation)
+		// inits of logging setup
 		setUpLogging();
 	}
 	
 	/**
-	 * Set up for common logging in a flash environment.
+	 * Sets up common logging in the Flash environment that uses {@code trace}.
 	 */
 	private static function setUpLogging(Void):Void {
-
-		// Trace Output in the environment.
+		// traces log messages
 		var root:RootLogger = new RootLogger(AbstractLogLevel.ALL);
 		root.addHandler(new TraceHandler());
-		  
-		// Tell the Logger Repository to use the loggerHierarchy for default.
+		// sets the logger hierarchy as repository
 		LogManager.setLoggerRepository(new LoggerHierarchy(root)); 
 	}
+	
 }
