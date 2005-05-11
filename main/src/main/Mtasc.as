@@ -21,13 +21,14 @@ import org.as2lib.env.log.repository.LoggerHierarchy;
 import org.as2lib.env.log.LogManager;
 
 /**
- * {@code Mtasc} ist open for your configuration in a Mtasc context.
- * <p>It allows you to define all Mtasc specific configurations similar to the configuration
- * in {@link main.Configuration}.
+ * {@code Mtasc} is intended for configuration of applications compiled with MTASC.
  * 
- * <p>The current code contains a example that might match to usual cases. If you have additional
- * configuration you have to overwrite (not extend!) this class in your directory. All that has to
- * stay to be compatible is {@link #init}.
+ * <p>It allows you to define all MTASC specific configurations similar to the
+ * configuration in {@link main.Configuration}.
+ * 
+ * <p>The current code contains an example that matches usual cases. If you have
+ * additional configuration you have to overwrite (not extend!) this class in your
+ * directory. All that must stay to be compatible is the {@link #init} method.
  * 
  * @see main.Configuration
  * @author Martin Heidegger
@@ -36,25 +37,24 @@ import org.as2lib.env.log.LogManager;
 class main.Mtasc {
 	
 	/**
-	 * Initialisation method for the configuration
+	 * Initializes and starts the MTASC configuration.
 	 */
 	public static function init():Void {
-		// Set up for logging
+		// sets up logging
 		setUpLogging();
 	}
 	
 	/**
-	 * Mtasc specific Logging settings.
+	 * Sets up MTASC specific logging. This configures the As2lib Logging API to log
+	 * to Flashout.
 	 */
 	private static function setUpLogging(Void:Void):Void {
-
-		// Default Logging settings.
+		// creates a new root logger
 		var root:RootLogger = new RootLogger(AbstractLogLevel.ALL);
-		
 		// TODO: Create a Mtasc - only working logger ...
 		root.addHandler(new FlashoutHandler());
-		  
-		// Definition of default logging hierarchy. 
+		// sets the logger hierarchy as repository
 		LogManager.setLoggerRepository(new LoggerHierarchy(root)); 
 	}
+	
 }

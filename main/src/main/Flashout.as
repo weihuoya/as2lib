@@ -24,13 +24,16 @@ import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.stringifier.FlashoutLogMessageStringifier;
 
 /**
- * {@code Flashout} ist open for your configuration in a Flashout context.
- * <p>It allows you to define all Flashout specific configurations similar to the configuration
- * in {@link main.Configuration}.
+ * {@code Flashout} is intended for applications that want to use Flashout for log
+ * messages.
  * 
- * <p>The current code contains a example that might match to usual cases. If you have additional
- * configuration you have to overwrite (not extend!) this class in your directory. All that has to
- * stay to be compatible is {@link #init}.
+ * <p>It allows you to define all Flashout specific configurations similar to the
+ * configuration in {@link main.Configuration}.
+ * 
+ * <p>The current code contains an example that can be used in most cases. If you
+ * have additional configuration you must overwrite (not extend!) this class in your
+ * application directory. All that must be the same to be compatible is the static
+ * {@link #init} method.
  * 
  * @see main.Configuration
  * @author Martin Heidegger
@@ -39,26 +42,24 @@ import org.as2lib.env.log.stringifier.FlashoutLogMessageStringifier;
 class main.Flashout {
 	
 	/**
-	 * Initialisation method for the configuration
+	 * Initializes and starts the Flashout configuration.
 	 */
 	public static function init():Void {
-		// Set up for logging
+		// sets up logging
 		setUpLogging();
 	}
 	
 	/**
-	 * Flashout specific Logging settings.
+	 * Configures Flashout.
 	 */
 	private static function setUpLogging(Void:Void):Void {
-		
-		// Special Stringifier for a Flashout Environment.
+		// sets the stringifier for Flashout
 		LogMessage.setStringifier(new FlashoutLogMessageStringifier());
-
-		// Default Logging settings.
+		// creates and initializes the root logger
 		var root:RootLogger = new RootLogger(AbstractLogLevel.ALL);
 		root.addHandler(new FlashoutHandler());
-		  
-		// Definition of default logging hierarchy. 
+		// sets logger hierarchy as repository 
 		LogManager.setLoggerRepository(new LoggerHierarchy(root)); 
 	}
+	
 }
