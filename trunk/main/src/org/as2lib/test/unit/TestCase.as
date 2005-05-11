@@ -24,8 +24,8 @@ import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestResultFactory;
 import org.as2lib.test.unit.TestCaseResultFactory;
-import org.as2lib.util.Call;
-import org.as2lib.util.Executable;
+import org.as2lib.app.exec.Call;
+import org.as2lib.app.exec.Executable;
 import org.as2lib.util.ObjectUtil;
 
 /**
@@ -71,7 +71,7 @@ import org.as2lib.util.ObjectUtil;
  *   </code>
  *   Call:
  *   <code>
- * new MyTestCase().run(true);
+ * new MyTestCase().run();
  *   </code>
  *   Result:
  *   <code>

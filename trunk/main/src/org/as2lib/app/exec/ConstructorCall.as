@@ -16,7 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.ClassUtil;
-import org.as2lib.util.Call;
+import org.as2lib.app.exec.Call;
 
 /**
  * Constructor Call is to call a constructor by remote.
@@ -47,9 +47,9 @@ class org.as2lib.util.ConstructorCall extends Call {
 	 * @param args the arguments that shall be passed
 	 * @return the result of the method execution
 	 */
-	public function execute(args:Array) {
+	public function execute() {
 		var instance = ClassUtil.createCleanInstance(clazz);
-		return clazz.apply(instance, args);
+		return clazz.apply(instance, arguments);
 	}
 	
 }

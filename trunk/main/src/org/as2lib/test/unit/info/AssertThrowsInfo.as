@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.test.unit.AbstractAssertInfo;
-import org.as2lib.util.Executable;
+import org.as2lib.app.exec.Executable;
 import org.as2lib.util.StringUtil;
 import org.as2lib.env.reflect.ClassInfo;
 
@@ -63,7 +63,7 @@ class org.as2lib.test.unit.info.AssertThrowsInfo extends AbstractAssertInfo {
 	 */
 	public function execute(Void):Boolean {
 		try {
-			toCall.execute(args);
+			toCall.execute.apply(toCall, args);
 		} catch(e) {
 			exception = e;
 			exceptionThrown = true;
