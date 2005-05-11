@@ -23,16 +23,14 @@ import org.as2lib.core.BasicInterface;
  * @author Simon Wacker
  * @author Martin Heidegger
  */
-interface org.as2lib.util.Executable extends BasicInterface {
+interface org.as2lib.app.exec.Executable extends BasicInterface {
 	
 	/**
-	 * Executes the hidden encapsulated functionality using the passed-in {@code args}
-	 * array.
+	 * Executes the hidden encapsulated functionality using the passed-in {@code arguments}.
 	 *
-	 * @param args the arguments to use for the execution
 	 * @return the result of the execution
 	 */
-	public function execute(args:Array);
+	public function execute();
 	
 	/**
 	 * Iterates through the passed-in {@code object} and invokes the {@link #execute}

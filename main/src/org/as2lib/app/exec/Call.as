@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ReflectUtil;
-import org.as2lib.util.Executable;
+import org.as2lib.app.exec.Executable;
 import org.as2lib.util.AccessPermission;
 
 /**
@@ -30,7 +30,7 @@ import org.as2lib.util.AccessPermission;
  * @author Simon Wacker
  * @author Martin Heidegger
  */
-class org.as2lib.util.Call extends BasicClass implements Executable {
+class org.as2lib.app.exec.Call extends BasicClass implements Executable {
 	
 	/** The object to execute the method on. */
 	private var object;
@@ -58,14 +58,13 @@ class org.as2lib.util.Call extends BasicClass implements Executable {
 	}
 	
 	/**
-	 * Executes the method on the object passing the given {@code args} and returns the
+	 * Executes the method on the object passing the given {@code arguments} and returns the
 	 * result of the execution.
 	 * 
-	 * @param args the arguments to pass to the method on execution
 	 * @return the result of the method execution
 	 */
-	public function execute(args:Array) {
-		return method.apply(object, args);
+	public function execute() {
+		return method.apply(object, arguments);
 	}
 	
 	/**
@@ -104,7 +103,7 @@ class org.as2lib.util.Call extends BasicClass implements Executable {
 	public function forEach(object):Void {
 		var i:String;
 		for (i in object) {
-			execute([object[i], i, object]);
+			execute(object[i], i, object);
 		}
 	}
 	

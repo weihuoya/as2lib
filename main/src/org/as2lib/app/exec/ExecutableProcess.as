@@ -1,6 +1,6 @@
 ﻿
 import org.as2lib.app.exec.AbstractProcess;
-import org.as2lib.util.Executable;
+import org.as2lib.app.exec.Executable;
 
 /**
  *

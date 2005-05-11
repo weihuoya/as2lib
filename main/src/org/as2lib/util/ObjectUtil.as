@@ -32,56 +32,58 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * 
 	 * @see #isTypeOf
 	 */
-	public static var TYPE_STRING = "string";
+	public static var TYPE_STRING:String = "string";
 	
 	/**
 	 * Constant for objects for type number.
 	 * 
 	 * @see #isTypeOf
 	 */
-	public static var TYPE_NUMBER = "number";
+	public static var TYPE_NUMBER:String = "number";
 	
 	/**
 	 * Constant for objects of type object.
 	 * 
 	 * @see #isTypeOf
 	 */
-	public static var TYPE_OBJECT = "object";
+	public static var TYPE_OBJECT:String = "object";
 	
 	/**
 	 * Constant for objects of type boolean.
 	 * 
 	 * @see #isTypeOf
 	 */
-	public static var TYPE_BOOLEAN = "boolean";
+	public static var TYPE_BOOLEAN:String = "boolean";
 	
 	/**
 	 * Constant for objects of type movieclip.
 	 * 
 	 * @see #isTypeOf
 	 */
-	public static var TYPE_MOVIECLIP = "movieclip";
+	public static var TYPE_MOVIECLIP:String = "movieclip";
 	
 	/**
 	 * Constant for objects of type function.
 	 * 
 	 * @see #isTypeOf
 	 */
-	public static var TYPE_FUNCTION = "function";
+	public static var TYPE_FUNCTION:String = "function";
 	
 	/**
 	 * Constant for the value undefined.
 	 * 
 	 * @see #isTypeOf
 	 */
-	public static var TYPE_UNDEFINED = "undefined";
+	public static var TYPE_UNDEFINED:String = "undefined";
 	
 	/**
 	 * Constant for the value null.
 	 * 
 	 * @see #isTypeOf
 	 */
-	public static var TYPE_NULL = "null";
+	public static var TYPE_NULL:String = "null";
+	
+	private static var CHILD_PREFIX:String = "generic_child";
 	
 	/**
 	 * Stringifies the passed-in {@code object} using the stringifier returned by the
@@ -227,6 +229,29 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 		}
 		return (object instanceof clazz
 					&& !(object.__proto__ instanceof clazz));
+	}
+	
+	/**
+	 * Tries to find a childname that is currently not used.
+	 * Uses {@link CHILD_PREFIX} and a number from 1 to 10000 with two variants to find a
+	 * childname that is currently not used (20.000 possible variants).
+	 * 
+	 * @param object To find a name that is currently not used.
+	 * @return Name that is currently not used. Returns null if non of the names could be found.
+	 */
+	public static function getUnusedChildName(object):String {
+		var i:Number = 10000;
+		var prefA:String = CHILD_PREFIX+"_";
+		var prefB:String = CHILD_PREFIX+"-";
+		while(--i-(-1)) {
+			if(object[prefA+i] === undefined) {
+				return prefA+i;
+			}
+			if(object[prefB+i] === undefined) {
+				return prefB+i;
+			}
+		}
+		return null;
 	}
 	
 	/**

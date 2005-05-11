@@ -15,7 +15,9 @@
  */
  
 import org.as2lib.app.exec.Process;
+import org.as2lib.app.exec.Call;
 import org.as2lib.app.exec.AbstractProcess;
+import org.as2lib.app.exec.Timeout;
 import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.data.holder.Iterator;
@@ -74,6 +76,12 @@ import org.as2lib.env.reflect.ClassInfo;
  */
 class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process {
 	
+	/** Time in ms until the testrunner pauses automatically. */
+	public static var MAX_TIME_UNTIL_AUTO_PAUSE = 400;
+	
+	/** Amount of frames until resume from auto pause */
+	public static var FRAMES_UNTIL_RESUME = 5;
+	
 	/** Result Holder for a TestResult. */
 	private var testResult:TestResult;
 	
@@ -101,6 +109,20 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 	/** Pause Flag (if pause is allowed or not. */
 	private var pauseAllowed:Boolean;
 	
+	/** TimeStamp for the time of the last resume/start */
+	private var lastStartStamp:Number;
+	
+	/** Autopause call. Executes awakeFromPause after {@link FRAMES_UNTIL_RESUME} */
+	private var autoPauseCall:Timeout;
+	
+	/** 
+	 * Constructs a new TestRunner.
+	 */
+	public function TestRunner(Void) {
+		super();
+		autoPauseCall = new Timeout(new Call(this, awakeFromAutoPause), FRAMES_UNTIL_RESUME);
+	}
+	
 	/**
 	 * Getter for the Testresult.
 	 * The Testresult contains all informations about the process.
@@ -124,6 +146,9 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 		testCaseIterator = new ArrayIterator(testCases);
 	}
 	
+	/**
+	 * Implementation for 
+	 */
 	public function start() {
 		return run.apply(this, arguments);
 	}
@@ -138,6 +163,8 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 		setTestResult(test.getResultFactory().createResult(test, this));
 		
 		started = true;
+		lastStartStamp = getTimer();
+		
 		// Dispatches the event for the view.
 		event.onStartProcess(this);
 		
@@ -162,7 +189,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 	 * @see #resume
 	 */
 	public function pause(Void):Void {
-		if(!pauseAllowed) {
+		if (!pauseAllowed) {
 			methodInfo.addInfo(new PauseError("IMPORTANT: Pause is not available before the execution of a testcase method. Action failed."))
 		} else {
 			paused = true;
@@ -176,26 +203,52 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 	 * @see #pause
 	 */
 	public function resume(Void):Void {
+		lastStartStamp = getTimer();
 		paused = false;
 		event.onResumeProcess(this);
 		processQueue();
 	}
 	
 	/**
+	 * Method to be executed by {@link autoPauseCall}
+	 */
+	private function awakeFromAutoPause(Void):Void {
+		lastStartStamp = getTimer();
+		paused = false;
+		processQueue();
+	}
+	
+
+	/**
+	 * Starts autoPause if necessary.
+	 * 
+	 * @return true if autopause was started.
+	 */
+	private function autoPause(Void):Boolean {
+		if (lastStartStamp+MAX_TIME_UNTIL_AUTO_PAUSE < getTimer()) {
+			paused = true;
+			autoPauseCall.execute();
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * Starts or resumes the TestCase Queue.
 	 */
 	private function processQueue(Void):Void {
+		
 		// Resuming former startet TestCase (if available);
-		if(currentTestCase && isRunning()) {
+		if (currentTestCase && isRunning()) {
 			processMethodQueue();
 		}
 		
-		while(testCaseIterator.hasNext() && isRunning()) {
+		while (testCaseIterator.hasNext() && isRunning()) {
 			startTestCase(this.testCaseIterator.next());
 		}
 		
 		// Finish if the current run isn't finished
-		if(isRunning()) {
+		if (isRunning()) {
 			finish();
 		}
 	}
@@ -241,11 +294,16 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 	 * Processes all methods of the current Testcase.
 	 */
 	private function processMethodQueue(Void):Void {
-		if(methodInfo) {
+		if (methodInfo) {
 			methodInfo.getStopWatch().stop();
 			finishMethod();
 		}
-		while(currentTestCaseMethodIterator.hasNext() && isRunning()) {
+		while (currentTestCaseMethodIterator.hasNext() && isRunning()) {
+			
+			if (autoPause()) {
+				return;
+			}
+			
 			methodInfo = TestCaseMethodInfo(currentTestCaseMethodIterator.next());
 			
 			try {
@@ -256,7 +314,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 			}
 			
 			// Prepare the execution of the method by setUp
-			if(!methodInfo.hasErrors()) {
+			if (!methodInfo.hasErrors()) {
 				try {
 					testCaseInstance.setUp();
 				} catch (e) {
@@ -264,7 +322,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 				}
 			}
 			
-			if(!methodInfo.hasErrors()) {
+			if (!methodInfo.hasErrors()) {
 				
 				// Execute the method
 				var sW:StopWatch = methodInfo.getStopWatch();
@@ -282,7 +340,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 				}
 			}
 
-			if(isRunning()) {
+			if (isRunning()) {
 				finishMethod();
 			}
 		}
@@ -294,7 +352,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 	 * Note: It is necessary for pause() to finish it later.
 	 */
 	private function finishMethod():Void {
-		if(methodInfo.isExecuted()){
+		if (methodInfo.isExecuted()){
 			// Tear down the changed of setUp.
 			try {
 				testCaseInstance.tearDown();

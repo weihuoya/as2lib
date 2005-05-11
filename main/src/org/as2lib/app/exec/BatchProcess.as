@@ -1,12 +1,10 @@
-﻿import org.as2lib.env.event.broadcaster.EventBroadcaster;
-import org.as2lib.env.event.broadcaster.SpeedEventBroadcaster;
+﻿
+import org.as2lib.env.event.distributor.EventDistributorControl;
+import org.as2lib.env.event.distributor.SimpleEventDistributorControl;
 import org.as2lib.app.exec.Batch;
 import org.as2lib.app.exec.Process;
-import org.as2lib.app.exec.ProcessInfo;
-import org.as2lib.app.exec.BatchInfo;
 import org.as2lib.app.exec.ProcessListener;
 import org.as2lib.app.exec.BatchListener;
-import org.as2lib.util.Executable;
 import org.as2lib.core.BasicClass;
 
 /**
@@ -23,11 +21,17 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	/** Flag if execution was finished */
 	private var finished:Boolean;
 	
-	/** ProcessBroadcaster holder */
-	private var pB:EventBroadcaster;
+	/** Holder for the batch */
+	private var batchEventControl:EventDistributorControl;
 	
-	/** BatchBroadcaster holder */
-	private var bB:EventBroadcaster;
+	/** */
+	private var batchEvent:BatchListener;
+	
+	/** Holder for the batch */
+	private var processEventControl:SimpleEventDistributorControl;
+	
+	/** */
+	private var processEvent:ProcessListener;
 	
 	/** List that contains all processes **/
 	private var list:Array;
@@ -39,12 +43,12 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	private var current:Number;
 	
 	public function BatchProcess(Void) {
-		pB = new SpeedEventBroadcaster();
-		bB = new SpeedEventBroadcaster();
+		processEventControl = new SimpleEventDistributorControl(ProcessListener);
+		processEvent = processEventControl.getDistributor();
+		batchEventControl = new SimpleEventDistributorControl(BatchListener);
+		batchEvent = batchEventControl.getDistributor();
 		current = -1;
 		list = new Array();
-		processUpdateInfo = new ProcessInfo("onUpdateProcess", this);
-		batchUpdateInfo = new BatchInfo("onUpdateBatch", this);
 		
 		percent = 0;
 		started = false;
@@ -55,7 +59,7 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 		return list[current];
 	}
 	
-	public function onStopProcess(info:ProcessInfo):Void {
+	public function onFinishProcess(info:Process):Void {
 		list[current].removeProcessListener(this);
 		if(current < list.length) {
 			updatePercent(100);
@@ -64,21 +68,28 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 			c.start();
 		} else {
 			finished = true;
-			bB.dispatch(new BatchInfo("onStopBatch", this));
-			pB.dispatch(new ProcessInfo("onStopProcess", this));
+			batchEvent.onStopBatch(this);
+			processEvent.onFinishProcess(this);
 			percent = -1;
 		}
 	}
 	
-	public function onStartProcess(info:ProcessInfo):Void {}
+	public function onStartProcess(info:Process):Void {}
 	
-	public function onUpdateProcess(info:ProcessInfo):Void {
-		var p:Number = info.getProcess().getPercent();
+	public function onPauseProcess(info:Process):Void {
+		
+	}
+	
+	public function onResumeProcess(info:Process):Void {
+	}
+	
+	public function onUpdateProcess(info:Process):Void {
+		var p:Number = info.getPercentage();
 		if(p != null) {
 			updatePercent(p);
 		}
-		bB.dispatch(batchUpdateInfo);
-		pB.dispatch(processUpdateInfo);
+		batchEvent.onUpdateBatch(this);
+		processEvent.onUpdateProcess(this);
 	}
 	
     public function start(Void):Void {
@@ -87,10 +98,10 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 		finished = false;
 		percent = 0;
 		
-		bB.dispatch(new BatchInfo("onStartBatch", this));
-		pB.dispatch(new ProcessInfo("onStartProcess", this));
+		batchEvent.onStartBatch(this);
+		processEvent.onStartProcess(this);
 		started = true;
-		onStopProcess();
+		onFinishProcess();
 	}
 	
 	public function addProcess(p:Process):Void {
@@ -113,45 +124,45 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	}
 	
     public function addProcessListener(listener:ProcessListener):Void {
-		pB.addListener(listener);
+		processEventControl.addListener(listener);
 	}
 	
 	public function removeProcessListener(listener:ProcessListener):Void {
-		pB.removeListener(listener);
+		processEventControl.removeListener(listener);
 	}
 	
-	public function removeAllProcessListener(Void):Void {
-		pB.removeAllListener();
+	public function removeAllProcessListeners(Void):Void {
+		processEventControl.removeAllListeners();
 	}
 	
-	public function addAllProcessListener(list:Array):Void {
-		pB.addAllListener(list);
+	public function addAllProcessListeners(list:Array):Void {
+		processEventControl.addAllListeners(list);
 	}
 	
-	public function getAllProcessListener(Void):Array {
-		return pB.getAllListener();
+	public function getAllProcessListeners(Void):Array {
+		return processEventControl.getAllListeners();
 	}
 	
     public function addBatchListener(listener:BatchListener):Void {
-		bB.addListener(listener);
+		batchEventControl.addListener(listener);
 	}
 	
 	public function removeBatchListener(listener:BatchListener):Void {
-		bB.removeListener(listener);
+		batchEventControl.removeListener(listener);
 	}
 	
-	public function removeAllBatchListener(Void):Void {
-		bB.removeAllListener();
+	public function removeAllBatchListeners(Void):Void {
+		batchEventControl.removeAllListeners();
 	}
 	
-	public function addAllBatchListener(list:Array):Void {
-		bB.addAllListener(list);
+	public function addAllBatchListeners(list:Array):Void {
+		batchEventControl.addAllListeners(list);
 	}
 	
-	public function getAllBatchListener(Void):Array {
-		return bB.getAllListener();
+	public function getAllBatchListeners(Void):Array {
+		return batchEventControl.getAllListeners();
 	}
-    public function getPercent(Void):Number {
+    public function getPercentage(Void):Number {
 		return percent;
 	}
     public function hasFinished(Void):Boolean {
@@ -159,5 +170,11 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	}
     public function hasStarted(Void):Boolean {
 		return started;
+	}
+	public function isRunning(Void):Boolean {
+		return true;
+	}
+	public function isPaused(Void):Boolean {
+		return false;
 	}
 }

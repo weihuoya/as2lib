@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.util.ClassUtil;
-import org.as2lib.util.Call;
+import org.as2lib.app.exec.Call;
 
 /**
  * {@code ConstructorCall} enables you to create instances of a class without having
@@ -47,9 +47,9 @@ class org.as2lib.util.ConstructorCall extends Call {
 	 * @param args the arguments to pass as parameters to the class's constructor
 	 * @return a new instance of the class specified on construction
 	 */
-	public function execute(args:Array) {
+	public function execute() {
 		var instance = ClassUtil.createCleanInstance(clazz);
-		return clazz.apply(instance, args);
+		return clazz.apply(instance, arguments);
 	}
 	
 }
