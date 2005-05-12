@@ -34,7 +34,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	 * @overload #getTypeAndMethodInfoByInstance
 	 */
 	public static function getTypeAndMethodInfo(object, method:Function):Array {
-		if (object == null || !method) return null;
+		if (object == null) return null;
 		if (typeof(object) == "function") {
 			return getTypeAndMethodInfoByType(object, method);
 		}
@@ -218,7 +218,9 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 				// flex stores every class in _global and in its actual package
 				// e.g. org.as2lib.core.BasicClass is stored in _global with name org_as2lib_core_BasicClass
 				// the first part of the if-clause excludes these extra stored classes
-				if ((!eval("_global." + r.split("_").join(".")) || r.indexOf("_") < 0) && p[r].prototype == c) return (n + r);
+				// p[r].prototype === c because a simple == will result in wrong name when searching for the __proto__ of
+				// a number
+				if ((!eval("_global." + r.split("_").join(".")) || r.indexOf("_") < 0) && p[r].prototype === c) return (n + r);
 				if (p[r].__constructor__ == Object) {
 					// prevents recursion on back-reference
 					var f:Boolean = false;
