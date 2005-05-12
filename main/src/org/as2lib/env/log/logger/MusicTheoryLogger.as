@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogMessage;
@@ -259,8 +258,8 @@ class org.as2lib.env.log.logger.MusicTheoryLogger extends AbstractLogger impleme
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			var message:LogMessage = new LogMessage(message, level, name);
-			getURL("javascript:showText('" + message + "')");
+			var m:LogMessage = new LogMessage(message, level, name);
+			getURL("javascript:showText('" + m + "')");
 		}
 	}
 	
@@ -275,7 +274,7 @@ class org.as2lib.env.log.logger.MusicTheoryLogger extends AbstractLogger impleme
 	 */
 	public function debug(message):Void {
 		if (isDebugEnabled()) {
-			log(debugLevel);
+			log(message, debugLevel);
 		}
 	}
 	
@@ -290,7 +289,7 @@ class org.as2lib.env.log.logger.MusicTheoryLogger extends AbstractLogger impleme
 	 */
 	public function info(message):Void {
 		if (isInfoEnabled()) {
-			log(infoLevel);
+			log(message, infoLevel);
 		}
 	}
 	
@@ -305,7 +304,7 @@ class org.as2lib.env.log.logger.MusicTheoryLogger extends AbstractLogger impleme
 	 */
 	public function warning(message):Void {
 		if (isWarningEnabled()) {
-			log(warningLevel);
+			log(message, warningLevel);
 		}
 	}
 	
@@ -320,7 +319,7 @@ class org.as2lib.env.log.logger.MusicTheoryLogger extends AbstractLogger impleme
 	 */
 	public function error(message):Void {
 		if (isErrorEnabled()) {
-			log(errorLevel);
+			log(message, errorLevel);
 		}
 	}
 	
@@ -335,7 +334,7 @@ class org.as2lib.env.log.logger.MusicTheoryLogger extends AbstractLogger impleme
 	 */
 	public function fatal(message):Void {
 		if (isFatalEnabled()) {
-			log(fatalLevel);
+			log(message, fatalLevel);
 		}
 	}
 	
