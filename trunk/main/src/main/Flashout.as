@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-//import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
+import org.as2lib.env.log.LogManager;
+import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.logger.RootLogger;
 import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.handler.FlashoutHandler;
 import org.as2lib.env.log.repository.LoggerHierarchy;
-import org.as2lib.env.log.LogManager;
-import org.as2lib.env.log.LogMessage;
-import org.as2lib.env.log.stringifier.FlashoutLogMessageStringifier;
+import org.as2lib.env.log.stringifier.SimpleLogMessageStringifier;
 
 /**
  * {@code Flashout} is intended for applications that want to use Flashout for log
@@ -53,8 +52,8 @@ class main.Flashout {
 	 * Configures Flashout.
 	 */
 	private static function setUpLogging(Void:Void):Void {
-		// sets the stringifier for Flashout
-		LogMessage.setStringifier(new FlashoutLogMessageStringifier());
+		// sets the stringifier
+		LogMessage.setStringifier(new SimpleLogMessageStringifier());
 		// creates and initializes the root logger
 		var root:RootLogger = new RootLogger(AbstractLogLevel.ALL);
 		root.addHandler(new FlashoutHandler());
