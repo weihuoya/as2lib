@@ -9,6 +9,7 @@
            <entry type="add" package="org.as2lib.env.reflect" class="ReflectUtil" method="getTypeAndMethodInfo"></entry>
            <entry type="add" package="org.as2lib.env.reflect" class="ReflectUtil" method="getTypeAndMethodInfoByType"></entry>
            <entry type="add" package="org.as2lib.env.reflect" class="ReflectUtil" method="getTypeAndMethodInfoByInstance"></entry>
+           <entry type="change" package="org.as2lib.env.log" class="LogMessageStringifier">Renamed to PatternLogMessageStringifier and moved into org.as2lib.env.log.stringifier package.</entry>
          </day>
          <day value="10">
            <entry type="change" package="org.as2lib.core" class="BasicInterface" method="toString(Void):String">Removed parameter 'Void' because it lead to strange error message because of a conflict with the Object.toString method that does not declare a 'Void' parameter.</entry>
