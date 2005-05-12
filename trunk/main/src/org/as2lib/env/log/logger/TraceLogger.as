@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogMessage;
