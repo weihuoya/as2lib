@@ -77,12 +77,10 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 	 */
 	public function execute(target):String {
 		var element:StackTraceElement = target;
-		var thrower = element.getThrower();
-		var method:Function = element.getMethod();
-		var info:Array = ReflectUtil.getTypeAndMethodInfo(thrower, method);
-		var result:String = info[0] == null ? UNKNOWN : info[0];
+		var info:Array = ReflectUtil.getTypeAndMethodInfo(element.getThrower(), element.getMethod());
+		var result:String = info[0] == null ? UNKNOWN + " " : (info[0] ? "static " : "");
 		result += info[1] == null ? UNKNOWN : info[1];
-		result += "." + info[2] == null ? UNKNOWN : info[2];
+		result += "." + (info[2] == null ? UNKNOWN : info[2]);
 		result += "(";
 		if (showArgumentsValues) {
 			result += element.getArguments().toString() ? element.getArguments().toString() : UNKNOWN;
