@@ -5,6 +5,11 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="5">
+         <day value="12">
+           <entry type="add" package="org.as2lib.env.reflect" class="ReflectUtil" method="getTypeAndMethodInfo"></entry>
+           <entry type="add" package="org.as2lib.env.reflect" class="ReflectUtil" method="getTypeAndMethodInfoByType"></entry>
+           <entry type="add" package="org.as2lib.env.reflect" class="ReflectUtil" method="getTypeAndMethodInfoByInstance"></entry>
+         </day>
          <day value="10">
            <entry type="change" package="org.as2lib.core" class="BasicInterface" method="toString(Void):String">Removed parameter 'Void' because it lead to strange error message because of a conflict with the Object.toString method that does not declare a 'Void' parameter.</entry>
          </day>

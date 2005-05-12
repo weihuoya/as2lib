@@ -28,6 +28,9 @@ import org.as2lib.env.reflect.ReflectUtil;
  */
 class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass implements Stringifier {
 	
+	/** Default name if an information is unknown. */
+	public static var UNKNOWN:String = "[unknown]";
+	
 	/** Show the real arguments. */
 	private var showArgumentsValues:Boolean;
 	
@@ -74,43 +77,25 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 	 */
 	public function execute(target):String {
 		var element:StackTraceElement = target;
-		var result:String = "";
 		var thrower = element.getThrower();
 		var method:Function = element.getMethod();
-		
-		var throwerName:String = ReflectUtil.getTypeName(thrower);
-		if (throwerName == null) {
-			throwerName = "[unknown]";
-		}
-		
-		var methodName:String;
-		if ((method == thrower || method == thrower.__constructor__) && thrower && method) {
-			// source string 'new' out, to a constant
-			methodName = "new";
-		} else {
-			methodName = ReflectUtil.getMethodName(method, thrower);
-			if (methodName == null) {
-				methodName = "[unknown]";
-			}
-		}
-		result += ReflectUtil.isMethodStatic(methodName, thrower) ? "static " : "";
-		
-		result += throwerName;
-		result += "." + methodName;
+		var info:Array = ReflectUtil.getTypeAndMethodInfo(thrower, method);
+		var result:String = info[0] == null ? UNKNOWN : info[0];
+		result += info[1] == null ? UNKNOWN : info[1];
+		result += "." + info[2] == null ? UNKNOWN : info[2];
 		result += "(";
 		if (showArgumentsValues) {
-			result += element.getArguments().toString() ? element.getArguments().toString() : "[unknown]";
+			result += element.getArguments().toString() ? element.getArguments().toString() : UNKNOWN;
 		} else {
 			var args:Array = element.getArguments();
 			for (var i:Number = 0; i < args.length; i++) {
 				var argType:String = ReflectUtil.getTypeName(args[i]);
-				if (argType == null) argType = "[unknown]";
+				if (argType == null) argType = UNKNOWN;
 				result += argType;
 				if (i < args.length-1) result += ", ";
 			}
 		}
 		result += ")";
-	
 		return result;
 	}
 	
