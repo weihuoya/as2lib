@@ -26,6 +26,123 @@ import org.as2lib.core.BasicClass;
  */
 class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	
+	/** The name to use for constructors. */
+	public static var CONSTRUCTOR:String = "new";
+	
+	/**
+	 * @overload #getTypeAndMethodInfoForType
+	 * @overload #getTypeAndMethodInfoByInstance
+	 */
+	public static function getTypeAndMethodInfo(object, method:Function):Array {
+		if (object == null || !method) return null;
+		if (typeof(object) == "function") {
+			return getTypeAndMethodInfoByType(object, method);
+		}
+		return getTypeAndMethodInfoByInstance(object, method);
+	}
+	
+	/**
+	 * Returns an array that contains the passed-in {@code method}'s scope, the name
+	 * of the type that declares the method and the name of the method itself.
+	 * 
+	 * <p>The type that declares the {@code method} must not be the passed-in {@code type}.
+	 * It may also be a super-type of the passed-in {@code type}.
+	 * 
+	 * <p>{@code null} will be returned if the passed-in {@code type} is {@code null}.
+	 * 
+	 * @param method the method to return information about
+	 * @param type the type to start the search for the method
+	 * @return an array containing the passed-in {@code method}'s scope, the name of
+	 * the declaring type and the passed-in {@code method}'s name
+	 */
+	public static function getTypeAndMethodInfoByType(type:Function, method:Function):Array {
+		if (!type) return null;
+		var r:Array = new Array();
+		var m:String;
+		if (method == type) {
+			m = CONSTRUCTOR;
+		} else {
+			m = getMethodNameByObject(method, type);
+		}
+		if (m != null) {
+			r[0] = true;
+			r[1] = getTypeNameForType(type);
+			r[2] = m;
+			return r;
+		}
+		return getTypeAndMethodInfoByPrototype(type.prototype, method);
+	}
+	
+	/**
+	 * Returns an array that contains the passed-in {@code method}'s scope, the name
+	 * of the type that declares the method and the name of the method itself.
+	 * 
+	 * <p>The type that declares the {@code method} must not be the direct type of the
+	 * passed-in {@code instance}. It may also be a super-type of this type.
+	 * 
+	 * <p>{@code null} will be returned if the passed-in {@code type} is {@code null}.
+	 * 
+	 * @param method the method to return information about
+	 * @param instance the instance of the type to start the search for the method
+	 * @return an array containing the passed-in {@code method}'s scope, the name of
+	 * the declaring type and the passed-in {@code method}'s name
+	 */
+	public static function getTypeAndMethodInfoByInstance(instance, method:Function):Array {
+		if (instance == null) return null;
+		// MovieClips on the stage do not have a '__constructor__' but a 'constructor' variable.
+		// Note that this causes problems with dynamically created inheritance chains like
+		// myMovieClip.__proto__ = MyClass.prototype because the '__constructor__' and 'constructor' 
+		// properties do not get changed.
+		if (instance.__constructor__) {
+			if (instance.__constructor__.prototype == instance.__proto__) {
+				return getTypeAndMethodInfoByType(instance.__constructor__, method);
+			}
+		}
+		if (instance.constructor) {
+			if (instance.constructor.prototype == instance.__proto__) {
+				return getTypeAndMethodInfoByType(instance.constructor, method);
+			}
+		}
+		return getTypeAndMethodInfoByPrototype(instance.__proto__, method);
+	}
+	
+	/**
+	 * Returns an array that contains the passed-in method's {@code m} scope, the name
+	 * of the type that declares the method and the name of the method itself.
+	 * 
+	 * <p>The type that declares the method must not be the direct type of the
+	 * passed-in prototype {@code p}. It may also be a super-type of this type.
+	 * 
+	 * <p>{@code null} will be returned if the passed-in prototype is {@code null}.
+	 * 
+	 * @param m the method to return information about
+	 * @param p the beginning of the prototype chain to search through
+	 * @return an array containing the passed-in method's scope, the name of the
+	 * declaring type and the passed-in method's name
+	 */
+	private static function getTypeAndMethodInfoByPrototype(p, m:Function):Array {
+		if (p == null) return null;
+		var o = p;
+		_global.ASSetPropFlags(_global, null, 0, true);
+		var n:String;
+		while (p) {
+			if (p.constructor == m) {
+				n = CONSTRUCTOR;
+			} else {
+				n = getMethodNameByObject(m, p);
+			}
+			if (n != null) {
+				var r:Array = new Array();
+				r[0] = false;
+				r[1] = getTypeNameForPrototype(p, _global, "", [_global]);;
+				r[2] = n;
+				return r;
+			}
+			p = p.__proto__;
+		}
+		return [null, getTypeNameForPrototype(o, _global, "", [_global]), null];
+	}
+	
 	/**
 	 * @overload #getTypeNameForInstance
 	 * @overload #getTypeNameForType
@@ -55,7 +172,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 		_global.ASSetPropFlags(_global, null, 0, true);
 		// The '__constructor__' or 'constructor' properties may not be correct with dynamic instances.
 		// We thus use the '__proto__' property that referes to the prototype of the type.
-		return getTypeNameForPrototypeByPackage(instance.__proto__, _global, "", [_global]);
+		return getTypeNameForPrototype(instance.__proto__, _global, "", [_global]);
 	}
 	
 	/**
@@ -73,7 +190,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	public static function getTypeNameForType(type:Function):String {
 		if (!type) return null;
 		_global.ASSetPropFlags(_global, null, 0, true);
-		return getTypeNameForPrototypeByPackage(type.prototype, _global, "", [_global]);
+		return getTypeNameForPrototype(type.prototype, _global, "", [_global]);
 	}
 	
 	/**
@@ -93,7 +210,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	 * @param a already searched through packages
 	 * @return the name of the type defining the prototype of {@code null}
 	 */
-	private static function getTypeNameForPrototypeByPackage(c, p, n:String, a:Array):String {
+	private static function getTypeNameForPrototype(c, p, n:String, a:Array):String {
 		//if (c == null || p == null) return null; // why is this causing trouble?
 		if (n == null) n = "";
 		for (var r:String in p) {
@@ -110,7 +227,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 					}
 					if (!f) {
 						a.push(p[r]);
-						r = getTypeNameForPrototypeByPackage(c, p[r], n + r + ".", a);
+						r = getTypeNameForPrototype(c, p[r], n + r + ".", a);
 						if (r) return r;
 					}
 				}
@@ -161,7 +278,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 				return getMethodNameByType(method, instance.constructor);
 			}
 		}
-		return getMethodNameByPrototype(method, instance);
+		return getMethodNameByPrototype(method, instance.__proto__);
 	}
 	
 	/**
@@ -181,51 +298,61 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 		if (!method || !type) return null;
 		var m:String = getMethodNameByPrototype(method, type.prototype);
 		if (m != null) return m;
-		var s:Function = _global.ASSetPropFlags;
-		for (var n:String in type) {
-			s(type, null, 0, true);
-			s(type, ["__proto__", "constructor", "prototype"], 7, true);
-			try {
-				if (type[n] == method) return n;
-			} catch (e) {
-			}
-			// ASSetPropFlags must be restored because unexpected behaviours get caused otherwise
-			s(type, null, 1, true);
+		return getMethodNameByObject(method, type);
+	}
+	
+	/**
+	 * Returns the name of the method {@code m} on the prototype chain starting from
+	 * the passed-in prototype {@code p}.
+	 * 
+	 * <p>{@code null} will be returned if:
+	 * <ul>
+	 *   <li>The passed-in method or prototype are {@code null}</li>
+	 *   <li>The method does not exist on the prototype chain.</li>
+	 * </ul>
+	 * 
+	 * @param m the method to get the name of
+	 * @param o the prototype that has the {@code method}
+	 * @return the name of the {@code method} or {@code null}
+	 */
+	private static function getMethodNameByPrototype(m:Function, p):String {
+		if (m == null || p == null) return null;
+		while (p) {
+			getMethodNameByObject(m, p);
+			p = p.__proto__;
 		}
 		return null;
 	}
 	
 	/**
-	 * Returns the name of the {@code method} on the prototype chain starting from the
-	 * passed-in {@code prototype}.
+	 * Returns the name of the method {@code m} on the passed-in object {@code o} or
+	 * {@code null}.
+	 * 
+	 * <p>Only the passed-in object is searched through. Note also that all methods
+	 * regardless of their access permissions are enumerated.
 	 * 
 	 * <p>{@code null} will be returned if:
 	 * <ul>
-	 *   <li>The passed-in {@code method} or {@code prototype} are {@code null}</li>
-	 *   <li>The {@code method} does not exist on the prototype chain.</li>
+	 *   <li>The passed-in method or object are {@code null}</li>
+	 *   <li>The method does not exist on the object.</li>
 	 * </ul>
-	 *
-	 * @param method the method to get the name of
-	 * @param type the prototype that has the {@code method}
-	 * @return the name of the {@code method} or {@code null}
+	 * 
+	 * @param m the method to find
+	 * @param o the object that may contain the method
+	 * @return the name of the method or {@code null}
 	 */
-	private static function getMethodNameByPrototype(method:Function, prototype):String {
-		if (method == null || prototype == null) return null;
-		var p = prototype;
+	private static function getMethodNameByObject(m:Function, o):String {
 		var s:Function = _global.ASSetPropFlags;
-		while (p) {
-			s(p, null, 0, true);
-			s(p, ["__proto__", "__constructor__"], 7, true);
-			for (var n:String in p) {
-				try {
-					if (p[n] == method) return n;
-				} catch (e) {
-				}
+		s(o, null, 0, true);
+		s(o, ["__proto__", "prototype", "__constructor__", "constructor"], 7, true);
+		for (var n:String in o) {
+			try {
+				if (o[n] == m) return n;
+			} catch (e) {
 			}
-			// ASSetPropFlags must be restored because unexpected behaviours get caused otherwise
-			s(p, null, 1, true);
-			p = p.__proto__;
 		}
+		// ASSetPropFlags must be restored because unexpected behaviours get caused otherwise
+		s(o, null, 1, true);
 		return null;
 	}
 	
