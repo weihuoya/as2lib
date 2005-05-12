@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
 import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.LogMessageStringifier;
+import org.as2lib.env.log.stringifier.PatternLogMessageStringifier;
 
 /**
  * {@code LogMessage} is a dumb data holder that contains all the information about
@@ -30,8 +30,8 @@ import org.as2lib.env.log.LogMessageStringifier;
  * representation. If you want a different appearance of the log message you can
  * use the static {@link #setStringifier} method to set your custom stringifier.
  *
- * <p>The {@link LogMessageStringifier} supports different presentation styles. It
- * allows to switch the log level, the logger name and the time on and off.
+ * <p>The {@link PatternLogMessageStringifier} supports different presentation styles.
+ * It allows to switch the log level, the logger name and the time on and off.
  *
  * @author Simon Wacker
  */
@@ -54,12 +54,12 @@ class org.as2lib.env.log.LogMessage extends BasicClass {
 	
 	/**
 	 * Returns either the stringifier set via {@link #setStringifier} or the default
-	 * one which is an instance of class {@link LogMessageStringifier}.
+	 * one which is an instance of class {@link PatternLogMessageStringifier}.
 	 *
 	 * @return the currently used stringifier
 	 */
 	public static function getStringifier(Void):Stringifier {
-		if (!stringifier) stringifier = new LogMessageStringifier(true, true, "HH:nn:ss.S");
+		if (!stringifier) stringifier = new PatternLogMessageStringifier(true, true, "HH:nn:ss.S");
 		return stringifier;
 	}
 	
