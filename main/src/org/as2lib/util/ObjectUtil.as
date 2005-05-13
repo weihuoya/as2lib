@@ -83,8 +83,6 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 */
 	public static var TYPE_NULL:String = "null";
 	
-	private static var CHILD_PREFIX:String = "generic_child";
-	
 	/**
 	 * Stringifies the passed-in {@code object} using the stringifier returned by the
 	 * static {@link Config#getObjectStringifier} method.
@@ -229,31 +227,6 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 		}
 		return (object instanceof clazz
 					&& !(object.__proto__ instanceof clazz));
-	}
-	
-	/**
-	 * Tries to find a child name that is currently not used.
-	 * 
-	 * <p>Uses {@link CHILD_PREFIX} and a number from 1 to 10000 with two variants to
-	 * find a child name that is currently not used (20.000 possible variants).
-	 * 
-	 * @param object the object to find an unused child name in
-	 * @return the name of the unused child or {@code null} if all names are already
-	 * reserved
-	 */
-	public static function getUnusedChildName(object):String {
-		var i:Number = 10000;
-		var prefA:String = CHILD_PREFIX+"_";
-		var prefB:String = CHILD_PREFIX+"-";
-		while(--i-(-1)) {
-			if(object[prefA+i] === undefined) {
-				return prefA+i;
-			}
-			if(object[prefB+i] === undefined) {
-				return prefB+i;
-			}
-		}
-		return null;
 	}
 	
 	/**

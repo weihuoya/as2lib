@@ -2,7 +2,7 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.app.exec.Executable;
 import org.as2lib.env.except.FatalException;
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.util.ObjectUtil;
+import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.util.ArrayUtil;
 
 class org.as2lib.app.exec.Impulse implements BasicInterface {
@@ -21,7 +21,7 @@ class org.as2lib.app.exec.Impulse implements BasicInterface {
 	}
 	
 	public function createContainerMovieClip(timeline:MovieClip):MovieClip {
-		var name:String = ObjectUtil.getUnusedChildName(timeline);
+		var name:String = ReflectUtil.getUnusedMemberName(timeline);
 		if (!name) {
 			throw new FatalException("No free Timeline available", this, arguments);
 		}
