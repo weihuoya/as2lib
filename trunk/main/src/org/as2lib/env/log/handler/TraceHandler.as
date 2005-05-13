@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
+import org.as2lib.util.Stringifier;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
-import org.as2lib.core.BasicClass;
+import org.as2lib.env.log.handler.AbstractLogHandler;
 
 /**
  * {@code TraceHandler} uses {@code trace} to log messages.
  * 
  * @author Simon Wacker
  */
-class org.as2lib.env.log.handler.TraceHandler extends BasicClass implements LogHandler {
+class org.as2lib.env.log.handler.TraceHandler extends AbstractLogHandler implements LogHandler {
 	
 	/** Holds a trace handler instance. */
 	private static var traceHandler:TraceHandler;
@@ -33,10 +34,15 @@ class org.as2lib.env.log.handler.TraceHandler extends BasicClass implements LogH
 	 *
 	 * <p>This method always returns the same instance.
 	 *
+	 * <p>The {@code messageStringifier} argument is only recognized on first
+	 * invocation of this method.
+	 * 
+	 * @param messageStringifier (optional) the log message stringifier to be used by
+	 * the returned handler
 	 * @return a trace handler
 	 */
-	public static function getInstance(Void):TraceHandler {
-		if (!traceHandler) traceHandler = new TraceHandler();
+	public static function getInstance(messageStringifier:Stringifier):TraceHandler {
+		if (!traceHandler) traceHandler = new TraceHandler(messageStringifier);
 		return traceHandler;
 	}
 	
@@ -47,20 +53,23 @@ class org.as2lib.env.log.handler.TraceHandler extends BasicClass implements LogH
 	 * using the handler returned by the static {@link #getInstance} method. Using this
 	 * instance prevents the instantiation of unnecessary trace handlers and saves
 	 * storage.
+	 * 
+	 * @param messageStringifier (optional) the log message stringifier to use
 	 */
-	public function TraceHandler(Void) {
+	public function TraceHandler(messageStringifier:Stringifier) {
+		super (messageStringifier);
 	}
 	
 	/**
 	 * Writes the passed-in {@code message} using {@code trace}.
 	 *
-	 * <p>The string to write out is obtained via the {@link LogMessage#toString}
-	 * method of the passed-in {@code message}.
-	 *
-	 * @param message the log message to write out
+	 * <p>The string representation of the {@code message} to log is obtained via
+	 * the {@code convertMessage} method.
+	 * 
+	 * @param message the message to log
 	 */
 	public function write(message:LogMessage):Void {
-		trace(message.toString());
+		trace(convertMessage(message));
 	}
 	
 }

@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
+import org.as2lib.util.Stringifier;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.handler.AbstractLogHandler;
 
 /**
  * {@code MusicTheoryHandler} writes messages to the SWF Console from Ricci Adams'
@@ -26,7 +27,7 @@ import org.as2lib.env.log.LogMessage;
  * @see org.as2lib.env.log.logger.MusicTheoryLogger
  * @see <a href="http://source.musictheory.net/swfconsole">SWF Console</a>
  */
-class org.as2lib.env.log.handler.MusicTheoryHandler extends BasicClass implements LogHandler {
+class org.as2lib.env.log.handler.MusicTheoryHandler extends AbstractLogHandler implements LogHandler {
 	
 	/** Holds a music theory handler instance. */
 	private static var musicTheoryHandler:MusicTheoryHandler;
@@ -35,11 +36,16 @@ class org.as2lib.env.log.handler.MusicTheoryHandler extends BasicClass implement
 	 * Returns an instance of this class.
 	 *
 	 * <p>This method always returns the same instance.
-	 *
+	 * 
+	 * <p>The {@code messageStringifier} argument is only recognized on first
+	 * invocation of this method.
+	 * 
+	 * @param messageStringifier (optional) the log message stringifier to be used by
+	 * the returned handler
 	 * @return a music theory handler
 	 */
-	public static function getInstance(Void):TraceHandler {
-		if (!musicTheoryHandler) musicTheoryHandler = new MusicTheoryHandler();
+	public static function getInstance(messageStringifier):MusicTheoryHandler {
+		if (!musicTheoryHandler) musicTheoryHandler = new MusicTheoryHandler(messageStringifier);
 		return musicTheoryHandler;
 	}
 	
@@ -50,20 +56,23 @@ class org.as2lib.env.log.handler.MusicTheoryHandler extends BasicClass implement
 	 * using the handler returned by the static {@link #getInstance} method. Using
 	 * this instance prevents the instantiation of unnecessary music theory handlers
 	 * and saves storage.
+	 * 
+	 * @param messageStringifier (optional) the log message stringifier to use
 	 */
-	public function MusicTheoryHandler(Void) {
+	public function MusicTheoryHandler(messageStringifier:Stringifier) {
+		super (messageStringifier);
 	}
 	
 	/**
 	 * Writes the passed-in {@code message} to the Musictheory SWF Console.
 	 * 
-	 * <p>The string that is logged is obtained via the {@link LogMessage#toString}
-	 * method of the passed-in {@code message}.
+	 * <p>The string representation of the {@code message} to log is obtained via
+	 * the {@code convertMessage} method.
 	 *
 	 * @param message the log message to write
 	 */
 	public function write(message:LogMessage):Void {
-		getURL("javascript:showText('" + message.toString() + "')");
+		getURL("javascript:showText('" + convertMessage(message) + "')");
 	}
 	
 }
