@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
+import org.as2lib.util.Stringifier;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.level.AbstractLogLevel;
+import org.as2lib.env.log.handler.AbstractLogHandler;
 
 /**
  * {@code FlashoutHandler} logs messages to the Flashout console.
  *
  * <p>The {@code Flashout} class is needed.
- *
+ * 
  * @author Simon Wacker
  * @see org.as2lib.env.log.logger.FlashoutLogger
  * @see <a href="http://www.potapenko.com/flashout">Flashout</a>
  */
-class org.as2lib.env.log.handler.FlashoutHandler extends BasicClass implements LogHandler {
+class org.as2lib.env.log.handler.FlashoutHandler extends AbstractLogHandler implements LogHandler {
 	
 	/** Holds a flashout handler. */
 	private static var flashoutHandler:FlashoutHandler;
@@ -38,10 +39,15 @@ class org.as2lib.env.log.handler.FlashoutHandler extends BasicClass implements L
 	 *
 	 * <p>This method always returns the same instance.
 	 *
+	 * <p>The {@code messageStringifier} argument is only recognized on first
+	 * invocation of this method.
+	 *
+	 * @param messageStringifier (optional) the log message stringifier to be used by
+	 * the returned handler
 	 * @return a flashout handler
 	 */
-	public static function getInstance(Void):FlashoutHandler {
-		if (!flashoutHandler) flashoutHandler = new FlashoutHandler();
+	public static function getInstance(messageStringifier:Stringifier):FlashoutHandler {
+		if (!flashoutHandler) flashoutHandler = new FlashoutHandler(messageStringifier);
 		return flashoutHandler;
 	}
 	
@@ -52,38 +58,42 @@ class org.as2lib.env.log.handler.FlashoutHandler extends BasicClass implements L
 	 * using the handler returned by the static {@link #getInstance} method. Using this
 	 * instance prevents the instantiation of unnecessary flashout handlers and
 	 * saves storage.
+	 * 
+	 * @param messageStringifier (optional) the log message stringifier to use
 	 */
-	public function FlashoutHandler(Void) {
+	public function FlashoutHandler(messageStringifier:Stringifier) {
+		super (messageStringifier);
 	}
 	
 	/**
 	 * Writes log messages to the Flashout console.
 	 *
-	 * <p>Uses the {@link LogMessage#toString} method to obtain the string that is
-	 * logged.
+	 * <p>The string representation of the {@code message} to log is obtained via
+	 * the {@code convertMessage} method.
 	 *
 	 * @param message the message to log
+	 * @todo log directly to the console without help of the {@code Flashout} class
 	 */
 	public function write(message:LogMessage):Void {
-		// todo: log directly to the console without help of the Flashout class
+		var m:String = convertMessage(message);
 		switch (message.getLevel()) {
 			case AbstractLogLevel.DEBUG:
-				Flashout["async" + "Log"]("debug_log", message.toString());
+				Flashout["async" + "Log"]("debug_log", m);
 				break;
 			case AbstractLogLevel.INFO:
-				Flashout["async" + "Log"]("info_log", message.toString());
+				Flashout["async" + "Log"]("info_log", m);
 				break;
 			case AbstractLogLevel.WARNING:
-				Flashout["async" + "Log"]("warning_log", message.toString());
+				Flashout["async" + "Log"]("warning_log", m);
 				break;
 			case AbstractLogLevel.ERROR:
-				Flashout["async" + "Log"]("error_log", message.toString());
+				Flashout["async" + "Log"]("error_log", m);
 				break;
 			case AbstractLogLevel.FATAL:
-				Flashout["async" + "Log"]("error_log", message.toString());
+				Flashout["async" + "Log"]("error_log", m);
 				break;
 			default:
-				Flashout["async" + "Log"]("default_log", message.toString());
+				Flashout["async" + "Log"]("default_log", m);
 				break;
 		}
 	}

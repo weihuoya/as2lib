@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
+import org.as2lib.util.Stringifier;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.handler.AbstractLogHandler;
 
 /**
  * {@code XmlSocketHandler} uses the {@code XMLSocket} to log the message.
@@ -28,7 +29,7 @@ import org.as2lib.env.log.LogMessage;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.env.log.handler.XmlSocketHandler extends BasicClass implements LogHandler {
+class org.as2lib.env.log.handler.XmlSocketHandler extends AbstractLogHandler implements LogHandler {
 	
 	/** Socket to connect to the specified host. */
 	private var socket:XMLSocket;
@@ -38,27 +39,30 @@ class org.as2lib.env.log.handler.XmlSocketHandler extends BasicClass implements 
 	 *
 	 * @param host a fully qualified DNS domain name
 	 * @param port the TCP port number on the host used to establish a connection
+	 * @param messageStringifier (optional) the log message stringifier to use
 	 * @throws IllegalArgumentException if the passed-in {@code port} is {@code null}
 	 * or less than 1024
 	 * @todo throw exception when unable to connect
 	 */
-	public function XmlSocketHandler(host:String, port:Number) {
+	public function XmlSocketHandler(host:String, port:Number, messageStringifier:Stringifier) {
 		if (port == null || port < 1024) {
 			throw new IllegalArgumentException("Argument 'port' [" + port "] must not be 'null' nor less than 1024.", this, arguments);
 		}
-		socket = new XMLSocket();
-		socket.connect(host, port);
+		this.socket = new XMLSocket();
+		this.socket.connect(host, port);
+		this.messageStringifier = messageStringifier;
 	}
 	
 	/**
 	 * Uses the xml socket connection to log the passed-in message.
 	 *
-	 * <p>Uses the {@link LogMessage#toString} method to obtain the string to log.
+	 * <p>The string representation of the {@code message} to log is obtained via
+	 * the {@code convertMessage} method.
 	 *
 	 * @param message the message to log
 	 */
 	public function write(message:LogMessage):Void {
-		socket.send(message.toString());
+		this.socket.send(convertMessage(message));
 	}
 	
 }

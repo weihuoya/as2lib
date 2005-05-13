@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import de.richinternet.utils.Dumper;
-
-import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.level.AbstractLogLevel;
+import org.as2lib.env.log.handler.AbstractLogHandler;
+
+import de.richinternet.utils.Dumper;
 
 /**
  * {@code RichInternetHandler} logs messages to Dirk Eisman's Flex Trace Panel.
@@ -31,7 +31,7 @@ import org.as2lib.env.log.level.AbstractLogLevel;
  * @see org.as2lib.env.log.logger.RichInternetLogger
  * @see <a href="http://www.richinternet.de/blog/index.cfm?entry=EB3BA9D6-A212-C5FA-A9B1B5DB4BB7F555">Flex Trace Panel</a>
  */
-class org.as2lib.env.log.handler.RichInternetHandler extends BasicClass implements LogHandler {
+class org.as2lib.env.log.handler.RichInternetHandler extends AbstractLogHandler implements LogHandler {
 	
 	/** Holds a rich internet handler. */
 	private static var richInternetHandler:RichInternetHandler;
@@ -41,20 +41,17 @@ class org.as2lib.env.log.handler.RichInternetHandler extends BasicClass implemen
 	 *
 	 * <p>This method always returns the same instance.
 	 * 
-	 * <p>The {@code logMessageStringifier} argument will only be recognized on first
+	 * <p>The {@code messageStringifier} argument is only recognized on first
 	 * invocation of this method.
-	 *
-	 * @param logMessageStringifier (optional) the log message stringifier to use with
-	 * this handler
+	 * 
+	 * @param messageStringifier (optional) the log message stringifier to be used by
+	 * the returned handler
 	 * @return a rich internet handler
 	 */
-	public static function getInstance(logMessageStringifier:Stringifier):RichInternetHandler {
-		if (!richInternetHandler) richInternetHandler = new RichInternetHandler(logMessageStringifier);
+	public static function getInstance(messageStringifier:Stringifier):RichInternetHandler {
+		if (!richInternetHandler) richInternetHandler = new RichInternetHandler(messageStringifier);
 		return richInternetHandler;
 	}
-	
-	/** The log message stringifier. */
-	private var logMessageStringifier:Stringifier;
 	
 	/**	
 	 * Constructs a new {@code RichInternetHandler} instance.
@@ -64,19 +61,17 @@ class org.as2lib.env.log.handler.RichInternetHandler extends BasicClass implemen
 	 * instance prevents the instantiation of unnecessary rich internet handlers and
 	 * saves storage.
 	 * 
-	 * @param logMessageStringifier (optional) the log message stringifier to use with
-	 * this handler
+	 * @param messageStringifier (optional) the log message stringifier to use
 	 */
-	public function RichInternetHandler(logMessageStringifier:Stringifier) {
-		this.logMessageStringifier = logMessageStringifier;
+	public function RichInternetHandler(messageStringifier:Stringifier) {
+		super (messageStringifier);
 	}
 	
 	/**
 	 * Writes log messages to Dirk Eisman's Flex Trace Panel.
 	 *
-	 * <p>Uses the {@code logMessageStringifier} to get the string representation of
-	 * the {@code message} if set. If not, the {@link LogMessage#toString} method to
-	 * of the {@code message} will be used.
+	 * <p>The string representation of the {@code message} to log is obtained via
+	 * the {@code convertMessage} method.
 	 * 
 	 * <p>The default level is {@code INFO}. If the {@code message}'s level is {@code FATAL}
 	 * it will be logged at {@code ERROR} level because Dirk Eisman's Flex Trace Panel
@@ -85,12 +80,7 @@ class org.as2lib.env.log.handler.RichInternetHandler extends BasicClass implemen
 	 * @param message the message to log
 	 */
 	public function write(message:LogMessage):Void {
-		var m:String;
-		if (this.logMessageStringifier) {
-			m = this.logMessageStringifier.execute(message);
-		} else {
-			m = message.toString();
-		}
+		var m:String = convertMessage(message);
 		switch (message.getLevel()) {
 			case AbstractLogLevel.DEBUG:
 				Dumper.trace(m);
