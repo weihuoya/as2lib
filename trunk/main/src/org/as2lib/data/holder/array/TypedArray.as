@@ -17,6 +17,7 @@
 import org.as2lib.core.BasicInterface;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * {@code TypedArray} acts like a normal array but assures that only objects of a
@@ -68,6 +69,7 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 	 */
 	public function TypedArray(type:Function) {
 		this.type = type;
+		_global.ASSetPropFlags(this, ["type"], 1, true);
 		if (arguments.length > 1) {
 			arguments.shift();
 			push.apply(this, arguments);
@@ -195,7 +197,7 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 	 */
 	private function validate(object):Void {
 		if (!ObjectUtil.typesMatch(object, type)) {
-			throw new IllegalArgumentException("Type mismatch between object [" + object + "] and type [" + type + "].", this, arguments);
+			throw new IllegalArgumentException("Type mismatch between object [" + object + "] and type [" + ReflectUtil.getTypeNameForType(type) + "].", this, arguments);
 		}
 	}
 	
