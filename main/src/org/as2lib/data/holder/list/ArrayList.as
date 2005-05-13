@@ -169,7 +169,7 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	}
 	
 	public function iterator(Void):Iterator {
-		return (new ArrayIterator(data));
+		return new ArrayIterator(data);
 	}
 	
 	public function indexOf(value):Number {
