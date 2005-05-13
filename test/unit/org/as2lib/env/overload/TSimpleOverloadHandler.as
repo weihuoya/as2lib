@@ -42,12 +42,12 @@ class org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase {
 	
 	public function testNewWithNullValues(Void):Void {
 		try {
-			new SimpleOverloadHandler([], null);
+			var o = new SimpleOverloadHandler([], null);
 			fail("Constructor should have thrown an IllegalArgumentException.");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
 		try {
-			new SimpleOverloadHandler(null, function() {});
+			var o = new SimpleOverloadHandler(null, function() {});
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 			fail("Constructor should not have thrown an IllegalArgumentException.");
 		}

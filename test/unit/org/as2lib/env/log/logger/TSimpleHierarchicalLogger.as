@@ -16,7 +16,6 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogHandler;
@@ -42,7 +41,7 @@ class org.as2lib.env.log.logger.TSimpleHierarchicalLogger extends TestCase {
 	public function testNewWithNullAndUndefinedArgument(Void):Void {
 		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(null);
 		assertNull("returned name should be null", logger.getName());
-		var logger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(undefined);
+		logger = new SimpleHierarchicalLogger(undefined);
 		assertUndefined("returned name should be undefined", logger.getName());
 	}
 	

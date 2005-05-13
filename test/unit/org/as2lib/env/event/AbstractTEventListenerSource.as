@@ -15,9 +15,7 @@
  */
 
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.event.EventListenerSource;
-import org.as2lib.env.event.EventListener;
 
 /**
  * @author Simon Wacker

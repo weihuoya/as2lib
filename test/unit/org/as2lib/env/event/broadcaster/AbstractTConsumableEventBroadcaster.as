@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.env.event.EventListener;
 import org.as2lib.env.event.broadcaster.EventBroadcaster;
 import org.as2lib.env.event.broadcaster.ConsumableEventBroadcaster;
 import org.as2lib.env.event.broadcaster.ConsumableEventInfo;

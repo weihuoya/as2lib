@@ -20,7 +20,7 @@ import org.as2lib.core.BasicMovieClip;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.Test;
 import org.as2lib.util.ObjectUtil;
-import org.as2lib.util.Call;
+import org.as2lib.app.exec.Call;
 import org.as2lib.env.reflect.ClassInfo;
 
 /**

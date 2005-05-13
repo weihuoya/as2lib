@@ -15,7 +15,7 @@
  */
  
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.util.Call;
+import org.as2lib.app.exec.Call;
 import org.as2lib.util.ConstructorCall;
 import org.as2lib.env.except.IllegalArgumentException;
 
@@ -39,9 +39,12 @@ class org.as2lib.util.TCall extends TestCase {
 	 * Validates that invalid Arguments really throw a exception
 	 */
 	public function testInvalidArguments(Void):Void {
-		assertThrows("Both have to be given", IllegalArgumentException, new ConstructorCall(Call), [null, null]);
-		assertThrows("Method has to be given", IllegalArgumentException, new ConstructorCall(Call), [{}]);
-		assertThrows("Scope has to be given", IllegalArgumentException, new ConstructorCall(Call), [null, function(){}]);
+		assertThrows("Both have to be given", IllegalArgumentException, new ConstructorCall(Call),
+			[null, null]);
+		assertThrows("Method has to be given", IllegalArgumentException, new ConstructorCall(Call),
+			[{}]);
+		assertThrows("Scope has to be given", IllegalArgumentException, new ConstructorCall(Call),
+			[null, function(){}]);
 	}
 	
 	/**
@@ -49,7 +52,7 @@ class org.as2lib.util.TCall extends TestCase {
 	 */
 	public function testCall(Void):Void {
 		var call:Call = new Call(this, internalCall);
-		call.execute(["a", "b"]);
+		call.execute("a", "b");
 	}
 	
 	/**

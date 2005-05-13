@@ -16,10 +16,8 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.level.DynamicLogLevel;
-import org.as2lib.env.log.level.AbstractLogLevel;
 
 /**
  * @author Simon Wacker
@@ -28,7 +26,7 @@ class org.as2lib.env.log.level.TDynamicLogLevel extends TestCase {
 	
 	public function testNewWithNullLevel(Void):Void {
 		try {
-			new DynamicLogLevel(null, "name");
+			var o = new DynamicLogLevel(null, "name");
 			fail("level of value null should cause IllegalArgumentException to be thrown");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
