@@ -18,7 +18,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
 import org.as2lib.env.reflect.TypeInfo;
 import org.as2lib.env.reflect.TypeMemberInfo;
-import org.as2lib.env.reflect.string.MethodInfoStringifier;
+import org.as2lib.env.reflect.stringifier.MethodInfoStringifier;
 
 /**
  * {@code MethodInfo} represents a method.

@@ -19,7 +19,7 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.env.reflect.TypeInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.TypeMemberInfo;
-import org.as2lib.env.reflect.string.PropertyInfoStringifier;
+import org.as2lib.env.reflect.stringifier.PropertyInfoStringifier;
 
 /**
  * {@code PropertyInfo} represents a property.
