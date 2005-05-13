@@ -17,6 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.data.holder.Queue;
 import org.as2lib.data.holder.Iterator;
 
@@ -162,7 +163,7 @@ class org.as2lib.data.holder.queue.TypedQueue extends BasicClass implements Queu
 	 */
 	private function validate(value):Void {
 		if (!ObjectUtil.typesMatch(value, type)) {
-			throw new IllegalArgumentException("Type mismatch between value '" + value + "' and type '" + type + "'.", this, arguments);
+			throw new IllegalArgumentException("Type mismatch between value [" + value + "] and type [" + ReflectUtil.getTypeNameForType(type) + "].", this, arguments);
 		}
 	}
 	
