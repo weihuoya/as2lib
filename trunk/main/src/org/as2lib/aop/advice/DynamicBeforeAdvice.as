@@ -16,7 +16,7 @@
 
 import org.as2lib.aop.advice.AbstractBeforeAdvice;
 import org.as2lib.aop.advice.BeforeAdvice;
-import org.as2lib.util.Call;
+import org.as2lib.app.exec.Call;
 import org.as2lib.aop.JoinPoint;
 
 /**
