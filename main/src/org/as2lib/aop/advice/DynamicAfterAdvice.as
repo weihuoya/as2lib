@@ -16,7 +16,7 @@
 
 import org.as2lib.aop.advice.AbstractAfterAdvice;
 import org.as2lib.aop.advice.AfterAdvice;
-import org.as2lib.util.Call;
+import org.as2lib.app.exec.Call;
 import org.as2lib.aop.JoinPoint;
 
 /**

@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.aop.advice.AdviceFactory;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.util.Call;
+import org.as2lib.app.exec.Call;
 import org.as2lib.aop.Advice;
 import org.as2lib.aop.Pointcut;
 
