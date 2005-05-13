@@ -232,12 +232,14 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	}
 	
 	/**
-	 * Tries to find a childname that is currently not used.
-	 * Uses {@link CHILD_PREFIX} and a number from 1 to 10000 with two variants to find a
-	 * childname that is currently not used (20.000 possible variants).
+	 * Tries to find a child name that is currently not used.
 	 * 
-	 * @param object To find a name that is currently not used.
-	 * @return Name that is currently not used. Returns null if non of the names could be found.
+	 * <p>Uses {@link CHILD_PREFIX} and a number from 1 to 10000 with two variants to
+	 * find a child name that is currently not used (20.000 possible variants).
+	 * 
+	 * @param object the object to find an unused child name in
+	 * @return the name of the unused child or {@code null} if all names are already
+	 * reserved
 	 */
 	public static function getUnusedChildName(object):String {
 		var i:Number = 10000;
