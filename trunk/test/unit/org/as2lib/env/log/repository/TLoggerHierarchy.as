@@ -16,15 +16,10 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.test.mock.support.TypeArgumentsMatcher;
-import org.as2lib.env.log.Logger;
-import org.as2lib.env.log.HierarchicalLogger;
 import org.as2lib.env.log.ConfigurableHierarchicalLogger;
-import org.as2lib.env.log.logger.SimpleLogger;
 import org.as2lib.env.log.logger.RootLogger;
 import org.as2lib.env.log.repository.LoggerHierarchy;
 import org.as2lib.env.log.repository.ConfigurableHierarchicalLoggerFactory;
-import org.as2lib.env.except.IllegalArgumentException;
 
 /**
  * @author Simon Wacker
