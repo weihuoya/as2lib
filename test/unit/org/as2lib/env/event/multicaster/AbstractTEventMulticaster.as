@@ -16,7 +16,6 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.env.event.EventListener;
 import org.as2lib.env.event.multicaster.EventMulticaster;
 import org.as2lib.env.event.multicaster.SampleEventListener;
 
