@@ -122,7 +122,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		assertNull("prototype is set to undefined", i.getSuperType());
 	}
 	
-	public function testGetSuperTypeForClassWithSuperClass(Void):Void {
+	/*public function testGetSuperTypeForClassWithSuperClass(Void):Void {
 		var Type:Function = function() {};
 		
 		var ic:MockControl = new MockControl(ClassInfo);
@@ -140,9 +140,9 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		
 		ic.verify();
 		ac.verify();
-	}
+	}*/
 	
-/*	public function testNewInstanceWithNotDefinedClass(Void):Void {
+	/*public function testNewInstanceWithNotDefinedClass(Void):Void {
 		var i:ClassInfo = new ClassInfo(null, null, null);
 		assertNull("class == null", i.newInstance(null));
 		
