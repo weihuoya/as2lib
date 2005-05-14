@@ -37,6 +37,16 @@ class org.as2lib.env.log.level.TDynamicLogLevel extends TestCase {
 		assertNull(l.toString());
 	}
 	
+	public function testToNumber(Void):Void {
+		var l:DynamicLogLevel = new DynamicLogLevel(2, "name");
+		assertSame(l.toNumber(), 2);
+	}
+	
+	public function testToString(Void):Void {
+		var l:DynamicLogLevel = new DynamicLogLevel(2, "name");
+		assertSame(l.toString(), "name");
+	}
+	
 	public function testIsGreaterOrEqualWithNullLevel(Void):Void {
 		var l:DynamicLogLevel = new DynamicLogLevel(2, "name");
 		assertTrue(l.isGreaterOrEqual(null));
