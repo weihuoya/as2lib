@@ -34,25 +34,74 @@ class org.as2lib.env.overload.TOverload extends TestCase {
 		return result;
 	}
 	
-	public function testAddHandlerForOverloadability(Void):Void {
+	public function testAddHandlerForCorrectOverloadingByHandlerViaRemoveHandler(Void):Void {
 		var o:Overload = new Overload(this);
 		var oh:OverloadHandler = getBlankOverloadHandler();
 		o.addHandler(oh);
-		assertNotThrows(o, "removeHandler", [oh]);
+		o.removeHandler(oh);
+	}
+	
+	public function testAddHandlerForCorrectOverloadingByHandlerOfIllegalType(Void):Void {
+		var o:Overload = new Overload(this);
+		try {
+			o.addHandler(new Object());
+			fail("expected IllegalArgumentException");
+		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
+		}
+	}
+	
+	public function testAddHandlerForCorrectOverloadingByValueViaRemoveHandler(Void):Void {
+		var o:Overload = new Overload(this);
+		var oh:OverloadHandler = o.addHandler([], function() {});
+		assertNotEmpty(oh);
+		assertTrue("returned overload handler is of wrong type", oh instanceof OverloadHandler);
+		o.removeHandler(oh);
+	}
+	
+	public function testAddHandlerForCorrectOverloadingByValueWithIllegalTypeArguments(Void):Void {
+		var o:Overload = new Overload(this);
+		try {
+			o.addHandler(new Object(), function() {});
+			fail("expected IllegalArgumentException with illegal first argument");
+		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
+		}
+		try {
+			o.addHandler([], new Object());
+			fail("expected IllegalArgumentException with illegal second argument");
+		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
+		}
 	}
 	
 	public function testAddHandlerByValueViaRemoveHandler(Void):Void {
 		var o:Overload = new Overload(this);
-		var oh:OverloadHandler = o.addHandler([], new Function());
+		var oh:OverloadHandler = o.addHandlerByValue([], function() {});
 		assertNotEmpty("The received OverloadHandler [" + oh + "] is empty.", oh);
 		assertTrue("The received instance [" + oh + "] is not of type OverloadHandler.", oh instanceof OverloadHandler);
-		assertNotThrows(o, "removeHandler", [oh]);
+		o.removeHandler(oh);
 	}
 	
-	public function testRemoveHandlerViaAddHandler(Void):Void {
+	public function testAddHandlerByHandlerViaRemoveHandler(Void):Void {
 		var o:Overload = new Overload(this);
-		var oh:OverloadHandler = o.addHandler([], new Function());
-		assertNotThrows(o, "removeHandler", [oh]);
+		var oh:OverloadHandler = getBlankOverloadHandler();
+		o.addHandlerByHandler(oh);
+		o.removeHandler(oh);
+	}
+	
+	public function testAddHandlerByHandlerWithNullArgument(Void):Void {
+		var o:Overload = new Overload(this);
+		o.addHandlerByHandler(null);
+	}
+	
+	public function testRemoveHandlerViaAddHandlerByValue(Void):Void {
+		var o:Overload = new Overload(this);
+		var oh:OverloadHandler = o.addHandler([], function() {});
+		o.removeHandler(oh);
+	}
+	
+	public function testRemoveHandlerWithNullArgument(Void):Void {
+		var o:Overload = new Overload(this);
+		o.addHandler([], function() {});
+		o.removeHandler(null);
 	}
 	
 	public function testForwardWithMultipleOverloadHandlers(Void):Void {
