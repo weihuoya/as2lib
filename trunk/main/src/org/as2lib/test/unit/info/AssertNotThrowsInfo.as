@@ -63,7 +63,7 @@ class org.as2lib.test.unit.info.AssertNotThrowsInfo extends AbstractAssertInfo {
 	 */
 	public function execute(Void):Boolean {
 		try {
-			toCall.execute.apply(toCall, args);
+			toCall.execute.apply(Object(toCall), args);
 		} catch(e) {
 			exception = e;
 			exceptionThrown = true;

@@ -63,7 +63,8 @@ class org.as2lib.test.unit.info.AssertThrowsInfo extends AbstractAssertInfo {
 	 */
 	public function execute(Void):Boolean {
 		try {
-			toCall.execute.apply(toCall, args);
+			// cat to Object because of Flash compiler bug with interfaces
+			toCall.execute.apply(Object(toCall), args);
 		} catch(e) {
 			exception = e;
 			exceptionThrown = true;
