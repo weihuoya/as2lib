@@ -134,7 +134,7 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * takes place. This means it is the object that declares all methods that take
 	 * part at the overloading.
 	 *
-	 * @param target the target to inoke the overloaded method on
+	 * @param target the target to invoke the overloaded method on
 	 */
 	public function Overload(target) {
 		this.handlers = new Array();
@@ -194,20 +194,20 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	public function addHandler() {
 		var l:Number = arguments.length;
 		if (l == 1) {
-			var handler:OverloadHandler = OverloadHandler(arguments[0]);
-			if (handler != null) {
+			var handler:OverloadHandler = arguments[0];
+			if (handler == null || handler instanceof OverloadHandler) {
 				addHandlerByHandler(handler);
 				return;
 			}
 		}
 		if (l == 2) {
 			var args:Array = arguments[0];
-			var func:Function = Function(arguments[1]);
-			if (args != null && func != null) {
-				return addHandlerByValue(args, func);
+			var method:Function = arguments[1];
+			if ((args == null || args instanceof Array) && (method == null || method instanceof Function)) {
+				return addHandlerByValue(args, method);
 			}
 		}
-		throw new IllegalArgumentException("The types of the passed arguments [" + arguments + "] must match one of the available choices.", this, arguments);
+		throw new IllegalArgumentException("The types and count of the passed-in arguments [" + arguments + "] must match one of the available choices.", this, arguments);
 	}
 	
 	/**
@@ -218,11 +218,16 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * {@link OverloadHandler#isMoreExplicit}. If both conditions hold true the method
 	 * invocation is forwarded to the method of the handler, that gets returned by the
 	 * {@link OverloadHandler#getMethod} method.
+	 * 
+	 * <p>If the passed-in {@code handler} is {@code null} or {@code undefined} no
+	 * actions will take place.
 	 *
 	 * @param handler the new overload handler to add
 	 */
 	public function addHandlerByHandler(handler:OverloadHandler):Void {
-		handlers.push(handler);
+		if (handler) {
+			handlers.push(handler);
+		}
 	}
 	
 	/**
@@ -262,10 +267,12 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	 * @param handler the overload handler to remove
 	 */
 	public function removeHandler(handler:OverloadHandler):Void {
-		var i:Number = handlers.length;
-		while (--i-(-1)) {
-			if (handlers[i] == handler) {
-				handlers.splice(i, 1);
+		if (handler) {
+			var i:Number = handlers.length;
+			while (--i-(-1)) {
+				if (handlers[i] == handler) {
+					handlers.splice(i, 1);
+				}
 			}
 		}
 	}
