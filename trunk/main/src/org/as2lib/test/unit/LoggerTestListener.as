@@ -62,12 +62,6 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Proc
 	 * @param progressInfo Extended informations the current progress.
 	 */
 	public function onUpdateProcess(process:Process):Void {
-		var testRunner:TestRunner = TestRunner(process);
-		var currentTest:TestCaseResult = testRunner.getCurrentTestCase();
-		if(formerTest != currentTest) {
-			getLogger().info(Math.round(testRunner.getPercentage())+"% ... executing "+currentTest.getName());
-		}
-		formerTest = currentTest;
 	}
 	
 	/**
@@ -91,7 +85,7 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Proc
 	 */
 	public function onPauseProcess(process:Process):Void {
 		var test:TestRunner = TestRunner(process);
-		getLogger().info("<TestRunner paused execution at "+test.getCurrentTestCaseMethodInfo().getName()+">");
+		getLogger().info("TestRunner paused execution at "+test.getCurrentTestCaseMethodInfo().getName()+"");
 	}
 	
 	/**
@@ -100,6 +94,6 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Proc
 	 * @param resumeInfo Informations about the TestRunner that resumed working.
 	 */
 	public function onResumeProcess(process:Process):Void {
-		getLogger().info("<TestRunner resumed execution>");
+		getLogger().info("TestRunner resumed execution");
 	}
 }

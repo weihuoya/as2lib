@@ -28,6 +28,7 @@ import org.as2lib.env.reflect.TypeMemberFilter;
 import org.as2lib.env.reflect.algorithm.ClassAlgorithm;
 import org.as2lib.env.reflect.algorithm.MethodAlgorithm;
 import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
+import org.as2lib.util.ClassUtil;
 
 /**
  * {@code ClassInfo} reflects a class and provides methods to get information about
@@ -442,12 +443,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @return a new instance of this class
 	 */
 	public function newInstance(args:Array) {
-		if (!clazz) return null;
-		var result:Object = new Object();
-		result.__proto__ = clazz.prototype;
-		result.__constructor__ = clazz;
-		clazz.apply(result, args);
-		return result;
+		return ClassUtil.createInstance(args);
 	}
 	
 	/**
