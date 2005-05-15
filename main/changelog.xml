@@ -5,14 +5,41 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="5">
+	 <day value="15">
+           <entry type="add" package="org.as2lib.util" class="ClassUtil" method="createInstance(clazz:Function, args:Array)"></entry>
+         </day>
          <day value="12">
            <entry type="add" package="org.as2lib.env.reflect" class="ReflectUtil" method="getTypeAndMethodInfo"></entry>
            <entry type="add" package="org.as2lib.env.reflect" class="ReflectUtil" method="getTypeAndMethodInfoByType"></entry>
            <entry type="add" package="org.as2lib.env.reflect" class="ReflectUtil" method="getTypeAndMethodInfoByInstance"></entry>
            <entry type="change" package="org.as2lib.env.log" class="LogMessageStringifier">Renamed to PatternLogMessageStringifier and moved into org.as2lib.env.log.stringifier package.</entry>
          </day>
+         <day value="11">
+           <entry type="add" package="org.as2lib.util" class="ObjectUtil" method="getUnusedChildName(object)">Util to get a childname that isn't used right now.</entry>
+	 </day>
          <day value="10">
            <entry type="change" package="org.as2lib.core" class="BasicInterface" method="toString(Void):String">Removed parameter 'Void' because it lead to strange error message because of a conflict with the Object.toString method that does not declare a 'Void' parameter.</entry>
+         </day>
+         <day value="9">
+           <entry type="remove" package="org.as2lib.test.unit" class="TestRunner" method="addTestListener">Now using addProcessListener for AbstractProcess.</entry>
+           <entry type="change" package="org.as2lib.test.unit" class="TestRunner">Now extended org.as2lib.app.exec.AbstractProcess</entry>
+	   <entry type="remove" package="org.as2lib.test.unit" class="TestListener">No properitary listener for tests only needed anymore</entry>
+	   <entry type="remove" package="org.as2lib.test.unit" class="StartInfo">Removed due to using new eventdistributor in testsystem</entry>
+	   <entry type="remove" package="org.as2lib.test.unit" class="FinishInfo">Removed due to using new eventdistributor in testsystem</entry>
+	   <entry type="remove" package="org.as2lib.test.unit" class="PauseInfo">Removed due to using new eventdistributor in testsystem</entry>
+	   <entry type="remove" package="org.as2lib.test.unit" class="ResumeInfo">Removed due to using new eventdistributor in testsystem</entry>
+           <entry type="add" package="org.as2lib.test.unit" class="Test" method="getResultFactory(test:Test, testRunner:TestRunner):TestResultFactory">Abstraction of generation of Result</entry>
+	   <entry type="add" package="org.as2lib.test.unit" class="TestResultFactory">Factory to generate a result to a test type.</entry>
+	   <entry type="add" package="org.as2lib.test.unit" class="TestCaseResultFactory">Facotry to generate a result to a testcase.</ent
+	   <entry type="add" package="org.as2lib.test.unit" class="TestSuiteResultFactory">Facotry to generate a result to a testsuite.</entry>ry>
+           <entry type="remove" package="org.as2lib.test.unit" class="TestRunner" method="runTestCase">New Factories allows fast & safe .run().</entry>
+           <entry type="remove" package="org.as2lib.test.unit" class="TestRunner" method="runTestSuite">New Factories allows fast & safe .run().</entry>
+           <entry type="add" package="org.as2lib.env.reflect" class="MethodInfo" method="getFullName">Possibility to get a the full name of a method including the declaring type name.</entry>
+         </day>
+       </month>
+       <month value="4">
+         <day value="22">
+           <entry type="add" package="org.as2lib.app.exec">New Package with Execution Stuff added (Process/Batch/...) </entry>
          </day>
        </month>
        <month value="3">
