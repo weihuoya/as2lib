@@ -414,7 +414,12 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 * @param args the arguments passed to the invoked method
 	 */
 	private function invokeMethod(methodName:String, args:Array) {
-		/*if (mock[methodName] == null) {
+		// resolves bug with algorithms that check the existence of a method before
+		// they proceed; this is for example with the AsBroadcaster
+		var r:Function = mock.__resolve;
+		mock.__resolve = null;
+		if (!mock[methodName]) {
+			mock.__resolve = r;
 			if (state instanceof RecordState) {
 				var owner:MockControl = this;
 				mock[methodName] = function() {
@@ -422,7 +427,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 					return owner["invokeMethod"](methodName, arguments);
 				};
 			}
-		}*/
+		}
 		return state.invokeMethod(new MethodCall(methodName, args));
 	}
 	
