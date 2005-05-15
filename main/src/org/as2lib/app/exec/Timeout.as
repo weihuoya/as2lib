@@ -1,9 +1,11 @@
+//import org.as2lib.core.BasicClass;
+import org.as2lib.app.exec.AbstractProcess;
 import org.as2lib.app.exec.Executable;
-import org.as2lib.app.exec.Impulse;
+import org.as2lib.app.exec.FrameImpulse;
 import org.as2lib.app.exec.Call;
 import org.as2lib.env.overload.Overload;
 
-class org.as2lib.app.exec.Timeout implements Executable {
+class org.as2lib.app.exec.Timeout extends AbstractProcess implements Executable {
 	
 	private var exe:Executable;
 	private var frames:Number;
@@ -38,18 +40,26 @@ class org.as2lib.app.exec.Timeout implements Executable {
 		executed = 1;
 		if (!target) target = new Array();
 		target.push(arguments);
-		Impulse.connect(timeCall);
+		FrameImpulse.connect(timeCall);
+		pause();
 		return null;
+	}
+	
+	public function run() {
+		execute.apply(this, arguments);
 	}
 	
 	private function finalExecution(Void):Void {
 		executed = 1;
 		var i:Number;
-		for (i=0; i<target.length; i++) {
-			exe["execute"].apply(exe, target[i]);
-		}
-		Impulse.disconnect(timeCall);
+		FrameImpulse.disconnect(timeCall);
+		var oldTarget = target.concat();
 		target = new Array();
+		for (i=0; i<oldTarget.length; i++) {
+			exe["execute"].apply(exe, oldTarget[i]);
+		}
+		resume();
+		finish();
 	}
 	
 	public function forEach(object):Void {
@@ -60,6 +70,6 @@ class org.as2lib.app.exec.Timeout implements Executable {
 			target.push([object[i], i, object]);
 			execute();
 		}
-		Impulse.connect(timeCall);
+		FrameImpulse.connect(timeCall);
 	}
 }

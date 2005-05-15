@@ -1,4 +1,4 @@
-﻿/**
+﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -26,6 +26,7 @@ import org.as2lib.test.unit.TestResultFactory;
 import org.as2lib.test.unit.TestCaseResultFactory;
 import org.as2lib.app.exec.Call;
 import org.as2lib.app.exec.Executable;
+import org.as2lib.app.exec.Process;
 import org.as2lib.util.ObjectUtil;
 
 /**
@@ -175,11 +176,12 @@ import org.as2lib.util.ObjectUtil;
  * 
  * You have also got the possibility to simple fail the Testcase by @see #fail.
  *
+ * @author Martin Heidegger
+ * @version 1.2
  * @see org.as2lib.test.unit.TestSuite
  * @see org.as2lib.test.unit.Test
  * @see org.as2lib.test.unit.Assert
  * @see org.as2lib.test.unit.TestResults
- * @author Martin Heidegger
  */
 
 class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
@@ -252,6 +254,11 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function resume(Void):Void {
 		getTestRunner().resume();
+	}
+	
+	private function startProcess(process:Process, args:Array, callBack:Executable):Void {
+		getTestRunner().startSubProcess(process, args, callBack);
+		
 	}
 	
 	/**

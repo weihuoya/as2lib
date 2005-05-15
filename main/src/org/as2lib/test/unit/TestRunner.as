@@ -33,8 +33,9 @@ import org.as2lib.test.unit.TestCaseResult;
 import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.util.ArrayUtil;
 import org.as2lib.util.StringUtil;
+import org.as2lib.util.ClassUtil;
 import org.as2lib.util.StopWatch;
-import org.as2lib.env.reflect.ClassInfo;
+//import org.as2lib.env.reflect.ClassInfo;
 
 /**
  * Central TestSystem Class to run Testcases and TestSuites.
@@ -77,10 +78,10 @@ import org.as2lib.env.reflect.ClassInfo;
 class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process {
 	
 	/** Time in ms until the testrunner pauses automatically. */
-	public static var MAX_TIME_UNTIL_AUTO_PAUSE = 400;
+	public static var MAX_TIME_UNTIL_AUTO_PAUSE = 1500;
 	
 	/** Amount of frames until resume from auto pause */
-	public static var FRAMES_UNTIL_RESUME = 5;
+	public static var FRAMES_UNTIL_RESUME = 1;
 	
 	/** Result Holder for a TestResult. */
 	private var testResult:TestResult;
@@ -141,7 +142,6 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 	 */
 	private function setTestResult(result:TestResult):Void {
 		testResult = result;
-		// TODO: Check consistance.
 		testCases = result.getTestCaseResults();
 		testCaseIterator = new ArrayIterator(testCases);
 	}
@@ -159,14 +159,13 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 	 * @param test Test to run.
 	 */
 	public function run(test:Test):TestRunner {
-		prepare();
+		
 		setTestResult(test.getResultFactory().createResult(test, this));
 		
 		started = true;
 		lastStartStamp = getTimer();
 		
-		// Dispatches the event for the view.
-		event.onStartProcess(this);
+		prepare();
 		
 		processQueue();
 		return this;
@@ -192,8 +191,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 		if (!pauseAllowed) {
 			methodInfo.addInfo(new PauseError("IMPORTANT: Pause is not available before the execution of a testcase method. Action failed."))
 		} else {
-			paused = true;
-			event.onPauseProcess(this);
+			super.pause();
 		}
 	}
 	
@@ -204,8 +202,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 	 */
 	public function resume(Void):Void {
 		lastStartStamp = getTimer();
-		paused = false;
-		event.onResumeProcess(this);
+		super.resume();
 		processQueue();
 	}
 	
@@ -239,16 +236,17 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 	private function processQueue(Void):Void {
 		
 		// Resuming former startet TestCase (if available);
-		if (currentTestCase && isRunning()) {
-			processMethodQueue();
-		}
-		
-		while (testCaseIterator.hasNext() && isRunning()) {
-			startTestCase(this.testCaseIterator.next());
-		}
-		
-		// Finish if the current run isn't finished
-		if (isRunning()) {
+		if(isRunning()) {
+			if (currentTestCase) {
+				processMethodQueue();
+			}
+			
+			
+			while (testCaseIterator.hasNext() && isRunning()) {
+				startTestCase(this.testCaseIterator.next());
+			}
+			
+			// Finish if the current run isn't finished
 			finish();
 		}
 	}
@@ -298,16 +296,16 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 			methodInfo.getStopWatch().stop();
 			finishMethod();
 		}
+			
 		while (currentTestCaseMethodIterator.hasNext() && isRunning()) {
 			
-			if (autoPause()) {
-				return;
-			}
-			
-			methodInfo = TestCaseMethodInfo(currentTestCaseMethodIterator.next());
+			methodInfo = currentTestCaseMethodIterator.next();
+		
+			// Dispatch the actual progress information
+			event.onUpdateProcess(this);
 			
 			try {
-				testCaseInstance = TestCase(ClassInfo.forInstance(currentTestCase.getTestCase()).newInstance());
+				testCaseInstance = ClassUtil.createInstance(currentTestCase.getTestCase()["__constructor__"]);
 				testCaseInstance.setTestRunner(this);
 			} catch(e) {
 				methodInfo.addInfo(new InstantiationError("IMPORTANT: Testcase threw an error by instanciation.\n"+StringUtil.addSpaceIndent(e.toString(), 2), this, arguments));
@@ -326,6 +324,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 				
 				// Execute the method
 				var sW:StopWatch = methodInfo.getStopWatch();
+				
 				try {
 					sW.start();
 					pauseAllowed = true;
@@ -333,6 +332,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 				} catch (e) {
 					methodInfo.addInfo(new ExecutionError("Unexpected exception thrown during execution:\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
 				}
+				
 				pauseAllowed = false;
 				
 				if(isRunning()) {
@@ -361,10 +361,8 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 			}
 		}
 		
-		processedTestCaseMethods.push(methodInfo);
 		
-		// Dispatch the actual progress information
-		event.onUpdateProcess(this);
+		processedTestCaseMethods.push(methodInfo);
 		
 		delete methodInfo;
 	}		
