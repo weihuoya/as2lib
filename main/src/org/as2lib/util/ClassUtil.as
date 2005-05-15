@@ -17,9 +17,9 @@
 import org.as2lib.core.BasicClass;
 
 /**
- * {@code ClassUtil} contains fundamental operations to efficiently and easily work
- * with any class. All methods here are supposed to be used with functions treated
- * as classes.
+ * {@code ClassUtil} contains fundamental operations to efficiently and easily
+ * work with any class. All methods here are supposed to be used with functions
+ * treated as classes.
  * 
  * @author Martin Heidegger
  * @author Simon Wacker
@@ -47,7 +47,8 @@ class org.as2lib.util.ClassUtil extends BasicClass {
 	}
 	
 	/**
-	 * Checks if the passed-in {@code clazz} implements the passed-in {@code interfaze}.
+	 * Checks if the passed-in {@code clazz} implements the passed-in {@code
+	 * interfaze}.
 	 * 
 	 * @param clazz the class to check
 	 * @param interfaze the interface the {@code clazz} may implement
@@ -60,7 +61,8 @@ class org.as2lib.util.ClassUtil extends BasicClass {
 		if (isSubClassOf(clazz, interfaze)) {
 			return false;
 		}
-		// If it's an interface then it must not be extended but the class has to be an instance of it
+		// If it's an interface then it must not be extended but the class has
+		// to be an instance of it
 		return (createCleanInstance(clazz) instanceof interfaze);
 	}
 	
@@ -69,6 +71,7 @@ class org.as2lib.util.ClassUtil extends BasicClass {
 	 * constructor.
 	 * 
 	 * @param clazz the	class to create a new instance of
+	 * @return new instance of the passed-in class.
 	 * @author Martin Heidegger
 	 * @author Ralf Bokelberg (www.qlod.com)
 	 */
@@ -79,4 +82,23 @@ class org.as2lib.util.ClassUtil extends BasicClass {
 		return result;
 	}
 	
+	/**
+	 * Creates a new instance of the passed-in {@code clazz} applying the
+	 * passed-in {@code args} to the constructor.
+	 * 
+	 * <p>This util is mostly made for MTASC compatibility because it doesn't
+	 * allow {@code new clazz()} for usual variables.
+	 * 
+	 * @param clazz Class to be instanciated
+	 * @param args Arguments to be applied to the constructor
+	 * @return new instance of the class
+	 */
+	public static function createInstance(clazz:Function, args:Array) {
+		if (!clazz) return null;
+		var result:Object = new Object();
+		result.__proto__ = clazz.prototype;
+		result.__constructor__ = clazz;
+		clazz.apply(result, args);
+		return result;
+	}
 }
