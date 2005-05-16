@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicInterface;
 
 /**
- * {@code ArgumentsMatcher} matches a list of expected arguments agains a list of
+ * {@code ArgumentsMatcher} matches a list of expected arguments against a list of
  * actual arguments.
  * 
  * @author Simon Wacker
