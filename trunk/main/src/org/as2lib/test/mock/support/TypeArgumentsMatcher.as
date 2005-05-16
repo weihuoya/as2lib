@@ -16,6 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.test.mock.ArgumentsMatcher;
+import org.as2lib.test.mock.ArgumentMatcher;
 
 /**
  * {@code TypeArgumentsMatcher} matches the actual arguments agains a list of types.
@@ -32,6 +33,10 @@ class org.as2lib.test.mock.support.TypeArgumentsMatcher extends BasicClass imple
 	 *
 	 * <p>If a type in the {@code expectedType} array is {@code null} or
 	 * {@code undefined} the expected and actual argument will be compared.
+	 * 
+	 * <p>If an element in the {@code expectedType} array is an instance of type
+	 * {@link ArgumentMatcher}, this argument matcher will be used to check whether
+	 * the actual argument is correct.
 	 * 
 	 * @param expectedTypes the expected types of the arguments
 	 */
@@ -63,6 +68,10 @@ class org.as2lib.test.mock.support.TypeArgumentsMatcher extends BasicClass imple
 		for (var i:Number = 0; i < expectedArguments.length; i++) {
 			if (expectedTypes[i] == null) {
 				if (expectedArguments[i] !== actualArguments[i]) {
+					return false;
+				}
+			} else if (expectedTypes[i] instanceof ArgumentMatcher) {
+				if (!ArgumentMatcher(expectedTypes[i]).matchArgument(actualArguments[i])) {
 					return false;
 				}
 			} else {
