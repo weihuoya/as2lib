@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.env.except.AbstractOperationException;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.event.distributor.EventDistributorControl;
 import org.as2lib.env.event.distributor.SimpleEventDistributorControl;
 import org.as2lib.app.exec.Process;
@@ -60,6 +61,9 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 	/** Callbacks set to the processes to be called after execution */
 	private var callBacks:Map;
 	
+	/** Holder for a possible set parent */
+	private var parent:Process;
+	
 	/**
 	 * Constructs a new {@code AbstractProcess}
 	 */
@@ -73,23 +77,45 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 		finished = false;
 	}
 	
+	public function setParentProcess(p:Process):Void {
+		do {
+			if(p == this) {
+				throw new IllegalArgumentException("You can not start a process with itself as super process.", this, arguments);
+			}
+		} while (p = p.getParentProcess());
+		
+		parent = p;
+	}
+	
+	public function getParentProcess(Void):Process {
+		return parent;
+	}
+	
 	/**
 	 * Starts a subprocess.
-	 * <p>Your Process will not be finished until all the subprocesses are finished.
-	 * <p>If you start more processes after each other, all will get started immediately.
-	 * It is no batch system where one starts strictly after another.
+	 * <p>Your Process will not be finished until all the subprocesses are
+	 * finished.
+	 * 
+	 * <p>If you start more processes after each other, all will get started
+	 * immediately. It is no batch system where one starts strictly after another.
+	 * 
+	 * <p>You can start one specific process only if this process wasn't started
+	 * before
 	 * 
      * @param process Process to be started.
      * @param args Arguments for the process start.
      * @param callBack Callback to be executed if the process finishes.
 	 */
 	public function startSubProcess(process:Process, args:Array, callBack:Executable):Void {
-		if (!ArrayUtil.contains(subProcesses, process)) {
-			subProcesses.push(process);
-			process.addProcessListener(this);
-			callBacks.put(process, callBack);
-			process["start"].apply(process, args);
-			pause();
+		if(!process.hasStarted()) {
+			if (!ArrayUtil.contains(subProcesses, process)) {
+				subProcesses.push(process);
+				process.addProcessListener(this);
+				callBacks.put(process, callBack);
+				process.setParentProcess(this);
+				process["start"].apply(process, args);
+				pause();
+			}
 		}
 	}
 	
@@ -125,7 +151,12 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 	 */
     public function start() {
     	prepare();
-		var result = run.apply(this, arguments);
+    	var result;
+    	try {
+			result = run.apply(this, arguments);
+    	} catch(e) {
+    		event.onProcessError(this, e);
+    	}
 		if(!isPaused()) {
 			finish();
 		}
@@ -202,6 +233,10 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 		ArrayUtil.removeElement(subProcesses, process);
 		callBacks.get(process).execute();
 		finish();
+	}
+	
+	public function onProcessError(process:Process, error):Void {
+		event.onProcessError(this, error);
 	}
 	
 	public function onResumeProcess(process:Process):Void {}

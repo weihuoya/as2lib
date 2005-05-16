@@ -1,4 +1,5 @@
 ﻿
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.event.distributor.EventDistributorControl;
 import org.as2lib.env.event.distributor.SimpleEventDistributorControl;
 import org.as2lib.app.exec.Batch;
@@ -42,6 +43,8 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	/** Current running process */
 	private var current:Number;
 	
+	private var parent:Process;
+	
 	public function BatchProcess(Void) {
 		processEventControl = new SimpleEventDistributorControl(ProcessListener);
 		processEvent = processEventControl.getDistributor();
@@ -55,8 +58,26 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 		finished = false;
 	}
 	
+	public function setParentProcess(p:Process):Void {
+		do {
+			if(p == this) {
+				throw new IllegalArgumentException("You can not start a process with itself as super process.", this, arguments);
+			}
+		} while (p = p.getParentProcess());
+		
+		parent = p;
+	}
+	
+	public function getParentProcess(Void):Process {
+		return parent;
+	}
+	
     public function getCurrentProcess(Void):Process {
 		return list[current];
+	}
+	
+	public function getAllAddedProcesses(Void):Array {
+		return list.concat();
 	}
 	
 	public function onFinishProcess(info:Process):Void {
@@ -64,6 +85,7 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 		if(current < list.length) {
 			updatePercent(100);
 			var c:Process = list[current++];
+			c.setParentProcess(this);
 			c.addProcessListener(this);
 			c.start();
 		} else {
@@ -104,9 +126,12 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 		onFinishProcess();
 	}
 	
-	public function addProcess(p:Process):Void {
-		list.push(p);
-		updatePercent(100);
+	public function addProcess(p:Process):Number {
+		if(p != this) {
+			list.push(p);
+			updatePercent(100);
+			return list.length-1;
+		}
 	}
 	
 	private function updatePercent(cP:Number):Void {
@@ -121,6 +146,10 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 				return;
 			}
 		}
+	}
+	
+	public function removeProcessById(id:Number):Void {
+		list.splice(id, 1);
 	}
 	
     public function addProcessListener(listener:ProcessListener):Void {

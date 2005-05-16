@@ -1,19 +1,53 @@
-//import org.as2lib.core.BasicClass;
+/*
+ * Copyright the original author or authors.
+ * 
+ * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.mozilla.org/MPL/MPL-1.1.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import org.as2lib.env.overload.Overload;
 import org.as2lib.app.exec.AbstractProcess;
+import org.as2lib.app.exec.Call;
 import org.as2lib.app.exec.Executable;
 import org.as2lib.app.exec.FrameImpulse;
-import org.as2lib.app.exec.Call;
-import org.as2lib.env.overload.Overload;
 
+/**
+ * {@code Timeout} works as 
+ * 
+ * @author Martin Heidegger
+ * @version 1.0
+ * @see Executable#execute
+ */
 class org.as2lib.app.exec.Timeout extends AbstractProcess implements Executable {
 	
+	/**  */
 	private var exe:Executable;
+	
+	/**  */
 	private var frames:Number;
+	
+	/**  */
 	private var executed:Number;
+	
+	/** List of the targets for the execution. */
 	private var target:Array;
+	
+	/**  */
 	private var timeCall:Call;
 	
-	public function Timeout() {
+	/**
+	 * 
+	 */
+	public function Timeout(Void) {
 		timeCall = new Call(this, onEnterFrame);
 		var o:Overload = new Overload(this);
 		o.addHandler([Executable, Number], setExecutable);
