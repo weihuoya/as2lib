@@ -29,9 +29,10 @@ class main.Configuration extends AbstractConfiguration {
     public static function init(Void):Void {
 		initProcess(new TestExecution());
     }
+    
 	private function setReferences(Void):Void {
 		// Execution Tests
-		use(org.as2lib.app.exec.TTimeout);
+		//use(org.as2lib.app.exec.TTimeout);
 		
 		// Data Holder tests
 		use(org.as2lib.data.holder.array.TArrayIterator);
@@ -60,10 +61,6 @@ class main.Configuration extends AbstractConfiguration {
 		// File tests
 		use(org.as2lib.io.file.TFile);
 		use(org.as2lib.io.file.TBitAndByteFormat);
-		
-		// org.as2lib.env.overload
-		use(org.as2lib.env.overload.TOverload);
-		use(org.as2lib.env.overload.TSimpleOverloadHandler);
 		
 		// Util tests
 		use(org.as2lib.util.TArrayUtil);
@@ -113,6 +110,10 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.io.conn.local.client.TLocalClientServiceProxy);
 		use(org.as2lib.io.conn.local.client.TLocalClientServiceProxyFactory);
 		
+		// org.as2lib.env.overload
+		use(org.as2lib.env.overload.TOverload);
+		use(org.as2lib.env.overload.TSimpleOverloadHandler);
+		
 		// org.as2lib.env.reflect
 		use(org.as2lib.env.reflect.TSimpleCache);
 		use(org.as2lib.env.reflect.TClassInfo);
@@ -131,24 +132,26 @@ class main.Configuration extends AbstractConfiguration {
 		//use(org.as2lib.env.reflect.algorithm.TPropertyAlgorithm);
 		
 		// org.as2lib.env.log
+		use(org.as2lib.env.log.logger.TSimpleLogger);
 		use(org.as2lib.env.log.logger.TSimpleHierarchicalLogger);
 		use(org.as2lib.env.log.repository.TLoggerHierarchy);
 		use(org.as2lib.env.log.level.TDynamicLogLevel);
 		
-		// org.as2lib.env.bean
-		//use(org.as2lib.env.bean.TMutablePropertyValueSet);
-		//use(org.as2lib.env.bean.TPropertyValue);
-		//use(org.as2lib.env.bean.TSimpleBeanWrapper);
-		
-		// org.as2lib.env.bean.factory.support
-		//use(org.as2lib.env.bean.factory.support.TDefaultBeanFactory);
-		//use(org.as2lib.env.bean.factory.support.TRootBeanDefinition);
+		// org.as2lib.env.event
+		use(org.as2lib.env.event.TSimpleEventListenerSource);
+		use(org.as2lib.env.event.TTypeSafeEventListenerSource);
 		
 		// org.as2lib.env.event.broadcaster
 		use(org.as2lib.env.event.broadcaster.TSpeedEventBroadcaster);
 		use(org.as2lib.env.event.broadcaster.TSimpleConsumableEventBroadcaster);
-		use(org.as2lib.env.event.TSimpleEventListenerSource);
-		use(org.as2lib.env.event.TTypeSafeEventListenerSource);
+		
+		// org.as2lib.env.event.multicaster
+		use(org.as2lib.env.event.multicaster.TSimpleEventMulticaster);
+		use(org.as2lib.env.event.multicaster.TSimpleConsumableEventMulticaster);
+		
+		// org.as2lib.env.event.distributor
+		use(org.as2lib.env.event.distributor.TSimpleEventDistributorControl);
+		use(org.as2lib.env.event.distributor.TSimpleConsumableEventDistributorControl);
 		 
 		// org.as2lib.env.except
 		// - TODO some problem with TIllegalStateException and TUnsupportedOperationException exceeds 256 levels of recursion -
@@ -158,5 +161,15 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.env.except.TIllegalArgumentException);
 		use(org.as2lib.env.except.TIllegalStateException);
 		use(org.as2lib.env.except.TUnsupportedOperationException);
+		
+		// org.as2lib.env.bean
+		//use(org.as2lib.env.bean.TMutablePropertyValueSet);
+		//use(org.as2lib.env.bean.TPropertyValue);
+		//use(org.as2lib.env.bean.TSimpleBeanWrapper);
+		
+		// org.as2lib.env.bean.factory.support
+		//use(org.as2lib.env.bean.factory.support.TDefaultBeanFactory);
+		//use(org.as2lib.env.bean.factory.support.TRootBeanDefinition);
 	}
+	
 }
