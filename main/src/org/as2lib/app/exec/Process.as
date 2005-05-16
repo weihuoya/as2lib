@@ -42,8 +42,6 @@ interface org.as2lib.app.exec.Process extends BasicInterface {
 	/**
 	 * Starts the execution of the process.
 	 * 
-	 * <p>
-	 * 
 	 * @return Result for the start (implementation specific);
 	 */
     public function start();
@@ -51,15 +49,21 @@ interface org.as2lib.app.exec.Process extends BasicInterface {
 	/**
 	 * Adds a {@link ProcessListener} as Observer to the process.
 	 * 
-	 * @param listener Listener to be added. 
+	 * @param listener {@link ProcessListener} to be added. 
 	 */
     public function addProcessListener(listener:ProcessListener):Void;
 	
-	
+	/**
+	 * Adds a {@code list} of {@link ProcessListeners} as Observer to the process.
+	 * 
+	 * @param list List of listeners to be added.
+	 */
 	public function addAllProcessListeners(list:Array):Void;
     
     /**
      * Removes a {@link ProcessListener} as Observer from the process.
+     * 
+     * @param listener {@link ProcessListener} to be added.
      */
 	public function removeProcessListener(listener:ProcessListener):Void;
 	
@@ -71,18 +75,35 @@ interface org.as2lib.app.exec.Process extends BasicInterface {
 	/**
 	 * Getter for all added Observers.
 	 * 
-	 * @return 
+	 * @return List that contains all registered listeners
 	 */
 	public function getAllProcessListeners(Void):Array;
 	
+	/**
+	 * Flag if the process has been started.
+	 * 
+	 * @return true if the process has been started and isn't finish yet else false.
+	 */
     public function hasStarted(Void):Boolean;
     
+    /**
+     * Flag if the process has been finished.
+     * 
+     * @return true if the process has been finished else false
+     */
     public function hasFinished(Void):Boolean;
     
+    /**
+     * Flag if the process has been paused.
+     * 
+     * @return true if the process has been started and has been paused
+     */
     public function isPaused(Void):Boolean;
     
     /**
+     * Flag if the process has been paused.
      * 
+     * @return true if the process has been started and is not paused
      */
     public function isRunning(Void):Boolean;
     
@@ -92,4 +113,22 @@ interface org.as2lib.app.exec.Process extends BasicInterface {
      * @return Percentage of execution. Null if percentage was not evaluateable.
      */
     public function getPercentage(Void):Number;
+    
+    /**
+     * Possibility to tell the process what parent process started its execution.
+     * 
+     * @param process {@code Process} that started the current process.
+     * @throws org.as2lib.env.except.IllegalArgumentException if the passed-in
+     * 		   process has the current process within the parent process list or
+     * 		   if the passed-in process is the same process as the current
+     * 		   process.
+     */
+    public function setParentProcess(process:Process):Void;
+    
+    /**
+     * Getter for the parent process that executed the process.
+     * 
+     * @return Parent process if available, else null.
+     */
+    public function getParentProcess(Void):Process;
 }
