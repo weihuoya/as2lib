@@ -443,7 +443,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @return a new instance of this class
 	 */
 	public function newInstance(args:Array) {
-		return ClassUtil.createInstance(args);
+		return ClassUtil.createInstance(clazz, args);
 	}
 	
 	/**
