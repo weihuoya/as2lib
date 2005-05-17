@@ -369,4 +369,41 @@ class org.as2lib.test.mock.support.TDefaultBehavior extends TestCase {
 		m7.doVerify();
 	}
 	
+	public function testGetMethodBehaviorWithTwoBehaviorsForOneMethodAndOneForAnother(Void):Void {
+		var m1:MethodBehaviorMock = new MethodBehaviorMock(this);
+		m1.getExpectedMethodCall();
+		m1.setGetExpectedMethodCallReturnValue(new MethodCall("setParent", []));
+		m1.expectsAnotherMethodCall();
+		m1.setExpectsAnotherMethodCallReturnValue(true);
+		m1.replay();
+		
+		var m2:MethodBehaviorMock = new MethodBehaviorMock(this);
+		m2.getExpectedMethodCall();
+		m2.setGetExpectedMethodCallReturnValue(new MethodCall("setParent", []));
+		m2.expectsAnotherMethodCall();
+		m2.setExpectsAnotherMethodCallReturnValue(true);
+		m2.replay();
+		
+		var m3:MethodBehaviorMock = new MethodBehaviorMock(this);
+		m3.getExpectedMethodCall();
+		m3.setGetExpectedMethodCallReturnValue(new MethodCall("getParent", []));
+		m2.expectsAnotherMethodCall();
+		m2.setExpectsAnotherMethodCallReturnValue(true);
+		m3.replay();
+		
+		var b:DefaultBehavior = new DefaultBehavior();
+		b.addMethodBehavior("getParent", m3);
+		b.addMethodBehavior("setParent", m1);
+		b.addMethodBehavior("setParent", m2);
+		assertSame("incorrect method behavior, should be 'm1'", b.getMethodBehavior(new MethodCall("setParent", [])), m1);
+		m1.setExpectsAnotherMethodCallReturnValue(false);
+		assertSame("incorrect method behavior, should be 'm2'", b.getMethodBehavior(new MethodCall("setParent", [])), m2);
+		assertSame("incorrect method behavior, should be 'm3'", b.getMethodBehavior(new MethodCall("getParent", [])), m3);
+		assertSame("incorrect method behavior, should be 'm3'", b.getMethodBehavior(new MethodCall("getParent", [])), m3);
+		
+		m1.doVerify();
+		m2.doVerify();
+		m3.doVerify();
+	}
+	
 }

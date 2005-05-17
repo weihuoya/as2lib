@@ -85,6 +85,7 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.test.mock.support.TReplayState);
 		use(org.as2lib.test.mock.support.TDefaultMethodBehavior);
 		use(org.as2lib.test.mock.support.TDefaultBehavior);
+		use(org.as2lib.test.mock.support.TDefaultArgumentsMatcher);
 		
 		// org.as2lib.aop.pointcut
 		use(org.as2lib.aop.pointcut.TKindedPointcut);
@@ -115,14 +116,14 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.env.overload.TSimpleOverloadHandler);
 		
 		// org.as2lib.env.reflect
-		use(org.as2lib.env.reflect.TSimpleCache);
-		use(org.as2lib.env.reflect.TClassInfo);
+		//use(org.as2lib.env.reflect.TSimpleCache);
+		//use(org.as2lib.env.reflect.TClassInfo);
 		//use(org.as2lib.env.reflect.TClassInfo_Method);
-		use(org.as2lib.env.reflect.TClassInfo_Property);
-		use(org.as2lib.env.reflect.TPackageInfo);
-		use(org.as2lib.env.reflect.TPackageInfo_Class);
-		use(org.as2lib.env.reflect.TPackageInfo_Package);
-		use(org.as2lib.env.reflect.TTypeProxyFactory;)
+		//use(org.as2lib.env.reflect.TClassInfo_Property);
+		//use(org.as2lib.env.reflect.TPackageInfo);
+		//use(org.as2lib.env.reflect.TPackageInfo_Class);
+		//use(org.as2lib.env.reflect.TPackageInfo_Package);
+		//use(org.as2lib.env.reflect.TTypeProxyFactory;);
 		
 		// org.as2lib.env.reflect.algorithm
 		//use(org.as2lib.env.reflect.algorithm.TClassAlgorithm);
