@@ -175,7 +175,7 @@ class org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	}
 	
 	public function testGetFullNameWithNullParent(Void):Void {
-		var i:PackageInfo = new PackageInfo("MyClass", null, null);
+		var i:PackageInfo = new PackageInfo(null, "MyClass", null);
 		assertSame(i.getFullName(), "MyClass");
 	}
 	
@@ -186,7 +186,7 @@ class org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		rc.setReturnValue(true);
 		rc.replay();
 		
-		var i:PackageInfo = new PackageInfo("MyClass", null, r);
+		var i:PackageInfo = new PackageInfo(null, "MyClass", r);
 		assertSame(i.getFullName(), "MyClass");
 		
 		rc.verify();
@@ -201,7 +201,7 @@ class org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		rc.setReturnValue("org.as2lib.mypackage");
 		rc.replay();
 		
-		var i:PackageInfo = new PackageInfo("MyClass", null, r);
+		var i:PackageInfo = new PackageInfo(null, "MyClass", r);
 		assertSame(i.getFullName(), "org.as2lib.mypackage.MyClass");
 		
 		rc.verify();
