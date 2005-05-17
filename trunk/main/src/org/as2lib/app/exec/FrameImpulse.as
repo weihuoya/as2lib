@@ -18,7 +18,7 @@ class org.as2lib.app.exec.FrameImpulse extends BasicClass implements Impulse {
 		getInstance().disconnectExecutable(exe);
 	}
 	
-	public static function isExecutableConnected(exe:Executable):Void {
+	public static function isExecutablonnected(exe:Executable):Void {
 		getInstance().isExecutableConnected(exe);
 	}
 	
@@ -60,6 +60,7 @@ class org.as2lib.app.exec.FrameImpulse extends BasicClass implements Impulse {
 						this.timeline.removeMovieClip();
 					}
 					delete this.timeline.onEnterFrame;
+					timelineIsGenerated = false;
 				}
 				
 				this.timeline = timeline;
