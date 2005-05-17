@@ -113,6 +113,7 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 		if (!methodBehavior) throw new IllegalArgumentException("Method behavior must not be null or undefined.", this, arguments);
 		if (methodName == null || methodName == "") methodName = methodBehavior.getExpectedMethodCall().getMethodName();
 		if (methodName == null || methodName == "") methodName = "[unknown]";
+		Flashout.error(methodName);
 		lastMethodName = methodName;
 		if (!methodBehaviors.containsKey(methodName)) methodBehaviors.put(methodName, new Array());
 		var behaviors:Array = methodBehaviors.get(methodName);
