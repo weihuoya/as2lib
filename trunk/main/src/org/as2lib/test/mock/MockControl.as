@@ -419,7 +419,6 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 		var r:Function = mock.__resolve;
 		mock.__resolve = null;
 		if (!mock[methodName]) {
-			mock.__resolve = r;
 			if (state instanceof RecordState) {
 				var owner:MockControl = this;
 				mock[methodName] = function() {
@@ -428,6 +427,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 				};
 			}
 		}
+		mock.__resolve = r;
 		return state.invokeMethod(new MethodCall(methodName, args));
 	}
 	
