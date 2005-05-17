@@ -422,6 +422,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 			if (state instanceof RecordState) {
 				var owner:MockControl = this;
 				mock[methodName] = function() {
+					if (methodName == "toString" && !owner.areToStringInvocationsHandled()) {
+						return owner.getMock().__proto__.toString.apply(owner.getMock());
+					}
 					// calling private methods out of inner anonymous methods is not allowed with MTASC
 					return owner["invokeMethod"](methodName, arguments);
 				};
