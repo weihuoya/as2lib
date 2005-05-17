@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.util.ClassUtil;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ClassNotFoundException;
@@ -28,7 +29,6 @@ import org.as2lib.env.reflect.TypeMemberFilter;
 import org.as2lib.env.reflect.algorithm.ClassAlgorithm;
 import org.as2lib.env.reflect.algorithm.MethodAlgorithm;
 import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
-import org.as2lib.util.ClassUtil;
 
 /**
  * {@code ClassInfo} reflects a class and provides methods to get information about
