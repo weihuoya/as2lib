@@ -21,7 +21,6 @@ import org.as2lib.env.reflect.algorithm.PackageAlgorithm;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.SimpleCache;
-import org.as2lib.env.reflect.PackageMemberInfo;
 
 /**
  * @author Simon Wacker
@@ -41,7 +40,8 @@ class org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestCase {
 		cc.verify();
 	}
 	
-	public function testExecuteWithStoredPackageInfo(Void):Void {
+	// PackageAlgorithm is not checking the cache anymore
+	/*public function testExecuteWithStoredPackageInfo(Void):Void {
 		var p:Object = new Object();
 		var o:Object = new Object();
 		
@@ -56,7 +56,7 @@ class org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestCase {
 		assertSame(a.execute(p), o);
 		
 		cc.verify();
-	}
+	}*/
 	
 	public function testExecuteWithUnknownPackage(Void):Void {
 		var p:Object = new Object();
@@ -82,7 +82,23 @@ class org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestCase {
 	
 	public function testExecuteWithExistingPackage(Void):Void {
 		var a:PackageAlgorithm = new PackageAlgorithm();
-		var pp1:PackageMemberInfo = a.execute(_global.org.as2lib.core);
+		var p1:Object = a.execute(_global.org.as2lib.core);
+		var p2:Object = a.execute(_global.org.as2lib);
+		assertNotNull("p1 is null", p1);
+		assertNotNull("p2 is null", p2);
+		assertSame(p1.package, _global.org.as2lib.core);
+		assertSame(p2.package, _global.org.as2lib);
+		assertSame(p1.name, "core");
+		assertSame(p2.name, "as2lib");
+		var pa1:PackageInfo = p1.parent;
+		var pa2:PackageInfo = p2.parent;
+		assertSame(pa1.getName(), "as2lib");
+		assertSame(pa2.getName(), "org");
+		assertSame(pa1.getParent(), pa2);
+		assertSame(pa1.getPackage(), _global.org.as2lib);
+		assertSame(pa2.getPackage(), _global.org);
+		assertSame(pa2.getParent(), a.getCache().getRoot());
+		/*var pp1:PackageMemberInfo = a.execute(_global.org.as2lib.core);
 		var pp2:PackageMemberInfo = a.execute(_global.org.as2lib);
 		assertNotNull("pp1 should not be null", pp1);
 		assertNotNull("pp2 should not be null", pp2);
@@ -96,7 +112,7 @@ class org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestCase {
 		assertSame("name of p1 should be 'core'", p1.getName(), "core");
 		assertSame("name of p2 should be 'core'", p2.getName(), "as2lib");
 		assertSame("actual package of p1 should be org.as2lib.core", p1.getPackage(), _global.org.as2lib.core);
-		assertSame("actual package of p2 should be org.as2lib", p2.getPackage(), _global.org.as2lib);
+		assertSame("actual package of p2 should be org.as2lib", p2.getPackage(), _global.org.as2lib);*/
 	}
 	
 	public function testExecuteByNameWithNullName(Void):Void {
@@ -105,9 +121,21 @@ class org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestCase {
 		cc.replay();
 		
 		var a:PackageAlgorithm = new PackageAlgorithm();
-		assertNull(a.executeByName(null));
-		assertNull(a.executeByName(undefined));
-		assertNull(a.executeByName());
+		try {
+			assertNull(a.executeByName(null));
+			fail("expected IllegalArgumentException for 'null' name");
+		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
+		}
+		try {
+			assertNull(a.executeByName(undefined));
+			fail("expected IllegalArgumentException for 'undefined' name");
+		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
+		}
+		try {
+			assertNull(a.executeByName());
+			fail("expected IllegalArgumentException for no name");
+		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
+		}
 		
 		cc.verify();
 	}
@@ -155,7 +183,11 @@ class org.as2lib.env.reflect.algorithm.TPackageAlgorithm extends TestCase {
 		
 		var a:PackageAlgorithm = new PackageAlgorithm();
 		a.setCache(c);
-		assertNull(a.executeByName("org.as2lib.unknownpackage"));
+		try {
+			assertNull(a.executeByName("org.as2lib.unknownpackage"));
+			fail("expected PackageNotFoundException for illegal name");
+		} catch (e:org.as2lib.env.reflect.PackageNotFoundException) {
+		}
 		
 		cc.verify();
 		rc.verify();

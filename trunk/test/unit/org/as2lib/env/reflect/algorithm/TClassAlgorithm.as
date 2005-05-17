@@ -20,7 +20,6 @@ import org.as2lib.test.mock.support.TypeArgumentsMatcher;
 import org.as2lib.env.reflect.algorithm.ClassAlgorithm;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PackageInfo;
-import org.as2lib.env.reflect.PackageMemberInfo;
 import org.as2lib.env.reflect.Cache;
 import org.as2lib.env.reflect.SimpleCache;
 import org.as2lib.core.BasicClass;
@@ -44,7 +43,8 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		cc.verify();
 	}
 	
-	public function testExecuteWithCachedClassInfo(Void):Void {
+	// this is not checked anymore
+	/*public function testExecuteWithCachedClassInfo(Void):Void {
 		var info = new Object();
 		
 		var cc:MockControl = new MockControl(Cache);
@@ -58,7 +58,7 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		
 		assertSame(a.execute(TClassAlgorithm), info);
 		cc.verify();
-	}
+	}*/
 	
 	public function testExecuteWihtUnkownClass(Void):Void {
 		var Clazz:Function = function() {};
@@ -66,8 +66,6 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		
 		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
-		c.getClass(o);
-		cc.setReturnValue(null);
 		c.getRoot();
 		cc.setReturnValue(PackageInfo.getRootPackage());
 		c.getPackage(null);
@@ -82,100 +80,53 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		a.setCache(c);
 		
 		assertNull(a.execute(o));
+		
 		cc.verify();
 	}
 	
 	public function testExecuteByClass(Void):Void {
-		// What's wrong with this? --> c.addPackage() must always return the correct package because it is needed
-		/*var cc:MockControl = new MockControl(Cache);
-		var c:Cache = cc.getMock();
-		c.getClass(TClassAlgorithm);
-		cc.setReturnValue(null);
-		c.getRoot();
-		cc.setReturnValue(ReflectConfig.getRootPackage());
-		cc.replay();*/
-		
 		var a:ClassAlgorithm = new ClassAlgorithm();
-		//a.setCache(c);
-		
-		var info:PackageMemberInfo = a.execute(TClassAlgorithm);
-		assertNotNull("Class for object could not be found.", info);
-		var objectInfo:ClassInfo = ClassInfo(info);
-		assertNotNull("Returned instance is not of type ClassInfo.", objectInfo);
-		assertSame("Type of class is not TClassAlgorithm.", objectInfo.getType(), TClassAlgorithm);
-		assertSame("Name of class is not 'TClassAlgorithm'.", objectInfo.getName(), "TClassAlgorithm");
-		
-		var package:PackageInfo = objectInfo.getPackage();
-		assertNotNull("Parent package is null.", package);
-		assertSame("Parent package is wrong.", package.getPackage(), _global.org.as2lib.env.reflect.algorithm);
-		assertSame("Parent package name is not algorithm.", package.getName(), "algorithm");
-		
-		//cc.verify();
+		var info:Object = a.execute(TClassAlgorithm);
+		assertNotNull("class for object could not be found", info);
+		assertSame(info.clazz, TClassAlgorithm);
+		assertSame(info.name, "TClassAlgorithm");
+		var p:PackageInfo = info.package;
+		assertNotNull("parent package is null", p);
+		assertSame(p.getName(), "algorithm");
+		assertSame(p.getPackage(), _global.org.as2lib.env.reflect.algorithm);
+		assertSame(p.getParent().getName(), "reflect");
 	}
 	
 	public function testExecuteByInterface(Void):Void {
-		// What's wrong with this? --> c.addPackage() must always return the correct package because it is needed
-		/*var cc:MockControl = new MockControl(Cache);
-		var c:Cache = cc.getMock();
-		c.getClass(BasicInterface);
-		cc.setReturnValue(null);
-		c.getRoot();
-		cc.setReturnValue(ReflectConfig.getRootPackage());
-		cc.replay();*/
-		
 		var a:ClassAlgorithm = new ClassAlgorithm();
-		//a.setCache(c);
-		
-		var info:PackageMemberInfo = a.execute(BasicInterface);
-		assertNotNull("Class for object could not be found.", info);
-		var objectInfo:ClassInfo = ClassInfo(info);
-		assertNotNull("Returned instance is not of type ClassInfo.", objectInfo);
-		assertSame("Type of class is not BasicInterface.", objectInfo.getType(), BasicInterface);
-		assertSame("Name of class is not 'BasicInterface'.", objectInfo.getName(), "BasicInterface");
-		
-		var package:PackageInfo = objectInfo.getPackage();
-		assertNotNull("Parent package is null.", package);
-		assertSame("Parent package is wrong.", package.getPackage(), _global.org.as2lib.core);
-		assertSame("Parent package name is not core.", package.getName(), "core");
-		
-		//cc.verify();
+		var info:Object = a.execute(BasicInterface);
+		assertNotNull("class for object could not be found", info);
+		assertSame(info.clazz, BasicInterface);
+		assertSame(info.name, "BasicInterface");
+		var p:PackageInfo = info.package;
+		assertNotNull("parent package is null", p);
+		assertSame(p.getName(), "core");
+		assertSame(p.getPackage(), _global.org.as2lib.core);
+		assertSame(p.getParent().getName(), "as2lib");
 	}
 	
 	public function testExecuteByObject(Void):Void {
 		var o:BasicClass = new BasicClass();
-		
-		// What's wrong with this? --> c.addPackage() must always return the correct package because it is needed
-		/*var cc:MockControl = new MockControl(Cache);
-		var c:Cache = cc.getMock();
-		c.getClass(o);
-		cc.setReturnValue(null);
-		c.getRoot();
-		cc.setReturnValue(ReflectConfig.getRootPackage());
-		cc.replay();*/
-		
 		var a:ClassAlgorithm = new ClassAlgorithm();
-		//a.setCache(c);
-		
-		var info:PackageMemberInfo = a.execute(o);
-		assertNotNull("Class for object could not be found.", info);
-		var objectInfo:ClassInfo = ClassInfo(info);
-		assertNotNull("Returned instance is not of type ClassInfo.", objectInfo);
-		assertSame("Type of class is not BasicClass.", objectInfo.getType(), BasicClass);
-		assertSame("Name of class is not 'BasicClass'.", objectInfo.getName(), "BasicClass");
-		
-		var package:PackageInfo = objectInfo.getPackage();
-		assertNotNull("Parent package is null.", package);
-		assertSame("Parent package is wrong.", package.getPackage(), _global.org.as2lib.core);
-		assertSame("Parent package name is not core.", package.getName(), "core");
-		
-		//cc.verify();
+		var info:Object = a.execute(o);
+		assertNotNull("class for object could not be found", info);
+		assertSame(info.clazz, BasicClass);
+		assertSame(info.name, "BasicClass");
+		var p:PackageInfo = info.package;
+		assertNotNull("parent package is null", p);
+		assertSame(p.getName(), "core");
+		assertSame(p.getPackage(), _global.org.as2lib.core);
+		assertSame(p.getParent().getName(), "as2lib");
 	}
 	
 	public function testExecuteByString(Void):Void {
 		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
-		c.getClass("a");
-		cc.setReturnValue(null);
 		c.getRoot();
 		cc.setReturnValue(PackageInfo.getRootPackage());
 		c.getPackage(null);
@@ -184,21 +135,16 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		c.addPackage(null);
 		cc.setDefaultReturnValue(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([PackageInfo]));
-		c.addClass(null);
-		cc.setReturnValue(null);
-		cc.setArgumentsMatcher(new TypeArgumentsMatcher([ClassInfo]));
 		cc.replay();
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		a.setCache(c);
-
-		var info:PackageMemberInfo = a.execute("a");
+		
+		var info:Object = a.execute("a");
 		assertNotNull("Class for string could not be found.", info);
-		var stringInfo:ClassInfo = ClassInfo(info);
-		assertNotNull("Returned instance is not of type ClassInfo.", stringInfo);
-		assertSame("Type of class is not string.", stringInfo.getType(), String);
-		assertSame("Containing package is not root package.", stringInfo.getPackage(), PackageInfo.getRootPackage());
-		assertSame("Name of class is not 'String'.", stringInfo.getName(), "String");
+		assertSame("Type of class is not string.", info.clazz, String);
+		assertSame("Containing package is not root package.", info.package, PackageInfo.getRootPackage());
+		assertSame("Name of class is not 'String'.", info.name, "String");
 		
 		cc.verify();
 	}
@@ -206,8 +152,6 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 	public function testExecuteByNumber(Void):Void {
 		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
-		c.getClass(32);
-		cc.setReturnValue(null);
 		c.getRoot();
 		cc.setReturnValue(PackageInfo.getRootPackage());
 		c.getPackage(null);
@@ -216,21 +160,16 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		c.addPackage(null);
 		cc.setDefaultReturnValue(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([PackageInfo]));
-		c.addClass(null);
-		cc.setReturnValue(null);
-		cc.setArgumentsMatcher(new TypeArgumentsMatcher([ClassInfo]));
 		cc.replay();
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		a.setCache(c);
 
-		var info:PackageMemberInfo = a.execute(32);
+		var info:Object = a.execute(32);
 		assertNotNull("Class for number could not be found.", info);
-		var numberInfo:ClassInfo = ClassInfo(info);
-		assertNotNull("Returned instance is not of type ClassInfo.", numberInfo);
-		assertSame("Type of class is not Number.", numberInfo.getType(), Number);
-		assertSame("Containing package is not root package.", numberInfo.getPackage(), PackageInfo.getRootPackage());
-		assertSame("Name of class is not 'Number'.", numberInfo.getName(), "Number");
+		assertSame("Type of class is not Number.", info.clazz, Number);
+		assertSame("Containing package is not root package.", info.package, PackageInfo.getRootPackage());
+		assertSame("Name of class is not 'Number'.", info.name, "Number");
 		
 		cc.verify();
 	}
@@ -238,8 +177,6 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 	public function testExecuteByBoolean(Void):Void {
 		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
-		c.getClass(false);
-		cc.setReturnValue(null);
 		c.getRoot();
 		cc.setReturnValue(PackageInfo.getRootPackage());
 		c.getPackage(null);
@@ -248,32 +185,25 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		c.addPackage(null);
 		cc.setDefaultReturnValue(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([PackageInfo]));
-		c.addClass(null);
-		cc.setReturnValue(null);
-		cc.setArgumentsMatcher(new TypeArgumentsMatcher([ClassInfo]));
 		cc.replay();
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		a.setCache(c);
 
-		var info:PackageMemberInfo = a.execute(false);
+		var info:Object = a.execute(false);
 		assertNotNull("Class for boolean could not be found.", info);
-		var booleanInfo:ClassInfo = ClassInfo(info);
-		assertNotNull("Returned instance is not of type ClassInfo.", booleanInfo);
-		assertSame("Type of class is not Boolean.", booleanInfo.getType(), Boolean);
-		assertSame("Containing package is not root package.", booleanInfo.getPackage(), PackageInfo.getRootPackage());
-		assertSame("Name of class is not 'Boolean'.", booleanInfo.getName(), "Boolean");
+		assertSame("Type of class is not Boolean.", info.clazz, Boolean);
+		assertSame("Containing package is not root package.", info.package, PackageInfo.getRootPackage());
+		assertSame("Name of class is not 'Boolean'.", info.name, "Boolean");
 		
 		cc.verify();
 	}
 	
-	public function testExecuteByFunction(Void):Void {
+	public function testExecuteByInstanceWithFunction(Void):Void {
 		var f:Function = function() {};
 		
 		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
-		c.getClass(f);
-		cc.setReturnValue(null);
 		c.getRoot();
 		cc.setReturnValue(PackageInfo.getRootPackage());
 		c.getPackage(null);
@@ -282,21 +212,16 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		c.addPackage(null);
 		cc.setDefaultReturnValue(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([PackageInfo]));
-		c.addClass(null);
-		cc.setReturnValue(null);
-		cc.setArgumentsMatcher(new TypeArgumentsMatcher([ClassInfo]));
 		cc.replay();
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		a.setCache(c);
 
-		var info:PackageMemberInfo = a.execute(f);
+		var info:Object = a.executeByInstance(f);
 		assertNotNull("Class for function could not be found.", info);
-		var functionInfo:ClassInfo = ClassInfo(info);
-		assertNotNull("Returned instance is not of type ClassInfo.", functionInfo);
-		assertSame("Type of class is not Function.", functionInfo.getType(), Function);
-		assertSame("Containing package is not root package.", functionInfo.getPackage(), PackageInfo.getRootPackage());
-		assertSame("Name of class is not 'Function'.", functionInfo.getName(), "Function");
+		assertSame("Type of class is not Function.", info.clazz, Function);
+		assertSame("Containing package is not root package.", info.package, PackageInfo.getRootPackage());
+		assertSame("Name of class is not 'Function'.", info.name, "Function");
 		
 		cc.verify();
 	}
@@ -306,8 +231,6 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		
 		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
-		c.getClass(_root.testExecuteByMovieClip_mc);
-		cc.setReturnValue(null);
 		c.getRoot();
 		cc.setReturnValue(PackageInfo.getRootPackage());
 		c.getPackage(null);
@@ -316,21 +239,16 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		c.addPackage(null);
 		cc.setDefaultReturnValue(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([PackageInfo]));
-		c.addClass(null);
-		cc.setReturnValue(null);
-		cc.setArgumentsMatcher(new TypeArgumentsMatcher([ClassInfo]));
 		cc.replay();
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		a.setCache(c);
 
-		var info:PackageMemberInfo = a.execute(_root.testExecuteByMovieClip_mc);
+		var info:Object = a.execute(_root.testExecuteByMovieClip_mc);
 		assertNotNull("Class for movieclip could not be found.", info);
-		var movieClipInfo:ClassInfo = ClassInfo(info);
-		assertNotNull("Returned instance is not of type ClassInfo.", movieClipInfo);
-		assertSame("Type of class is not MovieClip.", movieClipInfo.getType(), MovieClip);
-		assertSame("Containing package is not root package.", movieClipInfo.getPackage(), PackageInfo.getRootPackage());
-		assertSame("Name of class is not 'MovieClip'.", movieClipInfo.getName(), "MovieClip");
+		assertSame("Type of class is not MovieClip.", info.clazz, MovieClip);
+		assertSame("Containing package is not root package.", info.package, PackageInfo.getRootPackage());
+		assertSame("Name of class is not 'MovieClip'.", info.name, "MovieClip");
 		
 		cc.verify();
 		_root.testExecuteByMovieClip_mc.removeMovieClip();
@@ -341,8 +259,6 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		
 		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
-		c.getClass(_root.testExecuteByTextField_txt);
-		cc.setReturnValue(null);
 		c.getRoot();
 		cc.setReturnValue(PackageInfo.getRootPackage());
 		c.getPackage(null);
@@ -351,21 +267,16 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		c.addPackage(null);
 		cc.setDefaultReturnValue(null);
 		cc.setArgumentsMatcher(new TypeArgumentsMatcher([PackageInfo]));
-		c.addClass(null);
-		cc.setReturnValue(null);
-		cc.setArgumentsMatcher(new TypeArgumentsMatcher([ClassInfo]));
 		cc.replay();
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		a.setCache(c);
 
-		var info:PackageMemberInfo = a.execute(_root.testExecuteByTextField_txt);
+		var info:Object = a.execute(_root.testExecuteByTextField_txt);
 		assertNotNull("Class for textfield could not be found.", info);
-		var movieClipInfo:ClassInfo = ClassInfo(info);
-		assertNotNull("Returned instance is not of type ClassInfo.", movieClipInfo);
-		assertSame("Type of class is not TextField.", movieClipInfo.getType(), TextField);
-		assertSame("Containing package is not root package.", movieClipInfo.getPackage(), PackageInfo.getRootPackage());
-		assertSame("Name of class is not 'TextField'.", movieClipInfo.getName(), "TextField");
+		assertSame("Type of class is not TextField.", info.clazz, TextField);
+		assertSame("Containing package is not root package.", info.package, PackageInfo.getRootPackage());
+		assertSame("Name of class is not 'TextField'.", info.name, "TextField");
 		
 		cc.verify();
 		_root.testExecuteByTextField_txt.removeTextField();
@@ -377,9 +288,21 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		cc.replay();
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
-		assertNull(a.executeByName(null));
-		assertNull(a.executeByName(undefined));
-		assertNull(a.executeByName());
+		try {
+			assertNull(a.executeByName(null));
+			fail("expected IllegalArgumentException for null name");
+		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
+		}
+		try {
+			assertNull(a.executeByName(undefined));
+			fail("expected IllegalArgumentException for undefined name");
+		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
+		}
+		try {
+			assertNull(a.executeByName());
+			fail("expected IllegalArgumentException for no name");
+		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
+		}
 		
 		cc.verify();
 	}
@@ -427,7 +350,11 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		a.setCache(c);
-		assertNull(a.executeByName("org.as2lib.core.UnknownClass"));
+		try {
+			assertNull(a.executeByName("org.as2lib.core.UnknownClass"));
+			fail("expected ClassNotFoundException for illegal class name");
+		} catch (e:org.as2lib.env.reflect.ClassNotFoundException) {
+		}
 		
 		cc.verify();
 		rc.verify();
@@ -444,13 +371,15 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		var c:Cache = cc.getMock();
 		c.getRoot();
 		cc.setReturnValue(r);
-		c.getClass(_global.org.as2lib.core);
-		cc.setReturnValue(null);
 		cc.replay();
 		
 		var a:ClassAlgorithm = new ClassAlgorithm();
 		a.setCache(c);
-		assertNull(a.executeByName("org.as2lib.core"));
+		try {
+			assertNull(a.executeByName("org.as2lib.core"));
+			fail("expected IllegalArgumentException for illegal type");
+		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
+		}
 		
 		cc.verify();
 		rc.verify();
@@ -477,7 +406,7 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		assertSame("wrong type ", i.getType(), _global.org.as2lib.core.TClassAlgorithmTestExecute);
 		assertSame(i.getPackage().getFullName(), "org.as2lib.core");
 		assertSame("wrong package", i.getPackage().getPackage(), _global.org.as2lib.core);
-		assertSame("wrong root package", i.getPackage().getPackage().getPackage().getPackage(), r);
+		assertSame("wrong root package", i.getPackage().getParent().getParent().getParent(), r);
 		
 		rc.verify();
 	}
