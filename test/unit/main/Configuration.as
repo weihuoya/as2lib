@@ -118,8 +118,8 @@ class main.Configuration extends AbstractConfiguration {
 		// org.as2lib.env.reflect
 		use(org.as2lib.env.reflect.TSimpleCache);
 		use(org.as2lib.env.reflect.TClassInfo);
-		//use(org.as2lib.env.reflect.TClassInfo_Method);
-		//use(org.as2lib.env.reflect.TClassInfo_Property);
+		use(org.as2lib.env.reflect.TClassInfo_Method);
+		use(org.as2lib.env.reflect.TClassInfo_Property);
 		use(org.as2lib.env.reflect.TPackageInfo);
 		use(org.as2lib.env.reflect.TPackageInfo_Class);
 		use(org.as2lib.env.reflect.TPackageInfo_Package);
