@@ -251,12 +251,12 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		lc.setDefaultReturnValue("org.as2lib.core.test.t2.MyLogger", 2);
 		l.setName("org.as2lib.core.test.t2.MyLogger");
 		lc.setVoidCallable();
+		l.getParent();
+		lc.setReturnValue(r, 2);
 		l.setParent(r);
 		lc.setVoidCallable();
 		l.setParent(p);
 		lc.setVoidCallable();
-		l.getParent();
-		lc.setReturnValue(r, 2);
 		lc.replay();
 		
 		var l2c:MockControl = new MockControl(ConfigurableHierarchicalLogger);
@@ -265,12 +265,12 @@ class org.as2lib.env.log.repository.TLoggerHierarchy extends TestCase {
 		l2c.setDefaultReturnValue("org.as2lib.SecondLogger", 2);
 		l2.setName("org.as2lib.SecondLogger");
 		l2c.setVoidCallable();
+		l2.getParent();
+		l2c.setReturnValue(r, 2);
 		l2.setParent(r);
 		l2c.setVoidCallable();
 		l2.setParent(p);
 		l2c.setVoidCallable();
-		l2.getParent();
-		l2c.setReturnValue(r, 2);
 		l2c.replay();
 		
 		var h:LoggerHierarchy = new LoggerHierarchy(r);
