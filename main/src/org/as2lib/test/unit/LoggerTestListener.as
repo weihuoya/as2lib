@@ -96,4 +96,14 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Proc
 	public function onResumeProcess(process:Process):Void {
 		getLogger().info("TestRunner resumed execution");
 	}
+	
+	/**
+	 * Executed if a Exeception was thrown during the execution
+	 * 
+	 * @param process where the execution paused.
+	 * @param error Error that occured.
+	 */
+	public function onProcessError(process:Process, error):Void {
+		getLogger().error("Execution was thrown during the execution of the TestRunner: "+error);
+	}
 }
