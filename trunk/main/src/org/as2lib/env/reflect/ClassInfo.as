@@ -435,15 +435,12 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *
 	 * <p>{@code null} will be returned if the {@link #getType} method returns
 	 * {@code null} or {@code undefined}.
-	 * 
-	 * <p>The passed-in {@code args} are allowed to be {@code null} or {@code undefined}.
-	 * This is interpreted as 'pass no arguments'.
 	 *
-	 * @param args the arguments to pass-in to the constructor on creation
+	 * @param .. any number of arguments to pass-to the constructor on creation
 	 * @return a new instance of this class
 	 */
-	public function newInstance(args:Array) {
-		return ClassUtil.createInstance(clazz, args);
+	public function newInstance() {
+		return ClassUtil.createInstance(clazz, arguments);
 	}
 	
 	/**
