@@ -19,17 +19,18 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.MethodInfo;
-import org.as2lib.env.reflect.algorithm.ClassAlgorithm;
+import org.as2lib.env.reflect.ReflectConfig;
+import org.as2lib.env.reflect.Cache;
 
 /**
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.TClassInfo extends TestCase {
 	
-	private var formerClassAlgorithm:ClassAlgorithm;
+	private var formerCache:Cache;
 	
-	public function setUp() {
-		formerClassAlgorithm = ClassInfo.getClassAlgorithm();
+	public function setUp(Void):Void {
+		formerCache = ReflectConfig.getCache();
 	}
 	
 	public function testNewWithNullArguments(Void):Void {
@@ -122,32 +123,34 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		assertNull("prototype is set to undefined", i.getSuperType());
 	}
 	
-	/*public function testGetSuperTypeForClassWithSuperClass(Void):Void {
+	public function testGetSuperTypeForClassWithSuperClass(Void):Void {
 		var Type:Function = function() {};
-		
+		var lol = new Cache();
+		var rofl = ReflectConfig.getCache();
 		var ic:MockControl = new MockControl(ClassInfo);
 		var i:ClassInfo = ic.getMock();
 		ic.replay();
 		
-		var ac:MockControl = new MockControl(ClassAlgorithm);
-		var a:ClassAlgorithm = ac.getMock();
-		a.execute(Type.prototype);
-		ac.setReturnValue(i);
-		ac.replay();
+		var cc:MockControl = new MockControl(Cache);
+		var c:Cache = cc.getMock();
+		c.getClass(Type.prototype);
+		cc.setReturnValue(i);
+		cc.replay();
+		
 		var o:ClassInfo = new ClassInfo(Type, null, null);
-		ClassInfo.setClassAlgorithm(a);
+		ReflectConfig.setCache(c);
 		assertSame(o.getSuperType(), i);
 		
 		ic.verify();
-		ac.verify();
-	}*/
+		cc.verify();
+	}
 	
-	/*public function testNewInstanceWithNotDefinedClass(Void):Void {
+	public function testNewInstanceWithNotDefinedClass(Void):Void {
 		var i:ClassInfo = new ClassInfo(null, null, null);
-		assertNull("class == null", i.newInstance(null));
+		assertNull("class == null", i.newInstance());
 		
 		i = new ClassInfo(null, undefined, null);
-		assertNull("class == undefined", i.newInstance(null));
+		assertNull("class == undefined", i.newInstance());
 	}
 	
 	public function testNewInstanceWithNullAndUndefinedArgument(Void):Void {
@@ -158,13 +161,13 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		};
 		
 		var i:ClassInfo = new ClassInfo(Type, null, null);
-		var o = i.newInstance(null)
+		var o = i.newInstance()
 		assertNotNull(o);
 		assertTrue(o.invoked);
 		
 		o.invoked = false;
 		
-		var o2 = i.newInstance(undefined)
+		var o2 = i.newInstance()
 		assertNotNull(o2);
 		assertTrue(o2.invoked);
 		assertNotSame(o, o2);
@@ -182,12 +185,13 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		};
 		
 		var i:ClassInfo = new ClassInfo(Type, null, null);
-		var o = i.newInstance(["arg1", 2, arg3])
+		var o = i.newInstance("arg1", 2, arg3)
 		assertNotNull(o);
 		assertTrue(o.invoked);
-	}*/
-	
-	public function tearDown() {
-		ClassInfo.setClassAlgorithm(formerClassAlgorithm);
 	}
+	
+	public function tearDown(Void):Void {
+		ReflectConfig.setCache(formerCache);
+	}
+	
 }
