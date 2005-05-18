@@ -37,12 +37,12 @@ class main.Configuration extends AbstractConfiguration {
 		// Data Holder tests
 		use(org.as2lib.data.holder.array.TArrayIterator);
 		use(org.as2lib.data.holder.array.TTypedArray);
-		use(org.as2lib.data.holder.list.TPriorityList);
+		//use(org.as2lib.data.holder.list.TPriorityList);
 		use(org.as2lib.data.holder.list.TArrayList);
 		use(org.as2lib.data.holder.TProtectedIterator);
 		use(org.as2lib.data.holder.map.TValueMapIterator);
 		use(org.as2lib.data.holder.map.THashMap);
-		use(org.as2lib.data.holder.map.TPriorityMap);
+		//use(org.as2lib.data.holder.map.TPriorityMap);
 		use(org.as2lib.data.holder.map.TTypedMap);
 		use(org.as2lib.data.holder.map.TPrimitiveTypeMap);
 		use(org.as2lib.data.holder.stack.TSimpleStack);
