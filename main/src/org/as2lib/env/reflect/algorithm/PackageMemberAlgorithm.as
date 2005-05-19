@@ -120,6 +120,7 @@ class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass
 		if (!t) return null;
 		// must set access permissions because by default all package members in _global are hidden
 		_global.ASSetPropFlags(t, null, 0, true);
+		_global.ASSetPropFlags(t, ["__proto__", "constructor", "__constructor__", "prototype"], 1, true);
 		getCache();
 		var r:Array = new Array();
 		var n:Array = new Array();

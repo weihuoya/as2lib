@@ -224,6 +224,7 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 		var a:Object = b.getPackage();
 		if (!a) a = _global;
 		_global.ASSetPropFlags(a, null, 0, true);
+		_global.ASSetPropFlags(a, ["__proto__", "constructor", "__constructor__", "prototype"], 1, true);
 		findAndStore(b, v);
 		return r;
 	}
