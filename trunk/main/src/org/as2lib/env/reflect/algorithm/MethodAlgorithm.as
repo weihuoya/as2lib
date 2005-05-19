@@ -89,13 +89,13 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass {
 		
 		this.s = true;
 		_global.ASSetPropFlags(c, null, 0, true);
-		_global.ASSetPropFlags(c, ["__proto__", "constructor", "prototype"], 1, true);
+		_global.ASSetPropFlags(c, ["__proto__", "constructor", "__constructor__", "prototype"], 1, true);
 		search(c);
 		
 		this.s = false;
 		var p:Object = c.prototype;
 		_global.ASSetPropFlags(p, null, 0, true);
-		_global.ASSetPropFlags(p, ["__proto__", "constructor", "__constructor__"], 1, true);
+		_global.ASSetPropFlags(p, ["__proto__", "constructor", "__constructor__", "prototype"], 1, true);
 		search(p);
 		
 		// ASSetPropFlags must be restored because unexpected behaviors get caused otherwise
