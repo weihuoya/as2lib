@@ -328,7 +328,8 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * @return an array containing the members of the represented package
 	 */
 	public function getMembersByFlag(filterSubPackages:Boolean):Array {
-		if (getPackage() == null) return null;
+		// not just "== null" because "_global == null" evaluates to "true"
+		if (getPackage() === null || getPackage() === undefined) return null;
 		if (filterSubPackages == null) filterSubPackages = true;
 		if (members === undefined) {
 			members = getPackageMemberAlgorithm().execute(this);
@@ -371,7 +372,8 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * @return an array containing the remaining members of the represented package
 	 */
 	 public function getMembersByFilter(packageMemberFilter:PackageMemberFilter):Array {
-		if (getPackage() == null) return null;
+		// not just "== null" because "_global == null" evaluates to "true"
+		if (getPackage() === null || getPackage() === undefined) return null;
 		if (!packageMemberFilter) return getMembersByFlag(true);
 		var result:Array = getMembersByFlag(packageMemberFilter.filterSubPackages());
 		for (var i:Number = 0; i < result.length; i++) {
@@ -417,7 +419,8 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * @return an array containing the member classes of the represented package
 	 */
 	public function getMemberClassesByFlag(filterSubPackages:Boolean):Array {
-		if (getPackage() == null) return null;
+		// not just "== null" because "_global == null" evaluates to "true"
+		if (getPackage() === null || getPackage() === undefined) return null;
 		if (filterSubPackages == null) filterSubPackages = true;
 		if (members === undefined) {
 			members = getPackageMemberAlgorithm().execute(this);
@@ -458,7 +461,8 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * package
 	 */
 	 public function getMemberClassesByFilter(classFilter:PackageMemberFilter):Array {
-		if (getPackage() == null) return null;
+		// not just "== null" because "_global == null" evaluates to "true"
+		if (getPackage() === null || getPackage() === undefined) return null;
 		if (!classFilter) return getMemberClassesByFlag(true);
 		var result:Array = getMemberClassesByFlag(classFilter.filterSubPackages());
 		for (var i:Number = 0; i < result.length; i++) {
@@ -504,7 +508,8 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * @return an array containing the member packages of the represented package
 	 */
 	public function getMemberPackagesByFlag(filterSubPackages:Boolean):Array {
-		if (getPackage() == null) return null;
+		// not just "== null" because "_global == null" evaluates to "true"
+		if (getPackage() === null || getPackage() === undefined) return null;
 		if (filterSubPackages == null) filterSubPackages = true;
 		if (members === undefined) {
 			members = getPackageMemberAlgorithm().execute(this);
@@ -545,7 +550,8 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 * package
 	 */
 	 public function getMemberPackagesByFilter(packageFilter:PackageMemberFilter):Array {
-		if (getPackage() == null) return null;
+		// not just "== null" because "_global == null" evaluates to "true"
+		if (getPackage() === null || getPackage() === undefined) return null;
 		if (!packageFilter) return getMemberPackagesByFlag(true);
 		var result:Array = getMemberPackagesByFlag(packageFilter.filterSubPackages());
 		for (var i:Number = 0; i < result.length; i++) {
