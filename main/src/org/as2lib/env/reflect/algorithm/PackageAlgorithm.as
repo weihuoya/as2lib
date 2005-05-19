@@ -114,6 +114,8 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 	public function execute(o) {
 		if (o == null) return null;
 		p = null;
+		// must set access permissions because by default all package members in _global are hidden
+		_global.ASSetPropFlags(o, null, 0, true);
 		findAndStore(getCache().getRoot(), o);
 		return p;
 	}
