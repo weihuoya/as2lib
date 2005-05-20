@@ -16,6 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
+import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.test.speed.Test;
 import org.as2lib.test.speed.TestResult;
 import org.as2lib.test.speed.TestSuiteResult;
@@ -83,7 +84,7 @@ class org.as2lib.test.speed.TestSuite extends BasicClass implements Test {
 	public function addTest() {
 		var o:Overload = new Overload(this);
 		o.addHandler([Test], addTestByTest);
-		o.addHandler([Object, String], addTestByScopeAndName);
+		o.addHandler([MethodInfo], addTestByMethod);
 		return o.forward(arguments);
 	}
 	
@@ -101,13 +102,12 @@ class org.as2lib.test.speed.TestSuite extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Adds a new test case by {@code methodScope} and {@code methodName}.
+	 * Adds a new test case by {@code method}.
 	 * 
-	 * @param methodScope the scope of the method to profile
-	 * @param methodName the name of the method to profile
+	 * @param method the method to profile
 	 * @return the created and added test	 */
-	public function addTestByScopeAndName(methodScope, methodName:String):Test {
-		var test:TestCase = new TestCase(methodScope, methodName);
+	public function addTestByMethod(method:MethodInfo):Test {
+		var test:TestCase = new TestCase(method);
 		addTestByTest(test);
 		return test;
 	}

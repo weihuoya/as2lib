@@ -15,12 +15,17 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.reflect.MethodInfo;
 
 /**
  * {@code MethodInvocation} reflects a profiled method invocation.
  * 
  * @author Simon Wacker */
 class org.as2lib.test.speed.MethodInvocation extends BasicClass {
+	
+	/** Invoked method. */
+	private var method:MethodInfo;
 	
 	/** Time needed for this method invocation. */
 	private var time:Number;
@@ -39,9 +44,21 @@ class org.as2lib.test.speed.MethodInvocation extends BasicClass {
 	 * 
 	 * @param time the needed time for this method invocation
 	 * @param args the arguments used for this method invocation	 */
-	public function MethodInvocation(time:Number, args:Array) {
+	public function MethodInvocation(time:Number, args:Array, method:MethodInfo) {
+		if (time == null || !args || !method) {
+			throw new IllegalArgumentException("All three arguments 'time' [" + time + "], 'args' [" + args + "] and 'method' [" + method + "] must not be 'null' nor 'undefined'.", this, arguments);
+		}
 		this.time = time;
 		this.args = args;
+		this.method = method;
+	}
+	
+	/**
+	 * Returns the invoked method.
+	 * 
+	 * @return the invoked method	 */
+	public function getMethod(Void):MethodInfo {
+		return this.method;
 	}
 	
 	/**
@@ -96,7 +113,9 @@ class org.as2lib.test.speed.MethodInvocation extends BasicClass {
 	
 	/**
 	 * Returns whether this method invocation was successful. Successful means that it
-	 * returned a proper return value and did not throw an exception.	 */
+	 * returned a proper return value and did not throw an exception.
+	 * 
+	 * @return {@code true} if this method invocation was successful else {@code false}	 */
 	public function wasSuccessful(Void):Boolean {
 		return (this.exception === undefined);
 	}
