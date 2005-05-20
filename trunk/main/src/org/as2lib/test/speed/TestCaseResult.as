@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
 import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.test.speed.TestResult;
+import org.as2lib.test.speed.AbstractTestResult;
 import org.as2lib.test.speed.TestCase;
 import org.as2lib.test.speed.MethodInvocation;
 
@@ -25,7 +26,7 @@ import org.as2lib.test.speed.MethodInvocation;
  * {@code TestCaseResult} holds the result of a test case's execution.
  * 
  * @author Simon Wacker */
-class org.as2lib.test.speed.TestCaseResult extends BasicClass implements TestResult {
+class org.as2lib.test.speed.TestCaseResult extends AbstractTestResult implements TestResult {
 	
 	/** Wrapped test case this is the result of. */
 	private var testCase:TestCase;
@@ -44,21 +45,12 @@ class org.as2lib.test.speed.TestCaseResult extends BasicClass implements TestRes
 	}
 	
 	/**
-	 * Returns the method scope of the profiled method.
+	 * Returns the profiled method.
 	 * 
-	 * @return the scope of the profiled method
+	 * @return the profiled method
 	 */
-	public function getMethodScope(Void) {
-		return this.testCase.getMethodScope();
-	}
-	
-	/**
-	 * Returns the name of the profiled method.
-	 * 
-	 * @return the name of the profiled method
-	 */
-	public function getMethodName(Void):String {
-		return this.testCase.getMethodName();
+	public function getMethod(Void):MethodInfo {
+		return this.testCase.getMethod();
 	}
 	
 	/**
@@ -66,18 +58,7 @@ class org.as2lib.test.speed.TestCaseResult extends BasicClass implements TestRes
 	 * 
 	 * @return the name of the test case	 */
 	public function getName(Void):String {
-		var info:Array;
-		var methodScope = getMethodScope();
-		var method:Function = methodScope[getMethodName()];
-		if (typeof(methodScope) == "function") {
-			info = ReflectUtil.getTypeAndMethodInfoByType(methodScope, method);
-		} else {
-			info = ReflectUtil.getTypeAndMethodInfoByPrototype(methodScope, method);
-			if (info[1] == null) {
-				info = ReflectUtil.getTypeAndMethodInfoByInstance(methodScope, method);
-			}
-		}
-		return ((info[0] ? "static " : "") + info[1] + "." + info[2]);
+		return getMethod().toString();
 	}
 	
 	/**
@@ -103,15 +84,6 @@ class org.as2lib.test.speed.TestCaseResult extends BasicClass implements TestRes
 	}
 	
 	/**
-	 * Returns whether this result has any method invocations.
-	 * 
-	 * @return {@code true} if this result has method invocations else {@code false}
-	 */
-	public function hasMethodInvocations(Void):Boolean {
-		return (this.methodInvocations.length > 0);
-	}
-	
-	/**
 	 * Adds a profiled method invocation.
 	 * 
 	 * @param methodInvocation the profiled method invocation	 */
@@ -122,22 +94,36 @@ class org.as2lib.test.speed.TestCaseResult extends BasicClass implements TestRes
 	/**
 	 * Returns the string representation of this test case result.
 	 * 
+	 * @param rootTestResult test result that holds the total values needed for
+	 * percentage calculations
 	 * @return the string representation of this test case result	 */
 	public function toString():String {
-		var result:String = "";
-		var totalTime:Number = getTime();
-		for (var i:Number = 0; i < this.methodInvocations.length; i++) {
-			var mi:MethodInvocation = this.methodInvocations[i];
-			if (i > 0) {
-				result += "\n";
+		var rootTestResult:TestResult = arguments[0];
+		if (!rootTestResult) rootTestResult = this;
+		var result:String = getTimePercentage(rootTestResult.getTime()) + "%";
+		result += ", " + getTime() + " ms";
+		result += " - " + getMethodInvocationPercentage(rootTestResult.getMethodInvocationCount()) + "%";
+		result += ", " + getMethodInvocationCount() + " inv.";
+		result += " - " + getAverageTime() + " ms/inv.";
+		result += " - " + getName();
+		if (getMethodInvocationCount() > 1) {
+			for (var i:Number = 0; i < this.methodInvocations.length; i++) {
+				var mi:MethodInvocation = this.methodInvocations[i];
+				result += "\n  ";
+				result += getPercentage(mi.getTime(), rootTestResult.getTime()) + "%";
+				result += ", " + mi.getTime() + " ms";
+				// source into MethodInvocation
+				result += " - " + getName() + "(" + mi.getArguments() + ")";
+				if (mi.wasSuccessful()) {
+					if (mi.getReturnValue() !== undefined) {
+						result += " returned " + mi.getReturnValue();
+					}
+				} else {
+					result += " threw " + ReflectUtil.getTypeName(mi.getException());
+				}
 			}
-			if (totalTime == 0) {
-				result += "100.00 % - ";
-			} else {
-				result += Math.round((mi.getTime() / totalTime) * 100).toString() + " % - ";
-			}
-			result += mi.getTime() + " ms - ";
-			result += getName();
+		} else {
+			var mi:MethodInvocation = this.methodInvocations[0];
 			result += "(" + mi.getArguments() + ")";
 			if (mi.wasSuccessful()) {
 				if (mi.getReturnValue() !== undefined) {
@@ -148,6 +134,11 @@ class org.as2lib.test.speed.TestCaseResult extends BasicClass implements TestRes
 			}
 		}
 		return result;
+	}
+	
+	// source into MethodInvocation
+	private function getPercentage(partTime:Number, totalTime:Number):Number {
+		return Math.round((partTime / totalTime) * 10000)/100;
 	}
 	
 }

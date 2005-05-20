@@ -23,6 +23,12 @@ import org.as2lib.core.BasicInterface;
 interface org.as2lib.test.speed.TestResult extends BasicInterface {
 	
 	/**
+	 * Returns the name of the test.
+	 * 
+	 * @return the test's name	 */
+	public function getName(Void):String;
+	
+	/**
 	 * Returns the total invocation time in milliseconds.
 	 * 
 	 * @return the total invocation time in milliseconds
@@ -30,10 +36,19 @@ interface org.as2lib.test.speed.TestResult extends BasicInterface {
 	public function getTime(Void):Number;
 	
 	/**
-	 * Returns the name of the test.
+	 * Returns the average time needed for all method invocations.
 	 * 
-	 * @return the test's name	 */
-	public function getName(Void):String;
+	 * @return the needed average time
+	 */
+	public function getAverageTime(Void):Number;
+	
+	/**
+	 * Returns the invocation time as percentage in relation to the passed-in
+	 * {@code totalTime}.
+	 * 
+	 * @param totalTime the total time to calculate the percentage with
+	 * @return the invocation time as percentage	 */
+	public function getTimePercentage(totalTime:Number):Number;
 	
 	/**
 	 * Returns all profiled method invocations as {@link MethodInvocation} instances.
@@ -46,5 +61,21 @@ interface org.as2lib.test.speed.TestResult extends BasicInterface {
 	 * 
 	 * @return {@code true} if this result has method invocations else {@code false}	 */
 	public function hasMethodInvocations(Void):Boolean;
+	
+	/**
+	 * Returns the total number of method invocations.
+	 * 
+	 * @return the total number of method invocations
+	 */
+	public function getMethodInvocationCount(Void):Number;
+	
+	/**
+	 * Returns the percentage of method invocations in relation to the passed-in
+	 * {@code totalMethodInvocationCount}.
+	 * 
+	 * @param totalMethodInvocationCount the total number of method invocations to
+	 * calculate the percentage with
+	 * @return the percentage of method invocations of this result	 */
+	public function getMethodInvocationPercentage(totalMethodInvocationCount:Number):Number;
 	
 }

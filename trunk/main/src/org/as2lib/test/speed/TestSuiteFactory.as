@@ -18,7 +18,6 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.test.speed.TestSuite;
 
 /**
@@ -53,14 +52,10 @@ class org.as2lib.test.speed.TestSuiteFactory extends BasicClass {
 		for (var i:Number = 0; i < ca.length; i++) {
 			var c:ClassInfo = ca[i];
 			if (c.getType() === Object) continue;
+			result.addTest(c.getConstructor());
 			var ma:Array = c.getMethods(true);
 			for (var k:Number = 0; k < ma.length; k++) {
-				var m:MethodInfo = ma[k];
-				if (m.isStatic()) {
-					result.addTest(c.getType(), m.getName());
-				} else {
-					result.addTest(c.getType().prototype, m.getName());
-				}
+				result.addTestByMethod(ma[k]);
 			}
 		}
 		var pa:Array = package.getMemberPackages();

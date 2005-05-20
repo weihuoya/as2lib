@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
 import org.as2lib.util.StringUtil;
 import org.as2lib.test.speed.TestResult;
+import org.as2lib.test.speed.AbstractTestResult;
 import org.as2lib.test.speed.TestSuite;
 import org.as2lib.test.speed.Test;
 
@@ -24,7 +24,7 @@ import org.as2lib.test.speed.Test;
  * {@code TestSuiteResult} holds the result of all tests contained by a test suite.
  * 
  * @author Simon Wacker */
-class org.as2lib.test.speed.TestSuiteResult extends BasicClass implements TestResult {
+class org.as2lib.test.speed.TestSuiteResult extends AbstractTestResult implements TestResult {
 	
 	/** Wrapped test suite this instance is the result of. */
 	private var testSuite:TestSuite;
@@ -75,15 +75,6 @@ class org.as2lib.test.speed.TestSuiteResult extends BasicClass implements TestRe
 	}
 	
 	/**
-	 * Returns whether this result has any method invocations.
-	 * 
-	 * @return {@code true} if this result has method invocations else {@code false}
-	 */
-	public function hasMethodInvocations(Void):Boolean {
-		return (getMethodInvocations().length > 0);
-	}
-	
-	/**
 	 * Returns all test results of all sub-tests. These include test results from test
 	 * suites and test cases. The test reults are instances of type {@link TestResult}.
 	 * 
@@ -101,9 +92,18 @@ class org.as2lib.test.speed.TestSuiteResult extends BasicClass implements TestRe
 	 * Returns the string representation of this test suite result. This includes the
 	 * string representation of all tests added to the wrapped test suite.
 	 * 
+	 * @param rootTestResult test result that holds the total values needed for
+	 * percentage calculations
 	 * @return the string representation of this test suite result	 */
 	public function toString():String {
-		var result:String = getName();
+		var rootTestResult:TestResult = arguments[0];
+		if (!rootTestResult) rootTestResult = this;
+		var result:String = getTimePercentage(rootTestResult.getTime()) + "%";
+		result += ", " + getTime() + " ms";
+		result += " - " + getMethodInvocationPercentage(rootTestResult.getMethodInvocationCount()) + "%";
+		result += ", " + getMethodInvocationCount() + " inv.";
+		result += " - " + getAverageTime() + " ms/inv.";
+		result += " - " + getName();
 		var tests:Array = testSuite.getAllTests();
 		if (tests.length == 0) {
 			result += "\n  No tests.";
@@ -113,7 +113,7 @@ class org.as2lib.test.speed.TestSuiteResult extends BasicClass implements TestRe
 				var testResult:TestResult = Test(tests[i]).getResult();
 				if (testResult.hasMethodInvocations()) {
 					result += "\n";
-					result += StringUtil.addSpaceIndent(((Math.round((testResult.getTime() / totalTime) * 10000))/100).toString() + " % - " + testResult.toString(), 2);
+					result += StringUtil.addSpaceIndent(testResult.toString(rootTestResult), 2);
 				}
 			}
 		}
