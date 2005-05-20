@@ -30,12 +30,12 @@ class org.as2lib.env.reflect.stringifier.MethodInfoStringifier extends BasicClas
 	 * 
 	 * <p>The string representation is composed as follows:
 	 * <pre>
-	 *   fullyQualifiedDeclaringTypeName.methodName()
+	 *   fullyQualifiedDeclaringTypeName.methodName
 	 * </pre>
 	 *
 	 * <p>Or if static:
 	 * <pre>
-	 *   static fullyQualifiedDeclaringTypeName.methodName()
+	 *   static fullyQualifiedDeclaringTypeName.methodName
 	 * </pre>
 	 * 
 	 * @param target an instance of type {@link MethodInfo} to stringify
@@ -48,7 +48,7 @@ class org.as2lib.env.reflect.stringifier.MethodInfoStringifier extends BasicClas
 			result += "static ";
 		}
 		result += method.getDeclaringType().getFullName();
-		result += "." + method.getName() + "()";
+		result += "." + method.getName();
 		return result;
 	}
 	
