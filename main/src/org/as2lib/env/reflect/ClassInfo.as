@@ -810,4 +810,18 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		return null;
 	}
 	
+	/**
+	 * Returns the string representation of this instance.
+	 * 
+	 * <p>The string representation is constructed as follows:
+	 * <pre>
+	 *   [reflection fullyQualifiedNameOfReflectedType]
+	 * </pre>
+	 * 
+	 * @return this instance's string representation
+	 */
+	public function toString():String {
+		return ("[reflection " + getFullName() + "]");
+	}
+	
 }

@@ -824,4 +824,18 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 		return false;
 	}
 	
+	/**
+	 * Returns the string representation of this instance.
+	 * 
+	 * <p>The string representation is constructed as follows:
+	 * <pre>
+	 *   [reflection fullyQualifiedNameOfReflectedPackage]
+	 * </pre>
+	 * 
+	 * @return this instance's string representation
+	 */
+	public function toString():String {
+		return ("[reflection " + getFullName() + "]");
+	}
+	
 }
