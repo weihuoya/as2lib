@@ -41,7 +41,7 @@ class org.as2lib.env.event.EventExecutionException extends Exception {
 	 * @param thrower the object that declares the method that throws this exception
 	 * @param args the arguments of the throwing method
 	 */
-	public function EventExecutionException(message:String, thrower, args:FunctionArguments) {
+	public function EventExecutionException(message:String, thrower, args:Array) {
 		super (message, thrower, args);
 	}
 	
