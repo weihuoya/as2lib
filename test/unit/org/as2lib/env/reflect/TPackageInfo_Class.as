@@ -866,6 +866,13 @@ class org.as2lib.env.reflect.TPackageInfo_Class extends TestCase {
 		assertSame("wrong full name", c.getFullName(), "Array");
 	}
 	
+	// causes problems with MTASC because _global.ASnative's prototype equals _global.o
+	/*public function testGetMemberClassByFunctionASnativeFromRootPackage(Void):Void {
+		var p:PackageInfo = PackageInfo.getRootPackage();
+		var c:ClassInfo = p.getMemberClass(_global.ASnative);
+		assertNull(c);
+	}*/
+	
 	public function tearDown() {
 		PackageInfo.setPackageMemberAlgorithm(fpma);
 	}
