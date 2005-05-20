@@ -766,6 +766,16 @@ class org.as2lib.env.reflect.TPackageInfo_Package extends TestCase {
 		p6c.verify();
 	}
 	
+	public function testGetMemberPackageByPackageOrgFromRootPackage(Void):Void {
+		var p:PackageInfo = PackageInfo.getRootPackage();
+		var c:PackageInfo = p.getMemberPackage(_global.org);
+		assertNotNull(c);
+		assertSame(c.getPackage(), _global.org);
+		assertSame(c.getName(), "org");
+		assertSame(c.getFullName(), "org");
+		assertSame(c.getParent(), p);
+	}
+	
 	public function tearDown() {
 		PackageInfo.setPackageMemberAlgorithm(fpma);
 	}
