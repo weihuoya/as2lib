@@ -816,6 +816,56 @@ class org.as2lib.env.reflect.TPackageInfo_Class extends TestCase {
 		p2c.verify();
 	}
 	
+	public function testGetMemberClassByClassObjectFromRootPackage(Void):Void {
+		var p:PackageInfo = PackageInfo.getRootPackage();
+		var c:ClassInfo = p.getMemberClass(Object);
+		assertNotNull("member class for type Object could not be found", c);
+		assertSame("wrong concrete type", c.getType(), Object);
+		assertSame("wrong package", c.getPackage(), p);
+		assertSame("wrong name", c.getName(), "Object");
+		assertSame("wrong full name", c.getFullName(), "Object");
+	}
+	
+	public function testGetMemberClassByClassStringFromRootPackage(Void):Void {
+		var p:PackageInfo = PackageInfo.getRootPackage();
+		var c:ClassInfo = p.getMemberClass(String);
+		assertNotNull("member class for type String could not be found", c);
+		assertSame("wrong concrete type", c.getType(), String);
+		assertSame("wrong package", c.getPackage(), p);
+		assertSame("wrong name", c.getName(), "String");
+		assertSame("wrong full name", c.getFullName(), "String");
+	}
+	
+	public function testGetMemberClassByClassNumberFromRootPackage(Void):Void {
+		var p:PackageInfo = PackageInfo.getRootPackage();
+		var c:ClassInfo = p.getMemberClass(Number);
+		assertNotNull("member class for type Number could not be found", c);
+		assertSame("wrong concrete type", c.getType(), Number);
+		assertSame("wrong package", c.getPackage(), p);
+		assertSame("wrong name", c.getName(), "Number");
+		assertSame("wrong full name", c.getFullName(), "Number");
+	}
+	
+	public function testGetMemberClassByClassBooleanFromRootPackage(Void):Void {
+		var p:PackageInfo = PackageInfo.getRootPackage();
+		var c:ClassInfo = p.getMemberClass(Boolean);
+		assertNotNull("member class for type Boolean could not be found", c);
+		assertSame("wrong concrete type", c.getType(), Boolean);
+		assertSame("wrong package", c.getPackage(), p);
+		assertSame("wrong name", c.getName(), "Boolean");
+		assertSame("wrong full name", c.getFullName(), "Boolean");
+	}
+	
+	public function testGetMemberClassByClassArrayFromRootPackage(Void):Void {
+		var p:PackageInfo = PackageInfo.getRootPackage();
+		var c:ClassInfo = p.getMemberClass(Array);
+		assertNotNull("member class for type Array could not be found", c);
+		assertSame("wrong concrete type", c.getType(), Array);
+		assertSame("wrong package", c.getPackage(), p);
+		assertSame("wrong name", c.getName(), "Array");
+		assertSame("wrong full name", c.getFullName(), "Array");
+	}
+	
 	public function tearDown() {
 		PackageInfo.setPackageMemberAlgorithm(fpma);
 	}
