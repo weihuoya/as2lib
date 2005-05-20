@@ -39,7 +39,13 @@ class org.as2lib.env.reflect.ConstructorInfo extends MethodInfo {
 	 * @param declaringClass the class that declares the {@code constructor}
 	 */
 	public function ConstructorInfo(constructor:Function, declaringClass:ClassInfo) {
-		super (NAME, constructor, declaringClass, false);
+		//super (NAME, constructor, declaringClass, false);
+		// there seems to be a recursion problem somewhere (I could not track it down)
+		this.__proto__.__proto__ = MethodInfo.prototype;
+		this.name = NAME;
+		this.method = constructor;
+		this.declaringType = declaringClass;
+		this.staticFlag = false;
 	}
 	
 }
