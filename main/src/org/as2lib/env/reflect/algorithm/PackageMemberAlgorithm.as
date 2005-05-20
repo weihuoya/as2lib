@@ -129,7 +129,11 @@ class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass
 		r["packages"] = m;
 		var i:String;
 		for (i in t) {
-			if (typeof(t[i]) == "function") {
+			// The last two checks are made to exclude methods from _global like "ASnative".
+			// The last two checks must be made with strict eval because there are types with prototypes whose "valueOf"
+			// method returns "null" or "undefined", for example "Date", "Boolean" and "Number". But if you do a strict
+			// eval check between these prototypes and "null" or "undefined", "false" is be returned.
+			if (typeof(t[i]) == "function" && t[i].prototype !== undefined && t[i].prototype !== null) {
 				// flex stores every class in _global and in its actual package
 				// e.g. org.as2lib.core.BasicClass is stored in _global with name org_as2lib_core_BasicClass
 				// this if-clause excludes these extra stored classes
