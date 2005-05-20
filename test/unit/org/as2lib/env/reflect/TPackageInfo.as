@@ -764,6 +764,6 @@ class org.as2lib.env.reflect.TPackageInfo extends TestCase {
 	}
 	
 	public function tearDown() {
-		PackageInfo.getPackageMemberAlgorithm(fpa);
+		PackageInfo.setPackageMemberAlgorithm(fpa);
 	}
 }
