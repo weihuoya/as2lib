@@ -85,18 +85,12 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	 */
 	public static function getTypeAndMethodInfoByType(type:Function, method:Function):Array {
 		if (!type) return null;
-		var r:Array = new Array();
-		var m:String;
 		if (method == type) {
-			m = CONSTRUCTOR;
-		} else {
-			m = getMethodNameByObject(method, type);
+			return [false, getTypeNameForType(type), CONSTRUCTOR];
 		}
+		var m:String = getMethodNameByObject(method, type);
 		if (m != null) {
-			r[0] = true;
-			r[1] = getTypeNameForType(type);
-			r[2] = m;
-			return r;
+			return [true, getTypeNameForType(type), m];
 		}
 		return getTypeAndMethodInfoByPrototype(type.prototype, method);
 	}
@@ -148,7 +142,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	 * @return an array containing the passed-in method's scope, the name of the
 	 * declaring type and the passed-in method's name
 	 */
-	private static function getTypeAndMethodInfoByPrototype(p, m:Function):Array {
+	public static function getTypeAndMethodInfoByPrototype(p, m:Function):Array {
 		if (p == null) return null;
 		var o = p;
 		_global.ASSetPropFlags(_global, null, 0, true);
