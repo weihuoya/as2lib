@@ -24,7 +24,7 @@ import org.as2lib.core.BasicInterface;
  * {@code Impulse} allows to seperate the certain kind of Impulse from the
  * execution code.
  * 
- * <p>The {@code Impulse} executes {@link Executable#execute} on each impulse of
+ * <p>The {@code Impulse} executes {@link Executable#execute} on each impulse to
  * the connected executables.
  * 
  * Example:

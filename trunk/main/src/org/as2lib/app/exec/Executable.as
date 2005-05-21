@@ -26,16 +26,17 @@ import org.as2lib.core.BasicInterface;
 interface org.as2lib.app.exec.Executable extends BasicInterface {
 	
 	/**
-	 * Executes the hidden encapsulated functionality using the passed-in {@code arguments}.
+	 * Executes the hidden encapsulated functionality using the passed-in
+	 * {@code arguments}.
 	 *
 	 * @return the result of the execution
 	 */
 	public function execute();
 	
 	/**
-	 * Iterates through the passed-in {@code object} and invokes the {@link #execute}
-	 * method for every member passing-in the member itself, the name of the member and
-	 * the passed-in {@code object}.
+	 * Iterates through the passed-in {@code object} and invokes the 
+	 * {@link #execute} method for every member passing-in the member itself,
+	 * the name of the member and the passed-in {@code object}.
 	 *
 	 * @param object the object to iterate over
 	 */
