@@ -40,7 +40,7 @@ class org.as2lib.env.reflect.ConstructorInfo extends MethodInfo {
 	 */
 	public function ConstructorInfo(constructor:Function, declaringClass:ClassInfo) {
 		//super (NAME, constructor, declaringClass, false);
-		// there seems to be a recursion problem somewhere (I could not track it down)
+		// there is a cyclic import: ClassInfo imports ConstructorInfo and ConstructorInfo ClassInfo
 		this.__proto__.__proto__ = MethodInfo.prototype;
 		this.name = NAME;
 		this.method = constructor;
