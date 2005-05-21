@@ -21,7 +21,38 @@ import org.as2lib.app.exec.Executable;
 import org.as2lib.app.exec.FrameImpulse;
 
 /**
- * {@code Timeout} works as 
+ * {@code Timeout} works as delayed execution of a executable.
+ * 
+ * <p>As {@code Timeout} implements {@link Executable} it works like a usual
+ * executable and can be started with {@link #execute}. 
+ * 
+ * <p>As {@code Timeout} implements {@link Process} its possible to handle it
+ * as process.
+ * 
+ * <p>{@code Timeout} works framebased, that means you have to define the delay 
+ * in number of frames.
+ * 
+ * <p>Due to the definition of Call all arguments passed-in in {@link #execute}
+ * will be passed to the connected executable
+ * 
+ * Example for a direct execution:
+ * <code>
+ *   import org.as2lib.app.exec.Timeout;
+ *   import org.as2lib.app.exec.Call;
+ * 
+ *   Timeout.timeout(new Call(myObj, myMethod), 20, ["1", "2"]); 
+ * </code>
+ * 
+ * Example for a controlable usage:
+ * <code>
+ *   import org.as2lib.app.exec.Timeout;
+ *   import org.as2lib.app.exec.Call;
+ * 
+ *   var call:Call = new Call(myObj, myMethod);
+ *   var frames:Number = 20;
+ *   var t:Timeout = new Timeout(call, frames);
+ *   t.execute("argument 1", "argument 2");
+ * </code>
  * 
  * @author Martin Heidegger
  * @version 1.0
@@ -29,23 +60,43 @@ import org.as2lib.app.exec.FrameImpulse;
  */
 class org.as2lib.app.exec.Timeout extends AbstractProcess implements Executable {
 	
-	/**  */
+	/** Connected Executable */
 	private var exe:Executable;
 	
-	/**  */
+	/** Amount of frames until execution (delay) */
 	private var frames:Number;
 	
-	/**  */
+	/** Amount of listened frames */
 	private var executed:Number;
 	
-	/** List of the targets for the execution. */
+	/**
+	 * List of the targets (arguments) for the execution.
+	 * used in {@link #forEach}.
+	 */
 	private var target:Array;
 	
-	/**  */
+	/** Call to the onEnterFrame listener */
 	private var timeCall:Call;
 	
 	/**
+	 * Simplyfier for the execution of a timeout.
 	 * 
+	 * <p>Allows creation and execution of a {@code Timeout} with one call.
+	 * 
+	 * @param exe Executable to excute after a delay
+	 * @param frames Amout of frames during the end of the execution
+	 * @param args Arguments to be passed at execution
+	 */
+	public static function timeout(exe:Executable, frames:Number, args:Array) {
+		var t:Function = eval("th"+"is");
+		var o = new t(exe, frames).execute(args);
+	}
+	
+	/**
+	 * Creates a new {@code Timeout} instance.
+	 * 
+	 * @overload #setExecutable
+	 * @overload #setExecutableByObjectAndFunction
 	 */
 	public function Timeout(Void) {
 		timeCall = new Call(this, onEnterFrame);
@@ -55,21 +106,35 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements Executable 
 		o.forward(arguments);
 	}
 	
+	/**
+	 * Sets the connected executable.
+	 * 
+	 * @param exe Executable to be executed after the delay
+	 * @param frames Delay in frames until execution.
+	 */
 	public function setExecutable(exe:Executable, frames:Number):Void {
 		this.exe = exe;
 		this.frames = frames;
 	}
 	
+	/**
+	 * Sets the connected executable with a generated call.
+	 * 
+	 * @param inObject Scope of the execution
+	 * @param func Method to execute
+	 * @param frames Delay in frames until execution.
+	 */
 	public function setExecutableByObjectAndFunction(inObject:Object, func:Function, frames:Number):Void {
 		setExecutable(new Call(inObject, func), frames);
 	}
 	
-	private function onEnterFrame() {
-		if (executed++ > frames) {
-			finalExecution();
-		}
-	}
-	
+	/**
+	 * Starts the delay until the execution of the connected Executable.
+	 * 
+	 * @see #setExecutable
+	 * @see #setExecutableByObjectAndFunction
+	 * @see Executable#execute
+	 */
 	public function execute() {
 		executed = 1;
 		if (!target) target = new Array();
@@ -79,31 +144,79 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements Executable 
 		return null;
 	}
 	
+	/**
+	 * Referes to execute.
+	 * 
+	 * <p>Implementation of {@link AbstractProcess#run} for using it as a
+	 * process.
+	 */
 	public function run() {
 		execute.apply(this, arguments);
 	}
 	
-	private function finalExecution(Void):Void {
-		executed = 1;
-		var i:Number;
-		FrameImpulse.disconnect(timeCall);
-		var oldTarget = target.concat();
-		target = new Array();
-		for (i=0; i<oldTarget.length; i++) {
-			exe["execute"].apply(exe, oldTarget[i]);
-		}
-		resume();
-		finish();
-	}
-	
+	/**
+	 * Executed the Timeout for all iterable objects.
+	 * 
+	 * <p>If you execute .forEach to Timeout it will redirect content, name and
+	 * the object to each execution of the connected call. 
+	 * 
+	 * Example:
+	 * <code>
+	 *   import org.as2lib.app.exec.Timeout;
+	 * 
+	 *   function display(content, name, inObject) {
+	 *     trace("Executed: "+content+", "+name+", "+inObject+";");
+	 *   }
+	 *   
+	 *   var t:Timeout = new Timeout(this, display, 40);
+	 *   t.forEach({a:"1", b:"2", c:"3"});
+	 * </code>
+	 * 
+	 * Delays for 40 frames:
+	 * <pre>
+	 * Executed: 1, a, [Object object];
+	 * Executed: 2, b, [Object object];
+	 * Executed: 3, c, [Object object];
+	 * </pre>
+	 * 
+	 * @param object Object to be iterated
+	 */
 	public function forEach(object):Void {
 		executed = 0
 		if (!target) target = new Array();
 		var i:String;
 		for (i in object) {
 			target.push([object[i], i, object]);
-			execute();
 		}
+		execute();
 		FrameImpulse.connect(timeCall);
+	}
+
+	/**
+	 * Executed on each interval execution.
+	 */
+	private function onEnterFrame(Void):Void {
+		if (executed++ > frames) {
+			finalExecution();
+		}
+	}
+	
+	/**
+	 * Internal method to finish the execution.
+	 */
+	private function finalExecution(Void):Void {
+		executed = 1;
+		var i:Number;
+		FrameImpulse.disconnect(timeCall);
+		var oldTarget = target.concat();
+		target = new Array();
+		
+		// Applying the execution to multiple targets (foreach)
+		for (i=0; i<oldTarget.length; i++) {
+			exe["execute"].apply(exe, oldTarget[i]);
+		}
+		
+		resume();
+		finish();
 	}
 }

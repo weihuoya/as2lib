@@ -18,7 +18,7 @@ class org.as2lib.app.exec.FrameImpulse extends BasicClass implements Impulse {
 		getInstance().disconnectExecutable(exe);
 	}
 	
-	public static function isExecutablonnected(exe:Executable):Void {
+	public static function isConnected(exe:Executable):Void {
 		getInstance().isExecutableConnected(exe);
 	}
 	
