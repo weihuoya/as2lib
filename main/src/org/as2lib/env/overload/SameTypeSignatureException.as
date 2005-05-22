@@ -75,15 +75,12 @@ class org.as2lib.env.overload.SameTypeSignatureException extends OverloadExcepti
 		// it and it would never get displayed.
 		if (!asString) {
 			asString = message;
-			var methodName:String = ReflectUtil.getMethodName(overloadedMethod, overloadTarget);
-			if (methodName) {
-				asString += "\n  Overloaded Method: " + (ReflectUtil.isMethodStatic(methodName, overloadTarget) ? "static " : "") + methodName;
-			} else {
-				if (ReflectUtil.isConstructor(overloadedMethod, overloadTarget)) {
-					asString += "\n  Overloaded Method: new";
-				}
-			}
-			asString += "\n  Used Arguments["+overloadArguments.length+"]: ";
+			var info:Array = ReflectUtil.getTypeAndMethodInfo(overloadTarget, overloadedMethod);
+			asString += "\n  Overloaded Method: ";
+			asString += info[0] == null ? "[unknown]" : (info[0] ? "static " : "");
+			asString += info[1] == null ? "[unknown]" : info[1];
+			asString += "." + (info[2] == null ? "[unknown]" : info[2]);
+			asString += "\n  Used Arguments[" + overloadArguments.length + "]: ";
 			for (var i:Number = 0; i < overloadArguments.length; i++) {
 				if (i != 0) {
 					asString += ", ";
