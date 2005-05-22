@@ -28,15 +28,22 @@ import org.as2lib.data.holder.map.HashMap;
 /**
  * {@code AbstractProcess} is a abstract helper class to implement processes.
  * 
- * <p>Most of the functionalities of {@link Process} are served well within {@code AbstractProcess}.
- * because the usual implementation of process means to run something.
+ * <p>Most of the functionalities of {@link Process} are served well within 
+ * {@code AbstractProcess}. Because of the situation that most processes are 
+ * simple executions {@code AbstractProcess} allows easy implementations of 
+ * {@link Process}.
  * 
- * <p>To use the advantage of {@code AbstractProcess} simple extend it and implement the
- * {@link #run} method.
+ * <p>To use the advantage of {@code AbstractProcess} simple extend it and
+ * implement the {@link #run} method.
+ * 
+ * <p>It executes {@link #run} at {@link #start} and handles the exeuction of
+ * events and the correct states. If you wan't to stop your process
+ * {@link #pause} and {@link #resume} offer direct support.
  * 
  * @author Martin Heidegger
  * @version 1.0
- * @see Process;
+ * @see Process
+ * @see ProcessListener
  */
 class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 	
@@ -77,22 +84,34 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 		finished = false;
 	}
 	
+	/**
+	 * Setter for a possible parent process.
+	 * 
+	 * @param p Process to act as parentprocess.
+	 * @throws IllegalArgumentException if the applied process has the current 
+	 *         instance in its parents-hierarchy.
+	 */
 	public function setParentProcess(p:Process):Void {
+		parent = p;
 		do {
 			if(p == this) {
+				parent = null;
 				throw new IllegalArgumentException("You can not start a process with itself as super process.", this, arguments);
 			}
 		} while (p = p.getParentProcess());
-		
-		parent = p;
 	}
 	
+	/**
+	 * Getter for the parent process.
+	 * 
+	 * @returns Parent process if set, else null.
+	 */
 	public function getParentProcess(Void):Process {
 		return parent;
 	}
 	
 	/**
-	 * Starts a subprocess.
+	 * Starts a sub process.
 	 * <p>Your Process will not be finished until all the subprocesses are
 	 * finished.
 	 * 
@@ -165,6 +184,8 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 	
 	/**
 	 * Template method for running the process.
+	 * 
+	 * @throws AbstrachtOperationException if the method was not extended
 	 */
 	private function run(Void):Void {
 		throw new AbstractOperationException(".run is abstract and has to be implemented.", this, arguments);
@@ -199,35 +220,76 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 	}
 	
 	/**
+	 * Adds a {@link ProcessListener} as Observer to the process.
 	 * 
+	 * @param listener {@link ProcessListener} to be added. 
 	 */
     public function addProcessListener(listener:ProcessListener):Void {
 		distributor.addListener(listener);
 	}
 	
+    /**
+     * Removes a {@link ProcessListener} as Observer from the process.
+     * 
+     * @param listener {@link ProcessListener} to be added.
+     */
 	public function removeProcessListener(listener:ProcessListener):Void {
 		distributor.removeListener(listener);
 	}
 	
+	/**
+	 * Removes all added Observers.
+	 */
 	public function removeAllProcessListeners(Void):Void {
 		distributor.removeAllListeners();
 	}
 	
+	/**
+	 * Adds a {@code list} of {@link ProcessListeners} as Observer to the process.
+	 * 
+	 * @param list List of listeners to be added.
+	 */
 	public function addAllProcessListeners(list:Array):Void {
 		distributor.addAllListeners(list);
 	}
 	
+	/**
+	 * Flag if the process has been started.
+	 * 
+	 * @return true if the process has been started and isn't finish yet else false.
+	 */
 	public function getAllProcessListeners(Void):Array {
 		return distributor.getAllListeners();
 	}
+	
+    /**
+     * Getter for the currently executed percentage of the process.
+     * 
+     * @return Percentage of execution. Null if percentage was not evaluateable.
+     */
     public function getPercentage(Void):Number {
 		return null;
 	}
 	
+	/**
+	 * Method to be executed if a process property changes.
+	 * 
+	 * @param process {@link Process} that changed some properties
+	 */
 	public function onUpdateProcess(process:Process):Void {}
 	
+	/**
+	 * Method to be executed if a process starts execution.
+	 * 
+	 * @param process {@link Process} that started execution
+	 */
 	public function onStartProcess(process:Process):Void {}
 	
+	/**
+	 * Method to be executed if a process finishes its execution.
+	 * 
+	 * @param process {@link Process} that finished with execution
+	 */
 	public function onFinishProcess(process:Process):Void {
 		process.removeProcessListener(this);
 		ArrayUtil.removeElement(subProcesses, process);
@@ -235,12 +297,28 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 		finish();
 	}
 	
+    /**
+     * Method to be executed if a exception was thrown during the execution.
+     * 
+     * @param process {@link Process} where a error occured
+     * @param error Error that was catched with try & catch
+     */
 	public function onProcessError(process:Process, error):Void {
 		event.onProcessError(this, error);
 	}
 	
+	/**
+	 * Method to be executed if a process awakes from pause.
+	 * 
+	 * @param process {@link Process} that resumes from pause
+	 */
 	public function onResumeProcess(process:Process):Void {}
 	
+	/**
+	 * Method to be executed if a process pauses.
+	 * 
+	 * @param process {@link Process} that paused execution
+	 */
 	public function onPauseProcess(process:Process):Void {}
 	
 	/**
