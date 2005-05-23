@@ -138,7 +138,7 @@ class org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm extends BasicClass
 				// e.g. org.as2lib.core.BasicClass is stored in _global with name org_as2lib_core_BasicClass
 				// this if-clause excludes these extra stored classes
 				if (!eval("_global." + i.split("_").join(".")) || i.indexOf("_") < 0) {
-					var b:ClassInfo = c.getClass(t[i]);
+					var b:ClassInfo = c.getClassByClass(t[i]);
 					if (!b) {
 						b = c.addClass(new ClassInfo(t[i], i, p));
 					}
