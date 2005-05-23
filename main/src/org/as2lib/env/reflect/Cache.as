@@ -35,19 +35,39 @@ import org.as2lib.env.reflect.PackageInfo;
 interface org.as2lib.env.reflect.Cache extends BasicInterface {
 	
 	/**
-	 * Returns the class info representing either the class the {@code object} was
-	 * instantiated of or the class that was passed-in.
+	 * @overload #getClassByClass
+	 * @overload #getClassByInstance
+	 */
+	public function getClass():ClassInfo;
+	
+	/**
+	 * Returns the class info representing the passed-in {@code clazz}.
 	 * 
 	 * <p>{@code null} will be returned if:
 	 * <ul>
 	 *   <li>There is no corresponding {@code ClassInfo} instance cached.</li>
-	 *   <li>The passed-in {@code object} is {@code null} or {@code undefined}.</li>
+	 *   <li>The passed-in {@code clazz} is {@code null} or {@code undefined}.</li>
 	 * </ul>
 	 *
-	 * @param object the instance or class to return the appropriate class info for
-	 * @return the class info representing the class
+	 * @param clazz the class to return the class info for
+	 * @return the class info representing the passed-in {@code clazz}
 	 */
-	public function getClass(object):ClassInfo;
+	public function getClassByClass(clazz:Function):ClassInfo;
+	
+	/**
+	 * Returns the class info representing the class the {@code instance} was
+	 * instantiated of.
+	 * 
+	 * <p>{@code null} will be returned if:
+	 * <ul>
+	 *   <li>There is no corresponding {@code ClassInfo} instance cached.</li>
+	 *   <li>The passed-in {@code instance} is {@code null} or {@code undefined}.</li>
+	 * </ul>
+	 *
+	 * @param instance the instance to return the appropriate class info for
+	 * @return the class info representing the instance's class
+	 */
+	public function getClassByInstance(instance):ClassInfo;
 	
 	/**
 	 * Adds the passed-in {@code classInfo} to the list of cached class infos and returns
