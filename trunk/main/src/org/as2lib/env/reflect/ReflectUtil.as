@@ -29,6 +29,9 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	/** The name to use for constructors. */
 	public static var CONSTRUCTOR:String = "new";
 	
+	/** The name to use for unknown information. */
+	public static var UNKNOWN:String = "[unknown]";
+	
 	/** The prefix for a generic member name. */
 	private static var MEMBER_PREFIX:String = "__as2lib__member";
 	
