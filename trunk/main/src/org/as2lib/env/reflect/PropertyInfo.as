@@ -132,6 +132,18 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	}
 	
 	/**
+	 * Returns the full name of this property.
+	 * 
+	 * <p>The full name is the fully qualified name of the declaring type plus the name
+	 * of this property.
+	 *
+	 * @return the full name of this property
+	 */
+	public function getFullName(Void):String {
+		return declaringType.getFullName() + "." + name;
+	}
+	
+	/**
 	 * Returns the setter method of this property.
 	 * 
 	 * <p>The setter method of a property takes one argument, that is the new value that
