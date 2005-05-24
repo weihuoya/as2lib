@@ -85,7 +85,7 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	public function StackTraceElement(thrower, method:Function, args:Array) {
 		this.thrower = thrower ? thrower : null;
 		this.method = method ? method : null;
-		this.args = args ? args : null;
+		this.args = args ? args.concat() : null;
 	}
 	
 	/**
@@ -113,7 +113,7 @@ class org.as2lib.env.except.StackTraceElement extends BasicClass {
 	 * @return the arguments passed to the method that threw the throwable
 	 */
 	public function getArguments(Void):Array {
-		return args;
+		return args.concat();
 	}
 	
 	/**
