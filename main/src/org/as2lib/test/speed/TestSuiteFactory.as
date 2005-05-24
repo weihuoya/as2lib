@@ -15,10 +15,13 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.overload.Overload;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.test.speed.TestSuite;
+import org.as2lib.test.speed.TestCase;
 
 /**
  * {@code TestSuiteFactory} collects test suites.
@@ -29,6 +32,18 @@ class org.as2lib.test.speed.TestSuiteFactory extends BasicClass {
 	/**
 	 * Constructs a new {@code TestSuiteFactory} instance.	 */
 	public function TestSuiteFactory(Void) {
+	}
+	
+	/**
+	 * @overload #collectAllTestCases
+	 * @overload #collectTestCasesByPackage
+	 * @overload #collectTestCasesByClass	 */
+	public function collectTestCases():TestSuite {
+		var o:Overload = new Overload(this);
+		o.addHandler([], collectAllTestCases);
+		o.addHandler([PackageInfo], collectTestCasesByPackage);
+		o.addHandler([ClassInfo], collectTestCasesByClass);
+		return o.forward(arguments);
 	}
 	
 	/**
@@ -45,24 +60,39 @@ class org.as2lib.test.speed.TestSuiteFactory extends BasicClass {
 	 * 
 	 * @param package the package to begin the collection at
 	 * @return a test suite that contains all collected tests	 */
-	public function collectTestCases(package:PackageInfo):TestSuite {
+	public function collectTestCasesByPackage(package:PackageInfo):TestSuite {
 		if (!package) throw new IllegalArgumentException("Argument 'package' [" + package + "] must not be 'null' nor 'undefined'.", this, arguments);
-		var result:TestSuite = new TestSuite(package.getFullName());
+		var r:TestSuite = new TestSuite(package.getFullName());
 		var ca:Array = package.getMemberClasses();
 		for (var i:Number = 0; i < ca.length; i++) {
-			var c:ClassInfo = ca[i];
-			if (c.getType() === Object) continue;
-			result.addTest(c.getConstructor());
-			var ma:Array = c.getMethods(true);
-			for (var k:Number = 0; k < ma.length; k++) {
-				result.addTestByMethod(ma[k]);
-			}
+			r.addTest(collectTestCasesByClass(ca[i]));
 		}
 		var pa:Array = package.getMemberPackages();
 		for (var i:Number = 0; i < pa.length; i++) {
-			result.addTest(collectTestCases(pa[i]));
+			r.addTest(collectTestCasesByPackage(pa[i]));
 		}
-		return result;
+		return r;
+	}
+	
+	public function collectTestCasesByClass(clazz:ClassInfo):TestSuite {
+		var r:TestSuite = new TestSuite(clazz.getFullName());
+		r.addTest(clazz.getConstructor());
+		var p = clazz.getType().prototype;
+		if (p.__constructor__) {
+			var c:Function = p.__constructor__;
+			var m:MethodInfo = ClassInfo(clazz.getSuperType()).getConstructor();
+			if (c != m.getMethod()) {
+				p.__constructor__ = m.getMethod();
+			}
+			// this does actually collect a refernce to the super-type's constructor that is needed for super calls
+			// this is thus not actually part of the class
+			r.addTest(new TestCase(m, p, "__constructor__"));
+		}
+		var ma:Array = clazz.getMethods(true);
+		for (var k:Number = 0; k < ma.length; k++) {
+			r.addTestByMethod(ma[k]);
+		}
+		return r;
 	}
 	
 }

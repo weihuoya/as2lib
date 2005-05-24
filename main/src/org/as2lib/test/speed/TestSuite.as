@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.test.speed.Test;
-import org.as2lib.test.speed.TestResult;
-import org.as2lib.test.speed.TestSuiteResult;
+import org.as2lib.test.speed.AbstractTest;
+import org.as2lib.test.speed.SimpleTestSuiteResult;
 import org.as2lib.test.speed.TestCase;
 
 /**
@@ -33,16 +32,16 @@ import org.as2lib.test.speed.TestCase;
  * @author Simon Wacker
  * @author Martin Heidegger
  */
-class org.as2lib.test.speed.TestSuite extends BasicClass implements Test {
+class org.as2lib.test.speed.TestSuite extends AbstractTest implements Test {
+	
+	/** Makes the static variables of the super-class accessible through this class. */
+	private static var __proto__:Function = AbstractTest;
 	
 	/** This test suite's name. */
 	private var name:String;
 	
 	/** All added tests. */
 	private var tests:Array;
-	
-	/** This test suite's result. */
-	private var result:TestSuiteResult;
 	
 	/**
 	 * Constructs a new {@code TestSuite} instance.
@@ -55,7 +54,7 @@ class org.as2lib.test.speed.TestSuite extends BasicClass implements Test {
 	public function TestSuite(name:String, tests:Array) {
 		this.name = name;
 		this.tests = new Array();
-		this.result = new TestSuiteResult(this);
+		setResult(new SimpleTestSuiteResult(name));
 		for (var i:Number = 0; i < tests.length; i++) {
 			addTest(Test(tests[i]));
 		}
@@ -91,41 +90,40 @@ class org.as2lib.test.speed.TestSuite extends BasicClass implements Test {
 	/**
 	 * Adds the passed-in {@code test} to this test suite.
 	 * 
-	 * <p>If the argument {@code test} is {@code null} or {@code undefined} it will be
-	 * ignored.
+	 * <p>If the argument {@code test} is {@code null} or {@code undefined} this method
+	 * invocation will be ignored.
 	 * 
 	 * @param test the test to add	 */
 	public function addTestByTest(test:Test):Void {
 		if (test) {
 			this.tests.push(test);
+			this.result.addTestResult(test.getResult(NONE));
 		}
 	}
 	
 	/**
 	 * Adds a new test case by {@code method}.
 	 * 
+	 * <p>If the argument {@code method} is {@code null} or {@code undefined} this
+	 * method invocation will be ignored and {@code null} will be returned.
+	 * 
 	 * @param method the method to profile
 	 * @return the created and added test	 */
 	public function addTestByMethod(method:MethodInfo):Test {
-		var test:TestCase = new TestCase(method);
-		addTestByTest(test);
-		return test;
+		if (method) {
+			var test:TestCase = new TestCase(method);
+			addTestByTest(test);
+			return test;
+		}
+		return null;
 	}
 	
 	/**
 	 * Returns all tests of this test suite.
 	 * 
 	 * @return all tests of this test suite	 */
-	public function getAllTests(Void):Array {
+	public function getTests(Void):Array {
 		return this.tests.concat();
-	}
-	
-	/**
-	 * Return the result of this test suite.
-	 * 
-	 * @return this test suite's result	 */
-	public function getResult(Void):TestResult {
-		return this.result;
 	}
 	
 }
