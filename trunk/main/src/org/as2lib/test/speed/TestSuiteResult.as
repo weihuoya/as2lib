@@ -14,110 +14,81 @@
  * limitations under the License.
  */
 
-import org.as2lib.util.StringUtil;
 import org.as2lib.test.speed.TestResult;
-import org.as2lib.test.speed.AbstractTestResult;
-import org.as2lib.test.speed.TestSuite;
-import org.as2lib.test.speed.Test;
 
 /**
- * {@code TestSuiteResult} holds the result of all tests contained by a test suite.
+ * {@code TestSuiteResult} holds the result of a test suite's execution.
  * 
  * @author Simon Wacker */
-class org.as2lib.test.speed.TestSuiteResult extends AbstractTestResult implements TestResult {
-	
-	/** Wrapped test suite this instance is the result of. */
-	private var testSuite:TestSuite;
+interface org.as2lib.test.speed.TestSuiteResult extends TestResult {
 	
 	/**
-	 * Constructs a new {@code TestSuiteResult} instance.
+	 * Returns the time needed per method invocation.
 	 * 
-	 * @param testSuite the test suite this instance is the result of	 */
-	public function TestSuiteResult(testSuite:TestSuite) {
-		this.testSuite = testSuite;
-	}
-	
-	/**
-	 * Returns the name of the wrapped test suite.
-	 * 
-	 * @return the name of the wrapped test suite	 */
-	public function getName(Void):String {
-		return this.testSuite.getName();
-	}
-	
-	/**
-	 * Returns the total invocation time in milliseconds.
-	 * 
-	 * @return the total invocation time in milliseconds
+	 * @return the time needed per method invocation
 	 */
-	public function getTime(Void):Number {
-		var result:Number = 0;
-		var tests:Array = testSuite.getAllTests();
-		for (var i:Number = 0; i < tests.length; i++) {
-			var test:Test = tests[i];
-			result += test.getResult().getTime();
-		}
-		return result;
-	}
+	public function getAverageTime(Void):Number;
 	
 	/**
 	 * Returns all profiled method invocations as {@link MethodInvocation} instances.
 	 * 
-	 * @return all profiled method invocations as {@code MethodInvocation} instances	 */
-	public function getMethodInvocations(Void):Array {
-		var result:Array = new Array();
-		var tests:Array = this.testSuite.getAllTests();
-		for (var i:Number = 0; i < tests.length; i++) {
-			var test:Test = tests[i];
-			result = result.concat(test.getResult().getMethodInvocations());
-		}
-		return result;
-	}
+	 * @return all profiled method invocations as {@code MethodInvocation} instances
+	 */
+	public function getAllMethodInvocations(Void):Array;
 	
 	/**
-	 * Returns all test results of all sub-tests. These include test results from test
-	 * suites and test cases. The test reults are instances of type {@link TestResult}.
+	 * Returns whether this result has any method invocations.
 	 * 
-	 * @return all test results of all sub-tests	 */
-	public function getTestResults(Void):Array {
-		var result:Array = new Array();
-		var tests:Array = this.testSuite.getAllTests();
-		for (var i:Number = 0; i < tests.length; i++) {
-			result.push(Test(tests[i]).getResult());
-		}
-		return result;
-	}
+	 * @return {@code true} if this result has method invocations else {@code false}
+	 */
+	public function hasMethodInvocations(Void):Boolean;
 	
 	/**
-	 * Returns the string representation of this test suite result. This includes the
-	 * string representation of all tests added to the wrapped test suite.
+	 * Returns the total number of method invocations.
 	 * 
-	 * @param rootTestResult test result that holds the total values needed for
-	 * percentage calculations
-	 * @return the string representation of this test suite result	 */
-	public function toString():String {
-		var rootTestResult:TestResult = arguments[0];
-		if (!rootTestResult) rootTestResult = this;
-		var result:String = getTimePercentage(rootTestResult.getTime()) + "%";
-		result += ", " + getTime() + " ms";
-		result += " - " + getMethodInvocationPercentage(rootTestResult.getMethodInvocationCount()) + "%";
-		result += ", " + getMethodInvocationCount() + " inv.";
-		result += " - " + getAverageTime() + " ms/inv.";
-		result += " - " + getName();
-		var tests:Array = testSuite.getAllTests();
-		if (tests.length == 0) {
-			result += "\n  No tests.";
-		} else {
-			var totalTime:Number = getTime();
-			for (var i:Number = 0; i < tests.length; i++) {
-				var testResult:TestResult = Test(tests[i]).getResult();
-				if (testResult.hasMethodInvocations()) {
-					result += "\n";
-					result += StringUtil.addSpaceIndent(testResult.toString(rootTestResult), 2);
-				}
-			}
-		}
-		return result;
-	}
+	 * @return the total number of method invocations
+	 */
+	public function getMethodInvocationCount(Void):Number;
+	
+	/**
+	 * Returns the percentage of method invocations in relation to the passed-in
+	 * {@code totalMethodInvocationCount}.
+	 * 
+	 * @param totalMethodInvocationCount the total number of method invocations to
+	 * calculate the percentage with
+	 * @return the percentage of method invocations of this result
+	 */
+	public function getMethodInvocationPercentage(totalMethodInvocationCount:Number):Number;
+	
+	/**
+	 * Returns all test results as {@link TestResult} instances directly of this test
+	 * suite.
+	 * 
+	 * @return all test results of this test suite
+	 */
+	public function getTestResults(Void):Array;
+	
+	/**
+	 * Returns whether this test suite result has sub-test results.
+	 * 
+	 * @return {@code true} if this test suite has sub-test results else {@code false}
+	 */
+	public function hasTestResults(Void):Boolean;
+	
+	/**
+	 * Returns the number of sub-test results.
+	 * 
+	 * @return the number of sub-test results
+	 */
+	public function getTestResultCount(Void):Number;
+	
+	/**
+	 * Sorts this test suite result and its sub-test results.
+	 * 
+	 * @param property the property to sort by
+	 * @param descending determines whether to sort descending {@code true} or
+	 * ascending {@code false}
+	 */
+	public function sort(property:Number, descending:Boolean):Void;
 	
 }

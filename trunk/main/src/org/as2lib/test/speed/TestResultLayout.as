@@ -15,32 +15,20 @@
  */
 
 import org.as2lib.core.BasicInterface;
+import org.as2lib.test.speed.TestSuiteResult;
 
 /**
- * {@code TestResult} holds the result of a test's execution.
+ * {@code TestResultLayout} lays test results out.
  * 
  * @author Simon Wacker */
-interface org.as2lib.test.speed.TestResult extends BasicInterface {
+interface org.as2lib.test.speed.TestResultLayout extends BasicInterface {
 	
 	/**
-	 * Returns the name of the test.
+	 * Lays the passed-in {@code testResult} out and returns a new lay-outed test
+	 * result.
 	 * 
-	 * @return the test's name	 */
-	public function getName(Void):String;
-	
-	/**
-	 * Returns the total invocation time in milliseconds.
-	 * 
-	 * @return the total invocation time in milliseconds
-	 */
-	public function getTime(Void):Number;
-	
-	/**
-	 * Returns the invocation time as percentage in relation to the passed-in
-	 * {@code totalTime}.
-	 * 
-	 * @param totalTime the total time to calculate the percentage with
-	 * @return the invocation time as percentage	 */
-	public function getTimePercentage(totalTime:Number):Number;
+	 * @param testResult the test result to lay-out
+	 * @return the lay-outed test result	 */
+	public function layOut(testResult:TestSuiteResult):TestSuiteResult;
 	
 }

@@ -15,32 +15,19 @@
  */
 
 import org.as2lib.core.BasicInterface;
+import org.as2lib.test.speed.MethodInvocation;
 
 /**
- * {@code TestResult} holds the result of a test's execution.
+ * {@code MethodInvocationHolder} is a generic interface for tests that build upon
+ * method invocations.
  * 
  * @author Simon Wacker */
-interface org.as2lib.test.speed.TestResult extends BasicInterface {
+interface org.as2lib.test.speed.MethodInvocationHolder extends BasicInterface {
 	
 	/**
-	 * Returns the name of the test.
+	 * Returns the held method invocation.
 	 * 
-	 * @return the test's name	 */
-	public function getName(Void):String;
-	
-	/**
-	 * Returns the total invocation time in milliseconds.
-	 * 
-	 * @return the total invocation time in milliseconds
-	 */
-	public function getTime(Void):Number;
-	
-	/**
-	 * Returns the invocation time as percentage in relation to the passed-in
-	 * {@code totalTime}.
-	 * 
-	 * @param totalTime the total time to calculate the percentage with
-	 * @return the invocation time as percentage	 */
-	public function getTimePercentage(totalTime:Number):Number;
+	 * @return the held method invocation	 */
+	public function getMethodInvocation(Void):MethodInvocation;
 	
 }

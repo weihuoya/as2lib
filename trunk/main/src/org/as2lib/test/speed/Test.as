@@ -33,11 +33,8 @@ interface org.as2lib.test.speed.Test extends BasicInterface {
 	/**
 	 * Returns the test result of this test.
 	 * 
-	 * <p>Note that if this test is currently running, the returned result is only a
-	 * snapshot.
-	 * 
 	 * @return this test's result
 	 */
-	public function getResult(Void):TestResult;
+	public function getResult(layout:Number):TestResult;
 	
 }

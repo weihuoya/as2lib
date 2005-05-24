@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.reflect.MethodInfo;
+import org.as2lib.env.reflect.ConstructorInfo;
 import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.test.speed.AbstractTest;
 import org.as2lib.test.speed.Test;
-import org.as2lib.test.speed.TestResult;
-import org.as2lib.test.speed.TestCaseResult;
+import org.as2lib.test.speed.SimpleTestSuiteResult;
 import org.as2lib.test.speed.MethodInvocation;
 
 /**
@@ -31,25 +31,41 @@ import org.as2lib.test.speed.MethodInvocation;
  * @author Simon Wacker
  * @author Martin Heidegger
  */
-class org.as2lib.test.speed.TestCase extends BasicClass implements Test {
+class org.as2lib.test.speed.TestCase extends AbstractTest implements Test {
+	
+	/** Makes the static variables of the super-class accessible through this class. */
+	private static var __proto__:Function = AbstractTest;
+	
+	/** The previous method invocation. */
+	private static var p:MethodInvocation;
 	
 	/** The profiled method. */
 	private var method:MethodInfo;
 	
-	/** Result of this test cases' up to now performed speed tests. */
-	private var result:TestCaseResult;
+	/** Scope of profiled method. */
+	private var s;
+	
+	/** Name of profiled method. */
+	private var n:String;
 	
 	/**
+	 * @overload #TestCaseByVoid
 	 * @overload #TestCaseByMethod
-	 * @overload #TestCaseByClassAndMethod
-	 * @overload #TestCaseByInstanceAndMethod
+	 * @overload #TestCaseByObjectAndMethod
+	 * @overload #TestCaseByObjectAndName
 	 */
 	public function TestCase() {
 		var o:Overload = new Overload(this);
+		o.addHandler([], TestCaseByVoid);
 		o.addHandler([MethodInfo], TestCaseByMethod);
-		o.addHandler([Function, Function], TestCaseByClassAndMethod);
-		o.addHandler([Object, Function], TestCaseByInstanceAndMethod);
+		o.addHandler([MethodInfo, Object, String], TestCaseByMethod);
+		o.addHandler([Object, Function], TestCaseByObjectAndMethod);
+		o.addHandler([Object, String], TestCaseByObjectAndName);
 		o.forward(arguments);
+	}
+	
+	private function TestCaseByVoid(Void):Void {
+		TestCaseByObjectAndName(this, "doRun");
 	}
 	
 	/**
@@ -59,62 +75,71 @@ class org.as2lib.test.speed.TestCase extends BasicClass implements Test {
 	 * {@code "doRun"} that must be declared on this instance will be used instead if
 	 * it exists.
 	 * 
+	 * <p>If you want to profile a method, referenced from a different scope and with a
+	 * different name you can specify thse with the last two arguments. Note that if
+	 * specified the method declared on the class will not be profiled.
+	 * 
 	 * @param method the method to profile
+	 * @param referenceScope (optional) the scope of the method reference to profile
+	 * @param referenceName (optional) the name of the method reference to profile
 	 * @throws IllegalArgumentException if the passed-in {@code method} is {@code null}
-	 * or {@code undefined} and this instance has not method named {@code "doRun"}
+	 * or {@code undefined} and this instance has no method named {@code "doRun"}
 	 */
-	private function TestCaseByMethod(method:MethodInfo):Void {
-		if (!method) method = ClassInfo.forInstance(this).getMethodByName("doRun");
+	private function TestCaseByMethod(method:MethodInfo, referenceScope, referenceName:String):Void {
 		if (!method) {
 			throw new IllegalArgumentException("Argument 'method' [" + method + "] must not be 'null' nor 'undefined' or this instance must declare a method named 'doRun'.", this, arguments);
 		}
 		this.method = method;
-		this.result = new TestCaseResult(this);
+		if (referenceScope) {
+			this.s = referenceScope;
+		} else {
+			if (method instanceof ConstructorInfo) {
+				this.s = method.getDeclaringType().getPackage().getPackage();
+			} else if (method.isStatic()) {
+				this.s = method.getDeclaringType().getType();
+			} else {
+				this.s = method.getDeclaringType().getType().prototype;
+			}
+		}
+		if (referenceName) {
+			this.n = referenceName;
+		} else {
+			if (method instanceof ConstructorInfo) {
+				this.n = method.getDeclaringType().getName();
+			} else {
+				this.n = method.getName();
+			}
+		}
+		setResult(new SimpleTestSuiteResult(method.getFullName()));
 	}
 	
 	/**
 	 * Constructs a new {@code TestCase} instance by class and method.
 	 * 
-	 * <p>If {@code clazz} is {@code null} or {@code undefined} the class of this
-	 * instance will be used instead. If {@code method} is {@code null} or
-	 * {@code undefined} a method named {@code "doRun"} that must be declared on the
-	 * class is used instead if it exists.
-	 * 
 	 * @param clazz the class the declares the method to profile
 	 * @param method the method to profile
 	 */
-	private function TestCaseByClassAndMethod(clazz:Function, method:Function):Void {
-		var c:ClassInfo;
-		if (clazz) {
-			c = ClassInfo.forClass(clazz);
-		} else {
-			c = ClassInfo.forInstance(this);
+	private function TestCaseByObjectAndMethod(object, method:Function):Void {
+		if (object == null || !method) {
+			throw new IllegalArgumentException("Neither argument 'object' [" + object + "] nor 'method' [" + method + "] is allowed to be 'null' or 'undefined'.");
 		}
-		if (method) {
-			TestCaseByMethod(c.getMethodByMethod(method));	
-		} else {
-			TestCaseByMethod(c.getMethodByName("doRun"));
-		}
+		var c:ClassInfo = ClassInfo.forObject(object);
+		TestCaseByMethod(c.getMethodByMethod(method));	
 	}
 	
-	/**
-	 * Constructs a new {@code TestCase} instance by instance and method.
-	 * 
-	 * <p>If {@code instance} is {@code null} or {@code undefined}, {@code this} will
-	 * be used instead. If {@code method} is {@code null} or {@code undefined} a method
-	 * named {@code "doRun"} that must be declared by the instance's class is used
-	 * instead.
-	 * 
-	 * @param instance the instance whose class declares the method to profile
-	 * @param method the method to profile
-	 */
-	private function TestCaseByInstanceAndMethod(instance, method:Function):Void {
-		if (instance == null) instance = this;
-		var c:ClassInfo = ClassInfo.forInstance(instance);
-		if (method) {
-			TestCaseByMethod(c.getMethodByMethod(method));
+	private function TestCaseByObjectAndName(object, methodName:String):Void {
+		if (!object[methodName]) {
+			throw new IllegalArgumentException("Method [" + object[methodName] + "] with name '" + methodName + "' on object [" + object + "] must not be 'null' nor 'undefined'.");
+		}
+		if (typeof(object[methodName]) != "function") {
+			throw new IllegalArgumentException("Method [" + object[methodName] + "] with name '" + methodName + "' on object [" + object + "] must be of type 'function'.");
+		}
+		var c:ClassInfo = ClassInfo.forObject(object);
+		if (c.hasMethod(methodName)) {
+			TestCaseByMethod(c.getMethodByName(methodName));
 		} else {
-			TestCaseByMethod(c.getMethodByName("doRun"));
+			var m:MethodInfo = new MethodInfo(methodName, object[methodName], c, false);
+			TestCaseByMethod(m, object, methodName);
 		}
 	}
 	
@@ -131,11 +156,7 @@ class org.as2lib.test.speed.TestCase extends BasicClass implements Test {
 	 * Runs this performance test case.
 	 */
 	public function run(Void):Void {
-		if (this.method.isStatic()) {
-			this.method.getDeclaringType().getType()[this.method.getName()] = createClosure();
-		} else {
-			this.method.getDeclaringType().getType().prototype[this.method.getName()] = createClosure();
-		}
+		this.s[this.n] = createClosure();
 	}
 	
 	/**
@@ -147,15 +168,47 @@ class org.as2lib.test.speed.TestCase extends BasicClass implements Test {
 		var t:TestCase = this;
 		var m:Function = this.method.getMethod();
 		var closure:Function = function() {
-			var b:Number = getTimer();
+			var i:MethodInvocation = t["c"]();
+			i.setPreviousMethodInvocation(TestCase["p"]);
+			i.setArguments(arguments);
+			i.setCaller(arguments.caller.__as2lib__i);
+			m.__as2lib__i = i;
+			var b:Number;
 			try {
+				// enables proper handling of super calls and recursions inside of closured methods
+				var o:Function = arguments.callee;
+				var s = t["s"];
+				var n:String = t["n"];
+				// if the method uses recursion
+				this[n] = o;
+				// if there is a possibility that super might be called support it
+				if (s.__proto__[n]) {
+					s[n] = function() {
+						t["s"].__proto__[t["n"]].apply(this, arguments);
+					};
+				}
+				s[n].__as2lib__i = i;
+				b = getTimer();
 				var r = m.apply(this, arguments);
-				t["addReturnResult"](getTimer() - b, arguments, r);
+				i.setTime(getTimer() - b);
+				// reset methods
+				s[n] = o;
+				delete this[n];
+				// set time directly after invocation to reduce adulteration of the result
+				i.setReturnValue(r);
 				return r;
 			} catch (e) {
-				t["addExceptionResult"](getTimer() - b, arguments, e);
+				i.setTime(getTimer() - b);
+				i.setException(e);
 				throw e;
+			} finally {
+				t["a"](i);
+				TestCase["p"] = i;
+				delete m.__as2lib__i;
 			}
+		};
+		closure.valueOf = function():Object {
+			return m;
 		};
 		// sets class specific variables needed for closures of classes
 		closure.__proto__ = m.__proto__;
@@ -166,38 +219,21 @@ class org.as2lib.test.speed.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Adds a new profile result that resulted in a proper return value.
+	 * Creates a new method invocation configured for this test case.
 	 * 
-	 * @param time the time needed to execute the profiled method
-	 * @param args the arguments used for the method execution
-	 * @param returnValue the value the executed method returned
+	 * @return a new configured method invocation
 	 */
-	private function addReturnResult(time:Number, args:Array, returnValue):Void {
-		var mi:MethodInvocation = new MethodInvocation(time, args, this.method);
-		mi.setReturnValue(returnValue);
-		this.result.addResult(mi);
+	private function c(Void):MethodInvocation {
+		return new MethodInvocation(this.method);
 	}
 	
 	/**
-	 * Adds a new profile result that resulted in an exception.
+	 * Adds a new method invocation profile result.
 	 * 
-	 * @param time the time needed to execute the profiled method
-	 * @param args the arguments used for the method execution
-	 * @param exception the exception the executed method threw
+	 * @return the newly added method invocation profile result
 	 */
-	private function addExceptionResult(time:Number, args:Array, exception):Void {
-		var mi:MethodInvocation = new MethodInvocation(time, args, this.method);
-		mi.setException(exception);
-		this.result.addResult(mi);
-	}
-	
-	/**
-	 * Returns the test result of this test case.
-	 * 
-	 * @return this test case's result
-	 */
-	public function getResult(Void):TestResult {
-		return this.result;
+	private function a(methodInvocation:MethodInvocation):Void {
+		this.result.addTestResult(methodInvocation);
 	}
 	
 }
