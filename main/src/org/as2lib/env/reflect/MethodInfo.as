@@ -115,6 +115,9 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	
 	/**
 	 * Returns the full name of this method.
+	 * 
+	 * <p>The full name is the fully qualified name of the declaring type plus the name
+	 * of this method.
 	 *
 	 * @return the full name of this method
 	 */
