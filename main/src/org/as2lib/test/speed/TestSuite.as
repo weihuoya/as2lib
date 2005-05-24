@@ -16,10 +16,12 @@
 
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.reflect.MethodInfo;
+import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.test.speed.Test;
 import org.as2lib.test.speed.AbstractTest;
 import org.as2lib.test.speed.SimpleTestSuiteResult;
-import org.as2lib.test.speed.TestCase;
+import org.as2lib.test.speed.MethodTestCase;
+import org.as2lib.test.speed.PropertyTestCase;
 
 /**
  * {@code TestSuite} is the core interface for standardized performance test
@@ -79,11 +81,13 @@ class org.as2lib.test.speed.TestSuite extends AbstractTest implements Test {
 	
 	/**
 	 * @overload #addTestByTest
-	 * @overload #addTestByScopeAndName	 */
+	 * @overload #addTestByMethod
+	 * @overload #addTestByProperty	 */
 	public function addTest() {
 		var o:Overload = new Overload(this);
 		o.addHandler([Test], addTestByTest);
 		o.addHandler([MethodInfo], addTestByMethod);
+		o.addHandler([PropertyInfo], addTestByProperty);
 		return o.forward(arguments);
 	}
 	
@@ -111,7 +115,16 @@ class org.as2lib.test.speed.TestSuite extends AbstractTest implements Test {
 	 * @return the created and added test	 */
 	public function addTestByMethod(method:MethodInfo):Test {
 		if (method) {
-			var test:TestCase = new TestCase(method);
+			var test:MethodTestCase = new MethodTestCase(method);
+			addTestByTest(test);
+			return test;
+		}
+		return null;
+	}
+	
+	public function addTestByProperty(property:PropertyInfo):Test {
+		if (property) {
+			var test:PropertyTestCase = new PropertyTestCase(property);
 			addTestByTest(test);
 			return test;
 		}

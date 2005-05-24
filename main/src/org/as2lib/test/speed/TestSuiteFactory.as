@@ -21,7 +21,7 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.test.speed.TestSuite;
-import org.as2lib.test.speed.TestCase;
+import org.as2lib.test.speed.MethodTestCase;
 
 /**
  * {@code TestSuiteFactory} collects test suites.
@@ -86,11 +86,15 @@ class org.as2lib.test.speed.TestSuiteFactory extends BasicClass {
 			}
 			// this does actually collect a refernce to the super-type's constructor that is needed for super calls
 			// this is thus not actually part of the class
-			r.addTest(new TestCase(m, p, "__constructor__"));
+			r.addTest(new MethodTestCase(m, p, "__constructor__"));
 		}
 		var ma:Array = clazz.getMethods(true);
 		for (var k:Number = 0; k < ma.length; k++) {
 			r.addTestByMethod(ma[k]);
+		}
+		var pa:Array = clazz.getProperties(true);
+		for (var k:Number = 0; k < pa.length; k++) {
+			r.addTestByProperty(pa[k]);
 		}
 		return r;
 	}
