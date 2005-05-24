@@ -140,7 +140,10 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * @return the full name of this property
 	 */
 	public function getFullName(Void):String {
-		return declaringType.getFullName() + "." + name;
+		if (declaringType.getFullName()) {
+			return declaringType.getFullName() + "." + name;
+		}
+		return name;
 	}
 	
 	/**
