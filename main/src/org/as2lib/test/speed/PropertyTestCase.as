@@ -61,7 +61,7 @@ class org.as2lib.test.speed.PropertyTestCase extends AbstractTest implements Tes
 	
 	public function PropertyTestCaseByObjectAndName(object, propertyName:String):Void {
 		var c:ClassInfo = ClassInfo.forObject(object);
-		if (c.hasOwnProperty(propertyName)) {
+		if (c.hasProperty(propertyName)) {
 			PropertyTestCaseByProperty(c.getPropertyByName(propertyName));
 		} else {
 			if (!object["__set__" + propertyName] && !object["__get__" + propertyName]) {
