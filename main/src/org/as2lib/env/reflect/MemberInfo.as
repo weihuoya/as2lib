@@ -36,4 +36,12 @@ interface org.as2lib.env.reflect.MemberInfo extends BasicInterface {
 	 */
 	public function getName(Void):String;
 	
+	/**
+	 * Returns the name of this member plus the name of the member that contains this
+	 * member.
+	 * 
+	 * @return this member's full name
+	 */
+	public function getFullName(Void):String;
+	
 }
