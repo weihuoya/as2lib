@@ -32,6 +32,16 @@ import org.as2lib.env.reflect.MemberInfo;
 interface org.as2lib.env.reflect.TypeMemberInfo extends MemberInfo {
 	
 	/**
+	 * Returns the full name of this type member.
+	 * 
+	 * <p>The full name is the name of this type member plus the fully qualified name
+	 * of the declaring type.
+	 * 
+	 * @return the full name of this type member
+	 */
+	public function getFullName(Void):String;
+	
+	/**
 	 * Returns the declaring type of this type member.
 	 *
 	 * @return this type member's declaring type
