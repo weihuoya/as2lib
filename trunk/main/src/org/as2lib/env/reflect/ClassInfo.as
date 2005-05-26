@@ -656,6 +656,39 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	}
 	
 	/**
+	 * Returns whether this class or any super-class implements a property with the
+	 * passed-in {@code propertyName}.
+	 *
+	 * <p>Static properties are not filtered by default. That means {@code filterStaticProperties}
+	 * is by default set to {@code false}.
+	 *
+	 * <p>If the passed-in {@code propertyName} is {@code null} or {@code undefined},
+	 * {@code false} will be returned.
+	 *
+	 * @param propertyName the name of the property to search for
+	 * @param filterStaticProperties (optional) determines whether static properties are
+	 * filtered, that means excluded from the search
+	 * @return {@code true} if the property exists else {@code false}
+	 */
+	public function hasProperty(propertyName:String, filterStaticProperties:Boolean):Boolean {
+		if (propertyName == null) return false;
+		if (filterStaticProperties == null) filterStaticProperties = false;
+		if (clazz.prototype["__get__" + propertyName]) return true;
+		if (clazz.prototype["__set__" + propertyName]) return true;
+		if (filterStaticProperties) return false;
+		if (clazz[propertyName]) return true;
+		var superClass:TypeInfo = getSuperType();
+		while (superClass) {
+			if (superClass.getType()["__set__" + propertyName]
+					|| superClass.getType()["__get__" + propertyName]) {
+				return true;
+			}
+			superClass = superClass.getSuperType();
+		}
+		return false;
+	}
+	
+	/**
 	 * @overload #getPropertiesByFlag
 	 * @overload #getPropertiesByFilter
 	 */
