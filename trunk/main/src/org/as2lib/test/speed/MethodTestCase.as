@@ -135,7 +135,7 @@ class org.as2lib.test.speed.MethodTestCase extends AbstractTest implements Test 
 		if (c.hasMethod(methodName)) {
 			MethodTestCaseByMethod(c.getMethodByName(methodName));
 		} else {
-			var m:MethodInfo = new MethodInfo(methodName, object[methodName], c, false);
+			var m:MethodInfo = new MethodInfo(methodName, c, false, object[methodName]);
 			MethodTestCaseByMethod(m, object, methodName);
 		}
 	}

@@ -88,19 +88,23 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	 * <p>All arguments are allowed to be {@code null}. But keep in mind that not all
 	 * methods will function properly if one is.
 	 * 
+	 * <p>If {@code method} is not specified, it will be resolved at run-time everytime
+	 * it is needed. This means that the concrete method will always be up-to-date even
+	 * if you have overwritten it.
+	 * 
 	 * @param name the name of the method
-	 * @param method the concrete method
 	 * @param declaringType the declaring type of the method
-	 * @param static a flag representing whether the method is static
+	 * @param staticFlag determines whether the method is static
+	 * @param method (optional) the concrete method
 	 */
 	public function MethodInfo(name:String,
-							   method:Function,
 							   declaringType:TypeInfo,
-							   staticFlag:Boolean) {
+							   staticFlag:Boolean,
+							   method:Function) {
 		this.name = name;
-		this.method = method;
 		this.declaringType = declaringType;
 		this.staticFlag = staticFlag;
+		this.method = method;
 	}
 	
 	/**
@@ -131,10 +135,27 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	/**
 	 * Returns the concrete method this instance represents.
 	 *
+	 * <p>If the concrete method was not specified on construction it will be resolved
+	 * on run-time by this method everytime asked for. The returned method is thus
+	 * always the current method on the declaring type.
+	 *
 	 * @return the concrete method
 	 */
 	public function getMethod(Void):Function {
-		return method;
+		if (method) {
+			return method;
+		}
+		var t:Function = declaringType.getType();
+		if (staticFlag) {
+			if (t[name] != t.__proto__[name]) {
+				return t[name];
+			}
+		}
+		var p = t.prototype;
+		if (p[name] != p.__proto__[name]) {
+			return p[name];
+		}
+		return null;
 	}
 	
 	/**
@@ -157,7 +178,7 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	 * @return the return value of the method invocation
 	 */
 	public function invoke(scope, args:Array) {
-		return method.apply(scope, args);
+		return getMethod().apply(scope, args);
 	}
 	
 	/**

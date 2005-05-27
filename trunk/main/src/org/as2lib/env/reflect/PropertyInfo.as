@@ -99,22 +99,26 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * <p>All arguments are allowed to be {@code null}. But keep in mind that not all
 	 * methods will function properly if one is.
 	 * 
+	 * <p>If arguments {@code setter} or {@code getter} are not specified they will be
+	 * resolved at run-time everytime asked for. Making use of this functionality you
+	 * will always get the up-to-date setter or getter.
+	 * 
 	 * @param name the name of the property
-	 * @param setter the setter method of the property
-	 * @param getter the getter method of the property
 	 * @param declaringType the type declaring the property
-	 * @param static a flag that determines whether the property is static
+	 * @param staticFlag determines whether the property is static
+	 * @param setter (optional) the setter method of the property
+	 * @param getter (optional) the getter method of the property
 	 */
 	public function PropertyInfo(name:String,
-								 setter:Function,
-								 getter:Function,
 								 declaringType:TypeInfo,
-								 staticFlag:Boolean) {
+								 staticFlag:Boolean,
+								 setter:Function,
+								 getter:Function) {
 		this.name = name;
 		this.declaringType = declaringType;
 		this.staticFlag = staticFlag;
-		this.setter = setter ? new MethodInfo("__set__" + name, setter, declaringType, staticFlag) : null;
-		this.getter = getter ? new MethodInfo("__get__" + name, getter, declaringType, staticFlag) : null;
+		this.setter = new MethodInfo("__set__" + name, declaringType, staticFlag, setter);
+		this.getter = new MethodInfo("__get__" + name, declaringType, staticFlag, getter);
 	}
 	
 	/**
@@ -160,7 +164,10 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * @return the setter method of this property
 	 */
 	public function getSetter(Void):MethodInfo {
-		return setter;
+		if (setter.getMethod()) {
+			return setter;
+		}
+		return null;
 	}
 	
 	/**
@@ -177,7 +184,10 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * @return the getter method of the property
 	 */
 	public function getGetter(Void):MethodInfo {
-		return getter;
+		if (getter.getMethod()) {
+			return getter;
+		}
+		return null;
 	}
 	
 	/**
@@ -200,7 +210,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * @return {@code true} if this property is writable else {@code false}
 	 */
 	public function isWritable(Void):Boolean {
-		return (setter != null);
+		return (getSetter() != null);
 	}
 	
 	/**
@@ -211,7 +221,7 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	 * @return {@code true} when this property is readable else {@code false}
 	 */
 	public function isReadable(Void):Boolean {
-		return (getter != null);
+		return (getGetter() != null);
 	}
 	
 	/**

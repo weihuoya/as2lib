@@ -79,10 +79,10 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 			setter = info.getDeclaringType().getType().prototype[info.getSetter().getName()];
 		}
 		var newInfo:PropertyInfo = new PropertyInfo(info.getName(),
-													setter,
-													getter,
 													info.getDeclaringType(),
-													info.isStatic());
+													info.isStatic(),
+													setter,
+													getter);
 		return (new PropertyJoinPoint(newInfo, getThis()));
 	}
 	

@@ -75,9 +75,9 @@ class org.as2lib.aop.joinpoint.MethodJoinPoint extends AbstractJoinPoint impleme
 			method = info.getDeclaringType().getType().prototype[info.getName()];
 		}
 		var newInfo:MethodInfo = new MethodInfo(info.getName(),
-												method,
 												info.getDeclaringType(),
-												info.isStatic());
+												info.isStatic(),
+												method);
 		return (new MethodJoinPoint(newInfo, getThis()));
 	}
 	

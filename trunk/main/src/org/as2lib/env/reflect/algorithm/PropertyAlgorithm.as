@@ -125,13 +125,13 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass {
 				if (i.indexOf("__get__") == 0) {
 					g[n] = true;
 					if (!s[n]) {
-						r[r.length] = new PropertyInfo(n, t["__set__" + n], t[i], c, a);
+						r[r.length] = new PropertyInfo(n, c, a, t["__set__" + n], t[i]);
 						r[n] = r[r.length-1];
 					}
 				} else if (i.indexOf("__set__") == 0) {
 					s[n] = true;
 					if (!g[n]) {
-						r[r.length] = new PropertyInfo(n, t[i], t["__get__" + n], c, a);
+						r[r.length] = new PropertyInfo(n, c, a, t[i], t["__get__" + n]);
 						r[n] = r[r.length-1];
 					}
 				}

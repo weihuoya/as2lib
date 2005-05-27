@@ -111,7 +111,7 @@ class org.as2lib.env.reflect.algorithm.MethodAlgorithm extends BasicClass {
 			if (typeof(t[k]) == "function"
 					&& k.indexOf("__get__") < 0
 					&& k.indexOf("__set__") < 0) {
-				r[r.length] = new MethodInfo(k, t[k], i, s);
+				r[r.length] = new MethodInfo(k, i, s);
 				r[k] = r[r.length-1];
 			}
 		}
