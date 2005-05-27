@@ -56,7 +56,7 @@ class org.as2lib.env.reflect.algorithm.TPropertyAlgorithm extends TestCase {
 		var pc:MockControl = new MockControl(ClassInfo);
 		var p:ClassInfo = pc.getMock();
 		p.getType();
-		pc.setReturnValue(org.as2lib.env.reflect.treflect.SubClass);
+		pc.setDefaultReturnValue(org.as2lib.env.reflect.treflect.SubClass);
 		p.getFullName();
 		pc.setDefaultReturnValue("lo");
 		pc.replay();

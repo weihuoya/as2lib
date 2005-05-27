@@ -133,7 +133,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		
 		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
-		c.getClass(Type.prototype);
+		c.getClassByInstance(Type.prototype);
 		cc.setReturnValue(i);
 		cc.replay();
 		
