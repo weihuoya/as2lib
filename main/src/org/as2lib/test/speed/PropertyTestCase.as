@@ -69,7 +69,7 @@ class org.as2lib.test.speed.PropertyTestCase extends AbstractTest implements Tes
 			}
 			var setter:Function = object["__set__" + propertyName];
 			var getter:Function = object["__get__" + propertyName];
-			var p:PropertyInfo = new PropertyInfo(propertyName, setter, getter, c, false);
+			var p:PropertyInfo = new PropertyInfo(propertyName, c, false, setter, getter);
 			PropertyTestCaseByProperty(p, object, propertyName);
 		}
 	}
