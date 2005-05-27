@@ -91,7 +91,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		
 		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
-		c.getClass(Type.prototype);
+		c.getClassByInstance(Type.prototype);
 		cc.setReturnValue(si);
 		cc.replay();
 		
@@ -191,7 +191,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		
 		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
-		c.getClass(Type.prototype);
+		c.getClassByInstance(Type.prototype);
 		cc.setReturnValue(si);
 		cc.replay();
 		
@@ -386,7 +386,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		
 		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
-		c.getClass(Type.prototype);
+		c.getClassByInstance(Type.prototype);
 		cc.setReturnValue(si);
 		cc.replay();
 		
@@ -615,7 +615,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		
 		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
-		c.getClass(Type.prototype);
+		c.getClassByInstance(Type.prototype);
 		cc.setReturnValue(sc);
 		cc.replay();
 		
@@ -744,7 +744,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		
 		var cc:MockControl = new MockControl(Cache);
 		var c:Cache = cc.getMock();
-		c.getClass(Type.prototype);
+		c.getClassByInstance(Type.prototype);
 		cc.setReturnValue(sc);
 		cc.replay();
 		

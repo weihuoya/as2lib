@@ -37,7 +37,7 @@ class org.as2lib.env.except.TAbstractThrowable extends TestCase {
 		return true;
 	}
 	
-	public function getThrowable(message:String, thrower, args:FunctionArguments):Throwable {
+	public function getThrowable(message:String, thrower, args:Array):Throwable {
 		throw new Error("Abstract method that should be overwritten.");
 		return null;
 	}
@@ -49,17 +49,23 @@ class org.as2lib.env.except.TAbstractThrowable extends TestCase {
 		var e:StackTraceElement = StackTraceElement(t.getStackTrace().pop());
 		assertNull(e.getMethod());
 		assertNull(e.getThrower());
-		assertNull(e.getArguments());
+		assertEmpty(e.getArguments());
 	}
 	
 	public function testNewWithRealArguments(Void):Void {
+		var a:Array = ["arg1", 2, true, new Object()];
+		a.callee = function() {};
 		var h:Object = new Object();
-		var t:Throwable = getThrowable("message", h, arguments);
+		var t:Throwable = getThrowable("message", h, a);
 		assertSame(t.getMessage(), "message");
 		var e:StackTraceElement = StackTraceElement(t.getStackTrace().pop());
-		assertSame(e.getMethod(), arguments.callee);
+		assertSame(e.getMethod(), a.callee);
 		assertSame(e.getThrower(), h);
-		assertSame(e.getArguments(), arguments);
+		var args:Array = e.getArguments();
+		assertSame("length is different", a.length, args.length);
+		for (var i:Number = 0; i < a.length; i++) {
+			assertSame("element '" + i + "' is not the same", a[i], args[i]);
+		}
 	}
 	
 	public function testInitCauseWithNullArgument(Void):Void {
@@ -99,21 +105,34 @@ class org.as2lib.env.except.TAbstractThrowable extends TestCase {
 		var s:Array = t.getStackTrace();
 
 		var e:StackTraceElement;
+		var args:Array;
 
 		e = StackTraceElement(s.shift());
 		assertSame(e.getThrower(), h0);
 		assertSame(e.getMethod(), arguments.callee);
-		assertSame(e.getArguments(), arguments);
+		args = e.getArguments();
+		assertSame("length is different", arguments.length, args.length);
+		for (var i:Number = 0; i < arguments.length; i++) {
+			assertSame("element '" + i + "' is not the same", arguments[i], args[i]);
+		}
 		
 		e = StackTraceElement(s.shift());
 		assertSame(e.getThrower(), h1);
 		assertSame(e.getMethod(), f1);
-		assertSame(e.getArguments(), a1);
+		args = e.getArguments();
+		assertSame("length is different", a1.length, args.length);
+		for (var i:Number = 0; i < a1.length; i++) {
+			assertSame("element '" + i + "' is not the same", a1[i], args[i]);
+		}
 
 		e = StackTraceElement(s.shift());
 		assertSame(e.getThrower(), h2);
 		assertSame(e.getMethod(), f2);
-		assertSame(e.getArguments(), a2);
+		args = e.getArguments();
+		assertSame("length is different", a2.length, args.length);
+		for (var i:Number = 0; i < a2.length; i++) {
+			assertSame("element '" + i + "' is not the same", a2[i], args[i]);
+		}
 	}
 	
 }

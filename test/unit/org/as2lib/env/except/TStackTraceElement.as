@@ -115,21 +115,29 @@ class org.as2lib.env.except.TStackTraceElement extends TestCase {
 	 * Test if the arguments are returned properly
 	 */
 	public function testGetArguments (){
-		
 		// Validates the usual case completly.
 		var stackTraceElement:StackTraceElement = getStackTraceElement (thrower, method, args);
-		assertEquals ("stackTraceElement.getArguments() should return the args object", stackTraceElement.getArguments(), args);
-		assertEquals ("stackTraceElement.getArguments().callee should return the callee", stackTraceElement.getArguments().callee, callee);
-		assertEquals ("stackTraceElement.getArguments().caller should return the caller", stackTraceElement.getArguments().caller, caller);
+		var returnedArgs:Array = stackTraceElement.getArguments();
+		for (var i:Number = 0; i < returnedArgs.length; i++) {
+			assertSame("element '" + i + "' of arguments are not the same", returnedArgs[i], args[i]);
+		}
 		
 		// Validates wrong cases
-		assertNull ("stackTraceElement.getArguments() should return null if null is applied for the arguments", getStackTraceElement(thrower, method, null).getArguments() );
-		assertNull ("stackTraceElement.getArguments() should return undefined if undefined is applied for the arguments", getStackTraceElement(thrower, method, undefined).getArguments() );
+		assertEmpty("stackTraceElement.getArguments() should return null or undefined if null is applied for the arguments", getStackTraceElement(thrower, method, null).getArguments() );
+		assertEmpty("stackTraceElement.getArguments() should return null or undefined if undefined is applied for the arguments", getStackTraceElement(thrower, method, undefined).getArguments() );
 		
 		// Validates cases with missing method or thrower
-		assertEquals ("stackTraceElement.getArguments() should return the args object, even with missing thrower", getStackTraceElement(null, method, args).getArguments(), args);
-		assertEquals ("stackTraceElement.getArguments() should return the args object, even with missing method", getStackTraceElement(thrower, null, args).getArguments(), args);
-		assertEquals ("stackTraceElement.getArguments() should return the args object, even with missing thrower and method", getStackTraceElement(null, null, args).getArguments(), args);
-		
+		assertTrue("stackTraceElement.getArguments() should return the args object, even with missing thrower", compareArguments(getStackTraceElement(null, method, args).getArguments(), args));
+		assertTrue("stackTraceElement.getArguments() should return the args object, even with missing method", compareArguments(getStackTraceElement(thrower, null, args).getArguments(), args));
+		assertTrue("stackTraceElement.getArguments() should return the args object, even with missing thrower and method", compareArguments(getStackTraceElement(null, null, args).getArguments(), args));
 	}
+	
+	private function compareArguments(args1:Array, args2:Array):Boolean {
+		if (args1.length != args2.length) return false;
+		for (var i:Number = 0; i < args1.length; i++) {
+			if (args1[i] != args2[i]) return false;
+		}
+		return true;
+	}
+	
 }

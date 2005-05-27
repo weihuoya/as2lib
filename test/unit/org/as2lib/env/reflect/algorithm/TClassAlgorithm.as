@@ -322,7 +322,7 @@ class org.as2lib.env.reflect.algorithm.TClassAlgorithm extends TestCase {
 		var c:Cache = cc.getMock();
 		c.getRoot();
 		cc.setReturnValue(r);
-		c.getClass(org.as2lib.core.BasicClass);
+		c.getClassByClass(org.as2lib.core.BasicClass);
 		cc.setReturnValue(i);
 		cc.replay();
 		

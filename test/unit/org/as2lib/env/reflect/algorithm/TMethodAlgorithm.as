@@ -56,7 +56,7 @@ class org.as2lib.env.reflect.algorithm.TMethodAlgorithm extends TestCase {
 		var pc:MockControl = new MockControl(ClassInfo);
 		var p:ClassInfo = pc.getMock();
 		p.getType();
-		pc.setReturnValue(org.as2lib.env.reflect.treflect.SubClass);
+		pc.setDefaultReturnValue(org.as2lib.env.reflect.treflect.SubClass);
 		pc.replay();
 		
 		var a:MethodAlgorithm = new MethodAlgorithm();
