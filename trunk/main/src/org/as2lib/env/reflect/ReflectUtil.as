@@ -61,7 +61,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	}
 	
 	/**
-	 * @overload #getTypeAndMethodInfoForType
+	 * @overload #getTypeAndMethodInfoByType
 	 * @overload #getTypeAndMethodInfoByInstance
 	 */
 	public static function getTypeAndMethodInfo(object, method:Function):Array {
