@@ -20,7 +20,7 @@ import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.logger.AbstractLogger;
 
 /**
- * {@code TraceLogger} is a simple implementation of the {@code Logger} interface.
+ * {@code TraceLogger} logs messages using {@code trace}.
  * 
  * <p>The actual logging is always made using {@code trace}. No other output 
  * devices are supported. Use the {@link SimpleLogger} to be able to add log
