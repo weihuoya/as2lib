@@ -49,7 +49,7 @@ interface org.as2lib.env.log.ConfigurableLogger extends Logger {
 	 * <p>The level determines which output to make and and which to make not.
 	 * 
 	 * @param level the new level to control the output
-	 * @see Logger#getLevel
+	 * @see #getLevel
 	 */
 	public function setLevel(level:LogLevel):Void;
 	

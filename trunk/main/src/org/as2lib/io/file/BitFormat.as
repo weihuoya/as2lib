@@ -229,7 +229,7 @@ class org.as2lib.io.file.BitFormat extends BasicClass {
 	 *   new BitFormat(15002344).toString(); // 14.31Mb
 	 * 
 	 * @return bits as string with correct ending.
-	 * @see DEFAULT_FLOATING_POINTS
+	 * @see #DEFAULT_FLOATING_POINTS
 	 */
 	public function toString():String {
 		if(bit < KILO_BIT) {
