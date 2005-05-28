@@ -36,7 +36,7 @@ class org.as2lib.io.conn.core.client.AbstractClientServiceProxy extends BasicCla
 	 * @overload #invokeByName
 	 * @overload #invokeByNameAndArguments
 	 * @overload #invokeByNameAndCallback
-	 * @overload {@code invokeByNameAndArgumentsAndCallback}
+	 * @overload invokeByNameAndArgumentsAndCallback
 	 * @see ClientServiceProxy#invoke
 	 */
 	public function invoke():MethodInvocationCallback {
