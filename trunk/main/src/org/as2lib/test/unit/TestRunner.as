@@ -67,12 +67,6 @@ import org.as2lib.util.StopWatch;
  *       between TestCase & TestSuite. The current implementation of .run allows only those
  *       two classes.
  * 
- * The current State of the testrunner can be evaluated by:
- * @see #isRunning
- * @see #isPaused
- * @see #hasStarted
- * @see #hasFinished
- * 
  * @author Martin Heidegger
  */
 class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process {
