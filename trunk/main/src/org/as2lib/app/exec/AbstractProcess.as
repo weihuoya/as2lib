@@ -185,7 +185,7 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 	/**
 	 * Template method for running the process.
 	 * 
-	 * @throws AbstrachtOperationException if the method was not extended
+	 * @throws AbstractOperationException if the method was not extended
 	 */
 	private function run(Void):Void {
 		throw new AbstractOperationException(".run is abstract and has to be implemented.", this, arguments);
