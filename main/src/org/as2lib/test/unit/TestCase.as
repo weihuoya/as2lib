@@ -229,7 +229,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * Implementation of @see Test. 
 	 * Runs all methods of this testcase in an new container.
 	 * 
-	 * @see TestRunner.run
+	 * @see TestRunner#run
 	 * @return Runner of the Testcases (containing all informations about the run)
 	 */
 	public function run():TestRunner {
@@ -1276,7 +1276,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts the same like @see #assertThrowsWithFunction but adds a message to the failure (if necessary).
+	 * Asserts the same like {@link #assertThrowsWithFunction} but adds a message to the failure (if necessary).
 	 * 
 	 * @see assertThrowsWithFunction
 	 * @param message	Message that should be used by fail.
@@ -1342,10 +1342,10 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * 
 	 * The assertion adds a error to the result if the method did throw any exception.
 	 * 
-	 * @see #assertNotThrowsWithCallAndMessage
-	 * @see #assertNotThrowsWithCallAndTypeAndMessage
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
+	 * @see #assertNotThrowsWithCallAndMessage
+	 * @see #assertNotThrowsWithCallAndMessageAndType
 	 */
 	private function assertNotThrowsWithCall(call:Executable, args:Array):Boolean {
 		return assertNotThrowsWithCallAndMessage("", call, args);
@@ -1357,10 +1357,10 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * 
 	 * The assertion adds a error to the result if the method did throw the expected exception.
 	 * 
-	 * @see #assertNotThrowsWithCallAndTypeAndMessage
 	 * @param type	Type of the Exception that should not be thrown.
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
+	 * @see #assertNotThrowsWithCallAndMessageAndType
 	 */
 	private function assertNotThrowsWithCallAndType(type, call:Executable, args:Array):Boolean {
 		return assertNotThrowsWithCallAndMessageAndType("", type, call, args);
