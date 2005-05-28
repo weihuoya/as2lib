@@ -47,8 +47,8 @@ class org.as2lib.io.conn.core.server.AbstractServerServiceProxy extends BasicCla
 	}
 	
 	/**
-	 * @overload {@code invokeMethodByNameAndArguments}
-	 * @overload {@code invokeMethodByNameAndArgumentsAndResponseService}
+	 * @overload invokeMethodByNameAndArguments
+	 * @overload invokeMethodByNameAndArgumentsAndResponseService
 	 * @see ServerServiceProxy#invokeMethod
 	 */
 	public function invokeMethod():Void {
