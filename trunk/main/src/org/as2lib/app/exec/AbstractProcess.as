@@ -245,7 +245,7 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 	}
 	
 	/**
-	 * Adds a {@code list} of {@link ProcessListeners} as Observer to the process.
+	 * Adds a {@code list} of {@link ProcessListener} as Observer to the process.
 	 * 
 	 * @param list List of listeners to be added.
 	 */
