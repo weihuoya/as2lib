@@ -58,7 +58,7 @@ class org.as2lib.io.file.ByteFormat extends BitFormat {
 	 *   new ByteFormat(15002344).toString(); // 14.31MB
 	 * 
 	 * @return bytes as string with correct ending.
-	 * @see DEFAULT_FLOATING_POINTS
+	 * @see BitFormat#DEFAULT_FLOATING_POINTS
 	 */
 	public function toString():String {
 		if(bit < KILO_BYTE) {
