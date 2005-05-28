@@ -68,7 +68,7 @@ class org.as2lib.env.event.distributor.AbstractEventDistributorControl extends T
 	 * Creates a new distributor based on the listener type specified on construction.
 	 *
 	 * <p>The catching of methods called on the returned distributor takes place using
-	 * {@code __resolve}. This method then invokes the {@link distribute} method with
+	 * {@code __resolve}. This method then invokes the {@link #distribute} method with
 	 * the name of the called method and the arguments used for the method call.
 	 * 
 	 * @return the new distributor

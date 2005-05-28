@@ -31,7 +31,7 @@ import org.as2lib.app.exec.ProcessListener;
  * changed ({@link ProcessListener#onUpdateProcess}).
  * 
  * <p>To observe {@code Process} you can add one or more listener to the process
- * with {@link #addListener} or {@link #addAllListeners}.
+ * with {@link #addProcessListener} or {@link #addAllProcessListeners}.
  * 
  * 
  * @author Martin Heidegger
@@ -54,7 +54,7 @@ interface org.as2lib.app.exec.Process extends BasicInterface {
     public function addProcessListener(listener:ProcessListener):Void;
 	
 	/**
-	 * Adds a {@code list} of {@link ProcessListeners} as Observer to the process.
+	 * Adds a {@code list} of {@link ProcessListener}s as Observer to the process.
 	 * 
 	 * @param list List of listeners to be added.
 	 */

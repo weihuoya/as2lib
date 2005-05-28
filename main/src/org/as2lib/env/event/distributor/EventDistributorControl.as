@@ -21,7 +21,7 @@ import org.as2lib.env.event.EventListenerSource;
  * {@code EventDistributorControl} controls a distributor to distribute events to
  * listeners in a compiler-safe manner.
  * 
- * <p>You can get a distributor via the {@link getDistributor} method that can be
+ * <p>You can get a distributor via the {@link #getDistributor} method that can be
  * casted to your listener type. This enables you to distribute events in a
  * compiler-safe manner.
  * 

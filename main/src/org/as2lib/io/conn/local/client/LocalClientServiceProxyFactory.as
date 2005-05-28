@@ -80,7 +80,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxyFactory extends Abs
 	 * Returns the currently used type proxy factory that is used to create proxies for
 	 * a specific type.
 	 * 
-	 * <p>That is either the proxy factory set via {@link #setServiceProxyFactory}
+	 * <p>That is either the proxy factory set via {@link #setTypeProxyFactory}
 	 * or the default one, which is an instance of type {@link InterfaceProxyFactory}.
 	 * 
 	 * <p>The default {@link InterfaceProxyFactory} can only be used to create proxies

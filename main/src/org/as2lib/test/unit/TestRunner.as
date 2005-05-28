@@ -59,7 +59,7 @@ import org.as2lib.util.StopWatch;
  * It contains all Informations about the resulted testcases.
  * 
  * <p>The Testrunner is designed as process so its possible to add Listener to the
- * TestRunner by {@link #addProcessListener}. In this way it is possible to build a
+ * TestRunner by {@code addProcessListener}. In this way it is possible to build a
  * graphical view to the TestRunner (TestRunner is the Controller and TestResult the
  * Model -> MVC).
  *
@@ -107,7 +107,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 	/** TimeStamp for the time of the last resume/start */
 	private var lastStartStamp:Number;
 	
-	/** Autopause call. Executes awakeFromPause after {@link FRAMES_UNTIL_RESUME} */
+	/** Autopause call. Executes awakeFromPause after {@link #FRAMES_UNTIL_RESUME} */
 	private var autoPauseCall:Timeout;
 	
 	/** 
@@ -201,7 +201,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 	}
 	
 	/**
-	 * Method to be executed by {@link autoPauseCall}
+	 * Method to be executed by {@link #autoPauseCall}.
 	 */
 	private function awakeFromAutoPause(Void):Void {
 		lastStartStamp = getTimer();

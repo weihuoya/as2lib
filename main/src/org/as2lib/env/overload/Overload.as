@@ -384,7 +384,7 @@ class org.as2lib.env.overload.Overload extends BasicClass {
 	}
 	
 	/**
-	 * Returns {@link OverloadHandler} instances that match the passed-in {@code args}.
+	 * Returns {@link OverlaodHandler} instances that match the passed-in {@code args}.
 	 *
 	 * <p>The match is performed using the {@link OverlaodHandler#matches} method.
 	 * 

@@ -78,9 +78,9 @@ class org.as2lib.env.except.FatalException extends AbstractThrowable implements 
 	 * Returns the string representation of this fatal exception.
 	 *
 	 * <p>If you do not call this method out of another method, it also executes the
-	 * {@code fatal} method of the logger returned by the {@link #getLogger} method
-	 * passing {@code this} because it thinks that the virtual machine called this
-	 * method.
+	 * {@code fatal} method of the logger returned by the
+	 * {@link AbstractThrowable#getLogger} method passing {@code this} because it thinks
+	 * that the virtual machine called this method.
 	 *
 	 * <p>The string representation is obtained via the invocation of the
 	 * {@link AbstractThrowable#doToString} method that uses the stringifier returned

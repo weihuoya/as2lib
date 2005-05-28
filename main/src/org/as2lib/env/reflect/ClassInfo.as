@@ -385,10 +385,10 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * <p>If the {@link #getType} method returns {@code null} or {@code undefined},
 	 * {@code null} will be returned.
 	 * 
-	 * <p>You can use the returned ConstructorInfo instance to get the actual 
+	 * <p>You can use the returned constructor info to get the actual 
 	 * constructor. Note that the constructor in Flash is the same as the class. Thus
 	 * the function returned by the {@link #getType} method and the
-	 * {@link ConstructorInfo#getMethod} method of this class info is the same.
+	 * {@code getMethod} method of the returned constructor is the same.
 	 *
 	 * @return the constructor of the class.
 	 */

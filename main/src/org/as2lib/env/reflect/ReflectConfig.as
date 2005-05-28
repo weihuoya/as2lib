@@ -40,7 +40,7 @@ class org.as2lib.env.reflect.ReflectConfig extends BasicClass {
 	 * Returns the cache used to cache all classes and packages that have already been
 	 * found.
 	 * 
-	 * <p>If no cache was set manually via {@link setCache} the default cache will be
+	 * <p>If no cache was set manually via {@link #setCache} the default cache will be
 	 * returned, that is an instance of class {@link SimpleCache} and that is configured
 	 * with the root package returned by the {@link PackageInfo#getRootPackage} method.
 	 *
