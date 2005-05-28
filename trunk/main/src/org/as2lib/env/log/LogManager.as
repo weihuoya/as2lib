@@ -131,7 +131,7 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 	}
 	
 	/**
-	 * Sets a new repositroy returned by {@link #getLoggerRepositroy}.
+	 * Sets a new repositroy returned by {@link #getLoggerRepository}.
 	 *
 	 * <p>The {@link #getLogger} method uses this repository to obtain the logger for
 	 * the passed-in name.

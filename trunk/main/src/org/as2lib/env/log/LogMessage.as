@@ -66,7 +66,7 @@ class org.as2lib.env.log.LogMessage extends BasicClass {
 	/**
 	 * Sets a new stringifier to be used by the {@link #toString} method.
 	 *
-	 * <p>If {@code newStringifier} is {@code null} the {@link getStringifier} method
+	 * <p>If {@code newStringifier} is {@code null} the {@link #getStringifier} method
 	 * will return the default stringifier.
 	 *
 	 * @param newStringifier the new stringifier to be used

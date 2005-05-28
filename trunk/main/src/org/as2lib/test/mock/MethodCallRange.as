@@ -60,7 +60,7 @@ class org.as2lib.test.mock.MethodCallRange extends BasicClass {
 	 * Uses the passed-in {@code quantity} as minimum and maximum.
 	 *
 	 * <p>If the passed-in {@code quantity} is {@code null} {@link #DEFAULT_MINIMUM}
-	 * and {@link DEFAULT_MAXIMUM} is used.
+	 * and {@link #DEFAULT_MAXIMUM} is used.
 	 *
 	 * @param quantity the quantity
 	 */

@@ -38,7 +38,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	/**
 	 * Searches for a member name that is currently not used.
 	 * 
-	 * <p>Uses {@link MEMBER_PREFIX} and a number from 1 to 10000 with two variants to
+	 * <p>Uses {@link #MEMBER_PREFIX} and a number from 1 to 10000 with two variants to
 	 * find a member name that is currently not used (20.000 possible variants).
 	 * 
 	 * @param object the object to find an unused member name in

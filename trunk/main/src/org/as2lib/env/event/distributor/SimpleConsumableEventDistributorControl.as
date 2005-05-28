@@ -23,10 +23,10 @@ import org.as2lib.env.event.distributor.ConsumableEventDistributorControl;
  * event distributor. It enables you to distribute and handle events in the safest
  * way possible.
  * 
- * <p>Note that unlike the {@link Event} class, this class supports the consumption
- * of events. An event is consumed if an event method on a listener returns
- * {@code true}. This means that the distribution of the event will be stopped
- * immediately. Otherwise the event will further be distributed.
+ * <p>Note that unlike the {@link SimpleEventDistributorControl} class, this class
+ * supports the consumption of events. An event is consumed if an event method on a
+ * listener returns {@code true}. This means that the distribution of the event will
+ * be stopped immediately. Otherwise the event will further be distributed.
  * 
  * <p>Example:
  * <code>

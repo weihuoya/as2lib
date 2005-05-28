@@ -102,7 +102,7 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * {@code Object}.
 	 *
 	 * <p>Instances as well as their primitive correspondent match the types 
-	 * {@link String}, {@link Number} or {@link Boolean}.
+	 * {@code String}, {@code Number} or {@code Boolean}.
 	 * 
 	 * @param object the object whose type to compare with the passed-in {@code type}
 	 * @param type the type to use for the comparison

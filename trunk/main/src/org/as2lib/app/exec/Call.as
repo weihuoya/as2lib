@@ -95,7 +95,7 @@ class org.as2lib.app.exec.Call extends BasicClass implements Executable {
 	 *   }
 	 * </code>
 	 *
-	 * <p>Note that only members visible to for..in loops cause the {@link execute}
+	 * <p>Note that only members visible to for..in loops cause the {@link #execute}
 	 * method to be invoked.
 	 * 
 	 * @param object the object to iterate over

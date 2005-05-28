@@ -146,7 +146,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	/**
 	 * Constrcuts a new {@code MockControl} instance using the default behavior.
 	 *
-	 * <p>The default behavior is an instance of class {@link DefaultBehaviour}.
+	 * <p>The default behavior is an instance of class {@link org.as2lib.test.mock.support.DefaultBehaviour}.
 	 *
 	 * <p>This instance is in reset state after creation. That means it is ready to
 	 * receive expectations and to record them.

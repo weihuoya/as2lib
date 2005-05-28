@@ -217,7 +217,7 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	}
 	
 	/**
-	 * Implementation of {@link ProcessListener#onUpdateError} that redirects
+	 * Implementation of {@link ProcessListener#onUpdateProcess} that redirects
 	 * to internal eventbroadcasting.
 	 * 
 	 * @param info to the process that got updated.
@@ -320,7 +320,7 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	}
 	
 	/**
-	 * Adds a {@code list} of {@link ProcessListeners} as Observer to the process.
+	 * Adds a {@code list} of {@link ProcessListener}s as Observer to the process.
 	 * 
 	 * @param list List of listeners to be added.
 	 */
