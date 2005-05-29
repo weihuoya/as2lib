@@ -87,7 +87,7 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements Executable 
 	 * @param frames Amout of frames during the end of the execution
 	 * @param args Arguments to be passed at execution
 	 */
-	public static function timeout(exe:Executable, frames:Number, args:Array) {
+	public static function setTimeout(exe:Executable, frames:Number, args:Array) {
 		var t:Function = eval("th"+"is");
 		var o = new t(exe, frames).execute(args);
 	}
@@ -150,7 +150,7 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements Executable 
 	 * <p>Implementation of {@link AbstractProcess#run} for using it as a
 	 * process.
 	 */
-	public function run() {
+	public function run(Void):Void {
 		execute.apply(this, arguments);
 	}
 	
