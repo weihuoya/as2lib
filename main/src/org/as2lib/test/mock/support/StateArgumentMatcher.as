@@ -29,7 +29,7 @@ import org.as2lib.test.mock.ArgumentMatcher;
 class org.as2lib.test.mock.support.StateArgumentMatcher extends BasicClass implements ArgumentMatcher {
 	
 	/** The expected type. */
-	private var expectedType:Boolean;
+	private var expectedType:Function;
 	
 	/** The expected properties. */
 	private var expectedProperties:Map;
@@ -43,7 +43,7 @@ class org.as2lib.test.mock.support.StateArgumentMatcher extends BasicClass imple
 	 * @throws IllegalArgumentException if {@code type} is {@code null} or
 	 * {@code undefined}
 	 */
-	public function StateArgumentMatcher(expectedType:Boolean) {
+	public function StateArgumentMatcher(expectedType:Function) {
 		if (!expectedType) throw new IllegalArgumentException("Argument 'expectedType' [" + expectedType + "] must not be 'null' nor 'undefined'.", this, arguments);
 		this.expectedType = expectedType;
 		this.expectedProperties = new PrimitiveTypeMap();

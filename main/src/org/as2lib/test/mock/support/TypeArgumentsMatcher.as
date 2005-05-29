@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.util.ObjectUtil;
 import org.as2lib.test.mock.ArgumentsMatcher;
 import org.as2lib.test.mock.ArgumentMatcher;
 
@@ -75,7 +76,7 @@ class org.as2lib.test.mock.support.TypeArgumentsMatcher extends BasicClass imple
 					return false;
 				}
 			} else {
-				if (!(actualArguments[i] instanceof expectedTypes[i])) {
+				if (!ObjectUtil.typesMatch(actualArguments[i], expectedTypes[i])) {
 					return false;
 				}
 			}
