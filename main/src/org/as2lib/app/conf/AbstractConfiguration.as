@@ -34,7 +34,7 @@ class org.as2lib.app.conf.AbstractConfiguration extends AbstractProcess {
 	 * @overload #initClass;
 	 * @overload #initConfig;
 	 */
-	public static function init() {
+	public static function init(Void):Void {
 		if(typeof arguments[0] == "function") {
 			initClass(arguments[0]);
 		} else if(arguments[0] instanceof Process) {
@@ -71,5 +71,7 @@ class org.as2lib.app.conf.AbstractConfiguration extends AbstractProcess {
 	 *
 	 * @param cls Class to be referenced. 
 	 */
-	private function use(cls:Function):Void {}
+	private function use(cls:Function):Void {
+	}
+	
 }
