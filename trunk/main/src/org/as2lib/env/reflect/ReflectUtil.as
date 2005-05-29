@@ -345,7 +345,8 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	private static function getMethodNameByPrototype(m:Function, p):String {
 		if (m == null || p == null) return null;
 		while (p) {
-			getMethodNameByObject(m, p);
+			var n:String = getMethodNameByObject(m, p);
+			if (n != null) return n;
 			p = p.__proto__;
 		}
 		return null;
