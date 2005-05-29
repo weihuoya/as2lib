@@ -89,7 +89,8 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 * <p>The default log level is {@code ALL}. This means all messages regardless of
 	 * their level are logged.
 	 *
-	 * <p>The name is used as class name for the {@code NSDebugger.trace} method.
+	 * <p>The name is used as class name for the {@code NSDebugger.trace} method, if
+	 * the passed class name is {@code null} or {@code undefined}.
 	 *
 	 * @param name (optional) the name of this logger
 	 */
@@ -119,7 +120,8 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	/**
 	 * Sets the name of this logger.
 	 *
-	 * <p>The name is used as class name for the {@code NSDebugger.trace} method.
+	 * <p>The name is used as class name for the {@code NSDebugger.trace} method, if
+	 * the passed class name is {@code null} or {@code undefined}.
 	 *
 	 * @param name the new name of this logger
 	 */
@@ -232,6 +234,9 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 * <p>The {@code message} is always logged using {@code NSDebugger.trace} passing
 	 * at least the arguments {@code message} and {@code level} and {@code className},
 	 * {@code fileName} and {@code lineNumber} if specified.
+	 * 
+	 * <p>If {@code className} is {@code null} or {@code undefined}, the name of this
+	 * logger is used instead.
 	 *
 	 * @param message the message object to log
 	 * @param level the specific level at which the {@code message} shall be logged
@@ -242,6 +247,7 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 */
 	public function log(message, level:Number, className:String, fileName:String, lineNumber:Number):Void {
 		if (isEnabled(level)) {
+			if (className == null) className = this.name;
 			nsDebugger.trace(message, level, className, fileName, lineNumber);
 		}
 	}
@@ -255,6 +261,9 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 * <p>The {@code message} is always logged using {@code NSDebugger.trace} passing
 	 * at least the arguments {@code message}, the debug level and {@code className},
 	 * {@code fileName} and {@code lineNumber} if specified.
+	 * 
+	 * <p>If {@code className} is {@code null} or {@code undefined}, the name of this
+	 * logger is used instead.
 	 *
 	 * @param message the message object to log
 	 * @param className (optional) the name of the class that logs the {@code message}
@@ -264,6 +273,7 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 */
 	public function debug(message, className:String, fileName:String, lineNumber:Number):Void {
 		if (isDebugEnabled()) {
+			if (className == null) className = this.name;
 			nsDebugger.trace(message, this.debugLevel, className, fileName, lineNumber);
 		}
 	}
@@ -277,6 +287,9 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 * <p>The {@code message} is always logged using {@code NSDebugger.trace} passing
 	 * at least the arguments {@code message}, the info level and {@code className},
 	 * {@code fileName} and {@code lineNumber} if specified.
+	 * 
+	 * <p>If {@code className} is {@code null} or {@code undefined}, the name of this
+	 * logger is used instead.
 	 *
 	 * @param message the message object to log
 	 * @param className (optional) the name of the class that logs the {@code message}
@@ -286,6 +299,7 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 */
 	public function info(message, className:String, fileName:String, lineNumber:Number):Void {
 		if (isInfoEnabled()) {
+			if (className == null) className = this.name;
 			nsDebugger.trace(message, this.infoLevel, className, fileName, lineNumber);
 		}
 	}
@@ -299,6 +313,9 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 * <p>The {@code message} is always logged using {@code NSDebugger.trace} passing
 	 * at least the arguments {@code message}, the warning level and {@code className},
 	 * {@code fileName} and {@code lineNumber} if specified.
+	 * 
+	 * <p>If {@code className} is {@code null} or {@code undefined}, the name of this
+	 * logger is used instead.
 	 *
 	 * @param message the message object to log
 	 * @param className (optional) the name of the class that logs the {@code message}
@@ -308,6 +325,7 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 */
 	public function warning(message, className:String, fileName:String, lineNumber:Number):Void {
 		if (isWarningEnabled()) {
+			if (className == null) className = this.name;
 			nsDebugger.trace(message, this.warningLevel, className, fileName, lineNumber);
 		}
 	}
@@ -321,6 +339,9 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 * <p>The {@code message} is always logged using {@code NSDebugger.trace} passing
 	 * at least the arguments {@code message}, the error level and {@code className},
 	 * {@code fileName} and {@code lineNumber} if specified.
+	 * 
+	 * <p>If {@code className} is {@code null} or {@code undefined}, the name of this
+	 * logger is used instead.
 	 *
 	 * @param message the message object to log
 	 * @param className (optional) the name of the class that logs the {@code message}
@@ -330,20 +351,24 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 */
 	public function error(message, className:String, fileName:String, lineNumber:Number):Void {
 		if (isErrorEnabled()) {
+			if (className == null) className = this.name;
 			nsDebugger.trace(message, this.errorLevel, className, fileName, lineNumber);
 		}
 	}
 	
 	/**
 	 * Logs the passed-in {@code message} at fatal level.
-	 *
+	 * 
 	 * <p>The {@code message} is only logged when the level is set to {@code FATAL} or
 	 * a level above.
-	 *
+	 * 
 	 * <p>The {@code message} is always logged using {@code NSDebugger.trace} passing
 	 * at least the arguments {@code message}, the fatal level and {@code className},
 	 * {@code fileName} and {@code lineNumber} if specified.
-	 *
+	 * 
+	 * <p>If {@code className} is {@code null} or {@code undefined}, the name of this
+	 * logger is used instead.
+	 * 
 	 * @param message the message object to log
 	 * @param className (optional) the name of the class that logs the {@code message}
 	 * @param fileName (optional) the name of the file that declares the class
@@ -352,6 +377,7 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 */
 	public function fatal(message, className:String, fileName:String, lineNumber:Number):Void {
 		if (isFatalEnabled()) {
+			if (className == null) className = this.name;
 			nsDebugger.trace(message, this.fatalLevel, className, fileName, lineNumber);
 		}
 	}
