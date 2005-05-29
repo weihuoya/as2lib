@@ -74,8 +74,8 @@ class org.as2lib.env.except.TAbstractThrowable extends TestCase {
 	}
 	
 	public function testInitCauseViaGetCause(Void):Void {
-		var c1:Throwable = new Throwable();
-		var c2:Throwable = new Throwable();
+		var c1:Throwable = getThrowable();
+		var c2:Throwable = getThrowable();
 		
 		var t:Throwable = getThrowable("message", this, arguments);
 		assertSame(t.initCause(c1), t);
