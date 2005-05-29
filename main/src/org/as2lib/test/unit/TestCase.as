@@ -174,14 +174,13 @@ import org.as2lib.util.ObjectUtil;
  *   </tbody>
  * </table>
  * 
- * You have also got the possibility to simple fail the Testcase by @see #fail.
+ * You have also got the possibility to simple fail the Testcase by {@link #fail}.
  *
  * @author Martin Heidegger
  * @version 1.2
  * @see org.as2lib.test.unit.TestSuite
  * @see org.as2lib.test.unit.Test
- * @see org.as2lib.test.unit.Assert
- * @see org.as2lib.test.unit.TestResults
+ * @see org.as2lib.test.unit.TestResult
  */
 
 class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
@@ -311,9 +310,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * @see #assertTrueWithMessage
-	 * @see #assertTrueWithoutMessage
+	 * @overload #assertTrueWithMessage
+	 * @overload #assertTrueWithoutMessage
 	 */
 	private function assertTrue():Boolean {
 		var overload:Overload = new Overload(this);
@@ -356,8 +354,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	
 	/**
 	 * overload
-	 * @see #assertFalseWithMessage
-	 * @see #assertFalseWithoutMessage
+	 * @overload #assertFalseWithMessage
+	 * @overload #assertFalseWithoutMessage
 	 */
 	private function assertFalse():Boolean {
 		var overload:Overload = new Overload(this);
@@ -399,9 +397,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * @see #assertEqualsWithMessage
-	 * @see #assertEqualsWithoutMessage
+	 * @overload #assertEqualsWithMessage
+	 * @overload #assertEqualsWithoutMessage
 	 */
 	private function assertEquals():Boolean {
 		var overload:Overload = new Overload(this);
@@ -453,11 +450,10 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * @see #assertAlmostEqualsWithMessageWithMaxDiff
-	 * @see #assertAlmostEqualsWithoutMessageWithMaxDiff
-	 * @see #assertAlmostEqualsWithMessageWithoutMaxDiff
-	 * @see #assertAlmostEqualsWithoutMessageWithoutMaxDiff
+	 * @overload #assertAlmostEqualsWithMessageWithMaxDiff
+	 * @overload #assertAlmostEqualsWithoutMessageWithMaxDiff
+	 * @overload #assertAlmostEqualsWithMessageWithoutMaxDiff
+	 * @overload #assertAlmostEqualsWithoutMessageWithoutMaxDiff
 	 */
 	private function assertAlmostEquals():Boolean {
 		var overload:Overload = new Overload(this);
@@ -543,9 +539,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * @see #assertNotEqualsWithMessage
-	 * @see #assertNotEqualsWithoutMessage
+	 * @overload #assertNotEqualsWithMessage
+	 * @overload #assertNotEqualsWithoutMessage
 	 */
 	private function assertNotEquals():Boolean {
 		var overload:Overload = new Overload(this);
@@ -597,9 +592,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * @see #assertSameWithMessage
-	 * @see #assertSameWithoutMessage
+	 * @overload #assertSameWithMessage
+	 * @overload #assertSameWithoutMessage
 	 */
 	private function assertSame():Boolean {
 		var overload:Overload = new Overload(this);
@@ -651,9 +645,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * @see #assertNotSameWithMessage
-	 * @see #assertNotSameWithoutMessage
+	 * @overload #assertNotSameWithMessage
+	 * @overload #assertNotSameWithoutMessage
 	 */
 	private function assertNotSame():Boolean {
 		var overload:Overload = new Overload(this);
@@ -705,9 +698,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * @see #assertNullWithMessage
-	 * @see #assertNullWithoutMessage
+	 * @overload #assertNullWithMessage
+	 * @overload #assertNullWithoutMessage
 	 */
 	private function assertNull():Boolean {
 		var overload:Overload = new Overload(this);
@@ -753,9 +745,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * @see #assertNotNullWithMessage
-	 * @see #assertNotNullWithoutMessage
+	 * @overload #assertNotNullWithMessage
+	 * @overload #assertNotNullWithoutMessage
 	 */
 	private function assertNotNull():Boolean {
 		var overload:Overload = new Overload(this);
@@ -801,9 +792,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * @see #assertUndefinedWithMessage
-	 * @see #assertUndefinedWithoutMessage
+	 * @overload #assertUndefinedWithMessage
+	 * @overload #assertUndefinedWithoutMessage
 	 */
 	private function assertUndefined():Boolean {
 		var overload:Overload = new Overload(this);
@@ -849,9 +839,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * @see #assertNotUndefinedWithMessage
-	 * @see #assertNotUndefinedWithoutMessage
+	 * @overload #assertNotUndefinedWithMessage
+	 * @overload #assertNotUndefinedWithoutMessage
 	 */
 	private function assertNotUndefined():Boolean {
 		var overload:Overload = new Overload(this);
@@ -897,9 +886,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * @see #assertInfinityWithMessage
-	 * @see #assertInfinityWithoutMessage
+	 * @overload #assertInfinityWithMessage
+	 * @overload #assertInfinityWithoutMessage
 	 */
 	private function assertInfinity():Boolean {
 		var overload:Overload = new Overload(this);
@@ -941,9 +929,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * @see #assertNotInfinityWithMessage
-	 * @see #assertNotInfinityWithoutMessage
+	 * @overload #assertNotInfinityWithMessage
+	 * @overload #assertNotInfinityWithoutMessage
 	 */
 	private function assertNotInfinity():Boolean {
 		var overload:Overload = new Overload(this);
@@ -985,9 +972,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * @see #assertEmptyWithMessage
-	 * @see #assertEmptyWithoutMessage
+	 * @overload #assertEmptyWithMessage
+	 * @overload #assertEmptyWithoutMessage
 	 */
 	private function assertEmpty():Boolean {
 		var overload:Overload = new Overload(this);
@@ -1035,9 +1021,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * @see #assertNotEmptyWithMessage
-	 * @see #assertNotEmptyWithoutMessage
+	 * @overload #assertNotEmptyWithMessage
+	 * @overload #assertNotEmptyWithoutMessage
 	 */
 	private function assertNotEmpty():Boolean {
 		var overload:Overload = new Overload(this);
@@ -1085,20 +1070,18 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * 
-	 * @see #assertThrowsWithCall
-	 * @see #assertThrowsWithCallAndType
-	 * @see #assertThrowsWithCallAndMessage
-	 * @see #assertThrowsWithCallAndMessageAndType
-	 * @see #assertThrowsWithString
-	 * @see #assertThrowsWithStringAndType
-	 * @see #assertThrowsWithStringAndMessage
-	 * @see #assertThrowsWithStringAndMessageAndType
-	 * @see #assertThrowsWithFunction
-	 * @see #assertThrowsWithFunctionAndType
-	 * @see #assertThrowsWithFunctionAndMessage
-	 * @see #assertThrowsWithFunctionAndMessageAndType
+	 * @overload #assertThrowsWithCall
+	 * @overload #assertThrowsWithCallAndType
+	 * @overload #assertThrowsWithCallAndMessage
+	 * @overload #assertThrowsWithCallAndMessageAndType
+	 * @overload #assertThrowsWithString
+	 * @overload #assertThrowsWithStringAndType
+	 * @overload #assertThrowsWithStringAndMessage
+	 * @overload #assertThrowsWithStringAndMessageAndType
+	 * @overload #assertThrowsWithFunction
+	 * @overload #assertThrowsWithFunctionAndType
+	 * @overload #assertThrowsWithFunctionAndMessage
+	 * @overload #assertThrowsWithFunctionAndMessageAndType
 	 */
 	private function assertThrows():Boolean {
 		var overload:Overload = new Overload(this);
@@ -1304,20 +1287,18 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	
 	
 	/**
-	 * overload
-	 * 
-	 * @see #assertNotThrowsWithCall
-	 * @see #assertNotThrowsWithCallAndType
-	 * @see #assertNotThrowsWithCallAndMessage
-	 * @see #assertNotThrowsWithCallAndMessageAndType
-	 * @see #assertNotThrowsWithString
-	 * @see #assertNotThrowsWithStringAndType
-	 * @see #assertNotThrowsWithStringAndMessage
-	 * @see #assertNotThrowsWithStringAndMessageAndType
-	 * @see #assertNotThrowsWithFunction
-	 * @see #assertNotThrowsWithFunctionAndType
-	 * @see #assertNotThrowsWithFunctionAndMessage
-	 * @see #assertNotThrowsWithFunctionAndMessageAndType
+	 * @overload #assertNotThrowsWithCall
+	 * @overload #assertNotThrowsWithCallAndType
+	 * @overload #assertNotThrowsWithCallAndMessage
+	 * @overload #assertNotThrowsWithCallAndMessageAndType
+	 * @overload #assertNotThrowsWithString
+	 * @overload #assertNotThrowsWithStringAndType
+	 * @overload #assertNotThrowsWithStringAndMessage
+	 * @overload #assertNotThrowsWithStringAndMessageAndType
+	 * @overload #assertNotThrowsWithFunction
+	 * @overload #assertNotThrowsWithFunctionAndType
+	 * @overload #assertNotThrowsWithFunctionAndMessage
+	 * @overload #assertNotThrowsWithFunctionAndMessageAndType
 	 */
 	private function assertNotThrows():Boolean {
 		var overload:Overload = new Overload(this);
@@ -1522,10 +1503,8 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * overload
-	 * 
-	 * @see #assertTypeOfWithMessage
-	 * @see #assertTypeOfWithoutMessage
+	 * @overload #assertTypeOfWithMessage
+	 * @overload #assertTypeOfWithoutMessage
 	 */
 	private function assertTypeOf():Boolean {
 		var overload:Overload = new Overload(this);
@@ -1560,11 +1539,9 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		return !info.isFailed();
 	}
 	
-	/**
-	 * overload
-	 * 
-	 * @see #assertInstanceOfWithMessage
-	 * @see #assertInstanceOfWithoutMessage
+	/** 
+	 * @overload #assertInstanceOfWithMessage
+	 * @overload #assertInstanceOfWithoutMessage
 	 */
 	private function assertInstanceOf():Boolean {
 		var overload:Overload = new Overload(this);
@@ -1585,7 +1562,6 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts that a value is a instance of a special type and adds a message if the assertion fails.
 	 * 
 	 * @see #assertInstanceOfWithoutMessage
 	 * @param message	Message to be appended if the assertion fails.

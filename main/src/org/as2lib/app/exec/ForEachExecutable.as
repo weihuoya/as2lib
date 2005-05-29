@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -13,24 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import org.as2lib.core.BasicInterface;
+ 
+import org.as2lib.app.exec.Executable;
 
 /**
- * {@code Executable} wraps specific functionalities that can be executed through
- * the {@link #execute} method behind this generic interface.
+ * {@code ForEachExecutable} is a extension to {@link Executable} to execute the
+ * certain executale for all childs within a object.
  * 
- * @author Simon Wacker
  * @author Martin Heidegger
- */
-interface org.as2lib.app.exec.Executable extends BasicInterface {
-	
+ * @version 1.0
+ */ 
+interface org.as2lib.app.exec.ForEachExecutable extends Executable {
+
 	/**
-	 * Executes the hidden encapsulated functionality using the passed-in
-	 * {@code arguments}.
+	 * Iterates through the passed-in {@code object} and invokes the 
+	 * {@link #execute} method for every member passing-in the member itself,
+	 * the name of the member and the passed-in {@code object}.
 	 *
-	 * @return the result of the execution
+	 * @param object the object to iterate over
 	 */
-	public function execute();
-	
+	public function forEach(object):Void;
 }

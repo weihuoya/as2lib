@@ -17,7 +17,7 @@
 import org.as2lib.env.overload.Overload;
 import org.as2lib.app.exec.AbstractProcess;
 import org.as2lib.app.exec.Call;
-import org.as2lib.app.exec.Executable;
+import org.as2lib.app.exec.ForEachExecutable;
 import org.as2lib.app.exec.FrameImpulse;
 
 /**
@@ -58,7 +58,7 @@ import org.as2lib.app.exec.FrameImpulse;
  * @version 1.0
  * @see Executable#execute
  */
-class org.as2lib.app.exec.Timeout extends AbstractProcess implements Executable {
+class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExecutable {
 	
 	/** Connected Executable */
 	private var exe:Executable;

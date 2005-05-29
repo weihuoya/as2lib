@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ReflectUtil;
-import org.as2lib.app.exec.Executable;
+import org.as2lib.app.exec.ForEachExecutable;
 import org.as2lib.util.AccessPermission;
 
 /**
@@ -30,7 +30,7 @@ import org.as2lib.util.AccessPermission;
  * @author Simon Wacker
  * @author Martin Heidegger
  */
-class org.as2lib.app.exec.Call extends BasicClass implements Executable {
+class org.as2lib.app.exec.Call extends BasicClass implements ForEachExecutable {
 	
 	/** The object to execute the method on. */
 	private var object;
