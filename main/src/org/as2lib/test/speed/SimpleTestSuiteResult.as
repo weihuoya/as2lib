@@ -22,7 +22,7 @@ import org.as2lib.test.speed.TestResult;
 import org.as2lib.test.speed.MethodInvocationHolder;
 
 /**
- * {@code SimpleTestSuiteResult} holds the result of all tests contained by a test suite.
+ * {@code SimpleTestSuiteResult} holds the results of all tests contained by a test suite.
  * 
  * @author Simon Wacker */
 class org.as2lib.test.speed.SimpleTestSuiteResult extends AbstractTestSuiteResult implements ConfigurableTestSuiteResult {
@@ -64,12 +64,12 @@ class org.as2lib.test.speed.SimpleTestSuiteResult extends AbstractTestSuiteResul
 	}
 	
 	/**
-	 * Returns the string representation of this test result. This includes the string
-	 * representation of all tests added to the wrapped tests.
+	 * Returns the string representation of this test suite result. This includes the
+	 * string representation of all added test results.
 	 * 
 	 * @param rootTestResult test result that holds the total values needed for
 	 * percentage calculations
-	 * @return the string representation of this test result
+	 * @return the string representation of this test suite result
 	 */
 	public function toString():String {
 		var rootTestResult:TestSuiteResult = TestSuiteResult(arguments[0]);

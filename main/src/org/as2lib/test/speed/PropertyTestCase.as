@@ -24,13 +24,18 @@ import org.as2lib.test.speed.SimpleTestSuiteResult;
 import org.as2lib.test.speed.MethodTestCase;
 
 /**
+ * {@code PropertyTestCase} profiles a property.
+ * 
  * @author Simon Wacker */
 class org.as2lib.test.speed.PropertyTestCase extends AbstractTest implements Test {
 	
+	/** The property to profile. */
 	private var property:PropertyInfo;
 	
+	/** Test case for the getter method. */
 	private var getter:MethodTestCase;
 	
+	/** Test case for the setter method. */
 	private var setter:MethodTestCase;
 	
 	/**
@@ -43,6 +48,19 @@ class org.as2lib.test.speed.PropertyTestCase extends AbstractTest implements Tes
 		o.forward(arguments);
 	}
 	
+	/**
+	 * Constructs a new {@code PropertyTestCase} by property.
+	 * 
+	 * <p>If you want to profile a method, referenced from a different scope and with a
+	 * different name you can specify thse with the last two arguments. Note that if
+	 * specified the method declared on the class will not be profiled but its
+	 * reference.
+	 * 
+	 * @param property the property to profile
+	 * @param referenceScope (optional) the scope of the property reference to profile
+	 * @param referenceName (optional) the name of the property reference to profile
+	 * @throws IllegalArgumentException if the passed-in {@code property} is
+	 * {@code null} or {@code undefined}	 */
 	public function PropertyTestCaseByProperty(property:PropertyInfo, referenceScope, referenceName:String):Void {
 		if (!property) {
 			throw new IllegalArgumentException("Argument 'property' [" + property + "] must not be 'null' nor 'undefined'.", this, arguments);
@@ -59,6 +77,13 @@ class org.as2lib.test.speed.PropertyTestCase extends AbstractTest implements Tes
 		}
 	}
 	
+	/**
+	 * Constructs a new {@code PropertyTestCase} by object and property name.
+	 * 
+	 * @param object the object that declares the property to profile
+	 * @param propertyName the name of the property to profile
+	 * @throws IllegalArgumentException if there is no property with the given
+	 * {@code propertyName} on the given {@code object}	 */
 	public function PropertyTestCaseByObjectAndName(object, propertyName:String):Void {
 		var c:ClassInfo = ClassInfo.forObject(object);
 		if (c.hasProperty(propertyName)) {
@@ -74,10 +99,16 @@ class org.as2lib.test.speed.PropertyTestCase extends AbstractTest implements Tes
 		}
 	}
 	
+	/**
+	 * Returns the profiled property.
+	 * 
+	 * @return the profiled property	 */
 	public function getProperty(Void):PropertyInfo {
 		return this.property;
 	}
 	
+	/**
+	 * Runs this property test case.	 */
 	public function run(Void):Void {
 		this.getter.run();
 		this.setter.run();

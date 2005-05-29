@@ -24,12 +24,16 @@ import org.as2lib.test.speed.SimpleTestSuiteResult;
 import org.as2lib.test.speed.layout.ClassLayout;
 
 /**
+ * {@code PackageLayout} lays test suite results out with packages as root elements of
+ * the structure.
+ * 
  * @author Simon Wacker */
 class org.as2lib.test.speed.layout.PackageLayout extends BasicClass implements TestResultLayout {
 	
+	/** The result of the lay-outing of the current test suite result. */
 	private var result:ConfigurableTestSuiteResult;
 	
-	/** */
+	/** All method invocations of the test suite result to lay-out. */
 	private var methodInvocations:Array;
 	
 	/**
@@ -38,11 +42,11 @@ class org.as2lib.test.speed.layout.PackageLayout extends BasicClass implements T
 	}
 	
 	/**
-	 * Lays the passed-in {@code testResult} out and returns a new lay-outed test
-	 * result.
+	 * Lays the passed-in {@code testSuiteResult} out with packages as root elements of
+	 * the structure and returns the new lay-outed test suite result.
 	 * 
-	 * @param testResult the test result to lay-out
-	 * @return the lay-outed test result
+	 * @param testSuiteResult the test suite result to lay-out
+	 * @return the lay-outed test suite result
 	 * @todo support multiple package layers, not just the one of the declaring type
 	 */
 	public function layOut(testSuiteResult:TestSuiteResult):TestSuiteResult {
@@ -56,6 +60,12 @@ class org.as2lib.test.speed.layout.PackageLayout extends BasicClass implements T
 		return this.result;
 	}
 	
+	/**
+	 * Adds all method invocations of methods of the passed-in {@code package} to the
+	 * result and removes these invocations from the {@code methodInvocations} array.
+	 * 
+	 * @param package the package to add method invocations for
+	 * @return the number of removed method invocations	 */
 	private function addMethodInvocations(package:PackageInfo):Number {
 		var count:Number = 0;
 		var classResult:ConfigurableTestSuiteResult = new SimpleTestSuiteResult(package.getFullName());

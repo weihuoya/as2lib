@@ -24,8 +24,7 @@ import org.as2lib.test.speed.MethodTestCase;
 import org.as2lib.test.speed.PropertyTestCase;
 
 /**
- * {@code TestSuite} is the core interface for standardized performance test
- * suites.
+ * {@code TestSuite} is the core interface for standardized performance test suites.
  * 
  * <p>Test suites hold multiple {@code Test} instances, including {@code TestCase},
  * instances, {@code TestSuite} instances and instances of your custom {@code Test}
@@ -122,6 +121,15 @@ class org.as2lib.test.speed.TestSuite extends AbstractTest implements Test {
 		return null;
 	}
 	
+	/**
+	 * Adds a new test case by {@code property}.
+	 * 
+	 * <p>If the argument {@code property} is {@code null} or {@code undefined} this
+	 * method invocation will be ignored and {@code null} will be returned.
+	 * 
+	 * @param property the property to profile
+	 * @return the created and added test
+	 */
 	public function addTestByProperty(property:PropertyInfo):Test {
 		if (property) {
 			var test:PropertyTestCase = new PropertyTestCase(property);
