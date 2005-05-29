@@ -47,7 +47,8 @@ class org.as2lib.test.speed.TestSuiteFactory extends BasicClass {
 	}
 	
 	/**
-	 * Collects all methods except the ones declared by {@code Object} as test cases.
+	 * Collects all methods and properties as test cases except the ones declared by
+	 * {@code Object}.
 	 * 
 	 * @return a test suite that contains all tests	 */
 	public function collectAllTestCases(Void):TestSuite {
@@ -55,8 +56,8 @@ class org.as2lib.test.speed.TestSuiteFactory extends BasicClass {
 	}
 	
 	/**
-	 * Collects all methods except the ones declared by {@code Object} of the given
-	 * {@code package} and all sub-packages as test cases.
+	 * Collects all methods and properties of the given {@code package} and all
+	 * sub-packages as test cases except the ones declared by {@code Object}.
 	 * 
 	 * @param package the package to begin the collection at
 	 * @return a test suite that contains all collected tests	 */
@@ -74,6 +75,12 @@ class org.as2lib.test.speed.TestSuiteFactory extends BasicClass {
 		return r;
 	}
 	
+	/**
+	 * Collects all methods and properties of the given class as test cases.
+	 * Methods and properties of super-classes are not included.
+	 * 
+	 * @param clazz the class to collect the methods and properties of
+	 * @return a test suite that contains all collected tests	 */
 	public function collectTestCasesByClass(clazz:ClassInfo):TestSuite {
 		var r:TestSuite = new TestSuite(clazz.getFullName());
 		r.addTest(clazz.getConstructor());

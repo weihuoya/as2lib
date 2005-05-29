@@ -25,8 +25,8 @@ import org.as2lib.test.speed.SimpleTestSuiteResult;
 import org.as2lib.test.speed.MethodInvocation;
 
 /**
- * {@code TestCase} is the core interface for standardized performance test
- * cases.
+ * {@code MethodTestCase} is a test case for a method. It tests a method and profiles
+ * its method invocations.
  *
  * @author Simon Wacker
  * @author Martin Heidegger
@@ -63,26 +63,26 @@ class org.as2lib.test.speed.MethodTestCase extends AbstractTest implements Test 
 		o.forward(arguments);
 	}
 	
+	/**
+	 * Constructs a new {@code MethodTestCase} instance for the default method. This is
+	 * the method named {@code "doRun"} that must be declared on this instance.	 */
 	private function MethodTestCaseByVoid(Void):Void {
 		MethodTestCaseByObjectAndName(this, "doRun");
 	}
 	
 	/**
-	 * Constructs a new {@code TestCase} instance by method.
-	 * 
-	 * <p>If {@code method} is {@code null} or {@code undefined} the method named
-	 * {@code "doRun"} that must be declared on this instance will be used instead if
-	 * it exists.
+	 * Constructs a new {@code MethodTestCase} instance by method.
 	 * 
 	 * <p>If you want to profile a method, referenced from a different scope and with a
 	 * different name you can specify thse with the last two arguments. Note that if
-	 * specified the method declared on the class will not be profiled.
+	 * specified the method declared on the class will not be profiled but its
+	 * reference.
 	 * 
 	 * @param method the method to profile
 	 * @param referenceScope (optional) the scope of the method reference to profile
 	 * @param referenceName (optional) the name of the method reference to profile
 	 * @throws IllegalArgumentException if the passed-in {@code method} is {@code null}
-	 * or {@code undefined} and this instance has no method named {@code "doRun"}	 */
+	 * or {@code undefined}	 */
 	private function MethodTestCaseByMethod(method:MethodInfo, referenceScope, referenceName:String):Void {
 		if (!method) {
 			throw new IllegalArgumentException("Argument 'method' [" + method + "] must not be 'null' nor 'undefined' or this instance must declare a method named 'doRun'.", this, arguments);
@@ -112,10 +112,12 @@ class org.as2lib.test.speed.MethodTestCase extends AbstractTest implements Test 
 	}
 	
 	/**
-	 * Constructs a new {@code TestCase} instance by class and method.
+	 * Constructs a new {@code MethodTestCase} instance by object and method.
 	 * 
-	 * @param clazz the class the declares the method to profile
-	 * @param method the method to profile	 */
+	 * @param object the object that declares the method to profile
+	 * @param method the method to profile
+	 * @throws IllegalArgumentException if {@code object} or {@code method} is
+	 * {@code null} or {@code undefined}	 */
 	private function MethodTestCaseByObjectAndMethod(object, method:Function):Void {
 		if (object == null || !method) {
 			throw new IllegalArgumentException("Neither argument 'object' [" + object + "] nor 'method' [" + method + "] is allowed to be 'null' or 'undefined'.");
@@ -124,6 +126,13 @@ class org.as2lib.test.speed.MethodTestCase extends AbstractTest implements Test 
 		MethodTestCaseByMethod(c.getMethodByMethod(method));	
 	}
 	
+	/**
+	 * Constructs a new {@code MethodTestCase} instance by object and method name.
+	 * 
+	 * @param object the object that declares the method to profile
+	 * @param methodName the name of the method to profile
+	 * @throws IllegalArgumentException if a method with the given {@code methodName}
+	 * does not exist on the given {@code object} or is not of type {@code "function"}	 */
 	private function MethodTestCaseByObjectAndName(object, methodName:String):Void {
 		if (!object[methodName]) {
 			throw new IllegalArgumentException("Method [" + object[methodName] + "] with name '" + methodName + "' on object [" + object + "] must not be 'null' nor 'undefined'.");
@@ -224,9 +233,9 @@ class org.as2lib.test.speed.MethodTestCase extends AbstractTest implements Test 
 	/**
 	 * Adds a new method invocation profile result.
 	 * 
-	 * @return the newly added method invocation profile result	 */
-	private function a(methodInvocation:MethodInvocation):Void {
-		this.result.addTestResult(methodInvocation);
+	 * @param m the new method invocation profile result	 */
+	private function a(m:MethodInvocation):Void {
+		this.result.addTestResult(m);
 	}
 	
 }

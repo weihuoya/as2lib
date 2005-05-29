@@ -23,13 +23,16 @@ import org.as2lib.test.speed.ConfigurableTestSuiteResult;
 import org.as2lib.test.speed.SimpleTestSuiteResult;
 
 /**
- * {@code MethodLayout} lays test results out by methods as root structure node.
+ * {@code MethodLayout} lays test results out with methods as root elements of the
+ * structure.
  * 
  * @author Simon Wacker */
 class org.as2lib.test.speed.layout.MethodLayout extends BasicClass implements TestResultLayout {
 	
+	/** The result of the lay-outing of the current test suite result. */
 	private var result:ConfigurableTestSuiteResult;
 	
+	/** All method invocations of the test suite result to lay-out. */
 	private var methodInvocations:Array;
 	
 	/**
@@ -38,11 +41,11 @@ class org.as2lib.test.speed.layout.MethodLayout extends BasicClass implements Te
 	}
 	
 	/**
-	 * Lays the passed-in {@code testResult} out and returns a new lay-outed test
-	 * result.
+	 * Lays the passed-in {@code testSuiteResult} out with methods as root elements of
+	 * the structure and returns a new lay-outed test suite result.
 	 * 
-	 * @param testResult the test result to lay-out
-	 * @return the lay-outed test result
+	 * @param testSuiteResult the test suite result to lay-out
+	 * @return the lay-outed test suite result
 	 */
 	public function layOut(testSuiteResult:TestSuiteResult):TestSuiteResult {
 		this.result = new SimpleTestSuiteResult(testSuiteResult.getName());
@@ -55,6 +58,12 @@ class org.as2lib.test.speed.layout.MethodLayout extends BasicClass implements Te
 		return this.result;
 	}
 	
+	/**
+	 * Adds all method invocations of the passed-in {@code method} to the result and
+	 * removes the added invocations from the {@code methodInvocations} array.
+	 * 
+	 * @param method the method to add the invocations for
+	 * @return the number of method invocations added	 */
 	private function addMethodInvocations(method:MethodInfo):Number {
 		var count:Number = 0;
 		var methodResult:ConfigurableTestSuiteResult = new SimpleTestSuiteResult(method.getFullName());

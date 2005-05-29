@@ -21,7 +21,7 @@ import org.as2lib.test.speed.MethodInvocation;
 import org.as2lib.test.speed.MethodInvocationHolder;
 
 /**
- * {@code AbstractTestResult} provides implementations of methods needed by
+ * {@code AbstractTestSuiteResult} provides implementations of methods needed by
  * implementations of the {@link TestSuiteResult} interface.
  * 
  * @author Simon Wacker */
@@ -147,9 +147,9 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	}
 	
 	/**
-	 * Returns the number of sub-test results.
+	 * Returns the number of direct sub-test results.
 	 * 
-	 * @return the number of sub-test results
+	 * @return the number of direct sub-test results
 	 */
 	public function getTestResultCount(Void):Number {
 		return this.testResults.length;
@@ -171,6 +171,17 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	
 	/**
 	 * Sorts this test suite result and its sub-test results.
+	 * 
+	 * <p>Supported sort properties are:
+	 * <ul>
+	 *   <li>{@link #NAME}</li>
+	 *   <li>{@link #TIME}</li>
+	 *   <li>{@link #AVERAGE_TIME}</li>
+	 *   <li>{@link #TIME_PERCENTAGE}</li>
+	 *   <li>{@link #METHOD_INVOCATION_COUNT}</li>
+	 *   <li>{@link #METHOD_INVOCATION_PERCENTAGE}</li>
+	 *   <li>{@link #METHOD_INVOCATION_SUCCESSION}</li>
+	 * </ul>
 	 * 
 	 * @param property the property to sort by
 	 * @param descending determines whether to sort descending {@code true} or

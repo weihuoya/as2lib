@@ -21,7 +21,8 @@ import org.as2lib.test.speed.SimpleTestSuiteResult;
 import org.as2lib.test.speed.MethodInvocation;
 
 /**
- * {@code MethodLayout} lays test results out by methods as root structure node.
+ * {@code MethodInvocationLayout} lays test results out with method invocations as root
+ * elements of the structure.
  * 
  * @author Simon Wacker */
 class org.as2lib.test.speed.layout.MethodInvocationLayout extends BasicClass implements TestResultLayout {
@@ -32,11 +33,11 @@ class org.as2lib.test.speed.layout.MethodInvocationLayout extends BasicClass imp
 	}
 	
 	/**
-	 * Lays the passed-in {@code testResult} out and returns a new lay-outed test
-	 * result.
+	 * Lays the passed-in {@code testSuiteResult} out with method invocations as root
+	 * element of the structure and returns the new lay-outed test suite result.
 	 * 
-	 * @param testResult the test result to lay-out
-	 * @return the lay-outed test result
+	 * @param testSuiteResult the test suite result to lay-out
+	 * @return the lay-outed test suite result
 	 */
 	public function layOut(testSuiteResult:TestSuiteResult):TestSuiteResult {
 		var result:SimpleTestSuiteResult = new SimpleTestSuiteResult(testSuiteResult.getName());

@@ -30,7 +30,7 @@ class org.as2lib.test.speed.MethodInvocation extends AbstractTestResult implemen
 	/** Designates an unknown type in the type signature. */
 	public static var UNKNOWN:String = "[unknown]";
 	
-	/** Designates type void in the type signature. */
+	/** Designates type {@code Void} in the type signature. */
 	public static var VOID:String = "Void";
 	
 	/** Invoked method. */
@@ -97,6 +97,9 @@ class org.as2lib.test.speed.MethodInvocation extends AbstractTestResult implemen
 	
 	/**
 	 * Returns the signature of this method invocation.
+	 * 
+	 * <p>If any information needed to generate the signature is not defined,
+	 * {@link #UNKNOWN} is used as placeholder.
 	 * 
 	 * @return this method invocation's signature	 */
 	public function getSignature(Void):String {
@@ -281,12 +284,11 @@ class org.as2lib.test.speed.MethodInvocation extends AbstractTestResult implemen
 	}
 	
 	/**
-	 * Returns the string representation of this test result. This includes the string
-	 * representation of all tests added to the wrapped tests.
+	 * Returns the string representation of this method invocation.
 	 * 
 	 * @param rootTestResult test result that holds the total values needed for
 	 * percentage calculations
-	 * @return the string representation of this test result
+	 * @return the string representation of this method invocation
 	 */
 	public function toString():String {
 		var rootTestResult:TestResult = arguments[0];

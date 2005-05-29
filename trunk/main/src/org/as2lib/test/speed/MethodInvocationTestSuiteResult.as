@@ -23,7 +23,8 @@ import org.as2lib.test.speed.TestResult;
 import org.as2lib.test.speed.MethodInvocation;
 
 /**
- * {@code MethodInvocationTestSuiteResult} holds multiple sub-test results.
+ * {@code MethodInvocationTestSuiteResult} holds multiple sub-test results and is based
+ * on a method invocation.
  * 
  * @author Simon Wacker */
 class org.as2lib.test.speed.MethodInvocationTestSuiteResult extends AbstractTestSuiteResult implements ConfigurableTestSuiteResult, MethodInvocationHolder {
@@ -31,13 +32,13 @@ class org.as2lib.test.speed.MethodInvocationTestSuiteResult extends AbstractTest
 	/** Makes the static variables of the super-class accessible through this class. */
 	private static var __proto__:Function = AbstractTestSuiteResult;
 	
-	/** */
+	/** The wrapped method invocation. */
 	private var methodInvocation:MethodInvocation;
 	
 	/**
 	 * Constructs a new {@code MethodInvocationTestSuiteResult} instance.
 	 * 
-	 * @param methodInvocation	 */
+	 * @param methodInvocation the method invocation to wrap	 */
 	public function MethodInvocationTestSuiteResult(methodInvocation:MethodInvocation) {
 		this.methodInvocation = methodInvocation;
 	}
@@ -51,7 +52,8 @@ class org.as2lib.test.speed.MethodInvocationTestSuiteResult extends AbstractTest
 	}
 	
 	/**
-	 * Returns the name of this test result.
+	 * Returns the name of this test result. This is the name of the wrapped method
+	 * invocation.
 	 * 
 	 * @return the name of this test result	 */
 	public function getName(Void):String {
@@ -69,7 +71,7 @@ class org.as2lib.test.speed.MethodInvocationTestSuiteResult extends AbstractTest
 	
 	/**
 	 * Returns the string representation of this test result. This includes the string
-	 * representation of all tests added to the wrapped tests.
+	 * representation of all sub-tests.
 	 * 
 	 * @param rootTestResult test result that holds the total values needed for
 	 * percentage calculations
