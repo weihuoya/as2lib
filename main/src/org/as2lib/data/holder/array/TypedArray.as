@@ -151,7 +151,8 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 		} else {
 			validate(value);
 		}
-		return super.push.apply(this, arguments);
+		// cast needed for Flex compatibility
+		return Number(super.push.apply(this, arguments));
 	}
 	
 	/**
@@ -177,7 +178,8 @@ class org.as2lib.data.holder.array.TypedArray extends Array implements BasicInte
 		} else {
 			validate(value);
 		}
-		return super.unshift.apply(this, arguments);
+		// cast needed for Flex compatibility
+		return Number(super.unshift.apply(this, arguments));
 	}
 	
 	/**
