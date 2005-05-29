@@ -125,8 +125,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 	
 	public function testGetSuperTypeForClassWithSuperClass(Void):Void {
 		var Type:Function = function() {};
-		var lol = new Cache();
-		var rofl = ReflectConfig.getCache();
+		
 		var ic:MockControl = new MockControl(ClassInfo);
 		var i:ClassInfo = ic.getMock();
 		ic.replay();
