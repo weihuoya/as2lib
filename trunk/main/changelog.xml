@@ -5,6 +5,13 @@
   <release name="as2lib 0.1 rc1" day="1" month="1" year="2004">
     <year value="2005">
        <month value="5">
+         <day value="22">
+           <entry type="change" package="org.as2lib.util" class="Call">Moved to org.as2lib.app.exec</entry>
+           <entry type="change" package="org.as2lib.util" class="ConstructorCall">Moved to org.as2lib.app.exec</entry>
+           <entry type="add" package="main" class="*">New Package containing templates for own configuration.</entry>
+           <entry type="add" package="org.as2lib.app.exec" class="*">New Package containing classes useful for definition and execution of processes.</entry>
+           <entry type="add" package="org.as2lib.app.conf" class="*">New Package containing classes useful for configuration.</entry>
+         </day>
          <day value="18">
            <entry type="change" package="org.as2lib.env.reflect" class="ClassInfo" method="newInstance(args:Array)">Changed arguments to "()". The passed-in arguments are directly used as constructor arguments.</entry>
          </day>
