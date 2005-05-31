@@ -21,15 +21,15 @@ import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.handler.AbstractLogHandler;
 
-import org.actionstep.NSDebugger;
+import org.actionstep.ASDebugger;
 
 /**
- * {@code ActionStepHandler} the {@code org.actionstep.NSDebugger.trace} method to log
+ * {@code ActionStepHandler} the {@code org.actionstep.ASDebugger.trace} method to log
  * messages.
  * 
  * @author Simon Wacker
  * @see org.as2lib.env.log.logger.ActionStepLogger
- * @see <a href="http://sourceforge.net/projects/flashdebugtool">ActionStep Flash Debug Tool</a>
+ * @see <a href="http://actionstep.sourceforge.net">ActionStep</a>
  */
 class org.as2lib.env.log.handler.ActionStepHandler extends AbstractLogHandler implements LogHandler {
 	
@@ -68,7 +68,7 @@ class org.as2lib.env.log.handler.ActionStepHandler extends AbstractLogHandler im
 	}
 	
 	/**
-	 * Writes the passed-in {@code message} using the {@code org.actionstep.NSDebugger.trace}
+	 * Writes the passed-in {@code message} using the {@code org.actionstep.ASDebugger.trace}
 	 * method.
 	 *
 	 * <p>The string representation of the {@code message} to log is obtained via
@@ -77,7 +77,7 @@ class org.as2lib.env.log.handler.ActionStepHandler extends AbstractLogHandler im
 	 * @param message the message to log
 	 */
 	public function write(message:LogMessage):Void {
-		NSDebugger.trace(convertMessage(message), convertLevel(message.getLevel()));
+		ASDebugger.trace(convertMessage(message), convertLevel(message.getLevel()));
 	}
 	
 	/**
@@ -89,15 +89,15 @@ class org.as2lib.env.log.handler.ActionStepHandler extends AbstractLogHandler im
 	private function convertLevel(level:LogLevel):Number {
 		switch (level) {
 			case AbstractLogLevel.DEBUG:
-				return NSDebugger.DEBUG;
+				return ASDebugger.DEBUG;
 			case AbstractLogLevel.INFO:
-				return NSDebugger.INFO;
+				return ASDebugger.INFO;
 			case AbstractLogLevel.WARNING:
-				return NSDebugger.WARNING;
+				return ASDebugger.WARNING;
 			case AbstractLogLevel.ERROR:
-				return NSDebugger.ERROR;
+				return ASDebugger.ERROR;
 			case AbstractLogLevel.FATAL:
-				return NSDebugger.FATAL;
+				return ASDebugger.FATAL;
 			default:
 				return null;
 		}
