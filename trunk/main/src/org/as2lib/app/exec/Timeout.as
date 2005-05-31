@@ -17,6 +17,7 @@
 import org.as2lib.env.overload.Overload;
 import org.as2lib.app.exec.AbstractProcess;
 import org.as2lib.app.exec.Call;
+import org.as2lib.app.exec.Executable;
 import org.as2lib.app.exec.ForEachExecutable;
 import org.as2lib.app.exec.FrameImpulse;
 
