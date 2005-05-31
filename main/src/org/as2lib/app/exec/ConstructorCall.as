@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
 import org.as2lib.util.ClassUtil;
 import org.as2lib.app.exec.Call;
 
@@ -25,7 +24,7 @@ import org.as2lib.app.exec.Call;
  * @author Martin Heidegger
  * @author Christoph Atteneder
  */
-class org.as2lib.util.ConstructorCall extends Call {
+class org.as2lib.app.exec.ConstructorCall extends Call {
 	
 	/** The Class to be instanciated. */
 	private var clazz:Function;
