@@ -46,7 +46,7 @@ class org.as2lib.env.log.handler.XmlSocketHandler extends AbstractLogHandler imp
 	 */
 	public function XmlSocketHandler(host:String, port:Number, messageStringifier:Stringifier) {
 		if (port == null || port < 1024) {
-			throw new IllegalArgumentException("Argument 'port' [" + port "] must not be 'null' nor less than 1024.", this, arguments);
+			throw new IllegalArgumentException("Argument 'port' [" + port + "] must not be 'null' nor less than 1024.", this, arguments);
 		}
 		this.socket = new XMLSocket();
 		this.socket.connect(host, port);
@@ -62,7 +62,7 @@ class org.as2lib.env.log.handler.XmlSocketHandler extends AbstractLogHandler imp
 	 * @param message the message to log
 	 */
 	public function write(message:LogMessage):Void {
-		this.socket.send(convertMessage(message));
+		this.socket.send(convertMessage(message) + "\n");
 	}
 	
 }
