@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[AbstractConfiguration]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[AbstractProcess]]></name><uri><![CDATA[org_as2lib_app_exec_AbstractProcess]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Version]]></title><value><![CDATA[1.0]]></value></item>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.app.conf.AbstractConfiguration]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 29 May 2005, 17:37:00]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[Helper class for a simpler creation of Configurations.]]></summary><restOfDescription><![CDATA[<p>Helper to start processes that might be useful within a configuration: like starting
+ a TestRunner or predefined action templates.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[init]]></item>
+<item><![CDATA[initClass]]></item>
+<item><![CDATA[initProcess]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><private><![CDATA[use]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[AbstractProcess]]></name><uri><![CDATA[org_as2lib_app_exec_AbstractProcess]]></uri></link></title><item><link><name>addAllProcessListeners</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>addAllProcessListeners</method></link></item><item><link><name>addProcessListener</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>addProcessListener</method></link></item><item><link><name>getAllProcessListeners</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>getAllProcessListeners</method></link></item><item><link><name>getParentProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>getParentProcess</method></link></item><item><link><name>getPercentage</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>getPercentage</method></link></item><item><link><name>hasFinished</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>hasFinished</method></link></item><item><link><name>hasStarted</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>hasStarted</method></link></item><item><link><name>isPaused</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>isPaused</method></link></item><item><link><name>isRunning</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>isRunning</method></link></item><item><link><name>pause</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>pause</method></link></item><item><link><name>removeAllProcessListeners</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>removeAllProcessListeners</method></link></item><item><link><name>removeProcessListener</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>removeProcessListener</method></link></item><item><link><name>resume</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>resume</method></link></item><item><link><name>setParentProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>setParentProcess</method></link></item><item><link><name>start</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>start</method></link></item><item><link><name>startSubProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>startSubProcess</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Event handlers]]></title>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Event handlers inherited from]]></text><link><name><![CDATA[AbstractProcess]]></name><uri><![CDATA[org_as2lib_app_exec_AbstractProcess]]></uri></link></title><item><link><name>onFinishProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onFinishProcess</method></link></item><item><link><name>onPauseProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onPauseProcess</method></link></item><item><link><name>onProcessError</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onProcessError</method></link></item><item><link><name>onResumeProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onResumeProcess</method></link></item><item><link><name>onStartProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onStartProcess</method></link></item><item><link><name>onUpdateProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onUpdateProcess</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[init]]></title><fullMethod><left><![CDATA[static function <b>init</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Helper method to initialise a application.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Overloading]]></title><description><![CDATA[<a href="org_as2lib_app_conf_AbstractConfiguration.html#initClass">;</a> <code>(clazz:Function) : Void</code><br />#initConfig;]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[initClass]]></title><fullMethod><left><![CDATA[static function <b>initClass</b> (
+]]></left><right><param><name><![CDATA[clazz]]></name>:<type><![CDATA[Function]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Initializes a Configuration class.<p>Applies <code>.init()</code> to a configuration class and does nothing with any other class.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="main_Configuration.html">main.Configuration</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[initProcess]]></title><fullMethod><left><![CDATA[static function <b>initProcess</b> (
+]]></left><right><param><name><![CDATA[process]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Initializes a Configuration instance.<p>Applies <code>.init()</code> to the configuration instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="main_Configuration.html">main.Configuration</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><private><![CDATA[use]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>use</b> (
+]]></left><right><param><name><![CDATA[cls]]></name>:<type><![CDATA[Function]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Helper method to get references to classes.<p>Mtasc doesn't allow references without useage like: <code>MyTest;</code>
+ so use this method to create references to your tests like: <code>use(MyTest);</code>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[cls]]></name><description><![CDATA[Class to be referenced.]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+</private>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:25:54]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

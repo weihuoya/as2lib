@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Throwable</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>Throwable</h1>
+        <div class="classProperties">
+          <div class="kindOfClass"><span class="value">
+Interface
+</span>
+          </div>
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.except.Throwable</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 09 April 2005, 17:33:24</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>Throwable</code> is the basic interface for every class that is thrown. </div><p>You can actually throw every class even if it does not implement this interface
+ but it is recommended to strictly use this interface for every throwable. Using it
+ produces clarity and setups a standard.<p>It prescribes implementing classes to provide key functionalities that help you
+ a lot when an exception is thrown and you do not catch it.<p>The first thing is the message. The message contains detaild information about
+ the problem that occurred.<p>The second is the stack trace. The stack trace contains at least the method that
+ actually threw the throwable. It can also contain the method that invoked the
+ method that threw the throwable and so on.<p>The third feature is the cause. Let's say a throwable is thrown and you catch it.
+ After catching it you want to throw a new throwable, that is of another type (maybe
+ a application specific exception while the catched was a generic one from a framework)
+ and contains another message that describes the problem from the point of view of
+ the catching method. In such a case we of course do not want to lose the
+ information the catched throwable provides, that caused the throwing of the new
+ throwable. We thus create the new throwable and initialize its cause, the catched
+ throwable, to get a more comprehensive error message.<p>Working with throwables in ActionScript is a little buggy and can be a pain to
+ use if you do not know to what you have to pay attention.<p>The first thing is that if you catch a throwable, the type of it must be fully
+ qualified. You cannot import the throwable and then only use its name, because
+ Flash will then not recognize the type, and will not catch the thrown throwable
+ (Note that it actually works when working on the timeline. The problem only occures
+ within classes. But I would nevertheless always use fully qualified names to guard
+ against potential errors.). Thus write your catch-blocks always the following way.<pre><span class="codeKeyword">try</span> {
+    ...
+} <span class="codeKeyword">catch</span> (e:org.as2lib.env.except.IllegalArgumentException) {
+    ...
+}</pre><p>The second problem occurs when working with Flex. The throwable type in the
+ catch-block's signature must always be a sub-class of the class <code>Error</code>
+ (which is the native 'throwable' of ActionScript). Because of that it is not
+ possible to catch throwables by interfaces, like this interface. If you simply want
+ to catch all throwables that may be thrown in your application do not specify a
+ throwable type or use <code>Error</code> if you are really really sure that all your
+ concrete throwable implementations extend this class. Note that the
+ <a href="org_as2lib_env_except_Exception.html">Exception</a> and <a href="org_as2lib_env_except_FatalException.html">FatalException</a> classes extend the <code>Error</code> class,
+ so they and any sub-classes can be used with Flex.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#getStackTrace">getStackTrace</a>
+                </li>
+                <li>
+                  <a href="#addStackTraceElement">addStackTraceElement</a>
+                </li>
+                <li>
+                  <a href="#initCause">initCause</a>
+                </li>
+                <li>
+                  <a href="#getCause">getCause</a>
+                </li>
+                <li>
+                  <a href="#getMessage">getMessage</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicInterface.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="addStackTraceElement">addStackTraceElement</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>addStackTraceElement</b> (
+
+
+</div>
+                <div><span class="code">thrower,
+method:Function,
+args:Array) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Adds a stack trace element to the stack trace.<p>The new stack trace element is added to the end of the stack trace.<p>At some parts in your application you may want to add stack trace elements
+ manually. This can help you to get a clearer image of what went where wrong and
+ why. You can use this method to do so.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">thrower<span class="separator">:</span></div>
+                    <div>the object that threw, rethrew or forwarded (let pass) the
+ throwable</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">method <span class="separator">:</span></div>
+                    <div>the method that threw, rethrew or forwarded (let pass) the
+ throwable</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args   <span class="separator">:</span></div>
+                    <div>the arguments the method was invoked with when throwing, rethrowing
+ or forwarding (leting pass) the throwable</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getCause">getCause</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getCause</b> (
+</div>
+                <div><span class="code">Void)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the initialized cause.<p>The cause is the throwable that caused this throwable to be thrown.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the initialized cause</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_except_Throwable.html#initCause">initCause</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMessage">getMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMessage</b> (
+</div>
+                <div><span class="code">Void) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the message that describes in detail what went wrong.<p>The message should be understandable, even for non-programmers. It should
+ contain detailed information about what went wrong. And maybe also how the user
+ that sees this message can solve the problem.<p>If the throwable was thrown for example because of a wrong collaborator or
+ an illegal string or something similar, provide the string representation of it
+ in the error message. It is recommended to put these between []-characters.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the message that describes the problem in detail</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getStackTrace">getStackTrace</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getStackTrace</b> (
+</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns an array that contains <a href="org_as2lib_env_except_StackTraceElement.html">StackTraceElement</a> instances of the
+ methods invoked before this throwable was thrown.<p>The last element is always the one that contains the actual method that
+ threw the throwable.<p>The stack trace helps you a lot because it says you where the throwing of
+ the throwable took place and also what arguments caused the throwing.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">a stack containing the invoked methods until the throwable was thrown</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="initCause">initCause</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>initCause</b> (
+</div>
+                <div><span class="code">cause) : <a href="org_as2lib_env_except_Throwable.html">Throwable</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Initializes the cause of this throwable.<p>The cause can only be initialized once. You normally initialize a cause if
+ you throw a throwable due to the throwing of another throwable. Thereby you do
+ not lose the information the cause offers.<p>This method returns this throwable to have an easy way to initialize the
+ cause. Following is how you could use the cause mechanism.<pre><span class="codeKeyword">try</span> {
+    myInstance.invokeMethodThatThrowsAThrowable();
+} <span class="codeKeyword">catch</span> (e:org.as2lib.env.except.Throwable) {
+    <span class="codeKeyword">throw</span> <span class="codeKeyword">new</span> MyThrowable(<span class="codeString">"myMessage"</span>, <span class="codeIdentifier">this</span>, arguments).initCause(e);
+}</pre></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">cause<span class="separator">:</span></div>
+                    <div>the throwable that caused the throwing of this throwable</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">this throwable itself</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if the cause has already
+ been initialized</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2005 as2lib | </span><span class="date">Tuesday, 31 May 2005, 20:27:06
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

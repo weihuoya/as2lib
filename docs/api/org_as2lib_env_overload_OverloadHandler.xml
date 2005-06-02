@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[OverloadHandler]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.overload.OverloadHandler]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 09 April 2005, 16:08:00]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>OverloadHandler</code> declares methods needed by overload handlers.]]></summary><restOfDescription><![CDATA[<p>Overload handlers are used by the <a href="org_as2lib_env_overload_Overload.html">Overload</a> class to identify the 
+ corresponding method for a specific list of arguments. Whereby the overload handler
+ holds the method and the expected arguments' types of this method.<p>It also offers functionalities to match real arguments against the expected
+ arguments' types, <a href="org_as2lib_env_overload_OverloadHandler.html#matches">matches</a>, and to determine which overload handler or
+ rather which arguments' types of two handlers are more explicit,
+ <a href="org_as2lib_env_overload_OverloadHandler.html#isMoreExplicit">isMoreExplicit</a>.<p>It also offers the ability to invoke/execute the target method on a target scope
+ passing-in a list of arguments.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[matches]]></item>
+<item><![CDATA[execute]]></item>
+<item><![CDATA[isMoreExplicit]]></item>
+<item><![CDATA[getArgumentsTypes]]></item>
+<item><![CDATA[getMethod]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[execute]]></title><fullMethod><left><![CDATA[function <b>execute</b> (
+
+]]></left><right><param><name><![CDATA[target]]></name></param>,
+<param><name><![CDATA[args]]></name>:<type><![CDATA[Array]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Executes the method of this handler on the given <code>target</code> passing-in the
+ given <code>args</code>.<p>The <code>this</code> scope of the method refers to the passed-in <code>target</code>
+ on execution.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[target]]></name><description><![CDATA[the target object to invoke the method on]]></description></param>
+<param><name><![CDATA[args  ]]></name><description><![CDATA[the arguments to pass-in on method invocation]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the result of the method invocation]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getArgumentsTypes]]></title><fullMethod><left><![CDATA[function <b>getArgumentsTypes</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the arguments' types used to match against the real arguments.<p>The arguments' types determine for which types of arguments the method was
+ declared for. That means which arguments' types the method expects.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the arguments' types the method expects]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getMethod]]></title><fullMethod><left><![CDATA[function <b>getMethod</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Function]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the method this overload handler was assigned to.<p>This is the method to invoke passing the appropriate arguments when this
+ handler matches the arguments and is the most explicit one.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the method to invoke when the real arguments match the ones of this
+ handler and this handler is the most explicit one]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isMoreExplicit]]></title><fullMethod><left><![CDATA[function <b>isMoreExplicit</b> (
+]]></left><right><param><name><![CDATA[handler]]></name>:<type><![CDATA[<a href="org_as2lib_env_overload_OverloadHandler.html">OverloadHandler</a>]]></type></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks if this overload handler is more explicit than the passed-in
+ <code>handler</code>.<p>What means more explicit? The type <code>String</code> is for example more
+ explicit than <code>Object</code>. The type <code>org.as2lib.core.BasicClass</code> is
+ also more explicit than <code>Object</code>. And the type
+ <code>org.as2lib.env.overload.SimpleOverloadHandler</code> is more explicit than
+ <code>org.as2lib.core.BasicClass</code>. I hope you get the image. As you can see,
+ the explicitness depends on the inheritance hierarchy.<p>Note that classes are supposed to be more explicit than interfaces.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[handler]]></name><description><![CDATA[the handler to compare this handler with regarding explicitness]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if this handler is more explicit else <code>false</code> or
+ <code>null</code> if the two handlers have the same explicitness]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[matches]]></title><fullMethod><left><![CDATA[function <b>matches</b> (
+]]></left><right><param><name><![CDATA[realArguments]]></name>:<type><![CDATA[Array]]></type></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks whether the passed-in <code>realArguments</code> match the expected arguments'
+ types of this overload handler.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[realArguments]]></name><description><![CDATA[the real arguments to match against the arguments' types]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if the <code>realArguments</code> match the arguments' types
+ else <code>false</code>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:28:04]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

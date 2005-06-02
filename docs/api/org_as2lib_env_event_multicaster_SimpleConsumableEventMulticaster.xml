@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[SimpleConsumableEventMulticaster]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[SimpleEventListenerSource]]></name><uri><![CDATA[org_as2lib_env_event_SimpleEventListenerSource]]></uri></link></item><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[ConsumableEventMulticaster]]></name><uri><![CDATA[org_as2lib_env_event_multicaster_ConsumableEventMulticaster]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.event.multicaster.SimpleConsumableEventMulticaster]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 30 April 2005, 11:39:46]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>SimpleConsumableEventMulticaster</code> multicasts an event to all added listeners with
+ custom arguments until the event is consumed.]]></summary><restOfDescription><![CDATA[<p>Example:<pre><span class="codeComment">// creates a multicaster for the 'onError' event</span>
+<span class="codeKeyword">var</span> multicaster:SimpleConsumableEventMulticaster = <span class="codeKeyword">new</span> SimpleConsumableEventMulticaster(<span class="codeString">"onError"</span>);
+<span class="codeComment">// adds listeners</span>
+multicaster.<span class="codeIdentifier">addListener</span>(<span class="codeKeyword">new</span> SimpleErrorListener());
+multicaster.<span class="codeIdentifier">addListener</span>(<span class="codeKeyword">new</span> MyErrorListener());
+<span class="codeComment">// executes the specified event on all listeners passing the given arguments</span>
+multicaster.dispatch(myErrorCode, myException);</pre><p>The event dispatch is stopped as soon as any of the above listeners returns
+ <code>true</code>. If for example the <code>SimpleErrorListener.onError</code> method
+ returns <code>true</code>, <code>MyErrorListener.onError</code> will not be executed
+ because the event is consumed.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[SimpleConsumableEventMulticaster]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[eventName]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getEventName]]></item>
+<item><![CDATA[dispatch]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[SimpleEventListenerSource]]></name><uri><![CDATA[org_as2lib_env_event_SimpleEventListenerSource]]></uri></link></title><item><link><name>addAllListeners</name><uri>org_as2lib_env_event_SimpleEventListenerSource</uri><method>addAllListeners</method></link></item><item><link><name>addListener</name><uri>org_as2lib_env_event_SimpleEventListenerSource</uri><method>addListener</method></link></item><item><link><name>getAllListeners</name><uri>org_as2lib_env_event_SimpleEventListenerSource</uri><method>getAllListeners</method></link></item><item><link><name>removeAllListeners</name><uri>org_as2lib_env_event_SimpleEventListenerSource</uri><method>removeAllListeners</method></link></item><item><link><name>removeListener</name><uri>org_as2lib_env_event_SimpleEventListenerSource</uri><method>removeListener</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[SimpleConsumableEventMulticaster]]></title><fullMethod><left><![CDATA[function <b>SimpleConsumableEventMulticaster</b> (
+
+]]></left><right><param><name><![CDATA[eventName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[listeners]]></name>:<type><![CDATA[Array]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>SimpleConsumableEventMulticaster</code> instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[eventName]]></name><description><![CDATA[the name of the event to execute on listeners]]></description></param>
+<param><name><![CDATA[listeners]]></name><description><![CDATA[(optional) an array of listeners to populate this broadcaster
+ with]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if passed-in <code>eventName</code> is <code>null</code>,
+ <code>undefined</code> or an empty string]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_env_event_SimpleEventListenerSource.html#SimpleEventListenerSource">org.as2lib.env.event.SimpleEventListenerSource.SimpleEventListenerSource</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[eventName]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>eventName</b>:String
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The name of the event.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[dispatch]]></title><fullMethod><left><![CDATA[function <b>dispatch</b> (
+]]></left><right>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Dispatches the event to all listeners passing the given arguments as parameters
+ to the listeners' event methods until a listener consumes the event by returning
+ <code>true</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[..]]></name><description><![CDATA[any number of arguments to pass to the listeners' event methods]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_event_EventExecutionException.html">EventExecutionException</a> if a listener's event method threw an exception]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_event_multicaster_EventMulticaster.html#dispatch">EventMulticaster.dispatch</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getEventName]]></title><fullMethod><left><![CDATA[function <b>getEventName</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the event name set on construction.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the name of the event]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:55]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

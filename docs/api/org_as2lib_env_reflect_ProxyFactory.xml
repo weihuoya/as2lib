@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ProxyFactory]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.reflect.ProxyFactory]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 09 April 2005, 12:52:38]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>ProxyFactory</code> declares methods to create dynamic proxies, that means at
+ run-time, of specific types, that are classes or interfaces.]]></summary><restOfDescription><![CDATA[<p>Methods that get invoked on the returned proxy are forwared to an invocation
+ handler that is responsible to respond appropriately to the method invocation.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[createProxy]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[createProxy]]></title><fullMethod><left><![CDATA[function <b>createProxy</b> (
+
+]]></left><right><param><name><![CDATA[type]]></name>:<type><![CDATA[Function]]></type></param>,
+<param><name><![CDATA[handler]]></name>:<type><![CDATA[<a href="org_as2lib_env_reflect_InvocationHandler.html">InvocationHandler</a>]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Creates a proxy for the given <code>type</code> and delegates method invocations on
+ this proxy to the <a href="org_as2lib_env_reflect_InvocationHandler.html#invoke">InvocationHandler.invoke</a> method.<p>Types are classes and interfaces.<p>The returned proxy can be casted to the passed-in <code>type</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[type   ]]></name><description><![CDATA[the type to create a proxy for]]></description></param>
+<param><name><![CDATA[handler]]></name><description><![CDATA[the handler to invoke the <code>invoke</code> method on method
+ invocations on the returned proxy]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the proxy for the given <code>type</code>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:28:36]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

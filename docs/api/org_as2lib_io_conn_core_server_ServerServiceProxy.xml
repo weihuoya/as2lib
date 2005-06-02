@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ServerServiceProxy]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Christoph Atteneder]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.io.conn.core.server.ServerServiceProxy]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Friday, 08 April 2005, 12:13:04]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>ServerServiceProxy</code> handles client requests to a certain service and its
+ responses.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[run]]></item>
+<item><![CDATA[stop]]></item>
+<item><![CDATA[invokeMethod]]></item>
+<item><![CDATA[invokeMethodByNameAndArguments]]></item>
+<item><![CDATA[invokeMethodByNameAndArgumentsAndResponseService]]></item>
+<item><![CDATA[getService]]></item>
+<item><![CDATA[getPath]]></item>
+<item><![CDATA[isRunning]]></item>
+<item><![CDATA[addErrorListener]]></item>
+<item><![CDATA[removeErrorListener]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[addErrorListener]]></title><fullMethod><left><![CDATA[function <b>addErrorListener</b> (
+]]></left><right><param><name><![CDATA[errorListener]]></name>:<type><![CDATA[<a href="org_as2lib_io_conn_core_event_MethodInvocationErrorListener.html">MethodInvocationErrorListener</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds a new error listener to listen for errors that may occur when trying to
+ invoke a method on this service.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[errorListener]]></name><description><![CDATA[the error listener to add]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html#removeErrorListener">removeErrorListener</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getPath]]></title><fullMethod><left><![CDATA[function <b>getPath</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the path on the host of this service.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the path of this service]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getService]]></title><fullMethod><left><![CDATA[function <b>getService</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Returns the actual service this proxy wraps.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the wrapped service]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[invokeMethod]]></title><fullMethod><left><![CDATA[function <b>invokeMethod</b> (
+]]></left><right>) : <![CDATA[Void]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Overloading]]></title><description><![CDATA[<a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html#invokeMethodByNameAndArguments">invokeMethodByNameAndArguments</a> <code>(methodName:String, args:Array) : Void</code><br /><a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html#invokeMethodByNameAndArgumentsAndResponseService">invokeMethodByNameAndArgumentsAndResponseService</a> <code>(methodName:String, args:Array, responseServiceUrl:String) : Void</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[invokeMethodByNameAndArguments]]></title><fullMethod><left><![CDATA[function <b>invokeMethodByNameAndArguments</b> (
+
+]]></left><right><param><name><![CDATA[methodName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[args]]></name>:<type><![CDATA[Array]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Invokes the service method corresponding to the passed-in <code>methodName</code> on
+ the actaul service object, passing the content of <code>args</code> array as parameters.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[methodName]]></name><description><![CDATA[the name of the service method to invoke]]></description></param>
+<param><name><![CDATA[args      ]]></name><description><![CDATA[arguments to pass-to the method]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[invokeMethodByNameAndArgumentsAndResponseService]]></title><fullMethod><left><![CDATA[function <b>invokeMethodByNameAndArgumentsAndResponseService</b> (
+
+
+]]></left><right><param><name><![CDATA[methodName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[args]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[responseServiceUrl]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Invokes the service method corresponding to the passed-in <code>methodName</code> on
+ the actual service object and returns the response to the client using the
+ passed-in <code>responseServiceUrl</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[methodName        ]]></name><description><![CDATA[name of method to invoke on the service]]></description></param>
+<param><name><![CDATA[args              ]]></name><description><![CDATA[arguments to pass to the method]]></description></param>
+<param><name><![CDATA[responseServiceUrl]]></name><description><![CDATA[the url of response service to which the result is sent]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isRunning]]></title><fullMethod><left><![CDATA[function <b>isRunning</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Indicates whether this service is currently running.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if this service runs else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[removeErrorListener]]></title><fullMethod><left><![CDATA[function <b>removeErrorListener</b> (
+]]></left><right><param><name><![CDATA[errorListener]]></name>:<type><![CDATA[<a href="org_as2lib_io_conn_core_event_MethodInvocationErrorListener.html">MethodInvocationErrorListener</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Removes an added error listener.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[errorListener]]></name><description><![CDATA[the error listener to remove]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html#addErrorListener">addErrorListener</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[run]]></title><fullMethod><left><![CDATA[function <b>run</b> (
+]]></left><right><param><name><![CDATA[host]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Runs the service and listens for requests of clients.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[host]]></name><description><![CDATA[the host to run this service on]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[stop]]></title><fullMethod><left><![CDATA[function <b>stop</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Stops this service.]]></text>
+</description>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:29:06]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

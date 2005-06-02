@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ForEachExecutable]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[Executable]]></name><uri><![CDATA[org_as2lib_app_exec_Executable]]></uri></link></item><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Version]]></title><value><![CDATA[1.0]]></value></item>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.app.exec.ForEachExecutable]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Monday, 30 May 2005, 00:37:02]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>ForEachExecutable</code> is a extension to <a href="org_as2lib_app_exec_Executable.html">Executable</a> to execute the
+ certain executale for all childs within a object.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[forEach]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[Executable]]></name><uri><![CDATA[org_as2lib_app_exec_Executable]]></uri></link></title><item><link><name>execute</name><uri>org_as2lib_app_exec_Executable</uri><method>execute</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[forEach]]></title><fullMethod><left><![CDATA[function <b>forEach</b> (
+]]></left><right><param><name><![CDATA[object]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Iterates through the passed-in <code>object</code> and invokes the 
+ #execute method for every member passing-in the member itself,
+ the name of the member and the passed-in <code>object</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[object]]></name><description><![CDATA[the object to iterate over]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:06]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

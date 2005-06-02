@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[Mtasc]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[none (Mtasc is a root class)]]></name></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Version]]></title><value><![CDATA[1.0]]></value></item>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[main.Mtasc]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Wednesday, 11 May 2005, 17:16:48]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>Mtasc</code> is intended for configuration of applications compiled with MTASC.]]></summary><restOfDescription><![CDATA[<p>It allows you to define all MTASC specific configurations similar to the
+ configuration in <a href="main_Configuration.html">Configuration</a>.<p>The current code contains an example that matches usual cases. If you have
+ additional configuration you have to overwrite (not extend!) this class in your
+ directory. All that must stay to be compatible is the <a href="main_Mtasc.html#init">init</a> method.]]></restOfDescription>
+</classDescription>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="main_Configuration.html">Configuration</a>]]></description></field>
+</fields>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[init]]></item>
+<item><private><![CDATA[setUpLogging]]></private></item>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[init]]></title><fullMethod><left><![CDATA[static function <b>init</b> (
+]]></left><right>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Initializes and starts the MTASC configuration.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[setUpLogging]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static function <b>setUpLogging</b> (
+]]></left><right><param><name><![CDATA[Void]]></name>:<type><![CDATA[Void]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets up MTASC specific logging. This configures the As2lib Logging API to log
+ to Flashout.]]></text>
+</description>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:25:53]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

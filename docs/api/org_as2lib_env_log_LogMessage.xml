@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[LogMessage]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.log.LogMessage]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 28 May 2005, 12:13:32]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>LogMessage</code> is a dumb data holder that contains all the information about
+ the message to log.]]></summary><restOfDescription><![CDATA[<p>These information are the the message to log, its level and the name of the
+ logger that is responsible for logging the message.<p>The <a href="org_as2lib_env_log_LogMessage.html#toString">toString</a> method uses the set stringifier to obtain its string
+ representation. If you want a different appearance of the log message you can
+ use the static <a href="org_as2lib_env_log_LogMessage.html#setStringifier">setStringifier</a> method to set your custom stringifier.<p>The <a href="org_as2lib_env_log_stringifier_PatternLogMessageStringifier.html">org.as2lib.env.log.stringifier.PatternLogMessageStringifier</a> supports different presentation styles.
+ It allows to switch the log level, the logger name and the time on and off.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[LogMessage]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><private><![CDATA[stringifier]]></private></item>
+</methodSummaryPart>
+</private>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[message]]></private></item>
+<item><private><![CDATA[level]]></private></item>
+<item><private><![CDATA[loggerName]]></private></item>
+<item><private><![CDATA[timeStamp]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[getStringifier]]></item>
+<item><![CDATA[setStringifier]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getMessage]]></item>
+<item><![CDATA[getLevel]]></item>
+<item><![CDATA[getLoggerName]]></item>
+<item><![CDATA[getTimeStamp]]></item>
+<item><![CDATA[toString]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[LogMessage]]></title><fullMethod><left><![CDATA[function <b>LogMessage</b> (
+
+
+
+]]></left><right><param><name><![CDATA[message]]></name></param>,
+<param><name><![CDATA[level]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>]]></type></param>,
+<param><name><![CDATA[loggerName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[timeStamp]]></name>:<type><![CDATA[Number]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>LogMessage</code> instance.<p>If <code>timeStamp</code> is <code>null</code> or <code>undefined</code> this constructor
+ sets it by itself using the current time.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[message   ]]></name><description><![CDATA[the message object to log]]></description></param>
+<param><name><![CDATA[level     ]]></name><description><![CDATA[the level of the passed-in <code>message</code>]]></description></param>
+<param><name><![CDATA[loggerName]]></name><description><![CDATA[the name of the logger that logs the <code>message</code>]]></description></param>
+<param><name><![CDATA[timeStamp ]]></name><description><![CDATA[(optional) the number of milliseconds elapsed from 1/1/1970
+ until log this message was created]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><private><![CDATA[stringifier]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>stringifier</b>:<a href="org_as2lib_util_Stringifier.html">Stringifier</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The currently used stringifier.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[level]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>level</b>:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The level the of the log message.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[loggerName]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>loggerName</b>:String
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The name of the logger that logs the message.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[message]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>message</b>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The message object to log.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[timeStamp]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>timeStamp</b>:Number
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The number of milliseconds elapsed from 1/1/1970 until log message was created.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[getStringifier]]></title><fullMethod><left><![CDATA[static function <b>getStringifier</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_util_Stringifier.html">Stringifier</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns either the stringifier set via <a href="org_as2lib_env_log_LogMessage.html#setStringifier">setStringifier</a> or the default
+ one which is an instance of class <a href="org_as2lib_env_log_stringifier_PatternLogMessageStringifier.html">org.as2lib.env.log.stringifier.PatternLogMessageStringifier</a>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the currently used stringifier]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setStringifier]]></title><fullMethod><left><![CDATA[static function <b>setStringifier</b> (
+]]></left><right><param><name><![CDATA[newStringifier]]></name>:<type><![CDATA[<a href="org_as2lib_util_Stringifier.html">Stringifier</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets a new stringifier to be used by the <a href="org_as2lib_env_log_LogMessage.html#toString">toString</a> method.<p>If <code>newStringifier</code> is <code>null</code> the <a href="org_as2lib_env_log_LogMessage.html#getStringifier">getStringifier</a> method
+ will return the default stringifier.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[newStringifier]]></name><description><![CDATA[the new stringifier to be used]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[getLevel]]></title><fullMethod><left><![CDATA[function <b>getLevel</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the level of the message.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the level of the message]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getLoggerName]]></title><fullMethod><left><![CDATA[function <b>getLoggerName</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the name of the logger that logs the message.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the name of the logging logger]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getMessage]]></title><fullMethod><left><![CDATA[function <b>getMessage</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Returns the message object to log]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[message the message object to log]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getTimeStamp]]></title><fullMethod><left><![CDATA[function <b>getTimeStamp</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the number of milliseconds elapsed from 1/1/1970 until message was
+ created.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the number of milliseconds elapsed from 1/1/1970 until message was
+ created.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toString]]></title><fullMethod><left><![CDATA[function <b>toString</b> (
+]]></left><right>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Uses the stringifier returned by the static <a href="org_as2lib_env_log_LogMessage.html#getStringifier">getStringifier</a> method
+ to stringify this instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the string representation of this log message]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:54]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[LogHandler]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.log.LogHandler]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Thursday, 05 May 2005, 21:58:00]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>LogHandler</code> is used to actually log messages.]]></summary><restOfDescription><![CDATA[<p>You need different handlers for different output targets. Output targets can
+ be everything, Flash's Output Panel, any type of file, a database, a custom
+ output console and so on.<p>The As2lib supports a hand full of different output formats. Take a look at
+ the <code>org.as2lib.env.log.handler</code> package to see which are supported.<p>A logger does not have to support the feature of adding custom handlers. It
+ is not prescribed by the <code>Logger</code> interface so it depends on specific
+ implementations. Mostly 'speed' loggers do not use this approach because it
+ slows the whole logging process a little bit down.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[write]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[write]]></title><fullMethod><left><![CDATA[function <b>write</b> (
+]]></left><right><param><name><![CDATA[message]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LogMessage.html">LogMessage</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Writes information obtained from the passed-in <code>message</code> as well as 
+ additional information to the output target.<p>It is not prescribed which information will be written. Hence it depends on
+ the concrete handler.<p>Most handlers simply use the <a href="org_as2lib_env_log_LogMessage.html#toString">LogMessage.toString</a> method to obtain
+ the string representation to log.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[message]]></name><description><![CDATA[the message containing the information to log]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:50]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

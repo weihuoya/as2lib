@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[NaturalNumberIncludingZero]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[Integer]]></name><uri><![CDATA[org_as2lib_data_type_Integer]]></uri></link></item><item><link><name><![CDATA[Number]]></name></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.data.type.NaturalNumberIncludingZero]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 09 April 2005, 09:19:40]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>NaturalNumberIncludingZero</code> represents a natural number including zero.]]></summary><restOfDescription><![CDATA[<p>Natural numbers are positive integers including 0. If you do not want to allow
+ 0 use <code>NaturalNumber</code> instead.]]></restOfDescription>
+</classDescription>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_type_NaturalNumber.html">NaturalNumber</a>]]></description></field>
+</fields>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[NaturalNumberIncludingZero]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[Integer]]></name><uri><![CDATA[org_as2lib_data_type_Integer]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_data_type_Integer</uri><method>toString</method></link></item><item><link><name>valueOf</name><uri>org_as2lib_data_type_Integer</uri><method>valueOf</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[NaturalNumberIncludingZero]]></title><fullMethod><left><![CDATA[function <b>NaturalNumberIncludingZero</b> (
+]]></left><right><param><name><![CDATA[number]]></name>:<type><![CDATA[Number]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>NaturalNumberIncludingZero</code> instance.<p>Decimal places are cropped from the passed-in <code>number</code> if it has at least
+ one. The passed-in <code>number</code> must also not be negative.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[number]]></name><description><![CDATA[the natural number]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_data_type_NumberFormatException.html">NumberFormatException</a> if the passed-in <code>number</code> is negative number
+ or (-)infinity]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_data_type_Integer.html#Integer">Integer.Integer</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:42]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

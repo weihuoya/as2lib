@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ExecutableProcess]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[AbstractProcess]]></name><uri><![CDATA[org_as2lib_app_exec_AbstractProcess]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Version]]></title><value><![CDATA[1.0]]></value></item>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.app.exec.ExecutableProcess]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 22 May 2005, 19:23:28]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>ExecutableProcess</code> is a Wrapper for <a href="org_as2lib_app_exec_Executable.html">Executable</a>'s to be
+ executable as a <a href="org_as2lib_app_exec_Process.html">Process</a>;]]></summary><restOfDescription><![CDATA[<p>As Executables have no response features this is a wrapper for using any
+ executable as process.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[ExecutableProcess]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[args]]></private></item>
+<item><private><![CDATA[executable]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><private><![CDATA[run]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[AbstractProcess]]></name><uri><![CDATA[org_as2lib_app_exec_AbstractProcess]]></uri></link></title><item><link><name>addAllProcessListeners</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>addAllProcessListeners</method></link></item><item><link><name>addProcessListener</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>addProcessListener</method></link></item><item><link><name>getAllProcessListeners</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>getAllProcessListeners</method></link></item><item><link><name>getParentProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>getParentProcess</method></link></item><item><link><name>getPercentage</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>getPercentage</method></link></item><item><link><name>hasFinished</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>hasFinished</method></link></item><item><link><name>hasStarted</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>hasStarted</method></link></item><item><link><name>isPaused</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>isPaused</method></link></item><item><link><name>isRunning</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>isRunning</method></link></item><item><link><name>pause</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>pause</method></link></item><item><link><name>removeAllProcessListeners</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>removeAllProcessListeners</method></link></item><item><link><name>removeProcessListener</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>removeProcessListener</method></link></item><item><link><name>resume</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>resume</method></link></item><item><link><name>setParentProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>setParentProcess</method></link></item><item><link><name>start</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>start</method></link></item><item><link><name>startSubProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>startSubProcess</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Event handlers]]></title>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Event handlers inherited from]]></text><link><name><![CDATA[AbstractProcess]]></name><uri><![CDATA[org_as2lib_app_exec_AbstractProcess]]></uri></link></title><item><link><name>onFinishProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onFinishProcess</method></link></item><item><link><name>onPauseProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onPauseProcess</method></link></item><item><link><name>onProcessError</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onProcessError</method></link></item><item><link><name>onResumeProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onResumeProcess</method></link></item><item><link><name>onStartProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onStartProcess</method></link></item><item><link><name>onUpdateProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onUpdateProcess</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[ExecutableProcess]]></title><fullMethod><left><![CDATA[function <b>ExecutableProcess</b> (
+
+]]></left><right><param><name><![CDATA[executable]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Executable.html">Executable</a>]]></type></param>,
+<param><name><![CDATA[args]]></name>:<type><![CDATA[Array]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Creates a new ExecutableProcess.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[executable]]></name><description><![CDATA[Executeable to be executed on process start.]]></description></param>
+</field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_app_exec_AbstractProcess.html#AbstractProcess">AbstractProcess.AbstractProcess</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[args]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>args</b>:Array
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Arguments to be applied to the executable at execution]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[executable]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>executable</b>:<a href="org_as2lib_app_exec_Executable.html">Executable</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Executable to be executed]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><private><![CDATA[run]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>run</b> (
+]]></left><right>)</right></fullMethod>
+<description>
+<text><![CDATA[Implementation of <a href="org_as2lib_app_exec_AbstractProcess.html#run">AbstractProcess.run</a>.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:06]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

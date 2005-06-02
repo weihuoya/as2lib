@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[Stack]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.data.holder.Stack]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Wednesday, 06 April 2005, 13:18:24]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>Stack</code> is the base interface for data holders that follow the 'last-in,
+ first-out' policy.]]></summary><restOfDescription><![CDATA[<p>It offers the opposite functionality of a queue, which follows the 'first-in,
+ first-out' policy.<p>'last-in, first-out' means that the last value that has been pushed to the
+ stack is the first that is popped from the stack.<p>The usage of a stack is quite simple. You have one method to push values,
+ <a href="org_as2lib_data_holder_Stack.html#push">push</a>, and one method to pop values, <a href="org_as2lib_data_holder_Stack.html#pop">pop</a>. You can also peek at
+ the top of the stack to see what's the last value that has been pushed to the
+ stack without removing it <a href="org_as2lib_data_holder_Stack.html#peek">peek</a>.<p>If you want to iterate over the values of the stack you can either use the
+ iterator returned by the <a href="org_as2lib_data_holder_Stack.html#iterator">iterator</a> method or the array that contains the
+ stack's values returned by the <a href="org_as2lib_data_holder_Stack.html#toArray">toArray</a> method.<p>The two methods <a href="org_as2lib_data_holder_Stack.html#isEmpty">isEmpty</a> and <a href="org_as2lib_data_holder_Stack.html#size">size</a> let you find out whether
+ the stack contains values and how many values it contains.<p>Example:<pre><span class="codeComment">// the stack gets set up</span>
+<span class="codeKeyword">var</span> stack:Stack = <span class="codeKeyword">new</span> MyStack();
+stack.push(<span class="codeString">"value1"</span>);
+stack.push(<span class="codeString">"value2"</span>);
+stack.push(<span class="codeString">"value3"</span>);
+<span class="codeComment">// the stack gets used somewhere in your application</span>
+<span class="codeIdentifier">trace</span>(stack.peek()); <span class="codeComment">// traces the last element without removing it</span>
+<span class="codeKeyword">while</span> (!stack.isEmpty()) {
+    <span class="codeIdentifier">trace</span>(stack.pop());
+}</pre><p>Output:<pre>value3
+value3
+value2
+value1</pre>]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[push]]></item>
+<item><![CDATA[pop]]></item>
+<item><![CDATA[peek]]></item>
+<item><![CDATA[iterator]]></item>
+<item><![CDATA[isEmpty]]></item>
+<item><![CDATA[size]]></item>
+<item><![CDATA[toArray]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[isEmpty]]></title><fullMethod><left><![CDATA[function <b>isEmpty</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether this stack is empty.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if this stack is empty else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[iterator]]></title><fullMethod><left><![CDATA[function <b>iterator</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_data_holder_Iterator.html">Iterator</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an iterator to iterate over the values of this stack.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[an iterator to iterate over this stack's values]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Stack.html#toArray">toArray</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[peek]]></title><fullMethod><left><![CDATA[function <b>peek</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Returns the lastly pushed value without removing it.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the lastly pushed value]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if this stack is empty]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[pop]]></title><fullMethod><left><![CDATA[function <b>pop</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Removes and returns the lastly pushed value.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the lastly pushed value]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if this stack is empty]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[push]]></title><fullMethod><left><![CDATA[function <b>push</b> (
+]]></left><right><param><name><![CDATA[value]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Pushes the passed-in <code>value</code> to this stack.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[value]]></name><description><![CDATA[the value to push to this stack]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[size]]></title><fullMethod><left><![CDATA[function <b>size</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the number of pushed values.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the number of pushed values]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Stack.html#push">push</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toArray]]></title><fullMethod><left><![CDATA[function <b>toArray</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the array representation of this stack.<p>The elements are copied onto the array in a 'last-in, first-out' order, similar
+ to the order of the elements returned by a succession of calls to the <a href="org_as2lib_data_holder_Stack.html#pop">pop</a>
+ method.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the array representation of this stack]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:37]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

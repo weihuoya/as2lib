@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ActionStepLogger]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[Logger]]></name><uri><![CDATA[org_as2lib_env_log_Logger]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.log.logger.ActionStepLogger]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Tuesday, 31 May 2005, 17:24:34]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>ActionStepLogger</code> provides support for the ActionStep Debugger.]]></summary><restOfDescription><![CDATA[<p>The actual logging is always made using the <code>org.actionstep.ASDebugger.trace</code>
+ method. No other output devices are supported. Use the <a href="org_as2lib_env_log_logger_SimpleLogger.html">SimpleLogger</a> to be
+ able to add log handlers as you please which allows you to log to every device you
+ want.<p>Configure the ActionStep Debugger API as usually and just use this class in
+ your application to log messages or objects. This enables you to switch between
+ almost every available logging API without having to change the logs in your
+ application but just the underlying configuration on startup.]]></restOfDescription>
+</classDescription>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_handler_ActionStepHandler.html">org.as2lib.env.log.handler.ActionStepHandler</a><br /><a href="http://actionstep.sourceforge.net">ActionStep</a>]]></description></field>
+</fields>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[ActionStepLogger]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><![CDATA[ALL]]></item>
+<item><![CDATA[DEBUG]]></item>
+<item><![CDATA[INFO]]></item>
+<item><![CDATA[WARNING]]></item>
+<item><![CDATA[ERROR]]></item>
+<item><![CDATA[FATAL]]></item>
+<item><![CDATA[NONE]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[name]]></private></item>
+<item><private><![CDATA[level]]></private></item>
+<item><private><![CDATA[asDebugger]]></private></item>
+<item><private><![CDATA[debugLevel]]></private></item>
+<item><private><![CDATA[infoLevel]]></private></item>
+<item><private><![CDATA[warningLevel]]></private></item>
+<item><private><![CDATA[errorLevel]]></private></item>
+<item><private><![CDATA[fatalLevel]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getName]]></item>
+<item><![CDATA[setName]]></item>
+<item><![CDATA[setLevel]]></item>
+<item><![CDATA[getLevel]]></item>
+<item><![CDATA[isEnabled]]></item>
+<item><![CDATA[isDebugEnabled]]></item>
+<item><![CDATA[isInfoEnabled]]></item>
+<item><![CDATA[isWarningEnabled]]></item>
+<item><![CDATA[isErrorEnabled]]></item>
+<item><![CDATA[isFatalEnabled]]></item>
+<item><![CDATA[log]]></item>
+<item><![CDATA[debug]]></item>
+<item><![CDATA[info]]></item>
+<item><![CDATA[warning]]></item>
+<item><![CDATA[error]]></item>
+<item><![CDATA[fatal]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[ActionStepLogger]]></title><fullMethod><left><![CDATA[function <b>ActionStepLogger</b> (
+]]></left><right><param><name><![CDATA[name]]></name>:<type><![CDATA[String]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>ActionStepLogger</code> instance.<p>The default log level is <code>ALL</code>. This means all messages regardless of
+ their level are logged.<p>The name is used as class name for the <code>ASDebugger.trace</code> method, if
+ the passed class name is <code>null</code> or <code>undefined</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[name]]></name><description><![CDATA[(optional) the name of this logger]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><![CDATA[ALL]]></title><fullMethod><left><![CDATA[static <b>ALL</b>:Number = <span class="codeNumber">5</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[All level.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[DEBUG]]></title><fullMethod><left><![CDATA[static <b>DEBUG</b>:Number = <span class="codeNumber">4</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[ActionStep debug level.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[ERROR]]></title><fullMethod><left><![CDATA[static <b>ERROR</b>:Number = <span class="codeNumber">1</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[ActionStep error level.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[FATAL]]></title><fullMethod><left><![CDATA[static <b>FATAL</b>:Number = <span class="codeNumber">0</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[ActionStep fatal level.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[INFO]]></title><fullMethod><left><![CDATA[static <b>INFO</b>:Number = <span class="codeNumber">3</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[ActionStep info level.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[NONE]]></title><fullMethod><left><![CDATA[static <b>NONE</b>:Number = -<span class="codeNumber">1</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[None level.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[WARNING]]></title><fullMethod><left><![CDATA[static <b>WARNING</b>:Number = <span class="codeNumber">2</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[ActionStep warning level.]]></text>
+</description>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[asDebugger]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>asDebugger</b>:Function
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[<code>ASDebugger</code> class reference for fast access.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[debugLevel]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>debugLevel</b>:Number
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[ActionStep debug level.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[errorLevel]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>errorLevel</b>:Number
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[ActionStep error level.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[fatalLevel]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>fatalLevel</b>:Number
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[ActionStep fatal level.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[infoLevel]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>infoLevel</b>:Number
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[ActionStep info level.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[level]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>level</b>:Number
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The set level as number.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[name]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>name</b>:String
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The name of this logger.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[warningLevel]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>warningLevel</b>:Number
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[ActionStep warn level.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[debug]]></title><fullMethod><left><![CDATA[function <b>debug</b> (
+
+
+
+]]></left><right><param><name><![CDATA[message]]></name></param>,
+<param><name><![CDATA[className]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[fileName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[lineNumber]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Logs the passed-in <code>message</code> at debug level.<p>The <code>message</code> is only logged when the level is set to <code>DEBUG</code> or
+ a level above.<p>The <code>message</code> is always logged using <code>ASDebugger.trace</code> passing
+ at least the arguments <code>message</code>, the debug level and <code>className</code>,
+ <code>fileName</code> and <code>lineNumber</code> if specified.<p>If <code>className</code> is <code>null</code> or <code>undefined</code>, the name of this
+ logger is used instead.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[message   ]]></name><description><![CDATA[the message object to log]]></description></param>
+<param><name><![CDATA[className ]]></name><description><![CDATA[(optional) the name of the class that logs the <code>message</code>]]></description></param>
+<param><name><![CDATA[fileName  ]]></name><description><![CDATA[(optional) the name of the file that declares the class]]></description></param>
+<param><name><![CDATA[lineNumber]]></name><description><![CDATA[(optional) the line number at which the logging call stands]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_ActionStepLogger.html#isDebugEnabled">isDebugEnabled</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[error]]></title><fullMethod><left><![CDATA[function <b>error</b> (
+
+
+
+]]></left><right><param><name><![CDATA[message]]></name></param>,
+<param><name><![CDATA[className]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[fileName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[lineNumber]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Logs the passed-in <code>message</code> at error level.<p>The <code>message</code> is only logged when the level is set to <code>ERROR</code> or
+ a level above.<p>The <code>message</code> is always logged using <code>ASDebugger.trace</code> passing
+ at least the arguments <code>message</code>, the error level and <code>className</code>,
+ <code>fileName</code> and <code>lineNumber</code> if specified.<p>If <code>className</code> is <code>null</code> or <code>undefined</code>, the name of this
+ logger is used instead.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[message   ]]></name><description><![CDATA[the message object to log]]></description></param>
+<param><name><![CDATA[className ]]></name><description><![CDATA[(optional) the name of the class that logs the <code>message</code>]]></description></param>
+<param><name><![CDATA[fileName  ]]></name><description><![CDATA[(optional) the name of the file that declares the class]]></description></param>
+<param><name><![CDATA[lineNumber]]></name><description><![CDATA[(optional) the line number at which the logging call stands]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_ActionStepLogger.html#isErrorEnabled">isErrorEnabled</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[fatal]]></title><fullMethod><left><![CDATA[function <b>fatal</b> (
+
+
+
+]]></left><right><param><name><![CDATA[message]]></name></param>,
+<param><name><![CDATA[className]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[fileName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[lineNumber]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Logs the passed-in <code>message</code> at fatal level.<p>The <code>message</code> is only logged when the level is set to <code>FATAL</code> or
+ a level above.<p>The <code>message</code> is always logged using <code>ASDebugger.trace</code> passing
+ at least the arguments <code>message</code>, the fatal level and <code>className</code>,
+ <code>fileName</code> and <code>lineNumber</code> if specified.<p>If <code>className</code> is <code>null</code> or <code>undefined</code>, the name of this
+ logger is used instead.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[message   ]]></name><description><![CDATA[the message object to log]]></description></param>
+<param><name><![CDATA[className ]]></name><description><![CDATA[(optional) the name of the class that logs the <code>message</code>]]></description></param>
+<param><name><![CDATA[fileName  ]]></name><description><![CDATA[(optional) the name of the file that declares the class]]></description></param>
+<param><name><![CDATA[lineNumber]]></name><description><![CDATA[(optional) the line number at which the logging call stands]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_ActionStepLogger.html#isFatalEnabled">isFatalEnabled</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getLevel]]></title><fullMethod><left><![CDATA[function <b>getLevel</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the set level.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the set level]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getName]]></title><fullMethod><left><![CDATA[function <b>getName</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the name of this logger.<p>This method returns <code>null</code> if no name has been set via the
+ <a href="org_as2lib_env_log_logger_ActionStepLogger.html#setName">setName</a> method nor on construction.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the name of this logger]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[info]]></title><fullMethod><left><![CDATA[function <b>info</b> (
+
+
+
+]]></left><right><param><name><![CDATA[message]]></name></param>,
+<param><name><![CDATA[className]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[fileName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[lineNumber]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Logs the passed-in <code>message</code> at info level.<p>The <code>message</code> is only logged when the level is set to <code>INFO</code> or
+ a level above.<p>The <code>message</code> is always logged using <code>ASDebugger.trace</code> passing
+ at least the arguments <code>message</code>, the info level and <code>className</code>,
+ <code>fileName</code> and <code>lineNumber</code> if specified.<p>If <code>className</code> is <code>null</code> or <code>undefined</code>, the name of this
+ logger is used instead.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[message   ]]></name><description><![CDATA[the message object to log]]></description></param>
+<param><name><![CDATA[className ]]></name><description><![CDATA[(optional) the name of the class that logs the <code>message</code>]]></description></param>
+<param><name><![CDATA[fileName  ]]></name><description><![CDATA[(optional) the name of the file that declares the class]]></description></param>
+<param><name><![CDATA[lineNumber]]></name><description><![CDATA[(optional) the line number at which the logging call stands]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_ActionStepLogger.html#isInfoEnabled">isInfoEnabled</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isDebugEnabled]]></title><fullMethod><left><![CDATA[function <b>isDebugEnabled</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks if this logger is enabled for debug level log messages.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if debug messages are logged]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_ActionStepLogger.html#debug">debug</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_log_Logger.html#isDebugEnabled">org.as2lib.env.log.Logger.isDebugEnabled</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isEnabled]]></title><fullMethod><left><![CDATA[function <b>isEnabled</b> (
+]]></left><right><param><name><![CDATA[level]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks whether this logger is enabled for the passed-in <code>level</code>.<p><code>false</code> will be returned if:<ul><li>This logger is not enabled for the passed-in <code>level</code>.</li><li>The passed-in <code>level</code> is <code>null</code> or <code>undefined</code>.</li></ul>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[level]]></name><description><![CDATA[the level to make the check upon]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if this logger is enabled for the given <code>level</code> else
+ <code>false</code>]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_ActionStepLogger.html#log">log</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isErrorEnabled]]></title><fullMethod><left><![CDATA[function <b>isErrorEnabled</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks if this logger is enabled for error level log messages.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if error messages are logged]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_ActionStepLogger.html#error">error</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_log_Logger.html#isErrorEnabled">org.as2lib.env.log.Logger.isErrorEnabled</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isFatalEnabled]]></title><fullMethod><left><![CDATA[function <b>isFatalEnabled</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks if this logger is enabled for fatal level log messages.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if fatal messages are logged]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_ActionStepLogger.html#fatal">fatal</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_log_Logger.html#isFatalEnabled">org.as2lib.env.log.Logger.isFatalEnabled</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isInfoEnabled]]></title><fullMethod><left><![CDATA[function <b>isInfoEnabled</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks if this logger is enabled for info level log messages.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if info messages are logged]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_ActionStepLogger.html#info">info</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_log_Logger.html#isInfoEnabled">org.as2lib.env.log.Logger.isInfoEnabled</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isWarningEnabled]]></title><fullMethod><left><![CDATA[function <b>isWarningEnabled</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks if this logger is enabled for warning level log messages.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if warning messages are logged]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_ActionStepLogger.html#warning">warning</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_log_Logger.html#isWarningEnabled">org.as2lib.env.log.Logger.isWarningEnabled</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[log]]></title><fullMethod><left><![CDATA[function <b>log</b> (
+
+
+
+
+]]></left><right><param><name><![CDATA[message]]></name></param>,
+<param><name><![CDATA[level]]></name>:<type><![CDATA[Number]]></type></param>,
+<param><name><![CDATA[className]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[fileName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[lineNumber]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Logs the passed-in <code>message</code> at the given <code>level</code>.<p>The <code>message</code> is only logged when this logger is enabled for the
+ passed-in <code>level</code>.<p>The <code>message</code> is always logged using <code>ASDebugger.trace</code> passing
+ at least the arguments <code>message</code> and <code>level</code> and <code>className</code>,
+ <code>fileName</code> and <code>lineNumber</code> if specified.<p>If <code>className</code> is <code>null</code> or <code>undefined</code>, the name of this
+ logger is used instead.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[message   ]]></name><description><![CDATA[the message object to log]]></description></param>
+<param><name><![CDATA[level     ]]></name><description><![CDATA[the specific level at which the <code>message</code> shall be logged]]></description></param>
+<param><name><![CDATA[className ]]></name><description><![CDATA[(optional) the name of the class that logs the <code>message</code>]]></description></param>
+<param><name><![CDATA[fileName  ]]></name><description><![CDATA[(optional) the name of the file that declares the class]]></description></param>
+<param><name><![CDATA[lineNumber]]></name><description><![CDATA[(optional) the line number at which the logging call stands]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_ActionStepLogger.html#isEnabled">isEnabled</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setLevel]]></title><fullMethod><left><![CDATA[function <b>setLevel</b> (
+]]></left><right><param><name><![CDATA[level]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the log level.<p>The log level determines which messages are logged and which are not.<p>A level of value <code>null</code> or <code>undefined</code> is interpreted as level
+ <code>ALL</code> which is also the default level.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[level]]></name><description><![CDATA[the new log level]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setName]]></title><fullMethod><left><![CDATA[function <b>setName</b> (
+]]></left><right><param><name><![CDATA[name]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the name of this logger.<p>The name is used as class name for the <code>ASDebugger.trace</code> method, if
+ the passed class name is <code>null</code> or <code>undefined</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[name]]></name><description><![CDATA[the new name of this logger]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[warning]]></title><fullMethod><left><![CDATA[function <b>warning</b> (
+
+
+
+]]></left><right><param><name><![CDATA[message]]></name></param>,
+<param><name><![CDATA[className]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[fileName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[lineNumber]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Logs the passed-in <code>message</code> at warning level.<p>The <code>message</code> is only logged when the level is set to <code>WARNING</code>
+ or a level above.<p>The <code>message</code> is always logged using <code>ASDebugger.trace</code> passing
+ at least the arguments <code>message</code>, the warning level and <code>className</code>,
+ <code>fileName</code> and <code>lineNumber</code> if specified.<p>If <code>className</code> is <code>null</code> or <code>undefined</code>, the name of this
+ logger is used instead.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[message   ]]></name><description><![CDATA[the message object to log]]></description></param>
+<param><name><![CDATA[className ]]></name><description><![CDATA[(optional) the name of the class that logs the <code>message</code>]]></description></param>
+<param><name><![CDATA[fileName  ]]></name><description><![CDATA[(optional) the name of the file that declares the class]]></description></param>
+<param><name><![CDATA[lineNumber]]></name><description><![CDATA[(optional) the line number at which the logging call stands]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_ActionStepLogger.html#isWarningEnabled">isWarningEnabled</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:25]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

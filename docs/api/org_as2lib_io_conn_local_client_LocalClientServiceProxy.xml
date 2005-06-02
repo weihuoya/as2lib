@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[LocalClientServiceProxy]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[AbstractClientServiceProxy]]></name><uri><![CDATA[org_as2lib_io_conn_core_client_AbstractClientServiceProxy]]></uri></link></item><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[ClientServiceProxy]]></name><uri><![CDATA[org_as2lib_io_conn_core_client_ClientServiceProxy]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Christoph Atteneder]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.io.conn.local.client.LocalClientServiceProxy]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Thursday, 05 May 2005, 17:04:12]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>LocalClientServiceProxy</code> handles client requests to a certain service
+ and its responses.]]></summary><restOfDescription><![CDATA[<p>Example:<pre><span class="codeKeyword">var</span> client:LocalClientServiceProxy = <span class="codeKeyword">new</span> LocalClientServiceProxy(<span class="codeString">"local.as2lib.org/myService"</span>);
+<span class="codeKeyword">var</span> callback:MethodInvocationCallback = client.invoke(<span class="codeString">"myMethod"</span>, [<span class="codeString">"firstArgument"</span>, <span class="codeString">"secondArgument"</span>]);
+callback.onReturn = <span class="codeKeyword">function</span>(returnInfo:MethodInvocationReturnInfo):<span class="codeIdentifier">Void</span> {
+    <span class="codeIdentifier">trace</span>(<span class="codeString">"myMethod - return value: "</span> + returnInfo.getReturnValue());
+}
+callback.onError = <span class="codeKeyword">function</span>(errorInfo:MethodInvocationErrorInfo):<span class="codeIdentifier">Void</span> {
+    <span class="codeIdentifier">trace</span>(<span class="codeString">"myMethod - error: "</span> + errorInfo.getException());
+}</pre><p>It is also possible to call the method directly on the proxy. But you can't
+ type the proxy then.<pre><span class="codeKeyword">var</span> client = <span class="codeKeyword">new</span> LocalClientServiceProxy(<span class="codeString">"local.as2lib.org/myService"</span>);
+<span class="codeKeyword">var</span> callback:MethodInvocationCallback = client.myMethod(<span class="codeString">"firstArgument"</span>, <span class="codeString">"secondArgument"</span>);</pre><p>The neatest way is to use <code>LocalClientServiceProxyFactory</code> to get a proxy
+ for a service interface or class, which enables compiler checks. For more
+ information on this refer to the <a href="org_as2lib_io_conn_local_client_LocalClientServiceProxyFactory.html">LocalClientServiceProxyFactory</a> class.<p>If the return value is not of type <code>Number</code>, <code>Boolean</code>, <code>String</code>
+ or <code>Array</code> that are converted directly into the appropriate type you must
+ do the following to receive a value of correct type. Otherwise the return value
+ will be an instance of type Object that is populated with the instance variables
+ of the sent object. Note that this must be done on the client as well as on the
+ server and the 'symbolId' in this case <code>"MyClass"</code> must be the same.<pre><span class="codeIdentifier">Object</span>.registerClass(<span class="codeString">"MyClass"</span>, MyClass);</pre><p>The received object will now be of correct type. But you still have to be aware
+ of some facts:<br>Flash creates a new object in the background and sets the instance variables of
+ the sent instance to the new object. It then registers this object with the
+ appropriate class (if registered previously) and applies the constructor of that
+ class to the new object passing no arguments. This means if the constructor sets
+ instance variables it overwrites the ones set previously by <code>undefined</code>.]]></restOfDescription>
+</classDescription>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_conn_local_client_LocalClientServiceProxyFactory.html">LocalClientServiceProxyFactory</a>]]></description></field>
+</fields>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[LocalClientServiceProxy]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[url]]></private></item>
+<item><private><![CDATA[connection]]></private></item>
+<item><private><![CDATA[responseServices]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[generateResponseServiceUrl]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getUrl]]></item>
+<item><![CDATA[invokeByNameAndArgumentsAndCallback]]></item>
+<item><private><![CDATA[getBlankMethodInvocationErrorListener]]></private></item>
+<item><private><![CDATA[getBlankMethodInvocationCallback]]></private></item>
+<item><private><![CDATA[__resolve]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[AbstractClientServiceProxy]]></name><uri><![CDATA[org_as2lib_io_conn_core_client_AbstractClientServiceProxy]]></uri></link></title><item><link><name>invoke</name><uri>org_as2lib_io_conn_core_client_AbstractClientServiceProxy</uri><method>invoke</method></link></item><item><link><name>invokeByName</name><uri>org_as2lib_io_conn_core_client_AbstractClientServiceProxy</uri><method>invokeByName</method></link></item><item><link><name>invokeByNameAndArguments</name><uri>org_as2lib_io_conn_core_client_AbstractClientServiceProxy</uri><method>invokeByNameAndArguments</method></link></item><item><link><name>invokeByNameAndCallback</name><uri>org_as2lib_io_conn_core_client_AbstractClientServiceProxy</uri><method>invokeByNameAndCallback</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[LocalClientServiceProxy]]></title><fullMethod><left><![CDATA[function <b>LocalClientServiceProxy</b> (
+]]></left><right><param><name><![CDATA[url]]></name>:<type><![CDATA[String]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>LocalClientServiceProxy</code> instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[url]]></name><description><![CDATA[the url of the service]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if <code>url</code> is <code>null</code>, <code>undefined</code>
+ or an empty string]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxy.html#AbstractClientServiceProxy">org.as2lib.io.conn.core.client.AbstractClientServiceProxy.AbstractClientServiceProxy</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[connection]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>connection</b>:<a href="org_as2lib_io_conn_local_core_EnhancedLocalConnection.html">EnhancedLocalConnection</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Used EnhancedLocalConnection.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[responseServices]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>responseServices</b>:Array
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Stores all currently used response services.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[url]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>url</b>:String
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The url of the service.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[generateResponseServiceUrl]]></title><fullMethod><left><![CDATA[static function <b>generateResponseServiceUrl</b> (
+
+]]></left><right><param><name><![CDATA[serviceUrl]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[methodName]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Generates the response url for a service.<p>The response url is composed as follows:<pre>theServiceUrl.theMethodName_Return_theIndex</pre><p>If the passed-in <code>methodName</code> is <code>null</code>, <code>undefined</code> or an
+ empty string the response url will be composed as follows:<pre>theServiceUrl_Return_theIndex</pre><p><code>index</code> is a number from 0 to infinite depending on how many responses
+ are pending.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[serviceUrl]]></name><description><![CDATA[the url to the service]]></description></param>
+<param><name><![CDATA[methodName]]></name><description><![CDATA[the name of the responsing method]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the generated response url]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in <code>serviceUrl</code> is <code>null</code>,
+ <code>undefined</code> or an empty stirng]]></description></field>
+</fields>
+</method>
+</methodSection>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><private><![CDATA[__resolve]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>__resolve</b> (
+]]></left><right><param><name><![CDATA[methodName]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[Function]]></right></fullMethod>
+<description>
+<text><![CDATA[Enables you to invoke the method to be invoked on the 'remote' service directly
+ on this proxy.<p>The usage is mostly the same.
+ <code>myProxy.myMethod(<span class="codeString">"myArg1"</span>);</code>
+ <code>myProxy.myMethod(<span class="codeString">"myArg1"</span>, myCallback);</code>
+ <code><span class="codeKeyword">var</span> callback:MethodInvocationCallback = myProxy.myMethod(<span class="codeString">"myArg1"</span>);</code>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[methodName]]></name><description><![CDATA[the name of the method to invoke on the 'remote' service]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the function to execute as the actual method passing the actual arguments]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[getBlankMethodInvocationCallback]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>getBlankMethodInvocationCallback</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns a blank method invocation callback. This is a callback with no implemented
+ methods.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a blank method invocation callback]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[getBlankMethodInvocationErrorListener]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>getBlankMethodInvocationErrorListener</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_io_conn_core_event_MethodInvocationErrorListener.html">MethodInvocationErrorListener</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns a blank method invocation error listener. This is an error listern with
+ no implemented methods.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a blank method invocation error listener]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getUrl]]></title><fullMethod><left><![CDATA[function <b>getUrl</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the url of the service this proxy invokes methods on.<p>The returned url is never <code>null</code>, <code>undefined</code> or an empty string.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the url of the service this proxy invokes methods on]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[invokeByNameAndArgumentsAndCallback]]></title><fullMethod><left><![CDATA[function <b>invokeByNameAndArgumentsAndCallback</b> (
+
+
+]]></left><right><param><name><![CDATA[methodName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[args]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[callback]]></name>:<type><![CDATA[<a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a>]]></type></param>) : <![CDATA[<a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Invokes the method with passed-in <code>methodName</code> on the 'remote' service,
+ passing the elements of the passed-in <code>args</code> as parameters and invokes
+ the appropriate method on the passed-in <code>callback</code> on response.<p>The response of the method invocation is delegated to the appropriate method
+ on the passed-in <code>callback</code>. This is either the <code>onReturn</code> when no
+ error occured, or the <code>onError</code> method in case something went wrong.<p>If the passed-in <code>callback</code> is <code>null</code> a new <code>MethodInvocationCallback</code>
+ instance will be created and returned. It is possible to still set the callback
+ methods there, after invoking this method.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[methodName]]></name><description><![CDATA[the name of the method to invoke on the 'remote' service]]></description></param>
+<param><name><![CDATA[args      ]]></name><description><![CDATA[the arguments that are passed to the method as parameters]]></description></param>
+<param><name><![CDATA[callback  ]]></name><description><![CDATA[the callback that handles the response]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[either the passed-in callback or a new callback if <code>null</code>]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in <code>methodName</code> is <code>null</code>,
+ <code>undefined</code> or an empty string]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html#invokeByNameAndArgumentsAndCallback">org.as2lib.io.conn.core.client.ClientServiceProxy.invokeByNameAndArgumentsAndCallback</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:29:07]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

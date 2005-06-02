@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[SameTypeSignatureException]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[OverloadException]]></name><uri><![CDATA[org_as2lib_env_overload_OverloadException]]></uri></link></item><item><link><name><![CDATA[FatalException]]></name><uri><![CDATA[org_as2lib_env_except_FatalException]]></uri></link></item><item><link><name><![CDATA[AbstractThrowable]]></name><uri><![CDATA[org_as2lib_env_except_AbstractThrowable]]></uri></link></item><item><link><name><![CDATA[Error]]></name></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.overload.SameTypeSignatureException]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 22 May 2005, 19:48:16]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>SameTypeSignatureException</code> is thrown when two or more overload handlers
+ have the same type signature.]]></summary><restOfDescription><![CDATA[<p>Compared are the arguments' types of two overload handlers. This is mostly done
+ using the <a href="org_as2lib_env_overload_OverloadHandler.html#isMoreExplicit">OverloadHandler.isMoreExplicit</a> method.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[SameTypeSignatureException]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[asString]]></private></item>
+<item><private><![CDATA[overloadArguments]]></private></item>
+<item><private><![CDATA[overloadHandlers]]></private></item>
+<item><private><![CDATA[overloadTarget]]></private></item>
+<item><private><![CDATA[overloadedMethod]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Class methods inherited from]]></text><link><name><![CDATA[AbstractThrowable]]></name><uri><![CDATA[org_as2lib_env_except_AbstractThrowable]]></uri></link></title><item><link><name>getStringifier</name><uri>org_as2lib_env_except_AbstractThrowable</uri><method>getStringifier</method></link></item><item><link><name>setStringifier</name><uri>org_as2lib_env_except_AbstractThrowable</uri><method>setStringifier</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><private><![CDATA[doToString]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[FatalException]]></name><uri><![CDATA[org_as2lib_env_except_FatalException]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_env_except_FatalException</uri><method>toString</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[AbstractThrowable]]></name><uri><![CDATA[org_as2lib_env_except_AbstractThrowable]]></uri></link></title><item><link><name>addStackTraceElement</name><uri>org_as2lib_env_except_AbstractThrowable</uri><method>addStackTraceElement</method></link></item><item><link><name>getCause</name><uri>org_as2lib_env_except_AbstractThrowable</uri><method>getCause</method></link></item><item><link><name>getMessage</name><uri>org_as2lib_env_except_AbstractThrowable</uri><method>getMessage</method></link></item><item><link><name>getStackTrace</name><uri>org_as2lib_env_except_AbstractThrowable</uri><method>getStackTrace</method></link></item><item><link><name>initCause</name><uri>org_as2lib_env_except_AbstractThrowable</uri><method>initCause</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[SameTypeSignatureException]]></title><fullMethod><left><![CDATA[function <b>SameTypeSignatureException</b> (
+
+
+
+
+
+
+]]></left><right><param><name><![CDATA[message]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[thrower]]></name></param>,
+<param><name><![CDATA[args]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[overloadTarget]]></name></param>,
+<param><name><![CDATA[overloadedMethod]]></name>:<type><![CDATA[Function]]></type></param>,
+<param><name><![CDATA[overloadArguments]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[overloadHandlers]]></name>:<type><![CDATA[Array]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>SameTypeSignatureException</code> instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[message          ]]></name><description><![CDATA[the message of the exception]]></description></param>
+<param><name><![CDATA[thrower          ]]></name><description><![CDATA[the object whose method threw the exception]]></description></param>
+<param><name><![CDATA[args             ]]></name><description><![CDATA[the arguments of the method that threw the exception]]></description></param>
+<param><name><![CDATA[overloadTarget   ]]></name><description><![CDATA[the target object the method should be invoked on / on
+ which the overload is performed]]></description></param>
+<param><name><![CDATA[overloadedMethod ]]></name><description><![CDATA[the method that is overloaded]]></description></param>
+<param><name><![CDATA[overloadArguments]]></name><description><![CDATA[the real arguments used to perform the overloading]]></description></param>
+<param><name><![CDATA[overloadHandlers ]]></name><description><![CDATA[an array containing <code>OverloadHandler</code> instances
+ that have the same type signature]]></description></param>
+</field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_env_overload_OverloadException.html#OverloadException">OverloadException.OverloadException</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[asString]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>asString</b>:String
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Exception printed as string]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[overloadArguments]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>overloadArguments</b>:Array
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Arguments used by overloading]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[overloadedMethod]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>overloadedMethod</b>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The method that performs the overloading.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[overloadHandlers]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>overloadHandlers</b>:Array
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Handlers that where available by the unknown overloadHandler]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[overloadTarget]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>overloadTarget</b>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The object on which the overload should have taken place.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><private><![CDATA[doToString]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>doToString</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns a well formatted informative string representation of this exception.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the string representation of this exception]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_env_except_AbstractThrowable.html#doToString">org.as2lib.env.except.AbstractThrowable.doToString</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</private>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:28:05]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

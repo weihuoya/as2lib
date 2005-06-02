@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[TypedArray]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[Array]]></name></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.data.holder.array.TypedArray]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 29 May 2005, 10:29:36]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>TypedArray</code> acts like a normal array but assures that only objects of a
+ specific type are added to the array.]]></summary><restOfDescription><![CDATA[<p>Note that elements that are added to this array using the dot-syntax do not
+ get type-checked. For example:<pre>myArray[<span class="codeNumber">0</span>] = <span class="codeString">"value1"</span>;
+<span class="codeComment">// or</span>
+myArray.myProp = <span class="codeString">"value2"</span>; <span class="codeComment">// myArray["myProp"] = "value2";</span></pre><p>Example:<pre><span class="codeKeyword">var</span> array:<span class="codeIdentifier">Array</span> = <span class="codeKeyword">new</span> TypedArray(<span class="codeIdentifier">Number</span>);
+array.push(<span class="codeNumber">0</span>);
+array.push(<span class="codeNumber">1</span>);
+array.push(<span class="codeNumber">2</span>);
+<span class="codeComment">// throws an IllegalArgumentException because the element is not of the expected type</span>
+array.push(<span class="codeString">"myString"</span>);</pre><p>You can also construct your array the following way:<pre><span class="codeKeyword">var</span> array:<span class="codeIdentifier">Array</span> = <span class="codeKeyword">new</span> TypedArray(<span class="codeIdentifier">Number</span>, <span class="codeNumber">0</span>, <span class="codeNumber">1</span>, <span class="codeNumber">2</span>);</pre>]]></restOfDescription>
+</classDescription>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001191.html">Array class</a>]]></description></field>
+</fields>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[TypedArray]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[type]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getType]]></item>
+<item><![CDATA[concat]]></item>
+<item><![CDATA[push]]></item>
+<item><![CDATA[unshift]]></item>
+<item><![CDATA[toString]]></item>
+<item><private><![CDATA[validate]]></private></item>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[TypedArray]]></title><fullMethod><left><![CDATA[function <b>TypedArray</b> (
+]]></left><right><param><name><![CDATA[type]]></name>:<type><![CDATA[Function]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>TypedArray</code> instance.<p>You can optionally pass-in elements to populate this array with after the type
+ parameter. These elements also get type-checked. For example:<pre><span class="codeKeyword">var</span> array:<span class="codeIdentifier">Array</span> = <span class="codeKeyword">new</span> TypedArray(<span class="codeIdentifier">Number</span>, <span class="codeNumber">1</span>, <span class="codeNumber">2</span>, <span class="codeNumber">3</span>);</pre>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[type]]></name><description><![CDATA[the type of the elements this array expects]]></description></param>
+<param><name><![CDATA[..  ]]></name><description><![CDATA[any number of elements to populate this array with]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[type]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>type</b>:Function
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The type of the elements that can be added.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[concat]]></title><fullMethod><left><![CDATA[function <b>concat</b> (
+]]></left><right>) : <![CDATA[<a href="org_as2lib_data_holder_array_TypedArray.html">TypedArray</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Concatenates the elements specified in the parameter list with the elements of
+ this array and returns a new array containing these elements.<p>This array itself is left unchanged.<p>The returned array expects elements of the same type as this array does.<p>If you do not pass-in any elements a duplicate of this array gets returned.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[..]]></name><description><![CDATA[any number of elements to concatenate the elements of this array with]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a new array that contains the elements of this array as well as the
+ passed-in elements]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001192.html#3988964">Array.concat()</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getType]]></title><fullMethod><left><![CDATA[function <b>getType</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Function]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the type all elements of this array have.<p>This is the type passed-in on construction.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the type all elements of this array have]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[push]]></title><fullMethod><left><![CDATA[function <b>push</b> (
+]]></left><right><param><name><![CDATA[value]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds one or more elements to the end of this array and returns the new length of
+ this array.<p>The passed-in elements get type-checked first. They will only be added if they
+ are all of the correct type.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[value]]></name><description><![CDATA[the new element to add to the end of this array]]></description></param>
+<param><name><![CDATA[..   ]]></name><description><![CDATA[any number of further elements to add to the end of this array]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the new length of this array]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if one of the passed-in elements is of invalid
+ type]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001196.html#3989073">Array.push()</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toString]]></title><fullMethod><left><![CDATA[function <b>toString</b> (
+]]></left><right>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the string representation of this array.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the string representation of this array]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[unshift]]></title><fullMethod><left><![CDATA[function <b>unshift</b> (
+]]></left><right><param><name><![CDATA[value]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds one or more elements to the beginning of this array and returns the new
+ length of this array.<p>The passed-in values get type-checked first. They will only be added if they
+ are all of the correct type.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[value]]></name><description><![CDATA[the new element to add to the beginning of this array]]></description></param>
+<param><name><![CDATA[..   ]]></name><description><![CDATA[any number of further elements to add to the beginning of this array]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the new length of this array]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if one of the passed-in elements is of invalid
+ type]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="http://livedocs.macromedia.com/flash/mx2004/main_7_2/wwhelp/wwhimpl/common/html/wwhelp.htm?context=Flash_MX_2004&file=00001204.html#3989452">Array.unshift()</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[validate]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>validate</b> (
+]]></left><right><param><name><![CDATA[object]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Validates the passed-in <code>object</code> based on its type.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[object]]></name><description><![CDATA[the object whose type to validate]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the type of the <code>object</code> is invalid]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:16]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[Timeout]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[AbstractProcess]]></name><uri><![CDATA[org_as2lib_app_exec_AbstractProcess]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[ForEachExecutable]]></name><uri><![CDATA[org_as2lib_app_exec_ForEachExecutable]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Version]]></title><value><![CDATA[1.0]]></value></item>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.app.exec.Timeout]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Tuesday, 31 May 2005, 19:01:38]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>Timeout</code> works as delayed execution of a executable.]]></summary><restOfDescription><![CDATA[<p>As <code>Timeout</code> implements <a href="org_as2lib_app_exec_Executable.html">Executable</a> it works like a usual
+ executable and can be started with <a href="org_as2lib_app_exec_Timeout.html#execute">execute</a>.<p>As <code>Timeout</code> implements <a href="org_as2lib_app_exec_Process.html">Process</a> its possible to handle it
+ as process.<p><code>Timeout</code> works framebased, that means you have to define the delay 
+ in number of frames.<p>Due to the definition of Call all arguments passed-in in <a href="org_as2lib_app_exec_Timeout.html#execute">execute</a>
+ will be passed to the connected executable
+ 
+ Example for a direct execution:<pre><span class="codeKeyword">import</span> org.as2lib.app.exec.Timeout;
+<span class="codeKeyword">import</span> org.as2lib.app.exec.Call;
+
+Timeout.timeout(<span class="codeKeyword">new</span> Call(myObj, myMethod), <span class="codeNumber">20</span>, [<span class="codeString">"1"</span>, <span class="codeString">"2"</span>]);</pre>
+ 
+ Example for a controlable usage:<pre><span class="codeKeyword">import</span> org.as2lib.app.exec.Timeout;
+<span class="codeKeyword">import</span> org.as2lib.app.exec.Call;
+
+<span class="codeKeyword">var</span> <span class="codeIdentifier">call</span>:Call = <span class="codeKeyword">new</span> Call(myObj, myMethod);
+<span class="codeKeyword">var</span> frames:<span class="codeIdentifier">Number</span> = <span class="codeNumber">20</span>;
+<span class="codeKeyword">var</span> t:Timeout = <span class="codeKeyword">new</span> Timeout(<span class="codeIdentifier">call</span>, frames);
+t.execute(<span class="codeString">"argument 1"</span>, <span class="codeString">"argument 2"</span>);</pre>]]></restOfDescription>
+</classDescription>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Executable.html#execute">Executable.execute</a>]]></description></field>
+</fields>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[Timeout]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[exe]]></private></item>
+<item><private><![CDATA[frames]]></private></item>
+<item><private><![CDATA[executed]]></private></item>
+<item><private><![CDATA[target]]></private></item>
+<item><private><![CDATA[timeCall]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[setTimeout]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[setExecutable]]></item>
+<item><![CDATA[setExecutableByObjectAndFunction]]></item>
+<item><![CDATA[execute]]></item>
+<item><![CDATA[run]]></item>
+<item><![CDATA[forEach]]></item>
+<item><private><![CDATA[finalExecution]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[AbstractProcess]]></name><uri><![CDATA[org_as2lib_app_exec_AbstractProcess]]></uri></link></title><item><link><name>addAllProcessListeners</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>addAllProcessListeners</method></link></item><item><link><name>addProcessListener</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>addProcessListener</method></link></item><item><link><name>getAllProcessListeners</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>getAllProcessListeners</method></link></item><item><link><name>getParentProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>getParentProcess</method></link></item><item><link><name>getPercentage</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>getPercentage</method></link></item><item><link><name>hasFinished</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>hasFinished</method></link></item><item><link><name>hasStarted</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>hasStarted</method></link></item><item><link><name>isPaused</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>isPaused</method></link></item><item><link><name>isRunning</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>isRunning</method></link></item><item><link><name>pause</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>pause</method></link></item><item><link><name>removeAllProcessListeners</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>removeAllProcessListeners</method></link></item><item><link><name>removeProcessListener</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>removeProcessListener</method></link></item><item><link><name>resume</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>resume</method></link></item><item><link><name>setParentProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>setParentProcess</method></link></item><item><link><name>start</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>start</method></link></item><item><link><name>startSubProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>startSubProcess</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Event handlers]]></title>
+<item><private><![CDATA[onEnterFrame]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Event handlers inherited from]]></text><link><name><![CDATA[AbstractProcess]]></name><uri><![CDATA[org_as2lib_app_exec_AbstractProcess]]></uri></link></title><item><link><name>onFinishProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onFinishProcess</method></link></item><item><link><name>onPauseProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onPauseProcess</method></link></item><item><link><name>onProcessError</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onProcessError</method></link></item><item><link><name>onResumeProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onResumeProcess</method></link></item><item><link><name>onStartProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onStartProcess</method></link></item><item><link><name>onUpdateProcess</name><uri>org_as2lib_app_exec_AbstractProcess</uri><method>onUpdateProcess</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[Timeout]]></title><fullMethod><left><![CDATA[function <b>Timeout</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Creates a new <code>Timeout</code> instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Overloading]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Timeout.html#setExecutable">setExecutable</a> <code>(exe:{VISDOC_LINK_0}, frames:Number) : Void</code><br /><a href="org_as2lib_app_exec_Timeout.html#setExecutableByObjectAndFunction">setExecutableByObjectAndFunction</a> <code>(inObject:Object, func:Function, frames:Number) : Void</code>]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_app_exec_AbstractProcess.html#AbstractProcess">AbstractProcess.AbstractProcess</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[exe]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>exe</b>:<a href="org_as2lib_app_exec_Executable.html">Executable</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Connected Executable]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[executed]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>executed</b>:Number
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Amount of listened frames]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[frames]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>frames</b>:Number
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Amount of frames until execution (delay)]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[target]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>target</b>:Array
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[List of the targets (arguments) for the execution.
+ used in <a href="org_as2lib_app_exec_Timeout.html#forEach">forEach</a>.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[timeCall]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>timeCall</b>:<a href="org_as2lib_app_exec_Call.html">Call</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Call to the onEnterFrame listener]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[setTimeout]]></title><fullMethod><left><![CDATA[static function <b>setTimeout</b> (
+
+
+]]></left><right><param><name><![CDATA[exe]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Executable.html">Executable</a>]]></type></param>,
+<param><name><![CDATA[frames]]></name>:<type><![CDATA[Number]]></type></param>,
+<param><name><![CDATA[args]]></name>:<type><![CDATA[Array]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Simplyfier for the execution of a timeout.<p>Allows creation and execution of a <code>Timeout</code> with one call.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[exe   ]]></name><description><![CDATA[Executable to excute after a delay]]></description></param>
+<param><name><![CDATA[frames]]></name><description><![CDATA[Amout of frames during the end of the execution]]></description></param>
+<param><name><![CDATA[args  ]]></name><description><![CDATA[Arguments to be passed at execution]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[execute]]></title><fullMethod><left><![CDATA[function <b>execute</b> (
+]]></left><right>)</right></fullMethod>
+<description>
+<text><![CDATA[Starts the delay until the execution of the connected Executable.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Timeout.html#setExecutable">setExecutable</a><br /><a href="org_as2lib_app_exec_Timeout.html#setExecutableByObjectAndFunction">setExecutableByObjectAndFunction</a><br /><a href="org_as2lib_app_exec_Executable.html#execute">Executable.execute</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Executable.html#execute">Executable.execute</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[finalExecution]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>finalExecution</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Internal method to finish the execution.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[forEach]]></title><fullMethod><left><![CDATA[function <b>forEach</b> (
+]]></left><right><param><name><![CDATA[object]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Executed the Timeout for all iterable objects.<p>If you execute .forEach to Timeout it will redirect content, name and
+ the object to each execution of the connected call. 
+ 
+ Example:<pre><span class="codeKeyword">import</span> org.as2lib.app.exec.Timeout;
+
+<span class="codeKeyword">function</span> display(content, name, inObject) {
+  <span class="codeIdentifier">trace</span>(<span class="codeString">"Executed: "</span>+content+<span class="codeString">", "</span>+name+<span class="codeString">", "</span>+inObject+<span class="codeString">";"</span>);
+}
+
+<span class="codeKeyword">var</span> t:Timeout = <span class="codeKeyword">new</span> Timeout(<span class="codeIdentifier">this</span>, display, <span class="codeNumber">40</span>);
+t.forEach({a:<span class="codeString">"1"</span>, b:<span class="codeString">"2"</span>, c:<span class="codeString">"3"</span>});</pre>
+ 
+ Delays for 40 frames:<pre>Executed: <span class="codeNumber">1</span>, a, [<span class="codeIdentifier">Object</span> object];
+Executed: <span class="codeNumber">2</span>, b, [<span class="codeIdentifier">Object</span> object];
+Executed: <span class="codeNumber">3</span>, c, [<span class="codeIdentifier">Object</span> object];</pre>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[object]]></name><description><![CDATA[Object to be iterated]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_ForEachExecutable.html#forEach">ForEachExecutable.forEach</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[run]]></title><fullMethod><left><![CDATA[function <b>run</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Referes to execute.<p>Implementation of <a href="org_as2lib_app_exec_AbstractProcess.html#run">AbstractProcess.run</a> for using it as a
+ process.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_app_exec_AbstractProcess.html#run">AbstractProcess.run</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setExecutable]]></title><fullMethod><left><![CDATA[function <b>setExecutable</b> (
+
+]]></left><right><param><name><![CDATA[exe]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Executable.html">Executable</a>]]></type></param>,
+<param><name><![CDATA[frames]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the connected executable.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[exe   ]]></name><description><![CDATA[Executable to be executed after the delay]]></description></param>
+<param><name><![CDATA[frames]]></name><description><![CDATA[Delay in frames until execution.]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setExecutableByObjectAndFunction]]></title><fullMethod><left><![CDATA[function <b>setExecutableByObjectAndFunction</b> (
+
+
+]]></left><right><param><name><![CDATA[inObject]]></name>:<type><![CDATA[Object]]></type></param>,
+<param><name><![CDATA[func]]></name>:<type><![CDATA[Function]]></type></param>,
+<param><name><![CDATA[frames]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the connected executable with a generated call.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[inObject]]></name><description><![CDATA[Scope of the execution]]></description></param>
+<param><name><![CDATA[func    ]]></name><description><![CDATA[Method to execute]]></description></param>
+<param><name><![CDATA[frames  ]]></name><description><![CDATA[Delay in frames until execution.]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Event handlers]]></title>
+<method>
+<title><private><![CDATA[onEnterFrame]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>onEnterFrame</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Executed on each interval execution.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:11]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

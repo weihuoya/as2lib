@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[TestCaseResult]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[TestResult]]></name><uri><![CDATA[org_as2lib_test_unit_TestResult]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger.]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.test.unit.TestCaseResult]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Tuesday, 10 May 2005, 16:58:34]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[Wrapper for a TestCase that contains a API to all Informations to the execution of the Testcase.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[TestCaseResult]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[testCase]]></private></item>
+<item><private><![CDATA[testRunner]]></private></item>
+<item><private><![CDATA[testCaseMethodInfos]]></private></item>
+<item><private><![CDATA[finished]]></private></item>
+<item><private><![CDATA[started]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getMethodInfos]]></item>
+<item><private><![CDATA[fetchTestCaseMethodInfos]]></private></item>
+<item><![CDATA[getTestRunner]]></item>
+<item><![CDATA[getTestCase]]></item>
+<item><![CDATA[getName]]></item>
+<item><![CDATA[getTestResults]]></item>
+<item><![CDATA[getPercentage]]></item>
+<item><![CDATA[hasFinished]]></item>
+<item><![CDATA[hasStarted]]></item>
+<item><![CDATA[getOperationTime]]></item>
+<item><![CDATA[hasErrors]]></item>
+<item><![CDATA[getTestCaseResults]]></item>
+<item><![CDATA[toString]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[TestCaseResult]]></title><fullMethod><left><![CDATA[function <b>TestCaseResult</b> (
+
+]]></left><right><param><name><![CDATA[testCase]]></name>:<type><![CDATA[<a href="org_as2lib_test_unit_TestCase.html">TestCase</a>]]></type></param>,
+<param><name><![CDATA[testRunner]]></name>:<type><![CDATA[<a href="org_as2lib_test_unit_TestRunner.html">TestRunner</a>]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new TestCaseResult.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[testCase  ]]></name><description><![CDATA[TestCase to wrap.]]></description></param>
+<param><name><![CDATA[testRunner]]></name><description><![CDATA[TestRunner that initialized the TestCaseResult.]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[finished]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>finished</b>:Boolean
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Flag if the TestCase has been finished.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[started]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>started</b>:Boolean
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Flag if the TestCase has been started.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[testCase]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>testCase</b>:<a href="org_as2lib_test_unit_TestCase.html">TestCase</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Holder for the internal testcase.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[testCaseMethodInfos]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>testCaseMethodInfos</b>:<a href="org_as2lib_data_holder_array_TypedArray.html">TypedArray</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Internal list of all Methods contained in the Testcase.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[testRunner]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>testRunner</b>:<a href="org_as2lib_test_unit_TestRunner.html">TestRunner</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Holder for the runner of the testcase.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><private><![CDATA[fetchTestCaseMethodInfos]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>fetchTestCaseMethodInfos</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_data_holder_array_TypedArray.html">TypedArray</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Fetches all methods starting with "test" within the testcase.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[List containing all methodinformations.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getMethodInfos]]></title><fullMethod><left><![CDATA[function <b>getMethodInfos</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_data_holder_array_TypedArray.html">TypedArray</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Getter for all Informations about the methods contained within the TestCase.
+ Test method get recognized by the pattern: "test*"]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[List of all methods contained within this TestCase.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getName]]></title><fullMethod><left><![CDATA[function <b>getName</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Getter for the name of the TestCase.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[name of the TestCase.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_test_unit_TestResult.html#getName">TestResult.getName</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getOperationTime]]></title><fullMethod><left><![CDATA[function <b>getOperationTime</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Getter for the total operation time.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Total operation time in milliseconds.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_test_unit_TestResult.html#getOperationTime">TestResult.getOperationTime</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getPercentage]]></title><fullMethod><left><![CDATA[function <b>getPercentage</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Getter for the total percentage of the execution.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Percentage of execution.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_test_unit_TestResult.html#getPercentage">TestResult.getPercentage</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getTestCase]]></title><fullMethod><left><![CDATA[function <b>getTestCase</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_test_unit_TestCase.html">TestCase</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Getter for the wrapped TestCase.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Wrapped TestCase.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getTestCaseResults]]></title><fullMethod><left><![CDATA[function <b>getTestCaseResults</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_data_holder_array_TypedArray.html">TypedArray</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Getter for all TestCase results.
+ Implementation of @see TestResult#getTestCaseResults.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[The Testcase in a list of TestCaseResults.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_test_unit_TestResult.html#getTestCaseResults">TestResult.getTestCaseResults</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getTestResults]]></title><fullMethod><left><![CDATA[function <b>getTestResults</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_data_holder_array_TypedArray.html">TypedArray</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Implementation of @see TestResult#getTestResults.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[This TestCaseResult in a new list for Results.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_test_unit_TestResult.html#getTestResults">TestResult.getTestResults</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getTestRunner]]></title><fullMethod><left><![CDATA[function <b>getTestRunner</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_test_unit_TestRunner.html">TestRunner</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Getter for the Testrunner that executed the TestCase.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Testrunner that executed the TestCase.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[hasErrors]]></title><fullMethod><left><![CDATA[function <b>hasErrors</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[True if the Testcase has errors.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_test_unit_TestResult.html#hasErrors">TestResult.hasErrors</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[hasFinished]]></title><fullMethod><left><![CDATA[function <b>hasFinished</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the TestCase has been finished.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_test_unit_TestResult.html#hasFinished">TestResult.hasFinished</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[hasStarted]]></title><fullMethod><left><![CDATA[function <b>hasStarted</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the TestCase has been started.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_test_unit_TestResult.html#hasStarted">TestResult.hasStarted</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toString]]></title><fullMethod><left><![CDATA[function <b>toString</b> (
+]]></left><right>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Extended .toString implementation.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[TestCaseResult as well formated String.]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:30:50]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

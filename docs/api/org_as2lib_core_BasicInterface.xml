@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[BasicInterface]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[none]]></name></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Martin Heidegger, Michael Hermann]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.core.BasicInterface]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Tuesday, 10 May 2005, 16:47:08]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>BasicInterface</code> is the basic interface for each class in the As2lib
+ Framework.]]></summary><restOfDescription><![CDATA[<p>It is recommended to always implement this interface in the classes of your
+ own project but it is not a necessity. You can use all functionalities of the
+ As2lib Framework without implementing it.<p>It enables you to call the <a href="org_as2lib_core_BasicInterface.html#toString">toString</a> method on instances that have
+ been casted to interfaces.<p>The default implementation <code>BasicClass</code> offers an enhanced <code>toString</code>
+ method implementation that returns a better string representation than the default
+ <code>Object#toString</code> method of Flash.]]></restOfDescription>
+</classDescription>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_core_BasicClass.html">BasicClass</a>]]></description></field>
+</fields>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[toString]]></item>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[toString]]></title><fullMethod><left><![CDATA[function <b>toString</b> (
+]]></left><right>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the string representation of this instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the string representation of this instance]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:13]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

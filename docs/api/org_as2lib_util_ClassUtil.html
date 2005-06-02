@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>ClassUtil</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>ClassUtil</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Martin Heidegger, Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.util.ClassUtil</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Monday, 16 May 2005, 18:56:54</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>ClassUtil</code> contains fundamental operations to efficiently and easily
+ work with any class. </div> All methods here are supposed to be used with functions
+ treated as classes.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Class methods</span>
+              <ul>
+                <li>
+                  <a href="#isSubClassOf">isSubClassOf</a>
+                </li>
+                <li>
+                  <a href="#isImplementationOf">isImplementationOf</a>
+                </li>
+                <li>
+                  <a href="#createCleanInstance">createCleanInstance</a>
+                </li>
+                <li>
+                  <a href="#createInstance">createInstance</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="createCleanInstance">createCleanInstance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>createCleanInstance</b> (
+</div>
+                <div><span class="code">clazz:Function) : Object</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Creates a new instance of the passed-in <code>clazz</code> without invoking its 
+ constructor.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">clazz<span class="separator">:</span></div>
+                    <div>the	class to create a new instance of</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">new instance of the passed-in class.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Author:</span>
+                  <div class="item">Martin Heidegger<br />Ralf Bokelberg (www.qlod.com)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="createInstance">createInstance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>createInstance</b> (
+
+</div>
+                <div><span class="code">clazz:Function,
+args:Array)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Creates a new instance of the passed-in <code>clazz</code> applying the
+ passed-in <code>args</code> to the constructor.<p>This util is mostly made for MTASC compatibility because it doesn't
+ allow <code>new clazz()</code> for usual variables.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">clazz<span class="separator">:</span></div>
+                    <div>Class to be instanciated</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args <span class="separator">:</span></div>
+                    <div>Arguments to be applied to the constructor</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">new instance of the class</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isImplementationOf">isImplementationOf</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>isImplementationOf</b> (
+
+</div>
+                <div><span class="code">clazz:Function,
+interfaze:Function) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Checks if the passed-in <code>clazz</code> implements the passed-in <code>* interfaze</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">clazz    <span class="separator">:</span></div>
+                    <div>the class to check</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">interfaze<span class="separator">:</span></div>
+                    <div>the interface the <code>clazz</code> may implement</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if the passed-in <code>clazz</code> implements the passed-in
+ <code>interfaze</code> else <code>false</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isSubClassOf">isSubClassOf</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>isSubClassOf</b> (
+
+</div>
+                <div><span class="code">subClass:Function,
+superClass:Function) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Checks if the passed-in <code>subClass</code> is extended by the passed-in
+ <code>superClass</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">subClass  <span class="separator">:</span></div>
+                    <div>the class to check</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">superClass<span class="separator">:</span></div>
+                    <div>the class to match</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if <code>subClass</code> is a sub-class of <code>superClass</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2005 as2lib | </span><span class="date">Tuesday, 31 May 2005, 20:31:04
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

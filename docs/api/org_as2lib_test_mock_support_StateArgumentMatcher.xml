@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[StateArgumentMatcher]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[ArgumentMatcher]]></name><uri><![CDATA[org_as2lib_test_mock_ArgumentMatcher]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.test.mock.support.StateArgumentMatcher]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 29 May 2005, 11:41:10]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>StateArgumentMatcher</code> checks whether one argument is in an expected state.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[StateArgumentMatcher]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[expectedType]]></private></item>
+<item><private><![CDATA[expectedProperties]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[addExpectedProperty]]></item>
+<item><![CDATA[matchArgument]]></item>
+<item><private><![CDATA[checkProperty]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[StateArgumentMatcher]]></title><fullMethod><left><![CDATA[function <b>StateArgumentMatcher</b> (
+]]></left><right><param><name><![CDATA[expectedType]]></name>:<type><![CDATA[Function]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>StateArgumentMatcher</code> instance.<p>If every type is allowed, specifc <code>Object</code> as expected type.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[expectedType]]></name><description><![CDATA[the expected type of the argument]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if <code>type</code> is <code>null</code> or
+ <code>undefined</code>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[expectedProperties]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>expectedProperties</b>:<a href="org_as2lib_data_holder_Map.html">Map</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The expected properties.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[expectedType]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>expectedType</b>:Function
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The expected type.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[addExpectedProperty]]></title><fullMethod><left><![CDATA[function <b>addExpectedProperty</b> (
+
+]]></left><right><param><name><![CDATA[propertyName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[propertyValue]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds a new property the argument is expected to have.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[propertyName ]]></name><description><![CDATA[the name of the expected property]]></description></param>
+<param><name><![CDATA[propertyValue]]></name><description><![CDATA[the value of the expected property]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_test_mock_support_StateArgumentMatcher.html#checkProperty">checkProperty</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[checkProperty]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>checkProperty</b> (
+
+
+]]></left><right><param><name><![CDATA[target]]></name></param>,
+<param><name><![CDATA[propertyName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[expectedPropertyValue]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks whether the value of the property with name <code>propertyName</code> on the
+ passed-in <code>target</code> matches the <code>expectedPropertyValue</code>.<p>It is first checked whether a getter method with the passed-in
+ <code>propertyName</code> exists. If so it will be used to get the property value
+ that is then compared with the <code>expectedPropertyValue</code>. Otherwise the
+ <code>propertyName</code> will be used directly and its value will be compared with
+ the <code>expectedPropertyValue</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[target               ]]></name><description><![CDATA[the target object that declares the property]]></description></param>
+<param><name><![CDATA[propertyName         ]]></name><description><![CDATA[the name of the property]]></description></param>
+<param><name><![CDATA[expectedPropertyValue]]></name><description><![CDATA[the expected value of the property]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if the property has the expected value else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[matchArgument]]></title><fullMethod><left><![CDATA[function <b>matchArgument</b> (
+]]></left><right><param><name><![CDATA[argument]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks whether the passed-in <code>argument</code> is in the expected state.<p><code>false</code> will be returned if:<ul><li><code>argument</code> is <code>null</code> or <code>undefined</code>.</li><li><code>argument</code> is not of the expected type.</li><li><code>argument</code> is not in the expected state.</li></ul>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[argument]]></name><description><![CDATA[the argument to check whether it is in the expected state]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if the argument is in the expected state else <code>false</code>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_test_mock_ArgumentMatcher.html#matchArgument">org.as2lib.test.mock.ArgumentMatcher.matchArgument</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:29:52]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

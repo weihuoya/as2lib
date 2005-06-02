@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>MethodInvocationReturnListener</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>MethodInvocationReturnListener</h1>
+        <div class="classProperties">
+          <div class="kindOfClass"><span class="value">
+Interface
+</span>
+          </div>
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items">none</span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.io.conn.core.event.MethodInvocationReturnListener</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Friday, 06 May 2005, 12:12:38</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>MethodInvocationReturnListener</code> awaits a return value of a method invocation. </div><p>This interface can either be instantiated directly or implemented by a class.
+ If you instantiate it directly you must overwrite the event method with an anonymous
+ function.<p>Note that overwriting the event method with a anonymous function is error-prone,
+ because the arguments' types and the return type are not type-checked. Instantiating
+ an interface directly is also not permitted in Flex.<pre><span class="codeKeyword">var</span> listener:MethodInvocationReturnListener = <span class="codeKeyword">new</span> MethodInvocationReturnListener();
+listener.onReturn = <span class="codeKeyword">function</span>(returnInfo:MethodInvocationReturnInfo):<span class="codeIdentifier">Void</span>) {
+    <span class="codeIdentifier">trace</span>(<span class="codeString">"Invoked method successfully: "</span> + returnInfo); 
+}</pre><p>Implementing the interface by a class is a much neater way. But sometimes it
+ adds unnecessary complexity.<pre><span class="codeKeyword">class</span> MyListener <span class="codeKeyword">implements</span> MethodInvocationReturnListener {
+    <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> onReturn(returnInfo:MethodInvocationReturnInfo):<span class="codeIdentifier">Void</span> {
+        <span class="codeIdentifier">trace</span>(<span class="codeString">"Invoked method successfully: "</span> + returnInfo); 
+    }
+}</pre></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Event handlers</span>
+              <ul>
+                <li>
+                  <a href="#onReturn">onReturn</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Event handlers</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="onReturn">onReturn</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>onReturn</b> (
+</div>
+                <div><span class="code">returnInfo:<a href="org_as2lib_io_conn_core_event_MethodInvocationReturnInfo.html">MethodInvocationReturnInfo</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Is executed when the return value of the method invocation arrives.<p>This indicates that the method was invoked successfully.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">returnInfo<span class="separator">:</span></div>
+                    <div>contains the return value and some other useful information about
+ the invoked method</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2005 as2lib | </span><span class="date">Tuesday, 31 May 2005, 20:29:01
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

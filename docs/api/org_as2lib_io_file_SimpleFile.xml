@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[SimpleFile]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[File]]></name><uri><![CDATA[org_as2lib_io_file_File]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.io.file.SimpleFile]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Tuesday, 10 May 2005, 16:58:52]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[Default implementation of a file used within ActionScript.]]></summary><restOfDescription><![CDATA[
+ Supports all common features without any advantages.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[SimpleFile]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[helperXML]]></private></item>
+<item><private><![CDATA[data]]></private></item>
+<item><private><![CDATA[url]]></private></item>
+<item><private><![CDATA[loaded]]></private></item>
+<item><private><![CDATA[loading]]></private></item>
+<item><private><![CDATA[doesExist]]></private></item>
+<item><private><![CDATA[bytesLoaded]]></private></item>
+<item><private><![CDATA[bytesTotal]]></private></item>
+<item><private><![CDATA[lines]]></private></item>
+<item><private><![CDATA[eB]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><private><![CDATA[reset]]></private></item>
+<item><private><![CDATA[sendDataEvent]]></private></item>
+<item><private><![CDATA[sendProgressEvent]]></private></item>
+<item><private><![CDATA[updateByteInfo]]></private></item>
+<item><![CDATA[load]]></item>
+<item><![CDATA[isLoading]]></item>
+<item><![CDATA[isLoaded]]></item>
+<item><![CDATA[exists]]></item>
+<item><![CDATA[getBytesLoaded]]></item>
+<item><![CDATA[getBytesTotal]]></item>
+<item><![CDATA[getLocation]]></item>
+<item><![CDATA[getContent]]></item>
+<item><private><![CDATA[evaluateLines]]></private></item>
+<item><![CDATA[getLine]]></item>
+<item><![CDATA[countLines]]></item>
+<item><![CDATA[addListener]]></item>
+<item><![CDATA[toString]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[SimpleFile]]></title><fullMethod><left><![CDATA[function <b>SimpleFile</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new simple file.
+ It prepares the helperXML and resets all states.]]></text>
+</description>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[bytesLoaded]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>bytesLoaded</b>:Number
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Holder for the amount of bytes loaded]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[bytesTotal]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>bytesTotal</b>:Number
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Holder for the amount of the total file size]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[data]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>data</b>:String
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Content of the file]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[doesExist]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>doesExist</b>:Boolean = <span class="codeIdentifier">false</span>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Flag if the file does exist]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[eB]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>eB</b>:<a href="org_as2lib_env_event_broadcaster_EventBroadcaster.html">EventBroadcaster</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Eventbroadcaster to broadcast events]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[helperXML]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>helperXML</b>:XML
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Helper XML, rudimentary for the workaround to create a methology like a "file", supports different behaviours]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[lines]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>lines</b>:Array
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Content seperated in lines]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[loaded]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>loaded</b>:Boolean = <span class="codeIdentifier">false</span>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Flag if the file has been loaded]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[loading]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>loading</b>:Boolean = <span class="codeIdentifier">false</span>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Flag if the file is currently loading]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[url]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>url</b>:String
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Location that has been loaded]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[addListener]]></title><fullMethod><left><![CDATA[function <b>addListener</b> (
+]]></left><right><param><name><![CDATA[listener]]></name>:<type><![CDATA[<a href="org_as2lib_io_file_FileListener.html">FileListener</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Implementation of File.addListener.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[listener]]></name><description><![CDATA[Listener to be added to the file.]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#addListener">File.addListener</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#addListener">File.addListener</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[countLines]]></title><fullMethod><left><![CDATA[function <b>countLines</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Implementation of File.countLines.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Total amount of lines in the content.]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#countLines">File.countLines</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#countLines">File.countLines</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[evaluateLines]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>evaluateLines</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Method to create the lines from the content.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[exists]]></title><fullMethod><left><![CDATA[function <b>exists</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Implementation of File.exists.
+ This is a low level implementation of .exists. It won't work properly if you didn't load a file before.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_io_file_FileNotLoadedException.html">FileNotLoadedException</a> if no file was loaded before. (Is related to the onLoad event.)]]></description></field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the file exists.]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#exists">File.exists</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#exists">File.exists</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getBytesLoaded]]></title><fullMethod><left><![CDATA[function <b>getBytesLoaded</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Implementation of File.getBytesLoaded.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Total amount of bytes loaded.]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#getBytesLoaded">File.getBytesLoaded</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#getBytesLoaded">File.getBytesLoaded</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getBytesTotal]]></title><fullMethod><left><![CDATA[function <b>getBytesTotal</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Implementation of File.getBytesTotal.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Total file size in bytes.]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#getBytesTotal">File.getBytesTotal</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#getBytesTotal">File.getBytesTotal</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getContent]]></title><fullMethod><left><![CDATA[function <b>getContent</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Implementation of File.getContent.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Content of the File (if the file is loaded, else "null")]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#getContent">File.getContent</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#getContent">File.getContent</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getLine]]></title><fullMethod><left><![CDATA[function <b>getLine</b> (
+]]></left><right><param><name><![CDATA[line]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Implementation of File.getLine.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Content of the requested line, "undefined" if the line doesn't exist.]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#getLine">File.getLine</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#getLine">File.getLine</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getLocation]]></title><fullMethod><left><![CDATA[function <b>getLocation</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Implementation of File.getLocation.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Recent loaded location.]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#getLocation">File.getLocation</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#getLocation">File.getLocation</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isLoaded]]></title><fullMethod><left><![CDATA[function <b>isLoaded</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Implementation of File.isLoaded.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the File is already loaded.]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#isLoaded">File.isLoaded</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#isLoaded">File.isLoaded</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isLoading]]></title><fullMethod><left><![CDATA[function <b>isLoading</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Implementation of File.isLoading.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the File is still loading.]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#isLoading">File.isLoading</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#isLoading">File.isLoading</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[load]]></title><fullMethod><left><![CDATA[function <b>load</b> (
+]]></left><right><param><name><![CDATA[url]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Implementation of File.load.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[url]]></name><description><![CDATA[URL to be loaded.]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_file_File.html#load">File.load</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[reset]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>reset</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Resets all states of the Simple File]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[sendDataEvent]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>sendDataEvent</b> (
+]]></left><right><param><name><![CDATA[data]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Internal method to handle the helperXML's onData Event.
+ This method will send the onLoad event if the data is valid, else it will send the onFileNotFound event.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[data]]></name><description><![CDATA[Content of the file]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[sendProgressEvent]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>sendProgressEvent</b> (
+]]></left><right><param><name><![CDATA[newBytesLoaded]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Internal method to handle changes in helperXML bytesLoaded event.
+ This method will send a onProgress event.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[newBytesLoaded]]></name><description><![CDATA[]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_file_SimpleFile.html#SimpleFile">SimpleFile</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toString]]></title><fullMethod><left><![CDATA[function <b>toString</b> (
+]]></left><right>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Extended Stringifier
+ 
+ Example:
+  [type org.as2lib.io.file.SimpleFile | Location: MyFile.txt; Size: 12KB; ]]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[The file as string.]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[updateByteInfo]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>updateByteInfo</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Internal method to keep the bytesLoaded and Bytes Total values up-to-date.
+ This method was used for sendProgressEvent that sets the status of bytesLoaded. 
+ Else it could be possible by simply setting getting the helperXML.getBytesLoaded/-Total value on request.]]></text>
+</description>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:29:29]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

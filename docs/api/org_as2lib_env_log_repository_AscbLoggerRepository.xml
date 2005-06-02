@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[AscbLoggerRepository]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[LoggerRepository]]></name><uri><![CDATA[org_as2lib_env_log_LoggerRepository]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.log.repository.AscbLoggerRepository]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 10 April 2005, 10:34:10]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>AscbLoggerRepository</code> returns loggers of type <a href="org_as2lib_env_log_logger_AscbLogger.html">org.as2lib.env.log.logger.AscbLogger</a>.]]></summary><restOfDescription><![CDATA[<p>Configuring your global registry, like <code>LogManager</code> with this repository,
+ enables you to work externally with the As2lib Logging API, which allows you to
+ change between different other Logging APIs, but internally with the ASCB Logging
+ API. You also configure the ASCB Logging API as if you would use it directly.<p>Already received loggers are cached by name. Thus there exists only one logger
+ instance per logger name.]]></restOfDescription>
+</classDescription>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_AscbLogger.html">org.as2lib.env.log.logger.AscbLogger</a>]]></description></field>
+</fields>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[AscbLoggerRepository]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[loggers]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getLogger]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[AscbLoggerRepository]]></title><fullMethod><left><![CDATA[function <b>AscbLoggerRepository</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>AscbLoggerRepository</code> instance.]]></text>
+</description>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[loggers]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>loggers</b>:Object
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Already received loggers.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[getLogger]]></title><fullMethod><left><![CDATA[function <b>getLogger</b> (
+]]></left><right><param><name><![CDATA[name]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[<a href="org_as2lib_env_log_Logger.html">Logger</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns a pre-configured logger for the passed-in <code>name</code>.<p>A new logger is created for names to which no logger has been assigned yet.
+ The new logger is configured with the <code>name</code>. The logger is then cached by
+ name and returned for usage.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[name]]></name><description><![CDATA[the name of the logger to return]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the logger corresponding to the passed-in <code>name</code>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_log_LoggerRepository.html#getLogger">org.as2lib.env.log.LoggerRepository.getLogger</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:56]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

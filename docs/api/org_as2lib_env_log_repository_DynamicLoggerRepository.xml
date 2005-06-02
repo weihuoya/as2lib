@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[DynamicLoggerRepository]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[LoggerRepository]]></name><uri><![CDATA[org_as2lib_env_log_LoggerRepository]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.log.repository.DynamicLoggerRepository]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 10 April 2005, 10:34:10]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>DynamicLoggerRepository</code> is used to obtain loggers.]]></summary><restOfDescription><![CDATA[<p>The actual class of these loggers is determined by you at runtime. You can
+ therefor either use the constructors logger class argument or the
+ <a href="org_as2lib_env_log_repository_DynamicLoggerRepository.html#setLoggerFactory">setLoggerFactory</a> method.<p>This repository is very performant. What it does is quite simple. It only
+ instantiates logger instances passing-in the given name, stores these instances
+ by name for retrieval later on and returns them.<p>When working with logger repositories you normally store them in the log
+ manager using the static <a href="org_as2lib_env_log_LogManager.html#setLoggerRepository">org.as2lib.env.log.LogManager.setLoggerRepository</a> method. You can
+ then use the static <a href="org_as2lib_env_log_LogManager.html#getLogger">org.as2lib.env.log.LogManager.getLogger</a> method to obtain loggers from
+ the set repository.<p>Example:<pre><span class="codeComment">// configuration: on system start-up</span>
+<span class="codeKeyword">var</span> repository:LoggerRepository = <span class="codeKeyword">new</span> DynamicLoggerRepository(MyLogger);
+LogManager.setLoggerRepository(repository);
+<span class="codeComment">// usage: in the org.mydomain.MyClass class</span>
+<span class="codeKeyword">var</span> myLogger:Logger = LogManager.getLogger(<span class="codeString">"org.mydomain.MyClass"</span>);
+<span class="codeKeyword">if</span> (myLogger.isWarningEnabled()) {
+    myLogger.warning(<span class="codeString">"Pay attention please!"</span>);
+}</pre>]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[DynamicLoggerRepository]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[loggers]]></private></item>
+<item><private><![CDATA[loggerFactory]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><private><![CDATA[getDynamicLoggerFactory]]></private></item>
+<item><private><![CDATA[getBlankLoggerFactory]]></private></item>
+<item><![CDATA[getLoggerFactory]]></item>
+<item><![CDATA[setLoggerFactory]]></item>
+<item><![CDATA[getLogger]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[DynamicLoggerRepository]]></title><fullMethod><left><![CDATA[function <b>DynamicLoggerRepository</b> (
+]]></left><right><param><name><![CDATA[loggerClass]]></name>:<type><![CDATA[Function]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>DynamicLoggerRepository</code> instance.<p>If you do not pass a <code>loggerClass</code> you must set the logger factory via
+ the <a href="org_as2lib_env_log_repository_DynamicLoggerRepository.html#setLoggerFactory">setLoggerFactory</a> method. Otherwise the logger returned by
+ <a href="org_as2lib_env_log_repository_DynamicLoggerRepository.html#getLogger">getLogger</a> will always be <code>null</code>.<p>The logger is wrapped into a factory and the factory is set. The factory
+ then instantiates the logger class passing-in the name of the logger on calls
+ to <a href="org_as2lib_env_log_repository_DynamicLoggerRepository.html#getLogger">getLogger</a>.<p>Already received loggers are cached by name. Thus there exists only one
+ logger instance per name.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[loggerClass]]></name><description><![CDATA[(optional) the class to create loggers of]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[loggerFactory]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>loggerFactory</b>:<a href="org_as2lib_env_log_repository_LoggerFactory.html">LoggerFactory</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Creates loggers.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[loggers]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>loggers</b>:Object
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Already received loggers.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><private><![CDATA[getBlankLoggerFactory]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>getBlankLoggerFactory</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_log_repository_LoggerFactory.html">LoggerFactory</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns a blank logger factory.<p>That is a factory without implemented methods. All methods have still to be
+ set.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a blank logger factory]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[getDynamicLoggerFactory]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>getDynamicLoggerFactory</b> (
+]]></left><right><param><name><![CDATA[loggerClass]]></name>:<type><![CDATA[Function]]></type></param>) : <![CDATA[<a href="org_as2lib_env_log_repository_LoggerFactory.html">LoggerFactory</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns a new dynamic logger factory.<p>This factory creates new instances of the passed-in <code>loggerClass</code>. It
+ passes the logger name as parameter to the constructor of the class on creation.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a new dynamic logger factory]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getLogger]]></title><fullMethod><left><![CDATA[function <b>getLogger</b> (
+]]></left><right><param><name><![CDATA[name]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[<a href="org_as2lib_env_log_Logger.html">Logger</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns a pre-configured logger for the passed-in <code>name</code>.<p>A new logger is created for names to which no logger has been assigned yet.
+ The new logger is configured with the <code>name</code>, either by the custom
+ factory or by the default one, which passes the <code>name</code> as parameter to
+ the constructor of the logger class. The logger is then cached by name and
+ returned for usage.<p><code>null</code> will be returned if:<ul><li>No logger factory has been set.</li><li>The set logger factory returns <code>null</code> or <code>undefined</code>.</li></ul>´]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[name]]></name><description><![CDATA[the name of the logger to return]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the logger appropriate to the passed-in <code>name</code>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_log_LoggerRepository.html#getLogger">org.as2lib.env.log.LoggerRepository.getLogger</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getLoggerFactory]]></title><fullMethod><left><![CDATA[function <b>getLoggerFactory</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_log_repository_LoggerFactory.html">LoggerFactory</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the set logger factory.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the set logger factory]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setLoggerFactory]]></title><fullMethod><left><![CDATA[function <b>setLoggerFactory</b> (
+]]></left><right><param><name><![CDATA[loggerFactory]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_repository_LoggerFactory.html">LoggerFactory</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets a new logger factory.<p>This logger factory is used to create loggers for given names, that are
+ returned by the <a href="org_as2lib_env_log_repository_DynamicLoggerRepository.html#getLogger">getLogger</a> method.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[loggerFactory]]></name><description><![CDATA[the new logger factory]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:58]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

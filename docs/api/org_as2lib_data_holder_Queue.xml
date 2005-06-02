@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[Queue]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.data.holder.Queue]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Wednesday, 06 April 2005, 13:18:24]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>Queue</code> is the base interface for data holders that follow the 'first-in,
+ first-out' policy.]]></summary><restOfDescription><![CDATA[<p>It offers the opposite functionality of a stack which follows the 'last-in,
+ first-out' policy.<p>'first-in, first-out' means that the first value that has been enqueued/added
+ to the queue is the first that gets dequeued/removed.<p>The usage of a queue is quite simple. You have one method to add/enqueue values
+ <a href="org_as2lib_data_holder_Queue.html#enqueue">enqueue</a> and one method to remove/dequeue them <a href="org_as2lib_data_holder_Queue.html#dequeue">dequeue</a>. You can
+ also peek at the beginning of the queue to see what value has been added/enqueued
+ at first without removing it <a href="org_as2lib_data_holder_Queue.html#peek">peek</a>.<p>If you want to iterate over the values of the queue you can either use the
+ iterator returned by the <a href="org_as2lib_data_holder_Queue.html#iterator">iterator</a> method or the array that contains the
+ queue's values returned by the <a href="org_as2lib_data_holder_Queue.html#toArray">toArray</a> method.<p>The two methods <a href="org_as2lib_data_holder_Queue.html#isEmpty">isEmpty</a> and <a href="org_as2lib_data_holder_Queue.html#size">size</a> let you find
+ out whether the queue contains values and how many values it contains.<p>Example:<pre><span class="codeComment">// the queue gets set up</span>
+<span class="codeKeyword">var</span> queue:Queue = <span class="codeKeyword">new</span> MyQueue();
+queue.enqueue(<span class="codeString">"value1"</span>);
+queue.enqueue(<span class="codeString">"value2"</span>);
+queue.enqueue(<span class="codeString">"value3"</span>);
+<span class="codeComment">// the queue gets used somewhere in your application</span>
+<span class="codeIdentifier">trace</span>(queue.peek()); <span class="codeComment">// traces the first element without removing it</span>
+<span class="codeKeyword">while</span> (!queue.isEmpty()) {
+    <span class="codeIdentifier">trace</span>(queue.dequeue());
+}</pre><p>Output:<pre>value1
+value1
+value2
+value3</pre>]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[enqueue]]></item>
+<item><![CDATA[dequeue]]></item>
+<item><![CDATA[peek]]></item>
+<item><![CDATA[iterator]]></item>
+<item><![CDATA[isEmpty]]></item>
+<item><![CDATA[size]]></item>
+<item><![CDATA[toArray]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[dequeue]]></title><fullMethod><left><![CDATA[function <b>dequeue</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Removes and returns the firstly inserted value.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the firstly inserted value]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if this queue is empty]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[enqueue]]></title><fullMethod><left><![CDATA[function <b>enqueue</b> (
+]]></left><right><param><name><![CDATA[value]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds the passed-in <code>value</code> to this queue.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[value]]></name><description><![CDATA[the value to add]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isEmpty]]></title><fullMethod><left><![CDATA[function <b>isEmpty</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether this queue contains any values.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if this queue contains no values else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[iterator]]></title><fullMethod><left><![CDATA[function <b>iterator</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_data_holder_Iterator.html">Iterator</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an iterator to iterate over the values of this queue.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[an iterator to iterate over this queue's values]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#toArray">toArray</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[peek]]></title><fullMethod><left><![CDATA[function <b>peek</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Returns the firstly inserted value.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the firstly inserted value]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if this queue is empty]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[size]]></title><fullMethod><left><![CDATA[function <b>size</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the number of enqueued elements.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the number of enqueued elements]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#enqueue">enqueue</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toArray]]></title><fullMethod><left><![CDATA[function <b>toArray</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the array representation of this queue.<p>The elements are copied onto the array in a 'first-in, first-out' order,
+ similar to the order of the elements returned by a succession of calls to the
+ <a href="org_as2lib_data_holder_Queue.html#dequeue">dequeue</a> method.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the array representation of this queue]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:33]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[MockControl]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.test.mock.MockControl]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 28 May 2005, 12:20:50]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>MockControl</code> is the central class of the mock object framework.]]></summary><restOfDescription><![CDATA[ You use
+ it to create your mock object, set expectations and verify whether these
+ expectations have been met.<p>The normal workflow is creating a mock control for a specific class or
+ interface, receiving the mock object from it, setting expectations, setting the
+ behavior of the mock object, switching to replay state, using the mock object as
+ if it were a normal instance of a class and verifying that all expectations have
+ been met.<pre><span class="codeKeyword">import</span> org.as2lib.test.mock.MockControl;
+
+<span class="codeComment">// create mock control for class MyClass</span>
+<span class="codeKeyword">var</span> myMockControl:MockControl = <span class="codeKeyword">new</span> MockControl(MyClass);
+<span class="codeComment">// receive the mock object (it is in record state)</span>
+<span class="codeKeyword">var</span> myMock:MyClass = myMockControl.getMock();
+<span class="codeComment">// expect a call to the setStringProperty-method with argument 'myString'.</span>
+myMock.setStringProperty(<span class="codeString">"myString"</span>);
+<span class="codeComment">// expect calls to the getStringProperty-method</span>
+myMock.getStringProperty();
+<span class="codeComment">// return 'myString' for the first two calls</span>
+myMockControl.setReturnValue(<span class="codeString">"myString"</span>, <span class="codeNumber">2</span>);
+<span class="codeComment">// throw MyException for any further call</span>
+myMockControl.setDefaultThrowable(<span class="codeKeyword">new</span> MyException());
+<span class="codeComment">// switch to replay state</span>
+myMockControl.replay();
+
+<span class="codeComment">// the class under test calls these methods on the mock</span>
+myMock.setStringProperty(<span class="codeString">"myString"</span>);
+myMock.getStringProperty();
+myMock.getStringProperty();
+
+<span class="codeComment">// verify that all expectations have been met</span>
+myMockControl.verify();</pre><p>If an expectation has not been met an <a href="org_as2lib_test_mock_AssertionFailedError.html">AssertionFailedError</a> will be
+ thrown. If an expectation violation is discovered during execution an
+ <code>AssertionFailedError</code> will be thrown immediately.<p>If you had called the <code>setStringProperty</code> method in the above example
+ with another string like <code>"unexpectedString"</code> an <code>AssertFailedError</code>
+ would have been thrown immediately. If you had called the <code>setStringProperty</code>
+ method a second time, what has not been expected, an <code>AssertionFailedError</code>
+ would also have been thrown immediately. If you had not called the
+ <code>setStringProperty</code> method at all, an <code>AssertionFailedError</code> would
+ have been thrown on verification.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[MockControl]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[type]]></private></item>
+<item><private><![CDATA[proxyFactory]]></private></item>
+<item><private><![CDATA[mock]]></private></item>
+<item><private><![CDATA[behavior]]></private></item>
+<item><private><![CDATA[state]]></private></item>
+<item><private><![CDATA[recordStateFactory]]></private></item>
+<item><private><![CDATA[replayStateFactory]]></private></item>
+<item><private><![CDATA[handleToStringInvocations]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[getDefaultArgumentsMatcher]]></item>
+<item><![CDATA[getTypeArgumentsMatcher]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><private><![CDATA[MockControlByType]]></private></item>
+<item><private><![CDATA[MockControlByTypeAndBehavior]]></private></item>
+<item><![CDATA[setHandleToStringInvocations]]></item>
+<item><![CDATA[areToStringInvocationsHandled]]></item>
+<item><![CDATA[getMockProxyFactory]]></item>
+<item><![CDATA[setMockProxyFactory]]></item>
+<item><![CDATA[getRecordStateFactory]]></item>
+<item><private><![CDATA[getDefaultRecordStateFactory]]></private></item>
+<item><![CDATA[setRecordStateFactory]]></item>
+<item><![CDATA[getReplayStateFactory]]></item>
+<item><private><![CDATA[getDefaultReplayStateFactory]]></private></item>
+<item><![CDATA[setReplayStateFactory]]></item>
+<item><private><![CDATA[getBlankMockControlStateFactory]]></private></item>
+<item><![CDATA[getMock]]></item>
+<item><private><![CDATA[createDelegator]]></private></item>
+<item><private><![CDATA[getBlankInvocationHandler]]></private></item>
+<item><private><![CDATA[invokeMethod]]></private></item>
+<item><![CDATA[replay]]></item>
+<item><![CDATA[reset]]></item>
+<item><![CDATA[setArgumentsMatcher]]></item>
+<item><![CDATA[setDefaultReturnValue]]></item>
+<item><![CDATA[setDefaultThrowable]]></item>
+<item><![CDATA[setDefaultVoidCallable]]></item>
+<item><![CDATA[setReturnValue]]></item>
+<item><![CDATA[setReturnValueByValue]]></item>
+<item><![CDATA[setReturnValueByValueAndQuantity]]></item>
+<item><![CDATA[setReturnValueByValueAndMinimumAndMaximumQuantity]]></item>
+<item><![CDATA[setThrowable]]></item>
+<item><![CDATA[setThrowableByThrowable]]></item>
+<item><![CDATA[setThrowableByThrowableAndQuantity]]></item>
+<item><![CDATA[setThrowableByThrowableAndMinimumAndMaximumQuantity]]></item>
+<item><![CDATA[setVoidCallable]]></item>
+<item><![CDATA[setVoidCallableByVoid]]></item>
+<item><![CDATA[setVoidCallableByQuantity]]></item>
+<item><![CDATA[setVoidCallableByMinimumAndMaximumQuantity]]></item>
+<item><![CDATA[verify]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[MockControl]]></title><fullMethod><left><![CDATA[function <b>MockControl</b> (
+]]></left><right>)</right></fullMethod>
+<fields>
+<field><title><![CDATA[Overloading]]></title><description><![CDATA[<a href="org_as2lib_test_mock_MockControl.html#MockControlByType">MockControlByType</a> <code>(type:Function) : Void</code><br /><a href="org_as2lib_test_mock_MockControl.html#MockControlByTypeAndBehavior">MockControlByTypeAndBehavior</a> <code>(type:Function, behavior:{VISDOC_LINK_2}) : Void</code>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[behavior]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>behavior</b>:<a href="org_as2lib_test_mock_Behavior.html">Behavior</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The mock behavior.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[handleToStringInvocations]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>handleToStringInvocations</b>:Boolean
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Determines whether to handle <code>toString</code> method invocations.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[mock]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>mock</b>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The created mock proxy.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[proxyFactory]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>proxyFactory</b>:<a href="org_as2lib_env_reflect_ProxyFactory.html">ProxyFactory</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Used to create a new mock proxy.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[recordStateFactory]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>recordStateFactory</b>:<a href="org_as2lib_test_mock_MockControlStateFactory.html">MockControlStateFactory</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Factory used to obtain the record state.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[replayStateFactory]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>replayStateFactory</b>:<a href="org_as2lib_test_mock_MockControlStateFactory.html">MockControlStateFactory</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Factory used to obtain the replay state.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[state]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>state</b>:<a href="org_as2lib_test_mock_MockControlState.html">MockControlState</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The current state.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[type]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>type</b>:Function
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The type of the mock proxy.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[getDefaultArgumentsMatcher]]></title><fullMethod><left><![CDATA[static function <b>getDefaultArgumentsMatcher</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_test_mock_support_DefaultArgumentsMatcher.html">DefaultArgumentsMatcher</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns a new default arguments matcher.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a new default arguments matcher]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getTypeArgumentsMatcher]]></title><fullMethod><left><![CDATA[static function <b>getTypeArgumentsMatcher</b> (
+]]></left><right><param><name><![CDATA[expectedTypes]]></name>:<type><![CDATA[Array]]></type></param>) : <![CDATA[<a href="org_as2lib_test_mock_support_TypeArgumentsMatcher.html">TypeArgumentsMatcher</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns a new type arguments matcher that is configured with the passed-in
+ <code>expectedType</code>.<p>Type arguments matcher matches arguments by type and not by value.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a type arguments matcher]]></description></field>
+</fields>
+</method>
+</methodSection>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[areToStringInvocationsHandled]]></title><fullMethod><left><![CDATA[function <b>areToStringInvocationsHandled</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether <code>toString</code> invocations on the mock are handled.<p>Handling <code>toString</code> invocations means that these invocations are
+ added to the expected or actual behavior. This means if they are handled,
+ calling the <code>toString</code> method on the mock in replay state results in an
+ added expection and in record state in a verification whether the call was
+ expected. If they are not handled, the result of an invocation of the mock's
+ <code>toString</code> method is returned.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if <code>toString</code> invocations are handled else
+ <code>false</code>]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_test_mock_MockControl.html#setHandleToStringInvocations">setHandleToStringInvocations</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[createDelegator]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>createDelegator</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_reflect_InvocationHandler.html">InvocationHandler</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Creates a new invocation handler instance that handles method invocations on
+ the mock proxy.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a delegator that handles proxy method invocations]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[getBlankInvocationHandler]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>getBlankInvocationHandler</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_reflect_InvocationHandler.html">InvocationHandler</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns a blank invocation handler. That is a handler with no implemented
+ methods.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a blank invocation handler]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[getBlankMockControlStateFactory]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>getBlankMockControlStateFactory</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_test_mock_MockControlStateFactory.html">MockControlStateFactory</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns a blank mock control state factory. That is a factory with no
+ implemented methods.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a blank mock control state factory]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[getDefaultRecordStateFactory]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>getDefaultRecordStateFactory</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_test_mock_MockControlStateFactory.html">MockControlStateFactory</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the default record state factory.<p>The default record state factory returns instances of class
+ <a href="org_as2lib_test_mock_support_RecordState.html">org.as2lib.test.mock.support.RecordState</a>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the default record state factory]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[getDefaultReplayStateFactory]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>getDefaultReplayStateFactory</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_test_mock_MockControlStateFactory.html">MockControlStateFactory</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the default replay state factory.<p>The default replay state factory returns instances of class
+ <a href="org_as2lib_test_mock_support_ReplayState.html">org.as2lib.test.mock.support.ReplayState</a>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the default replay state factory]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getMock]]></title><fullMethod><left><![CDATA[function <b>getMock</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Returns the mock object.<p>The mock can be casted and typed to the interface or class specified
+ on instantiation.<p>The mock is created using the mock proxy factory returned by the
+ <a href="org_as2lib_test_mock_MockControl.html#getMockProxyFactory">getMockProxyFactory</a> method.<p>Once the mock object has been created it is cached. That means this method
+ always returns the same mock object for this mock control.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the mock object]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getMockProxyFactory]]></title><fullMethod><left><![CDATA[function <b>getMockProxyFactory</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_reflect_ProxyFactory.html">ProxyFactory</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the currently used mock proxy factory.<p>This proxy factoy is either the default <a href="org_as2lib_env_reflect_TypeProxyFactory.html">org.as2lib.env.reflect.TypeProxyFactory</a> or the one
+ set via <code>setMockProxyFactory</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the currently used proxy factory]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_test_mock_MockControl.html#setMockProxyFactory">setMockProxyFactory</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getRecordStateFactory]]></title><fullMethod><left><![CDATA[function <b>getRecordStateFactory</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_test_mock_MockControlStateFactory.html">MockControlStateFactory</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the currently used record state factory.<p>This is either the factory set via <code>setRecordStateFactory</code> or the
+ default one, which returns instances of the <a href="org_as2lib_test_mock_support_RecordState.html">org.as2lib.test.mock.support.RecordState</a> class.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the currently used record state factory]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_test_mock_MockControl.html#setRecordStateFactory">setRecordStateFactory</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getReplayStateFactory]]></title><fullMethod><left><![CDATA[function <b>getReplayStateFactory</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_test_mock_MockControlStateFactory.html">MockControlStateFactory</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the currently used replay state factory.<p>This is either the factory set via <code>setReplayStateFactory</code> or the
+ default one, which returns instances of the <a href="org_as2lib_test_mock_support_ReplayState.html">org.as2lib.test.mock.support.ReplayState</a> class.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the currently used replay state factory]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_test_mock_MockControl.html#setReplayStateFactory">setReplayStateFactory</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[invokeMethod]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>invokeMethod</b> (
+
+]]></left><right><param><name><![CDATA[methodName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[args]]></name>:<type><![CDATA[Array]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Is called when a method is invoked on the proxy.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[methodName]]></name><description><![CDATA[the name of the invoked method]]></description></param>
+<param><name><![CDATA[args      ]]></name><description><![CDATA[the arguments passed to the invoked method]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[MockControlByType]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>MockControlByType</b> (
+]]></left><right><param><name><![CDATA[type]]></name>:<type><![CDATA[Function]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Constrcuts a new <code>MockControl</code> instance using the default behavior.<p>The default behavior is an instance of class org.as2lib.test.mock.support.DefaultBehaviour.<p>This instance is in reset state after creation. That means it is ready to
+ receive expectations and to record them.<p>When you have finished recording you must switch to replay state using the
+ <a href="org_as2lib_test_mock_MockControl.html#replay">replay</a> method.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[type]]></name><description><![CDATA[the interface or class to create a mock object for]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in <code>type</code> is <code>null</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[MockControlByTypeAndBehavior]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>MockControlByTypeAndBehavior</b> (
+
+]]></left><right><param><name><![CDATA[type]]></name>:<type><![CDATA[Function]]></type></param>,
+<param><name><![CDATA[behavior]]></name>:<type><![CDATA[<a href="org_as2lib_test_mock_Behavior.html">Behavior</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>MockControl</code> instance using the passed-in
+ <code>bahvior</code>.<p>If the passed-in <code>behavior</code> is <code>null</code> the default behavior that
+ is of type <a href="org_as2lib_test_mock_support_DefaultBehavior.html">org.as2lib.test.mock.support.DefaultBehavior</a> is used instead.<p>This instance is in reset state after creation. That means it is ready to
+ to receive expectations and to record them.<p>When you have finished recording you must switch to replay state using the
+ <a href="org_as2lib_test_mock_MockControl.html#replay">replay</a> method.<p><code>toString</code> invocations on the mock are by default not handled.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[type    ]]></name><description><![CDATA[the interface or class to create a mock object for]]></description></param>
+<param><name><![CDATA[behavior]]></name><description><![CDATA[the instance to store the behavior of the mock]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in <code>type</code> is <code>null</code>]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_test_mock_MockControl.html#setHandleToStringInvocations">setHandleToStringInvocations</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[replay]]></title><fullMethod><left><![CDATA[function <b>replay</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Switches the mock object from record state to replay state.<p>The mock object is in record state as soon as it gets returned by the
+ <a href="org_as2lib_test_mock_MockControl.html#getMock">getMock</a> method.<p>You cannot record expectations in replay state. In replay state you verify
+ that all your expectations have been met, by using the mock as it were a real
+ instance.<p>If an expectations is not met an <a href="org_as2lib_test_mock_AssertionFailedError.html">AssertionFailedError</a> is thrown.
+ This is either done during execution of your test or on verification. Take a
+ look at the example provided in the class documentation to see when what
+ <code>AssertFailedError</code> is thrown.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[reset]]></title><fullMethod><left><![CDATA[function <b>reset</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Resets the mock control and the mock object to the state directly after
+ creation.<p>That means that all previously made expectations will be removed and that
+ the mock object will be again in record state.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[setArgumentsMatcher]]></title><fullMethod><left><![CDATA[function <b>setArgumentsMatcher</b> (
+]]></left><right><param><name><![CDATA[argumentsMatcher]]></name>:<type><![CDATA[<a href="org_as2lib_test_mock_ArgumentsMatcher.html">ArgumentsMatcher</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the arguments matcher that will be used for the last method specified by
+ a method call.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[argumentsMatcher]]></name><description><![CDATA[the arguments matcher to use for the specific method]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setDefaultReturnValue]]></title><fullMethod><left><![CDATA[function <b>setDefaultReturnValue</b> (
+]]></left><right><param><name><![CDATA[value]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Records that the mock object will by default allow the last method specified
+ by a method call and will react by returning the provided return value.<p>Default means that the method can be called 0 to infinite times without
+ expectation errors.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[value]]></name><description><![CDATA[the return value to return]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setDefaultThrowable]]></title><fullMethod><left><![CDATA[function <b>setDefaultThrowable</b> (
+]]></left><right><param><name><![CDATA[throwable]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Records that the mock object will by default allow the last method specified
+ by a method call, and will react by throwing the provided throwable.<p>Default means that the method can be called zero to infinite times without
+ expectation errors.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[throwable]]></name><description><![CDATA[the throwable to throw]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setDefaultVoidCallable]]></title><fullMethod><left><![CDATA[function <b>setDefaultVoidCallable</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Recards that the mock object will by default allow the last method specified
+ by a method call.<p>Default means that the method can be called zero to infinite times without
+ expectation errors.<p>Calling this method is not necessary. The mock control expects the last
+ method specified by a method call as soon as this method call occured.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setHandleToStringInvocations]]></title><fullMethod><left><![CDATA[function <b>setHandleToStringInvocations</b> (
+]]></left><right><param><name><![CDATA[handleToStringInvocations]]></name>:<type><![CDATA[Boolean]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets whether to handle <code>toString</code> invocations on mocks or not.<p>Handling <code>toString</code> invocations means that these invocations are
+ added to the expected or actual behavior. This means if you set
+ <code>handleToStringInvocations</code> to <code>true</code> calling this method on the
+ mock in replay state results in an added expection and in record state in a
+ verification whether the call was expected. If you set it to <code>false</code> the
+ result of an invocation of the mock's <code>toString</code> method is returned.<p>If <code>handleToStringInvocations</code> is <code>null</code>, it is interpreted as
+ <code>false</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[handleToStringInvocations]]></name><description><![CDATA[determines whether to handle <code>toStirng</code>
+ method invocations]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setMockProxyFactory]]></title><fullMethod><left><![CDATA[function <b>setMockProxyFactory</b> (
+]]></left><right><param><name><![CDATA[proxyFactory]]></name>:<type><![CDATA[<a href="org_as2lib_env_reflect_ProxyFactory.html">ProxyFactory</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the proxy factory used to obtain the mock proxis / mocks.<p>If <code>proxyFactory</code> is <code>null</code> the <code>getMockProxyFactory</code>
+ method will use the default factory.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[proxyFactory]]></name><description><![CDATA[factory to obtain mock proxies / mocks]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_test_mock_MockControl.html#getMockProxyFactory">getMockProxyFactory</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setRecordStateFactory]]></title><fullMethod><left><![CDATA[function <b>setRecordStateFactory</b> (
+]]></left><right><param><name><![CDATA[recordStateFactory]]></name>:<type><![CDATA[<a href="org_as2lib_test_mock_MockControlStateFactory.html">MockControlStateFactory</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the new record state factory.<p>If <code>recordStateFactory</code> is <code>null</code> the default record state
+ factory gets returned by the <code>getRecordStateFactory</code> method.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[recordStateFactory]]></name><description><![CDATA[the new record state factory]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_test_mock_MockControl.html#getRecordStateFactory">getRecordStateFactory</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setReplayStateFactory]]></title><fullMethod><left><![CDATA[function <b>setReplayStateFactory</b> (
+]]></left><right><param><name><![CDATA[replayStateFactory]]></name>:<type><![CDATA[<a href="org_as2lib_test_mock_MockControlStateFactory.html">MockControlStateFactory</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the new replay state factory.<p>If <code>replayStateFactory</code> is <code>null</code> the
+ <code>getReplayStateFactory</code> method will return the default replay state
+ factory.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[replayStateFactory]]></name><description><![CDATA[the new replay state factory]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_test_mock_MockControl.html#getReplayStateFactory">getReplayStateFactory</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setReturnValue]]></title><fullMethod><left><![CDATA[function <b>setReturnValue</b> (
+]]></left><right>) : <![CDATA[Void]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Overloading]]></title><description><![CDATA[<a href="org_as2lib_test_mock_MockControl.html#setReturnValueByValue">setReturnValueByValue</a> <code>(value) : Void</code><br /><a href="org_as2lib_test_mock_MockControl.html#setReturnValueByValueAndQuantity">setReturnValueByValueAndQuantity</a> <code>(value, quantity:Number) : Void</code><br /><a href="org_as2lib_test_mock_MockControl.html#setReturnValueByValueAndMinimumAndMaximumQuantity">setReturnValueByValueAndMinimumAndMaximumQuantity</a> <code>(value, minimumQuantity:Number, maximumQuantity:Number) : Void</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setReturnValueByValue]]></title><fullMethod><left><![CDATA[function <b>setReturnValueByValue</b> (
+]]></left><right><param><name><![CDATA[value]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Records that the mock object will expect the last method call once and will
+ react by returning the provided return value.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[value]]></name><description><![CDATA[the return value to return]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setReturnValueByValueAndMinimumAndMaximumQuantity]]></title><fullMethod><left><![CDATA[function <b>setReturnValueByValueAndMinimumAndMaximumQuantity</b> (
+
+
+]]></left><right><param><name><![CDATA[value]]></name></param>,
+<param><name><![CDATA[minimumQuantity]]></name>:<type><![CDATA[Number]]></type></param>,
+<param><name><![CDATA[maximumQuantity]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Records that the mock object will expect the last method call between
+ <code>minimumQuantity</code> and <code>maximumQuantity</code> times and will react by
+ returning the provided return value.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[value          ]]></name><description><![CDATA[the return value to return]]></description></param>
+<param><name><![CDATA[minimumQuantity]]></name><description><![CDATA[the minimum number of times the method must be called]]></description></param>
+<param><name><![CDATA[maximumQuantity]]></name><description><![CDATA[the maximum number of times the method can be called]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setReturnValueByValueAndQuantity]]></title><fullMethod><left><![CDATA[function <b>setReturnValueByValueAndQuantity</b> (
+
+]]></left><right><param><name><![CDATA[value]]></name></param>,
+<param><name><![CDATA[quantity]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Records that the mock object will expect the last method call a fixed number
+ of times and will react by returning the provided return value.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[value   ]]></name><description><![CDATA[the return value to return]]></description></param>
+<param><name><![CDATA[quantity]]></name><description><![CDATA[the number of times the method is allowed to be invoked]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setThrowable]]></title><fullMethod><left><![CDATA[function <b>setThrowable</b> (
+]]></left><right>) : <![CDATA[Void]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Overloading]]></title><description><![CDATA[<a href="org_as2lib_test_mock_MockControl.html#setThrowableByThrowable">setThrowableByThrowable</a> <code>(throwable) : Void</code><br /><a href="org_as2lib_test_mock_MockControl.html#setThrowableByThrowableAndQuantity">setThrowableByThrowableAndQuantity</a> <code>(throwable, quantity:Number) : Void</code><br /><a href="org_as2lib_test_mock_MockControl.html#setThrowableByThrowableAndMinimumAndMaximumQuantity">setThrowableByThrowableAndMinimumAndMaximumQuantity</a> <code>(throwable, minimumQuantity:Number, maximumQuantity:Number) : Void</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setThrowableByThrowable]]></title><fullMethod><left><![CDATA[function <b>setThrowableByThrowable</b> (
+]]></left><right><param><name><![CDATA[throwable]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Records that the mock object will expect the last method call once and will
+ react by throwing the provided throwable.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[throwable]]></name><description><![CDATA[the throwable to throw]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setThrowableByThrowableAndMinimumAndMaximumQuantity]]></title><fullMethod><left><![CDATA[function <b>setThrowableByThrowableAndMinimumAndMaximumQuantity</b> (
+
+
+]]></left><right><param><name><![CDATA[throwable]]></name></param>,
+<param><name><![CDATA[minimumQuantity]]></name>:<type><![CDATA[Number]]></type></param>,
+<param><name><![CDATA[maximumQuantity]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Records that the mock object will expect the last method call between 
+ <code>minimumQuantity</code> and <code>maximumQuantity times</code> and will react by
+ throwing the provided throwable.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[throwable      ]]></name><description><![CDATA[the throwable to throw]]></description></param>
+<param><name><![CDATA[minimumQuantity]]></name><description><![CDATA[the minimum number of times the method must be called]]></description></param>
+<param><name><![CDATA[maximumQuantity]]></name><description><![CDATA[the maximum number of times the method can be called]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setThrowableByThrowableAndQuantity]]></title><fullMethod><left><![CDATA[function <b>setThrowableByThrowableAndQuantity</b> (
+
+]]></left><right><param><name><![CDATA[throwable]]></name></param>,
+<param><name><![CDATA[quantity]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Records that the mock object will expect the last method call a fixed number
+ of times and will react by throwing the provided throwable.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[throwable]]></name><description><![CDATA[the throwable to throw]]></description></param>
+<param><name><![CDATA[quantity ]]></name><description><![CDATA[the number of times the method is allowed to be invoked]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setVoidCallable]]></title><fullMethod><left><![CDATA[function <b>setVoidCallable</b> (
+]]></left><right>) : <![CDATA[Void]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Overloading]]></title><description><![CDATA[<a href="org_as2lib_test_mock_MockControl.html#setVoidCallableByVoid">setVoidCallableByVoid</a> <code>(Void) : Void</code><br /><a href="org_as2lib_test_mock_MockControl.html#setVoidCallableByQuantity">setVoidCallableByQuantity</a> <code>(quantity:Number) : Void</code><br /><a href="org_as2lib_test_mock_MockControl.html#setVoidCallableByMinimumAndMaximumQuantity">setVoidCallableByMinimumAndMaximumQuantity</a> <code>(minimumQuantity:Number, maximumQuantity:Number) : Void</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setVoidCallableByMinimumAndMaximumQuantity]]></title><fullMethod><left><![CDATA[function <b>setVoidCallableByMinimumAndMaximumQuantity</b> (
+
+]]></left><right><param><name><![CDATA[minimumQuantity]]></name>:<type><![CDATA[Number]]></type></param>,
+<param><name><![CDATA[maximumQuantity]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Records that the mock object will expect the last method call between 
+ <code>minimumQuantity</code> and <code>maximumQuantity</code> times and will react by
+ returning silently.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[minimumQuantity]]></name><description><![CDATA[the minimum number of times the method must be called]]></description></param>
+<param><name><![CDATA[maximumQuantity]]></name><description><![CDATA[the maximum number of times the method can be called]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setVoidCallableByQuantity]]></title><fullMethod><left><![CDATA[function <b>setVoidCallableByQuantity</b> (
+]]></left><right><param><name><![CDATA[quantity]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Records that the mock object will expect the last method call a fixed number
+ of times and will react by returning silently.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[quantity]]></name><description><![CDATA[the number of times the method is allowed to be invoked]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setVoidCallableByVoid]]></title><fullMethod><left><![CDATA[function <b>setVoidCallableByVoid</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Records that the mock object will expect the last method call once and will
+ react by returning silently.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in replay state]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[verify]]></title><fullMethod><left><![CDATA[function <b>verify</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Verifies that all expectations have been met that could not been verified
+ during execution.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if this mock control is in record state<br /><a href="org_as2lib_test_mock_AssertionFailedError.html">AssertionFailedError</a> if an expectation has not been met]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:29:41]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

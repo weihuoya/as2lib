@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[StackStringifier]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[Stringifier]]></name><uri><![CDATA[org_as2lib_util_Stringifier]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.data.holder.stack.StackStringifier]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Thursday, 05 May 2005, 17:04:10]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>StackStringifier</code> stringifies instances of type <a href="org_as2lib_data_holder_Stack.html">org.as2lib.data.holder.Stack</a>.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[execute]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[execute]]></title><fullMethod><left><![CDATA[function <b>execute</b> (
+]]></left><right><param><name><![CDATA[target]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the string representation of the passed-in <code>target</code> stack.<p><code>target</code> must be an instance of type <code>Stack</code>.<p>The string representation is constructed as follows:<pre>[lastlyAddedValue, penultimatelyAddedValue, ...]</pre>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[target]]></name><description><![CDATA[the target stack to stringify]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the string representation of the passed-in <code>target</code> stack]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_util_Stringifier.html#execute">org.as2lib.util.Stringifier.execute</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:39]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

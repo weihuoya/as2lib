@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[LocalServerRegistry]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[ServerRegistry]]></name><uri><![CDATA[org_as2lib_io_conn_core_server_ServerRegistry]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Christoph Atteneder]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.io.conn.local.server.LocalServerRegistry]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 17 April 2005, 17:59:34]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>LocalServerRegistry</code> keeps track of running servers.]]></summary><restOfDescription><![CDATA[<p>This means that servers are registered to be aware of all servers that are
+ currently running. The servers are registered in a kind of gloabl registry, even
+ if you instantiate different instances of this class and in different swfs.<p>Servers are expected to register themselves at this registry when they start
+ running and unregister themselves when they stop running.<p>Example:<pre><span class="codeKeyword">var</span> serverRegistry:LocalServerRegistry = <span class="codeKeyword">new</span> LocalServerRegistry();
+serverRegistry.registerServer(<span class="codeString">"local.as2lib.org"</span>);
+serverRegistry.containsServer(<span class="codeString">"local.as2lib.org"</span>);
+serverRegistry.removeServer(<span class="codeString">"local.as2lib.org"</span>);</pre><p>As you can see in the above example, not servers are registered but hosts,
+ that represent servers.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[LocalServerRegistry]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[serverRegistry]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[containsServer]]></item>
+<item><![CDATA[registerServer]]></item>
+<item><![CDATA[removeServer]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[LocalServerRegistry]]></title><fullMethod><left><![CDATA[function <b>LocalServerRegistry</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>LocalServerRegistry</code> instance.]]></text>
+</description>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[serverRegistry]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>serverRegistry</b>:Object
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Contains all registered Servers.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[containsServer]]></title><fullMethod><left><![CDATA[function <b>containsServer</b> (
+]]></left><right><param><name><![CDATA[host]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether a server with the passed-in <code>host</code> is registered in some
+ registry.<p>This does not mean that the server is registered in this registry. It can be
+ registered in another registry, even in another swf.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[host]]></name><description><![CDATA[the host that acts as an identifier for the server]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if the server with the given <code>host</code> is regitered else
+ <code>false</code>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_io_conn_core_server_ServerRegistry.html#containsServer">org.as2lib.io.conn.core.server.ServerRegistry.containsServer</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[registerServer]]></title><fullMethod><left><![CDATA[function <b>registerServer</b> (
+]]></left><right><param><name><![CDATA[host]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Registers the server with the given <code>host</code> at this server registry.<p>The server is registered gloablly, that means that registries in other swfs
+ can check whether the server is registered.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[host]]></name><description><![CDATA[the host that acts as an identifier for the server]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if <code>host</code> is <code>null</code>, <code>undefined</code>
+ or an empty string<br /><a href="org_as2lib_io_conn_core_server_ReservedHostException.html">ReservedHostException</a> if a server with the passed-in <code>host</code> is already
+ running]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_io_conn_core_server_ServerRegistry.html#registerServer">org.as2lib.io.conn.core.server.ServerRegistry.registerServer</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[removeServer]]></title><fullMethod><left><![CDATA[function <b>removeServer</b> (
+]]></left><right><param><name><![CDATA[host]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Removes the server with the given <code>host</code> from this server registry.<p>Only servers that have been registered directly at this registry can be removed.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[host]]></name><description><![CDATA[the host that acts as an identifier for the server to remove]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if you try to unregister a server that has not
+ been registered directly at this registry but at another one]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_io_conn_core_server_ServerRegistry.html#removeServer">org.as2lib.io.conn.core.server.ServerRegistry.removeServer</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:29:18]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

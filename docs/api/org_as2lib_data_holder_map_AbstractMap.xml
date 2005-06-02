@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[AbstractMap]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.data.holder.map.AbstractMap]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Wednesday, 06 April 2005, 13:18:24]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>AbstractMap</code> offers implementations of methods needed by most concrete
+ <a href="org_as2lib_data_holder_Map.html">org.as2lib.data.holder.Map</a> implementations.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><private><![CDATA[AbstractMap]]></private></item>
+</methodSummaryPart>
+</private>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><private><![CDATA[stringifier]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[getStringifier]]></item>
+<item><![CDATA[setStringifier]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><private><![CDATA[populate]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<private>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><private><![CDATA[AbstractMap]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>AbstractMap</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>AbstractMap</code> instance.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><private><![CDATA[stringifier]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>stringifier</b>:<a href="org_as2lib_util_Stringifier.html">Stringifier</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Stringifies maps.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[getStringifier]]></title><fullMethod><left><![CDATA[static function <b>getStringifier</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_util_Stringifier.html">Stringifier</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the stringifier that stringifies maps.<p>If no stringifier has been set manually an instance of class <a href="org_as2lib_data_holder_map_MapStringifier.html">MapStringifier</a>
+ will be returned.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the stringifier that stringifies maps]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setStringifier]]></title><fullMethod><left><![CDATA[static function <b>setStringifier</b> (
+]]></left><right><param><name><![CDATA[mapStringifier]]></name>:<type><![CDATA[<a href="org_as2lib_util_Stringifier.html">Stringifier</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the new stringifier that stringifies maps.<p>If you set a stringifier of value <code>null</code> or <code>undefined</code> the static
+ method <a href="org_as2lib_data_holder_map_AbstractMap.html#getStringifier">getStringifier</a> will return the default stringifier.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[mapStringifier]]></name><description><![CDATA[the new map stringifier]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><private><![CDATA[populate]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>populate</b> (
+]]></left><right><param><name><![CDATA[source]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Populates the map with the content of the passed-in <code>source</code>.<p>Iterates over the passed-in source with the for..in loop and uses the variables'
+ names as key and their values as value. Variables that are hidden from for..in
+ loops will not be added to this map.<p>This method uses the <code>put</code> method to add the key-value pairs.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[source]]></name><description><![CDATA[an object that contains key-value pairs to populate this map with]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+</private>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:21]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

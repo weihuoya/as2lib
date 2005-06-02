@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[Impulse]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Version]]></title><value><![CDATA[1.0]]></value></item>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.app.exec.Impulse]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 22 May 2005, 19:23:28]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>Impulse</code> is a definition for events that gets executed periodically.]]></summary><restOfDescription><![CDATA[<p>Periodical events could be frame executions, seconds, hours or dates.
+ <code>Impulse</code> allows to seperate the certain kind of Impulse from the
+ execution code.<p>The <code>Impulse</code> executes <a href="org_as2lib_app_exec_Executable.html#execute">Executable.execute</a> on each impulse to
+ the connected executables.
+ 
+ Example:<pre><span class="codeKeyword">import</span> org.as2lib.app.exec.Impulse;
+
+<span class="codeKeyword">var</span> impulse:Impulse = <span class="codeKeyword">new</span> MySinusImpulse();
+impulse.connectExecutable(<span class="codeKeyword">new</span> MySpecialCall());
+impulse.connectExecutable(<span class="codeKeyword">new</span> MyMostImportantCall());</pre>]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[connectExecutable]]></item>
+<item><![CDATA[disconnectExecutable]]></item>
+<item><![CDATA[isExecutableConnected]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[connectExecutable]]></title><fullMethod><left><![CDATA[function <b>connectExecutable</b> (
+]]></left><right><param><name><![CDATA[executable]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Executable.html">Executable</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Connect a certain executable to listen to the continous event.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[executable]]></name><description><![CDATA[Executable that should be connected]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[disconnectExecutable]]></title><fullMethod><left><![CDATA[function <b>disconnectExecutable</b> (
+]]></left><right><param><name><![CDATA[executable]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Executable.html">Executable</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Disconnect a certain executable from listening to the <code>Impulse</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[executable]]></name><description><![CDATA[Executable that should be disconnected]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isExecutableConnected]]></title><fullMethod><left><![CDATA[function <b>isExecutableConnected</b> (
+]]></left><right><param><name><![CDATA[executable]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Executable.html">Executable</a>]]></type></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Flag if a certain(passed-in) <code>executable</code> is connected.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[executable]]></name><description><![CDATA[<a href="org_as2lib_app_exec_Executable.html">Executable</a> is ]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the certain executable got connected]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:09]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

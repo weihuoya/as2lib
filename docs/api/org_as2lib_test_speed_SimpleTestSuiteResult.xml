@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[SimpleTestSuiteResult]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[AbstractTestSuiteResult]]></name><uri><![CDATA[org_as2lib_test_speed_AbstractTestSuiteResult]]></uri></link></item><item><link><name><![CDATA[AbstractTestResult]]></name><uri><![CDATA[org_as2lib_test_speed_AbstractTestResult]]></uri></link></item><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[ConfigurableTestSuiteResult]]></name><uri><![CDATA[org_as2lib_test_speed_ConfigurableTestSuiteResult]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.test.speed.SimpleTestSuiteResult]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 29 May 2005, 08:50:12]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>SimpleTestSuiteResult</code> holds the results of all tests contained by a test suite.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[SimpleTestSuiteResult]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><private><![CDATA[__proto__]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Class properties inherited from]]></text><link><name><![CDATA[AbstractTestSuiteResult]]></name><uri><![CDATA[org_as2lib_test_speed_AbstractTestSuiteResult]]></uri></link></title><item><link><name>AVERAGE_TIME</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>AVERAGE_TIME</method></link></item><item><link><name>METHOD_INVOCATION_COUNT</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>METHOD_INVOCATION_COUNT</method></link></item><item><link><name>METHOD_INVOCATION_PERCENTAGE</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>METHOD_INVOCATION_PERCENTAGE</method></link></item><item><link><name>METHOD_INVOCATION_SUCCESSION</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>METHOD_INVOCATION_SUCCESSION</method></link></item><item><link><name>NAME</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>NAME</method></link></item><item><link><name>TIME</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>TIME</method></link></item><item><link><name>TIME_PERCENTAGE</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>TIME_PERCENTAGE</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[name]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getName]]></item>
+<item><![CDATA[getTime]]></item>
+<item><![CDATA[toString]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[AbstractTestSuiteResult]]></name><uri><![CDATA[org_as2lib_test_speed_AbstractTestSuiteResult]]></uri></link></title><item><link><name>addTestResult</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>addTestResult</method></link></item><item><link><name>getAllMethodInvocations</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>getAllMethodInvocations</method></link></item><item><link><name>getAverageTime</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>getAverageTime</method></link></item><item><link><name>getMethodInvocationCount</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>getMethodInvocationCount</method></link></item><item><link><name>getMethodInvocationPercentage</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>getMethodInvocationPercentage</method></link></item><item><link><name>getTestResultCount</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>getTestResultCount</method></link></item><item><link><name>getTestResults</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>getTestResults</method></link></item><item><link><name>hasMethodInvocations</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>hasMethodInvocations</method></link></item><item><link><name>hasTestResults</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>hasTestResults</method></link></item><item><link><name>sort</name><uri>org_as2lib_test_speed_AbstractTestSuiteResult</uri><method>sort</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[AbstractTestResult]]></name><uri><![CDATA[org_as2lib_test_speed_AbstractTestResult]]></uri></link></title><item><link><name>getTimePercentage</name><uri>org_as2lib_test_speed_AbstractTestResult</uri><method>getTimePercentage</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[SimpleTestSuiteResult]]></title><fullMethod><left><![CDATA[function <b>SimpleTestSuiteResult</b> (
+]]></left><right><param><name><![CDATA[name]]></name>:<type><![CDATA[String]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>SimpleTestSuiteResult</code> instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[name]]></name><description><![CDATA[the name of this result]]></description></param>
+</field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_test_speed_AbstractTestSuiteResult.html#AbstractTestSuiteResult">AbstractTestSuiteResult.AbstractTestSuiteResult</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><private><![CDATA[__proto__]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>__proto__</b>:Function = AbstractTestSuiteResult
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Makes the static variables of the super-class accessible through this class.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[name]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>name</b>:String
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Name of this result.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[getName]]></title><fullMethod><left><![CDATA[function <b>getName</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the name of this test result.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the name of this test result]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_test_unit_TestResult.html#getName">org.as2lib.test.unit.TestResult.getName</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getTime]]></title><fullMethod><left><![CDATA[function <b>getTime</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the total invocation time in milliseconds.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the total invocation time in milliseconds]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[TestResult#getTime]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toString]]></title><fullMethod><left><![CDATA[function <b>toString</b> (
+]]></left><right>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the string representation of this test suite result. This includes the
+ string representation of all added test results.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[rootTestResult]]></name><description><![CDATA[test result that holds the total values needed for
+ percentage calculations]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the string representation of this test suite result]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:30:11]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

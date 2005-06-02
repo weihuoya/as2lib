@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[SimpleConsumableEventDistributorControl]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[AbstractEventDistributorControl]]></name><uri><![CDATA[org_as2lib_env_event_distributor_AbstractEventDistributorControl]]></uri></link></item><item><link><name><![CDATA[TypeSafeEventListenerSource]]></name><uri><![CDATA[org_as2lib_env_event_TypeSafeEventListenerSource]]></uri></link></item><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[ConsumableEventDistributorControl]]></name><uri><![CDATA[org_as2lib_env_event_distributor_ConsumableEventDistributorControl]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker
+ @authro Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControl]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 28 May 2005, 12:09:20]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>SimpleConsumableEventDistributorControl</code> acts as a listener source and
+ event distributor.]]></summary><restOfDescription><![CDATA[ It enables you to distribute and handle events in the safest
+ way possible.<p>Note that unlike the <a href="org_as2lib_env_event_distributor_SimpleEventDistributorControl.html">SimpleEventDistributorControl</a> class, this class
+ supports the consumption of events. An event is consumed if an event method on a
+ listener returns <code>true</code>. This means that the distribution of the event will
+ be stopped immediately. Otherwise the event will further be distributed.<p>Example:<pre><span class="codeComment">// creates a distributor control with the expected listener type</span>
+<span class="codeKeyword">var</span> distributorControl:SimpleConsumableEventDistributorControl = <span class="codeKeyword">new</span> SimpleConsumableEventDistributorControl(ErrorListener);
+<span class="codeComment">// adds new listeners that must be of the expected type</span>
+distributorControl.<span class="codeIdentifier">addListener</span>(<span class="codeKeyword">new</span> MyErrorListener());
+distributorControl.<span class="codeIdentifier">addListener</span>(<span class="codeKeyword">new</span> SimpleErrorListener());
+<span class="codeComment">// gets a distributor to distribute the event to all listeners</span>
+<span class="codeKeyword">var</span> distributor:ErrorListener = ErrorListener(distributorControl.getDistributor());
+<span class="codeComment">// distributes the event with custom arguments</span>
+distributor.onError(myErrorCode, myException);</pre><p>If in the above example, the <code>MyErrorListener.onError</code> method returns
+ <code>true</code>, the <code>SimpleErrorListener.onError</code> method will not be invoked
+ because the event is consumed.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[SimpleConsumableEventDistributorControl]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><private><![CDATA[distribute]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[AbstractEventDistributorControl]]></name><uri><![CDATA[org_as2lib_env_event_distributor_AbstractEventDistributorControl]]></uri></link></title><item><link><name>getDistributor</name><uri>org_as2lib_env_event_distributor_AbstractEventDistributorControl</uri><method>getDistributor</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[TypeSafeEventListenerSource]]></name><uri><![CDATA[org_as2lib_env_event_TypeSafeEventListenerSource]]></uri></link></title><item><link><name>addAllListeners</name><uri>org_as2lib_env_event_TypeSafeEventListenerSource</uri><method>addAllListeners</method></link></item><item><link><name>addListener</name><uri>org_as2lib_env_event_TypeSafeEventListenerSource</uri><method>addListener</method></link></item><item><link><name>getAllListeners</name><uri>org_as2lib_env_event_TypeSafeEventListenerSource</uri><method>getAllListeners</method></link></item><item><link><name>getListenerType</name><uri>org_as2lib_env_event_TypeSafeEventListenerSource</uri><method>getListenerType</method></link></item><item><link><name>isListenerTypeChecked</name><uri>org_as2lib_env_event_TypeSafeEventListenerSource</uri><method>isListenerTypeChecked</method></link></item><item><link><name>removeAllListeners</name><uri>org_as2lib_env_event_TypeSafeEventListenerSource</uri><method>removeAllListeners</method></link></item><item><link><name>removeListener</name><uri>org_as2lib_env_event_TypeSafeEventListenerSource</uri><method>removeListener</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[SimpleConsumableEventDistributorControl]]></title><fullMethod><left><![CDATA[function <b>SimpleConsumableEventDistributorControl</b> (
+
+
+]]></left><right><param><name><![CDATA[listenerType]]></name>:<type><![CDATA[Function]]></type></param>,
+<param><name><![CDATA[checkListenerType]]></name>:<type><![CDATA[Boolean]]></type></param>,
+<param><name><![CDATA[listeners]]></name>:<type><![CDATA[Array]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>SimpleConsumableEventDistributorControl</code> instance.<p><code>checkListenerType</code> is by default set to <code>true</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[listenerType     ]]></name><description><![CDATA[the expected type of listeners]]></description></param>
+<param><name><![CDATA[checkListenerType]]></name><description><![CDATA[determines whether to check that passed-in listeners
+ are of the expected type]]></description></param>
+<param><name><![CDATA[listeners        ]]></name><description><![CDATA[(optional) the listeners to add]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in <code>listenerType</code> is
+ <code>null</code> or <code>undefined</code>]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_env_event_distributor_AbstractEventDistributorControl.html#AbstractEventDistributorControl">AbstractEventDistributorControl.AbstractEventDistributorControl</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><private><![CDATA[distribute]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>distribute</b> (
+
+]]></left><right><param><name><![CDATA[eventName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[args]]></name>:<type><![CDATA[Array]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Executes the event with the given <code>eventName</code> on all added listeners, using
+ the arguments after <code>eventName</code> as parameters.<p>If <code>eventName</code> is <code>null</code> or <code>undefined</code> the distribution
+ will be omited.<p>The distribution will be stopped immediately if an event method of a listener
+ returns <code>true</code> and thus consumes the event.<p>If <code>args</code> is <code>null</code> or <code>undefined</code> nor parameters will be
+ passed to the listeners' event methods.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[eventName]]></name><description><![CDATA[the name of the event method to execute on the added listeners]]></description></param>
+<param><name><![CDATA[args     ]]></name><description><![CDATA[any number of arguments that are used as parameters on execution of
+ the event on the listeners]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_event_EventExecutionException.html">EventExecutionException</a> if an event method on a listener threw an
+ exception]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_env_event_distributor_AbstractEventDistributorControl.html#distribute">AbstractEventDistributorControl.distribute</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</private>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:51]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

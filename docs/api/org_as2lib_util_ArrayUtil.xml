@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ArrayUtil]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Martin Heidegger, Christophe Herreman]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.util.ArrayUtil]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Friday, 08 April 2005, 19:06:20]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>ArrayUtil</code> contains fundamental methods to manipulate <code>Array</code>s.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><private><![CDATA[ArrayUtil]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[clone]]></item>
+<item><![CDATA[removeElement]]></item>
+<item><![CDATA[removeAllOccurances]]></item>
+<item><![CDATA[removeLastOccurance]]></item>
+<item><![CDATA[removeFirstOccurance]]></item>
+<item><![CDATA[contains]]></item>
+<item><![CDATA[indexOf]]></item>
+<item><![CDATA[shuffle]]></item>
+<item><![CDATA[swap]]></item>
+<item><![CDATA[isSame]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<private>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><private><![CDATA[ArrayUtil]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>ArrayUtil</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Private constructor.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[clone]]></title><fullMethod><left><![CDATA[static function <b>clone</b> (
+]]></left><right><param><name><![CDATA[array]]></name>:<type><![CDATA[Array]]></type></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Clones an array.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[array]]></name><description><![CDATA[the array to clone]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a clone of the passed-in <code>array</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[contains]]></title><fullMethod><left><![CDATA[static function <b>contains</b> (
+
+]]></left><right><param><name><![CDATA[array]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[object]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks if the passed-in <code>array</code> contains the given <code>object</code>.<p>The content is searched through with a for..in loop. This enables any type of
+ array to be passed-in, indexed and associative arrays.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[array ]]></name><description><![CDATA[the array that may contain the <code>object</code>]]></description></param>
+<param><name><![CDATA[object]]></name><description><![CDATA[the object that may be contained in the <code>array</code>]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if the <code>array</code> contains the <code>object</code> else
+ <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[indexOf]]></title><fullMethod><left><![CDATA[static function <b>indexOf</b> (
+
+]]></left><right><param><name><![CDATA[array]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[object]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the index of the given <code>object</code> within the passed-in <code>array</code>.<p>The content of the <code>array</code> is searched through by iterating through the
+ array. This method returns the first occurence of the passed-in <code>object</code>
+ within the <code>array</code>. If the object could not be found <code>-1</code> will be
+ returned.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[array ]]></name><description><![CDATA[the array to search through]]></description></param>
+<param><name><![CDATA[object]]></name><description><![CDATA[the object to return the position of]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the position of the <code>object</code> within the <code>array</code> or <code>-1</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isSame]]></title><fullMethod><left><![CDATA[static function <b>isSame</b> (
+
+]]></left><right><param><name><![CDATA[array1]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[array2]]></name>:<type><![CDATA[Array]]></type></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Compares the two arrays <code>array1</code> and <code>array2</code>, whether they contain
+ the same values at the same positions.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[array1]]></name><description><![CDATA[the first array for the comparison]]></description></param>
+<param><name><![CDATA[array2]]></name><description><![CDATA[the second array for the comparison]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if the two arrays contain the same values at the same
+ positions else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[removeAllOccurances]]></title><fullMethod><left><![CDATA[static function <b>removeAllOccurances</b> (
+
+]]></left><right><param><name><![CDATA[array]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[element]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Removes all occurances of a the given <code>element</code> out of the passed-in
+ <code>array</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[array  ]]></name><description><![CDATA[the array to remove the element out of]]></description></param>
+<param><name><![CDATA[element]]></name><description><![CDATA[the element to remove]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if <code>element</code> was removed and <code>false</code> if it was
+ not contained in the passed-in <code>array</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[removeElement]]></title><fullMethod><left><![CDATA[static function <b>removeElement</b> (
+
+]]></left><right><param><name><![CDATA[array]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[element]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Removes the given <code>element</code> out of the passed-in <code>array</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[array  ]]></name><description><![CDATA[the array to remove the element out of]]></description></param>
+<param><name><![CDATA[element]]></name><description><![CDATA[the element to remove]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if <code>element</code> was removed and <code>false</code> if it was
+ not contained in the passed-in <code>array</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[removeFirstOccurance]]></title><fullMethod><left><![CDATA[static function <b>removeFirstOccurance</b> (
+
+]]></left><right><param><name><![CDATA[array]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[element]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Removes the first occurance of the given <code>element</code> out of the passed-in
+ <code>array</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[array  ]]></name><description><![CDATA[the array to remove the element out of]]></description></param>
+<param><name><![CDATA[element]]></name><description><![CDATA[the element to remove]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if <code>element</code> was removed and <code>false</code> if it was
+ not contained in the passed-in <code>array</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[removeLastOccurance]]></title><fullMethod><left><![CDATA[static function <b>removeLastOccurance</b> (
+
+]]></left><right><param><name><![CDATA[array]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[element]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Removes the last occurance of the given <code>element</code> out of the passed-in
+ <code>array</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[array  ]]></name><description><![CDATA[the array to remove the element out of]]></description></param>
+<param><name><![CDATA[element]]></name><description><![CDATA[the element to remove]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if <code>element</code> was removed and <code>false</code> if it was
+ not contained in the passed-in <code>array</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[shuffle]]></title><fullMethod><left><![CDATA[static function <b>shuffle</b> (
+]]></left><right><param><name><![CDATA[array]]></name>:<type><![CDATA[Array]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Shuffles the passed-in <code>array</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[array]]></name><description><![CDATA[the array to shuffle]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[swap]]></title><fullMethod><left><![CDATA[static function <b>swap</b> (
+
+
+]]></left><right><param><name><![CDATA[array]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[i]]></name>:<type><![CDATA[Number]]></type></param>,
+<param><name><![CDATA[j]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Swaps the value at position <code>i</code> with the value at position <code>j</code> of the
+ passed-in <code>array</code>.<p>The modifications are directly made to the passed-in <code>array</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[array]]></name><description><![CDATA[the array whose elements to swap]]></description></param>
+<param><name><![CDATA[i    ]]></name><description><![CDATA[the index of the first value]]></description></param>
+<param><name><![CDATA[j    ]]></name><description><![CDATA[the index of the second value]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[array the passed-in <code>array</code>]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the argument <code>array</code> is <code>null</code><br /><a href="org_as2lib_data_holder_NoSuchElementException.html">NoSuchElementException</a> if the passed-in positions <code>i</code> and <code>j</code>
+ are less than 0 or greater than the array's length]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:31:03]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

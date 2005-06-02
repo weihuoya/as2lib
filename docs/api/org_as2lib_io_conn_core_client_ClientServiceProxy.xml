@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ClientServiceProxy]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Christoph Atteneder]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.io.conn.core.client.ClientServiceProxy]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Friday, 08 April 2005, 12:13:02]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>ClientServiceProxy</code> handles client requests to a certain service and its
+ responses.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[invoke]]></item>
+<item><![CDATA[invokeByName]]></item>
+<item><![CDATA[invokeByNameAndArguments]]></item>
+<item><![CDATA[invokeByNameAndCallback]]></item>
+<item><![CDATA[invokeByNameAndArgumentsAndCallback]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[invoke]]></title><fullMethod><left><![CDATA[function <b>invoke</b> (
+]]></left><right>) : <![CDATA[<a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a>]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Overloading]]></title><description><![CDATA[<a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html#invokeByName">invokeByName</a> <code>(methodName:String) : {VISDOC_LINK_0}</code><br /><a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html#invokeByNameAndArguments">invokeByNameAndArguments</a> <code>(methodName:String, args:Array) : {VISDOC_LINK_0}</code><br /><a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html#invokeByNameAndCallback">invokeByNameAndCallback</a> <code>(methodName:String, callback:{VISDOC_LINK_0}) : {VISDOC_LINK_1}</code><br /><a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html#invokeByNameAndArgumentsAndCallback">invokeByNameAndArgumentsAndCallback</a> <code>(methodName:String, args:Array, callback:{VISDOC_LINK_0}) : {VISDOC_LINK_1}</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[invokeByName]]></title><fullMethod><left><![CDATA[function <b>invokeByName</b> (
+]]></left><right><param><name><![CDATA[methodName]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[<a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Invokes the method with passed-in <code>methodName</code> on the service.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[methodName]]></name><description><![CDATA[the name of the method to invoke]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a callback that can be used to get informed of the response]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[invokeByNameAndArguments]]></title><fullMethod><left><![CDATA[function <b>invokeByNameAndArguments</b> (
+
+]]></left><right><param><name><![CDATA[methodName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[args]]></name>:<type><![CDATA[Array]]></type></param>) : <![CDATA[<a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Invokes the method with passed-in <code>methodName</code> on the service, passing the
+ given <code>args</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[methodName]]></name><description><![CDATA[the name of the method to invoke]]></description></param>
+<param><name><![CDATA[args      ]]></name><description><![CDATA[the arguments to pass to the method]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a callback that can be used to get informed of the response]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[invokeByNameAndArgumentsAndCallback]]></title><fullMethod><left><![CDATA[function <b>invokeByNameAndArgumentsAndCallback</b> (
+
+
+]]></left><right><param><name><![CDATA[methodName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[args]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[callback]]></name>:<type><![CDATA[<a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a>]]></type></param>) : <![CDATA[<a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Invokes the method with passed-in <code>methodName</code> on the service, passing the
+ arguments.<p>When the response arrives the appropriate callback method is invoked.<p>If the passed-in <code>callback</code> is not <code>null</code> or <code>undefined</code>,
+ the returned callback is the same.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[methodName]]></name><description><![CDATA[the name of the method to be invoked]]></description></param>
+<param><name><![CDATA[args      ]]></name><description><![CDATA[the arguments to pass to the method]]></description></param>
+<param><name><![CDATA[callback  ]]></name><description><![CDATA[the callback to receive the response or possible failures]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a callback that can be used to get informed of the response]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[invokeByNameAndCallback]]></title><fullMethod><left><![CDATA[function <b>invokeByNameAndCallback</b> (
+
+]]></left><right><param><name><![CDATA[methodName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[callback]]></name>:<type><![CDATA[<a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a>]]></type></param>) : <![CDATA[<a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Invokes the method with passed-in <code>methodName</code> on the service.<p>When the response arrives the appropriate callback method is invoked.<p>If the passed-in <code>callback</code> is not <code>null</code> or <code>undefined</code>,
+ the returned callback is the same.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[methodName]]></name><description><![CDATA[the name of the method to invoke]]></description></param>
+<param><name><![CDATA[callback  ]]></name><description><![CDATA[the callback that receives the return value or errors]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a callback that can be used to get informed of the response]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:28:53]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Impulse</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>Impulse</h1>
+        <div class="classProperties">
+          <div class="kindOfClass"><span class="value">
+Interface
+</span>
+          </div>
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Version: </span><span class="value">1.0</span>
+              </li>
+              <li><span class="title">Author: </span><span class="value">Martin Heidegger</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.app.exec.Impulse</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Sunday, 22 May 2005, 19:23:28</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>Impulse</code> is a definition for events that gets executed periodically. </div><p>Periodical events could be frame executions, seconds, hours or dates.
+ <code>Impulse</code> allows to seperate the certain kind of Impulse from the
+ execution code.<p>The <code>Impulse</code> executes <a href="org_as2lib_app_exec_Executable.html#execute">Executable.execute</a> on each impulse to
+ the connected executables.
+ 
+ Example:<pre><span class="codeKeyword">import</span> org.as2lib.app.exec.Impulse;
+
+<span class="codeKeyword">var</span> impulse:Impulse = <span class="codeKeyword">new</span> MySinusImpulse();
+impulse.connectExecutable(<span class="codeKeyword">new</span> MySpecialCall());
+impulse.connectExecutable(<span class="codeKeyword">new</span> MyMostImportantCall());</pre></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#connectExecutable">connectExecutable</a>
+                </li>
+                <li>
+                  <a href="#disconnectExecutable">disconnectExecutable</a>
+                </li>
+                <li>
+                  <a href="#isExecutableConnected">isExecutableConnected</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicInterface.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="connectExecutable">connectExecutable</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>connectExecutable</b> (
+</div>
+                <div><span class="code">executable:<a href="org_as2lib_app_exec_Executable.html">Executable</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Connect a certain executable to listen to the continous event.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">executable<span class="separator">:</span></div>
+                    <div>Executable that should be connected</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="disconnectExecutable">disconnectExecutable</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>disconnectExecutable</b> (
+</div>
+                <div><span class="code">executable:<a href="org_as2lib_app_exec_Executable.html">Executable</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Disconnect a certain executable from listening to the <code>Impulse</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">executable<span class="separator">:</span></div>
+                    <div>Executable that should be disconnected</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isExecutableConnected">isExecutableConnected</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>isExecutableConnected</b> (
+</div>
+                <div><span class="code">executable:<a href="org_as2lib_app_exec_Executable.html">Executable</a>) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Flag if a certain(passed-in) <code>executable</code> is connected.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">executable<span class="separator">:</span></div>
+                    <div><a href="org_as2lib_app_exec_Executable.html">Executable</a> is </div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">true if the certain executable got connected</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2005 as2lib | </span><span class="date">Tuesday, 31 May 2005, 20:26:09
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

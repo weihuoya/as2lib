@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[MethodAlgorithm]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.reflect.algorithm.MethodAlgorithm]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Friday, 27 May 2005, 09:42:56]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>MethodAlgorithm</code> searches for all methods of a specific class.]]></summary><restOfDescription><![CDATA[<p>This class is mostly used internally. If you wanna obtain the methods of a
+ class you need its representing ClassInfo. You can then also use the
+ <a href="org_as2lib_env_reflect_ClassInfo.html#getMethods">org.as2lib.env.reflect.ClassInfo.getMethods</a> method directly and do not have to make the detour
+ over this class. The <a href="org_as2lib_env_reflect_ClassInfo.html#getMethods">org.as2lib.env.reflect.ClassInfo.getMethods</a> method is also easier to use
+ and offers some extra functionalities.<p>If you nevertheless want to use this class here is how it works.<pre><span class="codeKeyword">var</span> classInfo:ClassInfo = ClassInfo.forClass(MyClass);
+<span class="codeKeyword">var</span> methodAlgorithm:MethodAlgorithm = <span class="codeKeyword">new</span> MethodAlgorithm();
+<span class="codeKeyword">var</span> methods:<span class="codeIdentifier">Array</span> = methodAlgorithm.execute(classInfo);</pre><p>Refer to the <a href="org_as2lib_env_reflect_algorithm_MethodAlgorithm.html#execute">execute</a> method for details on how to get data from the
+ methods array appropriately.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[MethodAlgorithm]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[r]]></private></item>
+<item><private><![CDATA[i]]></private></item>
+<item><private><![CDATA[s]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[execute]]></item>
+<item><private><![CDATA[search]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[MethodAlgorithm]]></title><fullMethod><left><![CDATA[function <b>MethodAlgorithm</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>MethodAlgorithm</code> instance.]]></text>
+</description>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[i]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>i</b>:<a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The class to return methods for.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[r]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>r</b>:Array
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The temporary result.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[s]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>s</b>:Boolean
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Determines whether the method is static or not.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[execute]]></title><fullMethod><left><![CDATA[function <b>execute</b> (
+]]></left><right><param><name><![CDATA[i]]></name>:<type><![CDATA[<a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a>]]></type></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Searches for all methods of the passed-in class <code>i</code>.<p>The resulting array contains instances of type <a href="org_as2lib_env_reflect_MethodInfo.html">org.as2lib.env.reflect.MethodInfo</a>.<p><code>null</code> will be returned if:<ul><li>The passed-in class <code>i</code> is <code>null</code> or <code>undefined</code>.</li><li>The <code>getType</code> method of the passed-in class returns <code>null</code>.</li></ul><p>Only the passed in class will be searched through, no super classes.<p>The found methods are stored in the resulting array by index as well as by
+ name. This means you can obtain <code>MethodInfo</code> instances either by index:
+ <code><span class="codeKeyword">var</span> myMethod:MethodInfo = myMethods[<span class="codeNumber">0</span>];</code><p>Or by name:
+ <code><span class="codeKeyword">var</span> myMethod:MethodInfo = myMethods[<span class="codeString">"myMethodName"</span>];</code>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[i]]></name><description><![CDATA[the class info instance representing the class to search through]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the found methods, an empty array or <code>null</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[search]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>search</b> (
+]]></left><right><param><name><![CDATA[t]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:28:08]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

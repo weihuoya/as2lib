@@ -1,0 +1,437 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>FrameImpulse</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>FrameImpulse</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_app_exec_Impulse.html">Impulse</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Version: </span><span class="value">1.0</span>
+              </li>
+              <li><span class="title">Author: </span><span class="value">Martin Heidegger</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.app.exec.FrameImpulse</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Tuesday, 31 May 2005, 17:11:56</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>FrameImpulse</code> is a implementation of <a href="org_as2lib_app_exec_Impulse.html">Impulse</a> for a impulse
+ that gets executed at a the Frame <code>onEnterFrame</code> event. </div><p><code>FrameImpulse</code> supports static methods for easy connecting to a
+ FrameImpulse.
+ 
+ Example:<pre><span class="codeKeyword">import</span> org.as2lib.app.exec.FrameImpulse;
+<span class="codeKeyword">import</span> org.as2lib.app.exec.Executable;
+
+<span class="codeKeyword">class</span> com.domain.FrameTracer <span class="codeKeyword">implements</span> Executable {
+
+   <span class="codeKeyword">private</span> <span class="codeKeyword">var</span> prefix:<span class="codeIdentifier">String</span>;
+
+   <span class="codeKeyword">private</span> <span class="codeKeyword">var</span> postfix:<span class="codeIdentifier">String</span>;
+
+   <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> FrameTrigger(prefix:<span class="codeIdentifier">String</span>, postfix:<span class="codeIdentifier">String</span>) {
+       <span class="codeIdentifier">this</span>.prefix = prefix;
+       <span class="codeIdentifier">this</span>.postfix = postfix;
+       FrameImpulse.connect(<span class="codeIdentifier">this</span>);
+   }
+
+   <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> execute() {
+       <span class="codeIdentifier">trace</span>(prefix+<span class="codeIdentifier">_root</span>.<span class="codeProperty">_currentframe</span>+postfix);
+   }
+}</pre></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#FrameImpulse">FrameImpulse</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#instance">instance</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#timeline">timeline</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#connectedExecutables">connectedExecutables</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#timelineIsGenerated">timelineIsGenerated</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span>
+              <ul>
+                <li>
+                  <a href="#connect">connect</a>
+                </li>
+                <li>
+                  <a href="#disconnect">disconnect</a>
+                </li>
+                <li>
+                  <a href="#isConnected">isConnected</a>
+                </li>
+                <li>
+                  <a href="#getInstance">getInstance</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#connectExecutable">connectExecutable</a>
+                </li>
+                <li>
+                  <a href="#disconnectExecutable">disconnectExecutable</a>
+                </li>
+                <li>
+                  <a href="#isExecutableConnected">isExecutableConnected</a>
+                </li>
+                <li>
+                  <a href="#setTimeline">setTimeline</a>
+                </li>
+                <li>
+                  <a href="#getTimeline">getTimeline</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="FrameImpulse">FrameImpulse</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>FrameImpulse</b> (
+</div>
+                <div><span class="code">timeline:MovieClip)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Creates a new FrameImpulse instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">timeline<span class="separator">:</span></div>
+                    <div>Timeline to be used - see: <a href="org_as2lib_app_exec_FrameImpulse.html#setTimeline">setTimeline</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="instance">instance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>instance</b>:<a href="org_as2lib_app_exec_FrameImpulse.html">FrameImpulse</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Holder for the static instance</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="connectedExecutables">connectedExecutables</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>connectedExecutables</b>:Array
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">List of the connected Executables</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="timeline">timeline</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>timeline</b>:MovieClip
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Holder for the timeline to the FrameImpulse</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="timelineIsGenerated">timelineIsGenerated</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>timelineIsGenerated</b>:Boolean
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Flag if the timeline is generated and should be destroyed after
+ replacement.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="connect">connect</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>connect</b> (
+</div>
+                <div><span class="code">exe:<a href="org_as2lib_app_exec_Executable.html">Executable</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Connects a certain executable as listener to the impulse.<p>The Impulse will call <code>execute</code> on a frame change.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">exe<span class="separator">:</span></div>
+                    <div>Executable to be connected to the Impulse</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="disconnect">disconnect</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>disconnect</b> (
+</div>
+                <div><span class="code">exe:<a href="org_as2lib_app_exec_Executable.html">Executable</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Disconnects a <a href="org_as2lib_app_exec_Executable.html">Executable</a> from listening to the impulse.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">exe<span class="separator">:</span></div>
+                    <div><a href="org_as2lib_app_exec_Executable.html">Executable</a> to disconnect.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getInstance">getInstance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>getInstance</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_app_exec_FrameImpulse.html">FrameImpulse</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Getter for a instance of a FrameImpulse.<p>Generates a new FrameImpulse if no FrameImpulse has been set.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>FrameImpulse</code> instance.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isConnected">isConnected</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>isConnected</b> (
+</div>
+                <div><span class="code">exe:<a href="org_as2lib_app_exec_Executable.html">Executable</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Validates if a certain <a href="org_as2lib_app_exec_Executable.html">Executable</a> is currently connected to the
+ impulse.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">exe<span class="separator">:</span></div>
+                    <div><a href="org_as2lib_app_exec_Executable.html">Executable</a> to be validated.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if the certain executable is connected.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="connectExecutable">connectExecutable</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>connectExecutable</b> (
+</div>
+                <div><span class="code">exe:<a href="org_as2lib_app_exec_Executable.html">Executable</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Connects a executable as listener to the frame execution.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">exe<span class="separator">:</span></div>
+                    <div>Executable to be added as listener</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="disconnectExecutable">disconnectExecutable</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>disconnectExecutable</b> (
+</div>
+                <div><span class="code">exe:<a href="org_as2lib_app_exec_Executable.html">Executable</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Disconnects a <a href="org_as2lib_app_exec_Executable.html">Executable</a> from listening to the impulse.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">exe<span class="separator">:</span></div>
+                    <div><a href="org_as2lib_app_exec_Executable.html">Executable</a> to disconnect.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getTimeline">getTimeline</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getTimeline</b> (
+</div>
+                <div><span class="code">Void) : MovieClip</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Getter for the currently listening timeline.<p>This method creates a new timeline in root and listenes to it if no
+ timeline has been set.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">Currently listening timeline</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isExecutableConnected">isExecutableConnected</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>isExecutableConnected</b> (
+</div>
+                <div><span class="code">exe:<a href="org_as2lib_app_exec_Executable.html">Executable</a>) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Validates if a certain <a href="org_as2lib_app_exec_Executable.html">Executable</a> is currently connected to the
+ impulse.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">exe<span class="separator">:</span></div>
+                    <div><a href="org_as2lib_app_exec_Executable.html">Executable</a> to be validated.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if the certain executable is connected.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setTimeline">setTimeline</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>setTimeline</b> (
+</div>
+                <div><span class="code">timeline:MovieClip) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">timeline<span class="separator">:</span></div>
+                    <div>Timeline to be used</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2005 as2lib | </span><span class="date">Tuesday, 31 May 2005, 20:26:07
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

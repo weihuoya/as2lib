@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ByteFormat]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BitFormat]]></name><uri><![CDATA[org_as2lib_io_file_BitFormat]]></uri></link></item><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.io.file.ByteFormat]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 28 May 2005, 11:42:36]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[Formater for bytes.]]></summary><restOfDescription><![CDATA[
+ This class gets used for formatting bits in Kilo/Mega/Giga/Tera bytes.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[ByteFormat]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><private><![CDATA[SHORT_BYTE]]></private></item>
+<item><private><![CDATA[SHORT_KILO_BYTE]]></private></item>
+<item><private><![CDATA[SHORT_MEGA_BYTE]]></private></item>
+<item><private><![CDATA[SHORT_GIGA_BYTE]]></private></item>
+<item><private><![CDATA[SHORT_TERA_BYTE]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[toString]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BitFormat]]></name><uri><![CDATA[org_as2lib_io_file_BitFormat]]></uri></link></title><item><link><name>getBit</name><uri>org_as2lib_io_file_BitFormat</uri><method>getBit</method></link></item><item><link><name>getBytes</name><uri>org_as2lib_io_file_BitFormat</uri><method>getBytes</method></link></item><item><link><name>getGigaBit</name><uri>org_as2lib_io_file_BitFormat</uri><method>getGigaBit</method></link></item><item><link><name>getGigaBytes</name><uri>org_as2lib_io_file_BitFormat</uri><method>getGigaBytes</method></link></item><item><link><name>getKiloBit</name><uri>org_as2lib_io_file_BitFormat</uri><method>getKiloBit</method></link></item><item><link><name>getKiloBytes</name><uri>org_as2lib_io_file_BitFormat</uri><method>getKiloBytes</method></link></item><item><link><name>getMegaBit</name><uri>org_as2lib_io_file_BitFormat</uri><method>getMegaBit</method></link></item><item><link><name>getMegaBytes</name><uri>org_as2lib_io_file_BitFormat</uri><method>getMegaBytes</method></link></item><item><link><name>getTeraBit</name><uri>org_as2lib_io_file_BitFormat</uri><method>getTeraBit</method></link></item><item><link><name>getTeraBytes</name><uri>org_as2lib_io_file_BitFormat</uri><method>getTeraBytes</method></link></item><item><link><name>setFloatingPoints</name><uri>org_as2lib_io_file_BitFormat</uri><method>setFloatingPoints</method></link></item><item><link><name>toString</name><uri>org_as2lib_io_file_BitFormat</uri><method>toString</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[ByteFormat]]></title><fullMethod><left><![CDATA[function <b>ByteFormat</b> (
+]]></left><right><param><name><![CDATA[bytes]]></name>:<type><![CDATA[Number]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Creates a new ByteFormat]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[bytes]]></name><description><![CDATA[Bytes to be formatted.]]></description></param>
+</field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_io_file_BitFormat.html#BitFormat">BitFormat.BitFormat</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><private><![CDATA[SHORT_BYTE]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>SHORT_BYTE</b>:String = <span class="codeString">"B"</span>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Shortname of byte]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[SHORT_GIGA_BYTE]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>SHORT_GIGA_BYTE</b>:String = <span class="codeString">"GB"</span>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Shortname of gigabyte]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[SHORT_KILO_BYTE]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>SHORT_KILO_BYTE</b>:String = <span class="codeString">"KB"</span>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Shortname of kilobyte]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[SHORT_MEGA_BYTE]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>SHORT_MEGA_BYTE</b>:String = <span class="codeString">"MB"</span>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Shortname of megabyte]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[SHORT_TERA_BYTE]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>SHORT_TERA_BYTE</b>:String = <span class="codeString">"TB"</span>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Shortname of terabyte]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[toString]]></title><fullMethod><left><![CDATA[function <b>toString</b> (
+]]></left><right>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Extended toString method for a well formatted bytevalue.
+ This method uses the next matching size and adds the matching Shortname for it.
+ 
+ Examples:
+   new ByteFormat(1).toString(); // 1B
+   new ByteFormat(1234).toString(); // 1.21KB
+   new ByteFormat(15002344).toString(); // 14.31MB]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[bytes as string with correct ending.]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_file_BitFormat.html#DEFAULT_FLOATING_POINTS">BitFormat.DEFAULT_FLOATING_POINTS</a>]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_io_file_BitFormat.html#toString">BitFormat.toString</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:29:23]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

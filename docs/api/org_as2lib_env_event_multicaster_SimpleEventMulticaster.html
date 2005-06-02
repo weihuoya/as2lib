@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>SimpleEventMulticaster</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>SimpleEventMulticaster</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_env_event_SimpleEventListenerSource.html">SimpleEventListenerSource</a> &lt; <a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_env_event_multicaster_EventMulticaster.html">EventMulticaster</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.event.multicaster.SimpleEventMulticaster</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 30 April 2005, 11:38:40</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>SimpleEventMulticaster</code> multicasts an event to all added listeners with
+ custom arguments. </div> This class does not support consuming events.<p>Example:<pre><span class="codeComment">// creates a multicaster for the 'onError' event</span>
+<span class="codeKeyword">var</span> multicaster:SimpleEventMulticaster = <span class="codeKeyword">new</span> SimpleEventMulticaster(<span class="codeString">"onError"</span>);
+<span class="codeComment">// adds listeners</span>
+multicaster.<span class="codeIdentifier">addListener</span>(<span class="codeKeyword">new</span> SimpleErrorListener());
+multicaster.<span class="codeIdentifier">addListener</span>(<span class="codeKeyword">new</span> MyErrorListener());
+<span class="codeComment">// executes the specified event on all listeners passing the given arguments</span>
+multicaster.dispatch(myErrorCode, myException);</pre></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#SimpleEventMulticaster">SimpleEventMulticaster</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#eventName">eventName</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#b">b</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#getEventName">getEventName</a>
+                </li>
+                <li>
+                  <a href="#removeAllListeners">removeAllListeners</a>
+                </li>
+                <li>
+                  <a href="#dispatch">dispatch</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_env_event_SimpleEventListenerSource.html">SimpleEventListenerSource</a></span></span>
+                    <div class="item"><a href="org_as2lib_env_event_SimpleEventListenerSource.html#addAllListeners">addAllListeners</a>, <a href="org_as2lib_env_event_SimpleEventListenerSource.html#addListener">addListener</a>, <a href="org_as2lib_env_event_SimpleEventListenerSource.html#getAllListeners">getAllListeners</a>, <a href="org_as2lib_env_event_SimpleEventListenerSource.html#removeAllListeners">removeAllListeners</a>, <a href="org_as2lib_env_event_SimpleEventListenerSource.html#removeListener">removeListener</a></div>
+                  </div>
+                </div>
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="SimpleEventMulticaster">SimpleEventMulticaster</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>SimpleEventMulticaster</b> (
+
+</div>
+                <div><span class="code">eventName:String,
+listeners:Array)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>SimpleEventMulticaster</code> instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">eventName<span class="separator">:</span></div>
+                    <div>the name of the event to execute on all added listeners</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">listeners<span class="separator">:</span></div>
+                    <div>(optional) an array of listeners to populate this broadcaster
+ with</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if passed-in <code>eventName</code> is <code>null</code>,
+ <code>undefined</code> or an empty string</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_env_event_SimpleEventListenerSource.html#SimpleEventListenerSource">org.as2lib.env.event.SimpleEventListenerSource.SimpleEventListenerSource</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="b">b</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>b</b>:Object
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">The wrapped <code>AsBroadcaster</code> needed for actual distribution.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="eventName">eventName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>eventName</b>:String
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">The name of the event.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="dispatch">dispatch</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>dispatch</b> (
+</div>
+                <div><span class="code">) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Dispatches the event to all added listeners passing the given arguments as
+ parameters to the listeners' event methods.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">..<span class="separator">:</span></div>
+                    <div>any number of arguments to pass to the listeners' event methods</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventExecutionException.html">EventExecutionException</a> if a listener's event method threw an exception</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_event_multicaster_EventMulticaster.html#dispatch">EventMulticaster.dispatch</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getEventName">getEventName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getEventName</b> (
+</div>
+                <div><span class="code">Void) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the event name set on construction.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the name of the event</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="removeAllListeners">removeAllListeners</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>removeAllListeners</b> (
+</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Removes all added listeners.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_env_event_SimpleEventListenerSource.html#removeAllListeners">org.as2lib.env.event.SimpleEventListenerSource.removeAllListeners</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventListenerSource.html#removeAllListeners">org.as2lib.env.event.EventListenerSource.removeAllListeners</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2005 as2lib | </span><span class="date">Tuesday, 31 May 2005, 20:26:56
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

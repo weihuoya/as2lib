@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[RootLogger]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[SimpleHierarchicalLogger]]></name><uri><![CDATA[org_as2lib_env_log_logger_SimpleHierarchicalLogger]]></uri></link></item><item><link><name><![CDATA[AbstractLogger]]></name><uri><![CDATA[org_as2lib_env_log_logger_AbstractLogger]]></uri></link></item><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.log.logger.RootLogger]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 10 April 2005, 10:34:10]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>RootLogger</code> represents the root in a logger hierarchy.]]></summary><restOfDescription><![CDATA[<p>The name of a root logger is by default <code>"root"</code>.<p>You must set a log level because otherwise the level in the hierarchy could
+ be <code>null</code> which could cause unexpected behavior.<p>This class is normally used in conjunction with the <a href="org_as2lib_env_log_repository_LoggerHierarchy.html">org.as2lib.env.log.repository.LoggerHierarchy</a>.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[RootLogger]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><private><![CDATA[__proto__]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Class properties inherited from]]></text><link><name><![CDATA[AbstractLogger]]></name><uri><![CDATA[org_as2lib_env_log_logger_AbstractLogger]]></uri></link></title><item><link><name>ALL</name><uri>org_as2lib_env_log_logger_AbstractLogger</uri><method>ALL</method></link></item><item><link><name>DEBUG</name><uri>org_as2lib_env_log_logger_AbstractLogger</uri><method>DEBUG</method></link></item><item><link><name>ERROR</name><uri>org_as2lib_env_log_logger_AbstractLogger</uri><method>ERROR</method></link></item><item><link><name>FATAL</name><uri>org_as2lib_env_log_logger_AbstractLogger</uri><method>FATAL</method></link></item><item><link><name>INFO</name><uri>org_as2lib_env_log_logger_AbstractLogger</uri><method>INFO</method></link></item><item><link><name>NONE</name><uri>org_as2lib_env_log_logger_AbstractLogger</uri><method>NONE</method></link></item><item><link><name>WARNING</name><uri>org_as2lib_env_log_logger_AbstractLogger</uri><method>WARNING</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[setLevel]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[SimpleHierarchicalLogger]]></name><uri><![CDATA[org_as2lib_env_log_logger_SimpleHierarchicalLogger]]></uri></link></title><item><link><name>addHandler</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>addHandler</method></link></item><item><link><name>debug</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>debug</method></link></item><item><link><name>error</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>error</method></link></item><item><link><name>fatal</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>fatal</method></link></item><item><link><name>getAllHandlers</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>getAllHandlers</method></link></item><item><link><name>getLevel</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>getLevel</method></link></item><item><link><name>getName</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>getName</method></link></item><item><link><name>getParent</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>getParent</method></link></item><item><link><name>info</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>info</method></link></item><item><link><name>isDebugEnabled</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>isDebugEnabled</method></link></item><item><link><name>isEnabled</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>isEnabled</method></link></item><item><link><name>isErrorEnabled</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>isErrorEnabled</method></link></item><item><link><name>isFatalEnabled</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>isFatalEnabled</method></link></item><item><link><name>isInfoEnabled</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>isInfoEnabled</method></link></item><item><link><name>isWarningEnabled</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>isWarningEnabled</method></link></item><item><link><name>log</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>log</method></link></item><item><link><name>removeAllHandlers</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>removeAllHandlers</method></link></item><item><link><name>removeHandler</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>removeHandler</method></link></item><item><link><name>setLevel</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>setLevel</method></link></item><item><link><name>setName</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>setName</method></link></item><item><link><name>setParent</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>setParent</method></link></item><item><link><name>warning</name><uri>org_as2lib_env_log_logger_SimpleHierarchicalLogger</uri><method>warning</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[RootLogger]]></title><fullMethod><left><![CDATA[function <b>RootLogger</b> (
+]]></left><right><param><name><![CDATA[level]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>RootLogger</code> instance.<p>The name is automatically set to <code>"root"</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[level]]></name><description><![CDATA[the level of this logger]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in <code>level</code> is <code>null</code>
+ or <code>undefined</code>]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#SimpleHierarchicalLogger">SimpleHierarchicalLogger.SimpleHierarchicalLogger</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><private><![CDATA[__proto__]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>__proto__</b>:Function = SimpleHierarchicalLogger
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Makes the static variables of the super-class accessible through this class.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[setLevel]]></title><fullMethod><left><![CDATA[function <b>setLevel</b> (
+]]></left><right><param><name><![CDATA[level]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the level of this logger.<p>A level of value <code>null</code> or <code>undefined</code> is not allowed.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[level]]></name><description><![CDATA[the new level of this logger]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> when <code>level</code> is <code>null</code> or
+ <code>undefined</code>]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_SimpleHierarchicalLogger.html#setLevel">SimpleHierarchicalLogger.setLevel</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:40]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

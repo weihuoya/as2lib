@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[AbstractPriority]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.data.holder.AbstractPriority]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 17 July 2004, 16:06:12]]></value></item>
+</classDetails>
+<classDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><private><![CDATA[AbstractPriority]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><![CDATA[PRIORITY_HIGHEST]]></item>
+<item><![CDATA[PRIORITY_HIGHER]]></item>
+<item><![CDATA[PRIORITY_HIGH]]></item>
+<item><![CDATA[PRIORITY_NORMAL]]></item>
+<item><![CDATA[PRIORITY_LOW]]></item>
+<item><![CDATA[PRIORITY_LOWER]]></item>
+<item><![CDATA[PRIORITY_LOWEST]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<private>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><private><![CDATA[AbstractPriority]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>AbstractPriority</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><![CDATA[PRIORITY_HIGH]]></title><fullMethod><left><![CDATA[static <b>PRIORITY_HIGH</b>:Number = <span class="codeNumber">10</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+</method>
+<method>
+<title><![CDATA[PRIORITY_HIGHER]]></title><fullMethod><left><![CDATA[static <b>PRIORITY_HIGHER</b>:Number = <span class="codeNumber">5</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+</method>
+<method>
+<title><![CDATA[PRIORITY_HIGHEST]]></title><fullMethod><left><![CDATA[static <b>PRIORITY_HIGHEST</b>:Number = <span class="codeNumber">0</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+</method>
+<method>
+<title><![CDATA[PRIORITY_LOW]]></title><fullMethod><left><![CDATA[static <b>PRIORITY_LOW</b>:Number = <span class="codeNumber">20</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+</method>
+<method>
+<title><![CDATA[PRIORITY_LOWER]]></title><fullMethod><left><![CDATA[static <b>PRIORITY_LOWER</b>:Number = <span class="codeNumber">25</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+</method>
+<method>
+<title><![CDATA[PRIORITY_LOWEST]]></title><fullMethod><left><![CDATA[static <b>PRIORITY_LOWEST</b>:Number = <span class="codeNumber">30</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+</method>
+<method>
+<title><![CDATA[PRIORITY_NORMAL]]></title><fullMethod><left><![CDATA[static <b>PRIORITY_NORMAL</b>:Number = <span class="codeNumber">15</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:14]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

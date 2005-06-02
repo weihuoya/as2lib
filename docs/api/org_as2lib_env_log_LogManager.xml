@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[LogManager]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.log.LogManager]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 28 May 2005, 12:13:04]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>LogManager</code> is the core access point of the As2lib Logging API.]]></summary><restOfDescription><![CDATA[<p>You use it to set the underlying repository that stores and releases loggers
+ and to obtain a logger according to a logger's name of the repository.<p>The repository must be set before anything else using this class as access
+ point to obtain loggers. There is no default repository.<p>This class could be used as follows with a non-singleton repository. Note
+ that you can of course also use any other kind of logger repository.<pre><span class="codeComment">// configuration: when setting everything up</span>
+<span class="codeKeyword">var</span> loggerHierarchy:LoggerHierarchy = <span class="codeKeyword">new</span> LoggerHierarchy();
+<span class="codeKeyword">var</span> traceLogger:Logger = <span class="codeKeyword">new</span> SimpleHierarchicalLogger(<span class="codeString">"org.mydomain"</span>);
+traceLogger.addHandler(<span class="codeKeyword">new</span> TraceHandler());
+loggerHierarchy.addLogger(traceLogger);
+LogManager.setLoggerRepository(loggerHierarchy);
+<span class="codeComment">// usage: in the class org.mydomain.MyClass</span>
+<span class="codeKeyword">var</span> myLogger:Logger = LogManager.getLogger(<span class="codeString">"org.mydomain.MyClass"</span>);
+<span class="codeKeyword">if</span> (myLogger.isInfoEnabled()) {
+    myLogger.info(<span class="codeString">"This is an informative log message."</span>);
+}</pre><p>If you have one logger that shall always be returned you can use the
+ convenience method <a href="org_as2lib_env_log_LogManager.html#setLogger">setLogger</a> that does all the work with the repository
+ for you.<pre><span class="codeComment">// configuration: when setting everything up</span>
+<span class="codeKeyword">var</span> traceLogger:Logger = <span class="codeKeyword">new</span> SimpleLogger();
+traceLogger.addHandler(<span class="codeKeyword">new</span> TraceHandler());
+LogManager.setLogger(traceLogger);
+<span class="codeComment">// usage: in the class org.mydomain.MyClass</span>
+<span class="codeKeyword">var</span> myLogger:Logger = LogManager.getLogger(<span class="codeString">"org.mydomain.MyClass"</span>);
+<span class="codeKeyword">if</span> (myLogger.isInfoEnabled()) {
+    myLogger.info(<span class="codeString">"This is an informative log message."</span>);
+}</pre>]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><private><![CDATA[LogManager]]></private></item>
+</methodSummaryPart>
+</private>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><private><![CDATA[repository]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[getLogger]]></item>
+<item><![CDATA[setLogger]]></item>
+<item><private><![CDATA[getBlankLoggerRepository]]></private></item>
+<item><![CDATA[getLoggerRepository]]></item>
+<item><![CDATA[setLoggerRepository]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<private>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><private><![CDATA[LogManager]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>LogManager</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Private constructor.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><private><![CDATA[repository]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>repository</b>:<a href="org_as2lib_env_log_LoggerRepository.html">LoggerRepository</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Repository that stores already retrieved loggers.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><private><![CDATA[getBlankLoggerRepository]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static function <b>getBlankLoggerRepository</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_log_LoggerRepository.html">LoggerRepository</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns a blank logger repository.<p>This is a <code>LoggerRepository</code> instance with no implemented methods.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a blank logger repository]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getLogger]]></title><fullMethod><left><![CDATA[static function <b>getLogger</b> (
+]]></left><right><param><name><![CDATA[loggerName]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[<a href="org_as2lib_env_log_Logger.html">Logger</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the logger according the passed-in <code>loggerName</code>.<p>Uses the set logger repository to receive the logger that is returned.<p><code>null</code> is returned if the logger repository returns <code>null</code> or
+ <code>undefined</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[loggerName]]></name><description><![CDATA[the name of the logger to return]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the logger according to the passed-in <code>name</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getLoggerRepository]]></title><fullMethod><left><![CDATA[static function <b>getLoggerRepository</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_log_LoggerRepository.html">LoggerRepository</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Reutrns the logger repository set via <a href="org_as2lib_env_log_LogManager.html#setLoggerRepository">setLoggerRepository</a>.<p>There is no default logger repository, so you must set it before anything
+ else.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the set logger repository]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setLogger]]></title><fullMethod><left><![CDATA[static function <b>setLogger</b> (
+]]></left><right><param><name><![CDATA[logger]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_Logger.html">Logger</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the <code>logger</code> that is returned on calls to the <a href="org_as2lib_env_log_LogManager.html#getLogger">getLogger</a>
+ method.<p>This method actually sets a singleton repository via the static
+ <a href="org_as2lib_env_log_LogManager.html#setLoggerRepository">setLoggerRepository</a> that always returns the passed-in <code>logger</code>
+ and ignores the name.<p>You could also set the repository by hand, this is just an easier way of
+ doing it if you always want the same logger to be returned.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[logger]]></name><description><![CDATA[the logger to return on calls to the <code>#getLogger</code> method]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setLoggerRepository]]></title><fullMethod><left><![CDATA[static function <b>setLoggerRepository</b> (
+]]></left><right><param><name><![CDATA[loggerRepository]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LoggerRepository.html">LoggerRepository</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets a new repositroy returned by <a href="org_as2lib_env_log_LogManager.html#getLoggerRepository">getLoggerRepository</a>.<p>The <a href="org_as2lib_env_log_LogManager.html#getLogger">getLogger</a> method uses this repository to obtain the logger for
+ the passed-in name.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[loggerRepository]]></name><description><![CDATA[the new logger repository]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:52]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

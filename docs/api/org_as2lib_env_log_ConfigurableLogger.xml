@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ConfigurableLogger]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[Logger]]></name><uri><![CDATA[org_as2lib_env_log_Logger]]></uri></link></item><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.log.ConfigurableLogger]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 28 May 2005, 11:41:14]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>ConfigurableLogger</code> declares methods needed to configure most loggers.]]></summary><restOfDescription><![CDATA[<p>This is first the method to set the level <a href="org_as2lib_env_log_ConfigurableLogger.html#setLevel">setLevel</a> and second the
+ methods to add, remove and access handlers <a href="org_as2lib_env_log_ConfigurableLogger.html#addHandler">addHandler</a>,
+ <a href="org_as2lib_env_log_ConfigurableLogger.html#removeHandler">removeHandler</a>, <a href="org_as2lib_env_log_ConfigurableLogger.html#removeAllHandlers">removeAllHandlers</a> and <a href="org_as2lib_env_log_ConfigurableLogger.html#getAllHandlers">getAllHandlers</a>.<p>Log handlers are responsible for making the actual output. There are a few
+ pre-defined handlers that can be used to log to different output devices. Take
+ a look at the <code>org.as2lib.env.log.handler</code> package for these.<p>Loggers are normally configured only once.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getLevel]]></item>
+<item><![CDATA[setLevel]]></item>
+<item><![CDATA[addHandler]]></item>
+<item><![CDATA[getAllHandlers]]></item>
+<item><![CDATA[removeHandler]]></item>
+<item><![CDATA[removeAllHandlers]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[Logger]]></name><uri><![CDATA[org_as2lib_env_log_Logger]]></uri></link></title><item><link><name>debug</name><uri>org_as2lib_env_log_Logger</uri><method>debug</method></link></item><item><link><name>error</name><uri>org_as2lib_env_log_Logger</uri><method>error</method></link></item><item><link><name>fatal</name><uri>org_as2lib_env_log_Logger</uri><method>fatal</method></link></item><item><link><name>info</name><uri>org_as2lib_env_log_Logger</uri><method>info</method></link></item><item><link><name>isDebugEnabled</name><uri>org_as2lib_env_log_Logger</uri><method>isDebugEnabled</method></link></item><item><link><name>isErrorEnabled</name><uri>org_as2lib_env_log_Logger</uri><method>isErrorEnabled</method></link></item><item><link><name>isFatalEnabled</name><uri>org_as2lib_env_log_Logger</uri><method>isFatalEnabled</method></link></item><item><link><name>isInfoEnabled</name><uri>org_as2lib_env_log_Logger</uri><method>isInfoEnabled</method></link></item><item><link><name>isWarningEnabled</name><uri>org_as2lib_env_log_Logger</uri><method>isWarningEnabled</method></link></item><item><link><name>warning</name><uri>org_as2lib_env_log_Logger</uri><method>warning</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[addHandler]]></title><fullMethod><left><![CDATA[function <b>addHandler</b> (
+]]></left><right><param><name><![CDATA[handler]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LogHandler.html">LogHandler</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds the passed-in log <code>handler</code>.<p>Log handlers are used to actually log the messages. They determine what
+ information to log and to which output device.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[handler]]></name><description><![CDATA[the new log handler to log messages]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getAllHandlers]]></title><fullMethod><left><![CDATA[function <b>getAllHandlers</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns all handlers that were added to this logger.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[all added log handlers]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getLevel]]></title><fullMethod><left><![CDATA[function <b>getLevel</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the set level.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the set level]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_ConfigurableLogger.html#setLevel">setLevel</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[removeAllHandlers]]></title><fullMethod><left><![CDATA[function <b>removeAllHandlers</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Removes all added log handlers.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[removeHandler]]></title><fullMethod><left><![CDATA[function <b>removeHandler</b> (
+]]></left><right><param><name><![CDATA[handler]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LogHandler.html">LogHandler</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Removes all occerrences of the passed-in <code>handler</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[handler]]></name><description><![CDATA[the log handler to remove]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setLevel]]></title><fullMethod><left><![CDATA[function <b>setLevel</b> (
+]]></left><right><param><name><![CDATA[level]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the log level.<p>The level determines which output to make and and which to make not.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[level]]></name><description><![CDATA[the new level to control the output]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_ConfigurableLogger.html#getLevel">getLevel</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:10]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

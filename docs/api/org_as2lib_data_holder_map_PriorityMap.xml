@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[PriorityMap]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[AbstractPriority]]></name><uri><![CDATA[org_as2lib_data_holder_AbstractPriority]]></uri></link></item><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[Map]]></name><uri><![CDATA[org_as2lib_data_holder_Map]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.data.holder.map.PriorityMap]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Tuesday, 10 May 2005, 16:57:32]]></value></item>
+</classDetails>
+<classDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[PriorityMap]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Class properties inherited from]]></text><link><name><![CDATA[AbstractPriority]]></name><uri><![CDATA[org_as2lib_data_holder_AbstractPriority]]></uri></link></title><item><link><name>PRIORITY_HIGH</name><uri>org_as2lib_data_holder_AbstractPriority</uri><method>PRIORITY_HIGH</method></link></item><item><link><name>PRIORITY_HIGHER</name><uri>org_as2lib_data_holder_AbstractPriority</uri><method>PRIORITY_HIGHER</method></link></item><item><link><name>PRIORITY_HIGHEST</name><uri>org_as2lib_data_holder_AbstractPriority</uri><method>PRIORITY_HIGHEST</method></link></item><item><link><name>PRIORITY_LOW</name><uri>org_as2lib_data_holder_AbstractPriority</uri><method>PRIORITY_LOW</method></link></item><item><link><name>PRIORITY_LOWER</name><uri>org_as2lib_data_holder_AbstractPriority</uri><method>PRIORITY_LOWER</method></link></item><item><link><name>PRIORITY_LOWEST</name><uri>org_as2lib_data_holder_AbstractPriority</uri><method>PRIORITY_LOWEST</method></link></item><item><link><name>PRIORITY_NORMAL</name><uri>org_as2lib_data_holder_AbstractPriority</uri><method>PRIORITY_NORMAL</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[map]]></private></item>
+<item><private><![CDATA[priorityArray]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[containsKey]]></item>
+<item><![CDATA[containsValue]]></item>
+<item><![CDATA[getKeys]]></item>
+<item><![CDATA[getValues]]></item>
+<item><![CDATA[get]]></item>
+<item><![CDATA[put]]></item>
+<item><![CDATA[putByValue]]></item>
+<item><![CDATA[putByValueAndPriority]]></item>
+<item><![CDATA[putAll]]></item>
+<item><![CDATA[putAllByMap]]></item>
+<item><![CDATA[putAllByMapAndPriority]]></item>
+<item><![CDATA[changePriority]]></item>
+<item><private><![CDATA[changePriorityByIndex]]></private></item>
+<item><private><![CDATA[filter]]></private></item>
+<item><![CDATA[clear]]></item>
+<item><![CDATA[remove]]></item>
+<item><![CDATA[iterator]]></item>
+<item><![CDATA[valueIterator]]></item>
+<item><![CDATA[keyIterator]]></item>
+<item><![CDATA[size]]></item>
+<item><![CDATA[isEmpty]]></item>
+<item><![CDATA[toString]]></item>
+<item><private><![CDATA[findKey]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[PriorityMap]]></title><fullMethod><left><![CDATA[function <b>PriorityMap</b> (
+]]></left><right><param><name><![CDATA[map]]></name>:<type><![CDATA[<a href="org_as2lib_data_holder_Map.html">Map</a>]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new PriorityMap.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_data_holder_AbstractPriority.html#AbstractPriority">org.as2lib.data.holder.AbstractPriority.AbstractPriority</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[map]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>map</b>:<a href="org_as2lib_data_holder_Map.html">Map</a>
+]]></left><right></right></fullMethod>
+</method>
+<method>
+<title><private><![CDATA[priorityArray]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>priorityArray</b>:Array
+]]></left><right></right></fullMethod>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[changePriority]]></title><fullMethod><left><![CDATA[function <b>changePriority</b> (
+
+
+]]></left><right><param><name><![CDATA[key]]></name></param>,
+<param><name><![CDATA[priority]]></name>:<type><![CDATA[Number]]></type></param>,
+<param><name><![CDATA[absolute]]></name>:<type><![CDATA[Boolean]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+</method>
+<method>
+<title><private><![CDATA[changePriorityByIndex]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>changePriorityByIndex</b> (
+
+
+]]></left><right><param><name><![CDATA[index]]></name>:<type><![CDATA[Number]]></type></param>,
+<param><name><![CDATA[priority]]></name>:<type><![CDATA[Number]]></type></param>,
+<param><name><![CDATA[absolute]]></name>:<type><![CDATA[Boolean]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+</method>
+<method>
+<title><![CDATA[clear]]></title><fullMethod><left><![CDATA[function <b>clear</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#clear">org.as2lib.data.holder.Map.clear</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[containsKey]]></title><fullMethod><left><![CDATA[function <b>containsKey</b> (
+]]></left><right><param><name><![CDATA[key]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#containsKey">org.as2lib.data.holder.Map.containsKey()</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#containsKey">org.as2lib.data.holder.Map.containsKey</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[containsValue]]></title><fullMethod><left><![CDATA[function <b>containsValue</b> (
+]]></left><right><param><name><![CDATA[value]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#containsValue">org.as2lib.data.holder.Map.containsValue()</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#containsValue">org.as2lib.data.holder.Map.containsValue</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[filter]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>filter</b> (
+]]></left><right><param><name><![CDATA[index]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Handles the priority within the map.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[index]]></name><description><![CDATA[Index of the new content.]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[findKey]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>findKey</b> (
+]]></left><right><param><name><![CDATA[key]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+</method>
+<method>
+<title><![CDATA[get]]></title><fullMethod><left><![CDATA[function <b>get</b> (
+]]></left><right><param><name><![CDATA[key]]></name></param>)</right></fullMethod>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#get">org.as2lib.data.holder.Map.get()</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#get">org.as2lib.data.holder.Map.get</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getKeys]]></title><fullMethod><left><![CDATA[function <b>getKeys</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Array]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#getKeys">org.as2lib.data.holder.Map.getKeys()</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#getKeys">org.as2lib.data.holder.Map.getKeys</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getValues]]></title><fullMethod><left><![CDATA[function <b>getValues</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Array]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#getValues">org.as2lib.data.holder.Map.getValues()</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#getValues">org.as2lib.data.holder.Map.getValues</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isEmpty]]></title><fullMethod><left><![CDATA[function <b>isEmpty</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#isEmpty">org.as2lib.data.holder.Map.isEmpty</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[iterator]]></title><fullMethod><left><![CDATA[function <b>iterator</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_data_holder_Iterator.html">Iterator</a>]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#iterator">org.as2lib.data.holder.Map.iterator</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[keyIterator]]></title><fullMethod><left><![CDATA[function <b>keyIterator</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_data_holder_Iterator.html">Iterator</a>]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#keyIterator">org.as2lib.data.holder.Map.keyIterator</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[put]]></title><fullMethod><left><![CDATA[function <b>put</b> (
+
+]]></left><right><param><name><![CDATA[key]]></name></param>,
+<param><name><![CDATA[value]]></name></param>)</right></fullMethod>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#put">org.as2lib.data.holder.Map.put</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[putAll]]></title><fullMethod><left><![CDATA[function <b>putAll</b> (
+]]></left><right><param><name><![CDATA[map]]></name>:<type><![CDATA[<a href="org_as2lib_data_holder_Map.html">Map</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#putAll">org.as2lib.data.holder.Map.putAll</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[putAllByMap]]></title><fullMethod><left><![CDATA[function <b>putAllByMap</b> (
+]]></left><right><param><name><![CDATA[map]]></name>:<type><![CDATA[<a href="org_as2lib_data_holder_Map.html">Map</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+</method>
+<method>
+<title><![CDATA[putAllByMapAndPriority]]></title><fullMethod><left><![CDATA[function <b>putAllByMapAndPriority</b> (
+
+]]></left><right><param><name><![CDATA[map]]></name>:<type><![CDATA[<a href="org_as2lib_data_holder_Map.html">Map</a>]]></type></param>,
+<param><name><![CDATA[priority]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+</method>
+<method>
+<title><![CDATA[putByValue]]></title><fullMethod><left><![CDATA[function <b>putByValue</b> (
+
+]]></left><right><param><name><![CDATA[key]]></name></param>,
+<param><name><![CDATA[value]]></name></param>)</right></fullMethod>
+</method>
+<method>
+<title><![CDATA[putByValueAndPriority]]></title><fullMethod><left><![CDATA[function <b>putByValueAndPriority</b> (
+
+
+]]></left><right><param><name><![CDATA[key]]></name></param>,
+<param><name><![CDATA[value]]></name></param>,
+<param><name><![CDATA[priority]]></name>:<type><![CDATA[Number]]></type></param>)</right></fullMethod>
+</method>
+<method>
+<title><![CDATA[remove]]></title><fullMethod><left><![CDATA[function <b>remove</b> (
+]]></left><right><param><name><![CDATA[key]]></name></param>)</right></fullMethod>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#remove">org.as2lib.data.holder.Map.remove</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[size]]></title><fullMethod><left><![CDATA[function <b>size</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#size">org.as2lib.data.holder.Map.size</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toString]]></title><fullMethod><left><![CDATA[function <b>toString</b> (
+]]></left><right>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[<div class="inheritDoc">Returns the string representation of this instance.<p>The String representation is obtained via the stringifier returned by the
+ {VISDOC_LINK_0} method.</div><a class="followInheritDoc" href="org_as2lib_core_BasicClass.html#toString">#</a>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<div class="inheritDoc">the string representation of this instance</div><a class="followInheritDoc" href="org_as2lib_core_BasicClass.html#toString">#</a>]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[valueIterator]]></title><fullMethod><left><![CDATA[function <b>valueIterator</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_data_holder_Iterator.html">Iterator</a>]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#valueIterator">org.as2lib.data.holder.Map.valueIterator</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:27]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>
