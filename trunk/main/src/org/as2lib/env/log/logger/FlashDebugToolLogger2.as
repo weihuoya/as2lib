@@ -245,10 +245,10 @@ class org.as2lib.env.log.logger.FlashDebugToolLogger extends BasicClass implemen
 	 * @param lineNumber (optional) the line number at which the logging call stands
 	 * @see #isEnabled
 	 */
-	public function log(message, level:Number, className:String, fileName:String, lineNumber:Number):Void {
+	public function log(message, level:Number):Void {
 		if (isEnabled(level)) {
-			if (className == null) className = this.name;
-			fdtDebugger.trace(message, level, className, fileName, lineNumber);
+			if (arguments[2] == null) arguments[2] = this.name;
+			fdtDebugger.trace(message, level, arguments[2], arguments[3], arguments[4]);
 		}
 	}
 	
@@ -271,10 +271,10 @@ class org.as2lib.env.log.logger.FlashDebugToolLogger extends BasicClass implemen
 	 * @param lineNumber (optional) the line number at which the logging call stands
 	 * @see #isDebugEnabled
 	 */
-	public function debug(message, className:String, fileName:String, lineNumber:Number):Void {
+	public function debug(message):Void {
 		if (isDebugEnabled()) {
-			if (className == null) className = this.name;
-			fdtDebugger.trace(message, this.debugLevel, className, fileName, lineNumber);
+			if (arguments[1] == null) arguments[1] = this.name;
+			fdtDebugger.trace(message, this.debugLevel, arguments[1], arguments[2], arguments[3]);
 		}
 	}
 	
@@ -297,10 +297,10 @@ class org.as2lib.env.log.logger.FlashDebugToolLogger extends BasicClass implemen
 	 * @param lineNumber (optional) the line number at which the logging call stands
 	 * @see #isInfoEnabled
 	 */
-	public function info(message, className:String, fileName:String, lineNumber:Number):Void {
+	public function info(message):Void {
 		if (isInfoEnabled()) {
-			if (className == null) className = this.name;
-			fdtDebugger.trace(message, this.infoLevel, className, fileName, lineNumber);
+			if (arguments[1] == null) arguments[1] = this.name;
+			fdtDebugger.trace(message, this.infoLevel, arguments[1], arguments[2], arguments[3]);
 		}
 	}
 	
@@ -323,10 +323,10 @@ class org.as2lib.env.log.logger.FlashDebugToolLogger extends BasicClass implemen
 	 * @param lineNumber (optional) the line number at which the logging call stands
 	 * @see #isWarningEnabled
 	 */
-	public function warning(message, className:String, fileName:String, lineNumber:Number):Void {
+	public function warning(message):Void {
 		if (isWarningEnabled()) {
-			if (className == null) className = this.name;
-			fdtDebugger.trace(message, this.warningLevel, className, fileName, lineNumber);
+			if (arguments[1] == null) arguments[1] = this.name;
+			fdtDebugger.trace(message, this.warningLevel, arguments[1], arguments[2], arguments[3]);
 		}
 	}
 	
@@ -349,10 +349,10 @@ class org.as2lib.env.log.logger.FlashDebugToolLogger extends BasicClass implemen
 	 * @param lineNumber (optional) the line number at which the logging call stands
 	 * @see #isErrorEnabled
 	 */
-	public function error(message, className:String, fileName:String, lineNumber:Number):Void {
+	public function error(message):Void {
 		if (isErrorEnabled()) {
-			if (className == null) className = this.name;
-			fdtDebugger.trace(message, this.errorLevel, className, fileName, lineNumber);
+			if (arguments[1] == null) arguments[1] = this.name;
+			fdtDebugger.trace(message, this.errorLevel, arguments[1], arguments[2], arguments[3]);
 		}
 	}
 	
@@ -375,10 +375,10 @@ class org.as2lib.env.log.logger.FlashDebugToolLogger extends BasicClass implemen
 	 * @param lineNumber (optional) the line number at which the logging call stands
 	 * @see #isFatalEnabled
 	 */
-	public function fatal(message, className:String, fileName:String, lineNumber:Number):Void {
+	public function fatal(message):Void {
 		if (isFatalEnabled()) {
-			if (className == null) className = this.name;
-			fdtDebugger.trace(message, this.fatalLevel, className, fileName, lineNumber);
+			if (arguments[1] == null) arguments[1] = this.name;
+			fdtDebugger.trace(message, this.fatalLevel, arguments[1], arguments[2], arguments[3]);
 		}
 	}
 	
