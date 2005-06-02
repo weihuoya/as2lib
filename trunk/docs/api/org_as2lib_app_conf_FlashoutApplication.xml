@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[FlashoutApplication]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[none (FlashoutApplication is a root class)]]></name></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Version]]></title><value><![CDATA[1.0]]></value></item>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.app.conf.FlashoutApplication]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Wednesday, 11 May 2005, 12:27:46]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[Default access point for a application within a Flashout context.]]></summary><restOfDescription><![CDATA[<p>Use this class as base class within your Flashout settings and it will execute your
+ Flashout specific configuration of <a href="main_Flashout.html">main.Flashout</a> and your configuration for all
+ environments found at <a href="main_Configuration.html">main.Configuration</a>]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[main]]></item>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[main]]></title><fullMethod><left><![CDATA[static function <b>main</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Executes the configuration for the flash environment in <a href="main_Flash.html">main.Flash</a> and the 
+ configuration for all environments in <a href="main_Configuration.html">main.Configuration</a>.]]></text>
+</description>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:25:55]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

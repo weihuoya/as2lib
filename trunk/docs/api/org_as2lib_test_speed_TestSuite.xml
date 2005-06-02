@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[TestSuite]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[AbstractTest]]></name><uri><![CDATA[org_as2lib_test_speed_AbstractTest]]></uri></link></item><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[Test]]></name><uri><![CDATA[org_as2lib_test_speed_Test]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.test.speed.TestSuite]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 29 May 2005, 08:52:56]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>TestSuite</code> is the core interface for standardized performance test suites.]]></summary><restOfDescription><![CDATA[<p>Test suites hold multiple <code>Test</code> instances, including <code>TestCase</code>,
+ instances, <code>TestSuite</code> instances and instances of your custom <code>Test</code>
+ implementations.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[TestSuite]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><private><![CDATA[__proto__]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Class properties inherited from]]></text><link><name><![CDATA[AbstractTest]]></name><uri><![CDATA[org_as2lib_test_speed_AbstractTest]]></uri></link></title><item><link><name>CLASS</name><uri>org_as2lib_test_speed_AbstractTest</uri><method>CLASS</method></link></item><item><link><name>METHOD</name><uri>org_as2lib_test_speed_AbstractTest</uri><method>METHOD</method></link></item><item><link><name>METHOD_INVOCATION</name><uri>org_as2lib_test_speed_AbstractTest</uri><method>METHOD_INVOCATION</method></link></item><item><link><name>METHOD_INVOCATION_TREE</name><uri>org_as2lib_test_speed_AbstractTest</uri><method>METHOD_INVOCATION_TREE</method></link></item><item><link><name>NONE</name><uri>org_as2lib_test_speed_AbstractTest</uri><method>NONE</method></link></item><item><link><name>PACKAGE</name><uri>org_as2lib_test_speed_AbstractTest</uri><method>PACKAGE</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[name]]></private></item>
+<item><private><![CDATA[tests]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[run]]></item>
+<item><![CDATA[getName]]></item>
+<item><![CDATA[addTest]]></item>
+<item><![CDATA[addTestByTest]]></item>
+<item><![CDATA[addTestByMethod]]></item>
+<item><![CDATA[addTestByProperty]]></item>
+<item><![CDATA[getTests]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[AbstractTest]]></name><uri><![CDATA[org_as2lib_test_speed_AbstractTest]]></uri></link></title><item><link><name>getResult</name><uri>org_as2lib_test_speed_AbstractTest</uri><method>getResult</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[TestSuite]]></title><fullMethod><left><![CDATA[function <b>TestSuite</b> (
+
+]]></left><right><param><name><![CDATA[name]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[tests]]></name>:<type><![CDATA[Array]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>TestSuite</code> instance.<p>If the passed-in <code>tests</code> array contains elements that are not of type
+ <code>Test</code>, they will be ignored.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[name ]]></name><description><![CDATA[the name of this test suite]]></description></param>
+<param><name><![CDATA[tests]]></name><description><![CDATA[(optional) <code>Test</code> instances to populate this test suite with]]></description></param>
+</field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_test_speed_AbstractTest.html#AbstractTest">AbstractTest.AbstractTest</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><private><![CDATA[__proto__]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>__proto__</b>:Function = AbstractTest
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Makes the static variables of the super-class accessible through this class.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[name]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>name</b>:String
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[This test suite's name.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[tests]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>tests</b>:Array
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[All added tests.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[addTest]]></title><fullMethod><left><![CDATA[function <b>addTest</b> (
+]]></left><right>)</right></fullMethod>
+<fields>
+<field><title><![CDATA[Overloading]]></title><description><![CDATA[<a href="org_as2lib_test_speed_TestSuite.html#addTestByTest">addTestByTest</a> <code>(test:{VISDOC_LINK_0}) : Void</code><br /><a href="org_as2lib_test_speed_TestSuite.html#addTestByMethod">addTestByMethod</a> <code>(method:{VISDOC_LINK_0}) : {VISDOC_LINK_1}</code><br /><a href="org_as2lib_test_speed_TestSuite.html#addTestByProperty">addTestByProperty</a> <code>(property:{VISDOC_LINK_0}) : {VISDOC_LINK_1}</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[addTestByMethod]]></title><fullMethod><left><![CDATA[function <b>addTestByMethod</b> (
+]]></left><right><param><name><![CDATA[method]]></name>:<type><![CDATA[<a href="org_as2lib_env_reflect_MethodInfo.html">MethodInfo</a>]]></type></param>) : <![CDATA[<a href="org_as2lib_test_unit_Test.html">Test</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds a new test case by <code>method</code>.<p>If the argument <code>method</code> is <code>null</code> or <code>undefined</code> this
+ method invocation will be ignored and <code>null</code> will be returned.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[method]]></name><description><![CDATA[the method to profile]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the created and added test]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[addTestByProperty]]></title><fullMethod><left><![CDATA[function <b>addTestByProperty</b> (
+]]></left><right><param><name><![CDATA[property]]></name>:<type><![CDATA[<a href="org_as2lib_env_reflect_PropertyInfo.html">PropertyInfo</a>]]></type></param>) : <![CDATA[<a href="org_as2lib_test_unit_Test.html">Test</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds a new test case by <code>property</code>.<p>If the argument <code>property</code> is <code>null</code> or <code>undefined</code> this
+ method invocation will be ignored and <code>null</code> will be returned.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[property]]></name><description><![CDATA[the property to profile]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the created and added test]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[addTestByTest]]></title><fullMethod><left><![CDATA[function <b>addTestByTest</b> (
+]]></left><right><param><name><![CDATA[test]]></name>:<type><![CDATA[<a href="org_as2lib_test_unit_Test.html">Test</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds the passed-in <code>test</code> to this test suite.<p>If the argument <code>test</code> is <code>null</code> or <code>undefined</code> this method
+ invocation will be ignored.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[test]]></name><description><![CDATA[the test to add]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getName]]></title><fullMethod><left><![CDATA[function <b>getName</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns this test suite's name.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[this test suite's name]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getTests]]></title><fullMethod><left><![CDATA[function <b>getTests</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns all tests of this test suite.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[all tests of this test suite]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[run]]></title><fullMethod><left><![CDATA[function <b>run</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Runs all added tests.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_test_unit_Test.html#run">org.as2lib.test.unit.Test.run</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:30:13]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

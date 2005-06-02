@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[PropertyInfo]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[TypeMemberInfo]]></name><uri><![CDATA[org_as2lib_env_reflect_TypeMemberInfo]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.reflect.PropertyInfo]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Friday, 27 May 2005, 10:02:00]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>PropertyInfo</code> represents a property.]]></summary><restOfDescription><![CDATA[<p>The term property means only properties added via <code>Object.addProperty</code>
+ or the ones added with the <code>get</code> and <code>set</code> keywords, that are implicit
+ getters and setters, not variables.<p><code>PropertyInfo</code> instances for specific properties can be obtained using
+ the methods <a href="org_as2lib_env_reflect_ClassInfo.html#getProperties">ClassInfo.getProperties</a> or <a href="org_as2lib_env_reflect_ClassInfo.html#getProperty">ClassInfo.getProperty</a>.
+ That means you first have to get a class info for the class that declares or
+ inherits the property. You can therefor use the <a href="org_as2lib_env_reflect_ClassInfo.html#forObject">ClassInfo.forObject</a>,
+ <a href="org_as2lib_env_reflect_ClassInfo.html#forClass">ClassInfo.forClass</a>, <a href="org_as2lib_env_reflect_ClassInfo.html#forInstance">ClassInfo.forInstance</a> and <a href="org_as2lib_env_reflect_ClassInfo.html#forName">ClassInfo.forName</a>
+ methods.<p>When you have obtained the property info you can use it to get information
+ about the property.<pre><span class="codeIdentifier">trace</span>(<span class="codeString">"Property name: "</span> + propertyInfo.getName());
+<span class="codeIdentifier">trace</span>(<span class="codeString">"Declaring type: "</span> + propertyInfo.getDeclaringType().getFullName());
+<span class="codeIdentifier">trace</span>(<span class="codeString">"Is Static?: "</span> + propertyInfo.isStatic());
+<span class="codeIdentifier">trace</span>(<span class="codeString">"Is Writable?: "</span> + propertyInfo.isWritable());
+<span class="codeIdentifier">trace</span>(<span class="codeString">"Is Readable?: "</span> + propertyInfo.isReadable());</pre>]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[PropertyInfo]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><private><![CDATA[stringifier]]></private></item>
+</methodSummaryPart>
+</private>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[name]]></private></item>
+<item><private><![CDATA[setter]]></private></item>
+<item><private><![CDATA[getter]]></private></item>
+<item><private><![CDATA[declaringType]]></private></item>
+<item><private><![CDATA[staticFlag]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[getStringifier]]></item>
+<item><![CDATA[setStringifier]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getName]]></item>
+<item><![CDATA[getFullName]]></item>
+<item><![CDATA[getSetter]]></item>
+<item><![CDATA[getGetter]]></item>
+<item><![CDATA[getDeclaringType]]></item>
+<item><![CDATA[isWritable]]></item>
+<item><![CDATA[isReadable]]></item>
+<item><![CDATA[isStatic]]></item>
+<item><![CDATA[toString]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[PropertyInfo]]></title><fullMethod><left><![CDATA[function <b>PropertyInfo</b> (
+
+
+
+
+]]></left><right><param><name><![CDATA[name]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[declaringType]]></name>:<type><![CDATA[<a href="org_as2lib_env_reflect_TypeInfo.html">TypeInfo</a>]]></type></param>,
+<param><name><![CDATA[staticFlag]]></name>:<type><![CDATA[Boolean]]></type></param>,
+<param><name><![CDATA[setter]]></name>:<type><![CDATA[Function]]></type></param>,
+<param><name><![CDATA[getter]]></name>:<type><![CDATA[Function]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>PropertyInfo</code> instance.<p>All arguments are allowed to be <code>null</code>. But keep in mind that not all
+ methods will function properly if one is.<p>If arguments <code>setter</code> or <code>getter</code> are not specified they will be
+ resolved at run-time everytime asked for. Making use of this functionality you
+ will always get the up-to-date setter or getter.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[name         ]]></name><description><![CDATA[the name of the property]]></description></param>
+<param><name><![CDATA[declaringType]]></name><description><![CDATA[the type declaring the property]]></description></param>
+<param><name><![CDATA[staticFlag   ]]></name><description><![CDATA[determines whether the property is static]]></description></param>
+<param><name><![CDATA[setter       ]]></name><description><![CDATA[(optional) the setter method of the property]]></description></param>
+<param><name><![CDATA[getter       ]]></name><description><![CDATA[(optional) the getter method of the property]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><private><![CDATA[stringifier]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>stringifier</b>:<a href="org_as2lib_util_Stringifier.html">Stringifier</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The property info stringifier.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[declaringType]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>declaringType</b>:<a href="org_as2lib_env_reflect_TypeInfo.html">TypeInfo</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The type that declares this property.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[getter]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>getter</b>:<a href="org_as2lib_env_reflect_MethodInfo.html">MethodInfo</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The getter method of this property.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[name]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>name</b>:String
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The name of this property.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[setter]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>setter</b>:<a href="org_as2lib_env_reflect_MethodInfo.html">MethodInfo</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The setter method of this property.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[staticFlag]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>staticFlag</b>:Boolean
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[A flag representing whether this property is static.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[getStringifier]]></title><fullMethod><left><![CDATA[static function <b>getStringifier</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_util_Stringifier.html">Stringifier</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the stringifier used to stringify property infos.<p>If no custom stringifier has been set via the <a href="org_as2lib_env_reflect_PropertyInfo.html#setStringifier">setStringifier</a> method,
+ an instance of the default <a href="org_as2lib_env_reflect_stringifier_PropertyInfoStringifier.html">org.as2lib.env.reflect.stringifier.PropertyInfoStringifier</a> class is returned.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the stringifier that stringifies property infos]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setStringifier]]></title><fullMethod><left><![CDATA[static function <b>setStringifier</b> (
+]]></left><right><param><name><![CDATA[propertyInfoStringifier]]></name>:<type><![CDATA[<a href="org_as2lib_env_reflect_stringifier_PropertyInfoStringifier.html">PropertyInfoStringifier</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the stringifier used to stringify property infos.<p>If <code>propertyInfoStringifier</code> is <code>null</code> or <code>undefined</code> the
+ <a href="org_as2lib_env_reflect_PropertyInfo.html#getStringifier">getStringifier</a> method will return the default stringifier.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[propertyInfoStringifier]]></name><description><![CDATA[the stringifier that stringifies property infos]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[getDeclaringType]]></title><fullMethod><left><![CDATA[function <b>getDeclaringType</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_reflect_TypeInfo.html">TypeInfo</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the type that declares this property.<p>At this time interfaces are not allowed to declare properties. The declaring
+ type is thus allways an instance of type <a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a>, a class.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the type that declares this property]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_reflect_TypeMemberInfo.html#getDeclaringType">TypeMemberInfo.getDeclaringType</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getFullName]]></title><fullMethod><left><![CDATA[function <b>getFullName</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the full name of this property.<p>The full name is the fully qualified name of the declaring type plus the name
+ of this property.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the full name of this property]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_reflect_TypeMemberInfo.html#getFullName">TypeMemberInfo.getFullName</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getGetter]]></title><fullMethod><left><![CDATA[function <b>getGetter</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_reflect_MethodInfo.html">MethodInfo</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the getter method of this property.<p>The getter method of a property takes no arguments, but returns the value of
+ the property. You can invoke it the same as every other method.<p>The name of this getter method is the prefix '__get__' plus the name of this
+ property.<p>Property getter methods are also known under the name implicit getters.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the getter method of the property]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getName]]></title><fullMethod><left><![CDATA[function <b>getName</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the name of this property.<p>If you want the getter or setter methods' name you must use the <code>getName</code>
+ method of the <code>getGetter</code> or <code>getSetter</code> method respectively. The
+ name of this getter or setter method is the prefix '__get__' or '__set__' plus
+ the name of this property.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the name of this property]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_reflect_MemberInfo.html#getName">MemberInfo.getName</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getSetter]]></title><fullMethod><left><![CDATA[function <b>getSetter</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_reflect_MethodInfo.html">MethodInfo</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the setter method of this property.<p>The setter method of a property takes one argument, that is the new value that
+ shall be assigned to the property. You can invoke it the same as every other method.<p>The name of this setter method is the prefix '__set__' plus the name of this
+ property.<p>Property setter methods are also known under the name implicit setters.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the setter method of this property]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isReadable]]></title><fullMethod><left><![CDATA[function <b>isReadable</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether this property is readable.<p>This property is readable when its getter is not <code>null</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> when this property is readable else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isStatic]]></title><fullMethod><left><![CDATA[function <b>isStatic</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether this property is static or not.<p>Static properties are properties per type.<p>Non-Static properties are properties per instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if this property is static else <code>false</code>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_reflect_TypeMemberInfo.html#isStatic">TypeMemberInfo.isStatic</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isWritable]]></title><fullMethod><left><![CDATA[function <b>isWritable</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether this property is writable.<p>This property is writable when its setter is not <code>null</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if this property is writable else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toString]]></title><fullMethod><left><![CDATA[function <b>toString</b> (
+]]></left><right>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the string representation of this property.<p>The string representation is obtained via the stringifier returned by the
+ static <a href="org_as2lib_env_reflect_PropertyInfo.html#getStringifier">getStringifier</a> method.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the string representation of this property]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:28:35]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

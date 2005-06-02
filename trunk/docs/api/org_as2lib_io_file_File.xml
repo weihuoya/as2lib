@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[File]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.io.file.File]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 30 October 2004, 14:24:14]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[Definition for a file with a loading delay.]]></summary><restOfDescription><![CDATA[
+ Almost general definition for a file used in flash. It supports loading and response events.
+ 
+ Example:<pre><span class="codeKeyword">import</span> org.as2lib.io.file.FileListener;
+<span class="codeKeyword">import</span> org.as2lib.io.file.SimpleFile; <span class="codeComment">// Standard Implementation for a file.</span>
+
+<span class="codeKeyword">class</span> MyClass <span class="codeKeyword">implements</span> FileListener {
+    <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> MyClass() {
+        <span class="codeKeyword">var</span> file:File = <span class="codeKeyword">new</span> SimpleFile(); <span class="codeComment">// Choose your implementation.</span>
+        file.<span class="codeIdentifier">addListener</span>(<span class="codeIdentifier">this</span>); <span class="codeComment">// Add the instance as listener.</span>
+        file.<span class="codeIdentifier">load</span>(<span class="codeString">"MyFile.txt"</span>); <span class="codeComment">// Load the source file.</span>
+    }
+
+    <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> <span class="codeIdentifier">onLoad</span>(fileInfo:FileEventInfo):<span class="codeIdentifier">Void</span> {
+          <span class="codeIdentifier">trace</span>(<span class="codeString">"I have loaded my file!"</span>);
+           <span class="codeIdentifier">trace</span>(<span class="codeString">"Content of the file: "</span>+fileInfo.getFile().getContent());
+           <span class="codeIdentifier">trace</span>(<span class="codeString">"Content of line 2: "</span>+fileInfo.getFile().getLine(<span class="codeNumber">1</span>));
+    }
+
+    <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> onProgress(fileInfo:FileEventInfo):<span class="codeIdentifier">Void</span> {
+           <span class="codeIdentifier">trace</span>(<span class="codeString">"I am loading my file: "</span>+fileInfo.getFile().<span class="codeIdentifier">getBytesLoaded</span>());
+    }
+
+    <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> onFileNotFound(fileInfo:FileEventInfo):<span class="codeIdentifier">Void</span> {
+          <span class="codeIdentifier">trace</span>(<span class="codeString">"I havn't found my file!"</span>);
+    }
+}</pre>]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[load]]></item>
+<item><![CDATA[isLoaded]]></item>
+<item><![CDATA[isLoading]]></item>
+<item><![CDATA[exists]]></item>
+<item><![CDATA[getContent]]></item>
+<item><![CDATA[getLine]]></item>
+<item><![CDATA[countLines]]></item>
+<item><![CDATA[getLocation]]></item>
+<item><![CDATA[getBytesLoaded]]></item>
+<item><![CDATA[getBytesTotal]]></item>
+<item><![CDATA[addListener]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[addListener]]></title><fullMethod><left><![CDATA[function <b>addListener</b> (
+]]></left><right><param><name><![CDATA[listener]]></name>:<type><![CDATA[<a href="org_as2lib_io_file_FileListener.html">FileListener</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds a listener to the file for all events published by the file.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[Listener]]></name><description><![CDATA[for the file.]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_file_FileListener.html">FileListener</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[countLines]]></title><fullMethod><left><![CDATA[function <b>countLines</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the amount of lines in the content.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Amount of lines within the content.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[exists]]></title><fullMethod><left><![CDATA[function <b>exists</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Boolean flag if the file exists.
+ Note: Flash has usually some kind of delay with this method that has to be recognized by its
+       implementation.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_io_file_FileNotLoadedException.html">FileNotLoadedException</a> If nothing has been loaded before.]]></description></field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the file exists.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getBytesLoaded]]></title><fullMethod><left><![CDATA[function <b>getBytesLoaded</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Getter for the bytes that has been loaded already.
+ It will return 0 if no bytes have been loaded.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Amount of bytes that has been loaded.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getBytesTotal]]></title><fullMethod><left><![CDATA[function <b>getBytesTotal</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Getter for the total filesize in bytes.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Total size of the file in bytes.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getContent]]></title><fullMethod><left><![CDATA[function <b>getContent</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Getter for the content of the complete file.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Content of the file.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getLine]]></title><fullMethod><left><![CDATA[function <b>getLine</b> (
+]]></left><right><param><name><![CDATA[line]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Getter for the content in the specific line of the content.
+ It will return "undefined" if the line doesn't exist. The line will not
+ contain the linebreak.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[line]]></name><description><![CDATA[Line to get the content of (starting with 0).]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Content of the line.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getLocation]]></title><fullMethod><left><![CDATA[function <b>getLocation</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Location of the File.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[The location of the file as loaded with load.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isLoaded]]></title><fullMethod><left><![CDATA[function <b>isLoaded</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Boolean flag if the file is loaded.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the file is loaded. false if the file is loading or .load wasn't called.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isLoading]]></title><fullMethod><left><![CDATA[function <b>isLoading</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Boolean flag if the file is loading.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the file is loading. false if the file is already loaded or .load wasn't called.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[load]]></title><fullMethod><left><![CDATA[function <b>load</b> (
+]]></left><right><param><name><![CDATA[location]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Loads a file from a location.
+ This method is similar to the MovieClip.load method.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[location]]></name><description><![CDATA[Location (URL) to of the file to load.]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:29:24]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

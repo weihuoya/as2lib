@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[SimpleConsumableEventBroadcaster]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[SimpleEventListenerSource]]></name><uri><![CDATA[org_as2lib_env_event_SimpleEventListenerSource]]></uri></link></item><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[ConsumableEventBroadcaster]]></name><uri><![CDATA[org_as2lib_env_event_broadcaster_ConsumableEventBroadcaster]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.event.broadcaster.SimpleConsumableEventBroadcaster]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 30 April 2005, 11:37:24]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>SimpleConsumableEventBroadcaster</code> broadcasts an event to listeners until
+ the event has been consumed.]]></summary><restOfDescription><![CDATA[<p>The dispatching of the event will be stopped as soon as the event is consumed.
+ The event can be consumed by calling the appropriate method on the
+ <code>ConsumableEventInfo</code> instance passed to the <code>dispatch</code> method and
+ from there to the appropriate event method on the listeners.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[SimpleConsumableEventBroadcaster]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[dispatch]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[SimpleEventListenerSource]]></name><uri><![CDATA[org_as2lib_env_event_SimpleEventListenerSource]]></uri></link></title><item><link><name>addAllListeners</name><uri>org_as2lib_env_event_SimpleEventListenerSource</uri><method>addAllListeners</method></link></item><item><link><name>addListener</name><uri>org_as2lib_env_event_SimpleEventListenerSource</uri><method>addListener</method></link></item><item><link><name>getAllListeners</name><uri>org_as2lib_env_event_SimpleEventListenerSource</uri><method>getAllListeners</method></link></item><item><link><name>removeAllListeners</name><uri>org_as2lib_env_event_SimpleEventListenerSource</uri><method>removeAllListeners</method></link></item><item><link><name>removeListener</name><uri>org_as2lib_env_event_SimpleEventListenerSource</uri><method>removeListener</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[SimpleConsumableEventBroadcaster]]></title><fullMethod><left><![CDATA[function <b>SimpleConsumableEventBroadcaster</b> (
+]]></left><right><param><name><![CDATA[listeners]]></name>:<type><![CDATA[Array]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>SimpleConsumableEventBroadcaster</code> instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[listeners]]></name><description><![CDATA[(optional) an array of listeners to populate this broadcaster
+ with]]></description></param>
+</field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_env_event_SimpleEventListenerSource.html#SimpleEventListenerSource">org.as2lib.env.event.SimpleEventListenerSource.SimpleEventListenerSource</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[dispatch]]></title><fullMethod><left><![CDATA[function <b>dispatch</b> (
+]]></left><right><param><name><![CDATA[eventInfo]]></name>:<type><![CDATA[<a href="org_as2lib_env_event_broadcaster_EventInfo.html">EventInfo</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Dispatches the passed-in <code>eventInfo</code> to all listeners until the event has
+ been consumed.<p>The name returned by the <a href="org_as2lib_env_event_broadcaster_EventInfo.html#getName">EventInfo.getName</a> method of the passed-in
+ <code>eventInfo</code> is used as event method name to invoke on the listeners.<p>The passed-in <code>eventInfo</code> is also passed as parameter to the listeners'
+ event methods.<p>The event dispatching will be stopped as soon as the event is consumed. An
+ event can be consumed by calling the appropriate method on the passed-in
+ <code>eventInfo</code> that must be, if the consumption of events shall be enabled,
+ an instance of type <a href="org_as2lib_env_event_broadcaster_ConsumableEventInfo.html">ConsumableEventInfo</a>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[eventInfo]]></name><description><![CDATA[the event to dispatch to all listeners]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_event_EventExecutionException.html">EventExecutionException</a> if a listener threw an exception during
+ dispatching]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:46]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

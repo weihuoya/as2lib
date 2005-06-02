@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[RichInternetHandler]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[AbstractLogHandler]]></name><uri><![CDATA[org_as2lib_env_log_handler_AbstractLogHandler]]></uri></link></item><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[LogHandler]]></name><uri><![CDATA[org_as2lib_env_log_LogHandler]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.log.handler.RichInternetHandler]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Friday, 13 May 2005, 16:49:34]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>RichInternetHandler</code> logs messages to Dirk Eisman's Flex Trace Panel.]]></summary><restOfDescription><![CDATA[<p>The <code>de.richinternet.utils.Dumper</code> class is needed.]]></restOfDescription>
+</classDescription>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_RichInternetLogger.html">org.as2lib.env.log.logger.RichInternetLogger</a><br /><a href="http://www.richinternet.de/blog/index.cfm?entry=EB3BA9D6-A212-C5FA-A9B1B5DB4BB7F555">Flex Trace Panel</a>]]></description></field>
+</fields>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[RichInternetHandler]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><private><![CDATA[richInternetHandler]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[getInstance]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[write]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[RichInternetHandler]]></title><fullMethod><left><![CDATA[function <b>RichInternetHandler</b> (
+]]></left><right><param><name><![CDATA[messageStringifier]]></name>:<type><![CDATA[<a href="org_as2lib_util_Stringifier.html">Stringifier</a>]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>RichInternetHandler</code> instance.<p>You can use one and the same instance for multiple loggers. So think about
+ using the handler returned by the static <a href="org_as2lib_env_log_handler_RichInternetHandler.html#getInstance">getInstance</a> method. Using this
+ instance prevents the instantiation of unnecessary rich internet handlers and
+ saves storage.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[messageStringifier]]></name><description><![CDATA[(optional) the log message stringifier to use]]></description></param>
+</field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_env_log_handler_AbstractLogHandler.html#AbstractLogHandler">AbstractLogHandler.AbstractLogHandler</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><private><![CDATA[richInternetHandler]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>richInternetHandler</b>:<a href="org_as2lib_env_log_handler_RichInternetHandler.html">RichInternetHandler</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Holds a rich internet handler.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[getInstance]]></title><fullMethod><left><![CDATA[static function <b>getInstance</b> (
+]]></left><right><param><name><![CDATA[messageStringifier]]></name>:<type><![CDATA[<a href="org_as2lib_util_Stringifier.html">Stringifier</a>]]></type></param>) : <![CDATA[<a href="org_as2lib_env_log_handler_RichInternetHandler.html">RichInternetHandler</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an instance of this class.<p>This method always returns the same instance.<p>The <code>messageStringifier</code> argument is only recognized on first
+ invocation of this method.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[messageStringifier]]></name><description><![CDATA[(optional) the log message stringifier to be used by
+ the returned handler]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a rich internet handler]]></description></field>
+</fields>
+</method>
+</methodSection>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[write]]></title><fullMethod><left><![CDATA[function <b>write</b> (
+]]></left><right><param><name><![CDATA[message]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LogMessage.html">LogMessage</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Writes log messages to Dirk Eisman's Flex Trace Panel.<p>The string representation of the <code>message</code> to log is obtained via
+ the <code>convertMessage</code> method.<p>The default level is <code>INFO</code>. If the <code>message</code>'s level is <code>FATAL</code>
+ it will be logged at <code>ERROR</code> level because Dirk Eisman's Flex Trace Panel
+ does not support the <code>FATAL</code> level.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[message]]></name><description><![CDATA[the message to log]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_log_LogHandler.html#write">org.as2lib.env.log.LogHandler.write</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:18]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

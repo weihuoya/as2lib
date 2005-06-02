@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>LoggerTestListener</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>LoggerTestListener</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Martin Heidegger</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.unit.LoggerTestListener</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Wednesday, 18 May 2005, 10:52:16</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary">Default listener for TestRunner. </div>
+ Listener as default logger for the Testrunner. To be used as standard outwriter for the TestRunner.<div class="classFields"><div class="boxWithBorder"><div class="boxedElem"><div class="contentHolder"><span class="title">See also:</span><div class="item"><a href="org_as2lib_env_log_LogManager.html#getLoggerRepository">org.as2lib.env.log.LogManager.getLoggerRepository</a><br /><a href="org_as2lib_env_log_Logger.html">org.as2lib.env.log.Logger</a></div></div></div></div></div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#logger">logger</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#formerTest">formerTest</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class methods</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#getLogger">getLogger</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Event handlers</span>
+              <ul>
+                <li>
+                  <a href="#onStartProcess">onStartProcess</a>
+                </li>
+                <li>
+                  <a href="#onUpdateProcess">onUpdateProcess</a>
+                </li>
+                <li>
+                  <a href="#onFinishProcess">onFinishProcess</a>
+                </li>
+                <li>
+                  <a href="#onPauseProcess">onPauseProcess</a>
+                </li>
+                <li>
+                  <a href="#onResumeProcess">onResumeProcess</a>
+                </li>
+                <li>
+                  <a href="#onProcessError">onProcessError</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="logger">logger</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>logger</b>:<a href="org_as2lib_env_log_Logger.html">Logger</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Stores the logger used to do the output.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="formerTest">formerTest</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>formerTest</b>:<a href="org_as2lib_test_unit_TestCaseResult.html">TestCaseResult</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Stores former displayed TestCase.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Class methods</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getLogger">getLogger</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static function <b>getLogger</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_log_Logger.html">Logger</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the logger used to do the output</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Event handlers</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="onFinishProcess">onFinishProcess</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>onFinishProcess</b> (
+</div>
+                <div><span class="code">process:<a href="org_as2lib_app_exec_Process.html">Process</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Redirects the string representation of the testrunner to the logger</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">finishInfo<span class="separator">:</span></div>
+                    <div>Informations about the TestRunner that finished.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_ProcessListener.html#onFinishProcess">org.as2lib.app.exec.ProcessListener.onFinishProcess</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="onPauseProcess">onPauseProcess</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>onPauseProcess</b> (
+</div>
+                <div><span class="code">process:<a href="org_as2lib_app_exec_Process.html">Process</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Pause event, fired after by pausing the execution of a TestRunner.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">pauseInfo<span class="separator">:</span></div>
+                    <div>Informations about the TestRunner that paused.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_ProcessListener.html#onPauseProcess">org.as2lib.app.exec.ProcessListener.onPauseProcess</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="onProcessError">onProcessError</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>onProcessError</b> (
+
+</div>
+                <div><span class="code">process:<a href="org_as2lib_app_exec_Process.html">Process</a>,
+error) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Executed if a Exeception was thrown during the execution</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">process<span class="separator">:</span></div>
+                    <div>where the execution paused.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">error  <span class="separator">:</span></div>
+                    <div>Error that occured.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_ProcessListener.html#onProcessError">org.as2lib.app.exec.ProcessListener.onProcessError</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="onResumeProcess">onResumeProcess</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>onResumeProcess</b> (
+</div>
+                <div><span class="code">process:<a href="org_as2lib_app_exec_Process.html">Process</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Pause event, fired after by resuming the execution of a TestRunner.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">resumeInfo<span class="separator">:</span></div>
+                    <div>Informations about the TestRunner that resumed working.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_ProcessListener.html#onResumeProcess">org.as2lib.app.exec.ProcessListener.onResumeProcess</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="onStartProcess">onStartProcess</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>onStartProcess</b> (
+</div>
+                <div><span class="code">process:<a href="org_as2lib_app_exec_Process.html">Process</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Start event, fired by start of a TestRunner.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">startInfo<span class="separator">:</span></div>
+                    <div>Informations about the TestRunner that started.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_ProcessListener.html#onStartProcess">org.as2lib.app.exec.ProcessListener.onStartProcess</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="onUpdateProcess">onUpdateProcess</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>onUpdateProcess</b> (
+</div>
+                <div><span class="code">process:<a href="org_as2lib_app_exec_Process.html">Process</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Progress event, fired after each executed method within a TestRunner.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">progressInfo<span class="separator">:</span></div>
+                    <div>Extended informations the current progress.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_ProcessListener.html#onUpdateProcess">org.as2lib.app.exec.ProcessListener.onUpdateProcess</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2005 as2lib | </span><span class="date">Tuesday, 31 May 2005, 20:30:34
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[LocalConfig]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.io.conn.local.LocalConfig]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Friday, 08 April 2005, 12:13:04]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>LocalConfig</code> is the basic configuration class of the Local Connection API.]]></summary><restOfDescription><![CDATA[<p>It can be used to configure static parts, that means parts that are shared
+ globally.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><private><![CDATA[LocalConfig]]></private></item>
+</methodSummaryPart>
+</private>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><private><![CDATA[serverRegistry]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[getServerRegistry]]></item>
+<item><![CDATA[setServerRegistry]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<private>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><private><![CDATA[LocalConfig]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>LocalConfig</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Private constructor.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><private><![CDATA[serverRegistry]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>serverRegistry</b>:<a href="org_as2lib_io_conn_core_server_ServerRegistry.html">ServerRegistry</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Stores the server registry.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[getServerRegistry]]></title><fullMethod><left><![CDATA[static function <b>getServerRegistry</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_io_conn_core_server_ServerRegistry.html">ServerRegistry</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the currently used server registry.<p>That is either the server registry set via <a href="org_as2lib_io_conn_local_LocalConfig.html#setServerRegistry">setServerRegistry</a> or the
+ default on which is an instance of class <a href="org_as2lib_io_conn_local_server_LocalServerRegistry.html">org.as2lib.io.conn.local.server.LocalServerRegistry</a>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the currenlty used server registry]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_conn_local_LocalConfig.html#setServerRegistry">setServerRegistry</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setServerRegistry]]></title><fullMethod><left><![CDATA[static function <b>setServerRegistry</b> (
+]]></left><right><param><name><![CDATA[newServerRegistry]]></name>:<type><![CDATA[<a href="org_as2lib_io_conn_core_server_ServerRegistry.html">ServerRegistry</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets a new server registry.<p>If you set a server registry of value <code>null</code> or <code>undefined</code>
+ <a href="org_as2lib_io_conn_local_LocalConfig.html#getServerRegistry">getServerRegistry</a> will return the default server registry.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[newServerRegistry]]></name><description><![CDATA[the new server registry]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_conn_local_LocalConfig.html#getServerRegistry">getServerRegistry</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:29:15]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

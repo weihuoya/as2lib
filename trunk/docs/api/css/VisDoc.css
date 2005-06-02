@@ -1,0 +1,205 @@
+html body {
+	background-color:white;
+	height:100%;
+	margin:0;
+	font-size: x-small;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	font-size: small;
+}
+html>body {font-size:small;}
+.VisDoc {font-family:"Lucida Grande",verdana,arial,sans-serif; line-height:1.4em; font-size:96%; background-color:transparent; padding:0; margin:0;}
+.VisDoc div.content {margin:0; padding:20px 5em 0.5em 5em;}
+.VisDoc h1, .VisDoc h2, .VisDoc h3 {font-family:Myriad Apple, Myriad, Arial, Helvetica, Lucida Grande, sans-serif; line-height:100%;}
+.VisDoc h1 {color:#e24628; font-size:2.2em; line-height:1.1em;}
+.VisDoc h2 {color:#e24628; margin-bottom:12px; padding-bottom:12px; font-size:1.8em;}
+.VisDoc h3 {display:inline; margin:1em 0 0 0; color:#800; font-size:1.25em;}
+.VisDoc ul {}
+.VisDoc hr {color:#999; background-color:#999; height:1px; border:none; margin:1em 0 1em 0; padding:0;}
+/* links */
+.VisDoc :link, 
+.VisDoc :visited {text-decoration:underline; color:blue; background-color:transparent;}
+.VisDoc :link:hover,
+.VisDoc :visited:hover {color:#f40; text-decoration:underline;}
+
+.VisDoc .hasBottomDivider {border-bottom:1px solid #a2a6a9;}
+.VisDoc .title {display:block; font-weight:bold;}
+
+/* Code */
+.VisDoc .code {white-space:pre;}
+.VisDoc code, .VisDoc pre, .VisDoc .code, .VisDoc tt {font-family:Courier,"Courier New",monospace; font-size:12px;}
+.VisDoc code, .VisDoc tt {color:#800;}
+.VisDoc pre {margin-top:1em; margin-bottom:1em; color:#800;}
+.VisDoc .colorizedCode {color:#800;}
+.VisDoc .codeComment {color:#777;}
+.VisDoc .codeString {color:#c60}
+.VisDoc div.fullMethod .codeString {color:#800;}
+.VisDoc .codeNumber {color:#800;}
+.VisDoc .codeKeyword {color:#DB476B;}
+.VisDoc .codeProperty {color:#005699;}
+.VisDoc .codeIdentifier {color:#005699;}
+
+/* Inherited docs */
+.VisDoc .inheritDoc {display:inline; color:#765;}
+.VisDoc a.followInheritDoc {font-weight:bold; color:#765; text-decoration:none; margin:0 2px 0 1px; padding-bottom:1px; font-size:80%; line-height:80%; vertical-align:super;}
+.VisDoc a:link:hover.followInheritDoc,
+.VisDoc a:visited:hover.followInheritDoc {background-color:#f40; color:white; text-decoration:none;}
+
+/* Clearing a float contentHolder without source markup */
+/* See: http://www.positioniseverything.net/easyclearing.html */
+.VisDoc .floatholder {margin:0; margin-top:1.2em;}
+.VisDoc .floatbox {float:left; display:block;}
+.VisDoc .clearfix:after {content:"."; display:block; height:0; clear:both; visibility:hidden;}
+/* Holly Hack Targets IE Win only \*/
+* html .clearfix {height:1%;}
+/* End Holly Hack */
+
+/* highlight */
+.VisDoc .highlight,
+.VisDoc .private h3.highlight {background-color:#e24628; color:white; padding:0 2px 1px 2px;}
+
+/* Box with border and box elements separated by horizontal lines */
+.VisDoc div.boxWithBorder {margin-top:1em; margin-bottom:1em; /* (compensate for the padding of contentHolder) */ background-color:#F0F5F9; border-width:0 1px 1px; border-color:#a2a6a9; border-style:solid;}
+.VisDoc div.boxWithBorder div.boxedElem {padding:0; margin:0; border-top:1px solid #a2a6a9;}
+.VisDoc div.boxWithBorder div.boxedElem div.contentHolder {padding:0.4em 0.9em 0.6em 0.9em;}
+.VisDoc div.boxWithBorder div.boxedElem div.contentHolder div.item {margin-left:3em;}
+.VisDoc div.boxWithBorder div.boxedElem div.contentHolder div.item div.name {float:left;}
+.VisDoc div.boxWithBorder div.boxedElem div.contentHolder div.item .separator {margin:0 2px 0 2px;}
+.VisDoc div.boxWithBorder div.boxedElem div.contentHolder div.item table {border:1px solid #ccc; border-collapse:collapse; background-color:white;}
+.VisDoc div.boxWithBorder div.boxedElem div.contentHolder div.item table th,
+.VisDoc div.boxWithBorder div.boxedElem div.contentHolder div.item table td {vertical-align:top; padding:1px 4px; margin:2px 0;}
+.VisDoc div.boxWithBorder div.boxedElem div.contentHolder div.item table th {text-align:left; font-weight:normal; border-bottom:1px solid #ccc;}
+.VisDoc div.boxWithBorder div.boxedElem div.contentHolder div.item table td {width:100%; border-left:1px solid #ccc;}
+.VisDoc div.boxWithBorder div.boxedElem div.contentHolder div.item table td.uneven,
+.VisDoc div.boxWithBorder div.boxedElem div.contentHolder div.item table th.uneven {background-color:white;}
+.VisDoc div.boxWithBorder div.boxedElem div.contentHolder div.item table td.even,
+.VisDoc div.boxWithBorder div.boxedElem div.contentHolder div.item table th.even {background-color:white}
+.VisDoc div.boxWithBorder div.boxedElem div.contentHolder .title {}
+
+.VisDoc div.classProperties {margin:2em 0 0 4em;}
+.VisDoc div.classProperties ul {list-style:none; margin:0; padding:0;}
+.VisDoc div.classProperties ul li {list-style:none; margin:0; padding:0;}
+.VisDoc div.classProperties ul li .title {/* exception */ display:inline;}
+.VisDoc div.classProperties div.kindOfClass {margin-top:1em;}
+.VisDoc div.classProperties div.kindOfClass .value {font-weight:bold;}
+.VisDoc div.classProperties div.inheritsFrom {margin-top:1em;}
+.VisDoc div.classProperties div.inheritsFrom .title {}
+.VisDoc div.classProperties div.inheritsFrom .items {}
+.VisDoc div.classProperties div.conformsTo {margin-top:1em;}
+.VisDoc div.classProperties div.conformsTo .title {}
+.VisDoc div.classProperties div.conformsTo .items {}
+.VisDoc div.classProperties div.classDetails {margin-top:1em;}
+.VisDoc div.classProperties div.classDetails .title {}
+.VisDoc div.classProperties div.classDetails .value {color:#800;}
+.VisDoc div.classProperties a:link,
+.VisDoc div.classProperties a:visited {text-decoration:none;}
+.VisDoc div.classProperties a:link:hover,
+.VisDoc div.classProperties a:visited:hover {text-decoration:underline;}
+
+.VisDoc div.classDescription {margin-top:3em;}
+/* fields before description (@deprecated): */
+.VisDoc div.classDescription .fields {margin-bottom:1em;}
+.VisDoc div.classDescription .field {font-style:italic;}
+.VisDoc div.classDescription .field .title {display:inline;}
+.VisDoc div.classDescription .descriptionSummary {display:inline; font-weight:bold;}
+.VisDoc div.classDescription div.boxWithBorder {margin-top:2em;}
+
+.VisDoc div.summary {margin-top:4em;}
+.VisDoc div.summary a:link,
+.VisDoc div.summary a:visited {text-decoration:none;}
+.VisDoc div.summary a:link:hover,
+.VisDoc div.summary a:visited:hover {text-decoration:underline;}
+.VisDoc div.summary .boxWithBorder {margin-top:0.5em;}
+.VisDoc div.summary div.methodList {}
+.VisDoc div.summary div.methodList div.methodSummaryPart {padding-bottom:1em;}
+.VisDoc div.summary div.methodList div.methodSummaryPart .title {}
+.VisDoc div.summary div.methodList div.methodSummaryPart ul {list-style:none; margin:0; padding:0;}
+.VisDoc div.summary div.methodList div.methodSummaryPart ul li {list-style:none; margin:0; padding:0;}
+.VisDoc div.summary div.methodList div.methodSummaryPart ul li a {}
+/* exceptions to box layout: */
+.VisDoc div.summary div.methodList div.methodSummaryPart div.boxWithBorder div.boxedElem div.contentHolder {font-size:85%;}
+.VisDoc div.summary div.methodList div.methodSummaryPart div.boxWithBorder div.boxedElem div.contentHolder .item {margin-left:0;}
+
+.VisDoc div.methodSection {margin-top:4em;}
+.VisDoc div.methodSection div.method {margin-bottom:1em; padding-bottom:1.5em;}
+.VisDoc div.methodSection div.method .title {}
+.VisDoc div.methodSection div.method div.fullMethod {margin-top:1.2em;}
+.VisDoc div.methodSection div.method div.fullMethod .methodName {color:#800;}
+.VisDoc div.methodSection div.method div.fullMethod b {font-weight:normal; color:#800;}
+.VisDoc div.methodSection div.method .access {font-size:95%; color:#666; margin-left:0.5em;}
+.VisDoc div.methodSection div.method div.description {margin-top:1.2em;}
+/* fields before description (@deprecated): */
+.VisDoc div.methodSection div.method div.fullMethod a:link,
+.VisDoc div.methodSection div.method div.fullMethod a:visited {color:black; text-decoration:none; border-bottom:1px solid #aaa;}
+.VisDoc div.methodSection div.method div.fullMethod a:hover,
+.VisDoc div.methodSection div.method div.fullMethod a:visited:hover {color:#f40; text-decoration:none; border-bottom:1px solid #f40;}
+.VisDoc div.methodSection div.method div.description .fields {margin-bottom:1em;}
+.VisDoc div.methodSection div.method div.description .field {font-style:italic;}
+.VisDoc div.methodSection div.method div.description .field .title {display:inline;}
+
+.VisDoc div.footer {margin:5em 0 0.5em 0; padding:0.5em 0; color:#666; font-size:90%; line-height:1.3em;}
+.VisDoc div.footer a:link,
+.VisDoc div.footer a:visited {color:#666; font-weight:bold; text-decoration:none;}
+.VisDoc div.footer a:hover {color:blue; border-bottom:1px solid blue;}
+.VisDoc div.footer .created {}
+.VisDoc div.footer .date {}
+.VisDoc div.footer .viewFrames {display:inline;}
+.VisDoc div.footer .hideFrames {display:none;}
+
+/* private members */
+.VisDoc li.private a:link,
+.VisDoc li.private a:visited {color:#7680A7; border-bottom:1px dotted #ccc;}
+.VisDoc li.private a:hover {color:#f40; border:0px;}
+.VisDoc .privateColor {background-color:#9FA6C1; color:white; padding:0 2px 1px 2px; margin: 0 -2px; margin-right:0.55em;}
+.VisDoc .private h3 {color:#7680A7;}
+.viewPrivate {display:none;}
+.hidePrivate {display:none;}
+/* toggle */
+/*
+.VisDoc .private {display:none;}
+.VisDoc .private {display:block;}
+*/
+
+/* table of contents in toc.html: list of packages and classes */
+.VisDoc div.classList {margin-top:4em;}
+.VisDoc div.classList a:link,
+.VisDoc div.classList a:visited {text-decoration:none;}
+.VisDoc div.classList a:link:hover,
+.VisDoc div.classList a:visited:hover {text-decoration:underline;}
+.VisDoc div.classList div.package {padding-bottom:0;}
+.VisDoc div.classList div.package .title {display:inline;}
+.VisDoc div.classList div.package .packageName {color:#666;}
+.VisDoc div.classList div.package .interface {font-size:95%; color:#888; margin-left:0.7em;}
+.VisDoc div.classList div.package ul {list-style:none; margin:0; padding:0;}
+.VisDoc div.classList div.package ul li {list-style:none; margin:0; padding:0;}
+.VisDoc div.classList div.package ul li.fullPackagePath {}
+.VisDoc div.classList div.package ul li a {}
+.VisDoc div.classList div.package a .path {}
+.VisDoc div.classList div.package a .className {}
+.VisDoc div.classList div.package .packagePath {color:#888;}
+.VisDoc div.classList div.package .packagePathTitle {color:black;}
+.VisDoc div.classList div.package .packageName {color:black; font-weight:bold;}
+.VisDoc div.classList div.package .repeatSign {display:none;}
+
+/* table of contents in toc.html when in left frame */
+body#toc {background-color:#f7f7f7;}
+#toc .VisDoc {position:absolute; left:-1px; top:0; padding:0; margin:0; height:100%; width:100%; border-right:1px solid #ddd;}
+#toc .VisDoc div.content {padding:20px 1.5em 0.5em 1.25em;}
+#toc .VisDoc h1 {font-size:1.35em; color:#555;}
+#toc .VisDoc div.classList {margin-top:2em; padding-bottom:1em;}
+#toc .VisDoc div.classList div.package a .path {display:none;} /* don't show path in left toc: no room */
+#toc .VisDoc div.classList div.package ul li.fullPackagePath {margin-top:1em;}
+#toc .VisDoc div.classList div.package .packagePath {display:none;}
+#toc .VisDoc div.classList div.package .repeatSign {display:inline; margin-right:0.4em; color:#888;}
+#toc .VisDoc ul {margin:0; padding:0;}
+#toc .VisDoc div.footer {border-bottom:1px solid #ddd;}
+#toc .VisDoc div.footer .created {display:none;}
+#toc .VisDoc div.footer .date {display:none;}
+#toc .VisDoc div.footer .viewFrames {display:none;}
+#toc .VisDoc div.footer .hideFrames {display:inline;}
+#toc .VisDoc div.footer .viewPrivate {display:none;}
+#toc .VisDoc div.footer .hidePrivate {display:none;}
+
+/* pages in frameset show button "show TOC" */
+#framed .VisDoc div.footer .viewFrames {display:none;}
+#framed .VisDoc div.footer .hideFrames {display:inline;}

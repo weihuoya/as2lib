@@ -1,0 +1,331 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>MathUtil</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>MathUtil</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Christophe Herreman, Martin Heidegger, Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.util.MathUtil</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Friday, 08 April 2005, 19:06:22</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>MathUtil</code> contains fundamental math operations. </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#MathUtil">MathUtil</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span>
+              <ul>
+                <li>
+                  <a href="#isOdd">isOdd</a>
+                </li>
+                <li>
+                  <a href="#isEven">isEven</a>
+                </li>
+                <li>
+                  <a href="#isInteger">isInteger</a>
+                </li>
+                <li>
+                  <a href="#isNatural">isNatural</a>
+                </li>
+                <li>
+                  <a href="#isPrime">isPrime</a>
+                </li>
+                <li>
+                  <a href="#factorial">factorial</a>
+                </li>
+                <li>
+                  <a href="#getDivisors">getDivisors</a>
+                </li>
+                <li>
+                  <a href="#round">round</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="MathUtil">MathUtil</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>MathUtil</b> (
+</div>
+                <div><span class="code">)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Private constructor.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="factorial">factorial</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>factorial</b> (
+</div>
+                <div><span class="code">n:<a href="org_as2lib_data_type_NaturalNumberIncludingZero.html">NaturalNumberIncludingZero</a>) : Number</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Calculates the factorial of the passed-in number <code>n</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">n<span class="separator">:</span></div>
+                    <div>the number to calculate the factorial of</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the factorial of <code>n</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getDivisors">getDivisors</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>getDivisors</b> (
+</div>
+                <div><span class="code">n:<a href="org_as2lib_data_type_NaturalNumberIncludingZero.html">NaturalNumberIncludingZero</a>) : Array</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns an array with all divisors of the passed-in number <code>n</code></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">n<span class="separator">:</span></div>
+                    <div>the number to return the divisors of</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">an array that contains the divisors of <code>n</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isEven">isEven</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>isEven</b> (
+</div>
+                <div><span class="code">n:<a href="org_as2lib_data_type_Integer.html">Integer</a>) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Checks if the passed-in integer <code>n</code> is even.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">n<span class="separator">:</span></div>
+                    <div>the integer to check</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if <code>n</code> is even else <code>false</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isInteger">isInteger</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>isInteger</b> (
+</div>
+                <div><span class="code">n:Number) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Checks if the passed-in number <code>n</code> is an integer.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">n<span class="separator">:</span></div>
+                    <div>the number to check</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if <code>n</code> is an integer else <code>false</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isNatural">isNatural</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>isNatural</b> (
+</div>
+                <div><span class="code">n:Number) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Checks if the passed-in number <code>n</code> is natural.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">n<span class="separator">:</span></div>
+                    <div>the number to check</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if <code>n</code> is natural else <code>false</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isOdd">isOdd</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>isOdd</b> (
+</div>
+                <div><span class="code">n:<a href="org_as2lib_data_type_Integer.html">Integer</a>) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Checks if the passed-in integer <code>n</code> is odd.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">n<span class="separator">:</span></div>
+                    <div>the integer to check</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if <code>n</code> is odd else <code>false</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isPrime">isPrime</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>isPrime</b> (
+</div>
+                <div><span class="code">n:<a href="org_as2lib_data_type_NaturalNumber.html">NaturalNumber</a>) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Checks if the passed-in number <code>n</code> is a prime.<p>A prime number is a positive integer that has no positive integer divisors
+ other than 1 and itself.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">n<span class="separator">:</span></div>
+                    <div>the number to check</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if <code>n</code> is a prime else <code>false</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="round">round</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>round</b> (
+
+</div>
+                <div><span class="code">n:Number,
+c:Number) : Number</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Rounds the passed-in number <code>n</code> to the nearest value.<p>It works basically the same as the <code>Math.round</code> method, but it adds a
+ new argument to specify the number of decimal spaces.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">n<span class="separator">:</span></div>
+                    <div>the number to round</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">c<span class="separator">:</span></div>
+                    <div>the number of decimal spaces</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the rounded number</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2005 as2lib | </span><span class="date">Tuesday, 31 May 2005, 20:31:08
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

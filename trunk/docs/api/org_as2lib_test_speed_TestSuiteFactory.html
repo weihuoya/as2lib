@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>TestSuiteFactory</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>TestSuiteFactory</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.speed.TestSuiteFactory</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Sunday, 29 May 2005, 08:56:26</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>TestSuiteFactory</code> collects test suites. </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#TestSuiteFactory">TestSuiteFactory</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#collectTestCases">collectTestCases</a>
+                </li>
+                <li>
+                  <a href="#collectAllTestCases">collectAllTestCases</a>
+                </li>
+                <li>
+                  <a href="#collectTestCasesByPackage">collectTestCasesByPackage</a>
+                </li>
+                <li>
+                  <a href="#collectTestCasesByClass">collectTestCasesByClass</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="TestSuiteFactory">TestSuiteFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>TestSuiteFactory</b> (
+</div>
+                <div><span class="code">Void)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>TestSuiteFactory</code> instance.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="collectAllTestCases">collectAllTestCases</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>collectAllTestCases</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_test_unit_TestSuite.html">TestSuite</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Collects all methods and properties as test cases except the ones declared by
+ <code>Object</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">a test suite that contains all tests</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="collectTestCases">collectTestCases</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>collectTestCases</b> (
+</div>
+                <div><span class="code">) : <a href="org_as2lib_test_unit_TestSuite.html">TestSuite</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading:</span>
+                  <div class="item"><a href="org_as2lib_test_speed_TestSuiteFactory.html#collectAllTestCases">collectAllTestCases</a> <code>(Void) : {VISDOC_LINK_0}</code><br /><a href="org_as2lib_test_speed_TestSuiteFactory.html#collectTestCasesByPackage">collectTestCasesByPackage</a> <code>(package:{VISDOC_LINK_0}) : {VISDOC_LINK_1}</code><br /><a href="org_as2lib_test_speed_TestSuiteFactory.html#collectTestCasesByClass">collectTestCasesByClass</a> <code>(clazz:{VISDOC_LINK_0}) : {VISDOC_LINK_1}</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="collectTestCasesByClass">collectTestCasesByClass</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>collectTestCasesByClass</b> (
+</div>
+                <div><span class="code">clazz:<a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a>) : <a href="org_as2lib_test_unit_TestSuite.html">TestSuite</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Collects all methods and properties of the given class as test cases.
+ Methods and properties of super-classes are not included.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">clazz<span class="separator">:</span></div>
+                    <div>the class to collect the methods and properties of</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">a test suite that contains all collected tests</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="collectTestCasesByPackage">collectTestCasesByPackage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>collectTestCasesByPackage</b> (
+</div>
+                <div><span class="code">package:<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>) : <a href="org_as2lib_test_unit_TestSuite.html">TestSuite</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Collects all methods and properties of the given <code>package</code> and all
+ sub-packages as test cases except the ones declared by <code>Object</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">package<span class="separator">:</span></div>
+                    <div>the package to begin the collection at</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">a test suite that contains all collected tests</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2005 as2lib | </span><span class="date">Tuesday, 31 May 2005, 20:30:14
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[AccessPermission]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.util.AccessPermission]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Friday, 08 April 2005, 19:06:20]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>AccessPermission</code> adjusts the access permissions of members like methods
+ and properties in a specific context.]]></summary><restOfDescription><![CDATA[<p>You can hide methods from for..in loops and protect them from deletion and
+ from being overwritten.<p>Note that no matter what access permissions you set they can be overwritten.<p>Also note that the access permissions are not applied to the object but to
+ the reference to the object. That means that the object can for example be
+ enumerable in one reference but not in another.<p>Example:<pre><span class="codeKeyword">var</span> object:<span class="codeIdentifier">Object</span> = <span class="codeKeyword">new</span> <span class="codeIdentifier">Object</span>();
+object.myProperty = <span class="codeKeyword">new</span> <span class="codeIdentifier">Object</span>();
+object.mySecondReference = object.myProperty;
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myProperty:          Value: "</span> + object.myProperty);
+<span class="codeIdentifier">trace</span>(<span class="codeString">"mySecondReference:   Value: "</span> + object.mySecondReference);
+AccessPermission.<span class="codeIdentifier">set</span>(object, [<span class="codeString">"myProperty"</span>], AccessPermission.PROTECT_DELETE);
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myProperty:          Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"myProperty"</span>));
+<span class="codeIdentifier">trace</span>(<span class="codeString">"mySecondReference:   Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"mySecondReference"</span>));
+<span class="codeKeyword">delete</span> object.myProperty;
+<span class="codeKeyword">delete</span> object.mySecondReference;
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myProperty:          Value: "</span> + object.myProperty);
+<span class="codeIdentifier">trace</span>(<span class="codeString">"mySecondReference:   Value: "</span> + object.mySecondReference);</pre><p>Output:<pre>myProperty:          Value: [object <span class="codeIdentifier">Object</span>]
+mySecondReference:   Value: [object <span class="codeIdentifier">Object</span>]
+myProperty:          Permission: <span class="codeNumber">2</span>
+mySecondReference:   Permission: <span class="codeNumber">0</span>
+myProperty:          Value: [object <span class="codeIdentifier">Object</span>]
+mySecondReference:   Value: <span class="codeIdentifier">undefined</span></pre><p>As you can see, the above statement holds true. We have two references that
+ reference the same object. We set the access permission of one reference. We can
+ then not delete the reference the access permission was applied to, but the other
+ reference.<p>Following is another example with a property in its normal state and another
+ protected property we applied the <a href="org_as2lib_util_AccessPermission.html#ALLOW_NOTHING">ALLOW_NOTHING</a> access permission to.<p>Example:<pre><span class="codeKeyword">var</span> object:<span class="codeIdentifier">Object</span> = <span class="codeKeyword">new</span> <span class="codeIdentifier">Object</span>();
+object.myNormalProperty = <span class="codeString">"myNormalPropertyValue"</span>;
+object.myProtectedProperty = <span class="codeString">"myProtectedPropertyValue"</span>;
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myNormalProperty:      Default Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"myNormalProperty"</span>));
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myProtectedProperty:   Default Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"myProtectedProperty"</span>));
+AccessPermission.<span class="codeIdentifier">set</span>(object, [<span class="codeString">"myProtectedProperty"</span>], AccessPermission.ALLOW_NOTHING);
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myProtectedProperty:   New Permission: "</span> + AccessPermission.<span class="codeIdentifier">get</span>(object, <span class="codeString">"myProtectedProperty"</span>));
+object.myNormalProperty = <span class="codeString">"newMyNormalPropertyValue"</span>;
+object.myProtectedProperty = <span class="codeString">"newMyProtectedPropertyValue"</span>;
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myNormalProperty:      Value After Overwriting: "</span> + object.myNormalProperty);
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myProtectedProperty:   Value After Overwriting: "</span> + object.myProtectedProperty);
+<span class="codeKeyword">for</span> (<span class="codeKeyword">var</span> i:<span class="codeIdentifier">String</span> <span class="codeKeyword">in</span> object) {
+  <span class="codeIdentifier">trace</span>(i + <span class="codeString">":      Found In For..In Loop, Value: "</span> + object[i]);
+}
+<span class="codeKeyword">delete</span> object.myNormalProperty;
+<span class="codeKeyword">delete</span> object.myProtectedProperty;
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myNormalProperty:      Value After Deletion: "</span> + object.myNormalProperty);
+<span class="codeIdentifier">trace</span>(<span class="codeString">"myProtectedProperty:   Value After Deletion: "</span> + object.myProtectedProperty);</pre><p>Output:<pre>myNormalProperty:      Default Permission: <span class="codeNumber">0</span>
+myProtectedProperty:   Default Permission: <span class="codeNumber">0</span>
+myProtectedProperty:   New Permission: <span class="codeNumber">7</span>
+myNormalProperty:      Value After Overwriting: newMyNormalPropertyValue
+myProtectedProperty:   Value After Overwriting: myProtectedPropertyValue
+myNormalProperty:      Found In For..In Loop, Value: newMyNormalPropertyValue
+myNormalProperty:      Value After Deletion: <span class="codeIdentifier">undefined</span>
+myProtectedProperty:   Value After Deletion: myProtectedPropertyValue</pre><p>As you can see the protected property cannot be deleted, overwritten and is
+ hidden from for..in loops, while the non-protected property can be deleted, can
+ be overwritten and can be enumerated.<p>Besides the <a href="org_as2lib_util_AccessPermission.html#get">get</a> method you can check up on properties for specific
+ access permissions using the <a href="org_as2lib_util_AccessPermission.html#isEnumerable">isEnumerable</a>, <a href="org_as2lib_util_AccessPermission.html#isDeletable">isDeletable</a> and
+ <a href="org_as2lib_util_AccessPermission.html#isOverwritable">isOverwritable</a> methods.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><private><![CDATA[AccessPermission]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><![CDATA[ALLOW_ALL]]></item>
+<item><![CDATA[HIDE]]></item>
+<item><![CDATA[PROTECT_DELETE]]></item>
+<item><![CDATA[PROTECT_OVERWRITE]]></item>
+<item><![CDATA[ALLOW_NOTHING]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[set]]></item>
+<item><![CDATA[get]]></item>
+<item><![CDATA[isEnumerable]]></item>
+<item><![CDATA[isOverwritable]]></item>
+<item><![CDATA[isDeletable]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<private>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><private><![CDATA[AccessPermission]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>AccessPermission</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Private constructor.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><![CDATA[ALLOW_ALL]]></title><fullMethod><left><![CDATA[static <b>ALLOW_ALL</b> = <span class="codeNumber">0</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[Allow everything to be done with the object.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[ALLOW_NOTHING]]></title><fullMethod><left><![CDATA[static <b>ALLOW_NOTHING</b> = <span class="codeNumber">7</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[Allow nothing to be done with the object.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[HIDE]]></title><fullMethod><left><![CDATA[static <b>HIDE</b> = <span class="codeNumber">1</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[Hide an object from for..in loops.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[PROTECT_DELETE]]></title><fullMethod><left><![CDATA[static <b>PROTECT_DELETE</b> = <span class="codeNumber">2</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[Protect an object from deletion.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[PROTECT_OVERWRITE]]></title><fullMethod><left><![CDATA[static <b>PROTECT_OVERWRITE</b> = <span class="codeNumber">4</span>
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[Protect an object from overwriting.]]></text>
+</description>
+</method>
+</methodSection>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[get]]></title><fullMethod><left><![CDATA[static function <b>get</b> (
+
+]]></left><right><param><name><![CDATA[target]]></name></param>,
+<param><name><![CDATA[referenceName]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the current access permission of the reference.<p>The permission is represented by a <code>Number</code>. This number is a bitwise
+ combination of the three access specifier <a href="org_as2lib_util_AccessPermission.html#HIDE">HIDE</a>, <a href="org_as2lib_util_AccessPermission.html#PROTECT_DELETE">PROTECT_DELETE</a>
+ and <a href="org_as2lib_util_AccessPermission.html#PROTECT_OVERWRITE">PROTECT_OVERWRITE</a>. You can find out what the returned access
+ permission number means using these constants.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[target       ]]></name><description><![CDATA[the target object that holds the reference]]></description></param>
+<param><name><![CDATA[referenceName]]></name><description><![CDATA[the name of the reference to return the access permission for]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a number representing the access permission of the reference]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isDeletable]]></title><fullMethod><left><![CDATA[static function <b>isDeletable</b> (
+
+]]></left><right><param><name><![CDATA[target]]></name></param>,
+<param><name><![CDATA[referenceName]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether the reference is deletable.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[target       ]]></name><description><![CDATA[the target object that holds the reference]]></description></param>
+<param><name><![CDATA[referenceName]]></name><description><![CDATA[the name of the reference to return whether it is deletable]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if the reference is deletable else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isEnumerable]]></title><fullMethod><left><![CDATA[static function <b>isEnumerable</b> (
+
+]]></left><right><param><name><![CDATA[target]]></name></param>,
+<param><name><![CDATA[referenceName]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether the reference is enumerable.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[target       ]]></name><description><![CDATA[the target object that holds the reference]]></description></param>
+<param><name><![CDATA[referenceName]]></name><description><![CDATA[the name of the reference to return whether it is enumerable]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if the reference is enumerable else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isOverwritable]]></title><fullMethod><left><![CDATA[static function <b>isOverwritable</b> (
+
+]]></left><right><param><name><![CDATA[target]]></name></param>,
+<param><name><![CDATA[referenceName]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether the reference is overwritable.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[target       ]]></name><description><![CDATA[the target object that holds the reference]]></description></param>
+<param><name><![CDATA[referenceName]]></name><description><![CDATA[the name of the reference to return whether it is overwritable]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if the reference is overwritable else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[set]]></title><fullMethod><left><![CDATA[static function <b>set</b> (
+
+
+]]></left><right><param><name><![CDATA[target]]></name></param>,
+<param><name><![CDATA[referenceNames]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[access]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the access permission of a reference by an access code.<p>The following access codes are applicable:<table><tr><th><a href="org_as2lib_util_AccessPermission.html#HIDE">HIDE</a></th><td>Hides the reference from for-in loops.</td></tr><tr><th><a href="org_as2lib_util_AccessPermission.html#PROTECT_DELETE">PROTECT_DELETE</a></th><td>Protects the reference from deletion</td></tr><tr><th><a href="org_as2lib_util_AccessPermission.html#PROTECT_OVERWRITE">PROTECT_OVERWRITE</a></th><td>Protects the reference from overwriting</td></tr><tr><th><a href="org_as2lib_util_AccessPermission.html#ALLOW_ALL">ALLOW_ALL</a></th><td>Allows everything to be done with the reference.</td></tr><tr><th><a href="org_as2lib_util_AccessPermission.html#ALLOW_NOTHING">ALLOW_NOTHING</a></th><td>Allows nothing to be done with the reference.</td></tr></table><p>These access codes can be combined as follows to apply multiple access
+ permissions.<pre>AccessPermission.PROTECT_DELETE | AccessPermission.PROTECT_OVERWRITE</pre><p>Note that every new invocation of this method simply overwrites the old access
+ permissions of the reference.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[target        ]]></name><description><![CDATA[the object that holds references to the objects the access permissions
+ shall be applied to]]></description></param>
+<param><name><![CDATA[referenceNames]]></name><description><![CDATA[the names of the references to apply the access permission to]]></description></param>
+<param><name><![CDATA[access        ]]></name><description><![CDATA[the access permissions to apply]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:31:01]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

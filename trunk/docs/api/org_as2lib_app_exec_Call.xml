@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[Call]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[ForEachExecutable]]></name><uri><![CDATA[org_as2lib_app_exec_ForEachExecutable]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.app.exec.Call]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Tuesday, 31 May 2005, 17:11:56]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>Call</code> enables another object to call a method in another scope without
+ having to know the scope.]]></summary><restOfDescription><![CDATA[<p>This enables you to pass a call to another object and let the object execute
+ the call without losing its scope. You use the <a href="org_as2lib_app_exec_Call.html#execute">execute</a> method to do so.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[Call]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[object]]></private></item>
+<item><private><![CDATA[method]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[execute]]></item>
+<item><![CDATA[forEach]]></item>
+<item><![CDATA[toString]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[Call]]></title><fullMethod><left><![CDATA[function <b>Call</b> (
+
+]]></left><right><param><name><![CDATA[object]]></name></param>,
+<param><name><![CDATA[method]]></name>:<type><![CDATA[Function]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>Call</code> instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[object]]></name><description><![CDATA[the object to execute the method on]]></description></param>
+<param><name><![CDATA[method]]></name><description><![CDATA[the method to execute]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if either <code>object</code> or <code>method</code> is 
+ <code>null</code> or <code>undefined</code>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[method]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>method</b>:Function
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The method to execute on the object.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[object]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>object</b>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The object to execute the method on.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[execute]]></title><fullMethod><left><![CDATA[function <b>execute</b> (
+]]></left><right>)</right></fullMethod>
+<description>
+<text><![CDATA[Executes the method on the object passing the given <code>arguments</code> and returns the
+ result of the execution.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the result of the method execution]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Executable.html#execute">Executable.execute</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[forEach]]></title><fullMethod><left><![CDATA[function <b>forEach</b> (
+]]></left><right><param><name><![CDATA[object]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Iterates over the passed-in <code>object</code> using the for..in loop and executes
+ this call passing the found member, its name and the passed-in <code>object</code>.<p>Example:<pre><span class="codeKeyword">class</span> MyClass {
+
+    <span class="codeKeyword">private</span> <span class="codeKeyword">var</span> a:<span class="codeIdentifier">String</span>;
+    <span class="codeKeyword">private</span> <span class="codeKeyword">var</span> b:<span class="codeIdentifier">String</span>;
+    <span class="codeKeyword">private</span> <span class="codeKeyword">var</span> c:<span class="codeIdentifier">String</span>;
+
+    <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> MyClass() {
+        a = <span class="codeString">"1"</span>;
+        b = <span class="codeString">"2"</span>;
+        c = <span class="codeString">"2"</span>;
+    }
+
+    <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> traceObject(value, name:<span class="codeIdentifier">String</span>, inObject):<span class="codeIdentifier">Void</span> {
+        <span class="codeIdentifier">trace</span>(name + <span class="codeString">": "</span> + value);
+    }
+
+    <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> listAll() {
+        <span class="codeKeyword">new</span> Call(<span class="codeIdentifier">this</span>, traceObject).forEach(<span class="codeIdentifier">this</span>);
+    }
+}</pre><p>Note that only members visible to for..in loops cause the <a href="org_as2lib_app_exec_Call.html#execute">execute</a>
+ method to be invoked.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[object]]></name><description><![CDATA[the object to iterate over]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_ForEachExecutable.html#forEach">ForEachExecutable.forEach</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toString]]></title><fullMethod><left><![CDATA[function <b>toString</b> (
+]]></left><right>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the string representation of this call.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the string representation of this call]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:04]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

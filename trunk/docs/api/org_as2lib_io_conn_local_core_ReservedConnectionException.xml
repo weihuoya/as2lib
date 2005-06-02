@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ReservedConnectionException]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[ConnectionException]]></name><uri><![CDATA[org_as2lib_io_conn_ConnectionException]]></uri></link></item><item><link><name><![CDATA[Exception]]></name><uri><![CDATA[org_as2lib_env_except_Exception]]></uri></link></item><item><link><name><![CDATA[AbstractThrowable]]></name><uri><![CDATA[org_as2lib_env_except_AbstractThrowable]]></uri></link></item><item><link><name><![CDATA[Error]]></name></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Christoph Atteneder]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.io.conn.local.core.ReservedConnectionException]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 09 April 2005, 17:33:26]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>ReservedConnectionException</code> is thrown if you try to open a connection
+ with a connection name that is already in use.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[ReservedConnectionException]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Class methods inherited from]]></text><link><name><![CDATA[AbstractThrowable]]></name><uri><![CDATA[org_as2lib_env_except_AbstractThrowable]]></uri></link></title><item><link><name>getStringifier</name><uri>org_as2lib_env_except_AbstractThrowable</uri><method>getStringifier</method></link></item><item><link><name>setStringifier</name><uri>org_as2lib_env_except_AbstractThrowable</uri><method>setStringifier</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[Exception]]></name><uri><![CDATA[org_as2lib_env_except_Exception]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_env_except_Exception</uri><method>toString</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[AbstractThrowable]]></name><uri><![CDATA[org_as2lib_env_except_AbstractThrowable]]></uri></link></title><item><link><name>addStackTraceElement</name><uri>org_as2lib_env_except_AbstractThrowable</uri><method>addStackTraceElement</method></link></item><item><link><name>getCause</name><uri>org_as2lib_env_except_AbstractThrowable</uri><method>getCause</method></link></item><item><link><name>getMessage</name><uri>org_as2lib_env_except_AbstractThrowable</uri><method>getMessage</method></link></item><item><link><name>getStackTrace</name><uri>org_as2lib_env_except_AbstractThrowable</uri><method>getStackTrace</method></link></item><item><link><name>initCause</name><uri>org_as2lib_env_except_AbstractThrowable</uri><method>initCause</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[ReservedConnectionException]]></title><fullMethod><left><![CDATA[function <b>ReservedConnectionException</b> (
+
+
+]]></left><right><param><name><![CDATA[message]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[thrower]]></name></param>,
+<param><name><![CDATA[args]]></name>:<type><![CDATA[Array]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>ReservedConnectionException</code> instance.<p>All arguments are allowed to be <code>null</code> or <code>undefined</code>. But if
+ one is, the string representation returned by the <code>toString</code> method
+ will not be complete.<p>The <code>args</code> array should be the internal arguments array of the
+ method that throws the throwable. The internal arguments array exists in
+ every method and contains its parameters, the callee method and the caller
+ method. You can refernce it in every method using the name
+ <code>"arguments"</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[message]]></name><description><![CDATA[the message that describes the problem in detail]]></description></param>
+<param><name><![CDATA[thrower]]></name><description><![CDATA[the object that declares the method that throws this
+ exception]]></description></param>
+<param><name><![CDATA[args   ]]></name><description><![CDATA[the arguments of the throwing method]]></description></param>
+</field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_io_conn_ConnectionException.html#ConnectionException">org.as2lib.io.conn.ConnectionException.ConnectionException</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:29:14]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

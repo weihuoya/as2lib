@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[LogLevel]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.log.LogLevel]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Tuesday, 10 May 2005, 16:56:32]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>LogLevel</code> is the basic interface for all levels.]]></summary><restOfDescription><![CDATA[<p>It is used by loggers to write log messages at different levels and to
+ define at which levels messages shall be written.<p>The default levels offered by the As2lib Logging API in a descending order
+ are <code>ALL</code>, <code>DEBUG</code>, <code>INFO</code>, <code>WARNING</code>, <code>ERROR</code>,
+ <code>FATAL</code> and <code>NONE</code>. All these levels are defined as constants in
+ the <a href="org_as2lib_env_log_level_AbstractLogLevel.html">org.as2lib.env.log.level.AbstractLogLevel</a> class. Use this class to reference them.<p>It is also possible to create your own log levels. You just must
+ implement this interface or just instantiate one using the
+ <a href="org_as2lib_env_log_level_DynamicLogLevel.html">org.as2lib.env.log.level.DynamicLogLevel</a> class.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[isGreaterOrEqual]]></item>
+<item><![CDATA[toNumber]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[isGreaterOrEqual]]></title><fullMethod><left><![CDATA[function <b>isGreaterOrEqual</b> (
+]]></left><right><param><name><![CDATA[level]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>]]></type></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Determines whether this level is greater or equal than the passed-in
+ <code>level</code>.<p>This is normally done using the number representation of this level and
+ comparing it using the greater or equal operator with the number representation
+ of the passed-in <code>level</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[level]]></name><description><![CDATA[the level to compare this level with]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if this level is greater or equal than the passed-in
+ <code>level</code> else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toNumber]]></title><fullMethod><left><![CDATA[function <b>toNumber</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the number representation of this level.<p>Is used to compare levels with each other.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the number representation of this level]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:51]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[TypeInfo]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[PackageMemberInfo]]></name><uri><![CDATA[org_as2lib_env_reflect_PackageMemberInfo]]></uri></link></item><item><link><name><![CDATA[MemberInfo]]></name><uri><![CDATA[org_as2lib_env_reflect_MemberInfo]]></uri></link></item><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.reflect.TypeInfo]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 09 April 2005, 12:52:38]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>TypeInfo</code> represents a type a ActionScript type, that is either a class
+ or an interface.]]></summary><restOfDescription><![CDATA[<p>Note that it is not possible right now to distinguish between classes and
+ interfaces at run-time. Therefore are both classes and interfaces represented by
+ <a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a> instances. This is going to change as soon is a differentiation
+ is possible.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getType]]></item>
+<item><![CDATA[getSuperType]]></item>
+<item><![CDATA[getPackage]]></item>
+<item><![CDATA[hasMethod]]></item>
+<item><![CDATA[getMethods]]></item>
+<item><![CDATA[getMethodsByFlag]]></item>
+<item><![CDATA[getMethodsByFilter]]></item>
+<item><![CDATA[getMethod]]></item>
+<item><![CDATA[getMethodByName]]></item>
+<item><![CDATA[getMethodByMethod]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[PackageMemberInfo]]></name><uri><![CDATA[org_as2lib_env_reflect_PackageMemberInfo]]></uri></link></title><item><link><name>getFullName</name><uri>org_as2lib_env_reflect_PackageMemberInfo</uri><method>getFullName</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[MemberInfo]]></name><uri><![CDATA[org_as2lib_env_reflect_MemberInfo]]></uri></link></title><item><link><name>getFullName</name><uri>org_as2lib_env_reflect_MemberInfo</uri><method>getFullName</method></link></item><item><link><name>getName</name><uri>org_as2lib_env_reflect_MemberInfo</uri><method>getName</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[getMethod]]></title><fullMethod><left><![CDATA[function <b>getMethod</b> (
+]]></left><right>) : <![CDATA[<a href="org_as2lib_env_reflect_MethodInfo.html">MethodInfo</a>]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Overloading]]></title><description><![CDATA[<a href="org_as2lib_env_reflect_TypeInfo.html#getMethodByName">getMethodByName</a> <code>(methodName:String) : {VISDOC_LINK_0}</code><br /><a href="org_as2lib_env_reflect_TypeInfo.html#getMethodByMethod">getMethodByMethod</a> <code>(concreteMethod:Function) : {VISDOC_LINK_0}</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getMethodByMethod]]></title><fullMethod><left><![CDATA[function <b>getMethodByMethod</b> (
+]]></left><right><param><name><![CDATA[concreteMethod]]></name>:<type><![CDATA[Function]]></type></param>) : <![CDATA[<a href="org_as2lib_env_reflect_MethodInfo.html">MethodInfo</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the method info corresponding to the passed-in <code>concreteMethod</code>.<p><code>null</code> will be returned if:<ul><li>The passed-in <code>concreteMethod</code> is <code>null</code> or <code>undefined</code>.</li><li>The method does not exist in the represented type or any super-type.</li></ul><p>Note that methods of interfaces cannot be evaluated at run-time. They thus
+ have no methods for the Reflection API.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[concreteMethod]]></name><description><![CDATA[the method you wanna obtain the corresponding method info
+ for]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the method info correspoinding to the passed-in <code>concreteMethod</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getMethodByName]]></title><fullMethod><left><![CDATA[function <b>getMethodByName</b> (
+]]></left><right><param><name><![CDATA[methodName]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[<a href="org_as2lib_env_reflect_MethodInfo.html">MethodInfo</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the method info corresponding to the passed-in <code>methodName</code>.<p><code>null</code> will be returned if:<ul><li>The passed-in <code>methodName</code> is <code>null</code> or <code>undefined</code>.</li><li>The method does not exist in the represented type or any super-type.</li></ul><p>Note that methods of interfaces cannot be evaluated at run-time. They thus
+ have no methods for the Reflection API.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[methodName]]></name><description><![CDATA[the name of the method you wanna obtain]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the method info correspoinding to the passed-in <code>methodName</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getMethods]]></title><fullMethod><left><![CDATA[function <b>getMethods</b> (
+]]></left><right>) : <![CDATA[Array]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Overloading]]></title><description><![CDATA[<a href="org_as2lib_env_reflect_TypeInfo.html#getMethodsByFlag">getMethodsByFlag</a> <code>(filterSuperTypes:Boolean) : Array</code><br /><a href="org_as2lib_env_reflect_TypeInfo.html#getMethodsByFilter">getMethodsByFilter</a> <code>(methodFilter:{VISDOC_LINK_2}) : Array</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getMethodsByFilter]]></title><fullMethod><left><![CDATA[function <b>getMethodsByFilter</b> (
+]]></left><right><param><name><![CDATA[methodFilter]]></name>:<type><![CDATA[<a href="org_as2lib_env_reflect_TypeMemberFilter.html">TypeMemberFilter</a>]]></type></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an array containing the methods represented by <code>MethodInfo</code> instances
+ this type and super types' declare that are not filtered/excluded.<p>The <a href="org_as2lib_env_reflect_TypeMemberFilter.html#filter">TypeMemberFilter.filter</a> method of the passed-in <code>methodFilter</code>
+ is invoked for every method to determine whether it shall be contained in the
+ result.<p>If the passed-in <code>methodFilter</code> is <code>null</code> or <code>undefined</code> the
+ result of an invocation of the <a href="org_as2lib_env_reflect_TypeInfo.html#getMethodsByFlag">getMethodsByFlag</a> method with argument
+ <code>false</code> will be returned.<p>Note that methods of interfaces cannot be evaluated at run-time. They thus
+ have no methods for the Reflection API.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[methodFilter]]></name><description><![CDATA[the filter that filters unwanted methods out]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[an array containing the remaining methods represented by <code>MethodInfo</code>
+ instances]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getMethodsByFlag]]></title><fullMethod><left><![CDATA[function <b>getMethodsByFlag</b> (
+]]></left><right><param><name><![CDATA[filterSuperTypes]]></name>:<type><![CDATA[Boolean]]></type></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an array containing the methods represented by <code>MethodInfo</code> instances
+ this type declares and maybe the ones of the super types.<p>The super types' methods are included if you pass-in <code>false</code>, <code>null</code>
+ or <code>undefined</code> and excluded/filtered if you pass-in <code>true</code>. This means
+ super-types are by default included.<p>Note that methods of interfaces cannot be evaluated at run-time. They thus
+ have no methods for the Reflection API.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[filterSuperTypes]]></name><description><![CDATA[(optional) determines whether to filter/exclude the super
+ types' methods]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[an array containing the methods represented by <code>MethodInfo</code> instances]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getPackage]]></title><fullMethod><left><![CDATA[function <b>getPackage</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the package this type is a member of.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the package this type is a member of]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getSuperType]]></title><fullMethod><left><![CDATA[function <b>getSuperType</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_reflect_TypeInfo.html">TypeInfo</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the super type of this type.<p>Talking of classes the super-type is the class's super-class, that means the
+ class it extends and with interfaces it is the interface's super-interface, that
+ means the interface it extends.<p>A super-type is not an implemented interface. Note the difference between
+ extending and implementing.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the super types of this type]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getType]]></title><fullMethod><left><![CDATA[function <b>getType</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Function]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the type this instance represents.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the type represented by this instance]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[hasMethod]]></title><fullMethod><left><![CDATA[function <b>hasMethod</b> (
+
+]]></left><right><param><name><![CDATA[methodName]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[filterStaticMethods]]></name>:<type><![CDATA[Boolean]]></type></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether this type or any super-type has a method with the passed-in
+ <code>methodName</code>.<p>Static methods are not filtered by default. This means <code>filterStaticMethods</code>
+ is by default set to <code>false</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[methodName         ]]></name><description><![CDATA[the name of the method to search for]]></description></param>
+<param><name><![CDATA[filterStaticMethods]]></name><description><![CDATA[(optional) determines whether static methods are
+ filtered, this means excluded from the search]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if the method exists else <code>false</code>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:28:46]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

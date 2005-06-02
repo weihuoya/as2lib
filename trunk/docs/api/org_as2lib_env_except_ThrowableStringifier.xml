@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ThrowableStringifier]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[Stringifier]]></name><uri><![CDATA[org_as2lib_util_Stringifier]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.except.ThrowableStringifier]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 09 April 2005, 17:33:24]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>ThrowableStringifier</code> stringifies instances of type <a href="org_as2lib_env_except_Throwable.html">Throwable</a>.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[ThrowableStringifier]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[showStackTrace]]></private></item>
+<item><private><![CDATA[showCause]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[execute]]></item>
+<item><![CDATA[stringifyStackTrace]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[ThrowableStringifier]]></title><fullMethod><left><![CDATA[function <b>ThrowableStringifier</b> (
+
+]]></left><right><param><name><![CDATA[showStackTrace]]></name>:<type><![CDATA[Boolean]]></type></param>,
+<param><name><![CDATA[showCause]]></name>:<type><![CDATA[Boolean]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>ThrowableStringifier</code> instance.<p>You can switch different parts of the string representation on or off using
+ the declared arguments.<p>The stack trace and the cause are be default shown. That means if you want
+ them to be contained in the resulting string representation you do not have to
+ specify any arguments.<p>The settings apply only to the throwable to stringify. That means they do
+ not apply for its cause. The cause is responsible for stringifying itself.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[showStackTrace]]></name><description><![CDATA[determines whether the string representation contains the
+ stack trace]]></description></param>
+<param><name><![CDATA[showCause     ]]></name><description><![CDATA[determines whether the string representation contains the
+ cause]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[showCause]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>showCause</b>:Boolean
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Show the cause.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[showStackTrace]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>showStackTrace</b>:Boolean
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Show the stack trace.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[execute]]></title><fullMethod><left><![CDATA[function <b>execute</b> (
+]]></left><right><param><name><![CDATA[target]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns a string representation of the passed-in <a href="org_as2lib_env_except_Throwable.html">Throwable</a> instance.<p>Depending on the settings you made on instantiation the stack trace and
+ cause is contained in the resulting string or not.<p>Note that the cause is stringified by its own stringifier. That means the
+ setting show stack trace and show cause settings apply only for this throwable
+ and not for its causes. The cause is responsible for stringifying itself.<p>The throwable elements are also responsible for stringifying themselves.<p>The string representation is composed as follows:<pre>theFullQualifiedNameOfTheThrowable: theMessage
+  at theStringRepresentationOfTheStackTraceElement
+  ..
+Caused by: theStringRepresentationOfTheCause</pre><p>Here is how a real string representation could look like:<pre>org.as2lib.<span class="codeIdentifier">data</span>.holder.IllegalLengthException: The argument <span class="codeIdentifier">length</span> '-<span class="codeNumber">2</span>' is <span class="codeKeyword">not</span> allowed to be negative.
+  at org.as2lib.<span class="codeIdentifier">data</span>.holder.MyDataHolder.setMaximumLength(<span class="codeIdentifier">Number</span>)
+Caused by: org.as2lib.<span class="codeIdentifier">data</span>.math.IllegalNumberException: The argument number '-<span class="codeNumber">2</span>' is <span class="codeKeyword">not</span> allowed <span class="codeKeyword">in</span> a range from <span class="codeNumber">0</span> to ∞.
+  at org.as2lib.<span class="codeIdentifier">data</span>.math.Range.setNumber(<span class="codeIdentifier">Number</span>)</pre>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[target]]></name><description><![CDATA[the <code>Throwable</code> to stringify]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the string representation of the passed-in <code>target</code> throwable]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_except_ThrowableStringifier.html#stringifyStackTrace">stringifyStackTrace</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_util_Stringifier.html#execute">org.as2lib.util.Stringifier.execute</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[stringifyStackTrace]]></title><fullMethod><left><![CDATA[function <b>stringifyStackTrace</b> (
+]]></left><right><param><name><![CDATA[stackTrace]]></name>:<type><![CDATA[Array]]></type></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Stringifies the passed-in <code>stackTrace</code> array that contains
+ <a href="org_as2lib_env_except_StackTraceElement.html">StackTraceElement</a> instances.<p>The individual <code>StackTraceElement</code> instances are responsible for
+ stringifying themselves.<p>The resulting string representation is composed as follows:<pre>at theStringRepresentationOfTheFirstStackTraceElement
+at theStringRepresentationOfTheSecondStackTraceElement
+..</pre><p>A real string representation could look like this:<pre>at org.as2lib.<span class="codeIdentifier">data</span>.math.Range.setNumber(<span class="codeIdentifier">Number</span>)
+at org.as2lib.<span class="codeIdentifier">data</span>.holder.MyDataHolder.setMaximumLength(<span class="codeIdentifier">Number</span>)
+at com.simonwacker.MyApplication.initialize()</pre>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[stackTrace]]></name><description><![CDATA[the stack trace to stringify]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the string representation of the passed-in <code>stackTrace</code>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:07]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

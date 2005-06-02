@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[LuminicBoxHandler]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[LogHandler]]></name><uri><![CDATA[org_as2lib_env_log_LogHandler]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.log.handler.LuminicBoxHandler]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 10 April 2005, 10:34:10]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>LuminicBoxHandler</code> is a wrapper of the <code>ConsolePublisher</code> class
+ from the LuminicBox Logging API.]]></summary><restOfDescription><![CDATA[ It can be used to write log messages to the
+ LuminicBox console.]]></restOfDescription>
+</classDescription>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="http://www.luminicbox.com/dev/flash/log">LuminicBox Logging API</a>]]></description></field>
+</fields>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[LuminicBoxHandler]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><private><![CDATA[luminicBoxHandler]]></private></item>
+</methodSummaryPart>
+</private>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[consolePublisher]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[getInstance]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[write]]></item>
+<item><private><![CDATA[convertLevel]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[LuminicBoxHandler]]></title><fullMethod><left><![CDATA[function <b>LuminicBoxHandler</b> (
+]]></left><right><param><name><![CDATA[maximalInspectionDepth]]></name>:<type><![CDATA[Number]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>LuminicBoxHandler</code> instance.<p>You can use one and the same instance for multiple loggers. So think about
+ using the handler returned by the static <a href="org_as2lib_env_log_handler_LuminicBoxHandler.html#getInstance">getInstance</a> method. Using
+ this instance prevents the instantiation of unnecessary luminic box handlers
+ and saves storage.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[maximalInspectionDepth]]></name><description><![CDATA[(optional) the maximal depth of object inspection]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><private><![CDATA[luminicBoxHandler]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>luminicBoxHandler</b>:<a href="org_as2lib_env_log_handler_LuminicBoxHandler.html">LuminicBoxHandler</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Holds a luminic box handler.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[consolePublisher]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>consolePublisher</b>:ConsolePublisher
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The wrapped console publisher.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[getInstance]]></title><fullMethod><left><![CDATA[static function <b>getInstance</b> (
+]]></left><right><param><name><![CDATA[maximalInspectionDepth]]></name>:<type><![CDATA[Number]]></type></param>) : <![CDATA[<a href="org_as2lib_env_log_handler_LuminicBoxHandler.html">LuminicBoxHandler</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an instance of this class.<p>This method always returns the same instance.<p>The <code>maximalInspectionDepth</code> is only recognized when this method is
+ invoked the first time.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[maximalInspectionDepth]]></name><description><![CDATA[(optional) the maximal depth of object inspection]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a luminic box handler]]></description></field>
+</fields>
+</method>
+</methodSection>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><private><![CDATA[convertLevel]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>convertLevel</b> (
+]]></left><right><param><name><![CDATA[level]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>]]></type></param>) : <![CDATA[Level]]></right></fullMethod>
+<description>
+<text><![CDATA[Converts the As2lib <code>LogLevel</code> into a LuminicBox <code>Level</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[level]]></name><description><![CDATA[the As2lib log level to convert]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the equivalent LuminicBox level]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[write]]></title><fullMethod><left><![CDATA[function <b>write</b> (
+]]></left><right><param><name><![CDATA[message]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LogMessage.html">LogMessage</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Writes directly to the LuminicBox console.<p>The <code>ConsolePublisher</code> determines how the string representation is
+ constructed.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[message]]></name><description><![CDATA[the log message to write out]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_log_LogHandler.html#write">org.as2lib.env.log.LogHandler.write</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:16]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

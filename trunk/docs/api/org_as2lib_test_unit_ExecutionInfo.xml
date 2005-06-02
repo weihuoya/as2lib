@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ExecutionInfo]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.test.unit.ExecutionInfo]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 28 August 2004, 14:24:08]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[Interface for all Informations occured during the execution of a method of a testcase.]]></summary><restOfDescription><![CDATA[
+ 
+ @autor Martin Heidegger]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[isFailed]]></item>
+<item><![CDATA[getMessage]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[getMessage]]></title><fullMethod><left><![CDATA[function <b>getMessage</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the message to the information.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Message to the assertion.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isFailed]]></title><fullMethod><left><![CDATA[function <b>isFailed</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the information should be recognized as failure]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:30:16]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

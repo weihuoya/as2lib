@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[SimpleCache]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[Cache]]></name><uri><![CDATA[org_as2lib_env_reflect_Cache]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.reflect.SimpleCache]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Monday, 23 May 2005, 11:17:48]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>SimpleCache</code> is a simple and performant implementation of the <code>Cache</code>
+ interface.]]></summary><restOfDescription><![CDATA[<p>The caching of classes and packages leads to better performance. You also
+ must cache them because for example the parent of two classes residing in the
+ same package should be the same <code>PackageInfo</code> instance.<p>This cache is mostly used internally. But you can also use it to add
+ <code>ClassInfo</code> or <code>PackageInfo</code> instances directly so that they do not
+ have to be searched for. This can improve the performance dramatically with
+ classes or packages that are needed quite often.<p>This implementation sets a variable with name <code>"__as2lib__hashCode"</code> on
+ every cached class and package to offer better performance. Do not delete this
+ property.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[SimpleCache]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><private><![CDATA[hashCodeCounter]]></private></item>
+</methodSummaryPart>
+</private>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[cache]]></private></item>
+<item><private><![CDATA[root]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getClass]]></item>
+<item><![CDATA[getClassByClass]]></item>
+<item><![CDATA[getClassByInstance]]></item>
+<item><![CDATA[addClass]]></item>
+<item><![CDATA[getPackage]]></item>
+<item><![CDATA[addPackage]]></item>
+<item><![CDATA[getRoot]]></item>
+<item><![CDATA[releaseAll]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[SimpleCache]]></title><fullMethod><left><![CDATA[function <b>SimpleCache</b> (
+]]></left><right><param><name><![CDATA[root]]></name>:<type><![CDATA[<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>SimpleCache</code> instance.<p>The root/default package determines where the <code>ClassAlgorithm</code> and
+ <code>PackageAlgorithm</code> classes start their search.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[root]]></name><description><![CDATA[the root/default package of the package hierarchy]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><private><![CDATA[hashCodeCounter]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>hashCodeCounter</b>:Number = <span class="codeNumber">0</span>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The number of generated hash codes.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[cache]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>cache</b>:Array
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The added infos.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[root]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>root</b>:<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The root package.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[addClass]]></title><fullMethod><left><![CDATA[function <b>addClass</b> (
+]]></left><right><param><name><![CDATA[info]]></name>:<type><![CDATA[<a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a>]]></type></param>) : <![CDATA[<a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds the passed-in <code>classInfo</code> to the list of cached class infos and returns
+ this <code>classInfo</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[classInfo]]></name><description><![CDATA[the class info to add]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the passed-in and added <code>classInfo</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[addPackage]]></title><fullMethod><left><![CDATA[function <b>addPackage</b> (
+]]></left><right><param><name><![CDATA[info]]></name>:<type><![CDATA[<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>]]></type></param>) : <![CDATA[<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds the passed-in <code>packageInfo</code> to this cache and returns this added
+ <code>packageInfo</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[packageInfo]]></name><description><![CDATA[the package info to add]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the passed-in and added <code>packageInfo</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getClass]]></title><fullMethod><left><![CDATA[function <b>getClass</b> (
+]]></left><right>) : <![CDATA[<a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a>]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Overloading]]></title><description><![CDATA[<a href="org_as2lib_env_reflect_SimpleCache.html#getClassByClass">getClassByClass</a> <code>(clazz:Function) : {VISDOC_LINK_0}</code><br /><a href="org_as2lib_env_reflect_SimpleCache.html#getClassByInstance">getClassByInstance</a> <code>(instance) : {VISDOC_LINK_0}</code>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_reflect_Cache.html#getClass">Cache.getClass</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getClassByClass]]></title><fullMethod><left><![CDATA[function <b>getClassByClass</b> (
+]]></left><right><param><name><![CDATA[clazz]]></name>:<type><![CDATA[Function]]></type></param>) : <![CDATA[<a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the class info representing the passed-in <code>clazz</code>.<p><code>null</code> will be returned if:<ul><li>There is no corresponding <code>ClassInfo</code> instance cached.</li><li>The passed-in <code>clazz</code> is <code>null</code> or <code>undefined</code>.</li></ul>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[clazz]]></name><description><![CDATA[the class to return the class info for]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the class info representing the passed-in <code>clazz</code>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_reflect_Cache.html#getClassByClass">Cache.getClassByClass</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getClassByInstance]]></title><fullMethod><left><![CDATA[function <b>getClassByInstance</b> (
+]]></left><right><param><name><![CDATA[instance]]></name></param>) : <![CDATA[<a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the class info representing the class the <code>instance</code> was
+ instantiated of.<p><code>null</code> will be returned if:<ul><li>There is no corresponding <code>ClassInfo</code> instance cached.</li><li>The passed-in <code>instance</code> is <code>null</code> or <code>undefined</code>.</li></ul>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[instance]]></name><description><![CDATA[the instance to return the appropriate class info for]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the class info representing the instance's class]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_reflect_Cache.html#getClassByInstance">Cache.getClassByInstance</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getPackage]]></title><fullMethod><left><![CDATA[function <b>getPackage</b> (
+]]></left><right><param><name><![CDATA[package]]></name></param>) : <![CDATA[<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the package info representing the passed-in <code>package</code>.<p><code>null</code> will be returned if:<ul><li>There is no corresponding <code>PackageInfo</code> instance cached.</li><li>The passed-in <code>package</code> is <code>null</code> or <code>undefined</code>.</li></ul>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[package]]></name><description><![CDATA[the package to return the appropriate package info for]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the pakcage info representing the passed-in <code>package</code>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_reflect_Cache.html#getPackage">Cache.getPackage</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getRoot]]></title><fullMethod><left><![CDATA[function <b>getRoot</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the root package of the whole package hierarchy.<p>The root package is also refered to as the default package.<p>The root/default package determines where the <code>ClassAlgorithm</code> and
+ <code>PackageAlgorithm</code> classes start their search.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the root/default package]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_reflect_Cache.html#getRoot">Cache.getRoot</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[releaseAll]]></title><fullMethod><left><![CDATA[function <b>releaseAll</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Releases all cached class and package infos.<p>Note that their <code>__as2lib__hashCode</code> variable stays the same.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_reflect_Cache.html#releaseAll">Cache.releaseAll</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:28:43]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

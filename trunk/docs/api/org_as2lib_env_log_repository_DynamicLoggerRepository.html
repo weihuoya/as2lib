@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>DynamicLoggerRepository</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>DynamicLoggerRepository</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_env_log_LoggerRepository.html">LoggerRepository</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.log.repository.DynamicLoggerRepository</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Sunday, 10 April 2005, 10:34:10</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>DynamicLoggerRepository</code> is used to obtain loggers. </div><p>The actual class of these loggers is determined by you at runtime. You can
+ therefor either use the constructors logger class argument or the
+ <a href="org_as2lib_env_log_repository_DynamicLoggerRepository.html#setLoggerFactory">setLoggerFactory</a> method.<p>This repository is very performant. What it does is quite simple. It only
+ instantiates logger instances passing-in the given name, stores these instances
+ by name for retrieval later on and returns them.<p>When working with logger repositories you normally store them in the log
+ manager using the static <a href="org_as2lib_env_log_LogManager.html#setLoggerRepository">org.as2lib.env.log.LogManager.setLoggerRepository</a> method. You can
+ then use the static <a href="org_as2lib_env_log_LogManager.html#getLogger">org.as2lib.env.log.LogManager.getLogger</a> method to obtain loggers from
+ the set repository.<p>Example:<pre><span class="codeComment">// configuration: on system start-up</span>
+<span class="codeKeyword">var</span> repository:LoggerRepository = <span class="codeKeyword">new</span> DynamicLoggerRepository(MyLogger);
+LogManager.setLoggerRepository(repository);
+<span class="codeComment">// usage: in the org.mydomain.MyClass class</span>
+<span class="codeKeyword">var</span> myLogger:Logger = LogManager.getLogger(<span class="codeString">"org.mydomain.MyClass"</span>);
+<span class="codeKeyword">if</span> (myLogger.isWarningEnabled()) {
+    myLogger.warning(<span class="codeString">"Pay attention please!"</span>);
+}</pre></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#DynamicLoggerRepository">DynamicLoggerRepository</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#loggers">loggers</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#loggerFactory">loggerFactory</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#getDynamicLoggerFactory">getDynamicLoggerFactory</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getBlankLoggerFactory">getBlankLoggerFactory</a>
+                </li>
+                <li>
+                  <a href="#getLoggerFactory">getLoggerFactory</a>
+                </li>
+                <li>
+                  <a href="#setLoggerFactory">setLoggerFactory</a>
+                </li>
+                <li>
+                  <a href="#getLogger">getLogger</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="DynamicLoggerRepository">DynamicLoggerRepository</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>DynamicLoggerRepository</b> (
+</div>
+                <div><span class="code">loggerClass:Function)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>DynamicLoggerRepository</code> instance.<p>If you do not pass a <code>loggerClass</code> you must set the logger factory via
+ the <a href="org_as2lib_env_log_repository_DynamicLoggerRepository.html#setLoggerFactory">setLoggerFactory</a> method. Otherwise the logger returned by
+ <a href="org_as2lib_env_log_repository_DynamicLoggerRepository.html#getLogger">getLogger</a> will always be <code>null</code>.<p>The logger is wrapped into a factory and the factory is set. The factory
+ then instantiates the logger class passing-in the name of the logger on calls
+ to <a href="org_as2lib_env_log_repository_DynamicLoggerRepository.html#getLogger">getLogger</a>.<p>Already received loggers are cached by name. Thus there exists only one
+ logger instance per name.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">loggerClass<span class="separator">:</span></div>
+                    <div>(optional) the class to create loggers of</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="loggerFactory">loggerFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>loggerFactory</b>:<a href="org_as2lib_env_log_repository_LoggerFactory.html">LoggerFactory</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Creates loggers.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="loggers">loggers</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>loggers</b>:Object
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Already received loggers.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getBlankLoggerFactory">getBlankLoggerFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getBlankLoggerFactory</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_log_repository_LoggerFactory.html">LoggerFactory</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns a blank logger factory.<p>That is a factory without implemented methods. All methods have still to be
+ set.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">a blank logger factory</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getDynamicLoggerFactory">getDynamicLoggerFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getDynamicLoggerFactory</b> (
+</div>
+                <div><span class="code">loggerClass:Function) : <a href="org_as2lib_env_log_repository_LoggerFactory.html">LoggerFactory</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns a new dynamic logger factory.<p>This factory creates new instances of the passed-in <code>loggerClass</code>. It
+ passes the logger name as parameter to the constructor of the class on creation.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">a new dynamic logger factory</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getLogger">getLogger</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getLogger</b> (
+</div>
+                <div><span class="code">name:String) : <a href="org_as2lib_env_log_Logger.html">Logger</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns a pre-configured logger for the passed-in <code>name</code>.<p>A new logger is created for names to which no logger has been assigned yet.
+ The new logger is configured with the <code>name</code>, either by the custom
+ factory or by the default one, which passes the <code>name</code> as parameter to
+ the constructor of the logger class. The logger is then cached by name and
+ returned for usage.<p><code>null</code> will be returned if:<ul><li>No logger factory has been set.</li><li>The set logger factory returns <code>null</code> or <code>undefined</code>.</li></ul>«</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name<span class="separator">:</span></div>
+                    <div>the name of the logger to return</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the logger appropriate to the passed-in <code>name</code></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_LoggerRepository.html#getLogger">org.as2lib.env.log.LoggerRepository.getLogger</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getLoggerFactory">getLoggerFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getLoggerFactory</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_log_repository_LoggerFactory.html">LoggerFactory</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the set logger factory.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the set logger factory</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setLoggerFactory">setLoggerFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>setLoggerFactory</b> (
+</div>
+                <div><span class="code">loggerFactory:<a href="org_as2lib_env_log_repository_LoggerFactory.html">LoggerFactory</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Sets a new logger factory.<p>This logger factory is used to create loggers for given names, that are
+ returned by the <a href="org_as2lib_env_log_repository_DynamicLoggerRepository.html#getLogger">getLogger</a> method.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">loggerFactory<span class="separator">:</span></div>
+                    <div>the new logger factory</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2005 as2lib | </span><span class="date">Tuesday, 31 May 2005, 20:27:58
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

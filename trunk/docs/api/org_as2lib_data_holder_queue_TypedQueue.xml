@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[TypedQueue]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[Queue]]></name><uri><![CDATA[org_as2lib_data_holder_Queue]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.data.holder.queue.TypedQueue]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Friday, 13 May 2005, 09:46:52]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>TypedQueue</code> is a wrapper for <a href="org_as2lib_data_holder_Queue.html">org.as2lib.data.holder.Queue</a> instances that ensures that
+ only values of a specific type can be added to the wrapped queue.]]></summary><restOfDescription><![CDATA[<p>This class simply delegates all method invocations to the wrapped queue. If
+ the specific method is responsible for adding values it first checks if the values
+ to add are of the expected type. If they are the method invocation is forwarded,
+ otherwise an <a href="org_as2lib_env_except_IllegalArgumentException.html">org.as2lib.env.except.IllegalArgumentException</a> is thrown.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[TypedQueue]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[queue]]></private></item>
+<item><private><![CDATA[type]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getType]]></item>
+<item><![CDATA[enqueue]]></item>
+<item><![CDATA[dequeue]]></item>
+<item><![CDATA[peek]]></item>
+<item><![CDATA[iterator]]></item>
+<item><![CDATA[isEmpty]]></item>
+<item><![CDATA[size]]></item>
+<item><![CDATA[toArray]]></item>
+<item><![CDATA[toString]]></item>
+<item><private><![CDATA[validate]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[TypedQueue]]></title><fullMethod><left><![CDATA[function <b>TypedQueue</b> (
+
+]]></left><right><param><name><![CDATA[type]]></name>:<type><![CDATA[Function]]></type></param>,
+<param><name><![CDATA[queue]]></name>:<type><![CDATA[<a href="org_as2lib_data_holder_Queue.html">Queue</a>]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>TypedQueue</code> instance.<p>If the passed-in <code>queue</code> does already contain values, these values do
+ not get type-checked.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[type ]]></name><description><![CDATA[the type of the values that are allowed to be added]]></description></param>
+<param><name><![CDATA[queue]]></name><description><![CDATA[the queue to wrap]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in <code>type</code> is <code>null</code>
+ or <code>undefined</code><br /><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if <code>queue</code> is <code>null</code> or
+ <code>undefined</code>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[queue]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>queue</b>:<a href="org_as2lib_data_holder_Queue.html">Queue</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The wrapped queue.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[type]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>type</b>:Function
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The type of the values that can be added.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[dequeue]]></title><fullMethod><left><![CDATA[function <b>dequeue</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Removes the firstly inserted value.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the firstly inserted value]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if this queue is empty]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#dequeue">org.as2lib.data.holder.Queue.dequeue</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[enqueue]]></title><fullMethod><left><![CDATA[function <b>enqueue</b> (
+]]></left><right><param><name><![CDATA[value]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds the passed-in <code>value</code> to this queue.<p>The value is only enqueued if it is of the expected type.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[value]]></name><description><![CDATA[the value to add]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the type of the passed-in <code>value</code> is
+ invalid]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#enqueue">org.as2lib.data.holder.Queue.enqueue</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getType]]></title><fullMethod><left><![CDATA[function <b>getType</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Function]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the type that all values in the wrapped queue have.<p>This is the type passed-in on construction.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the type the all values of the wrapped queue have]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isEmpty]]></title><fullMethod><left><![CDATA[function <b>isEmpty</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether this queue contains any values.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if this queue contains no values else <code>false</code>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#isEmpty">org.as2lib.data.holder.Queue.isEmpty</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[iterator]]></title><fullMethod><left><![CDATA[function <b>iterator</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_data_holder_Iterator.html">Iterator</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an iterator that can be used to iterate over the values of this queue.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[an iterator to iterate over this queue's values]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_queue_TypedQueue.html#toArray">toArray</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#iterator">org.as2lib.data.holder.Queue.iterator</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[peek]]></title><fullMethod><left><![CDATA[function <b>peek</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Returns the firstly inserted value.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the firstly inserted value]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if this queue is empty]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#peek">org.as2lib.data.holder.Queue.peek</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[size]]></title><fullMethod><left><![CDATA[function <b>size</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the number of enqueued elements.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the number of enqueued elements]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_queue_TypedQueue.html#enqueue">enqueue</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#size">org.as2lib.data.holder.Queue.size</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toArray]]></title><fullMethod><left><![CDATA[function <b>toArray</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an array representation of this queue.<p>The elements are copied onto the array in a 'first-in, first-out' order,
+ similar to the order of the elements returned by a succession of calls to the
+ <a href="org_as2lib_data_holder_queue_TypedQueue.html#dequeue">dequeue</a> method.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the array representation of this queue]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#toArray">org.as2lib.data.holder.Queue.toArray</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toString]]></title><fullMethod><left><![CDATA[function <b>toString</b> (
+]]></left><right>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the string representation of the wrapped queue.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the string representation of the wrapped queue]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[validate]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>validate</b> (
+]]></left><right><param><name><![CDATA[value]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Validates the passed-in <code>value</code> based on its type.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[value]]></name><description><![CDATA[the value whose type shall be validated]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the type of the <code>value</code> is invalid]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:36]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

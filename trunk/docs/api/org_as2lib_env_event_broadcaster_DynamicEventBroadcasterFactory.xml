@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[DynamicEventBroadcasterFactory]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[EventBroadcasterFactory]]></name><uri><![CDATA[org_as2lib_env_event_broadcaster_EventBroadcasterFactory]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.event.broadcaster.DynamicEventBroadcasterFactory]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 23 April 2005, 13:51:00]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>DynamicEventBroadcasterFactory</code> creates and returns any kind of event
+ broadcaster.]]></summary><restOfDescription><![CDATA[ The specific event broadcaster class can be specified on construction
+ or with the <a href="org_as2lib_env_event_broadcaster_DynamicEventBroadcasterFactory.html#setEventBroadcasterClass">setEventBroadcasterClass</a> method.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[DynamicEventBroadcasterFactory]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[clazz]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[setEventBroadcasterClass]]></item>
+<item><![CDATA[createEventBroadcaster]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[DynamicEventBroadcasterFactory]]></title><fullMethod><left><![CDATA[function <b>DynamicEventBroadcasterFactory</b> (
+]]></left><right><param><name><![CDATA[clazz]]></name>:<type><![CDATA[Function]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>DynamicEventBroadcasterFactory</code> instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[clazz]]></name><description><![CDATA[the <a href="org_as2lib_env_event_broadcaster_EventBroadcaster.html">EventBroadcaster</a> implementation to return instances of]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[clazz]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>clazz</b>:Function
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The event broadcaster class to return instances of.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[createEventBroadcaster]]></title><fullMethod><left><![CDATA[function <b>createEventBroadcaster</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_event_broadcaster_EventBroadcaster.html">EventBroadcaster</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Creates and returns a new instance of a the specified class.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a new instance of the specified class]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if no class to return instances of has been set
+ yet]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_event_broadcaster_EventBroadcasterFactory.html#createEventBroadcaster">EventBroadcasterFactory.createEventBroadcaster</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setEventBroadcasterClass]]></title><fullMethod><left><![CDATA[function <b>setEventBroadcasterClass</b> (
+]]></left><right><param><name><![CDATA[clazz]]></name>:<type><![CDATA[Function]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Sets the <a href="org_as2lib_env_event_broadcaster_EventBroadcaster.html">EventBroadcaster</a> implementation to return instances of.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[clazz]]></name><description><![CDATA[the <a href="org_as2lib_env_event_broadcaster_EventBroadcaster.html">EventBroadcaster</a> implementation to return instances of]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in <code>clazz</code> is not an
+ implementation of the <code>EventBroadcaster</code> interface]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:44]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

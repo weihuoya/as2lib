@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[TestSuiteFactory]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.test.speed.TestSuiteFactory]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 29 May 2005, 08:56:26]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>TestSuiteFactory</code> collects test suites.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[TestSuiteFactory]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[collectTestCases]]></item>
+<item><![CDATA[collectAllTestCases]]></item>
+<item><![CDATA[collectTestCasesByPackage]]></item>
+<item><![CDATA[collectTestCasesByClass]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[TestSuiteFactory]]></title><fullMethod><left><![CDATA[function <b>TestSuiteFactory</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>TestSuiteFactory</code> instance.]]></text>
+</description>
+</method>
+</methodSection>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[collectAllTestCases]]></title><fullMethod><left><![CDATA[function <b>collectAllTestCases</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_test_unit_TestSuite.html">TestSuite</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Collects all methods and properties as test cases except the ones declared by
+ <code>Object</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a test suite that contains all tests]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[collectTestCases]]></title><fullMethod><left><![CDATA[function <b>collectTestCases</b> (
+]]></left><right>) : <![CDATA[<a href="org_as2lib_test_unit_TestSuite.html">TestSuite</a>]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Overloading]]></title><description><![CDATA[<a href="org_as2lib_test_speed_TestSuiteFactory.html#collectAllTestCases">collectAllTestCases</a> <code>(Void) : {VISDOC_LINK_0}</code><br /><a href="org_as2lib_test_speed_TestSuiteFactory.html#collectTestCasesByPackage">collectTestCasesByPackage</a> <code>(package:{VISDOC_LINK_0}) : {VISDOC_LINK_1}</code><br /><a href="org_as2lib_test_speed_TestSuiteFactory.html#collectTestCasesByClass">collectTestCasesByClass</a> <code>(clazz:{VISDOC_LINK_0}) : {VISDOC_LINK_1}</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[collectTestCasesByClass]]></title><fullMethod><left><![CDATA[function <b>collectTestCasesByClass</b> (
+]]></left><right><param><name><![CDATA[clazz]]></name>:<type><![CDATA[<a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a>]]></type></param>) : <![CDATA[<a href="org_as2lib_test_unit_TestSuite.html">TestSuite</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Collects all methods and properties of the given class as test cases.
+ Methods and properties of super-classes are not included.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[clazz]]></name><description><![CDATA[the class to collect the methods and properties of]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a test suite that contains all collected tests]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[collectTestCasesByPackage]]></title><fullMethod><left><![CDATA[function <b>collectTestCasesByPackage</b> (
+]]></left><right><param><name><![CDATA[package]]></name>:<type><![CDATA[<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>]]></type></param>) : <![CDATA[<a href="org_as2lib_test_unit_TestSuite.html">TestSuite</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Collects all methods and properties of the given <code>package</code> and all
+ sub-packages as test cases except the ones declared by <code>Object</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[package]]></name><description><![CDATA[the package to begin the collection at]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a test suite that contains all collected tests]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:30:14]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[AbstractProcess]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[none (AbstractProcess is a root class)]]></name></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[Process]]></name><uri><![CDATA[org_as2lib_app_exec_Process]]></uri></link></item><item><link><name><![CDATA[ProcessListener]]></name><uri><![CDATA[org_as2lib_app_exec_ProcessListener]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Version]]></title><value><![CDATA[1.0]]></value></item>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.app.exec.AbstractProcess]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 28 May 2005, 12:00:50]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>AbstractProcess</code> is a abstract helper class to implement processes.]]></summary><restOfDescription><![CDATA[<p>Most of the functionalities of <a href="org_as2lib_app_exec_Process.html">Process</a> are served well within 
+ <code>AbstractProcess</code>. Because of the situation that most processes are 
+ simple executions <code>AbstractProcess</code> allows easy implementations of 
+ <a href="org_as2lib_app_exec_Process.html">Process</a>.<p>To use the advantage of <code>AbstractProcess</code> simple extend it and
+ implement the <a href="org_as2lib_app_exec_AbstractProcess.html#run">run</a> method.<p>It executes <a href="org_as2lib_app_exec_AbstractProcess.html#run">run</a> at <a href="org_as2lib_app_exec_AbstractProcess.html#start">start</a> and handles the exeuction of
+ events and the correct states. If you wan't to stop your process
+ <a href="org_as2lib_app_exec_AbstractProcess.html#pause">pause</a> and <a href="org_as2lib_app_exec_AbstractProcess.html#resume">resume</a> offer direct support.]]></restOfDescription>
+</classDescription>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a><br /><a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a>]]></description></field>
+</fields>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><private><![CDATA[AbstractProcess]]></private></item>
+</methodSummaryPart>
+</private>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[paused]]></private></item>
+<item><private><![CDATA[started]]></private></item>
+<item><private><![CDATA[finished]]></private></item>
+<item><private><![CDATA[distributor]]></private></item>
+<item><private><![CDATA[event]]></private></item>
+<item><private><![CDATA[subProcesses]]></private></item>
+<item><private><![CDATA[callBacks]]></private></item>
+<item><private><![CDATA[parent]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[setParentProcess]]></item>
+<item><![CDATA[getParentProcess]]></item>
+<item><![CDATA[startSubProcess]]></item>
+<item><![CDATA[pause]]></item>
+<item><![CDATA[resume]]></item>
+<item><private><![CDATA[prepare]]></private></item>
+<item><![CDATA[start]]></item>
+<item><private><![CDATA[run]]></private></item>
+<item><![CDATA[hasFinished]]></item>
+<item><![CDATA[isPaused]]></item>
+<item><![CDATA[hasStarted]]></item>
+<item><![CDATA[isRunning]]></item>
+<item><![CDATA[addProcessListener]]></item>
+<item><![CDATA[removeProcessListener]]></item>
+<item><![CDATA[removeAllProcessListeners]]></item>
+<item><![CDATA[addAllProcessListeners]]></item>
+<item><![CDATA[getAllProcessListeners]]></item>
+<item><![CDATA[getPercentage]]></item>
+<item><private><![CDATA[finish]]></private></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Event handlers]]></title>
+<item><![CDATA[onUpdateProcess]]></item>
+<item><![CDATA[onStartProcess]]></item>
+<item><![CDATA[onFinishProcess]]></item>
+<item><![CDATA[onProcessError]]></item>
+<item><![CDATA[onResumeProcess]]></item>
+<item><![CDATA[onPauseProcess]]></item>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<private>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><private><![CDATA[AbstractProcess]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>AbstractProcess</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>AbstractProcess</code>]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[callBacks]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>callBacks</b>:<a href="org_as2lib_data_holder_Map.html">Map</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Callbacks set to the processes to be called after execution]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[distributor]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>distributor</b>:<a href="org_as2lib_env_event_distributor_EventDistributorControl.html">EventDistributorControl</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Distributor holder]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[event]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>event</b>:<a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Event holder]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[finished]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>finished</b>:Boolean
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Flag if execution was finished]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[parent]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>parent</b>:<a href="org_as2lib_app_exec_Process.html">Process</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Holder for a possible set parent]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[paused]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>paused</b>:Boolean
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Flag if execution was paused]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[started]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>started</b>:Boolean
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Flag if execution was started]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[subProcesses]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>subProcesses</b>:Array
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Processed that had been started during execution]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[addAllProcessListeners]]></title><fullMethod><left><![CDATA[function <b>addAllProcessListeners</b> (
+]]></left><right><param><name><![CDATA[list]]></name>:<type><![CDATA[Array]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds a <code>list</code> of <a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a> as Observer to the process.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[list]]></name><description><![CDATA[List of listeners to be added.]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Process.html#addAllProcessListeners">Process.addAllProcessListeners</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[addProcessListener]]></title><fullMethod><left><![CDATA[function <b>addProcessListener</b> (
+]]></left><right><param><name><![CDATA[listener]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds a <a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a> as Observer to the process.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[listener]]></name><description><![CDATA[<a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a> to be added.]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Process.html#addProcessListener">Process.addProcessListener</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[finish]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>finish</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Internal Method to finish the execution.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[getAllProcessListeners]]></title><fullMethod><left><![CDATA[function <b>getAllProcessListeners</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Flag if the process has been started.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the process has been started and isn't finish yet else false.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Process.html#getAllProcessListeners">Process.getAllProcessListeners</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getParentProcess]]></title><fullMethod><left><![CDATA[function <b>getParentProcess</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Getter for the parent process.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Parent process if set, else null.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Process.html#getParentProcess">Process.getParentProcess</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getPercentage]]></title><fullMethod><left><![CDATA[function <b>getPercentage</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Getter for the currently executed percentage of the process.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Percentage of execution. Null if percentage was not evaluateable.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Process.html#getPercentage">Process.getPercentage</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[hasFinished]]></title><fullMethod><left><![CDATA[function <b>hasFinished</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the process has finished. (false if the process hasn't started yet)]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Process.html#hasFinished">Process.hasFinished</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[hasStarted]]></title><fullMethod><left><![CDATA[function <b>hasStarted</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the process has started.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Process.html#hasStarted">Process.hasStarted</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isPaused]]></title><fullMethod><left><![CDATA[function <b>isPaused</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the process is paused.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Process.html#isPaused">Process.isPaused</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isRunning]]></title><fullMethod><left><![CDATA[function <b>isRunning</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[true if the process is running.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Process.html#isRunning">Process.isRunning</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[pause]]></title><fullMethod><left><![CDATA[function <b>pause</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Pauses the process.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[prepare]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>prepare</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Prepares the start of the process]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[removeAllProcessListeners]]></title><fullMethod><left><![CDATA[function <b>removeAllProcessListeners</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Removes all added Observers.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Process.html#removeAllProcessListeners">Process.removeAllProcessListeners</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[removeProcessListener]]></title><fullMethod><left><![CDATA[function <b>removeProcessListener</b> (
+]]></left><right><param><name><![CDATA[listener]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Removes a <a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a> as Observer from the process.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[listener]]></name><description><![CDATA[<a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a> to be added.]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Process.html#removeProcessListener">Process.removeProcessListener</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[resume]]></title><fullMethod><left><![CDATA[function <b>resume</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Resumes the process]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[run]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>run</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Template method for running the process.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_AbstractOperationException.html">AbstractOperationException</a> if the method was not extended]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setParentProcess]]></title><fullMethod><left><![CDATA[function <b>setParentProcess</b> (
+]]></left><right><param><name><![CDATA[p]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Setter for a possible parent process.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[p]]></name><description><![CDATA[Process to act as parentprocess.]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the applied process has the current 
+         instance in its parents-hierarchy.]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[start]]></title><fullMethod><left><![CDATA[function <b>start</b> (
+]]></left><right>)</right></fullMethod>
+<description>
+<text><![CDATA[Starts the process.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_Process.html#start">Process.start</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[startSubProcess]]></title><fullMethod><left><![CDATA[function <b>startSubProcess</b> (
+
+
+]]></left><right><param><name><![CDATA[process]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a>]]></type></param>,
+<param><name><![CDATA[args]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[callBack]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Executable.html">Executable</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Starts a sub process.<p>Your Process will not be finished until all the subprocesses are
+ finished.<p>If you start more processes after each other, all will get started
+ immediately. It is no batch system where one starts strictly after another.<p>You can start one specific process only if this process wasn't started
+ before]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[process ]]></name><description><![CDATA[Process to be started.]]></description></param>
+<param><name><![CDATA[args    ]]></name><description><![CDATA[Arguments for the process start.]]></description></param>
+<param><name><![CDATA[callBack]]></name><description><![CDATA[Callback to be executed if the process finishes.]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<methodSection>
+<title><![CDATA[Event handlers]]></title>
+<method>
+<title><![CDATA[onFinishProcess]]></title><fullMethod><left><![CDATA[function <b>onFinishProcess</b> (
+]]></left><right><param><name><![CDATA[process]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Method to be executed if a process finishes its execution.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[process]]></name><description><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a> that finished with execution]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_ProcessListener.html#onFinishProcess">ProcessListener.onFinishProcess</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[onPauseProcess]]></title><fullMethod><left><![CDATA[function <b>onPauseProcess</b> (
+]]></left><right><param><name><![CDATA[process]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Method to be executed if a process pauses.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[process]]></name><description><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a> that paused execution]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_ProcessListener.html#onPauseProcess">ProcessListener.onPauseProcess</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[onProcessError]]></title><fullMethod><left><![CDATA[function <b>onProcessError</b> (
+
+]]></left><right><param><name><![CDATA[process]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a>]]></type></param>,
+<param><name><![CDATA[error]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Method to be executed if a exception was thrown during the execution.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[process]]></name><description><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a> where a error occured]]></description></param>
+<param><name><![CDATA[error  ]]></name><description><![CDATA[Error that was catched with try & catch]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_ProcessListener.html#onProcessError">ProcessListener.onProcessError</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[onResumeProcess]]></title><fullMethod><left><![CDATA[function <b>onResumeProcess</b> (
+]]></left><right><param><name><![CDATA[process]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Method to be executed if a process awakes from pause.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[process]]></name><description><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a> that resumes from pause]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_ProcessListener.html#onResumeProcess">ProcessListener.onResumeProcess</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[onStartProcess]]></title><fullMethod><left><![CDATA[function <b>onStartProcess</b> (
+]]></left><right><param><name><![CDATA[process]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Method to be executed if a process starts execution.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[process]]></name><description><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a> that started execution]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_ProcessListener.html#onStartProcess">ProcessListener.onStartProcess</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[onUpdateProcess]]></title><fullMethod><left><![CDATA[function <b>onUpdateProcess</b> (
+]]></left><right><param><name><![CDATA[process]]></name>:<type><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Method to be executed if a process property changes.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[process]]></name><description><![CDATA[<a href="org_as2lib_app_exec_Process.html">Process</a> that changed some properties]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_app_exec_ProcessListener.html#onUpdateProcess">ProcessListener.onUpdateProcess</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:25:59]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

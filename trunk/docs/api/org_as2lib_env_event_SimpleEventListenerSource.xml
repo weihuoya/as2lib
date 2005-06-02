@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[SimpleEventListenerSource]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[EventListenerSource]]></name><uri><![CDATA[org_as2lib_env_event_EventListenerSource]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.event.SimpleEventListenerSource]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 23 April 2005, 13:51:00]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>SimpleEventListenerSource</code> manages listeners in the simplest way possible.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[SimpleEventListenerSource]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[l]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[addListener]]></item>
+<item><![CDATA[addAllListeners]]></item>
+<item><![CDATA[removeListener]]></item>
+<item><![CDATA[removeAllListeners]]></item>
+<item><![CDATA[getAllListeners]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[SimpleEventListenerSource]]></title><fullMethod><left><![CDATA[function <b>SimpleEventListenerSource</b> (
+]]></left><right><param><name><![CDATA[listeners]]></name>:<type><![CDATA[Array]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>SimpleEventListenerSource</code> instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[listeners]]></name><description><![CDATA[(optional) a collection of listeners to populate this listener
+ source with]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[l]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>l</b>:Array
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[All added listeners.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[addAllListeners]]></title><fullMethod><left><![CDATA[function <b>addAllListeners</b> (
+]]></left><right><param><name><![CDATA[listeners]]></name>:<type><![CDATA[Array]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds all listeners contained in the passed-in <code>listeners</code> array.<p>If the passed-in <code>listeners</code> array is <code>null</code> or <code>undefined</code>
+ it will be ignored. If an individual listener is <code>null</code> or
+ <code>undefined</code> it will be ignored too.<p>Note that the order of the listeners contained in the passed-in
+ <code>listeners</code> array is preserved.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[listeners]]></name><description><![CDATA[the listeners to add]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_event_SimpleEventListenerSource.html#addListener">addListener</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_event_EventListenerSource.html#addAllListeners">EventListenerSource.addAllListeners</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[addListener]]></title><fullMethod><left><![CDATA[function <b>addListener</b> (
+]]></left><right><param><name><![CDATA[listener]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds the passed-in <code>listener</code>.<p>The listener will only be added if it is not <code>null</code> nor <code>undefined</code>.<p>Note that if the passed-in <code>listener</code> has already been added the
+ previously added one will be removed.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[listener]]></name><description><![CDATA[the listener to add]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_event_EventListenerSource.html#addListener">EventListenerSource.addListener</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getAllListeners]]></title><fullMethod><left><![CDATA[function <b>getAllListeners</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns all added listeners.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[all added listeners]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_event_EventListenerSource.html#getAllListeners">EventListenerSource.getAllListeners</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[removeAllListeners]]></title><fullMethod><left><![CDATA[function <b>removeAllListeners</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Removes all added listeners.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_event_EventListenerSource.html#removeAllListeners">EventListenerSource.removeAllListeners</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[removeListener]]></title><fullMethod><left><![CDATA[function <b>removeListener</b> (
+]]></left><right><param><name><![CDATA[listener]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Removes the passed-in <code>listener</code>.<p>The removal will be ignored if the passed-in <code>listener</code> is <code>null</code>
+ or <code>undefined</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[listener]]></name><description><![CDATA[the listener to remove]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_event_EventListenerSource.html#removeListener">EventListenerSource.removeListener</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:58]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

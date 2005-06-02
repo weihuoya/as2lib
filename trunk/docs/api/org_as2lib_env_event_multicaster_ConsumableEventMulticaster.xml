@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ConsumableEventMulticaster]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[EventMulticaster]]></name><uri><![CDATA[org_as2lib_env_event_multicaster_EventMulticaster]]></uri></link></item><item><link><name><![CDATA[EventListenerSource]]></name><uri><![CDATA[org_as2lib_env_event_EventListenerSource]]></uri></link></item><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.event.multicaster.ConsumableEventMulticaster]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 23 April 2005, 13:51:00]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>ConsumableEventMulticaster</code> multicasts an event to all added listeners
+ with custom arguments until the event is consumed.]]></summary><restOfDescription><![CDATA[<p>A multicaster that implements this interface allows for consumable events.
+ This means that the event dispatch is stopped as soon as an event is consumed.<p>An event is consumed if a listener's event method returns <code>true</code>. If it
+ returns nothing, <code>null</code> or <code>undefined</code> or <code>false</code> the event
+ will further be dispatched.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[EventMulticaster]]></name><uri><![CDATA[org_as2lib_env_event_multicaster_EventMulticaster]]></uri></link></title><item><link><name>dispatch</name><uri>org_as2lib_env_event_multicaster_EventMulticaster</uri><method>dispatch</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[EventListenerSource]]></name><uri><![CDATA[org_as2lib_env_event_EventListenerSource]]></uri></link></title><item><link><name>addAllListeners</name><uri>org_as2lib_env_event_EventListenerSource</uri><method>addAllListeners</method></link></item><item><link><name>addListener</name><uri>org_as2lib_env_event_EventListenerSource</uri><method>addListener</method></link></item><item><link><name>getAllListeners</name><uri>org_as2lib_env_event_EventListenerSource</uri><method>getAllListeners</method></link></item><item><link><name>removeAllListeners</name><uri>org_as2lib_env_event_EventListenerSource</uri><method>removeAllListeners</method></link></item><item><link><name>removeListener</name><uri>org_as2lib_env_event_EventListenerSource</uri><method>removeListener</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:54]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

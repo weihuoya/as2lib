@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[Flash]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[none (Flash is a root class)]]></name></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Version]]></title><value><![CDATA[1.0]]></value></item>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[main.Flash]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Wednesday, 11 May 2005, 17:13:48]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>Flash</code> is intended for configuration of applications compiled with Flash.]]></summary><restOfDescription><![CDATA[<p>It allows you to define all Flash specific configurations similar to the
+ configuration in <a href="main_Configuration.html">Configuration</a>.<p>The current code uses a common configuration. If you have additional configuration
+ you have to overwrite (not extend!) this class in your application directory. The
+ only method that must be declared to be compatible is <a href="main_Flash.html#init">init</a>.]]></restOfDescription>
+</classDescription>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="main_Configuration.html">Configuration</a>]]></description></field>
+</fields>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[init]]></item>
+<item><private><![CDATA[setUpLogging]]></private></item>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[init]]></title><fullMethod><left><![CDATA[static function <b>init</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Initializes and starts the Flash configuration.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_app_conf_FlashApplication.html">org.as2lib.app.conf.FlashApplication</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><private><![CDATA[setUpLogging]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static function <b>setUpLogging</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets up common logging in the Flash environment that uses <code>trace</code>.]]></text>
+</description>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:25:50]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

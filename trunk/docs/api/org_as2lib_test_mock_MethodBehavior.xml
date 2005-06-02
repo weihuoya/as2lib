@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[MethodBehavior]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.test.mock.MethodBehavior]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 10 April 2005, 11:53:36]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>MethodBehavior</code> stores the expected and actual behaviors of one method
+ and verifies the expectation against the actual method calls.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getExpectedMethodCall]]></item>
+<item><![CDATA[addActualMethodCall]]></item>
+<item><![CDATA[addMethodResponse]]></item>
+<item><![CDATA[setArgumentsMatcher]]></item>
+<item><![CDATA[expectsAnotherMethodCall]]></item>
+<item><![CDATA[response]]></item>
+<item><![CDATA[verify]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[addActualMethodCall]]></title><fullMethod><left><![CDATA[function <b>addActualMethodCall</b> (
+]]></left><right><param><name><![CDATA[actualMethodCall]]></name>:<type><![CDATA[<a href="org_as2lib_test_mock_MethodCall.html">MethodCall</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds a new actual method call.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[actualMethodCall]]></name><description><![CDATA[the new actual method call]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_test_mock_AssertionFailedError.html">AssertionFailedError</a> if the maximum number of expected actual method
+ calls has been passed]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[addMethodResponse]]></title><fullMethod><left><![CDATA[function <b>addMethodResponse</b> (
+
+]]></left><right><param><name><![CDATA[methodResponse]]></name>:<type><![CDATA[<a href="org_as2lib_test_mock_MethodResponse.html">MethodResponse</a>]]></type></param>,
+<param><name><![CDATA[methodCallRange]]></name>:<type><![CDATA[<a href="org_as2lib_test_mock_MethodCallRange.html">MethodCallRange</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds the new <code>methodResponse</code> together with the <code>methodCallRange</code>
+ that indicates when and how often the response shall take place.<p>If you set no response, the behavior expects exactly one method call.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[methodResponse ]]></name><description><![CDATA[the response to do a given number of times]]></description></param>
+<param><name><![CDATA[methodCallRange]]></name><description><![CDATA[the range that indicates how often the response can take
+ place]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[expectsAnotherMethodCall]]></title><fullMethod><left><![CDATA[function <b>expectsAnotherMethodCall</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks whether this behavior expects another method call.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if a further method call is expected else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getExpectedMethodCall]]></title><fullMethod><left><![CDATA[function <b>getExpectedMethodCall</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_test_mock_MethodCall.html">MethodCall</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the expected method call.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the expected method call]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[response]]></title><fullMethod><left><![CDATA[function <b>response</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Responses depending on the current number of actual method calls.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the response's return value
+ @throw the response's throwable]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setArgumentsMatcher]]></title><fullMethod><left><![CDATA[function <b>setArgumentsMatcher</b> (
+]]></left><right><param><name><![CDATA[argumentsMatcher]]></name>:<type><![CDATA[<a href="org_as2lib_test_mock_ArgumentsMatcher.html">ArgumentsMatcher</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the passed-in <code>argumentsMatcher</code> for the expected method call.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[argumentsMatcher]]></name><description><![CDATA[the arguments matcher for the expected method call]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[verify]]></title><fullMethod><left><![CDATA[function <b>verify</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Verifies that the expactations have been met.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_test_mock_AssertionFailedError.html">AssertionFailedError</a> if the verification fails]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:29:33]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

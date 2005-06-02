@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ArgumentsMatcher]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.test.mock.ArgumentsMatcher]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Monday, 16 May 2005, 14:41:34]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>ArgumentsMatcher</code> matches a list of expected arguments against a list of
+ actual arguments.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[matchArguments]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[matchArguments]]></title><fullMethod><left><![CDATA[function <b>matchArguments</b> (
+
+]]></left><right><param><name><![CDATA[expectedArguments]]></name>:<type><![CDATA[Array]]></type></param>,
+<param><name><![CDATA[actualArguments]]></name>:<type><![CDATA[Array]]></type></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks if the passed-in <code>expectedArguments</code> match the
+ <code>actualArguments</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[expectedArguments]]></name><description><![CDATA[the arguments that are expected]]></description></param>
+<param><name><![CDATA[actualArguments  ]]></name><description><![CDATA[the actual arguments]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if the arguments match else <code>false</code>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:29:31]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

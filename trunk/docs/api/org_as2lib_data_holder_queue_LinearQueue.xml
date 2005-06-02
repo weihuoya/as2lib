@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[LinearQueue]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[Queue]]></name><uri><![CDATA[org_as2lib_data_holder_Queue]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.data.holder.queue.LinearQueue]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Tuesday, 10 May 2005, 16:57:08]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>LinearQueue</code> stores values in a 'first-in, first-out' manner.]]></summary><restOfDescription><![CDATA[<p>This class is a linear implementation of the <code>Queue</code> interface. This
+ means that enqueued values are stored in a linear manner and that you can store
+ as many values as you please. There are also queues that store values in a cyclic
+ manner. These queues can normally only hold a prescribed number of values and
+ overwrite old values or throw an exception if you try to enqueue more values.<p>'first-in, first-out' means that the first value that has been enqueued/added
+ to the queue is the first that gets dequeued/removed.<p>The usage of a queue is quite simple. You have one method to add/enqueue values
+ <a href="org_as2lib_data_holder_queue_LinearQueue.html#enqueue">enqueue</a> and one method to remove/dequeue them <a href="org_as2lib_data_holder_queue_LinearQueue.html#dequeue">dequeue</a>. You can
+ also peek at the beginning of the queue to see what value has been added/enqueued
+ at first without removing it <a href="org_as2lib_data_holder_queue_LinearQueue.html#peek">peek</a>.<p>If you want to iterate over the values of the queue you can either use the
+ iterator returned by the <a href="org_as2lib_data_holder_queue_LinearQueue.html#iterator">iterator</a> method or the array that contains the
+ queue's values returned by the <a href="org_as2lib_data_holder_queue_LinearQueue.html#toArray">toArray</a> method.<p>The two methods <a href="org_as2lib_data_holder_queue_LinearQueue.html#isEmpty">isEmpty</a> and <a href="org_as2lib_data_holder_queue_LinearQueue.html#size">size</a> let you find
+ out whether the queue contains values and how many values it contains.<p>You can modify the string representation that is returned by the <a href="org_as2lib_data_holder_queue_LinearQueue.html#toString">toString</a>
+ method with the static <a href="org_as2lib_data_holder_queue_LinearQueue.html#setStringifier">setStringifier</a> method.<p>Example:<pre><span class="codeComment">// construct the queue</span>
+<span class="codeKeyword">var</span> queue:Queue = <span class="codeKeyword">new</span> LinearQueue();
+queue.enqueue(<span class="codeString">"value1"</span>);
+queue.enqueue(<span class="codeString">"value2"</span>);
+queue.enqueue(<span class="codeString">"value3"</span>);
+<span class="codeComment">// use the queue</span>
+<span class="codeIdentifier">trace</span>(queue.peek());
+<span class="codeKeyword">while</span> (!queue.isEmpty()) {
+    <span class="codeIdentifier">trace</span>(queue.pop());
+}</pre><p>Output:<pre>value1
+value1
+value2
+value3</pre><p>You can alternatively pass-in the content of the queue on construction.<pre><span class="codeKeyword">var</span> queue:Queue = <span class="codeKeyword">new</span> LinearQueue([<span class="codeString">"value1"</span>, <span class="codeString">"value2"</span>, <span class="codeString">"value3"</span>]);
+<span class="codeComment">// ..</span></pre>]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[LinearQueue]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><private><![CDATA[stringifier]]></private></item>
+</methodSummaryPart>
+</private>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[data]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[getStringifier]]></item>
+<item><![CDATA[setStringifier]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[enqueue]]></item>
+<item><![CDATA[dequeue]]></item>
+<item><![CDATA[peek]]></item>
+<item><![CDATA[iterator]]></item>
+<item><![CDATA[isEmpty]]></item>
+<item><![CDATA[size]]></item>
+<item><![CDATA[toArray]]></item>
+<item><![CDATA[toString]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[LinearQueue]]></title><fullMethod><left><![CDATA[function <b>LinearQueue</b> (
+]]></left><right><param><name><![CDATA[source]]></name>:<type><![CDATA[Array]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>LinearQueue</code> instance.<p>The queue steps through the passed-in <code>source</code> beginning at position 0
+ and enqueues all contained elements.<p>Example:<pre><span class="codeKeyword">var</span> queue:LinearQueue = <span class="codeKeyword">new</span> LinearQueue([<span class="codeNumber">1</span>, <span class="codeNumber">2</span>, <span class="codeNumber">3</span>]);
+<span class="codeKeyword">while</span> (!queue.isEmpty()) {
+       <span class="codeIdentifier">trace</span>(queue.dequeue());
+}</pre><p>The output is made in the following order: 1, 2, 3]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[source]]></name><description><![CDATA[(optional) an array that contains values to populate this queue with]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><private><![CDATA[stringifier]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>stringifier</b>:<a href="org_as2lib_util_Stringifier.html">Stringifier</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Stringifies queues.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[data]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>data</b>:Array
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Contains the inserted elements.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[getStringifier]]></title><fullMethod><left><![CDATA[static function <b>getStringifier</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_util_Stringifier.html">Stringifier</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the stringifier that stringifies queues.<p>If no stringifier has been set manually via the static <a href="org_as2lib_data_holder_queue_LinearQueue.html#setStringifier">setStringifier</a>
+ method an instance of class <a href="org_as2lib_data_holder_queue_QueueStringifier.html">QueueStringifier</a> will be returned.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the stringifier that stringifies queues]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[setStringifier]]></title><fullMethod><left><![CDATA[static function <b>setStringifier</b> (
+]]></left><right><param><name><![CDATA[queueStringifier]]></name>:<type><![CDATA[<a href="org_as2lib_util_Stringifier.html">Stringifier</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Sets the new stringifier that stringifies queues.<p>If the passed-in <code>queueStringifier</code> is <code>null</code> or <code>undefined</code>,
+ the static <a href="org_as2lib_data_holder_queue_LinearQueue.html#getStringifier">getStringifier</a> method will return the default stringifier.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[queueStringifier]]></name><description><![CDATA[the new queue stringifier]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[dequeue]]></title><fullMethod><left><![CDATA[function <b>dequeue</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Removes and returns the firstly inserted value.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the firstly inserted value]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if this queue is empty]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#dequeue">org.as2lib.data.holder.Queue.dequeue</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[enqueue]]></title><fullMethod><left><![CDATA[function <b>enqueue</b> (
+]]></left><right><param><name><![CDATA[value]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds the passed-in <code>value</code> to this queue.<p><code>null</code> and <code>undefined</code> values are allowed.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[value]]></name><description><![CDATA[the value to add]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#enqueue">org.as2lib.data.holder.Queue.enqueue</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isEmpty]]></title><fullMethod><left><![CDATA[function <b>isEmpty</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether this queue contains any values.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if this queue contains no values else <code>false</code>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#isEmpty">org.as2lib.data.holder.Queue.isEmpty</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[iterator]]></title><fullMethod><left><![CDATA[function <b>iterator</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_data_holder_Iterator.html">Iterator</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an iterator that can be used to iterate over the values of this queue.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[an iterator to iterate over this queue's values]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_queue_LinearQueue.html#toArray">toArray</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#iterator">org.as2lib.data.holder.Queue.iterator</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[peek]]></title><fullMethod><left><![CDATA[function <b>peek</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Returns the firstly inserted value.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the firstly inserted value]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_data_holder_EmptyDataHolderException.html">EmptyDataHolderException</a> if this queue is empty]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#peek">org.as2lib.data.holder.Queue.peek</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[size]]></title><fullMethod><left><![CDATA[function <b>size</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the number of enqueued elements.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the number of enqueued elements]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_queue_LinearQueue.html#enqueue">enqueue</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#size">org.as2lib.data.holder.Queue.size</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toArray]]></title><fullMethod><left><![CDATA[function <b>toArray</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an array representation of this queue.<p>The elements are copied onto the array in a 'first-in, first-out' order,
+ similar to the order of the elements returned by a succession of calls to the
+ <a href="org_as2lib_data_holder_queue_LinearQueue.html#dequeue">dequeue</a> method.
+ ################################################################################]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the array representation of this queue]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Queue.html#toArray">org.as2lib.data.holder.Queue.toArray</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toString]]></title><fullMethod><left><![CDATA[function <b>toString</b> (
+]]></left><right>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the string representation of this queue.<p>The string representation is obtained via the stringifier returned by the
+ static <a href="org_as2lib_data_holder_queue_LinearQueue.html#getStringifier">getStringifier</a> method.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the string representation of this queue]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:34]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

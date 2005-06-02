@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[Throwable]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.except.Throwable]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 09 April 2005, 17:33:24]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>Throwable</code> is the basic interface for every class that is thrown.]]></summary><restOfDescription><![CDATA[<p>You can actually throw every class even if it does not implement this interface
+ but it is recommended to strictly use this interface for every throwable. Using it
+ produces clarity and setups a standard.<p>It prescribes implementing classes to provide key functionalities that help you
+ a lot when an exception is thrown and you do not catch it.<p>The first thing is the message. The message contains detaild information about
+ the problem that occurred.<p>The second is the stack trace. The stack trace contains at least the method that
+ actually threw the throwable. It can also contain the method that invoked the
+ method that threw the throwable and so on.<p>The third feature is the cause. Let's say a throwable is thrown and you catch it.
+ After catching it you want to throw a new throwable, that is of another type (maybe
+ a application specific exception while the catched was a generic one from a framework)
+ and contains another message that describes the problem from the point of view of
+ the catching method. In such a case we of course do not want to lose the
+ information the catched throwable provides, that caused the throwing of the new
+ throwable. We thus create the new throwable and initialize its cause, the catched
+ throwable, to get a more comprehensive error message.<p>Working with throwables in ActionScript is a little buggy and can be a pain to
+ use if you do not know to what you have to pay attention.<p>The first thing is that if you catch a throwable, the type of it must be fully
+ qualified. You cannot import the throwable and then only use its name, because
+ Flash will then not recognize the type, and will not catch the thrown throwable
+ (Note that it actually works when working on the timeline. The problem only occures
+ within classes. But I would nevertheless always use fully qualified names to guard
+ against potential errors.). Thus write your catch-blocks always the following way.<pre><span class="codeKeyword">try</span> {
+    ...
+} <span class="codeKeyword">catch</span> (e:org.as2lib.env.except.IllegalArgumentException) {
+    ...
+}</pre><p>The second problem occurs when working with Flex. The throwable type in the
+ catch-block's signature must always be a sub-class of the class <code>Error</code>
+ (which is the native 'throwable' of ActionScript). Because of that it is not
+ possible to catch throwables by interfaces, like this interface. If you simply want
+ to catch all throwables that may be thrown in your application do not specify a
+ throwable type or use <code>Error</code> if you are really really sure that all your
+ concrete throwable implementations extend this class. Note that the
+ <a href="org_as2lib_env_except_Exception.html">Exception</a> and <a href="org_as2lib_env_except_FatalException.html">FatalException</a> classes extend the <code>Error</code> class,
+ so they and any sub-classes can be used with Flex.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getStackTrace]]></item>
+<item><![CDATA[addStackTraceElement]]></item>
+<item><![CDATA[initCause]]></item>
+<item><![CDATA[getCause]]></item>
+<item><![CDATA[getMessage]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[addStackTraceElement]]></title><fullMethod><left><![CDATA[function <b>addStackTraceElement</b> (
+
+
+]]></left><right><param><name><![CDATA[thrower]]></name></param>,
+<param><name><![CDATA[method]]></name>:<type><![CDATA[Function]]></type></param>,
+<param><name><![CDATA[args]]></name>:<type><![CDATA[Array]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds a stack trace element to the stack trace.<p>The new stack trace element is added to the end of the stack trace.<p>At some parts in your application you may want to add stack trace elements
+ manually. This can help you to get a clearer image of what went where wrong and
+ why. You can use this method to do so.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[thrower]]></name><description><![CDATA[the object that threw, rethrew or forwarded (let pass) the
+ throwable]]></description></param>
+<param><name><![CDATA[method ]]></name><description><![CDATA[the method that threw, rethrew or forwarded (let pass) the
+ throwable]]></description></param>
+<param><name><![CDATA[args   ]]></name><description><![CDATA[the arguments the method was invoked with when throwing, rethrowing
+ or forwarding (leting pass) the throwable]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getCause]]></title><fullMethod><left><![CDATA[function <b>getCause</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Returns the initialized cause.<p>The cause is the throwable that caused this throwable to be thrown.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the initialized cause]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_except_Throwable.html#initCause">initCause</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getMessage]]></title><fullMethod><left><![CDATA[function <b>getMessage</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the message that describes in detail what went wrong.<p>The message should be understandable, even for non-programmers. It should
+ contain detailed information about what went wrong. And maybe also how the user
+ that sees this message can solve the problem.<p>If the throwable was thrown for example because of a wrong collaborator or
+ an illegal string or something similar, provide the string representation of it
+ in the error message. It is recommended to put these between []-characters.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the message that describes the problem in detail]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getStackTrace]]></title><fullMethod><left><![CDATA[function <b>getStackTrace</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an array that contains <a href="org_as2lib_env_except_StackTraceElement.html">StackTraceElement</a> instances of the
+ methods invoked before this throwable was thrown.<p>The last element is always the one that contains the actual method that
+ threw the throwable.<p>The stack trace helps you a lot because it says you where the throwing of
+ the throwable took place and also what arguments caused the throwing.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a stack containing the invoked methods until the throwable was thrown]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[initCause]]></title><fullMethod><left><![CDATA[function <b>initCause</b> (
+]]></left><right><param><name><![CDATA[cause]]></name></param>) : <![CDATA[<a href="org_as2lib_env_except_Throwable.html">Throwable</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Initializes the cause of this throwable.<p>The cause can only be initialized once. You normally initialize a cause if
+ you throw a throwable due to the throwing of another throwable. Thereby you do
+ not lose the information the cause offers.<p>This method returns this throwable to have an easy way to initialize the
+ cause. Following is how you could use the cause mechanism.<pre><span class="codeKeyword">try</span> {
+    myInstance.invokeMethodThatThrowsAThrowable();
+} <span class="codeKeyword">catch</span> (e:org.as2lib.env.except.Throwable) {
+    <span class="codeKeyword">throw</span> <span class="codeKeyword">new</span> MyThrowable(<span class="codeString">"myMessage"</span>, <span class="codeIdentifier">this</span>, arguments).initCause(e);
+}</pre>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[cause]]></name><description><![CDATA[the throwable that caused the throwing of this throwable]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[this throwable itself]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if the cause has already
+ been initialized]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:06]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

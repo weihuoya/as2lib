@@ -1,0 +1,688 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>AbstractTestSuiteResult</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>AbstractTestSuiteResult</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_test_speed_AbstractTestResult.html">AbstractTestResult</a> &lt; <a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.speed.AbstractTestSuiteResult</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 28 May 2005, 20:15:48</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>AbstractTestSuiteResult</code> provides implementations of methods needed by
+ implementations of the <a href="org_as2lib_test_unit_TestSuiteResult.html">org.as2lib.test.unit.TestSuiteResult</a> interface. </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#AbstractTestSuiteResult">AbstractTestSuiteResult</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class properties</span>
+              <ul>
+                <li>
+                  <a href="#NAME">NAME</a>
+                </li>
+                <li>
+                  <a href="#TIME">TIME</a>
+                </li>
+                <li>
+                  <a href="#AVERAGE_TIME">AVERAGE_TIME</a>
+                </li>
+                <li>
+                  <a href="#TIME_PERCENTAGE">TIME_PERCENTAGE</a>
+                </li>
+                <li>
+                  <a href="#METHOD_INVOCATION_COUNT">METHOD_INVOCATION_COUNT</a>
+                </li>
+                <li>
+                  <a href="#METHOD_INVOCATION_PERCENTAGE">METHOD_INVOCATION_PERCENTAGE</a>
+                </li>
+                <li>
+                  <a href="#METHOD_INVOCATION_SUCCESSION">METHOD_INVOCATION_SUCCESSION</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#testResults">testResults</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#getThis">getThis</a>
+                </li>
+                <li>
+                  <a href="#getAverageTime">getAverageTime</a>
+                </li>
+                <li>
+                  <a href="#getAllMethodInvocations">getAllMethodInvocations</a>
+                </li>
+                <li>
+                  <a href="#hasMethodInvocations">hasMethodInvocations</a>
+                </li>
+                <li>
+                  <a href="#getMethodInvocationCount">getMethodInvocationCount</a>
+                </li>
+                <li>
+                  <a href="#getMethodInvocationPercentage">getMethodInvocationPercentage</a>
+                </li>
+                <li>
+                  <a href="#getTestResults">getTestResults</a>
+                </li>
+                <li>
+                  <a href="#hasTestResults">hasTestResults</a>
+                </li>
+                <li>
+                  <a href="#getTestResultCount">getTestResultCount</a>
+                </li>
+                <li>
+                  <a href="#addTestResult">addTestResult</a>
+                </li>
+                <li>
+                  <a href="#sort">sort</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getComparator">getComparator</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getNameComparator">getNameComparator</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getTimeComparator">getTimeComparator</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getAverageTimeComparator">getAverageTimeComparator</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getTimePercentageComparator">getTimePercentageComparator</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getMethodInvocationCountComparator">getMethodInvocationCountComparator</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getMethodInvocationPercentageComparator">getMethodInvocationPercentageComparator</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getMethodInvocationSuccessionComparator">getMethodInvocationSuccessionComparator</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_test_speed_AbstractTestResult.html">AbstractTestResult</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_test_speed_AbstractTestResult.html#getTimePercentage">getTimePercentage</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="AbstractTestSuiteResult">AbstractTestSuiteResult</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>AbstractTestSuiteResult</b> (
+</div>
+                <div><span class="code">Void)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>AbstractTestSuiteResult</code> instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_test_speed_AbstractTestResult.html#AbstractTestResult">AbstractTestResult.AbstractTestResult</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="AVERAGE_TIME">AVERAGE_TIME</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>AVERAGE_TIME</b>:Number = <span class="codeNumber">2</span>
+</div>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Sort by average time.</div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="METHOD_INVOCATION_COUNT">METHOD_INVOCATION_COUNT</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>METHOD_INVOCATION_COUNT</b>:Number = <span class="codeNumber">4</span>
+</div>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Sort by method invocation count.</div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="METHOD_INVOCATION_PERCENTAGE">METHOD_INVOCATION_PERCENTAGE</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>METHOD_INVOCATION_PERCENTAGE</b>:Number = <span class="codeNumber">5</span>
+</div>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Sort by method invocation percentage.</div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="METHOD_INVOCATION_SUCCESSION">METHOD_INVOCATION_SUCCESSION</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>METHOD_INVOCATION_SUCCESSION</b>:Number = <span class="codeNumber">6</span>
+</div>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Sort by the succession of method invocations.</div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="NAME">NAME</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>NAME</b>:Number = <span class="codeNumber">0</span>
+</div>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Sort by name.</div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="TIME">TIME</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TIME</b>:Number = <span class="codeNumber">1</span>
+</div>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Sort by time.</div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="TIME_PERCENTAGE">TIME_PERCENTAGE</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static <b>TIME_PERCENTAGE</b>:Number = <span class="codeNumber">3</span>
+</div>
+                <div><span class="code"></span><span class="access">(read,write)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Sort by time percentage.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="testResults">testResults</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>testResults</b>:Array
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Test results of all sub-tests.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="addTestResult">addTestResult</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>addTestResult</b> (
+</div>
+                <div><span class="code">testResult:<a href="org_as2lib_test_unit_TestResult.html">TestResult</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Adds a new sub-test result.<p>If <code>testResult</code> is <code>null</code> or <code>undefined</code> it wll be
+ ignored, this means not added.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">testResult<span class="separator">:</span></div>
+                    <div>the new test result to add</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getAllMethodInvocations">getAllMethodInvocations</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getAllMethodInvocations</b> (
+</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns all profiled method invocations as <a href="org_as2lib_test_speed_MethodInvocation.html">MethodInvocation</a> instances.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">all profiled method invocations as <code>MethodInvocation</code> instances</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getAverageTime">getAverageTime</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getAverageTime</b> (
+</div>
+                <div><span class="code">Void) : Number</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the time needed per method invocation.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the time needed per method invocation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getAverageTimeComparator">getAverageTimeComparator</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getAverageTimeComparator</b> (
+</div>
+                <div><span class="code">Void) : Function</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the comparator that compares the results by their average time.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the comparator that compares the results by their average time</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getComparator">getComparator</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getComparator</b> (
+</div>
+                <div><span class="code">property:Number) : Function</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the comparator for the passed-in <code>property</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">property<span class="separator">:</span></div>
+                    <div>the property to return the comparator for</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the comparator for the passed-in <code>property</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMethodInvocationCount">getMethodInvocationCount</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMethodInvocationCount</b> (
+</div>
+                <div><span class="code">Void) : Number</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the total number of method invocations.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the total number of method invocations</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getMethodInvocationCountComparator">getMethodInvocationCountComparator</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getMethodInvocationCountComparator</b> (
+</div>
+                <div><span class="code">Void) : Function</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the comparator that compares the results by their invocation count.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the comparator that compares the results by their invocation count</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMethodInvocationPercentage">getMethodInvocationPercentage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMethodInvocationPercentage</b> (
+</div>
+                <div><span class="code">totalMethodInvocationCount:Number) : Number</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the percentage of method invocations in relation to the passed-in
+ <code>totalMethodInvocationCount</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">totalMethodInvocationCount<span class="separator">:</span></div>
+                    <div>the total number of method invocations to
+ calculate the percentage with</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the percentage of method invocations of this result</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getMethodInvocationPercentageComparator">getMethodInvocationPercentageComparator</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getMethodInvocationPercentageComparator</b> (
+</div>
+                <div><span class="code">Void) : Function</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the comparator that compares the results by their method invocation
+ count in percentage.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the comparator that compares the results by their method invocation
+ count in percentage</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getMethodInvocationSuccessionComparator">getMethodInvocationSuccessionComparator</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getMethodInvocationSuccessionComparator</b> (
+</div>
+                <div><span class="code">Void) : Function</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the method invocation succession comparator.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the method invocation succession comparator</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getNameComparator">getNameComparator</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getNameComparator</b> (
+</div>
+                <div><span class="code">Void) : Function</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the comparator that compares test results by their names.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the comparator that compares test results by their names</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getTestResultCount">getTestResultCount</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getTestResultCount</b> (
+</div>
+                <div><span class="code">Void) : Number</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the number of direct sub-test results.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the number of direct sub-test results</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getTestResults">getTestResults</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getTestResults</b> (
+</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns all test results as <a href="org_as2lib_test_unit_TestResult.html">org.as2lib.test.unit.TestResult</a> instances directly of this test
+ suite.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">all test results of this test suite</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getThis">getThis</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getThis</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_test_unit_TestSuiteResult.html">TestSuiteResult</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns this instance with correct type. This is needed for proper compile-time
+ checks.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">this instance with its correct type</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getTimeComparator">getTimeComparator</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getTimeComparator</b> (
+</div>
+                <div><span class="code">Void) : Function</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the comparator that compares the results by their needed time.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the comparator that compares the results by their needed time</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getTimePercentageComparator">getTimePercentageComparator</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getTimePercentageComparator</b> (
+</div>
+                <div><span class="code">Void) : Function</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the comparator that compares the results by their needed time in
+ percentage.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the comparator that compares the results by their needed time in
+ percentage.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="hasMethodInvocations">hasMethodInvocations</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>hasMethodInvocations</b> (
+</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns whether this test suite result has any method invocations.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if this test suite result has method invocations else
+ <code>false</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="hasTestResults">hasTestResults</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>hasTestResults</b> (
+</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns whether this test suite result has sub-test results.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if this test suite has sub-test results else <code>false</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="sort">sort</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>sort</b> (
+
+</div>
+                <div><span class="code">property:Number,
+descending:Boolean) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Sorts this test suite result and its sub-test results.<p>Supported sort properties are:<ul><li><a href="org_as2lib_test_speed_AbstractTestSuiteResult.html#NAME">NAME</a></li><li><a href="org_as2lib_test_speed_AbstractTestSuiteResult.html#TIME">TIME</a></li><li><a href="org_as2lib_test_speed_AbstractTestSuiteResult.html#AVERAGE_TIME">AVERAGE_TIME</a></li><li><a href="org_as2lib_test_speed_AbstractTestSuiteResult.html#TIME_PERCENTAGE">TIME_PERCENTAGE</a></li><li><a href="org_as2lib_test_speed_AbstractTestSuiteResult.html#METHOD_INVOCATION_COUNT">METHOD_INVOCATION_COUNT</a></li><li><a href="org_as2lib_test_speed_AbstractTestSuiteResult.html#METHOD_INVOCATION_PERCENTAGE">METHOD_INVOCATION_PERCENTAGE</a></li><li><a href="org_as2lib_test_speed_AbstractTestSuiteResult.html#METHOD_INVOCATION_SUCCESSION">METHOD_INVOCATION_SUCCESSION</a></li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">property  <span class="separator">:</span></div>
+                    <div>the property to sort by</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">descending<span class="separator">:</span></div>
+                    <div>determines whether to sort descending <code>true</code> or
+ ascending <code>false</code></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2005 as2lib | </span><span class="date">Tuesday, 31 May 2005, 20:29:57
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

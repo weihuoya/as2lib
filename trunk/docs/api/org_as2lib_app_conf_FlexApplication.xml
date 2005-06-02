@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[FlexApplication]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[none (FlexApplication is a root class)]]></name></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Version]]></title><value><![CDATA[1.0]]></value></item>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.app.conf.FlexApplication]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Wednesday, 11 May 2005, 22:15:22]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>FlexApplication</code> is the default access point for Flex applications.]]></summary><restOfDescription><![CDATA[<p>Use this class to configure your application with Macromedia Flex. It inits
+ your flex configuration in <a href="main_Flex.html">main.Flex</a> and your configuration for all 
+ environments in <a href="main_Configuration.html">main.Configuration</a>.<p>You must simply init your application something like this:<pre>&#60;mx:Application xmlns:mx=<span class="codeString">"http://www.macromedia.com/2003/mxml"</span> initialize=<span class="codeString">"initApp();"</span>&#62;
+  &#60;mx:Script&#62;
+    &#60;![CDATA[
+      <span class="codeKeyword">import</span> org.as2lib.app.conf.FlexApplication;
+      <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> initApp(<span class="codeIdentifier">Void</span>):<span class="codeIdentifier">Void</span> {
+        FlexApplication.init();
+      }
+    ]]&#62;
+  &#60;/mx:Script&#62;
+&#60;/mx:Application&#62;</pre>]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[init]]></item>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[init]]></title><fullMethod><left><![CDATA[static function <b>init</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Executes the configuration for the Flex environment in <a href="main_Flex.html">main.Flex</a> and the 
+ configuration for all environments in <a href="main_Configuration.html">main.Configuration</a>.]]></text>
+</description>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:25:56]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[AscbHandler]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[LogHandler]]></name><uri><![CDATA[org_as2lib_env_log_LogHandler]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.log.handler.AscbHandler]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Sunday, 10 April 2005, 10:34:10]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>AscbHandler</code> delegates the log message to the <code>LogManager.log</code>
+ method of the ASCB Logging API.]]></summary>
+</classDescription>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_env_log_logger_AscbLogger.html">org.as2lib.env.log.logger.AscbLogger</a><br /><a href="http://www.person13.com/ascblibrary">ASCB Library</a>]]></description></field>
+</fields>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[AscbHandler]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><private><![CDATA[ascbHandler]]></private></item>
+</methodSummaryPart>
+</private>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[manager]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[getInstance]]></item>
+</methodSummaryPart>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[write]]></item>
+<item><private><![CDATA[convertLevel]]></private></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[AscbHandler]]></title><fullMethod><left><![CDATA[function <b>AscbHandler</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>AscbHandler</code> instance.<p>You can use one and the same instance for multiple loggers. So think about
+ using the handler returned by the static <a href="org_as2lib_env_log_handler_AscbHandler.html#getInstance">getInstance</a> method. Using this
+ instance prevents the instantiation of unnecessary ascb handlers and saves
+ storage.]]></text>
+</description>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><private><![CDATA[ascbHandler]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[static <b>ascbHandler</b>:<a href="org_as2lib_env_log_handler_AscbHandler.html">AscbHandler</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Holds a ascb handler.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[manager]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>manager</b>:<a href="org_as2lib_env_log_LogManager.html">LogManager</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The ASCB <code>LogManager</code> log messages are delegated to.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[getInstance]]></title><fullMethod><left><![CDATA[static function <b>getInstance</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_env_log_handler_AscbHandler.html">AscbHandler</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an instance of this class.<p>This method always returns the same instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a ascb handler]]></description></field>
+</fields>
+</method>
+</methodSection>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><private><![CDATA[convertLevel]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>convertLevel</b> (
+]]></left><right><param><name><![CDATA[level]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>]]></type></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Converts the As2lib <code>LogLevel</code> into a ASCB level.
+
+ <dl>
+   <dt>ALL</dt>
+   <dd>Is converted to <code>Level.ALL</code>.</dd>
+   <dt>DEBUG</dt>
+   <dd>Is converted to <code>Level.DEBUG</code>.</dd>
+   <dt>INFO</dt>
+   <dd>Is converted to <code>Level.INFO</code>.</dd>
+   <dt>WARNING</dt>
+   <dd>Is converted to <code>Level.WARNING</code>.</dd>
+   <dt>ERROR</dt>
+   <dd>Is converted to <code>Level.SEVERE</code>.</dd>
+   <dt>FATAL</dt>
+   <dd>Is converted to <code>Level.ALL</code>.</dd>
+   <dt>NONE</dt>
+   <dd>Is converted to <code>Level.OFF</code>.</dd>
+ </dl><p>If the passed-in <code>level</code> is none of the above, <code>null</code> is returned.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[level]]></name><description><![CDATA[the As2lib log level to convert]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the equivalent ASCB level number or <code>null</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[write]]></title><fullMethod><left><![CDATA[function <b>write</b> (
+]]></left><right><param><name><![CDATA[message]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LogMessage.html">LogMessage</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Converts the passed-in <code>message</code> to a format that is expected formatters
+ of the ASCB Logging API and passes the converted message to the
+ <code>LogManager.log</code> method of the ASCB Logging API.<p>The converted object has the following variables:
+ <dl>
+   <dt>level</dt>
+   <dd>
+     ASCB Logging API level number of the message. The former As2lib
+     <code>LogLevel</code> returned by <code>LogMessage.getLevel</code> was converted to
+     this level number by the <a href="org_as2lib_env_log_handler_AscbHandler.html#convertLevel">convertLevel</a> method.
+   </dd>
+   <dt>message</dt>
+   <dd>
+     The actual message to log. That is the message returned by the
+     <code>LogMessage.getMessage</code> method.
+   </dd>
+   <dt>name</dt>
+   <dd>
+     The name of the logger returned by the <code>LogMessage.getLoggerName</code>
+     method.
+   </dd>
+   <dt>time</dt>
+   <dd>
+     The time when the logging took place. This is a <code>Date</code> instance
+     configured with the timestamp returned by the method 
+     <code>LogMessage.getTimeStamp</code>.
+   </dd>
+   <dt>logMessage</dt>
+   <dd>
+     The passed-in <code>message</code> instance. This variable may be used by your
+     own formatter if you want to take advantage of the stringifier of the
+     <code>LogMessage</code>.
+   </dd>
+ </dl>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[message]]></name><description><![CDATA[the message to log]]></description></param>
+</field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_log_LogHandler.html#write">org.as2lib.env.log.LogHandler.write</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:13]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

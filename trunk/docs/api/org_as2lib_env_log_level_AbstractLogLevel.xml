@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[AbstractLogLevel]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[LogLevel]]></name><uri><![CDATA[org_as2lib_env_log_LogLevel]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.log.level.AbstractLogLevel]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Tuesday, 10 May 2005, 16:56:08]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>AbstractLogLevel</code> acts as a basic access point for the pre-defined levels
+ <a href="org_as2lib_env_log_level_AbstractLogLevel.html#ALL">ALL</a>, <a href="org_as2lib_env_log_level_AbstractLogLevel.html#DEBUG">DEBUG</a>, <a href="org_as2lib_env_log_level_AbstractLogLevel.html#INFO">INFO</a>, <a href="org_as2lib_env_log_level_AbstractLogLevel.html#WARNING">WARNING</a>, <a href="org_as2lib_env_log_level_AbstractLogLevel.html#ERROR">ERROR</a>,
+ <a href="org_as2lib_env_log_level_AbstractLogLevel.html#FATAL">FATAL</a> and <a href="org_as2lib_env_log_level_AbstractLogLevel.html#NONE">NONE</a>.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><private><![CDATA[AbstractLogLevel]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Class properties]]></title>
+<item><![CDATA[ALL]]></item>
+<item><![CDATA[DEBUG]]></item>
+<item><![CDATA[INFO]]></item>
+<item><![CDATA[WARNING]]></item>
+<item><![CDATA[ERROR]]></item>
+<item><![CDATA[FATAL]]></item>
+<item><![CDATA[NONE]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[level]]></private></item>
+<item><private><![CDATA[name]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[isGreaterOrEqual]]></item>
+<item><![CDATA[toNumber]]></item>
+<item><![CDATA[toString]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<private>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><private><![CDATA[AbstractLogLevel]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[function <b>AbstractLogLevel</b> (
+
+]]></left><right><param><name><![CDATA[level]]></name>:<type><![CDATA[Number]]></type></param>,
+<param><name><![CDATA[name]]></name>:<type><![CDATA[String]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>AbstractLogLevel</code> instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[level]]></name><description><![CDATA[the level represented by a number]]></description></param>
+<param><name><![CDATA[name ]]></name><description><![CDATA[the name of the level]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if passed-in <code>level</code> is <code>null</code> or
+ <code>undefined</code>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Class properties]]></title>
+<method>
+<title><![CDATA[ALL]]></title><fullMethod><left><![CDATA[static <b>ALL</b>:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a> = <span class="codeKeyword">new</span> AbstractLogLevel(<span class="codeNumber">60</span>, <span class="codeString">"<b>ALL</b>"</span>)
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[All log messages get logged.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[DEBUG]]></title><fullMethod><left><![CDATA[static <b>DEBUG</b>:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a> = <span class="codeKeyword">new</span> AbstractLogLevel(<span class="codeNumber">50</span>, <span class="codeString">"<b>DEBUG</b>"</span>)
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[All log messages that are at a lower log level than debug get logged.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[ERROR]]></title><fullMethod><left><![CDATA[static <b>ERROR</b>:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a> = <span class="codeKeyword">new</span> AbstractLogLevel(<span class="codeNumber">20</span>, <span class="codeString">"<b>ERROR</b>"</span>)
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[All log messages that are at a lower log level than error get logged.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[FATAL]]></title><fullMethod><left><![CDATA[static <b>FATAL</b>:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a> = <span class="codeKeyword">new</span> AbstractLogLevel(<span class="codeNumber">10</span>, <span class="codeString">"<b>FATAL</b>"</span>)
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[All log messages that are at a lower log level than fatal get logged.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[INFO]]></title><fullMethod><left><![CDATA[static <b>INFO</b>:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a> = <span class="codeKeyword">new</span> AbstractLogLevel(<span class="codeNumber">40</span>, <span class="codeString">"<b>INFO</b>"</span>)
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[All log messages that are at a lower log level than info get logged.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[NONE]]></title><fullMethod><left><![CDATA[static <b>NONE</b>:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a> = <span class="codeKeyword">new</span> AbstractLogLevel(<span class="codeNumber">0</span>, <span class="codeString">"<b>NONE</b>"</span>)
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[No log messages get logged.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[WARNING]]></title><fullMethod><left><![CDATA[static <b>WARNING</b>:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a> = <span class="codeKeyword">new</span> AbstractLogLevel(<span class="codeNumber">30</span>, <span class="codeString">"<b>WARNING</b>"</span>)
+]]></left><right></right></fullMethod><access><![CDATA[(read,write)]]></access>
+<description>
+<text><![CDATA[All log messages that are at a lower log level than warning get logged.]]></text>
+</description>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[level]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>level</b>:Number
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Stores the level in form of a number.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[name]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>name</b>:String
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The name of the level.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[isGreaterOrEqual]]></title><fullMethod><left><![CDATA[function <b>isGreaterOrEqual</b> (
+]]></left><right><param><name><![CDATA[level]]></name>:<type><![CDATA[<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>]]></type></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Compares the number representation of this level with the one of the passed-in
+ <code>level</code> using the is greater or equal operator.<p><code>true</code> will be returned if:<ul><li>This level is greater or equal than the passed-in <code>level</code>.</li><li>The passed-in <code>level</code> is <code>null</code> or <code>undefined</code>.</li></ul>]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[level]]></name><description><![CDATA[the level to compare this level with]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if this level is greater or equal than the passed-in
+ <code>level</code> else <code>false</code>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_log_LogLevel.html#isGreaterOrEqual">org.as2lib.env.log.LogLevel.isGreaterOrEqual</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toNumber]]></title><fullMethod><left><![CDATA[function <b>toNumber</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the number representation of this level.<p>The return value is never <code>null</code> or <code>undefined</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the number representation of this level]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_log_LogLevel.html#toNumber">org.as2lib.env.log.LogLevel.toNumber</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[toString]]></title><fullMethod><left><![CDATA[function <b>toString</b> (
+]]></left><right>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the string representation of this level.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the string representation of this level]]></description></field>
+<field><title><![CDATA[Overrides]]></title><description><![CDATA[<a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a>]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:27:21]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

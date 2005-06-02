@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[Configuration]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[none (Configuration is a root class)]]></name></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Version]]></title><value><![CDATA[1.0]]></value></item>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[main.Configuration]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Wednesday, 11 May 2005, 17:00:24]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>Configuration</code> is intended for general configuration at startup, that
+ is the same for Flash, Flex and MTASC.]]></summary><restOfDescription><![CDATA[<p><code>Configuration</code> is a central part of a configuration system. It should
+ contain only the not-plattform-specific configuration. If you want to use this
+ configuration take a look at <a href="org_as2lib_app_conf_FlashoutApplication.html">org.as2lib.app.conf.FlashoutApplication</a>,
+ <a href="org_as2lib_app_conf_MtascApplication.html">org.as2lib.app.conf.MtascApplication</a> and <a href="org_as2lib_app_conf_FlashApplication.html">org.as2lib.app.conf.FlashApplication</a>.<p><code>Configuration</code> sould be overwritten. Other classes reference to it but
+ itself contains no code. If you want to overwrite it you can create the same class
+ in your application directory with your configuration code.<p>Example:<pre><span class="codeKeyword">import</span> com.domain.app.*;
+
+<span class="codeKeyword">class</span> main.Configuration {
+    <span class="codeKeyword">public</span> <span class="codeKeyword">static</span> <span class="codeKeyword">var</span> app:MyApplication;
+
+    <span class="codeKeyword">public</span> <span class="codeKeyword">static</span> <span class="codeKeyword">function</span> init(<span class="codeIdentifier">Void</span>);<span class="codeIdentifier">Void</span> {
+        app = <span class="codeKeyword">new</span> MySuperApplication();
+        app.start();
+    }
+}</pre><p>It is important to have a static <code>init</code> method that does all the needed
+ configuration. This method must, as in the above example, be declared in a class
+ that has the same namespace (<code>main</code>) and name (<code>Configuration</code> as
+ this example class. Besides that you can declare any further method in the class
+ or extend any class and implement any interface you like.<p>If you now want to use this class MTASC you must pay attention to the class
+ paths of the compiler to get it to run!<br>The Macromedia Flash MX 2004 Compiler takes the topmost as most important so
+ you would have to set your classpaths like this:<pre>D:\Projects\MyApplication\src\
+D:\Libraries\as2lib\main\src\</pre><br>The MTASC compiler (<a href="http://www.mtasc.org">http://www.mtasc.org</a>) works the opposite way. The tompost
+ classpath is less important. So you would have to set your classpaths like this:<pre>-cp <span class="codeString">"D:/Libraries/as2lib/main/src"</span> -cp <span class="codeString">"D:/Projects/MyApplication/src/"</span></pre><br>If you work with the eclipse plugin (http://asdt.sf.net) that uses mtasc you
+ have to set the classpaths in your project directory in the same way (you can add
+ external folders by using alias folders).]]></restOfDescription>
+</classDescription>
+<fields>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_app_conf_FlashApplication.html">org.as2lib.app.conf.FlashApplication</a><br /><a href="org_as2lib_app_conf_MtascApplication.html">org.as2lib.app.conf.MtascApplication</a><br /><a href="org_as2lib_app_conf_FlashoutApplication.html">org.as2lib.app.conf.FlashoutApplication</a>]]></description></field>
+</fields>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Class methods]]></title>
+<item><![CDATA[init]]></item>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Class methods]]></title>
+<method>
+<title><![CDATA[init]]></title><fullMethod><left><![CDATA[static function <b>init</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[This method is used by the <code>main</code> or <code>init</code> method of the classes
+ <a href="org_as2lib_app_conf_FlashoutApplication.html">org.as2lib.app.conf.FlashoutApplication</a>, <a href="org_as2lib_app_conf_FlashApplication.html">org.as2lib.app.conf.FlashApplication</a>
+ and <a href="org_as2lib_app_conf_MtascApplication.html">org.as2lib.app.conf.MtascApplication</a>.]]></text>
+</description>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:25:48]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

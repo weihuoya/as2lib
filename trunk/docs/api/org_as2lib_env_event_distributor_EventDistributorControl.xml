@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[EventDistributorControl]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[EventListenerSource]]></name><uri><![CDATA[org_as2lib_env_event_EventListenerSource]]></uri></link></item><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.env.event.distributor.EventDistributorControl]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Saturday, 28 May 2005, 12:08:20]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>EventDistributorControl</code> controls a distributor to distribute events to
+ listeners in a compiler-safe manner.]]></summary><restOfDescription><![CDATA[<p>You can get a distributor via the <a href="org_as2lib_env_event_distributor_EventDistributorControl.html#getDistributor">getDistributor</a> method that can be
+ casted to your listener type. This enables you to distribute events in a
+ compiler-safe manner.]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getDistributor]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[EventListenerSource]]></name><uri><![CDATA[org_as2lib_env_event_EventListenerSource]]></uri></link></title><item><link><name>addAllListeners</name><uri>org_as2lib_env_event_EventListenerSource</uri><method>addAllListeners</method></link></item><item><link><name>addListener</name><uri>org_as2lib_env_event_EventListenerSource</uri><method>addListener</method></link></item><item><link><name>getAllListeners</name><uri>org_as2lib_env_event_EventListenerSource</uri><method>getAllListeners</method></link></item><item><link><name>removeAllListeners</name><uri>org_as2lib_env_event_EventListenerSource</uri><method>removeAllListeners</method></link></item><item><link><name>removeListener</name><uri>org_as2lib_env_event_EventListenerSource</uri><method>removeListener</method></link></item></fromClass>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[getDistributor]]></title><fullMethod><left><![CDATA[function <b>getDistributor</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Returns the typed distributor to distribute the event to all added listeners.<p>The returned distributor can be casted to the type all added listeners have.
+ You can then invoke the event method on it to distribute it to all added
+ listeners. This event distribution approach has the advantage of proper
+ compile-time checking.<p>Note that the type of the returned distributor depends on the concrete
+ implementation of this interface. Most implementations will probably expect the
+ listener type to be passed-in on construction.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the distributor to distribute the event]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:50]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

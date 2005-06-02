@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[Server]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Christoph Atteneder]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.io.conn.core.server.Server]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Friday, 08 April 2005, 12:13:04]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>Server</code> acts as a composite for many services that are all combined in one
+ domain.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[run]]></item>
+<item><![CDATA[stop]]></item>
+<item><![CDATA[putService]]></item>
+<item><![CDATA[addService]]></item>
+<item><![CDATA[removeService]]></item>
+<item><![CDATA[getService]]></item>
+<item><![CDATA[getHost]]></item>
+<item><![CDATA[isRunning]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[addService]]></title><fullMethod><left><![CDATA[function <b>addService</b> (
+]]></left><right><param><name><![CDATA[serviceProxy]]></name>:<type><![CDATA[<a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html">ServerServiceProxy</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Adds the passed-in <code>serviceProxy</code> to this server.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[serviceProxy]]></name><description><![CDATA[the proxy to add to this server]]></description></param>
+</field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_conn_core_server_Server.html#putService">putService</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getHost]]></title><fullMethod><left><![CDATA[function <b>getHost</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the name of this server.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the name of this server]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getService]]></title><fullMethod><left><![CDATA[function <b>getService</b> (
+]]></left><right><param><name><![CDATA[path]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[<a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html">ServerServiceProxy</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the service corresponding to the passed-in service <code>path</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[path]]></name><description><![CDATA[the full path of the service to return]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a service proxy wrapping the actual service]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isRunning]]></title><fullMethod><left><![CDATA[function <b>isRunning</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether this server is running.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if this server is running else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[putService]]></title><fullMethod><left><![CDATA[function <b>putService</b> (
+
+]]></left><right><param><name><![CDATA[path]]></name>:<type><![CDATA[String]]></type></param>,
+<param><name><![CDATA[service]]></name></param>) : <![CDATA[<a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html">ServerServiceProxy</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Puts the passed-in <code>service</code> to the passed-in <code>path</code> on this server.<p>This means after starting this server you can invoke methods on the passed-in
+ <code>service</code> using the server host plus the service <code>path</code> as url.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[path   ]]></name><description><![CDATA[the path through which the service can be accessed on this server]]></description></param>
+<param><name><![CDATA[service]]></name><description><![CDATA[the actual service which provides the functionalities]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the service proxy that wraps the passed-in <code>service</code> and <code>path</code>]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_io_conn_core_server_Server.html#addService">addService</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[removeService]]></title><fullMethod><left><![CDATA[function <b>removeService</b> (
+]]></left><right><param><name><![CDATA[path]]></name>:<type><![CDATA[String]]></type></param>) : <![CDATA[<a href="org_as2lib_io_conn_core_server_ServerServiceProxy.html">ServerServiceProxy</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Removes the service corresponding to the passed-in <code>path</code> from this server.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[path]]></name><description><![CDATA[the full path of the service to remove]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[a service proxy that wraps the actual service]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[run]]></title><fullMethod><left><![CDATA[function <b>run</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Runs this server and all added services.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[stop]]></title><fullMethod><left><![CDATA[function <b>stop</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Stops all added services and this server.]]></text>
+</description>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:29:04]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

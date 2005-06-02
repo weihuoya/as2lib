@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[ArrayIterator]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[Iterator]]></name><uri><![CDATA[org_as2lib_data_holder_Iterator]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Michael Herrmann, Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.data.holder.array.ArrayIterator]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Wednesday, 06 April 2005, 13:18:24]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>ArrayIterator</code> can be used to iterate over arrays.]]></summary><restOfDescription><![CDATA[<p>The usage of this iterator is quite simple. There is one method to check
+ whether there are more elements left to iterate over <a href="org_as2lib_data_holder_array_ArrayIterator.html#hasNext">hasNext</a>, one method
+ to get the next element <a href="org_as2lib_data_holder_array_ArrayIterator.html#next">next</a> and one to remove the current element
+ <a href="org_as2lib_data_holder_array_ArrayIterator.html#remove">remove</a>.<p>Example:<pre><span class="codeKeyword">var</span> iterator:Iterator = <span class="codeKeyword">new</span> ArrayIterator([<span class="codeString">"value1"</span>, <span class="codeString">"value2"</span>, <span class="codeString">"value3"</span>]);
+<span class="codeKeyword">while</span> (iterator.hasNext()) {
+    <span class="codeIdentifier">trace</span>(iterator.next());
+}</pre><p>Output:<pre>value1
+value2
+value3</pre>]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[ArrayIterator]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[t]]></private></item>
+<item><private><![CDATA[i]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[hasNext]]></item>
+<item><![CDATA[next]]></item>
+<item><![CDATA[remove]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[ArrayIterator]]></title><fullMethod><left><![CDATA[function <b>ArrayIterator</b> (
+]]></left><right><param><name><![CDATA[target]]></name>:<type><![CDATA[Array]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new <code>ArrayIterator</code> instance.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[target]]></name><description><![CDATA[the array to iterate over]]></description></param>
+</field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in <code>target</code> array is
+ <code>null</code> or <code>undefined</code>]]></description></field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[i]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>i</b>:Number
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The current index of the iteration.]]></text>
+</description>
+</method>
+<method>
+<title><private><![CDATA[t]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>t</b>:Array
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[The target data holder.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[hasNext]]></title><fullMethod><left><![CDATA[function <b>hasNext</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether there exists another element to iterate over.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if there is at least one lement left to iterate over]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Iterator.html#hasNext">org.as2lib.data.holder.Iterator.hasNext</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[next]]></title><fullMethod><left><![CDATA[function <b>next</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Returns the next element of the array.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the next element of the array]]></description></field>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_data_holder_NoSuchElementException.html">NoSuchElementException</a> if there is no next element]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Iterator.html#next">org.as2lib.data.holder.Iterator.next</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[remove]]></title><fullMethod><left><![CDATA[function <b>remove</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Removes the currently selected element from this iterator and from the array this
+ iterator iterates over.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Throws]]></title><description><![CDATA[<a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if you try to remove an element when none is selected]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Iterator.html#remove">org.as2lib.data.holder.Iterator.remove</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:15]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

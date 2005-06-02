@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[Map]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker, Michael Herrmann]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.data.holder.Map]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Wednesday, 06 April 2005, 13:18:24]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>Map</code> is the base interface for data holders that map keys to values.]]></summary><restOfDescription><![CDATA[<p>A map offers two methods that help you find out whether it contains a specific
+ key or value. These two methods are <a href="org_as2lib_data_holder_Map.html#containsKey">containsKey</a> and <a href="org_as2lib_data_holder_Map.html#containsValue">containsValue</a>.<p>To get the data stored in the map you can use the methods <a href="org_as2lib_data_holder_Map.html#getKeys">getKeys</a>,
+ <a href="org_as2lib_data_holder_Map.html#getValues">getValues</a> and <a href="org_as2lib_data_holder_Map.html#get">get</a>. If you want to iterate over the values of
+ the map you can use the iterators returned by the methods <a href="org_as2lib_data_holder_Map.html#iterator">iterator</a> or
+ <a href="org_as2lib_data_holder_Map.html#valueIterator">valueIterator</a>. If you want to iterate over the keys you can use the
+ iterator returned by the <a href="org_as2lib_data_holder_Map.html#keyIterator">keyIterator</a> method.<p>To add key value pairs to the map you can use the methods <a href="org_as2lib_data_holder_Map.html#put">put</a> and
+ <a href="org_as2lib_data_holder_Map.html#putAll">putAll</a>. The <code>putAll</code> method lets you add all key-value pairs
+ contained in the passed-in <code>map</code> to this map.<p>To remove key-value pairs you can use the methods <a href="org_as2lib_data_holder_Map.html#remove">remove</a> and
+ <a href="org_as2lib_data_holder_Map.html#clear">clear</a>. The <code>remove</code> method deletes only the key-value pair
+ corresponding to the passed-in <code>key</code>, while the clear method removes all
+ key-value pairs.<p>There are two more methods you may need. The <a href="org_as2lib_data_holder_Map.html#isEmpty">isEmpty</a> and the
+ <a href="org_as2lib_data_holder_Map.html#size">size</a> method. These methods give you information about whether this
+ map contains any mappings and how many mappings it contains.<p>Example:<pre><span class="codeComment">// the map gets set up somewhere</span>
+<span class="codeKeyword">var</span> map:Map = <span class="codeKeyword">new</span> MyMap();
+map.put(<span class="codeString">"myKey"</span>, <span class="codeString">"myValue"</span>);
+<span class="codeComment">// at some different place in your code</span>
+<span class="codeKeyword">if</span> (map.containsKey(<span class="codeString">"myKey"</span>)) {
+    <span class="codeIdentifier">trace</span>(map.<span class="codeIdentifier">get</span>(<span class="codeString">"myKey"</span>));
+}</pre>]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[containsKey]]></item>
+<item><![CDATA[containsValue]]></item>
+<item><![CDATA[getKeys]]></item>
+<item><![CDATA[getValues]]></item>
+<item><![CDATA[get]]></item>
+<item><![CDATA[put]]></item>
+<item><![CDATA[putAll]]></item>
+<item><![CDATA[remove]]></item>
+<item><![CDATA[clear]]></item>
+<item><![CDATA[iterator]]></item>
+<item><![CDATA[valueIterator]]></item>
+<item><![CDATA[keyIterator]]></item>
+<item><![CDATA[size]]></item>
+<item><![CDATA[isEmpty]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicInterface]]></name><uri><![CDATA[org_as2lib_core_BasicInterface]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicInterface</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[clear]]></title><fullMethod><left><![CDATA[function <b>clear</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Clears all mappings.]]></text>
+</description>
+</method>
+<method>
+<title><![CDATA[containsKey]]></title><fullMethod><left><![CDATA[function <b>containsKey</b> (
+]]></left><right><param><name><![CDATA[key]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks if the passed-in <code>key</code> exists.<p>That means whether a value has been mapped to it.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[key]]></name><description><![CDATA[the key to be checked for availability]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if the <code>key</code> exists else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[containsValue]]></title><fullMethod><left><![CDATA[function <b>containsValue</b> (
+]]></left><right><param><name><![CDATA[value]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Checks if the passed-in <code>value</code> is mapped to a key.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[value]]></name><description><![CDATA[the value to be checked for availability]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if the <code>value</code> is mapped to a key else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[get]]></title><fullMethod><left><![CDATA[function <b>get</b> (
+]]></left><right><param><name><![CDATA[key]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Returns the value that is mapped to the passed-in <code>key</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[key]]></name><description><![CDATA[the key to return the corresponding value for]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the value corresponding to the passed-in <code>key</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getKeys]]></title><fullMethod><left><![CDATA[function <b>getKeys</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an array that contains all keys that have a value mapped to
+ it.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[an array that contains all keys]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getValues]]></title><fullMethod><left><![CDATA[function <b>getValues</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Array]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an array that contains all values that are mapped to a key.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[an array that contains all mapped values]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[isEmpty]]></title><fullMethod><left><![CDATA[function <b>isEmpty</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Boolean]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns whether this map contains any mappings.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[<code>true</code> if this map contains any mappings else <code>false</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[iterator]]></title><fullMethod><left><![CDATA[function <b>iterator</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_data_holder_Iterator.html">Iterator</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an iterator to iterate over the values of this map.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[an iterator to iterate over the values of this map]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#valueIterator">valueIterator</a><br /><a href="org_as2lib_data_holder_Map.html#getValues">getValues</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[keyIterator]]></title><fullMethod><left><![CDATA[function <b>keyIterator</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_data_holder_Iterator.html">Iterator</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an iterator to iterate over the keys of this map.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[an iterator to iterate over the keys of this map]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#getKeys">getKeys</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[put]]></title><fullMethod><left><![CDATA[function <b>put</b> (
+
+]]></left><right><param><name><![CDATA[key]]></name></param>,
+<param><name><![CDATA[value]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Maps the given <code>key</code> to the <code>value</code>.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[key  ]]></name><description><![CDATA[the key used as identifier for the <code>value</code>]]></description></param>
+<param><name><![CDATA[value]]></name><description><![CDATA[the value to map to the <code>key</code>]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the value that was originally mapped to the <code>key</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[putAll]]></title><fullMethod><left><![CDATA[function <b>putAll</b> (
+]]></left><right><param><name><![CDATA[map]]></name>:<type><![CDATA[<a href="org_as2lib_data_holder_Map.html">Map</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Copies all mappings from the passed-in <code>map</code> to this map.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[map]]></name><description><![CDATA[the mappings to add to this map]]></description></param>
+</field>
+</fields>
+</method>
+<method>
+<title><![CDATA[remove]]></title><fullMethod><left><![CDATA[function <b>remove</b> (
+]]></left><right><param><name><![CDATA[key]]></name></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Removes the mapping from the given <code>key</code> to the value.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[key]]></name><description><![CDATA[the key identifying the mapping to remove]]></description></param>
+</field>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the value that was originally mapped to the <code>key</code>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[size]]></title><fullMethod><left><![CDATA[function <b>size</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[Number]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns the amount of mappings.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[the amount of mappings]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[valueIterator]]></title><fullMethod><left><![CDATA[function <b>valueIterator</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_data_holder_Iterator.html">Iterator</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Returns an iterator to iterate over the values of this map.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[an iterator to iterate over the values of this map]]></description></field>
+<field><title><![CDATA[See also]]></title><description><![CDATA[<a href="org_as2lib_data_holder_Map.html#iterator">iterator</a><br /><a href="org_as2lib_data_holder_Map.html#getValues">getValues</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:26:20]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

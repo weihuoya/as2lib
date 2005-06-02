@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>RecordState</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>RecordState</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_test_mock_MockControlState.html">MockControlState</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.mock.support.RecordState</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Thursday, 05 May 2005, 17:04:12</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>RecordState</code> records behaviors. </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#RecordState">RecordState</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#behavior">behavior</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#getBehavior">getBehavior</a>
+                </li>
+                <li>
+                  <a href="#invokeMethod">invokeMethod</a>
+                </li>
+                <li>
+                  <a href="#setMethodResponse">setMethodResponse</a>
+                </li>
+                <li>
+                  <a href="#setArgumentsMatcher">setArgumentsMatcher</a>
+                </li>
+                <li>
+                  <a href="#verify">verify</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="RecordState">RecordState</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>RecordState</b> (
+</div>
+                <div><span class="code">behavior:<a href="org_as2lib_test_mock_Behavior.html">Behavior</a>)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>RecordState</code> instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">behavior<span class="separator">:</span></div>
+                    <div>the behavior to add and get behaviors of the mock</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in <code>behavior</code> is
+ <code>null</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="behavior">behavior</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>behavior</b>:<a href="org_as2lib_test_mock_Behavior.html">Behavior</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Used to add and get behaviors of the mock.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="getBehavior">getBehavior</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getBehavior</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_test_mock_Behavior.html">Behavior</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the behavior set during instantiation.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the behavior</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="invokeMethod">invokeMethod</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>invokeMethod</b> (
+</div>
+                <div><span class="code">methodCall:<a href="org_as2lib_test_mock_MethodCall.html">MethodCall</a>)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Adds the expected <code>methodCall</code> to the expected behavior of the mock.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodCall<span class="separator">:</span></div>
+                    <div>contains all information about the method call</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setArgumentsMatcher">setArgumentsMatcher</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>setArgumentsMatcher</b> (
+</div>
+                <div><span class="code">argumentsMatcher:<a href="org_as2lib_test_mock_ArgumentsMatcher.html">ArgumentsMatcher</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Sets the arguments matcher for the lastly called method.<p>The arguments matcher is used by the expected method call to check whether
+ it matches an actual method call.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">argumentsMatcher<span class="separator">:</span></div>
+                    <div>the new arguments matcher for the expected method call</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MockControlState.html#setArgumentsMatcher">org.as2lib.test.mock.MockControlState.setArgumentsMatcher</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setMethodResponse">setMethodResponse</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>setMethodResponse</b> (
+
+</div>
+                <div><span class="code">methodResponse:<a href="org_as2lib_test_mock_MethodResponse.html">MethodResponse</a>,
+methodCallRange:<a href="org_as2lib_test_mock_MethodCallRange.html">MethodCallRange</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Sets the expectation that the lastly called method is called the passed-in
+ number of times. When called between that range it responses the given way.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodResponse <span class="separator">:</span></div>
+                    <div>the response of the method during the expected call
+ range</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodCallRange<span class="separator">:</span></div>
+                    <div>the expected range of method calls</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MockControlState.html#setMethodResponse">org.as2lib.test.mock.MockControlState.setMethodResponse</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="verify">verify</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>verify</b> (
+</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_test_mock_MockControlState.html#verify">org.as2lib.test.mock.MockControlState.verify</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2005 as2lib | </span><span class="date">Tuesday, 31 May 2005, 20:29:50
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

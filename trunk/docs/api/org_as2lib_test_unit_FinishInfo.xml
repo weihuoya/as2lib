@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[FinishInfo]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[TestRunnerInfo]]></name><uri><![CDATA[org_as2lib_test_unit_TestRunnerInfo]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Martin Heidegger]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.test.unit.FinishInfo]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Thursday, 05 May 2005, 17:04:12]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[Information published if the TestRunner finished.]]></summary>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Constructor]]></title>
+<item><![CDATA[FinishInfo]]></item>
+</methodSummaryPart>
+<private>
+<methodSummaryPart>
+<title><![CDATA[Instance properties]]></title>
+<item><private><![CDATA[testRunner]]></private></item>
+</methodSummaryPart>
+</private>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[getTestRunner]]></item>
+<item><![CDATA[getName]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Constructor]]></title>
+<method>
+<title><![CDATA[FinishInfo]]></title><fullMethod><left><![CDATA[function <b>FinishInfo</b> (
+]]></left><right><param><name><![CDATA[testRunner]]></name>:<type><![CDATA[<a href="org_as2lib_test_unit_TestRunner.html">TestRunner</a>]]></type></param>)</right></fullMethod>
+<description>
+<text><![CDATA[Constructs a new FinishInfo.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[testRunner]]></name><description><![CDATA[TestRunner that published the event.]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+<private>
+<methodSection>
+<title><![CDATA[Instance properties]]></title>
+<method>
+<title><private><![CDATA[testRunner]]></private></title><private><![CDATA[private]]></private><fullMethod><left><![CDATA[<b>testRunner</b>:<a href="org_as2lib_test_unit_TestRunner.html">TestRunner</a>
+]]></left><right></right></fullMethod>
+<description>
+<text><![CDATA[Internal Testrunner holder.]]></text>
+</description>
+</method>
+</methodSection>
+</private>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[getName]]></title><fullMethod><left><![CDATA[function <b>getName</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[String]]></right></fullMethod>
+<description>
+<text><![CDATA[Implementation of TestRunnerInfo#getName.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[Name of the Event.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_env_event_broadcaster_EventInfo.html#getName">org.as2lib.env.event.broadcaster.EventInfo.getName</a>]]></description></field>
+</fields>
+</method>
+<method>
+<title><![CDATA[getTestRunner]]></title><fullMethod><left><![CDATA[function <b>getTestRunner</b> (
+]]></left><right><param><name><![CDATA[Void]]></name></param>) : <![CDATA[<a href="org_as2lib_test_unit_TestRunner.html">TestRunner</a>]]></right></fullMethod>
+<description>
+<text><![CDATA[Implementation of TestRunnerInfo#getTestRunner.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Returns]]></title><description><![CDATA[TestRunner that published this event.]]></description></field>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_test_unit_TestRunnerInfo.html#getTestRunner">TestRunnerInfo.getTestRunner</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:30:16]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

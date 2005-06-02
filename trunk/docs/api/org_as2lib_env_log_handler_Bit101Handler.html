@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Bit101Handler</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>Bit101Handler</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_env_log_LogHandler.html">LogHandler</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.log.handler.Bit101Handler</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Sunday, 10 April 2005, 10:34:10</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>Bit101Handler</code> logs messages to the Bit-101 Debug Panel. </div><p>The <code>Debug</code> class is needed.<div class="classFields"><div class="boxWithBorder"><div class="boxedElem"><div class="contentHolder"><span class="title">See also:</span><div class="item"><a href="org_as2lib_env_log_logger_Bit101Logger.html">org.as2lib.env.log.logger.Bit101Logger</a><br /><a href="www.bit-101.com/DebugPanel">Flash Debug Panel Source</a><br /><a href="http://www.bit-101.com/blog/archives/000119.html">Flash Debug Panel Article</a></div></div></div></div></div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#Bit101Handler">Bit101Handler</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#bit101Handler">bit101Handler</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#decorateMessage">decorateMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#recursionDepth">recursionDepth</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#indentation">indentation</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span>
+              <ul>
+                <li>
+                  <a href="#getInstance">getInstance</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#write">write</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="Bit101Handler">Bit101Handler</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>Bit101Handler</b> (
+
+
+</div>
+                <div><span class="code">decorateMessage:Boolean,
+recursionDepth:Number,
+indentation:Number)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>Bit101Handler</code> instance.<p>You can use one and the same instance for multiple loggers. So think about
+ using the handler returned by the static <a href="org_as2lib_env_log_handler_Bit101Handler.html#getInstance">getInstance</a> method. Using
+ this instance prevents the instantiation of unnecessary bit-101 handlers and
+ saves storage.<p><code>decorateMessage</code> is by default <code>true</code>. Refer to the
+ <code>Debug</code> class for information on the default <code>recursionDepth</code> and
+ <code>indentation</code>.<p>Note that messages are only logged recursively if <code>decorateMessage</code> is
+ set to <code>false</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">decorateMessage<span class="separator">:</span></div>
+                    <div>(optional) determines whether to log the string returned
+ by the <code>LogMessage.toString</code> method or just the message returned by
+ <code>LogMessage.getMessage</code></div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">recursionDepth <span class="separator">:</span></div>
+                    <div>(optional) determines the count of recursions for
+ recursively traced objects</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">indentation    <span class="separator">:</span></div>
+                    <div>(optional) determines the indentation number for recursively
+ traced objects</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="bit101Handler">bit101Handler</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>bit101Handler</b>:<a href="org_as2lib_env_log_handler_Bit101Handler.html">Bit101Handler</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Holds a bit-101 handler.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="decorateMessage">decorateMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>decorateMessage</b>:Boolean
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Determines whether to decorate messages.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="indentation">indentation</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>indentation</b>:Number
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">The indentation number for recursively traced objects.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="recursionDepth">recursionDepth</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>recursionDepth</b>:Number
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">The number of recursions when tracing an object recursively.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="getInstance">getInstance</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>getInstance</b> (
+
+
+</div>
+                <div><span class="code">decorateMessage:Boolean,
+recursionDepth:Number,
+indentation:Number) : <a href="org_as2lib_env_log_handler_Bit101Handler.html">Bit101Handler</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns an instance of this class.<p>This method always returns the same instance.<p>Note that the arguments are only recognized on first call of this method and
+ are in this case used for construction of the <code>Bit101Handler</code> instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">decorateMessage<span class="separator">:</span></div>
+                    <div>(optional) determines whether to log the string returned
+ by the <code>LogMessage.toString</code> method or just the message returned by
+ <code>LogMessage.getMessage</code></div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">recursionDepth <span class="separator">:</span></div>
+                    <div>(optional) determines the count of recursions for
+ recursively traced objects</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">indentation    <span class="separator">:</span></div>
+                    <div>(optional) determines the indentation number for recursively
+ traced objects</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">a bit-101 handler</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="write">write</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>write</b> (
+</div>
+                <div><span class="code">message:<a href="org_as2lib_env_log_LogMessage.html">LogMessage</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Writes log messages to the Bit-101 Debug Panel.<p>Uses the <a href="org_as2lib_env_log_LogMessage.html#toString">org.as2lib.env.log.LogMessage.toString</a> method to obtain the string that is
+ logged if <code>decorateMessage</code> is turned on. Otherwise the string returned
+ by the original message's <code>toString</code> method is logged if it is of type
+ <code>'string'</code>, <code>'number'</code>, <code>'boolean'</code>, <code>'undefined'</code> or
+ <code>'null'</code> or the original method is logged recursively if it is not of one
+ of the above types.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>the message to log</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_LogHandler.html#write">org.as2lib.env.log.LogHandler.write</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; 2005 as2lib | </span><span class="date">Tuesday, 31 May 2005, 20:27:14
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

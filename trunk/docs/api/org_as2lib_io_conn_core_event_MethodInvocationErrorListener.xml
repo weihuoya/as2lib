@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[MethodInvocationErrorListener]]></title>
+<classDocScript />
+<classData>
+<kindOfClass>
+<![CDATA[Interface]]>
+</kindOfClass>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[none]]></name></link></item>
+</inheritsFrom>
+<classDetails>
+<item><title><![CDATA[Author]]></title><value><![CDATA[Simon Wacker]]></value></item>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.io.conn.core.event.MethodInvocationErrorListener]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Friday, 06 May 2005, 12:12:38]]></value></item>
+</classDetails>
+<classDescription><summary><![CDATA[<code>MethodInvocationErrorListener</code> awaits an error response of a method
+ invocation.]]></summary><restOfDescription><![CDATA[<p>When and why the event method is invoked depends on the used client.<p>This interface can either be instantiated directly or implemented by a class.
+ If you instantiate it directly you must overwrite the event methods with
+ anonymous function.<p>Note that overwriting the event method with a anonymous function is error-prone,
+ because the arguments' types and the return type are not type-checked. Instantiating
+ an interface directly is also not permitted in Flex.<pre><span class="codeKeyword">var</span> listener:MethodInvocationErrorListener = <span class="codeKeyword">new</span> MethodInvocationErrorListener();
+listener.onError = <span class="codeKeyword">function</span>(errorInfo:MethodInvocationErrorInfo):<span class="codeIdentifier">Void</span> {
+    <span class="codeIdentifier">trace</span>(<span class="codeString">"Error occured when trying to invoke the method: "</span> + errorInfo);
+}</pre><p>Implementing the interface by a class is a much neater way, but sometimes adds
+ unnecessary complexity.<pre><span class="codeKeyword">class</span> MyListener <span class="codeKeyword">implements</span> MethodInvocationErrorListener {
+    <span class="codeKeyword">public</span> <span class="codeKeyword">function</span> onError(errorInfo:MethodInvocationErrorInfo):<span class="codeIdentifier">Void</span> {
+        <span class="codeIdentifier">trace</span>(<span class="codeString">"Error occured when trying to invoke the method: "</span> + errorInfo);
+    }
+}</pre>]]></restOfDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Event handlers]]></title>
+<item><![CDATA[onError]]></item>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Event handlers]]></title>
+<method>
+<title><![CDATA[onError]]></title><fullMethod><left><![CDATA[function <b>onError</b> (
+]]></left><right><param><name><![CDATA[errorInfo]]></name>:<type><![CDATA[<a href="org_as2lib_io_conn_core_event_MethodInvocationErrorInfo.html">MethodInvocationErrorInfo</a>]]></type></param>) : <![CDATA[Void]]></right></fullMethod>
+<description>
+<text><![CDATA[Is executed when a method invocation fails.<p>Known issues are:<ul><li>The method threw an exception.</li><li>The method does not exist on the remote service.</li></ul><p>Remember that not all clients support this functionalities.]]></text>
+</description>
+<fields>
+<field><title><![CDATA[Parameters]]></title>
+<param><name><![CDATA[errorInfo]]></name><description><![CDATA[contains information about the error and some useful information
+ about the called method]]></description></param>
+</field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:28:58]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>

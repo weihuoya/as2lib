@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+<cssFile><![CDATA[css/VisDoc.css]]></cssFile>
+<title><![CDATA[TestSuiteResultFactory]]></title>
+<classDocScript />
+<classData>
+<inheritsFrom>
+<title><![CDATA[Inherits from]]></title><item><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></item>
+</inheritsFrom>
+<conformsTo>
+<title><![CDATA[Implements]]></title><item><link><name><![CDATA[TestResultFactory]]></name><uri><![CDATA[org_as2lib_test_unit_TestResultFactory]]></uri></link></item>
+</conformsTo>
+<classDetails>
+<item><title><![CDATA[Classpath]]></title><value><![CDATA[org.as2lib.test.unit.TestSuiteResultFactory]]></value></item>
+<item><title><![CDATA[File last modified]]></title><value><![CDATA[Monday, 09 May 2005, 21:43:18]]></value></item>
+</classDetails>
+<classDescription>
+</classDescription>
+</classData>
+<pageSummary>
+<methodList>
+<title><![CDATA[Summary]]></title>
+<methodSummaryPart>
+<title><![CDATA[Instance methods]]></title>
+<item><![CDATA[createResult]]></item>
+<inheritedMethods>
+<fromClass><title><text><![CDATA[Instance methods inherited from]]></text><link><name><![CDATA[BasicClass]]></name><uri><![CDATA[org_as2lib_core_BasicClass]]></uri></link></title><item><link><name>toString</name><uri>org_as2lib_core_BasicClass</uri><method>toString</method></link></item></fromClass>
+</inheritedMethods>
+</methodSummaryPart>
+</methodList>
+</pageSummary>
+<methodSections>
+<methodSection>
+<title><![CDATA[Instance methods]]></title>
+<method>
+<title><![CDATA[createResult]]></title><fullMethod><left><![CDATA[function <b>createResult</b> (
+
+]]></left><right><param><name><![CDATA[test]]></name>:<type><![CDATA[<a href="org_as2lib_test_unit_Test.html">Test</a>]]></type></param>,
+<param><name><![CDATA[runner]]></name>:<type><![CDATA[<a href="org_as2lib_test_unit_TestRunner.html">TestRunner</a>]]></type></param>) : <![CDATA[<a href="org_as2lib_test_unit_TestResult.html">TestResult</a>]]></right></fullMethod>
+<fields>
+<field><title><![CDATA[Specified by]]></title><description><![CDATA[<a href="org_as2lib_test_unit_TestResultFactory.html#createResult">TestResultFactory.createResult</a>]]></description></field>
+</fields>
+</method>
+</methodSection>
+</methodSections>
+<footer><copyright><![CDATA[2005 as2lib]]></copyright>
+<date><![CDATA[Tuesday, 31 May 2005, 20:31:00]]>
+</date><showTOC>show TOC</showTOC><hideTOC>hide TOC</hideTOC><showPrivate>show private members</showPrivate><hidePrivate>hide private members</hidePrivate>
+</footer>
+</document>
