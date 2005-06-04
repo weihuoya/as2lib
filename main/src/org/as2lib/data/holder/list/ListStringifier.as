@@ -17,29 +17,40 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
 import org.as2lib.data.holder.List;
-import org.as2lib.data.holder.Iterator;
 
 /**
- * ListStringifier is the default Stringifier used to stringify Lists.
+ * {@code ListStringifier} is the default stringifier used to stringify {@link List}
+ * instances.
  *
  * @author Christoph Atteneder
- * @see org.as2lib.data.holder.List
+ * @author Simon Wacker
  */
 class org.as2lib.data.holder.list.ListStringifier extends BasicClass implements Stringifier {
+	
 	/**
-	 * @see org.as2lib.util.string.Stringifier
+	 * Stringifies passed-in {@code target} that must be an instance of type
+	 * {link List}.
+	 * 
+	 * <p>The string representation is constructed as follows:
+	 * <pre>
+	 *   [firstlyAddedValue, secondlyAddedValue, ...]
+	 * </pre>
+	 * 
+	 * @param target the list target to stringify
+	 * @return the string representation of the passed-in {@code target}
 	 */
 	public function execute(target):String {
-		var list:List = List(target);
+		var list:List = target;
 		var result:String = "[";
-		var iterator:Iterator = list.iterator();
-		while (iterator.hasNext()) {
-			result += iterator.next().toString();
-			if (iterator.hasNext()) {
+		var values:Array = list.toArray();
+		for (var i:Number = 0; i < values.length; i++) {
+			if (i > 0) {
 				result += ", ";
 			}
+			result += values[i].toString();
 		}
 		result += "]";
 		return result;
 	}
+	
 }
