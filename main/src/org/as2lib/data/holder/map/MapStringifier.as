@@ -17,8 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
 import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.array.ArrayIterator;
-import org.as2lib.data.holder.Iterator;
 
 /**
  * {@code MapStringifier} stringifies instances of type {@link Map}.
@@ -41,15 +39,15 @@ class org.as2lib.data.holder.map.MapStringifier extends BasicClass implements St
 	 * @return the string representation of the passed-in {@code target}
 	 */
 	public function execute(target):String {
-		var map:Map = Map(target);
+		var map:Map = target;
 		var result:String = "{";
-		var valueIterator:Iterator = new ArrayIterator(map.getValues());
-		var keyIterator:Iterator = new ArrayIterator(map.getKeys())
-		while (keyIterator.hasNext()) {
-			result += keyIterator.next().toString() + "=" + valueIterator.next().toString();
-			if (keyIterator.hasNext()) {
+		var values:Array = map.getValues();
+		var keys:Array = map.getKeys();
+		for (var i:Number = 0; i < keys.length; i++) {
+			if (i > 0) {
 				result += ", ";
 			}
+			result += keys[i].toString() + "=" + values[i].toString();
 		}
 		result += "}";
 		return result;
