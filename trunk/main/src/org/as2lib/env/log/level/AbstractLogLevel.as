@@ -30,19 +30,19 @@ class org.as2lib.env.log.level.AbstractLogLevel extends BasicClass implements Lo
 	/** All log messages get logged. */
 	public static var ALL:LogLevel = new AbstractLogLevel(60, "ALL");
 	
-	/** All log messages that are at a lower log level than debug get logged. */
+	/** All log messages that are at a higher log level than debug get logged. */
 	public static var DEBUG:LogLevel = new AbstractLogLevel(50, "DEBUG");
 	
-	/** All log messages that are at a lower log level than info get logged. */
+	/** All log messages that are at a higher log level than info get logged. */
 	public static var INFO:LogLevel = new AbstractLogLevel(40, "INFO");
 	
-	/** All log messages that are at a lower log level than warning get logged. */
+	/** All log messages that are at a higher log level than warning get logged. */
 	public static var WARNING:LogLevel = new AbstractLogLevel(30, "WARNING");
 	
-	/** All log messages that are at a lower log level than error get logged. */
+	/** All log messages that are at a higher log level than error get logged. */
 	public static var ERROR:LogLevel = new AbstractLogLevel(20, "ERROR");
 	
-	/** All log messages that are at a lower log level than fatal get logged. */
+	/** All log messages that are at a higher log level than fatal get logged. */
 	public static var FATAL:LogLevel = new AbstractLogLevel(10, "FATAL");
 	
 	/** No log messages get logged. */
