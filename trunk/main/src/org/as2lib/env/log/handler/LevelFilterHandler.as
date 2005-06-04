@@ -79,7 +79,7 @@ class org.as2lib.env.log.handler.LevelFilterHandler implements LogHandler {
 	 * 
 	 * @param message the message to forward to the wrapped handler	 */
 	public function write(message:LogMessage):Void {
-		if (this.level.toNumber() >= message.getLevel().toNumber()) {
+		if (this.levelAsNumber >= message.getLevel().toNumber()) {
 			this.handler.write(message);
 		}
 	}
