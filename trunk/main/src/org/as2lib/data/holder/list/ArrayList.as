@@ -104,7 +104,7 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	 */
 	public function insertAll(list:List):Void {
 		var v:Array = list.toArray();
-		var l:Number = a.length;
+		var l:Number = v.length;
 		for (var i:Number = 0; i < l; i++) {
 			insertLast(v[i]);
 		}
