@@ -31,8 +31,8 @@ class org.as2lib.app.conf.AbstractConfiguration extends AbstractProcess {
 	/**
 	 * Helper method to initialise a application.
 	 * 
-	 * @overload #initClass;
-	 * @overload #initConfig;
+	 * @overload #initClass
+	 * @overload #initConfig
 	 */
 	public static function init(Void):Void {
 		if(typeof arguments[0] == "function") {

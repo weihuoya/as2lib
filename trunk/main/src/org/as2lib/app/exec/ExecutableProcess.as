@@ -19,7 +19,7 @@ import org.as2lib.app.exec.Executable;
 
 /**
  * {@code ExecutableProcess} is a Wrapper for {@link Executable}'s to be
- * executable as a {@link org.as2lib.app.exec.Process};
+ * executable as a {@link org.as2lib.app.exec.Process}.
  * 
  * <p>As Executables have no response features this is a wrapper for using any
  * executable as process.

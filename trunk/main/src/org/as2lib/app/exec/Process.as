@@ -40,9 +40,9 @@ import org.as2lib.app.exec.ProcessListener;
 interface org.as2lib.app.exec.Process extends BasicInterface {
 	
 	/**
-	 * Starts the execution of the process.
+	 * Starts the execution of this process.
 	 * 
-	 * @return Result for the start (implementation specific);
+	 * @return result for the start (implementation specific).
 	 */
     public function start();
     
