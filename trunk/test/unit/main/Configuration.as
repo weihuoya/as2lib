@@ -59,8 +59,8 @@ class main.Configuration extends AbstractConfiguration {
 		
 		
 		// File tests
-		use(org.as2lib.io.file.TFile);
-		use(org.as2lib.io.file.TBitAndByteFormat);
+		//use(org.as2lib.io.file.TFile);
+		//use(org.as2lib.io.file.TBitAndByteFormat);
 		
 		// Util tests
 		use(org.as2lib.util.TArrayUtil);
@@ -88,16 +88,16 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.test.mock.support.TDefaultArgumentsMatcher);
 		
 		// org.as2lib.aop.pointcut
-		use(org.as2lib.aop.pointcut.TKindedPointcut);
+		//use(org.as2lib.aop.pointcut.TKindedPointcut);
 		//use(org.as2lib.aop.pointcut.TAndCompositePointcut);
 		//use(org.as2lib.aop.pointcut.TOrCompositePointcut);
-		use(org.as2lib.aop.pointcut.TDynamicPointcutFactory);
+		//use(org.as2lib.aop.pointcut.TDynamicPointcutFactory);
 		
 		// org.as2lib.aop.joinpoint
 		//use(org.as2lib.aop.joinpoint.TMethodJoinPoint);
 		//use(org.as2lib.aop.joinpoint.TPropertyJoinPoint);
-		use(org.as2lib.aop.joinpoint.TGetPropertyJoinPoint);
-		use(org.as2lib.aop.joinpoint.TSetPropertyJoinPoint);
+		//use(org.as2lib.aop.joinpoint.TGetPropertyJoinPoint);
+		//use(org.as2lib.aop.joinpoint.TSetPropertyJoinPoint);
 		
 		// org.as2lib.aop.matcher
 		use(org.as2lib.aop.matcher.TDefaultMatcher);
@@ -117,6 +117,7 @@ class main.Configuration extends AbstractConfiguration {
 		
 		// org.as2lib.env.reflect
 		use(org.as2lib.env.reflect.TSimpleCache);
+		// player breaks when you run TClassInfo test together with tests until org.as2lib.env.log
 		use(org.as2lib.env.reflect.TClassInfo);
 		use(org.as2lib.env.reflect.TClassInfo_Method);
 		use(org.as2lib.env.reflect.TClassInfo_Property);
@@ -137,6 +138,7 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.env.log.logger.TSimpleHierarchicalLogger);
 		use(org.as2lib.env.log.repository.TLoggerHierarchy);
 		use(org.as2lib.env.log.level.TDynamicLogLevel);
+		use(org.as2lib.env.log.handler.TLevelFilterHandler);
 		
 		// org.as2lib.env.event
 		use(org.as2lib.env.event.TSimpleEventListenerSource);
