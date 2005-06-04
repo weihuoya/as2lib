@@ -113,13 +113,14 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * @return an array that contains the divisors of {@code n}
 	 */
 	public static function getDivisors(n:NaturalNumberIncludingZero):Array {
-		var divisors:Array = new Array();
-		for (var i:Number = 1; i <= n; i++) {
-			if (n%i == 0){
-				divisors.push(i);
+		var r:Array = new Array();
+		for (var i:Number = 1, e:Number = n/2; i <= e; i++) {
+			if (n % i == 0){
+				r.push(i);
 			}
 		}
-		return divisors;
+		if (n != 0) r.push(n.valueOf());
+		return r;
 	}
 	
 	/**
