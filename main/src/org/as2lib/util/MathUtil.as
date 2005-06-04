@@ -76,11 +76,11 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * @return {@code true} if {@code n} is a prime else {@code false}
 	 */	
 	public static function isPrime(n:NaturalNumber):Boolean {
-		if (n == 1 || (n>2 && n%2 == 0)) {
-			return false;
-		}
-		for (var i:Number = 2; i < n-1; i++) {
-			if (n%i == 0){
+		if (n == 1) return false;
+		if (n == 2) return true;
+		if (n % 2 == 0) return false;
+		for (var i:Number = 3, e:Number = Math.sqrt(n); i <= e; i += 2) {
+			if (n % i == 0){
 				return false;
 			}
 		}
@@ -114,7 +114,7 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 */
 	public static function getDivisors(n:NaturalNumberIncludingZero):Array {
 		var divisors:Array = new Array();
-		for (var i:Number = 0; i <= n; i++) {
+		for (var i:Number = 1; i <= n; i++) {
 			if (n%i == 0){
 				divisors.push(i);
 			}
