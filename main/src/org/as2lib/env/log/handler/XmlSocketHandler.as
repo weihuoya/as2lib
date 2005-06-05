@@ -28,6 +28,7 @@ import org.as2lib.env.log.handler.AbstractLogHandler;
  * over the XML socket.
  * 
  * @author Simon Wacker
+ * @see <a href="http://sos.powerflasher.com">SOS - SocketOutputServer</a>
  */
 class org.as2lib.env.log.handler.XmlSocketHandler extends AbstractLogHandler implements LogHandler {
 	
