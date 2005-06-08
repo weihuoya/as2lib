@@ -25,6 +25,31 @@ import org.as2lib.data.holder.list.ListStringifier;
 /**
  * {@code ArrayList} is a resizable-array implementation of {@code List} interface.
  * 
+ * <p>Example:
+ * <code>
+ *   var list:List = new ArrayList();
+ *   list.insert("myValue1");
+ *   list.insertFirst("myValue2");
+ *   list.insertLast("myValue3");
+ *   trace(list.contains("myValue2"));
+ *   trace(list.remove(0));
+ *   trace(list.contains("myValue2"));
+ *   trace(list.removeLast());
+ *   trace(list.get(0));
+ *   list.clear();
+ *   trace(list.size());
+ * </code>
+ * 
+ * <p>Output:
+ * <pre>
+ *   true
+ *   myValue2
+ *   false
+ *   myValue3
+ *   myValue1
+ *   0
+ * </pre>
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
@@ -118,7 +143,7 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 		var o:Overload = new Overload(this);
 		o.addHandler([Object], removeByValue);
 		o.addHandler([Number], removeByIndex);
-		o.forward(arguments);
+		return o.forward(arguments);
 	}
 	
 	/**
