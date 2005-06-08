@@ -20,6 +20,31 @@ import org.as2lib.data.holder.Iterator;
 /**
  * {@code List} holds values by index. Each value has its unique index.
  * 
+ * <p>Example:
+ * <code>
+ *   var list:List = new MyList();
+ *   list.insert("myValue1");
+ *   list.insertFirst("myValue2");
+ *   list.insertLast("myValue3");
+ *   trace(list.contains("myValue2"));
+ *   trace(list.remove(0));
+ *   trace(list.contains("myValue2"));
+ *   trace(list.removeLast());
+ *   trace(list.get(0));
+ *   list.clear();
+ *   trace(list.size());
+ * </code>
+ * 
+ * <p>Output:
+ * <pre>
+ *   true
+ *   myValue2
+ *   false
+ *   myValue3
+ *   myValue1
+ *   0
+ * </pre>
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.data.holder.List extends BasicInterface {
