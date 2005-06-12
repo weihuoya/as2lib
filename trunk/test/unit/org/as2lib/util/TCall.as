@@ -16,7 +16,7 @@
  
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.app.exec.Call;
-import org.as2lib.util.ConstructorCall;
+import org.as2lib.app.exec.ConstructorCall;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**

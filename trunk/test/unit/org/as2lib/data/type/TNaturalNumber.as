@@ -17,7 +17,7 @@
  import org.as2lib.test.unit.TestCase;
  import org.as2lib.data.type.NaturalNumber;
  import org.as2lib.data.type.NumberFormatException;
- import org.as2lib.util.ConstructorCall;
+ import org.as2lib.app.exec.ConstructorCall;
  
  /**
   * Test for the Natural Number type.

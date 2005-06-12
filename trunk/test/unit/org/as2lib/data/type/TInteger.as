@@ -17,7 +17,7 @@
 import org.as2lib.data.type.Integer;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.data.type.NumberFormatException;
-import org.as2lib.util.ConstructorCall;
+import org.as2lib.app.exec.ConstructorCall;
 
 /**
  * Testcase for the Iterator type.
