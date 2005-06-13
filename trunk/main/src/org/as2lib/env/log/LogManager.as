@@ -33,7 +33,7 @@ import org.as2lib.env.log.Logger;
  * <code>
  *   // configuration: when setting everything up
  *   var loggerHierarchy:LoggerHierarchy = new LoggerHierarchy();
- *   var traceLogger:Logger = new SimpleHierarchicalLogger("org.mydomain");
+ *   var traceLogger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger("org.mydomain");
  *   traceLogger.addHandler(new TraceHandler());
  *   loggerHierarchy.addLogger(traceLogger);
  *   LogManager.setLoggerRepository(loggerHierarchy);
@@ -50,7 +50,7 @@ import org.as2lib.env.log.Logger;
  *
  * <code>
  *   // configuration: when setting everything up
- *   var traceLogger:Logger = new SimpleLogger();
+ *   var traceLogger:SimpleLogger = new SimpleLogger();
  *   traceLogger.addHandler(new TraceHandler());
  *   LogManager.setLogger(traceLogger);
  *   // usage: in the class org.mydomain.MyClass
