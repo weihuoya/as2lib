@@ -51,7 +51,7 @@ class main.Flashout {
 	/**
 	 * Configures Flashout.
 	 */
-	private static function setUpLogging(Void:Void):Void {
+	private static function setUpLogging(Void):Void {
 		// sets the stringifier
 		LogMessage.setStringifier(new SimpleLogMessageStringifier());
 		// creates and initializes the root logger
