@@ -37,7 +37,7 @@ import org.as2lib.env.event.distributor.EventDistributorControl;
  * </code>
  * 
  * @author Simon Wacker
- * @authro Martin Heidegger
+ * @author Martin Heidegger
  */
 class org.as2lib.env.event.distributor.SimpleEventDistributorControl extends AbstractEventDistributorControl implements EventDistributorControl {
 	
