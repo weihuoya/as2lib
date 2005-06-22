@@ -234,7 +234,7 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	/**
 	 * Starts the execution of the Batch.
 	 */
-    public function start(Void):Void {
+    public function start() {
     	if(!started) {
 			current = 0;
 			started = false;
