@@ -1,5 +1,4 @@
 ﻿import org.as2lib.core.BasicInterface;
-import org.as2lib.data.math.Matrix;
 
 interface org.as2lib.data.math.Vector extends BasicInterface {
 	
