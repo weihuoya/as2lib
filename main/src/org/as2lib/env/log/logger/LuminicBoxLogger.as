@@ -33,6 +33,8 @@ import LuminicBox.Log.IPublisher;
  * it. Other functionalities are performed by this class directly.
  * 
  * @author Simon Wacker
+ * @author Christoph Atteneder
+ * 
  * @see org.as2lib.env.log.handler.LuminicBoxHandler
  * @see <a href="http://www.luminicbox.com/dev/flash/log">LuminicBox Logging API</a>
  */
@@ -80,8 +82,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	 * @return the name of this logger
 	 */
 	public function getName(Void):String {
-		// todo: ask pablo to implement a getLoggerId method
-		return this.logger["_loggerId"];
+		return this.logger.getId();
 	}
 	
 	/**
@@ -102,8 +103,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	 * @return the set or default level
 	 */
 	public function getLevel(Void):Level {
-		// todo: ask pablo to implement a getLevel method
-		return this.logger["_level"];
+		return this.logger.getLevel();
 	}
 	
 	/**
