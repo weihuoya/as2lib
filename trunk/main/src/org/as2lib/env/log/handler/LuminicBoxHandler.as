@@ -30,6 +30,7 @@ import LuminicBox.Log.Level;
  * LuminicBox console.
  * 
  * @author Simon Wacker
+ * @author Christoph Atteneder
  * @see <a href="http://www.luminicbox.com/dev/flash/log">LuminicBox Logging API</a>
  */
 class org.as2lib.env.log.handler.LuminicBoxHandler extends BasicClass implements LogHandler {
@@ -83,8 +84,7 @@ class org.as2lib.env.log.handler.LuminicBoxHandler extends BasicClass implements
 	 */
 	public function write(message:LogMessage):Void {
 		var event:LogEvent = new LogEvent(message.getLoggerName(), message.getMessage(), convertLevel(message.getLevel()));
-		// todo: ask Pablo to allow time to be set manually
-		event["time"] = new Date(message.getTimeStamp());
+		event.time = new Date(message.getTimeStamp());
 		consolePublisher.publish(event);
 	}
 	

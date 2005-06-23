@@ -56,7 +56,9 @@ class main.LuminicBox {
 		LogMessage.setStringifier(new SimpleLogMessageStringifier());
 		// creates and initializes the root logger
 		var root:RootLogger = new RootLogger(AbstractLogLevel.ALL);
-		root.addHandler(new LuminicBoxHandler());
+		// if you want to set max inspection depth other than 4, you can
+		// pass the maximal inspection depth to LuminicBoxHandler()
+		root.addHandler(LuminicBoxHandler.getInstance());
 		// sets logger hierarchy as repository 
 		LogManager.setLoggerRepository(new LoggerHierarchy(root)); 
 	}
