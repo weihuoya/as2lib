@@ -1,0 +1,26 @@
+<project name="Swf Ant Task Samples - As2lib - Open Source ActionScript 2.0 Library - " default="usage" basedir=".">
+  
+  <property name="src.dir" location="src"/>
+  <property name="lib.dir" location="lib"/>
+  <property name="build.dir" location="build"/>
+  
+  <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../../src"/>
+  
+  <target name="usage">
+    <echo message=""/>
+    <echo message="------------------------------------------------------"/>
+    <echo message="Among the available targets are:"/>
+    <echo message=""/>
+    <echo message="sample"/>
+    <echo message="------------------------------------------------------"/>
+    <echo message=""/>
+  </target>
+  
+  <target name="sample" description="builds sample swf">
+    <swf src="${src.dir}/com/simonwacker/ant/Sample.as" dest="${build.dir}/sample.swf" width="300" height="100" framerate="31" bgcolor="FF8A00">
+      <clip id="simonwacker" import="${lib.dir}/simonwacker.jpg"/>
+      <font id="pixel" import="${lib.dir}/PixelClassic.ttf"/>
+    </swf>
+  </target>
+  
+</project>
