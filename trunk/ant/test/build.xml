@@ -1,0 +1,54 @@
+<project name="As2lib - Open Source ActionScript 2.0 Library - Ant Tasks Tests" default="usage" basedir=".">
+  
+  <property name="src.dir" location="src"/>
+  <property name="lib.dir" location="lib"/>
+  
+  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../src"/>
+  <taskdef name="swfmill" classname="org.as2lib.ant.Swfmill" classpath="../src"/>
+  <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../src"/>
+  
+  <target name="usage">
+    <echo message=""/>
+    <echo message="------------------------------------------------------"/>
+    <echo message="Among the available targets are:"/>
+    <echo message=""/>
+    <echo message="swfmillTests"/>
+    <echo message="------------------------------------------------------"/>
+    <echo message=""/>
+  </target>
+
+  <target name="swfmillTests" description="tests swfmill">
+    <swfmill src="swfmill/my.xml" dest="swfmill/my.swf" cmd="simple"/>
+  </target>
+
+  <!--<target name="swfTests" description="tests swf">
+    <swf dest="test.swf" width="200" height="20" framerate="31" bgcolor="00FFFF"/>
+  </target>-->
+
+  <target name="swfTests" description="tests swf">
+    <swf src="src/AntExample.as" dest="test.swf" width="300" height="300" framerate="12" bgcolor="FFFF00">
+      <clip id="test" import="library/firefox.png" class="src/AntExample"/>
+    </swf>
+  </target>
+
+  <!--<target name="swfTests" description="tests swf">
+    <swf src="src/AntExample.as" dest="test.swf" width="300" height="300" framerate="12" bgcolor="FFFF00">
+      <clip id="test" import="library/firefox.png">
+        <include id="1" import="1.jpg"/>
+        <include id="2" import="2.jpg"/>
+        <include id="3" import="3.jpg"/>
+      </clip>
+      <font id="font" import="myfont.ttf" glyphs="lol">
+        <include id="1" import="1.jpg" glyphs="1"/>
+        <include id="2" import="2.jpg" glyphs="12"/>
+        <include id="3" import="3.jpg" glyphs="123"/>
+      </font>
+      <import file="imp" url="impurl">
+        <include file="1" url="1.url"/>
+        <include file="2" url="2.url"/>
+        <include file="3" url="3.url"/>
+      </import>
+    </swf>
+  </target>-->
+  
+</project>
