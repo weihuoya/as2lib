@@ -24,7 +24,7 @@ import org.as2lib.env.log.handler.AbstractLogHandler;
 import org.actionstep.ASDebugger;
 
 /**
- * {@code ActionStepHandler} the {@code org.actionstep.ASDebugger.trace} method to log
+ * {@code ActionStepHandler} uses the {@code org.actionstep.ASDebugger.trace} method to log
  * messages.
  * 
  * @author Simon Wacker
