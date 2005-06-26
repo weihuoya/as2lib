@@ -6,6 +6,8 @@
     <year value="2005">
        <month value="6">
          <day value="26">
+           <entry type="add" package="org.as2lib.env.log.repository" class="AudiofarmLoggerRepository">Repository support for Ralf Siegel's Logging Framework for ActionScript 2.</entry>
+           <entry type="add" package="org.as2lib.env.log.logger" class="AudiofarmLogger">Logger support for Ralf Siegel's Logging Framework for ActionScript 2.</entry>
            <entry type="add" package="org.as2lib.env.log.logger" class="Log4fHandler">Handler support for Log4f.</entry>
            <entry type="add" package="org.as2lib.env.log.logger" class="Log4fLogger">Logger support for Log4f.</entry>
          </day>
