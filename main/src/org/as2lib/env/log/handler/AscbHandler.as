@@ -21,7 +21,7 @@ import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.level.AbstractLogLevel;
 
 import ascb.util.logging.LogManager;
-import ascb.util.logging.Level
+import ascb.util.logging.Level;
 
 /**
  * {@code AscbHandler} delegates the log message to the {@code LogManager.log}
