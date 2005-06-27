@@ -246,13 +246,17 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	 * @return the comparator that compares test results by their names
 	 */
 	private function getNameComparator(Void):Function {
-		return function(a:TestResult, b:TestResult):Number {
+		// returning function directly is not flex compatible
+		// flex compiler would not recognize return statement
+		// seems to be a flex compiler bug
+		var r:Function = function(a:TestResult, b:TestResult):Number {
 			var m:String = a.getName();
 			var n:String = b.getName();
 			if (m == n) return 0;
 			if (m > n) return 1;
 			return -1;
 		};
+		return r;
 	}
 	
 	/**
@@ -261,13 +265,17 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	 * @return the comparator that compares the results by their needed time
 	 */
 	private function getTimeComparator(Void):Function {
-		return function(a:TestResult, b:TestResult):Number {
+		// returning function directly is not flex compatible
+		// flex compiler would not recognize return statement
+		// seems to be a flex compiler bug
+		var r:Function = function(a:TestResult, b:TestResult):Number {
 			var m:Number = a.getTime();
 			var n:Number = b.getTime();
 			if (m == n) return 0;
 			if (m > n) return 1;
 			return -1;
 		};
+		return r;
 	}
 	
 	/**
@@ -276,7 +284,10 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	 * @return the comparator that compares the results by their average time
 	 */
 	private function getAverageTimeComparator(Void):Function {
-		return function(a:TestResult, b:TestResult):Number {
+		// returning function directly is not flex compatible
+		// flex compiler would not recognize return statement
+		// seems to be a flex compiler bug
+		var r:Function = function(a:TestResult, b:TestResult):Number {
 			if (a instanceof TestSuiteResult
 					&& b instanceof TestSuiteResult) {
 				var m:Number = TestSuiteResult(a).getAverageTime();
@@ -291,6 +302,7 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 			if (m > n) return 1;
 			return -1;
 		};
+		return r;
 	}
 	
 	/**
@@ -302,13 +314,17 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	 */
 	private function getTimePercentageComparator(Void):Function {
 		var scope:TestResult = getThis();
-		return function(a:TestResult, b:TestResult):Number {
+		// returning function directly is not flex compatible
+		// flex compiler would not recognize return statement
+		// seems to be a flex compiler bug
+		var r:Function = function(a:TestResult, b:TestResult):Number {
 			var m:Number = a.getTimePercentage(scope.getTime());
 			var n:Number = b.getTimePercentage(scope.getTime());
 			if (m == n) return 0;
 			if (m > n) return 1;
 			return -1;
 		};
+		return r;
 	}
 	
 	/**
@@ -317,7 +333,10 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	 * @return the comparator that compares the results by their invocation count
 	 */
 	private function getMethodInvocationCountComparator(Void):Function {
-		return function(a:TestResult, b:TestResult):Number {
+		// returning function directly is not flex compatible
+		// flex compiler would not recognize return statement
+		// seems to be a flex compiler bug
+		var r:Function = function(a:TestResult, b:TestResult):Number {
 			if (a instanceof TestSuiteResult
 					&& b instanceof TestSuiteResult) {
 				var m:Number = TestSuiteResult(a).getMethodInvocationCount();
@@ -328,6 +347,7 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 			}
 			return 0;
 		};
+		return r;
 	}
 	
 	/**
@@ -339,7 +359,10 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	 */
 	private function getMethodInvocationPercentageComparator(Void):Function {
 		var scope:TestSuiteResult = getThis();
-		return function(a:TestResult, b:TestResult):Number {
+		// returning function directly is not flex compatible
+		// flex compiler would not recognize return statement
+		// seems to be a flex compiler bug
+		var r:Function = function(a:TestResult, b:TestResult):Number {
 			if (a instanceof TestSuiteResult
 					&& b instanceof TestSuiteResult) {
 				var m:Number = TestSuiteResult(a).getMethodInvocationPercentage(scope.getMethodInvocationCount());
@@ -350,6 +373,7 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 			}
 			return 0;
 		};
+		return r;
 	}
 	
 	/**
@@ -358,7 +382,10 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	 * @return the method invocation succession comparator
 	 */
 	private function getMethodInvocationSuccessionComparator(Void):Function {
-		return function(a:TestResult, b:TestResult):Number {
+		// returning function directly is not flex compatible
+		// flex compiler would not recognize return statement
+		// seems to be a flex compiler bug
+		var r:Function = function(a:TestResult, b:TestResult):Number {
 			var m:MethodInvocation;
 			var n:MethodInvocation;
 			if (a instanceof MethodInvocation) m = MethodInvocation(a);
@@ -371,6 +398,7 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 			}
 			return 0;
 		};
+		return r;
 	}
 	
 }
