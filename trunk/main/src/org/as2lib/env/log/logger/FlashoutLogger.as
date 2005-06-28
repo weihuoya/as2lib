@@ -16,7 +16,6 @@
 
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.logger.AbstractLogger;
 
 /**
@@ -27,7 +26,11 @@ import org.as2lib.env.log.logger.AbstractLogger;
  * directly enables you to switch between almost every available Logging API without
  * having to change the logging calls, but just the underlying configuration on
  * startup.
- *
+ * 
+ * <p>Note that if you are working with the Flashout 0.2.* you have to specify
+ * Flashout's custom trace method as trace replacement when compiling your classes
+ * with MTASC.
+ * 
  * @author Simon Wacker
  * @see org.as2lib.env.log.handler.FlashoutHandler
  * @see <a href="http://www.potapenko.com/flashout">Flashout</a>
@@ -219,7 +222,13 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	 */
 	public function fatal(message):Void {
 		if (isFatalEnabled()) {
-			Flashout.error(message);
+			// old Flashout did not provide fatal level
+			// wanted support to be compatible with both versions
+			if (Flashout["fatal"]) {
+				Flashout["fatal"](message);
+			} else {
+				Flashout.error(message);
+			}
 		}
 	}
 	

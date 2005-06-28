@@ -25,6 +25,10 @@ import org.as2lib.env.log.handler.AbstractLogHandler;
  *
  * <p>The {@code Flashout} class is needed.
  * 
+ * <p>Note that if you are working with the Flashout 0.2.* you have to specify
+ * Flashout's custom trace method as trace replacement when compiling your classes
+ * with MTASC.
+ * 
  * @author Simon Wacker
  * @see org.as2lib.env.log.logger.FlashoutLogger
  * @see <a href="http://www.potapenko.com/flashout">Flashout</a>
@@ -70,30 +74,39 @@ class org.as2lib.env.log.handler.FlashoutHandler extends AbstractLogHandler impl
 	 *
 	 * <p>The string representation of the {@code message} to log is obtained via
 	 * the {@code convertMessage} method.
+	 * 
+	 * <p>Every As2lib Logging API log level that has a mapping to the log levels of
+	 * Flashout is mapped to the correct one. If no mapping is found, {@code Flashout.log}
+	 * is used.
 	 *
 	 * @param message the message to log
-	 * @todo log directly to the console without help of the {@code Flashout} class
 	 */
 	public function write(message:LogMessage):Void {
 		var m:String = convertMessage(message);
 		switch (message.getLevel()) {
 			case AbstractLogLevel.DEBUG:
-				Flashout["async" + "Log"]("debug_log", m);
+				Flashout.debug(m);
 				break;
 			case AbstractLogLevel.INFO:
-				Flashout["async" + "Log"]("info_log", m);
+				Flashout.info(m);
 				break;
 			case AbstractLogLevel.WARNING:
-				Flashout["async" + "Log"]("warning_log", m);
+				Flashout.warning(m);
 				break;
 			case AbstractLogLevel.ERROR:
-				Flashout["async" + "Log"]("error_log", m);
+				Flashout.error(m);
 				break;
 			case AbstractLogLevel.FATAL:
-				Flashout["async" + "Log"]("error_log", m);
+				// old Flashout did not provide fatal level
+				// wanted support to be compatible with both versions
+				if (Flashout["fatal"]) {
+					Flashout["fatal"](m);
+				} else {
+					Flashout.error(m);
+				}
 				break;
 			default:
-				Flashout["async" + "Log"]("default_log", m);
+				Flashout.log(m);
 				break;
 		}
 	}
