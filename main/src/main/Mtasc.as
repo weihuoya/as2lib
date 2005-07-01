@@ -38,8 +38,10 @@ class main.Mtasc {
 	
 	/**
 	 * Initializes and starts the MTASC configuration.
+	 * 
+	 * @param container the root movie-clip that is passed by MTASC to the main method
 	 */
-	public static function init():Void {
+	public static function init(container:MovieClip):Void {
 		// sets up logging
 		setUpLogging();
 	}

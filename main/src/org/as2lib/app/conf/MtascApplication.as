@@ -25,20 +25,27 @@ import main.Configuration;
  * 
  * <p>Simply use this class as main startup class in the mtasc preferences.
  * <code>
- * [MTASC directory]\mtasc.exe -cp "[your project path]" -cp "[as2lib project path]" org/as2lib/app/conf/MtascApplication.as
+ *   [MTASC directory]\mtasc.exe -cp "[your project path]" -cp "[as2lib project path]" org/as2lib/app/conf/MtascApplication.as
  * </code>
  * 
  * @author Martin Heidegger
+ * @author Simon Wacker
  * @version 1.0
  */
 class org.as2lib.app.conf.MtascApplication {
 	
 	/**
-	 * Executes the configuration for the flash environment in {@link main.Flash} and the 
-	 * configuration for all environments in {@link main.Configuration}.
+	 * Executes the configuration for the mtasc environment in {@link main.Mtasc} and the 
+	 * configuration for all environments in {@link main.Configuration}. This are the
+	 * {@link Mtasc#init} and {@link Configuration#init} methods.
+	 * 
+	 * <p>The {@code Mtasc.init} method is passed the {@code container} movie-clip, that
+	 * is by default {@code _root} if this class is used as main method for MTASC.
+	 * 
+	 * @param container the root movie-clip that is passed by MTASC to the main method
 	 */
-	public static function main(Void):Void {
-		Mtasc.init();
+	public static function main(container:MovieClip):Void {
+		Mtasc.init(container);
 		Configuration.init();
 	}
 	
