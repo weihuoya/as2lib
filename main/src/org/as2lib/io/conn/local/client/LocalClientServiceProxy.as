@@ -184,14 +184,14 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 			// "owner.url" is not MTASC compatible because "url" is private
 			callback.onReturn(new MethodInvocationReturnInfo(owner["url"], methodName, args, returnValue));
 			this.close();
-		}
+		};
 		responseService["onError"] = function(errorCode:Number, exception):Void {
 			// "owner.responseServices" is not MTASC compatible because "responseServices" is private
 			owner["responseServices"].splice(index, 1);
 			// "owner.url" is not MTASC compatible because "url" is private
 			callback.onError(new MethodInvocationErrorInfo(owner["url"], methodName, args, errorCode, exception));
 			this.close();
-		}
+		};
 		try {
 			responseService.connect(responseUrl);
 		} catch (exception:org.as2lib.io.conn.local.core.ReservedConnectionException) {
@@ -202,7 +202,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 		var errorListener:MethodInvocationErrorListener = getBlankMethodInvocationErrorListener();
 		errorListener.onError = function(info:MethodInvocationErrorInfo) {
 			callback.onError(info);
-		}
+		};
 		
 		try {
 			connection.send(url, "invokeMethod", [methodName, args, responseUrl], errorListener);

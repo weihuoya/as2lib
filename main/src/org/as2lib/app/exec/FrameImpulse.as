@@ -179,7 +179,7 @@ class org.as2lib.app.exec.FrameImpulse extends BasicClass implements Impulse {
 					while (--i-(-1)) {
 						c[i].execute();
 					}
-				}
+				};
 				
 			} else {
 				throw new IllegalArgumentException("onEnterFrame method in "

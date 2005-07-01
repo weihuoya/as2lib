@@ -295,7 +295,7 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 				owner["dispatchError"](new MethodInvocationErrorInfo(connectionName, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR));
 				listener.onError(new MethodInvocationErrorInfo(connectionName, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR));
 			}
-		}
+		};
 		if (!client.send.apply(client, [connectionName, methodName].concat(args)))
 			throw new MethodInvocationException("Arguments [" + args + "] are out of size.", this, arguments);
 		return listener;

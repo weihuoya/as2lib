@@ -264,7 +264,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 		listener.onError = function(info:MethodInvocationErrorInfo):Void {
 			// "owner.errorDistributor" and "owner.currentServiceUrl" are not MTASC compatible
 			owner["errorDistributor"].onError(new MethodInvocationErrorInfo(owner["currentServiceUrl"], methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR, null));
-		}
+		};
 		try {
 			if (service[methodName]) {
 				var returnValue = service[methodName].apply(service, args);

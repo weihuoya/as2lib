@@ -152,7 +152,7 @@ class org.as2lib.util.StopWatch extends BasicClass {
 	public function toString():String {
 		var result:String;
 		result = "\n------- [STOPWATCH] -------";
-		var i:Number
+		var i:Number;
 		for(i=0; i<startTimeKeys.length; i++) {
 			result += "\n started["+startTimeKeys[i]+"ms] stopped["+stopTimeKeys[i]+"ms]";
 		}

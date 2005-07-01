@@ -280,7 +280,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 		var result:MockControlStateFactory = getBlankMockControlStateFactory();
 		result.getMockControlState = function(behavior:Behavior):MockControlState {
 			return new RecordState(behavior);
-		}
+		};
 		return result;
 	}
 	
@@ -323,7 +323,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 		var result:MockControlStateFactory = getBlankMockControlStateFactory();
 		result.getMockControlState = function(behavior:Behavior):MockControlState {
 			return new ReplayState(behavior);
-		}
+		};
 		return result;
 	}
 	
@@ -390,7 +390,7 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 			}
 			// calling private methods from an inner anonymous method is not allowed by MTASC
 			return owner["invokeMethod"](method, args);
-		}
+		};
 		return result;
 	}
 	

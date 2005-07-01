@@ -151,7 +151,7 @@ class org.as2lib.env.log.logger.FludgeLogger extends AbstractLogger implements L
 	 */
 	public function debug(message):Void {
 		if (isDebugEnabled()) {
-			Fludge.trace(message.toString(), "debug")
+			Fludge.trace(message.toString(), "debug");
 		}
 	}
 	
@@ -166,7 +166,7 @@ class org.as2lib.env.log.logger.FludgeLogger extends AbstractLogger implements L
 	 */
 	public function info(message):Void {
 		if (isInfoEnabled()) {
-			Fludge.trace(message.toString(), "info")
+			Fludge.trace(message.toString(), "info");
 		}
 	}
 	
@@ -181,7 +181,7 @@ class org.as2lib.env.log.logger.FludgeLogger extends AbstractLogger implements L
 	 */
 	public function warning(message):Void {
 		if (isWarningEnabled()) {
-			Fludge.trace(message.toString(), "warn")
+			Fludge.trace(message.toString(), "warn");
 		}
 	}
 	
@@ -196,7 +196,7 @@ class org.as2lib.env.log.logger.FludgeLogger extends AbstractLogger implements L
 	 */
 	public function error(message):Void {
 		if (isErrorEnabled()) {
-			Fludge.trace(message.toString(), "error")
+			Fludge.trace(message.toString(), "error");
 		}
 	}
 	
@@ -213,7 +213,7 @@ class org.as2lib.env.log.logger.FludgeLogger extends AbstractLogger implements L
 	 */
 	public function fatal(message):Void {
 		if (isFatalEnabled()) {
-			Fludge.trace(message.toString(), "exception")
+			Fludge.trace(message.toString(), "exception");
 		}
 	}
 	

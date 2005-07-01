@@ -119,7 +119,7 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 		// type error Local variable redefinition : Void
 		result.getLogger = function():ConfigurableHierarchicalLogger {
 			return new SimpleHierarchicalLogger();
-		}
+		};
 		return result;
 	}
 	
@@ -172,7 +172,7 @@ class org.as2lib.env.log.repository.LoggerHierarchy extends BasicClass implement
 		var result:ConfigurableHierarchicalLoggerFactory = getBlankConfigurableHierarchicalLoggerFactory();
 		result.getLogger = function(Void):ConfigurableHierarchicalLogger {
 			return logger;
-		}
+		};
 		return result;
 	}
 	

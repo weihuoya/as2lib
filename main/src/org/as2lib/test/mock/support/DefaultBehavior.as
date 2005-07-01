@@ -69,7 +69,7 @@ class org.as2lib.test.mock.support.DefaultBehavior extends BasicClass implements
 		var result:MethodBehaviorFactory = getBlankMethodBehaviorFactory();
 		result.getMethodBehavior = function(expectedMethodCall:MethodCall):MethodBehavior {
 			return new DefaultMethodBehavior(expectedMethodCall);
-		}
+		};
 		return result;
 	}
 	

@@ -138,4 +138,5 @@ interface org.as2lib.io.file.File extends BasicInterface {
 	 * @see FileListener
 	 */
 	public function addListener(listener:FileListener):Void;
+	
 }

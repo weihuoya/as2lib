@@ -57,7 +57,7 @@ class org.as2lib.env.reflect.InterfaceProxyFactory extends BasicClass implements
 			return (function() {
 				return handler.invoke(this, methodName, arguments);
 			});
-		}
+		};
 		return result;
 	}
 	

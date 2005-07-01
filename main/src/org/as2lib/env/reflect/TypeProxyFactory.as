@@ -74,7 +74,7 @@ class org.as2lib.env.reflect.TypeProxyFactory extends BasicClass implements Prox
 			return (function() {
 				return handler.invoke(this, methodName, arguments);
 			});
-		}
+		};
 		return result;
 	}
 	

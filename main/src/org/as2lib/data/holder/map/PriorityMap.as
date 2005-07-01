@@ -114,7 +114,7 @@ class org.as2lib.data.holder.map.PriorityMap extends AbstractPriority implements
 	
 	public function putAllByMapAndPriority(map:Map, priority:Number):Void {
 		var valueIterator:ArrayIterator = new ArrayIterator(map.getValues());
-		var keyIterator:ArrayIterator = new ArrayIterator(map.getKeys())
+		var keyIterator:ArrayIterator = new ArrayIterator(map.getKeys());
 		while (keyIterator.hasNext()) {
 			putByValueAndPriority(keyIterator.next(), valueIterator.next(), priority);
 		}

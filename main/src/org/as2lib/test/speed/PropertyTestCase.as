@@ -18,7 +18,7 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.test.speed.AbstractTest
+import org.as2lib.test.speed.AbstractTest;
 import org.as2lib.test.speed.Test;
 import org.as2lib.test.speed.SimpleTestSuiteResult;
 import org.as2lib.test.speed.MethodTestCase;
