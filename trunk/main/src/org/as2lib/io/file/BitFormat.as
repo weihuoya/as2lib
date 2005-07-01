@@ -99,7 +99,7 @@ class org.as2lib.io.file.BitFormat extends BasicClass {
 	public function setFloatingPoints(fp:Number):BitFormat {
 		if(fp >= 0 && fp != null) {
 			this.comma = fp;
-			return this
+			return this;
 		} else {
 			throw new IllegalArgumentException("No valid amount of floating points ("+fp+") used.", this, arguments);
 		}

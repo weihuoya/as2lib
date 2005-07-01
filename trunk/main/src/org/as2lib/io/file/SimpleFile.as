@@ -87,7 +87,7 @@ class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
 		// Using XML Template to get the onData Event.
 		helperXML.onData = function(data) {
 			this.owner.sendDataEvent(data);
-		}
+		};
 		
 		reset();
 	}

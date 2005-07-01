@@ -86,7 +86,7 @@ class org.as2lib.env.event.distributor.AbstractEventDistributorControl extends T
 				// e.distribute is not MTASC compatible because "distribute" is private
 				e["distribute"](n, arguments);
 			});
-		}
+		};
 		var p:Object = t.prototype;
 		while (p != Object.prototype) {
 			for (var i:String in p) {

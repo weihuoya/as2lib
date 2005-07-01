@@ -92,7 +92,7 @@ class org.as2lib.env.log.repository.DynamicLoggerRepository extends BasicClass i
 		var result:LoggerFactory = getBlankLoggerFactory();
 		result.getLogger = function(loggerName:String):Logger {
 			return new loggerClass(loggerName);
-		}
+		};
 		return result;
 	}
 	

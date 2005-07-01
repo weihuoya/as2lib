@@ -101,7 +101,7 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 		repository = getBlankLoggerRepository();
 		repository.getLogger = function(loggerName:String):Logger {
 			return logger;
-		}
+		};
 	}
 	
 	/**

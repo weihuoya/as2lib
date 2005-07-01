@@ -172,7 +172,7 @@ class org.as2lib.test.mock.support.DefaultMethodBehavior extends BasicClass impl
 			if (actualMethodCalls.length < 1) return true;
 			else return false;
 		}
-		return (getCurrentMethodCallRangeIndex() > -1)
+		return (getCurrentMethodCallRangeIndex() > -1);
 	}
 	
 	/**

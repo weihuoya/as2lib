@@ -174,10 +174,10 @@ class org.as2lib.env.bean.SimpleBeanWrapper extends AbstractBeanWrapper implemen
 		}
 		var key:String = propertyPath.substring(propertyPath.indexOf(PROPERTY_KEY_PREFIX)+1, propertyPath.length-1);
 		if (key.indexOf("\"") > -1) {
-			return key.substring(key.indexOf("\"")+1, key.lastIndexOf("\""))
+			return key.substring(key.indexOf("\"")+1, key.lastIndexOf("\""));
 		}
 		if (key.indexOf("'") > -1) {
-			return key.substring(key.indexOf("'")+1, key.lastIndexOf("'"))
+			return key.substring(key.indexOf("'")+1, key.lastIndexOf("'"));
 		}
 		return key;
 	}

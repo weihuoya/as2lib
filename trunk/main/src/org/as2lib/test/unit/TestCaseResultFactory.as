@@ -1,4 +1,4 @@
-import org.as2lib.core.BasicClass
+import org.as2lib.core.BasicClass;
 import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.TestRunner;

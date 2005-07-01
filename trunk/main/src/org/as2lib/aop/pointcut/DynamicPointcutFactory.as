@@ -81,11 +81,11 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		var rule:PointcutRule = getBlankPointcutRule();
 		rule.execute = function(pattern:String):Boolean {
 			return (pattern.indexOf(" || ") != -1);
-		}
+		};
 		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
 			return (new OrCompositePointcut(pattern));
-		}
+		};
 		bindPointcutFactory(rule, factory);
 	}
 	
@@ -96,11 +96,11 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		var rule:PointcutRule = getBlankPointcutRule();
 		rule.execute = function(pattern:String):Boolean {
 			return (pattern.indexOf(" && ") != -1);
-		}
+		};
 		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
 			return (new AndCompositePointcut(pattern));
-		}
+		};
 		bindPointcutFactory(rule, factory);
 	}
 	
@@ -111,12 +111,12 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		var rule:PointcutRule = getBlankPointcutRule();
 		rule.execute = function(pattern:String):Boolean {
 			return (pattern.indexOf("execution") == 0);
-		}
+		};
 		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
 			pattern = pattern.substring(10, pattern.length - 3);
 			return (new KindedPointcut(pattern, AbstractJoinPoint.TYPE_METHOD));
-		}
+		};
 		bindPointcutFactory(rule, factory);
 	}
 	

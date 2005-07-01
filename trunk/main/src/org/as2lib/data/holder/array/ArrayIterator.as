@@ -87,18 +87,18 @@ import org.as2lib.data.holder.NoSuchElementException;
 					throw new NoSuchElementException("There is no more element.", this, arguments);
 				}
 				return t[++g];
-			}
+			};
 			// Replace for .next() if .hasNext was called and there is something next
 			var x:Function = function() {
 				s.next = y;
 				return t[++g];
-			}
+			};
 			// Replace for .next() if .hasNext found that there is no next
 			var z:Function = function() {
 				s.next = y;
 				arguments.callee = p.next;
 				throw new NoSuchElementException("There is no more element.", this, arguments);
-			}
+			};
 			// .next replacement
 			next = y;
 			// .hasNext replacement
@@ -110,7 +110,7 @@ import org.as2lib.data.holder.NoSuchElementException;
 					s.next = z;
 					return false; 
 				}
-			}
+			};
 			// .remove replacement
 			remove = function() {
 				if (g < 0) {
@@ -118,7 +118,7 @@ import org.as2lib.data.holder.NoSuchElementException;
 					throw new IllegalStateException("You tried to remove an element before calling the 'next' method. There is thus no element selected to remove.", this, arguments);
 				}
 				t.splice(g--, 1);
-			}
+			};
 		}
 	}
 	

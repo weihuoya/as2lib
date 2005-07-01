@@ -183,7 +183,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 	 */
 	public function pause(Void):Void {
 		if (!pauseAllowed) {
-			methodInfo.addInfo(new PauseError("IMPORTANT: Pause is not available before the execution of a testcase method. Action failed."))
+			methodInfo.addInfo(new PauseError("IMPORTANT: Pause is not available before the execution of a testcase method. Action failed."));
 		} else {
 			super.pause();
 		}

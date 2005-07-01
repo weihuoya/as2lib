@@ -183,7 +183,7 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExec
 	 * @param object Object to be iterated
 	 */
 	public function forEach(object):Void {
-		executed = 0
+		executed = 0;
 		if (!target) target = new Array();
 		var i:String;
 		for (i in object) {
