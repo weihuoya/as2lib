@@ -263,7 +263,7 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 */
 	private function getTokenCount(string:String):Number {
 		if (!string) return 0;
-		var result = 0;
+		var result:Number = 0;
 		var token:String = string.substr(0, 1);
 		while (string.substr(result, 1) == token) {
 			result++;

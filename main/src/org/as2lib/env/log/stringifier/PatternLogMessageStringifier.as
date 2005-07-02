@@ -74,7 +74,7 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 	 */
 	public function execute(target):String {
 		var message:LogMessage = target;
-		var info = "";
+		var info:String = "";
 		if (timeFormatter) {
 			var timeStamp:Number = message.getTimeStamp();
 			if (timeStamp != null) {

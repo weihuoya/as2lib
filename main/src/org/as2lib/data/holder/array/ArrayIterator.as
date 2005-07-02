@@ -72,7 +72,7 @@ import org.as2lib.data.holder.NoSuchElementException;
 		// Prepare of fast internal replacement
 		var t:Array = target;
 		var g:Number = -1;
-		var p = ArrayIterator.prototype;
+		var p:Object = ArrayIterator.prototype;
 		var s:ArrayIterator = this;
 		
 		// Replacement of internal methods as performance upgrade.

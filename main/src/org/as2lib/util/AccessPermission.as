@@ -112,27 +112,27 @@ class org.as2lib.util.AccessPermission extends BasicClass {
 	/**
 	 * Allow everything to be done with the object.
      */
-	public static var ALLOW_ALL = 0;
+	public static var ALLOW_ALL:Number = 0;
 	
 	/**
 	 * Hide an object from for..in loops.
      */
-	public static var HIDE = 1;
+	public static var HIDE:Number = 1;
 	
 	/**
 	 * Protect an object from deletion.
      */
-	public static var PROTECT_DELETE = 2;
+	public static var PROTECT_DELETE:Number = 2;
 	
 	/**
 	 * Protect an object from overwriting.
      */
-	public static var PROTECT_OVERWRITE = 4;
+	public static var PROTECT_OVERWRITE:Number = 4;
 	
 	/**
 	 * Allow nothing to be done with the object.
      */
-	public static var ALLOW_NOTHING = 7;
+	public static var ALLOW_NOTHING:Number = 7;
 	
 	/**
 	 * Sets the access permission of a reference by an access code.

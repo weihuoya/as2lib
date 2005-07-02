@@ -33,7 +33,7 @@ class org.as2lib.env.bean.converter.NumberConverter extends AbstractPropertyValu
 	
 	public function convertPropertyValueByStringValueAndType(value:String, type:Function) {
 		if (type && type != Number) {
-			return new [type](value);
+			return new type(value);
 		}
 		return convertPropertyValueByStringValue(value);
 	}

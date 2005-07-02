@@ -151,7 +151,7 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 				return t[name];
 			}
 		}
-		var p = t.prototype;
+		var p:Object = t.prototype;
 		if (p[name] != p.__proto__[name]) {
 			return p[name];
 		}

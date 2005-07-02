@@ -344,7 +344,7 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 */
 	public static function multiply(string:String, factor:Number):String {
 		var result:String="";
-		for (var i = factor; i > 0; i--) {
+		for (var i:Number = factor; i > 0; i--) {
 			result += string;
 		}
 		return result;

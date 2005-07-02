@@ -48,7 +48,7 @@ class org.as2lib.env.bean.SimpleBeanWrapper extends AbstractBeanWrapper implemen
 	}
 	
 	public function getPropertyValue(propertyName:String) {
-		var transformedPropertyName = transformPropertyName(propertyName);
+		var transformedPropertyName:String = transformPropertyName(propertyName);
 		if (propertyName.indexOf(PROPERTY_PREFIX) == 0) {
 			/*if (isNestedProperty(transformedPropertyName)) {
 				return getPropertyValueByPropertyAccess(getNestedObjectByPropertyAccess(transformedPropertyName), getFinalPropertyName(transformedPropertyName), getKeyName(transformedPropertyName));
@@ -98,7 +98,7 @@ class org.as2lib.env.bean.SimpleBeanWrapper extends AbstractBeanWrapper implemen
 	}
 
 	public function setPropertyValueByPropertyValue(propertyValue:PropertyValue):Void {
-		var transformedPropertyName = transformPropertyName(propertyValue.getName());
+		var transformedPropertyName:Number = transformPropertyName(propertyValue.getName());
 		if (propertyValue.getName().indexOf(PROPERTY_PREFIX) == 0) {
 			setPropertyValueByPropertyAccess(getWrappedObject(), getFinalPropertyName(transformedPropertyName), getKeyName(transformedPropertyName), transformPropertyValue(propertyValue));
 			return;

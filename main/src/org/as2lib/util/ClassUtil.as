@@ -35,7 +35,7 @@ class org.as2lib.util.ClassUtil extends BasicClass {
 	 * @return {@code true} if {@code subClass} is a sub-class of {@code superClass}
 	 */
 	public static function isSubClassOf(subClass:Function, superClass:Function):Boolean {
-		var base = subClass.prototype;
+		var base:Object = subClass.prototype;
 		// A superclass has to be in the prototype chain
 		while(base !== undefined) {
 			base = base.__proto__;
@@ -56,7 +56,6 @@ class org.as2lib.util.ClassUtil extends BasicClass {
 	 * {@code interfaze} else {@code false}
 	 */
 	public static function isImplementationOf(clazz:Function, interfaze:Function):Boolean {
-		var base = clazz.prototype;
 		// A interface must not be in the prototype chain.
 		if (isSubClassOf(clazz, interfaze)) {
 			return false;

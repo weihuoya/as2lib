@@ -41,7 +41,7 @@ class org.as2lib.env.overload.SameTypeSignatureException extends OverloadExcepti
 	private var overloadTarget;
 	
 	/** The method that performs the overloading. */
-	private var overloadedMethod;
+	private var overloadedMethod:Function;
 	
 	/**
 	 * Constructs a new {@code SameTypeSignatureException} instance.

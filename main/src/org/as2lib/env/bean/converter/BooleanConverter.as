@@ -33,7 +33,7 @@ class org.as2lib.env.bean.converter.BooleanConverter extends AbstractPropertyVal
 	
 	public function convertPropertyValueByStringValueAndType(value:String, type:Function) {
 		if (type && type != Boolean) {
-			return new [type](value);
+			return new type(value);
 		}
 		return convertPropertyValueByStringValue(value);
 	}

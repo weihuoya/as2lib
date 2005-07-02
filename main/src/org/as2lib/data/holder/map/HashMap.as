@@ -278,7 +278,7 @@ class org.as2lib.data.holder.map.HashMap extends AbstractMap implements Map {
 	 * @return the index where the {@code value} is stored
 	 */
 	private function findValue(value):Number {
-		var l = values.length;
+		var l:Number = values.length;
 		while (values[--l] !== value && l>-1);
 		return l;
 	}
@@ -290,7 +290,7 @@ class org.as2lib.data.holder.map.HashMap extends AbstractMap implements Map {
 	 * @return the index where the {@code key} is stored
 	 */
 	private function findKey(key):Number {
-		var l = keys.length;
+		var l:Number = keys.length;
 		while (keys[--l] !== key && l>-1);
 		return l;
 	}

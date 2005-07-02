@@ -213,7 +213,7 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	 * positions else {@code false}
 	 */
 	public static function isSame(array1:Array, array2:Array):Boolean {
-		var i = array1.length;
+		var i:Number = array1.length;
 		if (i != array2.length) {
 			return false;
 		}

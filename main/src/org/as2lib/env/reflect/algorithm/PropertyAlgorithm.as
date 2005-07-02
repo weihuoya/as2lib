@@ -121,7 +121,7 @@ class org.as2lib.env.reflect.algorithm.PropertyAlgorithm extends BasicClass {
 		var i:String;
 		for (i in t) {
 			if (typeof(t[i]) == "function") {
-				var n = i.substring(7);
+				var n:String = i.substring(7);
 				if (i.indexOf("__get__") == 0) {
 					g[n] = true;
 					if (!s[n]) {
