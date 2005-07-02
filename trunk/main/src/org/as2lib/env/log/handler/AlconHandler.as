@@ -20,10 +20,10 @@ import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.level.AbstractLogLevel;
 
-import net.hiddenresource.util.alcon.Alcon;
+import net.hiddenresource.util.alcon.Debug;
 
 /**
- * {@code AlconHandler} uses the {@code net.hiddenresource.util.alcon.Alcon} class
+ * {@code AlconHandler} uses the {@code net.hiddenresource.util.alcon.Debug} class
  * from Sascha Balkau to log messages.
  * 
  * @author Simon Wacker
@@ -93,9 +93,9 @@ class org.as2lib.env.log.handler.AlconHandler extends BasicClass implements LogH
 	 */
 	public function write(message:LogMessage):Void {
 		if (this.decorateMethod) {
-			Alcon.trace(message.toString(), convertLevel(message.getLevel()), this.recursiveTracing);
+			Debug.trace(message.toString(), convertLevel(message.getLevel()), this.recursiveTracing);
 		} else {
-			Alcon.trace(message.getMessage(), convertLevel(message.getLevel()), this.recursiveTracing);
+			Debug.trace(message.getMessage(), convertLevel(message.getLevel()), this.recursiveTracing);
 		}
 	}
 	
