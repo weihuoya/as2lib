@@ -220,7 +220,7 @@ class org.as2lib.app.exec.FrameImpulse extends BasicClass implements Impulse {
 				throw new FatalException("Could not generate a timeline for "
 										 +"impulse generation", this, arguments);
 			}
-			var timelineIsGenerated = true;
+			var timelineIsGenerated:Boolean = true;
 		}
 		return timeline;
 	}

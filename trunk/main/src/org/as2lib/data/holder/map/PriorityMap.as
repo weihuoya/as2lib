@@ -207,7 +207,7 @@ class org.as2lib.data.holder.map.PriorityMap extends AbstractPriority implements
 	}
 	private function findKey(key):Number {
 		var keys:Array = map.getKeys();
-		var l = keys.length;
+		var l:Number = keys.length;
 		while (keys[--l] != key && l>-1);
 		return l;
 	}

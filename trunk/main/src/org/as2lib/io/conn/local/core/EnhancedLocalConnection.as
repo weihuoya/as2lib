@@ -319,7 +319,7 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 	 *
 	 * @param info that contains further information about the error
 	 */
-	private function dispatchError(info:MethodInvocationErrorInfo) {
+	private function dispatchError(info:MethodInvocationErrorInfo):Void {
 		var distributor:MethodInvocationErrorListener = errorDistributorControl.getDistributor();
 		distributor.onError(info);
 	}

@@ -129,7 +129,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	 * @return This TestCaseResult in a new list for Results.
 	 */
 	public function getTestResults(Void):TypedArray {
-		var result = new TypedArray(TestResult);
+		var result:TypedArray = new TypedArray(TestResult);
 		result.push(this);
 		return result;
 	}

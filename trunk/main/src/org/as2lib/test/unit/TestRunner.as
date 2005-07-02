@@ -72,10 +72,10 @@ import org.as2lib.util.StopWatch;
 class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process {
 	
 	/** Time in ms until the testrunner pauses automatically. */
-	public static var MAX_TIME_UNTIL_AUTO_PAUSE = 1500;
+	public static var MAX_TIME_UNTIL_AUTO_PAUSE:Number = 1500;
 	
 	/** Amount of frames until resume from auto pause */
-	public static var FRAMES_UNTIL_RESUME = 1;
+	public static var FRAMES_UNTIL_RESUME:Number = 1;
 	
 	/** Result Holder for a TestResult. */
 	private var testResult:TestResult;

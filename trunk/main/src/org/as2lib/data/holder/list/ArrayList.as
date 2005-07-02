@@ -321,7 +321,7 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	 * @return the index of {@code value}
 	 */
 	public function indexOf(value):Number {
-		var l = data.length;
+		var l:Number = data.length;
 		while (data[--l] !== value && l > -1);
 		return l;
 	}

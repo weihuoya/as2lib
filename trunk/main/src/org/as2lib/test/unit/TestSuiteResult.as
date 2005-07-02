@@ -51,7 +51,7 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 		
 		var tests:Array = testSuite.getTests();
 		var i:Number = tests.length;
-		while(--i-(-1)) {
+		while (--i-(-1)) {
 			if(tests[i] instanceof TestCase) {
 				testResults.unshift(new TestCaseResult(tests[i], testRunner));
 			} else if(tests[i] instanceof TestSuite) {
@@ -79,7 +79,7 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	public function getPercentage(Void):Number {
 		var result:Number = 0;
 		var unit:Number = 100/this.testResults.length;
-		for(var i=this.testResults.length-1; i>=0; i--) {
+		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
 			result += (unit/100*this.testResults[i].getPercentage());
 		}
 		return result;
@@ -89,8 +89,8 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	 * @return True if the TestSuite is finished.
 	 */
 	public function hasFinished(Void):Boolean {
-		for(var i=this.testResults.length-1; i>=0; i--) {
-			if(!this.testResults[i].isFinished()) {
+		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
+			if (!this.testResults[i].isFinished()) {
 				return false;
 			}
 		}
@@ -101,8 +101,8 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	 * @return True if the TestSuite is started.
 	 */
 	public function hasStarted(Void):Boolean {
-		for(var i=this.testResults.length-1; i>=0; i--) {
-			if(this.testResults[i].hasStarted()) {
+		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
+			if (this.testResults[i].hasStarted()) {
 				return true;
 			}
 		}
@@ -117,10 +117,10 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	 */
 	public function getTestCaseResults(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestCaseResult);
-		for(var i:Number=0; i<this.testResults.length; i++) {
+		for (var i:Number=0; i<this.testResults.length; i++) {
 			// TODO: Bug? Why can't i use .concat ???
 			var testCases:Array = this.testResults[i].getTestCaseResults();
-			for(var j:Number=0; j<testCases.length; j++) {
+			for (var j:Number=0; j<testCases.length; j++) {
 				result.push(testCases[j]);
 			}
 		}
@@ -135,10 +135,10 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	 */
 	public function getTestResults(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestResult);
-		for(var i:Number=0; i<this.testResults.length; i++) {
+		for (var i:Number=0; i<this.testResults.length; i++) {
 			// TODO: Bug? Why can't i use .concat ???
 			var testResults:Array = this.testResults[i].getTestResults();
-			for(var j:Number=0; j<testResults.length; j++) {
+			for (var j:Number=0; j<testResults.length; j++) {
 				result.push(testResults[i]);
 			}
 		}
@@ -161,7 +161,7 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	 */
 	public function getOperationTime(Void):Number {
 		var result:Number = 0;
-		for(var i=this.testResults.length-1; i>=0; i--) {
+		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
 			result += this.testResults[i].getOperationTime();
 		}
 		return result;
@@ -171,8 +171,8 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	 * @return True if the TestSuite contains errors.
 	 */
 	public function hasErrors(Void):Boolean {
-		for(var i=this.testResults.length-1; i>=0; i--) {
-			if(this.testResults[i].hasErrors()) {
+		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
+			if (this.testResults[i].hasErrors()) {
 				return true;
 			}
 		}
@@ -199,7 +199,7 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 		var titleLength:Number;
 		result = "*** TestSuite "+getName()+" ("+testResults.length+" Tests) ["+getOperationTime()+"ms] ***";
 		titleLength = result.length;
-		for(var i=0; i<testResults.length; i++){
+		for (var i:Number = 0; i < testResults.length; i++){
 			result += "\n"+StringUtil.addSpaceIndent(this.testResults[i].toString(), 2);
 		}
 		result += "\n"+StringUtil.multiply("*", titleLength);
