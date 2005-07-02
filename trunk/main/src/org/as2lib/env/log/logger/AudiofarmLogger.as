@@ -44,7 +44,7 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	
 	/**
 	 * Indicates that all messages at debug and higher levels shall be logged. This
-	 * level is equivalent to the as2logger {@code FINE} level.	 */
+	 * level is equivalent to the as2logger {@code CONFIG} level.	 */
 	public static var DEBUG:Level = Level.CONFIG;
 	
 	/**
@@ -99,7 +99,7 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	 * Constructs a new {@code AudiofarmLogger} instance.
 	 * 
 	 * <p>Gets an as2logger {@code Logger} instance via the
-	 * {code logging.Logger.getLogger} method.
+	 * {@code logging.Logger.getLogger} method.
 	 *
 	 * @param name the name of this logger
 	 */
@@ -122,13 +122,19 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	}
 	
 	/**
-	 * Returns the parent for this logger. This method returns the nearest extant
-	 * parent in the namespace. Thus if a Logger is called "a.b.c.d", and a Logger
-	 * called "a.b" has been created but no logger "a.b.c" exists, then a call of
-	 * {@code getParent} on the logger "a.b.c.d" will return the Logger "a.b". The
-	 * parent for the anonymous Logger is always the root (global) Logger. The result
-	 * will be {@code undefined} if it is called on the root (global) logger in the
-	 * namespace.	 */
+	 * Returns the parent for this logger.
+	 * 
+	 * <p>This method returns the nearest extant parent in the namespace. Thus if a
+	 * logger is called "a.b.c.d", and a logger called "a.b" has been created but no
+	 * logger "a.b.c" exists, then a call of {@code getParent} on the logger "a.b.c.d"
+	 * will return the logger "a.b".
+	 * 
+	 * <p>The parent for the anonymous logger is always the root (global) logger.
+	 * 
+	 * <p>The result will be {@code undefined} if it is called on the root (global) logger
+	 * in the namespace.
+	 * 
+	 * @return the parent of this logger	 */
 	public function getParent(Void):logging.Logger {
 		return this.logger.getParent();
 	}
@@ -189,10 +195,13 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	
 	/**
 	 * Set the log level specifying which messages at which levels will be logged by
-	 * this logger. Message levels lower than this value will be discarded. The level
-	 * value {@link OFF} can be used to turn off logging. If the new level is
-	 * {@code undefined}, it means that this node should inherit its level from its
-	 * nearest ancestor with a specific (non-undefined) level value.
+	 * this logger.
+	 * 
+	 * <p>Message levels lower than this value will be discarded. The level
+	 * value {@link OFF} can be used to turn off logging.
+	 * 
+	 * <p>If the new level is {@code undefined}, it means that this node should inherit
+	 * its level from its nearest ancestor with a specific (non-undefined) level value.
 	 * 
 	 * @param level the new level	 */
 	public function setLevel(level:Level):Void {
@@ -204,6 +213,7 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	 *
 	 * @return {@code true} if debug messages are logged
 	 * @see #debug
+	 * @see AudiofarmLogger#DEBUG
 	 */
 	public function isDebugEnabled(Void):Boolean {
 		return this.logger.isLoggable(this.debugLevel);
@@ -214,6 +224,7 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	 *
 	 * @return {@code true} if info messages are logged
 	 * @see #info
+	 * @see AudiofarmLogger#INFO
 	 */
 	public function isInfoEnabled(Void):Boolean {
 		return this.logger.isLoggable(this.infoLevel);
@@ -224,6 +235,7 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	 *
 	 * @return {@code true} if warning messages are logged
 	 * @see #warning
+	 * @see AudiofarmLogger#WARNING
 	 */
 	public function isWarningEnabled(Void):Boolean {
 		return this.logger.isLoggable(this.warningLevel);
@@ -234,6 +246,7 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	 *
 	 * @return {@code true} if error messages are logged
 	 * @see #error
+	 * @see AudiofarmLogger#ERROR
 	 */
 	public function isErrorEnabled(Void):Boolean {
 		return this.logger.isLoggable(this.errorLevel);
@@ -244,6 +257,7 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	 *
 	 * @return {@code true} if fatal messages are logged
 	 * @see #fatal
+	 * @see AudiofarmLogger#FATAL
 	 */
 	public function isFatalEnabled(Void):Boolean {
 		return this.logger.isLoggable(this.fatalLevel);
@@ -256,6 +270,7 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	 *
 	 * @param message the message object to log
 	 * @see #isDebugEnabled
+	 * @see AudiofarmLogger#DEBUG
 	 */
 	public function debug(message):Void {
 		if (isDebugEnabled()) {
@@ -268,6 +283,7 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	 *
 	 * @param message the message object to log
 	 * @see #isInfoEnabled
+	 * @see AudiofarmLogger#INFO
 	 */
 	public function info(message):Void {
 		if (isInfoEnabled()) {
@@ -280,6 +296,7 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	 *
 	 * @param message the message object to log
 	 * @see #isWarningEnabled
+	 * @see AudiofarmLogger#WARNING
 	 */
 	public function warning(message):Void {
 		if (isWarningEnabled()) {
@@ -288,12 +305,13 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	}
 	
 	/**
-	 * Logs the message object to wrapped as2logger {@code Logger} at severe level.
+	 * Logs the message object to wrapped as2logger {@code Logger} at error level.
 	 * 
 	 * <p>The error level is equivalent to the severe level of as2logger.
 	 *
 	 * @param message the message object to log
 	 * @see #isErrorEnabled
+	 * @see AudiofarmLogger#ERROR
 	 */
 	public function error(message):Void {
 		if (isErrorEnabled()) {
@@ -302,12 +320,13 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	}
 	
 	/**
-	 * Logs the message object to wrapped as2logger {@code Logger} at all level.
+	 * Logs the message object to wrapped as2logger {@code Logger} at fatal level.
 	 * 
 	 * <p>The fatal level is equivalent to the severe level of as2logger.
 	 *
 	 * @param message the message object to log
 	 * @see #isFatalEnabled
+	 * @see AudiofarmLogger#FATAL
 	 */
 	public function fatal(message):Void {
 		if (isFatalEnabled()) {

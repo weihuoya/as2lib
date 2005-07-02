@@ -22,16 +22,17 @@ import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.handler.AbstractLogHandler;
 
 /**
- * {@code Log4fHandler} uses the {@code Log4f.log} method to log messages.
+ * {@code ZtorLog4fHandler} uses the {@code Log4f.log} method of the ZTOR Log4f
+ * project to log messages.
  * 
  * @author Simon Wacker
- * @see org.as2lib.env.log.logger.Log4fLogger
- * @see <a href="http://www.ztor.com/index.php4?ln=&g=comp&d=log4f">Log4f</a>
+ * @see org.as2lib.env.log.logger.ZtorLog4fLogger
+ * @see <a href="http://www.ztor.com/index.php4?ln=&g=comp&d=log4f">ZTOR Log4f</a>
  */
-class org.as2lib.env.log.handler.Log4fHandler extends AbstractLogHandler implements LogHandler {
+class org.as2lib.env.log.handler.ZtorLog4fHandler extends AbstractLogHandler implements LogHandler {
 	
 	/** Holds a log4f handler instance. */
-	private static var log4fHandler:Log4fHandler;
+	private static var ztorLog4fHandler:ZtorLog4fHandler;
 	
 	/**
 	 * Returns an instance of this class.
@@ -43,15 +44,15 @@ class org.as2lib.env.log.handler.Log4fHandler extends AbstractLogHandler impleme
 	 * 
 	 * @param messageStringifier (optional) the log message stringifier to be used by
 	 * the returned handler
-	 * @return a log4f handler
+	 * @return a ztor log4f handler
 	 */
-	public static function getInstance(messageStringifier:Stringifier):Log4fHandler {
-		if (!log4fHandler) log4fHandler = new Log4fHandler(messageStringifier);
-		return log4fHandler;
+	public static function getInstance(messageStringifier:Stringifier):ZtorLog4fHandler {
+		if (!ztorLog4fHandler) ztorLog4fHandler = new ZtorLog4fHandler(messageStringifier);
+		return ztorLog4fHandler;
 	}
 	
 	/**	
-	 * Constructs a new {@code Log4fHandler} instance.
+	 * Constructs a new {@code ZtorLog4fHandler} instance.
 	 *
 	 * <p>You can use one and the same instance for multiple loggers. So think about
 	 * using the handler returned by the static {@link #getInstance} method. Using this
@@ -60,7 +61,7 @@ class org.as2lib.env.log.handler.Log4fHandler extends AbstractLogHandler impleme
 	 * 
 	 * @param messageStringifier (optional) the log message stringifier to use
 	 */
-	public function Log4fHandler(messageStringifier:Stringifier) {
+	public function ZtorLog4fHandler(messageStringifier:Stringifier) {
 		super (messageStringifier);
 	}
 	
@@ -78,12 +79,12 @@ class org.as2lib.env.log.handler.Log4fHandler extends AbstractLogHandler impleme
 	}
 	
 	/**
-	 * Converts the As2lib {@code LogLevel} into a Log4f level number.
+	 * Converts the As2lib {@code LogLevel} into a ZTOR Log4f level number.
 	 * 
 	 * <p>The default level is {@code Log4f.LOG4F}. It is used if no match is found.
 	 * 
 	 * @param level the As2lib log level to convert
-	 * @return the equivalent Log4f level
+	 * @return the equivalent ZTOR Log4f level
 	 */
 	private function convertLevel(level:LogLevel):Number {
 		switch (level) {
