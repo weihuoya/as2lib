@@ -17,18 +17,18 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
 
-import net.hiddenresource.util.alcon.Alcon;
+import net.hiddenresource.util.alcon.Debug;
 
 /**
  * {@code AlconLogger} delegates all messages to the
- * {@code net.hiddenresource.util.alcon.Alcon.trace} method.
+ * {@code net.hiddenresource.util.alcon.Debug.trace} method.
  * 
- * <p>Using this class instead of the {@code Alcon} class in your application
+ * <p>Using this class instead of the {@code Debug} class in your application
  * directly enables you to switch between almost every available Logging API without
  * having to change the logging calls but just the configuration on startup.
  *
  * <p>Every global configuration must be done via the static methods on the
- * {@code Alcon} class itself.
+ * {@code Debug} class itself.
  *
  * @author Simon Wacker
  * @see org.as2lib.env.log.handler.AlconHandler
@@ -53,9 +53,6 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	
 	/** Determines whether to trace recursively or not. */
 	private var recursiveTracing:Boolean;
-	
-	/** Alcon class reference for fast access. */
-	private var alcon:Function;
 	
 	/** Alcon debug level. */
 	private var debugLevel:Number;
@@ -82,7 +79,6 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 */
 	public function AlconLogger(recursiveTracing:Boolean) {
 		this.recursiveTracing = recursiveTracing == null ? true : recursiveTracing;
-		this.alcon = Alcon;
 		this.debugLevel = DEBUG;
 		this.infoLevel = INFO;
 		this.warnLevel = WARN;
@@ -97,7 +93,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #debug
 	 */
 	public function isDebugEnabled(Void):Boolean {
-		return (this.alcon.getFilterLevel() <= this.debugLevel);
+		return (Debug["fl"] <= this.debugLevel);
 	}
 	
 	/**
@@ -107,7 +103,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #info
 	 */
 	public function isInfoEnabled(Void):Boolean {
-		return (this.alcon.getFilterLevel() <= this.infoLevel);
+		return (Debug["fl"] <= this.infoLevel);
 	}
 	
 	/**
@@ -117,7 +113,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #warning
 	 */
 	public function isWarningEnabled(Void):Boolean {
-		return (this.alcon.getFilterLevel() <= this.warnLevel);
+		return (Debug["fl"] <= this.warnLevel);
 	}
 	
 	/**
@@ -127,7 +123,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #error
 	 */
 	public function isErrorEnabled(Void):Boolean {
-		return (this.alcon.getFilterLevel() <= this.errorLevel);
+		return (Debug["fl"] <= this.errorLevel);
 	}
 	
 	/**
@@ -137,7 +133,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #fatal
 	 */
 	public function isFatalEnabled(Void):Boolean {
-		return (this.alcon.getFilterLevel() <= this.fatalLevel);
+		return (Debug["fl"] <= this.fatalLevel);
 	}
 	
 	/**
@@ -153,7 +149,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #isDebugEnabled
 	 */
 	public function debug(message):Void {
-		this.alcon.trace(message, this.debugLevel, this.recursiveTracing);
+		Debug.trace(message, this.debugLevel, this.recursiveTracing);
 	}
 	
 	/**
@@ -169,7 +165,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #isInfoEnabled
 	 */
 	public function info(message):Void {
-		this.alcon.trace(message, this.infoLevel, this.recursiveTracing);
+		Debug.trace(message, this.infoLevel, this.recursiveTracing);
 	}
 	
 	/**
@@ -185,7 +181,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #isWarningEnabled
 	 */
 	public function warning(message):Void {
-		this.alcon.trace(message, this.warnLevel, this.recursiveTracing);
+		Debug.trace(message, this.warnLevel, this.recursiveTracing);
 	}
 	
 	/**
@@ -201,7 +197,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #isErrorEnabled
 	 */
 	public function error(message):Void {
-		this.alcon.trace(message, this.errorLevel, this.recursiveTracing);
+		Debug.trace(message, this.errorLevel, this.recursiveTracing);
 	}
 	
 	/**
@@ -217,7 +213,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #isFatalEnabled
 	 */
 	public function fatal(message):Void {
-		this.alcon.trace(message, this.fatalLevel, this.recursiveTracing);
+		Debug.trace(message, this.fatalLevel, this.recursiveTracing);
 	}
 	
 }
