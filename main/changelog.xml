@@ -5,6 +5,9 @@
   <release name="as2lib 0.6?" day="?" month="?" year="2005">
     <year value="2005">
       <month value="7">
+        <day value="2">
+          <entry type="add" package="org.as2lib.env.log.logger" class="Log4fLogger">Logger support for Log4F Framework.</entry>
+        </day>
         <day value="1">
           <entry type="change" package="main" class="Mtasc" method="init(Void):Void"><change-arguments to="container:MovieClip"/></entry>
           <entry type="change" package="org.as2lib.app.conf" class="MtascApplication" method="main(Void):Void"><change-arguments to="container:MovieClip"/></entry>
@@ -16,8 +19,8 @@
           <entry type="add" package="org.as2lib.env.log.logger" class="FludgeLogger">Logger support for fludge.</entry>
           <entry type="add" package="org.as2lib.env.log.repository" class="AudiofarmLoggerRepository">Repository support for Ralf Siegel's Logging Framework for ActionScript 2.</entry>
           <entry type="add" package="org.as2lib.env.log.logger" class="AudiofarmLogger">Logger support for Ralf Siegel's Logging Framework for ActionScript 2.</entry>
-          <entry type="add" package="org.as2lib.env.log.logger" class="Log4fHandler">Handler support for Log4f.</entry>
-          <entry type="add" package="org.as2lib.env.log.logger" class="Log4fLogger">Logger support for Log4f.</entry>
+          <entry type="add" package="org.as2lib.env.log.logger" class="ZtorLog4fHandler">Handler support for ZTOR Log4f.</entry>
+          <entry type="add" package="org.as2lib.env.log.logger" class="ZtorLog4fLogger">Logger support for ZTOR Log4f.</entry>
         </day>
         <day value="4">
           <entry type="bugfix" package="org.as2lib.env.log.handler" class="XmlSocketHandler">Fixed bugs number 1213140 and 1212906.</entry>
