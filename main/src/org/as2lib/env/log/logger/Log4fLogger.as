@@ -20,6 +20,7 @@ import org.as2lib.env.log.Logger;
 import org.log4f.logging.Level;
 import org.log4f.logging.IFilter;
 import org.log4f.logging.IPublisher;
+import org.log4f.logging.util.List;
 
 /**
  * {@code Log4fLogger} acts as a wrapper for a {@code org.log4f.logging.logger}
@@ -148,7 +149,7 @@ class org.as2lib.env.log.logger.Log4fLogger extends BasicClass implements Logger
 	 * Returns an array with publishers associated with this logger.
 	 * 
 	 * @return an array with publishers that are associated with this logger	 */
-	public function getPublishers(Void):Array {
+	public function getPublishers(Void):List {
 		return this.logger.getPublishers();
 	}
 	
