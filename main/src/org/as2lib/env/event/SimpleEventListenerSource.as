@@ -16,6 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.event.EventListenerSource;
+import org.as2lib.util.ArrayUtil;
 
 /**
  * {@code SimpleEventListenerSource} manages listeners in the simplest way possible.
@@ -114,6 +115,16 @@ class org.as2lib.env.event.SimpleEventListenerSource extends BasicClass implemen
 	 */
 	public function getAllListeners(Void):Array {
 		return this.l.concat();
+	}
+	
+	/**
+	 * Returns true if a certain listener was added.
+	 * 
+	 * @param listener to be checked if it was added
+	 * @return true if the passed-in listener was added
+	 */
+	public function isListenerAdded(listener):Boolean {
+		return ArrayUtil.contains(this.l, listener);
 	}
 	
 }
