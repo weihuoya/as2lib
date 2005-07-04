@@ -128,8 +128,7 @@ class org.as2lib.env.event.impulse.FrameImpulse extends AbstractImpulse implemen
 					e.broadcastMessage("execute", that);
 					i.broadcastMessage("onImpulse", that);
 					f.broadcastMessage("onFrameImpulse", that);
-				}
-				
+				};
 			} else {
 				throw new IllegalArgumentException("onEnterFrame method in "
 												   +timeline
@@ -345,7 +344,7 @@ class org.as2lib.env.event.impulse.FrameImpulse extends AbstractImpulse implemen
 	 * @see #addListener
 	 */
 	public function addAllFrameImpulseListeners(listeners:Array):Void {
-		for (var i=0; i<listeners.length; i++) {
+		for (var i:Number=0; i<listeners.length; i++) {
 			addListener(listeners[i]);
 		}
 	}

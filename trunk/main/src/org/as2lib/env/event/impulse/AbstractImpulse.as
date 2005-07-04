@@ -205,7 +205,7 @@ class org.as2lib.env.event.impulse.AbstractImpulse extends BasicClass {
 	/**
 	 * Getter for the list of all added listeners.
 	 * 
-	 * <p>This method returns a list of all listeners added with eighter
+	 * <p>This method returns a list of all listeners added with eihter
 	 * {@link #connectExecutable}, {@link #addListener} or
 	 * {@link #addImpulseListener}
 	 * 
