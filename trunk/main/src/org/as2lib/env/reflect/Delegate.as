@@ -98,6 +98,7 @@ class org.as2lib.env.reflect.Delegate {
 	 * @param method Method to be executed at the scope.
 	 * @param args Arguments to be used at first position.
 	 * @return Function that delegates its call to a different scope & method.
+	 * @TODO find better name
 	 */
 	public static function createExtendedDelegate(scope, method:Function, args:Array):Function {
 		var result:Function;
