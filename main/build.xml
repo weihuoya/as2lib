@@ -1,0 +1,84 @@
+<project name="As2lib - Open Source ActionScript 2.0 Library" default="usage" basedir=".">
+  
+  <property name="src.dir" location="src"/>
+  <property name="dist.dir" location="dist"/>
+  <property name="docs.dir" location="../docs"/>
+  <property name="test.dir" location="../test"/>
+  <property name="lib.dir" location="../lib"/>
+  
+  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../ant/src"/>
+  
+  <target name="usage">
+    <echo message=""/>
+    <echo message="------------------------------------------------------"/>
+    <echo message="Among the available targets are:"/>
+    <echo message=""/>
+    <echo message="dist"/>
+    <echo message="clean"/>
+    <echo message="compile"/>
+    <echo message="------------------------------------------------------"/>
+    <echo message=""/>
+  </target>
+  
+  <target name="compile" description="compile source files">
+    <mtasc srcdir="${src.dir}/org/as2lib/aop" split="yes">
+      <classpath>
+        <pathelement path="${src.dir}"/>
+        <!-- <dirset dir="${lib.dir}">
+          How can I make a disjunction?
+      	  <include name="*"/>
+          <include name="*/src"/>
+        </dirset> -->
+      </classpath>
+    </mtasc>
+  </target>
+  
+  <!-- Cannot depend on 'compile' target because there are some libraries needed that are not MTASC compatible -->
+  <!--<target name="dist" depends="compile" description="generate the distribution">-->
+  <target name="dist" description="generate the distribution">
+    <mkdir dir="${dist.dir}/src"/>
+    <mkdir dir="${dist.dir}/docs/api"/>
+    <!--<mkdir dir="${dist.dir}/test"/>-->
+    <mkdir dir="${dist.dir}/lib"/>
+
+    <copy tofile="${dist.dir}/license.txt" file="license.txt" preservelastmodified="true"/>
+    <copy tofile="${dist.dir}/changelog.xml" file="changelog.xml" preservelastmodified="true"/>
+    <copy tofile="${dist.dir}/changelog.swf" file="changelog.swf" preservelastmodified="true"/>
+
+    <copy todir="${dist.dir}/src" preservelastmodified="true">
+      <fileset dir="${src.dir}">
+        <include name="**/*.as"/>
+        <exclude name="org/as2lib/aop/**/*.*"/>
+        <exclude name="org/as2lib/data/math/**/*.*"/>
+        <exclude name="org/as2lib/env/bean/**/*.*"/>
+      </fileset>
+    </copy>
+
+    <!--<copy todir="${dist.dir}/docs" preservelastmodified="true">
+      <fileset dir="${docs.dir}">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+
+    <copy todir="${dist.dir}/test" preservelastmodified="true">
+      <fileset dir="${test.dir}">
+        <include name="**/*.as"/>
+        <include name="**/*.fla"/>
+        <include name="**/*.xml"/>
+      </fileset>
+    </copy>
+
+    <copy todir="${dist.dir}/lib" preservelastmodified="true">
+      <fileset dir="${lib.dir}">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+
+    <zip destfile="${dist.dir}/as2lib-0.1-final.zip" basedir="${dist.dir}"/>-->
+  </target>
+  
+  <target name="clear" description="clean up">
+    <delete dir="${dist.dir}"/>
+  </target>
+  
+</project>
