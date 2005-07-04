@@ -19,7 +19,7 @@ import org.as2lib.app.exec.AbstractProcess;
 import org.as2lib.app.exec.Call;
 import org.as2lib.app.exec.Executable;
 import org.as2lib.app.exec.ForEachExecutable;
-import org.as2lib.app.exec.FrameImpulse;
+import org.as2lib.env.event.impulse.FrameImpulse;
 
 /**
  * {@code Timeout} works as delayed execution of a executable.
@@ -140,7 +140,7 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExec
 		executed = 1;
 		if (!target) target = new Array();
 		target.push(arguments);
-		FrameImpulse.connect(timeCall);
+		FrameImpulse.getInstance().connectExecutable(timeCall);
 		pause();
 		return null;
 	}
@@ -190,7 +190,7 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExec
 			target.push([object[i], i, object]);
 		}
 		execute();
-		FrameImpulse.connect(timeCall);
+		FrameImpulse.getInstance().connectExecutable(timeCall);
 	}
 
 	/**
@@ -205,16 +205,20 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExec
 	/**
 	 * Internal method to finish the execution.
 	 */
-	private function finalExecution(Void):Void {
+	private function finalExecution(impulse:FrameImpulse):Void {
 		executed = 1;
 		var i:Number;
-		FrameImpulse.disconnect(timeCall);
+		impulse.disconnectExecutable(timeCall);
 		var oldTarget = target.concat();
 		target = new Array();
 		
 		// Applying the execution to multiple targets (foreach)
-		for (i=0; i<oldTarget.length; i++) {
-			exe["execute"].apply(exe, oldTarget[i]);
+		try {
+			for (i=0; i<oldTarget.length; i++) {
+				exe["execute"].apply(exe, oldTarget[i]);
+			}
+		} catch(e) {
+			onProcessError(this, e);
 		}
 		
 		resume();
