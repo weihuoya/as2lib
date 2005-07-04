@@ -104,6 +104,7 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Proc
 	 * @param error Error that occured.
 	 */
 	public function onProcessError(process:Process, error):Void {
-		getLogger().error("Execution was thrown during the execution of the TestRunner: "+error);
+		getLogger().error("Exception was thrown during the execution of the TestRunner: " + error + ".");
 	}
+	
 }
