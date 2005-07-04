@@ -22,7 +22,7 @@
           <entry type="add" package="org.as2lib.env.event.impulse" class="Impulse" method="getAllImpulseListener(Void):Array"></entry>
           <entry type="add" package="org.as2lib.env.event.impulse" class="Impulse" method="hasImpulseListener(listener:ImpulseListener):Array"></entry>
           <entry type="add" package="org.as2lib.env.event.impulse" class="ImpulseListener">Dedicated listener support for Impulse</entry>
-          <entry type="change" package="org.as2lib.env.event.impulse" class="Impulse"> extends now org.as2lib.env.event.EventListenerSource</entry>
+          <entry type="change" package="org.as2lib.env.event.impulse" class="Impulse">Impulse extends now org.as2lib.env.event.EventListenerSource</entry>
           <entry type="change" package="org.as2lib.app.conf"><change-rename to="UnitTestExecution" from="TestExecution">Renamed for better understanding</change-rename></entry>
           <entry type="change" package="org.as2lib.env.event.impulse" class="Impulse"><change-move from="org.as2lib.app.exec" to="org.as2lib.env.event.impulse"></change-move></entry>
           <entry type="add" package="org.as2lib.env.reflect" class="Delegate">Delegate implementation for some problem cases.</entry>
