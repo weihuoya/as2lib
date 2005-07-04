@@ -36,7 +36,7 @@ class org.as2lib.app.conf.MtascApplication {
 	
 	/**
 	 * Executes the configuration for the mtasc environment in {@link main.Mtasc} and the 
-	 * configuration for all environments in {@link main.Configuration}. This are the
+	 * configuration for all environments in {@link main.Configuration}. These are the
 	 * {@link Mtasc#init} and {@link Configuration#init} methods.
 	 * 
 	 * <p>The {@code Mtasc.init} method is passed the {@code container} movie-clip, that

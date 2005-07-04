@@ -44,8 +44,14 @@ class org.as2lib.app.conf.FlexApplication {
 	
 	/**
 	 * Executes the configuration for the Flex environment in {@link main.Flex} and the 
-	 * configuration for all environments in {@link main.Configuration}.	 */
-	public static function init(Void):Void {
+	 * configuration for all environments in {@link main.Configuration}. These are the
+	 * {@link Flex#init} and {@link Configuration#init} methods.
+	 * 
+	 * <p>This method takes any amount of arguments and forwards them to both methods
+	 * {@code main.Flex.init} and {@code main.Configuration.init}.
+	 * 
+	 * @param .. any amount of arguments of any type	 */
+	public static function init():Void {
 		Flex.init.apply(Flex, arguments);
 		Configuration.init.apply(Configuration, arguments);
 	}
