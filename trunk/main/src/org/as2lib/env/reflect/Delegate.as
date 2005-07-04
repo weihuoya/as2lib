@@ -18,7 +18,7 @@
  * {@code Delegate} offers with {@link Delegate#createDelegate} a method for
  * using old-style Template classes.
  * 
- * <p>Using eventhandling like in common MovieClips creates problems in OOP
+ * <p>Using event handling like in common MovieClips creates problems in OOP
  * ActionScript due to the fact that it uses functions as event executions 
  * without minding about that the scope always refers to the MovieClip.
  * {@code Delegate.createDelegate} allows a proper Workaround for the redirection
