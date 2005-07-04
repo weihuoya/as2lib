@@ -118,12 +118,12 @@ class org.as2lib.env.event.SimpleEventListenerSource extends BasicClass implemen
 	}
 	
 	/**
-	 * Returns true if a certain listener was added.
+	 * Returns {@code true} if passed-in {@code listener} has been added.
 	 * 
-	 * @param listener to be checked if it was added
-	 * @return true if the passed-in listener was added
+	 * @param listener the listener to check whether it has been added
+	 * @return {@code true} if the {@code listener} has been added
 	 */
-	public function isListenerAdded(listener):Boolean {
+	public function hasListener(listener):Boolean {
 		return ArrayUtil.contains(this.l, listener);
 	}
 	

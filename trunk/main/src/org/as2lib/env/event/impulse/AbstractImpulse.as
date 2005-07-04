@@ -270,11 +270,11 @@ class org.as2lib.env.event.impulse.AbstractImpulse extends BasicClass {
 	 * @return {@code true} if the certain executable is connected.
 	 * @see #addListener
 	 */
-	public function isListenerAdded(listener):Boolean {
-		if(isImpulseListenerAdded(listener)) {
+	public function hasListener(listener):Boolean {
+		if (hasImpulseListener(listener)) {
 			return true;
 		}
-		if(isExecutableConnected(listener)) {
+		if (isExecutableConnected(listener)) {
 			return true;
 		}
 		return false;
@@ -287,7 +287,7 @@ class org.as2lib.env.event.impulse.AbstractImpulse extends BasicClass {
 	 * @param listener {@link ImpulseListener} to be validated.
 	 * @return {@code true} if the certain executable is connected.
 	 */
-	public function isImpulseListenerAdded(listener:ImpulseListener):Boolean {
+	public function hasImpulseListener(listener:ImpulseListener):Boolean {
 		return ArrayUtil.contains(impulseBroadcaster._listeners, listener);
 	}
 	
@@ -301,4 +301,5 @@ class org.as2lib.env.event.impulse.AbstractImpulse extends BasicClass {
 	public function isExecutableConnected(exe:Executable):Boolean {
 		return ArrayUtil.contains(execBroadcaster._listeners, exe);
 	}
+	
 }
