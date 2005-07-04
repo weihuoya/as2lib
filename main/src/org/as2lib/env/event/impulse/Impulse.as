@@ -113,13 +113,12 @@ interface org.as2lib.env.event.impulse.Impulse extends EventListenerSource {
 	public function getAllImpulseListeners(Void):Array;
 	
 	/**
-	 * Checks if a certain {@link ImpulseListener} has been added as
-	 * listener.
+	 * Checks if the {@code listener} has been added.
 	 * 
 	 * @param listener Listener to be checked if it has been added.
 	 * @return True if the certain listener has been added.
 	 */
-	public function isImpulseListenerAdded(listener:ImpulseListener):Boolean;
+	public function hasImpulseListener(listener:ImpulseListener):Boolean;
 	
 	/**
 	 * Removes all added {@link ImpulseListener}s from listening to any event.
@@ -166,4 +165,5 @@ interface org.as2lib.env.event.impulse.Impulse extends EventListenerSource {
 	 * Method to disconnect all connected Executables
 	 */
 	public function disconnectAllExecutables(Void):Void;
+	
 }

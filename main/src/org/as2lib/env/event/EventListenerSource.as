@@ -60,11 +60,11 @@ interface org.as2lib.env.event.EventListenerSource extends BasicInterface {
 	public function getAllListeners(Void):Array;
 	
 	/**
-	 * Returns true if passed listeners has been added.
+	 * Returns {@code true} if passed-in {@code listener} has been added.
 	 * 
-	 * @param listener Listener that should be checked if it was added.
-	 * @return true if the certain listener was added.
+	 * @param listener the listener to check whether it has been added
+	 * @return {@code true} if the {@code listener} has been added
 	 */
-	public function isListenerAdded(listener):Boolean;
+	public function hasListener(listener):Boolean;
 	
 }

@@ -321,16 +321,16 @@ class org.as2lib.env.event.impulse.FrameImpulse extends AbstractImpulse implemen
 	}
 	
 	/**
-	 * Checks if a certaint listener has been added.
+	 * Returns {@code true} if passed-in {@code listener} has been added.
 	 * 
-	 * @param listener Listener to be checked if it was added.
-	 * @return {@code true} if the listener was added.
+	 * @param listener the listener to check whether it has been added
+	 * @return {@code true} if the {@code listener} has been added
 	 */
-	public function isListenerAdded(listener):Boolean {
-		if (isFrameImpulseListenerAdded(listener)) {
+	public function hasListener(listener):Boolean {
+		if (hasFrameImpulseListener(listener)) {
 			return true;
 		}
-		if (super.isListenerAdded(listener)) {
+		if (super.hasListener(listener)) {
 			return true;
 		}
 		return false;
@@ -366,7 +366,8 @@ class org.as2lib.env.event.impulse.FrameImpulse extends AbstractImpulse implemen
 	 * @param listener Listener to be checked if it has been added.
 	 * @return {@code true} if the certain listener has been added.
 	 */
-	public function isFrameImpulseListenerAdded(listener:FrameImpulseListener):Boolean {
+	public function hasFrameImpulseListener(listener:FrameImpulseListener):Boolean {
 		return ArrayUtil.contains(frameImpulseBroadcaster._listenersss, listener); 
 	}
+	
 }
