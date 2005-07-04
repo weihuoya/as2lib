@@ -46,8 +46,8 @@ class org.as2lib.app.conf.FlexApplication {
 	 * Executes the configuration for the Flex environment in {@link main.Flex} and the 
 	 * configuration for all environments in {@link main.Configuration}.	 */
 	public static function init(Void):Void {
-		Flex.init();
-		Configuration.init();
+		Flex.init.apply(Flex, arguments);
+		Configuration.init.apply(Configuration, arguments);
 	}
 	
 }

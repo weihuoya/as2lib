@@ -33,7 +33,7 @@ import org.as2lib.test.unit.TestSuiteFactory;
  *   
  *   class main.Configuration extends AbstractConfiguration {
  *     public static function init(Void):Void {
- *       init(TestExecution);
+ *       init(UnitTestExecution);
  *     }
  *     
  *     public function setReferences(Void):Void {
@@ -47,7 +47,7 @@ import org.as2lib.test.unit.TestSuiteFactory;
  * @author Martin Heidegger
  * @version 1.0
  */
-class org.as2lib.app.conf.TestExecution extends AbstractProcess implements Process {
+class org.as2lib.app.conf.UnitTestExecution extends AbstractProcess implements Process {
 	
 	/**
 	 * Runs all available Testcases.

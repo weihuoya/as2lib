@@ -36,10 +36,13 @@ class org.as2lib.app.conf.FlashApplication {
 	/**
 	 * Executes the configuration for the flash environment in {@link main.Flash} and the 
 	 * configuration for all environments in {@link main.Configuration}.
+	 * 
+	 * <p>The configuration takes any amount of attributes that will be
+	 * forwared to both (main.Configuration and main.Flash) 
 	 */
-	public static function init(Void):Void {
-		Flash.init();
-		Configuration.init();
+	public static function init():Void {
+		Flash.init.apply(Flash, arguments);
+		Configuration.init.apply(Configuration, arguments);
 	}
 	
 }
