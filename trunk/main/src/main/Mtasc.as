@@ -50,7 +50,7 @@ class main.Mtasc {
 	 * Sets up MTASC specific logging. This configures the As2lib Logging API to log
 	 * to Flashout.
 	 */
-	private static function setUpLogging(Void:Void):Void {
+	private static function setUpLogging(Void):Void {
 		// creates a new root logger
 		var root:RootLogger = new RootLogger(AbstractLogLevel.ALL);
 		// TODO: Create a Mtasc - only working logger ...
