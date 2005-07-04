@@ -45,8 +45,8 @@ class org.as2lib.app.conf.MtascApplication {
 	 * @param container the root movie-clip that is passed by MTASC to the main method
 	 */
 	public static function main(container:MovieClip):Void {
-		Mtasc.init(container);
-		Configuration.init();
+		Mtasc.init.apply(Mtasc, arguments);
+		Configuration.init.apply(Configuration, arguments);
 	}
 	
 }
