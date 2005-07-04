@@ -69,22 +69,17 @@ class org.as2lib.env.reflect.Delegate {
 	 */
 	public static function createDelegate(scope, method:Function):Function {
 		var result:Function;
-		
 		result = function() {
 			return arguments.callee.method.apply(arguments.callee.scope, arguments);
-		}
-
+		};
 		result.scope = scope;
 		result.method = method;
-
 		return result;
 	}
 	
 	/**
 	 * Creates a method that delegates its arguments to a certain scope and
 	 * uses additional fixed arguments.
-	 * 
-	 * <p>
 	 * 
 	 * <p>Example:
 	 * <code>
@@ -106,20 +101,19 @@ class org.as2lib.env.reflect.Delegate {
 	 */
 	public static function createExtendedDelegate(scope, method:Function, args:Array):Function {
 		var result:Function;
-		
 		result = function() {
 			return arguments.callee.method.apply(arguments.callee.scope, arguments.callee.args.concat(arguments));
-		}
-
+		};
 		result.scope = scope;
 		result.method = method;
 		result.args = args;
-
 		return result;
 	}
 		
 	/**
-	 * Private Constructor to prevent instanciation.
+	 * Private Constructor to prevent instantiation.
 	 */
-	private function Delegate(Void) {}
+	private function Delegate(Void) {
+	}
+	
 }
