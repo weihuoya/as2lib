@@ -21,6 +21,8 @@ import org.as2lib.core.BasicInterface;
  * methods to add, remove and get listeners.
  * 
  * @author Simon Wacker
+ * @author Martin Heidegger
+ * @version 1.1
  */
 interface org.as2lib.env.event.EventListenerSource extends BasicInterface {
 	
@@ -56,5 +58,13 @@ interface org.as2lib.env.event.EventListenerSource extends BasicInterface {
 	 * @return all added listeners
 	 */
 	public function getAllListeners(Void):Array;
+	
+	/**
+	 * Returns true if passed listeners has been added.
+	 * 
+	 * @param listener Listener that should be checked if it was added.
+	 * @return true if the certain listener was added.
+	 */
+	public function isListenerAdded(listener):Boolean;
 	
 }
