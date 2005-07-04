@@ -255,9 +255,15 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		getTestRunner().resume();
 	}
 	
+	/**
+	 * Method to start a subprocess for this process.
+	 * 
+	 * @param process Process to start.
+	 * @param args Arguments to be used for the process
+	 * @param callBack Call to be executed if the execution finishes.
+	 */
 	private function startProcess(process:Process, args:Array, callBack:Executable):Void {
 		getTestRunner().startSubProcess(process, args, callBack);
-		
 	}
 	
 	/**
@@ -1061,7 +1067,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @see #assertNotEmptyWithoutMessage
 	 * @param message Message that should be provided if the assertion fails.
 	 * @param val Object that should not be empty.
-	 * @return true if no error occured else false
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertNotEmptyWithMessage(message:String, val):Boolean {
 		var info:ExecutionInfo = new AssertNotEmptyInfo(message, val);
@@ -1109,6 +1115,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @see #assertThrowsWithCallAndMessage
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertThrowsWithCall(call:Executable, args:Array):Boolean {
 		return assertThrowsWithCallAndMessage("", call, args);
@@ -1125,6 +1132,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param type	Type of the Exception that should be thrown.
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertThrowsWithCallAndType(type, call:Executable, args:Array):Boolean {
 		return assertThrowsWithCallAndMessageAndType("", type, call, args);
@@ -1140,6 +1148,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param inObject	Object that should be used as scope.
 	 * @param name		Name of the method that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertThrowsWithString(inObject, name:String, args:Array):Boolean {
 		return assertThrowsWithStringAndMessage("",  inObject, name, args);
@@ -1157,6 +1166,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param inObject	Object that should be used as scope.
 	 * @param name		Name of the method that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertThrowsWithStringAndType(type, inObject, name:String, args:Array):Boolean {
 		return assertThrowsWithStringAndMessageAndType("", type, inObject, name, args);
@@ -1172,6 +1182,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param inObject	Object that should be used as scope.
 	 * @param func		Function that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertThrowsWithFunction(inObject, func:Function, args:Array):Boolean {
 		return assertThrowsWithFunctionAndMessage("", inObject, func, args);
@@ -1187,6 +1198,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param inObject	Object that should be used as scope.
 	 * @param func		Function that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertThrowsWithFunctionAndType(type, inObject, func:Function, args:Array):Boolean {
 		return assertThrowsWithFunctionAndMessageAndType("", type, inObject, func, args);
@@ -1199,6 +1211,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param message	Message that should be used by fail.
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertThrowsWithCallAndMessage(message:String, call:Executable, args:Array):Boolean {
 		return assertThrowsWithCallAndMessageAndType(message, null, call, args);
@@ -1212,6 +1225,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param type	Type of the Exception that should be thrown.
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertThrowsWithCallAndMessageAndType(message:String, type, call:Executable, args:Array):Boolean {
 		var info:ExecutionInfo = new AssertThrowsInfo(message, type, call, args);
@@ -1227,6 +1241,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param inObject	Object that should be used as scope.
 	 * @param name		Name of the method that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertThrowsWithStringAndMessage(message:String,  inObject, name:String, args:Array):Boolean {
 		if(ObjectUtil.isTypeOf(inObject[name], "function")) {
@@ -1247,6 +1262,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param inObject	Object that should be used as scope.
 	 * @param name		Name of the method that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertThrowsWithStringAndMessageAndType(message:String, type, inObject, name:String, args:Array):Boolean {
 		if(ObjectUtil.isTypeOf(inObject[name], "function")) {
@@ -1266,6 +1282,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param inObject	Object that should be used as scope.
 	 * @param func		Function that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertThrowsWithFunctionAndMessage(message:String, inObject, func:Function, args:Array):Boolean {
 		return assertThrowsWithCallAndMessage(message, new Call(inObject, func), args);
@@ -1280,6 +1297,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param inObject	Object that should be used as scope.
 	 * @param func		Function that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertThrowsWithFunctionAndMessageAndType(message:String, type, inObject, func:Function, args:Array):Boolean {
 		return assertThrowsWithCallAndMessageAndType(message, type, new Call(inObject, func), args);
@@ -1325,6 +1343,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * 
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotThrowsWithCallAndMessage
 	 * @see #assertNotThrowsWithCallAndMessageAndType
 	 */
@@ -1341,6 +1360,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param type	Type of the Exception that should not be thrown.
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotThrowsWithCallAndMessageAndType
 	 */
 	private function assertNotThrowsWithCallAndType(type, call:Executable, args:Array):Boolean {
@@ -1353,10 +1373,11 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * 
 	 * The assertion adds a error to the result if the method did throw any exception or if the method was not available.
 	 * 
-	 * @see #assertNotThrowsWithStringAndMessage
 	 * @param inObject	Object that should be used as scope.
 	 * @param name		Name of the method that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertNotThrowsWithStringAndMessage
 	 */
 	private function assertNotThrowsWithString(inObject, name:String, args:Array):Boolean {
 		return assertNotThrowsWithStringAndMessage("", inObject, name, args);
@@ -1368,11 +1389,12 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * 
 	 * The assertion adds a error to the result if the method did throw the expected exception or if the method was not available.
 	 * 
-	 * @see #assertNotThrowsWithStringAndMessageAndType
 	 * @param type		Type of the Exception that should not be thrown.
 	 * @param inObject	Object that should be used as scope.
 	 * @param name		Name of the method that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertNotThrowsWithStringAndMessageAndType
 	 */
 	private function assertNotThrowsWithStringAndType(type, inObject, name:String, args:Array):Boolean {
 		return assertNotThrowsWithStringAndMessageAndType("", type, inObject, name, args);
@@ -1388,6 +1410,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param inObject	Object that should be used as scope.
 	 * @param func		Function that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertNotThrowsWithFunction(inObject, func:Function, args:Array):Boolean {
 		return assertNotThrowsWithFunctionAndMessage("", inObject, func, args);
@@ -1404,6 +1427,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param inObject	Object that should be used as scope.
 	 * @param func		Function that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertNotThrowsWithFunctionAndType(type, inObject, func:Function, args:Array):Boolean {
 		return assertNotThrowsWithFunctionAndMessageAndType("", type, inObject, func, args);
@@ -1416,6 +1440,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param message	Message that should be used by fail.
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertNotThrowsWithCallAndMessage(message:String, call:Executable, args:Array):Boolean {
 		return assertNotThrowsWithCallAndMessageAndType(message, null, call, args);
@@ -1429,6 +1454,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param type	Type of the Exception that should not be thrown.
 	 * @param call	Call that should be executed.
 	 * @param args	Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertNotThrowsWithCallAndMessageAndType(message:String, type, call:Executable, args:Array):Boolean {
 		var info:ExecutionInfo = new AssertNotThrowsInfo(message, type, call, args);
@@ -1439,11 +1465,12 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	/**
 	 * Asserts the same like @see #assertNotThrowsWithString but adds a message to the failure (if necessary).
 	 * 
-	 * @see #assertNotThrowsWithString
 	 * @param message	Message that should be used by fail.
 	 * @param inObject	Object that should be used as scope.
 	 * @param name		Name of the method that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertNotThrowsWithString
 	 */
 	private function assertNotThrowsWithStringAndMessage(message:String, inObject, name:String, args:Array):Boolean {
 		if(ObjectUtil.isTypeOf(inObject[name], "function")) {
@@ -1458,12 +1485,13 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	/**
 	 * Asserts the same like @see #assertNotThrowsWithStringAndType but adds a message to the failure (if necessary).
 	 * 
-	 * @see #assertNotThrowsWithString
 	 * @param message	Message that should be used by fail.
 	 * @param type		Type of the Exception that should not be thrown.
 	 * @param inObject	Object that should be used as scope.
 	 * @param name		Name of the method that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertNotThrowsWithString
 	 */
 	private function assertNotThrowsWithStringAndMessageAndType(message:String, type, inObject, name:String, args:Array):Boolean {
 		if(ObjectUtil.isTypeOf(inObject[name], "function")) {
@@ -1478,11 +1506,12 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	/**
 	 * Asserts the same like @see #assertNotThrowsWithFunction but adds a message to the failure (if necessary).
 	 * 
-	 * @see #assertNotThrowsWithFunction
 	 * @param message	Message that should be used by fail.
 	 * @param inObject	Object that should be used as scope.
 	 * @param func		Function that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertNotThrowsWithFunction
 	 */
 	private function assertNotThrowsWithFunctionAndMessage(message:String, inObject, func:Function, args:Array):Boolean {
 		return assertNotThrowsWithCallAndMessage(message, new Call(inObject, func), args);
@@ -1491,12 +1520,13 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	/**
 	 * Asserts the same like @see #assertNotThrowsWithFunctionAndType but adds a message to the failure (if necessary).
 	 * 
-	 * @see #assertNotThrowsWithFunctionAndType
 	 * @param message	Message that should be used by fail.
 	 * @param type		Type of the Exception that should not be thrown.
 	 * @param inObject	Object that should be used as scope.
 	 * @param func		Function that should be executed.
 	 * @param args		Arguments that should be used by executing.
+	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertNotThrowsWithFunctionAndType
 	 */
 	private function assertNotThrowsWithFunctionAndMessageAndType(message:String, type, inObject, func:Function, args:Array):Boolean {
 		return assertNotThrowsWithCallAndMessageAndType(message, type, new Call(inObject, func), args);
@@ -1516,10 +1546,11 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	/**
 	 * Asserts that the type of a value a special type.
 	 * 
-	 * @see #assertTypeOfWithMessage
-	 * @see org.as2lib.util.ObjectUtil#isTypeOf
 	 * @param val	Value to be validated.
 	 * @param type	Expected type of the value.
+	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertTypeOfWithMessage
+	 * @see org.as2lib.util.ObjectUtil#isTypeOf
 	 */
 	private function assertTypeOfWithoutMessage(val, type:String):Boolean {
 		return assertTypeOfWithMessage("", val, type);
@@ -1532,6 +1563,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 * @param message	Message to be appended if the assertion fails.
 	 * @param val		Value to be validated.
 	 * @param type		Expected type of the value.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertTypeOfWithMessage(message:String, val, type:String):Boolean {
 		var info:ExecutionInfo = new AssertTypeOfInfo(message, val, type);
@@ -1553,20 +1585,24 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	/**
 	 * Asserts that a value is a instance of a special type.
 	 * 
-	 * @see #assertInstanceOfWithoutMessage
 	 * @param val		Value to be validated.
 	 * @param type		Expected type of the value.
+	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertInstanceOfWithoutMessage
 	 */
 	private function assertInstanceOfWithoutMessage(val, type:Function):Boolean {
 		return assertInstanceOfWithMessage("", val, type);
 	}
 	
 	/**
+	 * Asserts that a value is a instance of a special type and applies a
+	 * message if the assertion fails.
 	 * 
 	 * @see #assertInstanceOfWithoutMessage
 	 * @param message	Message to be appended if the assertion fails.
 	 * @param val		Value to be validated.
 	 * @param type		Expected type of the value.
+	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertInstanceOfWithMessage(message:String, val, type:Function):Boolean {
 		var info:ExecutionInfo = new AssertInstanceOfInfo(message, val, type);
