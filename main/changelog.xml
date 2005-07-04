@@ -1,18 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog xmlns="as2lib"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="aslib http://www.as2lib.org/changelog_0.91.xsd">
-  <release name="as2lib 0.6?" day="?" month="?" year="2005">
+    xsi:schemaLocation="as2lib http://www.as2lib.org/changelog_0.91.xsd">
+  <release name="as2lib 0.9.1" day="4" month="7" year="2005">
     <year value="2005">
       <month value="7">
+        <day value="4">
+          <entry type="remove" package="main" class="Flashout"></entry>
+          <entry type="remove" package="org.as2lib.app.conf" class="FlashoutApplication"></entry>
+          <entry type="add" package="org.as2lib.env.event.impulse" class="FrameImpulse" method="addFrameImpulseListener(listener:FrameImpulseListener):Void"></entry>
+          <entry type="add" package="org.as2lib.env.event.impulse" class="FrameImpulse" method="removeFrameImpulseListener(listener:FrameImpulseListener):Void"></entry>
+          <entry type="add" package="org.as2lib.env.event.impulse" class="FrameImpulse" method="addAllFrameImpulseListener(listeners:Array):Void"></entry>
+          <entry type="add" package="org.as2lib.env.event.impulse" class="FrameImpulse" method="removeAllFrameImpulseListener(Void):Void"></entry>
+          <entry type="add" package="org.as2lib.env.event.impulse" class="FrameImpulse" method="getAllFrameImpulseListener(Void):Array"></entry>
+          <entry type="add" package="org.as2lib.env.event.impulse" class="FrameImpulse" method="hasFrameImpulseListener(listener:FrameImpulseListener):Array"></entry>
+          <entry type="add" package="org.as2lib.env.event.impulse" class="FrameImpulseListener">Dedicated listener support for FrameImpulse</entry>
+          <entry type="add" package="org.as2lib.env.event.impulse" class="Impulse" method="addImpulseListener(listener:ImpulseListener):Void"></entry>
+          <entry type="add" package="org.as2lib.env.event.impulse" class="Impulse" method="removeImpulseListener(listener:ImpulseListener):Void"></entry>
+          <entry type="add" package="org.as2lib.env.event.impulse" class="Impulse" method="addAllImpulseListener(listeners:Array):Void"></entry>
+          <entry type="add" package="org.as2lib.env.event.impulse" class="Impulse" method="removeAllImpulseListener(Void):Void"></entry>
+          <entry type="add" package="org.as2lib.env.event.impulse" class="Impulse" method="getAllImpulseListener(Void):Array"></entry>
+          <entry type="add" package="org.as2lib.env.event.impulse" class="Impulse" method="hasImpulseListener(listener:ImpulseListener):Array"></entry>
+          <entry type="add" package="org.as2lib.env.event.impulse" class="ImpulseListener">Dedicated listener support for Impulse</entry>
+          <entry type="change" package="org.as2lib.env.event.impulse" class="Impulse"> extends now org.as2lib.env.event.EventListenerSource</entry>
+          <entry type="change" package="org.as2lib.app.conf"><change-rename to="UnitTestExecution" from="TestExecution">Renamed for better understanding</change-rename></entry>
+          <entry type="change" package="org.as2lib.env.event.impulse" class="Impulse"><change-move from="org.as2lib.app.exec" to="org.as2lib.env.event.impulse"></change-move></entry>
+          <entry type="add" package="org.as2lib.env.reflect" class="Delegate">Delegate implementation for some problem cases.</entry>
+        </day>
         <day value="2">
+          <entry type="add" package="org.as2lib.env.event" class="EventListenerSource" method="hasListener(listener):Boolean">Method to check if a certain listener has been added.</entry>
           <entry type="add" package="org.as2lib.env.log.logger" class="Log4fLogger">Logger support for Log4F Framework.</entry>
         </day>
         <day value="1">
           <entry type="change" package="main" class="Mtasc" method="init(Void):Void"><change-arguments to="container:MovieClip"/></entry>
           <entry type="change" package="org.as2lib.app.conf" class="MtascApplication" method="main(Void):Void"><change-arguments to="container:MovieClip"/></entry>
         </day>
-      </month> 
+      </month>
       <month value="6">
         <day value="26">
           <entry type="add" package="org.as2lib.env.log.handler" class="FludgeHandler">Handler support for fludge.</entry>
