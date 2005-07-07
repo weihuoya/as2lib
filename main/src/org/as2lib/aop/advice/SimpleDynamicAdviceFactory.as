@@ -42,11 +42,11 @@ class org.as2lib.aop.advice.SimpleDynamicAdviceFactory extends BasicClass implem
 	 */
 	public function SimpleDynamicAdviceFactory(Void) {
 		registry = new Array();
-		registry[AbstractAdvice.TYPE_BEFORE] = new SimpleAdviceFactory(DynamicBeforeAdvice);
-		registry[AbstractAdvice.TYPE_AROUND] = new SimpleAdviceFactory(DynamicAroundAdvice);
-		registry[AbstractAdvice.TYPE_AFTER] = new SimpleAdviceFactory(DynamicAfterAdvice);
-		registry[AbstractAdvice.TYPE_AFTER_RETURNING] = new SimpleAdviceFactory(DynamicAfterReturningAdvice);
-		registry[AbstractAdvice.TYPE_AFTER_THROWING] = new SimpleAdviceFactory(DynamicAfterThrowingAdvice);
+		registry[AbstractAdvice.BEFORE] = new SimpleAdviceFactory(DynamicBeforeAdvice);
+		registry[AbstractAdvice.AROUND] = new SimpleAdviceFactory(DynamicAroundAdvice);
+		registry[AbstractAdvice.AFTER] = new SimpleAdviceFactory(DynamicAfterAdvice);
+		registry[AbstractAdvice.AFTER_RETURNING] = new SimpleAdviceFactory(DynamicAfterReturningAdvice);
+		registry[AbstractAdvice.AFTER_THROWING] = new SimpleAdviceFactory(DynamicAfterThrowingAdvice);
 	}
 	
 	/**
@@ -65,14 +65,14 @@ class org.as2lib.aop.advice.SimpleDynamicAdviceFactory extends BasicClass implem
 	 * @see org.as2lib.aop.advice.DynamicAdviceFactory#getAdviceByStringAndCall(String, Call):Advice
 	 */
 	public function getAdviceByStringAndCall(pointcut:String, callback:Call):Advice {
-		return getAdviceByTypeAndStringAndCall(registry[AbstractAdvice.TYPE_BEFORE], pointcut, callback);
+		return getAdviceByTypeAndStringAndCall(registry[AbstractAdvice.BEFORE], pointcut, callback);
 	}
 	
 	/**
 	 * @see org.as2lib.aop.advice.DynamicAdviceFactory#getAdviceByPointcutAndCall(Pointcut, Call):Advice
 	 */
 	public function getAdviceByPointcutAndCall(pointcut:Pointcut, callback:Call):Advice {
-		return getAdviceByTypeAndPointcutAndCall(registry[AbstractAdvice.TYPE_BEFORE], pointcut, callback);
+		return getAdviceByTypeAndPointcutAndCall(registry[AbstractAdvice.BEFORE], pointcut, callback);
 	}
 	
 	/**
