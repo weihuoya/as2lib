@@ -27,19 +27,19 @@ import org.as2lib.aop.AopConfig;
 class org.as2lib.aop.advice.AbstractAdvice extends BasicClass {
 	
 	/** Number value indicating a before advice. */
-	public static var TYPE_BEFORE:Number = 0;
+	public static var BEFORE:Number = 0;
 	
 	/** Number value indicating an around advice. */
-	public static var TYPE_AROUND:Number = 1;
+	public static var AROUND:Number = 1;
 	
 	/** Number value indicating an after advice. */
-	public static var TYPE_AFTER:Number = 2;
+	public static var AFTER:Number = 2;
 	
 	/** Number value indicating an after returning advice. */
-	public static var TYPE_AFTER_RETURNING:Number = 3;
+	public static var AFTER_RETURNING:Number = 3;
 	
 	/** Number value indicating an after throwing advice. */
-	public static var TYPE_AFTER_THROWING:Number = 4;
+	public static var AFTER_THROWING:Number = 4;
 	
 	/** Stores the pointcut that is responsible for checking if a join point is captured by the advice. */
 	private var pointcut:Pointcut;
