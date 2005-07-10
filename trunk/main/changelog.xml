@@ -5,6 +5,16 @@
   <release name="as2lib 0.9.1" day="4" month="7" year="2005">
     <year value="2005">
       <month value="7">
+        <day value="10">
+          <entry type="add" package="org.as2lib.data.holder.list" class="ListIterator">Iterator to iterate over any kind of list.</entry>
+          <entry type="add" package="org.as2lib.data.holder.list" class="AbstractList">Provides common implementations of methods needed by lists.</entry>
+          <entry type="add" package="org.as2lib.data.holder.list" class="SubList">Represents a sub-list.</entry>
+          <entry type="add" package="org.as2lib.data.holder" class="List" method="subList">Returns a sub-list of the list called on, that represents a specific range of values. Changes made on the sub-list are reflected on the owner-list.</entry>
+          <entry type="change" package="org.as2lib.data.holder" class="List" method="set/setAll/get/removeByIndex">Added proper exception handling if the index is out of range.</entry>
+          <entry type="add" package="org.as2lib.data.holder" class="List" method="insertAllByIndexAndList">Inserts all values starting from the index and shifts elements to the right.</entry>
+          <entry type="add" package="org.as2lib.data.holder" class="List" method="insertByIndexAndValue">Inserts value and shifts element at index and subsequent elements to the right.</entry>
+          <entry type="add" package="org.as2lib.data.holder" class="IndexOutOfBoundsException">Is thrown when you try to use an index that is out of range.</entry>
+        </day>
         <day value="6">
           <entry type="change" package="org.as2lib.aop.advice" class="AbstractAdvice">Changed names of constants 'TYPE_*' to '*'.</entry>
           <entry type="add" package="org.as2lib.aop">Added AOP framework, this means it is again included in this and following as2lib distributions.</entry>

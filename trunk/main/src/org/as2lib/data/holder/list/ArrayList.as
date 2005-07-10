@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.List;
-import org.as2lib.env.overload.Overload;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.array.ArrayIterator;
-import org.as2lib.util.Stringifier;
-import org.as2lib.data.holder.list.ListStringifier;
+import org.as2lib.data.holder.list.AbstractList;
+import org.as2lib.data.holder.IndexOutOfBoundsException;
 
 /**
  * {@code ArrayList} is a resizable-array implementation of {@code List} interface.
@@ -52,32 +50,13 @@ import org.as2lib.data.holder.list.ListStringifier;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
+class org.as2lib.data.holder.list.ArrayList extends AbstractList implements List {
 	
-	/** Stringifies lists. */
-	private static var stringifier:Stringifier;
+	/** Makes the static variables of the super-class accessible through this class. */
+	private static var __proto__:Function = AbstractList;
 	
 	/** Holds added values. */
 	private var data:Array;
-	
-	/**
-	 * Returns the stringifier to stringify lists.
-	 *
-	 * @return the list stringifier
-	 */
-	public static function getStringifier(Void):Stringifier {
-		if (!stringifier) stringifier = new ListStringifier();
-		return stringifier;
-	}
-	
-	/**
-	 * Sets the stringifier to stringify lists.
-	 *
-	 * @param listStringifier the stringifier to stringify lists
-	 */
-	public static function setStringifier(listStringifier:Stringifier):Void {
-		stringifier = listStringifier;
-	}
 	
 	/**
 	 * Constructs a new {@code ArrayList} instance.
@@ -94,65 +73,21 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	}
 	
 	/**
-	 * Inserts {@code value} at the end of this list.
+	 * Inserts {@code value} at the given {@code index}.
 	 * 
+	 * <p>The element that is currently at the given {@code index} is shifted by one to
+	 * the right, as well as any subsequent elements.
+	 * 
+	 * @param index the index at which to insert the {@code value}
 	 * @param value the value to insert
-	 * @see #insertLast
+	 * @throws IndexOutOfBoundsException if the given {@code index} is not in range,
+	 * this is less than 0 or greater than this list's size
 	 */
-	public function insert(value):Void {
-		insertLast(value);
-	}
-	
-	/**
-	 * Inserts {@code value} at the beginning of this list.
-	 * 
-	 * @param value the value to insert
-	 */
-	public function insertFirst(value):Void {
-		data.unshift(value);
-	}
-	
-	/**
-	 * Inserts {@code value} at the end of this list.
-	 * 
-	 * @param value the value to insert
-	 * @see #insert
-	 */
-	public function insertLast(value):Void {
-		data.push(value);
-	}
-	
-	/**
-	 * Inserts all values contained in {@code list} to the end of this list.
-	 * 
-	 * @param list the values to insert
-	 */
-	public function insertAll(list:List):Void {
-		var v:Array = list.toArray();
-		var l:Number = v.length;
-		for (var i:Number = 0; i < l; i++) {
-			insertLast(v[i]);
+	public function insertByIndexAndValue(index:Number, value):Void {
+		if (index < 0 || index > size()) {
+			throw new IndexOutOfBoundsException("Argument 'index' [" + index + "] is out of range, this is less than 0 or greater than this list's size [" + size() + "].", this, arguments);
 		}
-	}
-	
-	/**
-	 * @overload #removeByValue
-	 * @overload #removeByIndex
-	 */
-	public function remove() {
-		var o:Overload = new Overload(this);
-		o.addHandler([Object], removeByValue);
-		o.addHandler([Number], removeByIndex);
-		return o.forward(arguments);
-	}
-	
-	/**
-	 * Removes {@code value} from this list if it exists.
-	 * 
-	 * @param value the value to remove
-	 */
-	public function removeByValue(value):Void {
-		data.splice(indexOf(value), 1);
+		data.splice(index, 0, value);
 	}
 	
 	/**
@@ -160,42 +95,16 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	 * 
 	 * @param index the index of the value to remove
 	 * @return the removed value that was originally at given {@code index}
+	 * @throws IndexOutOfBoundsException if given {@code index} is less than 0 or
+	 * equal to or greater than this list's size
 	 */
 	public function removeByIndex(index:Number) {
+		if (index < 0 || index >= size()) {
+			throw new IndexOutOfBoundsException("Argument 'index' [" + index + "] is out of range, this is less than 0 or equal to or greater than this list's size [" + size() + "].", this, arguments);
+		}
 		var result = data[index];
 		data.splice(index, 1);
 		return result;
-	}
-	
-	/**
-	 * Removes the value at the beginning of this list.
-	 * 
-	 * @return the removed value
-	 */
-	public function removeFirst(Void) {
-		return data.shift();
-	}
-	
-	/**
-	 * Removes the value at the end of this list.
-	 * 
-	 * @return the removed value
-	 */
-	public function removeLast(Void) {
-		return data.pop();
-	}
-	
-	/**
-	 * Removes all values contained in {@code list}.
-	 * 
-	 * @param list the values to remove
-	 */
-	public function removeAll(list:List):Void {
-		var v:Array = list.toArray();
-		var l:Number = v.length;
-		for (var i:Number = 0; i < l; i++) {
-			removeByValue(v[i]);
-		}
 	}
 	
 	/**
@@ -204,26 +113,16 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	 * @param index the index of {@code value}
 	 * @param value the {@code value} to set to given {@code index}
 	 * @return the value that was orignially at given {@code index}
+	 * @throws IndexOutOfBoundsException if given {@code index} is less than 0 or
+	 * equal to or greater than this list's size
 	 */
 	public function set(index:Number, value) {
+		if (index < 0 || index >= size()) {
+			throw new IndexOutOfBoundsException("Argument 'index' [" + index + "] is out of range, this is less than 0 or equal to or greater than this list's size [" + size() + "].", this, arguments);
+		}
 		var result = data[index];
 		data[index] = value;
 		return result;
-	}
-	
-	/**
-	 * Sets all values contained in {@code list} to this list, starting from given
-	 * {@code index}.
-	 * 
-	 * @param index the index to start at
-	 * @param list the values to set
-	 */
-	public function setAll(index:Number, list:List):Void {
-		var v:Array = list.toArray();
-		var l:Number = v.length;
-		for (var i:Number = 0; i < l; i++) {
-			this.set(index++, v[i]);
-		}
 	}
 	
 	/**
@@ -231,51 +130,14 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	 * 
 	 * @param index the index to return the value of
 	 * @return the value that is at given {@code index}
+	 * @throws IndexOutOfBoundsException if given {@code index} is less than 0 or
+	 * equal to or greater than this list's size
 	 */
 	public function get(index:Number) {
+		if (index < 0 || index >= size()) {
+			throw new IndexOutOfBoundsException("Argument 'index' [" + index + "] is out of range, this is less than 0 or equal to or greater than this list's size [" + size() + "].", this, arguments);
+		}
 		return data[index];
-	}
-	
-	/**
-	 * Checks whether {@code value} is contained in this list.
-	 * 
-	 * @param value the value to check whether it is contained
-	 * @return {@code true} if {@code value} is contained else {@code false}
-	 */
-	public function contains(value):Boolean {
-		return (indexOf(value) > -1);
-	}
-	
-	/**
-	 * Checks whether all values of {@code list} are contained in this list.
-	 * 
-	 * @param list the values to check whether they are contained
-	 * @return {@code true} if all values of {@code list} are contained else
-	 * {@code false}
-	 */
-	public function containsAll(list:List):Boolean {
-		var v:Array = list.toArray();
-		var l:Number = v.length;
-		for (var i:Number = 0; i < l; i++) {
-			if (!contains(v[i])) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Retains all values the are contained in {@code list} and removes all others.
-	 * 
-	 * @param list the list of values to retain
-	 */
-	public function retainAll(list:List):Void {
-		var i:Number = data.length;
-		while(--i-(-1)) {
-			if (!list.contains(data[i])) {
-				removeByIndex(i);
-			}
-		}
 	}
 	
 	/**
@@ -295,35 +157,12 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	}
 	
 	/**
-	 * Returns whether this list is empty.
-	 * 
-	 * <p>This list is empty if it has no values assigned to it.
-	 * 
-	 * @return {@code true} if this list is empty else {@code false}
-	 */
-	public function isEmpty(Void):Boolean {
-		return (data.length < 1);
-	}
-	
-	/**
 	 * Returns the iterator to iterate over this list.
 	 * 
 	 * @return the iterator to iterate over this list
 	 */
 	public function iterator(Void):Iterator {
 		return new ArrayIterator(data);
-	}
-	
-	/**
-	 * Returns the index of {@code value}.
-	 * 
-	 * @param value the value to return the index of
-	 * @return the index of {@code value}
-	 */
-	public function indexOf(value):Number {
-		var l:Number = data.length;
-		while (data[--l] !== value && l > -1);
-		return l;
 	}
 	
 	/**
@@ -334,17 +173,5 @@ class org.as2lib.data.holder.list.ArrayList extends BasicClass implements List {
 	public function toArray(Void):Array {
 		return data.concat();
 	}
-	
-	/**
-	 * Returns the string representation of this list.
-	 * 
-	 * <p>The string representation is obtained via the stringifier returned by the
-	 * static {@link #getStringifier} method.
-	 * 
-	 * @return the string representation of this list
-	 */
-	public function toString():String {
-		return getStringifier().execute(this);
-	}
-	
+
 }

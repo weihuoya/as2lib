@@ -1,5 +1,6 @@
 ﻿import org.as2lib.data.holder.AbstractPriority;
 import org.as2lib.data.holder.List;
+import org.as2lib.data.holder.list.SubList;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.data.holder.Iterator;
 
@@ -144,6 +145,10 @@ class org.as2lib.data.holder.list.PriorityList extends AbstractPriority implemen
 		}
 	}
 	
+	public function subList(fromIndex:Number, toIndex:Number):List {
+		return new SubList(this, fromIndex, toIndex);
+	}
+	
 	public function clear(Void):Void {
 		priorityArray = new Array();
 		list.clear();
@@ -240,4 +245,10 @@ class org.as2lib.data.holder.list.PriorityList extends AbstractPriority implemen
 		return list.toString();
 	}
 	
+	public function insertAllByIndexAndList(index:Number, list:List):Void {
+	}
+
+	public function insertByIndexAndValue(index:Number, value):Void {
+	}
+
 }
