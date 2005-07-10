@@ -20,10 +20,10 @@ import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.level.AbstractLogLevel;
 
-import net.hiddenresource.util.alcon.Debug;
+import net.hiddenresource.util.Debug;
 
 /**
- * {@code AlconHandler} uses the {@code net.hiddenresource.util.alcon.Debug} class
+ * {@code AlconHandler} uses the {@code net.hiddenresource.util.Debug} class
  * from Sascha Balkau to log messages.
  * 
  * @author Simon Wacker

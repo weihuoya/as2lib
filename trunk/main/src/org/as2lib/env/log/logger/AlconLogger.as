@@ -17,11 +17,11 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
 
-import net.hiddenresource.util.alcon.Debug;
+import net.hiddenresource.util.Debug;
 
 /**
  * {@code AlconLogger} delegates all messages to the
- * {@code net.hiddenresource.util.alcon.Debug.trace} method.
+ * {@code net.hiddenresource.util.Debug.trace} method.
  * 
  * <p>Using this class instead of the {@code Debug} class in your application
  * directly enables you to switch between almost every available Logging API without
@@ -93,7 +93,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #debug
 	 */
 	public function isDebugEnabled(Void):Boolean {
-		return (Debug["fl"] <= this.debugLevel);
+		return (Debug.getFilterLevel() <= this.debugLevel);
 	}
 	
 	/**
@@ -103,7 +103,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #info
 	 */
 	public function isInfoEnabled(Void):Boolean {
-		return (Debug["fl"] <= this.infoLevel);
+		return (Debug.getFilterLevel() <= this.infoLevel);
 	}
 	
 	/**
@@ -113,7 +113,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #warning
 	 */
 	public function isWarningEnabled(Void):Boolean {
-		return (Debug["fl"] <= this.warnLevel);
+		return (Debug.getFilterLevel() <= this.warnLevel);
 	}
 	
 	/**
@@ -123,7 +123,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #error
 	 */
 	public function isErrorEnabled(Void):Boolean {
-		return (Debug["fl"] <= this.errorLevel);
+		return (Debug.getFilterLevel() <= this.errorLevel);
 	}
 	
 	/**
@@ -133,7 +133,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	 * @see #fatal
 	 */
 	public function isFatalEnabled(Void):Boolean {
-		return (Debug["fl"] <= this.fatalLevel);
+		return (Debug.getFilterLevel() <= this.fatalLevel);
 	}
 	
 	/**
