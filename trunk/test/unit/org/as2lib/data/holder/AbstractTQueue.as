@@ -33,7 +33,7 @@ class org.as2lib.data.holder.AbstractTQueue extends TestCase {
 	 * Static method to block this test from getting collected with the TestSuiteFactory.
 	 */
 	public static function blockCollecting(Void):Boolean {
-		return true
+		return true;
 	}
 	
 	/**

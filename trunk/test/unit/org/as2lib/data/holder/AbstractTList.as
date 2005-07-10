@@ -17,11 +17,13 @@
 import org.as2lib.data.holder.List;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.test.unit.TestCase;
+import org.as2lib.data.holder.IndexOutOfBoundsException;
 
 /**
  * Abtract Testcase for any List
  *
  * @author Martin Heidegger
+ * @author Simon Wacker
  */
 class org.as2lib.data.holder.AbstractTList extends TestCase {
 	
@@ -54,7 +56,7 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 	/**
 	 * Tests inserting different kind of content
 	 */
-	public function testInsert(Void):Void {
+	public function testInsertByValue(Void):Void {
 		// Validates simple inserting
 		list.insert("a");
 		assertEquals("Content at entry 0 should be 'a'", list.get(0), "a");
@@ -71,6 +73,71 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 		// Validatest that 'boolean' is used properly
 		list.insert(undefined);
 		assertUndefined("Content at entry 3 should be 'undefined'", list.get(3));
+	}
+	
+	public function testInsertByIndexAndValue(Void):Void {
+		list.insert(0, "a");
+		assertEquals("list[0] != 'a'", list.get(0), "a");
+		assertSame(list.size(), 1);
+		list.insert(1, "b");
+		assertEquals("list[1] != 'b'", list.get(1), "b");
+		assertSame(list.size(), 2);
+		list.insert(1, "c");
+		assertEquals("list[1] != 'c'", list.get(1), "c");
+		assertEquals("list[2] != 'b'", list.get(2), "b");
+		assertSame(list.size(), 3);
+		list.insert(1, "d");
+		assertEquals("list[1] != 'd'", list.get(1), "d");
+		assertEquals("list[2] != 'c'", list.get(2), "c");
+		assertEquals("list[3] != 'b'", list.get(3), "b");
+		assertSame(list.size(), 4);
+		list.insert(2, "e");
+		assertEquals("list[2] != 'e'", list.get(2), "e");
+		assertEquals("list[3] != 'c'", list.get(3), "c");
+		assertEquals("list[4] != 'b'", list.get(4), "b");
+		assertSame(list.size(), 5);
+		list.insert(0, "f");
+		assertEquals("list[0] != 'f'", list.get(0), "f");
+		assertEquals("list[1] != 'a'", list.get(1), "a");
+		assertEquals("list[2] != 'd'", list.get(2), "d");
+		assertEquals("list[3] != 'e'", list.get(3), "e");
+		assertEquals("list[4] != 'c'", list.get(4), "c");
+		assertEquals("list[5] != 'b'", list.get(5), "b");
+		assertSame(list.size(), 6);
+		list.insert(6, "g");
+		assertEquals("list[6] != 'g'", list.get(6), "g");
+		assertSame(list.size(), 7);
+	}
+	
+	public function testInsertByIndexAndValueWithIndexOutOfRange(Void):Void {
+		list.insert(0, "a");
+		list.insert(1, "b");
+		list.insert(2, "c");
+		assertSame(list.size(), 3);
+		try {
+			list.insert(-1, "d");
+			fail("expected IndexOutOfBoundsException for index (-1) less than 0");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 3);
+		try {
+			list.insert(-4, "e");
+			fail("expected IndexOutOfBoundsException for index (-4) less than 0");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 3);
+		try {
+			list.insert(4, "f");
+			fail("expected IndexOutOfBoundsException for index (4) greater than the list's size (3)");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 3);
+		try {
+			list.insert(8, "g");
+			fail("expected IndexOutOfBoundsException for index (8) greater than the list's size (3)");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 3);
 	}
 	
 	/**
@@ -104,7 +171,7 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 	/**
 	 * Tests if inserting of a list to a list (with a specific position) works properly
 	 */
-	public function testInsertAll(Void):Void {
+	public function testInsertAllByList(Void):Void {
 		list.insert("c");
 		list.insert("d");
 		var newList:List = createNewList();
@@ -115,6 +182,68 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 		assertEquals("Content at entry 1 should be 'd'", list.get(1), "d");
 		assertEquals("Content at entry 2 should be 'a'", list.get(2), "a");
 		assertEquals("Content at entry 3 should be 'b'", list.get(3), "b");
+	}
+	
+	public function testInsertAllByIndexAndListAtFirstIndex(Void):Void {
+		list.insert("c");
+		list.insert("d");
+		var newList:List = createNewList();
+		newList.insert("a");
+		newList.insert("b");
+		list.insertAll(0, newList);
+		assertEquals("list[0] != 'a'", list.get(0), "a");
+		assertEquals("list[1] != 'b'", list.get(1), "b");
+		assertEquals("list[2] != 'c'", list.get(2), "c");
+		assertEquals("list[3] != 'd'", list.get(3), "d");
+	}
+	
+	public function testInsertAllByIndexAndListAtLastIndex(Void):Void {
+		list.insert("c");
+		list.insert("d");
+		var newList:List = createNewList();
+		newList.insert("a");
+		newList.insert("b");
+		list.insertAll(2, newList);
+		assertEquals("list[0] != 'c'", list.get(0), "c");
+		assertEquals("list[1] != 'd'", list.get(1), "d");
+		assertEquals("list[2] != 'a'", list.get(2), "a");
+		assertEquals("list[3] != 'b'", list.get(3), "b");
+	}
+	
+	public function testInsertAllByIndexAndListInMiddle(Void):Void {
+		list.insert("c");
+		list.insert("d");
+		var newList:List = createNewList();
+		newList.insert("a");
+		newList.insert("b");
+		list.insertAll(1, newList);
+		assertEquals("list[0] != 'c'", list.get(0), "c");
+		assertEquals("list[1] != 'a'", list.get(1), "a");
+		assertEquals("list[2] != 'b'", list.get(2), "b");
+		assertEquals("list[3] != 'd'", list.get(3), "d");
+	}
+	
+	public function testInsertAllByIndexAndListWithOutOfBoundsIndex(Void):Void {
+		var a:List = createNewList();
+		a.insert("a");
+		a.insert("b");
+		a.insert("c");
+		list.insertAll(0, a);
+		var newList:List = createNewList();
+		newList.insert("d");
+		newList.insert("e");
+		try {
+			list.insertAll(-1, newList);
+			fail("expected IndexOutOfBoundsException for -1 index");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 3);
+		try {
+			list.insertAll(4, newList);
+			fail("expected IndexOutOfBoundsException for 4 index");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 3);
 	}
 	
 	/**
@@ -153,6 +282,36 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 		assertEquals("Content at entry 1 should be 'c'", list.get(1), "c");
 	}
 	
+	public function testRemoveByIndexWithOutOfBoundsIndex(Void):Void {
+		assertSame(list.size(), 0);
+		try {
+			list.removeByIndex(0);
+			fail("expected IndexOutOfBoundsException with empty list and index 0");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		list.insert("a");
+		list.insert("b");
+		list.insert("c");
+		try {
+			list.removeByIndex(-1);
+			fail("expected IndexOutOfBoundsException for index -1");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 3);
+		try {
+			list.removeByIndex(4);
+			fail("expected IndexOutOfBoundsException for index 4");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 3);
+		try {
+			list.removeByIndex(3);
+			fail("expected IndexOutOfBoundsException for index 3");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 3);
+	}
+	
 	/**
 	 * Tests if removing the first entry works properly
 	 */
@@ -171,7 +330,12 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 		list.insert("b");
 		list.removeLast();
 		assertEquals("Content at entry 0 should be 'a'", list.get(0), "a");
-		assertEmpty("Content at entry 1 should be empty", list.get(1));
+		try {
+			list.get(1);
+			fail("expected IndexOutOfBoundsException for index 1");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 1);
 	}
 	
 	/**
@@ -186,8 +350,17 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 		newList.insert("b");
 		list.removeAll(newList);
 		assertEquals("Content at entry 0 should be 'c'", list.get(0), 'c');
-		assertUndefined("Content at entry 1 should not be available", list.get(1));
-		assertUndefined("Content at entry 2 should not be available", list.get(2));
+		try {
+			list.get(1);
+			fail("expected IndexOutOfBoundsException for index 1");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		try {
+			list.get(2);
+			fail("expected IndexOutOfBoundsException for index 2");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 1);
 	}
 	
 	/**
@@ -198,6 +371,27 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 		list.insert("b");
 		list.set(0, "c");
 		assertEquals("Content at entry 0 should not be 'c'", list.get(0), 'c');
+	}
+	
+	public function testSetWithOutOfBoundsIndex(Void):Void {
+		try {
+			list.set(0, "c");
+			fail("expected IndexOutOfBoundsException in empty list with index 0");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		list.insert("a");
+		list.insert("b");
+		try {
+			list.set(2, "c");
+			fail("expected IndexOutOfBoundsException for index 2");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		try {
+			list.set(-1, "c");
+			fail("expected IndexOutOfBoundsException for index -1");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 2);
 	}
 	
 	/**
@@ -218,30 +412,82 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 		assertEquals("Content at entry 3 should be 'd'", list.get(3), 'd');
 	}
 	
+	public function testSetAllWithOutOfBoundsIndex(Void):Void {
+		var newList:List = createNewList();
+		newList.insert("e");
+		newList.insert("f");
+		list.insert("a");
+		list.insert("b");
+		list.insert("c");
+		list.insert("d");
+		try {
+			list.setAll(-1, newList);
+			fail("expected IndexOutOfBoundsException for index -1");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 4);
+		try {
+			list.setAll(4, newList);
+			fail("expected IndexOutOfBoundsException for index 4");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 4);
+		try {
+			list.setAll(3, newList);
+			fail("expected IndexOutOfBoundsException for index 3 and newList size 2");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 4);
+		list.setAll(2, newList);
+		assertSame(list.get(0), "a");
+		assertSame(list.get(1), "b");
+		assertSame(list.get(2), "e");
+		assertSame(list.get(3), "f");
+	}
+	
 	/**
 	 * Tests if get always returns the correct content.
 	 */
-	public function testGet(Void) {
-		// Prepares the list
+	public function testGet(Void):Void {
 		var obj = {};
 		var func = function() {};
 		list.insert("a");
 		list.insert(1);
 		list.insert(true);
 		list.insert(obj);
-		list.insert(func)
+		list.insert(func);
 		list.insert(null);
-		
-		// Validates existing entries
 		assertEquals("Content at entry 0 should be 'a'", list.get(0), 'a');
 		assertEquals("Content at entry 1 should be 1", list.get(1), 1);
 		assertEquals("Content at entry 2 should be true", list.get(2), true);
 		assertEquals("Content at entry 3 should be obj", list.get(3), obj);
 		assertEquals("Content at entry 4 should be func", list.get(4), func);
 		assertNull("Content at entry 5 should be null", list.get(5));
-		
-		// Validates a not existing entry
-		assertUndefined("Content for a non-existing entry should be null", list.get(6));
+	}
+	
+	public function testGetWithOutOfBoundsIndex(Void):Void {
+		try {
+			list.get(0);
+			fail("expected IndexOutOfBoundsException for 0 index in empty list");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		list.insert("a");
+		list.insert("b");
+		list.insert("c");
+		try {
+			list.get(3);
+			fail("expected IndexOutOfBoundsException for index 3");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		try {
+			list.get(-1);
+			fail("expected IndexOutOfBoundsException for index -1");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 3);
+		assertSame(list.get(0), "a");
+		assertSame(list.get(1), "b");
+		assertSame(list.get(2), "c");
 	}
 	
 	/**
@@ -318,24 +564,43 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 		newList.insert("a");
 		list.retainAll(newList);
 		assertEquals("Content at entry 0 should be 'a'", list.get(0), 'a');
-		assertUndefined("Content at entry 1 should be undefined", list.get(1));
-		assertUndefined("Content at entry 2 should be undefined", list.get(2));
+		try {
+			list.get(1);
+			fail("expected IndexOutOfBoundsException for index 1");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		try {
+			list.get(2);
+			fail("expected IndexOutOfBoundsException for index 2");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		assertSame(list.size(), 1);
 	}
 	
 	/**
 	 * Tests if clear works properly in the implementation
 	 */
 	public function testClear(Void):Void {
-		// Tests clearing of a list
 		list.insert("a");
 		list.insert("b");
 		list.insert("c");
 		list.clear();
-		
-		// Validating the empty list.
-		assertUndefined("Content at entry 0 should not be 'a'", list.get(0));
-		assertUndefined("Content at entry 1 should not be 'b'", list.get(1));
-		assertUndefined("Content at entry 2 should not be 'c'", list.get(2));
+		assertSame(list.size(), 0);
+		try {
+			list.get(0);
+			fail("expected IndexOutOfBoundsException for index 0");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		try {
+			list.get(1);
+			fail("expected IndexOutOfBoundsException for index 1");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
+		try {
+			list.get(2);
+			fail("expected IndexOutOfBoundsException for index 2");
+		} catch (e:org.as2lib.data.holder.IndexOutOfBoundsException) {
+		}
 	}
 	
 	/**
@@ -347,7 +612,7 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 		
 		// Test with filled list.
 		var obj:Object = {};
-		var func:Function = function() {}
+		var func:Function = function() {};
 		list.insert("a");
 		list.insert(1);
 		list.insert(true);
@@ -406,7 +671,7 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 	public function testIterator(Void):Void {
 		
 		var iter:Iterator;
-		var i:Number
+		var i:Number;
 		
 		// Test for a proper iterator from a empty list
 		iter = list.iterator();
@@ -451,7 +716,7 @@ class org.as2lib.data.holder.AbstractTList extends TestCase {
 	 */
 	public function testIndexOf(Void):Void {
 		var obj:Object = {};
-		var func:Function = function() {}
+		var func:Function = function() {};
 		
 		// Test for a empty list.
 		assertEquals("List index of 'a' should be -1", list.indexOf("a"), -1);
