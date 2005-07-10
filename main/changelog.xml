@@ -6,6 +6,8 @@
     <year value="2005">
       <month value="7">
         <day value="10">
+          <entry type="change" package="org.as2lib.env.log.handler" class="AlconHandler">Made Alcon 1.0.5 compatible.</entry>
+          <entry type="change" package="org.as2lib.env.log.logger" class="AlconLogger">Made Alcon 1.0.5 compatible.</entry>
           <entry type="add" package="org.as2lib.data.holder.list" class="ListIterator">Iterator to iterate over any kind of list.</entry>
           <entry type="add" package="org.as2lib.data.holder.list" class="AbstractList">Provides common implementations of methods needed by lists.</entry>
           <entry type="add" package="org.as2lib.data.holder.list" class="SubList">Represents a sub-list.</entry>
