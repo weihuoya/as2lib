@@ -28,4 +28,5 @@ class org.as2lib.data.holder.list.TArrayList extends AbstractTList {
 	private function createNewList(Void):List {
 		return new ArrayList();
 	}
+	
 }
