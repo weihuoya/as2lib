@@ -84,8 +84,16 @@ class org.as2lib.data.holder.list.ArrayList extends AbstractList implements List
 	 * this is less than 0 or greater than this list's size
 	 */
 	public function insertByIndexAndValue(index:Number, value):Void {
-		if (index < 0 || index > size()) {
+		if (index < 0 || index > data.length) {
 			throw new IndexOutOfBoundsException("Argument 'index' [" + index + "] is out of range, this is less than 0 or greater than this list's size [" + size() + "].", this, arguments);
+		}
+		if (index == data.length) {
+			data.push(value);
+			return;
+		}
+		if (index == 0) {
+			data.unshift(value);
+			return;
 		}
 		data.splice(index, 0, value);
 	}
@@ -99,8 +107,14 @@ class org.as2lib.data.holder.list.ArrayList extends AbstractList implements List
 	 * equal to or greater than this list's size
 	 */
 	public function removeByIndex(index:Number) {
-		if (index < 0 || index >= size()) {
+		if (index < 0 || index >= data.length) {
 			throw new IndexOutOfBoundsException("Argument 'index' [" + index + "] is out of range, this is less than 0 or equal to or greater than this list's size [" + size() + "].", this, arguments);
+		}
+		if (index == 0) {
+			return data.shift();
+		}
+		if (index == data.length - 1) {
+			return data.pop();
 		}
 		var result = data[index];
 		data.splice(index, 1);
@@ -117,7 +131,7 @@ class org.as2lib.data.holder.list.ArrayList extends AbstractList implements List
 	 * equal to or greater than this list's size
 	 */
 	public function set(index:Number, value) {
-		if (index < 0 || index >= size()) {
+		if (index < 0 || index >= data.length) {
 			throw new IndexOutOfBoundsException("Argument 'index' [" + index + "] is out of range, this is less than 0 or equal to or greater than this list's size [" + size() + "].", this, arguments);
 		}
 		var result = data[index];
@@ -134,7 +148,7 @@ class org.as2lib.data.holder.list.ArrayList extends AbstractList implements List
 	 * equal to or greater than this list's size
 	 */
 	public function get(index:Number) {
-		if (index < 0 || index >= size()) {
+		if (index < 0 || index >= data.length) {
 			throw new IndexOutOfBoundsException("Argument 'index' [" + index + "] is out of range, this is less than 0 or equal to or greater than this list's size [" + size() + "].", this, arguments);
 		}
 		return data[index];
