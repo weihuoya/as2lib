@@ -1,0 +1,433 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>AbstractThrowable</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>AbstractThrowable</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items">Error</span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.except.AbstractThrowable</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 09 April 2005, 17:33:24</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>AbstractThrowable</code> is an abstract class that contains sourced out<br /> functionalities used by the classes <a href="org_as2lib_env_except_Exception.html">Exception</a> and<br /> <a href="org_as2lib_env_except_FatalException.html">FatalException</a>. </div><p>It is thought to be an abstract implementation of the <a href="org_as2lib_env_except_Throwable.html">Throwable</a><br /> interface. Because of that sub-classes must implement the <code>Throwable</code><br /> interface if they are themselves not abstract.<p>This class extends the <code>Error</code> class. Thus you can use sub-classes of<br /> it as throwable type in catch-blocks in Flex.<div class="classFields"><div class="boxWithBorder"><div class="boxedElem"><div class="contentHolder"><span class="title">See also:</span><div class="item"><a href="org_as2lib_env_except_Throwable.html">Throwable</a></div></div></div></div></div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#AbstractThrowable">AbstractThrowable</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#stringifier">stringifier</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#logger">logger</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#stackTrace">stackTrace</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#cause">cause</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#message">message</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span>
+              <ul>
+                <li>
+                  <a href="#getStringifier">getStringifier</a>
+                </li>
+                <li>
+                  <a href="#setStringifier">setStringifier</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getLogger">getLogger</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#addStackTraceElement">addStackTraceElement</a>
+                </li>
+                <li>
+                  <a href="#getStackTrace">getStackTrace</a>
+                </li>
+                <li>
+                  <a href="#getCause">getCause</a>
+                </li>
+                <li>
+                  <a href="#initCause">initCause</a>
+                </li>
+                <li>
+                  <a href="#getMessage">getMessage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#doToString">doToString</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="AbstractThrowable">AbstractThrowable</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>AbstractThrowable</b> (
+
+
+</div>
+                <div><span class="code">message:String,
+thrower,
+args:Array)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>AbstractThrowable</code> instance.<p>All arguments are allowed to be <code>null</code> or <code>undefined</code>. But<br /> if one is, the string representation returned by the <code>toString</code><br /> method will not be complete.<p>The <code>args</code> array should be the internal arguments array of the<br /> method that throws the throwable. The internal arguments array exists in<br /> every method and contains its parameters, the callee method and the caller<br /> method. You can refernce it in every method using the name<br /> <code>"arguments"</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>the message that describes the problem in detail</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">thrower<span class="separator">:</span></div>
+                    <div>the object that declares the method that throws this<br /> throwable</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args   <span class="separator">:</span></div>
+                    <div>the arguments of the throwing method</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="logger">logger</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>logger</b>:<a href="org_as2lib_env_log_Logger.html">Logger</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Logger used to output this throwable.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="stringifier">stringifier</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>stringifier</b>:<a href="org_as2lib_util_Stringifier.html">Stringifier</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Stringifier used to stringify throwables.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="cause">cause</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>cause</b>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">The throwable that caused this throwable to be thrown.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="message">message</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>message</b>:String
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">The message describing what went wrong.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="stackTrace">stackTrace</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>stackTrace</b>:Array
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">The saved stack of method calls.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Class methods</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getLogger">getLogger</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static function <b>getLogger</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_log_Logger.html">Logger</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the logger used to log this throwable.<p><code>null</code> will be returned if the <a href="org_as2lib_env_log_LogManager.html#getLogger">org.as2lib.env.log.LogManager.getLogger</a><br /> method returns <code>null</code> or <code>undefined</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the logger used to output this throwable</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getStringifier">getStringifier</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>getStringifier</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_util_Stringifier.html">Stringifier</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the stringifier to stringify throwables.<p>The returned stringifier is either the default<br /> <a href="org_as2lib_env_except_ThrowableStringifier.html">ThrowableStringifier</a> if no custom stringifier was set or if the<br /> stringifier was set to <code>null</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the current stringifier</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setStringifier">setStringifier</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>setStringifier</b> (
+</div>
+                <div><span class="code">throwableStringifier:<a href="org_as2lib_util_Stringifier.html">Stringifier</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Sets the stringifier to stringify throwables.<p>If <code>throwableStringifier</code> is <code>null</code> the static<br /> <a href="org_as2lib_env_except_AbstractThrowable.html#getStringifier">getStringifier</a> method will return the default stringifier.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">throwableStringifier<span class="separator">:</span></div>
+                    <div>the stringifier to stringify throwables</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="addStackTraceElement">addStackTraceElement</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>addStackTraceElement</b> (
+
+
+</div>
+                <div><span class="code">thrower,
+method:Function,
+args:Array) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Adds a stack trace element to the stack trace.<p>The new stack trace element is added to the end of the stack trace.<p>At some parts in your application you may want to add stack trace elements<br /> manually. This can help you to get a clearer image of what went where wrong and<br /> why. You can use this method to do so.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">thrower<span class="separator">:</span></div>
+                    <div>the object that threw, rethrew or forwarded (let pass) the<br /> throwable</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">method <span class="separator">:</span></div>
+                    <div>the method that threw, rethrew or forwarded (let pass) the<br /> throwable</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args   <span class="separator">:</span></div>
+                    <div>the arguments the method was invoked with when throwing, rethrowing<br /> or forwarding (leting pass) the throwable</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="doToString">doToString</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>doToString</b> (
+</div>
+                <div><span class="code">Void) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the string representation of this throwable.<p>The string representation is obtained via the stringifier returned by<br /> the static <a href="org_as2lib_env_except_AbstractThrowable.html#getStringifier">getStringifier</a> method.<p>If you want to change the string representation either set a new<br /> stringifier via the static <a href="org_as2lib_env_except_AbstractThrowable.html#setStringifier">setStringifier</a> method or if you want<br /> the string representation only change for one throwable and its<br /> sub-classes overwrite this method.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the string representation of this throwable</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getCause">getCause</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getCause</b> (
+</div>
+                <div><span class="code">Void)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the initialized cause.<p>The cause is the throwable that caused this throwable to be thrown.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the initialized cause</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_except_AbstractThrowable.html#initCause">initCause</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMessage">getMessage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMessage</b> (
+</div>
+                <div><span class="code">Void) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the message that describes in detail what went wrong.<p>The message should be understandable, even for non-programmers. It should<br /> contain detailed information about what went wrong. And maybe also how the user<br /> that sees this message can solve the problem.<p>If the throwable was thrown for example because of a wrong collaborator or<br /> an illegal string or something similar, provide the string representation of it<br /> in the error message. It is recommended to put these between []-characters.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the message that describes the problem in detail</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getStackTrace">getStackTrace</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getStackTrace</b> (
+</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns an array that contains <a href="org_as2lib_env_except_StackTraceElement.html">StackTraceElement</a> instances of the<br /> methods invoked before this throwable was thrown.<p>The last element is always the one that contains the actual method that<br /> threw the throwable.<p>The stack trace helps you a lot because it says you where the throwing of<br /> the throwable took place and also what arguments caused the throwing.<p>The returned stack trace is never <code>null</code> or <code>undefined</code>. If<br /> no stack trace element has been set an empty array is returned.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">a stack containing the invoked methods until the throwable was thrown</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="initCause">initCause</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>initCause</b> (
+</div>
+                <div><span class="code">newCause) : <a href="org_as2lib_env_except_Throwable.html">Throwable</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Initializes the cause of this throwable.<p>The cause can only be initialized once. You normally initialize a cause<br /> if you throw a throwable due to the throwing of another throwable. Thereby<br /> you do not lose the information the cause offers.<p>This method returns this throwable to have an easy way to initialize the<br /> cause. Following is how you could use the cause mechanism.<pre><span class="codeKeyword">try</span> {
+    myInstance.invokeMethodThatThrowsAThrowable();
+} <span class="codeKeyword">catch</span> (e:org.as2lib.env.except.Throwable) {
+    <span class="codeKeyword">throw</span> <span class="codeKeyword">new</span> MyThrowable(<span class="codeString">"myMessage"</span>, <span class="codeIdentifier">this</span>, arguments).initCause(e);
+}</pre></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">cause<span class="separator">:</span></div>
+                    <div>the throwable that caused the throwing of this throwable</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">this throwable itself</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in<br /> <code>newCause</code> is <code>null</code> or <code>undefined</code><br /><a href="org_as2lib_env_except_IllegalStateException.html">IllegalStateException</a> if the cause has<br /> already been initialized</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_env_except_AbstractThrowable.html#getCause">getCause</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; as2lib, 2005 | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Monday, 04 July 2005, 19:20:47
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

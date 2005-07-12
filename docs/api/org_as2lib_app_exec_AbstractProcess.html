@@ -1,0 +1,874 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>AbstractProcess</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>AbstractProcess</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items">none (AbstractProcess is a root class)</span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_app_exec_Process.html">Process</a>
+                </li>
+                <li>
+                  <a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Version: </span><span class="value">1.0</span>
+              </li>
+              <li><span class="title">Author: </span><span class="value">Martin Heidegger</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.app.exec.AbstractProcess</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 28 May 2005, 12:00:50</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>AbstractProcess</code> is a abstract helper class to implement processes. </div><p>Most of the functionalities of <a href="org_as2lib_app_exec_Process.html">Process</a> are served well within <br /> <code>AbstractProcess</code>. Because of the situation that most processes are <br /> simple executions <code>AbstractProcess</code> allows easy implementations of <br /> <a href="org_as2lib_app_exec_Process.html">Process</a>.<p>To use the advantage of <code>AbstractProcess</code> simple extend it and<br /> implement the <a href="org_as2lib_app_exec_AbstractProcess.html#run">run</a> method.<p>It executes <a href="org_as2lib_app_exec_AbstractProcess.html#run">run</a> at <a href="org_as2lib_app_exec_AbstractProcess.html#start">start</a> and handles the exeuction of<br /> events and the correct states. If you wan't to stop your process<br /> <a href="org_as2lib_app_exec_AbstractProcess.html#pause">pause</a> and <a href="org_as2lib_app_exec_AbstractProcess.html#resume">resume</a> offer direct support.<div class="classFields"><div class="boxWithBorder"><div class="boxedElem"><div class="contentHolder"><span class="title">See also:</span><div class="item"><a href="org_as2lib_app_exec_Process.html">Process</a><br /><a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a></div></div></div></div></div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#AbstractProcess">AbstractProcess</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#paused">paused</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#started">started</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#finished">finished</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#distributor">distributor</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#event">event</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#subProcesses">subProcesses</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#callBacks">callBacks</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#parent">parent</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#setParentProcess">setParentProcess</a>
+                </li>
+                <li>
+                  <a href="#getParentProcess">getParentProcess</a>
+                </li>
+                <li>
+                  <a href="#startSubProcess">startSubProcess</a>
+                </li>
+                <li>
+                  <a href="#pause">pause</a>
+                </li>
+                <li>
+                  <a href="#resume">resume</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#prepare">prepare</a>
+                </li>
+                <li>
+                  <a href="#start">start</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#run">run</a>
+                </li>
+                <li>
+                  <a href="#hasFinished">hasFinished</a>
+                </li>
+                <li>
+                  <a href="#isPaused">isPaused</a>
+                </li>
+                <li>
+                  <a href="#hasStarted">hasStarted</a>
+                </li>
+                <li>
+                  <a href="#isRunning">isRunning</a>
+                </li>
+                <li>
+                  <a href="#addProcessListener">addProcessListener</a>
+                </li>
+                <li>
+                  <a href="#removeProcessListener">removeProcessListener</a>
+                </li>
+                <li>
+                  <a href="#removeAllProcessListeners">removeAllProcessListeners</a>
+                </li>
+                <li>
+                  <a href="#addAllProcessListeners">addAllProcessListeners</a>
+                </li>
+                <li>
+                  <a href="#getAllProcessListeners">getAllProcessListeners</a>
+                </li>
+                <li>
+                  <a href="#getPercentage">getPercentage</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#finish">finish</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Event handlers</span>
+              <ul>
+                <li>
+                  <a href="#onUpdateProcess">onUpdateProcess</a>
+                </li>
+                <li>
+                  <a href="#onStartProcess">onStartProcess</a>
+                </li>
+                <li>
+                  <a href="#onFinishProcess">onFinishProcess</a>
+                </li>
+                <li>
+                  <a href="#onProcessError">onProcessError</a>
+                </li>
+                <li>
+                  <a href="#onResumeProcess">onResumeProcess</a>
+                </li>
+                <li>
+                  <a href="#onPauseProcess">onPauseProcess</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="AbstractProcess">AbstractProcess</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>AbstractProcess</b> (
+</div>
+                <div><span class="code">Void)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>AbstractProcess</code></div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="callBacks">callBacks</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>callBacks</b>:<a href="org_as2lib_data_holder_Map.html">Map</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Callbacks set to the processes to be called after execution</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="distributor">distributor</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>distributor</b>:<a href="org_as2lib_env_event_distributor_EventDistributorControl.html">EventDistributorControl</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Distributor holder</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="event">event</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>event</b>:<a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Event holder</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="finished">finished</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>finished</b>:Boolean
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Flag if execution was finished</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="parent">parent</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>parent</b>:<a href="org_as2lib_app_exec_Process.html">Process</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Holder for a possible set parent</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="paused">paused</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>paused</b>:Boolean
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Flag if execution was paused</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="started">started</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>started</b>:Boolean
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Flag if execution was started</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="subProcesses">subProcesses</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>subProcesses</b>:Array
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Processed that had been started during execution</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="addAllProcessListeners">addAllProcessListeners</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>addAllProcessListeners</b> (
+</div>
+                <div><span class="code">list:Array) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Adds a <code>list</code> of <a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a> as Observer to the process.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">list<span class="separator">:</span></div>
+                    <div>List of listeners to be added.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_Process.html#addAllProcessListeners">Process.addAllProcessListeners</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="addProcessListener">addProcessListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>addProcessListener</b> (
+</div>
+                <div><span class="code">listener:<a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Adds a <a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a> as Observer to the process.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">listener<span class="separator">:</span></div>
+                    <div><a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a> to be added.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_Process.html#addProcessListener">Process.addProcessListener</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="finish">finish</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>finish</b> (
+</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Internal Method to finish the execution.</div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getAllProcessListeners">getAllProcessListeners</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getAllProcessListeners</b> (
+</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Flag if the process has been started.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">true if the process has been started and isn't finish yet else false.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_Process.html#getAllProcessListeners">Process.getAllProcessListeners</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getParentProcess">getParentProcess</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getParentProcess</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_app_exec_Process.html">Process</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Getter for the parent process.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">Parent process if set, else null.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_Process.html#getParentProcess">Process.getParentProcess</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getPercentage">getPercentage</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getPercentage</b> (
+</div>
+                <div><span class="code">Void) : Number</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Getter for the currently executed percentage of the process.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">Percentage of execution. Null if percentage was not evaluateable.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_Process.html#getPercentage">Process.getPercentage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="hasFinished">hasFinished</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>hasFinished</b> (
+</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">true if the process has finished. (false if the process hasn't started yet)</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_Process.html#hasFinished">Process.hasFinished</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="hasStarted">hasStarted</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>hasStarted</b> (
+</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">true if the process has started.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_Process.html#hasStarted">Process.hasStarted</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isPaused">isPaused</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>isPaused</b> (
+</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">true if the process is paused.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_Process.html#isPaused">Process.isPaused</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isRunning">isRunning</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>isRunning</b> (
+</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">true if the process is running.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_Process.html#isRunning">Process.isRunning</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="pause">pause</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>pause</b> (
+</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Pauses the process.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="prepare">prepare</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>prepare</b> (
+</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Prepares the start of the process</div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="removeAllProcessListeners">removeAllProcessListeners</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>removeAllProcessListeners</b> (
+</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Removes all added Observers.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_Process.html#removeAllProcessListeners">Process.removeAllProcessListeners</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="removeProcessListener">removeProcessListener</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>removeProcessListener</b> (
+</div>
+                <div><span class="code">listener:<a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Removes a <a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a> as Observer from the process.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">listener<span class="separator">:</span></div>
+                    <div><a href="org_as2lib_app_exec_ProcessListener.html">ProcessListener</a> to be added.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_Process.html#removeProcessListener">Process.removeProcessListener</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="resume">resume</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>resume</b> (
+</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Resumes the process</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="run">run</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>run</b> (
+</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Template method for running the process.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_AbstractOperationException.html">AbstractOperationException</a> if the method was not extended</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setParentProcess">setParentProcess</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>setParentProcess</b> (
+</div>
+                <div><span class="code">p:<a href="org_as2lib_app_exec_Process.html">Process</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Setter for a possible parent process.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">p<span class="separator">:</span></div>
+                    <div>Process to act as parentprocess.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the applied process has the current <br />         instance in its parents-hierarchy.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="start">start</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>start</b> (
+</div>
+                <div><span class="code">)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Starts the process.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_Process.html#start">Process.start</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="startSubProcess">startSubProcess</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>startSubProcess</b> (
+
+
+</div>
+                <div><span class="code">process:<a href="org_as2lib_app_exec_Process.html">Process</a>,
+args:Array,
+callBack:<a href="org_as2lib_app_exec_Executable.html">Executable</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Starts a sub process.<p>Your Process will not be finished until all the subprocesses are<br /> finished.<p>If you start more processes after each other, all will get started<br /> immediately. It is no batch system where one starts strictly after another.<p>You can start one specific process only if this process wasn't started<br /> before</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">process <span class="separator">:</span></div>
+                    <div>Process to be started.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args    <span class="separator">:</span></div>
+                    <div>Arguments for the process start.</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">callBack<span class="separator">:</span></div>
+                    <div>Callback to be executed if the process finishes.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Event handlers</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="onFinishProcess">onFinishProcess</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>onFinishProcess</b> (
+</div>
+                <div><span class="code">process:<a href="org_as2lib_app_exec_Process.html">Process</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Method to be executed if a process finishes its execution.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">process<span class="separator">:</span></div>
+                    <div><a href="org_as2lib_app_exec_Process.html">Process</a> that finished with execution</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_ProcessListener.html#onFinishProcess">ProcessListener.onFinishProcess</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="onPauseProcess">onPauseProcess</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>onPauseProcess</b> (
+</div>
+                <div><span class="code">process:<a href="org_as2lib_app_exec_Process.html">Process</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Method to be executed if a process pauses.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">process<span class="separator">:</span></div>
+                    <div><a href="org_as2lib_app_exec_Process.html">Process</a> that paused execution</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_ProcessListener.html#onPauseProcess">ProcessListener.onPauseProcess</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="onProcessError">onProcessError</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>onProcessError</b> (
+
+</div>
+                <div><span class="code">process:<a href="org_as2lib_app_exec_Process.html">Process</a>,
+error) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Method to be executed if a exception was thrown during the execution.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">process<span class="separator">:</span></div>
+                    <div><a href="org_as2lib_app_exec_Process.html">Process</a> where a error occured</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">error  <span class="separator">:</span></div>
+                    <div>Error that was catched with try & catch</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_ProcessListener.html#onProcessError">ProcessListener.onProcessError</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="onResumeProcess">onResumeProcess</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>onResumeProcess</b> (
+</div>
+                <div><span class="code">process:<a href="org_as2lib_app_exec_Process.html">Process</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Method to be executed if a process awakes from pause.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">process<span class="separator">:</span></div>
+                    <div><a href="org_as2lib_app_exec_Process.html">Process</a> that resumes from pause</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_ProcessListener.html#onResumeProcess">ProcessListener.onResumeProcess</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="onStartProcess">onStartProcess</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>onStartProcess</b> (
+</div>
+                <div><span class="code">process:<a href="org_as2lib_app_exec_Process.html">Process</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Method to be executed if a process starts execution.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">process<span class="separator">:</span></div>
+                    <div><a href="org_as2lib_app_exec_Process.html">Process</a> that started execution</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_ProcessListener.html#onStartProcess">ProcessListener.onStartProcess</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="onUpdateProcess">onUpdateProcess</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>onUpdateProcess</b> (
+</div>
+                <div><span class="code">process:<a href="org_as2lib_app_exec_Process.html">Process</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Method to be executed if a process property changes.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">process<span class="separator">:</span></div>
+                    <div><a href="org_as2lib_app_exec_Process.html">Process</a> that changed some properties</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_app_exec_ProcessListener.html#onUpdateProcess">ProcessListener.onUpdateProcess</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; as2lib, 2005 | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Monday, 04 July 2005, 19:20:06
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
