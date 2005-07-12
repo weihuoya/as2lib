@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>ConsumableEventMulticaster</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>ConsumableEventMulticaster</h1>
+        <div class="classProperties">
+          <div class="kindOfClass"><span class="value">
+Interface
+</span>
+          </div>
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_env_event_multicaster_EventMulticaster.html">EventMulticaster</a> &lt; <a href="org_as2lib_env_event_EventListenerSource.html">EventListenerSource</a> &lt; <a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.event.multicaster.ConsumableEventMulticaster</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 23 April 2005, 13:51:00</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>ConsumableEventMulticaster</code> multicasts an event to all added listeners<br /> with custom arguments until the event is consumed. </div><p>A multicaster that implements this interface allows for consumable events.<br /> This means that the event dispatch is stopped as soon as an event is consumed.<p>An event is consumed if a listener's event method returns <code>true</code>. If it<br /> returns nothing, <code>null</code> or <code>undefined</code> or <code>false</code> the event<br /> will further be dispatched.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_env_event_multicaster_EventMulticaster.html">EventMulticaster</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_env_event_multicaster_EventMulticaster.html#dispatch">dispatch</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_env_event_EventListenerSource.html">EventListenerSource</a></span></span>
+                    <div class="item"><a href="org_as2lib_env_event_EventListenerSource.html#addAllListeners">addAllListeners</a>, <a href="org_as2lib_env_event_EventListenerSource.html#addListener">addListener</a>, <a href="org_as2lib_env_event_EventListenerSource.html#getAllListeners">getAllListeners</a>, <a href="org_as2lib_env_event_EventListenerSource.html#hasListener">hasListener</a>, <a href="org_as2lib_env_event_EventListenerSource.html#removeAllListeners">removeAllListeners</a>, <a href="org_as2lib_env_event_EventListenerSource.html#removeListener">removeListener</a></div>
+                  </div>
+                </div>
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicInterface.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; as2lib, 2005 | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Monday, 04 July 2005, 19:20:42
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

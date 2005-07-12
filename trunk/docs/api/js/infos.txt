@@ -1,6 +1,0 @@
-- Infos -
-
-* This will have the content for http://as2lib.sourceforge.net
-* For Editing Content email the Admin: mastakaneda@sourceforge.net
-* To access the Web you will need at least: http://winscp.sourceforge.net/eng/
-  - Connection Address: ssh.sourceforge.net

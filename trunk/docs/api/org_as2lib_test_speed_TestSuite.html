@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>TestSuite</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>TestSuite</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_test_speed_AbstractTest.html">AbstractTest</a> &lt; <a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_test_speed_Test.html">Test</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker, Martin Heidegger</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.test.speed.TestSuite</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Sunday, 29 May 2005, 08:52:56</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>TestSuite</code> is the core interface for standardized performance test suites. </div><p>Test suites hold multiple <code>Test</code> instances, including <code>TestCase</code>,<br /> instances, <code>TestSuite</code> instances and instances of your custom <code>Test</code><br /> implementations.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#TestSuite">TestSuite</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#__proto__">__proto__</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Class properties inherited from <span class="superclass"><a href="org_as2lib_test_speed_AbstractTest.html">AbstractTest</a></span></span>
+                    <div class="item"><a href="org_as2lib_test_speed_AbstractTest.html#CLASS">CLASS</a>, <a href="org_as2lib_test_speed_AbstractTest.html#METHOD">METHOD</a>, <a href="org_as2lib_test_speed_AbstractTest.html#METHOD_INVOCATION">METHOD_INVOCATION</a>, <a href="org_as2lib_test_speed_AbstractTest.html#METHOD_INVOCATION_TREE">METHOD_INVOCATION_TREE</a>, <a href="org_as2lib_test_speed_AbstractTest.html#NONE">NONE</a>, <a href="org_as2lib_test_speed_AbstractTest.html#PACKAGE">PACKAGE</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#name">name</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#tests">tests</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#run">run</a>
+                </li>
+                <li>
+                  <a href="#getName">getName</a>
+                </li>
+                <li>
+                  <a href="#addTest">addTest</a>
+                </li>
+                <li>
+                  <a href="#addTestByTest">addTestByTest</a>
+                </li>
+                <li>
+                  <a href="#addTestByMethod">addTestByMethod</a>
+                </li>
+                <li>
+                  <a href="#addTestByProperty">addTestByProperty</a>
+                </li>
+                <li>
+                  <a href="#getTests">getTests</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_test_speed_AbstractTest.html">AbstractTest</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_test_speed_AbstractTest.html#getResult">getResult</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="TestSuite">TestSuite</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>TestSuite</b> (
+
+</div>
+                <div><span class="code">name:String,
+tests:Array)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>TestSuite</code> instance.<p>If the passed-in <code>tests</code> array contains elements that are not of type<br /> <code>Test</code>, they will be ignored.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name <span class="separator">:</span></div>
+                    <div>the name of this test suite</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">tests<span class="separator">:</span></div>
+                    <div>(optional) <code>Test</code> instances to populate this test suite with</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_test_speed_AbstractTest.html#AbstractTest">AbstractTest.AbstractTest</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Class properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="__proto__">__proto__</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>static <b>__proto__</b>:Function = AbstractTest
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Makes the static variables of the super-class accessible through this class.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="name">name</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>name</b>:String
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">This test suite's name.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="tests">tests</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>tests</b>:Array
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">All added tests.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="addTest">addTest</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>addTest</b> (
+</div>
+                <div><span class="code">)</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading:</span>
+                  <div class="item"><a href="org_as2lib_test_speed_TestSuite.html#addTestByTest">addTestByTest</a> <code>(test:{VISDOC_LINK_0}) : Void</code><br /><a href="org_as2lib_test_speed_TestSuite.html#addTestByMethod">addTestByMethod</a> <code>(method:{VISDOC_LINK_0}) : {VISDOC_LINK_1}</code><br /><a href="org_as2lib_test_speed_TestSuite.html#addTestByProperty">addTestByProperty</a> <code>(property:{VISDOC_LINK_0}) : {VISDOC_LINK_1}</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="addTestByMethod">addTestByMethod</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>addTestByMethod</b> (
+</div>
+                <div><span class="code">method:<a href="org_as2lib_env_reflect_MethodInfo.html">MethodInfo</a>) : <a href="org_as2lib_test_unit_Test.html">Test</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Adds a new test case by <code>method</code>.<p>If the argument <code>method</code> is <code>null</code> or <code>undefined</code> this<br /> method invocation will be ignored and <code>null</code> will be returned.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">method<span class="separator">:</span></div>
+                    <div>the method to profile</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the created and added test</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="addTestByProperty">addTestByProperty</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>addTestByProperty</b> (
+</div>
+                <div><span class="code">property:<a href="org_as2lib_env_reflect_PropertyInfo.html">PropertyInfo</a>) : <a href="org_as2lib_test_unit_Test.html">Test</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Adds a new test case by <code>property</code>.<p>If the argument <code>property</code> is <code>null</code> or <code>undefined</code> this<br /> method invocation will be ignored and <code>null</code> will be returned.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">property<span class="separator">:</span></div>
+                    <div>the property to profile</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the created and added test</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="addTestByTest">addTestByTest</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>addTestByTest</b> (
+</div>
+                <div><span class="code">test:<a href="org_as2lib_test_unit_Test.html">Test</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Adds the passed-in <code>test</code> to this test suite.<p>If the argument <code>test</code> is <code>null</code> or <code>undefined</code> this method<br /> invocation will be ignored.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">test<span class="separator">:</span></div>
+                    <div>the test to add</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getName">getName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getName</b> (
+</div>
+                <div><span class="code">Void) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns this test suite's name.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">this test suite's name</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getTests">getTests</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getTests</b> (
+</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns all tests of this test suite.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">all tests of this test suite</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="run">run</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>run</b> (
+</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Runs all added tests.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_test_unit_Test.html#run">org.as2lib.test.unit.Test.run</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; as2lib, 2005 | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Monday, 04 July 2005, 19:22:52
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

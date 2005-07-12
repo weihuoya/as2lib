@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>OverloadHandler</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>OverloadHandler</h1>
+        <div class="classProperties">
+          <div class="kindOfClass"><span class="value">
+Interface
+</span>
+          </div>
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.overload.OverloadHandler</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 09 April 2005, 16:08:00</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>OverloadHandler</code> declares methods needed by overload handlers. </div><p>Overload handlers are used by the <a href="org_as2lib_env_overload_Overload.html">Overload</a> class to identify the <br /> corresponding method for a specific list of arguments. Whereby the overload handler<br /> holds the method and the expected arguments' types of this method.<p>It also offers functionalities to match real arguments against the expected<br /> arguments' types, <a href="org_as2lib_env_overload_OverloadHandler.html#matches">matches</a>, and to determine which overload handler or<br /> rather which arguments' types of two handlers are more explicit,<br /> <a href="org_as2lib_env_overload_OverloadHandler.html#isMoreExplicit">isMoreExplicit</a>.<p>It also offers the ability to invoke/execute the target method on a target scope<br /> passing-in a list of arguments.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#matches">matches</a>
+                </li>
+                <li>
+                  <a href="#execute">execute</a>
+                </li>
+                <li>
+                  <a href="#isMoreExplicit">isMoreExplicit</a>
+                </li>
+                <li>
+                  <a href="#getArgumentsTypes">getArgumentsTypes</a>
+                </li>
+                <li>
+                  <a href="#getMethod">getMethod</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicInterface.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="execute">execute</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>execute</b> (
+
+</div>
+                <div><span class="code">target,
+args:Array)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Executes the method of this handler on the given <code>target</code> passing-in the<br /> given <code>args</code>.<p>The <code>this</code> scope of the method refers to the passed-in <code>target</code><br /> on execution.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">target<span class="separator">:</span></div>
+                    <div>the target object to invoke the method on</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args  <span class="separator">:</span></div>
+                    <div>the arguments to pass-in on method invocation</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the result of the method invocation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getArgumentsTypes">getArgumentsTypes</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getArgumentsTypes</b> (
+</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the arguments' types used to match against the real arguments.<p>The arguments' types determine for which types of arguments the method was<br /> declared for. That means which arguments' types the method expects.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the arguments' types the method expects</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMethod">getMethod</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMethod</b> (
+</div>
+                <div><span class="code">Void) : Function</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the method this overload handler was assigned to.<p>This is the method to invoke passing the appropriate arguments when this<br /> handler matches the arguments and is the most explicit one.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the method to invoke when the real arguments match the ones of this<br /> handler and this handler is the most explicit one</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isMoreExplicit">isMoreExplicit</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>isMoreExplicit</b> (
+</div>
+                <div><span class="code">handler:<a href="org_as2lib_env_overload_OverloadHandler.html">OverloadHandler</a>) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Checks if this overload handler is more explicit than the passed-in<br /> <code>handler</code>.<p>What means more explicit? The type <code>String</code> is for example more<br /> explicit than <code>Object</code>. The type <code>org.as2lib.core.BasicClass</code> is<br /> also more explicit than <code>Object</code>. And the type<br /> <code>org.as2lib.env.overload.SimpleOverloadHandler</code> is more explicit than<br /> <code>org.as2lib.core.BasicClass</code>. I hope you get the image. As you can see,<br /> the explicitness depends on the inheritance hierarchy.<p>Note that classes are supposed to be more explicit than interfaces.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">handler<span class="separator">:</span></div>
+                    <div>the handler to compare this handler with regarding explicitness</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if this handler is more explicit else <code>false</code> or<br /> <code>null</code> if the two handlers have the same explicitness</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="matches">matches</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>matches</b> (
+</div>
+                <div><span class="code">realArguments:Array) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Checks whether the passed-in <code>realArguments</code> match the expected arguments'<br /> types of this overload handler.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">realArguments<span class="separator">:</span></div>
+                    <div>the real arguments to match against the arguments' types</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><code>true</code> if the <code>realArguments</code> match the arguments' types<br /> else <code>false</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; as2lib, 2005 | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Monday, 04 July 2005, 19:21:30
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

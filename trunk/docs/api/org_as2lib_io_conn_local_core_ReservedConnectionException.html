@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>ReservedConnectionException</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>ReservedConnectionException</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_io_conn_ConnectionException.html">ConnectionException</a> &lt; <a href="org_as2lib_env_except_Exception.html">Exception</a> &lt; <a href="org_as2lib_env_except_AbstractThrowable.html">AbstractThrowable</a> &lt; Error</span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker, Christoph Atteneder</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.io.conn.local.core.ReservedConnectionException</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 09 April 2005, 17:33:26</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>ReservedConnectionException</code> is thrown if you try to open a connection<br /> with a connection name that is already in use. </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#ReservedConnectionException">ReservedConnectionException</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Class methods inherited from <span class="superclass"><a href="org_as2lib_env_except_AbstractThrowable.html">AbstractThrowable</a></span></span>
+                    <div class="item"><a href="org_as2lib_env_except_AbstractThrowable.html#getStringifier">getStringifier</a>, <a href="org_as2lib_env_except_AbstractThrowable.html#setStringifier">setStringifier</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_env_except_Exception.html">Exception</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_env_except_Exception.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_env_except_AbstractThrowable.html">AbstractThrowable</a></span></span>
+                    <div class="item"><a href="org_as2lib_env_except_AbstractThrowable.html#addStackTraceElement">addStackTraceElement</a>, <a href="org_as2lib_env_except_AbstractThrowable.html#getCause">getCause</a>, <a href="org_as2lib_env_except_AbstractThrowable.html#getMessage">getMessage</a>, <a href="org_as2lib_env_except_AbstractThrowable.html#getStackTrace">getStackTrace</a>, <a href="org_as2lib_env_except_AbstractThrowable.html#initCause">initCause</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="ReservedConnectionException">ReservedConnectionException</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>ReservedConnectionException</b> (
+
+
+</div>
+                <div><span class="code">message:String,
+thrower,
+args:Array)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>ReservedConnectionException</code> instance.<p>All arguments are allowed to be <code>null</code> or <code>undefined</code>. But if<br /> one is, the string representation returned by the <code>toString</code> method<br /> will not be complete.<p>The <code>args</code> array should be the internal arguments array of the<br /> method that throws the throwable. The internal arguments array exists in<br /> every method and contains its parameters, the callee method and the caller<br /> method. You can refernce it in every method using the name<br /> <code>"arguments"</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>the message that describes the problem in detail</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">thrower<span class="separator">:</span></div>
+                    <div>the object that declares the method that throws this<br /> exception</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args   <span class="separator">:</span></div>
+                    <div>the arguments of the throwing method</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_io_conn_ConnectionException.html#ConnectionException">org.as2lib.io.conn.ConnectionException.ConnectionException</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; as2lib, 2005 | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Monday, 04 July 2005, 19:22:18
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

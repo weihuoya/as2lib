@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>SimpleClientServiceProxyFactory</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>SimpleClientServiceProxyFactory</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxyFactory.html">AbstractClientServiceProxyFactory</a> &lt; <a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_io_conn_core_client_ClientServiceProxyFactory.html">ClientServiceProxyFactory</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.io.conn.local.client.SimpleClientServiceProxyFactory</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Friday, 08 April 2005, 12:13:04</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>SimpleClientServiceProxyFactory</code> is the simplest implementation of a client<br /> service proxy factory. </div><p>It allows only the <a href="org_as2lib_io_conn_local_client_SimpleClientServiceProxyFactory.html#getClientServiceProxyByUrl">getClientServiceProxyByUrl</a> method to be used and<br /> not the <code>getClientServiceProxyByUrlAndType</code> method.<pre><span class="codeKeyword">var</span> clientFactory:SimpleClientServiceProxyFactory = <span class="codeKeyword">new</span> SimpleClientServiceProxyFactory();
+<span class="codeKeyword">var</span> client:ClientServiceProxy = clientFactory.getClientServiceProxy(<span class="codeString">"local.as2lib.org/myService"</span>);</pre></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#SimpleClientServiceProxyFactory">SimpleClientServiceProxyFactory</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#getClientServiceProxyByUrl">getClientServiceProxyByUrl</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxyFactory.html">AbstractClientServiceProxyFactory</a></span></span>
+                    <div class="item"><a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxyFactory.html#getClientServiceProxy">getClientServiceProxy</a>, <a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxyFactory.html#getClientServiceProxyByUrlAndType">getClientServiceProxyByUrlAndType</a></div>
+                  </div>
+                </div>
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="SimpleClientServiceProxyFactory">SimpleClientServiceProxyFactory</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>SimpleClientServiceProxyFactory</b> (
+</div>
+                <div><span class="code">Void)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>SimpleClientServiceProxyFactory</code> instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxyFactory.html#AbstractClientServiceProxyFactory">org.as2lib.io.conn.core.client.AbstractClientServiceProxyFactory.AbstractClientServiceProxyFactory</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="getClientServiceProxyByUrl">getClientServiceProxyByUrl</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getClientServiceProxyByUrl</b> (
+</div>
+                <div><span class="code">url:String) : <a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html">ClientServiceProxy</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns a client service proxy for the service specified by the passed-in<br /> <code>url</code>.<p>You can use this proxy to invoke methods on the 'remote' service and to handle<br /> responses. The returned client service proxy is an instance of class<br /> <a href="org_as2lib_io_conn_local_client_LocalClientServiceProxy.html">LocalClientServiceProxy</a>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">url<span class="separator">:</span></div>
+                    <div>the url of the 'remote' service</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">a client service proxy to invoke methods on the 'remote' service</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_io_conn_core_client_ClientServiceProxyFactory.html#getClientServiceProxyByUrl">org.as2lib.io.conn.core.client.ClientServiceProxyFactory.getClientServiceProxyByUrl</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; as2lib, 2005 | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Monday, 04 July 2005, 19:22:17
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>SimpleConsumableEventBroadcaster</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>SimpleConsumableEventBroadcaster</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_env_event_SimpleEventListenerSource.html">SimpleEventListenerSource</a> &lt; <a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_env_event_broadcaster_ConsumableEventBroadcaster.html">ConsumableEventBroadcaster</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker, Martin Heidegger</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.event.broadcaster.SimpleConsumableEventBroadcaster</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 30 April 2005, 11:37:24</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>SimpleConsumableEventBroadcaster</code> broadcasts an event to listeners until<br /> the event has been consumed. </div><p>The dispatching of the event will be stopped as soon as the event is consumed.<br /> The event can be consumed by calling the appropriate method on the<br /> <code>ConsumableEventInfo</code> instance passed to the <code>dispatch</code> method and<br /> from there to the appropriate event method on the listeners.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#SimpleConsumableEventBroadcaster">SimpleConsumableEventBroadcaster</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#dispatch">dispatch</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_env_event_SimpleEventListenerSource.html">SimpleEventListenerSource</a></span></span>
+                    <div class="item"><a href="org_as2lib_env_event_SimpleEventListenerSource.html#addAllListeners">addAllListeners</a>, <a href="org_as2lib_env_event_SimpleEventListenerSource.html#addListener">addListener</a>, <a href="org_as2lib_env_event_SimpleEventListenerSource.html#getAllListeners">getAllListeners</a>, <a href="org_as2lib_env_event_SimpleEventListenerSource.html#hasListener">hasListener</a>, <a href="org_as2lib_env_event_SimpleEventListenerSource.html#removeAllListeners">removeAllListeners</a>, <a href="org_as2lib_env_event_SimpleEventListenerSource.html#removeListener">removeListener</a></div>
+                  </div>
+                </div>
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="SimpleConsumableEventBroadcaster">SimpleConsumableEventBroadcaster</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>SimpleConsumableEventBroadcaster</b> (
+</div>
+                <div><span class="code">listeners:Array)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>SimpleConsumableEventBroadcaster</code> instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">listeners<span class="separator">:</span></div>
+                    <div>(optional) an array of listeners to populate this broadcaster<br /> with</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_env_event_SimpleEventListenerSource.html#SimpleEventListenerSource">org.as2lib.env.event.SimpleEventListenerSource.SimpleEventListenerSource</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="dispatch">dispatch</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>dispatch</b> (
+</div>
+                <div><span class="code">eventInfo:<a href="org_as2lib_env_event_broadcaster_EventInfo.html">EventInfo</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Dispatches the passed-in <code>eventInfo</code> to all listeners until the event has<br /> been consumed.<p>The name returned by the <a href="org_as2lib_env_event_broadcaster_EventInfo.html#getName">EventInfo.getName</a> method of the passed-in<br /> <code>eventInfo</code> is used as event method name to invoke on the listeners.<p>The passed-in <code>eventInfo</code> is also passed as parameter to the listeners'<br /> event methods.<p>The event dispatching will be stopped as soon as the event is consumed. An<br /> event can be consumed by calling the appropriate method on the passed-in<br /> <code>eventInfo</code> that must be, if the consumption of events shall be enabled,<br /> an instance of type <a href="org_as2lib_env_event_broadcaster_ConsumableEventInfo.html">ConsumableEventInfo</a>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">eventInfo<span class="separator">:</span></div>
+                    <div>the event to dispatch to all listeners</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_event_EventExecutionException.html">EventExecutionException</a> if a listener threw an exception during<br /> dispatching</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; as2lib, 2005 | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Monday, 04 July 2005, 19:20:35
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

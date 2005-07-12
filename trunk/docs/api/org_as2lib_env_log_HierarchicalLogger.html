@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>HierarchicalLogger</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>HierarchicalLogger</h1>
+        <div class="classProperties">
+          <div class="kindOfClass"><span class="value">
+Interface
+</span>
+          </div>
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_env_log_Logger.html">Logger</a> &lt; <a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.log.HierarchicalLogger</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Sunday, 10 April 2005, 10:33:34</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>HierarchicalLogger</code> is implemented to enable to logger to take part in a<br /> hierarchy. </div><p>This functionality is needed by the <a href="org_as2lib_env_log_repository_LoggerHierarchy.html">org.as2lib.env.log.repository.LoggerHierarchy</a>, a repository that<br /> stores loggers hierarchical.</div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#getParent">getParent</a>
+                </li>
+                <li>
+                  <a href="#getName">getName</a>
+                </li>
+                <li>
+                  <a href="#getLevel">getLevel</a>
+                </li>
+                <li>
+                  <a href="#getAllHandlers">getAllHandlers</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_env_log_Logger.html">Logger</a></span></span>
+                    <div class="item"><a href="org_as2lib_env_log_Logger.html#debug">debug</a>, <a href="org_as2lib_env_log_Logger.html#error">error</a>, <a href="org_as2lib_env_log_Logger.html#fatal">fatal</a>, <a href="org_as2lib_env_log_Logger.html#info">info</a>, <a href="org_as2lib_env_log_Logger.html#isDebugEnabled">isDebugEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isErrorEnabled">isErrorEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isFatalEnabled">isFatalEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isInfoEnabled">isInfoEnabled</a>, <a href="org_as2lib_env_log_Logger.html#isWarningEnabled">isWarningEnabled</a>, <a href="org_as2lib_env_log_Logger.html#warning">warning</a></div>
+                  </div>
+                </div>
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicInterface.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="getAllHandlers">getAllHandlers</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getAllHandlers</b> (
+</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns all handlers this logger broadcasts to when logging a message.<p>These handlers are the once directly added to this logger and the once of the<br /> parents.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">all added log handlers and the ones of the parents</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getLevel">getLevel</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getLevel</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_log_LogLevel.html">LogLevel</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the level of this or the one of the parent logger.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the level of this or the one of the parent logger.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getName">getName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getName</b> (
+</div>
+                <div><span class="code">Void) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the name of this logger.<p>The name is fully qualified and the different parts must be separated by<br /> periods or other characters depending on the usage. The name could for example<br /> be <code>"org.as2lib.core.BasicClass"</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the name of this logger</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getParent">getParent</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getParent</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_log_HierarchicalLogger.html">HierarchicalLogger</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the parent of this logger.<p>This logger normally uses the parent to get the log level, if no one has been<br /> set to this logger manually and to get the handlers of its parents to write the<br /> log messages.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the parent of this logger</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; as2lib, 2005 | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Monday, 04 July 2005, 19:21:00
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

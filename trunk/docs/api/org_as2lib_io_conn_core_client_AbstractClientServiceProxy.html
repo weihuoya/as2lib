@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>AbstractClientServiceProxy</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>AbstractClientServiceProxy</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.io.conn.core.client.AbstractClientServiceProxy</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 28 May 2005, 11:55:46</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>AbstractClientServiceProxy</code> offers default implementations of some methods<br /> needed when implemnting the <a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html">ClientServiceProxy</a> interface. </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#AbstractClientServiceProxy">AbstractClientServiceProxy</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#invoke">invoke</a>
+                </li>
+                <li>
+                  <a href="#invokeByName">invokeByName</a>
+                </li>
+                <li>
+                  <a href="#invokeByNameAndArguments">invokeByNameAndArguments</a>
+                </li>
+                <li>
+                  <a href="#invokeByNameAndCallback">invokeByNameAndCallback</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="AbstractClientServiceProxy">AbstractClientServiceProxy</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>AbstractClientServiceProxy</b> (
+</div>
+                <div><span class="code">Void)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Private constructor.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="invoke">invoke</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>invoke</b> (
+</div>
+                <div><span class="code">) : <a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading:</span>
+                  <div class="item"><a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxy.html#invokeByName">invokeByName</a> <code>(methodName:String) : {VISDOC_LINK_0}</code><br /><a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxy.html#invokeByNameAndArguments">invokeByNameAndArguments</a> <code>(methodName:String, args:Array) : {VISDOC_LINK_0}</code><br /><a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxy.html#invokeByNameAndCallback">invokeByNameAndCallback</a> <code>(methodName:String, callback:{VISDOC_LINK_0}) : {VISDOC_LINK_1}</code><br />invokeByNameAndArgumentsAndCallback</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html#invoke">ClientServiceProxy.invoke</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="invokeByName">invokeByName</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>invokeByName</b> (
+</div>
+                <div><span class="code">methodName:String) : <a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Invokes the method with passed-in <code>methodName</code> on the service.<p>The invocation is done by forwardning to the <code>#invokeByNameAndArgumentsAndCallback</code><br /> method passing an empty arguments array.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodName<span class="separator">:</span></div>
+                    <div>the name of the method to invoke</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">a callback that can be used to get informed of the response</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html#invokeByName">ClientServiceProxy.invokeByName</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="invokeByNameAndArguments">invokeByNameAndArguments</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>invokeByNameAndArguments</b> (
+
+</div>
+                <div><span class="code">methodName:String,
+args:Array) : <a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Invokes the method with passed-in <code>methodName</code> and <code>args</code> on the<br /> service.<p>The response of the method invocation is delegated to the appropriate method<br /> on the returned callback. This is either the <code>onReturn</code> method when no<br /> error occured. Or the <code>onError</code> method in case something went wrong.<p>The invocation is done by forwardning to the <code>#invokeByNameAndArgumentsAndCallback</code><br /> method passing an empty arguments array.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodName<span class="separator">:</span></div>
+                    <div>the name of the method to invoke on the service</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args      <span class="separator">:</span></div>
+                    <div>the arguments that are passed to the method as parameters</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the callback that handles the response</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html#invokeByNameAndArguments">ClientServiceProxy.invokeByNameAndArguments</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="invokeByNameAndCallback">invokeByNameAndCallback</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>invokeByNameAndCallback</b> (
+
+</div>
+                <div><span class="code">methodName:String,
+callback:<a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a>) : <a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Invokes the the method with passed-in <code>method</code> on the service.<p>When the response arrives the appropriate callback method is invoked.<p>If the passed-in <code>callback</code> is not <code>null</code>, the returned callback<br /> is the same instance.<p>The invocation is done by forwardning to the <code>#invokeByNameAndArgumentsAndCallback</code><br /> method passing an empty arguments array.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodName<span class="separator">:</span></div>
+                    <div>the name of the method to invoke</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">callback  <span class="separator">:</span></div>
+                    <div>the callback that receives the return value or errors</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">a callback that can be used to get informed of the response</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span>
+                  <div class="item"><a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html#invokeByNameAndCallback">ClientServiceProxy.invokeByNameAndCallback</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; as2lib, 2005 | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Monday, 04 July 2005, 19:22:06
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

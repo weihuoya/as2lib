@@ -1,0 +1,834 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>PriorityList</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>PriorityList</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items"><a href="org_as2lib_data_holder_AbstractPriority.html">AbstractPriority</a> &lt; <a href="org_as2lib_core_BasicClass.html">BasicClass</a></span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_data_holder_List.html">List</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.data.holder.list.PriorityList</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Tuesday, 10 May 2005, 16:57:46</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"> </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#PriorityList">PriorityList</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class properties</span>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Class properties inherited from <span class="superclass"><a href="org_as2lib_data_holder_AbstractPriority.html">AbstractPriority</a></span></span>
+                    <div class="item"><a href="org_as2lib_data_holder_AbstractPriority.html#PRIORITY_HIGH">PRIORITY_HIGH</a>, <a href="org_as2lib_data_holder_AbstractPriority.html#PRIORITY_HIGHER">PRIORITY_HIGHER</a>, <a href="org_as2lib_data_holder_AbstractPriority.html#PRIORITY_HIGHEST">PRIORITY_HIGHEST</a>, <a href="org_as2lib_data_holder_AbstractPriority.html#PRIORITY_LOW">PRIORITY_LOW</a>, <a href="org_as2lib_data_holder_AbstractPriority.html#PRIORITY_LOWER">PRIORITY_LOWER</a>, <a href="org_as2lib_data_holder_AbstractPriority.html#PRIORITY_LOWEST">PRIORITY_LOWEST</a>, <a href="org_as2lib_data_holder_AbstractPriority.html#PRIORITY_NORMAL">PRIORITY_NORMAL</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#list">list</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#priorityArray">priorityArray</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#insert">insert</a>
+                </li>
+                <li>
+                  <a href="#insertByValue">insertByValue</a>
+                </li>
+                <li>
+                  <a href="#insertByValueAndPriority">insertByValueAndPriority</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#filterUp">filterUp</a>
+                </li>
+                <li>
+                  <a href="#insertFirst">insertFirst</a>
+                </li>
+                <li>
+                  <a href="#insertLast">insertLast</a>
+                </li>
+                <li>
+                  <a href="#insertAll">insertAll</a>
+                </li>
+                <li>
+                  <a href="#insertAllByList">insertAllByList</a>
+                </li>
+                <li>
+                  <a href="#insertAllByListAndPriority">insertAllByListAndPriority</a>
+                </li>
+                <li>
+                  <a href="#remove">remove</a>
+                </li>
+                <li>
+                  <a href="#removeByValue">removeByValue</a>
+                </li>
+                <li>
+                  <a href="#removeByIndex">removeByIndex</a>
+                </li>
+                <li>
+                  <a href="#removeFirst">removeFirst</a>
+                </li>
+                <li>
+                  <a href="#removeLast">removeLast</a>
+                </li>
+                <li>
+                  <a href="#removeAll">removeAll</a>
+                </li>
+                <li>
+                  <a href="#set">set</a>
+                </li>
+                <li>
+                  <a href="#setAll">setAll</a>
+                </li>
+                <li>
+                  <a href="#get">get</a>
+                </li>
+                <li>
+                  <a href="#contains">contains</a>
+                </li>
+                <li>
+                  <a href="#containsAll">containsAll</a>
+                </li>
+                <li>
+                  <a href="#retainAll">retainAll</a>
+                </li>
+                <li>
+                  <a href="#clear">clear</a>
+                </li>
+                <li>
+                  <a href="#size">size</a>
+                </li>
+                <li>
+                  <a href="#isEmpty">isEmpty</a>
+                </li>
+                <li>
+                  <a href="#iterator">iterator</a>
+                </li>
+                <li>
+                  <a href="#indexOf">indexOf</a>
+                </li>
+                <li>
+                  <a href="#changePriority">changePriority</a>
+                </li>
+                <li>
+                  <a href="#changePriorityByValue">changePriorityByValue</a>
+                </li>
+                <li>
+                  <a href="#changePriorityByIndex">changePriorityByIndex</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#filterDown">filterDown</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#hasLeft">hasLeft</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#hasRight">hasRight</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getLeft">getLeft</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getRight">getRight</a>
+                </li>
+                <li>
+                  <a href="#toArray">toArray</a>
+                </li>
+                <li>
+                  <a href="#toString">toString</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder">
+                    <span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="PriorityList">PriorityList</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>PriorityList</b> (
+</div>
+                <div><span class="code">list:<a href="org_as2lib_data_holder_List.html">List</a>)</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_AbstractPriority.html#AbstractPriority">org.as2lib.data.holder.AbstractPriority.AbstractPriority</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="list">list</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>list</b>:<a href="org_as2lib_data_holder_List.html">List</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="priorityArray">priorityArray</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>priorityArray</b>:Array
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="changePriority">changePriority</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>changePriority</b> (
+</div>
+                <div><span class="code">) : Void</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="changePriorityByIndex">changePriorityByIndex</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>changePriorityByIndex</b> (
+
+
+</div>
+                <div><span class="code">index:Number,
+priority:Number,
+absolute:Boolean) : Void</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="changePriorityByValue">changePriorityByValue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>changePriorityByValue</b> (
+
+
+</div>
+                <div><span class="code">value,
+priority:Number,
+absolute:Boolean) : Void</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="clear">clear</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>clear</b> (
+</div>
+                <div><span class="code">Void) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#clear">org.as2lib.data.holder.List.clear</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="contains">contains</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>contains</b> (
+</div>
+                <div><span class="code">value) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#contains">org.as2lib.data.holder.List.contains</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="containsAll">containsAll</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>containsAll</b> (
+</div>
+                <div><span class="code">list:<a href="org_as2lib_data_holder_List.html">List</a>) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#containsAll">org.as2lib.data.holder.List.containsAll</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="filterDown">filterDown</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>filterDown</b> (
+</div>
+                <div><span class="code">index:Number) : Void</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="filterUp">filterUp</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>filterUp</b> (
+</div>
+                <div><span class="code">index:Number) : Void</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="get">get</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>get</b> (
+</div>
+                <div><span class="code">index:Number)</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#get">org.as2lib.data.holder.List.get</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getLeft">getLeft</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getLeft</b> (
+</div>
+                <div><span class="code">index:Number) : Number</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getRight">getRight</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>getRight</b> (
+</div>
+                <div><span class="code">index:Number) : Number</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="hasLeft">hasLeft</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>hasLeft</b> (
+</div>
+                <div><span class="code">index:Number) : Boolean</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="hasRight">hasRight</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span>function <b>hasRight</b> (
+</div>
+                <div><span class="code">index:Number) : Boolean</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="indexOf">indexOf</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>indexOf</b> (
+</div>
+                <div><span class="code">value) : Number</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#indexOf">org.as2lib.data.holder.List.indexOf</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="insert">insert</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>insert</b> (
+</div>
+                <div><span class="code">value) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#insert">org.as2lib.data.holder.List.insert</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="insertAll">insertAll</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>insertAll</b> (
+</div>
+                <div><span class="code">list:<a href="org_as2lib_data_holder_List.html">List</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#insertAll">org.as2lib.data.holder.List.insertAll</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="insertAllByList">insertAllByList</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>insertAllByList</b> (
+</div>
+                <div><span class="code">list:<a href="org_as2lib_data_holder_List.html">List</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="insertAllByListAndPriority">insertAllByListAndPriority</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>insertAllByListAndPriority</b> (
+
+</div>
+                <div><span class="code">list:<a href="org_as2lib_data_holder_List.html">List</a>,
+priority:Number) : Void</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="insertByValue">insertByValue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>insertByValue</b> (
+</div>
+                <div><span class="code">value) : Void</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="insertByValueAndPriority">insertByValueAndPriority</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>insertByValueAndPriority</b> (
+
+</div>
+                <div><span class="code">value,
+priority:Number) : Void</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="insertFirst">insertFirst</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>insertFirst</b> (
+</div>
+                <div><span class="code">value) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#insertFirst">org.as2lib.data.holder.List.insertFirst</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="insertLast">insertLast</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>insertLast</b> (
+</div>
+                <div><span class="code">value) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#insertLast">org.as2lib.data.holder.List.insertLast</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isEmpty">isEmpty</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>isEmpty</b> (
+</div>
+                <div><span class="code">Void) : Boolean</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#isEmpty">org.as2lib.data.holder.List.isEmpty</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="iterator">iterator</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>iterator</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_data_holder_Iterator.html">Iterator</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#iterator">org.as2lib.data.holder.List.iterator</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="remove">remove</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>remove</b> (
+</div>
+                <div><span class="code">)</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#remove">org.as2lib.data.holder.List.remove</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="removeAll">removeAll</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>removeAll</b> (
+</div>
+                <div><span class="code">list:<a href="org_as2lib_data_holder_List.html">List</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#removeAll">org.as2lib.data.holder.List.removeAll</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="removeByIndex">removeByIndex</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>removeByIndex</b> (
+</div>
+                <div><span class="code">index:Number)</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#removeByIndex">org.as2lib.data.holder.List.removeByIndex</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="removeByValue">removeByValue</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>removeByValue</b> (
+</div>
+                <div><span class="code">value) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#removeByValue">org.as2lib.data.holder.List.removeByValue</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="removeFirst">removeFirst</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>removeFirst</b> (
+</div>
+                <div><span class="code">Void)</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#removeFirst">org.as2lib.data.holder.List.removeFirst</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="removeLast">removeLast</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>removeLast</b> (
+</div>
+                <div><span class="code">Void)</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#removeLast">org.as2lib.data.holder.List.removeLast</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="retainAll">retainAll</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>retainAll</b> (
+</div>
+                <div><span class="code">list:<a href="org_as2lib_data_holder_List.html">List</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#retainAll">org.as2lib.data.holder.List.retainAll</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="set">set</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>set</b> (
+
+</div>
+                <div><span class="code">index:Number,
+value)</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#set">org.as2lib.data.holder.List.set</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setAll">setAll</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>setAll</b> (
+
+</div>
+                <div><span class="code">index:Number,
+list:<a href="org_as2lib_data_holder_List.html">List</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#setAll">org.as2lib.data.holder.List.setAll</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="size">size</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>size</b> (
+</div>
+                <div><span class="code">Void) : Number</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#size">org.as2lib.data.holder.List.size</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="toArray">toArray</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>toArray</b> (
+</div>
+                <div><span class="code">Void) : Array</span>
+                </div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_data_holder_List.html#toArray">org.as2lib.data.holder.List.toArray</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="toString">toString</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>toString</b> (
+</div>
+                <div><span class="code">) : String</span>
+                </div>
+              </div>
+            </div>
+            <div class="description"><div class="inheritDoc">Returns the string representation of this instance.<p>The String representation is obtained via the stringifier returned by the<br /> {VISDOC_LINK_0} method.</div><a class="followInheritDoc" href="org_as2lib_core_BasicClass.html#toString">#</a></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item"><div class="inheritDoc">the string representation of this instance</div><a class="followInheritDoc" href="org_as2lib_core_BasicClass.html#toString">#</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span>
+                  <div class="item"><a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; as2lib, 2005 | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Monday, 04 July 2005, 19:20:18
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

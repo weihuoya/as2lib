@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>LevelFilterHandler</title>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css" />
+    <script src="js/doc.js" type="text/javascript"><![CDATA[//]]></script>
+  </head>
+  <body>
+    <div class="VisDoc">
+      <a name="PageTop" id="PageTop">
+
+      </a>
+      <div class="content">
+        <h1>LevelFilterHandler</h1>
+        <div class="classProperties">
+          <div class="inheritsFrom"><span class="title">Inherits from:</span><span class="items">none (LevelFilterHandler is a root class)</span>
+          </div>
+          <div class="conformsTo"><span class="title">Implements:</span>
+            <div class="items">
+              <ul>
+                <li>
+                  <a href="org_as2lib_env_log_LogHandler.html">LogHandler</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="classDetails">
+            <ul>
+              <li><span class="title">Author: </span><span class="value">Simon Wacker</span>
+              </li>
+              <li><span class="title">Classpath: </span><span class="value">org.as2lib.env.log.handler.LevelFilterHandler</span>
+              </li>
+              <li><span class="title">File last modified: </span><span class="value">Saturday, 04 June 2005, 11:21:40</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="classDescription"><div class="descriptionSummary"><code>LevelFilterHandler</code> filters log messages depending on their level. </div></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider">Summary</h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span>
+              <ul>
+                <li>
+                  <a href="#LevelFilterHandler">LevelFilterHandler</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span>
+              <ul>
+                <li class="private" style="display:none;">
+                  <a href="#handler">handler</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#level">level</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#levelAsNumber">levelAsNumber</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span>
+              <ul>
+                <li>
+                  <a href="#getHandler">getHandler</a>
+                </li>
+                <li>
+                  <a href="#getLevel">getLevel</a>
+                </li>
+                <li>
+                  <a href="#write">write</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Constructor</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="LevelFilterHandler">LevelFilterHandler</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>LevelFilterHandler</b> (
+
+</div>
+                <div><span class="code">handler:<a href="org_as2lib_env_log_LogHandler.html">LogHandler</a>,
+level:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>)</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>LevelFilterHandler</code> instance.<p>All log messages with a lower level than the passed-in <code>level</code> get<br /> filtered out.<p>If <code>level</code> is not passed-in or is <code>null</code> or <code>undefined</code> all<br /> levels will be allowed, this means it will be set to<br /> <a href="org_as2lib_env_log_level_AbstractLogLevel.html#ALL">org.as2lib.env.log.level.AbstractLogLevel.ALL</a>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">handler   <span class="separator">:</span></div>
+                    <div>the handler to forward not-filtered log messages to</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">(optional)<span class="separator">:</span></div>
+                    <div>level the log level determining which log messages to filter</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span>
+                  <div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">IllegalArgumentException</a> if the passed-in <code>handler</code> is<br /> <code>null</code> or <code>undefined</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider">Instance properties</h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="handler">handler</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>handler</b>:<a href="org_as2lib_env_log_LogHandler.html">LogHandler</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">The wrapped handler to forward not-filtered log messages to.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="level">level</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>level</b>:<a href="org_as2lib_env_log_LogLevel.html">LogLevel</a>
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">The lowest level that is not filtered.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="levelAsNumber">levelAsNumber</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code"><span class="privateColor">private</span><b>levelAsNumber</b>:Number
+</div>
+                <div><span class="code"></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">The lowest level as number that is not filtered.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider">Instance methods</h2>
+          <div class="method hasBottomDivider">
+            <h3 id="getHandler">getHandler</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getHandler</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_log_LogHandler.html">LogHandler</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the wrapped handler not-filtered log messages are fowarded to.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the wrapped handler</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getLevel">getLevel</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getLevel</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_log_LogLevel.html">LogLevel</a></span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Returns the lowest level messages can have that are not filtered. All messages<br /> at a lower level than the returned one are filtered.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span>
+                  <div class="item">the lowest level of messages that are not filtered</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="write">write</h3>
+            <div class="fullMethod">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>write</b> (
+</div>
+                <div><span class="code">message:<a href="org_as2lib_env_log_LogMessage.html">LogMessage</a>) : Void</span>
+                </div>
+              </div>
+            </div>
+            <div class="description">Forwards that passed-in <code>message</code> to the wrapped handler if the message<br /> has a higher or the same level than the specified one.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">message<span class="separator">:</span></div>
+                    <div>the message to forward to the wrapped handler</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span>
+                  <div class="item"><a href="org_as2lib_env_log_LogHandler.html#write">org.as2lib.env.log.LogHandler.write</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="copyright">&copy; as2lib, 2005 | </span><span class="created">Created with
+<a href="http://visiblearea.com/visdoc/">VisDoc</a> | </span><span class="date">Monday, 04 July 2005, 19:20:57
+ | </span><span class="viewFrames"><a href="#" onclick="showTOC(); return false;">show TOC</a></span><span class="hideFrames"><a href="#" onclick="hideTOC(); return false;">hide TOC</a></span><span class="viewPrivate"> | <a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"> | <a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
