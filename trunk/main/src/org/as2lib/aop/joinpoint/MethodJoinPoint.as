@@ -28,9 +28,6 @@ class org.as2lib.aop.joinpoint.MethodJoinPoint extends AbstractJoinPoint impleme
 	/** Stores the MethodInfo instance that represents the represented method. */
 	private var info:MethodInfo;
 	
-	/** Stores the object returned by the #getThis() method. */
-	private var thiz;
-	
 	/**
 	 * Constructs a new MethodJoinPoint.
 	 *
@@ -38,9 +35,9 @@ class org.as2lib.aop.joinpoint.MethodJoinPoint extends AbstractJoinPoint impleme
 	 * @param thiz a reference to the object the method is defined in
 	 */
 	public function MethodJoinPoint(info:MethodInfo, thiz) {
-		if (!info || !thiz) throw new IllegalArgumentException("Both arguments, info and thiz, are not allowed to be null or undefined.", this, arguments);
+		super(thiz);
+		if (!info) throw new IllegalArgumentException("Argument 'info' must not be 'null' nor 'undefined'.", this, arguments);
 		this.info = info;
-		this.thiz = thiz;
 	}
 	
 	/**
@@ -51,17 +48,10 @@ class org.as2lib.aop.joinpoint.MethodJoinPoint extends AbstractJoinPoint impleme
 	}
 	
 	/**
-	 * @see org.as2lib.aop.JoinPoint#getThis(Void)
-	 */
-	public function getThis(Void) {
-		return thiz;
-	}
-	
-	/**
 	 * @see org.as2lib.aop.JoinPoint#proceed(Array)
 	 */
 	public function proceed(args:Array) {
-		return MethodInfo(getInfo()).getMethod().apply(getThis(), args);
+		return proceedMethod(this.info, args);
 	}
 	
 	/**

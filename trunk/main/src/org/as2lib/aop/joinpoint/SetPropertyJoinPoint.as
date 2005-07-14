@@ -26,14 +26,14 @@ class org.as2lib.aop.joinpoint.SetPropertyJoinPoint extends PropertyJoinPoint {
 	 * @see org.as2lib.aop.joinpoint.PropertyJoinPoint#new(PropertyInfo, Object)
 	 */
 	public function SetPropertyJoinPoint(info:PropertyInfo, thiz) {
-		super (info, thiz);
+		super(info, thiz);
 	}
 	
 	/**
 	 * @see org.as2lib.aop.JoinPoint#proceed(Array)
 	 */
 	public function proceed(args:Array) {
-		return PropertyInfo(getInfo()).getSetter().getMethod().apply(getThis(), args);
+		return proceedMethod(this.info.getSetter());
 	}
 	
 	/**

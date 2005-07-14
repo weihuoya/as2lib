@@ -46,4 +46,5 @@ class org.as2lib.aop.advice.DynamicAfterReturningAdvice extends AbstractAfterRet
 	public function execute(joinPoint:JoinPoint, returnValue):Void {
 		callback.execute([joinPoint, returnValue]);
 	}
+	
 }

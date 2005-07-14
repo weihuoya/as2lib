@@ -29,9 +29,6 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 	/** Stores the PropertyInfo instance that represents the represented property. */
 	private var info:PropertyInfo;
 	
-	/** Stores the object returned by the #getThis() method. */
-	private var thiz;
-	
 	/**
 	 * Constructs a new PropertyJoinPoint.
 	 *
@@ -39,9 +36,9 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 	 * @param thiz a reference to the object the property is defined in
 	 */
 	public function PropertyJoinPoint(info:PropertyInfo, thiz) {
-		if (!info || !thiz) throw new IllegalArgumentException("Both arguments, info and thiz, are not allowed to be null or undefined.", this, arguments);
+		super(thiz);
+		if (!info) throw new IllegalArgumentException("Argument 'info' must not be 'null' nor 'undefined'.", this, arguments);
 		this.info = info;
-		this.thiz = thiz;
 	}
 	
 	/**
@@ -49,13 +46,6 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 	 */
 	public function getInfo(Void):TypeMemberInfo {
 		return info;
-	}
-	
-	/**
-	 * @see org.as2lib.aop.JoinPoint#getThis(Void)
-	 */
-	public function getThis(Void) {
-		return thiz;
 	}
 	
 	/**
