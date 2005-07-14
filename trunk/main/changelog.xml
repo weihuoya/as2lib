@@ -5,6 +5,9 @@
   <release name="as2lib 0.9.1" day="4" month="7" year="2005">
     <year value="2005">
       <month value="7">
+        <day value="13">
+          <entry type="bugfix" package="org.as2lib.aop.joinpoint">Fixed serious bug with 'super' in adviced methods.</entry>
+        </day>
         <day value="10">
           <entry type="change" package="org.as2lib.env.log.handler" class="AlconHandler">Made Alcon 1.0.5 compatible.</entry>
           <entry type="change" package="org.as2lib.env.log.logger" class="AlconLogger">Made Alcon 1.0.5 compatible.</entry>
