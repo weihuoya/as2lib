@@ -6,6 +6,8 @@
     <year value="2005">
       <month value="7">
         <day value="13">
+          <entry type="add" package="org.as2lib.env.log.handler" class="DebugItHandler">Added handler support for the debugit component.</entry>
+          <entry type="add" package="org.as2lib.env.log.logger" class="DebugItLogger">Added logger support for the debugit component.</entry>
           <entry type="bugfix" package="org.as2lib.aop.joinpoint">Fixed serious bug with 'super' in adviced methods.</entry>
         </day>
         <day value="10">
