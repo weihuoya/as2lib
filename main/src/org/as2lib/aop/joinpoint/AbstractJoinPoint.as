@@ -17,6 +17,8 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.aop.Matcher;
 import org.as2lib.aop.AopConfig;
+import org.as2lib.env.reflect.MethodInfo;
+import org.as2lib.env.except.IllegalArgumentException;
 
 /**
  * AbstractJoinPoint offers default implementations of methods needed
@@ -26,6 +28,28 @@ import org.as2lib.aop.AopConfig;
  * @author Simon Wacker
  */
 class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
+	
+	/**
+	 * The invoker method used to invoke the original method of a join point. This
+	 * invoker is invoked on different scopes, never on this scope.
+	 * 
+	 * <p>This invoker removes itself, before executing the method, from the object it
+	 * was assigned to. It expects itself to have the name {@code "__as2lib__invoker"}.
+	 * 
+	 * @param object the object that holds this invoker method
+	 * @param method the method to invoke on the {@code super} object
+	 * @param args the arguments to use for the invocation
+	 * @return the result of the invocation of {@code method} with {@code args} on the
+	 * {@code super} scope
+	 */
+	private static var INVOKER:Function = function(object, method:Function, args:Array) {
+		// removes reference to this function
+		object.__as2lib__invoker = null;
+		// deletes the variable '__as2lib__invoker'
+		delete object.__as2lib__invoker;
+		// 'super' is not accessible from this scope, at least that's the compiler error
+		return method.apply(eval("su" + "per"), args);
+	};
 	
 	/** Number value that indicates that it the used join point a method join point. */
 	public static var TYPE_METHOD:Number = 0;
@@ -41,10 +65,21 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	
 	private var matcher:Matcher;
 	
+	private var thiz;
+	
 	/**
 	 * Abstract constructor that prevents initialization.
 	 */
-	private function AbstractJoinPoint(Void) {
+	private function AbstractJoinPoint(thiz) {
+		if (!thiz) throw new IllegalArgumentException("Argument 'thiz' must not be 'null' nor 'undefined'.", this, arguments);
+		this.thiz = thiz;
+	}
+	
+	/**
+	 * @see org.as2lib.aop.JoinPoint#getThis(Void)
+	 */
+	public function getThis(Void) {
+		return this.thiz;
 	}
 	
 	public function setMatcher(matcher:Matcher):Void {
@@ -54,6 +89,20 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	public function getMatcher(Void):Matcher {
 		if (!matcher) matcher = AopConfig.getMatcher();
 		return matcher;
+	}
+	
+	public function proceedMethod(method:MethodInfo, args:Array) {
+		var p:Object = method.getDeclaringType().getType().prototype;
+		var t:Object = this.thiz;
+		var m:Function = method.getMethod();
+		if (t.__proto__ == p) {
+			return m.apply(t, args);
+		}
+		while (t.__proto__ != p) {
+			t = t.__proto__;
+		}
+		t.__as2lib__invoker = INVOKER;
+		return this.thiz.__as2lib__invoker(t, m, args);
 	}
 	
 	/**
