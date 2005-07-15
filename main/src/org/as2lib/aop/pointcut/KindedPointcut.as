@@ -90,10 +90,10 @@ class org.as2lib.aop.pointcut.KindedPointcut extends AbstractPointcut implements
 	 */
 	public function captures(joinPoint:JoinPoint):Boolean {
 		if (!joinPoint) return false;
-		if (matchingJoinPointType == null) {
+		if (this.matchingJoinPointType == null) {
 			return joinPoint.matches(getJoinPointPattern());
 		}
-		return (joinPoint.getType() == matchingJoinPointType
+		return (joinPoint.getType() == this.matchingJoinPointType
 					&& joinPoint.matches(getJoinPointPattern()));
 	}
 	
