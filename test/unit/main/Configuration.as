@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.app.conf.AbstractConfiguration;
-import org.as2lib.app.conf.TestExecution;
+import org.as2lib.app.conf.UnitTestExecution;
 
 /**
  * Basic Configuration of the Application.
@@ -27,7 +27,7 @@ import org.as2lib.app.conf.TestExecution;
 class main.Configuration extends AbstractConfiguration {
 
     public static function init(Void):Void {
-		initProcess(new TestExecution());
+		initProcess(new UnitTestExecution());
     }
     
 	private function setReferences(Void):Void {
