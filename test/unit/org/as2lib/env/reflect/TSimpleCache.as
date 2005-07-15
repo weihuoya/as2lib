@@ -42,7 +42,7 @@ class org.as2lib.env.reflect.TSimpleCache extends TestCase {
 	
 	public function testGetClassWithCachedClassInfo(Void):Void {
 		var Type:Function = function() {
-		}
+		};
 		
 		var ic:MockControl = new MockControl(ClassInfo);
 		var i:ClassInfo = ic.getMock();
@@ -63,9 +63,9 @@ class org.as2lib.env.reflect.TSimpleCache extends TestCase {
 	
 	public function testGetClassWithCachedSuperClassInfo(Void):Void {
 		var SuperType:Function = function() {
-		}
+		};
 		var SubType:Function = function() {
-		}
+		};
 		SubType.prototype = new SuperType();
 		
 		var ic:MockControl = new MockControl(ClassInfo);
@@ -148,7 +148,7 @@ class org.as2lib.env.reflect.TSimpleCache extends TestCase {
 	
 	public function testReleaseAllForClasses(Void):Void {
 		var Type:Function = function() {
-		}
+		};
 		
 		var ic:MockControl = new MockControl(ClassInfo);
 		var i:ClassInfo = ic.getMock();

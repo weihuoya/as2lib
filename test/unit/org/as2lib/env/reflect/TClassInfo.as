@@ -160,13 +160,13 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		};
 		
 		var i:ClassInfo = new ClassInfo(Type, null, null);
-		var o = i.newInstance()
+		var o = i.newInstance();
 		assertNotNull(o);
 		assertTrue(o.invoked);
 		
 		o.invoked = false;
 		
-		var o2 = i.newInstance()
+		var o2 = i.newInstance();
 		assertNotNull(o2);
 		assertTrue(o2.invoked);
 		assertNotSame(o, o2);
@@ -184,7 +184,7 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		};
 		
 		var i:ClassInfo = new ClassInfo(Type, null, null);
-		var o = i.newInstance("arg1", 2, arg3)
+		var o = i.newInstance("arg1", 2, arg3);
 		assertNotNull(o);
 		assertTrue(o.invoked);
 	}
