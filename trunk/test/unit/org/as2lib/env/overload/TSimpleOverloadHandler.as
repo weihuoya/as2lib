@@ -120,7 +120,7 @@ class org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase {
 	}
 	
 	public function testMatchesForComplexTypes(Void):Void {
-		_root.createEmptyMovieClip("testMatchesForPrimitiveTypes_mc", _root.getNextHighestDepth())
+		_root.createEmptyMovieClip("testMatchesForPrimitiveTypes_mc", _root.getNextHighestDepth());
 		
 		var h:SimpleOverloadHandler = new SimpleOverloadHandler([Object, BasicInterface, BasicClass, Array], function() {});
 		assertTrue("1_0", h.matches([new BasicClass(), getBasicInterface(), new BasicClass(), new Array()]));

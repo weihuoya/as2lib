@@ -34,9 +34,7 @@ class org.as2lib.test.mock.support.TDefaultBehavior extends TestCase {
 		}
 	}
 	
-	// TODO /////////////////////////////////
-	// Add further addMethodBehavior()-tests. //
-	// TODO /////////////////////////////////
+	// TODO Add further addMethodBehavior()-tests.
 	
 	public function testVerify(Void):Void {
 		var m1:MethodBehaviorMock = new MethodBehaviorMock(this);
@@ -139,7 +137,7 @@ class org.as2lib.test.mock.support.TDefaultBehavior extends TestCase {
 	
 	public function testGetMethodBehaviorWithNullName(Void):Void {
 		var ac1:Object = new Object();
-		var ac2:String = "a2"
+		var ac2:String = "a2";
 		
 		var m1:MethodBehaviorMock = new MethodBehaviorMock(this);
 		m1.getExpectedMethodCall();
@@ -147,7 +145,7 @@ class org.as2lib.test.mock.support.TDefaultBehavior extends TestCase {
 		m1.replay();
 		
 		var ac3:Object = new Object();
-		var ac4:String = "a4"
+		var ac4:String = "a4";
 		
 		var m2:MethodBehaviorMock = new MethodBehaviorMock(this);
 		m2.getExpectedMethodCall();
@@ -182,7 +180,7 @@ class org.as2lib.test.mock.support.TDefaultBehavior extends TestCase {
 	
 	public function testGetMethodBehaviorWithNames(Void):Void {
 		var ac1:Object = new Object();
-		var ac2:String = "a2"
+		var ac2:String = "a2";
 		
 		var m1:MethodBehaviorMock = new MethodBehaviorMock(this);
 		m1.getExpectedMethodCall();
@@ -190,7 +188,7 @@ class org.as2lib.test.mock.support.TDefaultBehavior extends TestCase {
 		m1.replay();
 		
 		var ac3:Object = new Object();
-		var ac4:String = "a4"
+		var ac4:String = "a4";
 		
 		var m2:MethodBehaviorMock = new MethodBehaviorMock(this);
 		m2.getExpectedMethodCall();
@@ -225,7 +223,7 @@ class org.as2lib.test.mock.support.TDefaultBehavior extends TestCase {
 	
 	public function testGetMethodBehaviorWithNoMatchingBehaviors(Void):Void {
 		var ac1:Object = new Object();
-		var ac2:String = "a2"
+		var ac2:String = "a2";
 		
 		var m1:MethodBehaviorMock = new MethodBehaviorMock(this);
 		m1.getExpectedMethodCall();
@@ -233,7 +231,7 @@ class org.as2lib.test.mock.support.TDefaultBehavior extends TestCase {
 		m1.replay();
 		
 		var ac3:Object = new Object();
-		var ac4:String = "a4"
+		var ac4:String = "a4";
 		
 		var m2:MethodBehaviorMock = new MethodBehaviorMock(this);
 		m2.replay();
