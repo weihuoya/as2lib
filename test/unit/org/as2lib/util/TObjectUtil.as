@@ -59,7 +59,7 @@ class org.as2lib.util.TObjectUtil extends TestCase {
 		var test5:Object = undefined;
 		var test6:Object = {};
 		var test7:BasicClass = new BasicClass();
-		var test8:Function = function() {}
+		var test8:Function = function() {};
 		var test9:BasicMovieClip = new BasicMovieClip();
 		
 		// Positive cases.
@@ -154,7 +154,7 @@ class org.as2lib.util.TObjectUtil extends TestCase {
 		var primitiveBoolean:Boolean = true;
 		var complexObject:Object = {};
 		var complexObject2:Object = new BasicClass();
-		var func:Function = function() {}
+		var func:Function = function() {};
 		var nullValue:Object = null;
 		var undefinedValue:Object = undefined;
 		

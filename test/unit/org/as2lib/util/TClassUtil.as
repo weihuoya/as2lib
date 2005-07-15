@@ -57,8 +57,8 @@ class org.as2lib.util.TClassUtil extends TestCase {
 	public function testCreateCleanInstance(Void):Void {
 		var clazz:Function = function() {
 			// Short Class construct (easy as1 way)
-			this.test = "a"
-		}
+			this.test = "a";
+		};
 		var instance:Object = ClassUtil.createCleanInstance(clazz);
 		assertNotEmpty("Instance was created so it must not be empty", instance);
 		assertUndefined("Constructor may not be called", instance.test);
