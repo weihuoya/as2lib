@@ -80,7 +80,7 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 	 * @see org.as2lib.aop.JoinPoint#getType(Void):Number
 	 */
 	public function getType(Void):Number {
-		return TYPE_PROPERTY;
+		return PROPERTY;
 	}
 	
 }

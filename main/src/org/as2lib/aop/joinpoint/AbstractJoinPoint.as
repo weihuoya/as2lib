@@ -29,6 +29,18 @@ import org.as2lib.env.except.IllegalArgumentException;
  */
 class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	
+	/** Number value that indicates that it the used join point a method join point. */
+	public static var METHOD:Number = 0;
+	
+	/** Number value that indicates that it the used join point a property join point. */
+	public static var PROPERTY:Number = 1;
+	
+	/** Number value that indicates that it the used join point a set-property join point. */
+	public static var SET_PROPERTY:Number = 2;
+	
+	/** Number value that indicates that it the used join point a get-property join point. */
+	public static var GET_PROPERTY:Number = 3;
+	
 	/**
 	 * The invoker method used to invoke the original method of a join point. This
 	 * invoker is invoked on different scopes, never on this scope.
@@ -50,18 +62,6 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 		// 'super' is not accessible from this scope, at least that's the compiler error
 		return method.apply(eval("su" + "per"), args);
 	};
-	
-	/** Number value that indicates that it the used join point a method join point. */
-	public static var TYPE_METHOD:Number = 0;
-	
-	/** Number value that indicates that it the used join point a property join point. */
-	public static var TYPE_PROPERTY:Number = 1;
-	
-	/** Number value that indicates that it the used join point a set-property join point. */
-	public static var TYPE_SET_PROPERTY:Number = 2;
-	
-	/** Number value that indicates that it the used join point a get-property join point. */
-	public static var TYPE_GET_PROPERTY:Number = 3;
 	
 	private var matcher:Matcher;
 	

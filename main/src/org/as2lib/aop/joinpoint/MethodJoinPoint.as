@@ -75,7 +75,7 @@ class org.as2lib.aop.joinpoint.MethodJoinPoint extends AbstractJoinPoint impleme
 	 * @see org.as2lib.aop.JoinPoint#getType(Void):Number
 	 */
 	public function getType(Void):Number {
-		return TYPE_METHOD;
+		return METHOD;
 	}
 	
 }
