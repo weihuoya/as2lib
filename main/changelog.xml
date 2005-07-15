@@ -6,6 +6,7 @@
     <year value="2005">
       <month value="7">
         <day value="15">
+          <entry type="add" package="org.as2lib.aop.pointcut" class="AbstractCompositePointcut" method="getPointcuts(Void):Array"></entry>
           <entry type="change" package="org.as2lib.aop.pointcut" class="OrCompositePointcut"><change-rename to="OrPointcut"/></entry>
           <entry type="change" package="org.as2lib.aop.pointcut" class="AndCompositePointcut"><change-rename to="AndPointcut"/></entry>
           <entry type="change" package="org.as2lib.aop.joinpoint" class="AbstractJoinPoint">Changed name of constants "TYPE_*" to "*".</entry>
