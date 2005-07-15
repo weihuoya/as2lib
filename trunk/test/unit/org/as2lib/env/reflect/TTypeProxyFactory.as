@@ -34,7 +34,7 @@ class org.as2lib.env.reflect.TTypeProxyFactory extends TestCase {
 			owner["assertSame"]("toString", method);
 			owner["assertSame"]("arg1", args[0]);
 			owner["assertSame"]("arg2", args[1]);
-		}
+		};
 		proxy1 = BasicInterface(factory.createProxy(BasicInterface, handler));
 		proxy1.toString("arg1", "arg2");
 	}
@@ -57,7 +57,7 @@ class org.as2lib.env.reflect.TTypeProxyFactory extends TestCase {
 				owner["assertSame"](args.length, 0);
 			}
 			this["count"]++;
-		}
+		};
 		proxy1 = PropertyValue(factory.createProxy(PropertyValue, handler));
 		proxy1.toString("arg1", "arg2");
 		proxy1.getName();
