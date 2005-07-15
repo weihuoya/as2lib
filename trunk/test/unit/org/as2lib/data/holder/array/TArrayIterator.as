@@ -36,7 +36,7 @@ class org.as2lib.data.holder.array.TArrayIterator extends AbstractTIterator {
 	}
 	
 	/**
-	 * Returns the elements that are contained within a array.
+	 * Returns the elements that are contained within an array.
 	 */
 	public function getElements(Void):Array {
 		return content;
