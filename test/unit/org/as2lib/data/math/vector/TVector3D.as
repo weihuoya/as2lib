@@ -1,6 +1,5 @@
 ﻿import org.as2lib.test.unit.TestCase;
-//import org.as2lib.app.exec.ConstructorCall;
-//import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.data.math.Vector;
 import org.as2lib.data.math.vector.Vector3D;
 
