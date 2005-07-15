@@ -16,7 +16,7 @@
 
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
-import org.as2lib.aop.pointcut.AndCompositePointcut;
+import org.as2lib.aop.pointcut.OrPointcut;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.pointcut.PointcutFactory;
 import org.as2lib.aop.Pointcut;
@@ -25,7 +25,7 @@ import org.as2lib.aop.AopConfig;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.aop.pointcut.TAndCompositePointcut extends TestCase {
+class org.as2lib.aop.pointcut.TOrPointcut extends TestCase {
 	
 	private var oldPointcutFactory:PointcutFactory;
 	
@@ -56,7 +56,7 @@ class org.as2lib.aop.pointcut.TAndCompositePointcut extends TestCase {
 		
 		AopConfig.setPointcutFactory(f);
 		
-		var p:AndCompositePointcut = new AndCompositePointcut(null);
+		var p:OrPointcut = new OrPointcut(null);
 		
 		fc.verify();
 		tearDown();
@@ -69,7 +69,7 @@ class org.as2lib.aop.pointcut.TAndCompositePointcut extends TestCase {
 		
 		AopConfig.setPointcutFactory(f);
 		
-		var p:AndCompositePointcut = new AndCompositePointcut("");
+		var p:OrPointcut = new OrPointcut("");
 		
 		fc.verify();
 		tearDown();
@@ -84,7 +84,7 @@ class org.as2lib.aop.pointcut.TAndCompositePointcut extends TestCase {
 		
 		AopConfig.setPointcutFactory(f);
 		
-		var p:AndCompositePointcut = new AndCompositePointcut("org.as2lib.core.*.*()");
+		var p:OrPointcut = new OrPointcut("org.as2lib.core.*.*()");
 		// test wether the pointcut really has been added
 		
 		fc.verify();
@@ -104,7 +104,7 @@ class org.as2lib.aop.pointcut.TAndCompositePointcut extends TestCase {
 		
 		AopConfig.setPointcutFactory(f);
 		
-		var p:AndCompositePointcut = new AndCompositePointcut("org.as2lib.core.*.*() && org.as2lib.env.reflect.*.*() && org.as2lib.test.Juhu.lol()");
+		var p:OrPointcut = new OrPointcut("org.as2lib.core.*.*() || org.as2lib.env.reflect.*.*() || org.as2lib.test.Juhu.lol()");
 		// test wether the pointcut really has been added
 		
 		fc.verify();
@@ -124,7 +124,7 @@ class org.as2lib.aop.pointcut.TAndCompositePointcut extends TestCase {
 		
 		AopConfig.setPointcutFactory(f);
 		
-		var p:AndCompositePointcut = new AndCompositePointcut("org.as2lib.core.*.*()");
+		var p:OrPointcut = new OrPointcut("org.as2lib.core.*.*()");
 		assertFalse(p.captures(null));
 		
 		fc.verify();
@@ -133,75 +133,17 @@ class org.as2lib.aop.pointcut.TAndCompositePointcut extends TestCase {
 	}
 	
 	public function testCapturesWithEmptyPointcutStack(Void):Void {
-		var p:AndCompositePointcut = new AndCompositePointcut(null);
+		var p:OrPointcut = new OrPointcut(null);
 		assertFalse(p.captures(getBlankJoinPoint()));
 	}
 	
-	public function testCapturesWithAllPointcutsCapturingTheJoinPoint(Void):Void {
+	public function testCapturesWithNoPointcutCapturingTheJoinPoint(Void):Void {
 		var j:JoinPoint = getBlankJoinPoint();
 		
 		var pc1:MockControl = new MockControl(Pointcut);
 		var p1:Pointcut = pc1.getMock();
 		p1.captures(j);
-		pc1.setReturnValue(true);
-		pc1.replay();
-		
-		var pc2:MockControl = new MockControl(Pointcut);
-		var p2:Pointcut = pc2.getMock();
-		p2.captures(j);
-		pc2.setReturnValue(true);
-		pc2.replay();
-		
-		var pc3:MockControl = new MockControl(Pointcut);
-		var p3:Pointcut = pc3.getMock();
-		p3.captures(j);
-		pc3.setReturnValue(true);
-		pc3.replay();
-		
-		var p:AndCompositePointcut = new AndCompositePointcut(null);
-		p.addPointcut(p1);
-		p.addPointcut(p2);
-		p.addPointcut(p3);
-		assertTrue(p.captures(j));
-		
-		pc1.verify();
-		pc2.verify();
-		pc3.verify();
-	}
-	
-	public function testCapturesWithTheLastPointcutNotCapturingTheJoinPoint(Void):Void {
-		var j:JoinPoint = getBlankJoinPoint();
-		
-		var pc1:MockControl = new MockControl(Pointcut);
-		var p1:Pointcut = pc1.getMock();
-		pc1.replay();
-		
-		var pc2:MockControl = new MockControl(Pointcut);
-		var p2:Pointcut = pc2.getMock();
-		pc2.replay();
-		
-		var pc3:MockControl = new MockControl(Pointcut);
-		var p3:Pointcut = pc3.getMock();
-		p3.captures(j);
-		pc3.setReturnValue(false);
-		pc3.replay();
-		
-		var p:AndCompositePointcut = new AndCompositePointcut(null);
-		p.addPointcut(p1);
-		p.addPointcut(p2);
-		p.addPointcut(p3);
-		assertFalse(p.captures(j));
-		
-		pc1.verify();
-		pc2.verify();
-		pc3.verify();
-	}
-	
-	public function testCapturesWithTheMiddlePointcutNotCapturingTheJoinPoint(Void):Void {
-		var j:JoinPoint = getBlankJoinPoint();
-		
-		var pc1:MockControl = new MockControl(Pointcut);
-		var p1:Pointcut = pc1.getMock();
+		pc1.setReturnValue(false);
 		pc1.replay();
 		
 		var pc2:MockControl = new MockControl(Pointcut);
@@ -213,14 +155,72 @@ class org.as2lib.aop.pointcut.TAndCompositePointcut extends TestCase {
 		var pc3:MockControl = new MockControl(Pointcut);
 		var p3:Pointcut = pc3.getMock();
 		p3.captures(j);
-		pc3.setReturnValue(true);
+		pc3.setReturnValue(false);
 		pc3.replay();
 		
-		var p:AndCompositePointcut = new AndCompositePointcut(null);
+		var p:OrPointcut = new OrPointcut(null);
 		p.addPointcut(p1);
 		p.addPointcut(p2);
 		p.addPointcut(p3);
 		assertFalse(p.captures(j));
+		
+		pc1.verify();
+		pc2.verify();
+		pc3.verify();
+	}
+	
+	public function testCapturesWithTheLastPointcutCapturingTheJoinPoint(Void):Void {
+		var j:JoinPoint = getBlankJoinPoint();
+		
+		var pc1:MockControl = new MockControl(Pointcut);
+		var p1:Pointcut = pc1.getMock();
+		pc1.replay();
+		
+		var pc2:MockControl = new MockControl(Pointcut);
+		var p2:Pointcut = pc2.getMock();
+		pc2.replay();
+		
+		var pc3:MockControl = new MockControl(Pointcut);
+		var p3:Pointcut = pc3.getMock();
+		p3.captures(j);
+		pc3.setReturnValue(true);
+		pc3.replay();
+		
+		var p:OrPointcut = new OrPointcut(null);
+		p.addPointcut(p1);
+		p.addPointcut(p2);
+		p.addPointcut(p3);
+		assertTrue(p.captures(j));
+		
+		pc1.verify();
+		pc2.verify();
+		pc3.verify();
+	}
+	
+	public function testCapturesWithTheMiddlePointcutCapturingTheJoinPoint(Void):Void {
+		var j:JoinPoint = getBlankJoinPoint();
+		
+		var pc1:MockControl = new MockControl(Pointcut);
+		var p1:Pointcut = pc1.getMock();
+		pc1.replay();
+		
+		var pc2:MockControl = new MockControl(Pointcut);
+		var p2:Pointcut = pc2.getMock();
+		p2.captures(j);
+		pc2.setReturnValue(true);
+		pc2.replay();
+		
+		var pc3:MockControl = new MockControl(Pointcut);
+		var p3:Pointcut = pc3.getMock();
+		p3.captures(j);
+		pc3.setReturnValue(false);
+		pc3.replay();
+		
+		var p:OrPointcut = new OrPointcut(null);
+		p.addPointcut(p1);
+		p.addPointcut(p2);
+		p.addPointcut(p3);
+		assertTrue(p.captures(j));
 		
 		pc1.verify();
 		pc2.verify();

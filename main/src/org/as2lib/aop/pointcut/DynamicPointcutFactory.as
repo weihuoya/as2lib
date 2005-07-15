@@ -19,8 +19,8 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.aop.Pointcut;
-import org.as2lib.aop.pointcut.OrCompositePointcut;
-import org.as2lib.aop.pointcut.AndCompositePointcut;
+import org.as2lib.aop.pointcut.OrPointcut;
+import org.as2lib.aop.pointcut.AndPointcut;
 import org.as2lib.aop.pointcut.KindedPointcut;
 //import org.as2lib.aop.pointcut.WithinPointcut;
 import org.as2lib.aop.pointcut.PointcutFactory;
@@ -84,7 +84,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		};
 		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
-			return (new OrCompositePointcut(pattern));
+			return (new OrPointcut(pattern));
 		};
 		bindPointcutFactory(rule, factory);
 	}
@@ -99,7 +99,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		};
 		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
-			return (new AndCompositePointcut(pattern));
+			return (new AndPointcut(pattern));
 		};
 		bindPointcutFactory(rule, factory);
 	}
