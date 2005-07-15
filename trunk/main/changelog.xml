@@ -5,6 +5,9 @@
   <release name="as2lib 0.9.1" day="4" month="7" year="2005">
     <year value="2005">
       <month value="7">
+        <day value="15">
+          <entry type="change" package="org.as2lib.aop.joinpoint" class="AbstractJoinPoint">Changed name of constants "TYPE_*" to "*".</entry>
+        </day>
         <day value="13">
           <entry type="add" package="org.as2lib.env.log.handler" class="DebugItHandler">Added handler support for the debugit component.</entry>
           <entry type="add" package="org.as2lib.env.log.logger" class="DebugItLogger">Added logger support for the debugit component.</entry>

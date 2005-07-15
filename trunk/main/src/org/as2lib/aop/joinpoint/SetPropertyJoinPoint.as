@@ -40,7 +40,7 @@ class org.as2lib.aop.joinpoint.SetPropertyJoinPoint extends PropertyJoinPoint {
 	 * @see org.as2lib.aop.JoinPoint#getType(Void):Number
 	 */
 	public function getType(Void):Number {
-		return TYPE_SET_PROPERTY;
+		return SET_PROPERTY;
 	}
 	
 }
