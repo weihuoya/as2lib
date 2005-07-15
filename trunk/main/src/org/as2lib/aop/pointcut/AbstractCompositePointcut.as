@@ -23,13 +23,13 @@ import org.as2lib.aop.Pointcut;
 class org.as2lib.aop.pointcut.AbstractCompositePointcut extends BasicClass {
 	
 	/** Stores all added pointcuts. */
-	private var pointcutArray:Array;
+	private var pointcuts:Array;
 	
 	/**
 	 * Private constructor that constructs a new AbstractCompositePointcut.
 	 */
 	private function AbstractCompositePointcut(Void) {
-		pointcutArray = new Array();
+		this.pointcuts = new Array();
 	}
 	
 	/**
@@ -40,7 +40,11 @@ class org.as2lib.aop.pointcut.AbstractCompositePointcut extends BasicClass {
 	 * @param pointcut the pointcut to be added
 	 */
 	public function addPointcut(pointcut:Pointcut):Void {
-		if (pointcut) pointcutArray.push(pointcut);
+		if (pointcut) this.pointcuts.push(pointcut);
+	}
+	
+	public function getPointcuts(Void):Array {
+		return this.pointcuts.concat();
 	}
 	
 }
