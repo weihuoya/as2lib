@@ -17,6 +17,10 @@
 import org.as2lib.aop.Pointcut;
 
 /**
+ * {@code CompositePointcut} is a composition of multiple pointcuts. In common
+ * implementations it combines the {@code captures} methods of multiple pointcuts in a
+ * specific logic, like AND or OR logic.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.aop.pointcut.CompositePointcut extends Pointcut {
@@ -24,8 +28,15 @@ interface org.as2lib.aop.pointcut.CompositePointcut extends Pointcut {
 	/**
 	 * Adds a new pointcut to the list of pointcuts.
 	 *
-	 * @param pointcut the pointcut to be added
+	 * @param pointcut the pointcut to add
 	 */
 	public function addPointcut(pointcut:Pointcut):Void;
+	
+	/**
+	 * Returns all added pointcuts.
+	 * 
+	 * @return all added pointcuts
+	 */
+	public function getPointcuts(Void):Array;
 	
 }
