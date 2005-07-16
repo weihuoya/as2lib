@@ -5,6 +5,9 @@
   <release name="as2lib 0.9.1" day="4" month="7" year="2005">
     <year value="2005">
       <month value="7">
+        <day value="16">
+          <entry type="remove" package="org.as2lib.aop.pointcut" class="AbstractPointcut">Was unnecessary because there was only on sub-class KindenPointcut.</entry>
+        </day>
         <day value="15">
           <entry type="add" package="org.as2lib.aop.pointcut" class="AbstractCompositePointcut" method="getPointcuts(Void):Array"></entry>
           <entry type="change" package="org.as2lib.aop.pointcut" class="OrCompositePointcut"><change-rename to="OrPointcut"/></entry>

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
 import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.JoinPoint;
-import org.as2lib.aop.pointcut.AbstractPointcut;
 
 /**
  * {@code KindedPointcut} represents any kinded pointcuts. These are for example
@@ -48,7 +48,7 @@ import org.as2lib.aop.pointcut.AbstractPointcut;
  * @see <a href="http://www.simonwacker.com/blog/archives/000057.php">Kinded Pointcuts</a>
  * @see <a href="http://www.simonwacker.com/blog/archives/000053.php">Wildcards</a>
  */
-class org.as2lib.aop.pointcut.KindedPointcut extends AbstractPointcut implements Pointcut {
+class org.as2lib.aop.pointcut.KindedPointcut extends BasicClass implements Pointcut {
 	
 	/** The type of the matching join points. */
 	private var matchingJoinPointType:Number;
