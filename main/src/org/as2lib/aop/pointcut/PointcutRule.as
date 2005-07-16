@@ -17,15 +17,19 @@
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code PointcutRule} is used to determine whether a specific pattern matches a
+ * specific pointcut type.
+ * 
  * @author Simon Wacker
+ * @see DynamicPointcutFactory
  */
 interface org.as2lib.aop.pointcut.PointcutRule extends BasicInterface {
 	
 	/**
-	 * Executes the rule.
-	 *
-	 * @param pattern the pattern to be used by the rule
-	 * @return true if the pattern has the right syntax
+	 * Executes the rule and returns the result.
+	 * 
+	 * @param pattern the pattern to check whether it fulfils this rule
+	 * @return {@code true} if the {@code pattern} fulfils this rule else {@code false}
 	 */
 	public function execute(pattern:String):Boolean;
 	

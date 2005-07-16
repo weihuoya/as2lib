@@ -28,20 +28,36 @@ import org.as2lib.aop.pointcut.PointcutRule;
 import org.as2lib.aop.joinpoint.AbstractJoinPoint;
 
 /**
+ * {@code DynamicPointcutFactory} is a pointcut factory that can be dynamically expanded
+ * with new pointcut types at run-time. You can do so by adding a new pointcut factory.
+ * This pointcut factory is mapped to a pointcut rule that determines whether the given
+ * pointcut factory is used to create the pointcut to return based on a given pointcut
+ * pattern.
+ * 
+ * <p>This pointcut factory allows for execution, set and get access join points and for
+ * composite pointcuts combined with AND or OR logic.
+ * <code>execution(org.as2lib.env.Logger.debug)</code>
+ * <code>set(org.as2lib.MyClass.myProperty)</code>
+ * <code>get(org.as2lib.MyClass.myProperty)</code>
+ * <code>execution(org.as2lib.env.Logger.debug) || set(org.as2lib.MyClass.myProperty)</code>
+ * 
+ * <p>You may of course enhance the list of supported pointcuts by binding new ones with
+ * the {@link #bindPointcutFactory} method.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implements PointcutFactory {
 	
-	/** Contains all bound factories. */
+	/** All bound factories. */
 	private var factoryMap:Map;
 	
 	/**
-	 * Constructs a new DynamicPointcutFactory.
+	 * Constructs a new {@code DynamicPointcutFactory} instance.
 	 */
 	public function DynamicPointcutFactory(Void) {
 		factoryMap = new HashMap();
-		bindOrCompositePointcut();
-		bindAndCompositePointcut();
+		bindOrPointcut();
+		bindAndPointcut();
 		bindMethodPointcut();
 		bindSetPropertyPointcut();
 		bindGetPropertyPointcut();
@@ -49,9 +65,8 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	}
 	
 	/**
-	 * Returns a blank pointcut rule. That is a rule with no initialized
-	 * methods.
-	 *
+	 * Returns a blank pointcut rule. This is a rule with no initialized methods.
+	 * 
 	 * @return a blank pointcut rule
 	 */
 	private function getBlankPointcutRule(Void):PointcutRule {
@@ -62,8 +77,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	}
 	
 	/**
-	 * Returns a blank pointcut factory. That is a factory with no initialized
-	 * methods.
+	 * Returns a blank pointcut factory. That is a factory with no initialized methods.
 	 *
 	 * @return a blank pointcut factory
 	 */
@@ -77,7 +91,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	/**
 	 * TODO: Documentation
 	 */
-	private function bindOrCompositePointcut(Void):Void {
+	private function bindOrPointcut(Void):Void {
 		var rule:PointcutRule = getBlankPointcutRule();
 		rule.execute = function(pattern:String):Boolean {
 			return (pattern.indexOf(" || ") != -1);
@@ -92,7 +106,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	/**
 	 * TODO: Documentation
 	 */
-	private function bindAndCompositePointcut(Void):Void {
+	private function bindAndPointcut(Void):Void {
 		var rule:PointcutRule = getBlankPointcutRule();
 		rule.execute = function(pattern:String):Boolean {
 			return (pattern.indexOf(" && ") != -1);
@@ -166,7 +180,15 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	}*/
 	
 	/**
-	 * @see org.as2lib.aop.pointcut.PointcutFactory#getPointcut(String):Pointcut
+	 * Returns a pointcut based on the passed-in {@code pattern} representation.
+	 * 
+	 * <p>The pointcut to return is determined by the rules of the added pointcut
+	 * factories. The pointcut factory whose rule applies first to the given
+	 * {@code pattern} is used to get the pointcut to return. This means that order
+	 * matters.
+	 *
+	 * @param pattern the string representation of the pointcut
+	 * @return the object-oriented view of the passed-in pointcut {@code pattern}
 	 */
 	public function getPointcut(pattern:String):Pointcut {
 		if (!pattern) return null;
@@ -182,15 +204,16 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	}
 	
 	/**
-	 * Binds a new factory.
+	 * Binds a new {@code factory} to the given {@code rule}.
 	 *
-	 * @param rule the rule that must evaluate to true to indicate the right factory
-	 * @param factory the factory to be added
-	 * @throws IllegalArgumentException if rule is null or undefined or
-	 *                                  if factory is null or undefined
+	 * @param rule the rule that must evaluate to {@code true} to indicate that the
+	 * {@code factory} shall be used for a given pointcut pattern
+	 * @param factory the factory to add
+	 * @throws IllegalArgumentException if rule is {@code null} or {@code undefined}
+	 * @throws IllegalArgumentException if factory is {@code null} or {@code undefined}
 	 */
 	public function bindPointcutFactory(rule:PointcutRule, factory:PointcutFactory):Void {
-		if (!rule || !factory) throw new IllegalArgumentException("Rule and factory are not allowed to be null or undefined.", this, arguments);
+		if (!rule || !factory) throw new IllegalArgumentException("Neither argument 'rule' nor argument 'factory' must be {@code null} nor {@code undefined}.", this, arguments);
 		factoryMap.put(rule, factory);
 	}
 	
