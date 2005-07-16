@@ -17,35 +17,11 @@
 import org.as2lib.core.BasicClass;
 
 /**
+ * {@code AbstractPointcut} provides common implementations of methods needed by
+ * {@link Pointcut} implementations.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.pointcut.AbstractPointcut extends BasicClass {
-	
-	/** Stores the pattern that represents the join point. */
-	private var joinPointPattern:String;
-	
-	/**
-	 * Private constructor to prevent initialization.
-	 */
-	private function AbstractPointcut(Void) {
-	}
-	
-	/**
-	 * Sets a new join point pattern.
-	 *
-	 * @param pattern the pattern to be set
-	 */
-	private function setJoinPointPattern(pattern:String):Void {
-		joinPointPattern = pattern;
-	}
-	
-	/**
-	 * Returns the set join point pattern.
-	 *
-	 * @return the set join point pattern
-	 */
-	private function getJoinPointPattern(Void):String {
-		return joinPointPattern;
-	}
 	
 }

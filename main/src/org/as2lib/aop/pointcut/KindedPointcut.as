@@ -53,6 +53,9 @@ class org.as2lib.aop.pointcut.KindedPointcut extends AbstractPointcut implements
 	/** The type of the matching join points. */
 	private var matchingJoinPointType:Number;
 	
+	/** The pattern that represents the join point. */
+	private var joinPointPattern:String;
+	
 	/**
 	 * Constructs a new {@code KindedPointcut} instance.
 	 *
@@ -64,11 +67,11 @@ class org.as2lib.aop.pointcut.KindedPointcut extends AbstractPointcut implements
 	 * <p>A matching join point type of value {@code null} or {@code undefined} is
 	 * interpreted as "any type of join point allowed".
 	 * 
-	 * @param pattern the join point pattern
+	 * @param joinPointPattern the join point pattern
 	 * @param matchingJoinPointType the type of join points that match this pointcut
 	 */
-	public function KindedPointcut(pattern:String, matchingJoinPointType:Number) {
-		setJoinPointPattern(pattern);
+	public function KindedPointcut(joinPointPattern:String, matchingJoinPointType:Number) {
+		this.joinPointPattern = joinPointPattern;
 		this.matchingJoinPointType = matchingJoinPointType;
 	}
 	
@@ -91,10 +94,10 @@ class org.as2lib.aop.pointcut.KindedPointcut extends AbstractPointcut implements
 	public function captures(joinPoint:JoinPoint):Boolean {
 		if (!joinPoint) return false;
 		if (this.matchingJoinPointType == null) {
-			return joinPoint.matches(getJoinPointPattern());
+			return joinPoint.matches(this.joinPointPattern);
 		}
 		return (joinPoint.getType() == this.matchingJoinPointType
-					&& joinPoint.matches(getJoinPointPattern()));
+					&& joinPoint.matches(this.joinPointPattern));
 	}
 	
 }
