@@ -21,18 +21,25 @@ import org.as2lib.env.reflect.TypeMemberInfo;
 import org.as2lib.aop.JoinPoint;
 
 /**
+ * {@code MethodJoinPoint} represents a method as join point.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.joinpoint.MethodJoinPoint extends AbstractJoinPoint implements JoinPoint {
 	
-	/** Stores the MethodInfo instance that represents the represented method. */
+	/** The info of the represented method. */
 	private var info:MethodInfo;
 	
 	/**
-	 * Constructs a new MethodJoinPoint.
+	 * Constructs a new {@code MethodJoinPoint} instance.
 	 *
-	 * @param info the MethodInfo instance that represents the represented method
-	 * @param thiz a reference to the object the method is defined in
+	 * @param info the info of the represented method
+	 * @param thiz thiz the logical this of the interception
+	 * @throws IllegalArgumentException of argument {@code thiz} is {@code null} or
+	 * {@code undefined}
+	 * @throws IllegalArgumentException if argument {@code info} is {@code null} or
+	 * {@code undefined}
+	 * @see <a href="http://www.simonwacker.com/blog/archives/000068.php">Passing Context</a>
 	 */
 	public function MethodJoinPoint(info:MethodInfo, thiz) {
 		super(thiz);
@@ -41,21 +48,32 @@ class org.as2lib.aop.joinpoint.MethodJoinPoint extends AbstractJoinPoint impleme
 	}
 	
 	/**
-	 * @see org.as2lib.aop.JoinPoint#getInfo(Void):TypeMemberInfo
+	 * Returns the info of the represented method. This is a {@link MethodInfo}
+	 * instance.
 	 */
 	public function getInfo(Void):TypeMemberInfo {
 		return info;
 	}
 	
 	/**
-	 * @see org.as2lib.aop.JoinPoint#proceed(Array)
+	 * Proceeds this join point by executing the represented method passing the given
+	 * arguments and returning the result of the execution.
+	 * 
+	 * @param args the arguments to use for the execution
+	 * @return the result of the execution
 	 */
 	public function proceed(args:Array) {
 		return proceedMethod(this.info, args);
 	}
 	
 	/**
-	 * @see org.as2lib.aop.JoinPoint#clone(Void):JoinPoint
+	 * Clones this join point.
+	 * 
+	 * <p>Note that the returned join point is not a full-clone of this join point. The
+	 * concrete method of of the returned join point's info is updated to the latest
+	 * state. This may thus differ if it has been overwritten before.
+	 * 
+	 * @return a clone of this join point
 	 */
 	public function clone(Void):JoinPoint {
 		var method:Function;
@@ -72,7 +90,9 @@ class org.as2lib.aop.joinpoint.MethodJoinPoint extends AbstractJoinPoint impleme
 	}
 	
 	/**
-	 * @see org.as2lib.aop.JoinPoint#getType(Void):Number
+	 * Returns the type of this join point.
+	 * 
+	 * @return {@link AbstractJoinPoint#METHOD}
 	 */
 	public function getType(Void):Number {
 		return METHOD;
