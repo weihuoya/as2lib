@@ -18,26 +18,43 @@ import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.aop.joinpoint.PropertyJoinPoint;
 
 /**
+ * {@code GetPropertyJoinPoint} is a join point matching get access to a property. It
+ * represents the getter method of a property.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.joinpoint.GetPropertyJoinPoint extends PropertyJoinPoint {
 	
 	/**
-	 * @see org.as2lib.aop.joinpoint.PropertyJoinPoint#new(PropertyInfo, Object)
+	 * Constructs a new {@code GetPropertyJoinPoint) instance.
+	 * 
+	 * @param info the property info of the represented property
+	 * @param thiz the logical this of the interception
+	 * @throws IllegalArgumentException of argument {@code thiz} is {@code null} or
+	 * {@code undefined}
+	 * @throws IllegalArgumentException if argument {@code info} is {@code null} or
+	 * {@code undefined}
+	 * @see <a href="http://www.simonwacker.com/blog/archives/000068.php">Passing Context</a>
 	 */
 	public function GetPropertyJoinPoint(info:PropertyInfo, thiz) {
 		super(info, thiz);
 	}
 	
 	/**
-	 * @see org.as2lib.aop.JoinPoint#proceed(Array)
+	 * Proceeds this join point by executing the getter of the represented property
+	 * with the given arguments and returning the result of the execution.
+	 * 
+	 * @param args the arguments to use for the execution
+	 * @return the result of the execution
 	 */
 	public function proceed(args:Array) {
 		return proceedMethod(this.info.getGetter(), args);
 	}
 	
 	/**
-	 * @see org.as2lib.aop.JoinPoint#proceed(Void):Number
+	 * Returns the type of this property.
+	 * 
+	 * @return {@link AbstractJoinPoint#GET_PROPERTY}
 	 */
 	public function getType(Void):Number {
 		return GET_PROPERTY;

@@ -22,18 +22,26 @@ import org.as2lib.env.reflect.TypeMemberInfo;
 import org.as2lib.aop.JoinPoint;
 
 /**
+ * {@code PropertyJoinPoint} represents any type of access to a property, be it set or
+ * get access.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint implements JoinPoint {
 	
-	/** Stores the PropertyInfo instance that represents the represented property. */
+	/** The info representing the property. */
 	private var info:PropertyInfo;
 	
 	/**
-	 * Constructs a new PropertyJoinPoint.
+	 * Constructs a new {@code PropertyJoinPoint} instance.
 	 *
-	 * @param info the PropertyInfo instance that represents the represented property
-	 * @param thiz a reference to the object the property is defined in
+	 * @param info the property info of the represented property
+	 * @param thiz the logical this of the interception
+	 * @throws IllegalArgumentException of argument {@code thiz} is {@code null} or
+	 * {@code undefined}
+	 * @throws IllegalArgumentException if argument {@code info} is {@code null} or
+	 * {@code undefined}
+	 * @see <a href="http://www.simonwacker.com/blog/archives/000068.php">Passing Context</a>
 	 */
 	public function PropertyJoinPoint(info:PropertyInfo, thiz) {
 		super(thiz);
@@ -42,21 +50,38 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 	}
 	
 	/**
-	 * @see org.as2lib.aop.JoinPoint#getInfo(Void):TypeMemberInfo
+	 * Returns the info of the represented property. This is a {@link PropertyInfo}
+	 * instance.
+	 * 
+	 * @return the info of the represented property
 	 */
 	public function getInfo(Void):TypeMemberInfo {
 		return info;
 	}
 	
 	/**
-	 * @see org.as2lib.aop.JoinPoint#getInfo(Array)
+	 * Throws an unsupported operation exception because this method is not supported
+	 * by an unspecified property access. Use the {@link GetPropertyJoinPoint} or
+	 * {@link SetPropertyJoinPoint} classes if you want to be able to proceed a property
+	 * join point.
+	 * 
+	 * @param args the arguments to use for the procession
+	 * @return the result of the procession
+	 * @throws UnsupportedOperationException
 	 */
 	public function proceed(args:Array) {
 		throw new UnsupportedOperationException("The execute operation is not supported by PropertyJoinPoint instances [" + this + "].", this, arguments);
 	}
 	
 	/**
-	 * @see org.as2lib.aop.JoinPoint#clone(Void):JoinPoint
+	 * Clones this join point.
+	 * 
+	 * <p>Note that the returned join point is not a full-clone of this join point. The
+	 * concrete getter or setter methods of the returned join point's property info may
+	 * differ because they are updated to the latest state. This means that if you
+	 * overwrite the getter or setter methods by hand they will differ.
+	 * 
+	 * @return a clone of this join point
 	 */
 	public function clone(Void):JoinPoint {
 		var getter:Function;
@@ -77,7 +102,9 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 	}
 	
 	/**
-	 * @see org.as2lib.aop.JoinPoint#getType(Void):Number
+	 * Returns this join point's type.
+	 * 
+	 * @return {@link AbstractJoinPoint#getType}
 	 */
 	public function getType(Void):Number {
 		return PROPERTY;
