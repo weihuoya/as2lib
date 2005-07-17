@@ -62,7 +62,7 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 		ic.verify();
 	}
 	
-	public function testProceedWithNullArgs(Void):Void {
+	/*public function testProceedWithNullArgs(Void):Void {
 		var r:Object = new Object();
 		
 		var tc:MockControl = new MockControl(Object);
@@ -115,7 +115,7 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 		ic.verify();
 		tc.verify();
 		fc.verify();
-	}
+	}*/
 	
 	public function testMatchesWithNullPattern(Void):Void {
 		var mc:MockControl = new MockControl(Matcher);

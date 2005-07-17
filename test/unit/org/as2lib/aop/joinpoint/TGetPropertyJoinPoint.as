@@ -25,7 +25,7 @@ import org.as2lib.env.reflect.MethodInfo;
  */
 class org.as2lib.aop.joinpoint.TGetPropertyJoinPoint extends TestCase {
 	
-	public function testProceedWithNullArgs(Void):Void {
+	/*public function testProceedWithNullArgs(Void):Void {
 		var r:Object = new Object();
 		
 		var tc:MockControl = new MockControl(Object);
@@ -92,6 +92,6 @@ class org.as2lib.aop.joinpoint.TGetPropertyJoinPoint extends TestCase {
 		tc.verify();
 		fc.verify();
 		gc.verify();
-	}
+	}*/
 	
 }
