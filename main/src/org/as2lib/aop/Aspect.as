@@ -17,21 +17,21 @@
 import org.as2lib.core.BasicInterface;
 
 /**
- * Aspect represents an aspect in AOP. The only method this
- * interface prescribes, getAdvices(Void):Array, is needed by
- * the weaver.
- * Refer to http://www.simonwacker.com/blog/archives/000041.php
- * for a short introduction of what an aspect is all about.
+ * {@code Aspect} represents an aspect in an Aspect-Oriented Programming language. An
+ * aspect's sole responsibility is to group varies advices in a logical sense.
+ * Convenient implementations of this interface also offer support to easily add
+ * advices.
  *
  * @author Simon Wacker
+ * @see <a href="http://www.simonwacker.com/blog/archives/000041.php">Terms and AspectJ</a>
  */
 interface org.as2lib.aop.Aspect extends BasicInterface {
 	
 	/**
-	 * Returns the advices add externally or internally to the
-	 * aspect. These advices will be used for the weaving process.
-	 *
-	 * @returns the advices to be used by the weaver
+	 * Returns the advices that were added externally or internally to this aspect.
+	 * These advices will be used for the weaving process.
+	 * 
+	 * @returns the advices used by the weaver
 	 */
 	public function getAdvices(Void):Array;
 	

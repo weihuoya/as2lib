@@ -18,29 +18,30 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.aop.JoinPoint;
 
 /**
- * Advice is the core interface that must be implemented to
- * create a custom advice. An advice normally contains the
- * code to be executed at a given pointcut.
- * Refer to http://www.simonwacker.com/blog/archives/000066.php
- * to read what an advice is all about in AOP terms.
- *
+ * {@code Advice} reflects an advice in an Aspect-Oriented Programming Language like
+ * AspectJ. This is the core interface that must be implemented to create a custom
+ * advices.
+ * 
+ * <p>An advice defines the code to be executed at a specific pointcut, that defines
+ * where and when this code shall be executed.
+ * 
  * @author Simon Wacker
+ * @see <a href="http://www.simonwacker.com/blog/archives/000066.php">Advice</a>
  */
 interface org.as2lib.aop.Advice extends BasicInterface {
 	
 	/**
-	 * Checks whether the advice captures the specific join
-	 * point. This check is normally being done using the set
-	 * pointcut.
-	 *
-	 * @param joinPoint the join point upon which the check shall be made
-	 * @return true if the joinPoint is being captured
+	 * Checks whether this advice captures the given {@code joinPoint}. This check is
+	 * normally being done using the set pointcut.
+	 * 
+	 * @param joinPoint the join point upon which to make the check
+	 * @return {@code true} if the given {@code joinPoint} is captured else {@code false}
 	 */
 	public function captures(joinPoint:JoinPoint):Boolean;
 	
 	/**
-	 * Returns a proxy method that shall be used instead of the
-	 * original method.
+	 * Returns a proxy method that can be used instead of the original method of the
+	 * {@code joinPoint}.
 	 *
 	 * @param joinPoint the join point that represents the original method
 	 * @return the proxy method
