@@ -17,16 +17,30 @@
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code Matcher} matches the string representation of a join point against a pattern.
+ * Depending on the implementation the pattern may consist of various wildcards and
+ * logical operators. Common wildcards and operators that are also supported by AspectJ
+ * are:
+ * 
+ * <ul>
+ *   <li>'*' indicates any number of characters excluding the period.</li>
+ *   <li>'..' indicates any number of charecters including all periods.</li>
+ *   <li>'+' indicates all subclasses or subinterfaces of a given type.</li>
+ *   <li>'!' negates the match.</li>
+ * </ul>
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.aop.Matcher extends BasicInterface {
 	
 	/**
-	 * Checks if the passed join point represented by a string matches
-	 * the given pattern.
+	 * Checks if the passed-in {@code joinPoint} represented by a string matches the
+	 * given {@code pattern}.
 	 *
-	 * @param joinPoint the join point represented as a string used as the base of the match
-	 * @param pattern the pattern that shall match the join point
+	 * @param joinPoint the join point represented as a string
+	 * @param pattern the pattern that may match the given {@code joinPoint} string
+	 * @return {@code true} if the given {@code joinPoint} matches the given
+	 * {@code pattern} else {@code false}
 	 */
 	public function match(joinPoint:String, pattern:String):Boolean;
 	

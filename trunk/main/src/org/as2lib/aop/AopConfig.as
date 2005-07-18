@@ -20,35 +20,38 @@ import org.as2lib.aop.pointcut.DynamicPointcutFactory;
 import org.as2lib.aop.advice.DynamicAdviceFactory;
 import org.as2lib.aop.advice.SimpleDynamicAdviceFactory;
 import org.as2lib.aop.Matcher;
-import org.as2lib.aop.matcher.DefaultMatcher;
+import org.as2lib.aop.matcher.WildcardMatcher;
 
 /**
+ * {@code AopConfig} declares methods to configure core parts of the AOP framework.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.AopConfig extends BasicClass {
 	
-	/** Stores the set pointcut factory. */
+	/** The pointcut factory. */
 	private static var pointcutFactory:PointcutFactory;
 	
-	/** Stores the set DynamicAdviceFactory. */
+	/** The dynamic advice factory. */
 	private static var dynamicAdviceFactory:DynamicAdviceFactory;
 	
+	/** The matcher. */
 	private static var matcher:Matcher;
 	
 	/**
-	 * Sets a new DynamicAdviceFactory.
+	 * Sets a new dynamic advice factory.
 	 *
-	 * @param factory the new DynamicAdviceFactory
+	 * @param factory the new dynamic advice factory
 	 */
 	public static function setDynamicAdviceFactory(factory:DynamicAdviceFactory):Void {
 		dynamicAdviceFactory = factory;
 	}
 	
 	/**
-	 * Returns the set or the default DynamicAdviceFactory. The defult factory
-	 * is SimpleDynamicAdviceFactory.
+	 * Returns the set or the default dynamic advice factory. The defult factory is
+	 * an instance of the {@link SimpleDynamicAdviceFactory} class.
 	 *
-	 * @return the set or the default DynamicAdviceFactory
+	 * @return the set or the default dynamic advice factory
 	 */
 	public static function getDynamicAdviceFactory(Void):DynamicAdviceFactory {
 		if (!dynamicAdviceFactory) dynamicAdviceFactory = new SimpleDynamicAdviceFactory();
@@ -56,35 +59,47 @@ class org.as2lib.aop.AopConfig extends BasicClass {
 	}
 	
 	/**
-	 * Sets a new PointcutFactory.
+	 * Sets a new pointcut factory.
 	 *
-	 * @param factory the PointcutFactory to be set
+	 * @param factory the new pointcut factory
 	 */
 	public static function setPointcutFactory(factory:PointcutFactory):Void {
 		pointcutFactory = factory;
 	}
 	
 	/**
-	 * Returns the set PointcutFactory or the default DynamicPointcutFactory.
+	 * Returns the set pointcut factory or the default one. The default one is an
+	 * instance of the {@link DynamicPointcutFactory} class.
 	 *
-	 * @return the set or default PointcutFactory
+	 * @return the set or default pointcut factory
 	 */
 	public static function getPointcutFactory(Void):PointcutFactory {
 		if (!pointcutFactory) pointcutFactory = new DynamicPointcutFactory();
 		return pointcutFactory;
 	}
 	
+	/**
+	 * Sets a new matcher.
+	 * 
+	 * @param newMatcher the new matcher
+	 */
 	public static function setMatcher(newMatcher:Matcher):Void {
 		matcher = newMatcher;
 	}
 	
+	/**
+	 * Returns either the set or the default matcher. The default matcher is an
+	 * instance of the {@link WildcardMatcher} class.
+	 * 
+	 * @return the set or default matcher
+	 */
 	public static function getMatcher(Void):Matcher {
-		if (!matcher) matcher = new DefaultMatcher();
+		if (!matcher) matcher = new WildcardMatcher();
 		return matcher;
 	}
 	
 	/**
-	 * Private constructor to prevent instantiation.
+	 * Constructs a new {@code AopConfig} instance.
 	 */
 	private function AopConfig(Void) {
 	}

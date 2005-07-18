@@ -18,21 +18,22 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.aop.JoinPoint;
 
 /**
- * Any class implementing this interface represents a pointcut.
- * A pointcut normally defines a pattern that can be matched against
- * a join point to check whether the join point is being captured.
- * Refer to http://www.simonwacker.com/blog/archives/000043.php for
- * a explanation of what pointcuts are in AOP termonology.
+ * {@code Pointcut} represents a pointcut in an Aspect-Oriented Programming Language
+ * like AspectJ. A pointcut is basically a pattern that can be matched against a join
+ * point to check whether the join point is captured. Whether it is captured depends
+ * on the pointcut pattern, which means on the characteristics of the join point.
  *
  * @author Simon Wacker
+ * @see <a href="http://www.simonwacker.com/blog/archives/000043.php">Pointcuts</a>
  */
 interface org.as2lib.aop.Pointcut extends BasicInterface {
 	
 	/**
-	 * Checks if the join point is being captured by this pointcut.
+	 * Checks if the given {@code joinPoint} is captured by this pointcut.
 	 *
-	 * @param joinPoint the join point upon which the check shall be made
-	 * @return true if the join point is being captured by this pointcut
+	 * @param joinPoint the join point upon which to make the check
+	 * @return {@code true} if the given {@code joinPoint} is captured by this pointcut
+	 * else {@code false}
 	 */
 	public function captures(joinPoint:JoinPoint):Boolean;
 	
