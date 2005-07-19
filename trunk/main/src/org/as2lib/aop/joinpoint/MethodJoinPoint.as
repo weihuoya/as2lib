@@ -50,6 +50,8 @@ class org.as2lib.aop.joinpoint.MethodJoinPoint extends AbstractJoinPoint impleme
 	/**
 	 * Returns the info of the represented method. This is a {@link MethodInfo}
 	 * instance.
+	 * 
+	 * @return the info of the represented method
 	 */
 	public function getInfo(Void):TypeMemberInfo {
 		return info;
