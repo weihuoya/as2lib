@@ -18,70 +18,71 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.env.reflect.TypeMemberInfo;
 
 /**
- * JoinPoint represents an identifiable point in a program. Although
- * this points could also be try..catch blocks the join points offered
- * by this framework are limited to members of classes or interfaces.
- * Refer to http://www.simonwacker.com/blog/archives/000041.php for a
- * description of join points in AOP terms.
- *
+ * {@code JoinPoint} represents an identifiable point in a program. Although this
+ * points could by theory also be try..catch blocks, the join points offered by this
+ * framework are limited to members of classes or interfaces, these are methods and
+ * properties.
+ * 
  * @author Simon Wacker
+ * @see <a href="http://www.simonwacker.com/blog/archives/000041.php">Terms and AspectJ</a>
  */
 interface org.as2lib.aop.JoinPoint extends BasicInterface {
 	
 	/**
-	 * Returns the TypeMemberInfo instance, that represents the join
-	 * point. The TypeMemberInfo class is part of the as2libs Reflection
-	 * API.
-	 *
-	 * @return the TypeMemberInfo representing the static part of the join point
+	 * Returns the info of the represented type member; this information is also known
+	 * as the join point's static part.
+	 * 
+	 * @return the info representing the static part of this join point
 	 */
 	public function getInfo(Void):TypeMemberInfo;
 	
 	/**
-	 * Executes the type member represented by this join point, passing the
-	 * arguments and returns the result.
+	 * Executes the type member represented by this join point passing the given
+	 * {@code args} and returns the result.
 	 *
-	 * @param args the arguments to be passed with the method call
-	 * @return the result of the method execution
+	 * @param args the arguments to use for the execution
+	 * @return the result of the type member execution
 	 */
 	public function proceed(args:Array);
 	
 	/**
-	 * Returns the logical this of the interception. That means if the join
-	 * point is part of a call-pointcut the result will refer to the object
-	 * where the call is made from. If the join point is part of an execution-
-	 * pointcut the result will refer to the object the represented method
-	 * resides in.
-	 *
-	 * @return the logical this of the join point depending on the wrapping pointcut
+	 * Returns the logical this of the interception. This means if this join point is
+	 * part of a call-pointcut the result will refer to the object where the call was
+	 * made from. If this join point is part of an execution-, set- or get-pointcut the
+	 * result will refer to the object that represented method or property resides in.
+	 * 
+	 * @return the logical this of this join point depending on the used pointcut
+	 * @see <a href="http://www.simonwacker.com/blog/archives/000068.php">Passing Context</a>
 	 */
 	public function getThis(Void);
 	
 	/**
-	 * Returns a clone of this JoinPoint with the up-to-date type
-	 * member.
+	 * Returns a clone of this join point with the up-to-date concrete type member.
 	 *
-	 * @return a clone of this JoinPoint with a up-to-date type member
+	 * @return a clone of this join point with an up-to-date concrete type member
 	 */
 	public function clone(Void):JoinPoint;
 	
 	/**
-	 * Returns the type of the join point. This can for example be
-	 * AbstractJoinPoint.TYPE_METHOD.
+	 * Returns the type of the join point.
+	 * 
+	 * <p>Supported types are declared as constants in the {@link AbstractJoinPoint}
+	 * class.
 	 *
-	 * @return the type of the join point represented by a number
+	 * @return the type of this join point
 	 */
 	public function getType(Void):Number;
 	
 	/**
-	 * Checks if the join point matches the given pattern. The pattern
-	 * can contain wildcards like '*' or '..'. A pattern could for example
-	 * be 'org..BasicClass.*'.
-	 * Refer to http://www.simonwacker.com/blog/archives/000053.php for
-	 * an explanation of possible wildcards. Note the the '?' wildcard is
-	 * not supported.
-	 *
-	 * @param pattern the pattern to be matched against this join point
+	 * Checks if this join point matches the given {@code pattern}. Depending on the
+	 * used matcher the pattern may contain wildcards like {@code "*"} and {@code ".."}.
+	 * A pattern could for example be {@code "org..BasicClass.*"}.
+	 * 
+	 * @param pattern the pattern to match against this join point
+	 * @return {@code true} if the given {@code pattern} matches this join point else
+	 * {@code false}
+	 * @see WildcardMatcher
+	 * @see <a href="http://www.simonwacker.com/blog/archives/000053">Wildcards</a>
 	 */
 	public function matches(pattern:String):Boolean;
 	
