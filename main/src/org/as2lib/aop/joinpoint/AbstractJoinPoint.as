@@ -150,6 +150,8 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	 * A pattern could for example be {@code "org..BasicClass.*"}.
 	 * 
 	 * @param pattern the pattern to match against this join point
+	 * @return {@code true} if the given {@code pattern} matches this join point else
+	 * {@code false}
 	 * @see WildcardMatcher
 	 * @see <a href="http://www.simonwacker.com/blog/archives/000053">Wildcards</a>
 	 */
