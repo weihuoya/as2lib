@@ -22,61 +22,64 @@ import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.AopConfig;
 
 /**
+ * {@code AbstractAdvice} implements methods commonly needed by {@link Adivce}
+ * implementations.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.advice.AbstractAdvice extends BasicClass {
 	
-	/** Number value indicating a before advice. */
+	/** Signifies a before advice. */
 	public static var BEFORE:Number = 0;
 	
-	/** Number value indicating an around advice. */
+	/** Signifies an around advice. */
 	public static var AROUND:Number = 1;
 	
-	/** Number value indicating an after advice. */
+	/** Signifies an after advice. */
 	public static var AFTER:Number = 2;
 	
-	/** Number value indicating an after returning advice. */
+	/** Signifies an after returning advice. */
 	public static var AFTER_RETURNING:Number = 3;
 	
-	/** Number value indicating an after throwing advice. */
+	/** Signifies an after throwing advice. */
 	public static var AFTER_THROWING:Number = 4;
 	
-	/** Stores the pointcut that is responsible for checking if a join point is captured by the advice. */
+	/** The pointcut that is responsible for checking if a join point is captured by this advice. */
 	private var pointcut:Pointcut;
 	
-	/** Stores the aspect that contains the advice. */
+	/** The aspect that contains this advice. */
 	private var aspect:Aspect;
 	
 	/**
-	 * Private constrcutor to prevent direct instantiation.
+	 * Constructs a new {@code AbstractAdvice} instance.
 	 *
-	 * @param aspect the aspect that contains the advice
+	 * @param aspect (optional) the aspect that contains this advice
 	 */
 	private function AbstractAdvice(aspect:Aspect) {
-		setAspect(aspect);
+		this.aspect = aspect;
 	}
 	
 	/**
-	 * Sets the new aspect.
+	 * Sets the aspect that contains this advice.
 	 *
-	 * @param newAspect the new aspect to be set
+	 * @param aspect the new aspect containing this advice
 	 */
-	private function setAspect(newAspect:Aspect):Void {
-		aspect = newAspect;
+	private function setAspect(aspect:Aspect):Void {
+		this.aspect = aspect;
 	}
 	
 	/**
-	 * Returns the set aspect.
-	 *
-	 * @return the set aspect
+	 * Returns the aspect that contains this advice.
+	 * 
+	 * @return the aspect that contains this advice
 	 */
-	private function getAspect(Void):Aspect {
-		return aspect;
+	public function getAspect(Void):Aspect {
+		return this.aspect;
 	}
 	
 	/**
-	 * @overload #setPointcutByPointcut()
-	 * @overload #setPointcutByString()
+	 * @overload #setPointcutByPointcut
+	 * @overload #setPointcutByString
 	 */
 	private function setPointcut(pointcut) {
 		var overload:Overload = new Overload(this);
@@ -86,37 +89,42 @@ class org.as2lib.aop.advice.AbstractAdvice extends BasicClass {
 	}
 	
 	/**
-	 * Sets the new pointcut.
+	 * Sets a new pointcut. The pointcut determines which join points are captured.
 	 *
-	 * @param newPointcut the new pointcut to be set
+	 * @param pointcut the new pointcut to set
 	 */
-	private function setPointcutByPointcut(newPointcut:Pointcut):Void {
-		pointcut = newPointcut;
+	private function setPointcutByPointcut(pointcut:Pointcut):Void {
+		this.pointcut = pointcut;
 	}
 	
 	/**
-	 * Sets the new pointcut.
+	 * Sets the new pointcut by the pointcut's string representation.
 	 *
-	 * @param pointcutString a string representation of the pointcut to set
-	 * @return the evaluated pointcut
+	 * @param pointcut the string representation of the pointcut
+	 * @return the actual pointcut set that was created by the given {@code pointcut}
+	 * string
 	 */
-	private function setPointcutByString(pointcutString:String):Pointcut {
-		var result:Pointcut = AopConfig.getPointcutFactory().getPointcut(pointcutString);
+	private function setPointcutByString(pointcut:String):Pointcut {
+		var result:Pointcut = AopConfig.getPointcutFactory().getPointcut(pointcut);
 		setPointcutByPointcut(result);
 		return result;
 	}
 	
 	/**
 	 * Returns the set pointcut.
-	 *
+	 * 
 	 * @return the set pointcut
 	 */
 	private function getPointcut(Void):Pointcut {
-		return pointcut;
+		return this.pointcut;
 	}
 	
 	/**
-	 * @see org.as2lib.aop.Advice#captures(JoinPoint):Boolean
+	 * Checks whether this advice captures the given {@code joinPoint}. This check is
+	 * done with the help of the set pointcut's {@code captures} method.
+	 * 
+	 * @param joinPoint the join point upon which to make the check
+	 * @return {@code true} if the given {@code joinPoint} is captured else {@code false}
 	 */
 	public function captures(joinPoint:JoinPoint):Boolean {
 		return pointcut.captures(joinPoint);
