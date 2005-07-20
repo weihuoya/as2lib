@@ -41,7 +41,8 @@ interface org.as2lib.aop.Advice extends BasicInterface {
 	
 	/**
 	 * Returns a proxy method that can be used instead of the original method of the
-	 * {@code joinPoint}.
+	 * {@code joinPoint}. This proxy does not only invoke the original method, but also
+	 * performs the weaved-in actions of the advice.
 	 *
 	 * @param joinPoint the join point that represents the original method
 	 * @return the proxy method

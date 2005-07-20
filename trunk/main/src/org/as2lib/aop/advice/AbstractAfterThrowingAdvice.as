@@ -14,25 +14,40 @@
  * limitations under the License.
  */
 
-import org.as2lib.aop.Aspect;
-import org.as2lib.aop.advice.AbstractAdvice;
-import org.as2lib.aop.JoinPoint;
 import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.aop.Aspect;
+import org.as2lib.aop.JoinPoint;
+import org.as2lib.aop.advice.AbstractAdvice;
+import org.as2lib.aop.advice.AfterThrowingAdvice;
 
 /**
+ * {@code AbstractAfterThrowingAdvice} provides implementations of methods needed by
+ * {@link AfterThrowingAdvice} implementations.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.advice.AbstractAfterThrowingAdvice extends AbstractAdvice {
 	
 	/**
-	 * @see org.as2lib.aop.advice.AbstractAdvice#new(Aspect)
+	 * Constructs a new {@code AbstractAfterThrowingAdvice} instance.
+	 * 
+	 * @param aspect (optional) the aspect that contains this advice
 	 */
 	private function AbstractAfterThrowingAdvice(aspect:Aspect) {
 		super(aspect);
 	}
 	
 	/**
-	 * @see org.as2lib.aop.Advice#getProxy(JoinPoint):Function
+	 * Returns a proxy method that can be used instead of the original method of the
+	 * {@code joinPoint}. This proxy does not only invoke the original method but also
+	 * invokes this advice's {@code execute} method, that must be implemented by
+	 * sub-classes, passing the appropriate join point after the original method has
+	 * been invoked and threw an exception. Note that the {@code execute} method is not
+	 * invoked if the procession of the join point did not result in an exception, but
+	 * in a return value.
+	 *
+	 * @param joinPoint the join point that represents the original method
+	 * @return the proxy method
 	 */
 	public function getProxy(joinPoint:JoinPoint):Function {
 		var owner:AbstractAfterThrowingAdvice = this;
@@ -44,17 +59,28 @@ class org.as2lib.aop.advice.AbstractAfterThrowingAdvice extends AbstractAdvice {
 	}
 	
 	/**
-	 * Logic to be executed when a join point is being reached.
-	 *
+	 * Proceeds the passed-in {@code joinPoint} with the given {@code args} and returns
+	 * the result of this procession after invoking this advice's {@code execute}
+	 * method passing the given {@code joinPoint} and the thrown exception.
+	 * 
+	 * <p>Note that this advice's {@code execute} method is only invoked if the
+	 * procession of the {@code joinPoint} with the given {@code args} resulted in an
+	 * exception.
+	 * 
 	 * @param joinPoint the reached join point
-	 * @param args the arguments passed to the join point
+	 * @param args the arguments to use for the procession of the join point, these are
+	 * normally the ones that were originally passed-to the join point
+	 * @return the result of the procession of the given {@code joinPoint} with the
+	 * given {@code args}
+	 * @throws * if the procession of the {@code joinPoint} with the given {@code args}
+	 * results in an exception
 	 */
 	private function executeJoinPoint(joinPoint:JoinPoint, args:Array) {
 		var result;
 		try {
 			result = joinPoint.proceed(args);
 		} catch (throwable) {
-			this["execute"](joinPoint, throwable);
+			AfterThrowingAdvice(this).execute(joinPoint, throwable);
 			throw throwable;
 		}
 		return result;
