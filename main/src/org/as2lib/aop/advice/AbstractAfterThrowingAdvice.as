@@ -73,7 +73,8 @@ class org.as2lib.aop.advice.AbstractAfterThrowingAdvice extends AbstractAdvice {
 	 * @return the result of the procession of the given {@code joinPoint} with the
 	 * given {@code args}
 	 * @throws * if the procession of the {@code joinPoint} with the given {@code args}
-	 * results in an exception
+	 * results in an exception or if this advice's {@code execute} method threw an
+	 * exception
 	 */
 	private function executeJoinPoint(joinPoint:JoinPoint, args:Array) {
 		var result;
