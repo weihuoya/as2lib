@@ -18,35 +18,44 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.aop.Matcher;
 
 /**
+ * {@code WildcardMatcher} matches a join point with a pattern that may contain
+ * wildcards.
+ * 
+ * TODO: Add a list of supported wildcards and how they can be used.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Matcher {
 	
 	/**
-	 * Constructs a new WildcardMatcher instance.
+	 * Constructs a new {@code WildcardMatcher} instance.
 	 */
 	public function WildcardMatcher(Void) {
 	}
 	
 	/**
-	 * Checks if the passed join point represented by a string
-	 * matches the given pattern. 
+	 * Checks if the passed {@code joinPoint} represented by a string matches the
+	 * given {@code pattern}. 
 	 *
 	 * <p>Supported wildcards are '*' and '..'.
 	 *
-	 * <p>False will be returned if:
+	 * <p>{@code false} will be returned if:
 	 * <ul>
-	 *   <li>The passed-in join point is null, undefined or a blank string.</li>
-	 *   <li>The pattern does not match the join point.</li>
+	 *   <li>
+	 *     The passed-in {@code joinPoint} is {@code null}, {@code undefined} or an
+	 *     empty string.
+	 *   </li>
+	 *   <li>The given {@code pattern} does not match the given {@code joinPoint}.</li>
 	 * </ul>
 	 *
-	 * <p>A pattern of value null, undefined or blank string matches every
-	 * join point.
+	 * <p>A {@code pattern} of value {@code null}, {@code undefined} or empty string
+	 * matches every join point.
 	 *
-	 * @param joinPoint the join point represented as a string used as the base of the match
-	 * @param pattern the pattern that shall match the join point
-	 * 
-	 * @see Matcher#match(String, String):Boolean
+	 * @param joinPoint the string representation of the join point to match with the
+	 * given {@code pattern}
+	 * @param pattern the pattern to match with the {@code joinPoint}
+	 * @return {@code true} if the {@code joinPoint} matches the {@code pattern} else
+	 * {@code false}
 	 */
 	public function match(joinPoint:String, pattern:String):Boolean {
 		if (!joinPoint) return false;
