@@ -18,16 +18,26 @@ import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.Advice;
 
 /**
+ * {@code AfterReturningAdvice} is invoked after a join point, this advice has been
+ * woven-into, has been invoked and returned successfully with a return value, not if
+ * it threw an exception.
+ * 
  * @author Simon Wacker
+ * @see AfterAdvice
+ * @see AfterThrowingAdvice
+ * @see <a href="http://www.simonwacker.com/blog/archives/000066.php">Advice</a>
  */
 interface org.as2lib.aop.advice.AfterReturningAdvice extends Advice {
 	
 	/** 
-	 * Executes the actions that shall take place after the join point
-	 * execution.
+	 * Executes the actions that were woven-in the given {@code joinPoint}.
+	 * 
+	 * <p>If you use the proxy returned by the {@link AbstractAfterReturningAdvice#getProxy}
+	 * method to overwrite the actual join point, this method is invoked after the join
+	 * point was invoked and returned successfully with a return value.
 	 *
-	 * @param joinPoint the join point the advice was woven into
-	 * @param returnValue the result of the join point execution
+	 * @param joinPoint the join point this advice was woven into
+	 * @param returnValue the result of the execution of the join point
 	 */
 	public function execute(joinPoint:JoinPoint, returnValue):Void;
 	
