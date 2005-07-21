@@ -115,7 +115,7 @@ class org.as2lib.aop.advice.AbstractAdvice extends BasicClass {
 	 * 
 	 * @return the set pointcut
 	 */
-	private function getPointcut(Void):Pointcut {
+	public function getPointcut(Void):Pointcut {
 		return this.pointcut;
 	}
 	
