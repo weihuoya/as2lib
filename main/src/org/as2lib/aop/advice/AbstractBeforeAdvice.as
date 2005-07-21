@@ -71,11 +71,14 @@ class org.as2lib.aop.advice.AbstractBeforeAdvice extends AbstractAdvice {
 	 * exception
 	 */
 	private function executeJoinPoint(joinPoint:JoinPoint, args:Array) {
-		// create a copy of 'args' to use for the procession because this advice's 'execute'
+		// create a copy of 'args' to use for the before advice because this advice's 'execute'
 		// method may alter the given 'args'
 		var a:Array = args.concat();
-		BeforeAdvice(this).execute(joinPoint, args);
-		return joinPoint.proceed(a);
+		// 'caller' and 'callee' may be needed by the before advice
+		a.caller = args.caller;
+		a.callee = args.callee;
+		BeforeAdvice(this).execute(joinPoint, a);
+		return joinPoint.proceed(args);
 	}
 	
 }
