@@ -14,25 +14,41 @@
  * limitations under the License.
  */
 
-import org.as2lib.aop.Aspect;
-import org.as2lib.aop.advice.AbstractAdvice;
-import org.as2lib.aop.JoinPoint;
 import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.aop.Aspect;
+import org.as2lib.aop.JoinPoint;
+import org.as2lib.aop.advice.AbstractAdvice;
+import org.as2lib.aop.advice.AroundAdvice;
 
 /**
+ * {@code AbstractAroundAdvice} provides implementations of methods commonly needed
+ * by {@link AroundAdvice} implementations.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.advice.AbstractAroundAdvice extends AbstractAdvice {
 	
 	/**
-	 * @see org.as2lib.aop.advice.AbstractAdvice#new(Aspect)
+	 * Constructs a new {@code AbstractAroundAdvice} instance.
+	 * 
+	 * @param aspect (optional) the aspect that contains this advice
 	 */
 	private function AbstractAroundAdvice(aspect:Aspect) {
 		super(aspect);
 	}
 	
 	/**
-	 * @see org.as2lib.aop.Advice#getProxy(JoinPoint):Function
+	 * Returns a proxy method that can be used instead of the original method of the
+	 * {@code joinPoint}. This proxy just invokes this advice's {@code execute} method
+	 * passing the appropriate join point and the arguments used for the execution of
+	 * the join point.
+	 * 
+	 * <p>If the join point passed-to the {@code execute} method is not invoked
+	 * manually it will not be invoked. The implementor of the {@code execute} method
+	 * is responsible for making the decision whether to invoke the join point or not.
+	 * 
+	 * @param joinPoint the join point that represents the original method
+	 * @return the proxy method
 	 */
 	public function getProxy(joinPoint:JoinPoint):Function {
 		var owner:AbstractAroundAdvice = this;
@@ -44,13 +60,17 @@ class org.as2lib.aop.advice.AbstractAroundAdvice extends AbstractAdvice {
 	}
 	
 	/**
-	 * Logic to be executed when a join point is being reached.
-	 *
+	 * Executes this advice's {@code execute} method, passing the given
+	 * {@code joinPoint} and the given {@code args}.
+	 * 
 	 * @param joinPoint the reached join point
-	 * @param args the arguments passed to the join point
+	 * @param args the arguments used to invoke the join point
+	 * @return the result of the execution of this advice's {@code execute} method
+	 * @throws * if the execution of tis adivce's {@code execute} method results in an
+	 * exception
 	 */
 	private function executeJoinPoint(joinPoint:JoinPoint, args:Array) {
-		return this["execute"](joinPoint, args);
+		return AroundAdvice(this).execute(joinPoint, args);
 	}
 	
 }
