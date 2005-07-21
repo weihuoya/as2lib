@@ -16,40 +16,45 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.aop.Advice;
 import org.as2lib.aop.Pointcut;
 import org.as2lib.app.exec.Call;
 import org.as2lib.aop.AopConfig;
 
 /**
- * AbstractAspect provides convenient method implmenetations and offers
+ * {@code AbstractAspect} provides convenient method implmenetations and offers
  * functionalities to add advices in different manners.
- *
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.aspect.AbstractAspect extends BasicClass {
 	
-	/** Stores the added advices. */
-	private var adviceArray:Array;
+	/** All added advices. */
+	private var advices:Array;
 	
 	/**
-	 * Constructs a new AbstractAspect.
+	 * Constructs a new {@code AbstractAspect} instance.
 	 */
 	private function AbstractAspect(Void) {
-		adviceArray = new Array();
+		this.advices = new Array();
 	}
 	
 	/**
-	 * @see org.as2lib.aop.Aspect#getAdvices(Void):Array
+	 * Returns all added advices.
+	 * 
+	 * <p>The returned advices are needed by weavers.
+	 * 
+	 * @return all added advices
 	 */
 	public function getAdvices(Void):Array {
-		return adviceArray;
+		return this.advices.concat();
 	}
 	
 	/**
-	 * @overload #addAdviceByAdvice()
-	 * @overload #addAdviceByTypeAndStringAndMethod()
-	 * @overload #addAdviceByTypeAndPointcutAndMethod()
+	 * @overload #addAdviceByAdvice
+	 * @overload #addAdviceByTypeAndStringAndMethod
+	 * @overload #addAdviceByTypeAndPointcutAndMethod
 	 */
 	private function addAdvice() {
 		var o:Overload = new Overload(this);
@@ -60,23 +65,37 @@ class org.as2lib.aop.aspect.AbstractAspect extends BasicClass {
 	}
 	
 	/**
-	 * Just adds the passed advice directly.
+	 * Adds the passed-in {@code advice}.
+	 * 
+	 * <p>No action will take place if {@code advice} is {@code null} or
+	 * {@code undefined}.
 	 *
-	 * @param advice the advice to be added
+	 * @param advice the advice to add
 	 */
 	private function addAdviceByAdvice(advice:Advice):Void {
-		adviceArray.push(advice);
+		if (advice) {
+			this.advices.push(advice);
+		}
 	}
 	
 	/**
-	 * Adds a new advice of the given type. The advice is obtained from
-	 * the AdviceFactory.
+	 * Adds a new advice of the given {@code type}, for the given {@code pointcut} and
+	 * with the given {@code method} that is executed if a join point captured by the
+	 * {@code pointcut} is reached.
+	 * 
+	 * <p>The advice is obtained by the {@code getAdvice} method of the advice factory
+	 * returned by {@link AopConfig#getDynamicAdviceFactory} method.
 	 *
-	 * @param type the type of the advice that shall be added
-	 * @param pointcut the pointcut represented by a string that shall be used by the Advice#captures(JoinPoint):Boolean method
-	 * @param method the method that contains the actions to be executed at specific join points
+	 * @param type the type of the advice
+	 * @param pointcut the pointcut represented by a string that determines which join
+	 * points are captured
+	 * @param method the method that contains the actions to be executed at specific
+	 * join points captured by the {@code pointcut}
+	 * @throws IllegalArgumentException if argument {@code method} is {@code null} or
+	 * {@code undefined}
 	 */
 	private function addAdviceByTypeAndStringAndMethod(type:Number, pointcut:String, method:Function):Advice {
+		if (method == null) throw new IllegalArgumentException("Argument 'method' must not be 'null' nor 'undefined'.", this, arguments);
 		var callback:Call = new Call(this, method);
 		var result:Advice = AopConfig.getDynamicAdviceFactory().getAdvice(type, pointcut, callback);
 		addAdviceByAdvice(result);
@@ -84,14 +103,19 @@ class org.as2lib.aop.aspect.AbstractAspect extends BasicClass {
 	}
 	
 	/**
-	 * Adds a new advice of the given type. The advice is obtained from
-	 * the AdviceFactory.
+	 * Adds a new advice of the given {@code type}, for the given {@code pointcut} and
+	 * with the given {@code method} that is executed if a join point captured by the
+	 * {@code pointcut} is reached.
 	 *
-	 * @param type the type of the advice that shall be added
-	 * @param pointcut the pointcut that shall be used by the Advice#captures(JoinPoint):Boolean method
-	 * @param method the method that contains the actions to be executed at specific join points
+	 * @param type the type of the advice
+	 * @param pointcut the pointcut that determines which join points are captured
+	 * @param method the method that contains the actions to be executed at specific
+	 * join points captured by the {@code pointcut}
+	 * @throws IllegalArgumentException if argument {@code method} is {@code null} or
+	 * {@code undefined}
 	 */
 	private function addAdviceByTypeAndPointcutAndMethod(type:Number, pointcut:Pointcut, method:Function):Advice {
+		if (method == null) throw new IllegalArgumentException("Argument 'method' must not be 'null' nor 'undefined'.", this, arguments);
 		var callback:Call = new Call(this, method);
 		var result:Advice = AopConfig.getDynamicAdviceFactory().getAdvice(type, pointcut, callback);
 		addAdviceByAdvice(result);
