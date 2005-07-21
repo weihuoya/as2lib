@@ -81,11 +81,11 @@ class org.as2lib.aop.advice.AbstractAdvice extends BasicClass {
 	 * @overload #setPointcutByPointcut
 	 * @overload #setPointcutByString
 	 */
-	private function setPointcut(pointcut) {
+	private function setPointcut() {
 		var overload:Overload = new Overload(this);
 		overload.addHandler([Pointcut], setPointcutByPointcut);
 		overload.addHandler([String], setPointcutByString);
-		overload.forward(arguments);
+		return overload.forward(arguments);
 	}
 	
 	/**
