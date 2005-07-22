@@ -20,38 +20,55 @@ import org.as2lib.aop.Advice;
 import org.as2lib.aop.Pointcut;
 
 /**
+ * {@code DynamicAdviceFactory} acts as a provider of advices based on specific types.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.aop.advice.DynamicAdviceFactory extends AdviceFactory {
 	
 	/**
-	 * @overload #getAdviceByTypeAndStringAndCall()
-	 * @overload #getAdviceByTypeAndPointcutAndCall()
-	 * @see org.as2lib.aop.advice.AdviceFactory#getAdvice():Advice
+	 * @overload getAdviceByStringAndCall
+	 * @overload getAdviceByPointcutAndCall
+	 * @overload #getAdviceByTypeAndStringAndCall
+	 * @overload #getAdviceByTypeAndPointcutAndCall
 	 */
 	public function getAdvice():Advice;
 	
 	/**
-	 * Returns the advice corresponding to the passed type. The advice
-	 * uses the passed pointcut and callback. The Callback will be executed
-	 * when the Advice#execute(..):Void method is called.
-	 *
-	 * @param type the type of the advice
-	 * @param pointcut a string representation of a pointcut used by the returned advice
-	 * @param callback a Call instance to execute the execute method on when the advice is executed
-	 * @return the advice corresponding to the type
+	 * Returns the advice corresponding to the given {@code type}. The returned advice
+	 * uses the passed-in {@code pointcut} and {@code callback}.
+	 * 
+	 * <p>The {@code callback} is invoked if the {@code execute} method of the returned
+	 * advice is executed.
+	 * 
+	 * <p>Commonly supported types are defined as constants in the
+	 * {@link AbstractAdvice} class.
+	 * 
+	 * @param type the type of the advice to return
+	 * @param pointcut the string representation of a pointcut used by the returned advice
+	 * @param callback the callback that is executed if you invoke the {@code execute}
+	 * method on the returned advice
+	 * @return the advice corresponding to the type and configured with the given
+	 * {@code pointcut} and {@code callback}
 	 */
 	public function getAdviceByTypeAndStringAndCall(type:Number, pointcut:String, callback:Call):Advice;
 	
 	/**
-	 * Returns the advice corresponding to the passed type. The advice
-	 * uses the passed pointcut and callback. The Callback will be executed
-	 * when the Advice#execute(..):Void method is called.
+	 * Returns the advice corresponding to the given {@code type}. The returned advice
+	 * uses the passed-in {@code pointcut} and {@code callback}.
+	 * 
+	 * <p>The {@code callback} is invoked if the {@code execute} method of the returned
+	 * advice is executed.
+	 * 
+	 * <p>Commonly supported types are defined as constants in the
+	 * {@link AbstractAdvice} class.
 	 *
-	 * @param type the type of the advice
+	 * @param type the type of the advice to return
 	 * @param pointcut the pointcut used by the returned advice
-	 * @param callback a Call instance to execute the execute method on when the advice is executed
-	 * @return the advice corresponding to the type
+	 * @param callback the callback that is executed if you invoke the {@code execute}
+	 * method on the returned advice
+	 * @return the advice corresponding to the type and configured with the given
+	 * {@code pointcut} and {@code callback}
 	 */
 	public function getAdviceByTypeAndPointcutAndCall(type:Number, pointcut:Pointcut, callback:Call):Advice;
 	
