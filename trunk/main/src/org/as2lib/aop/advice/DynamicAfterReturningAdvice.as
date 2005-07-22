@@ -14,37 +14,67 @@
  * limitations under the License.
  */
 
+import org.as2lib.app.exec.Call;
+import org.as2lib.env.overload.Overload;
+import org.as2lib.aop.JoinPoint;
+import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.advice.AbstractAfterReturningAdvice;
 import org.as2lib.aop.advice.AfterReturningAdvice;
-import org.as2lib.app.exec.Call;
-import org.as2lib.aop.JoinPoint;
 
 /**
+ * {@code DynamicAfterReturningAdvice} executes a callback at the weave-in point.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.advice.DynamicAfterReturningAdvice extends AbstractAfterReturningAdvice implements AfterReturningAdvice {
 	
-	/** Stores the callback instance. */
+	/** The callback to invoke. */
 	private var callback:Call;
 	
 	/**
-	 * Constrcuts a new DynamicAfterReturningAdvice.
-	 *
-	 * @param pointcut the pointcut that is used by the #captures(JoinPoint):Boolean operation
-	 * @param callback the Call instance executed when the #execute(JoinPoint):Void operation is being executed
+	 * @overload #DynamicAfterReturningAdviceByPointcut
+	 * @overload #DynamicAfterReturningAdviceByPointcutPattern
 	 */
-	public function DynamicAfterReturningAdvice(pointcut, callback:Call) {
+	public function DynamicAfterReturningAdvice() {
+		var o:Overload = new Overload(this);
+		o.addHandler(DynamicAfterReturningAdviceByPointcut, [Pointcut, Call]);
+		o.addHandler(DynamicAfterReturningAdviceByPointcutPattern, [String, Call]);
+		o.forward(arguments);
+	}
+	
+	/**
+	 * Constrcuts a new {@code DynamicAfterReturningAdvice} instance with a pointcut.
+	 *
+	 * @param pointcut the pointcut that determines the join points to weave this
+	 * advice in
+	 * @param callback the callback that is executed at the weave-in point
+	 */
+	private function DynamicAfterReturningAdviceByPointcut(pointcut:Pointcut, callback:Call) {
 		setPointcut(pointcut);
 		this.callback = callback;
 	}
 	
 	/**
-	 * Executes the callback passing the passed join point and return value.
+	 * Constrcuts a new {@code DynamicAfterReturningAdvice} instance with a pointcut pattern.
+	 *
+	 * @param pointcut the pointcut that determines the join points to weave this
+	 * advice in
+	 * @param callback the callback that is executed at the weave-in point
+	 */
+	private function DynamicAfterReturningAdviceByPointcutPattern(pointcut:String, callback:Call) {
+		setPointcut(pointcut);
+		this.callback = callback;
+	}
+	
+	/**
+	 * Executes the callback passing the given {@code joinPoint} and
+	 * {@code returnValue}.
 	 * 
-	 * @see org.as2lib.aop.advice.AfterReturningAdvice#execute(JoinPoint, Object):Void
+	 * @param joinPoint the join point this advice was woven into
+	 * @param returnValue the result of the execution of the join point
 	 */
 	public function execute(joinPoint:JoinPoint, returnValue):Void {
-		callback.execute([joinPoint, returnValue]);
+		callback.execute(joinPoint, returnValue);
 	}
 	
 }
