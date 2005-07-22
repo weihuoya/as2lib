@@ -20,33 +20,38 @@ import org.as2lib.aop.Advice;
 import org.as2lib.aop.Pointcut;
 
 /**
+ * {@code AdviceFactory} acts as provider for instances of type {@link Advice}.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.aop.advice.AdviceFactory extends BasicInterface {
 	
 	/**
-	 * @overload #getAdviceByStringAndCall()
-	 * @overload #getAdviceByPointcutAndCall()
+	 * @overload #getAdviceByStringAndCall
+	 * @overload #getAdviceByPointcutAndCall
 	 */
 	public function getAdvice():Advice;
 	
 	/**
-	 * Returns the appropriate advice corresponding to the passed pointcut
-	 * string and callback instance.
+	 * Returns an advice configured for the given {@code pointcut} string and
+	 * {@code callback}.
 	 *
-	 * @param pointcut a string representation of a pointcut used by the returned advice
-	 * @param callback a Call instance to execute the execute method on when the advice is executed
-	 * @return an advice that uses the passed pointcut and call
+	 * @param pointcut the string representation of a pointcut used by the returned advice
+	 * @param callback the callback that is executed if you invoke the {@code execute}
+	 * method on the returned advice
+	 * @return an advice that is configured with the given {@code pointcut} and
+	 * {@code callback}
 	 */
 	public function getAdviceByStringAndCall(pointcut:String, callback:Call):Advice;
 	
 	/**
-	 * Returns the appropriate advice corresponding to the passed pointcut
-	 * and callback instance.
+	 * Returns an advice configured for the given {@code pointcut} and {@code callback}.
 	 *
 	 * @param pointcut the pointcut used by the returned advice
-	 * @param callback a Call instance to execute the execute method on when the advice is executed
-	 * @return an advice that uses the passed pointcut and call
+	 * @param callback the callback that is executed if you invoke the {@code execute}
+	 * method on the returned advice
+	 * @return an advice that is configured with the given {@code pointcut} and
+	 * {@code callback}
 	 */
 	public function getAdviceByPointcutAndCall(pointcut:Pointcut, callback:Call):Advice;
 	
