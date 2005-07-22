@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.aop.advice.AdviceFactory;
+import org.as2lib.core.BasicInterface;
 import org.as2lib.app.exec.Call;
 import org.as2lib.aop.Advice;
 import org.as2lib.aop.Pointcut;
@@ -24,11 +24,9 @@ import org.as2lib.aop.Pointcut;
  * 
  * @author Simon Wacker
  */
-interface org.as2lib.aop.advice.DynamicAdviceFactory extends AdviceFactory {
+interface org.as2lib.aop.advice.DynamicAdviceFactory extends BasicInterface {
 	
 	/**
-	 * @overload getAdviceByStringAndCall
-	 * @overload getAdviceByPointcutAndCall
 	 * @overload #getAdviceByTypeAndStringAndCall
 	 * @overload #getAdviceByTypeAndPointcutAndCall
 	 */
