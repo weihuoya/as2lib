@@ -20,26 +20,43 @@ import org.as2lib.env.overload.Overload;
 import org.as2lib.app.exec.Call;
 import org.as2lib.aop.Advice;
 import org.as2lib.aop.Pointcut;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.util.ClassUtil;
 
 /**
+ * {@code SimpleAdviceFactory} creates advices dynamically based on an advice class.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.advice.SimpleAdviceFactory extends BasicClass implements AdviceFactory {
 	
-	/** Stores the advice. */
-	private var advice:Function;
+	/** The advice class. */
+	private var adviceClass:Function;
 	
 	/**
-	 * Constructs a new SimpleAdviceFactory.
+	 * Constructs a new {@code SimpleAdviceFactory} instance.
+	 * 
+	 * <p>The {@code adviceClass} is suspected to have a constructor that takes two
+	 * arguments. The first argument is either a pointcut pattern or a {@link Pointcut}
+	 * instance and the second argument is a callback of instance {@link Call}.
 	 *
-	 * @param advice the actual advice to return a instance of
+	 * @param advice the advice class to return instances of
+	 * @throws IllegalArgumentException if argument {@code adviceClass} is {@code null}
+	 * or {@code undefined}
+	 * @throws IllegalArgumentException if the passed-in {@code adviceClass} is not an
+	 * implementation of the {@link Advice} interface
 	 */
-	public function SimpleAdviceFactory(advice:Function) {
-		this.advice = advice;
+	public function SimpleAdviceFactory(adviceClass:Function) {
+		if (!adviceClass) throw new IllegalArgumentException("Argument 'adviceClass' must not be 'null' nor 'undefined'.", this, arguments);
+		if (!ClassUtil.isImplementationOf(adviceClass, Advice)) {
+			throw new IllegalArgumentException("Argument 'adviceClass' is not an implementation of interface 'Advice'.", this, arguments);
+		}
+		this.adviceClass = adviceClass;
 	}
 	
 	/**
-	 * @see org.as2lib.aop.advice.AdviceFactory#getAdvice():Advice
+	 * @overload #getAdviceByStringAndCall
+	 * @overload #getAdviceByPointcutAndCall
 	 */
 	public function getAdvice():Advice {
 		var o:Overload = new Overload(this);
@@ -49,17 +66,30 @@ class org.as2lib.aop.advice.SimpleAdviceFactory extends BasicClass implements Ad
 	}
 	
 	/**
-	 * @see org.as2lib.aop.advice.AdviceFactory#getAdviceByStringAndCall(String, Call):Advice
+	 * Returns an advice configured for the given {@code pointcut} string and
+	 * {@code callback}.
+	 *
+	 * @param pointcut the string representation of a pointcut used by the returned advice
+	 * @param callback the callback that is executed if you invoke the {@code execute}
+	 * method on the returned advice
+	 * @return an advice that is configured with the given {@code pointcut} and
+	 * {@code callback}
 	 */
 	public function getAdviceByStringAndCall(pointcut:String, callback:Call):Advice {
-		return Advice(new advice(pointcut, callback));
+		return Advice(new adviceClass(pointcut, callback));
 	}
 	
 	/**
-	 * @see org.as2lib.aop.advice.AdviceFactory#getAdviceByPointcutAndCall(Pointcut, Call):Advice
+	 * Returns an advice configured for the given {@code pointcut} and {@code callback}.
+	 *
+	 * @param pointcut the pointcut used by the returned advice
+	 * @param callback the callback that is executed if you invoke the {@code execute}
+	 * method on the returned advice
+	 * @return an advice that is configured with the given {@code pointcut} and
+	 * {@code callback}
 	 */
 	public function getAdviceByPointcutAndCall(pointcut:Pointcut, callback:Call):Advice {
-		return Advice(new advice(pointcut, callback));
+		return Advice(new adviceClass(pointcut, callback));
 	}
 	
 }
