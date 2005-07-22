@@ -18,32 +18,63 @@ import org.as2lib.aop.advice.AbstractAroundAdvice;
 import org.as2lib.aop.advice.AroundAdvice;
 import org.as2lib.app.exec.Call;
 import org.as2lib.aop.JoinPoint;
+import org.as2lib.env.overload.Overload;
+import org.as2lib.aop.Pointcut;
 
 /**
+ * {@code DynamicAroundAdvice} executes a callback at the weave-in point.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.advice.DynamicAroundAdvice extends AbstractAroundAdvice implements AroundAdvice {
 	
-	/** Stores the callback instance. */
+	/** The callback to invoke. */
 	private var callback:Call;
 	
 	/**
-	 * Constrcuts a new DynamicAroundAdvice.
-	 *
-	 * @param pointcut the pointcut that is used by the #captures(JoinPoint):Boolean operation
-	 * @param callback the Call instance executed when the #execute(JoinPoint):Void operation is being executed
+	 * @overload #DynamicAroundAdviceByPointcut
+	 * @overload #DynamicAroundAdviceByPointcutPattern
 	 */
-	public function DynamicAroundAdvice(pointcut, callback:Call) {
+	public function DynamicAroundAdvice() {
+		var o:Overload = new Overload(this);
+		o.addHandler(DynamicAroundAdviceByPointcut, [Pointcut, Call]);
+		o.addHandler(DynamicAroundAdviceByPointcutPattern, [String, Call]);
+		o.forward(arguments);
+	}
+	
+	/**
+	 * Constrcuts a new {@code DynamicAroundAdvice} instance with a pointcut.
+	 *
+	 * @param pointcut the pointcut that determines the join points to weave this
+	 * advice in
+	 * @param callback the callback that is executed at the weave-in point
+	 */
+	private function DynamicAroundAdviceByPointcut(pointcut:Pointcut, callback:Call) {
 		setPointcut(pointcut);
 		this.callback = callback;
 	}
 	
 	/**
-	 * Executes the callback passing the passed join point and arguments.
+	 * Constrcuts a new {@code DynamicAroundAdvice} instance with a pointcut pattern.
+	 *
+	 * @param pointcut the pointcut that determines the join points to weave this
+	 * advice in
+	 * @param callback the callback that is executed at the weave-in point
+	 */
+	private function DynamicAroundAdviceByPointcutPattern(pointcut:String, callback:Call) {
+		setPointcut(pointcut);
+		this.callback = callback;
+	}
+	
+	/**
+	 * Executes the callback passing the passed {@code joinPoint} and {@code args}.
 	 * 
-	 * @see org.as2lib.aop.advice.AroundAdvice#execute(JoinPoint, Array):Void
+	 * @param joinPoint the join point this advice was woven into
+	 * @param args the arguments passed to the join point
+	 * @return the result of the execution of the callback
 	 */
 	public function execute(joinPoint:JoinPoint, args:Array) {
-		callback.execute([joinPoint, args]);
+		return callback.execute(joinPoint, args);
 	}
+	
 }

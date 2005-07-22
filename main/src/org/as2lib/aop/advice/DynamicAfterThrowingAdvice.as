@@ -18,33 +18,62 @@ import org.as2lib.aop.advice.AbstractAfterThrowingAdvice;
 import org.as2lib.aop.advice.AfterThrowingAdvice;
 import org.as2lib.app.exec.Call;
 import org.as2lib.aop.JoinPoint;
+import org.as2lib.env.overload.Overload;
+import org.as2lib.aop.Pointcut;
 
 /**
+ * {@code DynamicAfterThrowingAdvice} executes a callback at the weave-in point.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.advice.DynamicAfterThrowingAdvice extends AbstractAfterThrowingAdvice implements AfterThrowingAdvice {
 	
-	/** Stores the callback instance. */
+	/** The callback to invoke. */
 	private var callback:Call;
 	
 	/**
-	 * Constrcuts a new DynamicAfterThrowingAdvice.
-	 *
-	 * @param pointcut the pointcut that is used by the #captures(JoinPoint):Boolean operation
-	 * @param callback the Call instance executed when the #execute(JoinPoint):Void operation is being executed
+	 * @overload #DynamicAfterThrowingAdviceByPointcut
+	 * @overload #DynamicAfterThrowingAdviceByPointcutPattern
 	 */
-	public function DynamicAfterThrowingAdvice(pointcut, callback:Call) {
+	public function DynamicAfterThrowingAdvice() {
+		var o:Overload = new Overload(this);
+		o.addHandler(DynamicAfterThrowingAdviceByPointcut, [Pointcut, Call]);
+		o.addHandler(DynamicAfterThrowingAdviceByPointcutPattern, [String, Call]);
+		o.forward(arguments);
+	}
+	
+	/**
+	 * Constrcuts a new {@code DynamicAfterThrowingAdvice} instance with a pointcut.
+	 *
+	 * @param pointcut the pointcut that determines the join points to weave this
+	 * advice in
+	 * @param callback the callback that is executed at the weave-in point
+	 */
+	private function DynamicAfterThrowingAdviceByPointcut(pointcut:Pointcut, callback:Call) {
 		setPointcut(pointcut);
 		this.callback = callback;
 	}
 	
 	/**
-	 * Executes the callback passing the passed join point and throwable.
+	 * Constrcuts a new {@code DynamicAfterThrowingAdvice} instance with a pointcut pattern.
+	 *
+	 * @param pointcut the pointcut that determines the join points to weave this
+	 * advice in
+	 * @param callback the callback that is executed at the weave-in point
+	 */
+	private function DynamicAfterThrowingAdviceByPointcutPattern(pointcut:String, callback:Call) {
+		setPointcut(pointcut);
+		this.callback = callback;
+	}
+	
+	/**
+	 * Executes the callback passing the passed {@code joinPoint} and {@code throwable}.
 	 * 
-	 * @see org.as2lib.aop.advice.AfterThrowingAdvice#execute(JoinPoint, *):Void
+	 * @param joinPoint the join point this advice was woven into
+	 * @param throwable the throwable thrown by the given {@code joinPoint}
 	 */
 	public function execute(joinPoint:JoinPoint, throwable):Void {
-		callback.execute([joinPoint, throwable]);
+		callback.execute(joinPoint, throwable);
 	}
 	
 }
