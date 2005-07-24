@@ -123,11 +123,14 @@ class org.as2lib.aop.advice.AbstractAdvice extends BasicClass {
 	 * Checks whether this advice captures the given {@code joinPoint}. This check is
 	 * done with the help of the set pointcut's {@code captures} method.
 	 * 
+	 * <p>If there is no pointcut set, {@code false} will be returned.
+	 * 
 	 * @param joinPoint the join point upon which to make the check
 	 * @return {@code true} if the given {@code joinPoint} is captured else {@code false}
 	 */
 	public function captures(joinPoint:JoinPoint):Boolean {
-		return pointcut.captures(joinPoint);
+		if (!this.pointcut) return false;
+		return this.pointcut.captures(joinPoint);
 	}
 	
 }
