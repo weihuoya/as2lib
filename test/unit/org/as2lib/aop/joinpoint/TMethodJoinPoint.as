@@ -103,9 +103,6 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 		SuperClass.prototype.test = o2;
 		SuperSuperClass.prototype.test = o3;
 		SuperSuperSuperClass.prototype.test = o4;
-		
-		trace(a);
-		trace(e);
 	}
 	
 	public function testMatchesWithNullPattern(Void):Void {
