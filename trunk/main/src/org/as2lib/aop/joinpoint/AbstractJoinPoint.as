@@ -15,10 +15,11 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.aop.Matcher;
-import org.as2lib.aop.AopConfig;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.aop.Matcher;
+import org.as2lib.aop.AopConfig;
+import org.as2lib.aop.JoinPoint;
 
 /**
  * {@code AbstractJoinPoint} provides implementations of methods commonly needed by
@@ -100,6 +101,9 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	 * Sets the new matcher that is used by the {@link #captures} method to evaluate
 	 * this join point against a given pattern.
 	 * 
+	 * <p>If {@code matcher} is {@code null} or {@code undefined}, {@link getMatcher}
+	 * will return the default matcher.
+	 * 
 	 * @param matcher the new matcher to set
 	 */
 	public function setMatcher(matcher:Matcher):Void {
@@ -129,8 +133,11 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	 * @param method the method to proceed
 	 * @param args the arguments to use for the procession
 	 * @return the result of the procession
+	 * @throws IllegalArgumentException if argument {@code method} is {@code null} or
+	 * {@code undefined}
 	 */
 	private function proceedMethod(method:MethodInfo, args:Array) {
+		if (!method) throw new IllegalArgumentException("Argument 'method' must not be 'null' nor 'undefined'.", this, arguments);
 		var p:Object = method.getDeclaringType().getType().prototype;
 		var t:Object = this.thiz;
 		var m:Function = method.getMethod();
@@ -156,7 +163,7 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	 * @see <a href="http://www.simonwacker.com/blog/archives/000053">Wildcards</a>
 	 */
 	public function matches(pattern:String):Boolean {
-		return getMatcher().match((this["getInfo"]().getDeclaringType().getFullName() + "." + this["getInfo"]().getName()), pattern);
+		return getMatcher().match(JoinPoint(this).getInfo().getFullName(), pattern);
 	}
 	
 }
