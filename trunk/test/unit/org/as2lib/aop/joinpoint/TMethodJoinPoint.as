@@ -20,6 +20,13 @@ import org.as2lib.aop.joinpoint.MethodJoinPoint;
 import org.as2lib.aop.Matcher;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.TypeInfo;
+import org.as2lib.aop.joinpoint.Class;
+import org.as2lib.aop.joinpoint.SuperClass;
+import org.as2lib.aop.joinpoint.SuperSuperClass;
+import org.as2lib.aop.joinpoint.SuperSuperSuperClass;
+import org.as2lib.aop.advice.DynamicAfterReturningAdvice;
+import org.as2lib.app.exec.Call;
+import org.as2lib.env.reflect.ClassInfo;
 
 /**
  * @author Simon Wacker
@@ -62,60 +69,44 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 		ic.verify();
 	}
 	
-	/*public function testProceedWithNullArgs(Void):Void {
-		var r:Object = new Object();
+	public function testProceed(Void):Void {
+		var e:Array = new Array();
+		var c:Class = new Class(e);
+		c.test();
 		
-		var tc:MockControl = new MockControl(Object);
-		var t:Object = tc.getMock();
-		tc.replay();
+		var o1:Function = Class.prototype.test;
+		var o2:Function = SuperClass.prototype.test;
+		var o3:Function = SuperSuperClass.prototype.test;
+		var o4:Function = SuperSuperSuperClass.prototype.test;
 		
-		var fc:MockControl = new MockControl(Function);
-		var f:Function = fc.getMock();
-		f.apply(t, null);
-		fc.setReturnValue(r);
-		fc.replay();
+		var d:DynamicAfterReturningAdvice = new DynamicAfterReturningAdvice("", new Call(new Object(), function(){}));
+		var p1:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(Class).getMethod("test"), this).clone());
+		var p2:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperClass).getMethod("test"), this).clone());
+		var p3:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperSuperClass).getMethod("test"), this).clone());
+		var p4:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperSuperSuperClass).getMethod("test"), this).clone());
 		
-		var ic:MockControl = new MockControl(MethodInfo);
-		var i:MethodInfo = ic.getMock();
-		i.getMethod();
-		ic.setReturnValue(f);
-		ic.replay();
-	
-		var j:MethodJoinPoint = new MethodJoinPoint(i, t);
-		assertSame(j.proceed(null), r);
+		Class.prototype.test = p1;
+		SuperClass.prototype.test = p2;
+		SuperSuperClass.prototype.test = p3;
+		SuperSuperSuperClass.prototype.test = p4;
 		
-		ic.verify();
-		tc.verify();
-		fc.verify();
+		var a:Array = new Array();
+		c = new Class(a);
+		c.test();
+		
+		assertSame("expectation was not met", e.length, a.length);
+		for (var i:Number = 0; i < e.length; i++) {
+			assertSame("expectation [" + e[i] + "] does not match actuality [" + a[i] + "]", e[i], a[i]);
+		}
+		
+		Class.prototype.test = o1;
+		SuperClass.prototype.test = o2;
+		SuperSuperClass.prototype.test = o3;
+		SuperSuperSuperClass.prototype.test = o4;
+		
+		trace(a);
+		trace(e);
 	}
-	
-	public function testProceedWithRealArgs(Void):Void {
-		var r:Object = new Object();
-		var a:Array = [new Object(), "arg2", 3, new Function()];
-		
-		var tc:MockControl = new MockControl(Object);
-		var t:Object = tc.getMock();
-		tc.replay();
-		
-		var fc:MockControl = new MockControl(Function);
-		var f:Function = fc.getMock();
-		f.apply(t, a);
-		fc.setReturnValue(r);
-		fc.replay();
-		
-		var ic:MockControl = new MockControl(MethodInfo);
-		var i:MethodInfo = ic.getMock();
-		i.getMethod();
-		ic.setReturnValue(f);
-		ic.replay();
-	
-		var j:MethodJoinPoint = new MethodJoinPoint(i, t);
-		assertSame(j.proceed(a), r);
-		
-		ic.verify();
-		tc.verify();
-		fc.verify();
-	}*/
 	
 	public function testMatchesWithNullPattern(Void):Void {
 		var mc:MockControl = new MockControl(Matcher);
@@ -128,18 +119,10 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 		var t:Object = tc.getMock();
 		tc.replay();
 		
-		var dc:MockControl = new MockControl(TypeInfo);
-		var d:TypeInfo = dc.getMock();
-		d.getFullName();
-		dc.setReturnValue("org.as2lib.core.BasicClass");
-		dc.replay();
-		
 		var ic:MockControl = new MockControl(MethodInfo);
 		var i:MethodInfo = ic.getMock();
-		i.getDeclaringType();
-		ic.setReturnValue(d);
-		i.getName();
-		ic.setReturnValue("myMethod");
+		i.getFullName();
+		ic.setReturnValue("org.as2lib.core.BasicClass.myMethod");
 		ic.replay();
 		
 		var j:MethodJoinPoint = new MethodJoinPoint(i, t);
@@ -147,7 +130,6 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 		assertTrue(j.matches(null));
 		
 		ic.verify();
-		dc.verify();
 		tc.verify();
 		mc.verify();
 	}
@@ -163,18 +145,10 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 		var t:Object = tc.getMock();
 		tc.replay();
 		
-		var dc:MockControl = new MockControl(TypeInfo);
-		var d:TypeInfo = dc.getMock();
-		d.getFullName();
-		dc.setReturnValue("org.as2lib.core.BasicClass");
-		dc.replay();
-		
 		var ic:MockControl = new MockControl(MethodInfo);
 		var i:MethodInfo = ic.getMock();
-		i.getDeclaringType();
-		ic.setReturnValue(d);
-		i.getName();
-		ic.setReturnValue("myMethod");
+		i.getFullName();
+		ic.setReturnValue("org.as2lib.core.BasicClass.myMethod");
 		ic.replay();
 		
 		var j:MethodJoinPoint = new MethodJoinPoint(i, t);
@@ -182,7 +156,6 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 		assertFalse(j.matches("org.*.BasicClass.*()"));
 		
 		ic.verify();
-		dc.verify();
 		tc.verify();
 		mc.verify();
 	}

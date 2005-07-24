@@ -93,18 +93,10 @@ class org.as2lib.aop.joinpoint.TPropertyJoinPoint extends TestCase {
 		var t:Object = tc.getMock();
 		tc.replay();
 		
-		var dc:MockControl = new MockControl(TypeInfo);
-		var d:TypeInfo = dc.getMock();
-		d.getFullName();
-		dc.setReturnValue("org.as2lib.core.BasicClass");
-		dc.replay();
-		
 		var ic:MockControl = new MockControl(PropertyInfo);
 		var i:PropertyInfo = ic.getMock();
-		i.getDeclaringType();
-		ic.setReturnValue(d);
-		i.getName();
-		ic.setReturnValue("myProperty");
+		i.getFullName();
+		ic.setReturnValue("org.as2lib.core.BasicClass.myProperty");
 		ic.replay();
 		
 		var j:PropertyJoinPoint = new PropertyJoinPoint(i, t);
@@ -112,7 +104,6 @@ class org.as2lib.aop.joinpoint.TPropertyJoinPoint extends TestCase {
 		assertTrue(j.matches(null));
 		
 		ic.verify();
-		dc.verify();
 		tc.verify();
 		mc.verify();
 	}
@@ -128,18 +119,10 @@ class org.as2lib.aop.joinpoint.TPropertyJoinPoint extends TestCase {
 		var t:Object = tc.getMock();
 		tc.replay();
 		
-		var dc:MockControl = new MockControl(TypeInfo);
-		var d:TypeInfo = dc.getMock();
-		d.getFullName();
-		dc.setReturnValue("org.as2lib.core.BasicClass");
-		dc.replay();
-		
 		var ic:MockControl = new MockControl(PropertyInfo);
 		var i:PropertyInfo = ic.getMock();
-		i.getDeclaringType();
-		ic.setReturnValue(d);
-		i.getName();
-		ic.setReturnValue("myProperty");
+		i.getFullName();
+		ic.setReturnValue("org.as2lib.core.BasicClass.myProperty");
 		ic.replay();
 		
 		var j:PropertyJoinPoint = new PropertyJoinPoint(i, t);
@@ -147,7 +130,6 @@ class org.as2lib.aop.joinpoint.TPropertyJoinPoint extends TestCase {
 		assertFalse(j.matches("org.*.BasicClass.*()"));
 		
 		ic.verify();
-		dc.verify();
 		tc.verify();
 		mc.verify();
 	}
