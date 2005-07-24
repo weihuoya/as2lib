@@ -37,8 +37,8 @@ class org.as2lib.aop.advice.DynamicAfterReturningAdvice extends AbstractAfterRet
 	 */
 	public function DynamicAfterReturningAdvice() {
 		var o:Overload = new Overload(this);
-		o.addHandler(DynamicAfterReturningAdviceByPointcut, [Pointcut, Call]);
-		o.addHandler(DynamicAfterReturningAdviceByPointcutPattern, [String, Call]);
+		o.addHandler([Pointcut, Call], DynamicAfterReturningAdviceByPointcut);
+		o.addHandler([String, Call], DynamicAfterReturningAdviceByPointcutPattern);
 		o.forward(arguments);
 	}
 	

@@ -37,8 +37,8 @@ class org.as2lib.aop.advice.DynamicAfterThrowingAdvice extends AbstractAfterThro
 	 */
 	public function DynamicAfterThrowingAdvice() {
 		var o:Overload = new Overload(this);
-		o.addHandler(DynamicAfterThrowingAdviceByPointcut, [Pointcut, Call]);
-		o.addHandler(DynamicAfterThrowingAdviceByPointcutPattern, [String, Call]);
+		o.addHandler([Pointcut, Call], DynamicAfterThrowingAdviceByPointcut);
+		o.addHandler([String, Call], DynamicAfterThrowingAdviceByPointcutPattern);
 		o.forward(arguments);
 	}
 	

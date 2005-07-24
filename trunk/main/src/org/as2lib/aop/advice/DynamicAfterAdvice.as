@@ -37,8 +37,8 @@ class org.as2lib.aop.advice.DynamicAfterAdvice extends AbstractAfterAdvice imple
 	 */
 	public function DynamicAfterAdvice() {
 		var o:Overload = new Overload(this);
-		o.addHandler(DynamicAfterAdviceByPointcut, [Pointcut, Call]);
-		o.addHandler(DynamicAfterAdviceByPointcutPattern, [String, Call]);
+		o.addHandler([Pointcut, Call], DynamicAfterAdviceByPointcut);
+		o.addHandler([String, Call], DynamicAfterAdviceByPointcutPattern);
 		o.forward(arguments);
 	}
 	
