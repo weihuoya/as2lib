@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.aop.joinpoint.PropertyJoinPoint;
 import org.as2lib.env.reflect.PropertyInfo;
 
@@ -34,10 +35,15 @@ class org.as2lib.aop.joinpoint.SetPropertyJoinPoint extends PropertyJoinPoint {
 	 * {@code undefined}
 	 * @throws IllegalArgumentException if argument {@code info} is {@code null} or
 	 * {@code undefined}
+	 * @throws IllegalArgumentException if argument {@code info} reflects a not-writable
+	 * property
 	 * @see <a href="http://www.simonwacker.com/blog/archives/000068.php">Passing Context</a>
 	 */
 	public function SetPropertyJoinPoint(info:PropertyInfo, thiz) {
 		super(info, thiz);
+		if (!info.isWritable()) {
+			throw new IllegalArgumentException("Argument 'info' [" + info + "] reflects a not-writable property. Set access is not possible for this kind of property.", this, arguments);
+		}
 	}
 	
 	/**

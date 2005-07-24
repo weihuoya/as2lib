@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.aop.joinpoint.PropertyJoinPoint;
 
@@ -34,10 +35,15 @@ class org.as2lib.aop.joinpoint.GetPropertyJoinPoint extends PropertyJoinPoint {
 	 * {@code undefined}
 	 * @throws IllegalArgumentException if argument {@code info} is {@code null} or
 	 * {@code undefined}
+	 * @throws IllegalArgumentException if argument {@code info} reflects a not-readable
+	 * property
 	 * @see <a href="http://www.simonwacker.com/blog/archives/000068.php">Passing Context</a>
 	 */
 	public function GetPropertyJoinPoint(info:PropertyInfo, thiz) {
 		super(info, thiz);
+		if (!info.isReadable()) {
+			throw new IllegalArgumentException("Argument 'info' [" + info + "] reflects a not-readable property. Get access is not possible for this kind of property.", this, arguments);
+		}
 	}
 	
 	/**
