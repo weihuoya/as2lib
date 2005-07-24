@@ -37,8 +37,8 @@ class org.as2lib.aop.advice.DynamicBeforeAdvice extends AbstractBeforeAdvice imp
 	 */
 	public function DynamicBeforeAdvice() {
 		var o:Overload = new Overload(this);
-		o.addHandler(DynamicBeforeAdviceByPointcut, [Pointcut, Call]);
-		o.addHandler(DynamicBeforeAdviceByPointcutPattern, [String, Call]);
+		o.addHandler([Pointcut, Call], DynamicBeforeAdviceByPointcut);
+		o.addHandler([String, Call], DynamicBeforeAdviceByPointcutPattern);
 		o.forward(arguments);
 	}
 	

@@ -37,8 +37,8 @@ class org.as2lib.aop.advice.DynamicAroundAdvice extends AbstractAroundAdvice imp
 	 */
 	public function DynamicAroundAdvice() {
 		var o:Overload = new Overload(this);
-		o.addHandler(DynamicAroundAdviceByPointcut, [Pointcut, Call]);
-		o.addHandler(DynamicAroundAdviceByPointcutPattern, [String, Call]);
+		o.addHandler([Pointcut, Call], DynamicAroundAdviceByPointcut);
+		o.addHandler([String, Call], DynamicAroundAdviceByPointcutPattern);
 		o.forward(arguments);
 	}
 	
