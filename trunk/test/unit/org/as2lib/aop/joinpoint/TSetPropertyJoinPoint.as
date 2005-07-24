@@ -25,6 +25,33 @@ import org.as2lib.env.reflect.MethodInfo;
  */
 class org.as2lib.aop.joinpoint.TSetPropertyJoinPoint extends TestCase {
 	
+	public function testNewWithNotWritableProperty(Void):Void {
+		var ic:MockControl = new MockControl(PropertyInfo);
+		ic.setHandleToStringInvocations(false);
+		var i:PropertyInfo = ic.getMock();
+		i.isWritable();
+		ic.setReturnValue(false);
+		i.toString();
+		ic.setReturnValue("");
+		ic.replay();
+		try {
+			new SetPropertyJoinPoint(i, new Object());
+			fail("expected IllegalArgumentException");
+		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
+		}
+		ic.verify();
+	}
+	
+	public function testNewWithWritableProperty(Void):Void {
+		var ic:MockControl = new MockControl(PropertyInfo);
+		var i:PropertyInfo = ic.getMock();
+		i.isWritable();
+		ic.setReturnValue(true);
+		ic.replay();
+		new SetPropertyJoinPoint(i, new Object());
+		ic.verify();
+	}
+	
 	/*public function testProceedWithNullArgs(Void):Void {
 		var r:Object = new Object();
 		
