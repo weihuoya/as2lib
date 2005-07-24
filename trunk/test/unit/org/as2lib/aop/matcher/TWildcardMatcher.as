@@ -55,42 +55,42 @@ class org.as2lib.aop.matcher.TWildcardMatcher extends TestCase {
 	
 	public function testMatchWithAsteriskReplacingCompleteNode(Void):Void {
 		var m:WildcardMatcher = new WildcardMatcher();
-		assertTrue("1", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "*.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean"));
-		assertTrue("2", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "org.as2lib.env.bean.factory.support.WildcardBeanFactory.*"));
-		assertTrue("3", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "org.as2lib.env.bean.*.support.WildcardBeanFactory.getBean"));
-		assertTrue("4", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "*.as2lib.*.bean.factory.*.*.*"));
-		assertFalse("5", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "*.*.as2lib.*.bean.factory.*.*.*"));
-		assertFalse("6", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "*.as2lib.*.bean.factory.*.*.*.*"));
-		assertFalse("7", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "org.as2lib.env.bean.factory.support.WildcardBeanFactory.*.getBean"));
-		assertFalse("8", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "org.as2lib.*.bean.factory.*.*.WildcardBeanFactory.getBean"));
+		assertTrue("1", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean"));
+		assertTrue("2", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org.as2lib.env.bean.factory.support.DefaultBeanFactory.*"));
+		assertTrue("3", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org.as2lib.env.bean.*.support.DefaultBeanFactory.getBean"));
+		assertTrue("4", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*.as2lib.*.bean.factory.*.*.*"));
+		assertFalse("5", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*.*.as2lib.*.bean.factory.*.*.*"));
+		assertFalse("6", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*.as2lib.*.bean.factory.*.*.*.*"));
+		assertFalse("7", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org.as2lib.env.bean.factory.support.DefaultBeanFactory.*.getBean"));
+		assertFalse("8", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org.as2lib.*.bean.factory.*.*.DefaultBeanFactory.getBean"));
 	}
 	
 	public function testMatchWithAsteriskReplacingOnlyNodeParts(Void):Void {
 		var m:WildcardMatcher = new WildcardMatcher();
-		assertTrue("1", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "*rg.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean"));
-		assertTrue("2", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "org.as2lib.env.bean.factory.support.WildcardBeanFactory.get*"));
-		assertTrue("3", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "*rg.as2lib.env.bean.factory.*port.WildcardBeanFactory.*Bean"));
-		assertTrue("4", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "*rg.as2lib.env.bean.factory.support.Wildcard*Factory.getBean"));
-		assertTrue("5", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "*rg.a*l*.env.bean.*cto*.support.Wildcard*Factory.getBean"));
-		assertTrue("6", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "*rg.a*l*.env.bean.*cto*.support.D*ault*Fa*o*.getBean"));
-		assertFalse("7", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "*rg.a*l*.env.unexpectedpackage.bean.*cto*.support.D*ault*Fa*o*.getBean"));
-		assertFalse("8", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "*rg.a*l*.env.*.bean.*cto*.support.unexpected*.D*ault*Fa*o*.getBean"));
-		assertFalse("9", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "*.*rg.a*l*.env.*.bean.*cto*.support.D*ault*Fa*o*.getBean"));
+		assertTrue("1", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*rg.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean"));
+		assertTrue("2", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org.as2lib.env.bean.factory.support.DefaultBeanFactory.get*"));
+		assertTrue("3", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*rg.as2lib.env.bean.factory.*port.DefaultBeanFactory.*Bean"));
+		assertTrue("4", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*rg.as2lib.env.bean.factory.support.Default*Factory.getBean"));
+		assertTrue("5", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*rg.a*l*.env.bean.*cto*.support.Default*Factory.getBean"));
+		assertTrue("6", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*rg.a*l*.env.bean.*cto*.support.D*ault*Fa*o*.getBean"));
+		assertFalse("7", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*rg.a*l*.env.unexpectedpackage.bean.*cto*.support.D*ault*Fa*o*.getBean"));
+		assertFalse("8", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*rg.a*l*.env.*.bean.*cto*.support.unexpected*.D*ault*Fa*o*.getBean"));
+		assertFalse("9", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*.*rg.a*l*.env.*.bean.*cto*.support.D*ault*Fa*o*.getBean"));
 	}
 	
 	public function testMatchWithDoublePeriod(Void):Void {
 		var m:WildcardMatcher = new WildcardMatcher();
-		assertTrue("1", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "..org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean"));
-		assertTrue("2", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "..as2lib.env.bean.factory.support.WildcardBeanFactory.getBean"));
-		assertTrue("3", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "org..factory.support.WildcardBeanFactory.getBean"));
-		assertTrue("4", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "org..factory..WildcardBeanFactory.getBean"));
-		assertTrue("5", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "org..factory.support..WildcardBeanFactory.getBean"));
-		assertTrue("6", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "org.as2lib..WildcardBeanFactory.getBean"));
-		assertTrue("7", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "..WildcardBeanFactory.getBean"));
-		assertFalse("8", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "org.as2lib.env.bean..unexpectedpackage.support.WildcardBeanFactory.getBean"));
-		assertFalse("9", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "org.as2lib..support.unexpectedpackage..WildcardBeanFactory.getBean"));
-		assertFalse("10", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "org.as2lib.env..support..unexpectedpackage.WildcardBeanFactory.getBean"));
-		assertTrue("11", m.match("org.as2lib.env.bean.factory.support.WildcardBeanFactory.getBean", "org.as2lib..env.bean..factory..support.WildcardBeanFactory.getBean"));
+		assertTrue("1", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "..org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean"));
+		assertTrue("2", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "..as2lib.env.bean.factory.support.DefaultBeanFactory.getBean"));
+		assertTrue("3", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org..factory.support.DefaultBeanFactory.getBean"));
+		assertTrue("4", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org..factory..DefaultBeanFactory.getBean"));
+		assertTrue("5", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org..factory.support..DefaultBeanFactory.getBean"));
+		assertTrue("6", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org.as2lib..DefaultBeanFactory.getBean"));
+		assertTrue("7", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "..DefaultBeanFactory.getBean"));
+		assertFalse("8", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org.as2lib.env.bean..unexpectedpackage.support.DefaultBeanFactory.getBean"));
+		assertFalse("9", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org.as2lib..support.unexpectedpackage..DefaultBeanFactory.getBean"));
+		assertFalse("10", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org.as2lib.env..support..unexpectedpackage.DefaultBeanFactory.getBean"));
+		assertTrue("11", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org.as2lib..env.bean..factory..support.DefaultBeanFactory.getBean"));
 	}
 	
 }
