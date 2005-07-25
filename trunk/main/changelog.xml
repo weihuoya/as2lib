@@ -6,6 +6,7 @@
     <year value="2005">
       <month value="7">
         <day value="25">
+          <entry type="add" package="org.as2lib.aop" class="JoinPoint" method="snapshot"></entry>
           <entry type="add" package="org.as2lib.env.reflect" class="PropertyInfo" method="snapshot"></entry>
           <entry type="add" package="org.as2lib.env.reflect" class="MethodInfo" method="snapshot"></entry>
           <entry type="add" package="org.as2lib.aop" class="JoinPoint" method="update(thiz):JoinPoint"></entry>

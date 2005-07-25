@@ -94,4 +94,18 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 		return new PropertyJoinPoint(this.info, thiz);
 	}
 	
+	/**
+	 * Returns a copy of this join point that reflects its current state.
+	 * 
+	 * <p>It is common practice to create a new join point for a not-fixed method info.
+	 * This is when the underlying concrete method this join point reflects may change.
+	 * To make the concrete method and other parts that may change fixed you can use
+	 * this method to get a new fixed join point, a snapshot.
+	 * 
+	 * @return a snapshot of this join point
+	 */
+	public function snapshot(Void):JoinPoint {
+		return new PropertyJoinPoint(this.info.snapshot(), getThis());
+	}
+	
 }
