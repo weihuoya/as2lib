@@ -74,40 +74,24 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 	}
 	
 	/**
-	 * Clones this join point.
-	 * 
-	 * <p>Note that the returned join point is not a full-clone of this join point. The
-	 * concrete getter or setter methods of the returned join point's property info may
-	 * differ because they are updated to the latest state. This means that if you
-	 * overwrite the getter or setter methods by hand they will differ.
-	 * 
-	 * @return a clone of this join point
-	 */
-	public function clone(Void):JoinPoint {
-		var getter:Function;
-		var setter:Function;
-		if (info.isStatic()) {
-			getter = info.getDeclaringType().getType()[info.getGetter().getName()];
-			setter = info.getDeclaringType().getType()[info.getSetter().getName()];
-		} else {
-			getter = info.getDeclaringType().getType().prototype[info.getGetter().getName()];
-			setter = info.getDeclaringType().getType().prototype[info.getSetter().getName()];
-		}
-		var newInfo:PropertyInfo = new PropertyInfo(info.getName(),
-													info.getDeclaringType(),
-													info.isStatic(),
-													setter,
-													getter);
-		return (new PropertyJoinPoint(newInfo, getThis()));
-	}
-	
-	/**
 	 * Returns this join point's type.
 	 * 
 	 * @return {@link AbstractJoinPoint#getType}
 	 */
 	public function getType(Void):Number {
 		return PROPERTY;
+	}
+	
+	/**
+	 * Returns a copy of this join point with an updated logical this. This join point
+	 * is left unchanged.
+	 * 
+	 * @param thiz the new logical this
+	 * @return a copy of this join point with an updated logical this
+	 * @see #getThis
+	 */
+	public function update(thiz):JoinPoint {
+		return new PropertyJoinPoint(this.info, thiz);
 	}
 	
 }
