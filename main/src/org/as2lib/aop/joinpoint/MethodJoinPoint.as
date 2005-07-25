@@ -69,35 +69,24 @@ class org.as2lib.aop.joinpoint.MethodJoinPoint extends AbstractJoinPoint impleme
 	}
 	
 	/**
-	 * Clones this join point.
-	 * 
-	 * <p>Note that the returned join point is not a full-clone of this join point. The
-	 * concrete method of of the returned join point's info is updated to the latest
-	 * state. This may thus differ if it has been overwritten before.
-	 * 
-	 * @return a clone of this join point
-	 */
-	public function clone(Void):JoinPoint {
-		var method:Function;
-		if (info.isStatic()) {
-			method = info.getDeclaringType().getType()[info.getName()];
-		} else {
-			method = info.getDeclaringType().getType().prototype[info.getName()];
-		}
-		var newInfo:MethodInfo = new MethodInfo(info.getName(),
-												info.getDeclaringType(),
-												info.isStatic(),
-												method);
-		return (new MethodJoinPoint(newInfo, getThis()));
-	}
-	
-	/**
 	 * Returns the type of this join point.
 	 * 
 	 * @return {@link AbstractJoinPoint#METHOD}
 	 */
 	public function getType(Void):Number {
 		return METHOD;
+	}
+	
+	/**
+	 * Returns a copy of this join point with an updated logical this. This join point
+	 * is left unchanged.
+	 * 
+	 * @param thiz the new logical this
+	 * @return a copy of this join point with an updated logical this
+	 * @see #getThis
+	 */
+	public function update(thiz):JoinPoint {
+		return new MethodJoinPoint(this.info, thiz);
 	}
 	
 }
