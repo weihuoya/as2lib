@@ -52,9 +52,8 @@ class org.as2lib.aop.advice.AbstractAfterThrowingAdvice extends AbstractAdvice {
 	public function getProxy(joinPoint:JoinPoint):Function {
 		var owner:AbstractAfterThrowingAdvice = this;
 		return (function() {
-			joinPoint = ClassInfo.forInstance(joinPoint).newInstance(joinPoint.getInfo(), this);
 			// MTASC doesn't allow access to private "executeJoinPoint"
-			return owner["executeJoinPoint"](joinPoint, arguments);
+			return owner["executeJoinPoint"](joinPoint.update(this), arguments);
 		});
 	}
 	
