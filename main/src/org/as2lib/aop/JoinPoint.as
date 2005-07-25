@@ -81,7 +81,8 @@ interface org.as2lib.aop.JoinPoint extends BasicInterface {
 	public function matches(pattern:String):Boolean;
 	
 	/**
-	 * Returns a copy of this join point with an updated logical this.
+	 * Returns a copy of this join point with an updated logical this. This join point
+	 * is left unchanged.
 	 * 
 	 * @param thiz the new logical this
 	 * @return a copy of this join point with an updated logical this
