@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -39,6 +39,7 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.data.holder.array.TTypedArray);
 		//use(org.as2lib.data.holder.list.TPriorityList);
 		use(org.as2lib.data.holder.list.TArrayList);
+		use(org.as2lib.data.holder.list.TSubList);
 		use(org.as2lib.data.holder.TProtectedIterator);
 		use(org.as2lib.data.holder.map.TValueMapIterator);
 		use(org.as2lib.data.holder.map.THashMap);
@@ -66,7 +67,7 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.util.TArrayUtil);
 		use(org.as2lib.util.TObjectUtil);
 		use(org.as2lib.util.TStringUtil);
-		use(org.as2lib.util.TCall);
+		//use(org.as2lib.util.TCall);
 		use(org.as2lib.util.TClassUtil);
 		use(org.as2lib.util.TStopWatch);
 		use(org.as2lib.util.TObjectUtil);
@@ -88,19 +89,26 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.test.mock.support.TDefaultArgumentsMatcher);
 		
 		// org.as2lib.aop.pointcut
-		//use(org.as2lib.aop.pointcut.TKindedPointcut);
-		//use(org.as2lib.aop.pointcut.TAndCompositePointcut);
-		//use(org.as2lib.aop.pointcut.TOrCompositePointcut);
-		//use(org.as2lib.aop.pointcut.TDynamicPointcutFactory);
+		use(org.as2lib.aop.pointcut.TKindedPointcut);
+		use(org.as2lib.aop.pointcut.TAndPointcut);
+		use(org.as2lib.aop.pointcut.TOrPointcut);
+		use(org.as2lib.aop.pointcut.TDynamicPointcutFactory);
 		
 		// org.as2lib.aop.joinpoint
-		//use(org.as2lib.aop.joinpoint.TMethodJoinPoint);
-		//use(org.as2lib.aop.joinpoint.TPropertyJoinPoint);
-		//use(org.as2lib.aop.joinpoint.TGetPropertyJoinPoint);
-		//use(org.as2lib.aop.joinpoint.TSetPropertyJoinPoint);
+		use(org.as2lib.aop.joinpoint.TMethodJoinPoint);
+		use(org.as2lib.aop.joinpoint.TPropertyJoinPoint);
+		use(org.as2lib.aop.joinpoint.TGetPropertyJoinPoint);
+		use(org.as2lib.aop.joinpoint.TSetPropertyJoinPoint);
 		
 		// org.as2lib.aop.matcher
-		use(org.as2lib.aop.matcher.TDefaultMatcher);
+		use(org.as2lib.aop.matcher.TWildcardMatcher);
+		
+		// org.as2lib.aop.advice
+		use(org.as2lib.aop.advice.TDynamicAfterAdvice);
+		use(org.as2lib.aop.advice.TDynamicAfterReturningAdvice);
+		use(org.as2lib.aop.advice.TDynamicAfterThrowingAdvice);
+		use(org.as2lib.aop.advice.TDynamicBeforeAdvice);
+		use(org.as2lib.aop.advice.TDynamicAroundAdvice);
 		
 		// org.as2lib.io.conn.local.server
 		use(org.as2lib.io.conn.local.server.TLocalServer);
