@@ -80,10 +80,10 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 		var o4:Function = SuperSuperSuperClass.prototype.test;
 		
 		var d:DynamicAfterReturningAdvice = new DynamicAfterReturningAdvice("", new Call(new Object(), function(){}));
-		var p1:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(Class).getMethod("test"), this).clone());
-		var p2:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperClass).getMethod("test"), this).clone());
-		var p3:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperSuperClass).getMethod("test"), this).clone());
-		var p4:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperSuperSuperClass).getMethod("test"), this).clone());
+		var p1:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(Class).getMethod("test").snapshot(), this));
+		var p2:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperClass).getMethod("test").snapshot(), this));
+		var p3:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperSuperClass).getMethod("test").snapshot(), this));
+		var p4:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperSuperSuperClass).getMethod("test").snapshot(), this));
 		
 		Class.prototype.test = p1;
 		SuperClass.prototype.test = p2;
