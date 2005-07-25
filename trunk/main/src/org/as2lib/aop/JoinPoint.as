@@ -30,7 +30,8 @@ interface org.as2lib.aop.JoinPoint extends BasicInterface {
 	
 	/**
 	 * Returns the info of the represented type member; this information is also known
-	 * as the join point's static part.
+	 * as the join point's static part. Note that the type of this join point is also
+	 * part of this join point's static part.
 	 * 
 	 * @return the info representing the static part of this join point
 	 */
@@ -57,13 +58,6 @@ interface org.as2lib.aop.JoinPoint extends BasicInterface {
 	public function getThis(Void);
 	
 	/**
-	 * Returns a clone of this join point with the up-to-date concrete type member.
-	 *
-	 * @return a clone of this join point with an up-to-date concrete type member
-	 */
-	public function clone(Void):JoinPoint;
-	
-	/**
 	 * Returns the type of the join point.
 	 * 
 	 * <p>Supported types are declared as constants in the {@link AbstractJoinPoint}
@@ -85,5 +79,14 @@ interface org.as2lib.aop.JoinPoint extends BasicInterface {
 	 * @see <a href="http://www.simonwacker.com/blog/archives/000053">Wildcards</a>
 	 */
 	public function matches(pattern:String):Boolean;
+	
+	/**
+	 * Returns a copy of this join point with an updated logical this.
+	 * 
+	 * @param thiz the new logical this
+	 * @return a copy of this join point with an updated logical this
+	 * @see #getThis
+	 */
+	public function update(thiz):JoinPoint;
 	
 }

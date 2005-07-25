@@ -5,6 +5,10 @@
   <release name="as2lib 0.9.1" day="4" month="7" year="2005">
     <year value="2005">
       <month value="7">
+        <day value="25">
+          <entry type="add" package="org.as2lib.aop" class="JoinPoint" method="update(thiz):JoinPoint"></entry>
+          <entry type="remove" package="org.as2lib.aop" class="JoinPoint" method="clone"></entry>
+        </day>
         <day value="22">
           <entry type="add" package="org.as2lib.aop.advice" class="SimpleDynamicAdviceFactory" method="bindAdviceFactory"></entry>
         </day>
