@@ -50,7 +50,7 @@ class org.as2lib.aop.advice.DynamicAfterReturningAdvice extends AbstractAfterRet
 	 * @param callback the callback that is executed at the weave-in point
 	 */
 	private function DynamicAfterReturningAdviceByPointcut(pointcut:Pointcut, callback:Call) {
-		setPointcut(pointcut);
+		setPointcutByPointcut(pointcut);
 		this.callback = callback;
 	}
 	
@@ -62,7 +62,7 @@ class org.as2lib.aop.advice.DynamicAfterReturningAdvice extends AbstractAfterRet
 	 * @param callback the callback that is executed at the weave-in point
 	 */
 	private function DynamicAfterReturningAdviceByPointcutPattern(pointcut:String, callback:Call) {
-		setPointcut(pointcut);
+		setPointcutByString(pointcut);
 		this.callback = callback;
 	}
 	

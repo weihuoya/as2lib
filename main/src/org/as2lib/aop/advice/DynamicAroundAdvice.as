@@ -50,7 +50,7 @@ class org.as2lib.aop.advice.DynamicAroundAdvice extends AbstractAroundAdvice imp
 	 * @param callback the callback that is executed at the weave-in point
 	 */
 	private function DynamicAroundAdviceByPointcut(pointcut:Pointcut, callback:Call) {
-		setPointcut(pointcut);
+		setPointcutByPointcut(pointcut);
 		this.callback = callback;
 	}
 	
@@ -62,7 +62,7 @@ class org.as2lib.aop.advice.DynamicAroundAdvice extends AbstractAroundAdvice imp
 	 * @param callback the callback that is executed at the weave-in point
 	 */
 	private function DynamicAroundAdviceByPointcutPattern(pointcut:String, callback:Call) {
-		setPointcut(pointcut);
+		setPointcutByString(pointcut);
 		this.callback = callback;
 	}
 	
