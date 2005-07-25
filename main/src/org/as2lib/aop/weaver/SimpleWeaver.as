@@ -50,7 +50,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	/**
 	 * @see org.as2lib.aop.Weaver#weave():Void
 	 */
-	public function weave():Void {
+	public function weave(Void):Void {
 		var o:Overload = new Overload(this);
 		o.addHandler([], weaveByVoid);
 		o.addHandler([Function], weaveByClass);
