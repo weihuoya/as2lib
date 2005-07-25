@@ -116,7 +116,6 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 		return name;
 	}
 	
-	
 	/**
 	 * Returns the full name of this method.
 	 * 
@@ -142,7 +141,7 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	 * @return the concrete method
 	 */
 	public function getMethod(Void):Function {
-		if (method) {
+		if (method !== undefined) {
 			return method;
 		}
 		var t:Function = declaringType.getType();
@@ -192,6 +191,15 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	 */
 	public function isStatic(Void):Boolean {
 		return staticFlag;
+	}
+	
+	/**
+	 * Returns a method info that reflects the current state of this method info.
+	 * 
+	 * @return a snapshot of this method info
+	 */
+	public function snapshot(Void):MethodInfo {
+		return new MethodInfo(name, declaringType, staticFlag, getMethod());
 	}
 	
 	/**

@@ -238,6 +238,19 @@ class org.as2lib.env.reflect.PropertyInfo extends BasicClass implements TypeMemb
 	}
 	
 	/**
+	 * Returns a property info that reflects the current state of this property info.
+	 * 
+	 * @return a snapshot of this property info
+	 */
+	public function snapshot(Void):PropertyInfo {
+		var setter:Function = null;
+		if (getSetter()) setter = getSetter().getMethod();
+		var getter:Function = null;
+		if (getGetter()) getter = getGetter().getMethod();
+		return new PropertyInfo(name, declaringType, staticFlag, setter, getter);
+	}
+	
+	/**
 	 * Returns the string representation of this property.
 	 *
 	 * <p>The string representation is obtained via the stringifier returned by the
