@@ -133,7 +133,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 		var i:Number = b.length;
 		while (--i-(-1)) {
 			var c:Advice = b[i];
-			if (c.captures(a)) weaveByJoinPointAndAdvice(a.clone(), c);
+			if (c.captures(a)) weaveByJoinPointAndAdvice(a.snapshot(), c);
 		}
 	}
 	
