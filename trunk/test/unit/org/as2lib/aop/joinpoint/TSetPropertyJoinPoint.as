@@ -27,12 +27,9 @@ class org.as2lib.aop.joinpoint.TSetPropertyJoinPoint extends TestCase {
 	
 	public function testNewWithNotWritableProperty(Void):Void {
 		var ic:MockControl = new MockControl(PropertyInfo);
-		ic.setHandleToStringInvocations(false);
 		var i:PropertyInfo = ic.getMock();
 		i.isWritable();
 		ic.setReturnValue(false);
-		i.toString();
-		ic.setReturnValue("");
 		ic.replay();
 		try {
 			new SetPropertyJoinPoint(i, new Object());

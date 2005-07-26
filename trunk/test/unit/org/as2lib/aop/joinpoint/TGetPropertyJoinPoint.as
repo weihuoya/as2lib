@@ -27,12 +27,9 @@ class org.as2lib.aop.joinpoint.TGetPropertyJoinPoint extends TestCase {
 	
 	public function testNewWithNotReadableProperty(Void):Void {
 		var ic:MockControl = new MockControl(PropertyInfo);
-		ic.setHandleToStringInvocations(false);
 		var i:PropertyInfo = ic.getMock();
 		i.isReadable();
 		ic.setReturnValue(false);
-		i.toString();
-		ic.setReturnValue("");
 		ic.replay();
 		try {
 			new GetPropertyJoinPoint(i, new Object());
