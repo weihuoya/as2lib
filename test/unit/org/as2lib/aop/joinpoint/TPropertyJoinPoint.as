@@ -39,11 +39,7 @@ class org.as2lib.aop.joinpoint.TPropertyJoinPoint extends TestCase {
 		var i:PropertyInfo = ic.getMock();
 		ic.replay();
 		
-		try {
-			new PropertyJoinPoint(i, null);
-			fail("Expected IllegalArgumentException");
-		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
-		}
+		new PropertyJoinPoint(i, null);
 		
 		ic.verify();
 	}

@@ -37,8 +37,6 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 	 *
 	 * @param info the property info of the represented property
 	 * @param thiz the logical this of the interception
-	 * @throws IllegalArgumentException of argument {@code thiz} is {@code null} or
-	 * {@code undefined}
 	 * @throws IllegalArgumentException if argument {@code info} is {@code null} or
 	 * {@code undefined}
 	 * @see <a href="http://www.simonwacker.com/blog/archives/000068.php">Passing Context</a>

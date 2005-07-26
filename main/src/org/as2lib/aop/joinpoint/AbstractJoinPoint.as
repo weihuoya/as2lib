@@ -74,14 +74,11 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	 * Constructs a new {@code AbstractJoinPoint) instance.
 	 * 
 	 * @param thiz the logical this of the interception
-	 * @throws IllegalArgumentException of argument {@code thiz} is {@code null} or
-	 * {@code undefined}
 	 * @see #getThis
 	 * @see <a href="http://www.simonwacker.com/blog/archives/000068.php">Passing Context</a>
 	 */
 	private function AbstractJoinPoint(thiz) {
-		if (!thiz) throw new IllegalArgumentException("Argument 'thiz' must not be 'null' nor 'undefined'.", this, arguments);
-		this.thiz = thiz;
+		this.thiz = thiz ? thiz : null;
 	}
 	
 	/**

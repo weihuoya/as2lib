@@ -46,11 +46,7 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 		var i:MethodInfo = ic.getMock();
 		ic.replay();
 		
-		try {
-			new MethodJoinPoint(i, null);
-			fail("Expected IllegalArgumentException");
-		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
-		}
+		new MethodJoinPoint(i, null);
 		
 		ic.verify();
 	}
