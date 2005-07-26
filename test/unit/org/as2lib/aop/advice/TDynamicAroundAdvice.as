@@ -58,7 +58,7 @@ class org.as2lib.aop.advice.TDynamicAroundAdvice extends AbstractTAdvice {
 			thiz.assertSame(args[0], "arg1");
 			thiz.assertSame(args[1], 2);
 			thiz.assertSame(args[2], a3);
-			joinPoint.proceed(["blubber1", a3, 5], "rv");
+			assertSame(joinPoint.proceed(["blubber1", a3, 5]), "rv");
 			return "blubber";
 		});
 		var a:Advice = createAdvice(p, c);
