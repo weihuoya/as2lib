@@ -32,6 +32,7 @@ import org.as2lib.test.mock.MockControlState;
 import org.as2lib.test.mock.support.RecordState;
 import org.as2lib.test.mock.support.ReplayState;
 import org.as2lib.test.mock.MockControlStateFactory;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * {@code MockControl} is the central class of the mock object framework. You use
@@ -386,7 +387,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 			// 'toString' must be excluded because it is used everytime output is made.
 			// For example in the success and failure messages of the unit testing api.
 			if (method == "toString" && !owner.areToStringInvocationsHandled()) {
-				return owner.getMock().__proto__.toString.apply(owner.getMock());
+				// TODO: Source out into own stringifier class (MockStringifier)
+				return "[mock " + ReflectUtil.getTypeNameForInstance(owner.getMock()) + "]";
+				//return owner.getMock().__proto__.toString.apply(owner.getMock());
 			}
 			// calling private methods from an inner anonymous method is not allowed by MTASC
 			return owner["invokeMethod"](method, args);
