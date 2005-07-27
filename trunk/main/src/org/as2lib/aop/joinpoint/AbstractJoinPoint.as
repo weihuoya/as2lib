@@ -20,6 +20,7 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.aop.Matcher;
 import org.as2lib.aop.AopConfig;
 import org.as2lib.aop.JoinPoint;
+import org.as2lib.env.except.IllegalStateException;
 
 /**
  * {@code AbstractJoinPoint} provides implementations of methods commonly needed by
@@ -132,11 +133,17 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	 * @return the result of the procession
 	 * @throws IllegalArgumentException if argument {@code method} is {@code null} or
 	 * {@code undefined}
+	 * @throws IllegalStateException if logical this is {@code null} or
+	 * {@code undefined}
+	 * @see #getThis
 	 */
 	private function proceedMethod(method:MethodInfo, args:Array) {
 		if (!method) throw new IllegalArgumentException("Argument 'method' must not be 'null' nor 'undefined'.", this, arguments);
+		var t:Object = getThis();
+		if (!t) {
+			throw new IllegalStateException("To execute this method the 'logical this' that is used as scope for the procession of the method must not be 'null' nor 'undefined'.", this, arguments);
+		}
 		var p:Object = method.getDeclaringType().getType().prototype;
-		var t:Object = this.thiz;
 		var m:Function = method.getMethod();
 		if (t.__proto__ == p) {
 			return m.apply(t, args);
@@ -145,7 +152,7 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 			t = t.__proto__;
 		}
 		t.__as2lib__invoker = INVOKER;
-		return this.thiz.__as2lib__invoker(t, m, args);
+		return getThis().__as2lib__invoker(t, m, args);
 	}
 	
 	/**
