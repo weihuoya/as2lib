@@ -32,16 +32,26 @@ import org.as2lib.data.holder.Map;
 import org.as2lib.env.reflect.MethodInfo;
 
 /**
+ * {@code SimpleWeaver} is a simple implementation of the {@code Weaver} interface that
+ * supports most needed functionalities.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	
+	/** Arrays of {@link Advice} instances that are mapped to affected types. */
 	private var advices:Map;
 	
+	/**
+	 * Constructs a new {@code SimpleWeaver} instance.
+	 */
 	public function SimpleWeaver(Void) {
 		advices = new HashMap();
 	}
 	
+	/**
+	 * Weaves the added aspects and advices into the affected types.
+	 */
 	public function weave(Void):Void {
 		var affectedTypes:Array = advices.getKeys();
 		for (var i:Number = 0; i < affectedTypes.length; i++) {
@@ -72,22 +82,24 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	}
 	
 	private function weaveByTypeAndAdvices(type:ClassInfo, advices:Array):Void {
-		var methods:Array = type.getMethods();
-		if (methods) {
-			for (var i:Number = 0; i < methods.length; i++) {
-				var method:MethodInfo = MethodInfo(methods[i]);
-				if (method) {
-					weaveByJoinPointAndAdvices(new MethodJoinPoint(method, null), advices);
+		if (type) {
+			var methods:Array = type.getMethods();
+			if (methods) {
+				for (var i:Number = 0; i < methods.length; i++) {
+					var method:MethodInfo = MethodInfo(methods[i]);
+					if (method) {
+						weaveByJoinPointAndAdvices(new MethodJoinPoint(method, null), advices);
+					}
 				}
 			}
-		}
-		var properties:Array = type.getProperties();
-		if (properties) {
-			for (var i:Number = 0; i < properties.length; i++) {
-				var property:PropertyInfo = PropertyInfo(properties[i]);
-				if (property) {
-					weaveByJoinPointAndAdvices(new GetPropertyJoinPoint(property, null), advices);
-					weaveByJoinPointAndAdvices(new SetPropertyJoinPoint(property, null), advices);
+			var properties:Array = type.getProperties();
+			if (properties) {
+				for (var i:Number = 0; i < properties.length; i++) {
+					var property:PropertyInfo = PropertyInfo(properties[i]);
+					if (property) {
+						weaveByJoinPointAndAdvices(new GetPropertyJoinPoint(property, null), advices);
+						weaveByJoinPointAndAdvices(new SetPropertyJoinPoint(property, null), advices);
+					}
 				}
 			}
 		}
@@ -118,20 +130,69 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 		}
 	}
 	
+	/**
+	 * @overload #addAspectForAllTypes
+	 * @overload #addAspectForAllTypesInPackage
+	 * @overload #addAspectForMultipleAffectedTypes
+	 * @overload #addAspectForOneAffectedType
+	 */
 	public function addAspect():Void {
 		var o:Overload = new Overload(this);
 		o.addHandler([Aspect], addAspectForAllTypes);
+		o.addHandler([Aspect, Object], addAspectForAllTypesInPackage);
 		o.addHandler([Aspect, Array], addAspectForMultipleAffectedTypes);
 		o.addHandler([Aspect, Function], addAspectForOneAffectedType);
 		o.forward(arguments);
 	}
 	
+	/**
+	 * Adds the given {@code aspect} for all types. This means that all types are
+	 * searched through starting from the default or root package and checked whether
+	 * their join points match any of the advices of the {@code aspect}.
+	 * 
+	 * @param aspect the aspect whose advices shall be woven-into captured join points
+	 */
 	public function addAspectForAllTypes(aspect:Aspect):Void {
 		if (aspect) {
 			addAspectForOneAffectedType(aspect, null);
 		}
 	}
 	
+	/**
+	 * Adds the given {@code aspect} for the types that are directly members of the
+	 * given {@code affectedPackage} or any sub-package. All these types are regarded
+	 * as affected types that are searched through for matching join points.
+	 * 
+	 * @param aspect the aspect whose advices shall be woven-into captured join points
+	 * @param affectedPackage the package to search for matching join points
+	 */
+	public function addAspectForAllTypesInPackage(aspect:Aspect, affectedPackage:Object):Void {
+		if (aspect) {
+			if (affectedPackage) {
+				var packageInfo:PackageInfo = PackageInfo.forPackage(affectedPackage);
+				if (packageInfo) {
+					var classes:Array = affectedPackage.getMemberClasses(false);
+					for (var i:Number = 0; i < classes.length; i++) {
+						var clazz:ClassInfo = ClassInfo(classes[i]);
+						if (clazz) {
+							addAspectForOneAffectedType(aspect, clazz.getType());
+						}
+					}
+				}
+			} else {
+				addAspectForOneAffectedType(aspect, null);
+			}
+		}
+	}
+	
+	/**
+	 * Adds the given {@code aspect} for the types that are contained in
+	 * {@code affectedTypes}. The {@code affectedTypes} array is supposed to hold
+	 * elements of type {@code Function}.
+	 * 
+	 * @param aspect the aspect whose advices shall be woven-into captured join points
+	 * @param affectedType a list of affected types
+	 */
 	public function addAspectForMultipleAffectedTypes(aspect:Aspect, affectedTypes:Array):Void {
 		if (aspect) {
 			if (affectedTypes) {
@@ -147,6 +208,14 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 		}
 	}
 	
+	/**
+	 * Adds the given {@code aspect} for the given {@code affectedType}. Only the given
+	 * {@code affectedType} is searched through when searching for join points that may
+	 * match the advices of the given {@code aspect}.
+	 * 
+	 * @param aspect the aspect whose advices shall be woven-into captured join points
+	 * @param affectedType the affected type to search for join points
+	 */
 	public function addAspectForOneAffectedType(aspect:Aspect, affectedType:Function):Void {
 		if (aspect) {
 			var advices:Array = aspect.getAdvices();
@@ -161,20 +230,69 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 		}
 	}
 	
+	/**
+	 * @overload #addAdviceForAllTypes
+	 * @overload #addAdviceForAllTypesInPackage
+	 * @overload #addAdviceForMultipleAffectedTypes
+	 * @overload #addAdviceForOneAffectedType
+	 */
 	public function addAdvice():Void {
 		var o:Overload = new Overload(this);
 		o.addHandler([Advice], addAdviceForAllTypes);
+		o.addHandler([Advice, Object], addAdviceForAllTypesInPackage);
 		o.addHandler([Advice, Array], addAdviceForMultipleAffectedTypes);
 		o.addHandler([Advice, Function], addAdviceForOneAffectedType);
 		o.forward(arguments);
 	}
 	
+	/**
+	 * Adds the given {@code advice} for all types. This means that all types are
+	 * searched through starting from the default or root package and checked whether
+	 * their join points match any of the advices of the {@code advice}.
+	 * 
+	 * @param advice the advice to weave-into matching join points
+	 */
 	public function addAdviceForAllTypes(advice:Advice):Void {
 		if (advice) {
 			addAdviceForOneAffectedType(advice, null);
 		}
 	}
 	
+	/**
+	 * Adds the given {@code advice} for the types that are directly members of the
+	 * given {@code affectedPackage} or any sub-package. All these types are regarded
+	 * as affected types that are searched through for matching join points.
+	 * 
+	 * @param advice the advice to weave-into captured join points
+	 * @param affectedPackage the package to search for matching join points
+	 */
+	public function addAdviceForAllTypesInPackage(advice:Advice, package:Object):Void {
+		if (advice) {
+			if (package) {
+				var packageInfo:PackageInfo = PackageInfo.forPackage(package);
+				if (packageInfo) {
+					var classes:Array = package.getMemberClasses(false);
+					for (var i:Number = 0; i < classes.length; i++) {
+						var clazz:ClassInfo = ClassInfo(classes[i]);
+						if (clazz) {
+							addAdviceForOneAffectedType(advice, clazz.getType());
+						}
+					}
+				}
+			} else {
+				addAdviceForOneAffectedType(advice, null);
+			}
+		}
+	}
+	
+	/**
+	 * Adds the given {@code advice} for the types that are contained in
+	 * {@code affectedTypes}. The {@code affectedTypes} array is supposed to hold
+	 * elements of type {@code Function}.
+	 * 
+	 * @param advice the advice to weave-into captured join points
+	 * @param affectedType a list of affected types
+	 */
 	public function addAdviceForMultipleAffectedTypes(advice:Advice, affectedTypes:Array):Void {
 		if (advice) {
 			if (affectedTypes) {
@@ -190,6 +308,14 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 		}
 	}
 	
+	/**
+	 * Adds the given {@code advice} for the given {@code affectedType}. Only the given
+	 * {@code affectedType} is searched through when searching for join points that may
+	 * match the given {@code advice}.
+	 * 
+	 * @param advice the advice to weave-into captured join points
+	 * @param affectedType the affected type to search for join points
+	 */
 	public function addAdviceForOneAffectedType(advice:Advice, affectedType:Function):Void {
 		if (advice) {
 			if (!advices.containsKey(affectedType)) {
