@@ -38,26 +38,6 @@ class org.as2lib.aop.advice.AbstractAfterThrowingAdvice extends AbstractAdvice {
 	}
 	
 	/**
-	 * Returns a proxy method that can be used instead of the original method of the
-	 * {@code joinPoint}. This proxy does not only invoke the original method but also
-	 * invokes this advice's {@code execute} method, that must be implemented by
-	 * sub-classes, passing the appropriate join point after the original method has
-	 * been invoked and threw an exception. Note that the {@code execute} method is not
-	 * invoked if the procession of the join point did not result in an exception, but
-	 * in a return value.
-	 *
-	 * @param joinPoint the join point that represents the original method
-	 * @return the proxy method
-	 */
-	public function getProxy(joinPoint:JoinPoint):Function {
-		var owner:AbstractAfterThrowingAdvice = this;
-		return (function() {
-			// MTASC doesn't allow access to private "executeJoinPoint"
-			return owner["executeJoinPoint"](joinPoint.update(this), arguments);
-		});
-	}
-	
-	/**
 	 * Proceeds the passed-in {@code joinPoint} with the given {@code args} and returns
 	 * the result of this procession after invoking this advice's {@code execute}
 	 * method passing the given {@code joinPoint} and the thrown exception.
