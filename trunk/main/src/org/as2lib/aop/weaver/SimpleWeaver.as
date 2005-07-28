@@ -30,6 +30,9 @@ import org.as2lib.aop.Advice;
 import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.data.holder.Map;
 import org.as2lib.env.reflect.MethodInfo;
+import org.as2lib.env.reflect.ConstructorInfo;
+import org.as2lib.aop.joinpoint.ConstructorJoinPoint;
+import org.as2lib.aop.joinpoint.AbstractJoinPoint;
 
 /**
  * {@code SimpleWeaver} is a simple implementation of the {@code Weaver} interface that
@@ -83,6 +86,10 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	
 	private function weaveByTypeAndAdvices(type:ClassInfo, advices:Array):Void {
 		if (type) {
+			var constructor:ConstructorInfo = type.getConstructor();
+			if (constructor) {
+				weaveByJoinPointAndAdvices(new ConstructorJoinPoint(constructor, null), advices);
+			}
 			var methods:Array = type.getMethods();
 			if (methods) {
 				for (var i:Number = 0; i < methods.length; i++) {
@@ -120,13 +127,17 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 		}
 	}
 	
-	private function weaveByJoinPointAndAdvice(joinPoint:JoinPoint, advice:Advice) {
+	private function weaveByJoinPointAndAdvice(joinPoint:JoinPoint, advice:Advice):Void {
 		var proxy:Function = advice.getProxy(joinPoint);
 		var info:TypeMemberInfo = joinPoint.getInfo();
-		if (info.isStatic()) {
-			info.getDeclaringType().getType()[info.getName()] = proxy;
+		if (joinPoint.getThis() == AbstractJoinPoint.CONSTRUCTOR) {
+			info.getDeclaringType().getPackage().getPackage()[info.getDeclaringType().getName()] = proxy;
 		} else {
-			info.getDeclaringType().getType().prototype[info.getName()] = proxy;
+			if (info.isStatic()) {
+				info.getDeclaringType().getType()[info.getName()] = proxy;
+			} else {
+				info.getDeclaringType().getType().prototype[info.getName()] = proxy;
+			}
 		}
 	}
 	
