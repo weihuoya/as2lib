@@ -6,6 +6,9 @@
     <year value="2005">
       <month value="7">
         <day value="28">
+          <entry type="add" package="org.as2lib.env.reflect" class="ConstructorInfo" method="getMethod">Resolves constructor method at run-time.</entry>
+          <entry type="add" package="org.as2lib.env.reflect" class="ConstructorInfo" method="snapshot">Creates snapshot of constructor info.</entry>
+          <entry type="add" package="org.as2lib.aop.joinpoint" class="ConstructorJoinPoint">Represents constructors as join points.</entry>
           <entry type="add" package="static org.as2lib.aop.joinpoint" class="AbstractJoinPoint" variable="CONSTRUCTOR">Added new join point type for constructors.</entry>
         </day>
         <day value="25">
