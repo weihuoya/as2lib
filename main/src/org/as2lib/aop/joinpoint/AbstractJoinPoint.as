@@ -143,8 +143,12 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 		if (!t) {
 			throw new IllegalStateException("To execute this method the 'logical this' that is used as scope for the procession of the method must not be 'null' nor 'undefined'.", this, arguments);
 		}
-		var p:Object = method.getDeclaringType().getType().prototype;
 		var m:Function = method.getMethod();
+		// there is no super bug with apply and static methods because 'super' is not allowed in static methods
+		if (method.isStatic()) {
+			return m.apply(t, args);
+		}
+		var p:Object = method.getDeclaringType().getType().prototype;
 		if (t.__proto__ == p) {
 			return m.apply(t, args);
 		}
