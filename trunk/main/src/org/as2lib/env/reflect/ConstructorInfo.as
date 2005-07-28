@@ -34,11 +34,14 @@ class org.as2lib.env.reflect.ConstructorInfo extends MethodInfo {
 	
 	/**
 	 * Constructs a new {@code ConstructorInfo} instance.
+	 * 
+	 * <p>If {@code constructor} is not specified, what means {@code undefined}, it
+	 * will be resolved at run-time everytime requested.
 	 *
-	 * @param constructor the concrete constructor
 	 * @param declaringClass the class that declares the {@code constructor}
+	 * @param constructor (optional) the concrete constructor
 	 */
-	public function ConstructorInfo(constructor:Function, declaringClass:ClassInfo) {
+	public function ConstructorInfo(declaringClass:ClassInfo, constructor:Function) {
 		//super (NAME, constructor, declaringClass, false);
 		// there is a cyclic import: ClassInfo imports ConstructorInfo and ConstructorInfo ClassInfo
 		this.__proto__.__proto__ = MethodInfo.prototype;
@@ -46,6 +49,32 @@ class org.as2lib.env.reflect.ConstructorInfo extends MethodInfo {
 		this.method = constructor;
 		this.declaringType = declaringClass;
 		this.staticFlag = false;
+	}
+	
+	/**
+	 * Returns the concrete constructor this instance represents.
+	 *
+	 * <p>If the concrete constructor was not specified on construction it will be
+	 * resolved at run-time by this method everytime asked for. The returned
+	 * constructor is thus always the current constructor of the declaring type.
+	 *
+	 * @return the concrete constructor
+	 */
+	public function getMethod(Void):Function {
+		if (method !== undefined) {
+			return method;
+		}
+		return declaringType.getPackage().getPackage()[declaringType.getName()];
+	}
+	
+	/**
+	 * Returns a {@link ConstructorInfo} instance that reflects the current state of
+	 * this constructor info.
+	 * 
+	 * @return a snapshot of this constructor info
+	 */
+	public function snapshot(Void):MethodInfo {
+		return new ConstructorInfo(ClassInfo(declaringType), getMethod());
 	}
 	
 }
