@@ -16,10 +16,13 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
+import org.as2lib.env.reflect.ConstructorInfo;
+import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.Aspect;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.AopConfig;
+import org.as2lib.aop.joinpoint.AbstractJoinPoint;
 
 /**
  * {@code AbstractAdvice} implements methods commonly needed by {@link Adivce}
@@ -57,6 +60,48 @@ class org.as2lib.aop.advice.AbstractAdvice extends BasicClass {
 	 */
 	private function AbstractAdvice(aspect:Aspect) {
 		this.aspect = aspect;
+	}
+	
+	/**
+	 * Returns a proxy method that can be used instead of the original method of the
+	 * {@code joinPoint}.
+	 * 
+	 * <p>The returned proxy invokes the abstract {@code executeJoinPoint} method of
+	 * this advice passing an update of the given {@code joinPoint} with the appropriate
+	 * logical this and the arguments used for the proxy invocation. Sub-classes are
+	 * responsible for implementing this method in the correct way.
+	 *
+	 * @param joinPoint the join point that represents the original method
+	 * @return the proxy method
+	 */
+	public function getProxy(joinPoint:JoinPoint):Function {
+		var owner:AbstractAdvice = this;
+		var result:Function = function() {
+			// MTASC doesn't allow access to private "executeJoinPoint"
+			return owner["executeJoinPoint"](joinPoint.update(this), arguments);
+		};
+		if (joinPoint.getType() == AbstractJoinPoint.CONSTRUCTOR) {
+			var info:ConstructorInfo = ConstructorInfo(joinPoint.getInfo());
+			var method:Function = info.getMethod();
+			result.__proto__ = method.__proto__;
+			result.prototype = method.prototype;
+			result.__constructor__ = method.__constructor__;
+			result.constructor = method.constructor;
+		}
+		return result;
+	}
+	
+	/**
+	 * Executes the woven-in code and the join point.
+	 * 
+	 * @param joinPoint the reached join point
+	 * @param args the arguments that were originally passed-to the join point
+	 * @return the result to return to the invoker of the given {@code joinPoint}
+	 * @throws AbstractOperationException always, because this is an abstract method
+	 * that must be overridden by sub-classes
+	 */
+	private function executeJoinPoint(joinPoint:JoinPoint, args:Array) {
+		throw new AbstractOperationException("This method is marked as abstract and must be overwritten.", this, arguments);
 	}
 	
 	/**
