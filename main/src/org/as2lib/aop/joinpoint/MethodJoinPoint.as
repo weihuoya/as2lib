@@ -34,7 +34,7 @@ class org.as2lib.aop.joinpoint.MethodJoinPoint extends AbstractJoinPoint impleme
 	 * Constructs a new {@code MethodJoinPoint} instance.
 	 *
 	 * @param info the info of the represented method
-	 * @param thiz thiz the logical this of the interception
+	 * @param thiz the logical this of the interception
 	 * @throws IllegalArgumentException if argument {@code info} is {@code null} or
 	 * {@code undefined}
 	 * @see <a href="http://www.simonwacker.com/blog/archives/000068.php">Passing Context</a>
