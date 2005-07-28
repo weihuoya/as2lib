@@ -43,6 +43,9 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	/** Indicates a join point of type get-property. */
 	public static var GET_PROPERTY:Number = 3;
 	
+	/** Indicates a join point of type constructor. */
+	public static var CONSTRUCTOR:Number = 4;
+	
 	/**
 	 * The invoker method used to invoke the original method of a join point. This
 	 * invoker is invoked on different scopes, never on this scope.

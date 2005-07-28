@@ -5,6 +5,9 @@
   <release name="as2lib 0.9.1" day="4" month="7" year="2005">
     <year value="2005">
       <month value="7">
+        <day value="28">
+          <entry type="add" package="static org.as2lib.aop.joinpoint" class="AbstractJoinPoint" variable="CONSTRUCTOR">Added new join point type for constructors.</entry>
+        </day>
         <day value="25">
           <entry type="add" package="org.as2lib.aop" class="Weaver" method="weave"></entry>
           <entry type="remove" package="org.as2lib.aop" class="Weaver">Removed all weave methods.</entry>
