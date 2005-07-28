@@ -321,12 +321,12 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @param name (optional) the name of the reflected class
 	 * @param package (optional) the package the reflected class is a member of
 	 */
-	public function ClassInfo(clazz:Function,
-							  name:String,
-							  package:PackageInfo) {
-		this.clazz = clazz;
+	public function ClassInfo(name:String,
+							  package:PackageInfo,
+							  clazz:Function) {
 		this.name = name;
 		this.package = package;
+		this.clazz = clazz;
 	}
 	
 	/**
@@ -376,29 +376,30 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @return the represented class
 	 */
 	public function getType(Void):Function {
+		// TODO: fine better way to keep concrete class up-to-date
+		// problems are that package and name must be resolved event if no update was made
+		// and that snapshots are not possible
+		if (getPackage().getPackage() !== undefined
+				&& getPackage().getPackage() !== null
+				&& getName() != null) {
+			return getPackage().getPackage()[getName()];
+		}
 		return clazz;
 	}
 	
 	/**
 	 * Returns the class's constructor representation.
-	 *
-	 * <p>If the {@link #getType} method returns {@code null} or {@code undefined},
-	 * {@code null} will be returned.
 	 * 
 	 * <p>You can use the returned constructor info to get the actual 
 	 * constructor. Note that the constructor in Flash is the same as the class. Thus
 	 * the function returned by the {@link #getType} method and the
 	 * {@code getMethod} method of the returned constructor is the same.
 	 *
-	 * @return the constructor of the class.
+	 * @return the constructor of the class
 	 */
 	public function getConstructor(Void):ConstructorInfo {
 		if (classConstructor === undefined) {
-			if (getType()) {
-				classConstructor = new ConstructorInfo(getType(), this);
-			} else {
-				classConstructor = null;
-			}
+			classConstructor = new ConstructorInfo(this);
 		}
 		return classConstructor;
 	}
@@ -420,8 +421,8 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 */
 	public function getSuperType(Void):TypeInfo {
 		if (superClass === undefined) {
-			if (clazz.prototype.__proto__) {
-				superClass = forInstance(clazz.prototype);
+			if (getType().prototype.__proto__) {
+				superClass = forInstance(getType().prototype);
 			} else {
 				superClass = null;
 			}
@@ -440,7 +441,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @return a new instance of this class
 	 */
 	public function newInstance() {
-		return ClassUtil.createInstance(clazz, arguments);
+		return ClassUtil.createInstance(getType(), arguments);
 	}
 	
 	/**
@@ -463,7 +464,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * by the static {@link #getClassAlgorithm} method.
 	 */
 	private function initNameAndPackage(Void):Void {
-		var info = getClassAlgorithm().executeByClass(getType());
+		var info = getClassAlgorithm().executeByClass(clazz);
 		if (name === undefined) name = info.name == null ? null : info.name;
 		if (package === undefined) package = info.package == null ? null : info.package;
 	}
@@ -486,9 +487,9 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	public function hasMethod(methodName:String, filterStaticMethods:Boolean):Boolean {
 		if (methodName == null) return false;
 		if (filterStaticMethods == null) filterStaticMethods = false;
-		if (clazz.prototype[methodName]) return true;
+		if (getType().prototype[methodName]) return true;
 		if (filterStaticMethods) return false;
-		if (clazz[methodName]) return true;
+		if (getType()[methodName]) return true;
 		var superClass:TypeInfo = getSuperType();
 		while (superClass) {
 			if (superClass.getType()[methodName]) {
@@ -673,10 +674,10 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	public function hasProperty(propertyName:String, filterStaticProperties:Boolean):Boolean {
 		if (propertyName == null) return false;
 		if (filterStaticProperties == null) filterStaticProperties = false;
-		if (clazz.prototype["__get__" + propertyName]) return true;
-		if (clazz.prototype["__set__" + propertyName]) return true;
+		if (getType().prototype["__get__" + propertyName]) return true;
+		if (getType().prototype["__set__" + propertyName]) return true;
 		if (filterStaticProperties) return false;
-		if (clazz[propertyName]) return true;
+		if (getType()[propertyName]) return true;
 		var superClass:TypeInfo = getSuperType();
 		while (superClass) {
 			if (superClass.getType()["__set__" + propertyName]
