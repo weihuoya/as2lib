@@ -143,7 +143,10 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 	public function executeByClass(d:Function) {
 		if (!d) return null;
 		return executeByComparator(function(f:Function) {
-			return f == d;
+			// use f.valueOf() because this allows one to overwrite the original class,
+			// to add a valueOf method that returns the original class and still find
+			// the correct class at run-time (this is for example used by the aop framework)
+			return f.valueOf() == d;
 		});
 	}
 	
