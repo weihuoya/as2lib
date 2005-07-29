@@ -57,12 +57,20 @@ class org.as2lib.env.reflect.ConstructorInfo extends MethodInfo {
 	 * <p>If the concrete constructor was not specified on construction it will be
 	 * resolved at run-time by this method everytime asked for. The returned
 	 * constructor is thus always the current constructor of the declaring type.
+	 * Resolving the class's constructor at run-time does only work if the declaring
+	 * type returns a not-{@code null} package and a not-{@code null} name. If these
+	 * two are {@code null} or {@code undefined} the function returned by the
+	 * {@code getType} method of the declaring type is returned.
 	 *
 	 * @return the concrete constructor
 	 */
 	public function getMethod(Void):Function {
 		if (method !== undefined) {
 			return method;
+		}
+		if (declaringType.getPackage().getPackage() == null
+				|| declaringType.getName() == null) {
+			return declaringType.getType();		
 		}
 		return declaringType.getPackage().getPackage()[declaringType.getName()];
 	}
