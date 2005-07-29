@@ -321,12 +321,12 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @param name (optional) the name of the reflected class
 	 * @param package (optional) the package the reflected class is a member of
 	 */
-	public function ClassInfo(name:String,
-							  package:PackageInfo,
-							  clazz:Function) {
+	public function ClassInfo(clazz:Function,
+							  name:String,
+							  package:PackageInfo) {
+		this.clazz = clazz;
 		this.name = name;
 		this.package = package;
-		this.clazz = clazz;
 	}
 	
 	/**
@@ -376,14 +376,14 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @return the represented class
 	 */
 	public function getType(Void):Function {
-		// TODO: fine better way to keep concrete class up-to-date
+		// TODO: find better way to keep concrete class up-to-date
 		// problems are that package and name must be resolved event if no update was made
 		// and that snapshots are not possible
-		if (getPackage().getPackage() !== undefined
+		/*if (getPackage().getPackage() !== undefined
 				&& getPackage().getPackage() !== null
 				&& getName() != null) {
 			return getPackage().getPackage()[getName()];
-		}
+		}*/
 		return clazz;
 	}
 	
