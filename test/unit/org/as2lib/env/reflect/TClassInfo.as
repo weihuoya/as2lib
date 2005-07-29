@@ -21,6 +21,7 @@ import org.as2lib.env.reflect.PackageInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.ReflectConfig;
 import org.as2lib.env.reflect.Cache;
+import org.as2lib.env.reflect.ConstructorInfo;
 
 /**
  * @author Simon Wacker
@@ -95,7 +96,9 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 	
 	public function testGetConstructorWithNullType(Void):Void {
 		var i:ClassInfo = new ClassInfo(null, null, null);
-		assertNull(i.getConstructor());
+		assertNotNull(i.getConstructor());
+		assertSame(i.getConstructor().getName(), ConstructorInfo.NAME);
+		assertNull(i.getConstructor().getMethod());
 	}
 	
 	public function testGetConstructorWithDefinedType(Void):Void {
