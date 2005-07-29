@@ -23,6 +23,8 @@ import org.as2lib.aop.Aspect;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.AopConfig;
 import org.as2lib.aop.joinpoint.AbstractJoinPoint;
+import org.as2lib.env.reflect.MethodInfo;
+import org.as2lib.env.reflect.PropertyInfo;
 
 /**
  * {@code AbstractAdvice} implements methods commonly needed by {@link Adivce}
@@ -80,13 +82,25 @@ class org.as2lib.aop.advice.AbstractAdvice extends BasicClass {
 			// MTASC doesn't allow access to private "executeJoinPoint"
 			return owner["executeJoinPoint"](joinPoint.update(this), arguments);
 		};
-		if (joinPoint.getType() == AbstractJoinPoint.CONSTRUCTOR) {
-			var info:ConstructorInfo = ConstructorInfo(joinPoint.getInfo());
-			var method:Function = info.getMethod();
+		var method:Function;
+		if (joinPoint.getType() == AbstractJoinPoint.METHOD
+				|| joinPoint.getType() == AbstractJoinPoint.CONSTRUCTOR) {
+			method = MethodInfo(joinPoint.getInfo()).getMethod();
+		}
+		if (joinPoint.getType() == AbstractJoinPoint.SET_PROPERTY) {
+			method = PropertyInfo(joinPoint.getInfo()).getSetter().getMethod();
+		}
+		if (joinPoint.getType() == AbstractJoinPoint.GET_PROPERTY) {
+			method = PropertyInfo(joinPoint.getInfo()).getGetter().getMethod();
+		}
+		if (method) {
 			result.__proto__ = method.__proto__;
 			result.prototype = method.prototype;
 			result.__constructor__ = method.__constructor__;
 			result.constructor = method.constructor;
+			result.__resolve = function(name:String) {
+				return method[name];
+			};
 		}
 		return result;
 	}
