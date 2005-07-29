@@ -391,9 +391,10 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * Returns the class's constructor representation.
 	 * 
 	 * <p>You can use the returned constructor info to get the actual 
-	 * constructor. Note that the constructor in Flash is the same as the class. Thus
-	 * the function returned by the {@link #getType} method and the
-	 * {@code getMethod} method of the returned constructor is the same.
+	 * constructor. Note that the constructor in Flash is by default the same as the
+	 * class. Thus the function returned by the {@link #getType} method and the
+	 * {@code getMethod} method of the returned constructor is the same, if you did not
+	 * overwrite the constructor manually after this instance was created.
 	 *
 	 * @return the constructor of the class
 	 */
@@ -421,8 +422,8 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 */
 	public function getSuperType(Void):TypeInfo {
 		if (superClass === undefined) {
-			if (getType().prototype.__proto__) {
-				superClass = forInstance(getType().prototype);
+			if (clazz.prototype.__proto__) {
+				superClass = forInstance(clazz.prototype);
 			} else {
 				superClass = null;
 			}
@@ -441,7 +442,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @return a new instance of this class
 	 */
 	public function newInstance() {
-		return ClassUtil.createInstance(getType(), arguments);
+		return ClassUtil.createInstance(getConstructor().getMethod(), arguments);
 	}
 	
 	/**
@@ -487,9 +488,9 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	public function hasMethod(methodName:String, filterStaticMethods:Boolean):Boolean {
 		if (methodName == null) return false;
 		if (filterStaticMethods == null) filterStaticMethods = false;
-		if (getType().prototype[methodName]) return true;
+		if (clazz.prototype[methodName]) return true;
 		if (filterStaticMethods) return false;
-		if (getType()[methodName]) return true;
+		if (clazz[methodName]) return true;
 		var superClass:TypeInfo = getSuperType();
 		while (superClass) {
 			if (superClass.getType()[methodName]) {
@@ -531,7 +532,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @return an array containing the methods
 	 */
 	public function getMethodsByFlag(filterSuperClasses:Boolean):Array {
-		if (!getType()) return null;
+		if (!clazz) return null;
 		if (methods === undefined) {
 			methods = getMethodAlgorithm().execute(this);
 		}
@@ -569,7 +570,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * array if no methods are declared or all were filtered or {@code null}
 	 */
 	public function getMethodsByFilter(methodFilter:TypeMemberFilter):Array {
-		if (!getType()) return null;
+		if (!clazz) return null;
 		if (!methodFilter) return getMethodsByFlag(false);
 		var result:Array = getMethodsByFlag(methodFilter.filterSuperTypes());
 		for (var i:Number = 0; i < result.length; i++) {
@@ -674,10 +675,10 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	public function hasProperty(propertyName:String, filterStaticProperties:Boolean):Boolean {
 		if (propertyName == null) return false;
 		if (filterStaticProperties == null) filterStaticProperties = false;
-		if (getType().prototype["__get__" + propertyName]) return true;
-		if (getType().prototype["__set__" + propertyName]) return true;
+		if (clazz.prototype["__get__" + propertyName]) return true;
+		if (clazz.prototype["__set__" + propertyName]) return true;
 		if (filterStaticProperties) return false;
-		if (getType()[propertyName]) return true;
+		if (clazz[propertyName]) return true;
 		var superClass:TypeInfo = getSuperType();
 		while (superClass) {
 			if (superClass.getType()["__set__" + propertyName]
@@ -720,7 +721,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @return an array containing the properties
 	 */
 	public function getPropertiesByFlag(filterSuperClasses:Boolean):Array {
-		if (!getType()) return null;
+		if (!clazz) return null;
 		if (properties === undefined) {
 			properties = getPropertyAlgorithm().execute(this);
 		}
@@ -755,7 +756,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @return an array containing the remaining properties
 	 */
 	public function getPropertiesByFilter(propertyFilter:TypeMemberFilter):Array {
-		if (!getType()) return null;
+		if (!clazz) return null;
 		if (!propertyFilter) return getPropertiesByFlag(false);
 		var result:Array = getPropertiesByFlag(propertyFilter.filterSuperTypes());
 		for (var i:Number = 0; i < result.length; i++) {
