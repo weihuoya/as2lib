@@ -98,8 +98,15 @@ class org.as2lib.aop.advice.AbstractAdvice extends BasicClass {
 			result.prototype = method.prototype;
 			result.__constructor__ = method.__constructor__;
 			result.constructor = method.constructor;
+			// just in case that any state is held in the original method, for classes this
+			// may be static variables, methods or properties
 			result.__resolve = function(name:String) {
 				return method[name];
+			};
+			// guarantees that the class info for the original class this proxy overwrites
+			// can still be found
+			result.valueOf = function():Object {
+				return method.valueOf();
 			};
 		}
 		return result;
