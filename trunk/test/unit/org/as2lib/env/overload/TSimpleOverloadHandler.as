@@ -207,21 +207,21 @@ class org.as2lib.env.overload.TSimpleOverloadHandler extends TestCase {
 		h = new SimpleOverloadHandler([Boolean], function() {});
 		assertNull("2_0", h.isMoreExplicit(new SimpleOverloadHandler([Boolean], function() {})));
 		assertTrue("2_1", h.isMoreExplicit(new SimpleOverloadHandler([Object], function() {})));
-		var BooleanSubClass = function() {};
+		var BooleanSubClass:Function = function() {};
 		BooleanSubClass.prototype = new Boolean();
 		assertFalse("2_2", h.isMoreExplicit(new SimpleOverloadHandler([BooleanSubClass], function() {})));
 		
 		h = new SimpleOverloadHandler([Number], function() {});
 		assertNull("3_0", h.isMoreExplicit(new SimpleOverloadHandler([Number], function() {})));
 		assertTrue("3_1", h.isMoreExplicit(new SimpleOverloadHandler([Object], function() {})));
-		var NumberSubClass = function() {};
+		var NumberSubClass:Function = function() {};
 		NumberSubClass.prototype = new Number();
 		assertFalse("3_2", h.isMoreExplicit(new SimpleOverloadHandler([NumberSubClass], function() {})));
 		
 		h = new SimpleOverloadHandler([String], function() {});
 		assertNull("4_0", h.isMoreExplicit(new SimpleOverloadHandler([String], function() {})));
 		assertTrue("4_1", h.isMoreExplicit(new SimpleOverloadHandler([Object], function() {})));
-		var StringSubClass = function() {};
+		var StringSubClass:Function = function() {};
 		StringSubClass.prototype = new String();
 		assertFalse("4_2", h.isMoreExplicit(new SimpleOverloadHandler([StringSubClass], function() {})));
 		
