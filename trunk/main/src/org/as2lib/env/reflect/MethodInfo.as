@@ -177,6 +177,9 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	 * @return the return value of the method invocation
 	 */
 	public function invoke(scope, args:Array) {
+		// TODO: if 'scope' is an instance of this method's declaring type
+		// do not use 'apply' because of the 'super' bug; use the 'super' fix
+		// of the AOP framework instead
 		return getMethod().apply(scope, args);
 	}
 	
