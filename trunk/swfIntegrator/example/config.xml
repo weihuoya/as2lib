@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean class="org.as2lib.swfIntegrator.Settings">
+	  <property name="compiler" value="D:\mtasc\hamtasc\mtasc.exe" />
+	  <property name="webRoot" value="D:\Dokumente\Projekte\as2lib\source\swfIntegrator\example\webroot" />
+	  <property name="webLocation" value="\swfTest" />
+	  <property name="librarySwfTarget" value="libs"/>
+	  <property name="applicationSwfTarget" value="swf" />
+	  <property name="workingDir" value="D:\Dokumente\Projekte\as2lib\source\swfIntegrator\example\intrinsic" />
+	  <property name="cacheActive" value="false" />
+	  <property name="htmlGenerator"><bean class="org.as2lib.swfIntegrator.html.DefaultHtmlGenerator" /></property>
+	  <property name="swfIntegratorRoot" value="D:\Dokumente\Projekte\as2lib\swfIntegrator\example\flash" />
+	</bean>
+
+	<bean id="test" class="org.as2lib.swfIntegrator.movie.MovieSettings">
+	  <property name="width" value="120" />
+	  <property name="height" value="40" />
+	  <property name="backgroundColor" value="#454345" />
+	  <property name="transparent" value="true" />
+	  <property name="version" value="6" />
+	  <property name="main" value="test.MainClass" />
+	  <property name="requiredLibraries">
+	     <list>
+	       <ref bean="as2lib" />
+	     </list>
+	  </property>
+	  <property name="alternativeOutput"><value><![CDATA[
+	  <div id="holla, baby!">
+	     <font size='2'>235</font>
+	  </div>
+	  ]]></value>
+	  </property>
+	</bean>
+
+	<bean id="as2lib" class="org.as2lib.swfIntegrator.library.SourceLibrary">
+	  <property name="location" value="D:\Dokumente\Projekte\as2lib\source\main\src"/>
+	  <property name="requiredLibraries">
+	    <list>
+	      <!--<ref bean="actionstep" />
+	      <ref bean="alcom" />
+	      <ref bean="as2logger" />
+	      <ref bean="ascb" />
+	      <ref bean="debug_panel" />
+	      <ref bean="flash_debug_tool" />
+	      <ref bean="flex_debug_panel" />
+	      <ref bean="fludge" />-->
+	      <ref bean="flashout" />
+<!--	      <ref bean="lb.log" />
+	      <ref bean="log4f" />
+	      <ref bean="ztor" />-->
+	    </list>
+	  </property>
+	</bean>
+
+	<bean id="flashout" class="org.as2lib.swfIntegrator.library.SourceLibrary">
+	  <property name="location" value="D:\Dokumente\Projekte\as2lib\lib\flashout"/>
+	</bean>
+
+	<!--<bean id="actionstep" class="org.as2lib.swfIntegrator.SourceLibrary">
+	  <property name="location" value="D:\Dokumente\Projekte\as2lib\lib\actionstep\src"/>
+	</bean>
+
+	<bean id="alcom" class="org.as2lib.swfIntegrator.SourceLibrary">
+	  <property name="location" value="D:\Dokumente\Projekte\as2lib\lib\alcon\sources"/>
+	  <property name="requiredLibraries">
+	    <list>
+	      <ref bean="flash_inbuilt" />
+	    </list>
+	  </property>
+	</bean>
+
+	<bean id="as2logger" class="org.as2lib.swfIntegrator.SourceLibrary">
+	  <property name="location" value="D:\Dokumente\Projekte\as2lib\lib\as2logger\Classes"/>
+	</bean>
+
+	<bean id="ascb" class="org.as2lib.swfIntegrator.SourceLibrary">
+	  <property name="location" value="D:\Dokumente\Projekte\as2lib\lib\ascb logging\classes"/>
+	</bean>
+
+	<bean id="debug_panel" class="org.as2lib.swfIntegrator.SourceLibrary">
+	  <property name="location" value="D:\Dokumente\Projekte\as2lib\lib\debug panel"/>
+	</bean>
+
+	<bean id="flash_debug_tool" class="org.as2lib.swfIntegrator.SourceLibrary">
+	  <property name="location" value="D:\Dokumente\Projekte\as2lib\lib\flash debug tool\Flash"/>
+	</bean>
+
+	<bean id="flex_debug_panel" class="org.as2lib.swfIntegrator.SourceLibrary">
+	  <property name="location" value="D:\Dokumente\Projekte\as2lib\lib\flex panel\src"/>
+	</bean>
+
+	<bean id="fludge" class="org.as2lib.swfIntegrator.SourceLibrary">
+	  <property name="location" value="D:\Dokumente\Projekte\as2lib\lib\fludge"/>
+	</bean>
+
+	<bean id="lb.log" class="org.as2lib.swfIntegrator.SourceLibrary">
+	  <property name="location" value="D:\Dokumente\Projekte\as2lib\lib\lb.log\source"/>
+	</bean>
+
+	<bean id="log4f" class="org.as2lib.swfIntegrator.SourceLibrary">
+	  <property name="location" value="D:\Dokumente\Projekte\as2lib\lib\log4f\src"/>
+	</bean>
+
+	<bean id="ztor" class="org.as2lib.swfIntegrator.SourceLibrary">
+	  <property name="location" value="D:\Dokumente\Projekte\as2lib\lib\ztor log4f"/>
+	</bean>
+
+	<bean id="flash_inbuilt" class="org.as2lib.swfIntegrator.SourceLibrary">
+	  <property name="location" value="C:\Dokumente und Einstellungen\HeideggerMartin\Lokale Einstellungen\Anwendungsdaten\Macromedia\Flash MX 2004\de\Configuration\Classes"/>
+	</bean>-->
+
+	<!--
+	<bean id="MMWebservice" class="org.as2lib.swfIntegrator.SwcLibrary">
+	</bean>
+	-->
+</beans>
