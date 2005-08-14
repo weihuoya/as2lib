@@ -90,6 +90,17 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			if (constructor) {
 				weaveByJoinPointAndAdvices(new ConstructorJoinPoint(constructor, null), advices);
 			}
+			var prototype:Object = type.getType().prototype;
+			if (prototype.__constructor__) {
+				var superClassConstructor:ConstructorInfo = ClassInfo(type.getSuperType()).getConstructor();
+				// there is a bug with the __constructor__ variable, we fix this by assigning
+				// this variable by hand to the correct method
+				prototype.__constructor__ = superClassConstructor.getMethod();
+				if (advices.containsKey(superClassConstructor.getDeclaringType().getType())) {
+					weaveSuperClassConstructor(new ConstructorJoinPoint(superClassConstructor, null), prototype, advices.get(superClassConstructor.getMethod()));
+					//weaveBySuperClassConstructorJoinPointAndAdvices(, advices.get(superClassConstructor.getMethod()));
+				}
+			}
 			var methods:Array = type.getMethods();
 			if (methods) {
 				for (var i:Number = 0; i < methods.length; i++) {
@@ -106,6 +117,19 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 					if (property) {
 						weaveByJoinPointAndAdvices(new GetPropertyJoinPoint(property, null), advices);
 						weaveByJoinPointAndAdvices(new SetPropertyJoinPoint(property, null), advices);
+					}
+				}
+			}
+		}
+	}
+	
+	private function weaveSuperClassConstructor(superClassConstructorJoinPoint:ConstructorJoinPoint, prototype, advices:Array):Void {
+		if (prototype && advices) {
+			for (var i:Number = 0; i < advices.length; i++) {
+				var advice:Advice = Advice(advices[i]);
+				if (advice) {
+					if (advice.captures(superClassConstructorJoinPoint)) {
+						prototype.__constructor__ = advice.getProxy(superClassConstructorJoinPoint);
 					}
 				}
 			}
