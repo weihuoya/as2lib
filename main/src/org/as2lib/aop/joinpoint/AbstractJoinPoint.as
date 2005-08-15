@@ -46,28 +46,6 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	/** Indicates a join point of type constructor. */
 	public static var CONSTRUCTOR:Number = 16;
 	
-	/**
-	 * The invoker method used to invoke the original method of a join point. This
-	 * invoker is invoked on different scopes, never on this scope.
-	 * 
-	 * <p>This invoker removes itself, before executing the method, from the object it
-	 * was assigned to. It expects itself to have the name {@code "__as2lib__invoker"}.
-	 * 
-	 * @param object the object that holds this invoker method
-	 * @param method the method to invoke on the {@code super} object
-	 * @param args the arguments to use for the invocation
-	 * @return the result of the invocation of {@code method} with {@code args} on the
-	 * {@code super} scope
-	 */
-	private static var INVOKER:Function = function(object, method:Function, args:Array) {
-		// removes reference to this function
-		object.__as2lib__invoker = null;
-		// deletes the variable '__as2lib__invoker'
-		delete object.__as2lib__invoker;
-		// 'super' is not accessible from this scope, at least that's the compiler error
-		return method.apply(eval("su" + "per"), args);
-	};
-	
 	/** The matcher used by this join point to evaluate the {@code captures} method. */
 	private var matcher:Matcher;
 	
@@ -146,20 +124,7 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 		if (!t) {
 			throw new IllegalStateException("To execute this method the 'logical this' that is used as scope for the procession of the method must not be 'null' nor 'undefined'.", this, arguments);
 		}
-		var m:Function = method.getMethod();
-		// there is no super bug with apply and static methods because 'super' is not allowed in static methods
-		if (method.isStatic()) {
-			return m.apply(t, args);
-		}
-		var p:Object = method.getDeclaringType().getType().prototype;
-		if (t.__proto__ == p) {
-			return m.apply(t, args);
-		}
-		while (t.__proto__ != p) {
-			t = t.__proto__;
-		}
-		t.__as2lib__invoker = INVOKER;
-		return getThis().__as2lib__invoker(t, m, args);
+		return method.invoke(t, args);
 	}
 	
 	/**

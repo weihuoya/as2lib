@@ -46,6 +46,28 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	private static var stringifier:Stringifier;
 	
 	/**
+	 * The invoker method used to invoke this method. This invoker is invoked on
+	 * different scopes, never on this scope.
+	 * 
+	 * <p>This invoker removes itself, before executing the method, from the object it
+	 * was assigned to. It expects itself to have the name {@code "__as2lib__invoker"}.
+	 * 
+	 * @param object the object that holds this invoker method
+	 * @param method the method to invoke on the {@code super} object
+	 * @param args the arguments to use for the invocation
+	 * @return the result of the invocation of {@code method} with {@code args} on the
+	 * {@code super} scope
+	 */
+	private static var INVOKER:Function = function(object, method:Function, args:Array) {
+		// removes reference to this function
+		object.__as2lib__invoker = null;
+		// deletes the variable '__as2lib__invoker'
+		delete object.__as2lib__invoker;
+		// 'super' is not accessible from this scope, at least that's the compiler error
+		return method.apply(eval("su" + "per"), args);
+	};
+	
+	/**
 	 * Returns the stringifier used to stringify method infos.
 	 *
 	 * <p>If no custom stringifier has been set via the {@link #setStringifier} method,
@@ -177,9 +199,23 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	 * @return the return value of the method invocation
 	 */
 	public function invoke(scope, args:Array) {
-		// TODO: if 'scope' is an instance of this method's declaring type
-		// do not use 'apply' because of the 'super' bug; use the 'super' fix
-		// of the AOP framework instead
+		// there is no super bug with apply and static methods because 'super' is not allowed in static methods
+		if (!staticFlag) {
+			// super bug can only be fixed if scope is an instance of the declaring type
+			// otherwise everything is messed up anyway
+			if (scope instanceof declaringType.getType()) {
+				var prototype:Object = declaringType.getType().prototype;
+				// if scope is a direct instance of the declaring type super works as expected
+				if (scope.__proto__ != prototype) {
+					var newScope = scope;
+					while (newScope.__proto__ != prototype) {
+						newScope = newScope.__proto__;
+					}
+					newScope.__as2lib__invoker = INVOKER;
+					return scope.__as2lib__invoker(newScope, getMethod(), args);
+				}
+			}
+		}
 		return getMethod().apply(scope, args);
 	}
 	
