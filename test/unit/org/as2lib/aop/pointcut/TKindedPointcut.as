@@ -18,6 +18,7 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.aop.pointcut.KindedPointcut;
 import org.as2lib.aop.JoinPoint;
+import org.as2lib.aop.joinpoint.AbstractJoinPoint;
 
 /**
  * @author Simon Wacker
@@ -25,7 +26,7 @@ import org.as2lib.aop.JoinPoint;
 class org.as2lib.aop.pointcut.TKindedPointcut extends TestCase {
 	
 	public function testCapturesWithNullJoinPoint(Void):Void {
-		var p:KindedPointcut = new KindedPointcut("*", 2);
+		var p:KindedPointcut = new KindedPointcut("*", AbstractJoinPoint.METHOD);
 		assertFalse(p.captures(null));
 	}
 	
@@ -46,12 +47,12 @@ class org.as2lib.aop.pointcut.TKindedPointcut extends TestCase {
 		var jc:MockControl = new MockControl(JoinPoint);
 		var j:JoinPoint = jc.getMock();
 		j.getType();
-		jc.setReturnValue(2);
+		jc.setReturnValue(AbstractJoinPoint.METHOD);
 		j.matches(null);
 		jc.setReturnValue(false);
 		jc.replay();
 		
-		var p:KindedPointcut = new KindedPointcut(null, 2);
+		var p:KindedPointcut = new KindedPointcut(null, AbstractJoinPoint.METHOD);
 		assertFalse(p.captures(j));
 		
 		jc.verify();
@@ -61,12 +62,12 @@ class org.as2lib.aop.pointcut.TKindedPointcut extends TestCase {
 		var jc:MockControl = new MockControl(JoinPoint);
 		var j:JoinPoint = jc.getMock();
 		j.getType();
-		jc.setReturnValue(2);
+		jc.setReturnValue(AbstractJoinPoint.METHOD);
 		j.matches("pattern*..");
 		jc.setReturnValue(true);
 		jc.replay();
 		
-		var p:KindedPointcut = new KindedPointcut("pattern*..", 2);
+		var p:KindedPointcut = new KindedPointcut("pattern*..", AbstractJoinPoint.METHOD);
 		assertTrue(p.captures(j));
 		
 		jc.verify();
@@ -76,12 +77,12 @@ class org.as2lib.aop.pointcut.TKindedPointcut extends TestCase {
 		var jc:MockControl = new MockControl(JoinPoint);
 		var j:JoinPoint = jc.getMock();
 		j.getType();
-		jc.setReturnValue(2);
+		jc.setReturnValue(AbstractJoinPoint.METHOD);
 		j.matches("pattern*..");
 		jc.setReturnValue(false);
 		jc.replay();
 		
-		var p:KindedPointcut = new KindedPointcut("pattern*..", 2);
+		var p:KindedPointcut = new KindedPointcut("pattern*..", AbstractJoinPoint.METHOD);
 		assertFalse(p.captures(j));
 		
 		jc.verify();
@@ -91,11 +92,31 @@ class org.as2lib.aop.pointcut.TKindedPointcut extends TestCase {
 		var jc:MockControl = new MockControl(JoinPoint);
 		var j:JoinPoint = jc.getMock();
 		j.getType();
-		jc.setReturnValue(3);
+		jc.setReturnValue(AbstractJoinPoint.GET_PROPERTY);
 		jc.replay();
 		
-		var p:KindedPointcut = new KindedPointcut("pattern*..", 2);
+		var p:KindedPointcut = new KindedPointcut("pattern*..", AbstractJoinPoint.METHOD);
 		assertFalse(p.captures(j));
+		
+		jc.verify();
+	}
+	
+	public function testCapturesWithCombinedMatchingJoinPointType(Void):Void {
+		var jc:MockControl = new MockControl(JoinPoint);
+		var j:JoinPoint = jc.getMock();
+		j.getType();
+		jc.setReturnValue(AbstractJoinPoint.GET_PROPERTY);
+		jc.setReturnValue(AbstractJoinPoint.CONSTRUCTOR);
+		jc.setReturnValue(AbstractJoinPoint.METHOD);
+		j.matches("pattern*..");
+		jc.setReturnValue(true);
+		jc.setReturnValue(true);
+		jc.replay();
+		
+		var p:KindedPointcut = new KindedPointcut("pattern*..", AbstractJoinPoint.GET_PROPERTY | AbstractJoinPoint.CONSTRUCTOR);
+		assertTrue("get-property", p.captures(j));
+		assertTrue("constructor", p.captures(j));
+		assertFalse("method", p.captures(j));
 		
 		jc.verify();
 	}
