@@ -24,8 +24,10 @@ import org.as2lib.aop.JoinPoint;
  * 
  * <p>Kinded pointcuts build upon a join point pattern and a specific join point type.
  * Pre-defined join point types are {@link AbstractJoinPoint#METHOD},
- * {@link AbstractJoinPoint#PROPERTY}, {@link AbstractJoinPoint#GET_PROPERTY} and
- * {@link AbstractJoinPoint#SET_PROPERTY}.
+ * {@link AbstractJoinPoint#PROPERTY}, {@link AbstractJoinPoint#GET_PROPERTY},
+ * {@link AbstractJoinPoint#SET_PROPERTY} and {@link AbstractJoinPoint#CONSTRUCTOR}.
+ * You may combine several join point types with a bitwise or "|" to make this kinded
+ * pointcut match all the combined join point types.
  * 
  * <p>The pattern may consist of wildcards. Using wildcards you can capture join points
  * based on specific characteristics like capture every setter method contained in every
@@ -50,8 +52,8 @@ import org.as2lib.aop.JoinPoint;
  */
 class org.as2lib.aop.pointcut.KindedPointcut extends BasicClass implements Pointcut {
 	
-	/** The type of the matching join points. */
-	private var matchingJoinPointType:Number;
+	/** The types of the matching join points. */
+	private var matchingJoinPointTypes:Number;
 	
 	/** The pattern that represents the join point. */
 	private var joinPointPattern:String;
@@ -67,12 +69,18 @@ class org.as2lib.aop.pointcut.KindedPointcut extends BasicClass implements Point
 	 * <p>A matching join point type of value {@code null} or {@code undefined} is
 	 * interpreted as "any type of join point allowed".
 	 * 
+	 * <p>{@code matchingJoinPointTypes} can be either only one type or a bitwise or "|"
+	 * combination of several types. It is thus possible to make this kinded pointcut
+	 * match more than one join point type.
+	 * <code>AbstractJoinPoint.METHOD | AbstractJoinPoint.CONSTRUCTOR</code>
+	 * 
 	 * @param joinPointPattern the join point pattern
-	 * @param matchingJoinPointType the type of join points that match this pointcut
+	 * @param matchingJoinPointTypes the types of the join points that match this
+	 * pointcut
 	 */
-	public function KindedPointcut(joinPointPattern:String, matchingJoinPointType:Number) {
+	public function KindedPointcut(joinPointPattern:String, matchingJoinPointTypes:Number) {
 		this.joinPointPattern = joinPointPattern;
-		this.matchingJoinPointType = matchingJoinPointType;
+		this.matchingJoinPointTypes = matchingJoinPointTypes;
 	}
 	
 	/**
@@ -93,10 +101,10 @@ class org.as2lib.aop.pointcut.KindedPointcut extends BasicClass implements Point
 	 */
 	public function captures(joinPoint:JoinPoint):Boolean {
 		if (!joinPoint) return false;
-		if (this.matchingJoinPointType == null) {
+		if (this.matchingJoinPointTypes == null) {
 			return joinPoint.matches(this.joinPointPattern);
 		}
-		return (joinPoint.getType() == this.matchingJoinPointType
+		return ((this.matchingJoinPointTypes & joinPoint.getType()) > 0
 					&& joinPoint.matches(this.joinPointPattern));
 	}
 	
