@@ -58,7 +58,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		factoryMap = new HashMap();
 		bindOrPointcut();
 		bindAndPointcut();
-		bindMethodPointcut();
+		bindExecutionPointcut();
 		bindSetPropertyPointcut();
 		bindGetPropertyPointcut();
 		//bindWithinPointcut();
@@ -121,7 +121,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	/**
 	 * TODO: Documentation
 	 */
-	private function bindMethodPointcut(Void):Void {
+	private function bindExecutionPointcut(Void):Void {
 		var rule:PointcutRule = getBlankPointcutRule();
 		rule.execute = function(pattern:String):Boolean {
 			return (pattern.indexOf("execution") == 0);
@@ -129,7 +129,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
 			pattern = pattern.substring(10, pattern.length - 3);
-			return (new KindedPointcut(pattern, AbstractJoinPoint.METHOD));
+			return (new KindedPointcut(pattern, AbstractJoinPoint.METHOD | AbstractJoinPoint.CONSTRUCTOR));
 		};
 		bindPointcutFactory(rule, factory);
 	}
