@@ -32,19 +32,19 @@ import org.as2lib.env.except.IllegalStateException;
 class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	
 	/** Indicates a join point of type method. */
-	public static var METHOD:Number = 0;
+	public static var METHOD:Number = 1;
 	
 	/** Indicates a join point of type property. */
-	public static var PROPERTY:Number = 1;
+	public static var PROPERTY:Number = 2;
 	
 	/** Indicates a join point of type set-property. */
-	public static var SET_PROPERTY:Number = 2;
+	public static var SET_PROPERTY:Number = 4;
 	
 	/** Indicates a join point of type get-property. */
-	public static var GET_PROPERTY:Number = 3;
+	public static var GET_PROPERTY:Number = 8;
 	
 	/** Indicates a join point of type constructor. */
-	public static var CONSTRUCTOR:Number = 4;
+	public static var CONSTRUCTOR:Number = 16;
 	
 	/**
 	 * The invoker method used to invoke the original method of a join point. This
