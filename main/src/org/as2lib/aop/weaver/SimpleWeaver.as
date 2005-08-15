@@ -42,7 +42,7 @@ import org.as2lib.aop.joinpoint.AbstractJoinPoint;
  */
 class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	
-	/** Arrays of {@link Advice} instances that are mapped to affected types. */
+	/** Arrays of {@link Advice} instances that are mapped to affected {@link ClassInfo} instances. */
 	private var advices:Map;
 	
 	/**
@@ -58,10 +58,10 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	public function weave(Void):Void {
 		var affectedTypes:Array = advices.getKeys();
 		for (var i:Number = 0; i < affectedTypes.length; i++) {
-			var affectedType:Function = affectedTypes[i];
+			var affectedType:ClassInfo = affectedTypes[i];
 			var affectedAdvices:Array = advices.get(affectedType);
 			if (affectedType) {
-				weaveByTypeAndAdvices(ClassInfo.forClass(affectedType), affectedAdvices);
+				weaveByTypeAndAdvices(affectedType, affectedAdvices);
 			} else {
 				weaveByPackageAndAdvices(PackageInfo.getRootPackage(), affectedAdvices);
 			}
@@ -96,12 +96,12 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 				// there is a bug with the __constructor__ variable, we fix this by assigning
 				// this variable by hand to the correct method
 				prototype.__constructor__ = superClassConstructor.getMethod();
-				if (advices.containsKey(superClassConstructor.getDeclaringType().getType())) {
-					weaveSuperClassConstructor(new ConstructorJoinPoint(superClassConstructor, null), prototype, advices.get(superClassConstructor.getMethod()));
+				if (this.advices.containsKey(superClassConstructor.getDeclaringType())) {
+					weaveSuperClassConstructor(new ConstructorJoinPoint(superClassConstructor, null), prototype, this.advices.get(superClassConstructor.getDeclaringType()));
 					//weaveBySuperClassConstructorJoinPointAndAdvices(, advices.get(superClassConstructor.getMethod()));
 				}
 			}
-			var methods:Array = type.getMethods();
+			var methods:Array = type.getMethodsByFlag(true);
 			if (methods) {
 				for (var i:Number = 0; i < methods.length; i++) {
 					var method:MethodInfo = MethodInfo(methods[i]);
@@ -110,7 +110,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 					}
 				}
 			}
-			var properties:Array = type.getProperties();
+			var properties:Array = type.getPropertiesByFlag(true);
 			if (properties) {
 				for (var i:Number = 0; i < properties.length; i++) {
 					var property:PropertyInfo = PropertyInfo(properties[i]);
@@ -129,7 +129,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 				var advice:Advice = Advice(advices[i]);
 				if (advice) {
 					if (advice.captures(superClassConstructorJoinPoint)) {
-						prototype.__constructor__ = advice.getProxy(superClassConstructorJoinPoint);
+						prototype.__constructor__ = advice.getProxy(superClassConstructorJoinPoint.snapshot());
 					}
 				}
 			}
@@ -353,11 +353,15 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	 */
 	public function addAdviceForOneAffectedType(advice:Advice, affectedType:Function):Void {
 		if (advice) {
-			if (!advices.containsKey(affectedType)) {
-				advices.put(affectedType, new Array());
+			var typeInfo:ClassInfo = ClassInfo.forClass(affectedType);
+			if (!advices.containsKey(typeInfo)) {
+				advices.put(typeInfo, new Array());
 			}
-			var affectedAdvices:Array = advices.get(affectedType);
+			var affectedAdvices:Array = advices.get(typeInfo);
 			affectedAdvices.push(advice);
+			if (typeInfo.getSuperType()) {
+				addAdviceForOneAffectedType(advice, typeInfo.getSuperType().getType());
+			}
 		}
 	}
 	
