@@ -154,7 +154,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	private function weaveByJoinPointAndAdvice(joinPoint:JoinPoint, advice:Advice):Void {
 		var proxy:Function = advice.getProxy(joinPoint);
 		var info:TypeMemberInfo = joinPoint.getInfo();
-		if (joinPoint.getThis() == AbstractJoinPoint.CONSTRUCTOR) {
+		if (joinPoint.getType() == AbstractJoinPoint.CONSTRUCTOR) {
 			info.getDeclaringType().getPackage().getPackage()[info.getDeclaringType().getName()] = proxy;
 		} else {
 			if (info.isStatic()) {
