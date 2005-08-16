@@ -87,7 +87,7 @@ class org.as2lib.test.speed.MethodTestCase extends AbstractTest implements Test 
 		if (!method) {
 			throw new IllegalArgumentException("Argument 'method' [" + method + "] must not be 'null' nor 'undefined' or this instance must declare a method named 'doRun'.", this, arguments);
 		}
-		this.method = method;
+		this.method = method.snapshot();
 		if (referenceScope) {
 			this.s = referenceScope;
 		} else {
@@ -170,6 +170,7 @@ class org.as2lib.test.speed.MethodTestCase extends AbstractTest implements Test 
 	 * @return the created closure	 */
 	private function createClosure(Void):Function {
 		var t:MethodTestCase = this;
+		var mi:MethodInfo = this.method;
 		var m:Function = this.method.getMethod();
 		var closure:Function = function() {
 			var i:MethodInvocation = t["c"]();
@@ -177,28 +178,10 @@ class org.as2lib.test.speed.MethodTestCase extends AbstractTest implements Test 
 			i.setArguments(arguments);
 			i.setCaller(arguments.caller.__as2lib__i);
 			m.__as2lib__i = i;
-			var b:Number;
+			var b:Number = getTimer();
 			try {
-				// enables proper handling of super calls and recursions inside of closured methods
-				var o:Function = arguments.callee;
-				var s = t["s"];
-				var n:String = t["n"];
-				// if the method uses recursion
-				this[n] = o;
-				// if there is a possibility that super might be called support it
-				if (s.__proto__[n]) {
-					s[n] = function() {
-						t["s"].__proto__[t["n"]].apply(this, arguments);
-					};
-				}
-				s[n].__as2lib__i = i;
-				b = getTimer();
-				var r = m.apply(this, arguments);
+				var r = mi.invoke(this, arguments);
 				i.setTime(getTimer() - b);
-				// reset methods
-				s[n] = o;
-				delete this[n];
-				// set time directly after invocation to reduce adulteration of the result
 				i.setReturnValue(r);
 				return r;
 			} catch (e) {
