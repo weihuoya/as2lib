@@ -34,6 +34,21 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 		formerCache = ReflectConfig.getCache();
 	}
 	
+	public function testGetSuperTypeForNumber(Void):Void {
+		var c:ClassInfo = ClassInfo.forClass(Number);
+		assertSame(c.getSuperType(), ClassInfo.forClass(Object));
+	}
+	
+	public function testGetSuperTypeForBoolean(Void):Void {
+		var c:ClassInfo = ClassInfo.forInstance(Boolean.prototype);
+		assertSame(c.getSuperType(), ClassInfo.forClass(Object));
+	}
+	
+	public function testGetSuperTypeForDate(Void):Void {
+		var c:ClassInfo = ClassInfo.forInstance(Date.prototype);
+		assertSame(c.getSuperType(), ClassInfo.forClass(Object));
+	}
+	
 	public function testNewWithNullArguments(Void):Void {
 		var i:ClassInfo = new ClassInfo(null, null, null);
 		assertNull("name not null", i.getName());
