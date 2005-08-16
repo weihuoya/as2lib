@@ -56,6 +56,9 @@ class org.as2lib.aop.advice.AbstractAfterThrowingAdvice extends AbstractAdvice {
 	 * exception
 	 */
 	private function executeJoinPoint(joinPoint:JoinPoint, args:Array) {
+		// 'this' in the catch block refers to '_level0' without this preceding 'this'
+		// (at least in the test cases)
+		this;
 		var result;
 		try {
 			result = joinPoint.proceed(args);
