@@ -653,7 +653,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 			var l:Number = methodArray.length;
 			for (var i:Number = 0; i < l; i = i-(-1)) {
 				var method:MethodInfo = methodArray[i];
-				if (method.getMethod().valueOf() == concreteMethod) {
+				if (method.getMethod().valueOf() == concreteMethod.valueOf()) {
 					return method;
 				}
 			}
@@ -840,8 +840,8 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 			var l:Number = propertyArray.length;
 			for (var i:Number = 0; i < l; i = i-(-1)) {
 				var property:PropertyInfo = propertyArray[i];
-				if (property.getGetter().valueOf() == concreteProperty
-						|| property.getSetter().valueOf() == concreteProperty) {
+				if (property.getGetter().valueOf() == concreteProperty.valueOf()
+						|| property.getSetter().valueOf() == concreteProperty.valueOf()) {
 					return property;
 				}
 			}
