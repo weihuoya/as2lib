@@ -45,6 +45,16 @@ class org.as2lib.env.event.distributor.AbstractEventDistributorControl extends T
 	}
 	
 	/**
+	 * Returns the type of listeners this distributor expects. This is also the type of
+	 * the distributor returned by the {@link #getDistributor} method.
+	 * 
+	 * @return the type of the distributor and listeners
+	 */
+	public function getType(Void):Function {
+		return t;
+	}
+	
+	/**
 	 * Returns the distributor to distribute the event to all added listeners.
 	 *
 	 * <p>The returned distributor can be casted to the type specified on construction.

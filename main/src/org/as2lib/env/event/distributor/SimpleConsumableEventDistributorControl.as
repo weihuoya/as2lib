@@ -70,15 +70,6 @@ class org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControl e
 	}
 	
 	/**
-	 * Getter for the type of the distributor.
-	 * 
-	 * @return type of the distributor.
-	 */
-	public function getType(Void):Function {
-		return t;
-	}
-	
-	/**
 	 * Executes the event with the given {@code eventName} on all added listeners, using
 	 * the arguments after {@code eventName} as parameters.
 	 *
