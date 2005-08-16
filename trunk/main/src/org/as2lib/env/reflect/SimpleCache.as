@@ -87,7 +87,7 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 * @return the class info representing the passed-in {@code clazz}
 	 */
 	public function getClassByClass(clazz:Function):ClassInfo {
-		if (clazz == null) return null;
+		if (clazz === null || clazz === undefined) return null;
 		var p:Object = clazz.prototype;
 		var c:Number = p.__as2lib__hashCode;
 		if (c == undefined) return null;
@@ -111,7 +111,7 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 * @return the class info representing the instance's class
 	 */
 	public function getClassByInstance(instance):ClassInfo {
-		if (instance == null) return null;
+		if (instance === null || instance === undefined) return null;
 		var p:Object = instance.__proto__;
 		var c:Number = p.__as2lib__hashCode;
 		if (c == undefined) return null;
@@ -154,7 +154,7 @@ class org.as2lib.env.reflect.SimpleCache extends BasicClass implements Cache {
 	 * @return the pakcage info representing the passed-in {@code package}
 	 */
 	public function getPackage(package):PackageInfo {
-		if (!package) return null;
+		if (package === null || package === undefined) return null;
 		var c:Number = package.__as2lib__hashCode;
 		if (c == null) return null;
 		if (c == package.__proto__.__as2lib__hashCode) {
