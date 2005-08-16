@@ -48,7 +48,7 @@ interface org.as2lib.env.event.distributor.EventDistributorControl extends Event
 	
 	/**
 	 * Returns the type of listeners this distributor expects. This is also the type of
-	 * instance returned by the {@link #getDistributor} method.
+	 * the distributor returned by the {@link #getDistributor} method.
 	 * 
 	 * @return the type of the distributor and listeners
 	 */
