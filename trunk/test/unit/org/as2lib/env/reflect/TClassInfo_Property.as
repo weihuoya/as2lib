@@ -22,6 +22,7 @@ import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.PropertyInfo;
 import org.as2lib.env.reflect.TypeMemberFilter;
 import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
+import org.as2lib.env.reflect.MethodInfo;
 
 /**
  * @author Simon Wacker
@@ -648,28 +649,64 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		Type.prototype.__proto__ = null;
 		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
+		var gp1c:MockControl = new MockControl(MethodInfo);
+		var gp1:MethodInfo = gp1c.getMock();
+		gp1.getMethod();
+		gp1c.setReturnValue(function() {});
+		gp1c.replay();
+		
+		var sp1c:MockControl = new MockControl(MethodInfo);
+		var sp1:MethodInfo = sp1c.getMock();
+		sp1.getMethod();
+		sp1c.setReturnValue(function() {});
+		sp1c.replay();
+		
 		var m1c:MockControl = new MockControl(PropertyInfo);
 		var m1:PropertyInfo = m1c.getMock();
 		m1.getGetter();
-		m1c.setReturnValue(function() {});
+		m1c.setReturnValue(gp1);
 		m1.getSetter();
-		m1c.setReturnValue(function() {});
+		m1c.setReturnValue(sp1);
 		m1c.replay();
+		
+		var gp2c:MockControl = new MockControl(MethodInfo);
+		var gp2:MethodInfo = gp2c.getMock();
+		gp2.getMethod();
+		gp2c.setReturnValue(function() {});
+		gp2c.replay();
+		
+		var sp2c:MockControl = new MockControl(MethodInfo);
+		var sp2:MethodInfo = sp2c.getMock();
+		sp2.getMethod();
+		sp2c.setReturnValue(function() {});
+		sp2c.replay();
 		
 		var m2c:MockControl = new MockControl(PropertyInfo);
 		var m2:PropertyInfo = m2c.getMock();
 		m2.getGetter();
-		m2c.setReturnValue(function() {});
+		m2c.setReturnValue(gp2);
 		m2.getSetter();
-		m2c.setReturnValue(function() {});
+		m2c.setReturnValue(sp2);
 		m2c.replay();
+		
+		var gp3c:MockControl = new MockControl(MethodInfo);
+		var gp3:MethodInfo = gp3c.getMock();
+		gp3.getMethod();
+		gp3c.setReturnValue(function() {});
+		gp3c.replay();
+		
+		var sp3c:MockControl = new MockControl(MethodInfo);
+		var sp3:MethodInfo = sp3c.getMock();
+		sp3.getMethod();
+		sp3c.setReturnValue(function() {});
+		sp3c.replay();
 		
 		var m3c:MockControl = new MockControl(PropertyInfo);
 		var m3:PropertyInfo = m3c.getMock();
 		m3.getGetter();
-		m3c.setReturnValue(function() {});
+		m3c.setReturnValue(gp3);
 		m3.getSetter();
-		m3c.setReturnValue(function() {});
+		m3c.setReturnValue(sp3);
 		m3c.replay();
 		
 		var mac:MockControl = new MockControl(PropertyAlgorithm);
@@ -702,10 +739,28 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		var Type:Function = function() {};
 		var i:ClassInfo = new ClassInfo(Type, null, null);
 		
+		var gp1c:MockControl = new MockControl(MethodInfo);
+		var gp1:MethodInfo = gp1c.getMock();
+		gp1.getMethod();
+		gp1c.setDefaultReturnValue(cm1);
+		gp1c.replay();
+		
+		var gp2c:MockControl = new MockControl(MethodInfo);
+		var gp2:MethodInfo = gp2c.getMock();
+		gp2.getMethod();
+		gp2c.setDefaultReturnValue(cm2);
+		gp2c.replay();
+		
+		var sp1c:MockControl = new MockControl(MethodInfo);
+		var sp1:MethodInfo = sp1c.getMock();
+		sp1.getMethod();
+		sp1c.setDefaultReturnValue(cm3);
+		sp1c.replay();
+		
 		var m1c:MockControl = new MockControl(PropertyInfo);
 		var m1:PropertyInfo = m1c.getMock();
 		m1.getGetter();
-		m1c.setDefaultReturnValue(cm1);
+		m1c.setDefaultReturnValue(gp1);
 		m1.getSetter();
 		m1c.setDefaultReturnValue(null);
 		m1c.replay();
@@ -713,7 +768,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		var m2c:MockControl = new MockControl(PropertyInfo);
 		var m2:PropertyInfo = m2c.getMock();
 		m2.getGetter();
-		m2c.setDefaultReturnValue(cm2);
+		m2c.setDefaultReturnValue(gp2);
 		m2.getSetter();
 		m2c.setDefaultReturnValue(null);
 		m2c.replay();
@@ -723,7 +778,7 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		m3.getGetter();
 		m3c.setDefaultReturnValue(null);
 		m3.getSetter();
-		m3c.setDefaultReturnValue(cm3);
+		m3c.setDefaultReturnValue(sp1);
 		m3c.replay();
 		
 		var mac:MockControl = new MockControl(PropertyAlgorithm);
@@ -750,10 +805,15 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		
 		ClassInfo.setPropertyAlgorithm(ma);
 		ReflectConfig.setCache(c);
+		trace("--");
 		assertSame(i.getPropertyByProperty(cm3), m3);
+		trace("--");
 		assertSame(i.getPropertyByProperty(cm1), m1);
+		trace("--");
 		assertSame(i.getPropertyByProperty(cm2), m2);
+		trace("--");
 		assertSame(i.getPropertyByProperty(cm4), sm4);
+		trace("--");
 		
 		mac.verify();
 		cc.verify();
