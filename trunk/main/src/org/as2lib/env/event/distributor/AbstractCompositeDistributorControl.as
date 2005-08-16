@@ -67,7 +67,7 @@ class org.as2lib.env.event.distributor.AbstractCompositeDistributorControl imple
 				if (size > 0) {
 					message += "("+m.size()+"):";
 				} else {
-					message += "(No types defined)."
+					message += "(No types defined).";
 				}
 				var iter:Iterator = m.keyIterator();
 				while (iter.hasNext()) {
