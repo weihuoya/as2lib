@@ -42,19 +42,19 @@ class org.as2lib.aop.advice.TDynamicAfterThrowingAdvice extends AbstractTAdvice 
 		var thiz:TestCase = this;
 		var j:JoinPoint = getBlankJoinPoint();
 		j.update = function(object):JoinPoint {
-			thiz.assertSame(object, o);
+			thiz["assertSame"](object, o);
 			return j;
 		};
 		j.proceed = function(args:Array):String {
 			z.push("proceed");
-			thiz.assertSame(args[0], "arg1");
-			thiz.assertSame(args[1], 2);
-			thiz.assertSame(args[2], a3);
+			thiz["assertSame"](args[0], "arg1");
+			thiz["assertSame"](args[1], 2);
+			thiz["assertSame"](args[2], a3);
 			return "rv";
 		};
 		var c:Call = new Call(this, function(joinPoint:JoinPoint, throwable):String {
 			z.push("callback");
-			thiz.assertSame(joinPoint, j);
+			thiz["assertSame"](joinPoint, j);
 			return "blubber";
 		});
 		var a:Advice = createAdvice(p, c);
@@ -77,21 +77,21 @@ class org.as2lib.aop.advice.TDynamicAfterThrowingAdvice extends AbstractTAdvice 
 		var thiz:TestCase = this;
 		var j:JoinPoint = getBlankJoinPoint();
 		j.update = function(object):JoinPoint {
-			thiz.assertSame(object, o);
+			thiz["assertSame"](object, o);
 			return j;
 		};
 		j.proceed = function(args:Array):String {
 			z.push("proceed");
-			thiz.assertSame(args[0], "arg1");
-			thiz.assertSame(args[1], 2);
-			thiz.assertSame(args[2], a3);
+			thiz["assertSame"](args[0], "arg1");
+			thiz["assertSame"](args[1], 2);
+			thiz["assertSame"](args[2], a3);
 			throw e;
 			return "rv";
 		};
 		var c:Call = new Call(this, function(joinPoint:JoinPoint, throwable):String {
 			z.push("callback");
-			thiz.assertSame(joinPoint, j);
-			thiz.assertSame(throwable, e);
+			thiz["assertSame"](joinPoint, j);
+			thiz["assertSame"](throwable, e);
 			return "blubber";
 		});
 		var a:Advice = createAdvice(p, c);
@@ -99,7 +99,7 @@ class org.as2lib.aop.advice.TDynamicAfterThrowingAdvice extends AbstractTAdvice 
 		try {
 			o.p("arg1", 2, a3);
 			fail("expected error");
-		} catch (e:Error) {
+		} catch (error:Error) {
 		}
 		assertSame(z.length, 2);
 		assertSame(z[0], "proceed");

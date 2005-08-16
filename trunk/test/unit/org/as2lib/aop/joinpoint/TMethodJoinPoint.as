@@ -19,7 +19,6 @@ import org.as2lib.test.mock.MockControl;
 import org.as2lib.aop.joinpoint.MethodJoinPoint;
 import org.as2lib.aop.Matcher;
 import org.as2lib.env.reflect.MethodInfo;
-import org.as2lib.env.reflect.TypeInfo;
 import org.as2lib.aop.joinpoint.Class;
 import org.as2lib.aop.joinpoint.SuperClass;
 import org.as2lib.aop.joinpoint.SuperSuperClass;
@@ -35,7 +34,7 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 	
 	public function testNewWithNullInfo(Void):Void {
 		try {
-			new MethodJoinPoint(null, new Object());
+			var jp:MethodJoinPoint = new MethodJoinPoint(null, new Object());
 			fail("Expected IllegalArgumentException");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
@@ -46,7 +45,7 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 		var i:MethodInfo = ic.getMock();
 		ic.replay();
 		
-		new MethodJoinPoint(i, null);
+		var jp:MethodJoinPoint = new MethodJoinPoint(i, null);
 		
 		ic.verify();
 	}

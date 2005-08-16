@@ -42,23 +42,23 @@ class org.as2lib.aop.advice.TDynamicAroundAdvice extends AbstractTAdvice {
 		var thiz:TestCase = this;
 		var j:JoinPoint = getBlankJoinPoint();
 		j.update = function(object):JoinPoint {
-			thiz.assertSame(object, o);
+			thiz["assertSame"](object, o);
 			return j;
 		};
 		j.proceed = function(args:Array):String {
 			z.push("proceed");
-			thiz.assertSame(args[0], "blubber1");
-			thiz.assertSame(args[1], a3);
-			thiz.assertSame(args[2], 5);
+			thiz["assertSame"](args[0], "blubber1");
+			thiz["assertSame"](args[1], a3);
+			thiz["assertSame"](args[2], 5);
 			return "rv";
 		};
 		var c:Call = new Call(this, function(joinPoint:JoinPoint, args:Array):String {
 			z.push("callback");
-			thiz.assertSame(joinPoint, j);
-			thiz.assertSame(args[0], "arg1");
-			thiz.assertSame(args[1], 2);
-			thiz.assertSame(args[2], a3);
-			assertSame(joinPoint.proceed(["blubber1", a3, 5]), "rv");
+			thiz["assertSame"](joinPoint, j);
+			thiz["assertSame"](args[0], "arg1");
+			thiz["assertSame"](args[1], 2);
+			thiz["assertSame"](args[2], a3);
+			thiz["assertSame"](joinPoint.proceed(["blubber1", a3, 5]), "rv");
 			return "blubber";
 		});
 		var a:Advice = createAdvice(p, c);
@@ -81,23 +81,23 @@ class org.as2lib.aop.advice.TDynamicAroundAdvice extends AbstractTAdvice {
 		var thiz:TestCase = this;
 		var j:JoinPoint = getBlankJoinPoint();
 		j.update = function(object):JoinPoint {
-			thiz.assertSame(object, o);
+			thiz["assertSame"](object, o);
 			return j;
 		};
 		j.proceed = function(args:Array):String {
 			z.push("proceed");
-			thiz.assertSame(args[0], "blubber1");
-			thiz.assertSame(args[1], a3);
-			thiz.assertSame(args[2], 5);
+			thiz["assertSame"](args[0], "blubber1");
+			thiz["assertSame"](args[1], a3);
+			thiz["assertSame"](args[2], 5);
 			throw e;
 			return "rv";
 		};
 		var c:Call = new Call(this, function(joinPoint:JoinPoint, args:Array):String {
 			z.push("callback");
-			thiz.assertSame(joinPoint, j);
-			thiz.assertSame(args[0], "arg1");
-			thiz.assertSame(args[1], 2);
-			thiz.assertSame(args[2], a3);
+			thiz["assertSame"](joinPoint, j);
+			thiz["assertSame"](args[0], "arg1");
+			thiz["assertSame"](args[1], 2);
+			thiz["assertSame"](args[2], a3);
 			joinPoint.proceed(["blubber1", a3, 5]);
 			return "blubber";
 		});
@@ -106,7 +106,7 @@ class org.as2lib.aop.advice.TDynamicAroundAdvice extends AbstractTAdvice {
 		try {
 			o.p("arg1", 2, a3);
 			fail("expected error");
-		} catch (e:Error) {
+		} catch (error:Error) {
 		}
 		assertSame(z.length, 2);
 		assertSame(z[0], "callback");

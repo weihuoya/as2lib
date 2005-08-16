@@ -19,7 +19,6 @@ import org.as2lib.test.mock.MockControl;
 import org.as2lib.aop.joinpoint.PropertyJoinPoint;
 import org.as2lib.aop.Matcher;
 import org.as2lib.env.reflect.PropertyInfo;
-import org.as2lib.env.reflect.TypeInfo;
 
 /**
  * @author Simon Wacker
@@ -28,7 +27,7 @@ class org.as2lib.aop.joinpoint.TPropertyJoinPoint extends TestCase {
 	
 	public function testNewWithNullInfo(Void):Void {
 		try {
-			new PropertyJoinPoint(null, new Object());
+			var jp:PropertyJoinPoint = new PropertyJoinPoint(null, new Object());
 			fail("Expected IllegalArgumentException");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
@@ -39,7 +38,7 @@ class org.as2lib.aop.joinpoint.TPropertyJoinPoint extends TestCase {
 		var i:PropertyInfo = ic.getMock();
 		ic.replay();
 		
-		new PropertyJoinPoint(i, null);
+		var jp:PropertyJoinPoint = new PropertyJoinPoint(i, null);
 		
 		ic.verify();
 	}
