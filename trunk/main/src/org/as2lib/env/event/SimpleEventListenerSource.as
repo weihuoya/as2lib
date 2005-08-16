@@ -52,8 +52,7 @@ class org.as2lib.env.event.SimpleEventListenerSource extends BasicClass implemen
 	 * @param listener the listener to add
 	 */
 	public function addListener(listener):Void {
-		if (listener) {
-			removeListener(listener);
+		if (listener && !hasListener(listener)) {
 			this.l.push(listener);
 		}
 	}
