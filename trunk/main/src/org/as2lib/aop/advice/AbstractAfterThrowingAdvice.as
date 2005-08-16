@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.aop.Aspect;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.advice.AbstractAdvice;

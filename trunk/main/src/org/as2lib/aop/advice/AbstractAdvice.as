@@ -16,7 +16,6 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.env.reflect.ConstructorInfo;
 import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.Aspect;
