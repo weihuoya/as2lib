@@ -58,7 +58,8 @@ class org.as2lib.aop.advice.AbstractAfterThrowingAdvice extends AbstractAdvice {
 	private function executeJoinPoint(joinPoint:JoinPoint, args:Array) {
 		// 'this' in the catch block refers to '_level0' without this preceding 'this'
 		// (at least in the test cases)
-		this;
+		// a detached 'this' is not allowed by MTASC we does have to store it in a variable
+		var x:AbstractAfterThrowingAdvice = this;
 		var result;
 		try {
 			result = joinPoint.proceed(args);
