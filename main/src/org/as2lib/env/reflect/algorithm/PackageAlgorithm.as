@@ -112,7 +112,7 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 	 * @return an object that contains information about the passed-in package
 	 */
 	public function execute(o) {
-		if (o == null) return null;
+		if (o === null || o === undefined) return null;
 		p = null;
 		// must set access permissions because by default all package members in _global are hidden
 		_global.ASSetPropFlags(o, null, 0, true);
@@ -176,7 +176,9 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 		var x:String = p.getFullName();
 		if (!x) x = "_global";
 		var f:Object = eval(x + "." + n);
-		if (!f) throw new PackageNotFoundException("A package with the name '" + n + "' could not be found.", this, arguments);
+		if (f === null || f === undefined) {
+			throw new PackageNotFoundException("A package with the name '" + n + "' could not be found.", this, arguments);
+		}
 		if (typeof(f) != "object") throw new IllegalArgumentException("The object corresponding to the passed-in package name '" + n + "' is not of type object.", this, arguments);
 		var r:PackageInfo = c.getPackage(f);
 		if (r) return r;
