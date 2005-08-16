@@ -838,7 +838,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		var propertyArray:Array = getPropertiesByFlag(true);
 		if (propertyArray) {
 			var l:Number = propertyArray.length;
-			for (var i:Number = 0; i < l; i = i-(-1)) {
+			for (var i:Number = 0; i < l; i++) {
 				var property:PropertyInfo = propertyArray[i];
 				if (property.getGetter().getMethod().valueOf() == concreteProperty.valueOf()
 						|| property.getSetter().getMethod().valueOf() == concreteProperty.valueOf()) {
