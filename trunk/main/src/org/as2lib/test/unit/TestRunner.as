@@ -337,6 +337,7 @@ class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process
 			if (isRunning()) {
 				finishMethod();
 			}
+			autoPause();
 		}
 	}
 
