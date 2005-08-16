@@ -201,18 +201,19 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	public function invoke(scope, args:Array) {
 		// there is no super bug with apply and static methods because 'super' is not allowed in static methods
 		if (!staticFlag) {
+			var t:Function = declaringType.getType();
 			// super bug can only be fixed if scope is an instance of the declaring type
 			// otherwise everything is messed up anyway
-			if (scope instanceof declaringType.getType()) {
-				var prototype:Object = declaringType.getType().prototype;
+			if (scope instanceof t) {
+				var p:Object = t.prototype;
 				// if scope is a direct instance of the declaring type super works as expected
-				if (scope.__proto__ != prototype) {
-					var newScope = scope;
-					while (newScope.__proto__ != prototype) {
-						newScope = newScope.__proto__;
+				if (scope.__proto__ != p) {
+					var s = scope;
+					while (s.__proto__ != p) {
+						s = s.__proto__;
 					}
-					newScope.__as2lib__invoker = INVOKER;
-					return scope.__as2lib__invoker(newScope, getMethod(), args);
+					s.__as2lib__invoker = INVOKER;
+					return scope.__as2lib__invoker(s, getMethod(), args);
 				}
 			}
 		}
