@@ -32,6 +32,11 @@ class org.as2lib.env.reflect.TPackageInfo extends TestCase {
 		fpa = PackageInfo.getPackageMemberAlgorithm();
 	}
 	
+	public function testForPackageWithGlobal(Void):Void {
+		var p:PackageInfo = PackageInfo.forPackage(_global);
+		assertSame(p, PackageInfo.getRootPackage());
+	}
+	
 	public function testIsParentPackageWithNullArgument(Void):Void {
 		var p:PackageInfo = new PackageInfo(null, null, null);
 		assertFalse(p.isParentPackage(null));
