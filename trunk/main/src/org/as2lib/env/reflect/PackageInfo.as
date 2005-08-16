@@ -91,7 +91,9 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 */
 	public static function forPackage(package):PackageInfo {
 		// _global == null results in true, as well does _global == undefined because of that === is used
-		if (package === null || package === undefined) throw new IllegalArgumentException("Argument 'package' [" + package + "] must not be 'null' nor 'undefined'.", eval("th" + "is"), arguments);
+		if (package === null || package === undefined) {
+			throw new IllegalArgumentException("Argument 'package' [" + package + "] must not be 'null' nor 'undefined'.", eval("th" + "is"), arguments);
+		}
 		var packageInfo:PackageInfo = ReflectConfig.getCache().getPackage(package);
 		if (packageInfo) return packageInfo;
 		return ReflectConfig.getCache().addPackage(new PackageInfo(package));
