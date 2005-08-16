@@ -18,7 +18,6 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.aop.joinpoint.GetPropertyJoinPoint;
 import org.as2lib.env.reflect.PropertyInfo;
-import org.as2lib.env.reflect.MethodInfo;
 
 /**
  * @author Simon Wacker
@@ -32,7 +31,7 @@ class org.as2lib.aop.joinpoint.TGetPropertyJoinPoint extends TestCase {
 		ic.setReturnValue(false);
 		ic.replay();
 		try {
-			new GetPropertyJoinPoint(i, new Object());
+			var jp:GetPropertyJoinPoint = new GetPropertyJoinPoint(i, new Object());
 			fail("expected IllegalArgumentException");
 		} catch (e:org.as2lib.env.except.IllegalArgumentException) {
 		}
@@ -45,7 +44,7 @@ class org.as2lib.aop.joinpoint.TGetPropertyJoinPoint extends TestCase {
 		i.isReadable();
 		ic.setReturnValue(true);
 		ic.replay();
-		new GetPropertyJoinPoint(i, new Object());
+		var jp:GetPropertyJoinPoint = new GetPropertyJoinPoint(i, new Object());
 		ic.verify();
 	}
 	

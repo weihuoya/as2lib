@@ -124,8 +124,8 @@ class org.as2lib.aop.pointcut.TOrPointcut extends TestCase {
 		
 		AopConfig.setPointcutFactory(f);
 		
-		var p:OrPointcut = new OrPointcut("org.as2lib.core.*.*()");
-		assertFalse(p.captures(null));
+		var p2:OrPointcut = new OrPointcut("org.as2lib.core.*.*()");
+		assertFalse(p2.captures(null));
 		
 		fc.verify();
 		pc.verify();
