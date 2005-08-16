@@ -46,4 +46,10 @@ interface org.as2lib.env.event.distributor.EventDistributorControl extends Event
 	 */
 	public function getDistributor(Void);
 	
+	/**
+	 * Returns the type of the distributor available with {@code getDistributor}.
+	 * 
+	 * @return type of the distributor
+	 */
+	public function getType(Void):Function;
 }
