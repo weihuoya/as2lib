@@ -36,17 +36,17 @@ class org.as2lib.env.reflect.TClassInfo extends TestCase {
 	
 	public function testGetSuperTypeForNumber(Void):Void {
 		var c:ClassInfo = ClassInfo.forClass(Number);
-		assertSame(c.getSuperType(), ClassInfo.forClass(Object));
+		assertSame(ClassInfo.forClass(Object), c.getSuperType());
 	}
 	
 	public function testGetSuperTypeForBoolean(Void):Void {
-		var c:ClassInfo = ClassInfo.forInstance(Boolean.prototype);
-		assertSame(c.getSuperType(), ClassInfo.forClass(Object));
+		var c:ClassInfo = ClassInfo.forClass(Boolean);
+		assertSame(ClassInfo.forClass(Object), c.getSuperType());
 	}
 	
 	public function testGetSuperTypeForDate(Void):Void {
-		var c:ClassInfo = ClassInfo.forInstance(Date.prototype);
-		assertSame(c.getSuperType(), ClassInfo.forClass(Object));
+		var c:ClassInfo = ClassInfo.forClass(Date);
+		assertSame(ClassInfo.forClass(Object), c.getSuperType());
 	}
 	
 	public function testNewWithNullArguments(Void):Void {
