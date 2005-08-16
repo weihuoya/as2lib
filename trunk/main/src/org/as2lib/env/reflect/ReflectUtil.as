@@ -65,7 +65,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	 * @overload #getTypeAndMethodInfoByInstance
 	 */
 	public static function getTypeAndMethodInfo(object, method:Function):Array {
-		if (object == null) return null;
+		if (object === null || object === undefined) return null;
 		if (typeof(object) == "function") {
 			return getTypeAndMethodInfoByType(object, method);
 		}
@@ -343,7 +343,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	 * @return the name of the {@code method} or {@code null}
 	 */
 	private static function getMethodNameByPrototype(m:Function, p):String {
-		if (m == null || p === null || p === undefined) return null;
+		if (m === null || m === undefined || p === null || p === undefined) return null;
 		while (p) {
 			var n:String = getMethodNameByObject(m, p);
 			if (n != null) return n;
@@ -441,7 +441,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	 * @overload #isConstructorByType
 	 */
 	public static function isConstructor(constructor:Function, object):Boolean {
-		if (!constructor || object === null || object === undefined) return false;
+		if (constructor === null || constructor === undefined || object === null || object === undefined) return false;
 		if (typeof(object) == "function") {
 			return isConstructorByType(constructor, object);
 		}
@@ -486,8 +486,8 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	 * {@code false}
 	 */
 	public static function isConstructorByType(method:Function, type:Function):Boolean {
-		if (!method || !type) return false;
-		return (method == type);
+		if (method === null || method === undefined || type === null || type === undefined) return false;
+		return (method.valueOf() == type.valueOf());
 	}
 	
 	/**
