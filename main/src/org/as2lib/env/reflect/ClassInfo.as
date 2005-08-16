@@ -115,8 +115,9 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 */
 	public static function forObject(object):ClassInfo {
 		// not '!object' because parameter 'object' could be an empty string
-		if (object == null) {
-			throw new IllegalArgumentException("The passed-in object '" + object + "' is not allowed to be null or undefined.", eval("th" + "is"), arguments);
+		// 'valueOf' method of 'object' may return 'null' or 'undefined' because of that strict eval is used
+		if (object === null || object === undefined) {
+			throw new IllegalArgumentException("Argument 'object' [" + object + "] must not be 'null' or 'undefined'.", eval("th" + "is"), arguments);
 		}
 		var classInfo:ClassInfo = ReflectConfig.getCache().getClass(object);
 		if (classInfo) return classInfo;
@@ -145,7 +146,9 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 */
 	public static function forInstance(instance):ClassInfo {
 		// not '!instance' because parameter 'instance' could be a blank string
-		if (instance == null) throw new IllegalArgumentException("The passed-in instance '" + instance + "' is not allowed to be null or undefined.", eval("th" + "is"), arguments);
+		if (instance === null || instance === undefined) {
+			throw new IllegalArgumentException("Argument 'instance' [" + instance + "] must not be 'null' or 'undefined'.", eval("th" + "is"), arguments);
+		}
 		var classInfo:ClassInfo = ReflectConfig.getCache().getClassByInstance(instance);
 		if (classInfo) return classInfo;
 		// if the __constructor__ is defined it most probably references the correct class
@@ -192,7 +195,9 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * or {@code undefined}
 	 */
 	public static function forClass(clazz:Function):ClassInfo {
-		if (!clazz) throw new IllegalArgumentException("The passed-in class '" + clazz + "' is not allowed to be null or undefined.", eval("th" + "is"), arguments);
+		if (clazz === null || clazz === undefined) {
+			throw new IllegalArgumentException("Argument 'clazz' [" + clazz + "] must not be 'null' or 'undefined'.", eval("th" + "is"), arguments);
+		}
 		var classInfo:ClassInfo = ReflectConfig.getCache().getClassByClass(clazz);
 		if (classInfo) return classInfo;
 		return ReflectConfig.getCache().addClass(new ClassInfo(clazz));
