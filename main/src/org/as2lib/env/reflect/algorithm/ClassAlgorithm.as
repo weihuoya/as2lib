@@ -146,7 +146,7 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 			// use f.valueOf() because this allows one to overwrite the original class,
 			// to add a valueOf method that returns the original class and still find
 			// the correct class at run-time (this is for example used by the aop framework)
-			return f.valueOf() == d;
+			return f.valueOf() == d.valueOf();
 		});
 	}
 	

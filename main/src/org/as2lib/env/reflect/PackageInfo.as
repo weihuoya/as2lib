@@ -699,7 +699,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 		if (classes) {
 			for (var i:Number = 0; i < classes.length; i++) {
 				var clazz:ClassInfo = classes[i];
-				if (clazz.getType() == concreteClass) {
+				if (clazz.getType().valueOf() == concreteClass) {
 					return clazz;
 				}
 			}
@@ -778,7 +778,7 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 		if (packages) {
 			for (var i:Number = 0; i < packages.length; i++) {
 				var package:PackageInfo = packages[i];
-				if (package.getPackage() == concretePackage) {
+				if (package.getPackage().valueOf() == concretePackage) {
 					return package;
 				}
 			}

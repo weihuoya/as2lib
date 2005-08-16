@@ -127,7 +127,7 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 		for (i in b) {
 			var e:Object = b[i];
 			if (typeof(e) == "object") {
-				if (e == o) {
+				if (e.valueOf() == o) {
 					p = new Object();
 					p.package = o;
 					p.name = i;
