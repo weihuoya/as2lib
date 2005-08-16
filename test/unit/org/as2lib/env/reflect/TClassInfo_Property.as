@@ -805,15 +805,10 @@ class org.as2lib.env.reflect.TClassInfo_Property extends TestCase {
 		
 		ClassInfo.setPropertyAlgorithm(ma);
 		ReflectConfig.setCache(c);
-		trace("--");
 		assertSame(i.getPropertyByProperty(cm3), m3);
-		trace("--");
 		assertSame(i.getPropertyByProperty(cm1), m1);
-		trace("--");
 		assertSame(i.getPropertyByProperty(cm2), m2);
-		trace("--");
 		assertSame(i.getPropertyByProperty(cm4), sm4);
-		trace("--");
 		
 		mac.verify();
 		cc.verify();
