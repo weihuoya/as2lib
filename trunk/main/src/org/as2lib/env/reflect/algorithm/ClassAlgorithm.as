@@ -141,7 +141,7 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 	 * @see #getCache
 	 */
 	public function executeByClass(d:Function) {
-		if (!d) return null;
+		if (d === null || d === undefined) return null;
 		return executeByComparator(function(f:Function) {
 			// use f.valueOf() because this allows one to overwrite the original class,
 			// to add a valueOf method that returns the original class and still find
@@ -182,7 +182,8 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 	 */
 	public function executeByInstance(d) {
 		// not 'if (!d)' because 'd' could be en empty string or a boolean
-		if (d == null) return null;
+		// 'valueOf' method of 'd' could return 'null' or 'undefined' thus strict eval is used
+		if (d === null || d === undefined) return null;
 		return executeByComparator(function(f:Function) {
 			return f.prototype === d.__proto__;
 		});
