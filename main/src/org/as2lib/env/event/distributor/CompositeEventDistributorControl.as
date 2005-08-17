@@ -23,13 +23,13 @@ import org.as2lib.env.event.distributor.EventDistributorControl;
  *
  * @author Martin Heidegger
  */
-interface org.as2lib.env.event.distributor.CompositeDistributorControl extends EventListenerSource {
+interface org.as2lib.env.event.distributor.CompositeEventDistributorControl extends EventListenerSource {
 	
 	public function getDistributor(type:Function);
 	
-	public function setDistributorControl(distributorControl:EventDistributorControl):Void;
+	public function setEventDistributorControl(distributorControl:EventDistributorControl):Void;
 	
-	public function resetDistributorControl(type:Function):Void;
+	public function setDefaultEventDistributorControl(type:Function):Void;
 	
 	public function acceptListenerType(type:Function):Void;
 }

@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.distributor.AbstractCompositeDistributorControl;
-import org.as2lib.env.event.distributor.CompositeDistributorControl;
+import org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl;
 import org.as2lib.env.event.distributor.SimpleEventDistributorControlFactory;
 
 /**
@@ -39,7 +38,7 @@ import org.as2lib.env.event.distributor.SimpleEventDistributorControlFactory;
  * @author Simon Wacker
  * @author Martin Heidegger
  */
-class org.as2lib.env.event.distributor.SimpleCompositeDistributorControl extends AbstractCompositeDistributorControl implements CompositeDistributorControl {
+class org.as2lib.env.event.distributor.SimpleCompositeEventDistributorControl extends AbstractCompositeEventDistributorControl {
 	
 	/**
 	 * Constructs a new {@code SimpleEventDistributorControl} instance.
@@ -53,7 +52,7 @@ class org.as2lib.env.event.distributor.SimpleCompositeDistributorControl extends
 	 * @throws IllegalArgumentException if the passed-in {@code listenerType} is
 	 * {@code null} or {@code undefined}
 	 */
-	public function SimpleCompositeDistributorControl(listenerType:Function, checkListenerType:Boolean, listeners:Array) {
+	public function SimpleCompositeEventDistributorControl() {
 		super (new SimpleEventDistributorControlFactory());
 	}
 	
