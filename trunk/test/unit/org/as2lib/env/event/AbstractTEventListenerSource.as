@@ -47,8 +47,8 @@ class org.as2lib.env.event.AbstractTEventListenerSource extends TestCase {
 		s.addListener(l);
 		s.addListener(l);
 		assertSame(s.getAllListeners().length, 2);
-		assertSame(s.getAllListeners()[0], l2);
-		assertSame(s.getAllListeners()[1], l);
+		assertSame(s.getAllListeners()[0], l);
+		assertSame(s.getAllListeners()[1], l2);
 	}
 	
 	public function testAddListener(Void):Void {
