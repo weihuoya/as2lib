@@ -437,9 +437,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 		var result;
 		try {
 			result = state.invokeMethod(new MethodCall(methodName, args));
-		} catch(e:org.as2lib.test.mock.MethodCallRangeError) {
-			e.setType(type);
-			throw e;
+		} catch(error:org.as2lib.test.mock.MethodCallRangeError) {
+			error.setType(type);
+			throw error;
 		}
 		return result;
 	}
@@ -699,9 +699,9 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	public function verify(Void):Void {
 		try {
 			state.verify();
-		} catch(e:org.as2lib.test.mock.MethodCallRangeError) {
-			e.setType(type);
-			throw e;
+		} catch(error:org.as2lib.test.mock.MethodCallRangeError) {
+			error.setType(type);
+			throw error;
 		}
 	}
 	
