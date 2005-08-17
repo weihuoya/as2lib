@@ -2,8 +2,20 @@
 <changelog xmlns="as2lib"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="as2lib http://www.as2lib.org/changelog_0.91.xsd">
-  <release name="as2lib 0.9.1" day="4" month="7" year="2005">
+  <release name="as2lib 0.9.2" day="20" month="8" year="2005">
     <year value="2005">
+      <month value="8">
+        <day value="17">
+          <entry type="add" package="org.as2lib.env.event" class="CompositeEventDistributorControl"></entry>
+          <entry type="add" package="org.as2lib.env.event" class="AbstractCompositeEventDistributorControl"></entry>
+          <entry type="add" package="org.as2lib.env.event" class="SimpleCompositeEventDistributorControl"></entry>
+          <entry type="add" package="org.as2lib.env.event" class="SimpleConsumableCompositeEventDistributorControl"></entry>
+          <entry type="add" package="org.as2lib.env.event" class="EventDistributorControlFactory"></entry>
+          <entry type="add" package="org.as2lib.env.event" class="SimpleEventDistributorControlFactory"></entry>
+          <entry type="add" package="org.as2lib.env.event" class="SimpleConsumableEventDistributorControlFactory"></entry>
+          <entry type="change" package="org.as2lib.app.exec" class="ForEachExecutable" method="forEach"><change-returnType to="Void" from="Array"></change-returnType></entry>
+        </day>
+      </month>
       <month value="7">
         <day value="28">
           <entry type="add" package="org.as2lib.env.reflect" class="ConstructorInfo" method="getMethod">Resolves constructor method at run-time.</entry>
