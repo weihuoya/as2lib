@@ -23,6 +23,7 @@ import org.as2lib.env.reflect.PackageMemberInfo;
 import org.as2lib.env.reflect.PackageMemberFilter;
 import org.as2lib.env.reflect.algorithm.PackageAlgorithm;
 import org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm;
+import org.as2lib.util.StringUtil;
 
 /**
  * {@code PackageInfo} represents a real package in the Flash environment. This class
@@ -835,10 +836,23 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 *   [reflection fullyQualifiedNameOfReflectedPackage]
 	 * </pre>
 	 * 
+	 * @param displayContent (optional) renders recursivly the content.
 	 * @return this instance's string representation
 	 */
 	public function toString():String {
-		return ("[reflection " + getFullName() + "]");
+		var result:String = "[PackageInfo -> "+getFullName();
+		if (arguments[0] == true) {
+			var i:Number;
+			var members:Array = getMembers();
+			for (i=0; i<members.length; i++) {
+				result += "\n"+StringUtil.addSpaceIndent(members[i].toString(true), 2);
+			}
+			if (members.length > 0) {
+				result += "\n";
+			}
+		}
+
+		return (result + "]");
 	}
 	
 }
