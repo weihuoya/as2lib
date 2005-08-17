@@ -55,7 +55,7 @@ class org.as2lib.env.event.distributor.AbstractCompositeDistributorControl imple
 			var added:Boolean;
 			for (i=0; i<k.length; i++) {
 				if(l instanceof k[i]) {
-					v[i].push(l);
+					v[i].addListener(l);
 					added = true;
 				}
 			}
@@ -85,7 +85,7 @@ class org.as2lib.env.event.distributor.AbstractCompositeDistributorControl imple
 			var i:Number;
 			for (i=0; i<k.length; i++) {
 				if (l instanceof k[i]) {
-					ArrayUtil.removeElement(v,l);
+					v[i].removeListener(l);
 				}
 			}
 			ArrayUtil.removeElement(this.l, l);
@@ -140,7 +140,7 @@ class org.as2lib.env.event.distributor.AbstractCompositeDistributorControl imple
 					return (function():Void {
 						//d.apply(e, n, arguments); causes 255 recursion error
 						// e.distribute is not MTASC compatible because "distribute" is private
-						e["em"].get(type)[n](arguments);
+						e["m"].get(type).getDistributor()[n](arguments);
 					});
 					// e.em is not MTASC compatible because "em" is private
 				};
@@ -148,8 +148,8 @@ class org.as2lib.env.event.distributor.AbstractCompositeDistributorControl imple
 				while (p != Object.prototype) {
 					for (var i:String in p) {
 						proxy[i] = function():Void {
-							// e.distribute is not MTASC compatible because "distribute" is private
-							var r = e["em"].get(type);
+							// e.em is not MTASC compatible because "em" is private
+							var r = e["m"].get(type).getDistributor();
 							r[arguments.callee.n].apply(r, arguments);
 						};
 						proxy[i].n = i;
