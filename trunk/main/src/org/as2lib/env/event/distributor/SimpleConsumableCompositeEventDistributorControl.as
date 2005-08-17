@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.event.distributor.AbstractCompositeDistributorControl;
-import org.as2lib.env.event.distributor.CompositeDistributorControl;
+import org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl;
 import org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControlFactory;
 
 /**
@@ -25,7 +24,7 @@ import org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControlF
  * @author Martin Heidegger
  * @version 1.0
  */
-class org.as2lib.env.event.distributor.SimpleConsumableEventCompositeDistributorControl extends AbstractCompositeEventDistributorControl {
+class org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributorControl extends AbstractCompositeEventDistributorControl {
 	
 	/**
 	 * Constructs a new {@code SimpleConsumableCompositeEventDistributorControl} instance.
