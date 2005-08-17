@@ -25,131 +25,212 @@ import org.as2lib.env.event.distributor.EventDistributorControl;
 import org.as2lib.env.event.distributor.EventDistributorControlFactory;
 
 /**
- * {@code AbstractEventDistributorControl} offers default implementations of
- * methods needed when implementing the {@link EventDistributorControl} interface
- * or any sub-interface.
+ * {@code AbstractCompositeEventDistributorControl} is the default implementation
+ * of {@link CompositeEventDistributorControl}.
+ * <p>To use the functionality, simply extend it and pass a factory for the
+ * default eventdistributors.
  * 
  * @author Martin Heidegger
+ * @version 1.0
  */
 class org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl implements CompositeEventDistributorControl {
 	
-	private var f:EventDistributorControlFactory;
-	private var l:Array;
-	// DistributorControlMap
-	private var m:Map;
+	/* Factory to create default event distributors for the different types */
+	private var eventDistributorControlFactory:EventDistributorControlFactory;
 	
+	/* Listener holder */
+	private var listeners:Array;
+	
+	/* Map that contains all used eventdistributors */
+	private var distributorMap:Map;
+	
+	/**
+	 * Creates a new AbstractCompositeEventDistributorControl
+	 * 
+	 * @param factory Factory to create event distributors for the different types.
+	 */
 	public function AbstractCompositeEventDistributorControl(factory:EventDistributorControlFactory) {
-		f = factory;
-		m = new HashMap();
-		l = new Array();
+		eventDistributorControlFactory = factory;
+		distributorMap = new HashMap();
+		listeners = new Array();
 	}
 	
+	/**
+	 * Adds a certain listener to the event control
+	 * <p>It validates if the passed-in listener matches any of the accepted 
+	 * listeners. 
+	 * 
+	 * <p>The listener will be contained in all matching distributors.
+	 * 
+	 * @param l Listener to be added to the control
+	 * @throws IllegalArgumentException if the certain listener doesn't match
+	 *         any accepted type.
+	 */
 	public function addListener(l):Void {
 		if (!hasListener(l)) {
-			var k:Array = m.getKeys();
-			var v:Array = m.getValues();
+			var acceptedTypes:Array = distributorMap.getKeys();
+			var existingDistributors:Array = distributorMap.getValues();
+			var added:Boolean = false;
 			var i:Number;
-			var added:Boolean;
-			for (i=0; i<k.length; i++) {
-				if(l instanceof k[i]) {
-					v[i].addListener(l);
+			for (i=0; i<acceptedTypes.length; i++) {
+				if (l instanceof acceptedTypes[i]) {
+					existingDistributors[i].addListener(l);
 					added = true;
 				}
 			}
 			if (added) {
-				this.l.push(l);
+				listeners.push(l);
 			} else {
-				var message:String = "Passed listener ["+ReflectUtil.getTypeNameForInstance(l)+"] doesnt match any of the supported listener types ";
-				var size:Number = m.size();
+				var message:String = "Passed listener ["+ReflectUtil.getTypeNameForInstance(l)+"] doesnt match any of the accepted listener types ";
+				var size:Number = distributorMap.size();
 				if (size > 0) {
-					message += "("+m.size()+"):";
+					message += "("+size+"):";
+					var iter:Iterator = distributorMap.keyIterator();
+					while (iter.hasNext()) {
+						message += "\n - "+ReflectUtil.getTypeNameForType(iter.next());
+					}
 				} else {
-					message += "(No types defined).";
-				}
-				var iter:Iterator = m.keyIterator();
-				while (iter.hasNext()) {
-					message += "\n - "+ReflectUtil.getTypeNameForType(iter.next());
+					message += "(No types accepted).";
 				}
 				throw new IllegalArgumentException(message, this, arguments);
 			}
 		}
 	}
 	
+	/**
+	 * Removes a certain listener from listening to a event.
+	 * 
+	 * @param l Listener to be removed.
+	 */
 	public function removeListener(l):Void {
 		if (hasListener(l)) {
-			var k:Array = m.getKeys();
-			var v:Array = m.getValues();
+			var acceptedTypes:Array = distributorMap.getKeys();
+			var existingDistributors:Array = distributorMap.getValues();
 			var i:Number;
-			for (i=0; i<k.length; i++) {
-				if (l instanceof k[i]) {
-					v[i].removeListener(l);
+			for (i=0; i<acceptedTypes.length; i++) {
+				if (l instanceof acceptedTypes[i]) {
+					existingDistributors[i].removeListener(l);
 				}
 			}
-			ArrayUtil.removeElement(this.l, l);
+			ArrayUtil.removeElement(listeners, l);
 		}
 	}
 	
+	/**
+	 * Adds a list of listeners to listen to the event.
+	 * 
+	 * @param list List of listeners to add.
+	 * @throws IllegalArgumentException if any listener is not accepted
+	 *         (the listeners before the certain listener will be added) 
+	 */
 	public function addAllListeners(list:Array):Void {
 		for (var i=0; i<list.length; i++) {
 			addListener(list[i]);
 		}
 	}
 	
+	/**
+	 * Removes all added listeners.
+	 */
 	public function removeAllListeners(Void):Void {
 		var i:Number;
-		var list:Array = l;
+		var list:Array = getAllListeners();
 		for (i=0; i<list.length; i++) {
 			removeListener(list[i]);
 		}
 	}
 	
+	/**
+	 * Returns a list that contains all listeners
+	 * 
+	 * @return list that contains all listeners
+	 */
 	public function getAllListeners(Void):Array {
-		return l.concat();
+		return listeners.concat();
 	}
 	
+	/**
+	 * Checks if a listener is already added.
+	 * 
+	 * @return true if the listener has been added
+	 */
 	public function hasListener(listener):Boolean {
-		return ArrayUtil.contains(l, listener);
+		return ArrayUtil.contains(listeners, listener);
 	}
 	
+	/**
+	 * Adds acception for a certain listener type.
+	 * <p>{@code addListener} does not allow listeners that don't match (instanceof)
+	 * any accepted listener type.
+	 * 
+	 * @param type Type of listener that should be accepted.
+	 */
 	public function acceptListenerType(type:Function):Void {
-		if (!m.get(type)) {
-			var distri:EventDistributorControl = f.createEventDistributorControl(type);
+		if (!distributorMap.get(type)) {
+			var distri:EventDistributorControl = eventDistributorControlFactory.createEventDistributorControl(type);
 			var i:Number;
-			for (i=0; i<l.length; i++) {
-				if (l[i] instanceof type) {
-					distri.addListener(l[i]);
+			for (i=0; i<listeners.length; i++) {
+				if (listeners[i] instanceof type) {
+					distri.addListener(listeners[i]);
 				}
 			}
-			m.put(type, distri);
+			distributorMap.put(type, distri);
 		}
 	}
 	
+	/**
+	 * Returns the distributor that contains all listeners match to the applied type. 
+	 * 
+	 * @return Distributor for distributing the event
+	 * @throws org.as2lib.env.except.IllegalArgumentException
+	 */
 	public function getDistributor(type:Function) {
-		var distri:EventDistributorControl = m.get(type);
+		var distri:EventDistributorControl = distributorMap.get(type);
 		if (distri === null  || distri === undefined) {
 			throw new IllegalArgumentException(ReflectUtil.getTypeName(type)+" is no supported distributor type", this, arguments);
 		}
 		return distri.getDistributor(type);
 	}
 	
+	/**
+	 * Replaces the default internal distributor with a different implementation.
+	 * <p>If you have a event that should be executed with a different kind of distributor
+	 * you can set it with this method (for example: consumable/not consumable).
+	 * 
+	 * <p>It will take the {@link EventDistributorControl#getType) type to to 
+	 * define the type its used for.
+	 * 
+	 * <p>All existing references to the former distributor will have to get updated,
+	 * else they won't get any new listeners!
+	 * 
+	 * @param eventDistributorControl Control to be used for event distribution.
+	 * @see #setDefaultEventDistributorControl
+	 * @throws IllegalArgumentException if the type is not accepted.
+	 */
 	public function setEventDistributorControl(eventDistributorControl:EventDistributorControl):Void  {
 		if (eventDistributorControl != null) {
 			var i:Number;
 			var type:Function = eventDistributorControl.getType();
 			eventDistributorControl.removeAllListeners();
-			for (i=0; i<l.length; i++) {
-				if (l[i] instanceof type) {
-					eventDistributorControl.addListener(l[i]);
+			for (i=0; i<listeners.length; i++) {
+				if (listeners[i] instanceof type) {
+					eventDistributorControl.addListener(listeners[i]);
 				}
 			}	
-			m.put(type, eventDistributorControl);
+			distributorMap.put(type, eventDistributorControl);
 		} else {
 			throw new IllegalArgumentException("distributorControl is not of any possible type.", this, arguments);
 		}
 	}
 	
+	/**
+	 * Replaces a custom event distributor with a default event distributor.
+	 * 
+	 * @param type Type to set to a default distributor control.
+	 * @throws IllegalArgumentException if the type is not accepted.
+	 */
 	public function setDefaultEventDistributorControl(type:Function):Void {
-		var control:EventDistributorControl = m.remove(type);
+		var control:EventDistributorControl = distributorMap.remove(type);
 		if (control === undefined || control === null) {
 			throw new IllegalArgumentException(ReflectUtil.getTypeNameForType(type)+" is not accepted as listener type", this, arguments);
 		}

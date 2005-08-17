@@ -18,39 +18,16 @@ import org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl
 import org.as2lib.env.event.distributor.SimpleEventDistributorControlFactory;
 
 /**
- * {@code SimpleEventDistributorControl} acts as a listener source and event
- * distributor control. It enables you to distribute and handle events in the
- * safest way possible by providing a compiler-safe distributor.
- * 
- * <p>Example:
- * <code>
- *   // creates a distributor control with the expected listener type
- *   var distributorControl:SimpleEventDistributorControl = new SimpleEventDistributorControl(ErrorListener);
- *   // adds new listeners that must be of the expected type
- *   distributorControl.addListener(new MyErrorListener());
- *   distributorControl.addListener(new SimpleErrorListener());
- *   // gets a distributor to distribute the event to all listeners
- *   var distributor:ErrorListener = ErrorListener(distributorControl.getDistributor());
- *   // distributes the event with custom arguments
- *   distributor.onError(myErrorCode, myException);
- * </code>
- * 
- * @author Simon Wacker
+ * {@code SimpleCompositeEventDistributorControl} is a implementation for
+ * non-consumable events (by default).
+ *
  * @author Martin Heidegger
+ * @version 1.0
  */
 class org.as2lib.env.event.distributor.SimpleCompositeEventDistributorControl extends AbstractCompositeEventDistributorControl {
 	
 	/**
-	 * Constructs a new {@code SimpleEventDistributorControl} instance.
-	 *
-	 * <p>{@code checkListenerType} is by default set to {@code true}.
-	 * 
-	 * @param listenerType the expected type of listeners
-	 * @param checkListenerType determines whether to check that passed-in listeners
-	 * are of the expected type
-	 * @param listeners (optional) the listeners to add
-	 * @throws IllegalArgumentException if the passed-in {@code listenerType} is
-	 * {@code null} or {@code undefined}
+	 * Constructs a new {@code SimpleCompositeEventDistributorControl} instance.
 	 */
 	public function SimpleCompositeEventDistributorControl() {
 		super (new SimpleEventDistributorControlFactory());
