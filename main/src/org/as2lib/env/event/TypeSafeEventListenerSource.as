@@ -74,13 +74,11 @@ class org.as2lib.env.event.TypeSafeEventListenerSource extends BasicClass implem
 	/**
 	 * Adds the passed-in {@code listener}.
 	 *
-	 * <p>The listener will only be added if it is not {@code null} nor {@code undefined}
-	 * and if it is of the expected listener type specified on construction.
+	 * <p>The listener will only be added if it is neither {@code null} nor
+	 * {@code undefined} and if it is of the expected listener type specified on
+	 * construction and if it has not already been added to this listener source.
 	 *
-	 * <p>Note that if the passed-in {@code listener} has already been added the
-	 * previously added one will be removed.
-	 *
-	 * <p>Note also that the listener type will not be checked if it was turned of on
+	 * <p>Note that the listener type will not be checked if it was turned of on
 	 * construction.
 	 * 
 	 * @param listener the listener to add
@@ -94,8 +92,9 @@ class org.as2lib.env.event.TypeSafeEventListenerSource extends BasicClass implem
 					throw new IllegalArgumentException("Argument 'listener' [" + listener + "] must be an instance of the expected listener type [" + this.t + "].", this, arguments);
 				}
 			}
-			removeListener(listener);
-			this.l.push(listener);
+			if (!hasListener(listener)) {
+				this.l.push(listener);
+			}
 		}
 	}
 	
