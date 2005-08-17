@@ -99,7 +99,7 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExec
 	 * @overload #setExecutable
 	 * @overload #setExecutableByObjectAndFunction
 	 */
-	public function Timeout(Void) {
+	public function Timeout() {
 		timeCall = new Call(this, onEnterFrame);
 		var o:Overload = new Overload(this);
 		o.addHandler([Executable, Number], setExecutable);
@@ -181,8 +181,9 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExec
 	 * </pre>
 	 * 
 	 * @param object Object to be iterated
+	 * @return null as the result isn't available yet.
 	 */
-	public function forEach(object):Void {
+	public function forEach(object):Array {
 		executed = 0;
 		if (!target) target = new Array();
 		var i:String;
@@ -191,6 +192,7 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExec
 		}
 		execute();
 		FrameImpulse.getInstance().connectExecutable(timeCall);
+		return null;
 	}
 
 	/**
