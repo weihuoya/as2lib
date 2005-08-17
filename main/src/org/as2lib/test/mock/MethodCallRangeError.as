@@ -36,7 +36,7 @@ class org.as2lib.test.mock.MethodCallRangeError extends AssertionFailedError {
 	/** The actual call range. */
 	private var actualMethodCallRanges:Array;
 	
-	/** Related type to the mock. */
+	/** Type of the mock. */
 	private var type:Function;
 	
 	/**
@@ -77,9 +77,9 @@ class org.as2lib.test.mock.MethodCallRangeError extends AssertionFailedError {
 	}
 	
 	/**
-	 * Sets the type that is defined for the MockControl that produced the error.
+	 * Sets the type of the mock that did not met all expectations.
 	 * 
-	 * @param type Type related to the method
+	 * @param type the type of the mock
 	 */
 	public function setType(type:Function):Void  {
 		this.type = type;
