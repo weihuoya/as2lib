@@ -31,6 +31,7 @@ interface org.as2lib.app.exec.ForEachExecutable extends Executable {
 	 * the name of the member and the passed-in {@code object}.
 	 *
 	 * @param object the object to iterate over
+	 * @return list with the result of each execution
 	 */
-	public function forEach(object):Void;
+	public function forEach(object):Array;
 }
