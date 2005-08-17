@@ -859,15 +859,15 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *   [reflection fullyQualifiedNameOfReflectedType]
 	 * </pre>
 	 * 
-	 * @param displayContent (optional) renders all methods.
+	 * @param displayContent (optional) a {@code Boolean} that determines whether to
+	 * render all methods {@code true} or not {@code false}
 	 * @return this instance's string representation
 	 */
 	public function toString():String {
-		var result:String = "[ClassInfo -> " + getFullName();
+		var result:String = "[reflection " + getFullName();
 		if (arguments[0] == true) {
 			var methods:Array = getMethods();
-			var i:Number;
-			for (i=0; i<methods.length; i++) {
+			for (var i:Number = 0; i < methods.length; i++) {
 				result += "\n" + StringUtil.addSpaceIndent(methods[i].toString(), 2);
 			}
 			if (methods.length > 0) {

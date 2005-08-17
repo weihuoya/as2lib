@@ -836,16 +836,16 @@ class org.as2lib.env.reflect.PackageInfo extends BasicClass implements PackageMe
 	 *   [reflection fullyQualifiedNameOfReflectedPackage]
 	 * </pre>
 	 * 
-	 * @param displayContent (optional) renders recursivly the content.
+	 * @param displayContent (optional) a {@code Boolean} that determines whether to
+	 * render this package's content recursively {@code true} or not {@code false}
 	 * @return this instance's string representation
 	 */
 	public function toString():String {
-		var result:String = "[PackageInfo -> "+getFullName();
+		var result:String = "[reflection " + getFullName();
 		if (arguments[0] == true) {
-			var i:Number;
 			var members:Array = getMembers();
-			for (i=0; i<members.length; i++) {
-				result += "\n"+StringUtil.addSpaceIndent(members[i].toString(true), 2);
+			for (var i:Number = 0; i < members.length; i++) {
+				result += "\n" + StringUtil.addSpaceIndent(members[i].toString(true), 2);
 			}
 			if (members.length > 0) {
 				result += "\n";
