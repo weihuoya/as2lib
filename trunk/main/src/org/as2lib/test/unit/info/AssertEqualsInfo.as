@@ -62,7 +62,19 @@ class org.as2lib.test.unit.info.AssertEqualsInfo extends AbstractAssertInfo {
 		if(hasMessage()) {
 			result += " with message: "+message;
 		}
-		result += "!\n"+StringUtil.addSpaceIndent(val+" != "+compareTo, 2);
+		var valStr:String;
+		try {
+			valStr = val.toString();
+		} catch (e) {
+			valStr = "[object Object]";
+		}
+		var compareToStr:String; 
+		try {
+			compareToStr = compareTo.toString();
+		} catch (e) {
+			compareToStr = "[object Object]";
+		}
+		result += "!\n"+StringUtil.addSpaceIndent(valStr+" != "+compareToStr, 2);
 		return result;
 	}
 	

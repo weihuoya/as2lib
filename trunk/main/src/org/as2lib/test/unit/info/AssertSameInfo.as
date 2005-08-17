@@ -62,7 +62,7 @@ class org.as2lib.test.unit.info.AssertSameInfo extends AbstractAssertInfo {
 			result += " with message: "+message;
 		}
 		result += "!\n"
-				+ "  "+val+" !== "+compareTo;
+				+ "  "+val.toString()+" !== "+compareTo.toString();
 		return result;
 	}
 	
@@ -72,6 +72,6 @@ class org.as2lib.test.unit.info.AssertSameInfo extends AbstractAssertInfo {
 	 * @return Message on success
 	 */
 	private function getSuccessMessage(Void):String {
-		return ("assertSame executed. "+val+" === "+compareTo);
+		return ("assertSame executed. "+val.toString()+" === "+compareTo.toString());
 	}
 }
