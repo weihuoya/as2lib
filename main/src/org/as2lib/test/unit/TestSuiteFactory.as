@@ -17,6 +17,7 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestCase;
+import org.as2lib.test.unit.TestCaseHelper;
 import org.as2lib.test.unit.TestSuite;
 import org.as2lib.util.ClassUtil;
 import org.as2lib.util.AccessPermission;
@@ -85,7 +86,7 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 		var i:String;
 		for(i in package) {
 			var child = package[i];
-			if(typeof child == "function" && ClassUtil.isSubClassOf(child, TestCase) && !child.blockCollecting()) {
+			if(typeof child == "function" && ClassUtil.isSubClassOf(child, TestCase) && !child.blockCollecting() && !ClassUtil.isSubClassOf(child, TestCaseHelper)) {
 				// flex stores every class in _global and in its actual package
 				// e.g. org.as2lib.core.BasicClass is stored in _global with name org_as2lib_core_BasicClass
 				// this if-clause excludes these extra stored classes
