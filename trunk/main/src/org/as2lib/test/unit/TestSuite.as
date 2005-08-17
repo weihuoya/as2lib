@@ -20,6 +20,7 @@ import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestResultFactory;
 import org.as2lib.test.unit.TestSuiteResultFactory;
+import org.as2lib.test.unit.LoggerTestListener;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
@@ -87,6 +88,7 @@ class org.as2lib.test.unit.TestSuite extends BasicClass implements Test {
 	 */
 	public function run():TestRunner {
 		var testRunner:TestRunner = new TestRunner();
+		testRunner.addProcessListener(new LoggerTestListener());
 		return testRunner.run(this);
 		// not mtasc compatible:
 		// return new TestRunner().run(this);
