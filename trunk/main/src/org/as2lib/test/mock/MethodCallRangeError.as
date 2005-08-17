@@ -17,6 +17,7 @@
 import org.as2lib.test.mock.AssertionFailedError;
 import org.as2lib.test.mock.MethodCall;
 import org.as2lib.test.mock.MethodCallRange;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * {@code MethodCallRangeError} is thrown if the expected method call range has not
@@ -34,6 +35,9 @@ class org.as2lib.test.mock.MethodCallRangeError extends AssertionFailedError {
 	
 	/** The actual call range. */
 	private var actualMethodCallRanges:Array;
+	
+	/** Related type to the mock. */
+	private var type:Function;
 	
 	/**
 	 * Constructs a new {@code MethodCallRangeError} instance.
@@ -73,6 +77,15 @@ class org.as2lib.test.mock.MethodCallRangeError extends AssertionFailedError {
 	}
 	
 	/**
+	 * Sets the type that is defined for the MockControl that produced the error.
+	 * 
+	 * @param type Type related to the method
+	 */
+	public function setType(type:Function):Void  {
+		this.type = type;
+	}
+	
+	/**
 	 * Returns the string representation of this error.
 	 *
 	 * @return the string representation of this error
@@ -80,7 +93,11 @@ class org.as2lib.test.mock.MethodCallRangeError extends AssertionFailedError {
 	public function doToString(Void):String {
 		var message:String = getMessage() + ":";
 		for (var i:Number = 0; i < methodCalls.length; i++) {
-			message += "\n  " + methodCalls[i] + ": expected: " + expectedMethodCallRanges[i] + ", actual: " + actualMethodCallRanges[i];
+			message += "\n  ";
+			if (type !== undefined && type !== null) {
+				message += ReflectUtil.getTypeNameForType(type) + ".";
+			}
+			message += methodCalls[i] + ": expected: " + expectedMethodCallRanges[i] + ", actual: " + actualMethodCallRanges[i];
 		}
 		return message;
 	}

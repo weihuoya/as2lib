@@ -434,7 +434,14 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 			}
 		}
 		mock.__resolve = r;
-		return state.invokeMethod(new MethodCall(methodName, args));
+		var result;
+		try {
+			result = state.invokeMethod(new MethodCall(methodName, args));
+		} catch(e:org.as2lib.test.mock.MethodCallRangeError) {
+			e.setType(type);
+			throw e;
+		}
+		return result;
 	}
 	
 	/**
@@ -690,7 +697,12 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 	 * @throws AssertionFailedError if an expectation has not been met
 	 */
 	public function verify(Void):Void {
-		state.verify();
+		try {
+			state.verify();
+		} catch(e:org.as2lib.test.mock.MethodCallRangeError) {
+			e.setType(type);
+			throw e;
+		}
 	}
 	
 }
