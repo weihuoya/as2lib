@@ -19,6 +19,7 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.test.unit.info.*;
 import org.as2lib.test.unit.ExecutionInfo;
+import org.as2lib.test.unit.LoggerTestListener;
 import org.as2lib.test.unit.Test;
 import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.test.unit.TestRunner;
@@ -30,8 +31,8 @@ import org.as2lib.app.exec.Process;
 import org.as2lib.util.ObjectUtil;
 
 /**
- * Basic Testcase class to be extended.
- * A Testcase defines the Access to all parts of the TestUnit System of as2lib.
+ * {@code Testcase} class to be extended.
+ * <p>A Testcase defines the Access to all parts of the TestUnit System of as2lib.
  * 
  * It is handled as an abstract class this means you have to extend it if you 
  * want to work with the system (similar to the most other testunit systems).
@@ -233,6 +234,7 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	public function run():TestRunner {
 		var testRunner:TestRunner = new TestRunner();
+		testRunner.addProcessListener(new LoggerTestListener());
 		return testRunner.run(this);
 		// not mtasc compatible:
 		// return new TestRunner().run(this);
