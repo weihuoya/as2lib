@@ -100,11 +100,17 @@ class org.as2lib.app.exec.Call extends BasicClass implements ForEachExecutable {
 	 * 
 	 * @param object the object to iterate over
 	 */
-	public function forEach(object):Void {
+	public function forEach(object):Array {
 		var i:String;
+		var result:Array = new Array();
 		for (i in object) {
-			execute(object[i], i, object);
+			try {
+				result.push(execute(object[i], i, object));
+			} catch(e) {
+				
+			}
 		}
+		return result;
 	}
 	
 	/**
