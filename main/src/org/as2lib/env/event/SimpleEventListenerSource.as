@@ -44,16 +44,16 @@ class org.as2lib.env.event.SimpleEventListenerSource extends BasicClass implemen
 	/**
 	 * Adds the passed-in {@code listener}.
 	 *
-	 * <p>The listener will only be added if it is not {@code null} nor {@code undefined}.
-	 * 
-	 * <p>Note that if the passed-in {@code listener} has already been added the
-	 * previously added one will be removed.
+	 * <p>The listener will only be added if it is neither {@code null} nor
+	 * {@code undefined} and if it has not already been added to this listener source.
 	 * 
 	 * @param listener the listener to add
 	 */
 	public function addListener(listener):Void {
-		if (listener && !hasListener(listener)) {
-			this.l.push(listener);
+		if (listener) {
+			if (!hasListener(listener)) {
+				this.l.push(listener);
+			}
 		}
 	}
 	
