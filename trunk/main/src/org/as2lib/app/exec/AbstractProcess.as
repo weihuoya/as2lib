@@ -75,13 +75,13 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 	 * Constructs a new {@code AbstractProcess}
 	 */
 	private function AbstractProcess(Void) {
-		distributor = new SimpleEventDistributorControl(ProcessListener);
-		event = distributor.getDistributor();
-		subProcesses = new Array();
-		callBacks = new HashMap();
-		started = false;
-		paused = false;
-		finished = false;
+		this.distributor = new SimpleEventDistributorControl(ProcessListener);
+		this.event = distributor.getDistributor();
+		this.subProcesses = new Array();
+		this.callBacks = new HashMap();
+		this.started = false;
+		this.paused = false;
+		this.finished = false;
 	}
 	
 	/**
@@ -92,13 +92,12 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 	 *         instance in its parents-hierarchy.
 	 */
 	public function setParentProcess(p:Process):Void {
-		parent = p;
 		do {
 			if(p == this) {
-				parent = null;
 				throw new IllegalArgumentException("You can not start a process with itself as super process.", this, arguments);
 			}
 		} while (p = p.getParentProcess());
+		this.parent = p;
 	}
 	
 	/**
@@ -107,7 +106,7 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 	 * @returns Parent process if set, else null.
 	 */
 	public function getParentProcess(Void):Process {
-		return parent;
+		return this.parent;
 	}
 	
 	/**
@@ -128,12 +127,12 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 	public function startSubProcess(process:Process, args:Array, callBack:Executable):Void {
 		if(!process.hasStarted()) {
 			if (!ArrayUtil.contains(subProcesses, process)) {
-				subProcesses.push(process);
 				process.addProcessListener(this);
-				callBacks.put(process, callBack);
+				this.subProcesses.push(process);
+				this.callBacks.put(process, callBack);
 				process.setParentProcess(this);
 				process["start"].apply(process, args);
-				pause();
+				this.pause();
 			}
 		}
 	}
@@ -142,27 +141,27 @@ class org.as2lib.app.exec.AbstractProcess implements Process, ProcessListener {
 	 * Pauses the process.
 	 */
 	public function pause(Void):Void {
-		paused = true;
-		event.onPauseProcess(this);
+		this.paused = true;
+		this.event.onPauseProcess(this);
 	}
 	
 	/**
 	 * Resumes the process
 	 */
 	public function resume(Void):Void {
-		paused = false;
-		event.onResumeProcess(this);
+		this.paused = false;
+		this.event.onResumeProcess(this);
 	}
 	
 	/**
 	 * Prepares the start of the process
 	 */
 	private function prepare(Void):Void {
-		started = false;
-		paused = false;
-		finished = false;
-		event.onStartProcess(this);
-		started = true;
+		this.started = false;
+		this.paused = false;
+		this.finished = false;
+		this.event.onStartProcess(this);
+		this.started = true;
 	}
 	
 	/**
