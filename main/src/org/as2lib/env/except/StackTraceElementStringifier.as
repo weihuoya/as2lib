@@ -98,7 +98,7 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 			}
 			result += ")";
 		} catch(e) {
-			result = " Exception throw due to evaluation of the stack element: \n"+StringUtil.addSpaceIndent(e.toString(), 2);
+			result = "Exception was thrown during generation of string representation of stack trace element: \n" + StringUtil.addSpaceIndent(e.toString(), 2);
 		}
 		return result;
 	}
