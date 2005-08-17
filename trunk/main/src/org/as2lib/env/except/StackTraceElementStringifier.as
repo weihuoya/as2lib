@@ -18,6 +18,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
 import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.env.reflect.ReflectUtil;
+import org.as2lib.util.StringUtil;
 
 /**
  * {@code StackTraceElementStringifier} stringifies {@link StackTraceElement}
@@ -77,23 +78,28 @@ class org.as2lib.env.except.StackTraceElementStringifier extends BasicClass impl
 	 */
 	public function execute(target):String {
 		var element:StackTraceElement = target;
-		var info:Array = ReflectUtil.getTypeAndMethodInfo(element.getThrower(), element.getMethod());
-		var result:String = info[0] == null ? UNKNOWN + " " : (info[0] ? "static " : "");
-		result += info[1] == null ? UNKNOWN : info[1];
-		result += "." + (info[2] == null ? UNKNOWN : info[2]);
-		result += "(";
-		if (showArgumentsValues) {
-			result += element.getArguments().toString() ? element.getArguments().toString() : UNKNOWN;
-		} else {
-			var args:Array = element.getArguments();
-			for (var i:Number = 0; i < args.length; i++) {
-				var argType:String = ReflectUtil.getTypeName(args[i]);
-				if (argType == null) argType = UNKNOWN;
-				result += argType;
-				if (i < args.length-1) result += ", ";
+		var result:String;
+		try {
+			var info:Array = ReflectUtil.getTypeAndMethodInfo(element.getThrower(), element.getMethod());
+			result = info[0] == null ? UNKNOWN + " " : (info[0] ? "static " : "");
+			result += info[1] == null ? UNKNOWN : info[1];
+			result += "." + (info[2] == null ? UNKNOWN : info[2]);
+			result += "(";
+			if (showArgumentsValues) {
+				result += element.getArguments().toString() ? element.getArguments().toString() : UNKNOWN;
+			} else {
+				var args:Array = element.getArguments();
+				for (var i:Number = 0; i < args.length; i++) {
+					var argType:String = ReflectUtil.getTypeName(args[i]);
+					if (argType == null) argType = UNKNOWN;
+					result += argType;
+					if (i < args.length-1) result += ", ";
+				}
 			}
+			result += ")";
+		} catch(e) {
+			result = " Exception throw due to evaluation of the stack element: \n"+StringUtil.addSpaceIndent(e.toString(), 2);
 		}
-		result += ")";
 		return result;
 	}
 	
