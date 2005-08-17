@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.aop.Aspect;
 
 /**
  * {@code Weaver} is responsible for weaving the aspect-oriented code into the affected
