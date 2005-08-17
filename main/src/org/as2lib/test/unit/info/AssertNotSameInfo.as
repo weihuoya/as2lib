@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.test.unit.AbstractAssertInfo;
+import org.as2lib.util.StringUtil;
 
 /**
  * Information holder and examiner of a assertNotSame call.
@@ -61,8 +62,19 @@ class org.as2lib.test.unit.info.AssertNotSameInfo extends AbstractAssertInfo {
 		if(hasMessage()) {
 			result += " with message: "+message;
 		}
-		result += "!\n"
-				+ "  "+val+" === "+compareTo;
+		var valStr:String;
+		try {
+			valStr = val.toString();
+		} catch (e) {
+			valStr = "[object Object]";
+		}
+		var compareToStr:String; 
+		try {
+			compareToStr = compareTo.toString();
+		} catch (e) {
+			compareToStr = "[object Object]";
+		}
+		result += "!\n"+StringUtil.addSpaceIndent(valStr+" === "+compareToStr, 2);
 		return result;
 	}
 	
