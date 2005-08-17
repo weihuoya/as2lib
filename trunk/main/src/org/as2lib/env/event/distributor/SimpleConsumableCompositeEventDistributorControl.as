@@ -39,7 +39,7 @@ import org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControlF
  * @author Simon Wacker
  * @author Martin Heidegger
  */
-class org.as2lib.env.event.distributor.SimpleConsumableCompositeDistributorControl extends AbstractCompositeDistributorControl implements CompositeDistributorControl {
+class org.as2lib.env.event.distributor.SimpleConsumableEventCompositeDistributorControl extends AbstractCompositeEventDistributorControl {
 	
 	/**
 	 * Constructs a new {@code SimpleEventDistributorControl} instance.
@@ -53,7 +53,7 @@ class org.as2lib.env.event.distributor.SimpleConsumableCompositeDistributorContr
 	 * @throws IllegalArgumentException if the passed-in {@code listenerType} is
 	 * {@code null} or {@code undefined}
 	 */
-	public function SimpleConsumableCompositeDistributorControl(listenerType:Function, checkListenerType:Boolean, listeners:Array) {
+	public function SimpleConsumableCompositeEventDistributorControl() {
 		super (new SimpleConsumableEventDistributorControlFactory());
 	}
 	

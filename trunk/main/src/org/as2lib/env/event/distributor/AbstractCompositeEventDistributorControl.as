@@ -20,7 +20,7 @@ import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.env.event.distributor.CompositeDistributorControl;
+import org.as2lib.env.event.distributor.CompositeEventDistributorControl;
 import org.as2lib.env.event.distributor.EventDistributorControl;
 import org.as2lib.env.event.distributor.EventDistributorControlFactory;
 
@@ -31,19 +31,16 @@ import org.as2lib.env.event.distributor.EventDistributorControlFactory;
  * 
  * @author Martin Heidegger
  */
-class org.as2lib.env.event.distributor.AbstractCompositeDistributorControl implements CompositeDistributorControl {
+class org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl implements CompositeEventDistributorControl {
 	
 	private var f:EventDistributorControlFactory;
 	private var l:Array;
 	// DistributorControlMap
 	private var m:Map;
-	// DistributorProxy Map
-	private var pm:Map;
 	
-	public function AbstractCompositeDistributorControl(factory:EventDistributorControlFactory) {
+	public function AbstractCompositeEventDistributorControl(factory:EventDistributorControlFactory) {
 		f = factory;
 		m = new HashMap();
-		pm = new HashMap();
 		l = new Array();
 	}
 	
@@ -129,59 +126,33 @@ class org.as2lib.env.event.distributor.AbstractCompositeDistributorControl imple
 	
 	public function getDistributor(type:Function) {
 		var distri:EventDistributorControl = m.get(type);
-		if (distri) {
-			var proxy = pm.get(type);
-			if (proxy === null || proxy === undefined) {
-				proxy = new Object();
-				proxy.__proto__ = type.prototype;
-				proxy.__constructor__ = type;
-				var e:AbstractCompositeDistributorControl = this;
-				proxy.__resolve = function(n:String):Function {
-					return (function():Void {
-						//d.apply(e, n, arguments); causes 255 recursion error
-						// e.distribute is not MTASC compatible because "distribute" is private
-						e["m"].get(type).getDistributor()[n](arguments);
-					});
-					// e.em is not MTASC compatible because "em" is private
-				};
-				var p:Object = type.prototype;
-				while (p != Object.prototype) {
-					for (var i:String in p) {
-						proxy[i] = function():Void {
-							// e.em is not MTASC compatible because "em" is private
-							var r = e["m"].get(type).getDistributor();
-							r[arguments.callee.n].apply(r, arguments);
-						};
-						proxy[i].n = i;
-					}
-					p = p.__proto__;
-				}
-			}
-			// This method returns a proxy to the current set distributor
-			return proxy;
-		} else {
+		if (distri === null  || distri === undefined) {
 			throw new IllegalArgumentException(ReflectUtil.getTypeName(type)+" is no supported distributor type", this, arguments);
 		}
+		return distri.getDistributor(type);
 	}
 	
-	public function setDistributorControl(distributorControl:EventDistributorControl):Void  {
-		if (distributorControl != null) {
+	public function setEventDistributorControl(eventDistributorControl:EventDistributorControl):Void  {
+		if (eventDistributorControl != null) {
 			var i:Number;
-			var type:Function = distributorControl.getType();
-			distributorControl.removeAllListeners();
+			var type:Function = eventDistributorControl.getType();
+			eventDistributorControl.removeAllListeners();
 			for (i=0; i<l.length; i++) {
 				if (l[i] instanceof type) {
-					distributorControl.addListener(l[i]);
+					eventDistributorControl.addListener(l[i]);
 				}
 			}	
-			m.put(type, distributorControl);
+			m.put(type, eventDistributorControl);
 		} else {
 			throw new IllegalArgumentException("distributorControl is not of any possible type.", this, arguments);
 		}
 	}
 	
-	public function resetDistributorControl(type:Function):Void {
-		var control:EventDistributorControl = m.get(type);
+	public function setDefaultEventDistributorControl(type:Function):Void {
+		var control:EventDistributorControl = m.remove(type);
+		if (control === undefined || control === null) {
+			throw new IllegalArgumentException(ReflectUtil.getTypeNameForType(type)+" is not accepted as listener type", this, arguments);
+		}
 		acceptListenerType(type);
 	}
 }
