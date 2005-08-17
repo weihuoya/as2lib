@@ -92,9 +92,9 @@ class org.as2lib.env.except.ThrowableStringifier extends BasicClass implements S
 	public function execute(target):String {
 		var throwable:Throwable = target;
 		var result:String = "";
-		var instanceName:String = ReflectUtil.getTypeNameForInstance(throwable);
-		var indent:Number = instanceName.length + 2;
-		result += instanceName + ": " + StringUtil.addSpaceIndent(throwable.getMessage(), indent).substr(indent);
+		var typeName:String = ReflectUtil.getTypeNameForInstance(throwable);
+		var indent:Number = typeName.length + 2;
+		result += typeName + ": " + StringUtil.addSpaceIndent(throwable.getMessage(), indent).substr(indent);
 		var stackTrace:Array = throwable.getStackTrace();
 		if (stackTrace && stackTrace.length > 0) {
 			result += "\n" + stringifyStackTrace(throwable.getStackTrace());
