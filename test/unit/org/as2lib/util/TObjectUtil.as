@@ -22,6 +22,9 @@ import org.as2lib.test.unit.Test;
 import org.as2lib.util.ObjectUtil;
 import org.as2lib.app.exec.Call;
 import org.as2lib.env.reflect.ClassInfo;
+import org.as2lib.util.ExtendedString;
+import org.as2lib.util.ExtendedBoolean;
+import org.as2lib.util.ExtendedNumber;
 
 /**
  * Testcase for massive ObjectUtil testing.
@@ -224,18 +227,30 @@ class org.as2lib.util.TObjectUtil extends TestCase {
 	public function testIsExplicitInstanceOf(Void):Void {
 		var inst:Object = new BasicClass();
 		var string:String = "a";
+		var stringInst:String = new String("1");
+		var extStringInst:ExtendedString = new ExtendedString(1);
 		var number:Number = 0;
+		var numberInst:Number = new Number(1);
+		var extNumberInst:ExtendedNumber = new ExtendedNumber(1);
 		var boolean:Boolean = true;
+		var booleanInst:Boolean = new Boolean(true);
+		var extBooleanInst:Boolean = new ExtendedBoolean(true);
 		
 		assertTrue("'inst' should be the explicit instance of BasicClass", ObjectUtil.isExplicitInstanceOf(inst, BasicClass));
 		assertFalse("'inst' should not be the explicit instance of Object", ObjectUtil.isExplicitInstanceOf(inst, Object));
 		assertTrue("'inst' should not be the explicit instance of BasicInterface because BasicClass is directly implementing it", ObjectUtil.isExplicitInstanceOf(inst, BasicClass));
 		assertTrue("'string' should be a explicit instance of String", ObjectUtil.isExplicitInstanceOf(string, String));
 		assertFalse("'string' should not be a explicit instance of Object", ObjectUtil.isExplicitInstanceOf(string, Object));
+		assertTrue("'stringInst' should be a explicit instance of String", ObjectUtil.isExplicitInstanceOf(stringInst, String));
+		assertFalse("'extStringInst' should not be a explicit instance of String", ObjectUtil.isExplicitInstanceOf(extStringInst, String));
 		assertTrue("'number' should be a explicit instance of Number", ObjectUtil.isExplicitInstanceOf(number, Number));
 		assertFalse("'number' should not be a explicit instance of Object", ObjectUtil.isExplicitInstanceOf(number, Object));
+		assertTrue("'numberInst' should be a explicit instance of Number", ObjectUtil.isExplicitInstanceOf(numberInst, Number));
+		assertFalse("'extNumberInst' should not be a explicit instance of Number", ObjectUtil.isExplicitInstanceOf(extNumberInst, Number));
 		assertTrue("'boolean' should be a explicit instance of Boolean", ObjectUtil.isExplicitInstanceOf(boolean, Boolean));
 		assertFalse("'boolean' should not be a explicit instance of Object", ObjectUtil.isExplicitInstanceOf(boolean, Object));
+		assertTrue("'booleanInst' should be a explicit instance of Boolean", ObjectUtil.isExplicitInstanceOf(booleanInst, Boolean));
+		assertFalse("'extBooleanInst' should not be a explicit instance of Boolean", ObjectUtil.isExplicitInstanceOf(extBooleanInst, Boolean));
 		assertFalse("'this' should not be a explicit instance of BasicClass", ObjectUtil.isExplicitInstanceOf(this, BasicClass));
 		assertFalse("'this' should not be a explicit instance of BasicInterface", ObjectUtil.isExplicitInstanceOf(this, BasicInterface));
 		assertFalse("'this' should not be a explicit instance of Test", ObjectUtil.isExplicitInstanceOf(this, Test));
