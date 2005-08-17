@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.util.StringUtil;
 import org.as2lib.util.ClassUtil;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.env.except.IllegalArgumentException;
@@ -858,10 +859,22 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *   [reflection fullyQualifiedNameOfReflectedType]
 	 * </pre>
 	 * 
+	 * @param displayContent (optional) renders all methods.
 	 * @return this instance's string representation
 	 */
 	public function toString():String {
-		return ("[reflection " + getFullName() + "]");
+		var result:String = "[ClassInfo -> " + getFullName();
+		if (arguments[0] == true) {
+			var methods:Array = getMethods();
+			var i:Number;
+			for (i=0; i<methods.length; i++) {
+				result += "\n" + StringUtil.addSpaceIndent(methods[i].toString(), 2);
+			}
+			if (methods.length > 0) {
+				result += "\n";
+			}
+		}
+		return (result + "]");
 	}
 	
 }
