@@ -216,17 +216,18 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 	 * {@code false}
 	 */
 	public static function isExplicitInstanceOf(object, clazz:Function):Boolean {
-		if (clazz == String) {
-			return (typeof(object) == TYPE_STRING);
+		if (isPrimitiveType(object)) {
+			if (clazz == String) {
+				return (typeof(object) == TYPE_STRING);
+			}
+			if (clazz == Number) {
+				return (typeof(object) == TYPE_NUMBER);
+			}
+			if (clazz == Boolean) {
+				return (typeof(object) == TYPE_BOOLEAN);
+			}
 		}
-		if (clazz == Number) {
-			return (typeof(object) == TYPE_NUMBER);
-		}
-		if (clazz == Boolean) {
-			return (typeof(object) == TYPE_BOOLEAN);
-		}
-		return (object instanceof clazz
-					&& !(object.__proto__ instanceof clazz));
+		return (object instanceof clazz	&& !(object.__proto__ instanceof clazz));
 	}
 	
 	/**
