@@ -80,6 +80,7 @@ interface org.as2lib.env.event.distributor.CompositeEventDistributorControl exte
 	/**
 	 * Returns the distributor that contains all listeners match to the applied type. 
 	 * 
+	 * @return Distributor for distributing the event
 	 * @throws org.as2lib.env.except.IllegalArgumentException
 	 */
 	public function getDistributor(type:Function);
@@ -100,6 +101,9 @@ interface org.as2lib.env.event.distributor.CompositeEventDistributorControl exte
 	 * 
 	 * <p>It will take the {@link EventDistributorControl#getType) type to to 
 	 * define the type its used for.
+	 * 
+	 * <p>All existing references to the former distributor will have to get updated,
+	 * else they won't get any new listeners!
 	 * 
 	 * @param eventDistributorControl Control to be used for event distribution.
 	 * @see #setDefaultEventDistributorControl
