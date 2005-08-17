@@ -1,6 +1,6 @@
 import org.as2lib.test.unit.TestCaseHelper;
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.env.event.distributor.CompositeDistributorControl;
+import org.as2lib.env.event.distributor.CompositeEventDistributorControl;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.data.type.Radian;
 import org.as2lib.env.except.IllegalArgumentException;
@@ -11,7 +11,7 @@ class org.as2lib.env.event.distributor.TCompositeEventDistributor extends TestCa
 		super(t);
 	}
 
-	public function executeProperBroadcasting(instance:CompositeDistributorControl) {
+	public function executeProperBroadcasting(instance:CompositeEventDistributorControl) {
 		
 		// Validator Object.
 		var param:Function = function(){};
@@ -91,10 +91,10 @@ class org.as2lib.env.event.distributor.TCompositeEventDistributor extends TestCa
 		l2Control.verify();
 	}
 	
-	public function executeWithDifferentDistributor(instance:CompositeDistributorControl) {
+	public function executeWithDifferentDistributor(instance:CompositeEventDistributorControl) {
 	}
 	
-	public function executeWithException(instance:CompositeDistributorControl) {
+	public function executeWithException(instance:CompositeEventDistributorControl) {
 		
 		var expectedException:IllegalArgumentException = new IllegalArgumentException("test", this, arguments);
 		var l1Control:MockControl = new MockControl(Radian);
