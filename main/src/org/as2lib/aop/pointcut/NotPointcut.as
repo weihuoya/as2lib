@@ -42,12 +42,16 @@ class org.as2lib.aop.pointcut.NotPointcut extends BasicClass implements Pointcut
 	 * Executes the wrapped pointcut's {@code captures} method passing the given
 	 * {@code joinPoint}, negates the result and returns the negation.
 	 * 
+	 * <p>If the wrapped pointcut specified on construction is {@code null} or
+	 * {@code undefined}, {@code false} will be returned.
+	 * 
 	 * @param joinPoint the join point to check whether it is captured
 	 * @return the negated result of the execution of the {@code captures} method of
 	 * the wrapped pointcut 
 	 */
 	public function captures(joinPoint:JoinPoint):Boolean {
-		return !pointcut.captures(joinPoint);
+		if (!this.pointcut) return false;
+		return !this.pointcut.captures(joinPoint);
 	}
 	
 }
