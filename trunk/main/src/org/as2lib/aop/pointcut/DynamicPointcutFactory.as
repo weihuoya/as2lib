@@ -135,7 +135,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		};
 		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
-			pattern = pattern.substring(2, pattern.length - 1);
+			pattern = pattern.substring(1, pattern.length);
 			return (new NotPointcut(AopConfig.getPointcutFactory().getPointcut(pattern)));
 		};
 		bindPointcutFactory(rule, factory);
