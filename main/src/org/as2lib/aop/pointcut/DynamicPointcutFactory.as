@@ -22,7 +22,7 @@ import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.pointcut.OrPointcut;
 import org.as2lib.aop.pointcut.AndPointcut;
 import org.as2lib.aop.pointcut.KindedPointcut;
-//import org.as2lib.aop.pointcut.WithinPointcut;
+import org.as2lib.aop.pointcut.WithinPointcut;
 import org.as2lib.aop.pointcut.PointcutFactory;
 import org.as2lib.aop.pointcut.PointcutRule;
 import org.as2lib.aop.joinpoint.AbstractJoinPoint;
@@ -34,9 +34,10 @@ import org.as2lib.aop.joinpoint.AbstractJoinPoint;
  * pointcut factory is used to create the pointcut to return based on a given pointcut
  * pattern.
  * 
- * <p>This pointcut factory allows for execution, set and get access join points and for
- * composite pointcuts combined with AND or OR logic.
+ * <p>This pointcut factory allows for execution, within, set and get access join points
+ * and for composite pointcuts combined with AND or OR logic.
  * <code>execution(org.as2lib.env.Logger.debug)</code>
+ * <code>within(org.as2lib.MyClass)</code>
  * <code>set(org.as2lib.MyClass.myProperty)</code>
  * <code>get(org.as2lib.MyClass.myProperty)</code>
  * <code>execution(org.as2lib.env.Logger.debug) || set(org.as2lib.MyClass.myProperty)</code>
@@ -61,7 +62,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		bindExecutionPointcut();
 		bindSetPropertyPointcut();
 		bindGetPropertyPointcut();
-		//bindWithinPointcut();
+		bindWithinPointcut();
 	}
 	
 	/**
@@ -166,18 +167,21 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		bindPointcutFactory(rule, factory);
 	}
 	
-	/*private function bindWithinPointcut(Void):Void {
+	/**
+	 * TODO: Documentation
+	 */
+	private function bindWithinPointcut(Void):Void {
 		var rule:PointcutRule = getBlankPointcutRule();
 		rule.execute = function(pattern:String):Boolean {
 			return (pattern.indexOf("within") == 0);
-		}
+		};
 		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
 			pattern = pattern.substring(7, pattern.length - 1);
 			return (new WithinPointcut(pattern));
-		}
+		};
 		bindPointcutFactory(rule, factory);
-	}*/
+	}
 	
 	/**
 	 * Returns a pointcut based on the passed-in {@code pattern} representation.
