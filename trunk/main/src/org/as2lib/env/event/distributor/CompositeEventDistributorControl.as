@@ -20,82 +20,99 @@ import org.as2lib.env.event.distributor.EventDistributorControl;
 
 /**
  * {@code CompositeEventDistributorControl} allows flexible usage of events for complex class models.
- * <p>{@link EventDistributorControl} allows only handling of one certain listener.
- * {@code CompositeEventDistributor} allows multiple types of listeners to provide
- * more granularity if many different kind of listeners are used. It holds a list
- * of accepted types for listeners and checks if the listener added with {@link #addListener}
- * matches the certain class.
+ * 
+ * <p>The {@link EventDistributorControl} class allows only for handling of one type of
+ * listeners while this {@code CompositeEventDistributor} class allows multiple types
+ * of listeners to provide more granularity if many different kinds of listeners are
+ * used. It holds a collection of accepted types of listeners and checks if the listener
+ * added via the {@link #addListener} method matches any of the accepted types and adds
+ * it to the correct event distributor control(s).
  *
- * Example Class that uses the Composites functionality:
+ * <p>Class that uses the composites functionalities:
  * <code>
  *   import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributorControl;
  *   
  *   class MyClass extends SimpleConsumableCompositeEventDistributorControl {
  *      
- *      public function MyClass() {
- *      	acceptListenerType(MyListenerInterface);
- *      }
- *      
- *      public function customMethod(Void):Void {
- *          var e:MyListenerInterface = getDistributor(MyListenerInterface)
- *          e.onEvent("1", "2");
- *      }
+ *     public function MyClass(Void) {
+ *       acceptListenerType(MyListener);
+ *     }
+ *     
+ *     public function customMethod(Void):Void {
+ *       var e:MyListener = getDistributor(MyListener);
+ *       e.onEvent("1", "2");
+ *     }
  *      
  *   }
  * </code>
  * 
- * Example Listener
+ * <p>Listener interface:
  * <code>
- *   interface MyListenerInterface {
- *   	public function onEvent(contentA:String, contentB:String):Void;
- *   }
- *   
- *   class MyListener implements MyListenerInterface {
- *   	private var prefix:String;
- *   	public function MyListener(prefix:String) {
- *   		this.prefix = prefix;
- *   	}
- *   	public function onEvent(contentA:String, contentB:String):Void {
- *   		trace(prefix+contentA+","prefix+contentB);
- *   	}
+ *   interface MyListener {
+ *     
+ *     public function onEvent(contentA:String, contentB:String):Void;
+ *     
  *   }
  * </code>
  * 
- * Example Usage
+ * <p>Listener interface implementation:
+ * <code>
+ *   class SimpleMyListener implements MyListener {
+ *     
+ *     private var prefix:String;
+ *     
+ *     public function SimpleMyListener(prefix:String) {
+ *       this.prefix = prefix;
+ *     }
+ *     
+ *     public function onEvent(contentA:String, contentB:String):Void {
+ *       trace(prefix + contentA + ", " + prefix + contentB);
+ *     }
+ *     
+ *   }
+ * </code>
+ * 
+ * <p>Usage:
  * <code>
  *   var myClass:MyClass = new MyClass();
- *   myClass.addListener(new MyListener("a"));
- *   myClass.addListener(new MyListener("b"));
- *   myClass.customMethod(); // will trace "a1,a2" and "b1,b2";
+ *   myClass.addListener(new SimpleMyListener("a"));
+ *   myClass.addListener(new SimpleMyListener("b"));
+ *   // traces "a1, a2" and "b1, b2";
+ *   myClass.customMethod();
  *   
- *   // will throw a exception because this listener Array type is not accepted
+ *   // throws an exception because listeners of type "Array" are not accepted
  *   myClass.addListener(new Array());
  * </code>
  * 
  * @author Martin Heidegger
- * @version 1.0
  */
 interface org.as2lib.env.event.distributor.CompositeEventDistributorControl extends EventListenerSource {
 	
 	/**
-	 * Returns the distributor that contains all listeners match to the applied type. 
+	 * Returns the distributor for the given {@code type} that can be used to distribute
+	 * events to all added listeners of the given {@code type}.
 	 * 
-	 * @return Distributor for distributing the event
-	 * @throws org.as2lib.env.except.IllegalArgumentException
+	 * <p>The returned distributor can be casted to the given {@code type} (type-safe
+	 * distribution of events).
+	 * 
+	 * @return the distributor to distribute events
 	 */
 	public function getDistributor(type:Function);
 	
 	/**
-	 * Adds acception for a certain listener type.
-	 * <p>{@code addListener} does not allow listeners that don't match (instanceof)
-	 * any accepted listener type.
+	 * Specifies that listeners of the given {@code type} are accepted, this includes
+	 * implementations of the given {@code type} as well as its sub-classes.
 	 * 
-	 * @param type Type of listener that should be accepted.
+	 * <p>{@code addListener} does not allow listeners that do not match (instanceof)
+	 * at least one accepted listener type.
+	 * 
+	 * @param type the type of listeners that can be added
 	 */
 	public function acceptListenerType(type:Function):Void;
 	
 	/**
 	 * Replaces the default internal distributor with a different implementation.
+	 * 
 	 * <p>If you have a event that should be executed with a different kind of distributor
 	 * you can set it with this method (for example: consumable/not consumable).
 	 * 
@@ -118,4 +135,5 @@ interface org.as2lib.env.event.distributor.CompositeEventDistributorControl exte
 	 * @throws IllegalArgumentException if the type is not accepted.
 	 */
 	public function setDefaultEventDistributorControl(type:Function):Void;
+	
 }

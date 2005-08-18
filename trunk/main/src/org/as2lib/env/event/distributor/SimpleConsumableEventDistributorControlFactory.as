@@ -20,21 +20,23 @@ import org.as2lib.env.event.distributor.EventDistributorControl;
 import org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControl;
 
 /**
- * {@code SimpleConsumableEventDistributorControlFactory} is a factory to create
- * instances of {@link SimpleConsumableEventDistributorControl}
+ * {@code SimpleConsumableEventDistributorControlFactory} creates instances of class
+ * {@link SimpleConsumableEventDistributorControl}.
  * 
  * @author Martin Heidegger
- * @version 1.0
  */
 class org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControlFactory extends BasicClass implements EventDistributorControlFactory {
 	
 	/**
-	 * Creates a new instance of {@code SimpleConsumableEventDistributorControl}
+	 * Creates a new instance of class {@link SimpleConsumableEventDistributorControl}.
 	 * 
-	 * @param type Type for the new instance.
-	 * @return instance of SimpleConsumableEventDistributorControl;
+	 * @param type the distributor and listener type for the new event distributor
+	 * control
+	 * @return an instance of class {@code SimpleConsumableEventDistributorControl} that
+	 * is configured with the given {@code type}
 	 */
 	public function createEventDistributorControl(type:Function):EventDistributorControl {
 		return new SimpleConsumableEventDistributorControl(type);
 	}
+	
 }
