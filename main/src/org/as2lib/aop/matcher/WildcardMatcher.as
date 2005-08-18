@@ -60,6 +60,7 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 	public function match(joinPoint:String, pattern:String):Boolean {
 		if (!joinPoint) return false;
 		if (!pattern) return true;
+		if (pattern == "..*.*") return true;
 		if (pattern.indexOf("*") < 0
 				&& pattern.indexOf("..") < -1) {
 			return (joinPoint == pattern);
