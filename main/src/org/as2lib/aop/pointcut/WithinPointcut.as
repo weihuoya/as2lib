@@ -32,7 +32,17 @@ class org.as2lib.aop.pointcut.WithinPointcut extends BasicClass implements Point
 	private var typePattern:String;
 	
 	/**
-	 * Constructs a new {@code WithinPointcut}.
+	 * Constructs a new {@code WithinPointcut} instance.
+	 * 
+	 * <p>A {@code typePattern} is for example:
+	 * <code>org.as2lib..*Aspect</code>
+	 * 
+	 * <p>The above pattern matches all join points within all types in the "org.as2lib"
+	 * package and any sub-package that have a name that ends with "Aspect".
+	 * 
+	 * @param typePattern the type pattern describing the lexical scope of join points
+	 * to capture
+	 * @see #captures
 	 */
 	public function WithinPointcut(typePattern:String) {
 		if (typePattern != null) {
