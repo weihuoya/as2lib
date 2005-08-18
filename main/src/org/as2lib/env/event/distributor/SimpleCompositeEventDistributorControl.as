@@ -18,18 +18,17 @@ import org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl
 import org.as2lib.env.event.distributor.SimpleEventDistributorControlFactory;
 
 /**
- * {@code SimpleCompositeEventDistributorControl} is a implementation for
- * non-consumable events (by default).
+ * {@code SimpleCompositeEventDistributorControl} is an event distributor that does by
+ * default not support the consumption of events.
  *
  * @author Martin Heidegger
- * @version 1.0
  */
 class org.as2lib.env.event.distributor.SimpleCompositeEventDistributorControl extends AbstractCompositeEventDistributorControl {
 	
 	/**
 	 * Constructs a new {@code SimpleCompositeEventDistributorControl} instance.
 	 */
-	public function SimpleCompositeEventDistributorControl() {
+	public function SimpleCompositeEventDistributorControl(Void) {
 		super (new SimpleEventDistributorControlFactory());
 	}
 	

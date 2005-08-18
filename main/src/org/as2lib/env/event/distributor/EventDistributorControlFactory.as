@@ -19,20 +19,21 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.env.event.distributor.EventDistributorControl;
 
 /**
- * {@code EventDistributorControlFactory} is a factory to create implementations
- * of {@link EventDistributorControl}
- *
+ * {@code EventDistributorControlFactory} creates instances of type
+ * {@link EventDistributorControl}
  * 
  * @author Martin Heidegger
- * @version 1.0
  */
 interface org.as2lib.env.event.distributor.EventDistributorControlFactory extends BasicInterface {
 	
 	/**
-	 * Creates a new instance of {@code EventDistributorControl}
+	 * Creates a new instance of type {@code EventDistributorControl}
 	 * 
-	 * @param type Type of the generated {@code EventDistributorControl}
-	 * @return Implementation of {@code EventDistributorControl} with the specific type.
+	 * @param type the distributor and listener type of the created event distributor
+	 * control
+	 * @return an event distributor control that is configured with the given
+	 * {@code type}
 	 */
 	public function createEventDistributorControl(type:Function):EventDistributorControl;
+	
 }
