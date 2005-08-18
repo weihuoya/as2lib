@@ -18,9 +18,11 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
+import org.as2lib.aop.AopConfig;
 import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.pointcut.OrPointcut;
 import org.as2lib.aop.pointcut.AndPointcut;
+import org.as2lib.aop.pointcut.NotPointcut;
 import org.as2lib.aop.pointcut.KindedPointcut;
 import org.as2lib.aop.pointcut.WithinPointcut;
 import org.as2lib.aop.pointcut.PointcutFactory;
@@ -37,10 +39,13 @@ import org.as2lib.aop.joinpoint.AbstractJoinPoint;
  * <p>This pointcut factory allows for execution, within, set and get access join points
  * and for composite pointcuts combined with AND or OR logic.
  * <code>execution(org.as2lib.env.Logger.debug)</code>
- * <code>within(org.as2lib.MyClass)</code>
  * <code>set(org.as2lib.MyClass.myProperty)</code>
  * <code>get(org.as2lib.MyClass.myProperty)</code>
+ * <code>within(org.as2lib.MyClass)</code>
  * <code>execution(org.as2lib.env.Logger.debug) || set(org.as2lib.MyClass.myProperty)</code>
+ * 
+ * <p>Negation is also supported for every kind of pointcut:
+ * <code>execution(org.as2lib..*.*) && !within(org.as2lib.MyAspect)</code>
  * 
  * <p>You may of course enhance the list of supported pointcuts by binding new ones with
  * the {@link #bindPointcutFactory} method.
@@ -59,6 +64,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		factoryMap = new HashMap();
 		bindOrPointcut();
 		bindAndPointcut();
+		bindNotPointcut();
 		bindExecutionPointcut();
 		bindSetPropertyPointcut();
 		bindGetPropertyPointcut();
@@ -115,6 +121,22 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		var factory:PointcutFactory = getBlankPointcutFactory();
 		factory.getPointcut = function(pattern:String):Pointcut {
 			return (new AndPointcut(pattern));
+		};
+		bindPointcutFactory(rule, factory);
+	}
+	
+	/**
+	 * TODO: Documentation
+	 */
+	private function bindNotPointcut(Void):Void {
+		var rule:PointcutRule = getBlankPointcutRule();
+		rule.execute = function(pattern:String):Boolean {
+			return (pattern.indexOf("!") == 0);
+		};
+		var factory:PointcutFactory = getBlankPointcutFactory();
+		factory.getPointcut = function(pattern:String):Pointcut {
+			pattern = pattern.substring(2, pattern.length - 1);
+			return (new NotPointcut(AopConfig.getPointcutFactory().getPointcut(pattern)));
 		};
 		bindPointcutFactory(rule, factory);
 	}
