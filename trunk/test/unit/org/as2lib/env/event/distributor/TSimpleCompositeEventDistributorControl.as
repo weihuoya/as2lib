@@ -2,7 +2,7 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.env.event.distributor.TCompositeEventDistributor;
 import org.as2lib.env.event.distributor.SimpleCompositeEventDistributorControl;
 
-class org.as2lib.env.event.distributor.TSimpleCompositeDistributorControl extends TestCase {
+class org.as2lib.env.event.distributor.TSimpleCompositeEventDistributorControl extends TestCase {
 	
 	public function testDistribution() {
 		var helper:TCompositeEventDistributor = new TCompositeEventDistributor(this);
