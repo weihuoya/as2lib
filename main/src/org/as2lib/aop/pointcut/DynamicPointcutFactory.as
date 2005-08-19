@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.util.StringUtil;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
@@ -222,6 +223,21 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	 */
 	public function getPointcut(pattern:String):Pointcut {
 		if (!pattern) return null;
+		// this should be refactored, it is not a perfect solution, but it works for now
+		if (pattern.indexOf(" ") != -1) {
+			pattern = StringUtil.trim(pattern);
+			while (pattern.indexOf("  ") != -1) {
+				pattern = StringUtil.replace(pattern, "  ", " ");
+			}
+			pattern = StringUtil.replace(pattern, "( ", "(");
+			pattern = StringUtil.replace(pattern, " )", ")");
+			pattern = StringUtil.replace(pattern, " (", "(");
+			pattern = StringUtil.replace(pattern, "! ", "!");
+			pattern = StringUtil.replace(pattern, " &&", "&&");
+			pattern = StringUtil.replace(pattern, " ||", "||");
+			pattern = StringUtil.replace(pattern, "&& ", "&&");
+			pattern = StringUtil.replace(pattern, "|| ", "||");
+		}
 		var rules:Array = factoryMap.getKeys();
 		var factories:Array = factoryMap.getValues();
 		for (var i:Number = 0; i < rules.length; i++) {
