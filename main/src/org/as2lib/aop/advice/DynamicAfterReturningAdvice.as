@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.app.exec.Call;
+import org.as2lib.app.exec.Executable;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.Pointcut;
@@ -29,7 +29,7 @@ import org.as2lib.aop.advice.AfterReturningAdvice;
 class org.as2lib.aop.advice.DynamicAfterReturningAdvice extends AbstractAfterReturningAdvice implements AfterReturningAdvice {
 	
 	/** The callback to invoke. */
-	private var callback:Call;
+	private var callback:Executable;
 	
 	/**
 	 * @overload #DynamicAfterReturningAdviceByPointcut
@@ -37,8 +37,8 @@ class org.as2lib.aop.advice.DynamicAfterReturningAdvice extends AbstractAfterRet
 	 */
 	public function DynamicAfterReturningAdvice() {
 		var o:Overload = new Overload(this);
-		o.addHandler([Pointcut, Call], DynamicAfterReturningAdviceByPointcut);
-		o.addHandler([String, Call], DynamicAfterReturningAdviceByPointcutPattern);
+		o.addHandler([Pointcut, Executable], DynamicAfterReturningAdviceByPointcut);
+		o.addHandler([String, Executable], DynamicAfterReturningAdviceByPointcutPattern);
 		o.forward(arguments);
 	}
 	
@@ -49,7 +49,7 @@ class org.as2lib.aop.advice.DynamicAfterReturningAdvice extends AbstractAfterRet
 	 * advice in
 	 * @param callback the callback that is executed at the weave-in point
 	 */
-	private function DynamicAfterReturningAdviceByPointcut(pointcut:Pointcut, callback:Call) {
+	private function DynamicAfterReturningAdviceByPointcut(pointcut:Pointcut, callback:Executable) {
 		setPointcutByPointcut(pointcut);
 		this.callback = callback;
 	}
@@ -61,7 +61,7 @@ class org.as2lib.aop.advice.DynamicAfterReturningAdvice extends AbstractAfterRet
 	 * advice in
 	 * @param callback the callback that is executed at the weave-in point
 	 */
-	private function DynamicAfterReturningAdviceByPointcutPattern(pointcut:String, callback:Call) {
+	private function DynamicAfterReturningAdviceByPointcutPattern(pointcut:String, callback:Executable) {
 		setPointcutByString(pointcut);
 		this.callback = callback;
 	}

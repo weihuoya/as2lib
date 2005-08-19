@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
+import org.as2lib.app.exec.Executable;
+import org.as2lib.env.overload.Overload;
+import org.as2lib.aop.JoinPoint;
+import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.advice.AbstractAroundAdvice;
 import org.as2lib.aop.advice.AroundAdvice;
-import org.as2lib.app.exec.Call;
-import org.as2lib.aop.JoinPoint;
-import org.as2lib.env.overload.Overload;
-import org.as2lib.aop.Pointcut;
 
 /**
  * {@code DynamicAroundAdvice} executes a callback at the weave-in point.
@@ -29,7 +29,7 @@ import org.as2lib.aop.Pointcut;
 class org.as2lib.aop.advice.DynamicAroundAdvice extends AbstractAroundAdvice implements AroundAdvice {
 	
 	/** The callback to invoke. */
-	private var callback:Call;
+	private var callback:Executable;
 	
 	/**
 	 * @overload #DynamicAroundAdviceByPointcut
@@ -37,8 +37,8 @@ class org.as2lib.aop.advice.DynamicAroundAdvice extends AbstractAroundAdvice imp
 	 */
 	public function DynamicAroundAdvice() {
 		var o:Overload = new Overload(this);
-		o.addHandler([Pointcut, Call], DynamicAroundAdviceByPointcut);
-		o.addHandler([String, Call], DynamicAroundAdviceByPointcutPattern);
+		o.addHandler([Pointcut, Executable], DynamicAroundAdviceByPointcut);
+		o.addHandler([String, Executable], DynamicAroundAdviceByPointcutPattern);
 		o.forward(arguments);
 	}
 	
@@ -49,7 +49,7 @@ class org.as2lib.aop.advice.DynamicAroundAdvice extends AbstractAroundAdvice imp
 	 * advice in
 	 * @param callback the callback that is executed at the weave-in point
 	 */
-	private function DynamicAroundAdviceByPointcut(pointcut:Pointcut, callback:Call) {
+	private function DynamicAroundAdviceByPointcut(pointcut:Pointcut, callback:Executable) {
 		setPointcutByPointcut(pointcut);
 		this.callback = callback;
 	}
@@ -61,7 +61,7 @@ class org.as2lib.aop.advice.DynamicAroundAdvice extends AbstractAroundAdvice imp
 	 * advice in
 	 * @param callback the callback that is executed at the weave-in point
 	 */
-	private function DynamicAroundAdviceByPointcutPattern(pointcut:String, callback:Call) {
+	private function DynamicAroundAdviceByPointcutPattern(pointcut:String, callback:Executable) {
 		setPointcutByString(pointcut);
 		this.callback = callback;
 	}
