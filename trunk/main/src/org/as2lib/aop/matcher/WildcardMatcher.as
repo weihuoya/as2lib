@@ -65,6 +65,9 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 				&& pattern.indexOf("..") < -1) {
 			return (joinPoint == pattern);
 		}
+		if (pattern.indexOf("* ") == 0 && joinPoint.indexOf("static ") == -1) {
+			pattern = pattern.substring(2, pattern.length);
+		}
 		return wildcardMatch(joinPoint, pattern);
 	}
 	
