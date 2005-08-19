@@ -47,7 +47,14 @@ class org.as2lib.aop.pointcut.AndPointcut extends AbstractCompositePointcut impl
 			// source this out
 			var pointcuts:Array = pointcut.split(" && ");
 			for (var i:Number = 0; i < pointcuts.length; i++) {
-				addPointcut(AopConfig.getPointcutFactory().getPointcut(pointcuts[i]));
+				if (pointcuts[i].indexOf("&&") != -1) {
+					var p:Array = pointcuts[i].split("&&");
+					for (var j:Number = 0; j < p.length; j++) {
+						addPointcut(AopConfig.getPointcutFactory().getPointcut(p[j]));
+					}
+				} else {
+					addPointcut(AopConfig.getPointcutFactory().getPointcut(pointcuts[i]));
+				}
 			}
 		}
 	}
