@@ -47,7 +47,8 @@ class org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl 
 	/**
 	 * Creates a new {@code AbstractCompositeEventDistributorControl} instance.
 	 * 
-	 * @param eventDistributorControlFactory the factory to create event distributors for the different types
+	 * @param eventDistributorControlFactory the factory to create event distributor
+	 * controls for the different listener types
 	 */
 	public function AbstractCompositeEventDistributorControl(eventDistributorControlFactory:EventDistributorControlFactory) {
 		this.eventDistributorControlFactory = eventDistributorControlFactory;
@@ -123,7 +124,7 @@ class org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl 
 	 * before the certain listener will be added) 
 	 */
 	public function addAllListeners(listeners:Array):Void {
-		for (var i = 0; i < listeners.length; i++) {
+		for (var i:Number = 0; i < listeners.length; i++) {
 			addListener(listeners[i]);
 		}
 	}
@@ -132,9 +133,8 @@ class org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl 
 	 * Removes all added listeners.
 	 */
 	public function removeAllListeners(Void):Void {
-		var i:Number;
 		var list:Array = getAllListeners();
-		for (i=0; i<list.length; i++) {
+		for (var i:Number = 0; i < list.length; i++) {
 			removeListener(list[i]);
 		}
 	}
@@ -165,12 +165,13 @@ class org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl 
 	 * at least one of the accepted listener types.
 	 * 
 	 * @param type the type of listeners that are accepted
+	 * @see #setEventDistributorControl
+	 * @see #setDefaultEventDistributorControl
 	 */
 	public function acceptListenerType(listenerType:Function):Void {
-		if (!distributorMap.get(listenerType)) {
+		if (!distributorMap.containsKey(listenerType)) {
 			var distributor:EventDistributorControl = eventDistributorControlFactory.createEventDistributorControl(listenerType);
-			var i:Number;
-			for (i=0; i<listeners.length; i++) {
+			for (var i:Number = 0; i < listeners.length; i++) {
 				if (listeners[i] instanceof listenerType) {
 					distributor.addListener(listeners[i]);
 				}
@@ -200,27 +201,30 @@ class org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl 
 	}
 	
 	/**
-	 * Adds a new event distributor control for its type. If the type is already in use
-	 * the old event distributor control will be overwritten.
+	 * Registers the given {@code eventDistributorControl} with its listener and
+	 * distributor type returned by its {@link EventDistributorControl#getType} method.
 	 * 
-	 * <p>If you have an event that shall be executed with a different kind of distributor
-	 * you can set it with this method (for example consumable/not consumable).
+	 * <p>The type is then automatically an accepted listener type.
 	 * 
-	 * <p>The type returned by the {@link EventDistributorControl#getType) method is used
-	 * as the type expected by listeners that shall be handled by the added event
-	 * distributor control.
+	 * <p>If there is already a distributor control registered for the given type, it
+	 * will be overwritten.
 	 * 
-	 * <p>All existing references to the former distributors will have to become updated,
-	 * else they won't get any new listeners!
+	 * <p>If you hold references to distributors of this type, returned by the
+	 * {@link #getDistributor} method, you will have to update them, else events will
+	 * not be distributed to newly registered listeners of that type.
 	 * 
-	 * @param eventDistributorControl the distributor control to get distributors to use
-	 * for event distribution
+	 * <p>You use this method if you have a specific event that should be executed with
+	 * a special kind of distributor, for example with a consumable one.
+	 * 
+	 * @param eventDistributorControl the event distributor control to use for event
+	 * distribution for the given type
 	 * @throws IllegalArgumentException if the given argument {@code eventDistributorControl}
 	 * is {@code null} or {@code undefined}
 	 * @see #setDefaultEventDistributorControl
+	 * @see #acceptListenerType
 	 */
 	public function setEventDistributorControl(eventDistributorControl:EventDistributorControl):Void  {
-		if (!eventDistributorControl) throw new IllegalArgumentException("Arguments 'eventDistributorControl' [" + eventDistributorControl + "] must neither be 'null' nor 'undefined'.", this, arguments);
+		if (!eventDistributorControl) throw new IllegalArgumentException("Argument 'eventDistributorControl' [" + eventDistributorControl + "] must neither be 'null' nor 'undefined'.", this, arguments);
 		var type:Function = eventDistributorControl.getType();
 		eventDistributorControl.removeAllListeners();
 		for (var i:Number = 0; i < listeners.length; i++) {
@@ -232,18 +236,22 @@ class org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl 
 	}
 	
 	/**
-	 * Replaces a custom event distributor by a default event distributor obtained from
-	 * the added factory.
+	 * Registers a default event distributor control with the given listener and
+	 * distributor {@code type}.
 	 * 
-	 * @param type the type to set to a default distributor control for
-	 * @throws IllegalArgumentException if the given {@code type} is not already accepted
+	 * <p>The {@code type} is then automatically an accepted listener type.
+	 * 
+	 * <p>If there is already a distributor control registered for the given type, it
+	 * will be overwritten.
+	 * 
+	 * @param type the type to register a default distributor control with
+	 * @throws IllegalArgumentException if argument {@code type} is {@code null} or
+	 * {@code undefined}
+	 * @see #acceptListenerType
 	 */
 	public function setDefaultEventDistributorControl(type:Function):Void {
-		var control:EventDistributorControl = distributorMap.remove(type);
-		if (control === undefined || control === null) {
-			throw new IllegalArgumentException(ReflectUtil.getTypeNameForType(type) + " is not accepted as listener type.", this, arguments);
-		}
-		acceptListenerType(type);
+		if (!type) throw new IllegalArgumentException("Argument 'type' [" + type + "] must neither be 'null' nor 'undefined'.", this, arguments);
+		setEventDistributorControl(eventDistributorControlFactory.createEventDistributorControl(type));
 	}
 	
 }

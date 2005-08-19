@@ -106,33 +106,34 @@ interface org.as2lib.env.event.distributor.CompositeEventDistributorControl exte
 	 * <p>{@code addListener} does not allow listeners that do not match (instanceof)
 	 * at least one accepted listener type.
 	 * 
-	 * @param type the type of listeners that can be added
+	 * @param listenerType the type of listeners that can be added
 	 */
-	public function acceptListenerType(type:Function):Void;
+	public function acceptListenerType(listenerType:Function):Void;
 	
 	/**
-	 * Replaces the default internal distributor with a different implementation.
+	 * Registers the given {@code eventDistributorControl} with its listener and
+	 * distributor type returned by its {@link EventDistributorControl#getType} method.
 	 * 
-	 * <p>If you have a event that should be executed with a different kind of distributor
-	 * you can set it with this method (for example: consumable/not consumable).
+	 * <p>If there is already a distributor control registered for the given type, it
+	 * will be overwritten.
 	 * 
-	 * <p>It will take the {@link EventDistributorControl#getType) type to to 
-	 * define the type its used for.
+	 * <p>You use this method if you have a specific event that should be executed with
+	 * a special kind of distributor, for example with a consumable one.
 	 * 
-	 * <p>All existing references to the former distributor will have to get updated,
-	 * else they won't get any new listeners!
-	 * 
-	 * @param eventDistributorControl Control to be used for event distribution.
+	 * @param eventDistributorControl the event distributor control to use for event
+	 * distribution for the given type
 	 * @see #setDefaultEventDistributorControl
-	 * @throws IllegalArgumentException if the type is not accepted.
 	 */
 	public function setEventDistributorControl(eventDistributorControl:EventDistributorControl):Void;
 	
 	/**
-	 * Replaces a custom event distributor with a default event distributor.
+	 * Registers a default event distributor control with the given listener and
+	 * distributor type.
 	 * 
-	 * @param type Type to set to a default distributor control.
-	 * @throws IllegalArgumentException if the type is not accepted.
+	 * <p>If there is already a distributor control registered for the given type, it
+	 * will be overwritten.
+	 * 
+	 * @param type the type to register a default distributor control with
 	 */
 	public function setDefaultEventDistributorControl(type:Function):Void;
 	
