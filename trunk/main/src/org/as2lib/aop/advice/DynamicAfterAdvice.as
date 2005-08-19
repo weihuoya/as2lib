@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.app.exec.Call;
+import org.as2lib.app.exec.Executable;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.Pointcut;
@@ -29,7 +29,7 @@ import org.as2lib.aop.advice.AfterAdvice;
 class org.as2lib.aop.advice.DynamicAfterAdvice extends AbstractAfterAdvice implements AfterAdvice {
 	
 	/** The callback to invoke. */
-	private var callback:Call;
+	private var callback:Executable;
 	
 	/**
 	 * @overload #DynamicAfterAdviceByPointcut
@@ -37,8 +37,8 @@ class org.as2lib.aop.advice.DynamicAfterAdvice extends AbstractAfterAdvice imple
 	 */
 	public function DynamicAfterAdvice() {
 		var o:Overload = new Overload(this);
-		o.addHandler([Pointcut, Call], DynamicAfterAdviceByPointcut);
-		o.addHandler([String, Call], DynamicAfterAdviceByPointcutPattern);
+		o.addHandler([Pointcut, Executable], DynamicAfterAdviceByPointcut);
+		o.addHandler([String, Executable], DynamicAfterAdviceByPointcutPattern);
 		o.forward(arguments);
 	}
 	
@@ -49,7 +49,7 @@ class org.as2lib.aop.advice.DynamicAfterAdvice extends AbstractAfterAdvice imple
 	 * advice in
 	 * @param callback the callback that is executed at the weave-in point
 	 */
-	private function DynamicAfterAdviceByPointcut(pointcut:Pointcut, callback:Call) {
+	private function DynamicAfterAdviceByPointcut(pointcut:Pointcut, callback:Executable) {
 		setPointcutByPointcut(pointcut);
 		this.callback = callback;
 	}
@@ -61,7 +61,7 @@ class org.as2lib.aop.advice.DynamicAfterAdvice extends AbstractAfterAdvice imple
 	 * advice in
 	 * @param callback the callback that is executed at the weave-in point
 	 */
-	private function DynamicAfterAdviceByPointcutPattern(pointcut:String, callback:Call) {
+	private function DynamicAfterAdviceByPointcutPattern(pointcut:String, callback:Executable) {
 		setPointcutByString(pointcut);
 		this.callback = callback;
 	}

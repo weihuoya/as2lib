@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
+import org.as2lib.app.exec.Executable;
+import org.as2lib.env.overload.Overload;
+import org.as2lib.aop.JoinPoint;
+import org.as2lib.aop.Pointcut;
 import org.as2lib.aop.advice.AbstractAfterThrowingAdvice;
 import org.as2lib.aop.advice.AfterThrowingAdvice;
-import org.as2lib.app.exec.Call;
-import org.as2lib.aop.JoinPoint;
-import org.as2lib.env.overload.Overload;
-import org.as2lib.aop.Pointcut;
 
 /**
  * {@code DynamicAfterThrowingAdvice} executes a callback at the weave-in point.
@@ -29,7 +29,7 @@ import org.as2lib.aop.Pointcut;
 class org.as2lib.aop.advice.DynamicAfterThrowingAdvice extends AbstractAfterThrowingAdvice implements AfterThrowingAdvice {
 	
 	/** The callback to invoke. */
-	private var callback:Call;
+	private var callback:Executable;
 	
 	/**
 	 * @overload #DynamicAfterThrowingAdviceByPointcut
@@ -37,8 +37,8 @@ class org.as2lib.aop.advice.DynamicAfterThrowingAdvice extends AbstractAfterThro
 	 */
 	public function DynamicAfterThrowingAdvice() {
 		var o:Overload = new Overload(this);
-		o.addHandler([Pointcut, Call], DynamicAfterThrowingAdviceByPointcut);
-		o.addHandler([String, Call], DynamicAfterThrowingAdviceByPointcutPattern);
+		o.addHandler([Pointcut, Executable], DynamicAfterThrowingAdviceByPointcut);
+		o.addHandler([String, Executable], DynamicAfterThrowingAdviceByPointcutPattern);
 		o.forward(arguments);
 	}
 	
@@ -49,7 +49,7 @@ class org.as2lib.aop.advice.DynamicAfterThrowingAdvice extends AbstractAfterThro
 	 * advice in
 	 * @param callback the callback that is executed at the weave-in point
 	 */
-	private function DynamicAfterThrowingAdviceByPointcut(pointcut:Pointcut, callback:Call) {
+	private function DynamicAfterThrowingAdviceByPointcut(pointcut:Pointcut, callback:Executable) {
 		setPointcutByPointcut(pointcut);
 		this.callback = callback;
 	}
@@ -61,7 +61,7 @@ class org.as2lib.aop.advice.DynamicAfterThrowingAdvice extends AbstractAfterThro
 	 * advice in
 	 * @param callback the callback that is executed at the weave-in point
 	 */
-	private function DynamicAfterThrowingAdviceByPointcutPattern(pointcut:String, callback:Call) {
+	private function DynamicAfterThrowingAdviceByPointcutPattern(pointcut:String, callback:Executable) {
 		setPointcutByString(pointcut);
 		this.callback = callback;
 	}
