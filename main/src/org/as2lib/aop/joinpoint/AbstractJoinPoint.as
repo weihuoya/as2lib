@@ -139,7 +139,11 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	 * @see <a href="http://www.simonwacker.com/blog/archives/000053">Wildcards</a>
 	 */
 	public function matches(pattern:String):Boolean {
-		return getMatcher().match(JoinPoint(this).getInfo().getFullName(), pattern);
+		var joinPointAsString:String = JoinPoint(this).getInfo().getFullName();
+		if (JoinPoint(this).getInfo().isStatic()) {
+			joinPointAsString = "static " + joinPointAsString;
+		}
+		return getMatcher().match(joinPointAsString, pattern);
 	}
 	
 }
