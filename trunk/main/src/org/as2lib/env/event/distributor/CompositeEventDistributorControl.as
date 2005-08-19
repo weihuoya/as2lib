@@ -124,7 +124,7 @@ interface org.as2lib.env.event.distributor.CompositeEventDistributorControl exte
 	 * distribution for the given type
 	 * @see #setDefaultEventDistributorControl
 	 */
-	public function setEventDistributorControl(eventDistributorControl:EventDistributorControl):Void;
+	public function registerEventDistributorControl(eventDistributorControl:EventDistributorControl):Void;
 	
 	/**
 	 * Registers a default event distributor control with the given listener and
@@ -135,6 +135,6 @@ interface org.as2lib.env.event.distributor.CompositeEventDistributorControl exte
 	 * 
 	 * @param type the type to register a default distributor control with
 	 */
-	public function setDefaultEventDistributorControl(type:Function):Void;
+	public function registerDefaultEventDistributorControl(type:Function):Void;
 	
 }

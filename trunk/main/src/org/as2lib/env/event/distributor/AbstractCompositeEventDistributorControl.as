@@ -165,8 +165,8 @@ class org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl 
 	 * at least one of the accepted listener types.
 	 * 
 	 * @param type the type of listeners that are accepted
-	 * @see #setEventDistributorControl
-	 * @see #setDefaultEventDistributorControl
+	 * @see #registerEventDistributorControl
+	 * @see #registerDefaultEventDistributorControl
 	 */
 	public function acceptListenerType(listenerType:Function):Void {
 		if (!distributorMap.containsKey(listenerType)) {
@@ -220,10 +220,10 @@ class org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl 
 	 * distribution for the given type
 	 * @throws IllegalArgumentException if the given argument {@code eventDistributorControl}
 	 * is {@code null} or {@code undefined}
-	 * @see #setDefaultEventDistributorControl
+	 * @see #registerDefaultEventDistributorControl
 	 * @see #acceptListenerType
 	 */
-	public function setEventDistributorControl(eventDistributorControl:EventDistributorControl):Void  {
+	public function registerEventDistributorControl(eventDistributorControl:EventDistributorControl):Void  {
 		if (!eventDistributorControl) throw new IllegalArgumentException("Argument 'eventDistributorControl' [" + eventDistributorControl + "] must neither be 'null' nor 'undefined'.", this, arguments);
 		var type:Function = eventDistributorControl.getType();
 		eventDistributorControl.removeAllListeners();
@@ -249,9 +249,9 @@ class org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl 
 	 * {@code undefined}
 	 * @see #acceptListenerType
 	 */
-	public function setDefaultEventDistributorControl(type:Function):Void {
+	public function registerDefaultEventDistributorControl(type:Function):Void {
 		if (!type) throw new IllegalArgumentException("Argument 'type' [" + type + "] must neither be 'null' nor 'undefined'.", this, arguments);
-		setEventDistributorControl(eventDistributorControlFactory.createEventDistributorControl(type));
+		registerEventDistributorControl(eventDistributorControlFactory.createEventDistributorControl(type));
 	}
 	
 }
