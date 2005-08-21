@@ -72,7 +72,7 @@ import org.as2lib.env.overload.SameTypeSignatureException;
  * <code>
  *   // MyClass.as
  *   class MyClass {
- *       public functino myMethod() {
+ *       public function myMethod() {
  *           var o:Overload = new Overload(this);
  *           o.addHandler([Number, String], myMethodByNumberAndString);
  *           o.addHandler([Number], myMethodByNumber);
