@@ -218,9 +218,6 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 						s = scope.__proto__;
 						while (s.__proto__ != p) {
 							s = s.__proto__;
-							if (s === null || s === undefined) {
-								return getMethod().apply(scope, args);
-							}
 						}
 						invokerScope = s;
 					} else {
