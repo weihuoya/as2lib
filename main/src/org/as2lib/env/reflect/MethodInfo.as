@@ -106,6 +106,9 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	/** A flag representing whether this method is static or not. */
 	private var staticFlag:Boolean;
 	
+	/** The scope of the invoker. */
+	private var invokerScope;
+	
 	/**
 	 * Constructs a new {@code MethodInfo} instance.
 	 *
@@ -210,9 +213,18 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 				var p:Object = t.prototype;
 				// if scope is a direct instance of the declaring type super works as expected
 				if (scope.__proto__ != p) {
-					var s = scope;
-					while (s.__proto__ != p) {
-						s = s.__proto__;
+					var s;
+					if (invokerScope === null || invokerScope === undefined) {
+						s = scope.__proto__;
+						while (s.__proto__ != p) {
+							s = s.__proto__;
+							if (s === null || s === undefined) {
+								return getMethod().apply(scope, args);
+							}
+						}
+						invokerScope = s;
+					} else {
+						s = invokerScope;
 					}
 					s.__as2lib__invoker = INVOKER;
 					return scope.__as2lib__invoker(s, getMethod(), args);
