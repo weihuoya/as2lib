@@ -355,7 +355,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 		if (advice) {
 			var typeInfo:ClassInfo = null;
 			if (affectedType) {
-				affectedType = ClassInfo.forClass(affectedType);
+				typeInfo = ClassInfo.forClass(affectedType);
 			}
 			if (!advices.containsKey(typeInfo)) {
 				advices.put(typeInfo, new Array());
