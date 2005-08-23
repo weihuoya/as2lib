@@ -353,7 +353,10 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	 */
 	public function addAdviceForOneAffectedType(advice:Advice, affectedType:Function):Void {
 		if (advice) {
-			var typeInfo:ClassInfo = ClassInfo.forClass(affectedType);
+			var typeInfo:ClassInfo = null;
+			if (affectedType) {
+				affectedType = ClassInfo.forClass(affectedType);
+			}
 			if (!advices.containsKey(typeInfo)) {
 				advices.put(typeInfo, new Array());
 			}
