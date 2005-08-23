@@ -2,75 +2,11 @@
 <changelog xmlns="as2lib"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="as2lib http://www.as2lib.org/changelog_0.91.xsd">
-  <release name="as2lib 0.9.2" day="20" month="8" year="2005">
+  <release name="as2lib 0.9.3" day="9" month="9" year="2005">
     <year value="2005">
       <month value="8">
-        <day value="18">
-          <entry type="add" package="org.as2lib.aop.pointcut" class="WithinPointcut"></entry>
-          <entry type="add" package="org.as2lib.aop.pointcut" class="NotPointcut"></entry>
-        </day>
-        <day value="17">
-          <entry type="add" package="org.as2lib.env.event" class="CompositeEventDistributorControl"></entry>
-          <entry type="add" package="org.as2lib.env.event" class="AbstractCompositeEventDistributorControl"></entry>
-          <entry type="add" package="org.as2lib.env.event" class="SimpleCompositeEventDistributorControl"></entry>
-          <entry type="add" package="org.as2lib.env.event" class="SimpleConsumableCompositeEventDistributorControl"></entry>
-          <entry type="add" package="org.as2lib.env.event" class="EventDistributorControlFactory"></entry>
-          <entry type="add" package="org.as2lib.env.event" class="SimpleEventDistributorControlFactory"></entry>
-          <entry type="add" package="org.as2lib.env.event" class="SimpleConsumableEventDistributorControlFactory"></entry>
-          <entry type="change" package="org.as2lib.app.exec" class="ForEachExecutable" method="forEach"><change-returnType to="Void" from="Array"></change-returnType></entry>
-        </day>
-      </month>
-      <month value="7">
-        <day value="28">
-          <entry type="add" package="org.as2lib.env.reflect" class="ConstructorInfo" method="getMethod">Resolves constructor method at run-time.</entry>
-          <entry type="add" package="org.as2lib.env.reflect" class="ConstructorInfo" method="snapshot">Creates snapshot of constructor info.</entry>
-          <entry type="add" package="org.as2lib.aop.joinpoint" class="ConstructorJoinPoint">Represents constructors as join points.</entry>
-          <entry type="add" package="static org.as2lib.aop.joinpoint" class="AbstractJoinPoint" variable="CONSTRUCTOR">Added new join point type for constructors.</entry>
-        </day>
-        <day value="25">
-          <entry type="add" package="org.as2lib.aop" class="Weaver" method="weave"></entry>
-          <entry type="remove" package="org.as2lib.aop" class="Weaver">Removed all weave methods.</entry>
-          <entry type="add" package="org.as2lib.aop" class="JoinPoint" method="snapshot"></entry>
-          <entry type="add" package="org.as2lib.env.reflect" class="PropertyInfo" method="snapshot"></entry>
-          <entry type="add" package="org.as2lib.env.reflect" class="MethodInfo" method="snapshot"></entry>
-          <entry type="add" package="org.as2lib.aop" class="JoinPoint" method="update(thiz):JoinPoint"></entry>
-          <entry type="remove" package="org.as2lib.aop" class="JoinPoint" method="clone"></entry>
-        </day>
-        <day value="22">
-          <entry type="add" package="org.as2lib.aop.advice" class="SimpleDynamicAdviceFactory" method="bindAdviceFactory"></entry>
-        </day>
-        <day value="18">
-          <entry type="change" package="org.as2lib.aop.matcher" class="DefaultMatcher"><change-rename to="WildcardMatcher"/></entry>
-        </day>
-        <day value="16">
-          <entry type="remove" package="org.as2lib.aop.pointcut" class="AbstractPointcut">Was unnecessary because there was only on sub-class KindenPointcut.</entry>
-        </day>
-        <day value="15">
-          <entry type="add" package="org.as2lib.aop.pointcut" class="AbstractCompositePointcut" method="getPointcuts(Void):Array"></entry>
-          <entry type="change" package="org.as2lib.aop.pointcut" class="OrCompositePointcut"><change-rename to="OrPointcut"/></entry>
-          <entry type="change" package="org.as2lib.aop.pointcut" class="AndCompositePointcut"><change-rename to="AndPointcut"/></entry>
-          <entry type="change" package="org.as2lib.aop.joinpoint" class="AbstractJoinPoint">Changed name of constants "TYPE_*" to "*".</entry>
-        </day>
-        <day value="13">
-          <entry type="add" package="org.as2lib.env.log.handler" class="DebugItHandler">Added handler support for the debugit component.</entry>
-          <entry type="add" package="org.as2lib.env.log.logger" class="DebugItLogger">Added logger support for the debugit component.</entry>
-          <entry type="bugfix" package="org.as2lib.aop.joinpoint">Fixed serious bug with 'super' in adviced methods.</entry>
-        </day>
-        <day value="10">
-          <entry type="change" package="org.as2lib.env.log.handler" class="AlconHandler">Made Alcon 1.0.5 compatible.</entry>
-          <entry type="change" package="org.as2lib.env.log.logger" class="AlconLogger">Made Alcon 1.0.5 compatible.</entry>
-          <entry type="add" package="org.as2lib.data.holder.list" class="ListIterator">Iterator to iterate over any kind of list.</entry>
-          <entry type="add" package="org.as2lib.data.holder.list" class="AbstractList">Provides common implementations of methods needed by lists.</entry>
-          <entry type="add" package="org.as2lib.data.holder.list" class="SubList">Represents a sub-list.</entry>
-          <entry type="add" package="org.as2lib.data.holder" class="List" method="subList">Returns a sub-list of the list called on, that represents a specific range of values. Changes made on the sub-list are reflected on the owner-list.</entry>
-          <entry type="change" package="org.as2lib.data.holder" class="List" method="set/setAll/get/removeByIndex">Added proper exception handling if the index is out of range.</entry>
-          <entry type="add" package="org.as2lib.data.holder" class="List" method="insertAllByIndexAndList">Inserts all values starting from the index and shifts elements to the right.</entry>
-          <entry type="add" package="org.as2lib.data.holder" class="List" method="insertByIndexAndValue">Inserts value and shifts element at index and subsequent elements to the right.</entry>
-          <entry type="add" package="org.as2lib.data.holder" class="IndexOutOfBoundsException">Is thrown when you try to use an index that is out of range.</entry>
-        </day>
-        <day value="6">
-          <entry type="change" package="org.as2lib.aop.advice" class="AbstractAdvice">Changed names of constants 'TYPE_*' to '*'.</entry>
-          <entry type="add" package="org.as2lib.aop">Added AOP framework, this means it is again included in this and following as2lib distributions.</entry>
+        <day value="23">
+          <entry type="fix" package="org.as2lib.aop.weaver" class="SimpleWeaver">Fixed major bug that resulted in IllegalArgumentException addAspectForAllTypes / addAdviceForAllTypes.</entry>
         </day>
       </month>
     </year>
