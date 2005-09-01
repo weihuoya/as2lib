@@ -6,6 +6,7 @@
     <year value="2005">
       <month value="9">
         <day value="1">
+          <entry type="fix" package="org.as2lib.aop.weaver" class="SimpleWeaver" method="weaveSuperClassConstructor">Fixed bug with super constructors and multiple advices.</entry>
           <entry type="fix" package="org.as2lib.aop.mtacher" class="WildcardMatcher" method="match">Fixed serious bug with often used pattern '..*.*'.</entry>
           <entry type="fix" package="org.as2lib.aop.weaver" class="SimpleWeaver" method="addAspectForAllTypesInPackage/addAdviceForAllTypesInPackage">Fixed serious bug that prevented weaving aspects and advices by types package as affected types.</entry>
         </day>
