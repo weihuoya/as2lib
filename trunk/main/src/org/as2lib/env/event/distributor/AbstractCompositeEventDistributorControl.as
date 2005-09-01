@@ -183,19 +183,20 @@ class org.as2lib.env.event.distributor.AbstractCompositeEventDistributorControl 
 	 * Returns the distributor that can be used to broadcast an event to all added
 	 * listeners that match the distributor's type.
 	 * 
+	 * <p>If the given {@code type} has not been accepted as listener type yet, it will
+	 * be accepted after you invoked this method.
+	 * 
 	 * <p>Note that the returned distributor will not be updated if you add a new
 	 * distributor control for the given {@code type} after you obtained a distributor.
 	 * You must get a new distributor if you want an updated one.
 	 * 
 	 * @return the distributor to distribute events
-	 * @throws IllegalArgumentException if there is no distributor for the given
-	 * {@code type}
 	 */
 	public function getDistributor(type:Function) {
-		var distributor:EventDistributorControl = distributorMap.get(type);
-		if (distributor === null  || distributor === undefined) {
-			throw new IllegalArgumentException(ReflectUtil.getTypeName(type) + " is a not supported distributor type.", this, arguments);
+		if (!distributorMap.containsKey(type)) {
+			acceptListenerType(type);
 		}
+		var distributor:EventDistributorControl = distributorMap.get(type);
 		return distributor.getDistributor();
 	}
 	
