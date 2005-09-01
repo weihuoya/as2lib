@@ -86,8 +86,6 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 			b.pop();
 			a.pop();
 		}
-		trace(a);
-		trace(b);
 		var d:Number = a.length;
 		var e:Number = b.length;
 		if (p.indexOf("..") < 0 && d != e) return false;
@@ -121,9 +119,6 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 	 * TODO: Documentation
 	 */
 	private static function matchString(s:String, p:String):Boolean {
-		trace(s);
-		trace(p);
-		trace("-----");
 		if (p == "*") return true;
 		if (p.indexOf("*") > -1) {
 			var a:Array = p.split("*");
