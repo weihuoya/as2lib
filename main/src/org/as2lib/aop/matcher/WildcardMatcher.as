@@ -80,14 +80,24 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 	private function wildcardMatch(jp:String, p:String):Boolean {
 		var a:Array = jp.split(".");
 		var b:Array = p.split(".");
+		var x:Number = b.length;
+		var y:Number = a.length;
+		while (b[--x] == "*" && a[--y] != null) {
+			b.pop();
+			a.pop();
+		}
+		trace(a);
+		trace(b);
 		var d:Number = a.length;
 		var e:Number = b.length;
 		if (p.indexOf("..") < 0 && d != e) return false;
 		if (b[0] == "") b.shift();
+		if (b[b.length - 1] == "" && b[b.length - 2] == "") b.pop();
 		for (var i:Number = 0; i < d; i++) {
 			var f:String = b[i];
 			if (f == "") {
-				f = b[i+1];
+				f = b[i + 1];
+				if (f == null) return true;
 				var g:Boolean = false;
 				for (var k:Number = i; k < d; k++) {
 					if (matchString(a[k], f)) {
@@ -111,6 +121,9 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 	 * TODO: Documentation
 	 */
 	private static function matchString(s:String, p:String):Boolean {
+		trace(s);
+		trace(p);
+		trace("-----");
 		if (p == "*") return true;
 		if (p.indexOf("*") > -1) {
 			var a:Array = p.split("*");

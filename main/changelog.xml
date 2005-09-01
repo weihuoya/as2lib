@@ -6,12 +6,13 @@
     <year value="2005">
       <month value="9">
         <day value="1">
-          <entry type="fix" package="org.as2lib.aop.weaver" class="SimpleWeaver">Fixed serious bug that prevented weaving aspects and advices by types package as affected types.</entry>
+          <entry type="fix" package="org.as2lib.aop.mtacher" class="WildcardMatcher" method="match">Fixed serious bug with often used pattern '..*.*'.</entry>
+          <entry type="fix" package="org.as2lib.aop.weaver" class="SimpleWeaver" method="addAspectForAllTypesInPackage/addAdviceForAllTypesInPackage">Fixed serious bug that prevented weaving aspects and advices by types package as affected types.</entry>
         </day>
       </month>
       <month value="8">
         <day value="23">
-          <entry type="fix" package="org.as2lib.aop.weaver" class="SimpleWeaver">Fixed major bug that resulted in IllegalArgumentException addAspectForAllTypes / addAdviceForAllTypes.</entry>
+          <entry type="fix" package="org.as2lib.aop.weaver" class="SimpleWeaver" method="addAspectForAllTypes/addAdviceForAllTypes">Fixed major bug that resulted in IllegalArgumentException.</entry>
         </day>
       </month>
     </year>
