@@ -206,7 +206,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			if (affectedPackage) {
 				var packageInfo:PackageInfo = PackageInfo.forPackage(affectedPackage);
 				if (packageInfo) {
-					var classes:Array = affectedPackage.getMemberClasses(false);
+					var classes:Array = packageInfo.getMemberClasses(false);
 					for (var i:Number = 0; i < classes.length; i++) {
 						var clazz:ClassInfo = ClassInfo(classes[i]);
 						if (clazz) {
@@ -306,7 +306,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			if (package) {
 				var packageInfo:PackageInfo = PackageInfo.forPackage(package);
 				if (packageInfo) {
-					var classes:Array = package.getMemberClasses(false);
+					var classes:Array = packageInfo.getMemberClasses(false);
 					for (var i:Number = 0; i < classes.length; i++) {
 						var clazz:ClassInfo = ClassInfo(classes[i]);
 						if (clazz) {
