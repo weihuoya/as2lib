@@ -33,6 +33,7 @@ import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.env.reflect.ConstructorInfo;
 import org.as2lib.aop.joinpoint.ConstructorJoinPoint;
 import org.as2lib.aop.joinpoint.AbstractJoinPoint;
+import org.as2lib.util.ArrayUtil;
 
 /**
  * {@code SimpleWeaver} is a simple implementation of the {@code Weaver} interface that
@@ -189,6 +190,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	 */
 	public function addAspectForAllTypes(aspect:Aspect):Void {
 		if (aspect) {
+			// TODO revisit, not perfect, better addAspectForAllTypesInPackage(aspect, rootPackage)
 			addAspectForOneAffectedType(aspect, null);
 		}
 	}
@@ -361,7 +363,10 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 				advices.put(typeInfo, new Array());
 			}
 			var affectedAdvices:Array = advices.get(typeInfo);
-			affectedAdvices.push(advice);
+			// TODO is this really always wanted? add a flag if not
+			if (!ArrayUtil.contains(affectedAdvices, advice)) {
+				affectedAdvices.push(advice);
+			}
 			if (typeInfo.getSuperType()) {
 				addAdviceForOneAffectedType(advice, typeInfo.getSuperType().getType());
 			}
