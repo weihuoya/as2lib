@@ -130,7 +130,10 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 				var advice:Advice = Advice(advices[i]);
 				if (advice) {
 					if (advice.captures(superClassConstructorJoinPoint)) {
-						prototype.__constructor__ = advice.getProxy(superClassConstructorJoinPoint.snapshot());
+						// TODO refactor
+						// not ' = snapshot()' because this makes a snapshot of the constructor in the package and not in the prototype
+						var c:ConstructorInfo = new ConstructorInfo(ClassInfo(superClassConstructorJoinPoint.getInfo().getDeclaringType()), prototype.__constructor__);
+						prototype.__constructor__ = advice.getProxy(new ConstructorJoinPoint(c, null));
 					}
 				}
 			}
