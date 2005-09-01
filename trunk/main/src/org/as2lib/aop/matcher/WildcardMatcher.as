@@ -111,6 +111,7 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 				if (!matchString(a[i], f)) return false;
 			}
 		}
+		if (a.length == b.length - 1 && b[b.length - 1] == "") return true;
 		if (a.length != b.length) return false;
 		return true;
 	}
