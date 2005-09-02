@@ -87,7 +87,6 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	
 	private function weaveByTypeAndAdvices(type:ClassInfo, advices:Array):Void {
 		if (type) {
-			org.as2lib.env.log.LogManager.getLogger("com.simonwacker.talk.fft05.type").info(type);
 			var constructor:ConstructorInfo = type.getConstructor();
 			if (constructor) {
 				weaveByJoinPointAndAdvices(new ConstructorJoinPoint(constructor, null), advices);
