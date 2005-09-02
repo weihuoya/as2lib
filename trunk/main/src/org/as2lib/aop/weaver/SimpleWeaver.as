@@ -87,13 +87,15 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	
 	private function weaveByTypeAndAdvices(type:ClassInfo, advices:Array):Void {
 		if (type) {
+			org.as2lib.env.log.LogManager.getLogger("com.simonwacker.talk.fft05.type").info(type);
 			var constructor:ConstructorInfo = type.getConstructor();
 			if (constructor) {
 				weaveByJoinPointAndAdvices(new ConstructorJoinPoint(constructor, null), advices);
 			}
 			var prototype:Object = type.getType().prototype;
 			if (prototype.__constructor__) {
-				var superClassConstructor:ConstructorInfo = ClassInfo(type.getSuperType()).getConstructor();
+				// getType().valueOf() is important because valueOf ensures that not a proxy but the original constructor is used
+				var superClassConstructor:ConstructorInfo = new ConstructorInfo(ClassInfo(type.getSuperType()), Function(type.getSuperType().getType().valueOf()));
 				// there is a bug with the __constructor__ variable, we fix this by assigning
 				// this variable by hand to the correct method
 				prototype.__constructor__ = superClassConstructor.getMethod();
