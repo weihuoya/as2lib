@@ -26,6 +26,27 @@ import org.as2lib.env.log.level.AbstractLogLevel;
  * @author Simon Wacker */
 class org.as2lib.env.log.handler.LevelFilterHandler implements LogHandler {
 	
+	/** All log messages get logged. */
+	public static var ALL:LogLevel = AbstractLogLevel.ALL;
+	
+	/** All log messages that are at a lower log level than debug get logged. */
+	public static var DEBUG:LogLevel = AbstractLogLevel.DEBUG;
+	
+	/** All log messages that are at a lower log level than info get logged. */
+	public static var INFO:LogLevel = AbstractLogLevel.INFO;
+	
+	/** All log messages that are at a lower log level than warning get logged. */
+	public static var WARNING:LogLevel = AbstractLogLevel.WARNING;
+	
+	/** All log messages that are at a lower log level than error get logged. */
+	public static var ERROR:LogLevel = AbstractLogLevel.ERROR;
+	
+	/** All log messages that are at a lower log level than fatal get logged. */
+	public static var FATAL:LogLevel = AbstractLogLevel.FATAL;
+	
+	/** No log messages get logged. */
+	public static var NONE:LogLevel = AbstractLogLevel.NONE;
+	
 	/** The wrapped handler to forward not-filtered log messages to. */
 	private var handler:LogHandler;
 	
