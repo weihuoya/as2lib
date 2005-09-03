@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
 import org.as2lib.aop.Matcher;
+import org.as2lib.core.BasicClass;
+import org.as2lib.util.StringUtil;
 
 /**
  * {@code WildcardMatcher} matches a join point with a pattern that may contain
@@ -71,6 +72,12 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 		if (pattern.indexOf("* ") == 0 && joinPoint.indexOf("static ") == -1) {
 			pattern = pattern.substring(2, pattern.length);
 		}
+		while (pattern.indexOf("**") > -1) {
+			pattern = StringUtil.replace(pattern, "**", "*");
+		}
+		while (pattern.indexOf("...") > -1) {
+			pattern = StringUtil.replace(pattern, "...", "..");
+		}
 		return wildcardMatch(joinPoint, pattern);
 	}
 	
@@ -120,6 +127,7 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 	 * TODO: Documentation
 	 */
 	private static function matchString(s:String, p:String):Boolean {
+		// ClassMy  *Class
 		if (p == "*") return true;
 		if (p.indexOf("*") > -1) {
 			var a:Array = p.split("*");
@@ -131,6 +139,12 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 				var d:Number = s.indexOf(c);
 				if (d < 0) return false;
 				if (d < z) return false;
+				if (d > 0 && i == 0) {
+					return false;
+				}
+				if (i == b - 1 && d + c.length < s.length) {
+					return false;
+				}
 				z = d;
 			}
 			return true;
