@@ -115,7 +115,15 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 				}
 				if (!g) return false;
 			} else {
-				if (!matchString(a[i], f)) return false;
+				trace(a[i]);
+				trace(f);
+				if (!matchString(a[i], f)) {
+					if (b[i - 1] != "*" || b[i - 2] != "") {
+						return false;
+					} else {
+						b.unshift("");
+					}
+				}
 			}
 		}
 		if (a.length == b.length - 1 && b[b.length - 1] == "") return true;
