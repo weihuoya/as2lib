@@ -76,6 +76,9 @@ class org.as2lib.aop.matcher.TWildcardMatcher extends TestCase {
 		assertFalse("7", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*rg.a*l*.env.unexpectedpackage.bean.*cto*.support.D*ault*Fa*o*.getBean"));
 		assertFalse("8", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*rg.a*l*.env.*.bean.*cto*.support.unexpected*.D*ault*Fa*o*.getBean"));
 		assertFalse("9", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "*.*rg.a*l*.env.*.bean.*cto*.support.D*ault*Fa*o*.getBean"));
+		assertFalse("10", m.match("ClassMy.myMethod", "*Class.myMethod"));
+		assertFalse("11", m.match("MyClass.myMethod", "Class*.myMethod"));
+		assertFalse("12", m.match("MyBeanClass.myMethod", "Another*Class.myMethod"));
 	}
 	
 	public function testMatchWithDoublePeriod(Void):Void {
@@ -91,6 +94,21 @@ class org.as2lib.aop.matcher.TWildcardMatcher extends TestCase {
 		assertFalse("9", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org.as2lib..support.unexpectedpackage..DefaultBeanFactory.getBean"));
 		assertFalse("10", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org.as2lib.env..support..unexpectedpackage.DefaultBeanFactory.getBean"));
 		assertTrue("11", m.match("org.as2lib.env.bean.factory.support.DefaultBeanFactory.getBean", "org.as2lib..env.bean..factory..support.DefaultBeanFactory.getBean"));
+	}
+	
+	public function testMatchWithDoublePeriodAndAsterisk(Void):Void {
+		var m:WildcardMatcher = new WildcardMatcher();
+		assertTrue(m.match("com.simonwacker.talk.fft05.FileBrowser.browse", "com.simonwacker.talk.fft05..*.*"));
+		assertTrue(m.match("com.simonwacker.talk.fft05.view.file.FileView.show", "com.simonwacker.talk.fft05..*.*"));
+		assertFalse(m.match("com.simonwacker.talk.FileBrowser.browse", "com.simonwacker.talk.fft05..*.*"));
+		assertTrue(m.match("com.simonwacker.talk.fft05.FileBrowser.browse", "com..fft05.*.br*"));
+		assertTrue(m.match("com.simonwacker.talk.fft05.FileBrowser.browse", "com.simonwacker..talk.fft05.*Browser.browse"));
+		assertTrue(m.match("com.simonwacker.talk.fft05.FileBrowser.browse", "com.*..talk.fft05.*Browser.browse"));
+		assertTrue(m.match("com.simonwacker.talk.fft05.FileBrowser.browse", "com.simonwacker..*.fft05.*Browser.browse"));
+		trace("###############");
+		assertTrue(m.match("com.simonwacker.talk.fft05.view.FileViewMap.showFile", "com.simonwacker.talk.fft05..*.showFile"));
+		trace("###############");
+		assertFalse(m.match("com.simonwacker.talk.FileViewMap.showFile", "com.simonwacker.talk.fft05..*.showFile"));
 	}
 	
 }
