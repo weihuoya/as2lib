@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>LocalClientServiceProxy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css"/>
+    <script src="js/doc.js" type="text/javascript">//</script>
+  </head>
+  <body pageId="Pageorg_as2lib_io_conn_local_client_LocalClientServiceProxy">
+    <div class="VisDoc"><span id="PageTop"><!----></span>
+      <div class="content"><span class="accessKeysInfo"><span class="label"><a href="#" class="accessKeyInfoToggle" onclick="toggleAccessKeyInfo(); return true;">Access keys</a></span><span class="accessKeyLinks" style="display:none;"><a href="#PageTop" accesskey="t">T</a>op, <a href="#Summary" accesskey="s">S</a>ummary, <a href="#Constructor" accesskey="c">C</a>onstructors, 
+Instance <a href="#Instanceproperties" accesskey="p">p</a>roperties, 
+Cl<a href="#Classmethods" accesskey="a">a</a>ss methods, 
+Instance <a href="#Instancemethods" accesskey="m">m</a>ethods</span></span><h1>LocalClientServiceProxy</h1>
+        <div class="classProperties">
+          <table cellspacing="0">
+            <tr>
+              <th>Kind of class:</th>
+              <td>class</td>
+            </tr>
+            <tr>
+              <th>Inherits from:</th>
+              <td>
+                <a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxy.html">AbstractClientServiceProxy</a> &lt; <a href="org_as2lib_core_BasicClass.html">BasicClass</a>
+              </td>
+            </tr>
+            <tr>
+              <th>Implements:</th>
+              <td>
+                <ul>
+                  <li>
+                    <a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html">ClientServiceProxy</a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th class="classDetails">Author:</th>
+              <td class="classDetails">Simon Wacker, Christoph Atteneder</td>
+            </tr>
+            <tr>
+              <th class="classDetails">Classpath:</th>
+              <td class="classDetails">org.as2lib.io.conn.local.client.LocalClientServiceProxy</td>
+            </tr>
+            <tr>
+              <th class="classDetails">File last modified:</th>
+              <td class="classDetails">Friday, 01 July 2005, 19:49:34</td>
+            </tr>
+          </table>
+        </div>
+        <div class="classDescription">
+          <div class="descriptionSummary"><code>LocalClientServiceProxy</code> handles client requests to a certain service<br /> and its responses.</div><p>Example:<pre>var client:LocalClientServiceProxy = new LocalClientServiceProxy(<span class="codeString">"local.as2lib.org/myService"</span>);
+var callback:MethodInvocationCallback = client.invoke(<span class="codeString">"myMethod"</span>, [<span class="codeString">"firstArgument"</span>, <span class="codeString">"secondArgument"</span>]);
+callback.onReturn = function(returnInfo:MethodInvocationReturnInfo):Void {
+    trace(<span class="codeString">"myMethod - return value: "</span> + returnInfo.getReturnValue());
+}
+callback.onError = function(errorInfo:MethodInvocationErrorInfo):Void {
+    trace(<span class="codeString">"myMethod - error: "</span> + errorInfo.getException());
+}</pre><p>It is also possible to call the method directly on the proxy. But you can't<br /> type the proxy then.<pre>var client = new LocalClientServiceProxy(<span class="codeString">"local.as2lib.org/myService"</span>);
+var callback:MethodInvocationCallback = client.myMethod(<span class="codeString">"firstArgument"</span>, <span class="codeString">"secondArgument"</span>);</pre><p>The neatest way is to use <code>LocalClientServiceProxyFactory</code> to get a proxy<br /> for a service interface or class, which enables compiler checks. For more<br /> information on this refer to the <a href="org_as2lib_io_conn_local_client_LocalClientServiceProxyFactory.html">LocalClientServiceProxyFactory</a> class.<p>If the return value is not of type <code>Number</code>, <code>Boolean</code>, <code>String</code><br /> or <code>Array</code> that are converted directly into the appropriate type you must<br /> do the following to receive a value of correct type. Otherwise the return value<br /> will be an instance of type Object that is populated with the instance variables<br /> of the sent object. Note that this must be done on the client as well as on the<br /> server and the 'symbolId' in this case <code>"MyClass"</code> must be the same.<pre>Object.registerClass(<span class="codeString">"MyClass"</span>, MyClass);</pre><p>The received object will now be of correct type. But you still have to be aware<br /> of some facts:<br>Flash creates a new object in the background and sets the instance variables of<br /> the sent instance to the new object. It then registers this object with the<br /> appropriate class (if registered previously) and applies the constructor of that<br /> class to the new object passing no arguments. This means if the constructor sets<br /> instance variables it overwrites the ones set previously by <code>undefined</code>.<div class="classFields">
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span><div class="item"><a href="org_as2lib_io_conn_local_client_LocalClientServiceProxyFactory.html">LocalClientServiceProxyFactory</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider"><span id="Summary">Summary</span></h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span><ul>
+                <li>
+                  <a href="#LocalClientServiceProxy">LocalClientServiceProxy</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span><ul>
+                <li class="private" style="display:none;">
+                  <a href="#url">url</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#connection">connection</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#responseServices">responseServices</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span><ul>
+                <li>
+                  <a href="#generateResponseServiceUrl">generateResponseServiceUrl</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span><ul>
+                <li>
+                  <a href="#getUrl">getUrl</a>
+                </li>
+                <li>
+                  <a href="#invokeByNameAndArgumentsAndCallback">invokeByNameAndArgumentsAndCallback</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getBlankMethodInvocationErrorListener">getBlankMethodInvocationErrorListener</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getBlankMethodInvocationCallback">getBlankMethodInvocationCallback</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#__resolve">__resolve</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder"><span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxy.html">AbstractClientServiceProxy</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxy.html#invoke">invoke</a>, <a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxy.html#invokeByName">invokeByName</a>, <a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxy.html#invokeByNameAndArguments">invokeByNameAndArguments</a>, <a href="org_as2lib_io_conn_core_client_AbstractClientServiceProxy.html#invokeByNameAndCallback">invokeByNameAndCallback</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="boxedElem">
+                  <div class="contentHolder"><span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider"><span id="Constructor">Constructor</span></h2>
+          <div class="method hasBottomDivider">
+            <h3 id="LocalClientServiceProxy">LocalClientServiceProxy</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>LocalClientServiceProxy</b> (
+</div>
+                <div><span class="code">url:String)</span></div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>LocalClientServiceProxy</code> instance.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">url<span class="itemSeparator">:</span></div>
+                    <div>the url of the service</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span><div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">org.as2lib.env.except.IllegalArgumentException</a> if <code>url</code> is <code>null</code>, <code>undefined</code><br /> or an empty string</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider"><span id="Instanceproperties">Instance properties</span></h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="connection">connection</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private <b>connection</b>:<a href="org_as2lib_io_conn_local_core_EnhancedLocalConnection.html">EnhancedLocalConnection</a>
+</div>
+                <div><span class="access">(read,write)</span></div>
+              </div>
+            </div>
+            <div class="description">Used EnhancedLocalConnection.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="responseServices">responseServices</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private <b>responseServices</b>:Array
+</div>
+                <div><span class="access">(read,write)</span></div>
+              </div>
+            </div>
+            <div class="description">Stores all currently used response services.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="url">url</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private <b>url</b>:String
+</div>
+                <div><span class="access">(read,write)</span></div>
+              </div>
+            </div>
+            <div class="description">The url of the service.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider"><span id="Classmethods">Class methods</span></h2>
+          <div class="method hasBottomDivider">
+            <h3 id="generateResponseServiceUrl">generateResponseServiceUrl</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>generateResponseServiceUrl</b> (
+
+</div>
+                <div><span class="code">serviceUrl:String,
+methodName:String) : String</span></div>
+              </div>
+            </div>
+            <div class="description">Generates the response url for a service.<p>The response url is composed as follows:<pre>theServiceUrl.theMethodName_Return_theIndex</pre><p>If the passed-in <code>methodName</code> is <code>null</code>, <code>undefined</code> or an<br /> empty string the response url will be composed as follows:<pre>theServiceUrl_Return_theIndex</pre><p><code>index</code> is a number from 0 to infinite depending on how many responses<br /> are pending.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">serviceUrl<span class="itemSeparator">:</span></div>
+                    <div>the url to the service</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">methodName<span class="itemSeparator">:</span></div>
+                    <div>the name of the responsing method</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the generated response url</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span><div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">org.as2lib.env.except.IllegalArgumentException</a> if the passed-in <code>serviceUrl</code> is <code>null</code>,<br /> <code>undefined</code> or an empty stirng</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider"><span id="Instancemethods">Instance methods</span></h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="__resolve">__resolve</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private function <b>__resolve</b> (
+</div>
+                <div><span class="code">methodName:String) : Function</span></div>
+              </div>
+            </div>
+            <div class="description">Enables you to invoke the method to be invoked on the 'remote' service directly<br /> on this proxy.<p>The usage is mostly the same.<br /> <code>myProxy.myMethod(<span class="codeString">"myArg1"</span>);</code><br /> <code>myProxy.myMethod(<span class="codeString">"myArg1"</span>, myCallback);</code><br /> <code>var callback:MethodInvocationCallback = myProxy.myMethod(<span class="codeString">"myArg1"</span>);</code></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">methodName<span class="itemSeparator">:</span></div>
+                    <div>the name of the method to invoke on the 'remote' service</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the function to execute as the actual method passing the actual arguments</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getBlankMethodInvocationCallback">getBlankMethodInvocationCallback</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private function <b>getBlankMethodInvocationCallback</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns a blank method invocation callback. This is a callback with no implemented<br /> methods.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">a blank method invocation callback</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getBlankMethodInvocationErrorListener">getBlankMethodInvocationErrorListener</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private function <b>getBlankMethodInvocationErrorListener</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_io_conn_core_event_MethodInvocationErrorListener.html">MethodInvocationErrorListener</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns a blank method invocation error listener. This is an error listern with<br /> no implemented methods.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">a blank method invocation error listener</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getUrl">getUrl</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getUrl</b> (
+</div>
+                <div><span class="code">Void) : String</span></div>
+              </div>
+            </div>
+            <div class="description">Returns the url of the service this proxy invokes methods on.<p>The returned url is never <code>null</code>, <code>undefined</code> or an empty string.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the url of the service this proxy invokes methods on</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="invokeByNameAndArgumentsAndCallback">invokeByNameAndArgumentsAndCallback</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>invokeByNameAndArgumentsAndCallback</b> (
+
+
+</div>
+                <div><span class="code">methodName:String,
+args:Array,
+callback:<a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a>) : <a href="org_as2lib_io_conn_core_event_MethodInvocationCallback.html">MethodInvocationCallback</a></span></div>
+              </div>
+            </div>
+            <div class="description">Invokes the method with passed-in <code>methodName</code> on the 'remote' service,<br /> passing the elements of the passed-in <code>args</code> as parameters and invokes<br /> the appropriate method on the passed-in <code>callback</code> on response.<p>The response of the method invocation is delegated to the appropriate method<br /> on the passed-in <code>callback</code>. This is either the <code>onReturn</code> when no<br /> error occured, or the <code>onError</code> method in case something went wrong.<p>If the passed-in <code>callback</code> is <code>null</code> a new <code>MethodInvocationCallback</code><br /> instance will be created and returned. It is possible to still set the callback<br /> methods there, after invoking this method.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">methodName<span class="itemSeparator">:</span></div>
+                    <div>the name of the method to invoke on the 'remote' service</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">args      <span class="itemSeparator">:</span></div>
+                    <div>the arguments that are passed to the method as parameters</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">callback  <span class="itemSeparator">:</span></div>
+                    <div>the callback that handles the response</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">either the passed-in callback or a new callback if <code>null</code></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span><div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">org.as2lib.env.except.IllegalArgumentException</a> if the passed-in <code>methodName</code> is <code>null</code>,<br /> <code>undefined</code> or an empty string</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span><div class="item"><a href="org_as2lib_io_conn_core_client_ClientServiceProxy.html#invokeByNameAndArgumentsAndCallback">org.as2lib.io.conn.core.client.ClientServiceProxy.invokeByNameAndArgumentsAndCallback</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="docFooter"><span class="copyright">&copy; as2lib, 2005</span><span class="separator">|</span><span class="createdWith">Created with <a href="http://visiblearea.com/visdoc/">VisDoc</a></span><span class="separator">|</span><span class="creationDate">Wednesday, 07 September 2005, 19:48:04</span><span class="separator">|</span><a href="#" onclick="showTOC(); return false;" class="showToc">show TOC</a><a href="#" onclick="hideTOC(); return false;" class="hideToc">hide TOC</a><span class="viewPrivate"><span class="separator">|</span><a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"><span class="separator">|</span><a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span></span><span class="tocFooter">&copy; as2lib, 2005<span class="separator">|</span><a href="#" onclick="hideTOC(); return false;" class="hideToc">hide TOC</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

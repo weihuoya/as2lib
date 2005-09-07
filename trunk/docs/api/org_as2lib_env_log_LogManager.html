@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>LogManager</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css"/>
+    <script src="js/doc.js" type="text/javascript">//</script>
+  </head>
+  <body pageId="Pageorg_as2lib_env_log_LogManager">
+    <div class="VisDoc"><span id="PageTop"><!----></span>
+      <div class="content"><span class="accessKeysInfo"><span class="label"><a href="#" class="accessKeyInfoToggle" onclick="toggleAccessKeyInfo(); return true;">Access keys</a></span><span class="accessKeyLinks" style="display:none;"><a href="#PageTop" accesskey="t">T</a>op, <a href="#Summary" accesskey="s">S</a>ummary, <a href="#Constructor" accesskey="c">C</a>onstructors, 
+C<a href="#Classproperties" accesskey="l">l</a>ass properties, 
+Cl<a href="#Classmethods" accesskey="a">a</a>ss methods</span></span><h1>LogManager</h1>
+        <div class="classProperties">
+          <table cellspacing="0">
+            <tr>
+              <th>Kind of class:</th>
+              <td>class</td>
+            </tr>
+            <tr>
+              <th>Inherits from:</th>
+              <td>
+                <a href="org_as2lib_core_BasicClass.html">BasicClass</a>
+              </td>
+            </tr>
+            <tr>
+              <th class="classDetails">Author:</th>
+              <td class="classDetails">Simon Wacker</td>
+            </tr>
+            <tr>
+              <th class="classDetails">Classpath:</th>
+              <td class="classDetails">org.as2lib.env.log.LogManager</td>
+            </tr>
+            <tr>
+              <th class="classDetails">File last modified:</th>
+              <td class="classDetails">Friday, 01 July 2005, 19:47:48</td>
+            </tr>
+          </table>
+        </div>
+        <div class="classDescription">
+          <div class="descriptionSummary"><code>LogManager</code> is the core access point of the As2lib Logging API.</div><p>You use it to set the underlying repository that stores and releases loggers<br /> and to obtain a logger according to a logger's name of the repository.<p>The repository must be set before anything else using this class as access<br /> point to obtain loggers. There is no default repository.<p>This class could be used as follows with a non-singleton repository. Note<br /> that you can of course also use any other kind of logger repository.<pre><span class="codeComment">// configuration: when setting everything up</span>
+var loggerHierarchy:LoggerHierarchy = new LoggerHierarchy();
+var traceLogger:SimpleHierarchicalLogger = new SimpleHierarchicalLogger(<span class="codeString">"org.mydomain"</span>);
+traceLogger.addHandler(new TraceHandler());
+loggerHierarchy.addLogger(traceLogger);
+LogManager.setLoggerRepository(loggerHierarchy);
+<span class="codeComment">// usage: in the class org.mydomain.MyClass</span>
+var myLogger:Logger = LogManager.getLogger(<span class="codeString">"org.mydomain.MyClass"</span>);
+if (myLogger.isInfoEnabled()) {
+    myLogger.info(<span class="codeString">"This is an informative log message."</span>);
+}</pre><p>If you have one logger that shall always be returned you can use the<br /> convenience method <a href="org_as2lib_env_log_LogManager.html#setLogger">setLogger</a> that does all the work with the repository<br /> for you.<pre><span class="codeComment">// configuration: when setting everything up</span>
+var traceLogger:SimpleLogger = new SimpleLogger();
+traceLogger.addHandler(new TraceHandler());
+LogManager.setLogger(traceLogger);
+<span class="codeComment">// usage: in the class org.mydomain.MyClass</span>
+var myLogger:Logger = LogManager.getLogger(<span class="codeString">"org.mydomain.MyClass"</span>);
+if (myLogger.isInfoEnabled()) {
+    myLogger.info(<span class="codeString">"This is an informative log message."</span>);
+}</pre></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider"><span id="Summary">Summary</span></h2>
+          <div class="methodList">
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Constructor</span><ul>
+                <li class="private" style="display:none;">
+                  <a href="#LogManager">LogManager</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class properties</span><ul>
+                <li class="private" style="display:none;">
+                  <a href="#repository">repository</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span><ul>
+                <li>
+                  <a href="#getLogger">getLogger</a>
+                </li>
+                <li>
+                  <a href="#setLogger">setLogger</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#getBlankLoggerRepository">getBlankLoggerRepository</a>
+                </li>
+                <li>
+                  <a href="#getLoggerRepository">getLoggerRepository</a>
+                </li>
+                <li>
+                  <a href="#setLoggerRepository">setLoggerRepository</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span><div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder"><span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider"><span id="Constructor">Constructor</span></h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="LogManager">LogManager</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private function <b>LogManager</b> (
+</div>
+                <div><span class="code">Void)</span></div>
+              </div>
+            </div>
+            <div class="description">Private constructor.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider"><span id="Classproperties">Class properties</span></h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="repository">repository</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static private <b>repository</b>:<a href="org_as2lib_env_log_LoggerRepository.html">LoggerRepository</a>
+</div>
+                <div><span class="access">(read,write)</span></div>
+              </div>
+            </div>
+            <div class="description">Repository that stores already retrieved loggers.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider"><span id="Classmethods">Class methods</span></h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="getBlankLoggerRepository">getBlankLoggerRepository</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static private function <b>getBlankLoggerRepository</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_log_LoggerRepository.html">LoggerRepository</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns a blank logger repository.<p>This is a <code>LoggerRepository</code> instance with no implemented methods.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">a blank logger repository</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getLogger">getLogger</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>getLogger</b> (
+</div>
+                <div><span class="code">loggerName:String) : <a href="org_as2lib_env_log_Logger.html">Logger</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the logger according the passed-in <code>loggerName</code>.<p>Uses the set logger repository to receive the logger that is returned.<p><code>null</code> is returned if the logger repository returns <code>null</code> or<br /> <code>undefined</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">loggerName<span class="itemSeparator">:</span></div>
+                    <div>the name of the logger to return</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the logger according to the passed-in <code>name</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getLoggerRepository">getLoggerRepository</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>getLoggerRepository</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_log_LoggerRepository.html">LoggerRepository</a></span></div>
+              </div>
+            </div>
+            <div class="description">Reutrns the logger repository set via <a href="org_as2lib_env_log_LogManager.html#setLoggerRepository">setLoggerRepository</a>.<p>There is no default logger repository, so you must set it before anything<br /> else.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the set logger repository</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setLogger">setLogger</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>setLogger</b> (
+</div>
+                <div><span class="code">logger:<a href="org_as2lib_env_log_Logger.html">Logger</a>) : Void</span></div>
+              </div>
+            </div>
+            <div class="description">Sets the <code>logger</code> that is returned on calls to the <a href="org_as2lib_env_log_LogManager.html#getLogger">getLogger</a><br /> method.<p>This method actually sets a singleton repository via the static<br /> <a href="org_as2lib_env_log_LogManager.html#setLoggerRepository">setLoggerRepository</a> that always returns the passed-in <code>logger</code><br /> and ignores the name.<p>You could also set the repository by hand, this is just an easier way of<br /> doing it if you always want the same logger to be returned.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">logger<span class="itemSeparator">:</span></div>
+                    <div>the logger to return on calls to the <code>#getLogger</code> method</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setLoggerRepository">setLoggerRepository</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>setLoggerRepository</b> (
+</div>
+                <div><span class="code">loggerRepository:<a href="org_as2lib_env_log_LoggerRepository.html">LoggerRepository</a>) : Void</span></div>
+              </div>
+            </div>
+            <div class="description">Sets a new repositroy returned by <a href="org_as2lib_env_log_LogManager.html#getLoggerRepository">getLoggerRepository</a>.<p>The <a href="org_as2lib_env_log_LogManager.html#getLogger">getLogger</a> method uses this repository to obtain the logger for<br /> the passed-in name.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">loggerRepository<span class="itemSeparator">:</span></div>
+                    <div>the new logger repository</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="docFooter"><span class="copyright">&copy; as2lib, 2005</span><span class="separator">|</span><span class="createdWith">Created with <a href="http://visiblearea.com/visdoc/">VisDoc</a></span><span class="separator">|</span><span class="creationDate">Wednesday, 07 September 2005, 19:46:37</span><span class="separator">|</span><a href="#" onclick="showTOC(); return false;" class="showToc">show TOC</a><a href="#" onclick="hideTOC(); return false;" class="hideToc">hide TOC</a><span class="viewPrivate"><span class="separator">|</span><a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"><span class="separator">|</span><a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span></span><span class="tocFooter">&copy; as2lib, 2005<span class="separator">|</span><a href="#" onclick="hideTOC(); return false;" class="hideToc">hide TOC</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

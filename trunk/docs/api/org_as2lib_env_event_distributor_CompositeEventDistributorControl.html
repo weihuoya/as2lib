@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>CompositeEventDistributorControl</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css"/>
+    <script src="js/doc.js" type="text/javascript">//</script>
+  </head>
+  <body pageId="Pageorg_as2lib_env_event_distributor_CompositeEventDistributorControl">
+    <div class="VisDoc"><span id="PageTop"><!----></span>
+      <div class="content"><span class="accessKeysInfo"><span class="label"><a href="#" class="accessKeyInfoToggle" onclick="toggleAccessKeyInfo(); return true;">Access keys</a></span><span class="accessKeyLinks" style="display:none;"><a href="#PageTop" accesskey="t">T</a>op, <a href="#Summary" accesskey="s">S</a>ummary, 
+Instance <a href="#Instancemethods" accesskey="m">m</a>ethods</span></span><h1>CompositeEventDistributorControl</h1>
+        <div class="classProperties">
+          <table cellspacing="0">
+            <tr>
+              <th>Kind of class:</th>
+              <td>interface</td>
+            </tr>
+            <tr>
+              <th>Inherits from:</th>
+              <td>
+                <a href="org_as2lib_env_event_EventListenerSource.html">EventListenerSource</a> &lt; <a href="org_as2lib_core_BasicInterface.html">BasicInterface</a>
+              </td>
+            </tr>
+            <tr>
+              <th>Implemented by:</th>
+              <td>
+                <ul>
+                  <li>
+                    <a href="org_as2lib_env_event_distributor_AbstractCompositeEventDistributorControl.html">AbstractCompositeEventDistributorControl</a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th class="classDetails">Author:</th>
+              <td class="classDetails">Martin Heidegger</td>
+            </tr>
+            <tr>
+              <th class="classDetails">Classpath:</th>
+              <td class="classDetails">org.as2lib.env.event.distributor.CompositeEventDistributorControl</td>
+            </tr>
+            <tr>
+              <th class="classDetails">File last modified:</th>
+              <td class="classDetails">Friday, 19 August 2005, 17:25:28</td>
+            </tr>
+          </table>
+        </div>
+        <div class="classDescription">
+          <div class="descriptionSummary"><code>CompositeEventDistributorControl</code> allows flexible usage of events for complex class models.</div><p>The <a href="org_as2lib_env_event_distributor_EventDistributorControl.html">EventDistributorControl</a> class allows only for handling of one type of<br /> listeners while this <code>CompositeEventDistributor</code> class allows multiple types<br /> of listeners to provide more granularity if many different kinds of listeners are<br /> used. It holds a collection of accepted types of listeners and checks if the listener<br /> added via the #addListener method matches any of the accepted types and adds<br /> it to the correct event distributor control(s).<p>Class that uses the composites functionalities:<pre>import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributorControl;
+
+class MyClass extends SimpleConsumableCompositeEventDistributorControl {
+
+  public function MyClass(Void) {
+    acceptListenerType(MyListener);
+  }
+
+  public function customMethod(Void):Void {
+    var e:MyListener = getDistributor(MyListener);
+    e.onEvent(<span class="codeString">"1"</span>, <span class="codeString">"2"</span>);
+  }
+
+}</pre><p>Listener interface:<pre>interface MyListener {
+
+  public function onEvent(contentA:String, contentB:String):Void;
+
+}</pre><p>Listener interface implementation:<pre>class SimpleMyListener implements MyListener {
+
+  private var prefix:String;
+
+  public function SimpleMyListener(prefix:String) {
+    this.prefix = prefix;
+  }
+
+  public function onEvent(contentA:String, contentB:String):Void {
+    trace(prefix + contentA + <span class="codeString">", "</span> + prefix + contentB);
+  }
+
+}</pre><p>Usage:<pre>var myClass:MyClass = new MyClass();
+myClass.addListener(new SimpleMyListener(<span class="codeString">"a"</span>));
+myClass.addListener(new SimpleMyListener(<span class="codeString">"b"</span>));
+<span class="codeComment">// traces "a1, a2" and "b1, b2";</span>
+myClass.customMethod();
+
+<span class="codeComment">// throws an exception because listeners of type "Array" are not accepted</span>
+myClass.addListener(new Array());</pre></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider"><span id="Summary">Summary</span></h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Instance methods</span><ul>
+                <li>
+                  <a href="#getDistributor">getDistributor</a>
+                </li>
+                <li>
+                  <a href="#acceptListenerType">acceptListenerType</a>
+                </li>
+                <li>
+                  <a href="#registerEventDistributorControl">registerEventDistributorControl</a>
+                </li>
+                <li>
+                  <a href="#registerDefaultEventDistributorControl">registerDefaultEventDistributorControl</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder"><span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_env_event_EventListenerSource.html">EventListenerSource</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_env_event_EventListenerSource.html#addAllListeners">addAllListeners</a>, <a href="org_as2lib_env_event_EventListenerSource.html#addListener">addListener</a>, <a href="org_as2lib_env_event_EventListenerSource.html#getAllListeners">getAllListeners</a>, <a href="org_as2lib_env_event_EventListenerSource.html#hasListener">hasListener</a>, <a href="org_as2lib_env_event_EventListenerSource.html#removeAllListeners">removeAllListeners</a>, <a href="org_as2lib_env_event_EventListenerSource.html#removeListener">removeListener</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="boxedElem">
+                  <div class="contentHolder"><span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicInterface.html">BasicInterface</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicInterface.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider"><span id="Instancemethods">Instance methods</span></h2>
+          <div class="method hasBottomDivider">
+            <h3 id="acceptListenerType">acceptListenerType</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>acceptListenerType</b> (
+</div>
+                <div><span class="code">listenerType:Function) : Void</span></div>
+              </div>
+            </div>
+            <div class="description">Specifies that listeners of the given <code>type</code> are accepted, this includes<br /> implementations of the given <code>type</code> as well as its sub-classes.<p><code>addListener</code> does not allow listeners that do not match (instanceof)<br /> at least one accepted listener type.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">listenerType<span class="itemSeparator">:</span></div>
+                    <div>the type of listeners that can be added</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getDistributor">getDistributor</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getDistributor</b> (
+</div>
+                <div><span class="code">type:Function)</span></div>
+              </div>
+            </div>
+            <div class="description">Returns the distributor for the given <code>type</code> that can be used to distribute<br /> events to all added listeners of the given <code>type</code>.<p>The returned distributor can be casted to the given <code>type</code> (type-safe<br /> distribution of events).</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the distributor to distribute events</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="registerDefaultEventDistributorControl">registerDefaultEventDistributorControl</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>registerDefaultEventDistributorControl</b> (
+</div>
+                <div><span class="code">type:Function) : Void</span></div>
+              </div>
+            </div>
+            <div class="description">Registers a default event distributor control with the given listener and<br /> distributor type.<p>If there is already a distributor control registered for the given type, it<br /> will be overwritten.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">type<span class="itemSeparator">:</span></div>
+                    <div>the type to register a default distributor control with</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="registerEventDistributorControl">registerEventDistributorControl</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>registerEventDistributorControl</b> (
+</div>
+                <div><span class="code">eventDistributorControl:<a href="org_as2lib_env_event_distributor_EventDistributorControl.html">EventDistributorControl</a>) : Void</span></div>
+              </div>
+            </div>
+            <div class="description">Registers the given <code>eventDistributorControl</code> with its listener and<br /> distributor type returned by its <a href="org_as2lib_env_event_distributor_EventDistributorControl.html#getType">EventDistributorControl.getType</a> method.<p>If there is already a distributor control registered for the given type, it<br /> will be overwritten.<p>You use this method if you have a specific event that should be executed with<br /> a special kind of distributor, for example with a consumable one.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">eventDistributorControl<span class="itemSeparator">:</span></div>
+                    <div>the event distributor control to use for event<br /> distribution for the given type</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span><div class="item">#setDefaultEventDistributorControl</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="docFooter"><span class="copyright">&copy; as2lib, 2005</span><span class="separator">|</span><span class="createdWith">Created with <a href="http://visiblearea.com/visdoc/">VisDoc</a></span><span class="separator">|</span><span class="creationDate">Wednesday, 07 September 2005, 19:45:04</span><span class="separator">|</span><a href="#" onclick="showTOC(); return false;" class="showToc">show TOC</a><a href="#" onclick="hideTOC(); return false;" class="hideToc">hide TOC</a><span class="viewPrivate"><span class="separator">|</span><a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"><span class="separator">|</span><a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span></span><span class="tocFooter">&copy; as2lib, 2005<span class="separator">|</span><a href="#" onclick="hideTOC(); return false;" class="hideToc">hide TOC</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

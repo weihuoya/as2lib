@@ -1,0 +1,1095 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>PackageInfo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css"/>
+    <script src="js/doc.js" type="text/javascript">//</script>
+  </head>
+  <body pageId="Pageorg_as2lib_env_reflect_PackageInfo">
+    <div class="VisDoc"><span id="PageTop"><!----></span>
+      <div class="content"><span class="accessKeysInfo"><span class="label"><a href="#" class="accessKeyInfoToggle" onclick="toggleAccessKeyInfo(); return true;">Access keys</a></span><span class="accessKeyLinks" style="display:none;"><a href="#PageTop" accesskey="t">T</a>op, <a href="#Summary" accesskey="s">S</a>ummary, <a href="#Constructor" accesskey="c">C</a>onstructors, 
+C<a href="#Classproperties" accesskey="l">l</a>ass properties, 
+Instance <a href="#Instanceproperties" accesskey="p">p</a>roperties, 
+Cl<a href="#Classmethods" accesskey="a">a</a>ss methods, 
+Instance <a href="#Instancemethods" accesskey="m">m</a>ethods</span></span><h1>PackageInfo</h1>
+        <div class="classProperties">
+          <table cellspacing="0">
+            <tr>
+              <th>Kind of class:</th>
+              <td>class</td>
+            </tr>
+            <tr>
+              <th>Inherits from:</th>
+              <td>
+                <a href="org_as2lib_core_BasicClass.html">BasicClass</a>
+              </td>
+            </tr>
+            <tr>
+              <th>Implements:</th>
+              <td>
+                <ul>
+                  <li>
+                    <a href="org_as2lib_env_reflect_PackageMemberInfo.html">PackageMemberInfo</a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th class="classDetails">Author:</th>
+              <td class="classDetails">Simon Wacker</td>
+            </tr>
+            <tr>
+              <th class="classDetails">Classpath:</th>
+              <td class="classDetails">org.as2lib.env.reflect.PackageInfo</td>
+            </tr>
+            <tr>
+              <th class="classDetails">File last modified:</th>
+              <td class="classDetails">Wednesday, 17 August 2005, 11:51:30</td>
+            </tr>
+          </table>
+        </div>
+        <div class="classDescription">
+          <div class="descriptionSummary"><code>PackageInfo</code> represents a real package in the Flash environment.</div> This class<br /> is used to get specific information about the package it represents.<p>You can use the static search methods <a href="org_as2lib_env_reflect_PackageInfo.html#forName">forName</a> and <a href="org_as2lib_env_reflect_PackageInfo.html#forPackage">forPackage</a> to<br /> get package infos for specific packages.<p>If you for example have a package you wanna get information about you first must<br /> retrieve the appropriate <code>PackageInfo</code> instance and you can then use its<br /> methods to get the wanted information.<br /> <pre>var packageInfo:PackageInfo = PackageInfo.forPackage(org.as2lib.core);
+trace(<span class="codeString">"Package full name: "</span> + packageInfo.getFullName());
+trace(<span class="codeString">"Parent package name: "</span> + packageInfo.getParent().getName());
+trace(<span class="codeString">"Member classes: "</span> + packageInfo.getMemberClasses());
+trace(<span class="codeString">"Member packages: "</span> + packageInfo.getMemberPackages());</pre></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider"><span id="Summary">Summary</span></h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span><ul>
+                <li>
+                  <a href="#PackageInfo">PackageInfo</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Class properties</span><ul>
+                <li class="private" style="display:none;">
+                  <a href="#packageAlgorithm">packageAlgorithm</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#packageMemberAlgorithm">packageMemberAlgorithm</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#rootPackage">rootPackage</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span><ul>
+                <li class="private" style="display:none;">
+                  <a href="#name">name</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#fullName">fullName</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#package">package</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#parent">parent</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#members">members</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Class methods</span><ul>
+                <li>
+                  <a href="#forName">forName</a>
+                </li>
+                <li>
+                  <a href="#forPackage">forPackage</a>
+                </li>
+                <li>
+                  <a href="#setPackageAlgorithm">setPackageAlgorithm</a>
+                </li>
+                <li>
+                  <a href="#getPackageAlgorithm">getPackageAlgorithm</a>
+                </li>
+                <li>
+                  <a href="#setPackageMemberAlgorithm">setPackageMemberAlgorithm</a>
+                </li>
+                <li>
+                  <a href="#getPackageMemberAlgorithm">getPackageMemberAlgorithm</a>
+                </li>
+                <li>
+                  <a href="#getRootPackage">getRootPackage</a>
+                </li>
+                <li>
+                  <a href="#setRootPackage">setRootPackage</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span><ul>
+                <li>
+                  <a href="#getName">getName</a>
+                </li>
+                <li>
+                  <a href="#getFullName">getFullName</a>
+                </li>
+                <li>
+                  <a href="#getPackage">getPackage</a>
+                </li>
+                <li>
+                  <a href="#getParent">getParent</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#initNameAndParent">initNameAndParent</a>
+                </li>
+                <li>
+                  <a href="#getMembers">getMembers</a>
+                </li>
+                <li>
+                  <a href="#getMembersByFlag">getMembersByFlag</a>
+                </li>
+                <li>
+                  <a href="#getMembersByFilter">getMembersByFilter</a>
+                </li>
+                <li>
+                  <a href="#getMemberClasses">getMemberClasses</a>
+                </li>
+                <li>
+                  <a href="#getMemberClassesByFlag">getMemberClassesByFlag</a>
+                </li>
+                <li>
+                  <a href="#getMemberClassesByFilter">getMemberClassesByFilter</a>
+                </li>
+                <li>
+                  <a href="#getMemberPackages">getMemberPackages</a>
+                </li>
+                <li>
+                  <a href="#getMemberPackagesByFlag">getMemberPackagesByFlag</a>
+                </li>
+                <li>
+                  <a href="#getMemberPackagesByFilter">getMemberPackagesByFilter</a>
+                </li>
+                <li>
+                  <a href="#getMember">getMember</a>
+                </li>
+                <li>
+                  <a href="#getMemberByName">getMemberByName</a>
+                </li>
+                <li>
+                  <a href="#getMemberByMember">getMemberByMember</a>
+                </li>
+                <li>
+                  <a href="#getMemberClass">getMemberClass</a>
+                </li>
+                <li>
+                  <a href="#getMemberClassByName">getMemberClassByName</a>
+                </li>
+                <li>
+                  <a href="#getMemberClassByClass">getMemberClassByClass</a>
+                </li>
+                <li>
+                  <a href="#getMemberPackage">getMemberPackage</a>
+                </li>
+                <li>
+                  <a href="#getMemberPackageByName">getMemberPackageByName</a>
+                </li>
+                <li>
+                  <a href="#getMemberPackageByPackage">getMemberPackageByPackage</a>
+                </li>
+                <li>
+                  <a href="#isRoot">isRoot</a>
+                </li>
+                <li>
+                  <a href="#isParentPackage">isParentPackage</a>
+                </li>
+                <li>
+                  <a href="#toString">toString</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder"><span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider"><span id="Constructor">Constructor</span></h2>
+          <div class="method hasBottomDivider">
+            <h3 id="PackageInfo">PackageInfo</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>PackageInfo</b> (
+
+
+</div>
+                <div><span class="code">package,
+name:String,
+parent:<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>)</span></div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>PackageInfo</code> instance.<p>Note that you do not have to pass-in the concrete <code>package</code>. But if you<br /> do not pass it in some methods cannot do their job correctly.<p>If you do not pass-in the <code>name</code> or the <code>parent</code> they are resolved<br /> lazily when requested using the passed-in <code>package</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">package<span class="itemSeparator">:</span></div>
+                    <div>the actual package this instance represents</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">name   <span class="itemSeparator">:</span></div>
+                    <div>(optional) the name of the package</div>
+                  </div>
+                  <div class="item">
+                    <div class="floatbox code colorizedCode">parent <span class="itemSeparator">:</span></div>
+                    <div>(optional) the parent package</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider"><span id="Classproperties">Class properties</span></h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="packageAlgorithm">packageAlgorithm</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static private <b>packageAlgorithm</b>:<a href="org_as2lib_env_reflect_algorithm_PackageAlgorithm.html">PackageAlgorithm</a>
+</div>
+                <div><span class="access">(read,write)</span></div>
+              </div>
+            </div>
+            <div class="description">The algorithm to find packages.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="packageMemberAlgorithm">packageMemberAlgorithm</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static private <b>packageMemberAlgorithm</b>:<a href="org_as2lib_env_reflect_algorithm_PackageMemberAlgorithm.html">PackageMemberAlgorithm</a>
+</div>
+                <div><span class="access">(read,write)</span></div>
+              </div>
+            </div>
+            <div class="description">The algorithm to find members of packages, that are classes and packages.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="rootPackage">rootPackage</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static private <b>rootPackage</b>:<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>
+</div>
+                <div><span class="access">(read,write)</span></div>
+              </div>
+            </div>
+            <div class="description">Stores the root package of the package hierarchy.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider"><span id="Instanceproperties">Instance properties</span></h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="fullName">fullName</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private <b>fullName</b>:String
+</div>
+                <div><span class="access">(read,write)</span></div>
+              </div>
+            </div>
+            <div class="description">The fully qualified name of this package.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="members">members</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private <b>members</b>:Array
+</div>
+                <div><span class="access">(read,write)</span></div>
+              </div>
+            </div>
+            <div class="description">The members of this package.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="name">name</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private <b>name</b>:String
+</div>
+                <div><span class="access">(read,write)</span></div>
+              </div>
+            </div>
+            <div class="description">The name of this package.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="package">package</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private <b>package</b>
+</div>
+                <div><span class="access">(read,write)</span></div>
+              </div>
+            </div>
+            <div class="description">The actual package this instance represents.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="parent">parent</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private <b>parent</b>:<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>
+</div>
+                <div><span class="access">(read,write)</span></div>
+              </div>
+            </div>
+            <div class="description">The parent of this package.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider"><span id="Classmethods">Class methods</span></h2>
+          <div class="method hasBottomDivider">
+            <h3 id="forName">forName</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>forName</b> (
+</div>
+                <div><span class="code">packageName:String) : <a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the package info corresponding to the passed-in <code>packageName</code>.<p>The passed-in <code>packageName</code> must be composed of the preceding path and<br /> the actual package name, that means it must be fully qualified. For example<br /> <code>"org.as2lib.core"</code>.<p>This method first checks whether the package is already contained in the<br /> cache.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">packageName<span class="itemSeparator">:</span></div>
+                    <div>the fully qualified name of the package to find</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the package info corresponding to the passed-in <code>packageName</code></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span><div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">org.as2lib.env.except.IllegalArgumentException</a> if the passed-in <code>packageName</code> is <code>null</code>,<br /> <code>undefined</code> or an empty string or if the object corresponding to the passed-in<br /> <code>packageName</code> is not of type <code>"object"</code><br /><a href="org_as2lib_env_reflect_PackageNotFoundException.html">PackageNotFoundException</a> if a package with the passed-in <code>packageName</code><br /> could not be found</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="forPackage">forPackage</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>forPackage</b> (
+</div>
+                <div><span class="code">package) : <a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the package info corresponding to the passed-in <code>package</code>.<p>This method first checks whether the package info is already contained in the<br /> cache.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">package<span class="itemSeparator">:</span></div>
+                    <div>the package you wanna get the package info for</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the package info corresponding to the passed-in <code>package</code></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span><div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">org.as2lib.env.except.IllegalArgumentException</a> if the passed-in <code>package</code> is <code>null</code><br /> or <code>undefined</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getPackageAlgorithm">getPackageAlgorithm</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>getPackageAlgorithm</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_reflect_algorithm_PackageAlgorithm.html">PackageAlgorithm</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the algorithm used to find packages.<p>Either the algorithm set via <a href="org_as2lib_env_reflect_PackageInfo.html#setPackageAlgorithm">setPackageAlgorithm</a> method will be<br /> returned or the default one which is an instance of class <a href="org_as2lib_env_reflect_algorithm_PackageAlgorithm.html">org.as2lib.env.reflect.algorithm.PackageAlgorithm</a>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the set or the default package algorithm</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span><div class="item"><a href="org_as2lib_env_reflect_PackageInfo.html#setPackageAlgorithm">setPackageAlgorithm</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getPackageMemberAlgorithm">getPackageMemberAlgorithm</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>getPackageMemberAlgorithm</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_reflect_algorithm_PackageMemberAlgorithm.html">PackageMemberAlgorithm</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the member algorithm used to find members of packages.<p>Either the algorithm set via <a href="org_as2lib_env_reflect_PackageInfo.html#setPackageMemberAlgorithm">setPackageMemberAlgorithm</a> will be<br /> returned or the default one which is an instance of class <a href="org_as2lib_env_reflect_algorithm_PackageMemberAlgorithm.html">org.as2lib.env.reflect.algorithm.PackageMemberAlgorithm</a>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the set or the default member algorithm</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span><div class="item"><a href="org_as2lib_env_reflect_PackageInfo.html#setPackageMemberAlgorithm">setPackageMemberAlgorithm</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getRootPackage">getRootPackage</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>getRootPackage</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the root package of the package hierarchy.<p>If you do not set a custom root package via the <code>#setRootPackage</code><br /> method, the default root package is returned that refers to <code>_global</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the root package of the package hierarchy.</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span><div class="item"><a href="org_as2lib_env_reflect_PackageInfo.html#setRootPackage">setRootPackage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setPackageAlgorithm">setPackageAlgorithm</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>setPackageAlgorithm</b> (
+</div>
+                <div><span class="code">newPackageAlgorithm:<a href="org_as2lib_env_reflect_algorithm_PackageAlgorithm.html">PackageAlgorithm</a>) : Void</span></div>
+              </div>
+            </div>
+            <div class="description">Sets the algorithm used to find packages.<p>If <code>newPackageAlgorithm</code> is <code>null</code> or <code>undefined</code>,<br /> <a href="org_as2lib_env_reflect_PackageInfo.html#getPackageAlgorithm">getPackageAlgorithm</a> will return the default package algorithm.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">newPackageAlgorithm<span class="itemSeparator">:</span></div>
+                    <div>the new algorithm to find packages</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span><div class="item"><a href="org_as2lib_env_reflect_PackageInfo.html#getPackageAlgorithm">getPackageAlgorithm</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setPackageMemberAlgorithm">setPackageMemberAlgorithm</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>setPackageMemberAlgorithm</b> (
+</div>
+                <div><span class="code">newPackageMemberAlgorithm:<a href="org_as2lib_env_reflect_algorithm_PackageMemberAlgorithm.html">PackageMemberAlgorithm</a>) : Void</span></div>
+              </div>
+            </div>
+            <div class="description">Sets the algorithm used to find members of packages.<p>Members of packages are classes, interfaces and packages.<p>If <code>newPackageMemberAlgorithm</code> is <code>null</code> or <code>undefined</code>,<br /> <a href="org_as2lib_env_reflect_PackageInfo.html#getPackageMemberAlgorithm">getPackageMemberAlgorithm</a> will return the default package member<br /> algorithm.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">newPackageMemberAlgorithm<span class="itemSeparator">:</span></div>
+                    <div>the new algorithm to find members of packages</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span><div class="item"><a href="org_as2lib_env_reflect_PackageInfo.html#getPackageMemberAlgorithm">getPackageMemberAlgorithm</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setRootPackage">setRootPackage</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">static function <b>setRootPackage</b> (
+</div>
+                <div><span class="code">newRootPackage:<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>) : Void</span></div>
+              </div>
+            </div>
+            <div class="description">Sets the new root package of the package hierarchy.<p>If the passed-in <code>newRootPackage</code> argument is <code>null</code> or<br /> <code>undefined</code> the <code>#getRootPackage</code> method will return the default<br /> root package.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">newRootPackage<span class="itemSeparator">:</span></div>
+                    <div>the new root package of the package hierarchy</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span><div class="item"><a href="org_as2lib_env_reflect_PackageInfo.html#getRootPackage">getRootPackage</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider"><span id="Instancemethods">Instance methods</span></h2>
+          <div class="method hasBottomDivider">
+            <h3 id="getFullName">getFullName</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getFullName</b> (
+</div>
+                <div><span class="code">Void) : String</span></div>
+              </div>
+            </div>
+            <div class="description">Returns the fully qualified name of the represented package. This means the name<br /> of the package plus its package path/namespace.<p>The path is not included if:<ul><li>The <a href="org_as2lib_env_reflect_PackageInfo.html#getParent">getParent</a> method returns <code>null</code> or <code>undefined</code>.</li><li>The <a href="org_as2lib_env_reflect_PackageInfo.html#getParent">getParent</a> method returns the root package, that means its <br />     <a href="org_as2lib_env_reflect_PackageInfo.html#isRoot">isRoot</a> method returns <code>true</code>.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the fully qualified name of the package</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span><div class="item"><a href="org_as2lib_env_reflect_PackageMemberInfo.html#getFullName">PackageMemberInfo.getFullName</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMember">getMember</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMember</b> (
+</div>
+                <div><span class="code">) : <a href="org_as2lib_env_reflect_PackageMemberInfo.html">PackageMemberInfo</a></span></div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading:</span><div class="item"><a href="org_as2lib_env_reflect_PackageInfo.html#getMemberByName">getMemberByName (memberName:String) : {VISDOC_LINK_1}</a><br /><a href="org_as2lib_env_reflect_PackageInfo.html#getMemberByMember">getMemberByMember (concreteMember) : {VISDOC_LINK_1}</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMemberByMember">getMemberByMember</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMemberByMember</b> (
+</div>
+                <div><span class="code">concreteMember) : <a href="org_as2lib_env_reflect_PackageMemberInfo.html">PackageMemberInfo</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the package member info corresponding to the passed-in<br /> <code>concreteMember</code>.<p>If the package member corresponding to the passed-in <code>concreteMember</code><br /> cannot be found directly in the represented package its sub-packages are<br /> searched through.<p><code>null</code> will be returned if:<ul><li>The <a href="org_as2lib_env_reflect_PackageInfo.html#getMembers">getMembers</a> method returns <code>null</code> or <code>undefined</code>.</li><li>The passed-in <code>concreteMember</code> is <code>null</code> or <code>undefined</code>.</li><li>The member could not be found.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">concreteMember<span class="itemSeparator">:</span></div>
+                    <div>the concrete member to find</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the package member info instance corresponding to the <code>concreteMember</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMemberByName">getMemberByName</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMemberByName</b> (
+</div>
+                <div><span class="code">memberName:String) : <a href="org_as2lib_env_reflect_PackageMemberInfo.html">PackageMemberInfo</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the package member info corresponding to the passed-in <code>memberName</code>.<p>If the package member with the passed-in <code>memberName</code> cannot be found<br /> directly in the represented package its sub-packages are searched through.<p><code>null</code> will be returned if:<ul><li>The <a href="org_as2lib_env_reflect_PackageInfo.html#getMembers">getMembers</a> method returns <code>null</code> or <code>undefined</code>.</li><li>The passed-in <code>memberName</code> is <code>null</code> or <code>undefined</code>.</li><li>There is no member with the passed-in <code>memberName</code>.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">memberName<span class="itemSeparator">:</span></div>
+                    <div>the name of the member to return</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the member corresponding to the passed-in <code>memberName</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMemberClass">getMemberClass</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMemberClass</b> (
+</div>
+                <div><span class="code">clazz) : <a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a></span></div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading:</span><div class="item"><a href="org_as2lib_env_reflect_PackageInfo.html#getMemberClassByName">getMemberClassByName (className:String) : <a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a></a><br /><a href="org_as2lib_env_reflect_PackageInfo.html#getMemberClassByClass">getMemberClassByClass (concreteClass:Function) : <a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMemberClassByClass">getMemberClassByClass</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMemberClassByClass</b> (
+</div>
+                <div><span class="code">concreteClass:Function) : <a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the class info corresponding to the passed-in <code>concreteClass</code>.<p>If the member class corresponding to the passed-in <code>concreteClass</code><br /> cannot be found directly in the represented package its sub-packages are<br /> searched through.<p><code>null</code> will be returned if:<ul><li>The passed-in <code>concreteClass</code> is <code>null</code> or <code>undefined</code>.</li><li>There is no class matching the passed-in <code>concreteClass</code> in this<br />     package or any sub-packages.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">concreteClass<span class="itemSeparator">:</span></div>
+                    <div>the concrete class a corresponding class info shall be<br /> returned</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the class info corresponding to the passed-in <code>concreteClass</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMemberClassByName">getMemberClassByName</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMemberClassByName</b> (
+</div>
+                <div><span class="code">className:String) : <a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the class info corresponding to the passed-in <code>className</code>.<p>If the member class with the passed-in <code>className</code> cannot be found<br /> directly in the represented package its sub-packages are searched through.<p><code>null</code> will be returned if:<ul><li>The passed-in <code>className</code> is <code>null</code> or <code>undefined</code>.</li><li>There is no class with the passed-in <code>className</code>.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">className<span class="itemSeparator">:</span></div>
+                    <div>the name of the class</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the class info corresponding to the passed-in <code>className</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMemberClasses">getMemberClasses</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMemberClasses</b> (
+</div>
+                <div><span class="code">) : Array</span></div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading:</span><div class="item"><a href="org_as2lib_env_reflect_PackageInfo.html#getMemberClassesByFlag">getMemberClassesByFlag (filterSubPackages:Boolean) : Array</a><br /><a href="org_as2lib_env_reflect_PackageInfo.html#getMemberClassesByFilter">getMemberClassesByFilter (classFilter:{VISDOC_LINK_5}) : Array</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMemberClassesByFilter">getMemberClassesByFilter</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMemberClassesByFilter</b> (
+</div>
+                <div><span class="code">classFilter:<a href="org_as2lib_env_reflect_PackageMemberFilter.html">PackageMemberFilter</a>) : Array</span></div>
+              </div>
+            </div>
+            <div class="description">Returns an array containing <a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a> instances representing the class<br /> members of the package and sub-packages that are not filtered/excluded.<p>The <a href="org_as2lib_env_reflect_PackageMemberFilter.html#filter">PackageMemberFilter.filter</a> method of the passed-in <code>classFilter</code><br /> is invoked for every member class to determine whether it shall be contained in<br /> the result.<p>If the passed-in <code>clasFilter</code> is <code>null</code> or <code>undefined</code> the<br /> result of an invocation of <a href="org_as2lib_env_reflect_PackageInfo.html#getMemberClassesByFlag">getMemberClassesByFlag</a> with argument <code>true</code><br /> will be returned.<p><code>null</code> will be returned if:<ul><li>The <a href="org_as2lib_env_reflect_PackageInfo.html#getPackage">getPackage</a> method returns <code>null</code> or <code>undefined</code>.</li><li>The <code>execute</code> method of the algorithm returned by<br />     <a href="org_as2lib_env_reflect_PackageInfo.html#getPackageMemberAlgorithm">getPackageMemberAlgorithm</a> returns <code>null</code> or <code>undefined</code>.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">classFilter<span class="itemSeparator">:</span></div>
+                    <div>the filter that filters unwanted member classes out</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">an array containing the remaining member classes of the represented<br /> package</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMemberClassesByFlag">getMemberClassesByFlag</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMemberClassesByFlag</b> (
+</div>
+                <div><span class="code">filterSubPackages:Boolean) : Array</span></div>
+              </div>
+            </div>
+            <div class="description">Returns an array containing <a href="org_as2lib_env_reflect_ClassInfo.html">ClassInfo</a> instances representing the member<br /> classes of the package and maybe the ones of the sub-packages.<p>If <code>filterSubPackages</code> is <code>null</code> or <code>undefined</code> it is<br /> interpreted as <code>true</code>, this means that sub-packages' classes are filtered<br /> by default.<p><code>null</code> will be returned if:<ul><li>The <a href="org_as2lib_env_reflect_PackageInfo.html#getPackage">getPackage</a> method returns <code>null</code> or <code>undefined</code>.</li><li>The <code>execute</code> method of the algorithm returned by<br />     <a href="org_as2lib_env_reflect_PackageInfo.html#getPackageMemberAlgorithm">getPackageMemberAlgorithm</a> returns <code>null</code> or <code>undefined</code>.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">filterSubPackages<span class="itemSeparator">:</span></div>
+                    <div>(optional) determines whether to filter/exclude the<br /> sub-packages' member classes</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">an array containing the member classes of the represented package</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMemberPackage">getMemberPackage</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMemberPackage</b> (
+</div>
+                <div><span class="code">package) : <a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a></span></div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading:</span><div class="item"><a href="org_as2lib_env_reflect_PackageInfo.html#getMemberPackageByName">getMemberPackageByName (packageName:String) : {VISDOC_LINK_1}</a><br /><a href="org_as2lib_env_reflect_PackageInfo.html#getMemberPackageByPackage">getMemberPackageByPackage (concretePackage) : {VISDOC_LINK_1}</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMemberPackageByName">getMemberPackageByName</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMemberPackageByName</b> (
+</div>
+                <div><span class="code">packageName:String) : <a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the package info corresponding to the passed-in <code>packageName</code>.<p>If the member package with the passed-in <code>packageName</code> cannot be found<br /> directly in the represented package its sub-packages are searched through.<p><code>null</code> will be returned if:<ul><li>The passed-in <code>packageName</code> is <code>null</code> or <code>undefined</code>.</li><li>The <a href="org_as2lib_env_reflect_PackageInfo.html#getMemberPackages">getMemberPackages</a> method returns <code>null</code>.</li><li>There is no package with the given <code>packageName</code>.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">packageName<span class="itemSeparator">:</span></div>
+                    <div>the name of the package</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the package info corresponding to the passed-in <code>packageName</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMemberPackageByPackage">getMemberPackageByPackage</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMemberPackageByPackage</b> (
+</div>
+                <div><span class="code">concretePackage) : <a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the package info corresponding to the passed-in <code>concretePackage</code>.<p>If the member package corresponding to the passed-in <code>concretePackage</code><br /> cannot be found directly in the represented package its sub-packages are<br /> searched through.<p><code>null</code> will be returned if:<ul><li>The passed-in <code>concretePackage</code> is <code>null</code> or <code>undefined</code>.</li><li>The <a href="org_as2lib_env_reflect_PackageInfo.html#getMemberPackages">getMemberPackages</a> method returns <code>null</code>.</li><li>A package matching the passed-in <code>concretePackage</code> could not be found.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">concretePackage<span class="itemSeparator">:</span></div>
+                    <div>the concrete package the corresponding package info shall<br /> be returned for</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the package info corresponding to the passed-in <code>concretePackage</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMemberPackages">getMemberPackages</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMemberPackages</b> (
+</div>
+                <div><span class="code">) : Array</span></div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading:</span><div class="item"><a href="org_as2lib_env_reflect_PackageInfo.html#getMemberPackagesByFlag">getMemberPackagesByFlag (filterSubPackages:Boolean) : Array</a><br /><a href="org_as2lib_env_reflect_PackageInfo.html#getMemberPackagesByFilter">getMemberPackagesByFilter (packageFilter:{VISDOC_LINK_5}) : Array</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMemberPackagesByFilter">getMemberPackagesByFilter</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMemberPackagesByFilter</b> (
+</div>
+                <div><span class="code">packageFilter:<a href="org_as2lib_env_reflect_PackageMemberFilter.html">PackageMemberFilter</a>) : Array</span></div>
+              </div>
+            </div>
+            <div class="description">Returns an array containing <a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a> instances representing the<br /> package members of the package and sub-packages that are not filtered/excluded.<p>The <a href="org_as2lib_env_reflect_PackageMemberFilter.html#filter">PackageMemberFilter.filter</a> method of the passed-in <code>packageFilter</code><br /> is invoked for every member package to determine whether it shall be contained<br /> in the result.<p>If the passed-in <code>packageFilter</code> is <code>null</code> or <code>undefined</code><br /> the result of the invocation of <a href="org_as2lib_env_reflect_PackageInfo.html#getMemberPackagesByFlag">getMemberPackagesByFlag</a> with argument<br /> <code>true</code> will be returned.<p><code>null</code> will be returned if:<ul><li>The <a href="org_as2lib_env_reflect_PackageInfo.html#getPackage">getPackage</a> method returns <code>null</code> or <code>undefined</code>.</li><li>The <code>execute</code> method of the algorithm returned by<br />     <a href="org_as2lib_env_reflect_PackageInfo.html#getPackageMemberAlgorithm">getPackageMemberAlgorithm</a> returns <code>null</code> or <code>undefined</code>.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">packageFilter<span class="itemSeparator">:</span></div>
+                    <div>the filter that filters unwanted member packages out</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">an array containing the remaining member packages of the represented<br /> package</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMemberPackagesByFlag">getMemberPackagesByFlag</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMemberPackagesByFlag</b> (
+</div>
+                <div><span class="code">filterSubPackages:Boolean) : Array</span></div>
+              </div>
+            </div>
+            <div class="description">Returns an array containing <a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a> instances representing the member<br /> packages of the package and maybe the ones of the sub-packages.<p>If <code>filterSubPackages</code> is <code>null</code> or <code>undefined</code> it is<br /> interpreted as <code>true</code>, this means sub-packages' packages are filtered<br /> by default.<p><code>null</code> will be returned if:<ul><li>The <a href="org_as2lib_env_reflect_PackageInfo.html#getPackage">getPackage</a> method returns <code>null</code> or <code>undefined</code>.</li><li>The <code>execute</code> method of the algorithm returned by<br />     <a href="org_as2lib_env_reflect_PackageInfo.html#getPackageMemberAlgorithm">getPackageMemberAlgorithm</a> returns <code>null</code> or <code>undefined</code>.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">filterSubPackages<span class="itemSeparator">:</span></div>
+                    <div>(optional) determines whether the sub-packages' member<br /> packages shall be filtered/excluded from or included in the result</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">an array containing the member packages of the represented package</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMembers">getMembers</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMembers</b> (
+</div>
+                <div><span class="code">) : Array</span></div>
+              </div>
+            </div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overloading:</span><div class="item"><a href="org_as2lib_env_reflect_PackageInfo.html#getMembersByFlag">getMembersByFlag (filterSubPackages:Boolean) : Array</a><br /><a href="org_as2lib_env_reflect_PackageInfo.html#getMembersByFilter">getMembersByFilter (packageMemberFilter:{VISDOC_LINK_5}) : Array</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMembersByFilter">getMembersByFilter</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMembersByFilter</b> (
+</div>
+                <div><span class="code">packageMemberFilter:<a href="org_as2lib_env_reflect_PackageMemberFilter.html">PackageMemberFilter</a>) : Array</span></div>
+              </div>
+            </div>
+            <div class="description">Returns an array containing <a href="org_as2lib_env_reflect_PackageMemberInfo.html">PackageMemberInfo</a> instances representing the<br /> members of the package and sub-packages that are not filtered/excluded.<p>The members of this package are all types and packages contained in the<br /> represented package.<p>The <a href="org_as2lib_env_reflect_PackageMemberFilter.html#filter">PackageMemberFilter.filter</a> method of the passed-in <code>packageMemberFilter</code><br /> is invoked for every package member to determine whether it shall be contained<br /> in the result.<p>If the passed-in <code>packageMemberFilter</code> is <code>null</code> or <code>undefined</code><br /> the result of the invocation of <a href="org_as2lib_env_reflect_PackageInfo.html#getMembersByFlag">getMembersByFlag</a> with argument <code>true</code><br /> will be returned.<p><code>null</code> will be returned if:<ul><li>The <a href="org_as2lib_env_reflect_PackageInfo.html#getPackage">getPackage</a> method returns <code>null</code> or <code>undefined</code>.</li><li>The <code>execute</code> method of the algorithm returned by<br />     <a href="org_as2lib_env_reflect_PackageInfo.html#getPackageMemberAlgorithm">getPackageMemberAlgorithm</a> returns <code>null</code> or <code>undefined</code>.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">packageMemberFilter<span class="itemSeparator">:</span></div>
+                    <div>the filter that filters unwanted package members out</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">an array containing the remaining members of the represented package</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getMembersByFlag">getMembersByFlag</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getMembersByFlag</b> (
+</div>
+                <div><span class="code">filterSubPackages:Boolean) : Array</span></div>
+              </div>
+            </div>
+            <div class="description">Returns an array containing <a href="org_as2lib_env_reflect_PackageMemberInfo.html">PackageMemberInfo</a> instances representing the<br /> members of the package and maybe the ones of the sub-packages.<p>The members of the package are all types and packages contained in the<br /> represented package.<p>If <code>filterSubPackages</code> is <code>null</code> or <code>undefined</code> it is<br /> interpreted as <code>true</code>, that means sub-packages' package members will be<br /> filtered/excluded from the result by default.<p><code>null</code> will be returned if<ul><li>The <a href="org_as2lib_env_reflect_PackageInfo.html#getPackage">getPackage</a> method returns <code>null</code> or <code>undefined</code>.</li><li>The <code>execute</code> method of the algorithm returned by<br />     <a href="org_as2lib_env_reflect_PackageInfo.html#getPackageMemberAlgorithm">getPackageMemberAlgorithm</a> returns <code>null</code> or <code>undefined</code>.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">filterSubPackages<span class="itemSeparator">:</span></div>
+                    <div>(optional) determines whether to filter the sub-packages'<br /> members</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">an array containing the members of the represented package</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getName">getName</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getName</b> (
+</div>
+                <div><span class="code">Void) : String</span></div>
+              </div>
+            </div>
+            <div class="description">Returns the name of the represented package.<p>This does not include the package's path/namespace. If this package info<br /> represented for example the <code>org.as2lib.core</code> package the returned<br /> name would be <code>"core"</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the name of the represented package</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">See also:</span><div class="item"><a href="org_as2lib_env_reflect_PackageInfo.html#getFullName">getFullName</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span><div class="item"><a href="org_as2lib_env_reflect_MemberInfo.html#getName">MemberInfo.getName</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getPackage">getPackage</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getPackage</b> (
+</div>
+                <div><span class="code">Void)</span></div>
+              </div>
+            </div>
+            <div class="description">Returns the actual package this instance represents.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the actual package</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getParent">getParent</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getParent</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the parent of the represented package.<p>The parent is the package the represented package is contained in / a member<br /> of. The parent of the package <code>org.as2lib.core</code> is <code>org.as2lib</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the parent of the represented package</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="initNameAndParent">initNameAndParent</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private function <b>initNameAndParent</b> (
+</div>
+                <div><span class="code">Void) : Void</span></div>
+              </div>
+            </div>
+            <div class="description">Initializes the name and the parent of the represented package.<p>This is done using the result of an execution of the package algorithm<br /> returned by the static <a href="org_as2lib_env_reflect_PackageInfo.html#getPackageAlgorithm">getPackageAlgorithm</a> method.</div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isParentPackage">isParentPackage</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>isParentPackage</b> (
+</div>
+                <div><span class="code">package:<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>) : Boolean</span></div>
+              </div>
+            </div>
+            <div class="description">Returns <code>true</code> if this package is the parent package of the passed-in<br /> <code>package</code>.<p><code>false</code> will be returned if:<ul><li>The passed-in <code>package</code> is not a parent package of this package.</li><li>The passed-in <code>package</code> is <code>null</code> or <code>undefined</code>.</li><li>The passed-in <code>package</code> equals this <code>package</code>.</li><li>The passed-in <code>package</code>'s <code>isRoot</code> method returns <code>true</code>.</li></ul></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">package<span class="itemSeparator">:</span></div>
+                    <div>package this package may be a parent of</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item"><code>true</code> if this package is the parent of the passed-in <code>package</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="isRoot">isRoot</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>isRoot</b> (
+</div>
+                <div><span class="code">Void) : Boolean</span></div>
+              </div>
+            </div>
+            <div class="description">Returns whether this package is a root package.<p>It is supposed to be a root package when its parent is <code>null</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item"><code>true</code> if this package info represents a root package else <code>false</code></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="toString">toString</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>toString</b> (
+</div>
+                <div><span class="code">) : String</span></div>
+              </div>
+            </div>
+            <div class="description">Returns the string representation of this instance.<p>The string representation is constructed as follows:<pre>[reflection fullyQualifiedNameOfReflectedPackage]</pre></div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">displayContent<span class="itemSeparator">:</span></div>
+                    <div>(optional) a <code>Boolean</code> that determines whether to<br /> render this package's content recursively <code>true</code> or not <code>false</code></div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">this instance's string representation</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Overrides:</span><div class="item"><a href="org_as2lib_core_BasicClass.html#toString">org.as2lib.core.BasicClass.toString</a></div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Specified by:</span><div class="item"><a href="org_as2lib_core_BasicInterface.html#toString">org.as2lib.core.BasicInterface.toString</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="docFooter"><span class="copyright">&copy; as2lib, 2005</span><span class="separator">|</span><span class="createdWith">Created with <a href="http://visiblearea.com/visdoc/">VisDoc</a></span><span class="separator">|</span><span class="creationDate">Wednesday, 07 September 2005, 19:47:23</span><span class="separator">|</span><a href="#" onclick="showTOC(); return false;" class="showToc">show TOC</a><a href="#" onclick="hideTOC(); return false;" class="hideToc">hide TOC</a><span class="viewPrivate"><span class="separator">|</span><a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"><span class="separator">|</span><a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span></span><span class="tocFooter">&copy; as2lib, 2005<span class="separator">|</span><a href="#" onclick="hideTOC(); return false;" class="hideToc">hide TOC</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
