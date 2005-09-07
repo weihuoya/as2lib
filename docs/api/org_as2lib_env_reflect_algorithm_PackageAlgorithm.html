@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>PackageAlgorithm</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <link rel="stylesheet" type="text/css" href="css/VisDoc.css"/>
+    <script src="js/doc.js" type="text/javascript">//</script>
+  </head>
+  <body pageId="Pageorg_as2lib_env_reflect_algorithm_PackageAlgorithm">
+    <div class="VisDoc"><span id="PageTop"><!----></span>
+      <div class="content"><span class="accessKeysInfo"><span class="label"><a href="#" class="accessKeyInfoToggle" onclick="toggleAccessKeyInfo(); return true;">Access keys</a></span><span class="accessKeyLinks" style="display:none;"><a href="#PageTop" accesskey="t">T</a>op, <a href="#Summary" accesskey="s">S</a>ummary, <a href="#Constructor" accesskey="c">C</a>onstructors, 
+Instance <a href="#Instanceproperties" accesskey="p">p</a>roperties, 
+Instance <a href="#Instancemethods" accesskey="m">m</a>ethods</span></span><h1>PackageAlgorithm</h1>
+        <div class="classProperties">
+          <table cellspacing="0">
+            <tr>
+              <th>Kind of class:</th>
+              <td>class</td>
+            </tr>
+            <tr>
+              <th>Inherits from:</th>
+              <td>
+                <a href="org_as2lib_core_BasicClass.html">BasicClass</a>
+              </td>
+            </tr>
+            <tr>
+              <th class="classDetails">Author:</th>
+              <td class="classDetails">Simon Wacker</td>
+            </tr>
+            <tr>
+              <th class="classDetails">Classpath:</th>
+              <td class="classDetails">org.as2lib.env.reflect.algorithm.PackageAlgorithm</td>
+            </tr>
+            <tr>
+              <th class="classDetails">File last modified:</th>
+              <td class="classDetails">Tuesday, 16 August 2005, 18:09:38</td>
+            </tr>
+          </table>
+        </div>
+        <div class="classDescription">
+          <div class="descriptionSummary"><code>PackageAlgorithm</code> searches for the specified package and returns the<br /> package info representing the found package.</div><p>To obtain the package info corresponding to package you use this class as<br /> follows.<pre>var packageAlgorithm:PackageAlgorithm = new PackageAlgorithm();
+var packageInfoByPackage:PackageInfo = packageAlgorithm.execute(org.as2lib.core);</pre><p>It is also possible to retrieve a package info by name.<pre>packageInfoByName:PackageInfo = packageAlgorithm.executeByName(<span class="codeString">"org.as2lib.core"</span>);</pre><p>Already retrieved package infos are stored in a cache. There thus exists only<br /> one <code>PackageInfo</code> instance per package. The following traces <code>true</code>.<br /> <pre>trace(packageInfoByPackage == packageInfoByName);</pre></div>
+        <div class="summary hasBottomDivider">
+          <h2 class="hasBottomDivider"><span id="Summary">Summary</span></h2>
+          <div class="methodList">
+            <div class="methodSummaryPart"><span class="title">Constructor</span><ul>
+                <li>
+                  <a href="#PackageAlgorithm">PackageAlgorithm</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart private" style="display:none;"><span class="title">Instance properties</span><ul>
+                <li class="private" style="display:none;">
+                  <a href="#c">c</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#p">p</a>
+                </li>
+              </ul>
+            </div>
+            <div class="methodSummaryPart"><span class="title">Instance methods</span><ul>
+                <li>
+                  <a href="#setCache">setCache</a>
+                </li>
+                <li>
+                  <a href="#getCache">getCache</a>
+                </li>
+                <li>
+                  <a href="#execute">execute</a>
+                </li>
+                <li class="private" style="display:none;">
+                  <a href="#findAndStore">findAndStore</a>
+                </li>
+                <li>
+                  <a href="#executeByName">executeByName</a>
+                </li>
+              </ul>
+              <div class="boxWithBorder">
+                <div class="boxedElem">
+                  <div class="contentHolder"><span class="title">Instance methods inherited from <span class="superclass"><a href="org_as2lib_core_BasicClass.html">BasicClass</a></span></span>
+                    <div class="item">
+                      <a href="org_as2lib_core_BasicClass.html#toString">toString</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider"><span id="Constructor">Constructor</span></h2>
+          <div class="method hasBottomDivider">
+            <h3 id="PackageAlgorithm">PackageAlgorithm</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>PackageAlgorithm</b> (
+</div>
+                <div><span class="code">Void)</span></div>
+              </div>
+            </div>
+            <div class="description">Constructs a new <code>PackageAlgorithm</code> instance.</div>
+          </div>
+        </div>
+        <div class="methodSection private" style="display:none;">
+          <h2 class="hasBottomDivider"><span id="Instanceproperties">Instance properties</span></h2>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="c">c</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private <b>c</b>:<a href="org_as2lib_env_reflect_Cache.html">Cache</a>
+</div>
+                <div><span class="access">(read,write)</span></div>
+              </div>
+            </div>
+            <div class="description">The chache.</div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="p">p</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private <b>p</b>
+</div>
+                <div><span class="access">(read,write)</span></div>
+              </div>
+            </div>
+            <div class="description">The found packages.</div>
+          </div>
+        </div>
+        <div class="methodSection">
+          <h2 class="hasBottomDivider"><span id="Instancemethods">Instance methods</span></h2>
+          <div class="method hasBottomDivider">
+            <h3 id="execute">execute</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>execute</b> (
+</div>
+                <div><span class="code">o)</span></div>
+              </div>
+            </div>
+            <div class="description">Executes the search for the passed-in package <code>o</code> and returns information<br /> about this package.<p>The returned object has the following properties:<br /> <dl><br />   <dt>package</dt><br />   <dd>The package as <code>Object</code> that has been searched for, this is the<br />       passed-in package <code>o</code>.</dd><br />   <dt>name</dt><br />   <dd>The name as <code>String</code> of the searched for package.</dd><br />   <dt>parent</dt><br />   <dd>The parent represented by a {@ling PackageInfo} instance the searched for<br />       package is a member of.</dd><br /> </dl><p><code>null</code> will be returned if:<ul><li>The passed-in package <code>o</code> is <code>null</code> or <code>undefined</code>.</li><li>The searched for package <code>o</code> could not be found.</li></ul><p>The search starts on the package returned by the cache's <code>getRoot</code><br /> method, this is by default <code>_global</code>.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">o<span class="itemSeparator">:</span></div>
+                    <div>the package to return information about</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">an object that contains information about the passed-in package</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="executeByName">executeByName</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>executeByName</b> (
+</div>
+                <div><span class="code">n:String) : <a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the package info representing the package corresponding to the passed-in<br /> package name <code>n</code>.<p>The name must be fully qualified, that means it must consist of the package's<br /> path as well as its name. For example 'org.as2lib.core'.<p>The search starts on the package returned by the <a href="org_as2lib_env_reflect_Cache.html#getRoot">org.as2lib.env.reflect.Cache.getRoot</a> method<br /> of the set cache. If this method returns a package info whose <code>getFullName</code><br /> method returns <code>null</code>, <code>undefined</code> or an empty string <code>"_global"</code><br /> is used instead</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">n<span class="itemSeparator">:</span></div>
+                    <div>the fully qualified name of the package</div>
+                  </div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the package info representing the package corresponding to the passed-in<br /> name</div>
+                </div>
+              </div>
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Throws:</span><div class="item"><a href="org_as2lib_env_except_IllegalArgumentException.html">org.as2lib.env.except.IllegalArgumentException</a> if the passed-in name is <code>null</code>,<br /> <code>undefined</code> or an empty string or if the object corresponding to the<br /> passed-in name is not of type <code>"object"</code><br /><a href="org_as2lib_env_reflect_PackageNotFoundException.html">org.as2lib.env.reflect.PackageNotFoundException</a> if a package with the passed-in name could not<br /> be found</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider private" style="display:none;">
+            <h3 id="findAndStore">findAndStore</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">private function <b>findAndStore</b> (
+
+</div>
+                <div><span class="code">a:<a href="org_as2lib_env_reflect_PackageInfo.html">PackageInfo</a>,
+o) : Boolean</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="getCache">getCache</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>getCache</b> (
+</div>
+                <div><span class="code">Void) : <a href="org_as2lib_env_reflect_Cache.html">Cache</a></span></div>
+              </div>
+            </div>
+            <div class="description">Returns the cache set via the <a href="org_as2lib_env_reflect_algorithm_PackageAlgorithm.html#setCache">setCache</a> method or the default cache that<br /> is returned by the <a href="org_as2lib_env_reflect_ReflectConfig.html#getCache">org.as2lib.env.reflect.ReflectConfig.getCache</a> method.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Returns:</span><div class="item">the currently used cache</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="method hasBottomDivider">
+            <h3 id="setCache">setCache</h3>
+            <div class="fullMemberString">
+              <div class="clearfix floatholder">
+                <div class="floatbox code">function <b>setCache</b> (
+</div>
+                <div><span class="code">cache:<a href="org_as2lib_env_reflect_Cache.html">Cache</a>) : Void</span></div>
+              </div>
+            </div>
+            <div class="description">Sets the cache that is used by the <a href="org_as2lib_env_reflect_algorithm_PackageAlgorithm.html#execute">execute</a> method to look whether the<br /> package to find is already stored and where to start the search if not.</div>
+            <div class="boxWithBorder">
+              <div class="boxedElem">
+                <div class="contentHolder"><span class="title">Parameters:</span><div class="item">
+                    <div class="floatbox code colorizedCode">cache<span class="itemSeparator">:</span></div>
+                    <div>the new cache</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="docFooter"><span class="copyright">&copy; as2lib, 2005</span><span class="separator">|</span><span class="createdWith">Created with <a href="http://visiblearea.com/visdoc/">VisDoc</a></span><span class="separator">|</span><span class="creationDate">Wednesday, 07 September 2005, 19:47:03</span><span class="separator">|</span><a href="#" onclick="showTOC(); return false;" class="showToc">show TOC</a><a href="#" onclick="hideTOC(); return false;" class="hideToc">hide TOC</a><span class="viewPrivate"><span class="separator">|</span><a href="#PageTop" onclick="showPrivate(); return true;">show private members</a></span><span class="hidePrivate"><span class="separator">|</span><a href="#PageTop" onclick="hidePrivate(); return true;">hide private members</a></span></span><span class="tocFooter">&copy; as2lib, 2005<span class="separator">|</span><a href="#" onclick="hideTOC(); return false;" class="hideToc">hide TOC</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
