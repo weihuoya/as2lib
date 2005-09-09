@@ -59,9 +59,7 @@ class org.as2lib.env.reflect.MethodInfo extends BasicClass implements TypeMember
 	 * {@code super} scope
 	 */
 	private var INVOKER:Function = function(object, method:Function, args:Array) {
-		// removes reference to this function
-		object.__as2lib__invoker = null;
-		// deletes the variable '__as2lib__invoker'
+		// deletes the variable '__as2lib__invoker'; deletes the reference to this function
 		delete object.__as2lib__invoker;
 		// ('super' is not accessible from this scope, at least that's the compiler error) <-- this was at the time INVOKER was static
 		// eval("su" + "per") is not supported by MTASC. INVOKER must thus be an instance variable because normal
