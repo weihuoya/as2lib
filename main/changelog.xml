@@ -5,6 +5,9 @@
   <release name="as2lib 0.9.3" day="9" month="9" year="2005">
     <year value="2005">
       <month value="9">
+        <day value="9">
+          <entry type="add" package="org.as2lib.env.log" class="LogManager">Enhanced class to allow the following access: 'private static var logger:Logger = LogManager.getLogger("org.as2lib.MyClass");'.</entry>
+        </day>
         <day value="1">
           <entry type="fix" package="org.as2lib.aop.weaver" class="SimpleWeaver" method="weaveSuperClassConstructor">Fixed bug with super constructors and multiple advices.</entry>
           <entry type="fix" package="org.as2lib.aop.mtacher" class="WildcardMatcher" method="match">Fixed serious bug with often used pattern '..*.*'.</entry>
