@@ -20,13 +20,15 @@ import org.as2lib.env.log.Logger;
 
 /**
  * {@code LogManager} is the core access point of the As2lib Logging API.
- *
+ * 
  * <p>You use it to set the underlying repository that stores and releases loggers
  * and to obtain a logger according to a logger's name of the repository.
  * 
- * <p>The repository must be set before anything else using this class as access
- * point to obtain loggers. There is no default repository.
- *
+ * <p>The repository must be set before anything else when you are using this
+ * class as access point to obtain loggers. There is no default repository. This
+ * means that all messages sent to loggers obtained from the {@link #getLogger} method,
+ * before the repository has been set will not be logged.
+ * 
  * <p>This class could be used as follows with a non-singleton repository. Note
  * that you can of course also use any other kind of logger repository.
  *
@@ -43,11 +45,11 @@ import org.as2lib.env.log.Logger;
  *       myLogger.info("This is an informative log message.");
  *   }
  * </code>
- *
+ * 
  * <p>If you have one logger that shall always be returned you can use the
  * convenience method {@link #setLogger} that does all the work with the repository
  * for you.
- *
+ * 
  * <code>
  *   // configuration: when setting everything up
  *   var traceLogger:SimpleLogger = new SimpleLogger();
@@ -59,6 +61,13 @@ import org.as2lib.env.log.Logger;
  *       myLogger.info("This is an informative log message.");
  *   }
  * </code>
+ * 
+ * <p>It is common practice to obtain loggers per class. You may thus consider the
+ * following strategy of obtaining loggers:
+ * <code>private static var logger:Logger = LogManager.getLogger("org.as2lib.MyClass");</code>
+ * 
+ * <p>Applying this strategy you have a logger per class that can be used within
+ * per class and per instance methods of the logging class.
  *
  * @author Simon Wacker
  */
@@ -67,21 +76,60 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 	/** Repository that stores already retrieved loggers. */
 	private static var repository:LoggerRepository;
 	
+	/** Proxies of loggers that are replaced by real loggers as soon as repository gets set. */
+	private static var loggerProxies:Array;
+	
 	/**
 	 * Returns the logger according the passed-in {@code loggerName}.
 	 * 
 	 * <p>Uses the set logger repository to receive the logger that is returned.
-	 *
-	 * <p>{@code null} is returned if the logger repository returns {@code null} or
-	 * {@code undefined}.
-	 *
+	 * 
+	 * <p>{@code null} is only returned if the logger repository is initialized and
+	 * returns {@code null} or {@code undefined}.
+	 * 
+	 * <p>If the logger repository has not been initialized yet a proxy gets returned
+	 * that is replaced by the actual logger of the repository, as soon as the
+	 * repository gets initialized. This means that the following access in classes is
+	 * possible:
+	 * <code>private static var logger:Logger = LogManager.getLogger("org.as2lib.MyClass");</code>
+	 * 
+	 * <p>But note that you shall not log messages before the actual initialization of
+	 * the repository; these messages will never be logged. Proxies are just returne to
+	 * enable the convenient logger access above.
+	 * 
 	 * @param loggerName the name of the logger to return
 	 * @return the logger according to the passed-in {@code name}
 	 */
 	public static function getLogger(loggerName:String):Logger {
-		var result:Logger = getLoggerRepository().getLogger(loggerName);
+		if (!repository) {
+			if (loggerProxies[loggerName]) return loggerProxies[loggerName];
+			if (!loggerProxies) loggerProxies = new Array();
+			var result:Logger = getBlankLogger();
+			result["__resolve"] = function() {
+				return false;
+			};
+			result["name"] = loggerName;
+			loggerProxies.push(result);
+			loggerProxies[loggerName] = result;
+			return result;
+		}
+		var result:Logger = repository.getLogger(loggerName);
 		if (result) return result;
 		return null;
+	}
+	
+	/**
+	 * Returns a blank logger.
+	 *
+	 * <p>This is a {@code Logger} instance with no implemented methods.
+	 *
+	 * @return a blank logger
+	 */
+	private static function getBlankLogger(Void):Logger {
+		var result = new Object();
+		result.__proto__ = Logger["prototype"];
+		result.__constructor__ = Logger;
+		return result;
 	}
 	
 	/**
@@ -134,12 +182,25 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 	 * Sets a new repositroy returned by {@link #getLoggerRepository}.
 	 *
 	 * <p>The {@link #getLogger} method uses this repository to obtain the logger for
-	 * the passed-in name.
+	 * the given logger name.
 	 *
 	 * @param loggerRepository the new logger repository
 	 */
 	public static function setLoggerRepository(loggerRepository:LoggerRepository):Void {
 		repository = loggerRepository;
+		if (loggerProxies) {
+			for (var i:Number = loggerProxies.length - 1; i >= 0; i--) {
+				var proxy:Logger = loggerProxies[i];
+				var name:String = proxy["name"];
+				delete proxy["__constructor__"];
+				delete proxy["__resolve"];
+				delete proxy["name"];
+				loggerProxies.pop();
+				delete loggerProxies[name];
+				var logger:Logger = loggerRepository.getLogger(name);
+				proxy["__proto__"] = logger;
+			}
+		}
 	}
 	
 	/**
