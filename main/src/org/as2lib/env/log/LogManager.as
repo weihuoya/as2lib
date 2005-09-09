@@ -204,6 +204,15 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 	}
 	
 	/**
+	 * Returns whether a logger repository has been added.
+	 * 
+	 * @return {@code true} if a logger repository has been added else {@code false}
+	 */
+	public static function hasLoggerRepository(Void):Boolean {
+		return (repository != null);
+	}
+	
+	/**
 	 * Private constructor.
 	 */
 	private function LogManager(Void) {
