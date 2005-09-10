@@ -27,7 +27,7 @@ import org.as2lib.core.BasicInterface;
  * a lot when an exception is thrown and you do not catch it.
  * 
  * <p>The first thing is the message. The message contains detaild information about
- * the problem that occurred and is inteded for developers, not for clients.
+ * the problem that occurred and is inteded for developers, not for users.
  * 
  * <p>The second is the stack trace. The stack trace contains at least the method that
  * actually threw the throwable. It can also contain the method that invoked the
@@ -44,7 +44,7 @@ import org.as2lib.core.BasicInterface;
  * 
  * <p>The fourth is the error code. While the message is inteded for developers, the
  * error code can be used to get localized messages from a message source that are
- * intended for clients.
+ * intended for users.
  *
  * <p>Working with throwables in ActionScript is a little buggy and can be a pain to
  * use if you do not know to what you have to pay attention.
@@ -177,13 +177,13 @@ interface org.as2lib.env.except.Throwable extends BasicInterface {
 	/**
 	 * Returns the initialized error code.
 	 * 
-	 * <p>Error codes can be used to obtain localized messages appropriate for clients;
+	 * <p>Error codes can be used to obtain localized messages appropriate for users;
 	 * while the {@link #getMessage} method returns messages inteded for developers to
 	 * get hands on the exception and fix bugs more easily.
 	 * The localized messages can for example be obtained through a global message
 	 * source and property files.
 	 * 
-	 * @return the error code to obtain an error message for clients
+	 * @return the error code to obtain an error message for users
 	 */
 	public function getErrorCode(Void):String;
 	
