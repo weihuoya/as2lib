@@ -194,8 +194,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	 */
 	public function addAspectForAllTypes(aspect:Aspect):Void {
 		if (aspect) {
-			// TODO revisit, not perfect, better addAspectForAllTypesInPackage(aspect, rootPackage)
-			addAspectForOneAffectedType(aspect, null);
+			addAspectForAllTypesInPackage(aspect, PackageInfo.getRootPackage());
 		}
 	}
 	
@@ -206,10 +205,12 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	 * 
 	 * @param aspect the aspect whose advices shall be woven-into captured join points
 	 * @param affectedPackage the package to search for matching join points
+	 * @throws IllegalArgumentException if {@code affectedPackage} is {@code null} or
+	 * {@code undefined}
 	 */
 	public function addAspectForAllTypesInPackage(aspect:Aspect, affectedPackage:Object):Void {
 		if (aspect) {
-			if (affectedPackage) {
+			if (affectedPackage !== null && affectedPackage !== undefined) {
 				var packageInfo:PackageInfo = PackageInfo.forPackage(affectedPackage);
 				if (packageInfo) {
 					var classes:Array = packageInfo.getMemberClasses(false);
@@ -220,8 +221,6 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 						}
 					}
 				}
-			} else {
-				addAspectForOneAffectedType(aspect, null);
 			}
 		}
 	}
@@ -243,8 +242,6 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 						addAspectForOneAffectedType(aspect, affectedType);
 					}
 				}
-			} else {
-				addAspectForOneAffectedType(aspect, null);
 			}
 		}
 	}
@@ -259,12 +256,14 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	 */
 	public function addAspectForOneAffectedType(aspect:Aspect, affectedType:Function):Void {
 		if (aspect) {
-			var advices:Array = aspect.getAdvices();
-			if (advices) {
-				for (var i:Number = 0; i < advices.length; i++) {
-					var advice:Advice = Advice(advices[i]);
-					if (advice) {
-						addAdviceForOneAffectedType(advice, affectedType);
+			if (affectedType) {
+				var advices:Array = aspect.getAdvices();
+				if (advices) {
+					for (var i:Number = 0; i < advices.length; i++) {
+						var advice:Advice = Advice(advices[i]);
+						if (advice) {
+							addAdviceForOneAffectedType(advice, affectedType);
+						}
 					}
 				}
 			}
@@ -295,7 +294,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	 */
 	public function addAdviceForAllTypes(advice:Advice):Void {
 		if (advice) {
-			addAdviceForOneAffectedType(advice, null);
+			addAdviceForAllTypesInPackage(advice, PackageInfo.getRootPackage());
 		}
 	}
 	
@@ -309,7 +308,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	 */
 	public function addAdviceForAllTypesInPackage(advice:Advice, package:Object):Void {
 		if (advice) {
-			if (package) {
+			if (package !== null && package !== undefined) {
 				var packageInfo:PackageInfo = PackageInfo.forPackage(package);
 				if (packageInfo) {
 					var classes:Array = packageInfo.getMemberClasses(false);
@@ -320,8 +319,6 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 						}
 					}
 				}
-			} else {
-				addAdviceForOneAffectedType(advice, null);
 			}
 		}
 	}
@@ -343,8 +340,6 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 						addAdviceForOneAffectedType(advice, affectedType);
 					}
 				}
-			} else {
-				addAdviceForOneAffectedType(advice, null);
 			}
 		}
 	}
@@ -367,7 +362,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 				advices.put(typeInfo, new Array());
 			}
 			var affectedAdvices:Array = advices.get(typeInfo);
-			// TODO is this really always wanted? add a flag if not
+			// TODO is this really always wanted? add a flag if not?
 			if (!ArrayUtil.contains(affectedAdvices, advice)) {
 				affectedAdvices.push(advice);
 			}
