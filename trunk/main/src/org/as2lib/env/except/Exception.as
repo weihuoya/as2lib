@@ -101,7 +101,9 @@ class org.as2lib.env.except.Exception extends AbstractThrowable implements Throw
 	 */
 	public function toString():String {
 		if (!arguments.caller && getLogger()) {
-			getLogger().error(this);
+			if (getLogger().isErrorEnabled()) {
+				getLogger().error(this);
+			}
 		}
 		return doToString();
 	}
