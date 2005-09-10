@@ -22,12 +22,13 @@ import org.as2lib.env.log.handler.AbstractLogHandler;
 
 /**
  * {@code XmlSocketHandler} uses the {@code XMLSocket} to log the message.
- *
+ * 
  * <p>It was originally designed to work with the POWERFLASHER's SOS
  * XML-Socket-Server but you can use it for any output device that is accessible
  * over the XML socket.
  * 
  * @author Simon Wacker
+ * @see SosSocketHandler
  * @see <a href="http://sos.powerflasher.com">SOS - SocketOutputServer</a>
  */
 class org.as2lib.env.log.handler.XmlSocketHandler extends AbstractLogHandler implements LogHandler {
@@ -37,7 +38,7 @@ class org.as2lib.env.log.handler.XmlSocketHandler extends AbstractLogHandler imp
 	
 	/**
 	 * Constructs a new {@code XmlSocketHandler} instance.
-	 *
+	 * 
 	 * @param host a fully qualified DNS domain name
 	 * @param port the TCP port number on the host used to establish a connection
 	 * @param messageStringifier (optional) the log message stringifier to use
