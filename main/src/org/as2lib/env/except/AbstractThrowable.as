@@ -93,6 +93,9 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	/** The message describing what went wrong. */
 	private var message:String;
 	
+	/** The error code to obtain localized client messages. */
+	private var errorCode:String;
+	
 	/**
 	 * Constructs a new {@code AbstractThrowable} instance.
 	 *
@@ -218,6 +221,38 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	 */
 	public function getMessage(Void):String {
 		return message;
+	}
+	
+	/**
+	 * Initializes the error code for this throwable.
+	 * 
+	 * <p>The initialization works only once. Any further initialization results in an
+	 * exception.
+	 * 
+	 * <p>Take a look at {@link #getErrorCode} to see what error codes are good for.
+	 * 
+	 * @param errorCode the error code to get localized client messages by
+	 * @return this throwable
+	 * @see #getErrorCode
+	 */
+	public function initErrorCode(errorCode:String):Throwable {
+		this.errorCode = errorCode;
+		return Throwable(this);
+	}
+	
+	/**
+	 * Returns the initialized error code.
+	 * 
+	 * <p>Error codes can be used to obtain localized messages appropriate for clients;
+	 * while the {@link #getMessage} method returns messages inteded for developers to
+	 * get hands on the exception and fix bugs more easily.
+	 * The localized messages can for example be obtained through a global message
+	 * source and property files.
+	 * 
+	 * @return the error code to obtain an error message for clients
+	 */
+	public function getErrorCode(Void):String {
+		return errorCode;
 	}
 	
 	/**
