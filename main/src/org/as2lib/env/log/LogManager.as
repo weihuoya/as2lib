@@ -15,8 +15,9 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.log.LoggerRepository;
+import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.env.log.Logger;
+import org.as2lib.env.log.LoggerRepository;
 
 /**
  * {@code LogManager} is the core access point of the As2lib Logging API.
@@ -80,6 +81,38 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 	private static var loggerProxies:Array;
 	
 	/**
+	 * @overload #getLoggerByName
+	 * @overload #getLoggerByObject
+	 */
+	public static function getLogger():Logger {
+		// do not use Overloading API hear because 'LogManager' must be as light-weight as possible
+		if (arguments[0].__proto__ != String.prototype) {
+			return getLoggerByObject(arguments[0]);
+		}
+		return getLoggerByName(arguments[0]);
+	}
+	
+	/**
+	 * Returns the logger according to the passed-in {@code object}.
+	 * 
+	 * <p>If {@code object} is of type 'function' it is supposed that this is the type
+	 * to get the name of otherwise it is supposed to be the instance of the type to get
+	 * the name of.
+	 * 
+	 * <p>The name of the type is used as logger name.
+	 * 
+	 * <p>Note that evaluating the name is rather slow. It is thus recommended to
+	 * hardcode the name and use the {@link #getLoggerByName} method.
+	 * 
+	 * @param object the object to return the type name of
+	 * @return the logger for the given {@code object}
+	 * @see #getLoggerByName
+	 */
+	public static function getLoggerByObject(object):Logger {
+		return getLoggerByName(ReflectUtil.getTypeName(object));
+	}
+	
+	/**
 	 * Returns the logger according the passed-in {@code loggerName}.
 	 * 
 	 * <p>Uses the set logger repository to receive the logger that is returned.
@@ -100,7 +133,7 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 	 * @param loggerName the name of the logger to return
 	 * @return the logger according to the passed-in {@code name}
 	 */
-	public static function getLogger(loggerName:String):Logger {
+	public static function getLoggerByName(loggerName:String):Logger {
 		if (!repository) {
 			if (loggerProxies[loggerName]) return loggerProxies[loggerName];
 			if (!loggerProxies) loggerProxies = new Array();

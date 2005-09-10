@@ -6,6 +6,7 @@
     <year value="2005">
       <month value="9">
         <day value="10">
+          <entry type="add" package="org.as2lib.env.log" class="LogManager" method="getLoggerByObject">Convenience method that releases you from evaluating the logger name yourself.</entry>
           <entry type="add" package="org.as2lib.util" class="MethodUtil"></entry>
           <entry type="add" package="org.as2lib.env.except" class="Throwable" method="initErrorCode/getErrorCode">Error code to get localized message to display to users.</entry>
         </day>
