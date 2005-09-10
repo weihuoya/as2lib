@@ -19,35 +19,62 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.env.log.stringifier.SosMessageStringifier;
 
 /**
- * {@code SosSocketHandler} uses the {@code XMLSocket} to log the message to POWERFLASHER's SOS
- * XML-Socket-Server.
- *
+ * {@code SosSocketHandler} uses the {@code XMLSocket} to log the message to
+ * POWERFLASHER's SOS XML-Socket-Server.
+ * 
  * <p>It logs colorized and formatted debug information to POWERFLASHER's SOS
- * XML-Socket-Server</p>
+ * XML-Socket-Server
  * 
  * @author Christoph Atteneder
  * @see <a href="http://sos.powerflasher.com">SOS - SocketOutputServer</a>
  */
 class org.as2lib.env.log.handler.SosSocketHandler extends XmlSocketHandler {
 	
-	private static var DEBUG:Number = 0xffffff;
+	/** Color of debug messages. */
+	private static var DEBUG:Number = 0xFFFFFF;
+	
+	/** Key of debug messages. */
 	public static var DEBUG_KEY:String = "DEBUG";
+	
+	/** Color of info messages. */
 	private static var INFO:Number = 0xD9D9FF;
+	
+	/** Key of info messages. */
 	public static var INFO_KEY:String = "INFO";
+	
+	/** Color of warning messages. */
 	private static var WARNING:Number = 0xFFFFCE;
+	
+	/** Key of warning messages. */
 	public static var WARNING_KEY:String = "WARNING";
+	
+	/** Color of error messages. */
 	private static var ERROR:Number = 0xFFBBBB;
+	
+	/** Key of error messages. */
 	public static var ERROR_KEY:String = "ERROR";
+	
+	/** Color of fatal messages. */
 	private static var FATAL:Number = 0xCC99CC;
+	
+	/** Key of fatal messages. */
 	public static var FATAL_KEY:String = "FATAL";
 	
-	public function SosSocketHandler(messageStringifier : Stringifier) {
-		super("localhost", 4445, (!messageStringifier)? new SosMessageStringifier():messageStringifier);
-		socket.send("<setKey><name>"+DEBUG_KEY+"</name><color>"+DEBUG+"</color></setKey>");
-		socket.send("<setKey><name>"+INFO_KEY+"</name><color>"+INFO+"</color></setKey>");
-		socket.send("<setKey><name>"+WARNING_KEY+"</name><color>"+WARNING+"</color></setKey>");
-		socket.send("<setKey><name>"+ERROR_KEY+"</name><color>"+ERROR+"</color></setKey>");
-		socket.send("<setKey><name>"+FATAL_KEY+"</name><color>"+FATAL+"</color></setKey>");
+	/**
+	 * Constructs a new {@code SosSocketHandler} instance.
+	 * 
+	 * <p>If {@code messageStringifier} is not specified an instance of class
+	 * {@link SosMessageStringifier} will be used.
+	 * 
+	 * @param messageStringifier (optional) the log message stringifier to use
+	 */
+	public function SosSocketHandler(messageStringifier:Stringifier) {
+		super("localhost", 4445, (!messageStringifier ? new SosMessageStringifier() : messageStringifier));
+		socket.send("<setKey><name>" + DEBUG_KEY + "</name><color>" + DEBUG + "</color></setKey>");
+		socket.send("<setKey><name>" + INFO_KEY + "</name><color>" + INFO + "</color></setKey>");
+		socket.send("<setKey><name>" + WARNING_KEY + "</name><color>" + WARNING + "</color></setKey>");
+		socket.send("<setKey><name>" + ERROR_KEY + "</name><color>" + ERROR + "</color></setKey>");
+		socket.send("<setKey><name>" + FATAL_KEY + "</name><color>" + FATAL + "</color></setKey>");
 	}
-
+	
 }
