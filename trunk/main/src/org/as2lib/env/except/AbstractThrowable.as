@@ -243,13 +243,13 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	/**
 	 * Returns the initialized error code.
 	 * 
-	 * <p>Error codes can be used to obtain localized messages appropriate for clients;
+	 * <p>Error codes can be used to obtain localized messages appropriate for users;
 	 * while the {@link #getMessage} method returns messages inteded for developers to
 	 * get hands on the exception and fix bugs more easily.
 	 * The localized messages can for example be obtained through a global message
 	 * source and property files.
 	 * 
-	 * @return the error code to obtain an error message for clients
+	 * @return the error code to obtain an error message for users
 	 */
 	public function getErrorCode(Void):String {
 		return errorCode;
