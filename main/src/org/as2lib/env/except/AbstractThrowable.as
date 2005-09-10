@@ -43,6 +43,9 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	/** Stringifier used to stringify throwables. */
 	private static var stringifier:Stringifier;
 	
+	/** Logger used to output throwables. */
+	private static var logger:Logger;
+	
 	/**
 	 * Returns the stringifier to stringify throwables.
 	 *
@@ -70,22 +73,16 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	}
 	
 	/**
-	 * Returns the logger used to log this throwable.
-	 *
-	 * <p>{@code null} will be returned if the {@link LogManager#getLogger}
-	 * method returns {@code null} or {@code undefined}.
+	 * Returns the logger used to log throwables.
 	 * 
-	 * @return the logger used to output this throwable
+	 * @return the logger used to log throwables
 	 */
 	private static function getLogger(Void):Logger {
-		if (logger === undefined) {
+		if (!logger) {
 			logger = LogManager.getLogger("org.as2lib.env.except.Throwable");
 		}
 		return logger;
 	}
-	
-	/** Logger used to output this throwable. */
-	private static var logger:Logger;
 	
 	/** The saved stack of method calls. */
 	private var stackTrace:Array;
