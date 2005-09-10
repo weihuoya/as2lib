@@ -5,6 +5,10 @@
   <release name="as2lib 0.9.3" day="9" month="9" year="2005">
     <year value="2005">
       <month value="9">
+        <day value="10">
+          <entry type="add" package="org.as2lib.util" class="MethodUtil"></entry>
+          <entry type="add" package="org.as2lib.env.except" class="Throwable" method="initErrorCode/getErrorCode">Error code to get localized message to display to users.</entry>
+        </day>
         <day value="9">
           <entry type="add" package="org.as2lib.env.log" class="LogManager">Enhanced class to allow the following access: 'private static var logger:Logger = LogManager.getLogger("org.as2lib.MyClass");'.</entry>
         </day>
