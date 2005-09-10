@@ -42,10 +42,10 @@ class org.as2lib.env.log.handler.SosSocketHandler extends XmlSocketHandler {
 	public static var FATAL_KEY:String = "FATAL";
 	
 	public function SosSocketHandler(messageStringifier : Stringifier) {
+		super("localhost", 4445, messageStringifier);
 		if(messageStringifier == null || messageStringifier == undefined) {
 			messageStringifier = new SosMessageStringifier();
 		}
-		super("localhost", 4445, messageStringifier);
 		socket.send("<setKey><name>"+DEBUG_KEY+"</name><color>"+DEBUG+"</color></setKey>");
 		socket.send("<setKey><name>"+INFO_KEY+"</name><color>"+INFO+"</color></setKey>");
 		socket.send("<setKey><name>"+WARNING_KEY+"</name><color>"+WARNING+"</color></setKey>");
