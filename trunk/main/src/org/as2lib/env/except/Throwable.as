@@ -27,7 +27,7 @@ import org.as2lib.core.BasicInterface;
  * a lot when an exception is thrown and you do not catch it.
  * 
  * <p>The first thing is the message. The message contains detaild information about
- * the problem that occurred.
+ * the problem that occurred and is inteded for developers, not for clients.
  * 
  * <p>The second is the stack trace. The stack trace contains at least the method that
  * actually threw the throwable. It can also contain the method that invoked the
@@ -41,6 +41,10 @@ import org.as2lib.core.BasicInterface;
  * information the catched throwable provides, that caused the throwing of the new
  * throwable. We thus create the new throwable and initialize its cause, the catched
  * throwable, to get a more comprehensive error message.
+ * 
+ * <p>The fourth is the error code. While the message is inteded for developers, the
+ * error code can be used to get localized messages from a message source that are
+ * intended for clients.
  *
  * <p>Working with throwables in ActionScript is a little buggy and can be a pain to
  * use if you do not know to what you have to pay attention.
@@ -68,8 +72,9 @@ import org.as2lib.core.BasicInterface;
  * concrete throwable implementations extend this class. Note that the
  * {@link Exception} and {@link FatalException} classes extend the {@code Error} class,
  * so they and any sub-classes can be used with Flex.
- *
+ * 
  * @author Simon Wacker
+ * @see <a href="http://www.as2lib.org/documentation/articles/as2lib_exception_api">Exceptions</a>
  */
 interface org.as2lib.env.except.Throwable extends BasicInterface {
 	
@@ -154,5 +159,32 @@ interface org.as2lib.env.except.Throwable extends BasicInterface {
 	 * @return the message that describes the problem in detail
 	 */
 	public function getMessage(Void):String;
+	
+	/**
+	 * Initializes the error code for this throwable.
+	 * 
+	 * <p>The initialization works only once. Any further initialization results in an
+	 * exception.
+	 * 
+	 * <p>Take a look at {@link #getErrorCode} to see what error codes are good for.
+	 * 
+	 * @param errorCode the error code to get localized client messages by
+	 * @return this throwable
+	 * @see #getErrorCode
+	 */
+	public function initErrorCode(errorCode:String):Throwable;
+	
+	/**
+	 * Returns the initialized error code.
+	 * 
+	 * <p>Error codes can be used to obtain localized messages appropriate for clients;
+	 * while the {@link #getMessage} method returns messages inteded for developers to
+	 * get hands on the exception and fix bugs more easily.
+	 * The localized messages can for example be obtained through a global message
+	 * source and property files.
+	 * 
+	 * @return the error code to obtain an error message for clients
+	 */
+	public function getErrorCode(Void):String;
 	
 }
