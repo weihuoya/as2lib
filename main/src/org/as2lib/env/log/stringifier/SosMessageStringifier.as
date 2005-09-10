@@ -29,37 +29,43 @@ import org.as2lib.env.log.handler.SosSocketHandler;
  */
 class org.as2lib.env.log.stringifier.SosMessageStringifier extends PatternLogMessageStringifier implements Stringifier {
 	
-	public function SosMessageStringifier() {
+	/**
+	 * Constructs a new {@code SosMessageStringifier} instance.
+	 */
+	public function SosMessageStringifier(Void) {
 		super(false, true);
 	}
 	
-	public function execute(target) : String {
-		
+	/**
+	 * Stringifies {@link LogMessage} instances.
+	 * 
+	 * @param target the {code LogMessage} instance to stringify
+	 * @return the string representation of the given {@code target}
+	 */
+	public function execute(target):String {
 		var message:LogMessage = target;
-		
 		var level:LogLevel = message.getLevel();
 		var levelKey:String;
-		
 		switch(level){
-			case AbstractLogLevel.DEBUG :
+			case AbstractLogLevel.DEBUG:
 				levelKey = SosSocketHandler.DEBUG_KEY;
 				break;
-			case AbstractLogLevel.ERROR :
+			case AbstractLogLevel.ERROR:
 				levelKey = SosSocketHandler.ERROR_KEY;
 				break;
-			case AbstractLogLevel.INFO :
+			case AbstractLogLevel.INFO:
 				levelKey = SosSocketHandler.INFO_KEY;
 				break;
-			case AbstractLogLevel.WARNING :
+			case AbstractLogLevel.WARNING:
 				levelKey = SosSocketHandler.WARNING_KEY;
 				break;		
-			case AbstractLogLevel.FATAL :
+			case AbstractLogLevel.FATAL:
 				levelKey = SosSocketHandler.FATAL_KEY;
 				break;
 			default :
 				levelKey = SosSocketHandler.DEBUG_KEY; 
 		};
-		return "<showMessage key='"+levelKey+"'>"+super.execute(target)+"</showMessage>\n";
+		return "<showMessage key='" + levelKey + "'>" + super.execute(target) + "</showMessage>\n";
 	}
-
+	
 }
