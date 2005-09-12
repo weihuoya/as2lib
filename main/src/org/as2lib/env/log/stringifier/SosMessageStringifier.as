@@ -23,7 +23,8 @@ import org.as2lib.env.log.handler.XmlSocketHandler;
 import org.as2lib.env.log.handler.SosHandler;
 
 /**
- * {@code SosMessageStringifier} stringifies {@link LogMessage} instances into SOS compatible log output.
+ * {@code SosMessageStringifier} stringifies {@link LogMessage} instances into SOS
+ * compatible log output.
  * 
  * @author Christoph Atteneder
  * @see <a href="http://sos.powerflasher.com">SOS - SocketOutputServer</a>
