@@ -528,6 +528,22 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	}
 	
 	/**
+	 * Evaluates the concrete type by its path.
+	 * <p>As different compiler may store the classes in different locations its
+	 * necessary to use this helper if you want to get a type by its name.
+	 * 
+	 * @param path Path of the type.
+	 * @return type Related to the path. Undefined if path doesn't relate any type.
+	 */
+	public static function getTypeByName(path:String):Function {
+		var result:Function = eval("_global."+path);
+		if (!result) {
+			result = eval("_global." + path.split(".").join("_"));
+		}
+		return result;
+	}
+	
+	/**
 	 * Private constructor.
 	 */
 	private function ReflectUtil(Void) {
