@@ -19,7 +19,7 @@ import org.as2lib.util.Stringifier;
 import org.as2lib.env.log.stringifier.SosMessageStringifier;
 
 /**
- * {@code SosSocketHandler} uses the {@code XMLSocket} to log the message to
+ * {@code SosHandler} uses the {@code XMLSocket} to log the message to
  * POWERFLASHER's SOS XML-Socket-Server.
  * 
  * <p>It logs colorized and formatted debug information to POWERFLASHER's SOS
