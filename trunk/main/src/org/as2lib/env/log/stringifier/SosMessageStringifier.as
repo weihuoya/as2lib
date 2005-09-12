@@ -19,7 +19,8 @@ import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.stringifier.PatternLogMessageStringifier;
-import org.as2lib.env.log.handler.SosSocketHandler;
+import org.as2lib.env.log.handler.XmlSocketHandler;
+import org.as2lib.env.log.handler.SosHandler;
 
 /**
  * {@code SosMessageStringifier} stringifies {@link LogMessage} instances into SOS compatible log output.
@@ -48,22 +49,22 @@ class org.as2lib.env.log.stringifier.SosMessageStringifier extends PatternLogMes
 		var levelKey:String;
 		switch(level){
 			case AbstractLogLevel.DEBUG:
-				levelKey = SosSocketHandler.DEBUG_KEY;
+				levelKey = SosHandler.DEBUG_KEY;
 				break;
 			case AbstractLogLevel.ERROR:
-				levelKey = SosSocketHandler.ERROR_KEY;
+				levelKey = SosHandler.ERROR_KEY;
 				break;
 			case AbstractLogLevel.INFO:
-				levelKey = SosSocketHandler.INFO_KEY;
+				levelKey = SosHandler.INFO_KEY;
 				break;
 			case AbstractLogLevel.WARNING:
-				levelKey = SosSocketHandler.WARNING_KEY;
+				levelKey = SosHandler.WARNING_KEY;
 				break;		
 			case AbstractLogLevel.FATAL:
-				levelKey = SosSocketHandler.FATAL_KEY;
+				levelKey = SosHandler.FATAL_KEY;
 				break;
 			default :
-				levelKey = SosSocketHandler.DEBUG_KEY; 
+				levelKey = SosHandler.DEBUG_KEY; 
 		};
 		return "<showMessage key='" + levelKey + "'>" + super.execute(target) + "</showMessage>\n";
 	}
