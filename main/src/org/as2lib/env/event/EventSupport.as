@@ -30,27 +30,28 @@ import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributo
  * {@link #addAddListener} its only necessary to add {@code acceptListenerType(AnyType);}
  * within the constructor of the extended class.
  * 
- * <p>To send an event it is necessary to recieve the matching distributor with
+ * <p>It is necessary for sending a event to recieve the matching distributor with
  * {@code eventControl.getDistributor(AnyType)} and execute the event to it.
  * 
  * <p>Example code:
  * <code>
  *   class Controller extends EventSupport {
  *   
- *     private var m:Model;
+ *     private var model:Model;
+ *     private var event:View;
  *     
  *     public function Controller(Void) {
  *       eventControl.acceptListenerType(View);
+ *       event = eventControl.getDistributor(View);
  *     }
  *     
  *     public function setTargetModel(model:Model) {
- *       m = model;
- *       var event:View = eventControl.getDistributor(View);
+ *       this.model = model;
  *       event.onTargetModelChanged(this);
  *     }
  *     
  *     public function getTargetModel(Void):Model {
- *     	 return m;
+ *     	 return model;
  *     }
  *   }
  * </code>
@@ -73,8 +74,8 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	/**
 	 * Adds the passed-in {@code listener} to be executed by events.
 	 * 
-	 * @param listener Listener to be added.
-	 * @throws IllegalArgumentException If the listener doesn't match the expected type.
+	 * @param listener the listener to be add
+	 * @throws IllegalArgumentException if the listener does not match any expected type.
 	 */
 	public function addListener(listener):Void {
 		eventControl.addListener(listener);
@@ -86,8 +87,8 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	 * any expected type the rest of the listeners will not be added an a exception
 	 * will raise.
 	 * 
-	 * @param listeners List of listener to be added.
-	 * @throws IllegalArgumentException If any listener doesn't match the expected type.
+	 * @param listeners the list of {@code listener}s to add
+	 * @throws IllegalArgumentException if any listener does not match any expected type
 	 */
 	public function addAllListeners(listeners:Array):Void {
 		eventControl.addAllListeners(listeners);
@@ -97,7 +98,7 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	/**
 	 * Removes the passed-in {@code listener} from beeing executed by events.
 	 * 
-	 * @param listener Listener to be removed.
+	 * @param listener the listener to remove
 	 */
 	public function removeListener(listener):Void {
 		eventControl.removeListener(listener);
