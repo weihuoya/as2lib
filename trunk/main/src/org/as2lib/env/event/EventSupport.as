@@ -74,8 +74,8 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	/**
 	 * Adds the passed-in {@code listener} to be executed by events.
 	 * 
-	 * @param listener the listener to be add
-	 * @throws IllegalArgumentException if the listener does not match any expected type.
+	 * @param listener the listener to add
+	 * @throws IllegalArgumentException if the listener does not match any expected type
 	 */
 	public function addListener(listener):Void {
 		eventControl.addListener(listener);
@@ -83,11 +83,12 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 
 	/**
 	 * Adds all listener contained in the passed-in {@code listeners} array.
-	 * <p>All listeners get added after each other. If one listener doesn't match
+	 * 
+	 * <p>All listeners get added after each other. If one listener does not match
 	 * any expected type the rest of the listeners will not be added an a exception
 	 * will raise.
 	 * 
-	 * @param listeners the list of {@code listener}s to add
+	 * @param listeners the list of listeners to add
 	 * @throws IllegalArgumentException if any listener does not match any expected type
 	 */
 	public function addAllListeners(listeners:Array):Void {
@@ -113,10 +114,11 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 
 	/**
 	 * Getter for the list of all added listeners.
-	 * <p>This method returns a copy (not a reference) to list of added
+	 * 
+	 * <p>This method returns a copy (not a reference) of the list of all added
 	 * listeners.
 	 * 
-	 * @return List that contains all added listeners.
+	 * @return list that contains all added listeners
 	 */
 	public function getAllListeners(Void):Array {
 		return eventControl.getAllListeners();
@@ -125,7 +127,7 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	/**
 	 * Checks if the passed-in {@code listener} has been added.
 	 * 
-	 * @return {@code true} if the listener has been added.
+	 * @return {@code true} if the listener has been added
 	 */
 	public function hasListener(listener):Boolean {
 		return eventControl.hasListener(listener);
