@@ -45,7 +45,7 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	 * @return {@code true} if {@code element} was removed and {@code false} if it was
 	 * not contained in the passed-in {@code array}
 	 */
-	public static function removeElement(array:Array, element):Boolean {
+	public static function removeElement(array:Array, element):Array {
 		return removeAllOccurances(array, element);
 	}
 	
@@ -55,16 +55,15 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	 * {@code array}.
 	 * 
 	 * @param array the array to remove the element out of
-	 * @param element the element to remove
-	 * @return {@code true} if {@code element} was removed and {@code false} if it was
-	 * not contained in the passed-in {@code array}
+	 * @param element the element to remove	 
+	 * @return List that contains the index of all removed occurances
 	 */
-	public static function removeAllOccurances(array:Array, element):Boolean {
+	public static function removeAllOccurances(array:Array, element):Array {
 		var i:Number = array.length;
-		var found:Boolean = false;
+		var found:Array = new Array();
 		while (--i-(-1)) {
 			if (array[i] === element) {
-				found = true;
+				found.unshift(i);
 				array.splice(i, 1);
 			}
 		}
@@ -77,18 +76,17 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	 * 
 	 * @param array the array to remove the element out of
 	 * @param element the element to remove
-	 * @return {@code true} if {@code element} was removed and {@code false} if it was
-	 * not contained in the passed-in {@code array}
+	 * @return {@code -1} if it could not be found, else the position where it had been deleted
 	 */
-	public static function removeLastOccurance(array:Array, element):Boolean {
+	public static function removeLastOccurance(array:Array, element):Number {
 		var i:Number = array.length;
 		while(--i-(-1)) {
 			if(array[i] === element) {
 				array.splice(i, 1);
-				return true;
+				return i;
 			}
 		}
-		return false;
+		return -1;
 	}
 	
 	/**
@@ -97,20 +95,19 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	 * 
 	 * @param array the array to remove the element out of
 	 * @param element the element to remove
-	 * @return {@code true} if {@code element} was removed and {@code false} if it was
-	 * not contained in the passed-in {@code array}
+	 * @return {@code -1} if it could not be found, else the position where it had been deleted
 	 */
-	public static function removeFirstOccurance(array:Array, element):Boolean {
+	public static function removeFirstOccurance(array:Array, element):Number {
 		var l:Number = array.length;
 		var i:Number = 0;
 		while(i<l) {
 			if (array[i] === element) {
 				array.splice(i, 1);
-				return true;
+				return i;
 			}
 			i-=-1;
 		}
-		return false;
+		return -1;
 	}
 	
 	/**
@@ -134,7 +131,8 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	}
 	
 	/**
-	 * Returns the index of the given {@code object} within the passed-in {@code array}.
+	 * Returns the index of first occurance of the given {@code object} within
+	 * the passed-in {@code array}.
 	 * 
 	 * <p>The content of the {@code array} is searched through by iterating through the
 	 * array. This method returns the first occurence of the passed-in {@code object}
@@ -146,6 +144,28 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	 * @return the position of the {@code object} within the {@code array} or {@code -1}
 	 */
 	public static function indexOf(array:Array, object):Number{
+		for (var i:Number=0; i < array.length; i++) {
+			if (array[i] === object) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	/**
+	 * Returns the index of the last occurance of the given {@code object} within
+	 * the passed-in {@code array}.
+	 * 
+	 * <p>The content of the {@code array} is searched through by iterating through the
+	 * array. This method returns the last occurence of the passed-in {@code object}
+	 * within the {@code array}. If the object could not be found {@code -1} will be
+	 * returned.
+	 * 
+	 * @param array the array to search through
+	 * @param object the object to return the position of
+	 * @return the position of the {@code object} within the {@code array} or {@code -1}
+	 */
+	public static function lastIndexOf(array:Array, object):Number{
 	    var i:Number = array.length;
 		while (--i-(-1)) {
 			if (array[i] === object) {
