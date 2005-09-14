@@ -136,7 +136,22 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	public static function round(n:Number, c:Number):Number {
 		var r:Number = Math.pow(10,c);
 		return Math.round(n*r)/r;
-	} 
+	}
+	
+	/**
+	 * Floors the passed-in number {@code n}.
+	 * 
+	 * <p>It works basically the same as the {@code Math.floor} method, but it adds a
+	 * new argument to specify the number of decimal spaces.
+	 * 
+	 * @param n the number to round
+	 * @param c the number of decimal spaces
+	 * @returns the rounded number
+	 */
+	public static function floor(n:Number, c:Number):Number {
+		var r:Number = Math.pow(10,c);
+		return Math.floor(n*r)/r;
+	}  
 	
 	/**
 	 * Private constructor.
