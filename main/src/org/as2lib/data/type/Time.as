@@ -20,8 +20,9 @@ import org.as2lib.util.MathUtil;
 /**
  * {@code Time} is a holder for a timedistance.
  * 
- * <p>{@code Time} seperates a timedistance into days, hours, minutes, seconds and
- * milliseconds to offers methods to access the time distance in different ways.
+ * <p>{@code Time} splits a time distance (distance between two dates) into
+ * days, hours, minutes, seconds and milliseconds to offers methods to access
+ * the time distance value.
  * 
  * <p>There are two ways to access the {@code Time} instance:
  * 
@@ -29,27 +30,32 @@ import org.as2lib.util.MathUtil;
  * Those methods are coversions to the different time units. You can recieve the
  * complete value in a different unit.
  * 
+ * Example:
+ * <code>
+ *   var time:Time = new Time(1.5, "d");
+ *   trace(time.asDays()); // 1.5
+ *   trace(time.asHours()); // 36
+ *   trace(time.asMinutes()); // 2160
+ * </code>
+ * 
  * <p>The second way is by {@code get*()}({@code getHours()}, {@code getMinutes()},...).
  * Those methods contain only the part of each unit that is contained within the
  * value.
  * 
- * <p>Example:
+ * Example:
  * <code>
- *   var t:Time = new Time(5400000);
- *   trace(t.getHours()); // 1.5
- *   trace(t.getHours(1)); // 1.5
- *   trace(t.getHours(0)); // 1
- *   trace(t.getMinutes()); // 30
- *   
- *   t = t.plus(new Time(1.5, "h"));
- *   trace(t.getHours()); // 3
- *   trace(t.getMinutes()); // 0
- *   
- *   t = t.minus(new Time(1800000));
- *   trace(t.getHours()); // 0.5
- *   trace(t.getHours(0)); // 0
- *   trace(t.getHours(1)); // 0.5
- *   trace(t.getMinutes()); // 30 
+ *   var time:Time = new Time(1.5, "d");
+ *   trace(time.getDays()); // 1.5
+ *   trace(time.getHours()); // 12
+ *   trace(time.getMinutes(); // 0
+ * </code>
+ * 
+ * <p>Its possible to pass-in a number in to round the value to the next lower case:
+ * 
+ * Example:
+ * <code>
+ *   var time:Time = new Time(1.5, "d");
+ *   trace(time.getDays(0)); // 1
  * </code>
  * 
  * @author Martin Heidegger
@@ -57,86 +63,89 @@ import org.as2lib.util.MathUtil;
  */
 class org.as2lib.data.type.Time extends BasicClass {
 	
-	/** factor from ms to second */ 
+	/** Factor from ms to second. */ 
 	private static var SECOND:Number = 1000;
 	
-	/** factor from ms to minute */
+	/** Factor from ms to minute. */
 	private static var MINUTE:Number = SECOND*60;
 	
-	/** factor from ms to hour */
+	/** Factor from ms to hour. */
 	private static var HOUR:Number = MINUTE*60;
 	
-	/** factor from ms to day */
+	/** Factor from ms to day. */
 	private static var DAY:Number = HOUR*24;
 	
-	/** internal holder of the time in ms */
+	/** Time distance in ms. */
 	private var ms:Number;
 	
-	/** hlder for the amount of days */
+	/** Amount of days. */
 	private var days:Number;
 	
-	/** holder for the amount of hours */
+	/** Amount of hours. */
 	private var hours:Number;
 	
-	/** holder for the amount of minutes */
+	/** Amount of minutes. */
 	private var minutes:Number;
 	
-	/** holder for the amount of seconds */
+	/** Amount of seconds. */
 	private var seconds:Number;
 	
-	/** holder for the amount of milliseconds */
+	/** Amount of milliseconds. */
 	private var milliSeconds:Number;
 	
-	/** Flag if the instance need to be evaluated by {@link #evaluate} */
+	/** Flag if the instance need to be evaluated by {@link #evaluate}. */
 	private var doEval:Boolean = true;
 	
 	/**
-	 * Constructs a new instance of {@code Time}.
+	 * Constructs a new {@code Time} instance.
 	 * 
-	 * <p>Uses "ms" if no or "wrong" gets used and recalculates it to Uses {@code Number.MAX_VALUE} if
-	 * {@code Infinity} gets passed-in.
+	 * <p>Uses "ms" if no format or a wrong format was passed-in.
+	 * 
+	 * <p>Uses {@code Number.MAX_VALUE} if {@code Infinity} was passed-in.
 	 * 
 	 * 
      * @param time amount of time for the passed-in {@code format}
      * @param format (optional) "d"/"h"/"m"/"s"/"ms" for the unit of the amout,
      * 	      default case is "ms"
 	 */
-	public function Time(number:Number, format:String) {
-		setValue(number, format);
+	public function Time(time:Number, format:String) {
+		setValue(time, format);
 	}
 	
 	/** 
 	 * Sets the time of the instance.
-	 * <p>Uses ms if a wrong format gets used. Uses Number.MAX_VALUE if Infinity
-	 * is used.
+	 * 
+	 * <p>Uses "ms" if no format or a wrong format was passed-in.
+	 * 
+	 * <p>Uses {@code Number.MAX_VALUE} if {@code Infinity} was passed-in.
 	 * 
      * @param time Amount in time for the current
      * @param format (optional) "d"/"h"/"m"/"s"/"ms" for the unit of the amout.
      * 		  Default value is ms.
 	 */
-	public function setValue(number:Number, format:String):Time {
-		if (number == Infinity) {
-			number = Number.MAX_VALUE;
+	public function setValue(time:Number, format:String):Time {
+		if (time == Infinity) {
+			time = Number.MAX_VALUE;
 		}
 		switch (format) {
 			case null:
 			case undefined:
-				ms = number;
+				ms = time;
 				break;
 			case "d":
-				ms = number*DAY;
+				ms = time*DAY;
 				break;
 			case "h":
-				ms = number*HOUR;
+				ms = time*HOUR;
 				break;
 			case "m":
-				ms = number*MINUTE;
+				ms = time*MINUTE;
 				break;
 			case "s":
-				ms = number*SECOND;
+				ms = time*SECOND;
 				break;
 			default:
-				ms = number;
+				ms = time;
 		}
 		
 		// By clearing the instance value (false) it will use the proto value (true)
@@ -147,7 +156,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 	/**
 	 * Adds the passed-in {@code timedistance} to the current time.
 	 *  
-	 * @param timedistance timedistance to be added to the current time
+	 * @param timedistance time distance to be added to the current time
 	 * @return new instance with the resulting amount of time
 	 */
 	public function plus(timedistance:Time):Time {
@@ -177,7 +186,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 		if (round == null) {
 			return milliSeconds;
 		} else {
-			return MathUtil.round(milliSeconds, round);
+			return MathUtil.floor(milliSeconds, round);
 		}
 	}
 	
@@ -203,7 +212,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 		if (round == null) {
 			return seconds;
 		} else {
-			return MathUtil.round(seconds, round);
+			return MathUtil.floor(seconds, round);
 		}
 	}
 	
@@ -229,7 +238,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 		if (round == null) {
 			return minutes;
 		} else {
-			return MathUtil.round(minutes, round);
+			return MathUtil.floor(minutes, round);
 		}
 	}
 	
@@ -255,7 +264,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 		if (round == null) {
 			return hours;
 		} else {
-			return MathUtil.round(hours, round);
+			return MathUtil.floor(hours, round);
 		}
 	}
 	
@@ -281,7 +290,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 		if (round == null) {
 			return days;
 		} else {
-			return MathUtil.round(days, round);
+			return MathUtil.floor(days, round);
 		}
 	}
 	
@@ -304,7 +313,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 	}
 	
 	/**
-	 * Evaluates all units
+	 * Splits the time distance from ms (source value) into the different units.
 	 */
 	private function evaluate(Void):Void {
 		var negative = (ms >= 0) ? 1 : -1;
