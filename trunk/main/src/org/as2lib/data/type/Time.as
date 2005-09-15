@@ -18,24 +18,24 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.util.MathUtil;
 
 /**
- * {@code Time} is a holder for a timedistance.
+ * {@code Time} is a holder for a time difference.
  * 
- * <p>{@code Time} splits a time distance (distance between two dates) into
+ * <p>{@code Time} splits a time difference (distance between two dates) into
  * days, hours, minutes, seconds and milliseconds to offers methods to access
- * the time distance value.
+ * the time difference value.
  * 
  * <p>There are two ways to access the {@code Time} instance:
  * 
- * <p>The first way is by {@code as*()}({@code asHours()}, {@code asMinutes()},...).
+ * <p>The first way is by {@code in*()}({@code inHours()}, {@code inMinutes()},...).
  * Those methods are coversions to the different time units. You can recieve the
  * complete value in a different unit.
  * 
  * Example:
  * <code>
  *   var time:Time = new Time(1.5, "d");
- *   trace(time.asDays()); // 1.5
- *   trace(time.asHours()); // 36
- *   trace(time.asMinutes()); // 2160
+ *   trace(time.inDays()); // 1.5
+ *   trace(time.inHours()); // 36
+ *   trace(time.inMinutes()); // 2160
  * </code>
  * 
  * <p>The second way is by {@code get*()}({@code getHours()}, {@code getMinutes()},...).
@@ -75,7 +75,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 	/** Factor from ms to day. */
 	private static var DAY:Number = HOUR*24;
 	
-	/** Time distance in ms. */
+	/** Time difference in ms. */
 	private var ms:Number;
 	
 	/** Amount of days. */
@@ -104,12 +104,12 @@ class org.as2lib.data.type.Time extends BasicClass {
 	 * <p>Uses {@code Number.MAX_VALUE} if {@code Infinity} was passed-in.
 	 * 
 	 * 
-     * @param time amount of time for the passed-in {@code format}
+     * @param time size of the time difference for the passed-in {@code format}
      * @param format (optional) "d"/"h"/"m"/"s"/"ms" for the unit of the amout,
      * 	      default case is "ms"
 	 */
-	public function Time(time:Number, format:String) {
-		setValue(time, format);
+	public function Time(timeDifference:Number, format:String) {
+		setValue(timeDifference, format);
 	}
 	
 	/** 
@@ -119,58 +119,52 @@ class org.as2lib.data.type.Time extends BasicClass {
 	 * 
 	 * <p>Uses {@code Number.MAX_VALUE} if {@code Infinity} was passed-in.
 	 * 
-     * @param time Amount in time for the current
+     * @param time size of the time difference for the passed-in {@code format}
      * @param format (optional) "d"/"h"/"m"/"s"/"ms" for the unit of the amout.
      * 		  Default value is ms.
 	 */
-	public function setValue(time:Number, format:String):Time {
-		if (time == Infinity) {
-			time = Number.MAX_VALUE;
+	public function setValue(timeDifference:Number, format:String):Time {
+		if (timeDifference == Infinity) {
+			timeDifference = Number.MAX_VALUE;
 		}
 		switch (format) {
-			case null:
-			case undefined:
-				ms = time;
-				break;
 			case "d":
-				ms = time*DAY;
+				ms = timeDifference*DAY;
 				break;
 			case "h":
-				ms = time*HOUR;
+				ms = timeDifference*HOUR;
 				break;
 			case "m":
-				ms = time*MINUTE;
+				ms = timeDifference*MINUTE;
 				break;
 			case "s":
-				ms = time*SECOND;
+				ms = timeDifference*SECOND;
 				break;
 			default:
-				ms = time;
+				ms = timeDifference;
 		}
-		
-		// By clearing the instance value (false) it will use the proto value (true)
-		delete doEval;
+		doEval = true;
 		return this;
 	}
 	
 	/**
 	 * Adds the passed-in {@code timedistance} to the current time.
 	 *  
-	 * @param timedistance time distance to be added to the current time
+	 * @param timeDifference time difference to be added to the current time
 	 * @return new instance with the resulting amount of time
 	 */
-	public function plus(timedistance:Time):Time {
-		return new Time(ms+timedistance.valueOf());
+	public function plus(timeDifference:Time):Time {
+		return new Time(ms+timeDifference.valueOf());
 	}
 	
 	/**
-	 * Adds the passed-in {@code timedistance} from the current time.
+	 * Adds the passed-in {@code timeDifference} from the current time.
 	 *  
-	 * @param timedistance timedistance to be removed from the current time
+	 * @param timeDifference time difference to be removed from the current time
 	 * @return new instance with the resulting amount of time
 	 */
-	public function minus(time:Time):Time {
-		return new Time(ms-time.valueOf());
+	public function minus(timeDifference:Time):Time {
+		return new Time(ms-timeDifference.valueOf());
 	}
 	
 	/**
@@ -179,7 +173,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 	 * <p>It will not round the result if you pass-in nothing.
 	 * 
 	 * @param round (optional) the number of decimal spaces
-	 * @return timedistance in milliseconds
+	 * @return time difference in milliseconds
 	 */
 	public function getMilliSeconds(round:Number):Number {
 		if (doEval) evaluate();
@@ -193,9 +187,9 @@ class org.as2lib.data.type.Time extends BasicClass {
 	/**
 	 * Getter for the time distance in milliseconds.
 	 * 
-	 * @return timedistance in milliseconds
+	 * @return time difference in milliseconds
 	 */
-	public function asMilliSeconds(Void):Number {
+	public function inMilliSeconds(Void):Number {
 		return ms;
 	}
 	
@@ -205,7 +199,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 	 * <p>It will not round the result if you pass-in nothing.
 	 * 
 	 * @param round (optional) the number of decimal spaces
-	 * @return timedistance in seconds
+	 * @return time difference in seconds
 	 */
 	public function getSeconds(round:Number):Number {
 		if (doEval) evaluate();
@@ -219,9 +213,9 @@ class org.as2lib.data.type.Time extends BasicClass {
 	/**
 	 * Getter for the time distance in seconds.
 	 * 
-	 * @return timedistance in seconds
+	 * @return time difference in seconds
 	 */
-	public function asSeconds(Void):Number {
+	public function inSeconds(Void):Number {
 		return ms/SECOND;
 	}
 	
@@ -231,7 +225,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 	 * <p>It will not round the result if you pass-in nothing.
 	 * 
 	 * @param round (optional) the number of decimal spaces
-	 * @return timedistance in minutes
+	 * @return time difference in minutes
 	 */
 	public function getMinutes(round:Number):Number {
 		if (doEval) evaluate();
@@ -245,9 +239,9 @@ class org.as2lib.data.type.Time extends BasicClass {
 	/**
 	 * Getter for the time distance in minutes.
 	 * 
-	 * @return timedistance in minutes
+	 * @return time difference in minutes
 	 */
-	public function asMinutes(Void):Number {
+	public function inMinutes(Void):Number {
 		return ms/MINUTE;
 	}
 	
@@ -257,7 +251,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 	 * <p>It will not round the result if you pass-in nothing.
 	 * 
 	 * @param round (optional) the number of decimal spaces
-	 * @return timedistance in hours
+	 * @return time difference in hours
 	 */
 	public function getHours(round:Number):Number {
 		if (doEval) evaluate();
@@ -271,9 +265,9 @@ class org.as2lib.data.type.Time extends BasicClass {
 	/**
 	 * Getter for the time distance in hours.
 	 * 
-	 * @return timedistance in hours
+	 * @return  time difference in hours
 	 */
-	public function asHours(Void):Number {
+	public function inHours(Void):Number {
 		return ms/HOUR;
 	}
 	
@@ -283,7 +277,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 	 * <p>It will not round the result if you pass-in nothing.
 	 * 
 	 * @param round (optional) the number of decimal spaces
-	 * @return timedistance in days
+	 * @return time difference in days
 	 */
 	public function getDays(round:Number):Number {
 		if (doEval) evaluate();
@@ -297,16 +291,16 @@ class org.as2lib.data.type.Time extends BasicClass {
 	/**
 	 * Getter for the time distance in days.
 	 * 
-	 * @return timedistance in days
+	 * @return  time difference in days
 	 */
-	public function asDays(Void):Number {
+	public function inDays(Void):Number {
 		return ms/DAY;
 	}
 	
 	/**
 	 * Generates String representation of the time.
 	 * 
-	 * @return time as string
+	 * @return time difference as string
 	 */
 	public function toString():String {
 		return getDays(0)+"d "+getHours(0)+":"+getMinutes(0)+":"+getSeconds(0)+"."+getMilliSeconds(0);
