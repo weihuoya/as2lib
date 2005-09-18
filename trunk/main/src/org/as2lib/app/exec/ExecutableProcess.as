@@ -16,6 +16,7 @@
 
 import org.as2lib.app.exec.AbstractProcess;
 import org.as2lib.app.exec.Executable;
+import org.as2lib.util.MethodUtil;
 
 /**
  * {@code ExecutableProcess} is a Wrapper for {@link Executable}'s to be
@@ -50,6 +51,6 @@ class org.as2lib.app.exec.ExecutableProcess extends AbstractProcess {
 	 * Implementation of {@link AbstractProcess#run}.
 	 */
 	private function run() {
-		executable.execute(args);
+		MethodUtil.invoke("execute", executable, args);
 	}
 }
