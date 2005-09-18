@@ -15,13 +15,14 @@
  */
 
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.env.event.distributor.EventDistributorControl;
-import org.as2lib.env.event.distributor.SimpleEventDistributorControl;
+import org.as2lib.env.event.distributor.CompositeEventDistributorControl;
+import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributorControl;
 import org.as2lib.app.exec.Batch;
 import org.as2lib.app.exec.Process;
 import org.as2lib.app.exec.ProcessListener;
 import org.as2lib.app.exec.BatchListener;
 import org.as2lib.core.BasicClass;
+import org.as2lib.data.type.Time;
 
 /**
  * {@code BatchProcess} is a implementation of {@link Batch} for a list of
@@ -33,6 +34,9 @@ import org.as2lib.core.BasicClass;
  * <p>As {@code BatchProcess} itself acts like a Process you can use it as a 
  * composite to execute a {@code BatchProcess} within another
  * {@code BatchProcess}.
+ * 
+ * <p>It supports beneath the {@link ProcessListener} the events for
+ * {@link BatchListener}.
  *
  * @author Martin Heidegger
  * @version 1.0
@@ -45,19 +49,16 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	/** Flag if execution was finished */
 	private var finished:Boolean;
 	
-	/** Holder for the control to the batch related event */
-	private var batchEventControl:EventDistributorControl;
+	/** Holder for the control the events */
+	private var eventControl:CompositeEventDistributorControl;
 	
 	/** Holder for the event to be executed for batchlistener */
 	private var batchEvent:BatchListener;
 	
-	/** Holder for the control to the process related event */
-	private var processEventControl:SimpleEventDistributorControl;
-	
-	/** Holder for the events to be executed for processlistener*/
+	/** Holder for the events to be executed for processlistener */
 	private var processEvent:ProcessListener;
 	
-	/** List that contains all processes **/
+	/** List that contains all processes */
 	private var list:Array;
 	
 	/** Holder for the percents already executed */
@@ -69,15 +70,27 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	/** Holder for a possible parent process, might be null */
 	private var parent:Process;
 	
+	/** Holder for the executed error */
+	private var error;
+	
+	/** Flag if the process is currently working */
+	private var working:Boolean;
+	
+	/** Started at time */
+	private var startTime:Number;
+	
+	/** Finished time */
+	private var endTime:Number;
+	
 	/**
-	 * Creates a new {@code BatchProcess}
+	 * Constructs a new {@code BatchProcess}
 	 */
 	public function BatchProcess(Void) {
-		processEventControl = new SimpleEventDistributorControl(ProcessListener);
-		processEvent = processEventControl.getDistributor();
-		batchEventControl = new SimpleEventDistributorControl(BatchListener);
-		batchEvent = batchEventControl.getDistributor();
-		current = -1;
+		eventControl = new SimpleConsumableCompositeEventDistributorControl();
+		eventControl.acceptListenerType(ProcessListener);
+		eventControl.acceptListenerType(BatchListener);
+		processEvent = eventControl.getDistributor(ProcessListener);
+		batchEvent = eventControl.getDistributor(BatchListener);
 		list = new Array();
 		
 		percent = 0;
@@ -136,26 +149,39 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	 */
 	public function onFinishProcess(info:Process):Void {
 		if (info == getCurrentProcess()) {
-			info.removeProcessListener(this);
-			if (current < list.length) {
-				updatePercent(100);
-				batchEvent.onUpdateBatch(this);
-				processEvent.onUpdateProcess(this);
-				var c:Process = list[current++];
-				c.setParentProcess(this);
-				c.addProcessListener(this);
-				c.start();
-			} else {
-				finished = true;
-				batchEvent.onStopBatch(this);
-				processEvent.onFinishProcess(this);
-				percent = -1;
-			}
+			info.removeListener(this);
+			nextProcess();
 		} else {
 			var error:IllegalArgumentException = new IllegalArgumentException("Unexpected onFinishProcess occured from "+info+".", this, arguments);
 			batchEvent.onBatchError(this, error);
 			processEvent.onProcessError(this, error);
+			finish();
 		}
+	}
+	
+	private function nextProcess(Void):Void {
+		if (current < list.length-1) {
+			updatePercent(100);
+			batchEvent.onUpdateBatch(this);
+			processEvent.onUpdateProcess(this);
+			current ++;
+			var c:Process = list[current];
+			c.setParentProcess(this);
+			c.addListener(this);
+			c.start();
+		} else {
+			finish();
+		}
+	}
+	
+	/**
+	 * Internal method to finish the execution.
+	 */
+	private function finish(Void):Void {
+		finished = true;
+		endTime = getTimer();
+		batchEvent.onStopBatch(this);
+		processEvent.onFinishProcess(this);
 	}
 	
 	/**
@@ -172,11 +198,11 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	 * @param info to the process that has been paused.
 	 */
 	public function onPauseProcess(info:Process):Void {
-		if (info != getCurrentProcess()) {
+		if (info == getCurrentProcess()) {
 			batchEvent.onUpdateBatch(this);
-			processEvent.onUpdateProcess(this);
+			processEvent.onPauseProcess(this);
 		} else {
-			var error:IllegalArgumentException = new IllegalArgumentException("Unexpected onPauseProcess occured from "+info+".", this, arguments);
+			var error:IllegalArgumentException = new IllegalArgumentException("Unexpected onPauseProcess occured from "+info+". Expected was "+getCurrentProcess(), this, arguments);
 			batchEvent.onBatchError(this, error);
 			processEvent.onProcessError(this, error);
 		}
@@ -189,9 +215,9 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	 * @param info to the process that has been resumed.
 	 */
 	public function onResumeProcess(info:Process):Void {
-		if (info != getCurrentProcess()) {
+		if (info == getCurrentProcess()) {
 			batchEvent.onUpdateBatch(this);
-			processEvent.onUpdateProcess(this);
+			processEvent.onResumeProcess(this);
 		} else {
 			var error:IllegalArgumentException = new IllegalArgumentException("Unexpected onResumeProcess occured from "+info+".", this, arguments);
 			batchEvent.onBatchError(this, error);
@@ -205,15 +231,23 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	 * 
 	 * @param info to the process that has thrown the error.
 	 */
-	public function onProcessError(info:Process, error):Void {
+	public function onProcessError(info:Process, error):Boolean {
+		var result:Boolean = false;
 		if (info != getCurrentProcess()) {
-			batchEvent.onBatchError(this, error);
-			processEvent.onProcessError(this, error);
-		} else {
-			var wrapper:IllegalArgumentException = new IllegalArgumentException("Unexpected onFinishProcess occured from "+info+".", this, arguments);
-			batchEvent.onBatchError(this, wrapper);
-			processEvent.onProcessError(this, wrapper);
+			error = new IllegalArgumentException("Unexpected onProcessError occured from "+info+".", this, arguments);
 		}
+		if (batchEvent.onBatchError(this, error)) {
+			result = true;
+		}
+		if (!result) {
+			if (processEvent.onProcessError(this, error)) {
+				result = true;
+			}
+		}
+		if (!result) {
+			finish();
+		}
+		return result;
 	}
 	
 	/**
@@ -236,15 +270,18 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	 */
     public function start() {
     	if(!started) {
-			current = 0;
+			current = -1;
 			started = false;
 			finished = false;
+			working = true;
 			percent = 0;
 			
 			batchEvent.onStartBatch(this);
+			delete endTime;
+			startTime = getTimer();
 			processEvent.onStartProcess(this);
 			started = true;
-			onFinishProcess();
+			nextProcess();
     	}
 	}
 	
@@ -295,37 +332,37 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	}
 
 	/**
-	 * Adds a {@link ProcessListener} as Observer to the process.
+	 * Adds a {@link Listener} as Observer to the process.
 	 * 
-	 * @param listener {@link ProcessListener} to be added. 
+	 * @param listener {@link Listener} to be added. 
 	 */
-    public function addProcessListener(listener:ProcessListener):Void {
-		processEventControl.addListener(listener);
+    public function addListener(listener):Void {
+		eventControl.addListener(listener);
 	}
 	
     /**
-     * Removes a {@link ProcessListener} as Observer from the process.
+     * Removes a {@code Listener} as Observer from the process.
      * 
-     * @param listener {@link ProcessListener} to be added.
+     * @param listener {@code ProcessListener} to be added.
      */
-	public function removeProcessListener(listener:ProcessListener):Void {
-		processEventControl.removeListener(listener);
+	public function removeListener(listener):Void {
+		eventControl.removeListener(listener);
 	}
 	
 	/**
 	 * Removes all added Observers.
 	 */
-	public function removeAllProcessListeners(Void):Void {
-		processEventControl.removeAllListeners();
+	public function removeAllListeners(Void):Void {
+		eventControl.removeAllListeners();
 	}
 	
 	/**
-	 * Adds a {@code list} of {@link ProcessListener}s as Observer to the process.
+	 * Adds a {@code list} of {@code Listener}s as Observer to the process.
 	 * 
 	 * @param list List of listeners to be added.
 	 */
-	public function addAllProcessListeners(list:Array):Void {
-		processEventControl.addAllListeners(list);
+	public function addAllListeners(list:Array):Void {
+		eventControl.addAllListeners(list);
 	}
 	
 	/**
@@ -333,52 +370,18 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	 * 
 	 * @return List that contains all registered listeners
 	 */
-	public function getAllProcessListeners(Void):Array {
-		return processEventControl.getAllListeners();
-	}
-	
-    /**
-     * Adds a {@link BatchListener} as Observer to the {@code Batch}.
-     * 
-     * @param listener {@link BatchListener} to be added.
-     */
-    public function addBatchListener(listener:BatchListener):Void {
-		batchEventControl.addListener(listener);
+	public function getAllListeners(Void):Array {
+		return eventControl.getAllListeners();
 	}
 	
 	/**
-	 * Removes a certain {@link BatchListener} as Observer from the {@code Batch}.
+	 * Checks if a certain listener has been added.
 	 * 
-	 * @param listener {@link BatchListener} to be removed.
+	 * @param l listener to check if it has been added.
+	 * @return true if the passed-in listener has been added.
 	 */
-	public function removeBatchListener(listener:BatchListener):Void {
-		batchEventControl.removeListener(listener);
-	}
-	
-	/**
-	 * Removes all added batchlisteners that were added with
-	 * {@link #addBatchListener} or {@link #addAllBatchListeners}.
-	 */
-	public function removeAllBatchListeners(Void):Void {
-		batchEventControl.removeAllListeners();
-	}
-	
-    /**
-     * Adds a {@link BatchListener} as Observer to the {@code Batch}.
-     * 
-     * @param listener {@link BatchListener} to be added.
-     */
-	public function addAllBatchListeners(list:Array):Void {
-		batchEventControl.addAllListeners(list);
-	}
-	
-	/**
-	 * Getter for all added listeners in form of a {@code Array}.
-	 * 
-	 * @return Added listeners in form of a array.
-	 */
-	public function getAllBatchListeners(Void):Array {
-		return batchEventControl.getAllListeners();
+	public function hasListener(l):Boolean {
+		return eventControl.hasListener(l);
 	}
 	
 	/**
@@ -388,6 +391,28 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	 */
     public function getPercentage(Void):Number {
 		return percent;
+	}
+	
+	/**
+	 * Duration of the execution of the process.
+	 * 
+	 * @return Time of the execution duration.
+	 */
+	public function getDuration(Void):Time {
+		if (endTime) {
+			return new Time(endTime-startTime);
+		} else {
+			return new Time(getTimer()-startTime);
+		}
+	}
+	
+	/**
+	 * Estimates the approximate time until finish of the process
+	 * 
+	 * @return estimated time until finish of process.
+	 */
+	public function getEstimatedTotalTime(Void):Time {
+		return new Time(getDuration().valueOf()/getPercentage()*100);
 	}
 	
 	/**
@@ -420,9 +445,25 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	}
 	
 	/**
+	 * TODO:!!!
+	 */
+	public function getErrors(Void):Array {
+		return error;
+	}
+	
+	/**
+	 * Flag if any error had occured during execution.
+	 * 
+	 * @return {@code true} if a error occured during the batc.
+	 */
+	public function hasError(Void):Boolean {
+		return (getErrors().length != null);
+	}
+	
+	/**
 	 * Returns if the Batch is paused or not.
 	 * 
-	 * @return true if the batch has been started and the current subprocess is
+	 * @return {@code true} if the batch has been started and the current subprocess is
 	 *         not paused.
 	 */
 	public function isPaused(Void):Boolean {
@@ -440,4 +481,9 @@ class org.as2lib.app.exec.BatchProcess extends BasicClass implements Batch, Proc
 	private function updatePercent(cP:Number):Void {
 		percent = 100/list.length*(current+(1/100*cP));
 	}
+
+	public function getEstimatedRestTime(Void) : Time {
+		return null;
+	}
+
 }

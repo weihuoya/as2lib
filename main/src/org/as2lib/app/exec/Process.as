@@ -14,70 +14,73 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicInterface;
-import org.as2lib.app.exec.ProcessListener;
+import org.as2lib.env.event.EventListenerSource;
+import org.as2lib.data.type.Time;
 
 /**
- * {@code Process} is a definition for all lacy processes like for loading files
- * having serverside responses or algorithms that take a little longer.
+ * {@code Process} represents the access to a lacy execution.
  * 
- * <p>Any {@code Process} implementation can be started with {@link #start}. Due
- * to flash ist not possible to allow system processes it is build as Observable
- * that responses if the process was
- * started ({@link ProcessListener#onStartProcess}),
- * finished ({@link ProcessListener#onFinishProcess}),
- * paused ({@link ProcessListener#onPauseProcess}),
- * resumed ({@link ProcessListener#onResumeProcess}) or if the properties
- * changed ({@link ProcessListener#onUpdateProcess}).
+ * <p>{@code Process} can be used as access to application code that executes with
+ * a time delay. This can be eighter file requests or time consuming algorithms
+ * that have to be delayed to prevent player timeouts.
  * 
- * <p>To observe {@code Process} you can add one or more listener to the process
- * with {@link #addProcessListener} or {@link #addAllProcessListeners}.
+ * <p>Any {@code Process} implementation can be started with {@link #start}.
  * 
+ * <p>It allows to add a {@code ProcessListener} by {@link #addListener} to observe
+ * the state of the {@code Process}. Any added observer will be executed by 
+ * the start of the process ({@code onStartProcess}), if the process pauses execution
+ * ({@code onFinishProcess}), on resume of execution ({@code onResumeProcess}), if
+ * a error occured ({@code onProcessError}) and if the {@code Process} finished
+ * execution.
  * 
  * @author Martin Heidegger
  * @version 1.0
+ * @see org.as2lib.app.exec.AbstractProcess
  */
-interface org.as2lib.app.exec.Process extends BasicInterface {
+interface org.as2lib.app.exec.Process extends EventListenerSource {
 	
 	/**
 	 * Starts the execution of this process.
 	 * 
-	 * @return result for the start (implementation specific).
+	 * <p>It is possible that the process finishes execution before returning the
+	 * from this method, but it is also possible that it finishes after returning
+	 * from this method. This rule exists to not loose unnecessary performance by
+	 * simple accepting that every process has to be finished after this execution.
+	 * 
+	 * <p>Problematic example:
+	 * <code>
+	 * 
+	 *   class MyClass implements FinishProcessListener {
+	 *     private var processStarted:Boolean
+	 *     
+	 *     public function MyClass(Void) {
+	 *     	 processStarted = false;
+	 *     }
+	 *   
+	 *     public function doSomething(Void):Void {
+	 *       var process:Process = new MyProcess();
+	 *       process.start();
+	 *       process.addListener(this);
+	 *       processStarted = true;
+	 *     }
+	 *     
+	 *     public function onFinishProcess(process:Process):Void {
+	 *       if (processStarted) {
+	 *         // do something
+	 *         processStarted = false;
+	 *       } else {
+	 *         // throw an error (will be called if the process finishes immediatly.
+	 *       }
+	 *     }
+	 *   }
+	 * </code>
+	 * 
+	 * <p>Any {@code Process} is allowed to take arguments for its execution or
+	 * return a result of its execution.
+	 * 
+	 * @return (optiona) result for the start (implementation specific).
 	 */
     public function start();
-    
-	/**
-	 * Adds a {@link ProcessListener} as Observer to the process.
-	 * 
-	 * @param listener {@link ProcessListener} to be added. 
-	 */
-    public function addProcessListener(listener:ProcessListener):Void;
-	
-	/**
-	 * Adds a {@code list} of {@link ProcessListener}s as Observer to the process.
-	 * 
-	 * @param list List of listeners to be added.
-	 */
-	public function addAllProcessListeners(list:Array):Void;
-    
-    /**
-     * Removes a {@link ProcessListener} as Observer from the process.
-     * 
-     * @param listener {@link ProcessListener} to be added.
-     */
-	public function removeProcessListener(listener:ProcessListener):Void;
-	
-	/**
-	 * Removes all added Observers.
-	 */
-	public function removeAllProcessListeners(Void):Void;
-	
-	/**
-	 * Getter for all added Observers.
-	 * 
-	 * @return List that contains all registered listeners
-	 */
-	public function getAllProcessListeners(Void):Array;
 	
 	/**
 	 * Flag if the process has been started.
@@ -87,35 +90,57 @@ interface org.as2lib.app.exec.Process extends BasicInterface {
     public function hasStarted(Void):Boolean;
     
     /**
-     * Flag if the process has been finished.
+     * Returns {@code true} if the process has been finished else {@code false}.
      * 
-     * @return true if the process has been finished else false
+     * <p>A {@code Process} can only be finished if it has been started with 
+     * {@code start()}
+     * 
+     * @return {@code true} if the process has been finished else {@code false}
      */
     public function hasFinished(Void):Boolean;
     
     /**
-     * Flag if the process has been paused.
+     * Returns {@code true} if the process has been started and has been paused.
      * 
-     * @return true if the process has been started and has been paused
+     * <p>A {@code Process} is allowed to be paused, this indicates that the process
+     * is actually waiting for something.
+     * 
+     * @return {@code true} if the process has been started and has been paused
      */
     public function isPaused(Void):Boolean;
     
     /**
-     * Flag if the process has been paused.
+     * Returns {@code true} if the process has been started and is not paused.
      * 
-     * @return true if the process has been started and is not paused
+     * <p>A {@code Process} is allowed to be paused, this indicates that the process
+     * is actually not waiting for something.
+     * 
+     * @return {@code true} if the process has been started and is not paused
      */
     public function isRunning(Void):Boolean;
     
     /**
-     * Getter for the currently executed percentage of the process.
+     * Returns the percentage of execution
      * 
-     * @return Percentage of execution. Null if percentage was not evaluateable.
+     * <p>There are several possibilies of return values:
+     * 
+     * <p>If the execution has not been started and the percentage will be
+     * evaluateable for sure it will return {@code 0}.
+     * 
+     * <p>If the execution has been started and the percentage is evaluateable,
+     * it returns the current amount of percentage from {@code 0}-{@code 100}.
+     * 
+     * <p>If the execution has finished and the percentage was evaluateable, it
+     * returns {@code 100}.
+     * 
+     * <p>In any other case it will return {@code null}.
+     * 
+     * @return current percentage of execution
      */
     public function getPercentage(Void):Number;
     
     /**
-     * Possibility to tell the process what parent process started its execution.
+     * Allows the integration and access to a process hierarchy.
      * 
      * @param process {@code Process} that started the current process.
      * @throws org.as2lib.env.except.IllegalArgumentException if the passed-in
@@ -126,9 +151,58 @@ interface org.as2lib.app.exec.Process extends BasicInterface {
     public function setParentProcess(process:Process):Void;
     
     /**
-     * Getter for the parent process that executed the process.
+     * Returns the parent {@code Process} set with {@code setParentProcess}.
      * 
-     * @return Parent process if available, else null.
+     * @return parent process if available, else {@code null}.
      */
     public function getParentProcess(Void):Process;
+    
+    /**
+     * Returns the occured errors published with {@code onProcessError} during
+     * exeuction of the {@code Process} in an array.
+     *
+     * @return all occured errors during the execution of the event
+     */
+    public function getErrors(Void):Array;
+	
+	/**
+	 * Checks if an error occured during execution of the {@code Process}.
+	 *  
+	 * @return {@code true} if an error occured, else {@code false}
+	 */
+	public function hasError(Void):Boolean;
+	
+	/**
+	 * By using {@code start()} it saves the start time of the execution of the process.
+	 * 
+	 * <p>This method allows access to the total execution time of the process. The total
+	 * execution time get evaluated by comparing start time with end time or (if the
+	 * process has not finished yet) with the current time.
+	 * 
+	 * @return time difference between start time and finish time or current point
+	 */
+	public function getDuration(Void):Time;
+	
+	/**
+	 * Evaluates the expected total time of execution.
+	 * 
+	 * <p>If the {@code Process} has been finished it returns the final total time
+	 * of the execution.
+	 * 
+	 * <p>If the {@code Process} has not been started it returns a estimated total
+	 * time of {@code 0}.
+	 * 
+	 * @return estimated time difference between start and finish time
+	 */
+	public function getEstimatedTotalTime(Void):Time;
+	
+	/**
+	 * Evaluates the expected rest time until the execution finishes.
+	 * 
+	 * <p>If the {@code Process} has been finished it returns {@code 0}. If it
+	 * has not been started it returns {@code null}.
+	 * 
+	 * @return estimated rest time of the execution of the process.
+	 */
+	public function getEstimatedRestTime(Void):Time;
 }
