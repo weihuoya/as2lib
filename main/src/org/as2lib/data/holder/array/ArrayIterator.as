@@ -78,7 +78,7 @@ import org.as2lib.data.holder.NoSuchElementException;
 		// Replacement of internal methods as performance upgrade.
 		// - Only if this class is used, else the OOP functionality would be broken.
 		// - With more than 50 elements, else this method would be slower
-		if (this["__proto__"] == p && t.length > 25) {
+		if (this["__proto__"] == p && t.length > 50) {
 			
 			// Replace for .next() if .hasNext was not called
 			var y:Function = function() {
