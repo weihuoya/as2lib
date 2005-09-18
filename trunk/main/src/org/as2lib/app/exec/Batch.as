@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.app.exec.Process;
-import org.as2lib.app.exec.BatchListener;
 
 /**
  * {@code Batch} is the definition for a list of processes that will be executed
@@ -32,13 +31,13 @@ import org.as2lib.app.exec.BatchListener;
  * can add a {@link BatchListener} with {@link #addBatchListener} that allows to
  * get a more detailed information about the batch execution.
  * 
- * Example:
+ * <p>Example:
  * <code>
  *   import org.as2lib.app.exec.Batch;
  *   import org.as2lib.app.exec.BatchProcess;
  *   
  *   var b:Batch = new BatchProcess();
- *   b.addBatchListener(new MyStartUpController());
+ *   b.addListener(new MyStartUpController());
  *   b.addProcess(new MyStartUpProcess());
  *   b.addProcess(new MyXMLParsingProcess());
  *   b.start();
@@ -52,73 +51,35 @@ interface org.as2lib.app.exec.Batch extends Process {
 	
 	/**
 	 * Adds a {@link Process} to the list of processes to execute.
-	 * Its possible to at the same process more than one times.
 	 * 
-	 * @param process {@link Process} to be added.
-	 * @return Internal identifier of the process.
+	 * <p>Its possible to at the same process more than one times. It will be
+	 * executed as often as you add it.
+	 * 
+	 * @param process {@link Process} to be added
+	 * @return internal identifier of the process
 	 */
 	public function addProcess(process:Process):Number;
 	
 	/**
-	 * Removes all instances of a process that were added to the batch.
+	 * Removes all instances of a process that were added to the {@code Batch}.
 	 * 
-	 * @param process {@link Process} to be removed.
+	 * @param process {@link Process} to be removed
 	 */
     public function removeProcess(process:Process):Void;
     
     /**
-     * Removes a process with a certain id from the batch.
+     * Removes a {@code Process} with a certain id of the {@code Batch}.
      * 
-     * @param id Identifier for the certain process.
+     * <p>This is necessary if you add the same process more than once.
+     * 
+     * @param id identifier for the certain {@code Process}
      */
     public function removeProcessById(id:Number):Void ;
     
     /**
-     * Getter for the currently execution Process.
+     * Returns the currently execution {@code Process}
      * 
-     * @return Currently executing process.
+     * @return currently executing {@code Process}
      */
-    public function getCurrentProcess(Void):Process;
-    
-    /**
-     * Getter for all added processes.
-     * 
-     * @return List of all added processes.
-     */
-    public function getAllAddedProcesses(Void):Array;
-    
-    /**
-     * Adds a {@link BatchListener} as Observer to the {@code Batch}.
-     * 
-     * @param listener {@link BatchListener} to be added.
-     */
-    public function addBatchListener(listener:BatchListener):Void;
-    
-    /**
-     * Adds a {@link BatchListener} as Observer to the {@code Batch}.
-     * 
-     * @param listener {@link BatchListener} to be added.
-     */
-	public function addAllBatchListeners(list:Array):Void;
-	
-	/**
-	 * Removes a certain {@link BatchListener} as Observer from the {@code Batch}.
-	 * 
-	 * @param listener {@link BatchListener} to be removed.
-	 */
-	public function removeBatchListener(listener:BatchListener):Void;
-	
-	/**
-	 * Removes all added batchlisteners that were added with
-	 * {@link #addBatchListener} or {@link #addAllBatchListeners}.
-	 */
-	public function removeAllBatchListeners(Void):Void;
-	
-	/**
-	 * Getter for all added listeners in form of a {@code Array}.
-	 * 
-	 * @return Added listeners in form of a array.
-	 */
-	public function getAllBatchListeners(Void):Array;
-	
+    public function getCurrentProcess(Void):Process;	
 }
