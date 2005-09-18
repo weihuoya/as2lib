@@ -14,7 +14,7 @@
  * limitations under the License.
  */
  
-import org.as2lib.app.exec.ControlableProcess;
+import org.as2lib.app.exec.Process;
 
 /**
  * {@code StepByStepProcess} is a process that can be executed in parts(steps).
@@ -29,7 +29,7 @@ import org.as2lib.app.exec.ControlableProcess;
  * @author Martin Heidegger
  * @version 1.0
  */
-interface org.as2lib.app.exec.StepByStepProcess extends ControlableProcess {
+interface org.as2lib.app.exec.StepByStepProcess extends Process {
 	
 	/**
 	 * Executes the next step of the process.
