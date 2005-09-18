@@ -140,8 +140,8 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExec
 		executed = 1;
 		if (!target) target = new Array();
 		target.push(arguments);
+		working = true;
 		FrameImpulse.getInstance().connectExecutable(timeCall);
-		pause();
 		return null;
 	}
 	
@@ -219,11 +219,9 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExec
 			for (i=0; i<oldTarget.length; i++) {
 				exe["execute"].apply(exe, oldTarget[i]);
 			}
+			finish();
 		} catch(e) {
-			onProcessError(this, e);
+			interrupt(e);
 		}
-		
-		resume();
-		finish();
 	}
 }
