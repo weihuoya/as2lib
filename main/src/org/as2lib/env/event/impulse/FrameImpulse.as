@@ -307,7 +307,7 @@ class org.as2lib.env.event.impulse.FrameImpulse extends AbstractImpulse implemen
 	 * @return List that contains all added {@link FrameImpulseListener}s.
 	 */
 	public function getAllFrameImpulseListeners(Void):Array {
-		return frameImpulseBroadcaster._listenerss.concat();
+		return frameImpulseBroadcaster._listeners.concat();
 	}
 	
 	/**
@@ -327,10 +327,8 @@ class org.as2lib.env.event.impulse.FrameImpulse extends AbstractImpulse implemen
 	 * @return {@code true} if the {@code listener} has been added
 	 */
 	public function hasListener(listener):Boolean {
-		if (hasFrameImpulseListener(listener)) {
-			return true;
-		}
-		if (super.hasListener(listener)) {
+		if (hasFrameImpulseListener(listener)
+			|| super.hasListener(listener)) {
 			return true;
 		}
 		return false;
@@ -367,7 +365,7 @@ class org.as2lib.env.event.impulse.FrameImpulse extends AbstractImpulse implemen
 	 * @return {@code true} if the certain listener has been added.
 	 */
 	public function hasFrameImpulseListener(listener:FrameImpulseListener):Boolean {
-		return ArrayUtil.contains(frameImpulseBroadcaster._listenersss, listener); 
+		return ArrayUtil.contains(frameImpulseBroadcaster._listeners, listener); 
 	}
 	
 }
