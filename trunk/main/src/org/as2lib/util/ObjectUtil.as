@@ -17,6 +17,8 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.Config;
 import org.as2lib.util.ClassUtil;
+import org.as2lib.util.ArrayUtil;
+import org.as2lib.util.Comparable;
 
 /**
  * {@code ObjectUtil} contains fundamental methods to efficiently and easily work
@@ -228,6 +230,79 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 			}
 		}
 		return (object instanceof clazz	&& !(object.__proto__ instanceof clazz));
+	}
+	
+	/**
+	 * Checks if two passed-in parameters are equal.
+	 * 
+	 * <p>It uses different strategies by the first passed-in {@code obj1}.
+	 *   <ul>
+	 *     <li>If {@code obj1} is a primitive it compares it with == operator.</li>
+	 *     <li>If {@code obj1} implements {@link Comparable} it calls {@code compare()}
+	 *         to compare both passed-in parameters</li>
+	 *     <li>Any different case compares the structure of both objects.</li>
+	 *   </ul>
+	 *   
+	 * <p>It compares complex objects (that do not implement {@code Comparable})
+	 * only if they are instances of the same class. A different class (even
+	 * if its only a extended class) will be handled as not equal.
+	 * 
+	 * <p>It compares complex objects recursivly. It handles back references in 
+	 * a proper way.
+	 * 
+	 * @param obj1 object to be compared
+	 * @param obj2 object to compare with passed-in {@code obj1}
+	 * @return {@code true} if both parameters are equal
+	 */
+	public static function compare(obj1, obj2):Boolean {
+		return compareRecursive(obj1, obj2, [], []);
+	}
+	
+	/**
+	 * Compares recursivly (for objects) if the structure matches.
+	 * 
+	 * @param obj1 object to compare with a different object.
+	 * @param obj2 object to be compared with {@code obj1}.
+	 * @param stack1 recursive stack to check endless recursions for the {@code obj1}
+	 * @param stack2 recursive stack to check endless recursions for the {@code obj2}
+	 * @return {@code true} if both paramerters are equal
+	 */
+	private static function compareRecursive(obj1, obj2, stack1:Array, stack2:Array):Boolean {
+		if (typeof obj1 == "object"
+			&& !(   obj1 instanceof String
+			     || obj1 instanceof Number
+			     || obj1 instanceof Boolean)) {
+			if (obj1 === obj2) {
+				return true;
+			}
+			if (obj1 instanceof Comparable) {
+				var c:Comparable = obj1;
+				return c.compare(obj2);
+			}
+			if (obj1.__proto__ == obj2.__proto__) {
+				var index:Number = ArrayUtil.lastIndexOf(stack1, obj1);
+				if (index > -1) {
+					if (obj2 == stack2[index]) {
+						return true;
+					}
+				}
+				stack1.push(obj1);
+				stack2.push(obj2);
+				var i:String;
+				for (i in obj1) {
+					if (!compareRecursive (obj1[i], obj2[i], stack1, stack2)) {
+						return false;
+					}
+				}
+				stack1.pop();
+				stack2.pop();
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return (obj1 == obj2);
+		}
 	}
 	
 	/**
