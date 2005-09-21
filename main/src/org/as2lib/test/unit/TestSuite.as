@@ -14,64 +14,127 @@
  * limitations under the License.
  */
  
-import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.array.TypedArray;
+import org.as2lib.app.exec.BatchProcess;
 import org.as2lib.test.unit.Test;
+import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestRunner;
-import org.as2lib.test.unit.TestResultFactory;
-import org.as2lib.test.unit.TestSuiteResultFactory;
-import org.as2lib.test.unit.LoggerTestListener;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.test.unit.TestSuiteResult;
+import org.as2lib.app.exec.Process;
+import org.as2lib.test.unit.TestCaseResult;
+import org.as2lib.test.unit.TestCaseMethodInfo;
 
 /**
- * Composite Implementation for Tests.
- * A TestSuite is a collection of Tests. While TestSuite implements Test
- * it is possible to even add TestSuite to the TestSuite.
+ * {@code TestSuite} is a composite implementation of {@link Test}.
+ * 
+ * <p>A {@code TestSuite} is a collection of {@code Test}s. A {@code TestSuite} 
+ * does not contain any executable code but it may contain different {@code Test}s
+ * that can be added with {@link #addTest}.
+ * 
+ * <p>In contrast to {@code TestCase} the {@code TestSuite} has no external
+ * {@code TestRunner}. {@code TestSuite} is its own implementation of
+ * {@code TestRunner}.
  * 
  * @author Martin Heidegger
+ * @version 2.0
+ * @see org.as2lib.test.unit.TestSuiteFactory
  */
-class org.as2lib.test.unit.TestSuite extends BasicClass implements Test {
+class org.as2lib.test.unit.TestSuite extends BatchProcess implements Test, TestRunner {
 
-	/** Internal Holder for all test contained within the TestSuite. */
+	/** 
+	 * Blocks the collection of 
+	 * {@code org.as2lib.test.unit.TestSuiteFactory#collectAllTestCases}.
+	 * 
+	 * @return {@code true} to block the collection
+	 */
+	public static function blockCollecting(Void):Boolean {
+		return true;
+	}
+	
+	/** All test contained within the TestSuite. */
 	private var tests:TypedArray;
 	
 	/** Name of the TestSuite. */
 	private var name:String;
 	
-	private var resultFactory:TestResultFactory;
-
-	public function getResultFactory(Void):TestResultFactory {
-		if(!resultFactory) resultFactory = new TestSuiteResultFactory();
-		return resultFactory;
-	}
+	/** Result for the execution of the TestSuite. */
+	private var testResult:TestSuiteResult;
 
 	/**
-	 * Constructs a new TestSuite.
+	 * Constructs a new {@code TestSuite}.
 	 * 
-	 * @param name Name of the TestSuite.
+	 * @param name name of the {@code TestSuite}
 	 */
 	public function TestSuite(name:String) {
-		this.tests = new TypedArray(Test);
+		this.tests = new TypedArray(TestRunner);
+		testResult = new TestSuiteResult(this);
 		this.name = name;
 	}
 	
 	/**
-	 * Adds a Test to the TestSuite.
+	 * Helper to validate if the added {@code Test} contains the current testsuite.
 	 * 
-	 * @param test Test that should be added.
-	 * @throws IllegalArgumentException If you add the TestSuite to itself.
+	 * <p>Since its possible to add any {@code Test} to this suite it could be
+	 * possible to add this {@code TestSuite} instance. That would result in a 
+	 * endless recursion.
+	 * 
+	 * @param test test to be validated
+	 * @throws IllegalArgumentException if the passed-in {@code Test} contains this
+	 *         instance as child.
 	 */
-	public function addTest(test:Test):Void {
-		if(test === this) {
-			throw new IllegalArgumentException("A testsuite may not include itself.", this, arguments);
+	private function checkRecursion(test:TestResult) {
+		if (test === testResult) {
+			throw new IllegalArgumentException(
+				"The test "+test+" contains or is the current test",
+				this, arguments);
 		}
-		tests.push(test);
+		var content:Array = test.getTestResults();
+		for (var i=0; i<content.length; i++) {
+			if (content[i] != test) {
+				checkRecursion(content[i]);
+			}
+		}
 	}
 	
 	/**
-	 * Getter for the name of the TestSuite.
+	 * Adds a process to the {@code TestSuite}.
 	 * 
-	 * @return Name of the TestSuite.
+	 * <p>{@code TestSuite} does only allow {@code TestRunner} as sub processes.
+	 * 
+	 * <p>Overrides the implementation in {@link BatchProcess#addProcess}.
+	 * 
+	 * @param p {@code Process} to be added to the {@code TestSuite}
+	 * @throws IllegalArgumentException if the passed-in {@code p} contains this
+	 *         instance as child.
+	 */
+	public function addProcess(p:Process):Void {
+		var eP:TestRunner = TestRunner(p);
+		if (eP) {
+			checkRecursion(eP.getTestResult());
+			testResult.addTest(eP.getTestResult());
+			tests.push(p);
+			super.addProcess(p);
+		} else {
+			throw new IllegalArgumentException("Only Tests are allowed for processing", this, arguments);
+		}
+	}
+	
+	/**
+	 * Adds a {@code Test} to the {@code TestSuite}.
+	 * 
+	 * @param test {@code Test} to be added
+	 * @throws IllegalArgumentException if the passed-in {@code Test} contains this
+	 *         instance as child.
+	 */
+	public function addTest(test:Test):Void {
+		addProcess(test.getTestRunner());
+	}
+	
+	/**
+	 * Returns the name of the {@code TestSuite}.
+	 * 
+	 * @return name of the {@code TestSuite}.
 	 */
 	public function getName(Void):String {
 		if(!name) {
@@ -81,35 +144,79 @@ class org.as2lib.test.unit.TestSuite extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Runs the TestSuite (implementation of Test.run)
+	 * Runs the {@code TestSuite}.
 	 * 
-	 * @param doNotPrintResult [Optional Parameter, null interpreted as false] Boolean if the Result should be printed immediately or not.
-	 * @return TestRunner that run this test (including all informations about the run).
+	 * @return {@code TestRunner} that run this test
 	 */
-	public function run():TestRunner {
-		var testRunner:TestRunner = new TestRunner();
-		testRunner.addProcessListener(new LoggerTestListener());
-		return testRunner.run(this);
-		// not mtasc compatible:
-		// return new TestRunner().run(this);
-		
+	public function run(Void):TestRunner {
+		start();
+		return this;
 	}
 	
 	/**
-	 * Blocks collecting of TestSuiteFactory
+	 * Returns the {@code TestRunner} that executes this {@code TestSuite}.
 	 * 
-	 * @return true to not get collected.
+	 * @return {@code TestRunner} that executes this {@code TestSuite}
 	 */
-	public static function blockCollecting(Void):Boolean {
-		return true;
+	public function getTestRunner(Void):TestRunner {
+		return this;
 	}
 	
 	/**
-	 * Getter for all Tests contained within the TestSuite.
+	 * Returns all {@code Tests} contained within this {@code TestSuite}.
 	 * 
-	 * @return TypedArray that contains all Tests of the TestSuite.
+	 * @return {@link TypedArray} that contains all {@code Test}s of this {@code TestSuite}.
 	 */
 	public function getTests(Void):TypedArray {
 		return this.tests;
+	}
+	
+	/**
+	 * Event handling for a error during a proces.
+	 * 
+	 * @param process {@code Process} that throws the error
+	 * @return {@code false} to stop further execution
+	 */
+	public function onProcessError(process:Process, error):Boolean {
+		return false;
+	}
+
+	/** 
+	 * Returns the {@code TestResult} to the {@code TestSuite}.
+	 * 
+	 * <p>The returned {@code TestResult} may not be complete. This is the case
+	 * if the test has not been executed or has not finished yet.
+	 * 
+	 * @return {@link TestResult} for the {@code TestSuite} that contains all informations
+	 */
+	public function getTestResult(Void):TestResult {
+		return testResult;
+	}
+	
+	/**
+	 * Returns the current executing {@code TestCaseResult}.
+	 * 
+	 * <p>It is necessary to get the {@code TestCaseResult} for the {@code TestCase}
+	 * that just gets executed because there can be more than one {@code TestCase}
+	 * available within a {@code TestResult}. 
+	 * 
+	 * @return {@code TestResult} to the current executing {@code TestCase}
+	 */
+	public function getCurrentTestCase(Void):TestCaseResult {
+		return list[current].getCurrentTestCase();
+	}
+	
+	/**
+	 * Returns the current executing {@code TestCaseMethodInfo}.
+	 * 
+	 * <p>It is necessary to get the {@code TestCaseMethodInfo} for the method
+	 * that just gets executed because there can be more than one methods available
+	 * within a {@code TestCaseResult}.
+	 * 
+	 * @return informations about the current executing method
+	 * @see #getCurrentTestCase
+	 */
+	public function getCurrentTestCaseMethodInfo(Void):TestCaseMethodInfo {
+		return list[current].getCurrentTestCaseMethodInfo();
 	}
 }

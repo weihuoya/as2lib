@@ -13,356 +13,77 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 import org.as2lib.app.exec.Process;
-import org.as2lib.app.exec.Call;
-import org.as2lib.app.exec.AbstractProcess;
-import org.as2lib.app.exec.Timeout;
-import org.as2lib.data.holder.array.TypedArray;
-import org.as2lib.data.holder.array.ArrayIterator;
-import org.as2lib.data.holder.Iterator;
-import org.as2lib.test.unit.info.InstantiationError;
-import org.as2lib.test.unit.info.SetUpError;
-import org.as2lib.test.unit.info.ExecutionError;
-import org.as2lib.test.unit.info.TearDownError;
-import org.as2lib.test.unit.info.PauseError;
-import org.as2lib.test.unit.Test;
-import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestCaseResult;
 import org.as2lib.test.unit.TestCaseMethodInfo;
-import org.as2lib.util.ArrayUtil;
-import org.as2lib.util.StringUtil;
-import org.as2lib.util.ClassUtil;
-import org.as2lib.util.StopWatch;
-//import org.as2lib.env.reflect.ClassInfo;
 
 /**
- * Central TestSystem Class to run Testcases and TestSuites.
- * This is the heart of the TestSystem. All Tests get executed here.
- * It contains a execution service for TestSuites and TestCase.
+ * {@code TestRunner} is the definition for a process that executes a {@code Test}.
  * 
- * <p>To use the TestRunner you simple have to instanciate it and run some
- * {@link TestCase} to it.
+ * <p>It is the internal mechianism for the execution of a {@code Test}. Any
+ * {@code Test} has to refer to its {@code TestRunner}.
  * 
- * Example:
+ * <p>Since {@code TestRunner} extends {@link Process} it is possible to add
+ * all listeners for {@code Process} to a {@code TestRunner}.
+ * 
+ * <p>Example for adding a Listener to the execution of a {@link TestCase}:
  * <code>
- * import org.as2lib.test.unit.TestRunner;
- * import org.as2lib.test.unit.LoggerTestListener;
- * 
- * var testRunner:TestRunner = new TestRunner();
- * testRunner.addProcessListener(new LoggerTestListener());
- * testRunner.run(new MyTestCase()); // alternativly you have a faster .runTestCase
+ *   var testCase:TestCase = new MyTestCase();
+ *   var testRunner:TestRunner = testCase.getTestRunner();
+ *   
+ *   // add a listener to log the events of the test
+ *   testRunner.addListener(new LoggerTestListener());
+ *   
+ *   // start the execution of the testcase
+ *   testCase.run();
  * </code>
  * 
- * <p>You can get the result of the running testcase(s) by @see #getTestResult.
- * It contains all Informations about the resulted testcases.
+ * <p>{@code TestRunner} is part of the unit testing MVC construct. {@code TestRunner}
+ * acts as controller, {@link TestResult} acts as model and all listeners act
+ * as view. {@code TestResult} can be accessed by {@code #getTestResult}.
  * 
- * <p>The Testrunner is designed as process so its possible to add Listener to the
- * TestRunner by {@code addProcessListener}. In this way it is possible to build a
- * graphical view to the TestRunner (TestRunner is the Controller and TestResult the
- * Model -> MVC).
- *
- * <p>Note: There is currently no better abstraction Level Possible so we have to differ
- *       between TestCase & TestSuite. The current implementation of .run allows only those
- *       two classes.
+ * <p>The seperation of {@code Test} & {@code TestRunner} is to save the developer
+ * of a {@code TestCase} that contains all its execution details (can lead to
+ * many reserved fields that might be used by the unit-test developer. In this way
+ * only two fields ((@link Test#getTestRunner} & {@link Test#run}) are reserved.
  * 
  * @author Martin Heidegger
+ * @version 2.0
  */
-class org.as2lib.test.unit.TestRunner extends AbstractProcess implements Process {
-	
-	/** Time in ms until the testrunner pauses automatically. */
-	public static var MAX_TIME_UNTIL_AUTO_PAUSE:Number = 1500;
-	
-	/** Amount of frames until resume from auto pause */
-	public static var FRAMES_UNTIL_RESUME:Number = 1;
-	
-	/** Result Holder for a TestResult. */
-	private var testResult:TestResult;
-	
-	/** Internal List of Testcases to process. */
-	private var testCases:TypedArray;
-	
-	/** Iterator over all Testcases. Holds the current position. */
-	private var testCaseIterator:Iterator;
-	
-	/** Information for the current processing method. */
-	private var methodInfo:TestCaseMethodInfo;
-	
-	/** Internal holder of the processed Testcasesmethods. */
-	private var processedTestCaseMethods:TypedArray;
-	
-	/** Holder of the currently running Testcase. */
-	private var currentTestCase:TestCaseResult;
-	
-	/** Interator for the methods of the current Testcase. */
-	private var currentTestCaseMethodIterator:Iterator;
-		
-	/** Holder for the methodscope of the current Method. */
-	private var testCaseInstance:TestCase;
-	
-	/** Pause Flag (if pause is allowed or not. */
-	private var pauseAllowed:Boolean;
-	
-	/** TimeStamp for the time of the last resume/start */
-	private var lastStartStamp:Number;
-	
-	/** Autopause call. Executes awakeFromPause after {@link #FRAMES_UNTIL_RESUME} */
-	private var autoPauseCall:Timeout;
+interface org.as2lib.test.unit.TestRunner extends Process {
 	
 	/** 
-	 * Constructs a new TestRunner.
-	 */
-	public function TestRunner(Void) {
-		super();
-		autoPauseCall = new Timeout(new Call(this, awakeFromAutoPause), FRAMES_UNTIL_RESUME);
-	}
-	
-	/**
-	 * Getter for the Testresult.
-	 * The Testresult contains all informations about the process.
+	 * Returns the {@code TestResult} to the {@code Test} executed by the {@code TestRunner}.
 	 * 
-	 * @return Result of the TestRunner.
-	 */
-	public function getTestResult(Void):TestResult {
-		return testResult;
-	}
-	
-	/**
-	 * Setter for the Testresult.
-	 * Only private used for a possible instanciation of the TestCase.
+	 * <p>The returned {@code TestResult} may not be complete. This is the case
+	 * if the test has not been executed or has not finished yet.
 	 * 
-	 * @param result TestResult for the runner.
+	 * @return {@link TestResult} for the {@code Test} that contains all informations
 	 */
-	private function setTestResult(result:TestResult):Void {
-		testResult = result;
-		testCases = result.getTestCaseResults();
-		testCaseIterator = new ArrayIterator(testCases);
-	}
+	public function getTestResult(Void):TestResult;
 	
 	/**
-	 * Implementation for 
-	 */
-	public function start() {
-		return run.apply(this, arguments);
-	}
-	
-	/**
-	 * Runs a test.
+	 * Returns the current executing {@code TestCaseResult}.
 	 * 
-	 * @param test Test to run.
-	 */
-	public function run(test:Test):TestRunner {
-		
-		setTestResult(test.getResultFactory().createResult(test, this));
-		
-		started = true;
-		lastStartStamp = getTimer();
-		
-		prepare();
-		
-		processQueue();
-		return this;
-	}
-	
-	/**
-	 * Prepares the Testcase to run the TestCase/TestSuite.
-	 */
-	private function prepare(Void):Void {
-		testCases = new TypedArray(TestCaseResult);
-		processedTestCaseMethods = new TypedArray(TestCaseMethodInfo);
-		super.prepare();
-	}
-	
-	/**
-	 * Pauses the process.
-	 * This is only possible during the execution of a testmethod (not before, not after).
-	 * Else it will add a error to the methodInfo.
+	 * <p>It is necessary to get the {@code TestCaseResult} for the {@code TestCase}
+	 * that just gets executed because there can be more than one {@code TestCase}
+	 * available within a {@code TestResult}. 
 	 * 
-	 * @see #resume
+	 * @return {@code TestResult} to the current executing {@code TestCase}
 	 */
-	public function pause(Void):Void {
-		if (!pauseAllowed) {
-			methodInfo.addInfo(new PauseError("IMPORTANT: Pause is not available before the execution of a testcase method. Action failed."));
-		} else {
-			super.pause();
-		}
-	}
+	public function getCurrentTestCase(Void):TestCaseResult;
 	
 	/**
-	 * Resumes the process.
+	 * Returns the current executing {@code TestCaseMethodInfo}.
 	 * 
-	 * @see #pause
-	 */
-	public function resume(Void):Void {
-		lastStartStamp = getTimer();
-		super.resume();
-		processQueue();
-	}
-	
-	/**
-	 * Method to be executed by {@link #autoPauseCall}.
-	 */
-	private function awakeFromAutoPause(Void):Void {
-		lastStartStamp = getTimer();
-		paused = false;
-		processQueue();
-	}
-	
-
-	/**
-	 * Starts autoPause if necessary.
+	 * <p>It is necessary to get the {@code TestCaseMethodInfo} for the method
+	 * that just gets executed because there can be more than one methods available
+	 * within a {@code TestCaseResult}.
 	 * 
-	 * @return true if autopause was started.
+	 * @return informations about the current executing method
+	 * @see #getCurrentTestCase
 	 */
-	private function autoPause(Void):Boolean {
-		if (lastStartStamp+MAX_TIME_UNTIL_AUTO_PAUSE < getTimer()) {
-			paused = true;
-			autoPauseCall.execute();
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * Starts or resumes the TestCase Queue.
-	 */
-	private function processQueue(Void):Void {
-		
-		// Resuming former startet TestCase (if available);
-		if(isRunning()) {
-			if (currentTestCase) {
-				processMethodQueue();
-			}
-			
-			
-			while (testCaseIterator.hasNext() && isRunning()) {
-				startTestCase(this.testCaseIterator.next());
-			}
-			
-			// Finish if the current run isn't finished
-			finish();
-		}
-	}
-	
-	/**
-	 * @param testCaseMethodInfo Information about a TestCaseMethod that should be checked if it was run already or not.
-	 * @return true if a testcasemethod has already been processed.
-	 */
-	public function isTestCaseMethodFinished(testCaseMethodInfo:TestCaseMethodInfo):Boolean {
-		return ArrayUtil.contains(processedTestCaseMethods, testCaseMethodInfo);
-	}
-	
-	/**
-	 * Starts the execution of a TestCase.
-	 * 
-	 * @param testCase TestCase that should be executed.
-	 */
-	private function startTestCase(testCase:TestCaseResult):Void {
-		currentTestCase = testCase;
-		currentTestCaseMethodIterator = new ArrayIterator(testCase.getMethodInfos());
-		processMethodQueue();
-	}
-	
-	/**
-	 * Getter for the current executing TestCase.
-	 * 
-	 * @return TestCaseResult Result to the current executing TestCase.
-	 */
-	public function getCurrentTestCase(Void):TestCaseResult {
-		return currentTestCase;
-	}
-	
-	/**
-	 * Getter for the current executing TestCaseMethod.
-	 * 
-	 * @return TestCaseMethodInfo Information about the current executing TestCaseMethod
-	 */
-	public function getCurrentTestCaseMethodInfo(Void):TestCaseMethodInfo {
-		return methodInfo;
-	}
-	
-	/**
-	 * Processes all methods of the current Testcase.
-	 */
-	private function processMethodQueue(Void):Void {
-		if (methodInfo) {
-			methodInfo.getStopWatch().stop();
-			finishMethod();
-		}
-			
-		while (currentTestCaseMethodIterator.hasNext() && isRunning()) {
-			
-			methodInfo = currentTestCaseMethodIterator.next();
-		
-			// Dispatch the actual progress information
-			event.onUpdateProcess(this);
-			
-			try {
-				testCaseInstance = ClassUtil.createInstance(currentTestCase.getTestCase()["__constructor__"]);
-				testCaseInstance.setTestRunner(this);
-			} catch(e) {
-				methodInfo.addInfo(new InstantiationError("IMPORTANT: Testcase threw an error by instanciation.\n"+StringUtil.addSpaceIndent(e.toString(), 2), this, arguments));
-			}
-			
-			// Prepare the execution of the method by setUp
-			if (!methodInfo.hasErrors()) {
-				try {
-					testCaseInstance.setUp();
-				} catch (e) {
-					methodInfo.addInfo(new SetUpError("IMPORTANT: Error occured during set up(Testcase wasn't executed):\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
-				}
-			}
-			
-			if (!methodInfo.hasErrors()) {
-				
-				// Execute the method
-				var sW:StopWatch = methodInfo.getStopWatch();
-				
-				try {
-					sW.start();
-					pauseAllowed = true;
-					methodInfo.executeTo(testCaseInstance);
-				} catch (e) {
-					methodInfo.addInfo(new ExecutionError("Unexpected exception thrown during execution:\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
-				}
-				
-				pauseAllowed = false;
-				
-				if(isRunning()) {
-					sW.stop();
-				}
-			}
-
-			if (isRunning()) {
-				finishMethod();
-			}
-			autoPause();
-		}
-	}
-
-	/**
-	 * Finishes the last MethodInfo.
-	 * 
-	 * Note: It is necessary for pause() to finish it later.
-	 */
-	private function finishMethod():Void {
-		if (methodInfo.isExecuted()){
-			// Tear down the changed of setUp.
-			try {
-				testCaseInstance.tearDown();
-			} catch(e) {
-				methodInfo.addInfo(new TearDownError("IMPORTANT: Error occured during tear down:\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
-			}
-		}
-		
-		
-		processedTestCaseMethods.push(methodInfo);
-		
-		delete methodInfo;
-	}		
-	
-	public function getPercentage(Void):Number {
-		return testResult.getPercentage();
-	}
+	public function getCurrentTestCaseMethodInfo(Void):TestCaseMethodInfo;
 }

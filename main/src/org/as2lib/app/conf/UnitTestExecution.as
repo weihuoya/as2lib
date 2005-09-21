@@ -16,9 +16,9 @@
 
 import org.as2lib.app.exec.Process;
 import org.as2lib.app.exec.AbstractProcess;
-import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.LoggerTestListener;
 import org.as2lib.test.unit.TestSuiteFactory;
+import org.as2lib.test.unit.TestSuite;
 
 /**
  * Prepared configuration to execute Testcases.
@@ -53,16 +53,14 @@ class org.as2lib.app.conf.UnitTestExecution extends AbstractProcess implements P
 	 * Runs all available Testcases.
 	 */
 	public function run(Void):Void {
-		// Testrunner to work with
-		var testRunner:TestRunner = new TestRunner();
-			  
-		// Redirects the finished testoutput to the default logger
-		testRunner.addProcessListener(new LoggerTestListener());
 		
 		// Execute all Testcases that are available at runtime
 		var factory:TestSuiteFactory = new TestSuiteFactory();
 		
+		var testSuite:TestSuite = factory.collectAllTestCases();
+		testSuite.addListener(LoggerTestListener.getInstance());
+		
 		// Starts the Runner as a subprocess.
-		startSubProcess(testRunner, [factory.collectAllTestCases()]);
+		startSubProcess(testSuite);
 	}
 }

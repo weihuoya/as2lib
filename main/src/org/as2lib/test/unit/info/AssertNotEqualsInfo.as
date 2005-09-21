@@ -16,6 +16,7 @@
 
 import org.as2lib.test.unit.AbstractAssertInfo;
 import org.as2lib.util.StringUtil;
+import org.as2lib.util.ObjectUtil;
 
 /**
  * Information holder and examiner of a assertNotEquals call.
@@ -49,7 +50,7 @@ class org.as2lib.test.unit.info.AssertNotEqualsInfo extends AbstractAssertInfo {
 	 * @return True if the execution fails.
 	 */
 	public function execute(Void):Boolean {
-		return(val == compareTo);
+		return ObjectUtil.compare(val,compareTo);
 	}
 	
 	/**

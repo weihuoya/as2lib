@@ -14,85 +14,77 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
+import org.as2lib.data.holder.Map;
+import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.log.LogSupport;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.test.unit.info.*;
 import org.as2lib.test.unit.ExecutionInfo;
-import org.as2lib.test.unit.LoggerTestListener;
 import org.as2lib.test.unit.Test;
-import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.test.unit.TestRunner;
-import org.as2lib.test.unit.TestResultFactory;
-import org.as2lib.test.unit.TestCaseResultFactory;
+import org.as2lib.test.unit.TestCaseRunner;
 import org.as2lib.app.exec.Call;
 import org.as2lib.app.exec.Executable;
 import org.as2lib.app.exec.Process;
 import org.as2lib.util.ObjectUtil;
+import org.as2lib.test.unit.LoggerTestListener;
 
 /**
- * {@code Testcase} class to be extended.
- * <p>A Testcase defines the Access to all parts of the TestUnit System of as2lib.
+ * {@code Testcase} is the basic class to extend for unit-tests.
  * 
- * It is handled as an abstract class this means you have to extend it if you 
- * want to work with the system (similar to the most other testunit systems).
+ * <p>A {@code TestCase} contains the API to write unit-tests.
+ * 
+ * <p>It is handled as an abstract class this means you have to extend it if you 
+ * want to work with the system (similar to the most other unit testing systems).
+ * 
+ * <p>Example for a simple test:
  * <code>
- * import org.as2lib.test.unit.TestCase;
+ *   import org.as2lib.test.unit.TestCase;
  * 
- * class MyTestCase extends TestCase {
- * }
+ *   class MyTestCase extends TestCase {}
  * </code>
  * 
- * A testcase usually gets processed by {@link #run}. 
- * The System will fetch all Methods starting with "test" and execute them in
- * a new, isolated instance. Before each method call the methods {@link #setUp} and
- * {@link #tearDown} will get called.
- *
- * Example:
- *   Testcase:
- *   <code>
- * import org.as2lib.test.unit.TestCase;
+ * <p>To execute a {@code TestCase} you just have to call {@code run()}. It logs
+ * automatically with {@link LoggerTestListener}.
  * 
- * class MyTestCase extends TestCase {
- *   public function TestCase(Void) {
- *     trace('new instance');
- *   }
- *   public function setUp(Void){
- *     trace('set up');
- *   }
- *   public function testMyFirstTest(Void) {
- *     trace('myFirstTest');
- *   }
- *   public function testMySecondTest(Void) {
- *     trace('mySecondTest');
- *   }
- *   public function tearDown(Void){
- *     trace('tear down');
- *   }
- * }
- *   </code>
- *   Call:
- *   <code>
- * new MyTestCase().run();
- *   </code>
- *   Result:
- *   <code>
- * new instance
- * set up
- * myFirstTest
- * tear down
- * new instance
- * set up
- * mySecondTest
- * tear down
- *   </code>
+ * <p>The test will return detailed informations about the executed method. The
+ * method {@code fail} will simply fail the test.
  * 
- * Within the "test"-methods you have access to different assert methods:
+ * <p>Example for a test that fails:
+ * <code>
+ *   import org.as2lib.test.unit.TestCase;
+ * 
+ *   class MyTestCase extends TestCase {
+ *     public function testOne(Void):Void {
+ *       if (1 == 0) { // example to show that fail can be used everywhere.
+ *         fail ("Error occured");
+ *       }
+ *     }
+ *   }
+ * </code>
+ * 
+ * <p>Within the "test"-methods you have access to different assert methods. Those
+ * methods fail if a certain condition is given or not and add a information for
+ * the failure to the informations about the execution.
+ * 
+ * <p>Example for a assertion:
+ * <code>
+ *   import org.as2lib.test.unit.TestCase;
+ * 
+ *   class MyTestCase extends TestCase {
+ *     public function testOne(Void):Void {
+ *       assertEquals("1 is not 0", 1, 0);
+ *     }
+ *   }
+ * </code>
+ * 
+ * <p>Supported assert methods are:
  * <table>
  *   <thead>
  *     <tr>
- *       <th>Methodname</th>
- *       <th>Checks</th>
+ *       <th>method name</th>
+ *       <th>condition</th>
  *     </tr>
  *   </thead>
  *   <tbody>
@@ -106,15 +98,16 @@ import org.as2lib.util.ObjectUtil;
  *     </tr>
  *     <tr>
  *       <th>assertEquals</th>
- *       <td><i>a</i> == <i>b</i></td>
+ *       <td>ObjectUtil.compare(<i>a</i>,<i>b</i>);</td>
  *     </tr>
  *     <tr>
  *       <th>assertAlmostEquals</th>
- *       <td>(<i>a</i> < <i>b</i> && <i>a</i>+x > <i>b</i>) || (<i>a</i> > <i>b</i> && <i>a</i>-x < <i>b</i>)</td>
+ *       <td>(<i>a</i> < <i>b</i> && <i>a</i>+x > <i>b</i>) ||
+ *       	 (<i>a</i> > <i>b</i> && <i>a</i>-x < <i>b</i>)</td>
  *     </tr>
  *     <tr>
  *       <th>assertNotEquals</th>
- *       <td><i>a</i> != <i>b</i></td>
+ *       <td>!ObjectUtil.compare(<i>a</i>,<i>b</i>);</td>
  *     </tr>
  *     <tr>
  *       <th>assertSame</th>
@@ -175,146 +168,222 @@ import org.as2lib.util.ObjectUtil;
  *   </tbody>
  * </table>
  * 
- * You have also got the possibility to simple fail the Testcase by {@link #fail}.
+ * <p>The system will fetch all methods with a name that starts with "test" and
+ * execute them in a new, isolated instance of the {@code TestCase} to prevent
+ * tests inteferences.
+ * 
+ * <p>Example for a test with instance properties:
+ * <code>
+ *   import org.as2lib.test.unit.TestCase;
+ * 
+ *   class MyTestCase extends TestCase {
+ *     private var a:String;
+ * 
+ *     private function testOne(Void):Void {
+ *       trace(a); // undefined
+ *       a = "1";
+ *       trace(a); // 1
+ *     }
+ *   
+ *     private function testTwo(Void):Void {
+ *       trace(a); // undefined
+ *       a = "1";
+ *       trace(a); // 1
+ *     }
+ *   }
+ * </code>
+ * 
+ * <p>The method {@link #setUp} allows preparing the new instance.
+ * The method {@link #tearDown} allows to clear those preparations.
+ *
+ * <p>Example with {@code setUp} and {@code tearDown}:
+ * <code>
+ *   import org.as2lib.test.unit.TestCase;
+ * 
+ *   class MyTestCase extends TestCase {
+ * 
+ *     private static var content:String="1";
+ *   
+ *     private static function setContent(newContent:String):Void {
+ *       content = newContent;
+ *     }
+ *     
+ *     private static function getContent(Void):String {
+ *       return content;
+ *     }
+ *     
+ *     private var cache:String;
+ * 
+ *     private function setUp() {
+ *       cache = getContent();
+ *     }
+ *   
+ *     private function testOne() {
+ *       trace(getContent()); // 1
+ *       setContent("2");
+ *       trace(getContent()); // 2
+ *     }
+ *   
+ *     private function testTwo() {
+ *       trace(getContent()); // 1
+ *       setContent("3");
+ *       trace(getContent()); // 3
+ *     }
+ *   
+ *     private function tearDown() {
+ *       setContent(cache);
+ *     }
+ *   }
+ * </code>
  *
  * @author Martin Heidegger
- * @version 1.2
+ * @version 2.0
  * @see org.as2lib.test.unit.TestSuite
  * @see org.as2lib.test.unit.Test
- * @see org.as2lib.test.unit.TestResult
+ * @see org.as2lib.test.unit.TestRunner
  */
 
-class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
+class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	
-	// Holder for the resultFactory.
-	private static var resultFactory:TestCaseResultFactory;
+	/* Defaut maximal difference used in {@code assertAlmostEquals}. */
+	public static var DEFAULT_MAX_DIFF:Number = 1e-10;
 	
-	// Defaut maximal difference used in assertAlmostEquals
-	public static var DEFAULT_MAX_DIFF:Number = 0.0000001;
+	/** All {@code TestRunner}s mapped to classes. */
+	private static var testRunners:Map = new HashMap();
 	
-	// Internal Holder for the TestRunner context the method is running in.
-	private var testRunner:TestRunner;
-	
-	/**
-	 * Returns a factory to create a Result
+	/** 
+	 * Blocks the collection of 
+	 * {@code org.as2lib.test.unit.TestSuiteFactory#collectAllTestCases}.
 	 * 
-	 * @return Factory for a result for this test.
+	 * @return {@code true} to block the collection
 	 */
-	public function getResultFactory(Void):TestResultFactory {
-		if(!resultFactory) resultFactory = new TestCaseResultFactory();
-		return resultFactory;
+	public static function blockCollecting(Void):Boolean {
+		return true;
 	}
 	
 	/**
-	 * Abstract constructor. You should extend this class to use the API.
+	 * Returns the {@code TestRunner} that applies to this {@code TestCase} instance.
+	 * 
+	 * <p>Its required to execute methods of a Test that this runs in a clean
+	 * instance that should not contain any state. To keep one {@code TestRunner}
+	 * per class it is necessary to save {@code TestRunner} in a {@code HashMap}
+	 * that stores the correct {@code TestCaseRunner} to the {@code TestCase}.
+	 *  
+	 * @param instance instance to fetch the correct {@code TestCaseRunner}
+	 * @return {@code TestRunner} that applies to this {@code TestCase} instance
+	 */
+	private static function getClassTestRunner(instance:TestCase):TestCaseRunner {
+		var clazz = instance["__proto__"];
+		var p:TestCaseRunner = testRunners.get(clazz);
+		if (!p) {
+			p = new TestCaseRunner(instance);
+			testRunners.put(clazz, p);
+		}
+		return p;
+	}
+	
+	/* Executor for this testcase. */
+	private var testRunner:TestCaseRunner;
+		
+	/**
+	 * Abstract constructor.
 	 */
 	private function TestCase(Void) {}
 	
 	/**
 	 * Template method to set up the testcase before running a method.
-	 * This method will get called before executing each method in a clean,
+	 * 
+	 * <p>This method will get called before executing each method in a clean,
 	 * new instance.
 	 */
 	public function setUp(Void):Void {}
 	
 	/**
 	 * Template method to tear down the testcase after running a method.
-	 * This method will get called after the execution of each method of this
+	 * 
+	 * <p>This method will get called after the execution of each method of this
 	 * testcase.
 	 */
 	public function tearDown(Void):Void {}
 	
 	/**
 	 * Runs this testcase.
-	 * Implementation of @see Test. 
-	 * Runs all methods of this testcase in an new container.
 	 * 
-	 * @see TestRunner#run
-	 * @return Runner of the Testcases (containing all informations about the run)
+	 * <p>Runs all methods of this testcase in an new container and logs all its
+	 * events.
+	 * 
+	 * @see Test#run
+	 * @return {@code TestRunner} to the {@code TestCase}
 	 */
-	public function run():TestRunner {
-		var testRunner:TestRunner = new TestRunner();
-		testRunner.addProcessListener(new LoggerTestListener());
-		return testRunner.run(this);
-		// not mtasc compatible:
-		// return new TestRunner().run(this);
+	public function run(Void):TestRunner {
+		var testRunner:TestRunner = getTestRunner();
+		testRunner.addListener(LoggerTestListener.getInstance());
+		testRunner.start();
+		return testRunner;
+	}
+	
+	/**
+	 * Returns the {@code TestRunner} that executes this {@code TestCase}.
+	 * 
+	 * @return {@code TestRunner} that executes this {@code TestCase}
+	 */
+	public function getTestRunner(Void):TestRunner {
+		if (!testRunner) {
+			testRunner = getClassTestRunner(this);
+		}
+		return testRunner;
 	}
 	
 	/**
 	 * Pauses the execution of this testcase.
-	 * This method has been introduces to pause the execution of this method.
-	 * The run will not be completed if @see #resume will not get called!
+	 * 
+	 * <p>This method has been introduces to pause the execution of this method.
+	 * The run will not be completed if {@code resume} will not be called!
 	 */
 	private function pause(Void):Void {
-		getTestRunner().pause();
+		testRunner.pause();
 	}
 	
 	/**
 	 * Resumes the run of this method.
-	 * This method resumes the execution of the testcase.
+	 * 
+	 * <p>This method resumes the exeuction of a {@code TestCase} that has been
+	 * paused with {@code pause}.
 	 */
 	private function resume(Void):Void {
-		getTestRunner().resume();
+		testRunner.resume();
 	}
 	
 	/**
 	 * Method to start a subprocess for this process.
 	 * 
-	 * @param process Process to start.
-	 * @param args Arguments to be used for the process
-	 * @param callBack Call to be executed if the execution finishes.
+	 * @param process process to start
+	 * @param args arguments to be used for the process
+	 * @param callBack call to be executed if the execution finishes
 	 */
 	private function startProcess(process:Process, args:Array, callBack:Executable):Void {
-		getTestRunner().startSubProcess(process, args, callBack);
+		testRunner.startSubProcess(process, args, callBack);
 	}
 	
 	/**
-	 * Setter for the testrunner.
-	 * The testrunner represents the context of the actual method.
-	 * {@link #getMethodInformation} is a referred to the informations that represent this
-	 * methods information. It will be automatically set by the testrunner, because
-	 * only it know who runs this test)
+	 * Adds a execution info to the process.
 	 * 
-	 * @param testRunner Used testrunner for this testcase.
+	 * @param info info to be added
+	 * @return {@code false} if the info is a error, else {@code true}
 	 */
-	public function setTestRunner(testRunner:TestRunner):Void {
-		this.testRunner = testRunner;
-	}
-	
-	/**
-	 * Getter for the testrunner.
-	 * The testrunner represents the context of the actual method.
-	 * The testrunner is usually only available within a testunit run.
-	 * 
-	 * @return Current testrunner.
-	 */
-	public function getTestRunner(Void):TestRunner {
-		return testRunner;
-	}
-	
-	/**
-	 * Returns the methodinformation for the method that is currently executed.
-	 * The methodinformation represents the information holder for the current
-	 * method that is executed.
-	 * 
-	 * Usually only available during the execution of the testcase.
-	 * 
-	 * @see TestRunner
-	 * @see #getTestRunner
-	 * @return Methodinformation for the current testcase method.
-	 */
-	private function getMethodInformation(Void):TestCaseMethodInfo {
-		return getTestRunner().getCurrentTestCaseMethodInfo();
+	private function addInfo(info:ExecutionInfo):Boolean {
+		testRunner.addInfo(info);
+		return !info.isFailed();
 	}
 	
 	/**
 	 * Simply fails the current Testcase.
 	 * 
-	 * @param message Message to the failing of the method.
+	 * @param message message to the failing of the method
 	 */
 	private function fail(message:String):Void {
 		message = (typeof message == "string") ? message : "<no message applied>";
-		getMethodInformation().addInfo(new FailureInfo(message));
+		addInfo(new FailureInfo(message));
 	}
 	
 	/**
@@ -330,38 +399,37 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts if a value is true.
+	 * Asserts if the passed-in {@code val} is {@code true}.
 	 * 
+	 * @param val boolean that should be {@code true}.
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertFalse
 	 * @see #assertTrue
 	 * @see #assertTrueWithMessage
-	 * @param val Boolean that should be "true".
-	 * @return true if no error occured else false.
 	 */
 	private function assertTrueWithoutMessage(val:Boolean):Boolean {
 		return assertTrueWithMessage("", val);
 	}
 	
 	/**
-	 * Asserts if a value is true or fails with a message.
-	 * This methods asserts the same like @see #assertTrueWithoutMessage
+	 * Asserts if the passed-in {@code val} is {@code true} or fails with the
+	 * passed-in {@code message}.
+	 * 
+	 * <p>This methods asserts the same like {@code assertTrueWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val boolean that should be {@code true}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertFalse
 	 * @see #assertTrue
 	 * @see #assertTrueWithoutMessage
-	 * @param message Message that should be provided if the assertion fails.
-	 * @param val Boolean that should be "true".
-	 * @return true if no error occured else false.
 	 */
 	private function assertTrueWithMessage(message:String, val:Boolean):Boolean {
-		var info:ExecutionInfo = new AssertTrueInfo(message, val);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+		return addInfo(new AssertTrueInfo(message, val));
 	}
 	
 	/**
-	 * overload
 	 * @overload #assertFalseWithMessage
 	 * @overload #assertFalseWithoutMessage
 	 */
@@ -374,34 +442,34 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts if a value is false else it fails.
+	 * Asserts if the passed-in {@code val} is {@code false} else it fails.
 	 * 
+	 * @param val boolean that should be {@code false}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertTrue
 	 * @see #assertFalse
 	 * @see #assertFalseWithMessage
-	 * @param val Boolean that should be "false".
-	 * @return true if no error occured else false
 	 */
 	private function assertFalseWithoutMessage(val:Boolean):Boolean {
 		return assertFalseWithMessage("", val);
 	}
 	
 	/**
-	 * Asserts if a valueis false or fails.
-	 * This method asserts the same like @see #assertFalseWithoutMessage
+	 * Asserts if the passed-in {@code val} is {@code false} or fails with the
+	 * passed-in {@code message}.
+	 * 
+	 * <p>This method asserts the same like {@code assertFalseWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val boolean that should be {@code false} 
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertTrue
 	 * @see #assertFalse
 	 * @see #assertFalseWithoutMessage
-	 * @param message Message that should be provided if the assertion fails.
-	 * @param val Boolean that should be "false".
-	 * @return true if no error occured else false.
 	 */
 	private function assertFalseWithMessage(message:String, val:Boolean):Boolean {
-		var info:ExecutionInfo = new AssertFalseInfo(message, val);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+		return addInfo(new AssertFalseInfo(message, val));
 	}
 	
 	/**
@@ -420,41 +488,44 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts that two variables contain the same value else it fails.
-	 * This method compares two variables if they contain the same value.
-	 * It compares the two variables with "==". @see #assertSame compares
-	 * two variables with "===" as exact reference match.
+	 * Asserts if the two passed-in parameters are equal.
 	 * 
+	 * <p>This method compares two variables by {@link org.as2lib.util.ObjectUtil#compare}.
+	 * 
+	 * <p>In contrast to {@code assertSame} that compares by "===" if both
+	 * are exactly the same this method compares the value of the two
+	 * parameters.
+	 * 
+	 * @param val parameter that should be compared
+	 * @param compareTo parameter to compare with {@code val}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertSame
 	 * @see #assertNotEquals
 	 * @see #assertEquals
 	 * @see #assertEqualsWithMessage
-	 * @param val Object that should be compared.
-	 * @param compareTo Object to compare with val.
-	 * @return true if no error occured else false.
 	 */
 	private function assertEqualsWithoutMessage(val, compareTo):Boolean {
 		return assertEqualsWithMessage("", val, compareTo);
 	}
 	
 	/**
-	 * Asserts that two variables contain the same value else it fails.
-	 * This method asserts the same like @see #assertEqualsWithoutMessage
+	 * Asserts if the two passed-in parameters are equal or fails with the passed-in
+	 * {@code message}.
+	 * 
+	 * <p>This method asserts the same like {@code assertEqualsWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val parameter that should be compared
+	 * @param compareTo parameter to compare with {@code val}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertSame
 	 * @see #assertNotEquals
 	 * @see #assertEquals
 	 * @see #assertEqualsWithoutMessage
-	 * @param message Message that should be provided if the assertion fails.
-	 * @param val Object that should be compared.
-	 * @param compareTo Object to compare with val.
-	 * @return true if no error occured else false
 	 */
 	private function assertEqualsWithMessage(message:String, val, compareTo):Boolean {
-		var info:ExecutionInfo = new AssertEqualsInfo(message, val, compareTo);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+		return addInfo(new AssertEqualsInfo(message, val, compareTo));
 	}
 	
 	/**
@@ -465,85 +536,100 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertAlmostEquals():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([String, Number, Number, Number], assertAlmostEqualsWithMessageWithMaxDiff);
-		overload.addHandler([String, Number, Number], assertAlmostEqualsWithMessageWithoutMaxDiff);
-		overload.addHandler([Number, Number, Number], assertAlmostEqualsWithoutMessageWithMaxDiff);
-		overload.addHandler([Number, Number], assertAlmostEqualsWithoutMessageWithoutMaxDiff);
+		overload.addHandler(
+			[String, Number, Number, Number],
+			assertAlmostEqualsWithMessageWithMaxDiff);
+		overload.addHandler(
+			[String, Number, Number],
+			assertAlmostEqualsWithMessageWithoutMaxDiff);
+		overload.addHandler(
+			[Number, Number, Number],
+			assertAlmostEqualsWithoutMessageWithMaxDiff);
+		overload.addHandler(
+			[Number, Number],
+			assertAlmostEqualsWithoutMessageWithoutMaxDiff);
 		return overload.forward(arguments);
 	}
 	
 	/**
-	 * Asserts that two number are the same with some difference value.
-	 * This method compares two number if they are almost the same.
-	 * It compares the two numbers by including a unsharpning buffer {@link #DEFAULT_MAX_DIFF}.
+	 * Asserts if the two passed-in numbers are the almost the same.
 	 * 
+	 * <p>This method compares two numbers by using the unsharpening buffer
+	 * {@link #DEFAULT_MAX_DIFF}.
+	 * 
+	 * @param val {@code number} to be compared
+	 * @param compareTo {@code number} to compare with {@code val}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertSame
 	 * @see #assertEquals
 	 * @see #assertAlmostEquals
-	 * 
-	 * @param val number1 to be compared.
-	 * @param compareTo number2 to compare with val.
-	 * @return true if no error occured else false.
 	 */
-	private function assertAlmostEqualsWithoutMessageWithoutMaxDiff(val:Number, compareTo:Number):Boolean {
-		return assertAlmostEqualsWithMessageWithMaxDiff("", val, compareTo, DEFAULT_MAX_DIFF);
+	private function assertAlmostEqualsWithoutMessageWithoutMaxDiff(val:Number,
+			compareTo:Number):Boolean {
+		return assertAlmostEqualsWithMessageWithMaxDiff("", val, compareTo,
+			DEFAULT_MAX_DIFF);
 	}
 	
 	/**
-	 * Asserts that two number are the same with some difference value.
-	 * This method asserts the same like {@link #assertAlmostEqualsWithoutMessageWithoutMaxDiff}
-	 * but it adds a message to the failure.
+	 * Asserts if the two passed-in numbers are the almost the same or fails
+	 * with the passed-in {@code message}.
 	 * 
+	 * <p>This method asserts the same like
+	 * {@code assertAlmostEqualsWithoutMessageWithoutMaxDiff} but it adds a message
+	 * to the failure.
+	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val {@code number} to be compared
+	 * @param compareTo {@code number} to compare with {@code val}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertSame
 	 * @see #assertEquals
 	 * @see #assertAlmostEquals
-	 * 
-	 * @param message message to be added to the failure.
-	 * @param val number1 to be compared.
-	 * @param compareTo number2 to compare with val.
-	 * @return true if no error occured else false.
 	 */
-	private function assertAlmostEqualsWithMessageWithoutMaxDiff(message:String, val:Number, compareTo:Number):Boolean {
-		return assertAlmostEqualsWithMessageWithMaxDiff(message, val, compareTo, DEFAULT_MAX_DIFF);
+	private function assertAlmostEqualsWithMessageWithoutMaxDiff(message:String,
+			val:Number, compareTo:Number):Boolean {
+		return assertAlmostEqualsWithMessageWithMaxDiff(message, val, compareTo,
+			DEFAULT_MAX_DIFF);
 	}
 	
 	/**
-	 * Asserts that two number are the same with some difference value.
-	 * This method compares two number if they are almost the same.
-	 * It compares the two numbers by including a unsharpning buffer (applied as argument).
+	 * Asserts if the two passed-in numbers are the almost the same.
+     *
+	 * <p>This method compares two numbers by using the passed-in unsharpening buffer
+	 * {@code maxDiff}.
 	 * 
+	 * @param val {@code number} to be compared
+	 * @param compareTo {@code number} to compare with {@code val}
+	 * @param maxDiff maximum difference between the passed-in numbers
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertSame
 	 * @see #assertEquals
 	 * @see #assertAlmostEquals
-	 * 
-	 * @param val number1 to be compared.
-	 * @param compareTo number2 to compare with val.
-	 * @param maxDiff max. difference between those two numbers.
-	 * @return true if no error occured else false.
 	 */
-	private function assertAlmostEqualsWithoutMessageWithMaxDiff(val:Number, compareTo:Number, maxDiff:Number):Boolean {
+	private function assertAlmostEqualsWithoutMessageWithMaxDiff(val:Number,
+			compareTo:Number, maxDiff:Number):Boolean {
 		return assertAlmostEqualsWithMessageWithMaxDiff("", val, compareTo, maxDiff);
 	}
 	
 	/**
-	 * Asserts that two number are the same with some difference value.
-	 * This method asserts the same like {@link #assertAlmostEqualsWithoutMessageWithMaxDiff}
+	 * Asserts if the two passed-in numbers are the almost the same or fails
+	 * with the passed-in {@code message}.
+	 * 
+	 * <p>This method asserts the same like {@code assertAlmostEqualsWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
-	 * @see #assertSame
-	 * @see #assertEquals
-	 * @see #assertAlmostEquals
-	 * 
-	 * @param message Message to be applied if a failure occurs
+	 * @param message message to be provided if the assertion fails
 	 * @param val number1 to be compared.
 	 * @param compareTo number2 to compare with val.
 	 * @param maxDiff max. difference between those two numbers.
-	 * @return true if no error occured else false.
+	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertSame
+	 * @see #assertEquals
+	 * @see #assertAlmostEquals
 	 */
-	private function assertAlmostEqualsWithMessageWithMaxDiff(message:String, val:Number, compareTo:Number, maxDiff:Number):Boolean {
-		var info:ExecutionInfo = new AssertAlmostEqualsInfo(message, val, compareTo, maxDiff);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+	private function assertAlmostEqualsWithMessageWithMaxDiff(message:String,
+			val:Number, compareTo:Number, maxDiff:Number):Boolean {
+		return addInfo(new AssertAlmostEqualsInfo(message, val, compareTo, maxDiff));
 	}
 	
 	/**
@@ -562,41 +648,45 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts that two variables do not contain the same value else it fails.
-	 * This method compares two variables if they do not contain the same value.
-	 * It compares the two variables with "!=". @see #assertNotSame compares
-	 * two variables with "!==" as exact reference match.
+	 * Asserts if the two passed-in parameters are not equal.
 	 * 
+	 * <p>This method compares two variables by {@link org.as2lib.util.ObjectUtil#compare}
+	 * and fails if it returns {@code true}.
+	 * 
+	 * <p>In contrast to {@code assertNotSame} that compares by "!==" if both
+	 * are exactly the same this method compares the value of the two
+	 * parameters.
+	 * 
+	 * @param val parameter that should be compared
+	 * @param compareTo parameter to compare with {@code val}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotSame
 	 * @see #assertEquals
 	 * @see #assertNotEquals
 	 * @see #assertNotEqualsWithMessage
-	 * @param val Object that should be compared.
-	 * @param compareTo Object to compare with val.
-	 * @return true if no error occured else false
 	 */
 	private function assertNotEqualsWithoutMessage(val, compareTo):Boolean {
 		return assertNotEqualsWithMessage("", val, compareTo);
 	}
 	
 	/**
-	 * Asserts that two variables do not contain the same value else it fails.
-	 * This method asserts the same like {@link #assertNotEqualsWithoutMessage}
+	 * Asserts if the two passed-in parameters are not equal of fails with the passed-in
+	 * {@code message}.
+	 * 
+	 * <p>This method asserts the same like {@code assertNotEqualsWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val parameter that should be compared
+	 * @param compareTo parameter to compare with {@code val}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotSame
 	 * @see #assertEquals
 	 * @see #assertNotEquals
 	 * @see #assertNotEqualsWithoutMessage
-	 * @param message Message that should be provided if the assertion fails.
-	 * @param val Object that should be compared.
-	 * @param compareTo Object to compare with val.
-	 * @return true if no error occured else false
 	 */
 	private function assertNotEqualsWithMessage(message:String, val, compareTo):Boolean {
-		var info:ExecutionInfo = new AssertNotEqualsInfo(message, val, compareTo);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+		return addInfo(new AssertNotEqualsInfo(message, val, compareTo));
 	}
 	
 	/**
@@ -615,41 +705,43 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts that two variables contain the same object reference else it fails.
-	 * This method compares two variables if they contain the same object reference.
-	 * It compares the two variables with "===". @see #assertEquals compares
-	 * two variables with "==" as value match.
+	 * Asserts if the two passed-in parameters are the same.
 	 * 
+	 * <p>This method compares two variables by "===".
+	 * 
+	 * <p>In contrast to {@code assertEquals} that compares by {@code ObjectUtil.compare}
+	 * the value this method compares if both parameters are exactly the same.
+	 * 
+	 * @param val parameter that should be compared
+	 * @param compareTo parameter to compare with {@code val}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotSame
 	 * @see #assertEquals
 	 * @see #assertSame
 	 * @see #assertSameWithMessage
-	 * @param val Object that should be compared.
-	 * @param compareTo Object to compare with val.
-	 * @return true if no error occured else false
 	 */
 	private function assertSameWithoutMessage(val, compareTo):Boolean {
 		return assertSameWithMessage("", val, compareTo);
 	}
 	
 	/**
-	 * Asserts that two variables contain the same object reference else it fails.
-	 * This method asserts the same like @see #assertSameWithoutMessage
+	 * Asserts if the two passed-in parameters are the same or fails with the passed-in
+	 * {@code message}.
+	 * 
+	 * <p>This method asserts the same like {@code assertSameWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val parameter that should be compared
+	 * @param compareTo parameter to compare with {@code val}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotSame
 	 * @see #assertEquals
 	 * @see #assertSame
 	 * @see #assertSameWithoutMessage
-	 * @param message Message that should be provided if the assertion fails.
-	 * @param val Object that should be compared.
-	 * @param compareTo Object to compare with val.
-	 * @return true if no error occured else false
 	 */
 	private function assertSameWithMessage(message:String, val, compareTo):Boolean {
-		var info:ExecutionInfo = new AssertSameInfo(message, val, compareTo);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+		return addInfo(new AssertSameInfo(message, val, compareTo));
 	}
 	
 	/**
@@ -668,41 +760,43 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts that two variables do not contain the same object reference else it fails.
-	 * This method compares two variables if they do not contain the same object reference.
-	 * It compares the two variables with "!==". @see #assertNotEquals compares
-	 * two variables with "!=" as value match.
+	 * Asserts if the two passed-in parameters are the not same.
 	 * 
+	 * <p>This method compares two variables by "!==".
+	 * 
+	 * <p>In contrast to {@code assertNotEquals} that compares by !{@code ObjectUtil.compare}
+	 * the value this method compares if both parameters are not exactly the same.
+	 * 
+	 * @param val parameter that should be compared
+	 * @param compareTo parameter to compare with {@code val}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertSame
 	 * @see #assertNotEquals
 	 * @see #assertNotSame
 	 * @see #assertNotSameWithMessage
-	 * @param val Object that should be compared.
-	 * @param compareTo Object to compare with val.
-	 * @return true if no error occured else false
 	 */
 	private function assertNotSameWithoutMessage(val, compareTo):Boolean {
 		return assertNotSameWithMessage("", val, compareTo);
 	}
 	
 	/**
-	 * Asserts that two variables do not contain the same object reference else it fails.
-	 * This method asserts the same like @see #assertNotSameWithoutMessage
+	 * Asserts if the two passed-in parameters are the not same or fails with the
+	 * passed-in {@code message}.
+	 * 
+	 * <p>This method asserts the same like {@code assertNotSameWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val parameter that should be compared
+	 * @param compareTo parameter to compare with {@code val}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertSame
 	 * @see #assertNotEquals
 	 * @see #assertNotSame
 	 * @see #assertNotSameWithoutMessage
-	 * @param message Message that should be provided if the assertion fails.
-	 * @param val Object that should be compared.
-	 * @param compareTo Object to compare with val.
-	 * @return true if no error occured else false
 	 */
 	private function assertNotSameWithMessage(message:String, val, compareTo):Boolean {
-		var info:ExecutionInfo = new AssertNotSameInfo(message, val, compareTo);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+		return addInfo(new AssertNotSameInfo(message, val, compareTo));
 	}
 	
 	/**
@@ -718,38 +812,38 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts if a value is (===) null else it fails.
+	 * Asserts if the passed-in {@code val} is (===) {@code null}.
 	 * 
+	 * @param val parameter that should be {@code null}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotNull
 	 * @see #assertUndefined
 	 * @see #assertEmpty
 	 * @see #assertNull
 	 * @see #assertNullWithMessage
-	 * @param val Object that should be null.
-	 * @return true if no error occured else false
 	 */
 	private function assertNullWithoutMessage(val):Boolean {
 		return assertNullWithMessage("", val);
 	}
 	
 	/**
-	 * Asserts if a value is (===) null else it fails.
-	 * This method asserts the same like @see #assertNullWithoutMessage
+	 * Asserts if the passed-in {@code val} is (===) {@code null} or fails with
+	 * the passed-in {@code message}.
+	 * 
+	 * <p>This method asserts the same like {@code assertNullWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val parameter that should be {@code null}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotNull
 	 * @see #assertUndefined
 	 * @see #assertEmpty
 	 * @see #assertNull
 	 * @see #assertNullWithoutMessage
-	 * @param message Message that should be provided if the assertion fails.
-	 * @param val Object that should be null.
-	 * @return true if no error occured else false
 	 */
 	private function assertNullWithMessage(message:String, val):Boolean {
-		var info:ExecutionInfo = new AssertNullInfo(message, val);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+		return addInfo(new AssertNullInfo(message, val));
 	}
 	
 	/**
@@ -765,38 +859,38 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts if a value is not (!==) null else it fails.
+	 * Asserts if the passed-in {@code val} is not (!==) {@code null}.
 	 * 
+	 * @param val parameter that should not be {@code null}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNull
 	 * @see #assertNotUndefined
 	 * @see #assertNotEmpty
 	 * @see #assertNotNull
 	 * @see #assertNotNullWithMessage
-	 * @param val Object that should not be null.
-	 * @return true if no error occured else false
 	 */
 	private function assertNotNullWithoutMessage(val):Boolean {
 		return assertNotNullWithMessage("", val);
 	}
 	
 	/**
-	 * Asserts if a value is not (!==) null else it fails.
-	 * This method asserts the same like @see #assertNotNullWithoutMessage
+	 * Asserts if the passed-in {@code val} is not (!==) {@code null} or fails with
+	 * the passed-in {@code message}.
+	 * 
+	 * <p>This method asserts the same like {@code assertNotNullWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val parameter that should not be {@code null}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNull
 	 * @see #assertNotUndefined
 	 * @see #assertNotEmpty
 	 * @see #assertNotNull
 	 * @see #assertNotNullWithoutMessage
-	 * @param message Message that should be provided if the assertion fails.
-	 * @param val Object that should not be null.
-	 * @return true if no error occured else false
 	 */
 	private function assertNotNullWithMessage(message:String, val):Boolean {
-		var info:ExecutionInfo = new AssertNotNullInfo(message, val);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+		return addInfo(new AssertNotNullInfo(message, val));
 	}
 	
 	/**
@@ -812,38 +906,38 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts if a value is (===) undefined else it fails.
+	 * Asserts if the passed-in {@code val} is (===) {@code undefined}.
 	 * 
+	 * @param val parameter that should be {@code undefined}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotUndefined
 	 * @see #assertNull
 	 * @see #assertEmpty
 	 * @see #assertUndefined
 	 * @see #assertUndefinedWithMessage
-	 * @param val Object that should be undefined.
-	 * @return true if no error occured else false
 	 */
 	private function assertUndefinedWithoutMessage(val):Boolean {
 		return assertUndefinedWithMessage("", val);
 	}
 	
 	/**
-	 * Asserts if a value is undefined else it fails.
-	 * This method asserts the same like @see #assertUndefinedWithoutMessage
+	 * Asserts if the passed-in {@code val} is (===) {@code undefined} or fails 
+	 * with the passed-in {@code message}.
+	 * 
+	 * <p>This method asserts the same like {@code assertUndefinedWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val parameter that should be {@code undefined}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotUndefined
 	 * @see #assertNull
 	 * @see #assertEmpty
 	 * @see #assertUndefined
 	 * @see #assertUndefinedWithoutMessage
-	 * @param message Message that should be provided if the assertion fails.
-	 * @param val Object that should not be null.
-	 * @return true if no error occured else false
 	 */
 	private function assertUndefinedWithMessage(message:String, val):Boolean {
-		var info:ExecutionInfo = new AssertUndefinedInfo(message, val);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+		return addInfo(new AssertUndefinedInfo(message, val));
 	}
 	
 	/**
@@ -859,38 +953,38 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts if a value is not undefined else it fails.
+	 * Asserts if the passed-in {@code val} is not (!==) {@code undefined}.
 	 * 
+	 * @param val parameter that should not be {@code undefined}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertUndefined
 	 * @see #assertNotNull
 	 * @see #assertNotEmpty
 	 * @see #assertNotUndefined
 	 * @see #assertNotUndefinedWithMessage
-	 * @param val Object that should not be undefined.
-	 * @return true if no error occured else false
 	 */
 	private function assertNotUndefinedWithoutMessage(val):Boolean {
 		return assertNotUndefined("", val);
 	}
 	
 	/**
-	 * Asserts if a value is not undefined else it fails.
-	 * This method asserts the same like @see #assertNotUndefinedWithoutMessage
+	 * Asserts if the passed-in {@code val} is not (!==) {@code undefined} or fails
+	 * with the passed-in {@code message}.
+	 * 
+	 * <p>This method asserts the same like {@code assertNotUndefinedWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val parameter that should not be {@code undefined}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertUndefined
 	 * @see #assertNotNull
 	 * @see #assertNotEmpty
 	 * @see #assertNotUndefined
 	 * @see #assertNotUndefinedWithoutMessage
-	 * @param message Message that should be provided if the assertion fails.
-	 * @param val Object that should not be null.
-	 * @return true if no error occured else false
 	 */
 	private function assertNotUndefinedWithMessage(message:String, val):Boolean {
-		var info:ExecutionInfo = new AssertNotUndefinedInfo(message, val);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+		return addInfo(new AssertNotUndefinedInfo(message, val));
 	}
 	
 	/**
@@ -906,34 +1000,34 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts that a value is infinity else it fails.
+	 * Asserts if the passed-in {@code val} is (===) {@code Infinity}.
 	 * 
+	 * @param val parameter that should be {@code Infinity}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotInfinity
 	 * @see #assertInfinity
 	 * @see #assertInfinityWithMessage
-	 * @param val Object that should be Infinity.
-	 * @return true if no error occured else false
 	 */
 	private function assertInfinityWithoutMessage(val):Boolean {
 		return assertInfinityWithMessage("", val);
 	}
 	
 	/**
-	 * Asserts that a value is infinity else it fails.
-	 * This method asserts the same like @see #assertInfinityWithoutMessage
+	 * Asserts if the passed-in {@code val} is (===) {@code Infinity} or fails
+	 * with the passed-in {@code message}.
+	 * 
+	 * <p>This method asserts the same like {@code assertInfinityWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val parameter that should be {@code Infinity}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotInfinity
 	 * @see #assertInfinity
 	 * @see #assertInfinityWithoutMessage
-	 * @param message Message that should be provided if the assertion fails.
-	 * @param val Object that should be Infinity.
-	 * @return true if no error occured else false
 	 */
 	private function assertInfinityWithMessage(message:String, val):Boolean {
-		var info:ExecutionInfo = new AssertInfinityInfo(message, val);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+		return addInfo(new AssertInfinityInfo(message, val));
 	}
 	
 	/**
@@ -949,34 +1043,34 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts that a value is not Infinity else it fails.
+	 * Asserts if the passed-in {@code val} is not (!==) {@code Infinity}.
 	 * 
+	 * @param val parameter that should not be {@code Infinity}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertInfinity
 	 * @see #assertNotInfinity
 	 * @see #assertNotInfinityWithMessage
-	 * @param val Object that should not be Infinity.
-	 * @return true if no error occured else false
 	 */
 	private function assertNotInfinityWithoutMessage(val):Boolean {
 		return assertNotInfinityWithMessage("", val);
 	}
 	
 	/**
-	 * Asserts that a value is not infinity else it fails.
-	 * This method asserts the same like @see #assertInfinityWithoutMessage
+	 * Asserts if the passed-in {@code val} is not (!==) {@code Infinity} or fails
+	 * with the passed-in {@code message}.
+	 * 
+	 * <p>This method asserts the same like {@code assertInfinityWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val parameter that should not be {@code Infinity}
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertInfinity
 	 * @see #assertNotInfinity
 	 * @see #assertNotInfinityWithoutMessage
-	 * @param message Message that should be provided if the assertion fails.
-	 * @param val Object that should not be Infinity.
-	 * @return true if no error occured else false
 	 */
 	private function assertNotInfinityWithMessage(message:String, val):Boolean {
-		var info:ExecutionInfo = new AssertNotInfinityInfo(message, val);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+		return addInfo(new AssertNotInfinityInfo(message, val));
 	}
 	
 	/**
@@ -992,40 +1086,40 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts that a value is empty else it fails.
-	 * Method to assert that a value is empty, in sense of
-	 * is null or undefined. (== null || == undefined)
+	 * Asserts if the passed-in {@code val} is empty.
 	 * 
+	 * <p>Empty means to be {@code === null} or {@code === undefined}.
+	 * 
+	 * @param val parameter that should be empty
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNull
 	 * @see #assertUndefined
 	 * @see #assertNotEmpty
 	 * @see #assertEmpty
 	 * @see #assertEmptyWithMessage
-	 * @param val Object that should be empty.
-	 * @return true if no error occured else false
 	 */
 	private function assertEmptyWithoutMessage(val):Boolean {
 		return assertEmptyWithMessage("", val);
 	}
 	
 	/**
-	 * Asserts that a value is empty else it fails.
-	 * This method asserts the same like @see #assertEmptyWithoutMessage
+	 * Asserts if the passed-in {@code val} is empty or fails with the passed-in
+	 * {@code message}.
+	 * 
+	 * <p>This method asserts the same like {@code assertEmptyWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val parameter that should be empty
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNull
 	 * @see #assertUndefined
 	 * @see #assertNotEmpty
 	 * @see #assertEmpty
 	 * @see #assertEmptyWithoutMessage
-	 * @param message Message that should be provided if the assertion fails.
-	 * @param val Object that should be empty.
-	 * @return true if no error occured else false
 	 */
 	private function assertEmptyWithMessage(message:String, val):Boolean {
-		var info:ExecutionInfo = new AssertEmptyInfo(message, val);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+		return addInfo(new AssertEmptyInfo(message, val));
 	}
 	
 	/**
@@ -1041,40 +1135,40 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts that a value is not empty else it fails.
-	 * Method to assert that a value is not empty, in sense of
-	 * neither null or undefined. (!= null || != undefined)
+	 * Asserts if the passed-in {@code val} is not empty.
 	 * 
+	 * <p>Not empty means to be {@code !== null} and {@code !== undefined}.
+	 * 
+	 * @param val parameter that should not be empty
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotNull
 	 * @see #assertNotUndefined
 	 * @see #assertEmpty
 	 * @see #assertNotEmpty
 	 * @see #assertNotEmptyWithMessage
-	 * @param val Object that should not be empty.
-	 * @return true if no error occured else false
 	 */
 	private function assertNotEmptyWithoutMessage(val):Boolean {
 		return assertNotEmptyWithMessage("", val);
 	}
 	
 	/**
-	 * Asserts that a value is not empty else it fails.
-	 * This method asserts the same like @see #assertNotEmptyWithoutMessage
+	 * Asserts if the passed-in {@code val} is not empty or fails with the passed-in
+	 * {@code message}.
+	 * 
+	 * <p>This method asserts the same like {@code assertNotEmptyWithoutMessage}
 	 * but it adds a message to the failure.
 	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val parameter that should not be empty
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotNull
 	 * @see #assertNotUndefined
 	 * @see #assertEmpty
 	 * @see #assertNotEmpty
 	 * @see #assertNotEmptyWithoutMessage
-	 * @param message Message that should be provided if the assertion fails.
-	 * @param val Object that should not be empty.
-	 * @return {@code true} if no error occured else {@code false}
 	 */
 	private function assertNotEmptyWithMessage(message:String, val):Boolean {
-		var info:ExecutionInfo = new AssertNotEmptyInfo(message, val);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+		return addInfo(new AssertNotEmptyInfo(message, val));
 	}
 	
 	/**
@@ -1093,218 +1187,300 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertThrows():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([Executable, Array], assertThrowsWithCall);
-		overload.addHandler([Object, String, Array], assertThrowsWithString);
-		overload.addHandler([Object, Function, Array], assertThrowsWithFunction);
-		overload.addHandler([Object, Executable, Array], assertThrowsWithCallAndType);
-		overload.addHandler([Object, Object, String, Array], assertThrowsWithStringAndType);
-		overload.addHandler([Object, Object, Function, Array], assertThrowsWithFunctionAndType);
-		overload.addHandler([String, Executable, Array], assertThrowsWithCallAndMessage);
-		overload.addHandler([String, Object, String, Array], assertThrowsWithStringAndMessage);
-		overload.addHandler([String, Object, Function, Array], assertThrowsWithFunctionAndMessage);
-		overload.addHandler([String, Object, Executable, Array], assertThrowsWithCallAndMessageAndType);
-		overload.addHandler([String, Object, Object, String, Array], assertThrowsWithStringAndMessageAndType);
-		overload.addHandler([String, Object, Object, Function, Array], assertThrowsWithFunctionAndMessageAndType);
+		overload.addHandler(
+		    [Executable, Array],
+			assertThrowsWithCall);
+		overload.addHandler(
+		    [Object, String, Array],
+			assertThrowsWithString);
+		overload.addHandler(
+		    [Object, Function, Array],
+			assertThrowsWithFunction);
+		overload.addHandler(
+		    [Object, Executable, Array],
+			assertThrowsWithCallAndType);
+		overload.addHandler(
+		    [Object, Object, String, Array],
+			assertThrowsWithStringAndType);
+		overload.addHandler(
+		    [Object, Object, Function, Array],
+			assertThrowsWithFunctionAndType);
+		overload.addHandler(
+		    [String, Executable, Array],
+			assertThrowsWithCallAndMessage);
+		overload.addHandler(
+		    [String, Object, String, Array],
+			assertThrowsWithStringAndMessage);
+		overload.addHandler(
+		    [String, Object, Function, Array],
+			assertThrowsWithFunctionAndMessage);
+		overload.addHandler(
+		    [String, Object, Executable, Array],
+			assertThrowsWithCallAndMessageAndType);
+		overload.addHandler(
+		    [String, Object, Object, String, Array],
+			assertThrowsWithStringAndMessageAndType);
+		overload.addHandler(
+		    [String, Object, Object, Function, Array],
+			assertThrowsWithFunctionAndMessageAndType);
 		return overload.forward(arguments);
 	}
 	
 	/**
-	 * Asserts that the execution of a call throws any exception.
-	 * This method executes the given Call with arguments and checks if it throws any Exception.
+	 * Asserts if the execution of a {@link Executable} throws any exception.
 	 * 
-	 * The assertion adds a error to the result if the method didn't throw a exception.
+	 * <p>This method executes at the passed-in {@code executable} the method
+	 * {@code execute} using the passed-in {@code args} and checks if it throws any
+	 * exception.
 	 * 
+	 * <p>The assertion fails if the method did not throw any exception.
+	 * 
+	 * @param executable {@code Executable} that should be executed
+	 * @param args arguments to be used for the execution
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertThrowsWithCallAndMessage
-	 * @param call	Call that should be executed.
-	 * @param args	Arguments that should be used by executing.
-	 * @return {@code true} if no error occured else {@code false}
 	 */
-	private function assertThrowsWithCall(call:Executable, args:Array):Boolean {
-		return assertThrowsWithCallAndMessage("", call, args);
+	private function assertThrowsWithCall(executable:Executable, args:Array):Boolean {
+		return assertThrowsWithCallAndMessage("", executable, args);
 	}
 	
 	/**
-	 * Asserts that the execution of a call throws any exception.
-	 * This method executes the given Call with arguments and checks if it throws any Exception.
+	 * Asserts if the execution of a {@link Executable} throws a certain exception.
 	 * 
-	 * The assertion adds a error to the result if the method didn't throw a exception or throw a 
-	 * exception with the wrong type.
+	 * <p>This method executes at the passed-in {@code executable} the method
+	 * {@code execute} using the passed-in {@code args} and checks if it throws the
+	 * expected exception.
 	 * 
+	 * <p>The assertion fails if the method did not throw any exception or if it
+	 * throw a exception of the wrong type.
+	 * 
+	 * @param type type of the exception that should be thrown
+	 * @param executabe {@code Executable} to be executed
+	 * @param args arguments to be used for the execution
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertThrowsWithCallAndMessageAndType
-	 * @param type	Type of the Exception that should be thrown.
-	 * @param call	Call that should be executed.
-	 * @param args	Arguments that should be used by executing.
-	 * @return {@code true} if no error occured else {@code false}
 	 */
-	private function assertThrowsWithCallAndType(type, call:Executable, args:Array):Boolean {
-		return assertThrowsWithCallAndMessageAndType("", type, call, args);
+	private function assertThrowsWithCallAndType(type, executable:Executable,
+			args:Array):Boolean {
+		return assertThrowsWithCallAndMessageAndType("", type, executable, args);
 	}
 	
 	/**
-	 * Asserts that the execution of a method throws any exception.
-	 * This method takes a method of the given object(inObject) by a given name and checks if it throws any expected exception by execution.
+	 * Asserts if the execution of the passed-in {@code name} to the passed-in
+	 * {@code scope} throws any exception.
 	 * 
-	 * The assertion adds a error to the result if the method didn't throw a exception or if the method was not available.
+	 * <p>This method executes within the passed-in {@code scope} the method with
+	 * the name of the passed-in {@code name} and checks if it throws any exception.
 	 * 
+	 * <p>The assertion fails if the method did not throw any exception.
+	 * 
+	 * @param scope object to be used a scope
+	 * @param name name of the method to be executed within the scope
+	 * @param args arguments to be used for the execution
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertThrowsWithStringAndMessage
-	 * @param inObject	Object that should be used as scope.
-	 * @param name		Name of the method that should be executed.
-	 * @param args		Arguments that should be used by executing.
-	 * @return {@code true} if no error occured else {@code false}
 	 */
-	private function assertThrowsWithString(inObject, name:String, args:Array):Boolean {
-		return assertThrowsWithStringAndMessage("",  inObject, name, args);
+	private function assertThrowsWithString(scope, name:String, args:Array):Boolean {
+		return assertThrowsWithStringAndMessage("", scope, name, args);
 	}
 	
 	/**
-	 * Asserts that the execution of a method throws a exception.
-	 * This method takes a method of the given object(inObject) by a given name and checks if it throws a expected exception by execution.
+	 * Asserts if the execution of the passed-in {@code name} to the passed-in
+	 * {@code scope} throws any exception.
 	 * 
-	 * The assertion adds a error to the result if the method didn't throw a exception or throw a 
-	 * exception with the wrong type or if the method was not available.
+	 * <p>This method executes within the passed-in {@code scope} the method with
+	 * the name of the passed-in {@code name} and checks if it throws the
+	 * expected exception.
 	 * 
+	 * <p>The assertion fails if the method did not throw any exception or if it
+	 * throw a exception of the wrong type.
+	 * 
+	 * @param type	type of the exception that should be thrown
+	 * @param scope object to be used a scope
+	 * @param name name of the method to be executed within the scope
+	 * @param args arguments to be used for the execution
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertThrowsWithStringAndMessageAndType
-	 * @param type		Type of the Exception that should be thrown.
-	 * @param inObject	Object that should be used as scope.
-	 * @param name		Name of the method that should be executed.
-	 * @param args		Arguments that should be used by executing.
-	 * @return {@code true} if no error occured else {@code false}
 	 */
-	private function assertThrowsWithStringAndType(type, inObject, name:String, args:Array):Boolean {
-		return assertThrowsWithStringAndMessageAndType("", type, inObject, name, args);
+	private function assertThrowsWithStringAndType(type, scope, name:String,
+			args:Array):Boolean {
+		return assertThrowsWithStringAndMessageAndType("", type, scope, name, args);
 	}
 	
 	/**
-	 * Asserts that the execution of a method throws any exception.
-	 * This method takes a given method and excutes it within a given object. It checks if it throws any exception by execution.
+	 * Asserts if the passed-in {@code method} throw any exception during its execution
+	 * to the passed-in {@code scope}.
 	 * 
-	 * The assertion adds a error to the result if the method didn't throw any exception.
+	 * <p>This method executes within the passed-in {@code scope} the passed-in 
+	 * {@code method} using the passed-in {@code args} and checks if it throws
+	 * the expected exception.
 	 * 
+	 * <p>The assertion fails if the method did not throw any exception.
+	 * 
+	 * @param scope object to be used a scope
+	 * @param method method that should be executed with the certain scope
+	 * @param args arguments to be used for the execution
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertThrowsWithFunctionAndMessage
-	 * @param inObject	Object that should be used as scope.
-	 * @param func		Function that should be executed.
-	 * @param args		Arguments that should be used by executing.
-	 * @return {@code true} if no error occured else {@code false}
 	 */
-	private function assertThrowsWithFunction(inObject, func:Function, args:Array):Boolean {
-		return assertThrowsWithFunctionAndMessage("", inObject, func, args);
+	private function assertThrowsWithFunction(scope, method:Function,
+			args:Array):Boolean {
+		return assertThrowsWithFunctionAndMessage("", scope, method, args);
 	}
 	
 	/**
-	 * Asserts that the execution of a method throws a exception.
-	 * This method takes a given method and excutes it within a given object. It checks if it throws a expected exception by execution.
+	 * Asserts if the passed-in {@code method} throw any exception during its execution
+	 * to the passed-in {@code scope}.
 	 * 
-	 * The assertion adds a error to the result if the method didn't throw a exception or throw a exception with the wrong type.
+	 * <p>This method executes within the passed-in {@code scope} the passed-in 
+	 * {@code method} using the passed-in {@code args} and checks if it throws
+	 * any exception.
 	 * 
-	 * @see #assertThrowsWithFunctionAndMessageAndType
-	 * @param inObject	Object that should be used as scope.
-	 * @param func		Function that should be executed.
-	 * @param args		Arguments that should be used by executing.
+	 * <p>The assertion fails if the method did not throw any exception  or if it
+	 * throw a exception of the wrong type.
+	 * 
+	 * @param type type of the exception that should be thrown
+	 * @param scope object to be used a scope
+	 * @param method method that should be executed with the certain scope
+	 * @param args arguments to be used for the execution
 	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertThrowsWithFunctionAndMessageAndType
 	 */
-	private function assertThrowsWithFunctionAndType(type, inObject, func:Function, args:Array):Boolean {
+	private function assertThrowsWithFunctionAndType(type, inObject, func:Function,
+			args:Array):Boolean {
 		return assertThrowsWithFunctionAndMessageAndType("", type, inObject, func, args);
 	}
 	
 	/**
-	 * Asserts the same like @see #assertThrowsWithCall but adds a message to the failure (if necessary).
+	 * Asserts if the execution of a {@link Executable} throws any exception.
 	 * 
+	 * <p>This methods asserts the same like {@code assertThrowsWithCall}
+	 * but it adds a message to the failure.
+	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param executable {@code Executable} that should be executed
+	 * @param args arguments to be used for the execution
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertThrowsWithCall
-	 * @param message	Message that should be used by fail.
-	 * @param call	Call that should be executed.
-	 * @param args	Arguments that should be used by executing.
-	 * @return {@code true} if no error occured else {@code false}
 	 */
-	private function assertThrowsWithCallAndMessage(message:String, call:Executable, args:Array):Boolean {
-		return assertThrowsWithCallAndMessageAndType(message, null, call, args);
+	private function assertThrowsWithCallAndMessage(message:String, executable:Executable,
+			args:Array):Boolean {
+		return assertThrowsWithCallAndMessageAndType(message, null, executable, args);
 	}
 	
 	/**
-	 * Asserts the same like @see #assertThrowsWithCallAndType but adds a message to the failure (if necessary).
+	 * Asserts if the execution of a {@link Executable} throws a certain exception.
 	 * 
+	 * <p>This methods asserts the same like {@code assertThrowsWithCallAndType}
+	 * but it adds a message to the failure.
+	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param type type of the exception that should be thrown
+	 * @param executable {@code Executable} that should be executed
+	 * @param args arguments to be used for the execution
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertThrowsWithCallAndType
-	 * @param message	Message that should be used by fail.
-	 * @param type	Type of the Exception that should be thrown.
-	 * @param call	Call that should be executed.
-	 * @param args	Arguments that should be used by executing.
-	 * @return {@code true} if no error occured else {@code false}
 	 */
-	private function assertThrowsWithCallAndMessageAndType(message:String, type, call:Executable, args:Array):Boolean {
-		var info:ExecutionInfo = new AssertThrowsInfo(message, type, call, args);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+	private function assertThrowsWithCallAndMessageAndType(message:String, type,
+			executable:Executable, args:Array):Boolean {
+		return addInfo(new AssertThrowsInfo(message, type, executable, args));
 	}
 	
 	/**
-	 * Asserts the same like @see #assertThrowsWithString but adds a message to the failure (if necessary).
+	 * Asserts if the execution of the passed-in {@code name} to the passed-in
+	 * {@code scope} throws any exception.
 	 * 
+	 * <p>This methods asserts the same like {@code assertThrowsWithString}
+	 * but it adds a message to the failure.
+	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param scope object to be used a scope
+	 * @param name name of the method to be executed within the scope
+	 * @param args arguments to be used for the execution
+	 * @throws IllegalArgumentException if the method with the passed-in {@code name}
+	 *         is not available with the passed-in {@code scope}.
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertThrowsWithString
-	 * @param message	Message that should be used by fail.
-	 * @param inObject	Object that should be used as scope.
-	 * @param name		Name of the method that should be executed.
-	 * @param args		Arguments that should be used by executing.
-	 * @return {@code true} if no error occured else {@code false}
 	 */
-	private function assertThrowsWithStringAndMessage(message:String,  inObject, name:String, args:Array):Boolean {
-		if(ObjectUtil.isTypeOf(inObject[name], "function")) {
-			return assertThrowsWithCallAndMessage(message, new Call(inObject, inObject[name]), args);
+	private function assertThrowsWithStringAndMessage(message:String, scope,
+			name:String, args:Array):Boolean {
+		if(ObjectUtil.isTypeOf(scope[name], "function")) {
+			return assertThrowsWithCallAndMessage(message, new Call(scope,
+				scope[name]), args);
 		} else {
-			var e:IllegalArgumentException = new IllegalArgumentException("The method '"+name+"' is not available within "+inObject.toString(), this, arguments);
-			//getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrowsWithStringAndMessage", this, arguments).initCause(e));	
-			return false;
+			throw new IllegalArgumentException("The method '"+name+"' is not available"+
+				+" within "+scope.toString(), this, arguments);
 		}
 	}
 	
 	/**
-	 * Asserts the same like @see #assertThrowsWithStringAndType but adds a message to the failure (if necessary).
+	 * Asserts if the execution of the passed-in {@code name} to the passed-in
+	 * {@code scope} throws a certain exception.
 	 * 
+	 * <p>This methods asserts the same like {@code assertThrowsWithStringAndType}
+	 * but it adds a message to the failure.
+	 * 
+	 * @param type type of the exception that should be thrown
+	 * @param message message to be provided if the assertion fails
+	 * @param scope object to be used a scope
+	 * @param name name of the method to be executed within the scope
+	 * @param args arguments to be used for the execution
+	 * @throws IllegalArgumentException if the method with the passed-in {@code name}
+	 *         is not available with the passed-in {@code scope}.
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertThrowsWithStringAndType
-	 * @param message	Message that should be used by fail.
-	 * @param type		Type of the Exception that should be thrown.
-	 * @param inObject	Object that should be used as scope.
-	 * @param name		Name of the method that should be executed.
-	 * @param args		Arguments that should be used by executing.
-	 * @return {@code true} if no error occured else {@code false}
 	 */
-	private function assertThrowsWithStringAndMessageAndType(message:String, type, inObject, name:String, args:Array):Boolean {
-		if(ObjectUtil.isTypeOf(inObject[name], "function")) {
-			return assertThrowsWithFunctionAndMessageAndType(message, type, inObject, inObject[name], args);
+	private function assertThrowsWithStringAndMessageAndType(message:String, type,
+			scope, name:String,args:Array):Boolean {
+		if(ObjectUtil.isTypeOf(scope[name], "function")) {
+			return assertThrowsWithFunctionAndMessageAndType(message, type,
+				scope, scope[name], args);
 		} else {
-			var e:IllegalArgumentException = new IllegalArgumentException("The method '"+name+"' is not available within "+inObject.toString(), this, arguments);
-			//getMethodInformation().addError(new UnexpectedException("Unexpected Exeption during assertThrowsWithStringAndMessageAndType", this, arguments).initCause(e));	
-			return false;
+			throw new IllegalArgumentException("The method '"+name+"' is not available"
+				+" within "+scope.toString(), this, arguments);
 		}
 	}
 	
 	/**
-	 * Asserts the same like {@link #assertThrowsWithFunction} but adds a message to the failure (if necessary).
+	 * Asserts if the passed-in {@code method} throw any exception during its execution
+	 * to the passed-in {@code scope}.
 	 * 
-	 * @see assertThrowsWithFunction
-	 * @param message	Message that should be used by fail.
-	 * @param inObject	Object that should be used as scope.
-	 * @param func		Function that should be executed.
-	 * @param args		Arguments that should be used by executing.
+	 * <p>This methods asserts the same like {@code assertThrowsWithFunction}
+	 * but it adds a message to the failure.
+	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param scope object to be used a scope
+	 * @param method method that should be executed with the certain scope
+	 * @param args arguments to be used for the execution
 	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertThrowsWithFunction
 	 */
-	private function assertThrowsWithFunctionAndMessage(message:String, inObject, func:Function, args:Array):Boolean {
-		return assertThrowsWithCallAndMessage(message, new Call(inObject, func), args);
+	private function assertThrowsWithFunctionAndMessage(message:String, scope,
+			method:Function, args:Array):Boolean {
+		return assertThrowsWithCallAndMessage(message, new Call(scope, method),
+			args);
 	}
 	
 	/**
-	 * Asserts the same like @see #assertThrowsWithFunctionAndType but adds a message to the failure (if necessary).
+	 * Asserts if the passed-in {@code method} throw any exception during its execution
+	 * to the passed-in {@code scope}.
 	 * 
-	 * @see #assertThrowsWithFunctionAndType
-	 * @param message	Message that should be used by fail.
-	 * @param type		Type of the Exception that should be thrown.
-	 * @param inObject	Object that should be used as scope.
-	 * @param func		Function that should be executed.
-	 * @param args		Arguments that should be used by executing.
+	 * <p>This methods asserts the same like {@code assertThrowsWithFunctionAnyType}
+	 * but it adds a message to the failure.
+	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param type type of the exception that should be thrown
+	 * @param scope object to be used a scope
+	 * @param method method that should be executed with the certain scope
+	 * @param args arguments to be used for the execution
 	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertThrowsWithFunctionAndType
 	 */
-	private function assertThrowsWithFunctionAndMessageAndType(message:String, type, inObject, func:Function, args:Array):Boolean {
-		return assertThrowsWithCallAndMessageAndType(message, type, new Call(inObject, func), args);
+	private function assertThrowsWithFunctionAndMessageAndType(message:String,
+			type, scope, method:Function, args:Array):Boolean {
+		return assertThrowsWithCallAndMessageAndType(message, type,
+			new Call(scope, method), args);
 	}
-	
 	
 	/**
 	 * @overload #assertNotThrowsWithCall
@@ -1322,216 +1498,303 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	 */
 	private function assertNotThrows():Boolean {
 		var overload:Overload = new Overload(this);
-		overload.addHandler([Executable, Array], assertNotThrowsWithCall);
-		overload.addHandler([Object, String, Array], assertNotThrowsWithString);
-		overload.addHandler([Object, Function, Array], assertNotThrowsWithFunction);
-		overload.addHandler([Object, Executable, Array], assertNotThrowsWithCallAndType);
-		overload.addHandler([Object, Object, String, Array], assertNotThrowsWithStringAndType);
-		overload.addHandler([Object, Object, Function, Array], assertNotThrowsWithFunctionAndType);
-		overload.addHandler([String, Executable, Array], assertNotThrowsWithCallAndMessage);
-		overload.addHandler([String, Object, String, Array], assertNotThrowsWithStringAndMessage);
-		overload.addHandler([String, Object, Function, Array], assertNotThrowsWithFunctionAndMessage);
-		overload.addHandler([String, Object, Executable, Array], assertNotThrowsWithCallAndMessageAndType);
-		overload.addHandler([String, Object, Object, String, Array], assertNotThrowsWithStringAndMessageAndType);
-		overload.addHandler([String, Object, Object, Function, Array], assertNotThrowsWithFunctionAndMessageAndType);
+		overload.addHandler(
+			[Executable, Array],
+			assertNotThrowsWithCall);
+		overload.addHandler(
+			[Object, String, Array],
+			assertNotThrowsWithString);
+		overload.addHandler(
+			[Object, Function, Array],
+			assertNotThrowsWithFunction);
+		overload.addHandler(
+			[Object, Executable, Array],
+			assertNotThrowsWithCallAndType);
+		overload.addHandler(
+			[Object, Object, String, Array],
+			assertNotThrowsWithStringAndType);
+		overload.addHandler(
+			[Object, Object, Function, Array],
+			assertNotThrowsWithFunctionAndType);
+		overload.addHandler(
+			[String, Executable, Array],
+			assertNotThrowsWithCallAndMessage);
+		overload.addHandler(
+			[String, Object, String, Array],
+			assertNotThrowsWithStringAndMessage);
+		overload.addHandler(
+			[String, Object, Function, Array],
+			assertNotThrowsWithFunctionAndMessage);
+		overload.addHandler(
+			[String, Object, Executable, Array],
+			assertNotThrowsWithCallAndMessageAndType);
+		overload.addHandler(
+			[String, Object, Object, String, Array],
+			assertNotThrowsWithStringAndMessageAndType);
+		overload.addHandler(
+			[String, Object, Object, Function, Array],
+			assertNotThrowsWithFunctionAndMessageAndType);
 		return overload.forward(arguments);
 	}
 	
 	/**
-	 * Asserts that the execution of a call doesn't throw any exception.
-	 * This method executes the given Call with arguments and checks if it doesn't throw any exception.
+	 * Asserts if the execution of a {@link Executable} does not throw any exception.
 	 * 
-	 * The assertion adds a error to the result if the method did throw any exception.
+	 * <p>This method executes at the passed-in {@code executable} the method
+	 * {@code execute} using the passed-in {@code args} and checks if it throws a
+	 * exception.
 	 * 
-	 * @param call	Call that should be executed.
-	 * @param args	Arguments that should be used by executing.
+	 * <p>The assertion fails if the method throws any exception.
+	 * 
+	 * @param executable {@code Executable} that should be executed
+	 * @param args arguments to be used for the execution
 	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotThrowsWithCallAndMessage
-	 * @see #assertNotThrowsWithCallAndMessageAndType
 	 */
-	private function assertNotThrowsWithCall(call:Executable, args:Array):Boolean {
-		return assertNotThrowsWithCallAndMessage("", call, args);
+	private function assertNotThrowsWithCall(executable:Executable, args:Array):Boolean {
+		return assertNotThrowsWithCallAndMessage("", executable, args);
 	}
 	
 	/**
-	 * Asserts that the execution of a call doesn't throw a exception.
-	 * This method executes the given Call with arguments and checks if it doesn't throw a expected exception.
+	 * Asserts if the execution of a {@link Executable} does not throw a certain
+	 * exception.
 	 * 
-	 * The assertion adds a error to the result if the method did throw the expected exception.
+	 * <p>This method executes at the passed-in {@code executable} the method
+	 * {@code execute} using the passed-in {@code args} and checks if it does not
+	 * throw a expected exception.
 	 * 
-	 * @param type	Type of the Exception that should not be thrown.
-	 * @param call	Call that should be executed.
-	 * @param args	Arguments that should be used by executing.
+	 * <p>The assertion fails if the method throws a exception of the passed-in
+	 * {@code type}.
+	 * 
+	 * @param type type of the exception that should not be thrown
+	 * @param executabe {@code Executable} to be executed
+	 * @param args arguments to be used for the execution
 	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotThrowsWithCallAndMessageAndType
 	 */
-	private function assertNotThrowsWithCallAndType(type, call:Executable, args:Array):Boolean {
-		return assertNotThrowsWithCallAndMessageAndType("", type, call, args);
+	private function assertNotThrowsWithCallAndType(type, executable:Executable,
+			args:Array):Boolean {
+		return assertNotThrowsWithCallAndMessageAndType("", type, executable, args);
 	}
 	
 	/**
-	 * Asserts that the execution of a method doesn't throw any exception.
-	 * This method takes a method of the given object(inObject) by a given name and checks if it doesn't throw any exception by execution.
+	 * Asserts if the execution of the passed-in {@code name} to the passed-in
+	 * {@code scope} does not throw any exception.
 	 * 
-	 * The assertion adds a error to the result if the method did throw any exception or if the method was not available.
+	 * <p>This method executes within the passed-in {@code scope} the method with
+	 * the name of the passed-in {@code name} and checks if it throws any exception.
 	 * 
-	 * @param inObject	Object that should be used as scope.
-	 * @param name		Name of the method that should be executed.
-	 * @param args		Arguments that should be used by executing.
+	 * <p>The assertion fails if the method throws any exception.
+	 * 
+	 * @param scope object to be used a scope
+	 * @param name name of the method to be executed within the scope
+	 * @param args arguments to be used for the execution
 	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotThrowsWithStringAndMessage
 	 */
-	private function assertNotThrowsWithString(inObject, name:String, args:Array):Boolean {
-		return assertNotThrowsWithStringAndMessage("", inObject, name, args);
+	private function assertNotThrowsWithString(scope, name:String,
+			args:Array):Boolean {
+		return assertNotThrowsWithStringAndMessage("", scope, name, args);
 	}
 	
 	/**
-	 * Asserts that the execution of a method doesn't throw a exception.
-	 * This method takes a method of the given object(inObject) by a given name and checks if it doesn't throw a expected exception by execution.
+	 * Asserts if the execution of the passed-in {@code name} to the passed-in
+	 * {@code scope} does not throws a certain exception.
 	 * 
-	 * The assertion adds a error to the result if the method did throw the expected exception or if the method was not available.
+	 * <p>This method executes within the passed-in {@code scope} the method with
+	 * the name of the passed-in {@code name} and checks if it does not throw the
+	 * expected exception.
 	 * 
-	 * @param type		Type of the Exception that should not be thrown.
-	 * @param inObject	Object that should be used as scope.
-	 * @param name		Name of the method that should be executed.
-	 * @param args		Arguments that should be used by executing.
+	 * <p>The assertion fails if the method throws a exception of the passed-in
+	 * {@code type}.
+	 * 
+	 * @param type type of the exception that should not be thrown
+	 * @param scope object to be used a scope
+	 * @param name name of the method to be executed within the scope
+	 * @param args arguments to be used for the execution
 	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotThrowsWithStringAndMessageAndType
 	 */
-	private function assertNotThrowsWithStringAndType(type, inObject, name:String, args:Array):Boolean {
-		return assertNotThrowsWithStringAndMessageAndType("", type, inObject, name, args);
+	private function assertNotThrowsWithStringAndType(type, scope, name:String,
+			args:Array):Boolean {
+		return assertNotThrowsWithStringAndMessageAndType("", type, scope,
+			name, args);
 	}
 	
 	/**
-	 * Asserts that the execution of a method doesn't throw any exception.
-	 * This method takes a given method and excutes it within a given object. It checks if it doesn't throw any exception by execution.
+	 * Asserts if the passed-in {@code method} does not throw any exception during
+	 * its execution to the passed-in {@code scope}.
 	 * 
-	 * The assertion adds a error to the result if the method did throw any exception.
+	 * <p>This method executes within the passed-in {@code scope} the passed-in 
+	 * {@code method} using the passed-in {@code args} and checks if it does not
+	 * throw the expected exception.
 	 * 
-	 * @see #assertNotThrowsWithFunctionAndMessage
-	 * @param inObject	Object that should be used as scope.
-	 * @param func		Function that should be executed.
-	 * @param args		Arguments that should be used by executing.
+	 * <p>The assertion fails if the method throws any exception.
+	 * 
+	 * @param scope object to be used a scope
+	 * @param method method that should be executed with the certain scope
+	 * @param args arguments to be used for the execution
 	 * @return {@code true} if no error occured else {@code false}
-	 */
-	private function assertNotThrowsWithFunction(inObject, func:Function, args:Array):Boolean {
-		return assertNotThrowsWithFunctionAndMessage("", inObject, func, args);
-	}
-	
-	/**
-	 * Asserts that the execution of a method doesn't throw a exception.
-	 * This method takes a given method and excutes it within a given object. It checks if it doesn't throw a expected exception by execution.
-	 * 
-	 * The assertion adds a error to the result if the method did throw the expected exception.
-	 * 
 	 * @see #assertNotThrowsWithFunctionAndMessage
-	 * @param type		Type of the Exception that should not be thrown.
-	 * @param inObject	Object that should be used as scope.
-	 * @param func		Function that should be executed.
-	 * @param args		Arguments that should be used by executing.
-	 * @return {@code true} if no error occured else {@code false}
 	 */
-	private function assertNotThrowsWithFunctionAndType(type, inObject, func:Function, args:Array):Boolean {
-		return assertNotThrowsWithFunctionAndMessageAndType("", type, inObject, func, args);
+	private function assertNotThrowsWithFunction(scope, method:Function,
+			args:Array):Boolean {
+		return assertNotThrowsWithFunctionAndMessage("", scope, method, args);
 	}
 	
 	/**
-	 * Asserts the same like @see #assertNotThrowsWithCall but adds a message to the failure (if necessary).
+	 * Asserts if the passed-in {@code method} throw a certain exception during
+	 * its execution to the passed-in {@code scope}.
 	 * 
+	 * <p>This method executes within the passed-in {@code scope} the passed-in 
+	 * {@code method} using the passed-in {@code args} and checks if it throws
+	 * a certain exception.
+	 * 
+	 * <p>The assertion fails if the method throws a exception of the passed-in
+	 * {@code type}.
+	 * 
+	 * @param type type of the exception that should not be thrown
+	 * @param scope object to be used a scope
+	 * @param method method that should be executed with the certain scope
+	 * @param args arguments to be used for the execution
+	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertNotThrowsWithFunctionAndMessageAndType
+	 */
+	private function assertNotThrowsWithFunctionAndType(type, scope,
+			method:Function, args:Array):Boolean {
+		return assertNotThrowsWithFunctionAndMessageAndType("", type, scope,
+			method, args);
+	}
+	
+	/**
+	 * Asserts if the execution of a {@link Executable} does not throw any exception.
+	 * 
+	 * <p>This methods asserts the same like {@code assertNotThrowsWithCall}
+	 * but it adds a message to the failure.
+	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param executable {@code Executable} that should be executed
+	 * @param args arguments to be used for the execution
+	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotThrowsWithCall
-	 * @param message	Message that should be used by fail.
-	 * @param call	Call that should be executed.
-	 * @param args	Arguments that should be used by executing.
-	 * @return {@code true} if no error occured else {@code false}
 	 */
-	private function assertNotThrowsWithCallAndMessage(message:String, call:Executable, args:Array):Boolean {
-		return assertNotThrowsWithCallAndMessageAndType(message, null, call, args);
+	private function assertNotThrowsWithCallAndMessage(message:String,
+			executable:Executable, args:Array):Boolean {
+		return assertNotThrowsWithCallAndMessageAndType(message, null, executable, args);
 	}
 	
 	/**
-	 * Asserts the same like @see #assertNotThrowsWithCallAndType but adds a message to the failure (if necessary).
+	 * Asserts if the execution of a {@link Executable} does not throw a certain
+	 * exception.
 	 * 
-	 * @see #assertNotThrowsWithCallAndType
-	 * @param message	Message that should be used by fail.
-	 * @param type	Type of the Exception that should not be thrown.
-	 * @param call	Call that should be executed.
-	 * @param args	Arguments that should be used by executing.
+	 * <p>This methods asserts the same like {@code assertNotThrowsWithCallAndType}
+	 * but it adds a message to the failure.
+	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param type type of the exception that should not be thrown
+	 * @param executable {@code Executable} that should be executed
+	 * @param args arguments to be used for the execution
 	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertThrowsWithCallAndType
 	 */
-	private function assertNotThrowsWithCallAndMessageAndType(message:String, type, call:Executable, args:Array):Boolean {
-		var info:ExecutionInfo = new AssertNotThrowsInfo(message, type, call, args);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+	private function assertNotThrowsWithCallAndMessageAndType(message:String,
+			type, executable:Executable, args:Array):Boolean {
+		return addInfo(new AssertNotThrowsInfo(message, type, executable, args));
 	}
 	
 	/**
-	 * Asserts the same like @see #assertNotThrowsWithString but adds a message to the failure (if necessary).
+	 * Asserts if the execution of the passed-in {@code name} to the passed-in
+	 * {@code scope} does not throw any exception.
 	 * 
-	 * @param message	Message that should be used by fail.
-	 * @param inObject	Object that should be used as scope.
-	 * @param name		Name of the method that should be executed.
-	 * @param args		Arguments that should be used by executing.
+	 * <p>This methods asserts the same like {@code assertNotThrowsWithString}
+	 * but it adds a message to the failure.
+	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param scope object to be used a scope
+	 * @param name name of the method to be executed within the scope
+	 * @param args arguments to be used for the execution
 	 * @return {@code true} if no error occured else {@code false}
+	 * @throws IllegalArgumentException if the method with the passed-in {@code name}
+	 *         is not available with the passed-in {@code scope}.
 	 * @see #assertNotThrowsWithString
 	 */
-	private function assertNotThrowsWithStringAndMessage(message:String, inObject, name:String, args:Array):Boolean {
+	private function assertNotThrowsWithStringAndMessage(message:String, inObject,
+			name:String, args:Array):Boolean {
 		if(ObjectUtil.isTypeOf(inObject[name], "function")) {
-			return assertNotThrowsWithCallAndMessage(message, new Call(inObject, inObject[name]), args);
+			return assertNotThrowsWithCallAndMessage(message, new Call(inObject,
+				inObject[name]), args);
 		} else {
-			var e:IllegalArgumentException = new IllegalArgumentException("The method '"+name+"' is not available within "+inObject.toString(), this, arguments);
-			//getMethodInformation().addInfo(new UnexpectedException("Unexpected Exeption during assertNotThrowsWithString", this, arguments).initCause(e));	
-			return false;
+			throw new IllegalArgumentException("The method '"+name+"' is not available"
+				+" within "+inObject.toString(), this, arguments);
 		}
 	}
 	
 	/**
-	 * Asserts the same like @see #assertNotThrowsWithStringAndType but adds a message to the failure (if necessary).
+	 * Asserts if the execution of the passed-in {@code name} to the passed-in
+	 * {@code scope} does not throw a certain exception.
 	 * 
-	 * @param message	Message that should be used by fail.
-	 * @param type		Type of the Exception that should not be thrown.
-	 * @param inObject	Object that should be used as scope.
-	 * @param name		Name of the method that should be executed.
-	 * @param args		Arguments that should be used by executing.
+	 * <p>This methods asserts the same like {@code assertNotThrowsWithStringAndType}
+	 * but it adds a message to the failure.
+	 * 
+	 * @param type type of the exception that should not be thrown
+	 * @param message message to be provided if the assertion fails
+	 * @param scope object to be used a scope
+	 * @param name name of the method to be executed within the scope
+	 * @param args arguments to be used for the execution
+	 * @throws IllegalArgumentException if the method with the passed-in {@code name}
+	 *         is not available with the passed-in {@code scope}.
 	 * @return {@code true} if no error occured else {@code false}
-	 * @see #assertNotThrowsWithString
+	 * @see #assertNotThrowsWithStringAndType
 	 */
-	private function assertNotThrowsWithStringAndMessageAndType(message:String, type, inObject, name:String, args:Array):Boolean {
-		if(ObjectUtil.isTypeOf(inObject[name], "function")) {
-			return assertNotThrowsWithCallAndMessageAndType(message, type, new Call(inObject, inObject[name]), args);
+	private function assertNotThrowsWithStringAndMessageAndType(message:String,
+			type, scope, name:String, args:Array):Boolean {
+		if(ObjectUtil.isTypeOf(scope[name], "function")) {
+			return assertNotThrowsWithCallAndMessageAndType(message, type,
+				new Call(scope, scope[name]), args);
 		} else {
-			var e:IllegalArgumentException = new IllegalArgumentException("The method '"+name+"' is not available within "+inObject.toString(), this, arguments);
-			//getMethodInformation().addInfo(new UnexpectedException("Unexpected Exeption during assertNotThrowsWithStringAndMessageAndType", this, arguments).initCause(e));	
-			return false;
+			throw new IllegalArgumentException("The method '"+name+"' is not available"
+				+" within "+scope.toString(), this, arguments);
 		}
 	}
 	
 	/**
-	 * Asserts the same like @see #assertNotThrowsWithFunction but adds a message to the failure (if necessary).
+	 * Asserts if the passed-in {@code method} does not throw any exception during 
+	 * its execution to the passed-in {@code scope}.
 	 * 
-	 * @param message	Message that should be used by fail.
-	 * @param inObject	Object that should be used as scope.
-	 * @param func		Function that should be executed.
-	 * @param args		Arguments that should be used by executing.
+	 * <p>This methods asserts the same like {@code assertNotThrowsWithFunction}
+	 * but it adds a message to the failure.
+	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param scope object to be used a scope
+	 * @param method method that should be executed with the certain scope
+	 * @param args arguments to be used for the execution
 	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertNotThrowsWithFunction
 	 */
-	private function assertNotThrowsWithFunctionAndMessage(message:String, inObject, func:Function, args:Array):Boolean {
-		return assertNotThrowsWithCallAndMessage(message, new Call(inObject, func), args);
+	private function assertNotThrowsWithFunctionAndMessage(message:String, scope,
+			method:Function, args:Array):Boolean {
+		return assertNotThrowsWithCallAndMessage(message, new Call(scope, method), args);
 	}
 	
 	/**
-	 * Asserts the same like @see #assertNotThrowsWithFunctionAndType but adds a message to the failure (if necessary).
+	 * Asserts if the passed-in {@code method} does not throw any exception during
+	 * its execution to the passed-in {@code scope}.
 	 * 
-	 * @param message	Message that should be used by fail.
-	 * @param type		Type of the Exception that should not be thrown.
-	 * @param inObject	Object that should be used as scope.
-	 * @param func		Function that should be executed.
-	 * @param args		Arguments that should be used by executing.
+	 * <p>This methods asserts the same like {@code assertNotThrowsWithFunctionAnyType}
+	 * but it adds a message to the failure.
+	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param type type of the exception that should not be thrown
+	 * @param scope object to be used a scope
+	 * @param method method that should be executed with the certain scope
+	 * @param args arguments to be used for the execution
 	 * @return {@code true} if no error occured else {@code false}
-	 * @see #assertNotThrowsWithFunctionAndType
+	 * @see #assertThrowsWithFunctionAndType
 	 */
-	private function assertNotThrowsWithFunctionAndMessageAndType(message:String, type, inObject, func:Function, args:Array):Boolean {
-		return assertNotThrowsWithCallAndMessageAndType(message, type, new Call(inObject, func), args);
+	private function assertNotThrowsWithFunctionAndMessageAndType(message:String,
+			type, scope, method:Function, args:Array):Boolean {
+		return assertNotThrowsWithCallAndMessageAndType(message, type,
+			new Call(scope, method), args);
 	}
 	
 	/**
@@ -1546,10 +1809,13 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts that the type of a value a special type.
+	 * Asserts if the passed-in {@code val} matches the passed-in {@code type}.
 	 * 
-	 * @param val	Value to be validated.
-	 * @param type	Expected type of the value.
+	 * <p>Checks with {@code typeof} if the {@code typeof} of the passed-in
+	 * {@code val} matches the passed in {@code type}.
+	 * 
+	 * @param val parameter to check the type
+	 * @param type expected type of {@code val}
 	 * @return {@code true} if no error occured else {@code false}
 	 * @see #assertTypeOfWithMessage
 	 * @see org.as2lib.util.ObjectUtil#isTypeOf
@@ -1559,18 +1825,21 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 	}
 	
 	/**
-	 * Asserts that the type of a value a special type and adds a exception if the assertion fails.
+	 * Asserts if the passed-in {@code val} matches the passed-in {@code type} or
+	 * fails with the passed-in {@code message}.
 	 * 
-	 * @see #assertTypeOfWithoutMessage
-	 * @param message	Message to be appended if the assertion fails.
-	 * @param val		Value to be validated.
-	 * @param type		Expected type of the value.
+	 * <p>This methods asserts the same like {@code assertTypeOfWithoutMessage}
+	 * but it adds a message to the failure.
+	 * 
+	 * @param message message to be provided if the assertion fails
+	 * @param val parameter to check the type
+	 * @param type expected type of {@code val}
 	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertTypeOfWithoutMessage
 	 */
-	private function assertTypeOfWithMessage(message:String, val, type:String):Boolean {
-		var info:ExecutionInfo = new AssertTypeOfInfo(message, val, type);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+	private function assertTypeOfWithMessage(message:String, val,
+			type:String):Boolean {
+		return addInfo(new AssertTypeOfInfo(message, val, type));
 	}
 	
 	/** 
@@ -1584,31 +1853,37 @@ class org.as2lib.test.unit.TestCase extends BasicClass implements Test {
 		return overload.forward(arguments);
 	}
 	
+	
 	/**
-	 * Asserts that a value is a instance of a special type.
+	 * Asserts if the passed-in {@code val} is a instance of the passed-in
+	 * {@code type}.
 	 * 
-	 * @param val		Value to be validated.
-	 * @param type		Expected type of the value.
+	 * <p>Checks with {@code instanceof} if the passed-in {@code val} is a 
+	 * instance of the passed in {@code type}.
+	 * 
+	 * @param val parameter to check the type
+	 * @param type expected type of {@code val}
 	 * @return {@code true} if no error occured else {@code false}
-	 * @see #assertInstanceOfWithoutMessage
+	 * @see #assertInstanceOfWithMessage
+	 * @see org.as2lib.util.ObjectUtil#isInstanceOf
 	 */
 	private function assertInstanceOfWithoutMessage(val, type:Function):Boolean {
 		return assertInstanceOfWithMessage("", val, type);
 	}
 	
 	/**
-	 * Asserts that a value is a instance of a special type and applies a
-	 * message if the assertion fails.
+	 * Asserts if the passed-in {@code val} is a instance of the passed-in
+	 * {@code type} or fails with the passed-in {@code message}
 	 * 
-	 * @see #assertInstanceOfWithoutMessage
-	 * @param message	Message to be appended if the assertion fails.
-	 * @param val		Value to be validated.
-	 * @param type		Expected type of the value.
+	 * @param message message to be provided if the assertion fails
+	 * @param val parameter to check the type
+	 * @param type expected type of {@code val}
 	 * @return {@code true} if no error occured else {@code false}
+	 * @see #assertInstanceOfWithoutMessage
 	 */
-	private function assertInstanceOfWithMessage(message:String, val, type:Function):Boolean {
-		var info:ExecutionInfo = new AssertInstanceOfInfo(message, val, type);
-		getMethodInformation().addInfo(info);
-		return !info.isFailed();
+	private function assertInstanceOfWithMessage(message:String, val,
+			type:Function):Boolean {
+		return addInfo(new AssertInstanceOfInfo(message, val, type));
 	}
+
 }
