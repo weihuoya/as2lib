@@ -23,31 +23,32 @@ import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributo
  * {@code EventSupport} provides simple access to events.
  * 
  * <p>To apply event abilities to your class its only necessary to extend
- * {@code EventSupport}. It holds in the private instance variable {@code eventControl}
- * a reference to {@link SimpleConsumableCompositeEventDistributionControl}.
+ * {@code EventSupport}. It holds in the private instance variable
+ * {@code distributorControl} a reference to
+ * {@link SimpleConsumableCompositeEventDistributionControl}.
  * 
  * <p>To allow additional listener types to be checked by {@link #addListener},
  * {@link #addAddListener} its only necessary to add {@code acceptListenerType(AnyType);}
  * within the constructor of the extended class.
  * 
  * <p>It is necessary for sending a event to recieve the matching distributor with
- * {@code eventControl.getDistributor(AnyType)} and execute the event to it.
+ * {@code distributorControl.getDistributor(AnyType)} and execute the event to it.
  * 
  * <p>Example code:
  * <code>
  *   class Controller extends EventSupport {
  *   
  *     private var model:Model;
- *     private var event:View;
+ *     private var distributor:View;
  *     
  *     public function Controller(Void) {
- *       eventControl.acceptListenerType(View);
- *       event = eventControl.getDistributor(View);
+ *       distributorControl.acceptListenerType(View);
+ *       distributor = distributorControl.getDistributor(View);
  *     }
  *     
  *     public function setTargetModel(model:Model) {
  *       this.model = model;
- *       event.onTargetModelChanged(this);
+ *       distributor.onTargetModelChanged(this);
  *     }
  *     
  *     public function getTargetModel(Void):Model {
@@ -62,13 +63,13 @@ import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributo
 class org.as2lib.env.event.EventSupport extends LogSupport implements EventListenerSource {
 	
 	/** Access to event control */
-	private var eventControl:CompositeEventDistributorControl;
+	private var distributorControl:CompositeEventDistributorControl;
 	
 	/**
 	 * Constructs a new {@code EventSupport} instance.
 	 */
 	function EventSupport(Void) {
-		eventControl = new SimpleConsumableCompositeEventDistributorControl();
+		distributorControl = new SimpleConsumableCompositeEventDistributorControl();
 	}
 
 	/**
@@ -78,7 +79,7 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	 * @throws IllegalArgumentException if the listener does not match any expected type
 	 */
 	public function addListener(listener):Void {
-		eventControl.addListener(listener);
+		distributorControl.addListener(listener);
 	}	
 
 	/**
@@ -92,7 +93,7 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	 * @throws IllegalArgumentException if any listener does not match any expected type
 	 */
 	public function addAllListeners(listeners:Array):Void {
-		eventControl.addAllListeners(listeners);
+		distributorControl.addAllListeners(listeners);
 	}
 
 
@@ -102,14 +103,14 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	 * @param listener the listener to remove
 	 */
 	public function removeListener(listener):Void {
-		eventControl.removeListener(listener);
+		distributorControl.removeListener(listener);
 	}
 
 	/**
 	 * Removes all listeners from beeing executed by events.
 	 */
 	public function removeAllListeners(Void):Void {
-		eventControl.removeAllListeners();
+		distributorControl.removeAllListeners();
 	}
 
 	/**
@@ -121,7 +122,7 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	 * @return list that contains all added listeners
 	 */
 	public function getAllListeners(Void):Array {
-		return eventControl.getAllListeners();
+		return distributorControl.getAllListeners();
 	}
 
 	/**
@@ -130,6 +131,6 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	 * @return {@code true} if the listener has been added
 	 */
 	public function hasListener(listener):Boolean {
-		return eventControl.hasListener(listener);
+		return distributorControl.hasListener(listener);
 	}
 }
