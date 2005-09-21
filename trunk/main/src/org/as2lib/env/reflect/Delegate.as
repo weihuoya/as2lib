@@ -52,7 +52,7 @@
  *   _root.onEnterFrame = mc.onEnterFrame;
  *   
  *   // Workaround using delegate
- *   _root.onEnterFrame = Delegate.createDelegate(mc, onEnterFrame);
+ *   _root.onEnterFrame = Delegate.create(mc, onEnterFrame);
  * </code>
  * 
  * @author Martin Heidegger
@@ -67,7 +67,7 @@ class org.as2lib.env.reflect.Delegate {
 	 * @param method Method to be executed at the scope.
 	 * @return Function that delegates its call to a different scope & method.
 	 */
-	public static function createDelegate(scope, method:Function):Function {
+	public static function create(scope, method:Function):Function {
 		var result:Function;
 		result = function() {
 			return arguments.callee.method.apply(arguments.callee.scope, arguments);
