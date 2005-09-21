@@ -1408,7 +1408,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 			return assertThrowsWithCallAndMessage(message, new Call(scope,
 				scope[name]), args);
 		} else {
-			throw new IllegalArgumentException("The method '"+name+"' is not available"+
+			throw new IllegalArgumentException("The method '"+name+"' is not available"
 				+" within "+scope.toString(), this, arguments);
 		}
 	}

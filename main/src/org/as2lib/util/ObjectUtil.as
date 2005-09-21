@@ -120,13 +120,13 @@ class org.as2lib.util.ObjectUtil extends BasicClass {
 			// Workaround for former used: typesMatch(type(object), object);
 			// Casting is not a good solution, it will break if the Constructor throws a error!
 			// This solution is not the fastest but will not break by any exception.
-			if((type === String || ClassUtil.isSubClassOf(type, String)) && t == TYPE_STRING) {
+			if ((type === String || ClassUtil.isSubClassOf(type, String)) && t == TYPE_STRING) {
 				return true;
 			}
-			if((type === Boolean || ClassUtil.isSubClassOf(type, Boolean)) && t == TYPE_BOOLEAN) {
+			if ((type === Boolean || ClassUtil.isSubClassOf(type, Boolean)) && t == TYPE_BOOLEAN) {
 				return true;
 			}
-			if((type === Number || ClassUtil.isSubClassOf(type, Number)) && t == TYPE_NUMBER) {
+			if ((type === Number || ClassUtil.isSubClassOf(type, Number)) && t == TYPE_NUMBER) {
 				return true;
 			}
 			return false;
