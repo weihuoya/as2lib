@@ -16,65 +16,68 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.array.TypedArray;
-import org.as2lib.util.StringUtil;
-import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestResult;
-import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.TestCaseResult;
 import org.as2lib.test.unit.TestSuite;
-import org.as2lib.env.reflect.ClassInfo;
-import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.util.StringUtil;
+import org.as2lib.data.type.Time;
 
 /**
- * Wrapper for a TestSuite with extended Informations about the run of the TestSuite.
+ * {@code TestSuiteResult} contains all informations about the execution of a {@code TestSuite}.
  * 
- * @see org.as2lib.test.unit.TestSuite
- * @autor Martin Heidegger
+ * <p>{@link TestSuite} contains all states of execution of the {@code TestSuite}
+ * and {@code TestSuiteResult} contains all informations about the execution.
+ * 
+ * @author Martin Heidegger.
+ * @version 1.0
+ * @see TestSuite
  */
 class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestResult {
 
-	/** TestSuite that gets wrapped. */
+	/** Related {@code TestSuite}. */
 	private var testSuite:TestSuite;
 	
-	/** TestResults related to the tests. */
+	/** {@code TestResults} to the {@code TestSuite}. */
 	private var testResults:TypedArray;
 
 	/**
-	 * Constructs a new TestSuiteResult.
+	 * Constructs a new {@code TestSuiteResult}.
 	 * 
-	 * @param testSuite TestSuite to be wrapped
-	 * @param testRunner TestRunner that created this Result.
+	 * @param testSuite related {@code TestSuite}
 	 */
-	public function TestSuiteResult(testSuite:TestSuite, testRunner:TestRunner) {
+	public function TestSuiteResult(testSuite:TestSuite) {
 		this.testSuite = testSuite;
 		testResults = new TypedArray(TestResult);
 		
 		var tests:Array = testSuite.getTests();
-		var i:Number = tests.length;
-		while (--i-(-1)) {
-			if(tests[i] instanceof TestCase) {
-				testResults.unshift(new TestCaseResult(tests[i], testRunner));
-			} else if(tests[i] instanceof TestSuite) {
-				testResults.unshift(new TestSuiteResult(tests[i], testRunner));
-			} else {
-				throw new IllegalArgumentException("Type " + ClassInfo.forInstance(tests[i]).getFullName()+" not supported!", this, arguments);
-			}
+		for (var i:Number=0; i<tests.length; i++) {
+			addTest(tests[i]);
 		}
 	}
 	
 	/**
-	 * Getter for all Test(Results) contained in the TestSuite
+	 * Adds a {@code TestResult} to the {@code TestSuiteResult}.
 	 * 
-	 * @return List of all TestResults.
+	 * @param test {@code TestResult} to be added
+	 */
+	public function addTest(test:TestResult):Void {
+		testResults.unshift(test);
+	}
+	
+	/**
+	 * Returns all {@code TestResult) in a {@link TypedArray} contained in the
+	 * {@code TestSuite}.
+	 * 
+	 * @return list of all {@code TestResult}s
 	 */
 	public function getTests(Void):TypedArray {
 		return this.testResults;
 	}
 	
 	/**
-	 * Getter for the Percentage of the execution.
+	 * Returns the percentage ({@code 0}-{@code 100}) of the added {@code Test}s.
 	 * 
-	 * @return Percentage of execution.
+	 * @return percentage of execution
 	 */
 	public function getPercentage(Void):Number {
 		var result:Number = 0;
@@ -86,7 +89,9 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	}
 	
 	/**
-	 * @return True if the TestSuite is finished.
+	 * Returns {@code true} if the {@code TestSuite} has been finished.
+	 * 
+	 * @return {@code true} if the {@code TestSuite} has been finished
 	 */
 	public function hasFinished(Void):Boolean {
 		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
@@ -98,7 +103,9 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	}
 	
 	/**
-	 * @return True if the TestSuite is started.
+	 * Returns {@code true} if the {@code TestSuite} has been started.
+	 * 
+	 * @return {@code true} if the {@code TestSuite} has been started
 	 */
 	public function hasStarted(Void):Boolean {
 		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
@@ -108,12 +115,45 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 		}
 		return false;
 	}
+		
+	/**
+	 * Returns all {@code TestResult}s for the {@code Test}s contained
+	 * within the related {@code TestSuite}.
+	 * 
+	 * <p>Since its possible to add more than one {@code Test} to a {@code TestSuite}
+	 * its necessary to get the {@code TestResult}s to all added {@code Test}s.
+	 *
+	 * <p>It flattens out all {@code TestResults}, this means it concats all
+	 * {@code getTestResults} of every added {@code Test}. 
+	 * 
+	 * @return all {@code TestResult}s to all contained {@code Test}s
+	 */
+	public function getTestResults(Void):TypedArray {
+		var result:TypedArray = new TypedArray(TestResult);
+		for (var i:Number=0; i<this.testResults.length; i++) {
+			// TODO: Bug? Why can't i use .concat ???
+			var testCases:Array = this.testResults[i].getTestResults();
+			for (var j:Number=0; j<testCases.length; j++) {
+				result.push(testCases[j]);
+			}
+		}
+		return result;
+	}
 	
 	/**
-	 * Getter for all TestCaseResults (flatten) contained in the TestSuite.
-	 * Returns flatten all TestCaseResults.
+	 * Returns all {@code TestCaseResult}s for the {@code TestCase}s contained
+	 * within the related {@code Test}.
 	 * 
-	 * @return TestCaseResults containted in the TestSuite and all SubSuites.
+	 * <p>Since its possible to add more than one {@code Test} to a {@code TestSuite}
+	 * its necessary to get the {@code TestResult}s to all added {@code Test}s.
+	 * 
+	 * <p>{@code TestCase} represents the lowest level of {@code Test} therefor
+	 * its important to get all added {@code TestCaseResults} seperatly.
+	 *
+	 * <p>It flattens out all {@code TestResults}, this means it concats all
+	 * {@code getTestCaseResults} of every added {@code Test}. 
+	 * 
+	 * @return all {@code TestResult}s to all contained {@code Test}s
 	 */
 	public function getTestCaseResults(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestCaseResult);
@@ -128,47 +168,35 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	}
 	
 	/**
-	 * Getter for all TestResults (flatten) contained in the TestSuite.
-	 * Returns flatten all TestResults.
+	 * Retuns the name of the {@code TestSuite}.
 	 * 
-	 * @return TestResults containted in the TestSuite and all SubSuites.
-	 */
-	public function getTestResults(Void):TypedArray {
-		var result:TypedArray = new TypedArray(TestResult);
-		for (var i:Number=0; i<this.testResults.length; i++) {
-			// TODO: Bug? Why can't i use .concat ???
-			var testResults:Array = this.testResults[i].getTestResults();
-			for (var j:Number=0; j<testResults.length; j++) {
-				result.push(testResults[i]);
-			}
-		}
-		return result;
-	}
-	
-	/**
-	 * Getter for the Name of the TestSuite.
-	 * 
-	 * @return Name of the TestSuite.
+	 * @return name of the {@code TestSuite}
 	 */
 	public function getName(Void):String {
 		return this.getTestSuite().getName();
 	}
 	
 	/**
-	 * Getter for the total Operation time of the TestSuite.
+	 * Returns the total operation time for all methods executed for the
+	 * related {@code TestSuite}.
 	 * 
-	 * @return Operation Time of the TestSuite in milliseconds..
+	 * @return total operation time of the {@code Test}
 	 */
-	public function getOperationTime(Void):Number {
+	public function getOperationTime(Void):Time {
 		var result:Number = 0;
 		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
 			result += this.testResults[i].getOperationTime();
 		}
-		return result;
+		return new Time(result);
 	}
 	
+	
 	/**
-	 * @return True if the TestSuite contains errors.
+	 * Returns {@code true} if the errors occured during the execution of the
+	 * related {@code Test}.
+	 * 
+	 * @return {@code true} if the errors occured during the execution of the
+	 * 		   related {@code Test}.
 	 */
 	public function hasErrors(Void):Boolean {
 		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
@@ -180,9 +208,9 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	}
 	
 	/**
-	 * Getter for the wrapped TestSuite.
+	 * Returns the related {@coee TestSuite}.
 	 * 
-	 * @return wrapped TestSuite.
+	 * @return related {@code TestSuite}
 	 */
 	public function getTestSuite(Void):TestSuite {
 		return this.testSuite;
@@ -192,7 +220,7 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	/**
 	 * Extended .toString implementation.
 	 * 
-	 * @return TestSuiteResult as well formated String.
+	 * @return {@code TestSuiteResult} as well formated {@code String}
 	 */
 	public function toString():String {
 		var result:String;

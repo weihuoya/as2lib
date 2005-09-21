@@ -20,26 +20,29 @@ import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.util.StringUtil;
+import org.as2lib.data.type.Time;
 
 /**
- * Wrapper for a TestCase that contains a API to all Informations to the execution of the Testcase.
+ * {@code TestCaseResult} contains all informations about the execution of a {@code TestCase}.
+ * 
+ * <p>{@link TestCaseRunner} contains all states of execution of the {@code TestCase}
+ * and {@code TestCaseResult} contains all informations about the execution.
  * 
  * @author Martin Heidegger.
+ * @version 1.0
+ * @see TestCase
+ * @see TestCaseRunner
  */
 class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResult {
 	
-	/** Holder for the internal testcase. */
+	/** Reference to the related testcase. */
 	private var testCase:TestCase;
 	
-	/** Holder for the runner of the testcase. */
-	private var testRunner:TestRunner;
-	
-	/** Internal list of all Methods contained in the Testcase. */
+	/** All methods contained in the Testcase. */
 	private var testCaseMethodInfos:TypedArray;
 	
 	/** Flag if the TestCase has been finished. */
@@ -49,23 +52,24 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	private var started:Boolean;
 	
 	/**
-	 * Constructs a new TestCaseResult.
+	 * Constructs a new {@code TestCaseResult}.
 	 * 
-	 * @param testCase TestCase to wrap.
-	 * @param testRunner TestRunner that initialized the TestCaseResult.
+	 * @param testCase {@coce TestCase} related to the informations
 	 */
-	public function TestCaseResult(testCase:TestCase, testRunner:TestRunner) {
-		this.testRunner = testRunner;
+	public function TestCaseResult(testCase:TestCase) {
 		this.testCase = testCase;
 		this.started = false;
 		this.finished = false;
 	}
 	
 	/**
-	 * Getter for all Informations about the methods contained within the TestCase.
-	 * Test method get recognized by the pattern: "test*"
+	 * Returns all informations in a list about the methods contained within the
+	 * {@code TestCase}.
+	 *
+	 * <p>All methods get wrapped within {@code TestCaseMethodInfo}s. Only methods
+	 * that start with "test" are contained within this list.
 	 * 
-	 * @return List of all methods contained within this TestCase.
+	 * @return list of all methods contained within the related {@code TestCase}
 	 */
 	public function getMethodInfos(Void):TypedArray {
 		// Lacy Initialisation for load balancing. All Methods get evaluated by starting this TestCaseResult
@@ -78,9 +82,9 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	}
 	
 	/**
-	 * Fetches all methods starting with "test" within the testcase.
+	 * Fetches all methods starting with "test" within the {@code TestCase}
 	 * 
-	 * @return List containing all methodinformations.
+	 * @return list of all methods contained within the related {@code TestCase}
 	 */
 	private function fetchTestCaseMethodInfos(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestCaseMethodInfo);
@@ -89,7 +93,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 			for (var i:Number = methods.length-1; i >= 0; i--) {
 				var method:MethodInfo = methods[i];
 				if (StringUtil.startsWith(method.getName(), 'test')) {
-					result.push(new TestCaseMethodInfo(method, getTestRunner()));
+					result.push(new TestCaseMethodInfo(method));
 				}
 			}
 		}
@@ -97,27 +101,18 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	}
 	
 	/**
-	 * Getter for the Testrunner that executed the TestCase.
+	 * Returns the related {@code TestCase}.
 	 * 
-	 * @return Testrunner that executed the TestCase.
-	 */
-	public function getTestRunner(Void):TestRunner {
-		return testRunner;
-	}
-	
-	/**
-	 * Getter for the wrapped TestCase.
-	 * 
-	 * @return Wrapped TestCase.
+	 * @return instance of the related {@code TestCase}
 	 */
 	public function getTestCase(Void):TestCase {
 		return testCase;
 	}
 	
 	/**
-	 * Getter for the name of the TestCase.
+	 * Returns the class name of the related {@code TestCase}.
 	 * 
-	 * @return name of the TestCase.
+	 * @return class name of the related TestCase.
 	 */
 	public function getName(Void):String {
 		return ClassInfo.forInstance(getTestCase()).getFullName();
@@ -135,9 +130,21 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	}
 	
 	/**
-	 * Getter for the total percentage of the execution.
+	 * Returns all result to the TestCase results.
+	 * Implementation of @see TestResult#getTestCaseResults.
 	 * 
-	 * @return Percentage of execution.
+	 * @return The Testcase in a list of TestCaseResults.
+	 */
+	public function getTestCaseResults(Void):TypedArray {
+		var result:TypedArray = new TypedArray(TestCaseResult);
+		result.push(this);
+		return result;
+	}
+	
+	/**
+	 * Returns the percentage ({@code 0}-{@code 100}) of the executed methods.
+	 * 
+	 * @return percentage of execution
 	 */
 	public function getPercentage(Void):Number {
 		var finished:Number = 0;
@@ -156,12 +163,14 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	}
 	
 	/**
-	 * @return true if the TestCase has been finished.
+	 * Returns {@code true} if the {@code TestCase} has been finished.
+	 * 
+	 * @return {@code true} if the {@code TestCase} has been finished
 	 */
 	public function hasFinished(Void):Boolean {
-		if(finished) return true; // Caching of a true result as performance enhancement.
+		if (finished) return true; // Caching of a true result as performance enhancement.
 		var methodIterator:Iterator = new ArrayIterator(getMethodInfos());
-		while(methodIterator.hasNext()) {
+		while (methodIterator.hasNext()) {
 			if(!methodIterator.next().hasFinished()) {
 				return false;
 			}
@@ -170,13 +179,15 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	}
 	
 	/**
-	 * @return true if the TestCase has been started.
+	 * Returns {@code true} if the {@code TestCase} has been started.
+	 * 
+	 * @return {@code true} if the {@code TestCase} has been started
 	 */
 	public function hasStarted(Void):Boolean {
-		if(started) return true; // Caching of a true result as performance enhancement.
+		if (started) return true; // Caching of a true result as performance enhancement.
 		var methodIterator:Iterator = new ArrayIterator(getMethodInfos());
-		while(methodIterator.hasNext()) {
-			if(methodIterator.next().hasFinished()) {
+		while (methodIterator.hasNext()) {
+			if (methodIterator.next().hasFinished()) {
 				return (started=true);
 			}
 		}
@@ -184,26 +195,28 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	}
 	
 	/**
-	 * Getter for the total operation time.
+	 * Returns the total operation time for all methods executed for the {@code TestCase}.
 	 * 
-	 * @return Total operation time in milliseconds.
+	 * @return total operation time of the {@code TestCase}
 	 */
-	public function getOperationTime(Void):Number {
+	public function getOperationTime(Void):Time {
 		var result:Number = 0;
 		var methodIterator:Iterator = new ArrayIterator(getMethodInfos());
-		while(methodIterator.hasNext()) {
+		while (methodIterator.hasNext()) {
 			result += methodIterator.next().getStopWatch().getTimeInMilliSeconds();
 		}
-		return result;
+		return (new Time(result));
 	}
 	
 	/**
-	 * @return True if the Testcase has errors.
+	 * Returns {@code true} if the errors occured during the execution of {@code TestCase}.
+	 * 
+	 * @return {@code true} if the errors occured during the execution of {@code TestCase}.
 	 */
 	public function hasErrors(Void):Boolean {
 		var methodIterator:Iterator = new ArrayIterator(getMethodInfos());
-		while(methodIterator.hasNext()) {
-			if(methodIterator.next().hasErrors()) {
+		while (methodIterator.hasNext()) {
+			if (methodIterator.next().hasErrors()) {
 				return true;
 			}
 		}
@@ -211,31 +224,19 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	}
 	
 	/**
-	 * Getter for all TestCase results.
-	 * Implementation of @see TestResult#getTestCaseResults.
-	 * 
-	 * @return The Testcase in a list of TestCaseResults.
-	 */
-	public function getTestCaseResults(Void):TypedArray {
-		var result:TypedArray = new TypedArray(TestCaseResult);
-		result.push(this);
-		return result;
-	}
-	
-	/**
 	 * Extended .toString implementation.
 	 * 
-	 * @return TestCaseResult as well formated String.
+	 * @return {@code TestCaseResult} as well formated {@code String}
 	 */
 	public function toString():String {
 		var result:String;
-		var methodResult:String="";
-		var ms:Number=0;
-		var errors:Number=0;
+		var methodResult:String = "";
+		var ms:Number = 0;
+		var errors:Number = 0;
 		var methodInfos:Array = getMethodInfos();
-		var iter:Iterator=new ArrayIterator(methodInfos);
-		while(iter.hasNext()) {
-			var method:TestCaseMethodInfo = TestCaseMethodInfo(iter.next());
+		var iter:Iterator = new ArrayIterator(methodInfos);
+		while (iter.hasNext()) {
+			var method:TestCaseMethodInfo = iter.next();
 			ms += method.getStopWatch().getTimeInMilliSeconds();
 			if(method.hasErrors()) {
 				errors += method.getErrors().length;

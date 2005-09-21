@@ -14,38 +14,47 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
-import org.as2lib.env.log.Logger;
-import org.as2lib.env.log.LogManager;
 import org.as2lib.app.exec.Process;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestCaseResult;
 import org.as2lib.app.exec.ProcessListener;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.log.LogSupport;
+import org.as2lib.test.unit.TestCaseMethodInfo;
 
 /**
- * Default listener for TestRunner.
+ * {@code LoggerTestListener} is the default listener for Tests.
  * Listener as default logger for the Testrunner. To be used as standard outwriter for the TestRunner.
  *
  * @author Martin Heidegger
  * @see LogManager#getLoggerRepository
  * @see Logger
  */
-class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements ProcessListener {
+class org.as2lib.test.unit.LoggerTestListener extends LogSupport implements ProcessListener {
 	
-	/** Stores the logger used to do the output. */
-	private static var logger:Logger;
+	/* Instance holfer of the default LoggerTestListener */
+	private static var instance:LoggerTestListener;
+	
+	/**
+	 * Returns a instance of {@code LoggerTestListener}
+	 * 
+	 * @return Instance of {@code LoggerTestListener}
+	 */
+	public static function getInstance(Void):LoggerTestListener {
+		if (!instance) {
+			instance = new LoggerTestListener();
+		}
+		return instance;
+	}
 	
 	/** Stores former displayed TestCase. */
 	private var formerTest:TestCaseResult;
 	
 	/**
-	 * @return the logger used to do the output
+	 * Private constructor, use {@link #getInstance} to create a instance.
 	 */
-	private static function getLogger(Void):Logger {
-		if (!logger) logger = LogManager.getLoggerRepository().getLogger("org.as2lib.test.util.LoggerTestListener");
-		return logger;
-	}
+	private function LoggerTestListener() {}
+	
 	
 	/**
 	 * Start event, fired by start of a TestRunner.
@@ -53,7 +62,7 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Proc
 	 * @param startInfo Informations about the TestRunner that started.
 	 */
 	public function onStartProcess(process:Process):Void {
-		getLogger().info("TestRunner started execution.");
+		logger.info("TestRunner started execution.");
 	}
 	
 	/**
@@ -62,6 +71,13 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Proc
 	 * @param progressInfo Extended informations the current progress.
 	 */
 	public function onUpdateProcess(process:Process):Void {
+		var testRunner:TestRunner = TestRunner(process);
+		if (testRunner) {
+			var methodInfo:TestCaseMethodInfo = testRunner.getCurrentTestCaseMethodInfo();
+			if (methodInfo) {
+				logger.info("executing ... "+testRunner.getCurrentTestCase().getName()+"."+methodInfo.getMethodInfo().getName());
+			}
+		}
 	}
 	
 	/**
@@ -72,7 +88,7 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Proc
 	public function onFinishProcess(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
 		if(testRunner) {
-			getLogger().info("TestRunner finished with the result: \n"+testRunner.getTestResult().toString());
+			logger.info("TestRunner finished with the result: \n"+testRunner.getTestResult().toString());
 		} else {
 			throw new IllegalArgumentException("LoggerTestListener added to a different Process", this, arguments);
 		}
@@ -85,7 +101,7 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Proc
 	 */
 	public function onPauseProcess(process:Process):Void {
 		var test:TestRunner = TestRunner(process);
-		getLogger().info("TestRunner paused execution at "+test.getCurrentTestCaseMethodInfo().getName()+"");
+		logger.info("TestRunner paused execution at "+test.getCurrentTestCaseMethodInfo().getName());
 	}
 	
 	/**
@@ -94,7 +110,8 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Proc
 	 * @param resumeInfo Informations about the TestRunner that resumed working.
 	 */
 	public function onResumeProcess(process:Process):Void {
-		getLogger().info("TestRunner resumed execution");
+		var test:TestRunner = TestRunner(process);
+		logger.info("TestRunner resumed execution at "+test.getCurrentTestCaseMethodInfo().getName());
 	}
 	
 	/**
@@ -103,8 +120,9 @@ class org.as2lib.test.unit.LoggerTestListener extends BasicClass implements Proc
 	 * @param process where the execution paused.
 	 * @param error Error that occured.
 	 */
-	public function onProcessError(process:Process, error):Void {
-		getLogger().error("Exception was thrown during the execution of the TestRunner: " + error + ".");
+	public function onProcessError(process:Process, error):Boolean {
+		logger.error("Exception was thrown during the execution of the TestRunner: " + error + ".");
+		return true;
 	}
 	
 }

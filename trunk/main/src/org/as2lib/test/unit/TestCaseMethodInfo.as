@@ -18,7 +18,6 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.array.ArrayIterator;
-import org.as2lib.test.unit.TestRunner;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.util.StopWatch;
 import org.as2lib.util.StringUtil;
@@ -37,9 +36,6 @@ class org.as2lib.test.unit.TestCaseMethodInfo extends BasicClass {
 	/** Holder for the Stopwatch that contains the execution time. */
 	private var stopWatch:StopWatch;
 	
-	/** Holder for the TestRunner that runs this method. */
-	private var testRunner:TestRunner;
-	
 	/** All collected Informations for the execution. */
 	private var infos:TypedArray;
 	
@@ -50,24 +46,13 @@ class org.as2lib.test.unit.TestCaseMethodInfo extends BasicClass {
 	 * Constructs a new Informations for a TestCase method.
 	 * 
 	 * @param methodInfo Reflection based information of the method.
-	 * @param testRunner TestRunner that executed the test.
 	 */
-	public function TestCaseMethodInfo(methodInfo:MethodInfo, testRunner:TestRunner) {
+	public function TestCaseMethodInfo(methodInfo:MethodInfo) {
 		this.methodInfo = methodInfo;
-		this.testRunner = testRunner;
 		
 		stopWatch = new StopWatch();
 		infos = new TypedArray(ExecutionInfo);
 	}
-	
-	/**
-	 * Getter for the TestRunner that executed this method.
-	 * 
-	 * @return TestRunner that executed this method.
-	 */
-	public function getTestRunner(Void):TestRunner {
-		return testRunner;
-	}	
 	
 	/**
 	 * Getter for the Stopwatch that is held by this class.
@@ -76,15 +61,6 @@ class org.as2lib.test.unit.TestCaseMethodInfo extends BasicClass {
 	 */
 	public function getStopWatch(Void):StopWatch {
 		return stopWatch;
-	}
-	
-	/**
-	 * Information if the method has been executed.
-	 * 
-	 * @return true if the method has been executed.
-	 */
-	public function hasFinished(Void):Boolean {
-		return getTestRunner().isTestCaseMethodFinished(this);
 	}
 	
 	/**
@@ -163,13 +139,14 @@ class org.as2lib.test.unit.TestCaseMethodInfo extends BasicClass {
 	public function isExecuted(Void):Boolean {
 		return executed;
 	}
-	
+
 	/**
-	 * Executes the method to a scope.
+	 * Sets the current state of execution.
+	 * 
+	 * @param executed True if the method has been executed, else false.
 	 */
-	public function executeTo(scope):Void {
-		executed = true;
-		getMethodInfo().invoke(scope, null);
+	public function setExecuted(executed:Boolean):Void {
+		this.executed = executed;
 	}
 	
 	/**
@@ -181,9 +158,9 @@ class org.as2lib.test.unit.TestCaseMethodInfo extends BasicClass {
 		var result:String = getMethodInfo().getName()+"() ["+getStopWatch().getTimeInMilliSeconds()+"ms]";
 		var errors:Array = getErrors();
 		if(errors.length > 1) {
-			result += " "+getErrors().length+" errors occured";
+			result += " "+errors.length+" errors occured";
 		} else if(errors.length > 0) {
-			result += " "+getErrors().length+" error occured";
+			result += " 1 error occured";
 			
 		}
 		var errorIterator:Iterator = new ArrayIterator(errors);
@@ -197,6 +174,11 @@ class org.as2lib.test.unit.TestCaseMethodInfo extends BasicClass {
 		return result;
 	}
 	
+	/**
+	 * Getter for the complete name of the methodinfo
+	 * 
+	 * @return Complete name as string of the methodinfo.
+	 */
 	public function getName(Void):String {
 		return methodInfo.getFullName();
 	}

@@ -16,32 +16,34 @@
 
 import org.as2lib.core.BasicInterface;
 import org.as2lib.test.unit.TestRunner;
-import org.as2lib.test.unit.TestResultFactory;
 
 /**
- * Basic Class to be Extended by all Testcases.
- * This class provides all Function to be used by traditional Testcases.
- * It should used by all Testcases. It uses the Class "test.Failure" for Errors.
- * This is a Subproject from www.as2lib.org.
+ * {@code Test} is the definition for any test in a unit-testing context.
+ * 
+ * <p>To start a {@code Test} you simple have to execute {@code run}. It logs all
+ * output by default to a {@code Logger}.
  *
  * @author Martin Heidegger
- * @see TestResult
+ * @version 2.0
+ * @see TestRunner
  */
 interface org.as2lib.test.unit.Test extends BasicInterface {
 		
 	/**
-	 * Runs the Test.
+	 * Runs the test.
 	 * 
-	 * @return TestRunner that run this test (including all informations about the run).
+	 * @return {@code TestRunner} that executes this test
 	 */
-	public function run():TestRunner;
+	public function run(Void):TestRunner;
 	
 	/**
-	 * Returns the Information information sheet for the Result.
-	 * <p>Warning: The Result might be not complete! The Result will get filled
-	 * during the execution of the Testcase.
+	 * Returns the {@code TestRunner} that executes this {@code Test}.
 	 * 
-	 * @return Informations about the test.
+	 * <p>Every {@code Test} is ment to have a {@code TestRunner} that knows
+	 * how the informations of the {@code Test} have to be used to execute to
+	 * evaluate the result.
+	 * 
+	 * @return {@code TestRunner} that executes this test
 	 */
-	public function getResultFactory(Void):TestResultFactory;
+	public function getTestRunner(Void):TestRunner;
 }

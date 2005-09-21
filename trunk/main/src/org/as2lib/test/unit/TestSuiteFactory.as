@@ -16,11 +16,12 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.test.unit.Test;
-import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.TestCaseHelper;
 import org.as2lib.test.unit.TestSuite;
 import org.as2lib.util.ClassUtil;
 import org.as2lib.util.AccessPermission;
+import org.as2lib.env.reflect.PackageInfo;
+import org.as2lib.env.reflect.TypeInfo;
 
 /**
  * Factory to create TestSuites.
@@ -42,7 +43,7 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 	 * @return TestSuite that contains all available TestCases.
 	 */
 	public function collectAllTestCases(Void):TestSuite {
-		return collectTestCases(_global, true);
+		return collectTestCases(PackageInfo.getRootPackage(), true);
 	}
 	
 	/**
@@ -52,9 +53,8 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 	 * @param recursive Recursive Flag.
 	 * @return TestSuite that contains all available TestCases.
 	 */
-	public function collectTestCases(package, recursive:Boolean):TestSuite {
+	public function collectTestCases(package:PackageInfo, recursive:Boolean):TestSuite {
 		var result:TestSuite = new TestSuite("<Generated TestSuite>");
-		// TODO: Change to usual reflection system.
 		AccessPermission.set(package, null, AccessPermission.ALLOW_ALL);
 		collectAgent(package, result, recursive);
 		return result;
@@ -62,11 +62,10 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 
 	/**
 	 * Agent to collect TestCases within a package.
-	 * 
-	 * Note: If you want that a class gets blocked from collection simple add
+	 * <p>Note: If you want that a class gets blocked from collection simple add
 	 * a static method "blockCollecting" that returns true.
 	 * 
-	 * Example:
+	 * <p>Example:
 	 * <code>
 	 *   import org.as2lib.test.unit.TestCase;
 	 * 
@@ -82,21 +81,27 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 	 * @param suite TestSuite to add the found TestCase.
 	 * @param recursive Recursive Flag.
 	 */
-	private function collectAgent(package, suite:TestSuite, recursive:Boolean):Void {
-		var i:String;
-		for(i in package) {
-			var child = package[i];
-			if(typeof child == "function" && ClassUtil.isSubClassOf(child, TestCase) && !child.blockCollecting() && !ClassUtil.isSubClassOf(child, TestCaseHelper)) {
-				// flex stores every class in _global and in its actual package
-				// e.g. org.as2lib.core.BasicClass is stored in _global with name org_as2lib_core_BasicClass
-				// this if-clause excludes these extra stored classes
-				if (!eval("_global." + i.split("_").join(".")) || i.indexOf("_") < 0) {
-					suite.addTest(Test(ClassUtil.createCleanInstance(child)));
-				}
+	private function collectAgent(package:PackageInfo, suite:TestSuite, recursive:Boolean):Void {
+
+		var members:Array = package.getMemberClasses();
+		for(var i:Number = 0; i < members.length; i++) {
+			var childType:TypeInfo = members[i];
+			var child:Function = childType.getType();
+			if (
+				   ClassUtil.isImplementationOf(child, Test)
+				&& child != Test
+				&& !child.blockCollecting()
+				&& !ClassUtil.isSubClassOf(child, TestCaseHelper)
+				&& !ClassUtil.isSubClassOf(child, TestSuite)
+				) {
+				suite.addTest(Test(ClassUtil.createCleanInstance(child)));
 			}
-			if(typeof child == "object" && recursive) {
-				collectAgent(child, suite, recursive);
-			}
+		}
+		
+		var subPackages:Array = package.getMemberPackages();
+		for(var j:Number = 0; j < subPackages.length && recursive; j++) {
+			var subPackage:PackageInfo = subPackages[j];
+			collectAgent(subPackage, suite, true);
 		}
 	}
 }
