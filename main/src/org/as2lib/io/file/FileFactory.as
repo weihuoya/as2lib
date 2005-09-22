@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -13,40 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 import org.as2lib.core.BasicInterface;
-import org.as2lib.data.holder.Iterator;
+import org.as2lib.io.file.File;
 import org.as2lib.data.type.Byte;
 import org.as2lib.data.type.MultiLineString;
 
 /**
- * {@code File} is a holder for text content with multiple lines of a external resource.
+ * {@code FileFactory} is a integration layer for {@link org.as2lib.util.FileLoader}.
  * 
- * <p>Every {@code File} implementation has to provide the content of the real file.
+ * <p>{@code FileLoader} applies the loaded resource to {@code FileFactory} 
+ * property. The implementations of {@code FileLoader} can variy the result of 
+ * the loaded file.
  * 
  * @author Martin Heidegger
- * @version 2.0
+ * @version 1.0
  */
-interface org.as2lib.io.file.File extends BasicInterface {
+interface org.as2lib.io.file.FileFactory extends BasicInterface {
 	
 	/**
-	 * Returns the complete content of the file.
+	 * Creates a new {@code File} instance for the loaded resource.
 	 * 
-	 * @return content of the file
+	 * @param source content of the {@code File} to create
+	 * @param size size in {@link Byte} of the loaded resource
+	 * @param uri location of the loaded resource
+	 * @return {@code File} that represents the resource
 	 */
-	public function getContent(Void):MultiLineString;
-	
-	/**
-	 * Returns the location (URI) of the resource related to the content.
-	 * 
-	 * @return location of the resource related to the content
-	 */
-	public function getLocation(Void):String;
-	
-	/**
-	 * Returns the size of the related resource in bytes.
-	 * 
-	 * @return size of the related resource in bytes
-	 */
-	public function getSize(Void):Byte;
+	public function createFile(source:MultiLineString, size:Byte, uri:String):File;
 }

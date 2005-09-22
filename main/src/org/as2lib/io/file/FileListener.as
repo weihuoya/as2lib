@@ -14,35 +14,53 @@
  * limitations under the License.
  */
 
-import org.as2lib.io.file.FileEventInfo;
-import org.as2lib.env.event.EventListener;
+import org.as2lib.core.BasicInterface;
+import org.as2lib.io.file.File;
+import org.as2lib.io.file.FileLoader;
 
 /**
- * Listenerdefinition for a listener to fileevents.
+ * {@code FileListener} is the definition for all events that may occur during a
+ * {@code FileLoader} process.
+ * 
+ * <p>Every {@code FileLoader} has to provide events to handle the different
+ * states of the execution. All events will be broadcasted to {@code FileListener}
+ * implementations.
  * 
  * @author Martin Heidegger
- * @see File#addListener
+ * @version 2.0
+ * @see FileLoader
  */
-interface org.as2lib.io.file.FileListener extends EventListener {
+interface org.as2lib.io.file.FileListener extends BasicInterface {
 	
 	/**
-	 * Event to be published if the file was loaded.
+	 * Event to be published if the {@code FileLoader} started a request.
 	 * 
-	 * @param fileInfo Informations about the file that was loaded.
+	 * @param fileLoader {@code FileLoader that was started
 	 */
-	public function onLoad(fileInfo:FileEventInfo):Void;
+	public function onFileStartLoading(fileLoader:FileLoader):Void ;
 	
 	/**
 	 * Event to be published if the file was not found.
 	 * 
-	 * @param fileInfo Informations about the file that was not found.
+	 * @param uri location of the file that was requested 
 	 */
-	public function onFileNotFound(fileInfo:FileEventInfo):Void;
+	public function onFileNotFound(uri:String):Void;
 	
 	/**
-	 * Event to be published if loading of the file is in progress.
+	 * Event to be published if the percentage of the loaded process changes.
 	 * 
-	 * @param fileInfo Informations about the file that is loading.
+	 * @param fileLoader {@code FileLoader} that executes the request
 	 */
-	public function onProgress(fileInfo:FileEventInfo):Void;
+	public function onFileProgress(fileLoader:FileLoader):Void;
+	
+	/**
+	 * Event to be published if the resource finished loading.
+	 * 
+	 * <p>This event will only occur after the {@code FileLoader} was started.
+	 * 
+	 * <p>This event will not occur if the resource was not available.
+	 * 
+	 * @param file {@code File} that represents the loaded resource
+	 */
+	public function onFileLoad(file:File):Void;
 }
