@@ -47,7 +47,6 @@ class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
 	 * @param source content of the {@code File} to create
 	 * @param size size in {@link Byte} of the loaded resource
 	 * @param uri location of the loaded resource
-	 * @return {@code File} that represents the resource
 	 */
 	public function SimpleFile(source:MultiLineString, size:Byte, uri:String) {
 		this.source = source;
