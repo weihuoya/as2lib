@@ -23,7 +23,7 @@ import org.as2lib.data.type.MultiLineString;
 
 /**
  * {@code SimpleFileFactory} is a implementation of {@link FileFactory} for 
- * {@code SimpleFile}.
+ * creating {@code SimpleFile} instances.
  * 
  * @author Martin Heidegger
  * @version 1.0
@@ -38,7 +38,7 @@ class org.as2lib.io.file.SimpleFileFactory extends BasicClass implements FileFac
 	 * @param uri location of the loaded resource
 	 * @return {@code SimpleFile} that represents the resource
 	 */
-	public function createFile(data:MultiLineString, size:Byte, uri:String):File {
-		return new SimpleFile(data, size, uri);
+	public function createFile(source:MultiLineString, size:Byte, uri:String):File {
+		return new SimpleFile(source, size, uri);
 	}
 }
