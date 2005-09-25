@@ -18,71 +18,75 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
- * Formater for bit.
- * This class gets used for formatting bits in Kilo/Mega/Giga/Tera bits.
+ * {@code Bit} is represents a bit value.
+ * 
+ * <p>{@code Bit} can be used for a different kind of formatting of a bit value.
+ * It allows to access the value as bit, kilo-bit, mega-bit, giga-bit, tera-bit,
+ * byte, kilo-byte, mega-byte, giga-byte and tera-byte.
  * 
  * @author Martin Heidegger
+ * @version 1.1
  */
 class org.as2lib.data.type.Bit extends BasicClass {
 	
-	/** Default floating points used */
-	private static var DEFAULT_FLOATING_POINTS:Number = 2;
+	/** Default floating points used. */
+	public static var DEFAULT_FLOATING_POINTS:Number = 2;
 	
-	/** Size of a kilo */
+	/** Size of a kilo. */
 	private static var KILO:Number = 1024;
 	
-	/** Size of a kilobit */
+	/** Size of a kilobit. */
 	private static var KILO_BIT:Number = KILO;
 	
-	/** Size of a megabit */
+	/** Size of a megabit. */
 	private static var MEGA_BIT:Number = KILO_BIT*KILO;
 	
-	/** Size of a gigabit */
+	/** Size of a gigabit. */
 	private static var GIGA_BIT:Number = MEGA_BIT*KILO;
 	
-	/** Size of a terabit */
+	/** Size of a terabit. */
 	private static var TERA_BIT:Number = GIGA_BIT*KILO;
 	
-	/** Size of a byte */
+	/** Size of a byte. */
 	private static var BYTE:Number = 8;
 	
-	/** Size of a kilobyte */
+	/** Size of a kilobyte. */
 	private static var KILO_BYTE:Number = KILO*BYTE;
 	
-	/** Size of a megabyte */
+	/** Size of a megabyte. */
 	private static var MEGA_BYTE:Number = KILO_BYTE*KILO;
 	
-	/** Size of a gigabyte */
+	/** Size of a gigabyte. */
 	private static var GIGA_BYTE:Number = MEGA_BYTE*KILO;
 	
-	/** Size of a terabyte */
+	/** Size of a terabyte. */
 	private static var TERA_BYTE:Number = GIGA_BYTE*KILO;
 	
-	/** Shortname of bit */
+	/** Shortname of bit. */
 	private static var SHORT_BIT:String = "b";
 	
-	/** Shortname of kilobit */
+	/** Shortname of kilobit. */
 	private static var SHORT_KILO_BIT:String = "Kb";
 	
-	/** Shortname of megabit */
+	/** Shortname of megabit. */
 	private static var SHORT_MEGA_BIT:String = "Mb";
 	
-	/** Shortname of gigabit */
+	/** Shortname of gigabit. */
 	private static var SHORT_GIGA_BIT:String = "Gb";
 	
-	/** Shortname of terabit */
+	/** Shortname of terabit. */
 	private static var SHORT_TERA_BIT:String = "Tb";
 	
-	/** Holder for the amount of bits */
+	/** Holder for the amount of bits. */
 	private var bit:Number;
 	
-	/** Holder for the comma seperation */
+	/** Holder for the comma seperation. */
 	private var comma:Number;
 	
 	/**
-	 * Constructs a new BitFormat
+	 * Constructs a new {@code Bit}.
 	 * 
-	 * @param bit Bit to be formatted.
+	 * @param bit value in bit
 	 */
 	public function Bit(bit:Number) {
 		this.bit = bit;
@@ -92,9 +96,9 @@ class org.as2lib.data.type.Bit extends BasicClass {
 	/**
 	 * Sets the used amount of values after the comma.
 	 * 
-	 * @param fp Amount of characters after the floating point.
-	 * @return The current instance for faster access.
-	 * @throws IllegalArgumentException if you pass no floating points 
+	 * @param fp amount of characters after the floating point
+	 * @return the current instance
+	 * @throws IllegalArgumentException if you pass no amount of floating points
 	 */
 	public function setFloatingPoints(fp:Number):Bit {
 		if(fp >= 0 && fp != null) {
@@ -108,8 +112,8 @@ class org.as2lib.data.type.Bit extends BasicClass {
 	/**
 	 * Rounds a number by a count of floating points.
 	 * 
-	 * @param num Number to be rounded.
-	 * @param fp Amount of characters after the floating point.
+	 * @param num {@code Number} to be rounded
+	 * @param fp amount of characters after the floating point
 	 */
 	private function round(num:Number, fp:Number):Number {
 		var result:Number = 1;
@@ -120,115 +124,108 @@ class org.as2lib.data.type.Bit extends BasicClass {
 	}
 	
 	/**
-	 * Getter for the value in bit.
+	 * Returns the value in bit.
 	 * 
-	 * @return Value in bit.
-	 * @see #BitFormat
+	 * @return value in bit
 	 */
 	public function getBit(Void):Number {
 		return bit;
 	}
 	
 	/**
-	 * Getter for the value in bytes.
+	 * Returns the value in bytes.
 	 * 
-	 * @return Value in bytes.
-	 * @see #BitFormat
+	 * @return value in bytes
 	 */
 	public function getBytes(Void):Number {
 		return round(bit/BYTE, comma);
 	}
 	
 	/**
-	 * Getter for the value in kilobit.
+	 * Returns the value in kilobit.
 	 * 
-	 * @return Value in kilobit.
-	 * @see #BitFormat
+	 * @return value in kilobit
 	 */
 	public function getKiloBit(Void):Number {
 		return round(bit/KILO_BIT, comma);
 	}
 	
 	/**
-	 * Getter for the value in kilobytes.
+	 * Returns the value in kilobytes.
 	 * 
-	 * @return Value in kilobytes.
-	 * @see #BitFormat
+	 * @return value in kilobytes
 	 */
 	public function getKiloBytes(Void):Number {
 		return round(bit/KILO_BYTE, comma);
 	}
 	
 	/**
-	 * Getter for the value in megabit.
+	 * Returns the value in megabit.
 	 * 
-	 * @return Value in megabit.
-	 * @see #BitFormat
+	 * @return value in megabit
 	 */
 	public function getMegaBit(Void):Number {
 		return round(bit/MEGA_BIT, comma);
 	}
 	
 	/**
-	 * Getter for the value in megabytes.
+	 * Returns the value in megabytes.
 	 * 
-	 * @return Value in megabytes.
-	 * @see #BitFormat
+	 * @return value in megabytes
 	 */
 	public function getMegaBytes(Void):Number {
 		return round(bit/MEGA_BYTE, comma);
 	}
 	
 	/**
-	 * Getter for the value in gigabit.
+	 * Returns the value in gigabit.
 	 * 
-	 * @return Value in gigabit.
-	 * @see #BitFormat
+	 * @return value in gigabit
 	 */
 	public function getGigaBit(Void):Number {
 		return round(bit/GIGA_BIT, comma);
 	}
 	
 	/**
-	 * Getter for the value in gigabytes.
+	 * Returns the value in gigabytes.
 	 * 
-	 * @return Value in gigabytes.
-	 * @see #BitFormat
+	 * @return value in gigabytes
 	 */
 	public function getGigaBytes(Void):Number {
 		return round(bit/GIGA_BYTE, comma);
 	}
 	
 	/**
-	 * Getter for the value in terabit.
+	 * Returns the value in terabit.
 	 * 
-	 * @return Value in terabit.
-	 * @see #BitFormat
+	 * @return value in terabit
 	 */
 	public function getTeraBit(Void):Number {
 		return round(bit/TERA_BIT, comma);
 	}
 	
 	/**
-	 * Getter for the value in terabytes.
+	 * Returns the value in terabytes.
 	 * 
-	 * @return Value in terabytes.
-	 * @see #BitFormat
+	 * @return value in terabytes
 	 */
 	public function getTeraBytes(Void):Number {
 		return round(bit/TERA_BYTE, comma);
 	}
 	
 	/**
-	 * Extended toString method for a well formatted bitvalue.
-	 * This method uses the next matching size and adds the matching Shortname for it.
+	 * Extended toString method for a well formatted bit value.
 	 * 
-	 * Examples:
+	 * <p>This method uses the next matching size and adds the matching Shortname for it.
+	 * 
+	 * <p>Examples:
+	 * <code>
 	 *   new BitFormat(1).toString(); // 1b
 	 *   new BitFormat(1234).toString(); // 1.21Kb
 	 *   new BitFormat(15002344).toString(); // 14.31Mb
+	 * </code>
 	 * 
-	 * @return bits as string with correct ending.
+	 * @return bits in the next matching size with the matchin unit
 	 * @see #DEFAULT_FLOATING_POINTS
 	 */
 	public function toString():String {
@@ -245,6 +242,9 @@ class org.as2lib.data.type.Bit extends BasicClass {
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	public function valueOf():Number {
 		return getBytes();
 	}
