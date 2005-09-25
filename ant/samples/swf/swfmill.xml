@@ -4,8 +4,8 @@
   <background color='#FF8A00'/>
   <frame>
     <library>
-      <clip id="simonwacker" import="E:\Documents\Projects\As2lib\ant\samples\swf\lib\simonwacker.jpg"/>
-      <font id="pixel" import="E:\Documents\Projects\As2lib\ant\samples\swf\lib\PixelClassic.ttf"/>
+      <clip id="simonwacker" import="E:\Documents\Projects\As2lib\ant\samples\swf\files\simonwacker.jpg"/>
+      <font id="pixel" import="E:\Documents\Projects\As2lib\ant\samples\swf\files\PixelClassic.ttf"/>
     </library>
   </frame>
 </movie>

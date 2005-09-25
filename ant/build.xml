@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project name="Swf, Swfmill, Mtasc Ant Tasks" basedir="." default="jar">
+
+  <property name="src.dir" value="src"/>
+  <property name="build.dir" value="build"/>
+  <property name="dist.dir" value="dist"/>
+  <property name="javadocs.dir" value="docs/api"/>
+  
+  <target name="clean" description="delete all generated files">
+    <delete dir="${build.dir}" failonerror="false"/>
+  </target>
+  
+  <target name="compile" description="compiles the tasks">
+    <mkdir dir="${build.dir}"/>
+    <javac srcdir="${src.dir}" destdir="${build.dir}"/>
+  </target>
+  
+  <target name="jar" description="JARs the task" depends="compile">
+    <jar destfile="${dist.dir}/as2ant.jar" basedir="${build.dir}"/>
+  </target>
+  
+  <!--
+  <target name="javadoc" description="generate javadocs">
+    <mkdir dir="${javadocs.dir}"/>
+    <javadoc sourcepath="${src.dir}" destdir="${javadocs.dir}" windowtitle="Swf Ant Tasks" additionalparam="-breakiterator" source="1.0" package="access" author="true" version="true" use="true" defaultexcludes="true"/>
+  </target>
+  -->
+  
+</project>
