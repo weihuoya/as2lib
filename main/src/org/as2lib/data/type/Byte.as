@@ -17,45 +17,52 @@
 import org.as2lib.data.type.Bit;
 
 /**
- * {@code Byte} is a for bytes.
- * This class gets used for formatting bits in Kilo/Mega/Giga/Tera bytes.
+ * {@code Byte} is represents a byte value.
+ * 
+ * <p>{@code Byte} can be used for a different kind of formatting of a byte value.
+ * It allows to access the value as bit, kilo-bit, mega-bit, giga-bit, tera-bit,
+ * byte, kilo-byte, mega-byte, giga-byte and tera-byte.
  * 
  * @author Martin Heidegger
+ * @version 1.1
  */
 class org.as2lib.data.type.Byte extends Bit {
 	
-	/** Shortname of byte */
+	/** Shortname of byte. */
 	private static var SHORT_BYTE:String = "B";
 	
-	/** Shortname of kilobyte */
+	/** Shortname of kilo-byte. */
 	private static var SHORT_KILO_BYTE:String = "KB";
 	
-	/** Shortname of megabyte */
+	/** Shortname of mega-byte. */
 	private static var SHORT_MEGA_BYTE:String = "MB";
 	
-	/** Shortname of gigabyte */
+	/** Shortname of giga-byte. */
 	private static var SHORT_GIGA_BYTE:String = "GB";
 	
-	/** Shortname of terabyte */
+	/** Shortname of tera-byte. */
 	private static var SHORT_TERA_BYTE:String = "TB";
 	
-	/** 
-	 * Creates a new Byte
+	/**
+	 * Constructs a new {@code Byte}.
 	 * 
-	 * @param bytes Bytes to be formatted.
+	 * @param bytes value in byte
 	 */
 	public function Byte(bytes:Number) {
 		super(bytes*BYTE);
 	}
 	
 	/**
-	 * Extended toString method for a well formatted bytevalue.
-	 * This method uses the next matching size and adds the matching Shortname for it.
+	 * Extended toString method for a well formatted byte value.
 	 * 
-	 * Examples:
+	 * <p>This method uses the next matching size and adds the matching Shortname for it.
+	 * 
+	 * <p>Examples:
+	 * <code>
 	 *   new ByteFormat(1).toString(); // 1B
 	 *   new ByteFormat(1234).toString(); // 1.21KB
 	 *   new ByteFormat(15002344).toString(); // 14.31MB
+	 * </code>
 	 * 
 	 * @return bytes as string with correct ending.
 	 * @see BitFormat#DEFAULT_FLOATING_POINTS
