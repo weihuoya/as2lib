@@ -23,8 +23,8 @@ import java.util.List;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Execute;
-import org.apache.tools.ant.taskdefs.MatchingTask;
 import org.apache.tools.ant.types.Commandline;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
@@ -65,15 +65,19 @@ import org.apache.tools.ant.types.Path;
  *   <li>msvc</li>
  *   <li>mx</li>
  *   <li>keep</li>
- *   <li>separate</li>
- *   <li>flash6</li>
+ *   <li>group</li>
+ *   <li>separate (MTASC versions rc2 to 1.08)</li>
+ *   <li>version</li>
+ *   <li>flash6 (MTASC versions 1.04 to 1.08)</li>
  *   <li>main</li>
  *   <li>swf</li>
+ *   <li>out</li>
  *   <li>frame</li>
  *   <li>header</li>
- *   <li>excl</li>
+ *   <li>excl or exclude</li>
  *   <li>trace</li>
  *   <li>help</li>
+ *   <li>mtasc</li>
  * </ul>
  * 
  * <p>You must either provide "src", "srcdir" or "srcset".
@@ -83,7 +87,7 @@ import org.apache.tools.ant.types.Path;
  * @see <a href="http://www.mtasc.org" title="Motion-Twin ActionScript Compiler">Motion-Twin ActionScript Compiler</a>
  * @see <a href="http://ant.apache.org" title="Apache Ant">Apache Ant</a>
  */
-public class Mtasc extends MatchingTask {
+public class Mtasc extends Task {
     
     public static final String MTASC = "mtasc";
     public static final String VERBOSE = "-v";
@@ -91,29 +95,35 @@ public class Mtasc extends MatchingTask {
     public static final String MSVC = "-msvc";
     public static final String MX = "-mx";
     public static final String KEEP = "-keep";
-    public static final String SEPARATE = "-separate";
-    public static final String FLASH6 = "-flash6";
+    public static final String GROUP = "-group";
     public static final String CLASSPATH = "-cp";
     public static final String MAIN = "-main";
     public static final String SWF = "-swf";
+    public static final String OUT = "-out";
     public static final String FRAME = "-frame";
     public static final String HEADER = "-header";
     public static final String EXCLUDE = "-exclude";
     public static final String TRACE = "-trace";
     public static final String HELP = "-help";
+    public static final String VERSION = "-version";
+    public static final String SEPARATE = "-separate";
+    public static final String FLASH6 = "-flash6";
     
+    private String mtasc;
     private List compileFiles;
     private boolean split;
-    
     private Path sourceDirectory;
     private File source;
-    private FileSet sourceSet;
+    private ArrayList sourceSets;
+    private ArrayList sourceList;
     private Path classpath;
     private Path exclude;
     private File swf;
+    private File out;
     private String frame;
     private String header;
     private String trace;
+    private String version;
     private boolean help;
     private boolean verbose;
     private boolean strict;
@@ -122,16 +132,56 @@ public class Mtasc extends MatchingTask {
     private boolean keep;
     private boolean separate;
     private boolean flash6;
+    private boolean group;
     private boolean main;
     
     /**
-     * Constructs a new Mtasc instance.
+     * Constructs a new {@code Mtasc} instance.
      * 
      * <p>Note that {@code split} is by default set to {@code true}.
      */
     public Mtasc() {
         this.compileFiles = new ArrayList();
+        this.sourceSets = new ArrayList();
+        this.sourceList = new ArrayList();
         this.split = true;
+    }
+    
+    /**
+     * Returns the path to or name of the mtasc executable.
+     * 
+     * <p>If the mtasc executable has not been set, the default executable name
+     * {@link #MTASC} will be returned.
+     * 
+     * @return the path to or name of the mtasc executable
+     */
+    public String getMtasc() {
+        if (this.mtasc == null) this.mtasc = MTASC;
+        return this.mtasc;
+    }
+    
+    /**
+     * Sets the path to or name of the mtasc executable.
+     * 
+     * <p>The path can either be an absolute path:
+     * <code>E:/Programming/Flash/mtasc/mtasc.exe</code>
+     * 
+     * <p>or a relative path:
+     * <code>lib/mtasc/hamtasc.exe</code>
+     * 
+     * <p>You may also just use the name of the executable (without the file
+     * extension) if the directory it resides in is included in the 'PATH'
+     * environment variable:
+     * <code>hamtasc</code>
+     * 
+     * <p>If you do not set a mtasc executable {@link #MTASC} will be used. This
+     * requires that you include the directory in which the mtasc executable resides
+     * in the 'PATH' environment variable.
+     * 
+     * @param mtasc the path to or name of the mtasc executable
+     */
+    public void setMtasc(String mtasc) {
+        this.mtasc = mtasc;
     }
     
     /**
@@ -139,7 +189,7 @@ public class Mtasc extends MatchingTask {
      * 
      * @return a new source directory
      */
-    public Path createSrcdir() {
+    public Path createSrcDir() {
         if (this.sourceDirectory == null) {
             this.sourceDirectory = new Path(getProject());
         }
@@ -151,7 +201,7 @@ public class Mtasc extends MatchingTask {
      * 
      * @param sourceDirectory the new source directory
      */
-    public void setSrcdir(Path sourceDirectory) {
+    public void setSrcDir(Path sourceDirectory) {
         if (this.sourceDirectory == null) {
             this.sourceDirectory = sourceDirectory;
         } else {
@@ -164,7 +214,7 @@ public class Mtasc extends MatchingTask {
      * 
      * @return the source directory
      */
-    public Path getSrcdir() {
+    public Path getSrcDir() {
         return this.sourceDirectory;
     }
     
@@ -187,15 +237,23 @@ public class Mtasc extends MatchingTask {
     }
     
     /**
+     * Adds a new source.
+     * 
+     * @param source the new source
+     */
+    public void addSrc(File source) {
+        this.sourceList.add(source);
+    }
+    
+    /**
      * Creates and returns a new source file set.
      * 
      * @return a new source file set
      */
-    public FileSet createSrcset() {
-        if (this.sourceSet == null) {
-            this.sourceSet = new FileSet();
-        }
-        return this.sourceSet;
+    public FileSet createSrcSet() {
+        FileSet sourceSet = new FileSet();
+        this.sourceSets.add(sourceSet);
+        return sourceSet;
     }
     
     /**
@@ -203,8 +261,8 @@ public class Mtasc extends MatchingTask {
      * 
      * @return the source file set
      */
-    public FileSet getSrcset() {
-        return this.sourceSet;
+    public FileSet[] getSrcSets() {
+        return (FileSet[]) this.sourceSets.toArray(new FileSet[]{});
     }
     
     /**
@@ -212,8 +270,8 @@ public class Mtasc extends MatchingTask {
      * 
      * @param sourceSet the new source file set
      */
-    public void setSrcset(FileSet sourceSet) {
-        this.sourceSet = sourceSet;
+    public void setSrcSet(FileSet sourceSet) {
+        this.sourceSets.add(sourceSet);
     }
     
     /**
@@ -282,6 +340,33 @@ public class Mtasc extends MatchingTask {
      */
     public Path getExcl() {
     	return this.exclude;
+    }
+    
+    /**
+     * Creates and returns a new exclude file.
+     * 
+     * @return the new exclude file
+     */
+    public Path createExclude() {
+    	return createExcl();
+    }
+    
+    /**
+     * Sets a new exclude file.
+     * 
+     * @param exclude the new exclude file
+     */
+    public void setExclude(Path exclude) {
+    	setExcl(exclude);
+    }
+    
+    /**
+     * Returns the exclude file path.
+     * 
+     * @return the exclude file path
+     */
+    public Path getExclude() {
+    	return getExcl();
     }
     
     /**
@@ -458,7 +543,11 @@ public class Mtasc extends MatchingTask {
     /**
      * Sets the separate mode.
      * 
+     * <p>Only supported by MTASC versions rc2 to 1.08. Since version 1.09 'separate'
+     * is the default mode and you can switch it off with the 'group' mode.
+     * 
      * @param separate the separate mode
+     * @see #setGroup(boolean)
      */
     public void setSeparate(boolean separate) {
         this.separate = separate;
@@ -476,10 +565,36 @@ public class Mtasc extends MatchingTask {
     /**
      * Sets the flash6 mode.
      * 
+     * <p>Only supported by MTASC versions 1.04 to 1.08. Since version 1.09 the
+     * 'version' attribute can be used instead.
+     * 
      * @param flash6 the flash6 mode
+     * @see #setVersion(String)
      */
     public void setFlash6(boolean flash6) {
         this.flash6 = flash6;
+    }
+    
+    /**
+     * Returns whether group mode is turned on.
+     * 
+     * @return true if goup mode is turned on else false
+     */
+    public boolean getGroup() {
+        return this.group;
+    }
+    
+    /**
+     * Turns the group mode on.
+     * 
+     * <p>Supported since version 1.09. Use the 'separate' mode in previous
+     * versions.
+     * 
+     * @param group the group mode
+     * @see #setSeparate(boolean)
+     */
+    public void setGroup(boolean group) {
+        this.group = group;
     }
     
     /**
@@ -501,24 +616,6 @@ public class Mtasc extends MatchingTask {
     }
     
     /**
-     * Returns whether source files are splitted, this means compiled one-by-one.
-     * 
-     * @return true if source files are splitted else false
-     */
-    public boolean getSplit() {
-    	return this.split;
-    }
-    
-    /**
-     * Sets whether to split source files, this means compile them one-by-one.
-     * 
-     * @param split determines whether to split source files
-     */
-    public void setSplit(boolean split) {
-    	this.split = split;
-    }
-    
-    /**
      * Returns whether the help message is printed.
      * 
      * @return true if help message is printed else false
@@ -534,6 +631,81 @@ public class Mtasc extends MatchingTask {
      */
     public void setHelp(boolean help) {
         this.help = help;
+    }
+    
+    /**
+     * Returns the version of the output swf.
+     * 
+     * @return the version of the output swf
+     */
+    public String getVersion() {
+        return this.version;
+    }
+    
+    /**
+     * Sets the version of the ouput swf.
+     * 
+     * <p>Supported since version 1.09. Use the 'flash6' attribute in previous
+     * versions if you want to compile Flash 6 SWFs.
+     * 
+     * @param version the version of the output swf
+     * @see #setFlash6(boolean)
+     */
+    public void setVersion(String version) {
+        this.version = version;
+    }
+    
+    /**
+     * Returns the output swf.
+     * 
+     * @return the output swf
+     */
+    public File getOut() {
+        return this.out;
+    }
+    
+    /**
+     * Sets the output swf.
+     * 
+     * <p>Supported since version 1.08.
+     * 
+     * @param out the output swf
+     */
+    public void setOut(File out) {
+        this.out = out;
+    }
+    
+    /**
+     * Returns whether source files are splitted, this means compiled one-by-one.
+     * 
+     * @return true if source files are splitted else false
+     */
+    public boolean getSplit() {
+        return this.split;
+    }
+    
+    /**
+     * Sets whether to split source files, this means compile them one-by-one.
+     * 
+     * @param split determines whether to split source files
+     */
+    public void setSplit(boolean split) {
+        this.split = split;
+    }
+    
+    /**
+     * Returns whether this mtasc task has any sources to compile.
+     * 
+     * @return true if this mtasc task has any sources else false
+     */
+    public boolean hasSources() {
+        if ((this.sourceDirectory == null || this.sourceDirectory.size() == 0)
+                && this.sourceSets.size() == 0
+                && this.source == null
+                && this.sourceList.size() == 0) {
+            return false;
+        }
+        return true;
     }
     
     /**
@@ -559,8 +731,9 @@ public class Mtasc extends MatchingTask {
      */
     private void checkParameters() throws BuildException {
         if ((this.sourceDirectory == null || this.sourceDirectory.size() == 0)
-        		&& (this.sourceSet == null || (!this.sourceSet.hasPatterns() && !this.sourceSet.hasSelectors()))
-        		&& this.source == null) {
+        		&& this.sourceSets.size() == 0
+        		&& this.source == null
+                && this.sourceList.size() == 0) {
             throw new BuildException("Either the 'src', 'srcset' or 'srcdir' attribute must be set.", getLocation());
         }
     }
@@ -577,7 +750,8 @@ public class Mtasc extends MatchingTask {
      */
     private void addCompileFiles() {
         addCompileFiles(this.sourceDirectory);
-        addCompileFiles(this.sourceSet);
+        addCompileFiles((File[]) this.sourceList.toArray(new File[]{}));
+        addCompileFiles((FileSet[]) this.sourceSets.toArray(new FileSet[]{}));
         addCompileFile(this.source);
     }
     
@@ -600,13 +774,23 @@ public class Mtasc extends MatchingTask {
                                              + sd.getPath()
                                              + "' does not exist.", getLocation());
                 }
-                DirectoryScanner ds = getDirectoryScanner(sd);
+                DirectoryScanner ds = new DirectoryScanner();
+                ds.setBasedir(sd);
                 ds.setCaseSensitive(true);
                 ds.setIncludes(new String[] {"**/*.as"});
+                ds.scan();
                 String[] fl = ds.getIncludedFiles();
                 for (int k = 0; k < fl.length; k++) {
                     this.compileFiles.add(new File(sourceDirectory.toString() + "/" + fl[k]));
                 }
+            }
+        }
+    }
+    
+    private void addCompileFiles(File[] sourceList) {
+        if (sourceList != null && sourceList.length > 0) {
+            for (int i = 0; i < sourceList.length; i++) {
+                this.compileFiles.add(sourceList[i]);
             }
         }
     }
@@ -616,14 +800,17 @@ public class Mtasc extends MatchingTask {
      * 
      * @param sourceSet the source set to get source files from
      */
-    private void addCompileFiles(FileSet sourceSet) {
-        if (sourceSet != null) {
-            DirectoryScanner ds = sourceSet.getDirectoryScanner(getProject());
-            ds.setCaseSensitive(true);
-            ds.setIncludes(new String[]{"*.as"});
-            String[] fl = ds.getIncludedFiles();
-            for (int k = 0; k < fl.length; k++) {
-                this.compileFiles.add(new File(ds.getBasedir() + "/" + fl[k]));
+    private void addCompileFiles(FileSet[] sourceSets) {
+        if (sourceSets != null && sourceSets.length > 0) {
+            for (int i = 0; i < sourceSets.length; i++) {
+                FileSet ss = sourceSets[i];
+	            DirectoryScanner ds = ss.getDirectoryScanner(getProject());
+	            ds.setCaseSensitive(true);
+	            ds.setIncludes(new String[]{"*.as"});
+	            String[] fl = ds.getIncludedFiles();
+	            for (int k = 0; k < fl.length; k++) {
+	                this.compileFiles.add(new File(ds.getBasedir() + "/" + fl[k]));
+	            }
             }
         }
     }
@@ -672,7 +859,7 @@ public class Mtasc extends MatchingTask {
      */
     private Commandline setupCommand() {
         Commandline cmd = new Commandline();
-        cmd.setExecutable(MTASC);
+        cmd.setExecutable(getMtasc());
         setupCommandSwitches(cmd);
         addCompileFiles(cmd);
         return cmd;
@@ -687,7 +874,7 @@ public class Mtasc extends MatchingTask {
      */
     private Commandline setupCommand(File compileFile) {
         Commandline cmd = new Commandline();
-        cmd.setExecutable(MTASC);
+        cmd.setExecutable(getMtasc());
         setupCommandSwitches(cmd);
         // -
         cmd.createArgument().setValue(CLASSPATH);
@@ -708,6 +895,10 @@ public class Mtasc extends MatchingTask {
             command.createArgument().setValue(SWF);
             command.createArgument().setFile(this.swf);
         }
+        if (this.out != null) {
+            command.createArgument().setValue(OUT);
+            command.createArgument().setFile(this.out);
+        }
         if (this.frame != null) {
             command.createArgument().setValue(FRAME);
             command.createArgument().setValue(this.frame);
@@ -720,11 +911,16 @@ public class Mtasc extends MatchingTask {
             command.createArgument().setValue(TRACE);
             command.createArgument().setValue(this.trace);
         }
+        if (this.version != null) {
+            command.createArgument().setValue(VERSION);
+            command.createArgument().setValue(this.version);
+        }
         if (this.verbose) command.createArgument().setValue(VERBOSE);
         if (this.strict) command.createArgument().setValue(STRICT);
         if (this.msvc) command.createArgument().setValue(MSVC);
         if (this.mx) command.createArgument().setValue(MX);
         if (this.keep) command.createArgument().setValue(KEEP);
+        if (this.group) command.createArgument().setValue(GROUP);
         if (this.separate) command.createArgument().setValue(SEPARATE);
         if (this.flash6) command.createArgument().setValue(FLASH6);
         addExcludes(command);

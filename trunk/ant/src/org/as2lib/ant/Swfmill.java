@@ -55,6 +55,7 @@ import org.apache.tools.ant.types.EnumeratedAttribute;
  *   <li>quiet</li>
  *   <li>verbose</li>
  *   <li>dump</li>
+ *   <li>swfmill</li>
  * </ul>
  * 
  * @author Simon Wacker
@@ -63,7 +64,7 @@ import org.apache.tools.ant.types.EnumeratedAttribute;
  * @see <a href="http://ant.apache.org" title="Apache Ant">Apache Ant</a>
  */
 public class Swfmill extends Task {
-
+    
     public static final String SWFMILL = "swfmill";
     public static final String SWF2XML = "swf2xml";
     public static final String XML2SWF = "xml2swf";
@@ -74,6 +75,7 @@ public class Swfmill extends Task {
     public static final String VERBOSE = "-v";
     public static final String DUMP = "-d";
     
+    private String swfmill;
     private File source;
     private File destination;
     private File xsl;
@@ -90,6 +92,43 @@ public class Swfmill extends Task {
     }
     
     /**
+     * Returns the path to or name of the swfmill executable.
+     * 
+     * <p>If the swfmill executable has not been set, the default executable name
+     * {@link #SWFMILL} will be returned.
+     * 
+     * @return the path to or name of the swfmill executable
+     */
+    public String getSwfmill() {
+        if (this.swfmill == null) this.swfmill = SWFMILL;
+        return this.swfmill;
+    }
+    
+    /**
+     * Sets the path to or name of the swfmill executable.
+     * 
+     * <p>The path can either be an absolute path:
+     * <code>E:/Programming/Flash/swfmill/swfmill.exe</code>
+     * 
+     * <p>or a relative path:
+     * <code>lib/swfmill/swfmill.exe</code>
+     * 
+     * <p>You may also just use the name of the executable (without the file
+     * extension) if the directory it resides in is included in the 'PATH'
+     * environment variable:
+     * <code>swfmill</code>
+     * 
+     * <p>If you do not set a swfmill executable {@link #SWFMILL} will be used. This
+     * requires that you include the directory in which the swfmill executable resides
+     * in the 'PATH' environment variable.
+     * 
+     * @param swfmill the path to or name of the swfmill executable
+     */
+    public void setSwfmill(String swfmill) {
+        this.swfmill = swfmill;
+    }
+    
+    /**
      * Sets the source file. Depending on your used swfmill command this is either a
      * swf or xml file.
      * 
@@ -100,7 +139,7 @@ public class Swfmill extends Task {
     }
     
     /**
-     * Return the source file.
+     * Returns the source file.
      * 
      * @return the set source file
      */
@@ -366,7 +405,7 @@ public class Swfmill extends Task {
     
     private Commandline setupCommand() {
         Commandline cmd = new Commandline();
-        cmd.setExecutable(SWFMILL);
+        cmd.setExecutable(getSwfmill());
         setupCommandSwitches(cmd);
         cmd.createArgument().setValue(evaluateCommand());
         cmd.createArgument().setFile(this.source);
@@ -394,7 +433,6 @@ public class Swfmill extends Task {
         if (isSwfFile(this.source)) {
             return SWF2XML;
         }
-        // shouldn't an exception be thrown in this case?
         return SIMPLE;
     }
     
@@ -418,7 +456,7 @@ public class Swfmill extends Task {
         // is there a better way?
         String fileName = file.getName();
         String extension = "";
-        int lastDotPosition = fileName.lastIndexOf( '.' );
+        int lastDotPosition = fileName.lastIndexOf(".");
         if (0 < lastDotPosition && lastDotPosition <= fileName.length() - 2) {
            extension = fileName.substring(lastDotPosition + 1);
         }
