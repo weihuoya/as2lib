@@ -77,7 +77,7 @@ import org.apache.tools.ant.BuildException;
  *   <li>clip</li>
  *   <li>font</li>
  *   <li>import</li>
- *   <li>excl</li>
+ *   <li>excl or exclude</li>
  *   <li>help</li>
  *   <li>verbose</li>
  *   <li>header (width:height:fps:bgcolor)</li>
@@ -85,13 +85,19 @@ import org.apache.tools.ant.BuildException;
  *   <li>msvc</li>
  *   <li>mx</li>
  *   <li>keep</li>
- *   <li>separate</li>
- *   <li>flash6</li>
+ *   <li>group</li>
+ *   <li>separate (MTASC versions rc2 to 1.08)</li>
+ *   <li>version</li>
+ *   <li>flash6 (MTASC versions 1.04 to 1.08)</li>
  *   <li>main</li>
  *   <li>frame</li>
  *   <li>trace</li>
  *   <li>srcdir</li>
  *   <li>srcset</li>
+ *   <li>out</li>
+ *   <li>classes</li>
+ *   <li>mtasc</li>
+ *   <li>swfmill</li>
  * </ul>
  * 
  * @author Simon Wacker
@@ -102,14 +108,18 @@ import org.apache.tools.ant.BuildException;
  */
 public class Swf extends Mtasc {
     
-    /** Default file path and name for xml file needed by swfmill. */
+    /** Default file name for xml file needed by swfmill. */
     public static final String XML = "swfmill.xml";
+    
+    /** Default file name for swf file containing classes associated with clips. */
+    public static final String CLASSES = "classes.swf";
     
     private Swfmill swfmill;
     private int width;
     private int height;
     private int framerate;
     private String backgroundColor;
+    private File classes;
     private Clip clip;
     private Font font;
     private Import imp;
@@ -119,13 +129,47 @@ public class Swf extends Mtasc {
      */
     public Swf() {
         this.swfmill = new Swfmill();
-        this.swfmill.setSrc(new File(XML));
-        this.swfmill.setCommand(new Swfmill.Command(Swfmill.SIMPLE));
         setMain(true);
         setWidth(800);
         setHeight(600);
         setFramerate(31);
         setBackgroundColor("FFFFFF");
+    }
+    
+    /**
+     * Returns the path to or name of the swfmill executable.
+     * 
+     * <p>If the swfmill executable has not been set, the default executable name
+     * {@link Swfmill#SWFMILL} will be returned.
+     * 
+     * @return the path to or name of the swfmill executable
+     */
+    public String getSwfmill() {
+        return this.swfmill.getSwfmill();
+    }
+    
+    /**
+     * Sets the path to or name of the swfmill executable.
+     * 
+     * <p>The path can either be an absolute path:
+     * <code>E:/Programming/Flash/swfmill/swfmill.exe</code>
+     * 
+     * <p>or a relative path:
+     * <code>lib/swfmill/swfmill.exe</code>
+     * 
+     * <p>You may also just use the name of the executable (without the file
+     * extension) if the directory it resides in is included in the 'PATH'
+     * environment variable:
+     * <code>swfmill</code>
+     * 
+     * <p>If you do not set a swfmill executable {@link Swfmill#SWFMILL} will be used. This
+     * requires that you include the directory in which the swfmill executable resides
+     * in the 'PATH' environment variable.
+     * 
+     * @param swfmill the path to or name of the swfmill executable
+     */
+    public void setSwfmill(String swfmill) {
+        this.swfmill.setSwfmill(swfmill);
     }
     
     /**
@@ -371,6 +415,27 @@ public class Swf extends Mtasc {
     public String getColor() {
         return getBgColor();
     }
+    
+    /**
+     * Sets the classes file.
+     * 
+     * <p>The classes file must contain the compiled classes that are linked to clips,
+     * otherwise the class linkage will not work.
+     * 
+     * @param classes the classes file
+     */
+    public void setClasses(File classes) {
+        this.classes = classes;
+    }
+    
+    /**
+     * Returns the classes file.
+     * 
+     * @return the classes file
+     */
+    public File getClasses() {
+        return this.classes;
+    }
 
     /**
      * Creates a new clip (MovieClip or Graphic library symbol) to include in the swf.
@@ -497,18 +562,70 @@ public class Swf extends Mtasc {
      * @throws BuildException if the build failed
      */
     public void execute() throws BuildException {
+        //File classes = createClassesSwf();
         createXmlFile();
+        this.swfmill.setSrc(new File(getProject().getBaseDir() + "/" + XML));
+        this.swfmill.setCommand(new Swfmill.Command(Swfmill.SIMPLE));
         this.swfmill.setProject(getProject());
-        swfmill.execute();
-        super.execute();
+        this.swfmill.execute();
+        if ((getSrcDir() != null && getSrcDir().size() != 0)
+        		|| getSrcSets().length != 0
+        		|| getSrc() != null) {
+            super.execute();
+        }
     }
+    
+    /*private File createClassesSwf() {
+        if (this.clip != null) {
+            Mtasc mtasc = new Mtasc();
+            mtasc.setProject(getProject());
+            addSource(mtasc, this.clip);
+            Clip[] includes = this.clip.getIncludes();
+            for (int i = 0; i < includes.length; i++) {
+                addSource(mtasc, includes[i]);
+            }
+            if (!mtasc.hasSources()) {
+                return null;
+            }
+            mtasc.setClasspath(getClasspath());
+            mtasc.setVerbose(getVerbose());
+            mtasc.setStrict(getStrict());
+            mtasc.setMsvc(getMsvc());
+            mtasc.setMx(getMx());
+            mtasc.setGroup(getGroup());
+            mtasc.setVersion(getVersion());
+            mtasc.setOut(getOut());
+            mtasc.setSwf(new File(getProject().getBaseDir() + CLASSES));
+            mtasc.setExcl(getExcl());
+            mtasc.setTrace(getTrace());
+            mtasc.setHeader("10:10:31");
+            mtasc.setSplit(false);
+            mtasc.execute();
+            return new File(getProject().getBaseDir() + CLASSES);
+        }
+        return null;
+    }
+    
+    private void addSource(Mtasc mtasc, Clip clip) {
+        if (mtasc != null && clip != null) {
+	        if (clip.getClazz() != null) {
+	            if (clip.getClasspath() != null) {
+	                mtasc.addSrc(new File(clip.getClasspath().getPath() + "/" + clip.getClazz().replace(".", "/") + ".as"));
+	            } else {
+	                mtasc.addSrc(new File(clip.getClazz().replace(".", "/") + ".as"));
+	            }
+	        }
+        }
+    }*/
     
     /**
      * Creates the xml file needed by swfmill.
+     * 
+     * @param classes swf file containing classes associated with clips
      */
     private void createXmlFile() {
         try {
-            OutputStream os = new BufferedOutputStream(new FileOutputStream(XML));
+            OutputStream os = new BufferedOutputStream(new FileOutputStream(getProject().getBaseDir() + "/" + XML));
             OutputStreamWriter ow = new OutputStreamWriter(os);
             ow.write("<?xml version=\"1.0\" encoding=\"iso-8859-1\" ?>\n\n");
             ow.write("<movie");
@@ -519,8 +636,11 @@ public class Swf extends Mtasc {
             if (this.backgroundColor != null) {
                 ow.write("  <background color='#" + this.backgroundColor + "'/>\n");
             }
+            ow.write("  <frame>\n");
             if (this.clip != null || this.font != null || this.imp != null) {
-                ow.write("  <frame>\n");
+                if (this.classes != null) {
+                    ow.write("    <clip import=\"" + this.classes + "\"/>\n");
+                }
                 ow.write("    <library>\n");
                 if (this.clip != null) {
                     writeClip(this.clip, ow);
@@ -544,8 +664,8 @@ public class Swf extends Mtasc {
                     }
                 }
                 ow.write("    </library>\n");
-                ow.write("  </frame>\n");
             }
+            ow.write("  </frame>\n");
             ow.write("</movie>");
             ow.flush();
             ow.close();
@@ -555,7 +675,7 @@ public class Swf extends Mtasc {
     }
     
     private void writeClip(Clip clip, OutputStreamWriter outputWriter) throws IOException {
-        if (clip != null) {
+        if (clip != null && (clip.getId() != null || clip.getImport() != null || clip.getClazz() != null)) {
             outputWriter.write("      <clip");
             if (clip.getId() != null) {
                 outputWriter.write(" id=\"" + clip.getId() + "\"");
@@ -571,7 +691,7 @@ public class Swf extends Mtasc {
     }
     
     private void writeFont(Font font, OutputStreamWriter outputWriter) throws IOException {
-        if (font != null) {
+        if (font != null && (font.getId() != null || font.getImport() != null || font.getGlyphs() != null)) {
             outputWriter.write("      <font");
 	        if (font.getId() != null) {
 	            outputWriter.write(" id=\"" + font.getId() + "\"");
@@ -587,7 +707,7 @@ public class Swf extends Mtasc {
     }
     
     private void writeImport(Import imp, OutputStreamWriter outputWriter) throws IOException {
-        if (imp != null) {
+        if (imp != null && (imp.getFile() != null || imp.getUrl() != null)) {
             outputWriter.write("      <import");
             if (imp.getFile() != null) {
                 outputWriter.write(" file=\"" + imp.getFile() + "\"");
@@ -602,6 +722,12 @@ public class Swf extends Mtasc {
     /**
      * {@code Symbol} represents a library symbol that consists of an id (identifier)
      * corresponding to a movieclip, image or font.
+     * 
+     * <p>This task can take the following arguments:
+     * <ul>
+     *   <li>id</li>
+     *   <li>import</li>
+     * </ul>
      * 
      * @author Simon Wacker
      */
@@ -658,12 +784,21 @@ public class Swf extends Mtasc {
      * {@code Clip} represents a clip library symbol. This is either a movieclip or a
      * graphic library symbol.
      * 
+     * <p>This task can take the following arguments:
+     * <ul>
+     *   <li>id</li>
+     *   <li>import</li>
+     *   <li>class or clazz</li>
+     *   <li>include</li>
+     * </ul>
+     * 
      * @author Simon Wacker
      */
     public static class Clip extends Symbol {
         
         private List includes;
-        private File clazz;
+        private String clazz;
+        //private File classpath;
         
         /**
          * Constructs a new {@code Clip} instance.
@@ -677,8 +812,17 @@ public class Swf extends Mtasc {
          * 
          * @param clazz the class of the clip
          */
-        public void setClass(File clazz) {
+        public void setClass(String clazz) {
             this.clazz = clazz;
+        }
+        
+        /**
+         * Sets the class to associate with the clip.
+         * 
+         * @param clazz the class of the clip
+         */
+        public void setClazz(String clazz) {
+            setClass(clazz);
         }
         
         /**
@@ -686,9 +830,27 @@ public class Swf extends Mtasc {
          * 
          * @return the class of the clip
          */
-        public File getClazz() {
+        public String getClazz() {
             return this.clazz;
         }
+        
+        /**
+         * Sets the classpath of this clip's class.
+         * 
+         * @param classpath the classpath of this clip's class
+         */
+        /*public void setClasspath(File classpath) {
+            this.classpath = classpath;
+        }*/
+        
+        /**
+         * Returns the classpath of this clip's class.
+         * 
+         * @return the classpath of this clip's class
+         */
+        /*public File getClasspath() {
+            return this.classpath;
+        }*/
         
         /**
          * Creates a new included clip, if this clip instance is used as container for
@@ -715,6 +877,14 @@ public class Swf extends Mtasc {
     
     /**
      * {@code Font} represents a font library symbol to include in the swf.
+     * 
+     * <p>This task can take the following arguments:
+     * <ul>
+     *   <li>id</li>
+     *   <li>import</li>
+     *   <li>glyphs</li>
+     *   <li>include</li>
+     * </ul>
      * 
      * @author Simon Wacker
      */
@@ -773,6 +943,13 @@ public class Swf extends Mtasc {
     /**
      * {@code Import} represents a shared library import. The specified swf is
      * imported as library.
+     * 
+     * <p>This task can take the following arguments:
+     * <ul>
+     *   <li>file</li>
+     *   <li>url</li>
+     *   <li>include</li>
+     * </ul>
      * 
      * @author Simon Wacker
      */
