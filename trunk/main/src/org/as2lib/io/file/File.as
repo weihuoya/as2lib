@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicInterface;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.type.Byte;
-import org.as2lib.data.type.MultiLineString;
+import org.as2lib.data.type.MultilineString;
 
 /**
  * {@code File} is a holder for text content with multiple lines of a external resource.
@@ -34,7 +34,7 @@ interface org.as2lib.io.file.File extends BasicInterface {
 	 * 
 	 * @return content of the file
 	 */
-	public function getContent(Void):MultiLineString;
+	public function getContent(Void):MultilineString;
 	
 	/**
 	 * Returns the location (URI) of the resource related to the content.

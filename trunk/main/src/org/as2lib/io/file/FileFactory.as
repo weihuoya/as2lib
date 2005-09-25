@@ -17,7 +17,7 @@
 import org.as2lib.core.BasicInterface;
 import org.as2lib.io.file.File;
 import org.as2lib.data.type.Byte;
-import org.as2lib.data.type.MultiLineString;
+import org.as2lib.data.type.MultilineString;
 
 /**
  * {@code FileFactory} is a integration layer for {@link org.as2lib.util.FileLoader}.
@@ -39,5 +39,5 @@ interface org.as2lib.io.file.FileFactory extends BasicInterface {
 	 * @param uri location of the loaded resource
 	 * @return {@code File} that represents the resource
 	 */
-	public function createFile(source:MultiLineString, size:Byte, uri:String):File;
+	public function createFile(source:MultilineString, size:Byte, uri:String):File;
 }

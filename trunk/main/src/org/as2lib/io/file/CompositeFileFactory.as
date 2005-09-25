@@ -16,7 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.type.Byte;
-import org.as2lib.data.type.MultiLineString;
+import org.as2lib.data.type.MultilineString;
 import org.as2lib.io.file.File;
 import org.as2lib.io.file.FileFactory;
 import org.as2lib.io.file.SimpleFileFactory;
@@ -60,7 +60,7 @@ class org.as2lib.io.file.CompositeFileFactory extends BasicClass implements File
 	 * @param uri location of the loaded resource
 	 * @return {@code File} that represents the resource
 	 */
-	public function createFile(source:MultiLineString, size:Byte, uri:String):File {
+	public function createFile(source:MultilineString, size:Byte, uri:String):File {
 		var factory:FileFactory = extensionFactories.get(uri.substr(uri.lastIndexOf(".")));
 		if (!factory) {
 			factory = defaultFileFactory;

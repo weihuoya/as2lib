@@ -27,7 +27,7 @@ import org.as2lib.io.file.ResourceLoader;
 import org.as2lib.io.file.AbstractResourceLoader;
 import org.as2lib.io.file.SimpleFileFactory;
 import org.as2lib.io.file.FileNotLoadedException;
-import org.as2lib.data.type.MultiLineString;
+import org.as2lib.data.type.MultilineString;
 
 /**
  * {@code FileLoader} is a implementation of {@link ResourceLoader} for text resources.
@@ -49,7 +49,7 @@ import org.as2lib.data.type.MultiLineString;
  * <p>Example listener:
  * <code>
  *   import org.as2lib.io.file.FileListener;
- *   import org.as2lib.io.file.FileLoadingProcess;
+ *   import org.as2lib.io.file.FileLoader;
  *   import org.as2lib.io.file.File;
  *   
  *   class MyFileListener implements FileListener {
@@ -61,11 +61,11 @@ import org.as2lib.data.type.MultiLineString;
  *       // handle the error
  *     }
  *     
- *     public function onFileStartLoading(fileLoadingProcess:FileLoadingProcess) {
+ *     public function onFileStartLoading(fileLoader:FileLoader) {
  *       // show that this file just gets loaded
  *     }
  *     
- *     public function onFileProgress(fileLoadingProcess:FileLoadingProcess) {
+ *     public function onFileProgress(fileLoader:FileLoader) {
  *       // update the percentage display with fileLoadingProcess.getPercentage();
  *     }
  *   }
@@ -73,11 +73,11 @@ import org.as2lib.data.type.MultiLineString;
  * 
  * <p>Example of the usage:
  * <code>
- *   import org.as2lib.io.file.FileLoadingProcess;
+ *   import org.as2lib.io.file.FileLoader;
  *   
- *   var process:FileLoadingProcess = new FileLoadingProcess();
+ *   var process:FileLoader = new FileLoader();
  *   process.setUri("myFile.xml");
- *   process.addListener(fileListener);
+ *   process.addListener(new MyFileListener());
  *   process.start();
  * </code>
  * 
@@ -266,7 +266,7 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 			processEvent.onProcessError(this, new ResourceNotFoundException("'"+uri+"' could not be loaded.", this, arguments));
 		} else {
 			// Correct replacing of special line breaks that don't match the "\n" (Windows & Mac Line Breaks).
-			file = fileFactory.createFile(new MultiLineString(data), getBytesTotal(), uri);
+			file = fileFactory.createFile(new MultilineString(data), getBytesTotal(), uri);
 			// Dispatching the event for the loaded file.
 			fileEvent.onFileLoad(file);
 			resourceEvent.onResourceLoad(this);
