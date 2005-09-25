@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.data.type.Byte;
-import org.as2lib.data.type.MultiLineString;
+import org.as2lib.data.type.MultilineString;
 import org.as2lib.io.file.SimpleFile;
 
 /**
@@ -36,7 +36,7 @@ class org.as2lib.io.file.XmlFile extends SimpleFile {
 	 * @param size size in {@link Byte} of the loaded resource
 	 * @param uri location of the loaded resource
 	 */
-	public function XmlFile(source:MultiLineString, size:Byte, uri:String) {
+	public function XmlFile(source:MultilineString, size:Byte, uri:String) {
 		super(source, size, uri);
 		xml = new XML();
 		xml.parseXML(source);

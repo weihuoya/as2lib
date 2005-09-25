@@ -19,7 +19,7 @@ import org.as2lib.io.file.File;
 import org.as2lib.io.file.FileFactory;
 import org.as2lib.io.file.SimpleFile;
 import org.as2lib.data.type.Byte;
-import org.as2lib.data.type.MultiLineString;
+import org.as2lib.data.type.MultilineString;
 
 /**
  * {@code SimpleFileFactory} is a implementation of {@link FileFactory} for 
@@ -38,7 +38,7 @@ class org.as2lib.io.file.SimpleFileFactory extends BasicClass implements FileFac
 	 * @param uri location of the loaded resource
 	 * @return {@code SimpleFile} that represents the resource
 	 */
-	public function createFile(source:MultiLineString, size:Byte, uri:String):File {
+	public function createFile(source:MultilineString, size:Byte, uri:String):File {
 		return new SimpleFile(source, size, uri);
 	}
 }
