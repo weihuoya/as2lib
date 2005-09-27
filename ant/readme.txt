@@ -1,6 +1,6 @@
-----------------------
-As2ant - SWF Ant Tasks
-----------------------
+------------------------------------------
+As2ant - SWF Ant Tasks - Version 1.0 Alpha
+------------------------------------------
 
 
 These tasks are programmed by Simon Wacker (http://www.simonwacker.com) and distributed
