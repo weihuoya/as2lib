@@ -1,0 +1,26 @@
+<project name="Natural Entry Point" default="usage" basedir=".">
+  
+  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../../src"/>
+  <taskdef name="swfmill" classname="org.as2lib.ant.Swfmill" classpath="../../src"/>
+  
+  <target name="usage">
+    <echo message=""/>
+    <echo message="------------------------------------------------------"/>
+    <echo message="Among the available targets are:"/>
+    <echo message=""/>
+    <echo message="build"/>
+    <echo message="------------------------------------------------------"/>
+    <echo message=""/>
+  </target>
+  
+  <target name="build" description="builds application">
+    <mtasc swf="classes.swf" header="1:1:30" split="false">
+      <srcset dir=".">
+        <include name="Application.as"/>
+        <include name="Particle.as"/>
+      </srcset>
+    </mtasc>
+    <swfmill src="application.xml" dest="application.swf" cmd="simple"/>
+  </target>
+  
+</project>
