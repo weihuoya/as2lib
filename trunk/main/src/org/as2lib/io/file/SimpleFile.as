@@ -33,7 +33,7 @@ import org.as2lib.data.type.MultilineString;
 class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
 	
 	/** Content of the file. */
-	private var source:MultilineString;
+	private var source:String;
 	
 	/** Location of the file. */
 	private var uri:String;
@@ -48,7 +48,7 @@ class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
 	 * @param size size in {@link Byte} of the loaded resource
 	 * @param uri location of the loaded resource
 	 */
-	public function SimpleFile(source:MultilineString, size:Byte, uri:String) {
+	public function SimpleFile(source:String, size:Byte, uri:String) {
 		this.source = source;
 		this.uri = uri;
 		this.size = size;
@@ -70,7 +70,7 @@ class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
 	 * @return content of the file
 	 * @see File#getContent
 	 */
-	public function getContent(Void):MultilineString {
+	public function getContent(Void):String {
 		return source;
 	}
 	
