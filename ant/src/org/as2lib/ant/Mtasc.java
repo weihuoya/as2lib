@@ -54,6 +54,10 @@ import org.apache.tools.ant.types.Path;
  *&lt;/mtasc>
  * </code></pre>
  * 
+ * <p>If the mtasc executable is not included as environment variable in your operating
+ * system you must either include it or set it yourself for every mtasc-tag using the
+ * "mtasc" attribute. Take a look at {@link #setMtasc(String)} for more information.
+ * 
  * <p>This task can take the following arguments:
  * <ul>
  *   <li>src</li>
@@ -78,6 +82,7 @@ import org.apache.tools.ant.types.Path;
  *   <li>trace</li>
  *   <li>help</li>
  *   <li>mtasc</li>
+ *   <li>split</li>
  * </ul>
  * 
  * <p>You must either provide "src", "srcdir" or "srcset".
@@ -277,7 +282,12 @@ public class Mtasc extends Task {
     /**
      * Creates and returns a new classpath.
      * 
+     * <p>Alternatively to useing the classpath-tag to specify multiple classpaths
+     * you may also use the classpath-attribute and separate the various classpaths
+     * with the characters ';' or ':'.
+     * 
      * @return the new classpath
+     * @see #setClasspath(Path)
      */
     public Path createClasspath() {
         if (this.classpath == null) {
@@ -289,7 +299,12 @@ public class Mtasc extends Task {
     /**
      * Sets a new classpath.
      * 
+     * <p>If you want to specify multiple classpaths you must separate them with the
+     * characters ';' or ':', or you may not use the classpath attribute but the
+     * classpath-tag inside the mtasc-tag.
+     * 
      * @param classpath the new classpath
+     * @see #createClasspath()
      */
     public void setClasspath(Path classpath) {
         if (this.classpath == null) {
