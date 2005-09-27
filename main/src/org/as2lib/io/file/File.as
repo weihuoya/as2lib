@@ -32,9 +32,9 @@ interface org.as2lib.io.file.File extends BasicInterface {
 	/**
 	 * Returns the complete content of the file.
 	 * 
-	 * @return content of the file
+	 * @return content of the file, null if the content is not human-readable
 	 */
-	public function getContent(Void):MultilineString;
+	public function getContent(Void):String;
 	
 	/**
 	 * Returns the location (URI) of the resource related to the content.

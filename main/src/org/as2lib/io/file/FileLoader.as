@@ -27,7 +27,6 @@ import org.as2lib.io.file.ResourceLoader;
 import org.as2lib.io.file.AbstractResourceLoader;
 import org.as2lib.io.file.SimpleFileFactory;
 import org.as2lib.io.file.FileNotLoadedException;
-import org.as2lib.data.type.MultilineString;
 
 /**
  * {@code FileLoader} is a implementation of {@link ResourceLoader} for text resources.
@@ -266,7 +265,7 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 			processEvent.onProcessError(this, new ResourceNotFoundException("'"+uri+"' could not be loaded.", this, arguments));
 		} else {
 			// Correct replacing of special line breaks that don't match the "\n" (Windows & Mac Line Breaks).
-			file = fileFactory.createFile(new MultilineString(data), getBytesTotal(), uri);
+			file = fileFactory.createFile(data, getBytesTotal(), uri);
 			// Dispatching the event for the loaded file.
 			fileEvent.onFileLoad(file);
 			resourceEvent.onResourceLoad(this);

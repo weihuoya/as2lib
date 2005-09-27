@@ -49,7 +49,11 @@ class org.as2lib.test.mock.support.DefaultArgumentsMatcher extends BasicClass im
 						return false;
 					}
 				} else {
-					return false;
+					if (expectedArguments[i].prototype == actualArguments[i].prototype) {
+						return ( expectedArguments[i].valueOf() == actualArguments[i].valueOf());
+					} else {
+						return false;
+					}
 				}
 			}
 		}
