@@ -1,9 +1,8 @@
-<project name="Swf Ant Task - Sample" default="usage" basedir=".">
+<project name="Mtasc Ant Task - Sample" default="usage" basedir=".">
   
-  <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../../src"/>
+  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../../src"/>
   
   <property name="src.dir" location="src"/>
-  <property name="files.dir" location="files"/>
   <property name="build.dir" location="build"/>
   
   <target name="usage">
@@ -17,10 +16,7 @@
   </target>
   
   <target name="sample" description="builds sample swf">
-    <swf src="${src.dir}/com/simonwacker/ant/Sample.as" dest="${build.dir}/sample.swf" width="300" height="100" framerate="31" bgcolor="FF8A00">
-      <clip id="simonwacker" import="${files.dir}/simonwacker.jpg"/>
-      <font id="pixel" import="${files.dir}/PixelClassic.ttf"/>
-    </swf>
+    <mtasc src="${src.dir}/com/simonwacker/ant/Sample.as" classpath="${src.dir}" swf="${build.dir}/sample.swf" header="300:100:31:00FF00" main="yes"/>
   </target>
   
 </project>
