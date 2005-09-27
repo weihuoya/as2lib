@@ -45,6 +45,10 @@ import org.apache.tools.ant.types.EnumeratedAttribute;
  * want to use the 'simple' command.
  * <p><code>&lt;swfmill src="src.xml" dest="dest.swf" cmd="simple"/&gt;</code>
  * 
+ * <p>If the swfmill executable is not included as environment variable in your operating
+ * system you must either include it or set it yourself for every swfmill-tag using the
+ * "swfmill" attribute. Take a look at {@link #setSwfmill(String)} for more information.
+ * 
  * <p>This task can take the following arguments:
  * <ul>
  *   <li>src or source or in</li>

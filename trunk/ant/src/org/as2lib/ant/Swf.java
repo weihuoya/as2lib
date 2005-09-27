@@ -64,6 +64,14 @@ import org.apache.tools.ant.BuildException;
  *  &lt;/font&gt;
  *  &lt;import file="${imports.dir}/import.swf" url="http://www.simonwacker.com/import.swf"/&gt;
  *&lt;/swf&gt;</code></pre>
+ *
+ * <p>If the mtasc executable is not included as environment variable in your operating
+ * system you must either include it or set it yourself for every swf-tag using the
+ * "mtasc" attribute. Take a look at {@link Mtasc#setMtasc(String)} for more information.
+ * 
+ * <p>If the swfmill executable is not included as environment variable in your operating
+ * system you must either include it or set it yourself for every swf-tag using the
+ * "swfmill" attribute. Take a look at {@link Swfmill#setSwfmill(String)} for more information.
  * 
  * <p>This task can take the following arguments:
  * <ul>
@@ -98,6 +106,7 @@ import org.apache.tools.ant.BuildException;
  *   <li>classes</li>
  *   <li>mtasc</li>
  *   <li>swfmill</li>
+ *   <li>split</li>
  * </ul>
  * 
  * @author Simon Wacker
