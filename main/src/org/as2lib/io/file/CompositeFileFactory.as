@@ -60,7 +60,7 @@ class org.as2lib.io.file.CompositeFileFactory extends BasicClass implements File
 	 * @param uri location of the loaded resource
 	 * @return {@code File} that represents the resource
 	 */
-	public function createFile(source:MultilineString, size:Byte, uri:String):File {
+	public function createFile(source:String, size:Byte, uri:String):File {
 		var factory:FileFactory = extensionFactories.get(uri.substr(uri.lastIndexOf(".")));
 		if (!factory) {
 			factory = defaultFileFactory;
