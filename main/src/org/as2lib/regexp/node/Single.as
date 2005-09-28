@@ -17,7 +17,6 @@
 import org.as2lib.regexp.node.Node; 
 import org.as2lib.regexp.node.NotSingle;
 import org.as2lib.regexp.node.TreeInfo;
-import org.as2lib.env.log.LogManager;
 
 /**
  * {@code Single} is a node class for a single character value.

@@ -17,7 +17,6 @@
 import org.as2lib.regexp.Pattern;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.Exception;
-import org.as2lib.env.log.LogManager;
 
 /**
  * {@code Matcher} provides implementations of the match, search and 
