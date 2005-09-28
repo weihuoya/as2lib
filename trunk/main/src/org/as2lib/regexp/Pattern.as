@@ -19,7 +19,6 @@ import org.as2lib.regexp.PatternSyntaxException;
 import org.as2lib.regexp.Matcher;
 import org.as2lib.regexp.node.*;
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.log.LogManager;
 
 /**
  * {@code Pattern} provides implementations of the parsing engine for 
