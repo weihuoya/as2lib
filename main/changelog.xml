@@ -9,6 +9,7 @@
           <entry type="add" package="org.as2lib.env.log" class="LogManager" method="getLoggerByObject">Convenience method that releases you from evaluating the logger name yourself.</entry>
           <entry type="add" package="org.as2lib.util" class="MethodUtil"></entry>
           <entry type="add" package="org.as2lib.env.except" class="Throwable" method="initErrorCode/getErrorCode">Error code to get localized message to display to users.</entry>
+          <entry type="add" package="org.as2lib.regexp">Regular Expression framework is added.</entry>
         </day>
         <day value="9">
           <entry type="add" package="org.as2lib.env.log" class="LogManager">Enhanced class to allow the following access: 'private static var logger:Logger = LogManager.getLogger("org.as2lib.MyClass");'.</entry>
