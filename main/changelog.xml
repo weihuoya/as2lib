@@ -4,6 +4,11 @@
     xsi:schemaLocation="as2lib http://www.as2lib.org/changelog_0.91.xsd">
   <release name="as2lib 0.9.3" day="9" month="9" year="2005">
     <year value="2005">
+      <month value="10">
+        <day value="2">
+          <entry type="add" package="org.as2lib.env.reflect" class="ReflectUtil">Added proper cache for type and method names.</entry>
+        </day>
+      </month>
       <month value="9">
         <day value="10">
           <entry type="add" package="org.as2lib.env.log" class="LogManager" method="getLoggerByObject">Convenience method that releases you from evaluating the logger name yourself.</entry>
