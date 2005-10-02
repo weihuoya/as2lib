@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<project name="Swf, Swfmill, Mtasc Ant Tasks" basedir="." default="jar">
-
+<project name="As2ant - Swf, Swfmill, Mtasc Ant Tasks" basedir="." default="dist">
+  
   <property name="src.dir" value="src"/>
   <property name="build.dir" value="build"/>
   <property name="dist.dir" value="dist"/>
   <property name="javadocs.dir" value="docs/api"/>
+  <property name="samples.dir" value="samples"/>
   
   <target name="clean" description="delete all generated files">
     <delete dir="${build.dir}" failonerror="false"/>
@@ -17,7 +18,40 @@
   </target>
   
   <target name="jar" description="JARs the task" depends="compile">
-    <jar destfile="${dist.dir}/as2ant.jar" basedir="${build.dir}"/>
+    <jar destfile="${build.dir}/as2ant.jar" basedir="${build.dir}"/>
+  </target>
+  
+  <target name="dist" description="generate distribution" depends="jar">
+    <mkdir dir="${dist.dir}/src"/>
+    <mkdir dir="${dist.dir}/samples"/>
+    <mkdir dir="${dist.dir}/docs/api"/>
+    
+    <copy tofile="${dist.dir}/build.xml" file="build.xml" preservelastmodified="true"/>
+    <copy tofile="${dist.dir}/license.txt" file="license.txt" preservelastmodified="true"/>
+    <copy tofile="${dist.dir}/readme.txt" file="readme.txt" preservelastmodified="true"/>
+    
+    <copy todir="${dist.dir}/src" preservelastmodified="true">
+      <fileset dir="${src.dir}">
+        <include name="**/*.java"/>
+        <include name="**/*.class"/>
+      </fileset>
+    </copy>
+    
+    <copy todir="${dist.dir}/samples" preservelastmodified="true">
+      <fileset dir="${samples.dir}">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+    
+    <copy todir="${dist.dir}/docs/api" preservelastmodified="true">
+      <fileset dir="${javadocs.dir}">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+    
+    <copy tofile="${dist.dir}/as2ant.jar" file="${build.dir}/as2ant.jar" preservelastmodified="true"/>
+    
+    <zip destfile="${dist.dir}/as2ant_1.0_alpha.zip" basedir="${dist.dir}"/>
   </target>
   
   <!--
