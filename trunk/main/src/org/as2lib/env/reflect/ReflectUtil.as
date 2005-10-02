@@ -140,8 +140,8 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	 * 
 	 * <p>{@code null} will be returned if the passed-in prototype is {@code null}.
 	 * 
-	 * @param m the method to return information about
 	 * @param p the beginning of the prototype chain to search through
+	 * @param m the method to return information about
 	 * @return an array containing the passed-in method's scope, the name of the
 	 * declaring type and the passed-in method's name
 	 */
@@ -159,13 +159,13 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 			if (n != null) {
 				var r:Array = new Array();
 				r[0] = false;
-				r[1] = getTypeNameForPrototype(p, _global, "", [_global]);;
+				r[1] = getTypeNameByPrototype(p, _global, "", [_global]);
 				r[2] = n;
 				return r;
 			}
 			p = p.__proto__;
 		}
-		return [null, getTypeNameForPrototype(o, _global, "", [_global]), null];
+		return [null, getTypeNameByPrototype(o, _global, "", [_global]), null];
 	}
 	
 	/**
@@ -197,7 +197,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 		_global.ASSetPropFlags(_global, null, 0, true);
 		// The '__constructor__' or 'constructor' properties may not be correct with dynamic instances.
 		// We thus use the '__proto__' property that referes to the prototype of the type.
-		return getTypeNameForPrototype(instance.__proto__, _global, "", [_global]);
+		return getTypeNameByPrototype(instance.__proto__, _global, "", [_global]);
 	}
 	
 	/**
@@ -215,7 +215,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	public static function getTypeNameForType(type:Function):String {
 		if (type === null || type === undefined) return null;
 		_global.ASSetPropFlags(_global, null, 0, true);
-		return getTypeNameForPrototype(type.prototype, _global, "", [_global]);
+		return getTypeNameByPrototype(type.prototype, _global, "", [_global]);
 	}
 	
 	/**
@@ -235,8 +235,12 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	 * @param a already searched through packages
 	 * @return the name of the type defining the prototype of {@code null}
 	 */
-	private static function getTypeNameForPrototype(c, p, n:String, a:Array):String {
+	private static function getTypeNameByPrototype(c, p, n:String, a:Array):String {
 		//if (c == null || p == null) return null; // why is this causing trouble?
+		var y:String = c.__as2lib__typeName;
+		if (y != null && y != c.__proto__.__as2lib__typeName) {
+			return y;
+		}
 		if (n == null) n = "";
 		for (var r:String in p) {
 			try {
@@ -245,7 +249,11 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 				// the first part of the if-clause excludes these extra stored classes
 				// p[r].prototype === c because a simple == will result in wrong name when searching for the __proto__ of
 				// a number
-				if ((!eval("_global." + r.split("_").join(".")) || r.indexOf("_") < 0) && p[r].prototype === c) return (n + r);
+				if ((!eval("_global." + r.split("_").join(".")) || r.indexOf("_") < 0) && p[r].prototype === c) {
+					var x:String = n + r;
+					c.__as2lib__typeName = x;
+					return x;
+				}
 				if (p[r].__constructor__.valueOf() == Object) {
 					// prevents recursion on back-reference
 					var f:Boolean = false;
@@ -254,8 +262,12 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 					}
 					if (!f) {
 						a.push(p[r]);
-						r = getTypeNameForPrototype(c, p[r], n + r + ".", a);
+						r = getTypeNameByPrototype(c, p[r], n + r + ".", a);
 						if (r) return r;
+					}
+				} else {
+					if (typeof(p[r]) == "function") {
+						p[r].prototype.__as2lib__typeName = n + r;
 					}
 				}
 			} catch (e) {
@@ -370,12 +382,20 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 	 * @return the name of the method or {@code null}
 	 */
 	private static function getMethodNameByObject(m:Function, o):String {
+		var r:String = m.__as2lib__methodName;
+		if (r != null) return r;
 		var s:Function = _global.ASSetPropFlags;
 		s(o, null, 0, true);
 		s(o, ["__proto__", "prototype", "__constructor__", "constructor"], 7, true);
 		for (var n:String in o) {
 			try {
-				if (o[n].valueOf() == m.valueOf()) return n;
+				if (o[n].valueOf() == m.valueOf()) {
+					m.__as2lib__methodName = n;
+					return n;
+				}
+				if (typeof(o[n]) == "function") {
+					o[n].__as2lib__methodName = n;
+				}
 			} catch (e) {
 			}
 		}
