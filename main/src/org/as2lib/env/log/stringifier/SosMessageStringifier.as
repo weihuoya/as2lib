@@ -19,7 +19,6 @@ import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.stringifier.PatternLogMessageStringifier;
-import org.as2lib.env.log.handler.XmlSocketHandler;
 import org.as2lib.env.log.handler.SosHandler;
 
 /**
