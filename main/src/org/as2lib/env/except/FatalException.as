@@ -100,7 +100,7 @@ class org.as2lib.env.except.FatalException extends AbstractThrowable implements 
 	 * @return the string representation of this fatal exception
 	 */
 	public function toString():String {
-		if (!arguments.caller && getLogger()) {
+		if (!arguments.caller) {
 			if (getLogger().isFatalEnabled()) {
 				getLogger().fatal(this);
 			}
