@@ -100,7 +100,7 @@ class org.as2lib.env.except.Exception extends AbstractThrowable implements Throw
 	 * @return the string representation of this fatal exception
 	 */
 	public function toString():String {
-		if (!arguments.caller && getLogger()) {
+		if (!arguments.caller) {
 			if (getLogger().isErrorEnabled()) {
 				getLogger().error(this);
 			}
