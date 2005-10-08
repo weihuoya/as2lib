@@ -102,9 +102,9 @@ class org.as2lib.env.log.LogSupport extends BasicClass {
 	 */
 	public function getLogger(Void):Logger {
 		var t:Number = getTimer();
-		var logger:Logger = eval("this.__constructor__.classLogger");
+		var logger:Logger = eval("th" + "is.__constructor__.classLogger");
 		if (logger === undefined) {
-			logger = getLoggerByClass(eval("this.__constructor__"));
+			logger = getLoggerByClass(eval("th" + "is.__constructor__"));
 		}
 		return logger;
 	}
