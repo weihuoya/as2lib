@@ -5,6 +5,11 @@
   <release name="as2lib 0.9.3" day="9" month="9" year="2005">
     <year value="2005">
       <month value="10">
+        <day value="8">
+          <entry type="add" package="org.as2lib.env.log.parser" class="XmlLogConfigurationParser">Parses xml log configurations.</entry>
+          <entry type="add" package="org.as2lib.env.log" class="LogConfigurationParser">Interface for log configuration parsers.</entry>
+          <entry type="add" package="static org.as2lib.env.log.level" class="AbstractLogLevel" method="forName"></entry>
+        </day>
         <day value="2">
           <entry type="add" package="org.as2lib.env.reflect" class="ReflectUtil">Added proper cache for type and method names.</entry>
         </day>

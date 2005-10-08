@@ -48,6 +48,36 @@ class org.as2lib.env.log.level.AbstractLogLevel extends BasicClass implements Lo
 	/** No log messages get logged. */
 	public static var NONE:LogLevel = new AbstractLogLevel(0, "NONE");
 	
+	/**
+	 * Returns the log level for the given {@code name}.
+	 * 
+	 * <p>If the given {@code name} is not registered to any logger, {@link INFO} is
+	 * returned.
+	 * 
+	 * @param name the name of the log level to return
+	 * @return the log level for the given {@code name}
+	 */
+	public static function forName(name:String):LogLevel {
+		switch (name) {
+			case "ALL":
+				return ALL;
+			case "DEBUG":
+				return DEBUG;
+			case "INFO":
+				return INFO;
+			case "WARNING":
+				return WARNING;
+			case "ERROR":
+				return ERROR;
+			case "FATAL":
+				return FATAL;
+			case "NONE":
+				return NONE;
+			default:
+				return INFO;
+		}
+	}
+	
 	/** Stores the level in form of a number. */
 	private var level:Number;
 	
