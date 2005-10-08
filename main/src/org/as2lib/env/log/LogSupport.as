@@ -60,55 +60,59 @@ import org.as2lib.env.log.LogManager;
  */
 class org.as2lib.env.log.LogSupport extends BasicClass {
 	
-	/**
-	 * Returns the matching {@code Logger} for the passed-in class.
-	 * <p>It creates a {@code Logger} instance and saves it at the static field
-	 * "classLogger" of the class if its not available.
-	 * 
-	 * @param clazz Class that requests the logger.
-	 * @return {@code Logger} related to the class.
-	 */
-	public static function getLoggerByClass(clazz:Function):Logger {
-		var logger:Logger = clazz.classLogger;
-		if (!logger) {
-			// Use ClassInfo if ClassInfo has been compiled (because its faster), else use ReflectUtil
-			var ClassInfo:Function = ReflectUtil.getTypeByName("org.as2lib.env.reflect.ClassInfo");
-			if (ClassInfo != undefined) {
-				var typeInfo = ClassInfo.forObject(clazz);
-				logger = clazz.classLogger = LogManager.getLogger(typeInfo.getFullName());
-			} else {
-				logger = clazz.classLogger = LogManager.getLogger(ReflectUtil.getTypeNameForType(clazz));
-			}
-			// Set the value to null to dedicated have undefined replaced
-			if (!logger) {
-				logger = clazz.classLogger = null;
-			}
-		}
-		return logger;
-	}	
+	/** Logger to access is automatically filled */
+	public var logger:Logger;
 	
-	/**
-	 * Constructs a new LogSupport instance.
-	 */
+	
+	private var _logger:Logger;
+	
 	public function LogSupport(Void) {
 		// Create property within constructor, Macromedia Scope bug.
 		addProperty("logger", getLogger, null);
 	}
 	
-	/**
-	 * Returns the {@code Logger} related to the class.
-	 * 
-	 * @return {@code Logger} related to the class.
-	 */
-	public function getLogger(Void):Logger {
-		var t:Number = getTimer();
-		var logger:Logger = eval("th" + "is.__constructor__.classLogger");
-		if (logger === undefined) {
-			logger = getLoggerByClass(eval("th" + "is.__constructor__"));
+	public static function getLoggerByScope(scope):Logger {
+		var prototype;
+		
+		if (typeof scope == "function") {
+			prototype = scope["prototype"];
+		} else {
+			prototype = scope.__proto__;
 		}
-		return logger;
+		
+		if (prototype._logger !== null && prototype._logger === prototype.__proto__._logger) {
+			
+			trace("new logger");
+			
+			var name:String;
+			
+			// Use ClassInfo if ClassInfo has been compiled (because its faster), else use ReflectUtil
+			var ClassInfo:Function = ReflectUtil.getTypeByName("org.as2lib.env.reflect.ClassInfo");
+			if (typeof scope == "function") {
+				if (ClassInfo != undefined) {
+					name = ClassInfo.forClass(scope).getFullName();
+				} else {
+					name = ReflectUtil.getTypeNameForType(scope);
+				}
+			} else {
+				if (ClassInfo != undefined) {
+					name = ClassInfo.forInstance(scope).getFullName();
+				} else {
+					name = ReflectUtil.getTypeNameForInstance(scope);					
+				}
+			}
+			
+			prototype._logger = LogManager.getLogger(name);
+			
+			// Sets the logger dedicated to null if it didn't exist
+			if (!prototype._logger) {
+				prototype._logger = null;
+			}
+		}
+		return prototype._logger;
 	}
 	
-	/** Logger to access is automatically filled */
-	public var logger:Logger;
+	public function getLogger(Void):Logger {
+		return getLoggerByScope(this);
+	}
 }
