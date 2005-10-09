@@ -1,7 +1,7 @@
 <project name="As2lib - Open Source ActionScript 2.0 Library" default="usage" basedir=".">
   
   <property name="src.dir" location="src"/>
-  <property name="dist.dir" location="dist"/>
+  <property name="dist.dir" location="../dist"/>
   <property name="docs.dir" location="../docs"/>
   <property name="test.dir" location="../test"/>
   <property name="lib.dir" location="../lib"/>
@@ -13,68 +13,98 @@
     <echo message="------------------------------------------------------"/>
     <echo message="Among the available targets are:"/>
     <echo message=""/>
-    <echo message="dist"/>
-    <echo message="clean"/>
     <echo message="compile"/>
+    <echo message="dist"/>
+    <echo message="clear"/>
     <echo message="------------------------------------------------------"/>
     <echo message=""/>
   </target>
   
-  <target name="compile" description="compile source files">
-    <mtasc srcdir="${src.dir}/org/as2lib/aop" split="yes">
+  <target name="compile" description="compile all source files">
+    <mtasc split="no">
+      <srcset dir="${src.dir}">
+        <include name="**/*.as"/>
+        <exclude name="main/Flex.as"/>
+        <exclude name="org/as2lib/app/conf/FlexApplication.as"/>
+        <exclude name="org/as2lib/env/bean/**/*.as"/>
+        <exclude name="org/as2lib/data/math/**/*.as"/>
+        <exclude name="org/as2lib/data/holder/**/*Priority*.as"/>
+        <exclude name="org/as2lib/env/log/handler/AscbHandler.as"/>
+        <exclude name="org/as2lib/env/log/handler/Bit101Handler.as"/>
+        <exclude name="org/as2lib/env/log/handler/RichInternetHandler.as"/>
+        <exclude name="org/as2lib/env/log/handler/ZtorLog4fHandler.as"/>
+        <exclude name="org/as2lib/env/log/logger/ActionStepLogger.as"/>
+        <exclude name="org/as2lib/env/log/logger/AscbLogger.as"/>
+        <exclude name="org/as2lib/env/log/logger/Bit101Logger.as"/>
+        <exclude name="org/as2lib/env/log/logger/RichInternetLogger.as"/>
+        <exclude name="org/as2lib/env/log/logger/ZtorLog4fLogger.as"/>
+        <exclude name="org/as2lib/env/log/logger/AudiofarmLogger.as"/>
+        <exclude name="org/as2lib/env/log/logger/Log4fLogger.as"/>
+        <exclude name="org/as2lib/env/log/repository/AscbLoggerRepository.as"/>
+        <exclude name="org/as2lib/env/log/repository/AudiofarmLoggerRepository.as"/>
+      </srcset>
       <classpath>
         <pathelement path="${src.dir}"/>
-        <!-- <dirset dir="${lib.dir}">
-          How can I make a disjunction?
-      	  <include name="*"/>
-          <include name="*/src"/>
-        </dirset> -->
+        <pathelement path="${lib.dir}/actionstep/src"/>
+        <pathelement path="${lib.dir}/alcon/classes"/>
+        <pathelement path="${lib.dir}/as2logger/Classes"/>
+        <pathelement path="${lib.dir}/as2logger/Classes"/>
+        <pathelement path="${lib.dir}/ascb logging/classes"/>
+        <pathelement path="${lib.dir}/debug panel"/>
+        <pathelement path="${lib.dir}/debugit"/>
+        <pathelement path="${lib.dir}/flash debug tool/Flash"/>
+        <pathelement path="${lib.dir}/flashout"/>
+        <pathelement path="${lib.dir}/flex panel/src"/>
+        <pathelement path="${lib.dir}/fludge"/>
+        <pathelement path="${lib.dir}/lb.log/source"/>
+        <pathelement path="${lib.dir}/log4f/content"/>
+        <pathelement path="${lib.dir}/ztor log4f"/>
       </classpath>
     </mtasc>
   </target>
   
-  <!-- Cannot depend on 'compile' target because there are some libraries needed that are not MTASC compatible -->
-  <!--<target name="dist" depends="compile" description="generate the distribution">-->
-  <target name="dist" description="generate the distribution">
+  <target name="dist" depends="clear, compile" description="generate the distribution">
     <mkdir dir="${dist.dir}/src"/>
     <mkdir dir="${dist.dir}/docs/api"/>
     <!--<mkdir dir="${dist.dir}/test"/>-->
     <mkdir dir="${dist.dir}/lib"/>
-
+    
     <copy tofile="${dist.dir}/license.txt" file="license.txt" preservelastmodified="true"/>
+    <copy tofile="${dist.dir}/readme.txt" file="readme.txt" preservelastmodified="true"/>
     <copy tofile="${dist.dir}/changelog.xml" file="changelog.xml" preservelastmodified="true"/>
+    <copy tofile="${dist.dir}/changelog.txt" file="changelog.txt" preservelastmodified="true"/>
     <copy tofile="${dist.dir}/changelog.swf" file="changelog.swf" preservelastmodified="true"/>
-
+    
     <copy todir="${dist.dir}/src" preservelastmodified="true">
       <fileset dir="${src.dir}">
         <include name="**/*.as"/>
-        <exclude name="org/as2lib/aop/**/*.*"/>
+        <exclude name="org/as2lib/data/holder/**/*Priority*.as"/>
         <exclude name="org/as2lib/data/math/**/*.*"/>
         <exclude name="org/as2lib/env/bean/**/*.*"/>
       </fileset>
     </copy>
-
-    <!--<copy todir="${dist.dir}/docs" preservelastmodified="true">
-      <fileset dir="${docs.dir}">
+    
+    <copy todir="${dist.dir}/docs/api" preservelastmodified="true">
+      <fileset dir="${docs.dir}/api">
         <include name="**/*.*"/>
       </fileset>
     </copy>
-
-    <copy todir="${dist.dir}/test" preservelastmodified="true">
+    
+    <!--<copy todir="${dist.dir}/test" preservelastmodified="true">
       <fileset dir="${test.dir}">
         <include name="**/*.as"/>
         <include name="**/*.fla"/>
         <include name="**/*.xml"/>
       </fileset>
-    </copy>
-
+    </copy>-->
+    
     <copy todir="${dist.dir}/lib" preservelastmodified="true">
       <fileset dir="${lib.dir}">
         <include name="**/*.*"/>
       </fileset>
     </copy>
-
-    <zip destfile="${dist.dir}/as2lib-0.1-final.zip" basedir="${dist.dir}"/>-->
+    
+    <zip destfile="${dist.dir}/as2lib.zip" basedir="${dist.dir}"/>
   </target>
   
   <target name="clear" description="clean up">
