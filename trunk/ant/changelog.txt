@@ -1,0 +1,14 @@
+As2ant 1.0 beta
+---------------
+
+[+] org.as2lib.ant.Mtasc
+    Added support for XML-files as source files: srcxml-attribute
+
+[+] org.as2lib.ant.Mtasc
+    Added support for pack-argument: package-attribute.
+
+[+] org.as2lib.ant.Mtasc
+    Added support for local variables inference: infer-attribute.
+
+[~] org.as2lib.ant.Mtasc
+    Improved generated mtasc commandline to be better readable.
