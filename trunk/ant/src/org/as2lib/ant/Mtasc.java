@@ -17,9 +17,16 @@
 package org.as2lib.ant;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -28,6 +35,11 @@ import org.apache.tools.ant.taskdefs.Execute;
 import org.apache.tools.ant.types.Commandline;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * {@code Mtasc} compiles ActionScript 2 classes with the Motion-Twin ActionScript
@@ -85,7 +97,7 @@ import org.apache.tools.ant.types.Path;
  *   <li>split</li>
  * </ul>
  * 
- * <p>You must either provide "src", "srcdir" or "srcset".
+ * <p>You must either provide "src", "srcdir", "srcset" or "srcxml".
  * 
  * @author Simon Wacker
  * @since 28.04.2005
@@ -116,11 +128,13 @@ public class Mtasc extends Task {
     
     private String mtasc;
     private List compileFiles;
+    private List relativeCompileFiles;
     private boolean split;
     private Path sourceDirectory;
     private File source;
     private ArrayList sourceSets;
     private ArrayList sourceList;
+    private ArrayList sourceXmlList;
     private Path classpath;
     private Path exclude;
     private File swf;
@@ -149,6 +163,7 @@ public class Mtasc extends Task {
         this.compileFiles = new ArrayList();
         this.sourceSets = new ArrayList();
         this.sourceList = new ArrayList();
+        this.sourceXmlList = new ArrayList();
         this.split = true;
     }
     
@@ -277,6 +292,30 @@ public class Mtasc extends Task {
      */
     public void setSrcSet(FileSet sourceSet) {
         this.sourceSets.add(sourceSet);
+    }
+    
+    /**
+     * Adds a new src xml file. The src xml file must contain nodes with class-
+     * attributes. The values of all class-attribues are added as src-files. The
+     * class attributes' values must look as follows:
+     * <code>org.as2lib.env.log.Logger</code>
+     * 
+     * @param srcXml the source xml to add
+     */
+    public void addSrcXml(File srcXml) {
+        this.sourceXmlList.add(srcXml);
+    }
+    
+    /**
+     * Sets a new src xml file. The src xml file must contain nodes with class-
+     * attributes. The values of all class-attribues are added as src-files. The
+     * class attributes' values must look as follows:
+     * <code>org.as2lib.env.log.Logger</code>
+     * 
+     * @param srcXml the source xml to set
+     */
+    public void setSrcXml(File srcXml) {
+        this.sourceXmlList.add(srcXml);
     }
     
     /**
@@ -739,17 +778,18 @@ public class Mtasc extends Task {
     
     /**
      * Checks whether the required parameters are set. This is either source directory,
-     * source set or source file.
+     * source set, source file or source xml.
      * 
      * @throws BuildException if neither source directory nor source set nor source file
-     * is specified
+     * nor source xml is specified
      */
     private void checkParameters() throws BuildException {
         if ((this.sourceDirectory == null || this.sourceDirectory.size() == 0)
         		&& this.sourceSets.size() == 0
         		&& this.source == null
-                && this.sourceList.size() == 0) {
-            throw new BuildException("Either the 'src', 'srcset' or 'srcdir' attribute must be set.", getLocation());
+                && this.sourceList.size() == 0
+                && this.sourceXmlList.size() == 0) {
+            throw new BuildException("Either 'src', 'srcset', 'srcxml' or 'srcdir' must be set.", getLocation());
         }
     }
     
@@ -758,16 +798,71 @@ public class Mtasc extends Task {
      */
     private void resetCompileFiles() {
         this.compileFiles = new ArrayList();
+        this.relativeCompileFiles = new ArrayList();
     }
     
     /**
      * Adds all compile files.
      */
     private void addCompileFiles() {
+        addCompileFilesByXmlFiles((File[]) this.sourceXmlList.toArray(new File[]{}));
         addCompileFiles(this.sourceDirectory);
         addCompileFiles((File[]) this.sourceList.toArray(new File[]{}));
         addCompileFiles((FileSet[]) this.sourceSets.toArray(new FileSet[]{}));
         addCompileFile(this.source);
+    }
+    
+    private void addCompileFilesByXmlFiles(File[] xmlFiles) {
+        for (int i = 0; i < xmlFiles.length; i++) {
+            File file = xmlFiles[i];
+            InputStream is = null;
+            try {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                //factory.setValidating(true);
+                //factory.setNamespaceAware(false);
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                is = new FileInputStream(file);
+                Document doc = builder.parse(is);
+                Element root = doc.getDocumentElement();
+                addCompileFiles(root);
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (is != null) {
+                    try {
+                        is.close();
+                    }
+                    catch (IOException ex) {
+                        log("Could not close InputStream");
+                    }
+                }
+            }
+        }
+    }
+    
+    private void addCompileFiles(Node node) {
+        NodeList nl = node.getChildNodes();
+        for (int i = 0; i < nl.getLength(); i++) {
+            Node n = nl.item(i);
+            if (n instanceof Element) {
+                Element e = (Element) n;
+                if (e.hasAttribute("class")){
+                    String clazz = e.getAttribute("class");
+                    clazz = clazz.replace(".", "/");
+                    clazz += ".as";
+                    this.relativeCompileFiles.add(new File(clazz));
+                }
+            }
+            if (n.hasChildNodes()) {
+                addCompileFiles(n);
+            }
+        }
     }
     
     /**
@@ -851,15 +946,20 @@ public class Mtasc extends Task {
      * Compiles all compile files.
      */
     private void compile() {
-        if (this.compileFiles.size() > 0) {
-            log("Compiling " + this.compileFiles.size() + " source file"
-                + (this.compileFiles.size() == 1 ? "" : "s")
+        int s = this.compileFiles.size() + this.relativeCompileFiles.size();
+        if (s > 0) {
+            log("Compiling " + s + " source file"
+                + (s == 1 ? "" : "s")
 				+ ".");
             if (this.split) {
             	for (int i = 0; i < this.compileFiles.size(); i++) {
             		Commandline cmd = setupCommand((File) this.compileFiles.get(i));
             		executeCommand(cmd);
             	}
+                for (int i = 0; i < this.relativeCompileFiles.size(); i++) {
+                    Commandline cmd = setupCommandRelative((File) this.relativeCompileFiles.get(i));
+                    executeCommand(cmd);
+                }
             } else {
             	Commandline cmd = setupCommand();
                 executeCommand(cmd);
@@ -896,6 +996,14 @@ public class Mtasc extends Task {
     	cmd.createArgument().setValue(compileFile.getParent());
         // cmd.createArgument().setValue(compileFile.getAbsolutePath());
         cmd.createArgument().setValue(compileFile.getName());
+        return cmd;
+    }
+    
+    private Commandline setupCommandRelative(File compileFile) {
+        Commandline cmd = new Commandline();
+        cmd.setExecutable(getMtasc());
+        setupCommandSwitches(cmd);
+        cmd.createArgument().setValue(compileFile.getPath());
         return cmd;
     }
     
@@ -989,6 +1097,10 @@ public class Mtasc extends Task {
             String pp = ((File) this.compileFiles.get(i)).getParent();
         	command.createArgument().setValue(CLASSPATH);
         	command.createArgument().setValue(pp);
+        }
+        for (int i = 0; i < this.relativeCompileFiles.size(); i++) {
+            String fn = ((File) this.relativeCompileFiles.get(i)).getPath();
+            command.createArgument().setValue(fn);
         }
     }
     
