@@ -75,6 +75,7 @@ import org.xml.sax.SAXException;
  *   <li>src</li>
  *   <li>srcdir</li>
  *   <li>srcset</li>
+ *   <li>srcxml</li>
  *   <li>classpath</li>
  *   <li>verbose</li>
  *   <li>strict</li>
@@ -95,6 +96,8 @@ import org.xml.sax.SAXException;
  *   <li>help</li>
  *   <li>mtasc</li>
  *   <li>split</li>
+ *   <li>package</li>
+ *   <li>infer</li>
  * </ul>
  * 
  * <p>You must either provide "src", "srcdir", "srcset" or "srcxml".
@@ -125,13 +128,14 @@ public class Mtasc extends Task {
     public static final String VERSION = "-version";
     public static final String SEPARATE = "-separate";
     public static final String FLASH6 = "-flash6";
+    public static final String PACKAGE = "-pack";
+    public static final String INFER = "-infer";
     
     private String mtasc;
     private List compileFiles;
-    private List relativeCompileFiles;
-    private boolean split;
     private Path sourceDirectory;
     private File source;
+    private Path pack;
     private ArrayList sourceSets;
     private ArrayList sourceList;
     private ArrayList sourceXmlList;
@@ -143,6 +147,7 @@ public class Mtasc extends Task {
     private String header;
     private String trace;
     private String version;
+    private boolean split;
     private boolean help;
     private boolean verbose;
     private boolean strict;
@@ -153,6 +158,7 @@ public class Mtasc extends Task {
     private boolean flash6;
     private boolean group;
     private boolean main;
+    private boolean infer;
     
     /**
      * Constructs a new {@code Mtasc} instance.
@@ -316,6 +322,40 @@ public class Mtasc extends Task {
      */
     public void setSrcXml(File srcXml) {
         this.sourceXmlList.add(srcXml);
+    }
+    
+    /**
+     * Creates and returns a new source package.
+     * 
+     * @return a new source package
+     */
+    public Path createPackage() {
+        if (this.pack == null) {
+            this.pack = new Path(getProject());
+        }
+        return this.pack.createPath();
+    }
+    
+    /**
+     * Sets the new source package.
+     * 
+     * @param pack the new source package
+     */
+    public void setPackage(Path pack) {
+        if (this.pack == null) {
+            this.pack = pack;
+        } else {
+            this.pack.append(pack);
+        }
+    }
+    
+    /**
+     * Returns the source package.
+     * 
+     * @return the source package
+     */
+    public Path getPack() {
+        return this.pack;
     }
     
     /**
@@ -748,6 +788,24 @@ public class Mtasc extends Task {
     }
     
     /**
+     * Returns whether local variables inference is turned on.
+     * 
+     * @return true if local variables inference is turned on else false
+     */
+    public boolean getInfer() {
+        return this.infer;
+    }
+    
+    /**
+     * Turns local variables inference on.
+     * 
+     * @param infer determines whether to turn local variables inference on or off
+     */
+    public void setInfer(boolean infer) {
+        this.infer = infer;
+    }
+    
+    /**
      * Returns whether this mtasc task has any sources to compile.
      * 
      * @return true if this mtasc task has any sources else false
@@ -756,7 +814,8 @@ public class Mtasc extends Task {
         if ((this.sourceDirectory == null || this.sourceDirectory.size() == 0)
                 && this.sourceSets.size() == 0
                 && this.source == null
-                && this.sourceList.size() == 0) {
+                && this.sourceList.size() == 0
+                && (this.pack == null || this.pack.size() == 0)) {
             return false;
         }
         return true;
@@ -778,7 +837,7 @@ public class Mtasc extends Task {
     
     /**
      * Checks whether the required parameters are set. This is either source directory,
-     * source set, source file or source xml.
+     * source set, source file, source xml or pack.
      * 
      * @throws BuildException if neither source directory nor source set nor source file
      * nor source xml is specified
@@ -788,8 +847,9 @@ public class Mtasc extends Task {
         		&& this.sourceSets.size() == 0
         		&& this.source == null
                 && this.sourceList.size() == 0
-                && this.sourceXmlList.size() == 0) {
-            throw new BuildException("Either 'src', 'srcset', 'srcxml' or 'srcdir' must be set.", getLocation());
+                && this.sourceXmlList.size() == 0
+                && (this.pack == null || this.pack.size() == 0)) {
+            throw new BuildException("Either 'src', 'srcset', 'srcxml', 'srcdir' or 'pack' must be set.", getLocation());
         }
     }
     
@@ -798,7 +858,6 @@ public class Mtasc extends Task {
      */
     private void resetCompileFiles() {
         this.compileFiles = new ArrayList();
-        this.relativeCompileFiles = new ArrayList();
     }
     
     /**
@@ -812,14 +871,17 @@ public class Mtasc extends Task {
         addCompileFile(this.source);
     }
     
+    /**
+     * Adds all source files declared in the given xml files to the compile files list.
+     * 
+     * @param xmlFiles the xml files to look for source files in
+     */
     private void addCompileFilesByXmlFiles(File[] xmlFiles) {
         for (int i = 0; i < xmlFiles.length; i++) {
             File file = xmlFiles[i];
             InputStream is = null;
             try {
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                //factory.setValidating(true);
-                //factory.setNamespaceAware(false);
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 is = new FileInputStream(file);
                 Document doc = builder.parse(is);
@@ -839,13 +901,18 @@ public class Mtasc extends Task {
                         is.close();
                     }
                     catch (IOException ex) {
-                        log("Could not close InputStream");
+                        log("Could not close input stream.");
                     }
                 }
             }
         }
     }
     
+    /**
+     * Adds all source files contained in the given node to the compile files list.
+     * 
+     * @param node the node to look for source files in
+     */
     private void addCompileFiles(Node node) {
         NodeList nl = node.getChildNodes();
         for (int i = 0; i < nl.getLength(); i++) {
@@ -856,7 +923,7 @@ public class Mtasc extends Task {
                     String clazz = e.getAttribute("class");
                     clazz = clazz.replace(".", "/");
                     clazz += ".as";
-                    this.relativeCompileFiles.add(new File(clazz));
+                    addCompileFile(new File(clazz));
                 }
             }
             if (n.hasChildNodes()) {
@@ -891,16 +958,21 @@ public class Mtasc extends Task {
                 ds.scan();
                 String[] fl = ds.getIncludedFiles();
                 for (int k = 0; k < fl.length; k++) {
-                    this.compileFiles.add(new File(sourceDirectory.toString() + "/" + fl[k]));
+                    addCompileFile(new File(sourceDirectory.toString() + "/" + fl[k]));
                 }
             }
         }
     }
     
+    /**
+     * Adds all source files in the given sourceList to the compile files list.
+     * 
+     * @param sourceList the list of source files to add
+     */
     private void addCompileFiles(File[] sourceList) {
         if (sourceList != null && sourceList.length > 0) {
             for (int i = 0; i < sourceList.length; i++) {
-                this.compileFiles.add(sourceList[i]);
+                addCompileFile(sourceList[i]);
             }
         }
     }
@@ -919,7 +991,7 @@ public class Mtasc extends Task {
 	            ds.setIncludes(new String[]{"*.as"});
 	            String[] fl = ds.getIncludedFiles();
 	            for (int k = 0; k < fl.length; k++) {
-	                this.compileFiles.add(new File(ds.getBasedir() + "/" + fl[k]));
+	                addCompileFile(new File(ds.getBasedir() + "/" + fl[k]));
 	            }
             }
         }
@@ -938,6 +1010,17 @@ public class Mtasc extends Task {
                                          + sourceFile.getPath()
                                          + "' does not exist.", getLocation());
             }
+            if (sourceFile.isAbsolute()) {
+                String p = sourceFile.getPath();
+                String[] classpaths = classpath.list();
+                for (int i = 0; i < classpaths.length; i++) {
+                    String cp = classpaths[i];
+                    if (p.startsWith(cp)) {
+                        this.compileFiles.add(new File(p.substring(cp.length() + 1)));
+                        return;
+                    }
+                }
+            }
             this.compileFiles.add(sourceFile);
         }
     }
@@ -946,20 +1029,15 @@ public class Mtasc extends Task {
      * Compiles all compile files.
      */
     private void compile() {
-        int s = this.compileFiles.size() + this.relativeCompileFiles.size();
-        if (s > 0) {
-            log("Compiling " + s + " source file"
-                + (s == 1 ? "" : "s")
+        if (this.compileFiles.size() > 0) {
+            log("Compiling " + this.compileFiles.size() + " source file"
+                + (this.compileFiles.size() == 1 ? "" : "s")
 				+ ".");
             if (this.split) {
             	for (int i = 0; i < this.compileFiles.size(); i++) {
             		Commandline cmd = setupCommand((File) this.compileFiles.get(i));
             		executeCommand(cmd);
             	}
-                for (int i = 0; i < this.relativeCompileFiles.size(); i++) {
-                    Commandline cmd = setupCommandRelative((File) this.relativeCompileFiles.get(i));
-                    executeCommand(cmd);
-                }
             } else {
             	Commandline cmd = setupCommand();
                 executeCommand(cmd);
@@ -991,19 +1069,13 @@ public class Mtasc extends Task {
         Commandline cmd = new Commandline();
         cmd.setExecutable(getMtasc());
         setupCommandSwitches(cmd);
-        // -
-        cmd.createArgument().setValue(CLASSPATH);
-    	cmd.createArgument().setValue(compileFile.getParent());
-        // cmd.createArgument().setValue(compileFile.getAbsolutePath());
-        cmd.createArgument().setValue(compileFile.getName());
-        return cmd;
-    }
-    
-    private Commandline setupCommandRelative(File compileFile) {
-        Commandline cmd = new Commandline();
-        cmd.setExecutable(getMtasc());
-        setupCommandSwitches(cmd);
-        cmd.createArgument().setValue(compileFile.getPath());
+        if (compileFile.isAbsolute()) {
+            cmd.createArgument().setValue(CLASSPATH);
+        	cmd.createArgument().setValue(compileFile.getParent());
+            cmd.createArgument().setValue(compileFile.getName());
+        } else {
+            cmd.createArgument().setValue(compileFile.getPath());
+        }
         return cmd;
     }
     
@@ -1046,25 +1118,11 @@ public class Mtasc extends Task {
         if (this.group) command.createArgument().setValue(GROUP);
         if (this.separate) command.createArgument().setValue(SEPARATE);
         if (this.flash6) command.createArgument().setValue(FLASH6);
+        if (this.infer) command.createArgument().setValue(INFER);
         addExcludes(command);
         addClasspaths(command);
+        addPackages(command);
         if (this.main) command.createArgument().setValue(MAIN);
-    }
-    
-    /**
-     * Adds all classpaths to the passed-in command.
-     * 
-     * @param command the command to add the classpaths to
-     */
-    private void addClasspaths(Commandline command) {
-        if (this.classpath != null && this.classpath.size() > 0) {
-            String[] a = this.classpath.list();
-            for (int k = 0; k < a.length; k++) {
-                String p = a[k];
-                command.createArgument().setValue(CLASSPATH);
-                command.createArgument().setValue(p);
-            }
-        }
     }
     
     /**
@@ -1084,23 +1142,52 @@ public class Mtasc extends Task {
     }
     
     /**
+     * Adds all classpaths to the passed-in command.
+     * 
+     * @param command the command to add the classpaths to
+     */
+    private void addClasspaths(Commandline command) {
+        if (this.classpath != null && this.classpath.size() > 0) {
+            String[] a = this.classpath.list();
+            for (int k = 0; k < a.length; k++) {
+                String p = a[k];
+                command.createArgument().setValue(CLASSPATH);
+                command.createArgument().setValue(p);
+            }
+        }
+    }
+    
+    /**
+     * Adds all packages to the given command.
+     * 
+     * @param command the command to add the packages to
+     */
+    private void addPackages(Commandline command) {
+        if (this.pack != null && this.pack.size() > 0) {
+            String[] a = this.pack.list();
+            for (int i = 0; i < a.length; i++) {
+                String p = a[i];
+                command.createArgument().setValue(PACKAGE);
+                command.createArgument().setValue(p);
+            }
+        }
+    }
+    
+    /**
      * Adds the compile files to the passed-in command.
      * 
      * @param command the command to add the compile files to
      */
     private void addCompileFiles(Commandline command) {
         for (int i = 0; i < this.compileFiles.size(); i++) {
-        	// String fn = ((File) this.compileFiles.get(i)).getAbsolutePath();
-            String fn = ((File) this.compileFiles.get(i)).getName();
-            command.createArgument().setValue(fn);
-            // -
-            String pp = ((File) this.compileFiles.get(i)).getParent();
-        	command.createArgument().setValue(CLASSPATH);
-        	command.createArgument().setValue(pp);
-        }
-        for (int i = 0; i < this.relativeCompileFiles.size(); i++) {
-            String fn = ((File) this.relativeCompileFiles.get(i)).getPath();
-            command.createArgument().setValue(fn);
+            File cf = (File) this.compileFiles.get(i);
+            if (cf.isAbsolute()) {
+                command.createArgument().setValue(CLASSPATH);
+                command.createArgument().setValue(cf.getParent());
+                command.createArgument().setValue(cf.getName());
+            } else {
+                command.createArgument().setValue(cf.getPath());
+            }
         }
     }
     
