@@ -877,31 +877,33 @@ public class Mtasc extends Task {
      * @param xmlFiles the xml files to look for source files in
      */
     private void addCompileFilesByXmlFiles(File[] xmlFiles) {
-        for (int i = 0; i < xmlFiles.length; i++) {
-            File file = xmlFiles[i];
-            InputStream is = null;
-            try {
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder builder = factory.newDocumentBuilder();
-                is = new FileInputStream(file);
-                Document doc = builder.parse(is);
-                Element root = doc.getDocumentElement();
-                addCompileFiles(root);
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (SAXException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (is != null) {
-                    try {
-                        is.close();
-                    }
-                    catch (IOException ex) {
-                        log("Could not close input stream.");
+        if (xmlFiles != null) {
+            for (int i = 0; i < xmlFiles.length; i++) {
+                File file = xmlFiles[i];
+                InputStream is = null;
+                try {
+                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder builder = factory.newDocumentBuilder();
+                    is = new FileInputStream(file);
+                    Document doc = builder.parse(is);
+                    Element root = doc.getDocumentElement();
+                    addCompileFiles(root);
+                } catch (ParserConfigurationException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SAXException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (is != null) {
+                        try {
+                            is.close();
+                        }
+                        catch (IOException ex) {
+                            log("Could not close input stream.");
+                        }
                     }
                 }
             }
@@ -914,20 +916,22 @@ public class Mtasc extends Task {
      * @param node the node to look for source files in
      */
     private void addCompileFiles(Node node) {
-        NodeList nl = node.getChildNodes();
-        for (int i = 0; i < nl.getLength(); i++) {
-            Node n = nl.item(i);
-            if (n instanceof Element) {
-                Element e = (Element) n;
-                if (e.hasAttribute("class")){
-                    String clazz = e.getAttribute("class");
-                    clazz = clazz.replace(".", "/");
-                    clazz += ".as";
-                    addCompileFile(new File(clazz));
+        if (node != null) {
+            NodeList nl = node.getChildNodes();
+            for (int i = 0; i < nl.getLength(); i++) {
+                Node n = nl.item(i);
+                if (n instanceof Element) {
+                    Element e = (Element) n;
+                    if (e.hasAttribute("class")){
+                        String clazz = e.getAttribute("class");
+                        clazz = clazz.replace(".", "/");
+                        clazz += ".as";
+                        addCompileFile(new File(clazz));
+                    }
                 }
-            }
-            if (n.hasChildNodes()) {
-                addCompileFiles(n);
+                if (n.hasChildNodes()) {
+                    addCompileFiles(n);
+                }
             }
         }
     }
@@ -1010,9 +1014,9 @@ public class Mtasc extends Task {
                                          + sourceFile.getPath()
                                          + "' does not exist.", getLocation());
             }
-            if (sourceFile.isAbsolute()) {
+            if (sourceFile.isAbsolute() && this.classpath != null) {
                 String p = sourceFile.getPath();
-                String[] classpaths = classpath.list();
+                String[] classpaths = this.classpath.list();
                 for (int i = 0; i < classpaths.length; i++) {
                     String cp = classpaths[i];
                     if (p.startsWith(cp)) {
@@ -1034,15 +1038,15 @@ public class Mtasc extends Task {
                 + (this.compileFiles.size() == 1 ? "" : "s")
 				+ ".");
             if (this.split) {
-            	for (int i = 0; i < this.compileFiles.size(); i++) {
-            		Commandline cmd = setupCommand((File) this.compileFiles.get(i));
-            		executeCommand(cmd);
-            	}
-            } else {
-            	Commandline cmd = setupCommand();
-                executeCommand(cmd);
+                for (int i = 0; i < this.compileFiles.size(); i++) {
+                    Commandline cmd = setupCommand((File) this.compileFiles.get(i));
+                    executeCommand(cmd);
+                }
+                return;
             }
         }
+    	Commandline cmd = setupCommand();
+        executeCommand(cmd);
     }
     
     /**
@@ -1069,14 +1073,18 @@ public class Mtasc extends Task {
         Commandline cmd = new Commandline();
         cmd.setExecutable(getMtasc());
         setupCommandSwitches(cmd);
-        if (compileFile.isAbsolute()) {
-            cmd.createArgument().setValue(CLASSPATH);
-        	cmd.createArgument().setValue(compileFile.getParent());
-            cmd.createArgument().setValue(compileFile.getName());
-        } else {
-            cmd.createArgument().setValue(compileFile.getPath());
-        }
+        addCompileFile(cmd, compileFile);
         return cmd;
+    }
+    
+    private void addCompileFile(Commandline command, File file) {
+        if (file.isAbsolute()) {
+            command.createArgument().setValue(CLASSPATH);
+            command.createArgument().setValue(file.getParent());
+            command.createArgument().setValue(file.getName());
+        } else {
+            command.createArgument().setValue(file.getPath());
+        }
     }
     
     /**
@@ -1181,13 +1189,7 @@ public class Mtasc extends Task {
     private void addCompileFiles(Commandline command) {
         for (int i = 0; i < this.compileFiles.size(); i++) {
             File cf = (File) this.compileFiles.get(i);
-            if (cf.isAbsolute()) {
-                command.createArgument().setValue(CLASSPATH);
-                command.createArgument().setValue(cf.getParent());
-                command.createArgument().setValue(cf.getName());
-            } else {
-                command.createArgument().setValue(cf.getPath());
-            }
+            addCompileFile(command, cf);
         }
     }
     
