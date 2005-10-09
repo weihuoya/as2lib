@@ -130,7 +130,7 @@ class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements L
 	 * @return the added publishers
 	 * @see #addPublisher
 	 */
-	public function getPublishers(Void):Array {
+	public function getPublishers(Void):Object {
 		return logger.getPublishers();
 	}
 	
