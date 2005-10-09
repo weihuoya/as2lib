@@ -1077,6 +1077,12 @@ public class Mtasc extends Task {
         return cmd;
     }
     
+    /**
+     * Adds the given file to the given command.
+     * 
+     * @param command the command to add the file to
+     * @param file the file to add to the command
+     */
     private void addCompileFile(Commandline command, File file) {
         if (file.isAbsolute()) {
             command.createArgument().setValue(CLASSPATH);
