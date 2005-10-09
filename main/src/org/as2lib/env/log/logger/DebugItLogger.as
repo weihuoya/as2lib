@@ -218,7 +218,7 @@ class org.as2lib.env.log.logger.DebugItLogger extends AbstractLogger implements 
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			Debug.write((new LogMessage(message, level, name).toString()));
+			Debug.write((new LogMessage(message, level, name)).toString());
 		}
 	}
 	
@@ -233,7 +233,7 @@ class org.as2lib.env.log.logger.DebugItLogger extends AbstractLogger implements 
 	 */
 	public function debug(message):Void {
 		if (isDebugEnabled()) {
-			Debug.write((new LogMessage(message, debugLevel, name).toString()));
+			Debug.write((new LogMessage(message, debugLevel, name)).toString());
 		}
 	}
 	
@@ -248,7 +248,7 @@ class org.as2lib.env.log.logger.DebugItLogger extends AbstractLogger implements 
 	 */
 	public function info(message):Void {
 		if (isInfoEnabled()) {
-			Debug.write((new LogMessage(message, infoLevel, name).toString()));
+			Debug.write((new LogMessage(message, infoLevel, name)).toString());
 		}
 	}
 	
@@ -263,7 +263,7 @@ class org.as2lib.env.log.logger.DebugItLogger extends AbstractLogger implements 
 	 */
 	public function warning(message):Void {
 		if (isWarningEnabled()) {
-			Debug.write((new LogMessage(message, warningLevel, name).toString()));
+			Debug.write((new LogMessage(message, warningLevel, name)).toString());
 		}
 	}
 	
@@ -278,7 +278,7 @@ class org.as2lib.env.log.logger.DebugItLogger extends AbstractLogger implements 
 	 */
 	public function error(message):Void {
 		if (isErrorEnabled()) {
-			Debug.write((new LogMessage(message, errorLevel, name).toString()));
+			Debug.write((new LogMessage(message, errorLevel, name)).toString());
 		}
 	}
 	
@@ -293,7 +293,7 @@ class org.as2lib.env.log.logger.DebugItLogger extends AbstractLogger implements 
 	 */
 	public function fatal(message):Void {
 		if (isFatalEnabled()) {
-			Debug.write((new LogMessage(message, fatalLevel, name).toString()));
+			Debug.write((new LogMessage(message, fatalLevel, name)).toString());
 		}
 	}
 	
