@@ -138,6 +138,7 @@ public class Swf extends Mtasc {
      */
     public Swf() {
         this.swfmill = new Swfmill();
+        setSplit(false);
         setMain(true);
         setWidth(800);
         setHeight(600);
