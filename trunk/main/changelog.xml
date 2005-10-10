@@ -5,6 +5,14 @@
   <release name="as2lib 0.9.3" day="9" month="9" year="2005">
     <year value="2005">
       <month value="10">
+      	<day value="10">
+      		<entry type="change" package="org.as2lib.regexp" class="Pattern" method="isMatch">
+      			<change-rename to="matches"></change-rename>
+     		</entry>
+      		<entry type="change" package="org.as2lib.regexp" class="Matcher" method="isMatch">
+      			<change-rename to="matches"></change-rename>
+     		</entry>
+      	</day>
         <day value="8">
           <entry type="add" package="org.as2lib.env.log.parser" class="XmlLogConfigurationParser">Parses xml log configurations.</entry>
           <entry type="add" package="org.as2lib.env.log" class="LogConfigurationParser">Interface for log configuration parsers.</entry>
@@ -25,14 +33,14 @@
           <entry type="add" package="org.as2lib.env.log" class="LogManager">Enhanced class to allow the following access: 'private static var logger:Logger = LogManager.getLogger("org.as2lib.MyClass");'.</entry>
         </day>
         <day value="1">
-          <entry type="fix" package="org.as2lib.aop.weaver" class="SimpleWeaver" method="weaveSuperClassConstructor">Fixed bug with super constructors and multiple advices.</entry>
-          <entry type="fix" package="org.as2lib.aop.mtacher" class="WildcardMatcher" method="match">Fixed serious bug with often used pattern '..*.*'.</entry>
-          <entry type="fix" package="org.as2lib.aop.weaver" class="SimpleWeaver" method="addAspectForAllTypesInPackage/addAdviceForAllTypesInPackage">Fixed serious bug that prevented weaving aspects and advices by types package as affected types.</entry>
+          <entry type="bugfix" package="org.as2lib.aop.weaver" class="SimpleWeaver" method="weaveSuperClassConstructor">Fixed bug with super constructors and multiple advices.</entry>
+          <entry type="bugfix" package="org.as2lib.aop.mtacher" class="WildcardMatcher" method="match">Fixed serious bug with often used pattern '..*.*'.</entry>
+          <entry type="bugfix" package="org.as2lib.aop.weaver" class="SimpleWeaver" method="addAspectForAllTypesInPackage/addAdviceForAllTypesInPackage">Fixed serious bug that prevented weaving aspects and advices by types package as affected types.</entry>
         </day>
       </month>
       <month value="8">
         <day value="23">
-          <entry type="fix" package="org.as2lib.aop.weaver" class="SimpleWeaver" method="addAspectForAllTypes/addAdviceForAllTypes">Fixed major bug that resulted in IllegalArgumentException.</entry>
+          <entry type="bugfix" package="org.as2lib.aop.weaver" class="SimpleWeaver" method="addAspectForAllTypes/addAdviceForAllTypes">Fixed major bug that resulted in IllegalArgumentException.</entry>
         </day>
       </month>
     </year>
