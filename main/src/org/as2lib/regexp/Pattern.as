@@ -157,10 +157,10 @@ class org.as2lib.regexp.Pattern extends BasicClass
         return flags;
     }
 
-    public static function isMatch(pattern:String, input:String):Boolean {
+    public static function matches(pattern:String, input:String):Boolean {
         var p:Pattern = new Pattern(pattern);
         var m:Matcher = p.getMatcher(input);
-        return m.isMatch();
+        return m.matches();
     }
 
     public function split(input:String, limit:Number):Array { 

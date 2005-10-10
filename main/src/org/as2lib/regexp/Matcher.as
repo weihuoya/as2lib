@@ -164,7 +164,7 @@ class org.as2lib.regexp.Matcher extends BasicClass {
         return parentPattern["groupCount"] - 1;
     }
 
-    public function isMatch(Void):Boolean {
+    public function matches(Void):Boolean {
         reset();
         return match(0, getTextLength(), ENDANCHOR);
     }
