@@ -26,18 +26,22 @@ import org.as2lib.regexp.node.TreeInfo;
 
 class org.as2lib.regexp.node.Prolog extends Node {
     
-    var loop:Loop;
+    private var loop:Loop;
     
-    function Prolog(loop:Loop) {
+    public function Prolog(loop:Loop) {
         this.loop = loop;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         return loop.matchInit(matcher, i, seq);
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         return loop.study(info);
+    }
+    
+    public function getLoop(Void):Loop {
+    	return loop;
     }
 }
 

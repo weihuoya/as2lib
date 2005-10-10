@@ -28,18 +28,18 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.GroupRef extends Node {
 	
-    var head:GroupHead;
+    private var head:GroupHead;
     
-    function GroupRef(head:GroupHead) {
+    public function GroupRef(head:GroupHead) {
         this.head = head;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         return head.matchRef(matcher, i, seq)
             && next.match(matcher, matcher.last, seq);
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         info.maxValid = false;
         info.deterministic = false;
         return next.study(info);

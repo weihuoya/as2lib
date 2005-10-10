@@ -27,23 +27,24 @@ import org.as2lib.regexp.node.TreeInfo;
 
 class org.as2lib.regexp.node.NotRange extends Node {
 	
-    var lower, upper:Number;
+    private var lower, upper:Number;
     
-    function NotRange(n:Number) {
+    public function NotRange(n:Number) {
     	if (n != null) {
 	        lower = n >>> 16;
 	        upper = n & 0xFFFF;
     	}
     }
     
-    function dup(flag:Boolean):Node {
+    public function dup(flag:Boolean):Node {
         if (flag) {
             return new Range((lower << 16) + upper);
         } else {
             return new NotRange((lower << 16) + upper);
         }
     }
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i < matcher.to) {
             var ch:Number = seq.charCodeAt(i);
             return ((ch-lower)|(upper-ch)) < 0
@@ -51,7 +52,8 @@ class org.as2lib.regexp.node.NotRange extends Node {
         }
         return false;
     }
-    function study(info:TreeInfo):Boolean {
+    
+    public function study(info:TreeInfo):Boolean {
         info.minLength++;
         info.maxLength++;
         return next.study(info);

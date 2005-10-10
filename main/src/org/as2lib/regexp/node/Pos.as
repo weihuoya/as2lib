@@ -24,13 +24,13 @@ import org.as2lib.regexp.node.Node;
  
 class org.as2lib.regexp.node.Pos extends Node {
 	
-    var cond:Node;
+    private var cond:Node;
     
-    function Pos(cond:Node) {
+    public function Pos(cond:Node) {
         this.cond = cond;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         return cond.match(matcher, i, seq) && next.match(matcher, i, seq);
     }
 }

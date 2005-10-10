@@ -27,15 +27,15 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.Ques extends Node {
 	
-    var atom:Node;
-    var type:Number;
+    private var atom:Node;
+    private var type:Number;
     
-    function Ques(node:Node, type:Number) {
+    public function Ques(node:Node, type:Number) {
         this.atom = node;
         this.type = type;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         switch (type) {
         case Pattern.GREEDY:
             return (atom.match(matcher, i, seq) && next.match(matcher, matcher.last, seq))
@@ -51,7 +51,7 @@ class org.as2lib.regexp.node.Ques extends Node {
         }
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         if (type != Pattern.INDEPENDENT) {
             var minL:Number = info.minLength;
             atom.study(info);
@@ -62,6 +62,10 @@ class org.as2lib.regexp.node.Ques extends Node {
             atom.study(info);
             return next.study(info);
         }
+    }
+    
+    public function getType(Void):Number {
+    	return type;	
     }
 }
 

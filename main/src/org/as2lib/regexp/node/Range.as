@@ -27,22 +27,22 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.Range extends Node {
 	
-    var lower, upper:Number;
+    private var lower, upper:Number;
     
-    function Range(n:Number) {
+    public function Range(n:Number) {
     	if (n != null) {
 	        lower = n >>> 16;
 	        upper = n & 0xFFFF;
     	}
     }
     
-    function dup(flag:Boolean):Node {
+    public function dup(flag:Boolean):Node {
         return (flag) ? 
         	new NotRange((lower << 16) + upper) :
             new Range((lower << 16) + upper);
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i < matcher.to) {
             var ch:Number = seq.charCodeAt(i);
             return ((ch-lower)|(upper-ch)) >= 0 && next.match(matcher, i+1, seq);
@@ -50,7 +50,7 @@ class org.as2lib.regexp.node.Range extends Node {
         return false;
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         info.minLength++;
         info.maxLength++;
         return next.study(info);

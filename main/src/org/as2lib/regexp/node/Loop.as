@@ -28,17 +28,17 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.Loop extends Node {
 	
-    var body:Node;
-    var countIndex:Number; // local count index in matcher locals
-    var beginIndex:Number; // group begining index
-    var cmin, cmax:Number;
+    private var body:Node;
+    private var countIndex:Number; // local count index in matcher locals
+    private var beginIndex:Number; // group begining index
+    private var cmin, cmax:Number;
     
-    function Loop(countIndex:Number, beginIndex:Number) {
+    public function Loop(countIndex:Number, beginIndex:Number) {
         this.countIndex = countIndex;
         this.beginIndex = beginIndex;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         // Avoid infinite loop in zero-length case.
         if (i > matcher.locals[beginIndex]) {
             var count:Number = matcher.locals[countIndex];
@@ -72,7 +72,7 @@ class org.as2lib.regexp.node.Loop extends Node {
         return next.match(matcher, i, seq);
     }
     
-    function matchInit(matcher:Object, i:Number, seq:String):Boolean {
+    public function matchInit(matcher:Object, i:Number, seq:String):Boolean {
         var save:Number = matcher.locals[countIndex];
         var ret:Boolean = false;
         if (0 < cmin) {
@@ -90,10 +90,35 @@ class org.as2lib.regexp.node.Loop extends Node {
         return ret;
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         info.maxValid = false;
         info.deterministic = false;
         return false;
     }
+    
+    public function getCmin(Void):Number {
+    	return cmin;	
+    }
+
+    public function setCmin(cmin:Number):Void {
+    	this.cmin = cmin;
+    }
+    
+    public function getCmax(Void):Number {
+    	return cmax;	
+    }
+
+    public function setCmax(cmax:Number):Void {
+    	this.cmax = cmax;
+    }
+    
+    public function getBody(Void):Node {
+    	return body;
+    }
+
+    public function setBody(body:Node):Void {
+    	this.body = body;
+    }
+    
 }
 

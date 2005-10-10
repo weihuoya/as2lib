@@ -27,18 +27,18 @@ import org.as2lib.regexp.node.TreeInfo;
 
 class org.as2lib.regexp.node.Branch extends Node {
 	
-    var prev:Node;
+    private var prev:Node;
     
-    function Branch(lhs:Node, rhs:Node) {
+    public function Branch(lhs:Node, rhs:Node) {
         this.prev = lhs;
         this.next = rhs;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         return (prev.match(matcher, i, seq) || next.match(matcher, i, seq));
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         var minL:Number = info.minLength;
         var maxL:Number = info.maxLength;
         var maxV:Boolean = info.maxValid;

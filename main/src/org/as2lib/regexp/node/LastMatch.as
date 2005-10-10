@@ -25,9 +25,8 @@ import org.as2lib.regexp.node.Node;
  
 class org.as2lib.regexp.node.LastMatch extends Node {
 	
-    function match(matcher:Object, i:Number, seq:String):Boolean {
-        if (i != matcher.oldLast)
-            return false;
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
+        if (i != matcher.oldLast) return false;
         return next.match(matcher, i, seq);
     }
 }

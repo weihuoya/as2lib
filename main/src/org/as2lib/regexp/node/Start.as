@@ -28,16 +28,16 @@ import org.as2lib.regexp.node.TreeInfo;
 
 class org.as2lib.regexp.node.Start extends Node {
 	
-    var minLength:Number;
+    private var minLength:Number;
     
-    function Start(node:Node) {
+    public function Start(node:Node) {
         this.next = node;
         var info:TreeInfo = new TreeInfo();
         next.study(info);
         minLength = info.minLength;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i > matcher.to - minLength) return false;
         var ret:Boolean = false;
         var guard:Number = matcher.to - minLength;
@@ -54,7 +54,7 @@ class org.as2lib.regexp.node.Start extends Node {
         return ret;
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         next.study(info);
         info.maxValid = false;
         info.deterministic = false;

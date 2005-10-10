@@ -26,11 +26,11 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.Dot extends Node {
 	
-    function Dot() {
+    public function Dot() {
         super();
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i < matcher.to) {
             var ch:Number = seq.charCodeAt(i);;
             return (ch!= ord('\n') && ch != ord('\r')
@@ -41,7 +41,7 @@ class org.as2lib.regexp.node.Dot extends Node {
         return false;
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         info.minLength++;
         info.maxLength++;
         return next.study(info);

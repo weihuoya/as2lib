@@ -29,15 +29,15 @@ import org.as2lib.regexp.node.Node;
  
 class org.as2lib.regexp.node.GroupTail extends Node {
 	
-    var localIndex:Number;
-    var groupIndex:Number;
+    private var localIndex:Number;
+    private var groupIndex:Number;
     
-    function GroupTail(localCount:Number, groupCount:Number) {
+    public function GroupTail(localCount:Number, groupCount:Number) {
         localIndex = localCount;
         groupIndex = groupCount + groupCount;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         var tmp:Number = matcher.locals[localIndex];
         if (tmp >= 0) { // This is the normal group case.
             // Save the group so we can unset it if it
@@ -60,5 +60,13 @@ class org.as2lib.regexp.node.GroupTail extends Node {
             return true;
         }
     }
+    
+    public function getLocalIndex(Void):Number {
+    	return localIndex;
+    }
+    
+    public function getGroupIndex(Void):Number {
+    	return groupIndex;
+    }    
 }
 

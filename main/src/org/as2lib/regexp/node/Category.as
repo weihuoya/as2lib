@@ -25,24 +25,23 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.Category extends Node {
     
-    var atype:Number;
+   	private var atype:Number;
     
-    function Category(type:Number) {
+    public function Category(type:Number) {
         atype = type;
     }
     
-    function dup(flag:Boolean):Node {
+    public function dup(flag:Boolean):Node {
         return new Category(flag ? ~atype : atype);
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         return i < matcher.to
-        	// !!! REFACTORED
             && (atype & (1 << 0)) != 0
             && next.match(matcher, i+1, seq);
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         info.minLength++;
         info.maxLength++;
         return next.study(info);

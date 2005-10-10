@@ -28,17 +28,17 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.NotSingleU extends Node {
 	
-    var ch:Number;
+    private var ch:Number;
     
-    function NotSingleU(c:Number) {
+    public function NotSingleU(c:Number) {
         ch = AsciiUtil.toLower(AsciiUtil.toUpper(c));
     }
     
-    function dup(flag:Boolean):Node {
+    public function dup(flag:Boolean):Node {
         return (flag) ? new SingleU(ch) : new NotSingleU(ch);
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i < matcher.to) {
             var c:Number = seq.charCodeAt(i);
             if (c == ch) return false;
@@ -49,7 +49,7 @@ class org.as2lib.regexp.node.NotSingleU extends Node {
         return false;
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         info.minLength++;
         info.maxLength++;
         return next.study(info);

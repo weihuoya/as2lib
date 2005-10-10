@@ -28,11 +28,11 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.LazyLoop extends Loop {
 	
-    function LazyLoop(countIndex:Number, beginIndex:Number) {
+    public function LazyLoop(countIndex:Number, beginIndex:Number) {
         super(countIndex, beginIndex);
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         // Check for zero length group
         if (i > matcher.locals[beginIndex]) {
             var count:Number = matcher.locals[countIndex];
@@ -61,7 +61,7 @@ class org.as2lib.regexp.node.LazyLoop extends Loop {
         return next.match(matcher, i, seq);
     }
     
-    function matchInit(matcher:Object, i:Number, seq:String):Boolean {
+    public function matchInit(matcher:Object, i:Number, seq:String):Boolean {
         var save:Number = matcher.locals[countIndex];
         var ret:Boolean = false;
         if (0 < cmin) {
@@ -77,7 +77,7 @@ class org.as2lib.regexp.node.LazyLoop extends Loop {
         return ret;
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         info.maxValid = false;
         info.deterministic = false;
         return false;

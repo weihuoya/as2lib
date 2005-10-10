@@ -30,13 +30,13 @@ import org.as2lib.regexp.node.Node;
  
 class org.as2lib.regexp.node.GroupHead extends Node {
 	
-    var localIndex:Number;
+    private var localIndex:Number;
     
-    function GroupHead(localCount:Number) {
+    public function GroupHead(localCount:Number) {
         localIndex = localCount;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         var save:Number = matcher.locals[localIndex];
         matcher.locals[localIndex] = i;
         var ret:Boolean = next.match(matcher, i, seq);
@@ -44,12 +44,16 @@ class org.as2lib.regexp.node.GroupHead extends Node {
         return ret;
     }
     
-    function matchRef(matcher:Object, i:Number, seq:String):Boolean {
+    public function matchRef(matcher:Object, i:Number, seq:String):Boolean {
         var save:Number = matcher.locals[localIndex];
         matcher.locals[localIndex] = ~i; 
         var ret:Boolean = next.match(matcher, i, seq);
         matcher.locals[localIndex] = save;
         return ret;
+    }
+    
+    public function getLocalIndex(Void):Number {
+    	return localIndex;
     }
 }
 

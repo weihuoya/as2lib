@@ -26,7 +26,7 @@ import org.as2lib.regexp.node.Node;
  
 class org.as2lib.regexp.node.Begin extends Node {
 	
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i == matcher.from && next.match(matcher, i, seq)) {
             matcher.first = i;
             matcher.groups[0] = i;

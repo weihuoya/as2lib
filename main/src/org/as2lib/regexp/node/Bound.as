@@ -27,17 +27,18 @@ import org.as2lib.regexp.node.Node;
  
 class org.as2lib.regexp.node.Bound extends Node {
 	
-    static var LEFT:Number = 0x1;
-    static var RIGHT:Number= 0x2;
-    static var BOTH:Number = 0x3;
-    static var NONE:Number = 0x4;
-    var type:Number;
+    public static var LEFT:Number = 0x1;
+    public static var RIGHT:Number= 0x2;
+    public static var BOTH:Number = 0x3;
+    public static var NONE:Number = 0x4;
     
-    function Bound(n:Number) {
+    private var type:Number;
+    
+    public function Bound(n:Number) {
         type = n;
     }
     
-    function check(matcher:Object, i:Number, seq:String):Number {
+    public function check(matcher:Object, i:Number, seq:String):Number {
         var ch:Number;
         var left:Boolean = false;
         if (i > matcher.from) {
@@ -52,7 +53,7 @@ class org.as2lib.regexp.node.Bound extends Node {
         return ((Number(left) ^ Number(right)) ? (right ? LEFT : RIGHT) : NONE);
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         return (check(matcher, i, seq) & type) > 0
             && next.match(matcher, i, seq);
     }

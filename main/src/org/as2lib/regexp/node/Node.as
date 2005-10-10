@@ -30,36 +30,46 @@ import org.as2lib.env.except.Exception;
  
 class org.as2lib.regexp.node.Node extends BasicClass {
 	
-    var next:Node;
+    private var next:Node;
     
-    function Node() {
+    public function Node() {
         next = Pattern.ACCEPT;
     }
     
-    function dup(flag:Boolean):Node {
+    public function dup(flag:Boolean):Node {
         if (flag) {
             return new Not(this);
         } else {
             throw new Exception("Internal error in Node dup()", this, arguments);
         }
     }
+    
     /**
      * This method implements the classic accept node.
      */
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         matcher.last = i;
         matcher.groups[0] = matcher.first;
         matcher.groups[1] = matcher.last;
         return true;
     }
+    
     /**
      * This method is good for all zero length assertions.
      */
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         if (next != null) {
             return next.study(info);
         } else {
             return info.deterministic;
         }
+    }
+    
+    public function getNext(Void):Node {
+    	return next;
+    }
+    
+    public function setNext(next:Node):Void {
+    	this.next = next;
     }
 }

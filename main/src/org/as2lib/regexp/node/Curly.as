@@ -28,19 +28,19 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.Curly extends Node {
 	
-    var atom:Node;
-    var type:Number;
-    var cmin:Number;
-    var cmax:Number;
+    private var atom:Node;
+    private var type:Number;
+    private var cmin:Number;
+    private var cmax:Number;
 
-    function Curly(node:Node, cmin:Number, cmax:Number, type:Number) {
+    public function Curly(node:Node, cmin:Number, cmax:Number, type:Number) {
         this.atom = node;
         this.type = type;
         this.cmin = cmin;
         this.cmax = cmax;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         var j:Number;
         for (j = 0; j < cmin; j++) {
             if (atom.match(matcher, i, seq)) {
@@ -60,7 +60,7 @@ class org.as2lib.regexp.node.Curly extends Node {
     // Greedy match.
     // i is the index to start matching at
     // j is the number of atoms that have matched
-    function match0(matcher:Object, i:Number, j:Number, seq:String):Boolean {
+    private function match0(matcher:Object, i:Number, j:Number, seq:String):Boolean {
         if (j >= cmax) {
             // We have matched the maximum... continue with the rest of
             // the regular expression
@@ -104,7 +104,7 @@ class org.as2lib.regexp.node.Curly extends Node {
     // Reluctant match. At this point, the minimum has been satisfied.
     // i is the index to start matching at
     // j is the number of atoms that have matched
-    function match1(matcher:Object, i:Number, j:Number, seq:String):Boolean {
+    private function match1(matcher:Object, i:Number, j:Number, seq:String):Boolean {
         while (true) {
             // Try finishing match without consuming any more
             if (next.match(matcher, i, seq))
@@ -124,18 +124,18 @@ class org.as2lib.regexp.node.Curly extends Node {
         }
     }
     
-    function match2(matcher:Object, i:Number, j:Number, seq:String):Boolean {
+    private function match2(matcher:Object, i:Number, j:Number, seq:String):Boolean {
         for (; j < cmax; j++) {
-            if (!atom.match(matcher, i, seq))
-                break;
-            if (i == matcher.last)
-                break;
+            if (!atom.match(matcher, i, seq)) 
+            	break;
+            if (i == matcher.last) 
+            	break;
             i = matcher.last;
         }
         return next.match(matcher, i, seq);
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         // Save original info
         var minL:Number = info.minLength;
         var maxL:Number = info.maxLength;
@@ -168,5 +168,22 @@ class org.as2lib.regexp.node.Curly extends Node {
 
         return next.study(info);
     }
+    
+    public function getType(Void):Number {
+    	return type;
+    }
+
+    public function getAtom(Void):Node {
+    	return atom;
+    }
+    
+    public function getCmin(Void):Number {
+    	return cmin;
+    }
+    
+    public function getCmax(Void):Number {
+    	return cmax;
+    }
+    
 }
 

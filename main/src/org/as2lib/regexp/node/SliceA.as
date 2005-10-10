@@ -27,13 +27,13 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.SliceA extends Node {
 	
-    var buffer:Array;
+    private var buffer:Array;
     
-    function SliceA(buf:Array) {
+    public function SliceA(buf:Array) {
         buffer = buf;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         var buf:Array = buffer;
         var len:Number = buf.length;
         if (i + len > matcher.to) return false;
@@ -46,7 +46,7 @@ class org.as2lib.regexp.node.SliceA extends Node {
         return next.match(matcher, i+len, seq);
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         info.minLength += buffer.length;
         info.maxLength += buffer.length;
         return next.study(info);

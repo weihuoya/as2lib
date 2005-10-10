@@ -23,15 +23,17 @@ import org.as2lib.regexp.node.Node;
  */
  
 class org.as2lib.regexp.node.NotBehind extends Node {
-    var cond:Node;
-    var rmax, rmin:Number;
+	
+    private var cond:Node;
+    private var rmax, rmin:Number;
     
-    function NotBehind(cond:Node, rmax:Number, rmin:Number) {
+    public function NotBehind(cond:Node, rmax:Number, rmin:Number) {
         this.cond = cond;
         this.rmax = rmax;
         this.rmin = rmin;
     }
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         var from:Number = Math.max(i - rmax, matcher.from);
         for (var j = i - rmin; j >= from; j--) {
             if (cond.match(matcher, j, seq) && matcher.last == i) {

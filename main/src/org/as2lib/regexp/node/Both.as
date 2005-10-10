@@ -26,14 +26,14 @@ import org.as2lib.regexp.node.TreeInfo;
 
 class org.as2lib.regexp.node.Both extends Node {
 	
-    var lhs, rhs:Node;
+    private var lhs, rhs:Node;
     
-    function Both(lhs:Node, rhs:Node) {
+    public function Both(lhs:Node, rhs:Node) {
         this.lhs = lhs;
         this.rhs = rhs;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i < matcher.to) {
 	        return ((lhs.match(matcher, i, seq) && rhs.match(matcher, i, seq))
 	            && next.match(matcher, matcher.last, seq));
@@ -41,7 +41,7 @@ class org.as2lib.regexp.node.Both extends Node {
         return false;
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         var maxV:Boolean = info.maxValid;
         var detm:Boolean = info.deterministic;
 
