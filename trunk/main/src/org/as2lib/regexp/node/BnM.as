@@ -49,14 +49,14 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.BnM extends Node {
 	
-    var buffer:Array; 
-    var lastOcc:Array;
-    var optoSft:Array;
+    private var buffer:Array; 
+    private var lastOcc:Array;
+    private var optoSft:Array;
 
-    static function optimize(node:Node):Node {
+    public static function optimize(node:Node):Node {
         if (!(node instanceof Slice)) return node;
         
-        var src:Array = Slice(node).buffer; 
+        var src:Array = Slice(node).getBuffer(); 
         var patternLength:Number = src.length;
         
         // The BM algorithm requires a bit of overhead;
@@ -106,14 +106,14 @@ class org.as2lib.regexp.node.BnM extends Node {
         return new BnM(src, lastOcc, optoSft, node.next);
     }
     
-    function BnM(src:Array, lastOcc:Array, optoSft:Array, next:Node) {
+    public function BnM(src:Array, lastOcc:Array, optoSft:Array, next:Node) {
         this.buffer = src;
         this.lastOcc = lastOcc;
         this.optoSft = optoSft;
         this.next = next;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         var src:Array = buffer; // of char
         var patternLength:Number = src.length;
         var last:Number = matcher.to - patternLength;
@@ -147,7 +147,7 @@ class org.as2lib.regexp.node.BnM extends Node {
         return false;
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         info.minLength += buffer.length;
         info.maxValid = false;
         return next.study(info);

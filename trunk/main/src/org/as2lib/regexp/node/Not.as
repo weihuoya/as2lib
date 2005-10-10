@@ -19,17 +19,17 @@ import org.as2lib.regexp.node.TreeInfo;
 
 class org.as2lib.regexp.node.Not extends Node {
 	
-    var atom:Node;
+    private var atom:Node;
     
-    function Not(atom:Node) {
+    public function Not(atom:Node) {
         this.atom = atom;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         return (!atom.match(matcher, i, seq) && next.match(matcher, i+1, seq));
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         info.minLength++;
         info.maxLength++;
         return next.study(info);

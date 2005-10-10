@@ -27,11 +27,11 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.All extends Node {
 	
-    function All() {
+    public function All() {
         super();
     }
     
-    function dup(flag:Boolean):Node {
+    public function dup(flag:Boolean):Node {
         if (flag) {
             return new Single(-1);
         } else {
@@ -39,11 +39,11 @@ class org.as2lib.regexp.node.All extends Node {
         }
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         return (i < matcher.to && next.match(matcher, i+1, seq));
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         info.minLength++;
         info.maxLength++;
         return next.study(info);

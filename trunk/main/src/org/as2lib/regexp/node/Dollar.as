@@ -35,13 +35,13 @@ import org.as2lib.regexp.node.TreeInfo;
 
 class org.as2lib.regexp.node.Dollar extends Node {
 	
-    var multiline:Boolean;
+    private var multiline:Boolean;
     
-    function Dollar(mul:Boolean) {
+    public function Dollar(mul:Boolean) {
         multiline = mul;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (!multiline) {
             if (i < matcher.to - 2)
                 return false;
@@ -70,7 +70,7 @@ class org.as2lib.regexp.node.Dollar extends Node {
         return next.match(matcher, i, seq);
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         next.study(info);
         return info.deterministic;
     }

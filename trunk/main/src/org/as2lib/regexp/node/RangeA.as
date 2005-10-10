@@ -28,18 +28,18 @@ import org.as2lib.regexp.node.NotRangeA;
  
 class org.as2lib.regexp.node.RangeA extends Range {
 	
-    function RangeA(n:Number) {
+    public function RangeA(n:Number) {
         lower = n >>> 16;
         upper = n & 0xFFFF;
     }
     
-    function dup(flag:Boolean):Node {
+    public function dup(flag:Boolean):Node {
         return (flag) ?
             new NotRangeA((lower << 16) + upper) :
             new RangeA((lower << 16) + upper);
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i < matcher.to) {
             var ch:Number = seq.charCodeAt(i);
             var m:Boolean = (((ch-lower)|(upper-ch)) >= 0);

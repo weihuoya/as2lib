@@ -20,14 +20,14 @@ import org.as2lib.regexp.node.TreeInfo;
 
 class org.as2lib.regexp.node.Specials extends Node {
 	
-    function Specials() {
+    public function Specials() {
     }
     
-    function dup(flag:Boolean):Node {
+    public function dup(flag:Boolean):Node {
         return (flag) ? new Not(this) : new Specials();
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i < matcher.to) {
             var ch:Number = seq.charCodeAt(i);;
             return (((ch-0xFFF0) | (0xFFFD-ch)) >= 0 || ch == 0xFEFF)
@@ -36,7 +36,7 @@ class org.as2lib.regexp.node.Specials extends Node {
         return false;
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         info.minLength++;
         info.maxLength++;
         return next.study(info);

@@ -25,7 +25,7 @@ import org.as2lib.regexp.node.Node;
  
 class org.as2lib.regexp.node.Caret extends Node {
 	
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i > matcher.from) {
             var ch:Number = seq.charCodeAt(i-1);
             if (ch != ord('\n') && ch != ord('\r')

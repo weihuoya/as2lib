@@ -26,14 +26,14 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.BackRef extends Node {
 	
-    var groupIndex:Number;
+    private var groupIndex:Number;
     
-    function BackRef(groupCount:Number) {
+    public function BackRef(groupCount:Number) {
         super();
         groupIndex = groupCount + groupCount;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         var j:Number = matcher.groups[groupIndex];
         var k:Number = matcher.groups[groupIndex+1];
 
@@ -56,7 +56,7 @@ class org.as2lib.regexp.node.BackRef extends Node {
         return next.match(matcher, i+groupSize, seq);
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         info.maxValid = false;
         return next.study(info);
     }

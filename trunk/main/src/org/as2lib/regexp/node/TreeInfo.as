@@ -25,20 +25,20 @@ import org.as2lib.core.BasicClass;
         
 class org.as2lib.regexp.node.TreeInfo extends BasicClass {
 	
-	var minLength:Number;
-	var maxLength:Number;
-	var maxValid:Boolean;
-	var deterministic:Boolean;
+	public var minLength:Number;
+	public var maxLength:Number;
+	public var maxValid:Boolean;
+	public var deterministic:Boolean;
 
-    function TreeInfo() {
+    public function TreeInfo() {
         reset();
     }
     
-    function reset():Void {
+    public function reset():Void {
         minLength = 0;
         maxLength = 0;
         maxValid = true;
         deterministic = true;
     }
-    
+ 
 }

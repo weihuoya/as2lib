@@ -24,13 +24,14 @@ import org.as2lib.regexp.node.Node;
  
 class org.as2lib.regexp.node.Neg extends Node {
 	
-    var cond:Node;
+    private var cond:Node;
     
-    function Neg(cond:Node) {
+    public function Neg(cond:Node) {
         this.cond = cond;
     }
-    function match(matcher:Object, i:Number, seq:String):Boolean {
-        return !cond.match(matcher, i, seq) && next.match(matcher, i, seq);
+    
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
+        return (!cond.match(matcher, i, seq) && next.match(matcher, i, seq));
     }
 }
 

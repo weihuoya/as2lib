@@ -24,7 +24,7 @@ import org.as2lib.regexp.node.Node;
  
 class org.as2lib.regexp.node.Dummy extends Node {
 	
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         return next.match(matcher, i, seq);
     }
     

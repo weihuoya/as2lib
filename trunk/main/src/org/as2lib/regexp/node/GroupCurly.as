@@ -32,14 +32,14 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.GroupCurly extends Node {
 	
-    var atom:Node;
-    var type:Number;
-    var cmin:Number;
-    var cmax:Number;
-    var localIndex:Number;
-    var groupIndex:Number;
+    private var atom:Node;
+    private var type:Number;
+    private var cmin:Number;
+    private var cmax:Number;
+    private var localIndex:Number;
+    private var groupIndex:Number;
 
-    function GroupCurly(node:Node, cmin:Number, cmax:Number, type:Number, local:Number, group:Number) {
+    public function GroupCurly(node:Node, cmin:Number, cmax:Number, type:Number, local:Number, group:Number) {
         this.atom = node;
         this.type = type;
         this.cmin = cmin;
@@ -48,7 +48,7 @@ class org.as2lib.regexp.node.GroupCurly extends Node {
         this.groupIndex = group;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         var groups:Array = matcher.groups; // of Number
         var locals:Array = matcher.locals; // of Number
         var save0:Number = locals[localIndex];
@@ -87,7 +87,7 @@ class org.as2lib.regexp.node.GroupCurly extends Node {
     }
     
     // Aggressive group match
-    function match0(matcher:Object, i:Number, j:Number, seq:String):Boolean {
+    private function match0(matcher:Object, i:Number, j:Number, seq:String):Boolean {
         var groups:Array = matcher.groups; // of Number
         var save0:Number = groups[groupIndex];
         var save1:Number = groups[groupIndex+1];
@@ -134,7 +134,7 @@ class org.as2lib.regexp.node.GroupCurly extends Node {
     }
     
     // Reluctant matching
-    function match1(matcher:Object, i:Number, j:Number, seq:String):Boolean {
+    private function match1(matcher:Object, i:Number, j:Number, seq:String):Boolean {
         for (;;) {
             if (next.match(matcher, i, seq))
                 return true;
@@ -151,7 +151,7 @@ class org.as2lib.regexp.node.GroupCurly extends Node {
         }
     }
     // Possessive matching
-    function match2(matcher:Object, i:Number, j:Number, seq:String):Boolean {
+    private function match2(matcher:Object, i:Number, j:Number, seq:String):Boolean {
         for (; j < cmax; j++) {
             if (!atom.match(matcher, i, seq)) {
                 break;
@@ -166,7 +166,7 @@ class org.as2lib.regexp.node.GroupCurly extends Node {
         return next.match(matcher, i, seq);
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         // Save original info
         var minL:Number = info.minLength;
         var maxL:Number = info.maxLength;

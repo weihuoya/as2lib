@@ -26,13 +26,13 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.UnixDollar extends Node {
 	
-    var multiline:Boolean;
+    private var multiline:Boolean;
     
-    function UnixDollar(mul:Boolean) {
+    public function UnixDollar(mul:Boolean) {
         multiline = mul;
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i < matcher.to) {
             var ch:Number = seq.charCodeAt(i);
             if (ch == ord('\n')) {
@@ -46,7 +46,7 @@ class org.as2lib.regexp.node.UnixDollar extends Node {
         return next.match(matcher, i, seq);
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         next.study(info);
         return info.deterministic;
     }

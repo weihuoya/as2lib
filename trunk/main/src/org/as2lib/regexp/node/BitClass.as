@@ -27,15 +27,15 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.BitClass extends Node {
 	
-    var bits:Array; 
-    var complementMe:Boolean;
+    private var bits:Array; 
+    private var complementMe:Boolean;
     
-    function BitClass(flag:Boolean, newBits:Array) {
+    public function BitClass(flag:Boolean, newBits:Array) {
     	complementMe = (flag != null) ? flag : false; 
     	bits = (newBits != null) ? newBits : new Array(256);
     }
     
-    function addChar(c:Number, f:Number):Node {
+    public function addChar(c:Number, f:Number):Node {
         if ((f & Pattern.CASE_INSENSITIVE) == 0) {
             bits[c] = true;
             return this;
@@ -58,11 +58,11 @@ class org.as2lib.regexp.node.BitClass extends Node {
         return this;
     }
     
-    function dup(flag:Boolean):Node {
+    public function dup(flag:Boolean):Node {
         return new BitClass(flag, bits);
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i >= matcher.to) return false;
         var c:Number = seq.charCodeAt(i);
         var charMatches:Boolean = (c > 255) ? 
@@ -70,7 +70,7 @@ class org.as2lib.regexp.node.BitClass extends Node {
         return charMatches && next.match(matcher, i+1, seq);
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         info.minLength++;
         info.maxLength++;
         return next.study(info);

@@ -251,24 +251,24 @@ class org.as2lib.regexp.Pattern extends BasicClass
         while (node != null) {
             if (node instanceof Prolog) {
 	            trace(node);
-                printObjectTree((Prolog(node)).loop);
+                printObjectTree((Prolog(node)).getLoop());
                 trace("**** end contents prolog loop");
             } else if (node instanceof Loop) {
                 trace(node);
-                printObjectTree((Loop(node)).body);
+                printObjectTree((Loop(node)).getBody());
                 trace("**** end contents Loop body");
             } else if (node instanceof Curly) {
                 trace(node);
-                printObjectTree((Curly(node)).atom);
+                printObjectTree((Curly(node)).getAtom());
                 trace("**** end contents Curly body");
             } else if (node instanceof GroupTail) {
                 trace(node);
-                trace("Tail next is "+node.next);
+                trace("Tail next is "+node.getNext());
                 return;
             } else {
                 trace(node);
             }      
-            node = node.next;
+            node = node.getNext();
             if (node != null) {
                 trace("->next:");
             }
@@ -432,7 +432,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
                 if (head == null) {
                     head = node;
                 } else {
-                    tail.next = node;
+                    tail.setNext(node);
                 }
                 
                 // Double return:Tail was returned in root
@@ -515,14 +515,14 @@ class org.as2lib.regexp.Pattern extends BasicClass
             if (head == null) {
                 head = tail = node;
             } else {
-                tail.next = node;
+                tail.setNext(node);
                 tail = node;
             }
         }
         if (head == null) {
             return end;
         }
-        tail.next = end;
+        tail.setNext(end);
         return head;
     }
 
@@ -1000,13 +1000,13 @@ class org.as2lib.regexp.Pattern extends BasicClass
             case ord(':'):  //  (?:xxx) pure group
                 head = createGroup(true);
                 tail = root;
-                head.next = parseExpression(tail);
+                head.setNext(parseExpression(tail));
                 break;
             case ord('='):  // (?=xxx) and (?!xxx) lookahead
             case ord('!'):
                 head = createGroup(true);
                 tail = root;
-                head.next = parseExpression(tail);
+                head.setNext(parseExpression(tail));
                 if (ch == ord('=')) {
                     head = tail = new Pos(head);
                 } else {
@@ -1016,14 +1016,14 @@ class org.as2lib.regexp.Pattern extends BasicClass
             case ord('>'):  // (?>xxx)  independent group
                 head = createGroup(true);
                 tail = root;
-                head.next = parseExpression(tail);
+                head.setNext(parseExpression(tail));
                 head = tail = new Ques(head, INDEPENDENT);
                 break;
             case ord('<'):  // (?<xxx)  look behind
                 ch = readChar();
                 head = createGroup(true);
                 tail = root;
-                head.next = parseExpression(tail);
+                head.setNext(parseExpression(tail));
                 var info:TreeInfo = new TreeInfo();
                 head.study(info);
                 if (info.maxValid == false) {
@@ -1060,13 +1060,13 @@ class org.as2lib.regexp.Pattern extends BasicClass
                 }
                 head = createGroup(true);
                 tail = root;
-                head.next = parseExpression(tail);
+                head.setNext(parseExpression(tail));
                 break;
             }
         } else { // (xxx) a regular group
             head = createGroup(false);
             tail = root;
-            head.next = parseExpression(tail);
+            head.setNext(parseExpression(tail));
         }
 
         acceptChar(Number(ord(')')), "Unclosed group");
@@ -1085,49 +1085,53 @@ class org.as2lib.regexp.Pattern extends BasicClass
 
         if (node instanceof Ques) {
             var ques:Ques = Ques(node);
-            if (ques.type == POSSESSIVE) {
+            if (ques.getType() == POSSESSIVE) {
                 root = node;
                 return node;
             }
             // Dummy node to connect branch
-            tail.next = new Dummy();
-            tail = tail.next;
-            if (ques.type == GREEDY) {
+            tail.setNext(new Dummy());
+            tail = tail.getNext();
+            if (ques.getType() == GREEDY) {
                 head = new Branch(head, tail);
-            } else { // Reluctant quantifier
+            } else { 
+            	// Reluctant quantifier
                 head = new Branch(tail, head);
             }
             root = tail;
             return head;
         } else if (node instanceof Curly) {
             var curly:Curly = Curly(node);
-            if (curly.type == POSSESSIVE) {
+            if (curly.getType() == POSSESSIVE) {
                 root = node;
                 return node;
             }
             // Discover if the group is deterministic
             var info:TreeInfo = new TreeInfo();
-            if (head.study(info)) { // Deterministic
+            if (head.study(info)) { 
+            	// Deterministic
                 var temp:GroupTail = GroupTail(tail);
-                head = root = new GroupCurly(head.next, curly.cmin,
-                                   curly.cmax, curly.type,
-                                   (GroupTail(tail)).localIndex,
-                                   (GroupTail(tail)).groupIndex);
+                head = root = new GroupCurly(head.getNext(), curly.getCmin(),
+                                   curly.getCmax(), curly.getType(),
+                                   (GroupTail(tail)).getLocalIndex(),
+                                   (GroupTail(tail)).getGroupIndex());
                 return head;
-            } else { // Non-deterministic
-                var tmp:Number = (GroupHead(head)).localIndex;
+            } else { 
+            	// Non-deterministic
+                var tmp:Number = (GroupHead(head)).getLocalIndex();
                 var loop:Loop;
-                if (curly.type == GREEDY) {
+                if (curly.getType() == GREEDY) {
                     loop = new Loop(this.localCount, tmp);
-                } else { // Reluctant Curly
+                } else { 
+                	// Reluctant Curly
                     loop = new LazyLoop(this.localCount, tmp);
                 }
                 var prolog:Prolog = new Prolog(loop);
                 this.localCount += 1;
-                loop.cmin = curly.cmin;
-                loop.cmax = curly.cmax;
-                loop.body = head;
-                tail.next = loop;
+                loop.setCmin(curly.getCmin());
+                loop.setCmax(curly.getCmax());
+                loop.setBody(head);
+                tail.setNext(loop);
                 root = loop;
                 return prolog; // Dual return
             }

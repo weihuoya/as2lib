@@ -29,13 +29,13 @@ import org.as2lib.regexp.node.TreeInfo;
  
 class org.as2lib.regexp.node.First extends Node {
 	
-    var atom:Node;
+    private var atom:Node;
     
-    function First(node:Node) {
+    public function First(node:Node) {
         this.atom = BnM.optimize(node);
     }
     
-    function match(matcher:Object, i:Number, seq:String):Boolean {
+    public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (atom instanceof BnM) {
             return atom.match(matcher, i, seq)
                 && next.match(matcher, matcher.last, seq);
@@ -52,7 +52,7 @@ class org.as2lib.regexp.node.First extends Node {
         }
     }
     
-    function study(info:TreeInfo):Boolean {
+    public function study(info:TreeInfo):Boolean {
         atom.study(info);
         info.maxValid = false;
         info.deterministic = false;
