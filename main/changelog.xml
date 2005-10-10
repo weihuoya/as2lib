@@ -6,6 +6,7 @@
     <year value="2005">
       <month value="10">
       	<day value="10">
+      		<entry type="enhancement" package="org.as2lib.regexp.node">Access modificators are specified for the class members</entry>
       		<entry type="change" package="org.as2lib.regexp" class="Pattern" method="isMatch">
       			<change-rename to="matches"></change-rename>
      		</entry>
