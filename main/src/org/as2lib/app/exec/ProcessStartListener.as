@@ -34,5 +34,5 @@ interface org.as2lib.app.exec.ProcessStartListener {
 	 * 
 	 * @param process {@link Process} that started execution
 	 */
-	public function onStartProcess(process:Process):Void;
+	public function onProcessStart(process:Process):Void;
 }

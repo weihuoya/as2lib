@@ -9,5 +9,5 @@ interface org.as2lib.app.exec.ProcessPauseListener {
 	 * 
 	 * @param process {@link Process} that paused execution
 	 */
-	public function onPauseProcess(process:Process):Void;
+	public function onProcessPause(process:Process):Void;
 }

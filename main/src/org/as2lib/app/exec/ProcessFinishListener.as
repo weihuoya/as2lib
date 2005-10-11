@@ -8,5 +8,5 @@ interface org.as2lib.app.exec.ProcessFinishListener {
 	 * 
 	 * @param process {@link Process} that finished with execution
 	 */
-    public function onFinishProcess(process:Process):Void;
+    public function onProcessFinish(process:Process):Void;
 }

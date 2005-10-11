@@ -8,5 +8,5 @@ interface org.as2lib.app.exec.ProcessResumeListener {
 	 * 
 	 * @param process {@link Process} that resumes from pause
 	 */
-	public function onResumeProcess(process:Process):Void;
+	public function onProcessResume(process:Process):Void;
 }
