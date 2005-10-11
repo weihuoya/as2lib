@@ -13,6 +13,6 @@ interface org.as2lib.io.file.ResourceStartListener {
 	 * 
 	 * @param resourceLoader {@code ResourceLoader} that was started
 	 */
-	public function onResourceStart(resourceLoader:ResourceLoader):Void;
+	public function onLoadStart(resourceLoader:ResourceLoader):Void;
 	
 }

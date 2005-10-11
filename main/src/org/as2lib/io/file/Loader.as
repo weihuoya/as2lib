@@ -175,10 +175,10 @@ class org.as2lib.io.file.Loader extends EventSupport
 	 * 
 	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
 	 */
-	public function onResourceComplete(resourceLoader:ResourceLoader):Void {
+	public function onLoadComplete(resourceLoader:ResourceLoader):Void {
 		var completeDistributor:ResourceCompleteListener =
 			distributorControl.getDistributor(ResourceCompleteListener);
-		completeDistributor.onResourceComplete(resourceLoader);
+		completeDistributor.onLoadComplete(resourceLoader);
 	}
 
 	/**
@@ -187,10 +187,10 @@ class org.as2lib.io.file.Loader extends EventSupport
 	 * 
 	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
 	 */
-	public function onResourceStart(resourceLoader:ResourceLoader):Void {
+	public function onLoadStart(resourceLoader:ResourceLoader):Void {
 		var errorDistributor:ResourceStartListener =
 			distributorControl.getDistributor(ResourceStartListener);
-		errorDistributor.onResourceStart(resourceLoader);
+		errorDistributor.onLoadStart(resourceLoader);
 	}
 
 	/**
@@ -199,10 +199,10 @@ class org.as2lib.io.file.Loader extends EventSupport
 	 * 
 	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
 	 */
-	public function onResourceError(resourceLoader:ResourceLoader, errorCode:String, error):Boolean {
+	public function onLoadError(resourceLoader:ResourceLoader, errorCode:String, error):Boolean {
 		var errorDistributor:ResourceErrorListener =
 			distributorControl.getDistributor(ResourceErrorListener);
-		return errorDistributor.onResourceError(resourceLoader, errorCode, error);
+		return errorDistributor.onLoadError(resourceLoader, errorCode, error);
 	}
 
 	/**
@@ -211,9 +211,9 @@ class org.as2lib.io.file.Loader extends EventSupport
 	 * 
 	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
 	 */
-	public function onResourceProgress(resourceLoader:ResourceLoader):Void {
+	public function onLoadProgress(resourceLoader:ResourceLoader):Void {
 		var progressDistributor:ResourceProgressListener =
 			distributorControl.getDistributor(ResourceProgressListener);
-		progressDistributor.onResourceProgress(resourceLoader);
+		progressDistributor.onLoadProgress(resourceLoader);
 	}
 }

@@ -11,5 +11,5 @@ interface org.as2lib.io.file.ResourceErrorListener {
 	/**
 	 * TODO: Documentation !!!
 	 */
-	public function onResourceError(resourceLoader:ResourceLoader, errorCode:String, error):Boolean;
+	public function onLoadError(resourceLoader:ResourceLoader, errorCode:String, error):Boolean;
 }
