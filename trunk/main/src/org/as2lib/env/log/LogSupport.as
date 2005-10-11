@@ -32,87 +32,77 @@ import org.as2lib.env.log.LogManager;
  *   	public function test() {
  *   		logger.info("hi");
  *   	}
- *   	
  *   }
  * </code>
  * 
- * <p>The real instance is saved in the class at the static field "logger".
- * 
- * <p>If you define the static field "classLogger" for yourself it will not replace it
- * if its not "undefined". And return your custom logger.
- * 
- * <p>Example:
- * <code>
- *   import org.as2lib.env.log.Logger;
- *   import org.as2lib.env.log.LogManager;
- * 
- * 	 class MyClass extends LogSupport {
- * 	 	private static var classLogger:Logger = LogManager.getLogger("MyClass");
- * 	 	
- * 	 	public function test() {
- * 	 		logger.info("hi");
- * 	 	}
- * 	 }
- * </code>
+ * <p>{@code logger} is a getter property, that means its a function call to
+ * {@code getLogger}. You can't reset the logger.
  * 
  * @author Martin Heidegger
- * @version 1.0
+ * @version 2
  */
 class org.as2lib.env.log.LogSupport extends BasicClass {
 	
 	/** Logger to access is automatically filled */
 	public var logger:Logger;
 	
-	
+	/** Internal holder for the logger, don't access it directly, use {@code logger} instead */
 	private var _logger:Logger;
 	
+	/**
+	 * Constructs a new {@code LogSupport} instance.
+	 */
 	public function LogSupport(Void) {
 		// Create property within constructor, Macromedia Scope bug.
 		addProperty("logger", getLogger, null);
 	}
 	
-	public static function getLoggerByScope(scope):Logger {
-		var prototype;
+	public static function getLoggerByInstance(instance):Logger {
+		var p = instance.__proto__;
 		
-		if (typeof scope == "function") {
-			prototype = scope["prototype"];
-		} else {
-			prototype = scope.__proto__;
+		if (p._logger !== null && p._logger === p.__proto__._logger) {
+			return saveLoggerToPrototype(p, LogManager.getLogger(
+				ReflectUtil.getTypeNameForInstance(instance)));
 		}
 		
-		if (prototype._logger !== null && prototype._logger === prototype.__proto__._logger) {
-			
-			trace("new logger");
-			
-			var name:String;
-			
-			// Use ClassInfo if ClassInfo has been compiled (because its faster), else use ReflectUtil
-			var ClassInfo:Function = ReflectUtil.getTypeByName("org.as2lib.env.reflect.ClassInfo");
-			if (typeof scope == "function") {
-				if (ClassInfo != undefined) {
-					name = ClassInfo.forClass(scope).getFullName();
-				} else {
-					name = ReflectUtil.getTypeNameForType(scope);
-				}
-			} else {
-				if (ClassInfo != undefined) {
-					name = ClassInfo.forInstance(scope).getFullName();
-				} else {
-					name = ReflectUtil.getTypeNameForInstance(scope);					
-				}
-			}
-			
-			prototype._logger = LogManager.getLogger(name);
-			
-			// Sets the logger dedicated to null if it didn't exist
-			if (!prototype._logger) {
-				prototype._logger = null;
-			}
-		}
-		return prototype._logger;
+		return p._logger;
 	}
 	
+	public static function getLoggerByClass(clazz:Function):Logger {	var prototype;
+		
+		var	p = clazz["prototype"];
+		
+		if (p._logger !== null && p._logger === p.__proto__._logger) {
+			return saveLoggerToPrototype(p, LogManager.getLogger(
+				ReflectUtil.getTypeNameForType(clazz)));
+		}
+		
+		return p._logger;
+	}
+	
+	private static function saveLoggerToPrototype(proto, logger:Logger):Logger {
+		proto._logger = logger;
+		
+		// Sets the logger dedicated to null if it didn't exist
+		if (!proto._logger) {
+			proto._logger = null;
+		}
+		
+		return logger;
+	}
+	
+	public static function getLoggerByScope(scope):Logger {
+		if (typeof scope == "function") {
+			return getLoggerByClass(scope);
+		} else {
+			return getLoggerByInstance(scope);
+		}
+	}
+	
+	/**
+	 * 
+	 */
 	public function getLogger(Void):Logger {
-		return getLoggerByScope(this);
+		return getLoggerByInstance(this);
 	}
 }
