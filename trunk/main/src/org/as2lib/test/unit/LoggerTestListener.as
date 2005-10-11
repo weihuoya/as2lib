@@ -72,7 +72,7 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport
 	 * 
 	 * @param startInfo Informations about the TestRunner that started.
 	 */
-	public function onStartProcess(process:Process):Void {
+	public function onProcessStart(process:Process):Void {
 		logger.info("TestRunner started execution.");
 	}
 	
@@ -81,7 +81,7 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport
 	 * 
 	 * @param progressInfo Extended informations the current progress.
 	 */
-	public function onUpdateProcess(process:Process):Void {
+	public function onProcessUpdate(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
 		if (testRunner) {
 			var methodInfo:TestCaseMethodInfo = testRunner.getCurrentTestCaseMethodInfo();
@@ -96,7 +96,7 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport
 	 * 
 	 * @param finishInfo Informations about the TestRunner that finished.
 	 */
-	public function onFinishProcess(process:Process):Void {
+	public function onProcessFinish(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
 		if(testRunner) {
 			logger.info("TestRunner finished with the result: \n"+testRunner.getTestResult().toString());
@@ -110,7 +110,7 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport
 	 * 
 	 * @param pauseInfo Informations about the TestRunner that paused.
 	 */
-	public function onPauseProcess(process:Process):Void {
+	public function onProcessPause(process:Process):Void {
 		var test:TestRunner = TestRunner(process);
 		logger.info("TestRunner paused execution at "+test.getCurrentTestCaseMethodInfo().getName());
 	}
@@ -120,7 +120,7 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport
 	 * 
 	 * @param resumeInfo Informations about the TestRunner that resumed working.
 	 */
-	public function onResumeProcess(process:Process):Void {
+	public function onProcessResume(process:Process):Void {
 		var test:TestRunner = TestRunner(process);
 		logger.info("TestRunner resumed execution at "+test.getCurrentTestCaseMethodInfo().getName());
 	}

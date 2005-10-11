@@ -8,5 +8,5 @@ interface org.as2lib.app.exec.ProcessUpdateListener {
 	 * 
 	 * @param process {@link Process} that changed some properties
 	 */
-	public function onUpdateProcess(process:Process):Void;
+	public function onProcessUpdate(process:Process):Void;
 }

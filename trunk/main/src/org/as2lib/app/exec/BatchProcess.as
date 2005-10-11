@@ -15,9 +15,12 @@
  */
 
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.event.distributor.CompositeEventDistributorControl;
+import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributorControl;
 import org.as2lib.app.exec.Batch;
 import org.as2lib.app.exec.Process;
 import org.as2lib.app.exec.BatchListener;
+import org.as2lib.core.BasicClass;
 import org.as2lib.data.type.Time;
 import org.as2lib.app.exec.ProcessErrorListener;
 import org.as2lib.app.exec.ProcessPauseListener;
@@ -150,19 +153,19 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	}
 	
 	/**
-	 * Void implementation of {@link ProcessListener#onStartProcess}
+	 * Void implementation of {@link ProcessStartListener#onProcessStart}
 	 * 
 	 * @param info to the process that has been started.
 	 */
-	public function onStartProcess(info:Process):Void {}
+	public function onProcessStart(info:Process):Void {}
 	
 	/**
-	 * Implementation of {@link ProcessListener#onPauseProcess} that redirects
+	 * Implementation of {@link ProcessPauseListener#onProcessPause} that redirects
 	 * to internal eventbroadcasting.
 	 * 
 	 * @param info to the process that has been paused.
 	 */
-	public function onPauseProcess(info:Process):Void {
+	public function onProcessPause(info:Process):Void {
 		if (info == getCurrentProcess()) {
 			sendPauseEvent();
 		} else {
@@ -171,12 +174,12 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	}
 	
 	/**
-	 * Implementation of {@link ProcessListener#onResumeProcess} that redirects
+	 * Implementation of {@link ProcessResumeListener#onProcessResume} that redirects
 	 * to internal eventbroadcasting.
 	 * 
 	 * @param info to the process that has been resumed.
 	 */
-	public function onResumeProcess(info:Process):Void {
+	public function onProcessResume(info:Process):Void {
 		if (info == getCurrentProcess()) {
 			sendResumeEvent();
 		} else {
@@ -185,12 +188,13 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	}
 	
 	/**
-	 * Implementation of {@link ProcessListener#onProcessError} that redirects
+	 * Implementation of {@link ProcessErrorListener#onProcessError} that redirects
 	 * to internal eventbroadcasting.
 	 * 
 	 * @param info to the process that has thrown the error.
 	 */
 	public function onProcessError(info:Process, error):Boolean {
+		var result:Boolean = false;
 		if (info != getCurrentProcess()) {
 			error = new IllegalArgumentException("Unexpected onProcessError occured from "+info+".", this, arguments);
 		}
@@ -203,12 +207,12 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	}
 	
 	/**
-	 * Implementation of {@link ProcessListener#onUpdateProcess} that redirects
+	 * Implementation of {@link ProcessUpdateListener#onProcessUpdate} that redirects
 	 * to internal eventbroadcasting.
 	 * 
 	 * @param info to the process that got updated.
 	 */
-	public function onUpdateProcess(info:Process):Void {
+	public function onProcessUpdate(info:Process):Void {
 		var p:Number = info.getPercentage();
 		if(p != null) {
 			updatePercent(p);
@@ -298,9 +302,4 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	private function updatePercent(cP:Number):Void {
 		percent = 100/list.length*(current+(1/100*cP));
 	}
-
-	public function getEstimatedRestTime(Void) : Time {
-		return null;
-	}
-
 }

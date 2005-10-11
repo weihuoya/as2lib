@@ -78,11 +78,7 @@ import org.as2lib.env.event.distributor.CompositeEventDistributorControl;
 class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	implements Process,
 		ProcessErrorListener,
-		ProcessFinishListener,
-		ProcessStartListener,
-		ProcessPauseListener,
-		ProcessResumeListener,
-		ProcessUpdateListener {
+		ProcessFinishListener {
 	
 	/** Flag if execution was paused. */
 	private var paused:Boolean;
@@ -280,25 +276,11 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	}
 	
 	/**
-	 * Method to be executed if a process property changes.
-	 * 
-	 * @param process {@link Process} that changed some properties
-	 */
-	public function onUpdateProcess(process:Process):Void {}
-	
-	/**
-	 * Method to be executed if a process starts execution.
-	 * 
-	 * @param process {@link Process} that started execution
-	 */
-	public function onStartProcess(process:Process):Void {}
-	
-	/**
 	 * Method to be executed if a process finishes its execution.
 	 * 
 	 * @param process {@link Process} that finished with execution
 	 */
-	public function onFinishProcess(process:Process):Void {
+	public function onProcessFinish(process:Process):Void {
 		if (subProcesses.containsKey(process)) {
 			// removes current as listener
 			process.removeListener(this);
@@ -319,20 +301,6 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	public function onProcessError(process:Process, error):Boolean {
 		return sendErrorEvent(error);
 	}
-	
-	/**
-	 * Method to be executed if a process awakes from pause.
-	 * 
-	 * @param process {@link Process} that resumes from pause
-	 */
-	public function onResumeProcess(process:Process):Void {}
-	
-	/**
-	 * Method to be executed if a process pauses.
-	 * 
-	 * @param process {@link Process} that paused execution
-	 */
-	public function onPauseProcess(process:Process):Void {}
 	
 	/**
 	 * Internal Method to finish the execution.
@@ -392,25 +360,25 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	private function sendUpdateEvent(Void):Void {
 		var updateDistributor:ProcessUpdateListener
 			= dC.getDistributor(ProcessUpdateListener);
-		updateDistributor.onUpdateProcess(this);
+		updateDistributor.onProcessUpdate(this);
 	}
 	
 	private function sendPauseEvent(Void):Void {
 		var pauseDistributor:ProcessPauseListener
 			= dC.getDistributor(ProcessPauseListener);
-		pauseDistributor.onPauseProcess(this);
+		pauseDistributor.onProcessPause(this);
 	}
 	
 	private function sendResumeEvent(Void):Void {
 		var resumeDistributor:ProcessResumeListener
 			= dC.getDistributor(ProcessResumeListener);
-		resumeDistributor.onResumeProcess(this);
+		resumeDistributor.onProcessResume(this);
 	}
 	
 	private function sendStartEvent(Void):Void {
 		var startDistributor:ProcessStartListener
 			= dC.getDistributor(ProcessStartListener);
-		startDistributor.onStartProcess(this);
+		startDistributor.onProcessStart(this);
 	}
 	
 	private function sendErrorEvent(error):Boolean {
@@ -422,6 +390,7 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	private function sendFinishEvent(Void):Void {
 		var finishDistributor:ProcessFinishListener
 			= dC.getDistributor(ProcessFinishListener);
-		finishDistributor.onFinishProcess(this);
+		finishDistributor.onProcessFinish(this);
 	}
+
 }
