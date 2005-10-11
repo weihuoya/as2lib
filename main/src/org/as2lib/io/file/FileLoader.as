@@ -24,7 +24,7 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.io.file.ResourceLoader;
 import org.as2lib.io.file.AbstractResourceLoader;
 import org.as2lib.io.file.SimpleFileFactory;
-import org.as2lib.io.file.FileNotLoadedException;
+import org.as2lib.io.file.ResourceNotLoadedException;
 import org.as2lib.app.exec.Executable;
 
 /**
@@ -181,7 +181,7 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 	 */
 	public function getFile(Void):File {
 		if (file == null) {
-			throw new FileNotLoadedException("No File has been loaded.", this, arguments);
+			throw new ResourceNotLoadedException("No File has been loaded.", this, arguments);
 		}
 		return file;
 	}
