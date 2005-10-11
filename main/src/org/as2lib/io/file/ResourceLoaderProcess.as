@@ -16,10 +16,10 @@
 
 import org.as2lib.app.exec.AbstractProcess;
 import org.as2lib.io.file.ResourceLoader;
-import org.as2lib.io.file.ResourceStartListener;
-import org.as2lib.io.file.ResourceCompleteListener;
-import org.as2lib.io.file.ResourceProgressListener;
-import org.as2lib.io.file.ResourceErrorListener;
+import org.as2lib.io.file.LoadStartListener;
+import org.as2lib.io.file.LoadCompleteListener;
+import org.as2lib.io.file.LoadProgressListener;
+import org.as2lib.io.file.LoadErrorListener;
 import org.as2lib.data.holder.Map;
 
 /**
@@ -28,10 +28,10 @@ import org.as2lib.data.holder.Map;
  * @version 1.0
  */
 class org.as2lib.io.file.ResourceLoaderProcess extends AbstractProcess
-	implements ResourceStartListener,
-		ResourceCompleteListener,
-		ResourceProgressListener,
-		ResourceErrorListener {
+	implements LoadStartListener,
+		LoadCompleteListener,
+		LoadProgressListener,
+		LoadErrorListener {
 			
 	private var resourceLoader:ResourceLoader;
 	private var isFinished:Boolean;

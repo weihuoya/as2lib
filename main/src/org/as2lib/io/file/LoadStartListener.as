@@ -6,7 +6,7 @@ import org.as2lib.io.file.ResourceLoader;
  * @author Martin Heidegger
  * @version 1.0
  */
-interface org.as2lib.io.file.ResourceStartListener {
+interface org.as2lib.io.file.LoadStartListener {
 	
 	/**
 	 * Event to be published if the {@code ResourceLoader} started a request.
