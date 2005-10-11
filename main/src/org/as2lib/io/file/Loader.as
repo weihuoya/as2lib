@@ -21,11 +21,15 @@ import org.as2lib.io.file.CompositeFileFactory;
 import org.as2lib.io.file.FileLoader;
 import org.as2lib.io.file.FileFactory;
 import org.as2lib.io.file.ResourceLoader;
-import org.as2lib.io.file.ResourceListener;
 import org.as2lib.io.file.SimpleFileFactory;
 import org.as2lib.io.file.SwfLoader;
 import org.as2lib.io.file.XmlFileFactory;
 import org.as2lib.util.StringUtil;
+import org.as2lib.io.file.ResourceStartListener;
+import org.as2lib.io.file.ResourceCompleteListener;
+import org.as2lib.io.file.ResourceErrorListener;
+import org.as2lib.io.file.ResourceProgressListener;
+import org.as2lib.app.exec.Executable;
 
 /**
  * {@code Loader} is a central distributor for loading files.
@@ -61,7 +65,11 @@ import org.as2lib.util.StringUtil;
  * @author Martin Heidegger
  * @version 1.0
  */
-class org.as2lib.io.file.Loader extends EventSupport implements ResourceListener {
+class org.as2lib.io.file.Loader extends EventSupport
+	implements ResourceStartListener,
+		ResourceCompleteListener,
+		ResourceErrorListener,
+		ResourceProgressListener {
 	
 	/** Instance of the Loader. */
 	private static var instance:Loader;
@@ -81,18 +89,13 @@ class org.as2lib.io.file.Loader extends EventSupport implements ResourceListener
 	/** Factory to create {@code File} implementations, configurable. */
 	private var fileFactory:FileFactory;
 	
-	/** Event to publish all events to {@link ResourceListener}. */
-	private var rL:ResourceListener;
-	
 	/**
 	 * Constructs a new {@code Loader}.
 	 */
-	private function Loader(Void) {
-		distributorControl.acceptListenerType(ResourceListener);
+	public function Loader(Void) {
 		var factory:CompositeFileFactory = new CompositeFileFactory();
-		factory.setFileFactoryByExtension("xml", new XmlFileFactory());
+		factory.putFileFactoryByExtension("xml", new XmlFileFactory());
 		fileFactory = factory;
-		rL = distributorControl.getDistributor(ResourceListener);
 	}
 	
 	/**
@@ -103,13 +106,15 @@ class org.as2lib.io.file.Loader extends EventSupport implements ResourceListener
 	 * @param parameters (optional) parameters for loading the resource
 	 * @param method (optional) POST/GET as method for submitting the parameters,
 	 *        default method used if {@code method} was not passed-in is POST.
+	 * @param callBack (optional) {@link Executable} to be executed if the resource
+	 *        was complete loaded
 	 * @return {@code SwfLoader} that loads the resource
 	 */
-	public function loadMovie(url:String, mc:MovieClip, parameters:Map,
-			method:String):SwfLoader {
-		var fL:SwfLoader = new SwfLoader(mc, url, parameters, method);
+	public function loadSwf(uri:String, mc:MovieClip, parameters:Map,
+			method:String, callBack:Executable):SwfLoader {
+		var fL:SwfLoader = new SwfLoader(mc);
 		fL.addListener(this);
-		fL.start();
+		fL.load(uri, method, parameters);
 		return fL;
 	}
 	
@@ -117,14 +122,17 @@ class org.as2lib.io.file.Loader extends EventSupport implements ResourceListener
 	 * Loads a external file.
 	 * 
 	 * @param uri location of the resource to load
-	 * @param parameters (optional) parameters for loading the resource
 	 * @param method (optional) POST/GET as method for submitting the parameters,
 	 *        default method used if {@code method} was not passed-in is POST.
+	 * @param parameters (optional) parameters for loading the resource
+	 * @param callBack (optional) {@link Executable} to be executed if the resource
+	 *        was complete loaded
+	 * @return {@code FileLoader} that loads the certain file
 	 */
-	public function loadFile(url:String, parameters:Map, method:String):FileLoader {
-		var fL:FileLoader = new FileLoader(fileFactory, url, parameters, method);
+	public function loadFile(uri:String, method:String, parameters:Map, callBack:Executable):FileLoader {
+		var fL:FileLoader = new FileLoader(fileFactory);
 		fL.addListener(this);
-		fL.start();
+		fL.load(uri, method, parameters);
 		return fL;
 	}
 	
@@ -146,15 +154,17 @@ class org.as2lib.io.file.Loader extends EventSupport implements ResourceListener
 	}
 	
 	/**
-	 * @overload #loadMovie
+	 * @overload #loadSwf
 	 * @overload #loadFile
 	 */
 	public function load(url, target) {
 		var overload:Overload = new Overload();
-		overload.addHandler([String, MovieClip, Map, String], loadMovie);
-		overload.addHandler([String, MovieClip, Map], loadMovie);
-		overload.addHandler([String, MovieClip], loadMovie);
-		overload.addHandler([String, Map, String], loadFile);
+		overload.addHandler([String, MovieClip, String, Map, Executable], loadSwf);
+		overload.addHandler([String, MovieClip, String, Map], loadSwf);
+		overload.addHandler([String, MovieClip, String], loadSwf);
+		overload.addHandler([String, MovieClip], loadSwf);
+		overload.addHandler([String, String, Map, Executable], loadFile);
+		overload.addHandler([String, String, Map], loadFile);
 		overload.addHandler([String, Map], loadFile);
 		overload.addHandler([String], loadFile);
 		return overload.forward(arguments);
@@ -165,8 +175,10 @@ class org.as2lib.io.file.Loader extends EventSupport implements ResourceListener
 	 * 
 	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
 	 */
-	public function onResourceLoad(resourceLoader:ResourceLoader):Void {
-		rL.onResourceLoad(resourceLoader);
+	public function onResourceComplete(resourceLoader:ResourceLoader):Void {
+		var completeDistributor:ResourceCompleteListener =
+			distributorControl.getDistributor(ResourceCompleteListener);
+		completeDistributor.onResourceComplete(resourceLoader);
 	}
 
 	/**
@@ -175,8 +187,10 @@ class org.as2lib.io.file.Loader extends EventSupport implements ResourceListener
 	 * 
 	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
 	 */
-	public function onResourceStartLoading(resourceLoader:ResourceLoader):Void {
-		rL.onResourceStartLoading(resourceLoader);
+	public function onResourceStart(resourceLoader:ResourceLoader):Void {
+		var errorDistributor:ResourceStartListener =
+			distributorControl.getDistributor(ResourceStartListener);
+		errorDistributor.onResourceStart(resourceLoader);
 	}
 
 	/**
@@ -185,8 +199,10 @@ class org.as2lib.io.file.Loader extends EventSupport implements ResourceListener
 	 * 
 	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
 	 */
-	public function onResourceNotFound(uri:String):Void {
-		rL.onResourceNotFound(uri);
+	public function onResourceError(resourceLoader:ResourceLoader, errorCode:String, error):Boolean {
+		var errorDistributor:ResourceErrorListener =
+			distributorControl.getDistributor(ResourceErrorListener);
+		return errorDistributor.onResourceError(resourceLoader, errorCode, error);
 	}
 
 	/**
@@ -196,6 +212,8 @@ class org.as2lib.io.file.Loader extends EventSupport implements ResourceListener
 	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
 	 */
 	public function onResourceProgress(resourceLoader:ResourceLoader):Void {
-		rL.onResourceProgress(resourceLoader);
+		var progressDistributor:ResourceProgressListener =
+			distributorControl.getDistributor(ResourceProgressListener);
+		progressDistributor.onResourceProgress(resourceLoader);
 	}
 }

@@ -22,6 +22,8 @@ import org.as2lib.io.file.FileFactory;
 import org.as2lib.io.file.SimpleFileFactory;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
+import org.as2lib.env.overload.Overload;
+import org.as2lib.app.exec.ForEachExecutable;
 
 /**
  * {@code CompositeFileFactory} uses different {@code FileFactory} implementations
@@ -81,6 +83,17 @@ class org.as2lib.io.file.CompositeFileFactory extends BasicClass implements File
 	}
 	
 	/**
+	 * @overload #putFileFactoryByExtension
+	 * @overload #putFileFactoryByExtensions
+	 */
+	public function putFileFactory() {
+		var o:Overload = new Overload(this);
+		o.addHandler(String, putFileFactoryByExtension);
+		o.addHandler(Array, putFileFactoryByExtensions);
+		return o.forward(arguments);
+	}
+	
+	/**
 	 * Sets a certain {@code FileFactory} to be used for files with the passed-in
 	 * {@code extension}.
 	 * 
@@ -96,7 +109,7 @@ class org.as2lib.io.file.CompositeFileFactory extends BasicClass implements File
 	 * 		  passed-in {@code fileFactory}
 	 * @param fileFactory {@code FileFactory} that creates the files
 	 */
-	public function setFileFactoryByExtension(extension:String,
+	public function putFileFactoryByExtension(extension:String,
 			fileFactory:FileFactory):Void {
 		extensionFactories.put(extension, fileFactory);
 	}
@@ -118,11 +131,11 @@ class org.as2lib.io.file.CompositeFileFactory extends BasicClass implements File
 	 *        by the passed-in {@code fileFactory}
 	 * @param fileFactory {@code FileFactory} that creates the files
 	 */
-	public function setFileFactoryByExtensions(extensions:Array,
+	public function putFileFactoryByExtensions(extensions:Array,
 			fileFactory:FileFactory):Void {
 		var i:Number;
 		for( i=0; i<extensions.length; i++) {
-			setFileFactoryByExtension(extensions[i], fileFactory);
+			putFileFactoryByExtension(extensions[i], fileFactory);
 		}
 	}
 }

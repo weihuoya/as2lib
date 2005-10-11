@@ -14,39 +14,22 @@
  * limitations under the License.
  */
  
-import org.as2lib.core.BasicInterface;
-import org.as2lib.data.holder.Iterator;
-import org.as2lib.data.type.Byte;
-import org.as2lib.data.type.MultilineString;
+import org.as2lib.io.file.Resource;
 
 /**
- * {@code File} is a holder for text content with multiple lines of a external resource.
+ * {@code File} is a holder for human readable external resources.
  * 
- * <p>Every {@code File} implementation has to provide the content of the real file.
+ * <p>{@code File} provides access to the content of the real file.
  * 
  * @author Martin Heidegger
  * @version 2.0
  */
-interface org.as2lib.io.file.File extends BasicInterface {
+interface org.as2lib.io.file.File extends Resource {
 	
 	/**
 	 * Returns the complete content of the file.
 	 * 
-	 * @return content of the file, null if the content is not human-readable
+	 * @return content of the file
 	 */
 	public function getContent(Void):String;
-	
-	/**
-	 * Returns the location (URI) of the resource related to the content.
-	 * 
-	 * @return location of the resource related to the content
-	 */
-	public function getLocation(Void):String;
-	
-	/**
-	 * Returns the size of the related resource in bytes.
-	 * 
-	 * @return size of the related resource in bytes
-	 */
-	public function getSize(Void):Byte;
 }

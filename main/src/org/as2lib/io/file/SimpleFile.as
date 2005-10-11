@@ -15,12 +15,9 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.Iterator;
-import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.io.file.File;
 import org.as2lib.data.type.Byte;
 import org.as2lib.env.reflect.ReflectUtil;
-import org.as2lib.data.type.MultilineString;
 
 /**
  * {@code SimpleFile} represents the simplest way for accessing the file informations.
