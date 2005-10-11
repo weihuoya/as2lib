@@ -5,14 +5,17 @@
   <release name="as2lib 0.9.3" day="9" month="9" year="2005">
     <year value="2005">
       <month value="10">
+        <day value="11">
+          <entry type="add" package="org.as2lib.aop.matcher" class="RegexpMatcher">Matches a join point with a regular expression pattern.</entry>
+        </day>
       	<day value="10">
-      		<entry type="enhancement" package="org.as2lib.regexp.node">Access modificators are specified for the class members</entry>
-      		<entry type="change" package="org.as2lib.regexp" class="Pattern" method="isMatch">
-      			<change-rename to="matches"></change-rename>
-     		</entry>
-      		<entry type="change" package="org.as2lib.regexp" class="Matcher" method="isMatch">
-      			<change-rename to="matches"></change-rename>
-     		</entry>
+      	  <entry type="enhancement" package="org.as2lib.regexp.node">Access modificators are specified for the class members</entry>
+      	  <entry type="change" package="org.as2lib.regexp" class="Pattern" method="isMatch">
+      	    <change-rename to="matches"></change-rename>
+     	  </entry>
+      	  <entry type="change" package="org.as2lib.regexp" class="Matcher" method="isMatch">
+      	    <change-rename to="matches"></change-rename>
+     	  </entry>
       	</day>
         <day value="8">
           <entry type="add" package="org.as2lib.env.log.parser" class="XmlLogConfigurationParser">Parses xml log configurations.</entry>
