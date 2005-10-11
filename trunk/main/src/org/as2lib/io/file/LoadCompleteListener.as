@@ -6,7 +6,7 @@ import org.as2lib.io.file.ResourceLoader;
  * @author Martin Heidegger
  * @version 1.0
  */
-interface org.as2lib.io.file.ResourceCompleteListener {
+interface org.as2lib.io.file.LoadCompleteListener {
 	
 	/**
 	 * Event to be published if the resource finished loading.

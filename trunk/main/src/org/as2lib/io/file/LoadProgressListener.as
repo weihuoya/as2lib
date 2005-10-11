@@ -6,7 +6,7 @@ import org.as2lib.io.file.ResourceLoader;
  * @author Martin Heidegger
  * @version 1.0
  */
-interface org.as2lib.io.file.ResourceProgressListener {
+interface org.as2lib.io.file.LoadProgressListener {
 	
 	/**
 	 * Event to be published if the percentage of the loaded process changes.

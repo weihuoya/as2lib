@@ -18,10 +18,10 @@ import org.as2lib.data.holder.Map;
 import org.as2lib.data.type.Bit;
 import org.as2lib.data.type.Byte;
 import org.as2lib.env.event.distributor.CompositeEventDistributorControl;
-import org.as2lib.io.file.ResourceStartListener;
-import org.as2lib.io.file.ResourceCompleteListener;
-import org.as2lib.io.file.ResourceProgressListener;
-import org.as2lib.io.file.ResourceErrorListener;
+import org.as2lib.io.file.LoadStartListener;
+import org.as2lib.io.file.LoadCompleteListener;
+import org.as2lib.io.file.LoadProgressListener;
+import org.as2lib.io.file.LoadErrorListener;
 import org.as2lib.io.file.ResourceLoader;
 import org.as2lib.io.file.Resource;
 import org.as2lib.app.exec.Executable;
@@ -64,10 +64,10 @@ class org.as2lib.io.file.AbstractResourceLoader extends AbstractTimeConsumer imp
 	function AbstractResourceLoader(Void) {
 		super();
 		dC = distributorControl;
-		dC.acceptListenerType(ResourceStartListener);
-		dC.acceptListenerType(ResourceCompleteListener);
-		dC.acceptListenerType(ResourceProgressListener);
-		dC.acceptListenerType(ResourceErrorListener);
+		dC.acceptListenerType(LoadStartListener);
+		dC.acceptListenerType(LoadCompleteListener);
+		dC.acceptListenerType(LoadProgressListener);
+		dC.acceptListenerType(LoadErrorListener);
 	}
 	
 	/**
@@ -166,28 +166,28 @@ class org.as2lib.io.file.AbstractResourceLoader extends AbstractTimeConsumer imp
 	}
 	
 	private function sendStartEvent(Void):Void {
-		var startDistributor:ResourceStartListener
-			= dC.getDistributor(ResourceStartListener);
-		startDistributor.onResourceStart(this);
+		var startDistributor:LoadStartListener
+			= dC.getDistributor(LoadStartListener);
+		startDistributor.onLoadStart(this);
 	}
 	
 	private function sendErrorEvent(code:String, error):Void {
-		var errorDistributor:ResourceErrorListener
-			= dC.getDistributor(ResourceErrorListener);
-		errorDistributor.onResourceError(this, code, error);
+		var errorDistributor:LoadErrorListener
+			= dC.getDistributor(LoadErrorListener);
+		errorDistributor.onLoadError(this, code, error);
 	}
 	
 	private function sendCompleteEvent(Void):Void {
-		var completeDistributor:ResourceCompleteListener
-			= dC.getDistributor(ResourceCompleteListener);
-		completeDistributor.onResourceComplete(this);
+		var completeDistributor:LoadCompleteListener
+			= dC.getDistributor(LoadCompleteListener);
+		completeDistributor.onLoadComplete(this);
 		callBack.execute(this);
 	}
 	
 	private function sendProgressEvent(Void):Void {
-		var completeDistributor:ResourceProgressListener
-			= dC.getDistributor(ResourceProgressListener);
-		completeDistributor.onResourceProgress(this);
+		var completeDistributor:LoadProgressListener
+			= dC.getDistributor(LoadProgressListener);
+		completeDistributor.onLoadProgress(this);
 	}
 	
 }

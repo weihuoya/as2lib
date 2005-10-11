@@ -25,10 +25,10 @@ import org.as2lib.io.file.SimpleFileFactory;
 import org.as2lib.io.file.SwfLoader;
 import org.as2lib.io.file.XmlFileFactory;
 import org.as2lib.util.StringUtil;
-import org.as2lib.io.file.ResourceStartListener;
-import org.as2lib.io.file.ResourceCompleteListener;
-import org.as2lib.io.file.ResourceErrorListener;
-import org.as2lib.io.file.ResourceProgressListener;
+import org.as2lib.io.file.LoadStartListener;
+import org.as2lib.io.file.LoadCompleteListener;
+import org.as2lib.io.file.LoadErrorListener;
+import org.as2lib.io.file.LoadProgressListener;
 import org.as2lib.app.exec.Executable;
 
 /**
@@ -66,10 +66,10 @@ import org.as2lib.app.exec.Executable;
  * @version 1.0
  */
 class org.as2lib.io.file.Loader extends EventSupport
-	implements ResourceStartListener,
-		ResourceCompleteListener,
-		ResourceErrorListener,
-		ResourceProgressListener {
+	implements LoadStartListener,
+		LoadCompleteListener,
+		LoadErrorListener,
+		LoadProgressListener {
 	
 	/** Instance of the Loader. */
 	private static var instance:Loader;
@@ -176,8 +176,8 @@ class org.as2lib.io.file.Loader extends EventSupport
 	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
 	 */
 	public function onLoadComplete(resourceLoader:ResourceLoader):Void {
-		var completeDistributor:ResourceCompleteListener =
-			distributorControl.getDistributor(ResourceCompleteListener);
+		var completeDistributor:LoadCompleteListener =
+			distributorControl.getDistributor(LoadCompleteListener);
 		completeDistributor.onLoadComplete(resourceLoader);
 	}
 
@@ -188,8 +188,8 @@ class org.as2lib.io.file.Loader extends EventSupport
 	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
 	 */
 	public function onLoadStart(resourceLoader:ResourceLoader):Void {
-		var errorDistributor:ResourceStartListener =
-			distributorControl.getDistributor(ResourceStartListener);
+		var errorDistributor:LoadStartListener =
+			distributorControl.getDistributor(LoadStartListener);
 		errorDistributor.onLoadStart(resourceLoader);
 	}
 
@@ -200,8 +200,8 @@ class org.as2lib.io.file.Loader extends EventSupport
 	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
 	 */
 	public function onLoadError(resourceLoader:ResourceLoader, errorCode:String, error):Boolean {
-		var errorDistributor:ResourceErrorListener =
-			distributorControl.getDistributor(ResourceErrorListener);
+		var errorDistributor:LoadErrorListener =
+			distributorControl.getDistributor(LoadErrorListener);
 		return errorDistributor.onLoadError(resourceLoader, errorCode, error);
 	}
 
@@ -212,8 +212,8 @@ class org.as2lib.io.file.Loader extends EventSupport
 	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
 	 */
 	public function onLoadProgress(resourceLoader:ResourceLoader):Void {
-		var progressDistributor:ResourceProgressListener =
-			distributorControl.getDistributor(ResourceProgressListener);
+		var progressDistributor:LoadProgressListener =
+			distributorControl.getDistributor(LoadProgressListener);
 		progressDistributor.onLoadProgress(resourceLoader);
 	}
 }

@@ -6,7 +6,7 @@ import org.as2lib.io.file.ResourceLoader;
  * @author Martin Heidegger
  * @version 1.0
  */
-interface org.as2lib.io.file.ResourceErrorListener {
+interface org.as2lib.io.file.LoadErrorListener {
 	
 	/**
 	 * TODO: Documentation !!!
