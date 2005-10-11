@@ -16,14 +16,19 @@
 
 import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.app.exec.ProcessListener;
 import org.as2lib.app.exec.Process;
 import org.as2lib.app.exec.Executable;
-import org.as2lib.env.event.EventSupport;
+import org.as2lib.app.exec.ProcessErrorListener;
+import org.as2lib.app.exec.ProcessFinishListener;
+import org.as2lib.app.exec.ProcessStartListener;
+import org.as2lib.app.exec.ProcessPauseListener;
+import org.as2lib.app.exec.ProcessResumeListener;
+import org.as2lib.app.exec.ProcessUpdateListener;
+import org.as2lib.app.exec.AbstractTimeConsumer;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
-import org.as2lib.data.type.Time;
 import org.as2lib.util.MethodUtil;
+import org.as2lib.env.event.distributor.CompositeEventDistributorControl;
 
 /**
  * {@code AbstractProcess} is a abstract helper class to implement processes.
@@ -70,22 +75,20 @@ import org.as2lib.util.MethodUtil;
  * @see Process
  * @see ProcessListener
  */
-class org.as2lib.app.exec.AbstractProcess extends EventSupport implements Process, ProcessListener {
+class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
+	implements Process,
+		ProcessErrorListener,
+		ProcessFinishListener,
+		ProcessStartListener,
+		ProcessPauseListener,
+		ProcessResumeListener,
+		ProcessUpdateListener {
 	
 	/** Flag if execution was paused. */
 	private var paused:Boolean;
 	
-	/** Flag if execution was started. */
-	private var started:Boolean;
-	
-	/** Flag if execution was finished. */
-	private var finished:Boolean;
-	
 	/** Flag if execution is just not working (case if a event is not finished within .start). */
 	private var working:Boolean;
-	
-	/** Distributor to broadcast process events. */
-	private var processEvent:ProcessListener;
 	
 	/** List of all errors that occur during execution. */
 	private var errors:Array;
@@ -96,34 +99,24 @@ class org.as2lib.app.exec.AbstractProcess extends EventSupport implements Proces
 	/** Contains the possible parent. */
 	private var parent:Process;
 	
-	/** Start time in ms from application start. */
-	private var startTime:Number;
-	
-	/** Finish time in ms from application start until finish. */
-	private var endTime:Number;
-	
-	/** Duration time difference. */
-	private var duration:Time;
-	
-	/** Total time difference. */
-	private var totalTime:Time;
-	
-	/** Rest time difference. */
-	private var restTime:Time;
+	/** TODO:Documentation */
+	private var dC:CompositeEventDistributorControl;
 	
 	/**
 	 * Constructs a new {@code AbstractProcess}.
 	 */
 	private function AbstractProcess(Void) {
 		super();
-		distributorControl.acceptListenerType(ProcessListener);
-		processEvent = distributorControl.getDistributor(ProcessListener);
+		dC = distributorControl;
+		dC.acceptListenerType(ProcessStartListener);
+		dC.acceptListenerType(ProcessErrorListener);
+		dC.acceptListenerType(ProcessUpdateListener);
+		dC.acceptListenerType(ProcessPauseListener);
+		dC.acceptListenerType(ProcessResumeListener);
+		dC.acceptListenerType(ProcessFinishListener);
 		errors = new Array();
 		subProcesses = new HashMap();
-		duration = new Time(0);
-		started = false;
 		paused = false;
-		finished = false;
 		working = false;
 	}
 	
@@ -198,7 +191,7 @@ class org.as2lib.app.exec.AbstractProcess extends EventSupport implements Proces
 	 */
 	public function pause(Void):Void {
 		paused = true;
-		processEvent.onPauseProcess(this);
+		sendPauseEvent();
 	}
 	
 	/**
@@ -206,7 +199,7 @@ class org.as2lib.app.exec.AbstractProcess extends EventSupport implements Proces
 	 */
 	public function resume(Void):Void {
 		paused = false;
-		processEvent.onResumeProcess(this);
+		sendResumeEvent();
 	}
 	
 	/**
@@ -217,9 +210,9 @@ class org.as2lib.app.exec.AbstractProcess extends EventSupport implements Proces
 		paused = false;
 		finished = false;
 		working = false;
-		totalTime = new Time(0);
-		restTime = new Time(0);
-		processEvent.onStartProcess(this);
+		totalTime.setValue(0);
+		restTime.setValue(0);
+		sendStartEvent();
 		started = true;
 	}
 	
@@ -238,7 +231,7 @@ class org.as2lib.app.exec.AbstractProcess extends EventSupport implements Proces
     		startTime = getTimer();
 			result = MethodUtil.invoke("run", this, arguments);
     	} catch(e) {
-    		processEvent.onProcessError(this, e);
+    		sendErrorEvent(e);
     	}
 		if(!isPaused() && !isWorking()) {
 			finish();
@@ -268,17 +261,6 @@ class org.as2lib.app.exec.AbstractProcess extends EventSupport implements Proces
 	}
 	
 	/**
-	 * Returns {@code true} if the process has finished.
-	 * 
-	 * <p>If the process has not been started it returns {@code false}.
-	 * 
-	 * @return {@code true} if the process has finished
-	 */
-	public function hasFinished(Void):Boolean {
-		return finished;
-	}
-	
-	/**
 	 * Returns {@code true} if the process is paused.
 	 * 
 	 * @return {@code true} if the process is paused
@@ -287,16 +269,6 @@ class org.as2lib.app.exec.AbstractProcess extends EventSupport implements Proces
 		return paused;
 	}
 	
-	/**
-	 * Returns {@code true} if the process has started.
-	 * 
-	 * <p>If the process has finished it returns {@code false}.
-	 * 
-	 * @return {@code true} if the process has started
-	 */
-	public function hasStarted(Void):Boolean {
-		return started;
-	}
 	
 	/**
 	 * Returns {@code true} if the process is running.
@@ -305,57 +277,6 @@ class org.as2lib.app.exec.AbstractProcess extends EventSupport implements Proces
 	 */
 	public function isRunning(Void):Boolean {
 		return(!isPaused() && hasStarted());
-	}
-	
-    /**
-     * Returns the percentage of execution
-     * 
-     * <p>Override this implementation for a matching result.
-     * 
-     * @return {@code null}, override this implementation
-     */
-    public function getPercentage(Void):Number {
-		return null;
-	}
-	
-	/**
-	 * Returns the time of the execution of the process.
-	 * 
-	 * @return time difference between start time and end time/current time.
-	 */
-	public function getDuration(Void):Time {
-		if (endTime) {
-			return duration.setValue(endTime-startTime);
-		} else {
-			return duration.setValue(getTimer()-startTime);
-		}
-	}
-	
-	/**
-	 * Estimates the approximate time for the complete execution of the process.
-	 * 
-	 * @return estimated duration at the end of the process
-	 */
-	public function getEstimatedTotalTime(Void):Time {
-		if ((hasStarted() || hasFinished()) && getPercentage() != null) {
-			return totalTime.setValue(getDuration().inMilliSeconds()/getPercentage()*100);
-		} else {
-			return null;
-		}
-	}
-	
-	/**
-	 * Estimates the approximate time until the execution finishes.
-	 * 
-	 * @return estimated time until finish of the process
-	 */
-	public function getEstimatedRestTime(Void):Time {
-		var totalTime:Time = getEstimatedTotalTime();
-		if (totalTime == null) {
-			return null;
-		} else {
-			return restTime.setValue(getEstimatedTotalTime().inMilliSeconds()-getDuration().inMilliSeconds());
-		}
 	}
 	
 	/**
@@ -393,9 +314,10 @@ class org.as2lib.app.exec.AbstractProcess extends EventSupport implements Proces
      * 
      * @param process {@link Process} where a error occured
      * @param error error that occured
+     * @return {@code true} if error was consumed
      */
 	public function onProcessError(process:Process, error):Boolean {
-		return processEvent.onProcessError(this, error);
+		return sendErrorEvent(error);
 	}
 	
 	/**
@@ -421,7 +343,7 @@ class org.as2lib.app.exec.AbstractProcess extends EventSupport implements Proces
 			started = false;
 			working = false;
 			endTime = getTimer();
-			processEvent.onFinishProcess(this);
+			sendFinishEvent();
 		}
 	}
 	
@@ -459,10 +381,47 @@ class org.as2lib.app.exec.AbstractProcess extends EventSupport implements Proces
 	 * Publishes the error event and stores the error in the error list.
 	 * 
 	 * @param error error to be published
+	 * @return {@code true} if event was consumed
 	 */
-	private function publishError(error):Void {
+	private function publishError(error):Boolean {
 		if (!error) error = -1;
 		this.errors.push(error);
-		processEvent.onProcessError(this, error);
+		return sendErrorEvent(error);
+	}
+	
+	private function sendUpdateEvent(Void):Void {
+		var updateDistributor:ProcessUpdateListener
+			= dC.getDistributor(ProcessUpdateListener);
+		updateDistributor.onUpdateProcess(this);
+	}
+	
+	private function sendPauseEvent(Void):Void {
+		var pauseDistributor:ProcessPauseListener
+			= dC.getDistributor(ProcessPauseListener);
+		pauseDistributor.onPauseProcess(this);
+	}
+	
+	private function sendResumeEvent(Void):Void {
+		var resumeDistributor:ProcessResumeListener
+			= dC.getDistributor(ProcessResumeListener);
+		resumeDistributor.onResumeProcess(this);
+	}
+	
+	private function sendStartEvent(Void):Void {
+		var startDistributor:ProcessStartListener
+			= dC.getDistributor(ProcessStartListener);
+		startDistributor.onStartProcess(this);
+	}
+	
+	private function sendErrorEvent(error):Boolean {
+		var errorDistributor:ProcessErrorListener
+			= dC.getDistributor(ProcessErrorListener);
+		return errorDistributor.onProcessError(this, error);
+	}
+	
+	private function sendFinishEvent(Void):Void {
+		var finishDistributor:ProcessFinishListener
+			= dC.getDistributor(ProcessFinishListener);
+		finishDistributor.onFinishProcess(this);
 	}
 }
