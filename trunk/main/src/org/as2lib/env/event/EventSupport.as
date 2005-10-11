@@ -133,4 +133,11 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	public function hasListener(listener):Boolean {
 		return distributorControl.hasListener(listener);
 	}
+	
+	/**
+	 * TODO: Documentation !!!
+	 */
+	private function acceptListenerType(type:Function):Void {
+		distributorControl.acceptListenerType(type);
+	}
 }

@@ -176,7 +176,7 @@ class org.as2lib.test.unit.TestCaseRunner
 			if (methodState == STATE_NOT_STARTED) {
 				methodInfo = openTestCaseMethods.dequeue();
 				sW = methodInfo.getStopWatch();
-				processEvent.onUpdateProcess(this);
+				sendUpdateEvent();
 			}
 			while (processMethod());
 		}

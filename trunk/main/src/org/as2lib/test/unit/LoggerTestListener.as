@@ -17,10 +17,15 @@
 import org.as2lib.app.exec.Process;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestCaseResult;
-import org.as2lib.app.exec.ProcessListener;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.log.LogSupport;
 import org.as2lib.test.unit.TestCaseMethodInfo;
+import org.as2lib.app.exec.ProcessStartListener;
+import org.as2lib.app.exec.ProcessErrorListener;
+import org.as2lib.app.exec.ProcessFinishListener;
+import org.as2lib.app.exec.ProcessPauseListener;
+import org.as2lib.app.exec.ProcessResumeListener;
+import org.as2lib.app.exec.ProcessUpdateListener;
 
 /**
  * {@code LoggerTestListener} is the default listener for Tests.
@@ -30,7 +35,13 @@ import org.as2lib.test.unit.TestCaseMethodInfo;
  * @see LogManager#getLoggerRepository
  * @see Logger
  */
-class org.as2lib.test.unit.LoggerTestListener extends LogSupport implements ProcessListener {
+class org.as2lib.test.unit.LoggerTestListener extends LogSupport
+	implements ProcessStartListener,
+		ProcessErrorListener,
+		ProcessFinishListener,
+		ProcessPauseListener,
+		ProcessResumeListener,
+		ProcessUpdateListener {
 	
 	/* Instance holfer of the default LoggerTestListener */
 	private static var instance:LoggerTestListener;
