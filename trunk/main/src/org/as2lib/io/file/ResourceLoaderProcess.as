@@ -63,19 +63,19 @@ class org.as2lib.io.file.ResourceLoaderProcess extends AbstractProcess
 		working = !hasFinished();
 	}
 
-	public function onResourceStart(resourceLoader:ResourceLoader):Void {
+	public function onLoadStart(resourceLoader:ResourceLoader):Void {
 		sendStartEvent();
 	}
 
-	public function onResourceComplete(resourceLoader:ResourceLoader):Void {
+	public function onLoadComplete(resourceLoader:ResourceLoader):Void {
 		finish();
 	}
 
-	public function onResourceProgress(resourceLoader:ResourceLoader):Void {
+	public function onLoadProgress(resourceLoader:ResourceLoader):Void {
 		sendUpdateEvent();
 	}
 
-	public function onResourceError(resourceLoader:ResourceLoader, errorCode:String, error):Boolean {
+	public function onLoadError(resourceLoader:ResourceLoader, errorCode:String, error):Boolean {
 		interrupt(error);
 		return true;
 	}

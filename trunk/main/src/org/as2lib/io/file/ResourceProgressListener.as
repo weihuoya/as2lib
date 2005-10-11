@@ -13,5 +13,5 @@ interface org.as2lib.io.file.ResourceProgressListener {
 	 * 
 	 * @param resourceLoader {@code ResourceLoader} that executes the request
 	 */
-	public function onResourceProgress(resourceLoader:ResourceLoader):Void;
+	public function onLoadProgress(resourceLoader:ResourceLoader):Void;
 }

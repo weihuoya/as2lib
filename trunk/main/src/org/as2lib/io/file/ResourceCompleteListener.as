@@ -17,5 +17,5 @@ interface org.as2lib.io.file.ResourceCompleteListener {
 	 * 
 	 * @param resourceLoader {@code ResourceLoader} that contains the requested resource
 	 */
-	public function onResourceComplete(resourceLoader:ResourceLoader):Void;
+	public function onLoadComplete(resourceLoader:ResourceLoader):Void;
 }
