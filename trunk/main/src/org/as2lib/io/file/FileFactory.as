@@ -35,7 +35,7 @@ interface org.as2lib.io.file.FileFactory extends BasicInterface {
 	 * 
 	 * @param source content of the {@code File} to create
 	 * @param size size in {@link Byte} of the loaded resource
-	 * @param uri location of the loaded resource
+	 * @param uri URI that has been loaded
 	 * @return {@code File} that represents the resource
 	 */
 	public function createFile(source:String, size:Byte, uri:String):File;

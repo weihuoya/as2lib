@@ -15,11 +15,9 @@
  */
 
 import org.as2lib.io.file.FileFactory;
-import org.as2lib.io.file.FileListener;
 import org.as2lib.io.file.File;
+import org.as2lib.io.file.Resource;
 import org.as2lib.data.type.Byte;
-import org.as2lib.io.file.ResourceNotLoadedException;
-import org.as2lib.io.file.ResourceNotFoundException;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.Map;
 import org.as2lib.env.except.IllegalArgumentException;
@@ -27,6 +25,7 @@ import org.as2lib.io.file.ResourceLoader;
 import org.as2lib.io.file.AbstractResourceLoader;
 import org.as2lib.io.file.SimpleFileFactory;
 import org.as2lib.io.file.FileNotLoadedException;
+import org.as2lib.app.exec.Executable;
 
 /**
  * {@code FileLoader} is a implementation of {@link ResourceLoader} for text resources.
@@ -47,25 +46,39 @@ import org.as2lib.io.file.FileNotLoadedException;
  * 
  * <p>Example listener:
  * <code>
- *   import org.as2lib.io.file.FileListener;
- *   import org.as2lib.io.file.FileLoader;
- *   import org.as2lib.io.file.File;
+ *   import org.as2lib.io.file.ResourceProgressListener;
+ *   import org.as2lib.io.file.ResourceStartListener;
+ *   import org.as2lib.io.file.ResourceCompleteListener;
+ *   import org.as2lib.io.file.ResourceErrorListener;
+ *   import org.as2lib.io.file.ResourceLoader;
+ *   import org.as2lib.io.file.Resource;
  *   
- *   class MyFileListener implements FileListener {
- *     public function onFileLoad(file:File):Void {
- *       // work with the file ...
+ *   class MyFileListener implements 
+ *        ResourceProgressListener, ResourceStartListener,
+ *        ResourceCompleteListener, ResourceErrorListener {
+ *        
+ *     public function onResourceComplete(resourceLoader:ResourceLoader):Void {
+ *       var file:File = File(resourceLoader.getResource);
+ *       if (file != null) {
+ *         // Proper file available
+ *       } else {
+ *         // Wrong event handled
+ *       }
  *     }
  *     
- *     public function onFileNotFound(uri:String):Void {
- *       // handle the error
+ *     public function onResourceError(errorCode:String, error):Void {
+ *       if (errorCode == FileEvent.FILE_NOT_FOUND) {
+ *         var notExistantUrl = error;
+ *         // Use that url
+ *       }
  *     }
  *     
- *     public function onFileStartLoading(fileLoader:FileLoader) {
+ *     public function onResourceStart(resourceLoader:ResourceLoader) {
  *       // show that this file just gets loaded
  *     }
  *     
- *     public function onFileProgress(fileLoader:FileLoader) {
- *       // update the percentage display with fileLoadingProcess.getPercentage();
+ *     public function onResourceProgress(resourceLoader:ResourceLoader) {
+ *       // update the percentage display with resourceLoader.getPercentage();
  *     }
  *   }
  * </code>
@@ -81,15 +94,12 @@ import org.as2lib.io.file.FileNotLoadedException;
  * </code>
  * 
  * @author Martin Heidegger
- * @version 1.0
+ * @version 1.1
  */
 class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements ResourceLoader {
 	
 	/** {@code LoadVars} instance for loading the content. */
 	private var helper:LoadVars;
-	
-	/** Event to publish all events to {@link FileListeber}. */
-	private var fileEvent:FileListener;
 	
 	/** Result of the loaded {@code uri}. */
 	private var file:File;
@@ -109,9 +119,7 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 	 *        default is POST.
 	 */
 	public function FileLoader(fileFactory:FileFactory, uri:String, parameters:Map, method:String) {
-		super(uri, parameters, method);
-		distributorControl.acceptListenerType(FileListener);		
-		fileEvent = distributorControl.getDistributor(FileListener);
+		super(uri, parameters, method);		
 		
 		if (!fileFactory) {
 			fileFactory = new SimpleFileFactory();
@@ -122,9 +130,9 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 	/**
 	 * Starts loading the resource.
 	 */
-	private function run(Void):Void {
+	public function load(uri:String, method:String, parameters:Map, callBack:Executable):Void {
+		super.load(uri, method, parameters, callBack);
 		initHelper();
-		working = true;
 		if (uri == null) {
 			throw new IllegalArgumentException("Url has to be set for starting the process.", this, arguments);
 		} else {
@@ -151,9 +159,7 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 			} else {
 				helper.load(uri);
 			}
-			fileEvent.onFileStartLoading(this);
-			resourceEvent.onResourceStartLoading(this);
-			processEvent.onStartProcess(this);
+			sendStartEvent();
 		}
 	}
 	
@@ -163,7 +169,7 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 	 * @return resource that has been loaded
 	 * @throws FileNotLoadedException if the resource has not been loaded yet.
 	 */
-	public function getResource(Void) {
+	public function getResource(Void):Resource {
 		return getFile();
 	}
 	
@@ -191,7 +197,7 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 			function(prop, oldValue, newValue) {
 				// Prevent useless events.
 				if(newValue != oldValue && newValue > 0) {
-					owner["recieveUpdateEvent"]();
+					owner["handleUpdateEvent"]();
 				}
 				return newValue;
 			}
@@ -199,7 +205,7 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 		
 		// Using XML Template to get the onData Event.
 		helper.onData = function(data) {
-			owner["recieveDataEvent"](data);
+			owner["handleDataEvent"](data);
 		};
 	}
 	
@@ -238,10 +244,8 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 	 * 
 	 * @see #initHelper
 	 */
-	private function recieveUpdateEvent(Void):Void {
-		fileEvent.onFileProgress(this);
-		resourceEvent.onResourceProgress(this);
-		processEvent.onUpdateProcess(this);
+	private function handleUpdateEvent(Void):Void {
+		sendProgressEvent();
 	}
 	
 	/**
@@ -249,27 +253,21 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 	 * 
 	 * @see #initHelper
 	 */
-	private function recieveDataEvent(data:String):Void {
+	private function handleDataEvent(data:String):Void {
 		finished = true;
 		started = false;
-		paused = false;
-		working = false;
 		endTime = getTimer();
 		helper.onLoad = function() {};
 		helper.unwatch("_bytesLoaded");
 		// Check if the file was not available.
 		if(typeof data == "undefined") {
 			// Dispatching the event for the missing uri.
-			fileEvent.onFileNotFound(uri);
-			resourceEvent.onResourceNotFound(uri);
-			processEvent.onProcessError(this, new ResourceNotFoundException("'"+uri+"' could not be loaded.", this, arguments));
+			sendErrorEvent(FILE_NOT_FOUND_ERROR, uri);
 		} else {
 			// Correct replacing of special line breaks that don't match the "\n" (Windows & Mac Line Breaks).
 			file = fileFactory.createFile(data, getBytesTotal(), uri);
 			// Dispatching the event for the loaded file.
-			fileEvent.onFileLoad(file);
-			resourceEvent.onResourceLoad(this);
+			sendCompleteEvent();
 		}
-		processEvent.onFinishProcess(this);
 	}
 }
