@@ -20,77 +20,34 @@ import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.env.log.LogManager;
 
 /**
- * {@code LogSupport} is the class to access the logging system.
- * <p>If its possible to extend this class it allows you to access the {@code Logger}
- * for your instance with the private variable {@code logger}. {@code logger}
- * is a property that is only readable and redirects to {@code getLogger}.
+ * {@code LogSupport} can be used to easily gain access to loggers.
+ * 
+ * <p>You may extend this class to be able to access the logger appropriate to
+ * your specific class with the getter property {@link logger} or the {@code getLogger}
+ * method.
  * 
  * <p>Example:
  * <code>
  *   class MyClass extends LogSupport {
- *   
- *   	public function test() {
- *   		logger.info("hi");
- *   	}
+ *     
+ *     public function test() {
+ *       logger.info("hi");
+ *     }
+ *     
  *   }
  * </code>
  * 
- * <p>{@code logger} is a getter property, that means its a function call to
- * {@code getLogger}. You can't reset the logger.
- * 
  * @author Martin Heidegger
- * @version 2
+ * @version 2.0
  */
 class org.as2lib.env.log.LogSupport extends BasicClass {
 	
-	/** Logger to access is automatically filled */
-	public var logger:Logger;
-	
-	/** Internal holder for the logger, don't access it directly, use {@code logger} instead */
-	private var _logger:Logger;
-	
 	/**
-	 * Constructs a new {@code LogSupport} instance.
+	 * Returns the logger for the given {@code scope}.
+	 * 
+	 * @param scope the scope to return a logger for
+	 * @return the logger corresponding to the given {@code scope}
 	 */
-	public function LogSupport(Void) {
-		// Create property within constructor, Macromedia Scope bug.
-		addProperty("logger", getLogger, null);
-	}
-	
-	public static function getLoggerByInstance(instance):Logger {
-		var p = instance.__proto__;
-		
-		if (p._logger !== null && p._logger === p.__proto__._logger) {
-			return saveLoggerToPrototype(p, LogManager.getLogger(
-				ReflectUtil.getTypeNameForInstance(instance)));
-		}
-		
-		return p._logger;
-	}
-	
-	public static function getLoggerByClass(clazz:Function):Logger {	var prototype;
-		
-		var	p = clazz["prototype"];
-		
-		if (p._logger !== null && p._logger === p.__proto__._logger) {
-			return saveLoggerToPrototype(p, LogManager.getLogger(
-				ReflectUtil.getTypeNameForType(clazz)));
-		}
-		
-		return p._logger;
-	}
-	
-	private static function saveLoggerToPrototype(proto, logger:Logger):Logger {
-		proto._logger = logger;
-		
-		// Sets the logger dedicated to null if it didn't exist
-		if (!proto._logger) {
-			proto._logger = null;
-		}
-		
-		return logger;
-	}
-	
 	public static function getLoggerByScope(scope):Logger {
 		if (typeof scope == "function") {
 			return getLoggerByClass(scope);
@@ -100,9 +57,68 @@ class org.as2lib.env.log.LogSupport extends BasicClass {
 	}
 	
 	/**
+	 * Return the logger for the given {@code instance}.
 	 * 
+	 * @param instance the instance to return a logger for
+	 * @return the logger corresponding to the given {@code instance}
+	 */
+	public static function getLoggerByInstance(instance):Logger {
+		var p = instance.__proto__;
+		if (p.__as2lib__logger !== null && p.__as2lib__logger === p.__proto__.__as2lib__logger) {
+			return storeLoggerInPrototype(p, LogManager.getLogger(
+				ReflectUtil.getTypeNameForInstance(instance)));
+		}
+		return p.__as2lib__logger;
+	}
+	
+	/**
+	 * Returns the logger for the given {@code clazz}.
+	 * 
+	 * @param clazz the clazz to return a logger for
+	 * @return the logger corresponding to the given {@code clazz}
+	 */
+	public static function getLoggerByClass(clazz:Function):Logger {
+		var	p = clazz["prototype"];
+		if (p.__as2lib__logger !== null && p.__as2lib__logger === p.__proto__.__as2lib__logger) {
+			return storeLoggerInPrototype(p, LogManager.getLogger(
+				ReflectUtil.getTypeNameForType(clazz)));
+		}
+		return p.__as2lib__logger;
+	}
+	
+	/**
+	 * Stores the given {@code logger} in the given {@code prototype}.
+	 * 
+	 * @param prototype the prototype to store the given {@code logger} in
+	 * @param logger the logger to store in the given {@code prototype}
+	 * @return the given {@code logger}
+	 */
+	private static function storeLoggerInPrototype(prototype, logger:Logger):Logger {
+		prototype.__as2lib__logger = logger;
+		if (!prototype.__as2lib__logger) {
+			prototype.__as2lib__logger = null;
+		}
+		return logger;
+	}
+	
+	/** The logger for your sub-class. */
+	public var logger:Logger;
+	
+	/**
+	 * Constructs a new {@code LogSupport} instance.
+	 */
+	public function LogSupport(Void) {
+		// creates property within constructor because of Macromedia scope bug
+		addProperty("logger", getLogger, null);
+	}
+	
+	/**
+	 * Returns the logger for this instance.
+	 * 
+	 * @return the logger corresponding to this instance
 	 */
 	public function getLogger(Void):Logger {
 		return getLoggerByInstance(this);
 	}
+	
 }
