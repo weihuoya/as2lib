@@ -8,7 +8,7 @@ import org.as2lib.data.holder.Properties;
 import org.as2lib.data.holder.properties.PropertiesFactory;
 
 /**
- * {@code PropertiesFile} represents a set of properties.
+ * {@code PropertiesFile} represents a file of properties.
  * 
  * <p>A properties file contains simple key-value pairs. Multiple pairs are
  * separated by line terminators (\n or \r or \r\n). Keys are separated from
@@ -32,6 +32,7 @@ import org.as2lib.data.holder.properties.PropertiesFactory;
  * @author Martin Heidegger
  * @author Simon Wacker
  * @version 1.0
+ * @see Properties
  */
 class org.as2lib.io.file.PropertiesFile extends SimpleTextFile {
 	
