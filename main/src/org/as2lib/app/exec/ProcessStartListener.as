@@ -17,18 +17,19 @@
 import org.as2lib.app.exec.Process;
 
 /**
- * {@code ProcessStartListener} is a defintion for a Observer of the start of a
+ * {@code ProcessStartListener} is a defintion for a observer of the start of a
  * {@link Process}.
  * 
- * <p>To observe the start of a process you can implement this interface and add your
- * implementation with {@link Process#addListener} to a observe a certain
- * process.
+ * <p>To observe the start of a {@code Process} you can implement this interface
+ * and add your implementation with {@link Process#addListener} to observe a
+ * certain {@code Process}.
  * 
  * @author Martin Heidegger
- * @version 1.0
+ * @version 2.0
  * @see Process
  */
 interface org.as2lib.app.exec.ProcessStartListener {
+	
 	/**
 	 * Method to be executed if a process starts execution.
 	 * 
