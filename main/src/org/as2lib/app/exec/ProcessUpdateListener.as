@@ -17,15 +17,15 @@
 import org.as2lib.app.exec.Process;
 
 /**
- * {@code ProcessResumeListener} is a defintion for a observer for updates of a
+ * {@code ProcessUpdateListener} is a defintion for a observer for updates of a
  * {@link Process}.
  * 
  * <p>To observe changes/updates of a {@code Process} you can implement this
  * interface and add your implementation with {@link Process#addListener} to
  * observe a certain {@code Process}.
  * 
- * <p>{@code start}, {@code pause}, {@code resume} and {@code finish} are no
- * accepted changes of state.
+ * <p>{@code start}, {@code pause}, {@code error}, {@code resume} and {@code finish}
+ * are no accepted changes of state.
  * 
  * @author Martin Heidegger
  * @version 2.0
@@ -34,7 +34,7 @@ import org.as2lib.app.exec.Process;
 interface org.as2lib.app.exec.ProcessUpdateListener {
 	
 	/**
-	 * Method to be executed if a process property changes.
+	 * Method to be executed if a {@code Process} property changes.
 	 * 
 	 * @param process {@link Process} that changed some properties
 	 */
