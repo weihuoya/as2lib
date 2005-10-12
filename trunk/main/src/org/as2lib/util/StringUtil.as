@@ -356,7 +356,7 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 * @param string the string of which the first character shall be capitalized
 	 * @return the passed-in {@code string} with the first character capitalized
 	 */
-	public static function ucFirst(string:String):String{
+	public static function ucFirst(string:String):String {
 		 return string.charAt(0).toUpperCase() + string.substr(1);
 	}
 
@@ -367,7 +367,7 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 * capitalized
 	 * @return the {@code string} with the first character of every word capitalized
 	 */
-	public static function ucWords(string:String):String{
+	public static function ucWords(string:String):String {
 		var w:Array = string.split(" ");
 		var l:Number = w.length;
 		for (var i:Number = 0; i < l; i++){
@@ -382,7 +382,7 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 * @param string the string to return the first character of
 	 * @return the first character of the {@code string}
 	 */
-	public static function firstChar(string:String):String{
+	public static function firstChar(string:String):String {
 		return string.charAt(0);
 	}
 	
@@ -392,8 +392,49 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 * @param string the string to return the last character of
 	 * @return the last character of the {@code string}
 	 */
-	public static function lastChar(string:String):String{
+	public static function lastChar(string:String):String {
 		return string.charAt(string.length-1);
+	}
+	
+	private static function getCharValue(char:String):Number {
+		var code:Number = char.toUpperCase().charCodeAt(0);
+		// Number Area
+		if (code > 47 && code < 58) return (code-48);
+		// String Area
+		if (code > 64 && code < 91) return (code-55);
+		// Default value
+		return 0;
+	}
+	
+	public static var DEFAULT_ESCAPE_MAP:Array = 
+		["\\t", "\t", "\\n", "\n", "\\r", "\r", "\\\"", "\"", "\\\\", "\\", "\\'", "\'", "\\f", "\f", "\\b", "\b", "\\", ""];
+	
+	public static function escape(string:String, keyMap:Array, ignoreUnicode:Boolean):String {
+		if (!keyMap) {
+			keyMap = DEFAULT_ESCAPE_MAP;
+		}
+		var i:Number = 0;
+		var l:Number = keyMap.length;
+		while (i<l) {
+			string = string.split(keyMap[i]).join(keyMap[i+1]);
+			i+=2;
+		}
+		if (!ignoreUnicode) {
+			i = 0;
+			l = string.length;
+			while (i<l) {
+				if (string.substring(i, i+2) == "\\u") {
+					string = 
+						string.substring(0,i) + 
+						String.fromCharCode(
+							parseInt(string.substring(i+2, i+6), 16)
+						) +
+						string.substring(i+6);
+				}
+				i++;
+			}
+		}
+		return string;
 	}
 	
 	/**
