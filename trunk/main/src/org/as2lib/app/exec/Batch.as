@@ -27,9 +27,10 @@ import org.as2lib.app.exec.Process;
  * <p>{@code Batch} is a composite (it implements {@link Process}), so you can
  * even add one {@code Batch} with {@link #addProcess} to another {@code Batch}.
  * 
- * <p>Additionally to {@code addProcessListener} method of {@link Process} you
- * can add a {@link BatchListener} with {@link #addBatchListener} that allows to
- * get a more detailed information about the batch execution.
+ * <p>It supports beneath all listeners of {@link Process} seperate events for
+ * {@code Batch} processing:
+ *   {@link BatchStartListener}, {@link BatchFinishListener},
+ *   {@link BatchUpdateListener} and {@link BatchErrorListener}
  * 
  * <p>Example:
  * <code>

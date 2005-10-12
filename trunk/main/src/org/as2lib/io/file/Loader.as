@@ -37,13 +37,13 @@ import org.as2lib.app.exec.Executable;
  * <p>{@code Loader} should be used for loading files if you do not like to
  * bother about the certain loading mechianism.
  * 
- * <p>{@code Loader} is built as singleton. {@code Loader.getInstance} allows
- * access to the {@code Loader}.
+ * <p>If you want to reduces the occurences of {@code Loader} instances you can
+ * use {@code Loader.getInstance} that contains a {@code Loader} instance.
  * 
  * <p>{@code Loader.getInstance().load("uri")} is available to load any common file.
  * 
  * <p>Loading a external {@code .swf} requires a {@code MovieClip} to load therefore
- * you should use {@code loadMovie} or use the overloaded {@code load} with passing
+ * you should use {@code loadSwf} or use the overloaded {@code load} with passing
  * the {@code MovieClip} as second parameter.
  * 
  * <p>{@code Loader} uses paralell loading, this means it starts as much requests

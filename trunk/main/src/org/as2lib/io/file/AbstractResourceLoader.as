@@ -39,7 +39,7 @@ import org.as2lib.env.except.IllegalArgumentException;
  */
 class org.as2lib.io.file.AbstractResourceLoader extends AbstractTimeConsumer implements ResourceLoader {
 	
-	/** TODO: Documentation !!! */
+	/** Error code if a certain file could not be found. */
 	public static var FILE_NOT_FOUND_ERROR:String = "File not found";
 	
 	/** Location for the resource request. */
@@ -51,8 +51,10 @@ class org.as2lib.io.file.AbstractResourceLoader extends AbstractTimeConsumer imp
 	/** Parameters to be used for the resource request. */
 	private var parameters:Map;
 	
+	/** Faster access to internal event handling. */
 	private var dC:CompositeEventDistributorControl;
 	
+	/** {@link Executable} to be executed on finish of loading. */
 	private var callBack:Executable;
 	
 	/**
@@ -64,10 +66,10 @@ class org.as2lib.io.file.AbstractResourceLoader extends AbstractTimeConsumer imp
 	function AbstractResourceLoader(Void) {
 		super();
 		dC = distributorControl;
-		dC.acceptListenerType(LoadStartListener);
-		dC.acceptListenerType(LoadCompleteListener);
-		dC.acceptListenerType(LoadProgressListener);
-		dC.acceptListenerType(LoadErrorListener);
+		acceptListenerType(LoadStartListener);
+		acceptListenerType(LoadCompleteListener);
+		acceptListenerType(LoadProgressListener);
+		acceptListenerType(LoadErrorListener);
 	}
 	
 	/**
@@ -135,6 +137,10 @@ class org.as2lib.io.file.AbstractResourceLoader extends AbstractTimeConsumer imp
 	}
 	
 	/**
+	 * Prepares the loading of a certain resource.
+	 * 
+	 * <p>To be overwritten with the concrete load implentation. Do not forget 
+	 * to apply super.load().
 	 * 
 	 * @param uri location of the resource to load
 	 * @param parameters (optional) parameters for loading the resource
@@ -151,32 +157,68 @@ class org.as2lib.io.file.AbstractResourceLoader extends AbstractTimeConsumer imp
 		this.parameters = parameters;
 		this.callBack = callBack;
 		this.method = (method.toUpperCase() == "GET") ? "GET" : "POST";
+		started = true;
+		finished = false;
+		startTime = getTimer();
 	}
-
+	
+	/**
+	 * Returns the {@code method} to pass request parameters for request.
+	 * 
+	 * @return method to pass request parameters
+	 */
 	public function getParameterSubmitMethod(Void):String {
 		return method;
 	}
 
+	/**
+	 * Sets the {@code parameters} for the request to the resource.
+	 * 
+	 * <p>Returns {@code null} if no parameters has been set.
+	 * 
+	 * @return parameters to be passed with the resource request
+	 */
 	public function getParameters(Void):Map {
 		return parameters;
 	}
 
+	/**
+	 * Returns the loaded resource.
+	 * 
+	 * @return the loaded resource
+	 * @throws org.as2lib.io.file.ResourceNotLoadedException if the resource has
+	 *         not been loaded yet
+	 */
 	public function getResource(Void):Resource {
 		return null;
 	}
 	
+	/**
+	 * Internal helper to send the start event.
+	 */
 	private function sendStartEvent(Void):Void {
 		var startDistributor:LoadStartListener
 			= dC.getDistributor(LoadStartListener);
 		startDistributor.onLoadStart(this);
 	}
 	
+	/**
+	 * Internal helper to send the error event.
+	 * 
+	 * @param code errorcode for the certain error
+	 * @param error information to the certain error
+	 */
 	private function sendErrorEvent(code:String, error):Void {
 		var errorDistributor:LoadErrorListener
 			= dC.getDistributor(LoadErrorListener);
 		errorDistributor.onLoadError(this, code, error);
 	}
 	
+	/**
+	 * Internal helper to send the complete event.
+	 * 
+	 * <p>Event to be sent if the file was completly loaded.
+	 */
 	private function sendCompleteEvent(Void):Void {
 		var completeDistributor:LoadCompleteListener
 			= dC.getDistributor(LoadCompleteListener);
@@ -184,10 +226,12 @@ class org.as2lib.io.file.AbstractResourceLoader extends AbstractTimeConsumer imp
 		callBack.execute(this);
 	}
 	
+	/**
+	 * Internal helper to send the progress event.
+	 */
 	private function sendProgressEvent(Void):Void {
 		var completeDistributor:LoadProgressListener
 			= dC.getDistributor(LoadProgressListener);
 		completeDistributor.onLoadProgress(this);
 	}
-	
 }

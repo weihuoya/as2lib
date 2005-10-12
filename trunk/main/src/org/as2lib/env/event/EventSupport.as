@@ -135,7 +135,12 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	}
 	
 	/**
-	 * TODO: Documentation !!!
+	 * Internal method to accept a concrete listener type.
+	 * 
+	 * <p>Any listener added with {@code addListener} will be checked against
+	 * all accepted typed and added.
+	 * 
+	 * @param type to accept as listener
 	 */
 	private function acceptListenerType(type:Function):Void {
 		distributorControl.acceptListenerType(type);

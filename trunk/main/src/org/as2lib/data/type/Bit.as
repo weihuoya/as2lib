@@ -96,17 +96,17 @@ class org.as2lib.data.type.Bit extends BasicClass {
 	/**
 	 * Sets the used amount of values after the comma.
 	 * 
+	 * <p>This method does not change anything if {@code fp} is smaller than 0
+	 * or not passed-in.
+	 * 
 	 * @param fp amount of characters after the floating point
 	 * @return the current instance
-	 * @throws IllegalArgumentException if you pass no amount of floating points
 	 */
 	public function setFloatingPoints(fp:Number):Bit {
 		if(fp >= 0 && fp != null) {
 			this.comma = fp;
-			return this;
-		} else {
-			throw new IllegalArgumentException("No valid amount of floating points ("+fp+") used.", this, arguments);
 		}
+		return this;
 	}
 	
 	/**

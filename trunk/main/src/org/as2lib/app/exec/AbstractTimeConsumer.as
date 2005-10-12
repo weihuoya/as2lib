@@ -2,15 +2,23 @@ import org.as2lib.env.event.EventSupport;
 import org.as2lib.data.type.Time;
 
 /**
+ * {@code AbstractTimeConsumer} represents a time consuming class.
+ * 
+ * <p>It saves and provides informations about the time that the concrete 
+ * class used.
+ * 
+ * <p>The concrete implementation needs to take care of {@code startTime},
+ * {@code endTime},{@code getPercentage},{@code started} and {@code finished}.
+ * 
  * @author Martin Heidegger
  * @version 1.0
  */
 class org.as2lib.app.exec.AbstractTimeConsumer extends EventSupport {
 	
-	/** Start time in ms from application start. */
+	/** Start time in ms of start point. */
 	private var startTime:Number;
 	
-	/** Finish time in ms from application start until finish. */
+	/** Finish time in ms of finishing point. */
 	private var endTime:Number;
 	
 	/** Duration time difference. */
@@ -28,6 +36,9 @@ class org.as2lib.app.exec.AbstractTimeConsumer extends EventSupport {
 	/** Flag if execution was finished. */
 	private var finished:Boolean;
 	
+	/**
+	 * Constructs a new {@code AbstractTimeConsumer}.
+	 */
 	public function AbstractTimeConsumer(Void) {
 		duration = new Time(0);
 		totalTime = new Time(0);
