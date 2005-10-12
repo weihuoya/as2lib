@@ -16,18 +16,18 @@
  
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.type.Byte;
-import org.as2lib.io.file.File;
-import org.as2lib.io.file.FileFactory;
+import org.as2lib.io.file.TextFile;
+import org.as2lib.io.file.TextFileFactory;
 import org.as2lib.io.file.XmlFile;
 
 /**
- * {@code XmlFileFactory} is a implementation of {@link FileFactory} for creating
+ * {@code XmlFileFactory} is a implementation of {@link TextFileFactory} for creating
  * {@code XmlFile} instances.
  * 
  * @author Martin Heidegger
  * @version 1.0
  */
-class org.as2lib.io.file.XmlFileFactory extends BasicClass implements FileFactory {
+class org.as2lib.io.file.XmlFileFactory extends BasicClass implements TextFileFactory {
 	
 	/**
 	 * Creates a new {@code XmlFile} instance for the loaded resource.
@@ -37,7 +37,7 @@ class org.as2lib.io.file.XmlFileFactory extends BasicClass implements FileFactor
 	 * @param uri location of the loaded resource
 	 * @return {@code XmlFile} that represents the resource
 	 */
-	public function createFile(source:String, size:Byte, uri:String):File {
+	public function createTextFile(source:String, size:Byte, uri:String):TextFile {
 		return (new XmlFile(source, size, uri));
 	}
 

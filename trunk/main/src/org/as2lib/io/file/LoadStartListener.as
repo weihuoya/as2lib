@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import org.as2lib.io.file.ResourceLoader;
+import org.as2lib.io.file.FileLoader;
 
 /**
  * {@code LoadStartListener} can be implemented if its necessary to listen
- * to {@code onLoadStart} events of {@link ResourceLoader}s.
+ * to {@code onLoadStart} events of {@link FileLoader}s.
  * 
  * @author Martin Heidegger
  * @version 1.0
@@ -26,9 +26,9 @@ import org.as2lib.io.file.ResourceLoader;
 interface org.as2lib.io.file.LoadStartListener {
 	
 	/**
-	 * Event to be published if the {@code ResourceLoader} started a request.
+	 * Event to be published if the {@code FileLoader} started a request.
 	 * 
-	 * @param resourceLoader {@code ResourceLoader} that was started
+	 * @param fileLoader {@code FileLoader} that was started
 	 */
-	public function onLoadStart(resourceLoader:ResourceLoader):Void;
+	public function onLoadStart(fileLoader:FileLoader):Void;
 }

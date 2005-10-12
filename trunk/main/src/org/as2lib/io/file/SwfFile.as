@@ -16,18 +16,18 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.type.Byte;
-import org.as2lib.io.file.Resource;
+import org.as2lib.io.file.File;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
- * {@code SwfResource} is a holder for the informations to a loaded {@code .swf}
+ * {@code SwfFile} is a holder for the informations to a loaded {@code .swf}
  * 
- * <p>{@code SwfResource} is <b>not</b> built to represent human readable files.
+ * <p>{@code SwfFile} is <b>not</b> built to represent human readable files.
  * 
  * @author Martin Heidegger
  * @version 1.0
  */
-class org.as2lib.io.file.SwfResource extends BasicClass implements Resource {
+class org.as2lib.io.file.SwfFile extends BasicClass implements File {
 
 	/** Size of the file in bytes. */
 	private var size:Byte;
@@ -39,7 +39,7 @@ class org.as2lib.io.file.SwfResource extends BasicClass implements Resource {
 	private var container:MovieClip;
 	
 	/**
-	 * Constructs a new {@code SwfResource}.
+	 * Constructs a new {@code SwfFile}.
 	 * 
 	 * @param container {@code MovieClip} that contains the loaded {@code .swf}
 	 * @param uri (optional) URI to use as location ({@code container._url} will
@@ -47,7 +47,7 @@ class org.as2lib.io.file.SwfResource extends BasicClass implements Resource {
 	 * @param size (optional) size of the loaded {@code .swf}
 	 *        ({@code container.getBytesTotal()} will be used as default.)
 	 */
-	public function SwfResource(container:MovieClip, uri:String, size:Byte) {
+	public function SwfFile(container:MovieClip, uri:String, size:Byte) {
 		if (!size) {
 			size = new Byte(container.getBytesTotal());
 		}

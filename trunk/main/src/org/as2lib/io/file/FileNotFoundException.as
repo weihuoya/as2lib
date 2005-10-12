@@ -17,16 +17,16 @@
 import org.as2lib.env.except.Exception;
 
 /**
- * {@code ResourceNotLoadedException} to be thrown if a certain resource is not
- * loaded yet.
+ * {@code FileNotFoundException} to be thrown if a certain file could
+ * not be loaded.
  * 
  * @author Martin Heidegger
  * @version 1.0
  */
-class org.as2lib.io.file.ResourceNotLoadedException extends Exception {
+class org.as2lib.io.file.FileNotFoundException extends Exception {
 	
 	/**
-	 * Constructs a new {@code ResourceNotLoadedException}.
+	 * Constructs a new {@code FileNotFoundException}.
 	 * 
 	 * <p>All arguments are allowed to be {@code null} or {@code undefined}. But if
 	 * one is, the string representation returned by the {@code toString} method
@@ -43,7 +43,8 @@ class org.as2lib.io.file.ResourceNotLoadedException extends Exception {
 	 * exception
 	 * @param args the arguments of the throwing method
 	 */
-	public function ResourceNotLoadedException(message:String, thrower, args:Array) {
+	public function FileNotFoundException(message:String, thrower, args:Array) {
 		super(message, thrower, args);
 	}
+	
 }

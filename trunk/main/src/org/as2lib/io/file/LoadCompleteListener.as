@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import org.as2lib.io.file.ResourceLoader;
+import org.as2lib.io.file.FileLoader;
 
 /**
  * {@code LoadCompleteListener} can be implemented if its necessary to listen
- * to {@code onLoadComplete} events of {@link ResourceLoader}s.
+ * to {@code onLoadComplete} events of {@link FileLoader}s.
  * 
  * @author Martin Heidegger
  * @version 1.0
@@ -26,13 +26,13 @@ import org.as2lib.io.file.ResourceLoader;
 interface org.as2lib.io.file.LoadCompleteListener {
 	
 	/**
-	 * Event to be published if the resource finished loading.
+	 * Event to be published if the file finished loading.
 	 * 
-	 * <p>This event will only occur after the {@code ResourceLoader} was started.
+	 * <p>This event will only occur after the {@code FileLoader} was started.
 	 * 
-	 * <p>This event will not occur if the resource was not available.
+	 * <p>This event will not occur if the file was not available.
 	 * 
-	 * @param resourceLoader {@code ResourceLoader} that contains the requested resource
+	 * @param fileLoader {@code FileLoader} that contains the requested resource
 	 */
-	public function onLoadComplete(resourceLoader:ResourceLoader):Void;
+	public function onLoadComplete(fileLoader:FileLoader):Void;
 }

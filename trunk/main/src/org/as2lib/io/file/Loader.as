@@ -17,12 +17,12 @@
 import org.as2lib.data.holder.Map;
 import org.as2lib.env.event.EventSupport;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.io.file.CompositeFileFactory;
+import org.as2lib.io.file.CompositeTextFileFactory;
 import org.as2lib.io.file.FileLoader;
-import org.as2lib.io.file.FileFactory;
-import org.as2lib.io.file.ResourceLoader;
-import org.as2lib.io.file.SimpleFileFactory;
-import org.as2lib.io.file.SwfLoader;
+import org.as2lib.io.file.TextFileLoader;
+import org.as2lib.io.file.TextFileFactory;
+import org.as2lib.io.file.SimpleTextFileFactory;
+import org.as2lib.io.file.SwfFileLoader;
 import org.as2lib.io.file.XmlFileFactory;
 import org.as2lib.util.StringUtil;
 import org.as2lib.io.file.LoadStartListener;
@@ -49,7 +49,7 @@ import org.as2lib.app.exec.Executable;
  * <p>{@code Loader} uses paralell loading, this means it starts as much requests
  * as allowed paralell.
  * 
- * <p>{@code Loader} publishes events for {@link ResourceListener}.
+ * <p>{@code Loader} publishes the same event line {@link FileLoader}.
  * 
  * <p>Example for using {@code Loader.load}:
  * <code>
@@ -86,16 +86,16 @@ class org.as2lib.io.file.Loader extends EventSupport
 		return instance;
 	}	
 	
-	/** Factory to create {@code File} implementations, configurable. */
-	private var fileFactory:FileFactory;
+	/** Factory to create {@code TextFile} implementations, configurable. */
+	private var textFileFactory:TextFileFactory;
 	
 	/**
 	 * Constructs a new {@code Loader}.
 	 */
 	public function Loader(Void) {
-		var factory:CompositeFileFactory = new CompositeFileFactory();
-		factory.putFileFactoryByExtension("xml", new XmlFileFactory());
-		fileFactory = factory;
+		var factory:CompositeTextFileFactory = new CompositeTextFileFactory();
+		factory.putTextFileFactoryByExtension("xml", new XmlFileFactory());
+		textFileFactory = factory;
 	}
 	
 	/**
@@ -108,18 +108,18 @@ class org.as2lib.io.file.Loader extends EventSupport
 	 *        default method used if {@code method} was not passed-in is POST.
 	 * @param callBack (optional) {@link Executable} to be executed if the resource
 	 *        was complete loaded
-	 * @return {@code SwfLoader} that loads the resource
+	 * @return {@code SwfFileLoader} that loads the resource
 	 */
 	public function loadSwf(uri:String, mc:MovieClip, parameters:Map,
-			method:String, callBack:Executable):SwfLoader {
-		var fL:SwfLoader = new SwfLoader(mc);
+			method:String, callBack:Executable):SwfFileLoader {
+		var fL:SwfFileLoader = new SwfFileLoader(mc);
 		fL.addListener(this);
 		fL.load(uri, method, parameters);
 		return fL;
 	}
 	
 	/**
-	 * Loads a external file.
+	 * Loads a external text file.
 	 * 
 	 * @param uri location of the resource to load
 	 * @param method (optional) POST/GET as method for submitting the parameters,
@@ -127,35 +127,36 @@ class org.as2lib.io.file.Loader extends EventSupport
 	 * @param parameters (optional) parameters for loading the resource
 	 * @param callBack (optional) {@link Executable} to be executed if the resource
 	 *        was complete loaded
-	 * @return {@code FileLoader} that loads the certain file
+	 * @return {@code TextFileLoader} that loads the certain file
 	 */
-	public function loadFile(uri:String, method:String, parameters:Map, callBack:Executable):FileLoader {
-		var fL:FileLoader = new FileLoader(fileFactory);
+	public function loadText(uri:String, method:String, parameters:Map,
+			callBack:Executable):TextFileLoader {
+		var fL:TextFileLoader = new TextFileLoader(textFileFactory);
 		fL.addListener(this);
 		fL.load(uri, method, parameters);
 		return fL;
 	}
 	
 	/**
-	 * Defines the {@code FileFactory} to be used by {@code loadFile}.
+	 * Defines the {@code TextFileFactory} to be used by {@code loadText}.
 	 * 
-	 * <p>{@code loadFile} requires a {@code FileFactory} to generate the concrete
-	 * {@code File} instance that represents the resource. This methods allows
-	 * configuration of the supported file formats.
+	 * <p>{@code loadText} requires a {@code TextFileFactory} to generate the
+	 * concrete {@code TextFile} instance that represents the resource. This 
+	 * methods allows configuration of the supported file formats.
 	 * 
-	 * <p>The default configuration contains a {@link CompositeFileFactory} with
-	 * {@link org.as2lib.io.file.SimpleFileFactory} as default {@code FileFactory}
-	 * and {@link XmlFileFactory} for the extension "xml".
+	 * <p>The default configuration contains a {@link CompositeTextFileFactory} with
+	 * {@link org.as2lib.io.file.SimpleTextFileFactory} as default
+	 * {@code TextFileFactory} and {@link XmlFileFactory} for the extension "xml".
 	 * 
-	 * @param fileFactory {@code FileFactory} to be used by {@code loadFile}
+	 * @param textFileFactory {@code TextFileFactory} to be used by {@code loadFile}
 	 */
-	public function setFileFactory(fileFactory:FileFactory):Void {
-		this.fileFactory = fileFactory;
+	public function setFileFactory(textFileFactory:TextFileFactory):Void {
+		this.textFileFactory = textFileFactory;
 	}
 	
 	/**
 	 * @overload #loadSwf
-	 * @overload #loadFile
+	 * @overload #loadText
 	 */
 	public function load(url, target) {
 		var overload:Overload = new Overload();
@@ -163,55 +164,55 @@ class org.as2lib.io.file.Loader extends EventSupport
 		overload.addHandler([String, MovieClip, String, Map], loadSwf);
 		overload.addHandler([String, MovieClip, String], loadSwf);
 		overload.addHandler([String, MovieClip], loadSwf);
-		overload.addHandler([String, String, Map, Executable], loadFile);
-		overload.addHandler([String, String, Map], loadFile);
-		overload.addHandler([String, Map], loadFile);
-		overload.addHandler([String], loadFile);
+		overload.addHandler([String, String, Map, Executable], loadText);
+		overload.addHandler([String, String, Map], loadText);
+		overload.addHandler([String, Map], loadText);
+		overload.addHandler([String], loadText);
 		return overload.forward(arguments);
 	}
 	
 	/**
-	 * (implementation detail) Handles the response of a finished {@code ResourceLoader}.
+	 * (implementation detail) Handles the response of a finished {@code FileLoader}.
 	 * 
-	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
+	 * @param fileLoader {@code FileLoader} that loaded the certain resource
 	 */
-	public function onLoadComplete(resourceLoader:ResourceLoader):Void {
+	public function onLoadComplete(fileLoader:FileLoader):Void {
 		var completeDistributor:LoadCompleteListener =
 			distributorControl.getDistributor(LoadCompleteListener);
-		completeDistributor.onLoadComplete(resourceLoader);
+		completeDistributor.onLoadComplete(fileLoader);
 	}
 
 	/**
-	 * (implementation detail) Handles the response if a {@code ResourceLoader}
+	 * (implementation detail) Handles the response if a {@code FileLoader}
 	 * started working.
 	 * 
-	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
+	 * @param resourceLoader {@code FileLoader} that loaded the certain resource
 	 */
-	public function onLoadStart(resourceLoader:ResourceLoader):Void {
+	public function onLoadStart(resourceLoader:FileLoader):Void {
 		var errorDistributor:LoadStartListener =
 			distributorControl.getDistributor(LoadStartListener);
 		errorDistributor.onLoadStart(resourceLoader);
 	}
 
 	/**
-	 * (implementation detail) Handles the response if a {@code ResourceLoader}
+	 * (implementation detail) Handles the response if a {@code FileLoader}
 	 * could not find a resource.
 	 * 
-	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
+	 * @param resourceLoader {@code FileLoader} that loaded the certain resource
 	 */
-	public function onLoadError(resourceLoader:ResourceLoader, errorCode:String, error):Boolean {
+	public function onLoadError(resourceLoader:FileLoader, errorCode:String, error):Boolean {
 		var errorDistributor:LoadErrorListener =
 			distributorControl.getDistributor(LoadErrorListener);
 		return errorDistributor.onLoadError(resourceLoader, errorCode, error);
 	}
 
 	/**
-	 * (implementation detail) Handles the response if a {@code ResourceLoader}
+	 * (implementation detail) Handles the response if a {@code FileLoader}
 	 * progressed loading.
 	 * 
-	 * @param resourceLoader {@code ResourceLoader} that loaded the certain resource
+	 * @param resourceLoader {@code FileLoader} that loaded the certain resource
 	 */
-	public function onLoadProgress(resourceLoader:ResourceLoader):Void {
+	public function onLoadProgress(resourceLoader:FileLoader):Void {
 		var progressDistributor:LoadProgressListener =
 			distributorControl.getDistributor(LoadProgressListener);
 		progressDistributor.onLoadProgress(resourceLoader);

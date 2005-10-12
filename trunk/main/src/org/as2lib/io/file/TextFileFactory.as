@@ -14,39 +14,29 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicInterface;
+import org.as2lib.io.file.TextFile;
 import org.as2lib.data.type.Byte;
-import org.as2lib.io.file.SimpleTextFile;
 
 /**
- * {@code XmlFile} is implementation of {@code TextFile} for a xml resource.
+ * {@code TextFileFactory} is a integration layer for {@link org.as2lib.util.TextFileLoader}.
+ * 
+ * <p>{@code TextFileLoader} applies the loaded resource to {@code TextFileFactory} 
+ * property. The implementations of {@code TextFileLoader} can variy the result of 
+ * the loaded file.
  * 
  * @author Martin Heidegger
  * @version 1.0
  */
-class org.as2lib.io.file.XmlFile extends SimpleTextFile {
-	
-	/** Container Xml file. */
-	private var xml:XML;
+interface org.as2lib.io.file.TextFileFactory extends BasicInterface {
 	
 	/**
-	 * Constructs a new {@code XmlFile}.
+	 * Creates a new {@code TextFile} instance for the loaded resource.
 	 * 
-	 * @param source content of the {@code XmlFile} to create
+	 * @param source content of the {@code TextFile} to create
 	 * @param size size in {@link Byte} of the loaded resource
-	 * @param uri location of the loaded resource
+	 * @param uri URI that has been loaded
+	 * @return {@code TextFile} that represents the resource
 	 */
-	public function XmlFile(source:String, size:Byte, uri:String) {
-		super(source, size, uri);
-		xml = new XML();
-		xml.parseXML(source);
-	}
-	
-	/**
-	 * Returns the XML content in form of a proper accessable {@code XML} instance.
-	 * 
-	 * @return {@code XML} instance to access the XML content
-	 */
-	public function getXml(Void):XML {
-		return xml;
-	}
+	public function createTextFile(source:String, size:Byte, uri:String):TextFile;
 }
