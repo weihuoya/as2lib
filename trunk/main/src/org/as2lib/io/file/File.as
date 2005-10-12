@@ -21,6 +21,8 @@ import org.as2lib.io.file.Resource;
  * 
  * <p>{@code File} provides access to the content of the real file.
  * 
+ * <p>{@code File} is <b>not</b> built to represent binary files.
+ * 
  * @author Martin Heidegger
  * @version 2.0
  */
