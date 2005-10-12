@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.except.IllegalArgumentException;
 
 /**
  * {@code Bit} is represents a bit value.

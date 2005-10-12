@@ -62,7 +62,7 @@ import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributo
  */
 class org.as2lib.env.event.EventSupport extends LogSupport implements EventListenerSource {
 	
-	/** Access to event control */
+	/** Access to event control. */
 	private var distributorControl:CompositeEventDistributorControl;
 	
 	/**
@@ -79,7 +79,11 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	 * @throws IllegalArgumentException if the listener does not match any expected type
 	 */
 	public function addListener(listener):Void {
+		try {
 		distributorControl.addListener(listener);
+		} catch(e) {
+			trace(e.toString());
+		}
 	}	
 
 	/**

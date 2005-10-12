@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -17,14 +17,11 @@
 import org.as2lib.io.file.AbstractFileLoader;
 import org.as2lib.data.type.Byte;
 import org.as2lib.data.holder.Iterator;
-import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.event.impulse.FrameImpulse;
 import org.as2lib.env.event.impulse.FrameImpulseListener;
-import org.as2lib.io.file.FileNotFoundException;
 import org.as2lib.io.file.FileLoader;
 import org.as2lib.io.file.FileNotLoadedException;
 import org.as2lib.data.type.Time;
-import org.as2lib.env.bean.factory.InitializingBean;
 import org.as2lib.app.exec.Executable;
 import org.as2lib.data.holder.Map;
 import org.as2lib.io.file.File;
@@ -133,6 +130,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	 *        the file was loaded.
 	 */
 	public function load(uri:String, method:String, parameters:Map, callBack:Executable):Void {
+		super.load(uri, method, parameters, callBack);
 		result = null;
 		if(parameters) {
 			var keys:Iterator = parameters.keyIterator();
@@ -141,7 +139,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 				holder[key.toString()] = parameters.get(key);
 			}
 		}
-		loadMovie(uri, holder, method);
+		holder.loadMovie(uri, method);
 		sendStartEvent();
 		FrameImpulse.getInstance().addFrameImpulseListener(this);
 	}
@@ -199,7 +197,9 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	public function onFrameImpulse(impulse:FrameImpulse):Void {
 		if (checkFinished()) {
 			successLoading();
-		} else if (checkTimeout()) {
+			return;
+		}
+		if (checkTimeout()) {
 			failLoading();
 		}
 	}
@@ -249,7 +249,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 		finished = true;
 		started = false;
 		endTime = getTimer();
-		sendErrorEvent(FILE_NOT_FOUND_ERROR, this);
+		sendErrorEvent(FILE_NOT_FOUND_ERROR, uri);
 		tearDown();
 	}
 	

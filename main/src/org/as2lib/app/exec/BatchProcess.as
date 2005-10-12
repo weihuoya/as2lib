@@ -15,16 +15,11 @@
  */
 
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.env.event.distributor.CompositeEventDistributorControl;
-import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributorControl;
-import org.as2lib.app.exec.Batch;
 import org.as2lib.app.exec.Process;
 import org.as2lib.app.exec.BatchStartListener;
 import org.as2lib.app.exec.BatchFinishListener;
 import org.as2lib.app.exec.BatchErrorListener;
 import org.as2lib.app.exec.BatchUpdateListener;
-import org.as2lib.core.BasicClass;
-import org.as2lib.data.type.Time;
 import org.as2lib.app.exec.ProcessErrorListener;
 import org.as2lib.app.exec.ProcessPauseListener;
 import org.as2lib.app.exec.ProcessFinishListener;
@@ -32,6 +27,7 @@ import org.as2lib.app.exec.ProcessResumeListener;
 import org.as2lib.app.exec.ProcessUpdateListener;
 import org.as2lib.app.exec.ProcessStartListener;
 import org.as2lib.app.exec.AbstractProcess;
+import org.as2lib.app.exec.Batch;
 
 /**
  * {@code BatchProcess} is a implementation of {@link Batch} for a list of
@@ -135,7 +131,7 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	 * 
 	 * @param info Finished Process.
 	 */
-	public function onFinishProcess(info:Process):Void {
+	public function onProcessFinish(info:Process):Void {
 		if (info == getCurrentProcess()) {
 			info.removeListener(this);
 			nextProcess();
@@ -210,7 +206,7 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 			error = new IllegalArgumentException("Unexpected onProcessError occured from "+info+".", this, arguments);
 		}
 		
-		var result:Boolean = publishError(error);
+		result = publishError(error);
 		if (!result) {
 			finish();
 		}

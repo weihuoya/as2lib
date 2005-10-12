@@ -1,9 +1,5 @@
 import org.as2lib.data.type.Byte;
 import org.as2lib.io.file.SimpleTextFile;
-import org.as2lib.data.type.MultilineString;
-import org.as2lib.util.StringUtil;
-import org.as2lib.env.log.LogManager;
-import org.as2lib.env.log.Logger;
 import org.as2lib.data.holder.Properties;
 import org.as2lib.data.holder.properties.PropertiesParser;
 
