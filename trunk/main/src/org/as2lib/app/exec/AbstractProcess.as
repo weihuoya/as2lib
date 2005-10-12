@@ -107,7 +107,6 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	 * Constructs a new {@code AbstractProcess}.
 	 */
 	private function AbstractProcess(Void) {
-		super();
 		dC = distributorControl;
 		acceptListenerType(ProcessStartListener);
 		acceptListenerType(ProcessErrorListener);

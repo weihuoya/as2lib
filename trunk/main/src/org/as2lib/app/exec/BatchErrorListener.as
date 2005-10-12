@@ -37,5 +37,5 @@ interface org.as2lib.app.exec.BatchErrorListener {
      * @param error error that occured during execution
      * @return {@code true} to consume the event
      */
-	public function onBatchError(batch:Batch, error):Void;
+	public function onBatchError(batch:Batch, error):Boolean;
 }

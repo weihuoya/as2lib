@@ -1,3 +1,19 @@
+﻿/*
+ * Copyright the original author or authors.
+ * 
+ * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.mozilla.org/MPL/MPL-1.1.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.properties.SimpleProperties;
 import org.as2lib.data.holder.Properties;
@@ -51,6 +67,8 @@ class org.as2lib.data.holder.properties.PropertiesParser extends BasicClass {
 		var lines:MultilineString = new MultilineString(source);
 		var i:Number;
 		var c:Number = lines.getLineCount();
+		var key:String;
+		var value:String;
 		var formerKey:String;
 		var formerValue:String;
 		var useNextLine:Boolean = false;;
@@ -67,8 +85,8 @@ class org.as2lib.data.holder.properties.PropertiesParser extends BasicClass {
 					useNextLine = false;
 				} else {
 					var sep:Number = getSeperation(line);
-					var key:String = StringUtil.rightTrim(line.substr(0,sep));
-					var value:String = line.substring(sep+1);
+					key = StringUtil.rightTrim(line.substr(0,sep));
+					value = line.substring(sep+1);
 					formerKey = key;
 					formerValue = value;
 				}
@@ -76,7 +94,7 @@ class org.as2lib.data.holder.properties.PropertiesParser extends BasicClass {
 				value = StringUtil.leftTrim(value);
 				// Allow normal lines
 				if (value.charAt(value.length-1) == "\\") {
-					value = value.substring(0, value.length-2);
+					formerValue = value =  value.substr(0, value.length-1);
 					useNextLine = true;
 				} else {
 					// Commit Property
