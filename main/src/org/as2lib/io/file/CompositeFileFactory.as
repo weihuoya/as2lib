@@ -33,17 +33,20 @@ import org.as2lib.app.exec.ForEachExecutable;
  * kinds of file formats. {@code CompositeFileFactory} allows different processing
  * of resources depending to the extension of the loaded file.
  * 
- * <p>If a certain extension has not been specially set
+ * <p>If a certain extension has not been specially set it uses the {@code defaultFileFactory}
+ * to be set with {@code setDefaultFileFactory}.
+ * 
+ * <p>It uses {@link SimpleFileFactory} as default if no other has been set.
  * 
  * @author Martin Heidegger
- * @version 1.0
+ * @version 1.1
  */
 class org.as2lib.io.file.CompositeFileFactory extends BasicClass implements FileFactory {
 
 	/** {@code FileFactory} to be used if no other {@code FileFactory is available. */
     private var defaultFileFactory:FileFactory;
     
-    /** */
+    /** Maps {@code FileFactory}s to file extensions. */
     private var extensionFactories:Map;
     
     /**
@@ -102,7 +105,7 @@ class org.as2lib.io.file.CompositeFileFactory extends BasicClass implements File
 	 * <p>Proper example:
 	 * <code>
 	 *   var compositeFileFactory:CompositeFileFactory = new CompositeFileFactory();
-	 *   compositeFileFactory.setFileFactoryByExtension("txt", new SimpleFileFactory());
+	 *   compositeFileFactory.putFileFactoryByExtension("txt", new SimpleFileFactory());
 	 * </code>
 	 * 
 	 * @param extension extension of the file that should be recognized by the
@@ -123,7 +126,7 @@ class org.as2lib.io.file.CompositeFileFactory extends BasicClass implements File
 	 * <p>Proper example:
 	 * <code>
 	 *   var compositeFileFactory:CompositeFileFactory = new CompositeFileFactory();
-	 *   compositeFileFactory.setFileFactoryByExtensions(["txt", "prop"],
+	 *   compositeFileFactory.putFileFactoryByExtensions(["txt", "prop"],
 	 *   	new SimpleFileFactory());
 	 * </code>
 	 * 

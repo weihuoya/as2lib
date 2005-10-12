@@ -73,7 +73,12 @@ import org.as2lib.env.event.distributor.CompositeEventDistributorControl;
  * @author Martin Heidegger
  * @version 1.0
  * @see Process
- * @see ProcessListener
+ * @see ProcessStartListener
+ * @see ProcessFinishListener
+ * @see ProcessErrorListener
+ * @see ProcessPauseListener
+ * @see ProcessResumeListener
+ * @see ProcessUpdateListener
  */
 class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	implements Process,
@@ -95,7 +100,7 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	/** Contains the possible parent. */
 	private var parent:Process;
 	
-	/** TODO:Documentation */
+	/** Shorter name for the concrete distributorControl. */
 	private var dC:CompositeEventDistributorControl;
 	
 	/**
@@ -104,12 +109,12 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	private function AbstractProcess(Void) {
 		super();
 		dC = distributorControl;
-		dC.acceptListenerType(ProcessStartListener);
-		dC.acceptListenerType(ProcessErrorListener);
-		dC.acceptListenerType(ProcessUpdateListener);
-		dC.acceptListenerType(ProcessPauseListener);
-		dC.acceptListenerType(ProcessResumeListener);
-		dC.acceptListenerType(ProcessFinishListener);
+		acceptListenerType(ProcessStartListener);
+		acceptListenerType(ProcessErrorListener);
+		acceptListenerType(ProcessUpdateListener);
+		acceptListenerType(ProcessPauseListener);
+		acceptListenerType(ProcessResumeListener);
+		acceptListenerType(ProcessFinishListener);
 		errors = new Array();
 		subProcesses = new HashMap();
 		paused = false;
@@ -357,36 +362,54 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 		return sendErrorEvent(error);
 	}
 	
+	/**
+	 * Internal method to send update events for {@link ProcessUpdateListener}.
+	 */
 	private function sendUpdateEvent(Void):Void {
 		var updateDistributor:ProcessUpdateListener
 			= dC.getDistributor(ProcessUpdateListener);
 		updateDistributor.onProcessUpdate(this);
 	}
 	
+	/**
+	 * Internal method to send pause events for {@link ProcessPauseListener}.
+	 */
 	private function sendPauseEvent(Void):Void {
 		var pauseDistributor:ProcessPauseListener
 			= dC.getDistributor(ProcessPauseListener);
 		pauseDistributor.onProcessPause(this);
 	}
 	
+	/**
+	 * Internal method to send resume events for {@link ProcessResumeListener}.
+	 */
 	private function sendResumeEvent(Void):Void {
 		var resumeDistributor:ProcessResumeListener
 			= dC.getDistributor(ProcessResumeListener);
 		resumeDistributor.onProcessResume(this);
 	}
 	
+	/**
+	 * Internal method to send start events for {@link ProcessStartListener}.
+	 */
 	private function sendStartEvent(Void):Void {
 		var startDistributor:ProcessStartListener
 			= dC.getDistributor(ProcessStartListener);
 		startDistributor.onProcessStart(this);
 	}
 	
+	/**
+	 * Internal method to send error events for {@link ProcessErrorListener}.
+	 */
 	private function sendErrorEvent(error):Boolean {
 		var errorDistributor:ProcessErrorListener
 			= dC.getDistributor(ProcessErrorListener);
 		return errorDistributor.onProcessError(this, error);
 	}
 	
+	/**
+	 * Internal method to send finish events for {@link ProcessFinishListener}.
+	 */
 	private function sendFinishEvent(Void):Void {
 		var finishDistributor:ProcessFinishListener
 			= dC.getDistributor(ProcessFinishListener);

@@ -19,7 +19,10 @@ import org.as2lib.env.event.distributor.CompositeEventDistributorControl;
 import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributorControl;
 import org.as2lib.app.exec.Batch;
 import org.as2lib.app.exec.Process;
-import org.as2lib.app.exec.BatchListener;
+import org.as2lib.app.exec.BatchStartListener;
+import org.as2lib.app.exec.BatchFinishListener;
+import org.as2lib.app.exec.BatchErrorListener;
+import org.as2lib.app.exec.BatchUpdateListener;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.type.Time;
 import org.as2lib.app.exec.ProcessErrorListener;
@@ -41,8 +44,10 @@ import org.as2lib.app.exec.AbstractProcess;
  * composite to execute a {@code BatchProcess} within another
  * {@code BatchProcess}.
  * 
- * <p>It supports beneath the {@link ProcessListener} the events for
- * {@link BatchListener}.
+ * <p>It supports beneath all listeners of {@link Process} seperate events for
+ * {@code Batch} processing:
+ *   {@link BatchStartListener}, {@link BatchFinishListener},
+ *   {@link BatchUpdateListener} and {@link BatchErrorListener}
  *
  * @author Martin Heidegger
  * @version 1.0
@@ -70,7 +75,10 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	 * Constructs a new {@code BatchProcess}
 	 */
 	public function BatchProcess(Void) {
-		dC.acceptListenerType(BatchListener);
+		acceptListenerType(BatchStartListener);
+		acceptListenerType(BatchFinishListener);
+		acceptListenerType(BatchErrorListener);
+		acceptListenerType(BatchUpdateListener);
 		list = new Array();
 		
 		percent = 0;
@@ -138,14 +146,17 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 		}
 	}
 	
+	/**
+	 * Internal helper to start the next process.
+	 */
 	private function nextProcess(Void):Void {
 		if (current < list.length-1) {
 			updatePercent(100);
-			sendUpdateEvent();
 			current ++;
 			var c:Process = list[current];
 			c.setParentProcess(this);
 			c.addListener(this);
+			sendUpdateEvent();
 			c.start();
 		} else {
 			finish();
@@ -301,5 +312,66 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	 */
 	private function updatePercent(cP:Number):Void {
 		percent = 100/list.length*(current+(1/100*cP));
+	}
+	
+	
+	/**
+	 * Internal method to send error events.
+	 * 
+	 * @param error error to be provided
+	 * @return {@code true} to consume the event
+	 */
+	private function sendErrorEvent(error):Boolean {
+		var result:Boolean = false;
+		if (super.sendErrorEvent(error)) {
+			return true;
+		}
+		var errorDistributor:BatchErrorListener =
+				dC.getDistributor(BatchErrorListener);
+		return errorDistributor.onBatchError(this, error);
+	}
+	
+	/**
+	 * Internal method to send finish events.
+	 */
+	private function sendFinishEvent(Void):Void {
+		super.sendFinishEvent();
+		var finishDistributor:BatchFinishListener =
+				dC.getDistributor(BatchFinishListener);
+		finishDistributor.onBatchFinish(this);
+	}
+	
+	/**
+	 * Internal method to send pause events.
+	 */
+	private function sendPauseEvent(Void):Void {
+		sendUpdateEvent();
+	}
+	
+	/**
+	 * Internal method to send resume events.
+	 */
+	private function sendResumeEvent(Void):Void {
+		sendUpdateEvent();
+	}
+	
+	/**
+	 * Internal method to send update events.
+	 */
+	private function sendUpdateEvent(Void):Void {
+		super.sendUpdateEvent();
+		var finishDistributor:BatchUpdateListener =
+				dC.getDistributor(BatchUpdateListener);
+		finishDistributor.onBatchUpdate(this);
+	}
+	
+	/**
+	 * Internal method to send start events.
+	 */
+	private function sendStartEvent(Void):Void {
+		super.sendStartEvent();
+		var finishDistributor:BatchStartListener =
+				dC.getDistributor(BatchStartListener);
+		finishDistributor.onBatchStart(this);
 	}
 }

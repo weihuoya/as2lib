@@ -23,8 +23,7 @@ import org.as2lib.io.file.Resource;
 import org.as2lib.data.type.Time;
 
 /**
- * {@code ResourceLoader} is a {@link Process} to handle the loading of a external
- * resource.
+ * {@code ResourceLoader} is built to handle the loading of a external resources.
  * 
  * <p>A {@code ResourceLoader} allows to get a resource and create a representation
  * of the certain resource to allow proper access.
@@ -35,55 +34,95 @@ import org.as2lib.data.type.Time;
  * 
  * <p>Example to handle the loading of a resource:
  * <code>
+ *   import org.as2lib.io.file.AbstractResourceLoader;
  *   import org.as2lib.io.file.ResourceLoader;
- *   import org.as2lib.io.file.ResourceListener;
+ *   import org.as2lib.io.file.LoadStartListener;
+ *   import org.as2lib.io.file.LoadCompleteListener;
+ *   import org.as2lib.io.file.LoadProgressListener;
+ *   import org.as2lib.io.file.LoadErrorListener;
  *   
- *   class Main implements ResourceListener {
+ *   class Main implements
+ *   	LoadStartListener,
+ *   	LoadCompleteListener,
+ *   	LoadErrorListener,
+ *   	LoadProgressListener {
  *   
  *     public function main(loader:ResourceLoader):Void {
- *       loader.setUri("test.txt");
- *       loader.start();
+ *       loader.addListener(this);
+ *       loader.load("test.txt");
  *     }
  *     
- *     public function onResourceLoad(loader:ResourceLoader):Void {
+ *     public function onLoadComplete(loader:ResourceLoader):Void {
  *       var resource = loader.getResource();
  *       // Do anything you like....
  *     }
  *     
- *     public function onResourceNotFound(uri:String):Void {
- *       trace("Resource could not be found"+uri);
+ *     public function onLoadError(loader:ResourceLoader, errorCode:String, errror):Boolean {
+ *       if (errorCode == AbstractResourceLoader.FILE_NOT_FOUND_ERROR) {
+ *       	trace("Resource could not be found"+error);
+ *       }
+ *       return false
  *     }
  *     
- *     public function onResourceProgress(loader:ResourceLoader):Void {
+ *     public function onLoadProgress(loader:ResourceLoader):Void {
  *       trace("loaded: "+loader.getPercentage()+"% of "+loader.getUri());
  *     }
  *     
- *     public function onResourceStartLoading(loader:ResourceLoader):Void {
+ *     public function onLoadStart(loader:ResourceLoader):Void {
  *     	 trace("started loading: "+loader.getUri());
  *     }
  *   }
  * </code>
  * 
- * TODO: Remove Process restriction! Use Mediator!
- * TODO: .load(uri, method, params) !!
- * TODO: Are configuration methods necessary ? - no
- * 
  * @author Martin Heidegger
- * @version 1.0
+ * @version 2.0
  */
 interface org.as2lib.io.file.ResourceLoader extends EventListenerSource {
 	
+	/**
+	 * Loads a certain resource.
+	 * 
+	 * <p>It sends http request by using the passed-in {@code uri}, {@code method}
+	 * and {@code parameters}.
+	 * 
+	 * <p>If you only need to listen if the {@code Resource} finished loading you can
+	 * apply a {@code callBack} that gets called if the {@code Resource} is loaded.
+	 * 
+	 * <p>Example of using the callback:
+	 * <code>
+	 *   import org.as2lib.io.file.ResourceLoader;
+	 *   import org.as2lib.app.exec.Call;
+	 *   
+	 *   class Main {
+	 *     public function main(loader:ResourceLoader) {
+	 *       loader.load("test.txt", null, null, new Call(this, resource); 
+	 *     }
+	 *     
+	 *     public function finish(resource:Resource):Void {
+	 *       // Processing the resource ...
+	 *     }
+	 *   }
+	 *   
+	 * </code>
+	 * 
+	 * @param uri location of the resource to load
+	 * @param parameters (optional) parameters for loading the resource
+	 * @param method (optional) POST/GET as method for submitting the parameters,
+	 *        default method used if {@code method} was not passed-in is POST.
+	 * @param callBack (optional) {@link Executable} to be executed after the
+	 *        the resource was loaded.
+	 */
 	public function load(uri:String, method:String, params:Map, callBack:Executable):Void;
 	
 	/**
-	 * Returns for the location of the resource that was requested to load.
+	 * Returns the URI of the resource that was requested to load.
 	 * 
-	 * @return location of the resource to load
+	 * @return URI of the resource to load
 	 */
 	public function getUri(Void):String;
 	
 	/**
-	 * Sets the {@code method} to pass request parameters for request.
+	 * Returns the {@code method} to pass request parameters for request.
 	 * 
 	 * @return method to pass request parameters
 	 */
@@ -139,18 +178,25 @@ interface org.as2lib.io.file.ResourceLoader extends EventListenerSource {
 	 */
 	public function getTransferRate(Void):Bit;
 	
+	
 	/**
-	 * TODO: Documentation!!!
+	 * Estimates the approximate time until the resource was loaded.
+	 * 
+	 * @return estimated time until finish of loading
 	 */
 	public function getEstimatedRestTime(Void):Time;
 	
 	/**
-	 * TODO: Documentation!!!
+	 * Estimates the approximate time for the complete loading.
+	 * 
+	 * @return estimated duration at the end of the loading
 	 */
 	public function getEstimatedTotalTime(Void):Time;
 	
 	/**
-	 * TODO: Documentation!!!
+	 * Returns the duration it loads the certain resource.
+	 * 
+	 * @return time difference between start time and end time/current time.
 	 */
 	public function getDuration(Void):Time;
 }

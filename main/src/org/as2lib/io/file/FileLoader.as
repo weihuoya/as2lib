@@ -37,28 +37,26 @@ import org.as2lib.app.exec.Executable;
  * <p>{@link FileFactory} allows to generate different {@code File} implementations
  * for the loaded content.
  * 
- * <p>{@code FileLoader} is implemented as {@link org.as2lib.app.execProcess} and
- * can be completly integrated in {@code Process} based code.
- * 
- * <p>{@code FileLoader} therefore represents the time consuming part of access
- * to files and therefore contains a event system for handling the loading of
- * the events. It is possible to add listeners using {@code addListener}.
+ * <p>{@code FileLoader} represents the time consuming part of accessing files
+ * and therefore contains a event system to add listeners to listen to the
+ * concrete events. It is possible to add listeners using {@code addListener}.
  * 
  * <p>Example listener:
  * <code>
- *   import org.as2lib.io.file.ResourceProgressListener;
- *   import org.as2lib.io.file.ResourceStartListener;
- *   import org.as2lib.io.file.ResourceCompleteListener;
- *   import org.as2lib.io.file.ResourceErrorListener;
+ *   import org.as2lib.io.file.AbstractResourceLoader;
+ *   import org.as2lib.io.file.LoadProgressListener;
+ *   import org.as2lib.io.file.LoadStartListener;
+ *   import org.as2lib.io.file.LoadCompleteListener;
+ *   import org.as2lib.io.file.LoadErrorListener;
  *   import org.as2lib.io.file.ResourceLoader;
  *   import org.as2lib.io.file.Resource;
  *   
  *   class MyFileListener implements 
- *        ResourceProgressListener, ResourceStartListener,
- *        ResourceCompleteListener, ResourceErrorListener {
+ *        LoadProgressListener, LoadStartListener,
+ *        LoadCompleteListener, LoadErrorListener {
  *        
- *     public function onResourceComplete(resourceLoader:ResourceLoader):Void {
- *       var file:File = File(resourceLoader.getResource);
+ *     public function onLoadComplete(resourceLoader:ResourceLoader):Void {
+ *       var file:File = File(resourceLoader.getResource());
  *       if (file != null) {
  *         // Proper file available
  *       } else {
@@ -66,18 +64,18 @@ import org.as2lib.app.exec.Executable;
  *       }
  *     }
  *     
- *     public function onResourceError(errorCode:String, error):Void {
- *       if (errorCode == FileEvent.FILE_NOT_FOUND) {
+ *     public function onLoadError(resourceLoader:ResourceLoader, errorCode:String, error):Void {
+ *       if (errorCode == AbstractResourceLoader.FILE_NOT_FOUND) {
  *         var notExistantUrl = error;
  *         // Use that url
  *       }
  *     }
  *     
- *     public function onResourceStart(resourceLoader:ResourceLoader) {
+ *     public function onLoadStart(resourceLoader:ResourceLoader) {
  *       // show that this file just gets loaded
  *     }
  *     
- *     public function onResourceProgress(resourceLoader:ResourceLoader) {
+ *     public function onLoadProgress(resourceLoader:ResourceLoader) {
  *       // update the percentage display with resourceLoader.getPercentage();
  *     }
  *   }
@@ -87,10 +85,9 @@ import org.as2lib.app.exec.Executable;
  * <code>
  *   import org.as2lib.io.file.FileLoader;
  *   
- *   var process:FileLoader = new FileLoader();
- *   process.setUri("myFile.xml");
- *   process.addListener(new MyFileListener());
- *   process.start();
+ *   var fileLoader:FileLoader = new FileLoader();
+ *   fileLoader.addListener(new MyFileListener());
+ *   fileLoader.load("uri");
  * </code>
  * 
  * @author Martin Heidegger
@@ -113,14 +110,8 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 	 * @param fileFactory (optional) {@code FileFactory to create the {@code File}
 	 *        implementations, {@link SimpleFileFactory} gets used if no custom
 	 *        {@code FileFactory} gets passed-in
-	 * @param uri location of the resource to load
-	 * @param parameters (optional) parameters for loading the resource
-	 * @param method (optional) POST/GET as method for submitting the parameters,
-	 *        default is POST.
 	 */
-	public function FileLoader(fileFactory:FileFactory, uri:String, parameters:Map, method:String) {
-		super(uri, parameters, method);		
-		
+	public function FileLoader(fileFactory:FileFactory) {
 		if (!fileFactory) {
 			fileFactory = new SimpleFileFactory();
 		}
@@ -128,7 +119,21 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 	}
 	
 	/**
-	 * Starts loading the resource.
+	 * Loads a certain file by a http request.
+	 * 
+	 * <p>It sends http request by using the passed-in {@code uri}, {@code method}
+	 * and {@code parameters}. The responding file will be passed to the set
+	 * {@code FileFactory}.
+	 * 
+	 * <p>If you only need to listen if the {@code File} finished loading you can
+	 * apply a {@code callBack} that gets called if the {@code File} is loaded.
+	 * 
+	 * @param uri location of the resource to load
+	 * @param parameters (optional) parameters for loading the resource
+	 * @param method (optional) POST/GET as method for submitting the parameters,
+	 *        default method used if {@code method} was not passed-in is POST.
+	 * @param callBack (optional) {@link Executable} to be executed after the
+	 *        the resource was loaded.
 	 */
 	public function load(uri:String, method:String, parameters:Map, callBack:Executable):Void {
 		super.load(uri, method, parameters, callBack);
@@ -167,7 +172,7 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 	 * Returns the loaded resource.
 	 * 
 	 * @return resource that has been loaded
-	 * @throws FileNotLoadedException if the resource has not been loaded yet.
+	 * @throws ResourceNotLoadedException if the resource has not been loaded yet.
 	 */
 	public function getResource(Void):Resource {
 		return getFile();
@@ -177,7 +182,7 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 	 * Returns the loaded {@code File}.
 	 * 
 	 * @return {@code File} that has been loaded
-	 * @throws FileNotLoadedException if the resource has not been loaded yet.
+	 * @throws ResourceNotLoadedException if the resource has not been loaded yet.
 	 */
 	public function getFile(Void):File {
 		if (file == null) {
@@ -192,6 +197,7 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 	private function initHelper(Void):Void {
 		var owner:FileLoader = this;
 		helper = new LoadVars();
+		// Watching _bytesLoaded allows realtime events
 		helper.watch(
 			"_bytesLoaded",
 			function(prop, oldValue, newValue) {
@@ -203,7 +209,7 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 			}
 		);
 		
-		// Using XML Template to get the onData Event.
+		// Using LoadVars Template to get the onData Event.
 		helper.onData = function(data) {
 			owner["handleDataEvent"](data);
 		};

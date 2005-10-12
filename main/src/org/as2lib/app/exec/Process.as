@@ -25,13 +25,14 @@ import org.as2lib.data.type.Time;
  * that have to be delayed to prevent player timeouts.
  * 
  * <p>Any {@code Process} implementation can be started with {@link #start}.
+ *
+ * <p>Any {@code Process} can send events defined in following interfaces:
+ * {@link ProcessStartListener}, {@link ProcessErrorListener},
+ * {@link ProcessFinishListener}, {@link ProcessPauseListener},
+ * {@link ProcessResumeListener}, {@link ProcessUpdateListener}
  * 
- * <p>It allows to add a {@code ProcessListener} by {@link #addListener} to observe
- * the state of the {@code Process}. Any added observer will be executed by 
- * the start of the process ({@code onStartProcess}), if the process pauses execution
- * ({@code onFinishProcess}), on resume of execution ({@code onResumeProcess}), if
- * a error occured ({@code onProcessError}) and if the {@code Process} finished
- * execution.
+ * <p>To listen to the events implement one or more of the above interfaces and
+ * add the listener with {@code addListener} as listener to the {@code Process}.
  * 
  * @author Martin Heidegger
  * @version 1.0
@@ -50,7 +51,7 @@ interface org.as2lib.app.exec.Process extends EventListenerSource {
 	 * <p>Problematic example:
 	 * <code>
 	 * 
-	 *   class MyClass implements FinishProcessListener {
+	 *   class MyClass implements ProcessFinishListener {
 	 *     private var processStarted:Boolean
 	 *     
 	 *     public function MyClass(Void) {
