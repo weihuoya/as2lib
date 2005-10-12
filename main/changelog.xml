@@ -17,6 +17,20 @@
       	    <change-rename to="matches"></change-rename>
      	  </entry>
       	</day>
+        <day value="9">
+          <entry type="add" package="org.as2lib.app.exec" class="BatchStartListener"/>
+          <entry type="add" package="org.as2lib.app.exec" class="BatchFinishListener"/>
+          <entry type="add" package="org.as2lib.app.exec" class="BatchUpdateListener"/>
+          <entry type="add" package="org.as2lib.app.exec" class="BatchErrorListener"/>
+          <entry type="remove" package="org.as2lib.app.exec" class="BatchListener"/>
+          <entry type="add" package="org.as2lib.app.exec" class="ProcessStartListener"/>
+          <entry type="add" package="org.as2lib.app.exec" class="ProcessFinishListener"/>
+          <entry type="add" package="org.as2lib.app.exec" class="ProcessPauseListener"/>
+          <entry type="add" package="org.as2lib.app.exec" class="ProcessResumeListener"/>
+          <entry type="add" package="org.as2lib.app.exec" class="ProcessUpdateListener"/>
+          <entry type="add" package="org.as2lib.app.exec" class="ProcessErrorListener"/>
+          <entry type="remove" package="org.as2lib.app.exec" class="ProcessListener"/>
+        </day>
         <day value="8">
           <entry type="add" package="org.as2lib.env.log.parser" class="XmlLogConfigurationParser">Parses xml log configurations.</entry>
           <entry type="add" package="org.as2lib.env.log" class="LogConfigurationParser">Interface for log configuration parsers.</entry>
@@ -27,6 +41,28 @@
         </day>
       </month>
       <month value="9">
+        <day value="21">
+          <entry type="add" package="org.as2lib.test.unit" class="TestCaseRunner" />
+          <entry type="add" package="org.as2lib.test.unit" class="TestSuiteRunner" />
+          <entry type="remove" package="org.as2lib.test.unit" class="Test" method="getTestResult" />
+          <entry type="add" package="org.as2lib.test.unit" class="Test" method="getTestRunner" />
+          <entry type="change" package="org.as2lib.test.unit" class="TestRunner">Changed from a concrete class to a interface</entry>
+        </day>
+        <day value="18">
+          <entry type="add" package="org.as2lib.app.exec" class="Processor">Class to process a StepByStepProcess</entry>
+          <entry type="add" package="org.as2lib.app.exec" class="StepByStepProcess">Interface to define step based processing</entry>
+        </day>
+        <day value="13">
+          <entry type="change" package="org.as2lib.io.file" class="BitFormat">
+            <change-rename to="org.as2lib.data.type.Bit" />
+          </entry>
+          <entry type="change" package="org.as2lib.io.file" class="ByteFormat">
+            <change-rename to="org.as2lib.data.type.Byte" />
+          </entry>
+          <entry type="add" package="org.as2lib.data.type" class="Time">Holder for time distances</entry>
+          <entry type="add" package="org.as2lib.env.event" class="EventSupport">Simple access to CompositeEventDistributorControl</entry>
+          <entry type="add" package="org.as2lib.env.log" class="LogSupport">Simple access to logging</entry>
+        </day>
         <day value="10">
           <entry type="add" package="org.as2lib.env.log" class="LogManager" method="getLoggerByObject">Convenience method that releases you from evaluating the logger name yourself.</entry>
           <entry type="add" package="org.as2lib.util" class="MethodUtil"></entry>
