@@ -32,7 +32,7 @@ import org.as2lib.data.holder.properties.PropertiesParser;
  * @author Martin Heidegger
  * @author Simon Wacker
  * @version 1.0
- * @see Properties
+ * @see PropertiesParser
  */
 class org.as2lib.io.file.PropertiesFile extends SimpleTextFile {
 	
