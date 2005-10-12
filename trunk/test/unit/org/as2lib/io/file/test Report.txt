@@ -1,0 +1,17 @@
+test.swf Filmbericht
+---------------------
+Bild #    Bild Byte    Gesamt Byte    Szene
+------    ---------    -----------    ----------------
+      1             64             64    Szene 1 (AS 2.0-Klassen Exportbild)
+
+Szene                        Form Byte    Text Byte    ActionScript Byte
+-------------------------    ---------    ---------    -----------------
+Szene 1                                0             0                    30
+
+ActionScript Byte    Position
+-----------------    --------
+                30    Szene 1:Ebene 1:1
+
+
+
+

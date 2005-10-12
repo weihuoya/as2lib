@@ -7,7 +7,7 @@ import org.as2lib.app.exec.BatchListener;
 import org.as2lib.app.exec.TProcessListener;
 import org.as2lib.test.mock.MockControl;
 
-class org.as2lib.app.exec.TBatch extends TProcess implements ProcessListener {
+class org.as2lib.app.exec.TBatch extends TProcess {
 	
 	public function createProcess(Void):Process {
 		return createBatch();
@@ -23,11 +23,12 @@ class org.as2lib.app.exec.TBatch extends TProcess implements ProcessListener {
 	
 	public function testAddProcess(Void):Void {
 		var batch:Batch = createBatch();
-		var process:DummyProcess = new DummyProcess();
+		var processControl:MockControl = new MockControl(Process);
+		var process:Process = processControl.getMock();
 		var batchListener:DummyBatchListener = new DummyBatchListener(batch, this);
 		batch.addProcess(process);
 		batch.addProcess(process);
-		batch.addBatchListener(batchListener);
+		batch.addListener(batchListener);
 		batch.start();
 		pause();
 	}

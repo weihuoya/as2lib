@@ -14,6 +14,6 @@ class org.as2lib.app.exec.TTimeout extends TestCase {
 	
 	public function call(a) {
 		assertEquals(a, 1);
-		resume();
+		//resume();
 	}
 }

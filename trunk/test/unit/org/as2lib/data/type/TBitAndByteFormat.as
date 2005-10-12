@@ -1,8 +1,9 @@
 ﻿import org.as2lib.test.unit.TestCase;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.data.type.Byte;
 import org.as2lib.data.type.Bit;
 
-class org.as2lib.io.file.TBitAndByteFormat extends TestCase {
+class org.as2lib.data.type.TBitAndByteFormat extends TestCase {
 	private var byteFormat:Byte;
 	private var bitFormat:Bit;
 	
@@ -11,11 +12,8 @@ class org.as2lib.io.file.TBitAndByteFormat extends TestCase {
 		bitFormat = new Bit(1234*8);
 	}
 	public function testIllegalFloatingPoints(Void):Void {
-		byteFormat.setFloatingPoints(1);
-		byteFormat.setFloatingPoints(-1);
-		assertEquals(".setFloatingsPoints should not react to -1", byteFormat.toString(), "1.2KB");
-		byteFormat.setFloatingPoints(null);
-		assertEquals(".setFloatingsPoints should not react to null", byteFormat.toString(), "1.2KB");
+		assertThrows(".setFloatingPoints has to throw a IllegalArgumentException if -1 is used", IllegalArgumentException, byteFormat, "setFloatingPoints", [-1]);
+		assertThrows(".setFloatingPoints has to throw a IllegalArgumentException if null is used", IllegalArgumentException, byteFormat, "setFloatingPoints", [null]);
 	}
 	public function testSpecialFloatingPoints(Void):Void {
 		byteFormat.setFloatingPoints(2);

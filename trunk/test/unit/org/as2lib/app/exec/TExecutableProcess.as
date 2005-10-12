@@ -10,7 +10,7 @@ class org.as2lib.app.exec.TExecutableProcess extends TProcess {
 	}
 	
 	public function callTest(paramA:String, paramB:String, paramC:String):Void {
-		assertEquals("There has to get exactly 3 parameters", arguments.length, 3);
+		assertEquals("There should be exactly 3 parameters", arguments.length, 3);
 		assertEquals("Param A should be 'a'", paramA, "a");
 		assertEquals("Param B should be 'b'", paramB, "b");
 		assertEquals("Param C should be 'c'", paramC, "c");
