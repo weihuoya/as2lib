@@ -8,7 +8,27 @@ import org.as2lib.util.StringUtil;
  * {@code PropertiesParser} parses a properties source string into a {@link Properties}
  * instance.
  * 
+ * <p>The source string contains simple key-value pairs. Multiple pairs are
+ * separated by line terminators (\n or \r or \r\n). Keys are separated from
+ * values with the characters '=', ':' or a white space character.
+ * 
+ * <p>Comments are also supported. Just add a '#' or '!' character at the
+ * beginning of your comment-line.
+ * 
+ * <p>If you want to use any of the special characters in your key or value you
+ * must escape it with a back-slash character '\'.
+ * 
+ * <p>The key contains all of the characters in a line starting from the first
+ * non-white space character up to, but not including, the first unescaped
+ * key-value-separator.
+ * 
+ * <p>The value contains all of the characters in a line starting from the first
+ * non-white space character after the key-value-separator up to the end of the
+ * line. You may of course also escape the line terminator and create a value
+ * across multiple lines.
+ * 
  * @author Martin Heidegger
+ * @author Simon Wacker
  * @version 1.0
  */
 class org.as2lib.data.holder.properties.PropertiesParser extends BasicClass {
@@ -67,6 +87,12 @@ class org.as2lib.data.holder.properties.PropertiesParser extends BasicClass {
 		return result;
 	}
 	
+	/**
+	 * Returns the position at which key and value are separated.
+	 * 
+	 * @param line the line that contains the key-value pair
+	 * @return the position at which key and value are separated
+	 */
 	private function getSeperation(line:String):Number {
 		var i:Number;
 		var l:Number = line.length;
