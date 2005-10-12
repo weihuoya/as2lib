@@ -112,7 +112,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	 * 
 	 * @param holder {@code MovieClip} instance to load the {@code .swf} into
 	 */
-	public function SwfLoader(holder:MovieClip) {
+	public function SwfFileLoader(holder:MovieClip) {
 		this.holder = holder;
 	}
 	

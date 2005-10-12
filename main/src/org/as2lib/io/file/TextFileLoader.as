@@ -112,7 +112,7 @@ class org.as2lib.io.file.TextFileLoader extends AbstractFileLoader implements Fi
 	 *        {@code TextFile} implementations, {@link SimpleTextFileFactory}
 	 *        gets used if no custom {@code TextFileFactory} gets passed-in
 	 */
-	public function FileLoader(textFileFactory:TextFileFactory) {
+	public function TextFileLoader(textFileFactory:TextFileFactory) {
 		if (!textFileFactory) {
 			textFileFactory = new SimpleTextFileFactory();
 		}
