@@ -18,6 +18,7 @@ import org.as2lib.test.unit.TestCase;
 import org.as2lib.util.ArrayUtil;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.data.holder.NoSuchElementException;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * Test of all methods in ArrayUtil.
@@ -25,6 +26,10 @@ import org.as2lib.data.holder.NoSuchElementException;
  * @author Martin Heidegger
  */
 class org.as2lib.util.TArrayUtil extends TestCase {
+	
+	public function setUp(Void):Void {
+		ReflectUtil.getTypeNameForType(ArrayUtil);
+	}
 	
 	/**
 	 * Clones a array and validates the correctness of the cloning
@@ -36,7 +41,7 @@ class org.as2lib.util.TArrayUtil extends TestCase {
 		
 		assertNotSame("The result should not be the same as the test", result, test);
 		
-		for(var i in result) {
+		for(var i:String in result) {
 			var index:Number = Number(i);
 			if(index >= 0 && index <= 9) {
 				assertEquals("Unexpected value found at position "+i, result[i], index+1);
@@ -53,7 +58,7 @@ class org.as2lib.util.TArrayUtil extends TestCase {
 		// This array contains all values twice.
 		var test:Array = [1,1,2,2,3,3,4,4,5,5];
 		
-		assertTrue("It should return that the entries could be removed", ArrayUtil.removeElement(test, 2));
+		assertEquals("It should return that the entries could be removed", ArrayUtil.removeElement(test, 2), [2,3]);
 		assertEquals("Length has to match the expected length", test.length, 8);
 		for(var i=0; i<test.length; i++) {
 			var expected:Number = 0;
@@ -76,7 +81,7 @@ class org.as2lib.util.TArrayUtil extends TestCase {
 			}
 			assertEquals("Element "+i+" should not change by removing a element", test[i], expected);
 		}
-		assertFalse("It should not return that the entries could be removed", ArrayUtil.removeAllOccurances(test, 2));
+		assertEquals("It should not return that the entries could be removed", ArrayUtil.removeAllOccurances(test, 2), []);
 	}
 	
 	/**
@@ -86,7 +91,7 @@ class org.as2lib.util.TArrayUtil extends TestCase {
 		// This array contains all values twice.
 		var test:Array = [1,1,2,2,3,3,4,4,5,5];
 		
-		assertTrue("It should return that the entries could be removed", ArrayUtil.removeAllOccurances(test, 2));
+		assertEquals("It should return that the entries could be removed", ArrayUtil.removeAllOccurances(test, 2), [2,3]);
 		assertEquals("Length has to match the expected length", test.length, 8);
 		for(var i=0; i<test.length; i++) {
 			var expected:Number = 0;
@@ -109,7 +114,7 @@ class org.as2lib.util.TArrayUtil extends TestCase {
 			}
 			assertEquals("Element "+i+" should not change by removing a element", test[i], expected);
 		}
-		assertFalse("It should not return that the entries could be removed", ArrayUtil.removeAllOccurances(test, 2));
+		assertEquals("It should not return that the entries could be removed", ArrayUtil.removeAllOccurances(test, 2), []);
 	}
 
 	/**
@@ -119,13 +124,13 @@ class org.as2lib.util.TArrayUtil extends TestCase {
 		// This array contains all values twice.
 		var test:Array = [6,2,3,4,5,6];
 		
-		assertTrue("It should return that the entry could be removed", ArrayUtil.removeFirstOccurance(test, 6));
+		assertEquals("It should return that the entry could be removed", ArrayUtil.removeFirstOccurance(test, 6), 0);
 		assertEquals("Length has to match the expected length", test.length, 5);
 		for(var i=0; i<test.length; i++) {
 			var expected:Number = i+2;
 			assertEquals("Element "+i+" should not change by removing a element", test[i], expected);
 		}
-		assertFalse("It shoudld return that the entry could not be removed", ArrayUtil.removeFirstOccurance(test, 7));
+		assertEquals("It shoudld return that the entry could not be removed", ArrayUtil.removeFirstOccurance(test, 7), -1);
 	}
 	
 	/**
@@ -135,13 +140,13 @@ class org.as2lib.util.TArrayUtil extends TestCase {
 		// This array contains all values twice.
 		var test:Array = [1,2,3,4,5,1];
 		
-		assertTrue("It should return that the entry could be removed", ArrayUtil.removeLastOccurance(test, 1));
+		assertEquals("It should return that the entry could be removed", ArrayUtil.removeLastOccurance(test, 1), 5);
 		assertEquals("Length has to match the expected length", test.length, 5);
 		for(var i=0; i<test.length; i++) {
 			var expected:Number = i+1;
 			assertEquals("Element "+i+" should not change by removing a element", test[i], expected);
 		}
-		assertFalse("It shoudld return that the entry could not be removed", ArrayUtil.removeLastOccurance(test, 7));
+		assertEquals("It shoudld return that the entry could not be removed", ArrayUtil.removeLastOccurance(test, 7), -1);
 	}
 	
 	/**
@@ -200,7 +205,7 @@ class org.as2lib.util.TArrayUtil extends TestCase {
 	public function testIndexOf(Void):Void {
 		var obj:Object = {};
 		var arr:Array = [];
-		var test:Array = [1,"2",obj,arr,null,undefined];
+		var test:Array = [1,"2",obj,arr,null,undefined,1,"2",obj,arr,null,undefined];
 		
 		// Test of indexOf for objects that are contained
 		assertEquals("Index of 1 should be 0", ArrayUtil.indexOf(test, 1), 0);
@@ -211,6 +216,29 @@ class org.as2lib.util.TArrayUtil extends TestCase {
 		assertEquals("Index of undefined should be 5", ArrayUtil.indexOf(test, undefined), 5);
 		
 		// Test of indexOf for objects that are not contained
+		assertEquals("Index of 2 should be -1", ArrayUtil.indexOf(test, 2), -1);
+		assertEquals("Index of true should be -1", ArrayUtil.indexOf(test, true), -1);
+		assertEquals("Index of {} should be -1", ArrayUtil.indexOf(test, {}), -1);
+		assertEquals("Index of [] should be -1", ArrayUtil.indexOf(test, []), -1);
+	}
+	
+	/**
+	 * Test different contents with lastindexOf
+	 */
+	public function testLastIndexOf(Void):Void {
+		var obj:Object = {};
+		var arr:Array = [];
+		var test:Array = [1,"2",obj,arr,null,undefined,1,"2",obj,arr,null,undefined];
+		
+		// Test of lastIndexOf for objects that are contained
+		assertEquals("Index of 1 should be 6", ArrayUtil.lastIndexOf(test, 1), 6);
+		assertEquals("Index of '2' should be 7", ArrayUtil.lastIndexOf(test, "2"), 7);
+		assertEquals("Index of [obj] should be 8", ArrayUtil.lastIndexOf(test, obj), 8);
+		assertEquals("Index of [arr] should be 9", ArrayUtil.lastIndexOf(test, arr), 9);
+		assertEquals("Index of null should be 10", ArrayUtil.lastIndexOf(test, null), 10);
+		assertEquals("Index of undefined should be 11", ArrayUtil.lastIndexOf(test, undefined), 11);
+		
+		// Test of lastIndexOf for objects that are not contained
 		assertEquals("Index of 2 should be -1", ArrayUtil.indexOf(test, 2), -1);
 		assertEquals("Index of true should be -1", ArrayUtil.indexOf(test, true), -1);
 		assertEquals("Index of {} should be -1", ArrayUtil.indexOf(test, {}), -1);

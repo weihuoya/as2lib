@@ -31,19 +31,30 @@ class main.Configuration extends AbstractConfiguration {
     }
     
 	private function setReferences(Void):Void {
+		
+		// File tests
+		/*use(org.as2lib.io.file.TSimpleTextFile);
+		use(org.as2lib.io.file.TTextFileLoader);
+		use(org.as2lib.io.file.TPropertyFile);
+		use(org.as2lib.io.file.TSwfLoader);
+		use(org.as2lib.io.file.TBitAndByteFormat);
+		
 		// Execution Tests
-		//use(org.as2lib.app.exec.TTimeout);
+		use(org.as2lib.app.exec.TExecutableProcess);
+		// TODO: Currently not finished ... use(org.as2lib.app.exec.TBatchProcess);
+		use(org.as2lib.app.exec.TTimeout);
+		use(org.as2lib.app.exec.TCall);
 		
 		// Data Holder tests
 		use(org.as2lib.data.holder.array.TArrayIterator);
 		use(org.as2lib.data.holder.array.TTypedArray);
-		//use(org.as2lib.data.holder.list.TPriorityList);
+		// Have to rethink it ... use(org.as2lib.data.holder.list.TPriorityList);
 		use(org.as2lib.data.holder.list.TArrayList);
 		use(org.as2lib.data.holder.list.TSubList);
 		use(org.as2lib.data.holder.TProtectedIterator);
 		use(org.as2lib.data.holder.map.TValueMapIterator);
 		use(org.as2lib.data.holder.map.THashMap);
-		//use(org.as2lib.data.holder.map.TPriorityMap);
+		// Have to rethink it ... use(org.as2lib.data.holder.map.TPriorityMap);
 		use(org.as2lib.data.holder.map.TTypedMap);
 		use(org.as2lib.data.holder.map.TPrimitiveTypeMap);
 		use(org.as2lib.data.holder.stack.TSimpleStack);
@@ -57,21 +68,16 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.data.type.TRadian);
 		use(org.as2lib.data.type.TNaturalNumber);
 		use(org.as2lib.data.type.TNaturalNumberIncludingZero);
-		
-		
-		// File tests
-		//use(org.as2lib.io.file.TFile);
-		//use(org.as2lib.io.file.TBitAndByteFormat);
+		use(org.as2lib.data.type.TTime);
 		
 		// Util tests
 		use(org.as2lib.util.TArrayUtil);
 		use(org.as2lib.util.TObjectUtil);
 		use(org.as2lib.util.TStringUtil);
-		//use(org.as2lib.util.TCall);
 		use(org.as2lib.util.TClassUtil);
 		use(org.as2lib.util.TStopWatch);
 		use(org.as2lib.util.TObjectUtil);
-		use(org.as2lib.util.TArrayUtil);
+		*/use(org.as2lib.util.TArrayUtil);/*
 		use(org.as2lib.util.TMathUtil);
 		use(org.as2lib.util.TAccessPermission);
 		use(org.as2lib.util.TDateFormatter);
@@ -181,6 +187,7 @@ class main.Configuration extends AbstractConfiguration {
 		// org.as2lib.env.bean.factory.support
 		//use(org.as2lib.env.bean.factory.support.TDefaultBeanFactory);
 		//use(org.as2lib.env.bean.factory.support.TRootBeanDefinition);
+		 */
 	}
 	
 }

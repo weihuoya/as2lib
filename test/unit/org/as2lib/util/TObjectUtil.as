@@ -257,59 +257,38 @@ class org.as2lib.util.TObjectUtil extends TestCase {
 		assertTrue("'this' should be a explicit instance of "+ClassInfo.forObject(this).getFullName(), ObjectUtil.isExplicitInstanceOf(this, ClassInfo.forObject(this).getType()));
 	}
 	
-	/**
-	 * Tests the isEmpty method with a positive and negative case.
-	 */
-	/*public function testIsEmpty(Void):Void {
-		var string:String = "a";
-		var nullValue:Object = null;
-		var undefinedValue:Object = undefined;
+	public function testCompare(Void):Void {
+		assertTrue("'A' should be 'A'", ObjectUtil.compare("A", "A"));
+		assertFalse("'A' should not be 'b'", ObjectUtil.compare("A", "b"));
+		assertTrue("{} should be {}", ObjectUtil.compare({}, {}));
+		assertTrue("[1] should be [1]", ObjectUtil.compare([1], [1]));
+		assertFalse("[2] should not be [1]", ObjectUtil.compare([2],[1]));
+		assertTrue("[{}] should be [{}]", ObjectUtil.compare([{}],[{}]));
+		assertFalse("[[1]] should not be [[]]", ObjectUtil.compare([[1]], [[]]));
+		assertTrue("[[1]] should be [[1]]", ObjectUtil.compare([[1]], [[1]]));
 		
-		assertFalse("'string' is not empty", ObjectUtil.isEmpty(string));
-		assertTrue("'nullValue' is empty", ObjectUtil.isEmpty(nullValue));
-		assertTrue("'undefinedValue' is empty", ObjectUtil.isEmpty(undefinedValue));
-	}*/
-	
-	/**
-	 * Tests the .isAvailable method. (Inversion of the isEmpty test)
-	 */
-	/*public function testIsAvailable(Void):Void {
-		var string:String = "a";
-		var nullValue:Object = null;
-		var undefinedValue:Object = undefined;
+		var recursive:Array = [];
+		recursive.push("1");
+		recursive.push(recursive);
+		recursive.push("2");
 		
-		assertTrue("'string' is not empty", ObjectUtil.isAvailable(string));
-		assertFalse("'nullValue' is empty", ObjectUtil.isAvailable(nullValue));
-		assertFalse("'undefinedValue' is empty", ObjectUtil.isAvailable(undefinedValue));
-	}*/
-	
-	
-	/**
-	 * Tests the .isAvailable method.
-	 */
-	/*public function testForEach(Void):Void {
-		var call:Call = new Call(this, forEachCall);
-		var obj:Object = new Object();
-		obj.test1 = "a";
-		obj.test2 = "b";
-		obj.test3 = "c";
+		var recursive2:Array = [];
+		recursive2.push("1");
+		recursive2.push(recursive2);
+		recursive2.push("2");
 		
-		ObjectUtil.forEach(obj, call);
-	}*/
-	
-	
-	/**
-	 * Call to be executed by forEach.
-	 */
-	/*private function forEachCall(object, name:String):Void {
-		if(name == "test1") {
-			assertEquals("'test1' should be 'a'", object, "a");
-		} else if(name == "test2") {
-			assertEquals("'test2' should be 'b'", object, "b");
-		} else if(name == "test3") {
-			assertEquals("'test3' should be 'c'", object, "c");
-		} else {
-			fail("Unexpected name: '"+name+"' occured in object")
-		}
-	}*/
+		var recursive3:Array = [];
+		recursive3.push("1");
+		recursive3.push(recursive);
+		recursive3.push("2");
+		
+		var recursive4:Array = [];
+		recursive4.push("1");
+		recursive4.push("b");
+		recursive4.push("2");
+		
+		assertTrue("rec1 should be rec2", ObjectUtil.compare(recursive, recursive2));
+		assertTrue("rec1 should be rec3", ObjectUtil.compare(recursive, recursive3));
+		assertFalse("rec1 should not be rec4", ObjectUtil.compare(recursive, recursive4));
+	}
 }

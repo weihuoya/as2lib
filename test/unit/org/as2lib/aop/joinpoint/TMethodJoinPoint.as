@@ -69,31 +69,30 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 		var c:Class = new Class(e);
 		c.test();
 		
+		// Backing up current methods
 		var o1:Function = Class.prototype.test;
 		var o2:Function = SuperClass.prototype.test;
 		var o3:Function = SuperSuperClass.prototype.test;
 		var o4:Function = SuperSuperSuperClass.prototype.test;
 		
-		var d:DynamicAfterReturningAdvice = new DynamicAfterReturningAdvice("", new Call(new Object(), function(){}));
-		var p1:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(Class).getMethod("test").snapshot(), this));
-		var p2:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperClass).getMethod("test").snapshot(), this));
-		var p3:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperSuperClass).getMethod("test").snapshot(), this));
-		var p4:Function = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperSuperSuperClass).getMethod("test").snapshot(), this));
-		
-		Class.prototype.test = p1;
-		SuperClass.prototype.test = p2;
-		SuperSuperClass.prototype.test = p3;
-		SuperSuperSuperClass.prototype.test = p4;
+		// Replacing with an advice
+		var d:DynamicAfterReturningAdvice = new DynamicAfterReturningAdvice("", new Call(new Object(), function(){}));		
+		Class.prototype.test = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(Class).getMethod("test").snapshot(), this));
+		SuperClass.prototype.test = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperClass).getMethod("test").snapshot(), this));
+		SuperSuperClass.prototype.test = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperSuperClass).getMethod("test").snapshot(), this));
+		SuperSuperSuperClass.prototype.test = d.getProxy(new MethodJoinPoint(ClassInfo.forClass(SuperSuperSuperClass).getMethod("test").snapshot(), this));
 		
 		var a:Array = new Array();
 		c = new Class(a);
 		c.test();
 		
-		assertSame("expectation was not met", e.length, a.length);
+		assertSame("Result length before class modification does not match the expected length 22", e.length, 22);
+		assertSame("Result length after modification does not match the expected length 22", a.length, 22);
 		for (var i:Number = 0; i < e.length; i++) {
-			assertSame("expectation [" + e[i] + "] does not match actuality [" + a[i] + "]", e[i], a[i]);
+			assertSame("expectation [" + e[i] + "] for e[" + i + "] does not match actuality [" + a[i] + "]", e[i], a[i]);
 		}
 		
+		// Restoring original methods.
 		Class.prototype.test = o1;
 		SuperClass.prototype.test = o2;
 		SuperSuperClass.prototype.test = o3;
