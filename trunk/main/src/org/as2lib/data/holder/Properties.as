@@ -17,12 +17,33 @@
 import org.as2lib.core.BasicInterface;
 
 /**
- * 
+ * {@code Properties} represents a persistent set of properties; simply key-value
+ * pairs.
  * 
  * @author Martin Heidegger
+ * @author Simon Wacker
  * @version 1.0
  */
 interface org.as2lib.data.holder.Properties extends BasicInterface {
+	
+	/**
+	 * Returns the value associated with the given {@code key} if there is one, and the
+	 * given {@code defaultValue} otherwise.
+	 * 
+	 * @param key the key to return the value for
+	 * @param defaultValue the default value to return if there is no value mapped to the
+	 * given {@code key}
+	 * @return the value mapped to the given {@code key} or the given {@code defaultValue}
+	 */
 	public function getProperty(key:String, defaultValue:String):String;
+	
+	/**
+	 * Sets the given {@code value} for the given {@code key}; the {@code value} is mapped
+	 * to the {@code key}.
+	 * 
+	 * @param key the key to map the {@code value} to
+	 * @param value the value to map to the {@code key}
+	 */
 	public function setProperty(key:String, value:String):Void;
+	
 }
