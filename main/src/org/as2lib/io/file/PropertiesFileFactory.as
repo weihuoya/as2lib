@@ -18,27 +18,27 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.data.type.Byte;
 import org.as2lib.io.file.TextFile;
 import org.as2lib.io.file.TextFileFactory;
-import org.as2lib.io.file.PropertyFile;
+import org.as2lib.io.file.PropertiesFile;
 
 /**
- * {@code PropertyFileFactory} is a implementation of {@link TextFileFactory} for
- * creating {@code PropertyFile} instances.
+ * {@code PropertiesFileFactory} is a implementation of {@link TextFileFactory} for
+ * creating {@code PropertiesFile} instances.
  * 
  * @author Martin Heidegger
  * @version 1.0
  */
-class org.as2lib.io.file.PropertyFileFactory extends BasicClass implements TextFileFactory {
+class org.as2lib.io.file.PropertiesFileFactory extends BasicClass implements TextFileFactory {
 	
 	/**
-	 * Creates a new {@code PropertyFile} instance for the loaded resource.
+	 * Creates a new {@code PropertiesFile} instance for the loaded resource.
 	 * 
-	 * @param source content of the {@code File} to create
-	 * @param size size in {@link Byte} of the loaded resource
+	 * @param source content of the file to create
+	 * @param size size in bytes of the loaded resource
 	 * @param uri location of the loaded resource
-	 * @return {@code PropertyFile} that represents the resource
+	 * @return a property file that represents the resource
 	 */
 	public function createTextFile(source:String, size:Byte, uri:String):TextFile {
-		return (new PropertyFile(source, size, uri));
+		return (new PropertiesFile(source, size, uri));
 	}
 
 }
