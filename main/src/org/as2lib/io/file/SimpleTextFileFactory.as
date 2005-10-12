@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -13,30 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import org.as2lib.core.BasicInterface;
-import org.as2lib.io.file.File;
+ 
+import org.as2lib.core.BasicClass;
+import org.as2lib.io.file.TextFile;
+import org.as2lib.io.file.TextFileFactory;
+import org.as2lib.io.file.SimpleTextFile;
 import org.as2lib.data.type.Byte;
 
 /**
- * {@code FileFactory} is a integration layer for {@link org.as2lib.util.FileLoader}.
- * 
- * <p>{@code FileLoader} applies the loaded resource to {@code FileFactory} 
- * property. The implementations of {@code FileLoader} can variy the result of 
- * the loaded file.
+ * {@code SimpleTextFileFactory} is a implementation of {@link TextFileFactory} for 
+ * creating {@code SimpleTextFile} instances.
  * 
  * @author Martin Heidegger
  * @version 1.0
  */
-interface org.as2lib.io.file.FileFactory extends BasicInterface {
+class org.as2lib.io.file.SimpleTextFileFactory extends BasicClass implements TextFileFactory {
 	
 	/**
-	 * Creates a new {@code File} instance for the loaded resource.
+	 * Creates a new {@code SimpleTextFile} instance for the loaded resource.
 	 * 
-	 * @param source content of the {@code File} to create
+	 * @param source content of the {@code TextFile} to create
 	 * @param size size in {@link Byte} of the loaded resource
-	 * @param uri URI that has been loaded
-	 * @return {@code File} that represents the resource
+	 * @param uri location of the loaded resource
+	 * @return {@code SimpleTextFile} that represents the resource
 	 */
-	public function createFile(source:String, size:Byte, uri:String):File;
+	public function createTextFile(source:String, size:Byte, uri:String):TextFile {
+		return new SimpleTextFile(source, size, uri);
+	}
 }

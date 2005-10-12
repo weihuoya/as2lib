@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -15,29 +15,30 @@
  */
  
 import org.as2lib.core.BasicClass;
-import org.as2lib.io.file.File;
-import org.as2lib.io.file.FileFactory;
-import org.as2lib.io.file.SimpleFile;
 import org.as2lib.data.type.Byte;
+import org.as2lib.io.file.TextFile;
+import org.as2lib.io.file.TextFileFactory;
+import org.as2lib.io.file.PropertyFile;
 
 /**
- * {@code SimpleFileFactory} is a implementation of {@link FileFactory} for 
- * creating {@code SimpleFile} instances.
+ * {@code PropertyFileFactory} is a implementation of {@link TextFileFactory} for
+ * creating {@code PropertyFile} instances.
  * 
  * @author Martin Heidegger
  * @version 1.0
  */
-class org.as2lib.io.file.SimpleFileFactory extends BasicClass implements FileFactory {
+class org.as2lib.io.file.PropertyFileFactory extends BasicClass implements TextFileFactory {
 	
 	/**
-	 * Creates a new {@code SimpleFile} instance for the loaded resource.
+	 * Creates a new {@code PropertyFile} instance for the loaded resource.
 	 * 
 	 * @param source content of the {@code File} to create
 	 * @param size size in {@link Byte} of the loaded resource
 	 * @param uri location of the loaded resource
-	 * @return {@code SimpleFile} that represents the resource
+	 * @return {@code PropertyFile} that represents the resource
 	 */
-	public function createFile(source:String, size:Byte, uri:String):File {
-		return new SimpleFile(source, size, uri);
+	public function createTextFile(source:String, size:Byte, uri:String):TextFile {
+		return (new PropertyFile(source, size, uri));
 	}
+
 }

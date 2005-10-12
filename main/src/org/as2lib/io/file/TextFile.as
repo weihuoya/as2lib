@@ -14,19 +14,19 @@
  * limitations under the License.
  */
  
-import org.as2lib.io.file.Resource;
+import org.as2lib.io.file.File;
 
 /**
- * {@code File} is a holder for human readable external resources.
+ * {@code TextFile} is a holder for human readable external resources.
  * 
- * <p>{@code File} provides access to the content of the real file.
+ * <p>{@code TextFile} provides access to the content of the real file.
  * 
- * <p>{@code File} is <b>not</b> built to represent binary files.
+ * <p>{@code TextFile} is <b>not</b> built to represent binary files.
  * 
  * @author Martin Heidegger
  * @version 2.0
  */
-interface org.as2lib.io.file.File extends Resource {
+interface org.as2lib.io.file.TextFile extends File {
 	
 	/**
 	 * Returns the complete content of the file.

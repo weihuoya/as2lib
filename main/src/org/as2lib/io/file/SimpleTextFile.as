@@ -15,19 +15,19 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.io.file.File;
+import org.as2lib.io.file.TextFile;
 import org.as2lib.data.type.Byte;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
- * {@code SimpleFile} represents the simplest way for accessing the file informations.
+ * {@code SimpleTextFile} represents the simplest way for accessing the file informations.
  * 
- * <p>Supports all necessary features for {@code File} without any other advantages.
+ * <p>Supports all necessary features for {@code TextFile} without any other advantages.
  * 
  * @author Martin Heidegger
  * @version 2.0
  */
-class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
+class org.as2lib.io.file.SimpleTextFile extends BasicClass implements TextFile {
 	
 	/** Content of the file. */
 	private var source:String;
@@ -39,13 +39,13 @@ class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
 	private var size:Byte;
 	
 	/**
-	 * Constructs a new {@code SimpleFile}.
+	 * Constructs a new {@code SimpleTextFile}.
 	 * 
-	 * @param source content of the {@code File} to create
+	 * @param source content of the {@code TextFile} to create
 	 * @param size size in {@link Byte} of the loaded resource
 	 * @param uri location of the loaded resource
 	 */
-	public function SimpleFile(source:String, size:Byte, uri:String) {
+	public function SimpleTextFile(source:String, size:Byte, uri:String) {
 		this.source = source;
 		this.uri = uri;
 		this.size = size;
@@ -68,7 +68,7 @@ class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
 	 * Returns the content of the file
 	 * 
 	 * @return content of the file
-	 * @see File#getContent
+	 * @see TextFile#getContent
 	 */
 	public function getContent(Void):String {
 		return source;
@@ -87,9 +87,9 @@ class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
 	 * Extended Stringifier
 	 * 
 	 * Example:
-	 * {@code [type org.as2lib.io.file.SimpleFile | Location: MyFile.txt; Size: 12KB; ]}
+	 * {@code [type org.as2lib.io.file.SimpleTextFile | Location: MyTextFile.txt; Size: 12KB; ]}
 	 * 
-	 * @return the {@code File} as string
+	 * @return the {@code TextFile} as string
 	 */
 	public function toString():String {
 		var result:String;

@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.app.exec.AbstractProcess;
-import org.as2lib.io.file.ResourceLoader;
+import org.as2lib.io.file.FileLoader;
 import org.as2lib.io.file.LoadStartListener;
 import org.as2lib.io.file.LoadCompleteListener;
 import org.as2lib.io.file.LoadProgressListener;
@@ -24,19 +24,19 @@ import org.as2lib.data.holder.Map;
 import org.as2lib.app.exec.Executable;
 
 /**
- * {@code ResourceLoaderProcess} is a mediator to handle loading of files as
+ * {@code FileLoaderProcess} is a mediator to handle loading of files as
  * a {@code Process}.
  * 
- * <p>If you need to handle a {@link ResourceLoader} with a {@link Process} context
- * you can use {@code ResourceLoaderProcess} as mediator between both APIs.
+ * <p>If you need to handle a {@link FileLoader} with a {@link Process} context
+ * you can use {@code FileLoaderProcess} as mediator between both APIs.
  * 
- * <p>In contrast to {@code ResourceLoader} you have to call it like:
+ * <p>In contrast to {@code FileLoader} you have to call it like:
  * <code>
- *   import org.as2lib.io.file.FileLoader;
- *   import org.as2lib.io.file.ResourceLoaderProcess;
+ *   import org.as2lib.io.file.TextFileLoader;
+ *   import org.as2lib.io.file.FileLoaderProcess;
  * 
- *   var fileLoader:FileLoader = new FileLoader();
- *   var loader:ResourceLoaderProcess = new ResourceLoaderProcess(fileLoader);
+ *   var fileLoader:TextFileLoader = new TextFileLoader();
+ *   var loader:FileLoaderProcess = new FileLoaderProcess(fileLoader);
  *   loader.setUri("test.txt");
  *   loader.start();
  * </code>
@@ -44,14 +44,14 @@ import org.as2lib.app.exec.Executable;
  * @author Martin Heidegger
  * @version 1.0
  */
-class org.as2lib.io.file.ResourceLoaderProcess extends AbstractProcess
+class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess
 	implements LoadStartListener,
 		LoadCompleteListener,
 		LoadProgressListener,
 		LoadErrorListener {
 			
 	/** Resource loader to be mediated. */
-	private var resourceLoader:ResourceLoader;
+	private var resourceLoader:FileLoader;
 	
 	/** URI to load. */
 	private var uri:String;
@@ -66,11 +66,11 @@ class org.as2lib.io.file.ResourceLoaderProcess extends AbstractProcess
 	private var callBack:Executable;
 			
 	/**
-	 * Constructs a new {@code ResourceLoaderProcess}.
+	 * Constructs a new {@code FileLoaderProcess}.
 	 * 
-	 * @param resourceLoader {@code ResourceLoader} to be mediated
+	 * @param resourceLoader {@code FileLoader} to be mediated
 	 */
-	public function ResourceLoaderProcess(resourceLoader:ResourceLoader) {
+	public function FileLoaderProcess(resourceLoader:FileLoader) {
 		this.resourceLoader = resourceLoader;
 		resourceLoader.addListener(this);
 	}
@@ -96,11 +96,11 @@ class org.as2lib.io.file.ResourceLoaderProcess extends AbstractProcess
 	}
 	
 	/**
-	 * Returns the {@code ResourceLoader} that was mediated.
+	 * Returns the {@code FileLoader} that was mediated.
 	 * 
-	 * @return {@code ResourceLoader} that was mediated.
+	 * @return {@code FileLoader} that was mediated.
 	 */
-	public function getResourceLoader(Void):ResourceLoader {
+	public function getFileLoader(Void):FileLoader {
 		return resourceLoader;
 	}
 	
@@ -118,7 +118,7 @@ class org.as2lib.io.file.ResourceLoaderProcess extends AbstractProcess
 	}
 	
 	/**
-	 * Forwards {@code getPercentage} to the mediated {@code ResourceLoader.getPercentage}.
+	 * Forwards {@code getPercentage} to the mediated {@code FileLoader.getPercentage}.
 	 *
 	 * @return percentage of the resource
 	 */
@@ -127,38 +127,38 @@ class org.as2lib.io.file.ResourceLoaderProcess extends AbstractProcess
 	}
 
 	/**
-	 * Handles the {@code ResourceLoader}s start event.
+	 * Handles the {@code FileLoader}s start event.
 	 * 
-	 * @param resourceLoader {@code ResourceLoader} that sent the event
+	 * @param resourceLoader {@code FileLoader} that sent the event
 	 */
-	public function onLoadStart(resourceLoader:ResourceLoader):Void {
+	public function onLoadStart(resourceLoader:FileLoader):Void {
 		sendStartEvent();
 	}
 
 	/**
-	 * Handles the {@code ResourceLoader}s complete event.
+	 * Handles the {@code FileLoader}s complete event.
 	 * 
-	 * @param resourceLoader {@code ResourceLoader} that sent the event
+	 * @param resourceLoader {@code FileLoader} that sent the event
 	 */
-	public function onLoadComplete(resourceLoader:ResourceLoader):Void {
+	public function onLoadComplete(resourceLoader:FileLoader):Void {
 		finish();
 	}
 
 	/**
-	 * Handles the {@code ResourceLoader}s progress event.
+	 * Handles the {@code FileLoader}s progress event.
 	 * 
-	 * @param resourceLoader {@code ResourceLoader} that sent the event
+	 * @param resourceLoader {@code FileLoader} that sent the event
 	 */
-	public function onLoadProgress(resourceLoader:ResourceLoader):Void {
+	public function onLoadProgress(resourceLoader:FileLoader):Void {
 		sendUpdateEvent();
 	}
 
 	/**
-	 * Handles the {@code ResourceLoader}s error event.
+	 * Handles the {@code FileLoader}s error event.
 	 * 
-	 * @param resourceLoader {@code ResourceLoader} that sent the event
+	 * @param resourceLoader {@code FileLoader} that sent the event
 	 */
-	public function onLoadError(resourceLoader:ResourceLoader, errorCode:String, error):Boolean {
+	public function onLoadError(resourceLoader:FileLoader, errorCode:String, error):Boolean {
 		interrupt(error);
 		return true;
 	}

@@ -14,51 +14,51 @@
  * limitations under the License.
  */
 
-import org.as2lib.io.file.AbstractResourceLoader;
+import org.as2lib.io.file.AbstractFileLoader;
 import org.as2lib.data.type.Byte;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.event.impulse.FrameImpulse;
 import org.as2lib.env.event.impulse.FrameImpulseListener;
-import org.as2lib.io.file.ResourceNotFoundException;
-import org.as2lib.io.file.ResourceLoader;
-import org.as2lib.io.file.ResourceNotLoadedException;
+import org.as2lib.io.file.FileNotFoundException;
+import org.as2lib.io.file.FileLoader;
+import org.as2lib.io.file.FileNotLoadedException;
 import org.as2lib.data.type.Time;
 import org.as2lib.env.bean.factory.InitializingBean;
 import org.as2lib.app.exec.Executable;
 import org.as2lib.data.holder.Map;
-import org.as2lib.io.file.Resource;
-import org.as2lib.io.file.SwfResource;
+import org.as2lib.io.file.File;
+import org.as2lib.io.file.SwfFile;
 
 /**
- * {@code SwfLoader} is a implementation of {@link ResourceLoader} to load
- * resources with {@code loadMovie} (usually {@code .swf} files}.
+ * {@code SwfLoader} is a implementation of {@link FileLoader} to load
+ * files with {@code loadMovie} (usually {@code .swf} files}.
  * 
  * <p>Any content to be loaded with {@code MovieClip#loadMovie} can be load with
  * {@code SwfLoader} to a concrete {@code MovieClip} instance that has to be
  * passed-in with the constructor.
  *
  * <p>{@code SwfLoader} represents the time consuming part of accessing external
- * {@code .swf}' ({@code SwfResource} is the handleable part} and therefore
+ * {@code .swf}' ({@code SwfFile} is the handleable part} and therefore
  * contains a event system to add listeners to listen to the concrete events.
  * It is possible to add listeners using {@code addListener}.
  * 
  * <p>Example listener:
  * <code>
- *   import org.as2lib.io.file.AbstractResourceLoader;
+ *   import org.as2lib.io.file.AbstractFileLoader;
  *   import org.as2lib.io.file.LoadProgressListener;
  *   import org.as2lib.io.file.LoadStartListener;
  *   import org.as2lib.io.file.LoadCompleteListener;
  *   import org.as2lib.io.file.LoadErrorListener;
- *   import org.as2lib.io.file.ResourceLoader;
- *   import org.as2lib.io.file.SwfResource;
+ *   import org.as2lib.io.file.FileLoader;
+ *   import org.as2lib.io.file.SwfFile;
  *   
  *   class MySwfListener implements 
  *        LoadProgressListener, LoadStartListener,
  *        LoadCompleteListener, LoadErrorListener {
  *        
- *     public function onLoadComplete(resourceLoader:ResourceLoader):Void {
- *       var swf:SwfResource = SwfResource(resourceLoader.getResource());
+ *     public function onLoadComplete(fileLoader:FileLoader):Void {
+ *       var swf:SwfFile = SwfFile(fileLoader.getFile());
  *       if (swf != null) {
  *         // Proper swf available
  *       } else {
@@ -66,19 +66,19 @@ import org.as2lib.io.file.SwfResource;
  *       }
  *     }
  *     
- *     public function onLoadError(resourceLoader:ResourceLoader, errorCode:String, error):Void {
- *       if (errorCode == AbstractResourceLoader.FILE_NOT_FOUND) {
+ *     public function onLoadError(fileLoader:FileLoader, errorCode:String, error):Void {
+ *       if (errorCode == AbstractFileLoader.FILE_NOT_FOUND) {
  *         var notExistantUrl = error;
  *         // Use that url
  *       }
  *     }
  *     
- *     public function onLoadStart(resourceLoader:ResourceLoader) {
+ *     public function onLoadStart(fileLoader:FileLoader) {
  *       // show that this file just gets loaded
  *     }
  *     
- *     public function onLoadProgress(resourceLoader:ResourceLoader) {
- *       // update the percentage display with resourceLoader.getPercentage();
+ *     public function onLoadProgress(fileLoader:FileLoader) {
+ *       // update the percentage display with fileLoader.getPercentage();
  *     }
  *   }
  * </code>
@@ -95,17 +95,17 @@ import org.as2lib.io.file.SwfResource;
  * @author Martin Heidegger
  * @version 1.1
  */
-class org.as2lib.io.file.SwfLoader extends AbstractResourceLoader
-	implements ResourceLoader, FrameImpulseListener {
+class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
+	implements FileLoader, FrameImpulseListener {
 	
 	/** Time until the method breaks with "File not found". */
 	public static var TIMEOUT:Time = new Time(3000);
 	
-	/** Helper for loading the {@code Resource}. */
+	/** Helper for loading the {@code File}. */
 	private var holder:MovieClip;
 	
-	/** Loaded {@code Resource}. */
-	private var result:Resource;
+	/** Loaded {@code File}. */
+	private var result:File;
 	
 	/**
 	 * Constructs a new {@code SwfLoader} instance.
@@ -122,15 +122,15 @@ class org.as2lib.io.file.SwfLoader extends AbstractResourceLoader
 	 * <p>It sends http request by using the passed-in {@code uri}, {@code method}
 	 * and {@code parameters} with {@code .loadMovie}. 
 	 * 
-	 * <p>If you only need to listen if the {@code SwfResource} finished loading
-	 * you can apply a {@code callBack} that gets called if the {@code Resource} is loaded.
+	 * <p>If you only need to listen if the {@code SwfFile} finished loading
+	 * you can apply a {@code callBack} that gets called if the {@code File} is loaded.
 	 * 
-	 * @param uri location of the resource to load
-	 * @param parameters (optional) parameters for loading the resource
+	 * @param uri location of the file to load
+	 * @param parameters (optional) parameters for loading the file
 	 * @param method (optional) POST/GET as method for submitting the parameters,
 	 *        default method used if {@code method} was not passed-in is POST.
 	 * @param callBack (optional) {@link Executable} to be executed after the
-	 *        the resource was loaded.
+	 *        the file was loaded.
 	 */
 	public function load(uri:String, method:String, parameters:Map, callBack:Executable):Void {
 		result = null;
@@ -147,14 +147,14 @@ class org.as2lib.io.file.SwfLoader extends AbstractResourceLoader
 	}
 	
 	/**
-	 * Returns the loaded resource.
+	 * Returns the loaded file.
 	 * 
-	 * @return resource that has been loaded
-	 * @throws ResourceNotLoadedException if the resource has not been loaded yet
+	 * @return file that has been loaded
+	 * @throws FileNotLoadedException if the file has not been loaded yet
 	 */
-	public function getResource(Void):Resource {
+	public function getFile(Void):File {
 		if (!result) {
-			throw new ResourceNotLoadedException("No File has been loaded.", this, arguments);
+			throw new FileNotLoadedException("No File has been loaded.", this, arguments);
 		}
 		return result;
 	}
@@ -231,19 +231,19 @@ class org.as2lib.io.file.SwfLoader extends AbstractResourceLoader
 	}
 	
 	/**
-	 * Handles if the loading of resource was successful.
+	 * Handles if the loading of file was successful.
 	 */
 	private function successLoading(Void):Void {
 		finished = true;
 		started = false;
-		result = new SwfResource(holder, uri, getBytesTotal());
+		result = new SwfFile(holder, uri, getBytesTotal());
 		endTime = getTimer();
 		sendCompleteEvent();
 		tearDown();
 	}
 	
 	/**
-	 * Handles if the loading of the resource failed.
+	 * Handles if the loading of the file failed.
 	 */
 	private function failLoading(Void):Void {
 		finished = true;

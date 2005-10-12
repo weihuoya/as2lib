@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import org.as2lib.io.file.ResourceLoader;
+import org.as2lib.io.file.FileLoader;
 
 /**
  * {@code LoadErrorListener} can be implemented if its necessary to listen
- * to {@code onLoadError} events of {@link ResourceLoader}s.
+ * to {@code onLoadError} events of {@link FileLoader}s.
  * 
  * @author Martin Heidegger
  * @version 1.0
@@ -28,10 +28,10 @@ interface org.as2lib.io.file.LoadErrorListener {
 	/**
 	 * Event to be published if a error occured during loading of a certain resource.
 	 * 
-	 * @param resourceLoader {@code ResourceLoader} that executes the request
+	 * @param fileLoader {@code FileLoader} that executes the request
 	 * @param errorCode error-code to fast identify the concrete error
 	 * @param error information to the certain error
 	 * @return {@code true} to consume the event
 	 */
-	public function onLoadError(resourceLoader:ResourceLoader, errorCode:String, error):Boolean;
+	public function onLoadError(fileLoader:FileLoader, errorCode:String, error):Boolean;
 }

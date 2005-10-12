@@ -22,27 +22,27 @@ import org.as2lib.io.file.LoadStartListener;
 import org.as2lib.io.file.LoadCompleteListener;
 import org.as2lib.io.file.LoadProgressListener;
 import org.as2lib.io.file.LoadErrorListener;
-import org.as2lib.io.file.ResourceLoader;
-import org.as2lib.io.file.Resource;
+import org.as2lib.io.file.FileLoader;
+import org.as2lib.io.file.File;
 import org.as2lib.app.exec.Executable;
 import org.as2lib.app.exec.AbstractTimeConsumer;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
- * {@code AbstractResourceLoader} contains common implementation for a {@code ResourceLoader}.
+ * {@code AbstractFileLoader} is a abstract implementation for a {@code FileLoader}.
  * 
- * <p>Extend {@code AbstractResourceLoader} to implement most methods required
+ * <p>Extend {@code AbstractFileLoader} to implement most methods required
  * for a {@code ResourceLoader}.
  * 
  * @author Martin Heidegger
  * @version 1.0
  */
-class org.as2lib.io.file.AbstractResourceLoader extends AbstractTimeConsumer implements ResourceLoader {
+class org.as2lib.io.file.AbstractFileLoader extends AbstractTimeConsumer implements FileLoader {
 	
 	/** Error code if a certain file could not be found. */
 	public static var FILE_NOT_FOUND_ERROR:String = "File not found";
 	
-	/** Location for the resource request. */
+	/** URI for the request. */
 	private var uri:String;
 	
 	/** Method to pass resource request parameters. */
@@ -58,12 +58,12 @@ class org.as2lib.io.file.AbstractResourceLoader extends AbstractTimeConsumer imp
 	private var callBack:Executable;
 	
 	/**
-	 * Constructs a new {@code AbstractResourceLoader}
+	 * Constructs a new {@code AbstractFileLoader}
 	 * 
 	 * <p>Pass all arguments from the extended constructor by using super to 
 	 * add the parameters to the instance.
 	 */
-	function AbstractResourceLoader(Void) {
+	function AbstractFileLoader(Void) {
 		super();
 		dC = distributorControl;
 		acceptListenerType(LoadStartListener);
@@ -137,7 +137,7 @@ class org.as2lib.io.file.AbstractResourceLoader extends AbstractTimeConsumer imp
 	}
 	
 	/**
-	 * Prepares the loading of a certain resource.
+	 * Prepares the loading of a certain file.
 	 * 
 	 * <p>To be overwritten with the concrete load implentation. Do not forget 
 	 * to apply super.load().
@@ -189,7 +189,7 @@ class org.as2lib.io.file.AbstractResourceLoader extends AbstractTimeConsumer imp
 	 * @throws org.as2lib.io.file.ResourceNotLoadedException if the resource has
 	 *         not been loaded yet
 	 */
-	public function getResource(Void):Resource {
+	public function getFile(Void):File {
 		return null;
 	}
 	
@@ -234,4 +234,5 @@ class org.as2lib.io.file.AbstractResourceLoader extends AbstractTimeConsumer imp
 			= dC.getDistributor(LoadProgressListener);
 		completeDistributor.onLoadProgress(this);
 	}
+
 }
