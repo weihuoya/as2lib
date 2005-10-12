@@ -50,12 +50,15 @@ class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
 		this.uri = uri;
 		this.size = size;
 	}
-		
+	
 	/**
-	 * Implementation of File.getLocation.
+	 * Returns the location of the resource corresponding to the content.
 	 * 
-	 * @return Recent loaded location.
-	 * @see File#getLocation
+	 * <p>Note: Might be the URI of the resource or null if its not requestable
+	 * or the internal location corresponding to the instance path (if its without
+	 * any connection to a real file).
+	 * 
+	 * @return location of the resource related to the content
 	 */
 	public function getLocation(Void):String {
 		return uri;
@@ -84,9 +87,9 @@ class org.as2lib.io.file.SimpleFile extends BasicClass implements File {
 	 * Extended Stringifier
 	 * 
 	 * Example:
-	 *  [type org.as2lib.io.file.SimpleFile | Location: MyFile.txt; Size: 12KB; ]
+	 * {@code [type org.as2lib.io.file.SimpleFile | Location: MyFile.txt; Size: 12KB; ]}
 	 * 
-	 * @return the file as string
+	 * @return the {@code File} as string
 	 */
 	public function toString():String {
 		var result:String;
