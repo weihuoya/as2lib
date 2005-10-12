@@ -35,7 +35,7 @@ interface org.as2lib.app.exec.ProcessErrorListener {
      * 
      * @param process {@link Process} where a error occured
      * @param error error that occured during execution
-     * @return {@code true} if the process error should not be looped through all listeners
+     * @return {@code true} to consume the event
      */
     public function onProcessError(process:Process, error):Boolean;
 }

@@ -31,7 +31,7 @@ import org.as2lib.app.exec.Process;
 interface org.as2lib.app.exec.ProcessStartListener {
 	
 	/**
-	 * Method to be executed if a process starts execution.
+	 * Method to be executed if a {@code Process} starts execution.
 	 * 
 	 * @param process {@link Process} that started execution
 	 */
