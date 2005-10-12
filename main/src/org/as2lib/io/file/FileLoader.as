@@ -38,8 +38,9 @@ import org.as2lib.app.exec.Executable;
  * for the loaded content.
  * 
  * <p>{@code FileLoader} represents the time consuming part of accessing files
- * and therefore contains a event system to add listeners to listen to the
- * concrete events. It is possible to add listeners using {@code addListener}.
+ * ({@code File} is the handleable part} and therefore contains a event system
+ * to add listeners to listen to the concrete events. It is possible to add
+ * listeners using {@code addListener}.
  * 
  * <p>Example listener:
  * <code>
@@ -49,7 +50,7 @@ import org.as2lib.app.exec.Executable;
  *   import org.as2lib.io.file.LoadCompleteListener;
  *   import org.as2lib.io.file.LoadErrorListener;
  *   import org.as2lib.io.file.ResourceLoader;
- *   import org.as2lib.io.file.Resource;
+ *   import org.as2lib.io.file.File;
  *   
  *   class MyFileListener implements 
  *        LoadProgressListener, LoadStartListener,
@@ -87,7 +88,7 @@ import org.as2lib.app.exec.Executable;
  *   
  *   var fileLoader:FileLoader = new FileLoader();
  *   fileLoader.addListener(new MyFileListener());
- *   fileLoader.load("uri");
+ *   fileLoader.load("test.txt");
  * </code>
  * 
  * @author Martin Heidegger
@@ -172,7 +173,7 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 	 * Returns the loaded resource.
 	 * 
 	 * @return resource that has been loaded
-	 * @throws ResourceNotLoadedException if the resource has not been loaded yet.
+	 * @throws ResourceNotLoadedException if the resource has not been loaded yet
 	 */
 	public function getResource(Void):Resource {
 		return getFile();
@@ -182,7 +183,7 @@ class org.as2lib.io.file.FileLoader extends AbstractResourceLoader implements Re
 	 * Returns the loaded {@code File}.
 	 * 
 	 * @return {@code File} that has been loaded
-	 * @throws ResourceNotLoadedException if the resource has not been loaded yet.
+	 * @throws ResourceNotLoadedException if the resource has not been loaded yet
 	 */
 	public function getFile(Void):File {
 		if (file == null) {

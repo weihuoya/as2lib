@@ -1,3 +1,19 @@
+/*
+ * Copyright the original author or authors.
+ * 
+ * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.mozilla.org/MPL/MPL-1.1.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import org.as2lib.io.file.AbstractResourceLoader;
 import org.as2lib.data.type.Byte;
 import org.as2lib.data.holder.Iterator;
@@ -15,19 +31,107 @@ import org.as2lib.io.file.Resource;
 import org.as2lib.io.file.SwfResource;
 
 /**
+ * {@code SwfLoader} is a implementation of {@link ResourceLoader} to load
+ * resources with {@code loadMovie} (usually {@code .swf} files}.
  * 
+ * <p>Any content to be loaded with {@code MovieClip#loadMovie} can be load with
+ * {@code SwfLoader} to a concrete {@code MovieClip} instance that has to be
+ * passed-in with the constructor.
+ *
+ * <p>{@code SwfLoader} represents the time consuming part of accessing external
+ * {@code .swf}' ({@code SwfResource} is the handleable part} and therefore
+ * contains a event system to add listeners to listen to the concrete events.
+ * It is possible to add listeners using {@code addListener}.
+ * 
+ * <p>Example listener:
+ * <code>
+ *   import org.as2lib.io.file.AbstractResourceLoader;
+ *   import org.as2lib.io.file.LoadProgressListener;
+ *   import org.as2lib.io.file.LoadStartListener;
+ *   import org.as2lib.io.file.LoadCompleteListener;
+ *   import org.as2lib.io.file.LoadErrorListener;
+ *   import org.as2lib.io.file.ResourceLoader;
+ *   import org.as2lib.io.file.SwfResource;
+ *   
+ *   class MySwfListener implements 
+ *        LoadProgressListener, LoadStartListener,
+ *        LoadCompleteListener, LoadErrorListener {
+ *        
+ *     public function onLoadComplete(resourceLoader:ResourceLoader):Void {
+ *       var swf:SwfResource = SwfResource(resourceLoader.getResource());
+ *       if (swf != null) {
+ *         // Proper swf available
+ *       } else {
+ *         // Wrong event handled
+ *       }
+ *     }
+ *     
+ *     public function onLoadError(resourceLoader:ResourceLoader, errorCode:String, error):Void {
+ *       if (errorCode == AbstractResourceLoader.FILE_NOT_FOUND) {
+ *         var notExistantUrl = error;
+ *         // Use that url
+ *       }
+ *     }
+ *     
+ *     public function onLoadStart(resourceLoader:ResourceLoader) {
+ *       // show that this file just gets loaded
+ *     }
+ *     
+ *     public function onLoadProgress(resourceLoader:ResourceLoader) {
+ *       // update the percentage display with resourceLoader.getPercentage();
+ *     }
+ *   }
+ * </code>
+ * 
+ * <p>Example of the usage:
+ * <code>
+ *   import org.as2lib.io.file.SwfLoader;
+ *   
+ *   var swfLoader:SwfLoader = new SwfLoader();
+ *   swfLoader.addListener(new MySwfListener());
+ *   swfLoader.load("test.swf");
+ * </code>
+ * 
+ * @author Martin Heidegger
+ * @version 1.1
  */
-class org.as2lib.io.file.SwfLoader extends AbstractResourceLoader implements ResourceLoader, FrameImpulseListener {
+class org.as2lib.io.file.SwfLoader extends AbstractResourceLoader
+	implements ResourceLoader, FrameImpulseListener {
 	
+	/** Time until the method breaks with "File not found". */
 	public static var TIMEOUT:Time = new Time(3000);
 	
+	/** Helper for loading the {@code Resource}. */
 	private var holder:MovieClip;
+	
+	/** Loaded {@code Resource}. */
 	private var result:Resource;
 	
+	/**
+	 * Constructs a new {@code SwfLoader} instance.
+	 * 
+	 * @param holder {@code MovieClip} instance to load the {@code .swf} into
+	 */
 	public function SwfLoader(holder:MovieClip) {
 		this.holder = holder;
 	}
 	
+	/**
+	 * Loads a certain {@code .swf} by a http request.
+	 * 
+	 * <p>It sends http request by using the passed-in {@code uri}, {@code method}
+	 * and {@code parameters} with {@code .loadMovie}. 
+	 * 
+	 * <p>If you only need to listen if the {@code SwfResource} finished loading
+	 * you can apply a {@code callBack} that gets called if the {@code Resource} is loaded.
+	 * 
+	 * @param uri location of the resource to load
+	 * @param parameters (optional) parameters for loading the resource
+	 * @param method (optional) POST/GET as method for submitting the parameters,
+	 *        default method used if {@code method} was not passed-in is POST.
+	 * @param callBack (optional) {@link Executable} to be executed after the
+	 *        the resource was loaded.
+	 */
 	public function load(uri:String, method:String, parameters:Map, callBack:Executable):Void {
 		result = null;
 		if(parameters) {
@@ -42,6 +146,12 @@ class org.as2lib.io.file.SwfLoader extends AbstractResourceLoader implements Res
 		FrameImpulse.getInstance().addFrameImpulseListener(this);
 	}
 	
+	/**
+	 * Returns the loaded resource.
+	 * 
+	 * @return resource that has been loaded
+	 * @throws ResourceNotLoadedException if the resource has not been loaded yet
+	 */
 	public function getResource(Void):Resource {
 		if (!result) {
 			throw new ResourceNotLoadedException("No File has been loaded.", this, arguments);
@@ -49,6 +159,13 @@ class org.as2lib.io.file.SwfLoader extends AbstractResourceLoader implements Res
 		return result;
 	}
 	
+	/**
+	 * Returns the total amount of bytes that has been loaded.
+	 * 
+	 * <p>Returns {@code null} if its not possible to get the loaded bytes.
+	 * 
+	 * @return amount of bytes that has been loaded
+	 */
 	public function getBytesLoaded(Void):Byte {
 		var result:Number = holder.getBytesLoaded();
 		if (result >= 0) {
@@ -57,6 +174,13 @@ class org.as2lib.io.file.SwfLoader extends AbstractResourceLoader implements Res
 		return null;
 	}
 	
+	/**
+	 * Returns the total amount of bytes that will approximately be loaded.
+	 * 
+	 * <p>Returns {@code null} if its not possible to get the total amount of bytes.
+	 * 
+	 * @return amount of bytes to load
+	 */
 	public function getBytesTotal(Void):Byte {
 		var total:Number = holder.getBytesTotal();
 		if (total >= 0) {
@@ -65,14 +189,26 @@ class org.as2lib.io.file.SwfLoader extends AbstractResourceLoader implements Res
 		return null;
 	}
 	
+	/**
+	 * Handles a {@code frame} execution.
+	 * 
+	 * <p>Helper that checks every frame if the {@code .swf} finished loading.
+	 * 
+	 * @param impulse {@code FrameImpulse} that sent the event
+	 */
 	public function onFrameImpulse(impulse:FrameImpulse):Void {
-		if (checkTimeout()) {
-			failLoading();
-		} else if (checkFinished()){
+		if (checkFinished()) {
 			successLoading();
+		} else if (checkTimeout()) {
+			failLoading();
 		}
 	}
 	
+	/**
+	 * Checks if the {@code .swf} finished loading.
+	 * 
+	 * @return {@code true} if the {@code .swf} finished loading
+	 */
 	private function checkFinished():Boolean {
 		holder = eval(""+holder._target);
 		if ( holder.getBytesTotal() > 10 
@@ -82,6 +218,11 @@ class org.as2lib.io.file.SwfLoader extends AbstractResourceLoader implements Res
 		return false;
 	}
 	
+	/**
+	 * Checks if the {@code TIMEOUT} has been exceeded by the durating.
+	 * 
+	 * @return {@code true} if the duration exceeded the {@code TIMEOUT} value
+	 */
 	private function checkTimeout():Boolean {
 		if (holder.getBytesTotal() > 10) {
 			return false;
@@ -89,6 +230,9 @@ class org.as2lib.io.file.SwfLoader extends AbstractResourceLoader implements Res
 		return (getDuration().valueOf() > TIMEOUT);
 	}
 	
+	/**
+	 * Handles if the loading of resource was successful.
+	 */
 	private function successLoading(Void):Void {
 		finished = true;
 		started = false;
@@ -98,6 +242,9 @@ class org.as2lib.io.file.SwfLoader extends AbstractResourceLoader implements Res
 		tearDown();
 	}
 	
+	/**
+	 * Handles if the loading of the resource failed.
+	 */
 	private function failLoading(Void):Void {
 		finished = true;
 		started = false;
@@ -106,6 +253,11 @@ class org.as2lib.io.file.SwfLoader extends AbstractResourceLoader implements Res
 		tearDown();
 	}
 	
+	/**
+	 * Removes instance from listening to {@code FrameImpulse}.
+	 * 
+	 * @see #onFrameImpulse
+	 */
 	private function tearDown(Void):Void {
 		FrameImpulse.getInstance().removeListener(this);
 	}
