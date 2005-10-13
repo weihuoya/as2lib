@@ -1,95 +1,167 @@
-﻿[-] main.Flashout (4/6/2005)
+[+] org.as2lib.io.file.MediaFile (13/10/2005)
 
-[-] org.as2lib.app.conf.FlashoutApplication (4/6/2005)
+[+] org.as2lib.data.holder.Properties (12/10/2005)
+Data holder for String properties
 
-[+] org.as2lib.env.event.impulse.FrameImpulse.addFrameImpulseListener(listener:FrameImpulseListener):Void (4/6/2005)
+[+] org.as2lib.data.holder.properties.SimpleProperties (12/10/2005)
 
-[+] org.as2lib.env.event.impulse.FrameImpulse.removeFrameImpulseListener(listener:FrameImpulseListener):Void (4/6/2005)
+[+] org.as2lib.data.holder.properties.PropertiesParser (12/10/2005)
 
-[+] org.as2lib.env.event.impulse.FrameImpulse.addAllFrameImpulseListener(listeners:Array):Void (4/6/2005)
+[+] org.as2lib.io.file.PropertyFileFactory (12/10/2005)
 
-[+] org.as2lib.env.event.impulse.FrameImpulse.removeAllFrameImpulseListener(Void):Void (4/6/2005)
+[+] org.as2lib.io.file.PropertyFile (12/10/2005)
 
-[+] org.as2lib.env.event.impulse.FrameImpulse.getAllFrameImpulseListener(Void):Array (4/6/2005)
+[+] org.as2lib.util.StringUtil.escape (12/10/2005)
 
-[+] org.as2lib.env.event.impulse.FrameImpulse.hasFrameImpulseListener(listener:FrameImpulseListener):Array (4/6/2005)
+[+] org.as2lib.io.file.LoadStartListener (11/10/2005)
 
-[+] org.as2lib.env.event.impulse.FrameImpulseListener (4/6/2005)
-Dedicated listener support for FrameImpulse
+[+] org.as2lib.io.file.LoadErrorListener (11/10/2005)
 
-[+] org.as2lib.env.event.impulse.Impulse.addImpulseListener(listener:ImpulseListener):Void (4/6/2005)
+[+] org.as2lib.io.file.LoadProgressListener (11/10/2005)
 
-[+] org.as2lib.env.event.impulse.Impulse.removeImpulseListener(listener:ImpulseListener):Void (4/6/2005)
+[+] org.as2lib.io.file.LoadCompleteListener (11/10/2005)
 
-[+] org.as2lib.env.event.impulse.Impulse.addAllImpulseListener(listeners:Array):Void (4/6/2005)
+[-] org.as2lib.io.file.FileListener (11/10/2005)
 
-[+] org.as2lib.env.event.impulse.Impulse.removeAllImpulseListener(Void):Void (4/6/2005)
+[+] org.as2lib.io.file.CompositeFileFactory (11/10/2005)
+Factory to create different files by their extension
 
-[+] org.as2lib.env.event.impulse.Impulse.getAllImpulseListener(Void):Array (4/6/2005)
+[+] org.as2lib.io.file.Loader (11/10/2005)
+Central access to load files
 
-[+] org.as2lib.env.event.impulse.Impulse.hasImpulseListener(listener:ImpulseListener):Array (4/6/2005)
+[+] org.as2lib.io.file.TextFileFactory (11/10/2005)
+Interface for factories to text file implementations
 
-[+] org.as2lib.env.event.impulse.ImpulseListener (4/6/2005)
-Dedicated listener support for Impulse
+[+] org.as2lib.io.file.SimpleTextFileFactory (11/10/2005)
 
-[~] org.as2lib.env.event.impulse.Impulse (4/6/2005)
-Impulse extends now org.as2lib.env.event.EventListenerSource
+[+] org.as2lib.io.file.XmlFileFactory (11/10/2005)
 
-[~] org.as2lib.app.conf (4/6/2005)
-Renamed TestExecution to UnitTestExecution.
+[+] org.as2lib.io.file.TextFileLoader (11/10/2005)
+File loader to load textfiles (former SimpleFile)
 
-[~] org.as2lib.env.event.impulse.Impulse (4/6/2005)
-Moved org.as2lib.app.exec to org.as2lib.env.event.impulse.
+[~] org.as2lib.io.file.FileLoader (11/10/2005)
+Changed to a generic file loader interface
 
-[+] org.as2lib.env.reflect.Delegate (4/6/2005)
-Delegate implementation for some problem cases.
+[+] org.as2lib.io.file.TextFile (11/10/2005)
+File extension for text content
 
-[+] org.as2lib.env.event.EventListenerSource.hasListener(listener):Boolean (2/6/2005)
-Method to check if a certain listener has been added.
+[+] org.as2lib.io.file.SimpleTextFile (11/10/2005)
 
-[+] org.as2lib.env.log.logger.Log4fLogger (2/6/2005)
-Logger support for Log4F Framework.
+[+] org.as2lib.io.file.XmlFile (11/10/2005)
 
-[~] main.Mtasc.init(Void):Void (1/6/2005)
-Changed arguments to container:MovieClip.
+[~] org.as2lib.io.file.File (11/10/2005)
+Changed to a generic interface
 
-[~] org.as2lib.app.conf.MtascApplication.main(Void):Void (1/6/2005)
-Changed arguments to container:MovieClip.
+[+] org.as2lib.aop.matcher.RegexpMatcher (11/10/2005)
+Matches a join point with a regular expression pattern.
 
-[+] org.as2lib.env.log.handler.FludgeHandler (26/5/2005)
-Handler support for fludge.
+[+] org.as2lib.aop.matcher.RegexpMatcher (11/10/2005)
+Matches a join point with a regular expression pattern.
 
-[+] org.as2lib.env.log.logger.FludgeLogger (26/5/2005)
-Logger support for fludge.
+[*] org.as2lib.regexp.node (10/10/2005)
+Access modificators are specified for the class members
 
-[+] org.as2lib.env.log.repository.AudiofarmLoggerRepository (26/5/2005)
-Repository support for Ralf Siegel&apos;s Logging Framework for ActionScript 2.
+[~] org.as2lib.regexp.Pattern.isMatch (10/10/2005)
+Renamed to matches.
 
-[+] org.as2lib.env.log.logger.AudiofarmLogger (26/5/2005)
-Logger support for Ralf Siegel&apos;s Logging Framework for ActionScript 2.
+[~] org.as2lib.regexp.Matcher.isMatch (10/10/2005)
+Renamed to matches.
 
-[+] org.as2lib.env.log.logger.ZtorLog4fHandler (26/5/2005)
-Handler support for ZTOR Log4f.
+[+] org.as2lib.app.exec.BatchStartListener (9/10/2005)
 
-[+] org.as2lib.env.log.logger.ZtorLog4fLogger (26/5/2005)
-Logger support for ZTOR Log4f.
+[+] org.as2lib.app.exec.BatchFinishListener (9/10/2005)
 
-[!] org.as2lib.env.log.handler.XmlSocketHandler (4/5/2005)
-Fixed bugs number 1213140 and 1212906.
+[+] org.as2lib.app.exec.BatchUpdateListener (9/10/2005)
 
-[~] org.as2lib.env.log.logger.FlashDebugToolHandler (4/5/2005)
-Renamed to FlashDebugToolLogger.
+[+] org.as2lib.app.exec.BatchErrorListener (9/10/2005)
 
-[+] org.as2lib.env.log.handler.LevelFilterHandler (4/5/2005)
-Wrapper for handlers that filters log messages by level.
+[-] org.as2lib.app.exec.BatchListener (9/10/2005)
 
-[+] org.as2lib.data.holder.list.ListStringifier (4/5/2005)
-Stringifies lists.
+[+] org.as2lib.app.exec.ProcessStartListener (9/10/2005)
 
-[+] org.as2lib.data.holder.list.ArrayList (4/5/2005)
-Simple list implementation that uses array as underlying data holder.
+[+] org.as2lib.app.exec.ProcessFinishListener (9/10/2005)
 
-[+] org.as2lib.data.holder.List (4/5/2005)
-Stores values by index.
+[+] org.as2lib.app.exec.ProcessPauseListener (9/10/2005)
 
+[+] org.as2lib.app.exec.ProcessResumeListener (9/10/2005)
+
+[+] org.as2lib.app.exec.ProcessUpdateListener (9/10/2005)
+
+[+] org.as2lib.app.exec.ProcessErrorListener (9/10/2005)
+
+[-] org.as2lib.app.exec.ProcessListener (9/10/2005)
+
+[+] org.as2lib.env.log.parser.XmlLogConfigurationParser (8/10/2005)
+Parses xml log configurations.
+
+[+] org.as2lib.env.log.LogConfigurationParser (8/10/2005)
+Interface for log configuration parsers.
+
+[+] static org.as2lib.env.log.level.AbstractLogLevel.forName (8/10/2005)
+
+[+] org.as2lib.env.reflect.ReflectUtil (2/10/2005)
+Added proper cache for type and method names.
+
+[+] org.as2lib.test.unit.TestCaseRunner (21/9/2005)
+
+[+] org.as2lib.test.unit.TestSuiteRunner (21/9/2005)
+
+[-] org.as2lib.test.unit.Test.getTestResult (21/9/2005)
+
+[+] org.as2lib.test.unit.Test.getTestRunner (21/9/2005)
+
+[~] org.as2lib.test.unit.TestRunner (21/9/2005)
+Changed from a concrete class to a interface
+
+[+] org.as2lib.app.exec.Processor (18/9/2005)
+Class to process a StepByStepProcess
+
+[+] org.as2lib.app.exec.StepByStepProcess (18/9/2005)
+Interface to define step based processing
+
+[~] org.as2lib.io.file.BitFormat (13/9/2005)
+Renamed to org.as2lib.data.type.Bit.
+
+[~] org.as2lib.io.file.ByteFormat (13/9/2005)
+Renamed to org.as2lib.data.type.Byte.
+
+[+] org.as2lib.data.type.Time (13/9/2005)
+Holder for time distances
+
+[+] org.as2lib.env.event.EventSupport (13/9/2005)
+Simple access to CompositeEventDistributorControl
+
+[+] org.as2lib.env.log.LogSupport (13/9/2005)
+Simple access to logging
+
+[+] org.as2lib.util.Comparable (11/9/2005)
+Interface to compare to instances
+
+[+] org.as2lib.util.ObjectUtil.compare(obj1, obj2):Boolean (11/9/2005)
+
+[+] org.as2lib.env.log.LogManager.getLoggerByObject (10/9/2005)
+Convenience method that releases you from evaluating the logger name yourself.
+
+[+] org.as2lib.util.MethodUtil (10/9/2005)
+
+[+] org.as2lib.env.except.Throwable.initErrorCode/getErrorCode (10/9/2005)
+Error code to get localized message to display to users.
+
+[+] org.as2lib.regexp (10/9/2005)
+Regular Expression framework is added.
+
+[+] org.as2lib.env.log.LogManager (9/9/2005)
+Enhanced class to allow the following access: "private static var logger:Logger = LogManager.getLogger(&quot;org.as2lib.MyClass&quot;);".
+
+[!] org.as2lib.aop.weaver.SimpleWeaver.weaveSuperClassConstructor (1/9/2005)
+Fixed bug with super constructors and multiple advices.
+
+[!] org.as2lib.aop.mtacher.WildcardMatcher.match (1/9/2005)
+Fixed serious bug with often used pattern "..*.*".
+
+[!] org.as2lib.aop.weaver.SimpleWeaver.addAspectForAllTypesInPackage/addAdviceForAllTypesInPackage (1/9/2005)
+Fixed serious bug that prevented weaving aspects and advices by types package as affected types.
+
+[!] org.as2lib.aop.weaver.SimpleWeaver.addAspectForAllTypes/addAdviceForAllTypes (23/8/2005)
+Fixed major bug that resulted in IllegalArgumentException.
 
