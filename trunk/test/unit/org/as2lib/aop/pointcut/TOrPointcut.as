@@ -104,7 +104,7 @@ class org.as2lib.aop.pointcut.TOrPointcut extends TestCase {
 		
 		AopConfig.setPointcutFactory(f);
 		
-		var p:OrPointcut = new OrPointcut("org.as2lib.core.*.*() || org.as2lib.env.reflect.*.*() || org.as2lib.test.Juhu.lol()");
+		var p:OrPointcut = new OrPointcut("org.as2lib.core.*.*()||org.as2lib.env.reflect.*.*()||org.as2lib.test.Juhu.lol()");
 		// test wether the pointcut really has been added
 		
 		fc.verify();

@@ -90,6 +90,8 @@ class org.as2lib.aop.joinpoint.TPropertyJoinPoint extends TestCase {
 		
 		var ic:MockControl = new MockControl(PropertyInfo);
 		var i:PropertyInfo = ic.getMock();
+		i.isStatic();
+		ic.setReturnValue(false);
 		i.getFullName();
 		ic.setReturnValue("org.as2lib.core.BasicClass.myProperty");
 		ic.replay();
@@ -106,7 +108,7 @@ class org.as2lib.aop.joinpoint.TPropertyJoinPoint extends TestCase {
 	public function testMatchesWithRealPattern(Void):Void {
 		var mc:MockControl = new MockControl(Matcher);
 		var m:Matcher = mc.getMock();
-		m.match("org.as2lib.core.BasicClass.myProperty", "org.*.BasicClass.*()");
+		m.match("static org.as2lib.core.BasicClass.myProperty", "org.*.BasicClass.*()");
 		mc.setReturnValue(false);
 		mc.replay();
 		
@@ -116,6 +118,8 @@ class org.as2lib.aop.joinpoint.TPropertyJoinPoint extends TestCase {
 		
 		var ic:MockControl = new MockControl(PropertyInfo);
 		var i:PropertyInfo = ic.getMock();
+		i.isStatic();
+		ic.setReturnValue(true);
 		i.getFullName();
 		ic.setReturnValue("org.as2lib.core.BasicClass.myProperty");
 		ic.replay();
