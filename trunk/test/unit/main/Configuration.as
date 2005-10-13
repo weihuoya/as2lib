@@ -25,15 +25,14 @@ import org.as2lib.app.conf.UnitTestExecution;
  * @author Martin Heidegger.
  */
 class main.Configuration extends AbstractConfiguration {
-
+	
     public static function init(Void):Void {
-		initProcess(new UnitTestExecution());
+    	initProcess(new UnitTestExecution());
     }
     
 	private function setReferences(Void):Void {
-		
 		// File tests
-		/*use(org.as2lib.io.file.TSimpleTextFile);
+		use(org.as2lib.io.file.TSimpleTextFile);
 		use(org.as2lib.io.file.TTextFileLoader);
 		use(org.as2lib.io.file.TPropertyFile);
 		use(org.as2lib.io.file.TSwfLoader);
@@ -45,16 +44,16 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.app.exec.TTimeout);
 		use(org.as2lib.app.exec.TCall);
 		
-		// Data Holder tests
+		// org.as2lib.data.holder
 		use(org.as2lib.data.holder.array.TArrayIterator);
 		use(org.as2lib.data.holder.array.TTypedArray);
-		// Have to rethink it ... use(org.as2lib.data.holder.list.TPriorityList);
+		//use(org.as2lib.data.holder.list.TPriorityList);
 		use(org.as2lib.data.holder.list.TArrayList);
 		use(org.as2lib.data.holder.list.TSubList);
 		use(org.as2lib.data.holder.TProtectedIterator);
 		use(org.as2lib.data.holder.map.TValueMapIterator);
 		use(org.as2lib.data.holder.map.THashMap);
-		// Have to rethink it ... use(org.as2lib.data.holder.map.TPriorityMap);
+		//use(org.as2lib.data.holder.map.TPriorityMap);
 		use(org.as2lib.data.holder.map.TTypedMap);
 		use(org.as2lib.data.holder.map.TPrimitiveTypeMap);
 		use(org.as2lib.data.holder.stack.TSimpleStack);
@@ -62,7 +61,7 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.data.holder.queue.TLinearQueue);
 		use(org.as2lib.data.holder.queue.TTypedQueue);
 		
-		// Data Type Tests
+		// org.as2lib.data.type
 		use(org.as2lib.data.type.TInteger);
 		use(org.as2lib.data.type.TDegree);
 		use(org.as2lib.data.type.TRadian);
@@ -70,14 +69,13 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.data.type.TNaturalNumberIncludingZero);
 		use(org.as2lib.data.type.TTime);
 		
-		// Util tests
+		// org.as2lib.util
 		use(org.as2lib.util.TArrayUtil);
 		use(org.as2lib.util.TObjectUtil);
 		use(org.as2lib.util.TStringUtil);
 		use(org.as2lib.util.TClassUtil);
 		use(org.as2lib.util.TStopWatch);
-		use(org.as2lib.util.TObjectUtil);
-		*/use(org.as2lib.util.TArrayUtil);/*
+		use(org.as2lib.util.TArrayUtil);
 		use(org.as2lib.util.TMathUtil);
 		use(org.as2lib.util.TAccessPermission);
 		use(org.as2lib.util.TDateFormatter);
@@ -131,7 +129,6 @@ class main.Configuration extends AbstractConfiguration {
 		
 		// org.as2lib.env.reflect
 		use(org.as2lib.env.reflect.TSimpleCache);
-		// player breaks when you run TClassInfo test together with tests until org.as2lib.env.log
 		use(org.as2lib.env.reflect.TClassInfo);
 		use(org.as2lib.env.reflect.TClassInfo_Method);
 		use(org.as2lib.env.reflect.TClassInfo_Property);
@@ -153,6 +150,7 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.env.log.repository.TLoggerHierarchy);
 		use(org.as2lib.env.log.level.TDynamicLogLevel);
 		use(org.as2lib.env.log.handler.TLevelFilterHandler);
+		use(org.as2lib.env.log.parser.TXmlLogConfigurationParser);
 		
 		// org.as2lib.env.event
 		use(org.as2lib.env.event.TSimpleEventListenerSource);
@@ -169,6 +167,8 @@ class main.Configuration extends AbstractConfiguration {
 		// org.as2lib.env.event.distributor
 		use(org.as2lib.env.event.distributor.TSimpleEventDistributorControl);
 		use(org.as2lib.env.event.distributor.TSimpleConsumableEventDistributorControl);
+		use(org.as2lib.env.event.distributor.TCompositeEventDistributor);
+		use(org.as2lib.env.event.distributor.TSimpleCompositeEventDistributorControl);
 		 
 		// org.as2lib.env.except
 		// - TODO some problem with TIllegalStateException and TUnsupportedOperationException exceeds 256 levels of recursion -
@@ -187,7 +187,6 @@ class main.Configuration extends AbstractConfiguration {
 		// org.as2lib.env.bean.factory.support
 		//use(org.as2lib.env.bean.factory.support.TDefaultBeanFactory);
 		//use(org.as2lib.env.bean.factory.support.TRootBeanDefinition);
-		 */
 	}
 	
 }
