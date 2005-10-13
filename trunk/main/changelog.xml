@@ -2,7 +2,7 @@
 <changelog xmlns="as2lib"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="as2lib http://www.as2lib.org/changelog_0.91.xsd">
-  <release name="as2lib 0.9.3" day="9" month="9" year="2005">
+  <release name="as2lib 0.9.3" day="13" month="10" year="2005">
     <year value="2005">
       <month value="10">
         <day value="13">
