@@ -149,7 +149,7 @@ class org.as2lib.io.file.TextFileLoader extends AbstractFileLoader implements Fi
 						var key = keys.next();
 						helper[key.toString()] = parameters.get(key);
 					}
-					helper.sendAndLoad(uri, this, method);
+					helper["sendAndLoad"](uri, this, method);
 				} else {
 					var result:String = uri;
 					if (uri.indexOf("?") == -1) {
