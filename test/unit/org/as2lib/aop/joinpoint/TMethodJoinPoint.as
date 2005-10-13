@@ -102,7 +102,7 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 	public function testMatchesWithNullPattern(Void):Void {
 		var mc:MockControl = new MockControl(Matcher);
 		var m:Matcher = mc.getMock();
-		m.match("org.as2lib.core.BasicClass.myMethod", null);
+		m.match("static org.as2lib.core.BasicClass.myMethod", null);
 		mc.setReturnValue(true);
 		mc.replay();
 		
@@ -112,6 +112,8 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 		
 		var ic:MockControl = new MockControl(MethodInfo);
 		var i:MethodInfo = ic.getMock();
+		i.isStatic();
+		ic.setReturnValue(true);
 		i.getFullName();
 		ic.setReturnValue("org.as2lib.core.BasicClass.myMethod");
 		ic.replay();
@@ -138,6 +140,8 @@ class org.as2lib.aop.joinpoint.TMethodJoinPoint extends TestCase {
 		
 		var ic:MockControl = new MockControl(MethodInfo);
 		var i:MethodInfo = ic.getMock();
+		i.isStatic();
+		ic.setReturnValue(false);
 		i.getFullName();
 		ic.setReturnValue("org.as2lib.core.BasicClass.myMethod");
 		ic.replay();

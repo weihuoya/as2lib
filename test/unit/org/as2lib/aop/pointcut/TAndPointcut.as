@@ -122,7 +122,7 @@ class org.as2lib.aop.pointcut.TAndPointcut extends TestCase {
 		
 		AopConfig.setPointcutFactory(f);
 		
-		var p:AndPointcut = new AndPointcut("org.as2lib.core.*.*() && org.as2lib.env.reflect.*.*() && org.as2lib.test.Juhu.lol()");
+		var p:AndPointcut = new AndPointcut("org.as2lib.core.*.*()&&org.as2lib.env.reflect.*.*()&&org.as2lib.test.Juhu.lol()");
 		assertSame(p.getPointcuts().length, 3);
 		assertSame(p.getPointcuts()[0], c1);
 		assertSame(p.getPointcuts()[1], c2);
