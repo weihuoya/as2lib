@@ -1,4 +1,4 @@
-THE AS2LIB FRAMEWORK, release 0.9.1 (July 2005)
+THE AS2LIB FRAMEWORK, release 0.9.3 (July 2005)
 -----------------------------------------------
 http://www.as2lib.org
 
@@ -8,17 +8,19 @@ http://www.as2lib.org
    The As2lib is an open source framework targeted to Macromedia Flash MX 2004+ developers. It offers
    support for basic idioms like event handling, error handling, logging, overloading and reflections
    as well as different kinds of data holders and iterators. Also contained is a full-featured testing
-   API that allows for unit tests, mock objects and speed tests and an input/output (io) API.
+   framework that allows for unit tests, mock objects and speed tests, an input/output (io) framework
+   and an aspect-oriented programming (AOP) framework.
+   This release's highlights are the new regular expression (RegExp) framework and the revised file and
+   process frameworks.
    We aim to offer support for almost every problem domain in future releases including beans, contexts,
-   AOP, regular expressions and everything else you ask for. We thus encourage you to submit a Feature
-   Request if there is a feature you are missing or to post about this feature in the Discussion Forum
-   or on our Mailing List.
+   and everything else you ask for. We thus encourage you to submit a Feature Request if there is a feature
+   you are missing or to post about this feature in the Discussion Forum or on our Mailing List.
 
 
 2. Documentation:
 
-   General documentation: http://plone.as2lib.org/documentation.
-   API documentation: http://api.as2lib.org.
+   General documentation: http://plone.as2lib.org/documentation
+   API documentation: http://api.as2lib.org/0.9.3
 
 
 3. Release Notes:
@@ -31,11 +33,14 @@ http://www.as2lib.org
        * Overloading API - org.as2lib.env.overload
        * Reflection API - org.as2lib.env.reflect
        * Data Holders/Structures and Iterators - org.as2lib.data.holder
-       * Numerical Types - org.as2lib.data.type
+       * Various Types - org.as2lib.data.type
        * Connection API - org.as2lib.io.conn
+       * File API - org.as2lib.io.file
        * Unit Testing API - org.as2lib.test.unit
        * Mock Object API - org.as2lib.test.mock
        * Speed Testing (Profiler) API - org.as2lib.test.speed
+       * Aspect-Oriented Programming (AOP) API - org.as2lib.aop
+       * Regular Expression (RegExp) API - org.as2lib.regexp
        * Application (Process and Configuration) API - org.as2lib.app
        * Utilities for Arrays, Strings, Classes, ... - org.as2lib.util
 
