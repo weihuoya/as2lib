@@ -79,11 +79,7 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	 * @throws IllegalArgumentException if the listener does not match any expected type
 	 */
 	public function addListener(listener):Void {
-		try {
 		distributorControl.addListener(listener);
-		} catch(e) {
-			trace(e.toString());
-		}
 	}	
 
 	/**
@@ -149,4 +145,5 @@ class org.as2lib.env.event.EventSupport extends LogSupport implements EventListe
 	private function acceptListenerType(type:Function):Void {
 		distributorControl.acceptListenerType(type);
 	}
+	
 }
