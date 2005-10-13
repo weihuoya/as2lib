@@ -15,15 +15,13 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.data.type.Byte;
-import org.as2lib.data.type.MultilineString;
-import org.as2lib.io.file.TextFile;
-import org.as2lib.io.file.TextFileFactory;
-import org.as2lib.io.file.SimpleTextFileFactory;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
+import org.as2lib.data.type.Byte;
 import org.as2lib.env.overload.Overload;
-import org.as2lib.app.exec.ForEachExecutable;
+import org.as2lib.io.file.SimpleTextFileFactory;
+import org.as2lib.io.file.TextFile;
+import org.as2lib.io.file.TextFileFactory;
 
 /**
  * {@code CompositeTextFileFactory} uses different {@code TextFileFactory}

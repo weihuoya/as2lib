@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
+import org.as2lib.app.exec.Executable;
 import org.as2lib.data.holder.Map;
 import org.as2lib.env.event.EventSupport;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.io.file.CompositeTextFileFactory;
 import org.as2lib.io.file.FileLoader;
-import org.as2lib.io.file.TextFileLoader;
-import org.as2lib.io.file.TextFileFactory;
-import org.as2lib.io.file.SimpleTextFileFactory;
-import org.as2lib.io.file.SwfFileLoader;
-import org.as2lib.io.file.XmlFileFactory;
-import org.as2lib.util.StringUtil;
-import org.as2lib.io.file.LoadStartListener;
 import org.as2lib.io.file.LoadCompleteListener;
 import org.as2lib.io.file.LoadErrorListener;
 import org.as2lib.io.file.LoadProgressListener;
-import org.as2lib.app.exec.Executable;
+import org.as2lib.io.file.LoadStartListener;
+import org.as2lib.io.file.SwfFileLoader;
+import org.as2lib.io.file.TextFileFactory;
+import org.as2lib.io.file.TextFileLoader;
+import org.as2lib.io.file.XmlFileFactory;
 
 /**
  * {@code Loader} is a central distributor for loading files.
