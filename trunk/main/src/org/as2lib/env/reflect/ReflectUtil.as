@@ -242,6 +242,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 			return y;
 		}
 		if (n == null) n = "";
+		var s:Function = _global.ASSetPropFlags;
 		for (var r:String in p) {
 			try {
 				// flex stores every class in _global and in its actual package
@@ -252,6 +253,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 				if ((!eval("_global." + r.split("_").join(".")) || r.indexOf("_") < 0) && p[r].prototype === c) {
 					var x:String = n + r;
 					c.__as2lib__typeName = x;
+					s(c, "__as2lib__typeName", 1, true);
 					return x;
 				}
 				if (p[r].__constructor__.valueOf() == Object) {
@@ -268,6 +270,7 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 				} else {
 					if (typeof(p[r]) == "function") {
 						p[r].prototype.__as2lib__typeName = n + r;
+						s(p[r].prototype, "__as2lib__typeName", 1, true);
 					}
 				}
 			} catch (e) {
