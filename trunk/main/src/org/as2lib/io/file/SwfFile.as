@@ -16,18 +16,18 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.type.Byte;
-import org.as2lib.io.file.File;
 import org.as2lib.env.reflect.ReflectUtil;
+import org.as2lib.io.file.MediaFile;
 
 /**
- * {@code SwfFile} is a holder for the informations to a loaded {@code .swf}
+ * {@code SwfFile} holds all information of a loaded SWF-file.
  * 
- * <p>{@code SwfFile} is <b>not</b> built to represent human readable files.
+ * <p>Note that this file can also be used to represent images.
  * 
  * @author Martin Heidegger
  * @version 1.0
  */
-class org.as2lib.io.file.SwfFile extends BasicClass implements File {
+class org.as2lib.io.file.SwfFile extends BasicClass implements MediaFile {
 
 	/** Size of the file in bytes. */
 	private var size:Byte;
