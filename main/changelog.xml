@@ -5,6 +5,9 @@
   <release name="as2lib 0.9.3" day="9" month="9" year="2005">
     <year value="2005">
       <month value="10">
+        <day value="13">
+          <entry type="add" package="org.as2lib.io.file" class="MediaFile"/>
+        </day>
         <day value="12">
           <entry type="add" package="org.as2lib.data.holder" class="Properties">Data holder for String properties</entry>
           <entry type="add" package="org.as2lib.data.holder.properties" class="SimpleProperties"/>
@@ -31,16 +34,17 @@
           <entry type="add" package="org.as2lib.io.file" class="XmlFile"/>
           <entry type="change" package="org.as2lib.io.file" class="File">Changed to a generic interface</entry>
           <entry type="add" package="org.as2lib.aop.matcher" class="RegexpMatcher">Matches a join point with a regular expression pattern.</entry>
+          <entry type="add" package="org.as2lib.aop.matcher" class="RegexpMatcher">Matches a join point with a regular expression pattern.</entry>
         </day>
-        <day value="10">
-          <entry type="enhancement" package="org.as2lib.regexp.node">Access modificators are specified for the class members</entry>
-          <entry type="change" package="org.as2lib.regexp" class="Pattern" method="isMatch">
-            <change-rename to="matches"></change-rename>
-          </entry>
-          <entry type="change" package="org.as2lib.regexp" class="Matcher" method="isMatch">
-            <change-rename to="matches"></change-rename>
-          </entry>
-        </day>
+      	<day value="10">
+      	  <entry type="enhancement" package="org.as2lib.regexp.node">Access modificators are specified for the class members</entry>
+      	  <entry type="change" package="org.as2lib.regexp" class="Pattern" method="isMatch">
+      	    <change-rename to="matches"></change-rename>
+     	  </entry>
+      	  <entry type="change" package="org.as2lib.regexp" class="Matcher" method="isMatch">
+      	    <change-rename to="matches"></change-rename>
+     	  </entry>
+      	</day>
         <day value="9">
           <entry type="add" package="org.as2lib.app.exec" class="BatchStartListener"/>
           <entry type="add" package="org.as2lib.app.exec" class="BatchFinishListener"/>
@@ -87,7 +91,7 @@
           <entry type="add" package="org.as2lib.env.event" class="EventSupport">Simple access to CompositeEventDistributorControl</entry>
           <entry type="add" package="org.as2lib.env.log" class="LogSupport">Simple access to logging</entry>
         </day>
-        <day value="11">
+		<day value="11">
           <entry type="add" package="org.as2lib.util" class="Comparable">Interface to compare to instances</entry>
           <entry type="add" package="org.as2lib.util" class="ObjectUtil" method="compare(obj1, obj2):Boolean" />
         </day>
