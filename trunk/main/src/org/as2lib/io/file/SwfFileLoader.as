@@ -28,7 +28,7 @@ import org.as2lib.io.file.File;
 import org.as2lib.io.file.SwfFile;
 
 /**
- * {@code SwfLoader} is a implementation of {@link FileLoader} to load
+ * {@code SwfFileLoader} is a implementation of {@link FileLoader} to load
  * files with {@code loadMovie} (usually {@code .swf} files}.
  * 
  * <p>Any content to be loaded with {@code MovieClip#loadMovie} can be load with
@@ -107,7 +107,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	private var result:File;
 	
 	/**
-	 * Constructs a new {@code SwfLoader} instance.
+	 * Constructs a new {@code SwfFileLoader} instance.
 	 * 
 	 * @param holder {@code MovieClip} instance to load the {@code .swf} into
 	 */
