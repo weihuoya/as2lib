@@ -178,7 +178,6 @@ interface org.as2lib.io.file.FileLoader extends EventListenerSource {
 	 */
 	public function getTransferRate(Void):Bit;
 	
-	
 	/**
 	 * Estimates the approximate time until the resource was loaded.
 	 * 
@@ -199,4 +198,5 @@ interface org.as2lib.io.file.FileLoader extends EventListenerSource {
 	 * @return time difference between start time and end time/current time.
 	 */
 	public function getDuration(Void):Time;
+	
 }
