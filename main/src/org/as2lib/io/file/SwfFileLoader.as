@@ -34,7 +34,7 @@ import org.as2lib.io.file.SwfFile;
  * <p>Any content to be loaded with {@code MovieClip#loadMovie} can be load with
  * {@code SwfLoader} to a concrete {@code MovieClip} instance that has to be
  * passed-in with the constructor.
- *
+ * 
  * <p>{@code SwfLoader} represents the time consuming part of accessing external
  * {@code .swf}' ({@code SwfFile} is the handleable part} and therefore
  * contains a event system to add listeners to listen to the concrete events.
@@ -63,18 +63,19 @@ import org.as2lib.io.file.SwfFile;
  *       }
  *     }
  *     
- *     public function onLoadError(fileLoader:FileLoader, errorCode:String, error):Void {
+ *     public function onLoadError(fileLoader:FileLoader, errorCode:String, error):Boolean {
  *       if (errorCode == AbstractFileLoader.FILE_NOT_FOUND) {
  *         var notExistantUrl = error;
  *         // Use that url
  *       }
+ *       return false;
  *     }
  *     
- *     public function onLoadStart(fileLoader:FileLoader) {
+ *     public function onLoadStart(fileLoader:FileLoader):Void {
  *       // show that this file just gets loaded
  *     }
  *     
- *     public function onLoadProgress(fileLoader:FileLoader) {
+ *     public function onLoadProgress(fileLoader:FileLoader):Void {
  *       // update the percentage display with fileLoader.getPercentage();
  *     }
  *   }
@@ -82,9 +83,10 @@ import org.as2lib.io.file.SwfFile;
  * 
  * <p>Example of the usage:
  * <code>
- *   import org.as2lib.io.file.SwfLoader;
+ *   import org.as2lib.io.file.SwfFileLoader;
  *   
- *   var swfLoader:SwfLoader = new SwfLoader();
+ *   var container:MovieClip = this.createEmptyMovieClip("container", 1);
+ *   var swfLoader:SwfFileLoader = new SwfFileLoader(container);
  *   swfLoader.addListener(new MySwfListener());
  *   swfLoader.load("test.swf");
  * </code>
