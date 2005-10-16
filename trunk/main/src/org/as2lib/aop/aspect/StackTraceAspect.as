@@ -20,8 +20,7 @@ import org.as2lib.aop.aspect.AbstractAspect;
 import org.as2lib.aop.JoinPoint;
 
 /**
- * {@code StackTraceAspect} traces method invocations and stores them in a stack, the
- * {@link #getStackTrace}.
+ * {@code StackTraceAspect} traces method invocations and stores them in a stack.
  * 
  * <p>Traced method calls are stringified, this means a string representation of them
  * is created, and stored in the stack trace. The string representation consists of the
