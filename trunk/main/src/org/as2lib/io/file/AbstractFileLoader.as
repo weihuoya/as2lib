@@ -63,7 +63,7 @@ class org.as2lib.io.file.AbstractFileLoader extends AbstractTimeConsumer impleme
 	 * <p>Pass all arguments from the extended constructor by using super to 
 	 * add the parameters to the instance.
 	 */
-	function AbstractFileLoader(Void) {
+	public function AbstractFileLoader(Void) {
 		super();
 		dC = distributorControl;
 		acceptListenerType(LoadStartListener);
