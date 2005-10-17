@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -52,15 +52,20 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	/** The logical this of the interception. */
 	private var thiz;
 	
+	/** The invocation arguments. */
+	private var args:Array;
+	
 	/**
 	 * Constructs a new {@code AbstractJoinPoint) instance.
 	 * 
 	 * @param thiz the logical this of the interception
+	 * @param args the invocation arguments
 	 * @see #getThis
 	 * @see <a href="http://www.simonwacker.com/blog/archives/000068.php">Passing Context</a>
 	 */
-	private function AbstractJoinPoint(thiz) {
+	private function AbstractJoinPoint(thiz, args:Array) {
 		this.thiz = thiz ? thiz : null;
+		this.args = args ? args : null;
 	}
 	
 	/**
@@ -74,6 +79,27 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	 */
 	public function getThis(Void) {
 		return this.thiz;
+	}
+	
+	/**
+	 * Returns the arguments originally used to invoke this join point.
+	 * 
+	 * @return the invocation arguments
+	 */
+	public function getArguments(Void):Array {
+		var result:Array = args.concat();
+		result.callee = args.callee;
+		result.caller = args.caller;
+		return result;
+	}
+	
+	/**
+	 * Configures the given {@code joinPoint} with the configuration of this join point.
+	 * 
+	 * @param joinPoint the join point to configure
+	 */
+	private function configure(joinPoint:AbstractJoinPoint):Void {
+		joinPoint.setMatcher(getMatcher());
 	}
 	
 	/**
@@ -104,7 +130,8 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	}
 	
 	/**
-	 * Proceeds the given {@code method} with the passed-in arguments {@code args}.
+	 * Proceeds the given {@code method} with the passed-in {@code args} if specified,
+	 * or the original invocation arguments if not.
 	 * 
 	 * <p>Proceeding means that the method is executed on the logical this scope of
 	 * this join point with the given arguments.
@@ -124,6 +151,7 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 		if (!t) {
 			throw new IllegalStateException("To execute this method the 'logical this' that is used as scope for the procession of the method must not be 'null' nor 'undefined'.", this, arguments);
 		}
+		if (!args) args = this.args;
 		return method.invoke(t, args);
 	}
 	

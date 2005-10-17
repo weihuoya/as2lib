@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -37,12 +37,13 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 	 *
 	 * @param info the property info of the represented property
 	 * @param thiz the logical this of the interception
+	 * @param args the new invocation argumetns
 	 * @throws IllegalArgumentException if argument {@code info} is {@code null} or
 	 * {@code undefined}
 	 * @see <a href="http://www.simonwacker.com/blog/archives/000068.php">Passing Context</a>
 	 */
-	public function PropertyJoinPoint(info:PropertyInfo, thiz) {
-		super(thiz);
+	public function PropertyJoinPoint(info:PropertyInfo, thiz, args:Array) {
+		super(thiz, args);
 		if (!info) throw new IllegalArgumentException("Argument 'info' must not be 'null' nor 'undefined'.", this, arguments);
 		this.info = info;
 	}
@@ -81,15 +82,19 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 	}
 	
 	/**
-	 * Returns a copy of this join point with an updated logical this. This join point
-	 * is left unchanged.
+	 * Returns a copy of this join point with updated logical this and invocation arguments.
+	 * This join point is left unchanged.
 	 * 
 	 * @param thiz the new logical this
+	 * @param args the new invocation argumetns
 	 * @return a copy of this join point with an updated logical this
 	 * @see #getThis
+	 * @see #getArguments
 	 */
-	public function update(thiz):JoinPoint {
-		return new PropertyJoinPoint(this.info, thiz);
+	public function update(thiz, args:Array):JoinPoint {
+		var result:PropertyJoinPoint = new PropertyJoinPoint(this.info, thiz, args);
+		configure(result);
+		return result;
 	}
 	
 	/**
@@ -103,7 +108,9 @@ class org.as2lib.aop.joinpoint.PropertyJoinPoint extends AbstractJoinPoint imple
 	 * @return a snapshot of this join point
 	 */
 	public function snapshot(Void):JoinPoint {
-		return new PropertyJoinPoint(this.info.snapshot(), getThis());
+		var result:PropertyJoinPoint = new PropertyJoinPoint(this.info.snapshot(), thiz, args);
+		configure(result);
+		return result;
 	}
 	
 }

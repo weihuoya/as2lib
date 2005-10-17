@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -58,6 +58,13 @@ interface org.as2lib.aop.JoinPoint extends BasicInterface {
 	public function getThis(Void);
 	
 	/**
+	 * Returns the arguments originally used to invoke this join point.
+	 * 
+	 * @return the invocation arguments
+	 */
+	public function getArguments(Void):Array;
+	
+	/**
 	 * Returns the type of the join point.
 	 * 
 	 * <p>Supported types are declared as constants in the {@link AbstractJoinPoint}
@@ -81,14 +88,16 @@ interface org.as2lib.aop.JoinPoint extends BasicInterface {
 	public function matches(pattern:String):Boolean;
 	
 	/**
-	 * Returns a copy of this join point with an updated logical this. This join point
-	 * is left unchanged.
+	 * Returns a copy of this join point with updated logical this and arguments. This
+	 * join point is left unchanged.
 	 * 
 	 * @param thiz the new logical this
-	 * @return a copy of this join point with an updated logical this
+	 * @param args the new arguments
+	 * @return a copy of this join point with updated logical this and arguments
 	 * @see #getThis
+	 * @see #getArguments
 	 */
-	public function update(thiz):JoinPoint;
+	public function update(thiz, args:Array):JoinPoint;
 	
 	/**
 	 * Returns a copy of this join point that reflects its current state.

@@ -7,6 +7,10 @@
     <year value="2005">
       <month value="10">
         <day value="17">
+          <entry type="add" package="org.as2lib.aop.aspect" class="ThrowableStackTraceFillingAspect">Filles stack trace of throwables.</entry>
+          <entry type="bugfix" package="org.as2lib.aop.joinpoint" class="SetPropertyJoinPoint" method="proceed">Fixed bug with wrong arguments.</entry>
+          <entry type="bugfix" package="org.as2lib.aop.joinpoint" class="*">Fixed bugs with 'update' and 'snapshot' methods.</entry>
+          <entry type="add" package="org.as2lib.aop" class="JoinPoint" method="getArguments">General access to arguments for all advice types.</entry>
           <entry type="bugfix" package="org.as2lib.io.file" class="TextFileLoader" method="getFile">Never-ending recursion is eliminated</entry>
         </day>
         <day value="16">

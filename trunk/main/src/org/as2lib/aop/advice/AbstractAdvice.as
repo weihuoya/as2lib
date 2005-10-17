@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -79,7 +79,7 @@ class org.as2lib.aop.advice.AbstractAdvice extends BasicClass {
 		var owner:AbstractAdvice = this;
 		var result:Function = function() {
 			// MTASC doesn't allow access to private "executeJoinPoint"
-			return owner["executeJoinPoint"](joinPoint.update(this), arguments);
+			return owner["executeJoinPoint"](joinPoint.update(this, arguments));
 		};
 		var method:Function;
 		if (joinPoint.getType() == AbstractJoinPoint.METHOD

@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -38,16 +38,15 @@ class org.as2lib.aop.advice.AbstractAroundAdvice extends AbstractAdvice {
 	
 	/**
 	 * Executes this advice's {@code execute} method, passing the given
-	 * {@code joinPoint} and the given {@code args}.
+	 * {@code joinPoint} and arguments.
 	 * 
 	 * @param joinPoint the reached join point
-	 * @param args the arguments used to invoke the join point
 	 * @return the result of the execution of this advice's {@code execute} method
 	 * @throws * if the execution of tis adivce's {@code execute} method results in an
 	 * exception
 	 */
-	private function executeJoinPoint(joinPoint:JoinPoint, args:Array) {
-		return AroundAdvice(this).execute(joinPoint, args);
+	private function executeJoinPoint(joinPoint:JoinPoint) {
+		return AroundAdvice(this).execute(joinPoint, joinPoint.getArguments());
 	}
 	
 }
