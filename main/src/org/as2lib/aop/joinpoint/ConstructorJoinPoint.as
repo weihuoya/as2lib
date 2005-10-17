@@ -30,12 +30,13 @@ class org.as2lib.aop.joinpoint.ConstructorJoinPoint extends MethodJoinPoint {
 	 *
 	 * @param info the info of the represented constructor
 	 * @param thiz the logical this of the interception
+	 * @param args the invocation arguments
 	 * @throws IllegalArgumentException if argument {@code info} is {@code null} or
 	 * {@code undefined}
 	 * @see <a href="http://www.simonwacker.com/blog/archives/000068.php">Passing Context</a>
 	 */
-	public function ConstructorJoinPoint(info:ConstructorInfo, thiz) {
-		super(info, thiz);
+	public function ConstructorJoinPoint(info:ConstructorInfo, thiz, args:Array) {
+		super(info, thiz, args);
 	}
 	
 	/**
@@ -48,15 +49,19 @@ class org.as2lib.aop.joinpoint.ConstructorJoinPoint extends MethodJoinPoint {
 	}
 	
 	/**
-	 * Returns a copy of this join point with an updated logical this. This join point
-	 * is left unchanged.
+	 * Returns a copy of this join point with updated logical this and invocation arguments.
+	 * This join point is left unchanged.
 	 * 
 	 * @param thiz the new logical this
+	 * @param args the new invocation argumetns
 	 * @return a copy of this join point with an updated logical this
 	 * @see #getThis
+	 * @see #getArguments
 	 */
-	public function update(thiz):JoinPoint {
-		return new ConstructorJoinPoint(ConstructorInfo(this.info), thiz);
+	public function update(thiz, args:Array):JoinPoint {
+		var result:ConstructorJoinPoint = new ConstructorJoinPoint(ConstructorInfo(this.info), thiz, args);
+		configure(result);
+		return result;
 	}
 	
 	/**
@@ -70,7 +75,9 @@ class org.as2lib.aop.joinpoint.ConstructorJoinPoint extends MethodJoinPoint {
 	 * @return a snapshot of this join point
 	 */
 	public function snapshot(Void):JoinPoint {
-		return new ConstructorJoinPoint(ConstructorInfo(this.info.snapshot()), getThis());
+		var result:ConstructorJoinPoint = new ConstructorJoinPoint(ConstructorInfo(this.info.snapshot()), thiz, args);
+		configure(result);
+		return result;
 	}
 
 }

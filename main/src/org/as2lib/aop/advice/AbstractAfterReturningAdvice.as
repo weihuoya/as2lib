@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -37,22 +37,18 @@ class org.as2lib.aop.advice.AbstractAfterReturningAdvice extends AbstractAdvice 
 	}
 	
 	/**
-	 * Proceeds the passed-in {@code joinPoint} with the given {@code args} and returns
-	 * the result of this procession after invoking this advice's {@code execute}
-	 * method passing the given {@code joinPoint} and the result if the procession
-	 * returned successfully and did not result in an exception.
+	 * Proceeds the passed-in {@code joinPoint} and returns the result of this procession
+	 * after invoking this advice's {@code execute} method passing the given
+	 * {@code joinPoint} and the result if the procession returned successfully and did
+	 * not result in an exception.
 	 * 
 	 * @param joinPoint the reached join point
-	 * @param args the arguments to use for the procession of the join point, these are
-	 * normally the ones that were originally passed-to the join point
-	 * @return the result of the procession of the given {@code joinPoint} with the
-	 * given {@code args}
-	 * @throws * if the procession of the {@code joinPoint} with the given {@code args}
-	 * results in an exception or if this advice's {@code execute} method threw an
-	 * exception
+	 * @return the result of the procession of the given {@code joinPoint}
+	 * @throws * if the procession of the {@code joinPoint} results in an exception or
+	 * if this advice's {@code execute} method threw an exception
 	 */
-	private function executeJoinPoint(joinPoint:JoinPoint, args:Array) {
-		var result = joinPoint.proceed(args);
+	private function executeJoinPoint(joinPoint:JoinPoint) {
+		var result = joinPoint.proceed();
 		AfterReturningAdvice(this).execute(joinPoint, result);
 		return result;
 	}
