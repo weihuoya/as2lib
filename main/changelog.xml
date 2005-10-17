@@ -6,6 +6,9 @@
   <release name="as2lib 0.9.4" day="14" month="11" year="2005">
     <year value="2005">
       <month value="10">
+        <day value="17">
+          <entry type="bugfix" package="org.as2lib.io.file" class="TextFileLoader" method="getFile">Never-ending recursion is eliminated</entry>
+        </day>
         <day value="16">
           <entry type="add" package="org.as2lib.aop.aspect" class="StackTraceAspect">Maintains the stack trace to the current method.</entry>
         </day>

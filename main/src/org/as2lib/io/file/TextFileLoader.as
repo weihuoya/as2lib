@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -176,7 +176,7 @@ class org.as2lib.io.file.TextFileLoader extends AbstractFileLoader implements Fi
 	 * @throws FileNotLoadedException if the resource has not been loaded yet
 	 */
 	public function getFile(Void):File {
-		return getFile();
+		return getTextFile();
 	}
 	
 	/**
