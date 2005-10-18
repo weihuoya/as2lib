@@ -6,6 +6,9 @@
   <release name="as2lib 0.9.4" day="14" month="11" year="2005">
     <year value="2005">
       <month value="10">
+        <day value="18">
+          <entry type="add" package="static org.as2lib.aop.joinpoint" class="AbstractJoinPoint" method="getMethod">Returns the method info for a given join point.</entry>
+        </day>
         <day value="17">
           <entry type="add" package="org.as2lib.aop.aspect" class="ThrowableStackTraceFillingAspect">Filles stack trace of throwables.</entry>
           <entry type="bugfix" package="org.as2lib.aop.joinpoint" class="SetPropertyJoinPoint" method="proceed">Fixed bug with wrong arguments.</entry>
