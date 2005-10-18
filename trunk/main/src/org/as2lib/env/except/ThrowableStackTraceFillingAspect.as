@@ -19,6 +19,7 @@ import org.as2lib.aop.Aspect;
 import org.as2lib.aop.aspect.AbstractAspect;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.joinpoint.AbstractJoinPoint;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.util.ArrayUtil;
@@ -43,11 +44,8 @@ class org.as2lib.env.except.ThrowableStackTraceFillingAspect extends AbstractAsp
 	 * is {@code null} or {@code undefined}
 	 */
 	public function ThrowableStackTraceFillingAspect(stackTraceElementsPointcut:String) {
-		/*if (stackTraceElementsPointcut == null) {
-			throw new IllegalArgumentException("Argument 'stackTraceElementsPointcut' [" + stackTraceElementsPointcut + "] must not be 'null' nor 'undefined'", this, arguments);
-		}*/
 		if (stackTraceElementsPointcut == null) {
-			stackTraceElementsPointcut = "execution(* ..*.*()) && !within(org.as2lib.env.except.ThrowableStackTraceFillingAspect)";
+			throw new IllegalArgumentException("Argument 'stackTraceElementsPointcut' [" + stackTraceElementsPointcut + "] must not be 'null' nor 'undefined'", this, arguments);
 		}
 		addAdvice(AbstractAdvice.AFTER_THROWING, stackTraceElementsPointcut, afterThrowingAdvice);
 	}
