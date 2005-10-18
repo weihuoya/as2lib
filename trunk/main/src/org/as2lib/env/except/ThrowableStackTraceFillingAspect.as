@@ -42,7 +42,7 @@ class org.as2lib.env.except.ThrowableStackTraceFillingAspect extends AbstractAsp
 	 * The default pointcut captures all methods except the methods of this aspect.
 	 * <code>execution(* ..*.*()) && !within(org.as2lib.env.except.ThrowableStackTraceFillingAspect)</code>
 	 * 
-	 * @param stackTraceElementPointcut the pointcut that captures join points that
+	 * @param stackTraceElementPointcut (optional) the pointcut that captures join points that
 	 * shall be added as stack trace elements to throwables that are thrown
 	 */
 	public function ThrowableStackTraceFillingAspect(stackTraceElementsPointcut:String) {
