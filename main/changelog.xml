@@ -7,6 +7,7 @@
     <year value="2005">
       <month value="10">
         <day value="18">
+          <entry type="change" package="org.as2lib.aop.aspect" class="IndentedLoggingAspect"><change-move to="org.as2lib.env.log.aspect"/></entry>
           <entry type="change" package="org.as2lib.aop.aspect" class="StackTraceAspect"><change-move to="org.as2lib.env.except"/></entry>
           <entry type="change" package="org.as2lib.aop.aspect" class="ThrowableStackTraceFillingAspect"><change-move to="org.as2lib.env.except"/></entry>
           <entry type="add" package="static org.as2lib.aop.joinpoint" class="AbstractJoinPoint" method="getMethod">Returns the method info for a given join point.</entry>

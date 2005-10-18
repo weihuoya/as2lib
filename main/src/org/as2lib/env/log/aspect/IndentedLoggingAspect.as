@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -24,11 +24,14 @@ import org.as2lib.env.except.AbstractOperationException;
  * {@code IndentedLoggingAspect} indents logging of messages.
  * 
  * <p>You must sub-class this class and override the abstract methods
- * {@link #getLoggedMethodsPointcut} and {@link #getLoggingMethodsPointcut}.
+ * {@link #getLoggedJoinPointsPointcut} and {@link #getLoggingMethodsPointcut}.
+ * 
+ * <p>Note that this class can be used with every logging framework. It is not
+ * bound to the one of the as2lib.
  * 
  * @author Simon Wacker
  */
-class org.as2lib.aop.aspect.IndentedLoggingAspect extends AbstractAspect implements Aspect {
+class org.as2lib.env.log.aspect.IndentedLoggingAspect extends AbstractAspect implements Aspect {
 	
 	/** The temporary indentation level. */
 	private var indentationLevel:Number = -1;
@@ -38,8 +41,8 @@ class org.as2lib.aop.aspect.IndentedLoggingAspect extends AbstractAspect impleme
 	 */
 	private function IndentedLoggingAspect(Void) {
 		addAdvice(AbstractAdvice.AROUND, getLoggingMethodsPointcut(), aroundLoggingMethodsAdvice);
-		addAdvice(AbstractAdvice.BEFORE, getLoggedMethodsPointcut(), beforeLoggedMethodsAdvice);
-		addAdvice(AbstractAdvice.AFTER, getLoggedMethodsPointcut(), afterLoggedMethodsAdvice);
+		addAdvice(AbstractAdvice.BEFORE, getLoggedJoinPointsPointcut(), beforeLoggedJoinPointsAdvice);
+		addAdvice(AbstractAdvice.AFTER, getLoggedJoinPointsPointcut(), afterLoggedJoinPointsAdvice);
 	}
 	
 	/**
@@ -66,32 +69,32 @@ class org.as2lib.aop.aspect.IndentedLoggingAspect extends AbstractAspect impleme
 	}
 	
 	/**
-	 * Increases the indentation level before a logged method is invoked.
+	 * Increases the indentation level before a logged join point is invoked.
 	 * 
-	 * @param joinPoint the logged method
+	 * @param joinPoint the logged join point
 	 * @param args the arguments used for invoking the logged method
 	 */
-	private function beforeLoggedMethodsAdvice(joinPoint:JoinPoint, args:Array):Void {
+	private function beforeLoggedJoinPointsAdvice(joinPoint:JoinPoint, args:Array):Void {
 		indentationLevel++;
 	}
 	
 	/**
-	 * Decreases the indentation level after a logged method was invoked.
+	 * Decreases the indentation level after a logged join point was invoked.
 	 * 
-	 * @param joinPoint the logged method
+	 * @param joinPoint the logged join point
 	 */
-	private function afterLoggedMethodsAdvice(joinPoint:JoinPoint):Void {
+	private function afterLoggedJoinPointsAdvice(joinPoint:JoinPoint):Void {
 		indentationLevel--;
 	}
 	
 	/**
-	 * Returns the pointcut that captures methods that shall be logged.
+	 * Returns the pointcut that captures join points that shall be logged.
 	 * 
-	 * @return the pointcut that captures methods to log
+	 * @return the pointcut that captures join points to log
 	 * @throws AbstractOperationException because this method must be overridden by
 	 * sub-classes
 	 */
-	public function getLoggedMethodsPointcut(Void):String {
+	public function getLoggedJoinPointsPointcut(Void):String {
 		throw new AbstractOperationException("This operation is marked as abstract and must be overridden by a concrete subclasses.", this, arguments);
 		return null;
 	}
