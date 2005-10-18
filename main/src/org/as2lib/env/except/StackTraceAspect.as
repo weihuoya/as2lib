@@ -25,6 +25,10 @@ import org.as2lib.env.except.StackTraceElement;
  * {@code StackTraceAspect} traces method invocations and stores them as stack
  * trace elements in a stack trace.
  * 
+ * <p>Note that this aspect is not bound to the usage of exceptions. You may
+ * use this aspect even if you do not use exceptions, just to have access to a
+ * stack trace that may help you during debugging.
+ * 
  * @author Scott Hyndman
  * @author Simon Wacker
  * @see StackTraceElement
