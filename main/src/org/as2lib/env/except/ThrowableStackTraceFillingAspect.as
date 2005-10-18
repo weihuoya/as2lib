@@ -34,13 +34,15 @@ import org.as2lib.util.ArrayUtil;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.aop.aspect.ThrowableStackTraceFillingAspect extends AbstractAspect {
+class org.as2lib.env.except.ThrowableStackTraceFillingAspect extends AbstractAspect {
 	
 	/**
 	 * Constructs a new {@code ThrowableStackTraceFillingAspect} instance.
 	 * 
 	 * @param stackTraceElementPointcut the pointcut that captures join point that
 	 * shall be added as stack trace elements to throwables that are thrown
+	 * @throws IllegalArgumentException if argument {@code stackTraceElementPointcut}
+	 * is {@code null} or {@code undefined}
 	 */
 	public function ThrowableStackTraceFillingAspect(stackTraceElementPointcut:String) {
 		if (stackTraceElementPointcut == null) {
@@ -60,7 +62,7 @@ class org.as2lib.aop.aspect.ThrowableStackTraceFillingAspect extends AbstractAsp
 		if (throwable instanceof Throwable) {
 			var exception:Throwable = throwable;
 			var stackTrace:Array = exception.getStackTrace();
-			var method:Function = getMethod(joinPoint);
+			var method:Function = AbstractJoinPoint.getMethod(joinPoint).getMethod();
 			if (stackTrace.length != 1) {
 				exception.addStackTraceElement(joinPoint.getThis(), method, joinPoint.getArguments());
 			} else {
@@ -72,26 +74,6 @@ class org.as2lib.aop.aspect.ThrowableStackTraceFillingAspect extends AbstractAsp
 				}
 			}
 		}
-	}
-	
-	/**
-	 * Returns the concrete method the given {@code joinPoint} represents.
-	 * 
-	 * @param joinPoint the join point representing the concrete method to return
-	 * @return the concrete method the given {@code joinPoint} represents
-	 */
-	private function getMethod(joinPoint:JoinPoint):Function {
-		if (joinPoint.getType() == AbstractJoinPoint.METHOD
-				|| joinPoint.getType() == AbstractJoinPoint.CONSTRUCTOR) {
-			return MethodInfo(joinPoint.getInfo()).getMethod();
-		}
-		if (joinPoint.getType() == AbstractJoinPoint.GET_PROPERTY) {
-			return PropertyInfo(joinPoint.getInfo()).getGetter().getMethod();
-		}
-		if (joinPoint.getType() == AbstractJoinPoint.SET_PROPERTY) {
-			return PropertyInfo(joinPoint.getInfo()).getSetter().getMethod();
-		}
-		return null;
 	}
 	
 }
