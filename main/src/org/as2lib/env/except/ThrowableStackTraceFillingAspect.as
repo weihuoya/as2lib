@@ -39,16 +39,16 @@ class org.as2lib.env.except.ThrowableStackTraceFillingAspect extends AbstractAsp
 	/**
 	 * Constructs a new {@code ThrowableStackTraceFillingAspect} instance.
 	 * 
-	 * @param stackTraceElementPointcut the pointcut that captures join point that
+	 * @param stackTraceElementPointcut the pointcut that captures join points that
 	 * shall be added as stack trace elements to throwables that are thrown
 	 * @throws IllegalArgumentException if argument {@code stackTraceElementPointcut}
 	 * is {@code null} or {@code undefined}
 	 */
-	public function ThrowableStackTraceFillingAspect(stackTraceElementPointcut:String) {
-		if (stackTraceElementPointcut == null) {
-			throw new IllegalArgumentException("Argument 'stackTraceElementPointcut' [" + stackTraceElementPointcut + "] must not be 'null' nor 'undefined'", this, arguments);
+	public function ThrowableStackTraceFillingAspect(stackTraceElementsPointcut:String) {
+		if (stackTraceElementsPointcut == null) {
+			throw new IllegalArgumentException("Argument 'stackTraceElementsPointcut' [" + stackTraceElementsPointcut + "] must not be 'null' nor 'undefined'", this, arguments);
 		}
-		addAdvice(AbstractAdvice.AFTER_THROWING, stackTraceElementPointcut, afterThrowingAdvice);
+		addAdvice(AbstractAdvice.AFTER_THROWING, stackTraceElementsPointcut, afterThrowingAdvice);
 	}
 	
 	/**
