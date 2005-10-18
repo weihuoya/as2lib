@@ -22,8 +22,8 @@ import org.as2lib.aop.joinpoint.AbstractJoinPoint;
 import org.as2lib.env.except.StackTraceElement;
 
 /**
- * {@code StackTraceAspect} traces method invocations and stores them as stack
- * trace elements in a stack trace.
+ * {@code StackTraceAspect} traces method invocations or set and get access to
+ * properties and stores them as stack trace elements in a stack trace.
  * 
  * <p>Note that this aspect is not bound to the usage of exceptions. You may
  * use this aspect even if you do not use exceptions, just to have access to a
@@ -48,37 +48,37 @@ class org.as2lib.env.except.StackTraceAspect extends AbstractAspect implements A
 		return stackTrace.concat();
 	}
 	
-	/** Pointcut capturing methods to trace. */
-	private var tracedMethodsPointcut:String;
+	/** Pointcut capturing join points to trace. */
+	private var tracedJoinPointsPointcut:String;
 	
 	/**
 	 * Constructs a new {@code StackAspect} instance.
 	 * 
-	 * <p>If {@code traceMethodsPointcut} is not specified, the default pointcut is used.
+	 * <p>If {@code tracedJoinPointsPointcut} is not specified, the default pointcut is used.
 	 * The default pointcut captures all methods except the methods of this aspect.
 	 * <code>execution(* ..*.*()) && !within(org.as2lib.aop.aspect.StackTraceAspect)</code>
 	 * 
-	 * @param tracedMethodsPointcut (optional) the pointcut capturing methods whose
-	 * invocations shall be included in the stack trace
+	 * @param tracedJoinPointsPointcut (optional) the pointcut capturing methods whose
+	 * invocations or properties whose accesses shall be included in the stack trace
 	 */
-	public function StackTraceAspect(tracedMethodsPointcut:String) {
-		if (tracedMethodsPointcut == null) {
-			this.tracedMethodsPointcut = "execution(* ..*.*()) && !within(org.as2lib.aop.aspect.StackTraceAspect)";
+	public function StackTraceAspect(tracedJoinPointsPointcut:String) {
+		if (tracedJoinPointsPointcut == null) {
+			this.tracedJoinPointsPointcut = "execution(* ..*.*()) && !within(org.as2lib.aop.aspect.StackTraceAspect)";
 		} else {
-			this.tracedMethodsPointcut = tracedMethodsPointcut;
+			this.tracedJoinPointsPointcut = tracedJoinPointsPointcut;
 		}
 		stackTrace = new Array();
-		addAdvice(AbstractAdvice.AROUND, getTracedMethodsPointcut(), aroundTracedMethodsAdvice);
+		addAdvice(AbstractAdvice.AROUND, getTracedJoinPointsPointcut(), aroundTracedJoinPointsAdvice);
 	}
 	
 	/**
 	 * Pushes stack trace elements to and pops stack trace elements from the stack trace.
 	 * 
-	 * @param joinPoint the called method to trace
-	 * @param args the argument used for the method call
-	 * @return the result of the invocation of the given {@code joinPoint}
+	 * @param joinPoint the called method or set or get property access to trace
+	 * @param args the argument used for the method call or set or get property access
+	 * @return the result of the procession of the given {@code joinPoint}
 	 */
-	private function aroundTracedMethodsAdvice(joinPoint:JoinPoint, args:Array) {
+	private function aroundTracedJoinPointsAdvice(joinPoint:JoinPoint, args:Array) {
 		var stackTraceElement:StackTraceElement = new StackTraceElement(
 				joinPoint.getThis(),
 				AbstractJoinPoint.getMethod(joinPoint).getMethod(),
@@ -90,13 +90,13 @@ class org.as2lib.env.except.StackTraceAspect extends AbstractAspect implements A
 	}
 	
 	/**
-	 * Returns the pointcut capturing methods whose invocations shall be included in
-	 * the stack trace.
+	 * Returns the pointcut capturing methods whose invocations or properties whose get
+	 * or set access shall be included in the stack trace.
 	 * 
-	 * @param the pointcut capturing methods to trace
+	 * @param the pointcut capturing methods and property accesses to trace
 	 */
-	public function getTracedMethodsPointcut(Void):String {
-		return tracedMethodsPointcut;
+	public function getTracedJoinPointsPointcut(Void):String {
+		return getTracedJoinPointsPointcut;
 	}
 	
 }
