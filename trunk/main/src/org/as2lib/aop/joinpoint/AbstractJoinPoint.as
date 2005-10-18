@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicClass;
-import org.as2lib.env.reflect.MethodInfo;
-import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.aop.Matcher;
 import org.as2lib.aop.AopConfig;
 import org.as2lib.aop.JoinPoint;
+import org.as2lib.aop.Matcher;
+import org.as2lib.core.BasicClass;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.except.IllegalStateException;
+import org.as2lib.env.reflect.MethodInfo;
+import org.as2lib.env.reflect.PropertyInfo;
 
 /**
  * {@code AbstractJoinPoint} provides implementations of methods commonly needed by
@@ -45,6 +46,26 @@ class org.as2lib.aop.joinpoint.AbstractJoinPoint extends BasicClass {
 	
 	/** Indicates a join point of type constructor. */
 	public static var CONSTRUCTOR:Number = 16;
+	
+	/**
+	 * Returns the method the given {@code joinPoint} represents.
+	 * 
+	 * @param joinPoint the join point representing the method to return
+	 * @return the method the given {@code joinPoint} represents
+	 */
+	public static function getMethod(joinPoint:JoinPoint):MethodInfo {
+		if (joinPoint.getType() == AbstractJoinPoint.METHOD
+				|| joinPoint.getType() == AbstractJoinPoint.CONSTRUCTOR) {
+			return MethodInfo(joinPoint.getInfo());
+		}
+		if (joinPoint.getType() == AbstractJoinPoint.GET_PROPERTY) {
+			return PropertyInfo(joinPoint.getInfo()).getGetter();
+		}
+		if (joinPoint.getType() == AbstractJoinPoint.SET_PROPERTY) {
+			return PropertyInfo(joinPoint.getInfo()).getSetter();
+		}
+		return null;
+	}
 	
 	/** The matcher used by this join point to evaluate the {@code captures} method. */
 	private var matcher:Matcher;
