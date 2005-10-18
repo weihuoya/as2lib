@@ -15,10 +15,10 @@
  */
 
 import org.as2lib.aop.advice.AbstractAdvice;
+import org.as2lib.aop.Aspect;
 import org.as2lib.aop.aspect.AbstractAspect;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.aop.joinpoint.AbstractJoinPoint;
-import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.except.StackTraceElement;
 import org.as2lib.env.except.Throwable;
 import org.as2lib.util.ArrayUtil;
@@ -32,7 +32,7 @@ import org.as2lib.util.ArrayUtil;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.env.except.ThrowableStackTraceFillingAspect extends AbstractAspect {
+class org.as2lib.env.except.ThrowableStackTraceFillingAspect extends AbstractAspect implements Aspect {
 	
 	/**
 	 * Constructs a new {@code ThrowableStackTraceFillingAspect} instance.
@@ -43,8 +43,11 @@ class org.as2lib.env.except.ThrowableStackTraceFillingAspect extends AbstractAsp
 	 * is {@code null} or {@code undefined}
 	 */
 	public function ThrowableStackTraceFillingAspect(stackTraceElementsPointcut:String) {
-		if (stackTraceElementsPointcut == null) {
+		/*if (stackTraceElementsPointcut == null) {
 			throw new IllegalArgumentException("Argument 'stackTraceElementsPointcut' [" + stackTraceElementsPointcut + "] must not be 'null' nor 'undefined'", this, arguments);
+		}*/
+		if (stackTraceElementsPointcut == null) {
+			stackTraceElementsPointcut = "execution(* ..*.*()) && !within(org.as2lib.env.except.ThrowableStackTraceFillingAspect)";
 		}
 		addAdvice(AbstractAdvice.AFTER_THROWING, stackTraceElementsPointcut, afterThrowingAdvice);
 	}
