@@ -257,7 +257,6 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 					return x;
 				}
 				if (p[r].__proto__ == Object.prototype) {
-					com.interactiveAlchemy.utils.Debug.write(r);
 					// prevents recursion on back-reference
 					var f:Boolean = false;
 					for (var i:Number = 0; i < a.length; i++) {
