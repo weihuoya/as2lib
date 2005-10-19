@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -256,7 +256,8 @@ class org.as2lib.env.reflect.ReflectUtil extends BasicClass {
 					s(c, "__as2lib__typeName", 1, true);
 					return x;
 				}
-				if (p[r].__constructor__.valueOf() == Object) {
+				if (p[r].__proto__ == Object.prototype) {
+					com.interactiveAlchemy.utils.Debug.write(r);
 					// prevents recursion on back-reference
 					var f:Boolean = false;
 					for (var i:Number = 0; i < a.length; i++) {
