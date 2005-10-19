@@ -96,7 +96,7 @@ class org.as2lib.env.except.StackTraceAspect extends AbstractAspect implements A
 	 * @param the pointcut capturing methods and property accesses to trace
 	 */
 	public function getTracedJoinPointsPointcut(Void):String {
-		return getTracedJoinPointsPointcut;
+		return tracedJoinPointsPointcut;
 	}
 	
 }
