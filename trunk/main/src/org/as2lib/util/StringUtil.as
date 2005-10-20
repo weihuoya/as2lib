@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -293,7 +293,7 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 *
 	 * <p>This method is useful for different kind of ASCII output writing. It generates
 	 * a dynamic size of space indents in front of every line inside a string.
-	 * ################################################################################
+	 * 
 	 * <p>Example:
 	 * <code>
 	 *   var bigText = "My name is pretty important\n"
