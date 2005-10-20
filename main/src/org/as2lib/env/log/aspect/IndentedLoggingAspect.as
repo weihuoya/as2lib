@@ -19,6 +19,7 @@ import org.as2lib.aop.Aspect;
 import org.as2lib.aop.aspect.AbstractAspect;
 import org.as2lib.aop.JoinPoint;
 import org.as2lib.env.except.AbstractOperationException;
+import org.as2lib.util.StringUtil;
 
 /**
  * {@code IndentedLoggingAspect} indents logging of messages.
@@ -60,11 +61,9 @@ class org.as2lib.env.log.aspect.IndentedLoggingAspect extends AbstractAspect imp
 	 * changed {@code args}
 	 */
 	private function aroundLoggingMethodsAdvice(joinPoint:JoinPoint, args:Array) {
-		var spaces:String = "";
-		for (var i:Number = 0; i < indentationLevel; i++) {
-			spaces += "  ";
+		if (indentationLevel > 0) {
+			args[0] = StringUtil.addSpaceIndent(args[0].toString(), indentationLevel * 2);
 		}
-		args[0] = spaces + args[0].toString();
 		return joinPoint.proceed(args);
 	}
 	
