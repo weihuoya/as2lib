@@ -97,8 +97,8 @@ class org.as2lib.env.log.aspect.TraceLoggingAspect extends IndentedLoggingAspect
 	 * @param args the arguments whose type names to log
 	 */
 	private function beforeLoggedJoinPointsAdvice(joinPoint:JoinPoint, args:Array):Void {
+		super.beforeLoggedJoinPointsAdvice();
 		if (getLogger().isDebugEnabled()) {
-			super.beforeLoggedJoinPointsAdvice();
 			var message:String = joinPoint.getInfo().getFullName();
 			message += "(";
 			for (var i:Number = 0; i < args.length; i++) {
