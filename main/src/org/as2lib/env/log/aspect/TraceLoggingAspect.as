@@ -51,12 +51,6 @@ class org.as2lib.env.log.aspect.TraceLoggingAspect extends IndentedLoggingAspect
 		return logger;
 	}
 	
-	/** The pointcut that captures join points to log. */
-	private var loggedJoinPointsPointcut:String;
-	
-	/** The pointcut that captures logging methods. */
-	private var loggingMethodsPointcut:String;
-	
 	/**
 	 * Constructs a new {@code TraceLoggingAspect} instance.
 	 * 
@@ -86,8 +80,7 @@ class org.as2lib.env.log.aspect.TraceLoggingAspect extends IndentedLoggingAspect
 			loggingMethodsPointcut += "|| execution(org.as2lib.env.log.logger.SimpleHierarchicalLogger.error())";
 			loggingMethodsPointcut += "|| execution(org.as2lib.env.log.logger.SimpleHierarchicalLogger.fatal())";
 		}
-		this.loggedJoinPointsPointcut = loggedJoinPointsPointcut;
-		this.loggingMethodsPointcut = loggingMethodsPointcut;
+		super(loggedJoinPointsPointcut, loggingMethodsPointcut);
 	}
 	
 	/**
@@ -108,27 +101,6 @@ class org.as2lib.env.log.aspect.TraceLoggingAspect extends IndentedLoggingAspect
 			message += ")";
 			getLogger().debug(message);
 		}
-	}
-	
-	/**
-	 * Returns the pointcut capturing join points whose invocations or accesses shall
-	 * be logged.
-	 * 
-	 * @return the pointcut capturing join points whose invocations or accesses shall
-	 * be logged
-	 */
-	public function getLoggedJoinPointsPointcut(Void):String {
-		return loggedJoinPointsPointcut;
-	}
-	
-	/**
-	 * Returns the pointcut capturing methods that are responsible for logging
-	 * messages.
-	 * 
-	 * @return the pointcut capturing methods that log messages
-	 */
-	public function getLoggingMethodsPointcut(Void):String {
-		return loggingMethodsPointcut;
 	}
 	
 }
