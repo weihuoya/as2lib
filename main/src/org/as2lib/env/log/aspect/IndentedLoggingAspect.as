@@ -128,4 +128,15 @@ class org.as2lib.env.log.aspect.IndentedLoggingAspect extends AbstractAspect imp
 		return loggingMethodsPointcut;
 	}
 	
+	/**
+	 * Returns the current indentation level.
+	 * 
+	 * <p>The smallest indentation level is {@code -1}.
+	 * 
+	 * @return the current indentation level 
+	 */
+	public function getIndentationLevel(Void):Number {
+		return indentationLevel;
+	}
+	
 }
