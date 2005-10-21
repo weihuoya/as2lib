@@ -60,9 +60,9 @@ class org.as2lib.env.log.aspect.TraceLoggingAspect extends IndentedLoggingAspect
 	 * <code>execution(* ..*.*()) && !within(org.as2lib.env.log.aspect.TraceLoggingAspect) && !within(org.as2lib.env.log.aspect.IndentedLoggingAspect)</code>
 	 * 
 	 * <p>If argument {@code loggingMethodsPointcut} is not specified, the default
-	 * pointcut will be used that captures all logging methods of the class
-	 * {@link SimpleHierarchicalLogger}. These are {@code debug}, {@code info},
-	 * {@code warning}, {@code error} and {@code fatal}.
+	 * pointcut will be used that captures the {@code debug} logging method of the
+	 * class {@link SimpleHierarchicalLogger}.
+	 * <code>execution(org.as2lib.env.log.logger.SimpleHierarchicalLogger.debug())</code>
 	 * 
 	 * @param loggedJoinPointsPointcut (optional) the pointcut that captures join
 	 * points whose invocations or accesses shall be logged
@@ -75,10 +75,6 @@ class org.as2lib.env.log.aspect.TraceLoggingAspect extends IndentedLoggingAspect
 		}
 		if (loggingMethodsPointcut == null) {
 			loggingMethodsPointcut = "execution(org.as2lib.env.log.logger.SimpleHierarchicalLogger.debug())";
-			loggingMethodsPointcut += "|| execution(org.as2lib.env.log.logger.SimpleHierarchicalLogger.info())";
-			loggingMethodsPointcut += "|| execution(org.as2lib.env.log.logger.SimpleHierarchicalLogger.warning())";
-			loggingMethodsPointcut += "|| execution(org.as2lib.env.log.logger.SimpleHierarchicalLogger.error())";
-			loggingMethodsPointcut += "|| execution(org.as2lib.env.log.logger.SimpleHierarchicalLogger.fatal())";
 		}
 		super(loggedJoinPointsPointcut, loggingMethodsPointcut);
 	}
