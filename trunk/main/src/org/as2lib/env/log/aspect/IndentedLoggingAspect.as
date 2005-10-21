@@ -24,9 +24,6 @@ import org.as2lib.util.StringUtil;
 /**
  * {@code IndentedLoggingAspect} indents logging of messages.
  * 
- * <p>You must sub-class this class and override the abstract methods
- * {@link #getLoggedJoinPointsPointcut} and {@link #getLoggingMethodsPointcut}.
- * 
  * <p>Note that this class can be used with every logging framework. It is not
  * bound to the one of the as2lib.
  * 
@@ -37,10 +34,37 @@ class org.as2lib.env.log.aspect.IndentedLoggingAspect extends AbstractAspect imp
 	/** The temporary indentation level. */
 	private var indentationLevel:Number = -1;
 	
+	/** The pointcut that captures join points to log. */
+	private var loggedJoinPointsPointcut:String;
+	
+	/** The pointcut that captures logging methods. */
+	private var loggingMethodsPointcut:String;
+	
 	/**
 	 * Constructs a new {@code IndentedLoggingAspect} instance.
+	 * 
+	 * <p>The {@code loggedJoinPointsPointcut} determines when the indentation level
+	 * will be increased or decreased.
+	 * 
+	 * <p>The {@code loggingMethodsPointcut} determines the log methods whose first
+	 * argument, that is supposed to be the message, will be indented by the current
+	 * indentation level.
+	 * 
+	 * @param loggedJoinPointsPointcut the pointcut that captures join points to log
+	 * @param loggingMethodsPointcut the pointcut that captures methods that log
+	 * messages
 	 */
-	private function IndentedLoggingAspect(Void) {
+	public function IndentedLoggingAspect(loggedJoinPointsPointcut:String, loggingMethodsPointcut:String) {
+		this.loggingMethodsPointcut = loggingMethodsPointcut;
+		this.loggedJoinPointsPointcut = loggedJoinPointsPointcut;
+		initAdvices();
+	}
+	
+	/**
+	 * Initializes the advices around logging methods and before and after logged join
+	 * points.
+	 */
+	private function initAdvices(Void):Void {
 		addAdvice(AbstractAdvice.AROUND, getLoggingMethodsPointcut(), aroundLoggingMethodsAdvice);
 		addAdvice(AbstractAdvice.BEFORE, getLoggedJoinPointsPointcut(), beforeLoggedJoinPointsAdvice);
 		addAdvice(AbstractAdvice.AFTER, getLoggedJoinPointsPointcut(), afterLoggedJoinPointsAdvice);
@@ -90,12 +114,9 @@ class org.as2lib.env.log.aspect.IndentedLoggingAspect extends AbstractAspect imp
 	 * Returns the pointcut that captures join points that shall be logged.
 	 * 
 	 * @return the pointcut that captures join points to log
-	 * @throws AbstractOperationException because this method must be overridden by
-	 * sub-classes
 	 */
 	public function getLoggedJoinPointsPointcut(Void):String {
-		throw new AbstractOperationException("This operation is marked as abstract and must be overridden by a concrete subclasses.", this, arguments);
-		return null;
+		return loggedJoinPointsPointcut;
 	}
 	
 	/**
@@ -103,12 +124,9 @@ class org.as2lib.env.log.aspect.IndentedLoggingAspect extends AbstractAspect imp
 	 * messages. Such a method is for example the {@code Logger.info} method.
 	 * 
 	 * @return the pointcut that captures log methods
-	 * @throws AbstractOperationException because this method must be overridden by
-	 * sub-classes
 	 */
 	public function getLoggingMethodsPointcut(Void):String {
-		throw new AbstractOperationException("This operation is marked as abstract and must be overridden by a concrete subclasses.", this, arguments);
-		return null;
+		return loggingMethodsPointcut;
 	}
 	
 }
