@@ -18,7 +18,6 @@ import org.as2lib.aop.advice.AbstractAdvice;
 import org.as2lib.aop.Aspect;
 import org.as2lib.aop.aspect.AbstractAspect;
 import org.as2lib.aop.JoinPoint;
-import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.util.StringUtil;
 
 /**
