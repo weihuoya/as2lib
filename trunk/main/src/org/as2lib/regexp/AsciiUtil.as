@@ -26,34 +26,150 @@ import org.as2lib.core.BasicClass;
 class org.as2lib.regexp.AsciiUtil extends BasicClass {
     
     public static var UPPER:Number   = 0x00000100;
-    
     public static var LOWER:Number   = 0x00000200;
-    
     public static var DIGIT:Number   = 0x00000400;
-    
     public static var SPACE:Number   = 0x00000800;
-    
     public static var PUNCT:Number   = 0x00001000;
-    
     public static var CNTRL:Number   = 0x00002000;
-    
     public static var BLANK:Number   = 0x00004000;
-    
     public static var HEX:Number     = 0x00008000;
-    
     public static var UNDER:Number   = 0x00010000;
-    
     public static var ASCII:Number   = 0x0000FF00;
-
     public static var ALPHA:Number   = (UPPER|LOWER);
-
     public static var ALNUM:Number   = (UPPER|LOWER|DIGIT);
-
     public static var GRAPH:Number   = (PUNCT|UPPER|LOWER|DIGIT);
-
     public static var WORD:Number    = (UPPER|LOWER|UNDER|DIGIT);
-
     public static var XDIGIT:Number  = HEX;
+
+	public static var CHAR_NUL:Number 		= 0x00; 
+	public static var CHAR_SOH:Number 		= 0x01; 
+	public static var CHAR_STX:Number 		= 0x02; 
+	public static var CHAR_ETX:Number 		= 0x03; 
+	public static var CHAR_EOT:Number 		= 0x04; 
+	public static var CHAR_ENQ:Number 		= 0x05; 
+	public static var CHAR_ACK:Number 		= 0x06; 
+	public static var CHAR_BEL:Number 		= 0x07; 
+	public static var CHAR_BS:Number 		= 0x08;  
+	public static var CHAR_HT:Number 		= 0x09;  
+	public static var CHAR_LF:Number 		= 0x0A;  
+	public static var CHAR_VT:Number 		= 0x0B;  
+	public static var CHAR_FF:Number 		= 0x0C;  
+	public static var CHAR_CR:Number 		= 0x0D;  
+	public static var CHAR_SI:Number 		= 0x0E;  
+	public static var CHAR_SO:Number 		= 0x0F;  
+	public static var CHAR_DLE:Number 		= 0x10; 
+	public static var CHAR_DC1:Number 		= 0x11; 
+	public static var CHAR_DC2:Number 		= 0x12; 
+	public static var CHAR_DC3:Number 		= 0x13; 
+	public static var CHAR_DC4:Number 		= 0x14; 
+	public static var CHAR_NAK:Number 		= 0x15; 
+	public static var CHAR_SYN:Number 		= 0x16; 
+	public static var CHAR_ETB:Number 		= 0x17; 
+	public static var CHAR_CAN:Number 		= 0x18; 
+	public static var CHAR_EM:Number 		= 0x19;  
+	public static var CHAR_SUB:Number 		= 0x1A; 
+	public static var CHAR_ESC:Number 		= 0x1B; 
+	public static var CHAR_FS:Number 		= 0x1C;  
+	public static var CHAR_GS:Number 		= 0x1D;  
+	public static var CHAR_RS:Number 		= 0x1E;  
+	public static var CHAR_US:Number 		= 0x1F;  
+	public static var CHAR_SP:Number 		= 0x20; 
+	public static var CHAR_EXCL:Number 		= 0x21;		// !     
+	public static var CHAR_QUOT:Number 		= 0x22;		// "     
+	public static var CHAR_NUM:Number 		= 0x23; 	// #     
+	public static var CHAR_DOLLAR:Number 	= 0x24;		// $     
+	public static var CHAR_PERCNT:Number 	= 0x25;		// %     
+	public static var CHAR_AMP:Number 		= 0x26;		// &     
+	public static var CHAR_APOS:Number 		= 0x27;		// '     
+	public static var CHAR_LPAR:Number 		= 0x28; 	// (     
+	public static var CHAR_RPAR:Number 		= 0x29; 	// )     
+	public static var CHAR_AST:Number 		= 0x2A; 	// *     
+	public static var CHAR_PLUS:Number 		= 0x2B; 	// +     
+	public static var CHAR_COMMA:Number 	= 0x2C;		// ,     
+	public static var CHAR_MINUS:Number 	= 0x2D;		// -     
+	public static var CHAR_PERIOD:Number 	= 0x2E; 	// .     
+	public static var CHAR_SOL:Number 		= 0x2F;		// /
+	public static var CHAR_0:Number 		= 0x30;     
+	public static var CHAR_1:Number 		= 0x31;     
+	public static var CHAR_2:Number 		= 0x32;     
+	public static var CHAR_3:Number 		= 0x33;     
+	public static var CHAR_4:Number 		= 0x34;     
+	public static var CHAR_5:Number 		= 0x35;     
+	public static var CHAR_6:Number 		= 0x36;     
+	public static var CHAR_7:Number 		= 0x37;     
+	public static var CHAR_8:Number 		= 0x38;     
+	public static var CHAR_9:Number 		= 0x39;     
+	public static var CHAR_COLON:Number 	= 0x3A;		// :     
+	public static var CHAR_SEMI:Number 		= 0x3B;		// ;     
+	public static var CHAR_LT:Number 		= 0x3C;		// <     
+	public static var CHAR_EQUALS:Number 	= 0x3D;		// =     
+	public static var CHAR_GT:Number 		= 0x3E;		// >     
+	public static var CHAR_QUEST:Number 	= 0x3F;		// ?     
+	public static var CHAR_COMMAT:Number 	= 0x40;		// @     
+	public static var CHAR_A:Number 		= 0x41;     
+	public static var CHAR_B:Number 		= 0x42;     
+	public static var CHAR_C:Number 		= 0x43;     
+	public static var CHAR_D:Number 		= 0x44;     
+	public static var CHAR_E:Number 		= 0x45;     
+	public static var CHAR_F:Number 		= 0x46;     
+	public static var CHAR_G:Number 		= 0x47;     
+	public static var CHAR_H:Number 		= 0x48;     
+	public static var CHAR_I:Number 		= 0x49;     
+	public static var CHAR_J:Number 		= 0x4A;     
+	public static var CHAR_K:Number 		= 0x4B;     
+	public static var CHAR_L:Number 		= 0x4C;     
+	public static var CHAR_M:Number			= 0x4D;     
+	public static var CHAR_N:Number 		= 0x4E;     
+	public static var CHAR_O:Number 		= 0x4F;     
+	public static var CHAR_P:Number 		= 0x50;     
+	public static var CHAR_Q:Number 		= 0x51;     
+	public static var CHAR_R:Number 		= 0x52;     
+	public static var CHAR_S:Number 		= 0x53;     
+	public static var CHAR_T:Number 		= 0x54;     
+	public static var CHAR_U:Number 		= 0x55;     
+	public static var CHAR_V:Number 		= 0x56;     
+	public static var CHAR_W:Number 		= 0x57;     
+	public static var CHAR_X:Number 		= 0x58;     
+	public static var CHAR_Y:Number 		= 0x59;     
+	public static var CHAR_Z:Number 		= 0x5A;     
+	public static var CHAR_LSQB:Number 		= 0x5B; 	// [     
+	public static var CHAR_BSOL:Number 		= 0x5C; 	// \     
+	public static var CHAR_RSQB:Number 		= 0x5D; 	// ]     
+	public static var CHAR_CIRC:Number 		= 0x5E;		// ^     
+	public static var CHAR_LOWBAR:Number 	= 0x5F;		// _     
+	public static var CHAR_GRAVE:Number 	= 0x60;		// `     
+	public static var CHAR_a:Number 		= 0x61;     
+	public static var CHAR_b:Number 		= 0x62;     
+	public static var CHAR_c:Number 		= 0x63;     
+	public static var CHAR_d:Number 		= 0x64;     
+	public static var CHAR_e:Number 		= 0x65;     
+	public static var CHAR_f:Number 		= 0x66;     
+	public static var CHAR_g:Number 		= 0x67;     
+	public static var CHAR_h:Number 		= 0x68;     
+	public static var CHAR_i:Number 		= 0x69;     
+	public static var CHAR_j:Number 		= 0x6A;     
+	public static var CHAR_k:Number 		= 0x6B;     
+	public static var CHAR_l:Number 		= 0x6C;     
+	public static var CHAR_m:Number 		= 0x6D;     
+	public static var CHAR_n:Number 		= 0x6E;     
+	public static var CHAR_o:Number 		= 0x6F;     
+	public static var CHAR_p:Number 		= 0x70;     
+	public static var CHAR_q:Number 		= 0x71;     
+	public static var CHAR_r:Number 		= 0x72;     
+	public static var CHAR_s:Number 		= 0x73;     
+	public static var CHAR_t:Number 		= 0x74;     
+	public static var CHAR_u:Number 		= 0x75;     
+	public static var CHAR_v:Number 		= 0x76;     
+	public static var CHAR_w:Number 		= 0x77;     
+	public static var CHAR_x:Number 		= 0x78;     
+	public static var CHAR_y:Number 		= 0x79;     
+	public static var CHAR_z:Number 		= 0x7A;     
+	public static var CHAR_LCUB:Number 		= 0x7B;		// {     
+	public static var CHAR_VERBAR:Number 	= 0x7C;		// |     
+	public static var CHAR_RCUB:Number 		= 0x7D;		// }     
+	public static var CHAR_TILDE:Number 	= 0x7E;		// ~     
+	public static var CHAR_DEL:Number 		= 0x7F; 
+
 
     private static var charTypes:Array = [
         CNTRL,                  /* 00 (NUL) */
@@ -207,7 +323,7 @@ class org.as2lib.regexp.AsciiUtil extends BasicClass {
     }
 
     public static function isDigit(ch:Number):Boolean {
-        return ((ch - 0x30) | (0x39 - ch)) >= 0;
+        return ((ch - CHAR_0) | (CHAR_9 - ch)) >= 0;
     }
 
     public static function isAlnum(ch:Number):Boolean {
@@ -219,7 +335,7 @@ class org.as2lib.regexp.AsciiUtil extends BasicClass {
     }
 
     public static function isPrint(ch:Number):Boolean {
-        return ((ch - 0x20) | (0x7E - ch)) >= 0;
+        return ((ch - CHAR_SP) | (CHAR_TILDE - ch)) >= 0;
     }
 
     public static function isPunct(ch:Number):Boolean {
@@ -235,7 +351,7 @@ class org.as2lib.regexp.AsciiUtil extends BasicClass {
     }
 
     public static function isOctDigit(ch:Number):Boolean {
-        return ((ch - 0x30) | (0x37 - ch)) >= 0;
+        return ((ch - CHAR_0) | (CHAR_7 - ch)) >= 0;
     }
 
     public static function isCntrl(ch:Number):Boolean {
@@ -243,11 +359,11 @@ class org.as2lib.regexp.AsciiUtil extends BasicClass {
     }
 
     public static function isLower(ch:Number):Boolean {
-        return ((ch - 0x61) | (0x7A - ch)) >= 0;
+        return ((ch - CHAR_a) | (CHAR_z - ch)) >= 0;
     }
 
     public static function isUpper(ch:Number):Boolean {
-        return ((ch - 0x41) | (0x5A - ch)) >= 0;
+        return ((ch - CHAR_A) | (CHAR_Z - ch)) >= 0;
     }
 
     public static function isWord(ch:Number):Boolean {
