@@ -5,6 +5,11 @@
     xsi:schemaLocation="as2lib http://www.as2lib.org/changelog_0.91.xsd">
   <release name="as2lib 0.9.4" day="14" month="11" year="2005">
     <year value="2005">
+      <month value="11">
+        <day value="2">
+          <entry package="org.as2lib.regexp" class="AcsiiUtil" type="add">Static properties with ASCII codes for all characters are added</entry>
+        </day>
+      </month>
       <month value="10">
         <day value="20">
           <entry type="add" package="org.as2lib.env.log.aspect" class="TraceLoggingAspect">Logs the trace.</entry>
