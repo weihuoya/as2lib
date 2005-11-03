@@ -16,6 +16,7 @@
  
 import org.as2lib.regexp.node.Node; 
 import org.as2lib.regexp.node.TreeInfo;
+import org.as2lib.regexp.AsciiUtil;
 
 /**
  * {@code UnixDot} is a node class for the dot metacharacter when dotall is 
@@ -33,7 +34,7 @@ class org.as2lib.regexp.node.UnixDot extends Node {
     public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i < matcher.to) {
             var ch:Number = seq.charCodeAt(i);
-            return (ch != ord('\n') && next.match(matcher, i+1, seq));
+            return (ch != AsciiUtil.CHAR_LF && next.match(matcher, i+1, seq));
         }
         return false;
     }

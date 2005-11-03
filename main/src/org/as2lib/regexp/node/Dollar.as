@@ -16,6 +16,7 @@
  
 import org.as2lib.regexp.node.Node; 
 import org.as2lib.regexp.node.TreeInfo;
+import org.as2lib.regexp.AsciiUtil;
 
 /**
  * {@code Dollar} is a node to anchor at the end of a line or the 
@@ -43,25 +44,30 @@ class org.as2lib.regexp.node.Dollar extends Node {
     
     public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (!multiline) {
-            if (i < matcher.to - 2)
+            if (i < matcher.to - 2) {
                 return false;
+            }
             if (i == matcher.to - 2) {
                 var ch:Number = seq.charCodeAt(i);
-                if (ch != ord('\r')) return false;
+                if (ch != AsciiUtil.CHAR_CR) {
+                	return false;
+                }
                 ch = seq.charCodeAt(i+1);
-                if (ch != ord('\n')) return false;
+                if (ch != AsciiUtil.CHAR_LF) {
+                	return false;
+                }
             }
         }
         // Matches before any line terminator; also matches at the
         // end of input
         if (i < matcher.to) {
             var ch:Number = seq.charCodeAt(i);
-             if (ch == ord('\n')) {
+             if (ch == AsciiUtil.CHAR_LF) {
                  // No match between \r\n
-                 if (i > 0 && seq.charAt(i-1) == '\r')
+                 if (i > 0 && seq.charAt(i-1) == AsciiUtil.CHAR_CR) {
                      return false;
-             } else if (ch == ord('\r') || ch == ord('\u0085') ||
-                        (ch|1) == ord('\u2029')) {
+                 }
+             } else if (ch == AsciiUtil.CHAR_CR || ch == 0x0085 || (ch|1) == 0x2029) {
                  // line terminator; match
              } else { // No line terminator, no match
                  return false;

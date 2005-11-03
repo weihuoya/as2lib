@@ -40,10 +40,14 @@ class org.as2lib.regexp.node.BackRef extends Node {
         var groupSize:Number = k - j;
 
         // If the referenced group didn't match, neither can this
-        if (j < 0) return false;
+        if (j < 0) {
+        	return false;
+        }
 
         // If there isn't enough input left no match
-        if (i + groupSize > matcher.to) return false;
+        if (i + groupSize > matcher.to){
+        	return false;
+        }
 
         // Check each new char to make sure it matches what the group
         // referenced matched last time around

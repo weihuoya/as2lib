@@ -49,8 +49,8 @@ class org.as2lib.regexp.node.GroupCurly extends Node {
     }
     
     public function match(matcher:Object, i:Number, seq:String):Boolean {
-        var groups:Array = matcher.groups; // of Number
-        var locals:Array = matcher.locals; // of Number
+        var groups:Array = matcher.groups; 
+        var locals:Array = matcher.locals; 
         var save0:Number = locals[localIndex];
         var save1:Number = groups[groupIndex];
         var save2:Number = groups[groupIndex+1];
@@ -70,7 +70,7 @@ class org.as2lib.regexp.node.GroupCurly extends Node {
             }
         }
         if (!ret) {
-            ;
+            //
         } else if (type == Pattern.GREEDY) {
             ret = match0(matcher, i, cmin, seq);
         } else if (type == Pattern.LAZY) {
@@ -88,14 +88,16 @@ class org.as2lib.regexp.node.GroupCurly extends Node {
     
     // Aggressive group match
     private function match0(matcher:Object, i:Number, j:Number, seq:String):Boolean {
-        var groups:Array = matcher.groups; // of Number
+        var groups:Array = matcher.groups; 
         var save0:Number = groups[groupIndex];
         var save1:Number = groups[groupIndex+1];
         while (true) {
-            if (j >= cmax)
+            if (j >= cmax) {
                 break;
-            if (!atom.match(matcher, i, seq))
+            }
+            if (!atom.match(matcher, i, seq)) {
                 break;
+            }
             var k:Number = matcher.last - i;
             if (k <= 0) {
                 groups[groupIndex] = i;
@@ -105,13 +107,16 @@ class org.as2lib.regexp.node.GroupCurly extends Node {
             while (true) {
                 groups[groupIndex] = i;
                 groups[groupIndex+1] = i = i + k;
-                if (++j >= cmax)
+                if (++j >= cmax) {
                     break;
-                if (!atom.match(matcher, i, seq))
+                }
+                if (!atom.match(matcher, i, seq)) {
                     break;
+                }
                 if (i + k != matcher.last) {
-                    if (match0(matcher, i, j, seq))
+                    if (match0(matcher, i, j, seq)) {
                         return true;
+                    }
                     break;
                 }
             }
@@ -136,15 +141,18 @@ class org.as2lib.regexp.node.GroupCurly extends Node {
     // Reluctant matching
     private function match1(matcher:Object, i:Number, j:Number, seq:String):Boolean {
         for (;;) {
-            if (next.match(matcher, i, seq))
+            if (next.match(matcher, i, seq)) {
                 return true;
-            if (j >= cmax)
+            }
+            if (j >= cmax) {
                 return false;
-            if (!atom.match(matcher, i, seq))
+            }
+            if (!atom.match(matcher, i, seq)) {
                 return false;
-            if (i == matcher.last)
+            }
+            if (i == matcher.last) {
                 return false;
-
+            }
             matcher.groups[groupIndex] = i;
             matcher.groups[groupIndex+1] = i = matcher.last;
             j++;

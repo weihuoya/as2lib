@@ -41,10 +41,14 @@ class org.as2lib.regexp.node.SingleU extends Node {
     public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i < matcher.to) {
             var c:Number = seq.charCodeAt(i);
-            if (c == ch) return next.match(matcher, i+1, seq);
+            if (c == ch) {
+            	return next.match(matcher, i+1, seq);
+            }
             c = AsciiUtil.toUpper(c);
             c = AsciiUtil.toLower(c);
-            if (c == ch) return next.match(matcher, i+1, seq);
+            if (c == ch) {
+            	return next.match(matcher, i+1, seq);
+            }
         }
         return false;
     }

@@ -41,19 +41,22 @@ class org.as2lib.regexp.node.LazyLoop extends Loop {
                 var result:Boolean = body.match(matcher, i, seq);
                 // If match failed we must backtrack, so
                 // the loop count should NOT be incremented
-                if (!result)
+                if (!result) {
                     matcher.locals[countIndex] = count;
+                }
                 return result;
             }
-            if (next.match(matcher, i, seq))
+            if (next.match(matcher, i, seq)) {
                 return true;
+            }
             if (count < cmax) {
                 matcher.locals[countIndex] = count + 1;
                 var result:Boolean = body.match(matcher, i, seq);
                 // If match failed we must backtrack, so
                 // the loop count should NOT be incremented
-                if (!result)
+                if (!result) {
                     matcher.locals[countIndex] = count;
+                }
                 return result;
             }
             return false;

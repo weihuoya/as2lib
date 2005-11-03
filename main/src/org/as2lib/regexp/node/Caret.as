@@ -21,20 +21,22 @@
  * @author Igor Sadovskiy
  */
 
-import org.as2lib.regexp.node.Node;  
+import org.as2lib.regexp.node.Node;
+import org.as2lib.regexp.AsciiUtil;  
  
 class org.as2lib.regexp.node.Caret extends Node {
 	
     public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i > matcher.from) {
             var ch:Number = seq.charCodeAt(i-1);
-            if (ch != ord('\n') && ch != ord('\r')
-                && (ch|1) != ord('\u2029')
-                && ch != ord('\u0085') ) {
+            if (ch != AsciiUtil.CHAR_LF 
+            	&& ch != AsciiUtil.CHAR_CR
+                && (ch|1) != 0x2029
+                && ch != 0x0085 ) {
                 return false;
             }
             // Should treat /r/n as one newline
-            if (ch == ord('\r') && seq.charAt(i) == '\n')
+            if (ch == AsciiUtil.CHAR_CR && seq.charAt(i) == AsciiUtil.CHAR_LF)
                 return false;
         }
         // Perl does not match ^ at end of input even after newline

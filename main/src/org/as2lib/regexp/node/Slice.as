@@ -34,12 +34,14 @@ class org.as2lib.regexp.node.Slice extends Node {
     public function match(matcher:Object, i:Number, seq:String):Boolean {
         var buf:Array = buffer;
         var len:Number = buf.length;
-        if (i + len > matcher.to) return false;
-
-        for (var j = 0; j < len; j++) {
-            if (buf[j] != seq.charCodeAt(i+j)) return false;
+        if (i + len > matcher.to) {
+        	return false;
         }
-
+        for (var j = 0; j < len; j++) {
+            if (buf[j] != seq.charCodeAt(i+j)) {
+            	return false;
+            }
+        }
         return next.match(matcher, i+len, seq);
     }
     

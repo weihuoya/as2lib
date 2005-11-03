@@ -138,32 +138,32 @@ class org.as2lib.regexp.AsciiUtil extends BasicClass {
 	public static var CHAR_CIRC:Number 		= 0x5E;		// ^     
 	public static var CHAR_LOWBAR:Number 	= 0x5F;		// _     
 	public static var CHAR_GRAVE:Number 	= 0x60;		// `     
-	public static var CHAR_a:Number 		= 0x61;     
-	public static var CHAR_b:Number 		= 0x62;     
-	public static var CHAR_c:Number 		= 0x63;     
-	public static var CHAR_d:Number 		= 0x64;     
-	public static var CHAR_e:Number 		= 0x65;     
-	public static var CHAR_f:Number 		= 0x66;     
-	public static var CHAR_g:Number 		= 0x67;     
-	public static var CHAR_h:Number 		= 0x68;     
-	public static var CHAR_i:Number 		= 0x69;     
-	public static var CHAR_j:Number 		= 0x6A;     
-	public static var CHAR_k:Number 		= 0x6B;     
-	public static var CHAR_l:Number 		= 0x6C;     
-	public static var CHAR_m:Number 		= 0x6D;     
-	public static var CHAR_n:Number 		= 0x6E;     
-	public static var CHAR_o:Number 		= 0x6F;     
-	public static var CHAR_p:Number 		= 0x70;     
-	public static var CHAR_q:Number 		= 0x71;     
-	public static var CHAR_r:Number 		= 0x72;     
-	public static var CHAR_s:Number 		= 0x73;     
-	public static var CHAR_t:Number 		= 0x74;     
-	public static var CHAR_u:Number 		= 0x75;     
-	public static var CHAR_v:Number 		= 0x76;     
-	public static var CHAR_w:Number 		= 0x77;     
-	public static var CHAR_x:Number 		= 0x78;     
-	public static var CHAR_y:Number 		= 0x79;     
-	public static var CHAR_z:Number 		= 0x7A;     
+	public static var CHAR_LOW_A:Number 	= 0x61;     
+	public static var CHAR_LOW_B:Number 	= 0x62;     
+	public static var CHAR_LOW_C:Number 	= 0x63;     
+	public static var CHAR_LOW_D:Number 	= 0x64;     
+	public static var CHAR_LOW_E:Number 	= 0x65;     
+	public static var CHAR_LOW_F:Number 	= 0x66;     
+	public static var CHAR_LOW_G:Number 	= 0x67;     
+	public static var CHAR_LOW_H:Number 	= 0x68;     
+	public static var CHAR_LOW_I:Number 	= 0x69;     
+	public static var CHAR_LOW_J:Number 	= 0x6A;     
+	public static var CHAR_LOW_K:Number 	= 0x6B;     
+	public static var CHAR_LOW_L:Number 	= 0x6C;     
+	public static var CHAR_LOW_M:Number 	= 0x6D;     
+	public static var CHAR_LOW_N:Number 	= 0x6E;     
+	public static var CHAR_LOW_O:Number 	= 0x6F;     
+	public static var CHAR_LOW_P:Number 	= 0x70;     
+	public static var CHAR_LOW_Q:Number 	= 0x71;     
+	public static var CHAR_LOW_R:Number 	= 0x72;     
+	public static var CHAR_LOW_S:Number 	= 0x73;     
+	public static var CHAR_LOW_T:Number 	= 0x74;     
+	public static var CHAR_LOW_U:Number 	= 0x75;     
+	public static var CHAR_LOW_V:Number 	= 0x76;     
+	public static var CHAR_LOW_W:Number 	= 0x77;     
+	public static var CHAR_LOW_X:Number 	= 0x78;     
+	public static var CHAR_LOW_Y:Number 	= 0x79;     
+	public static var CHAR_LOW_Z:Number 	= 0x7A;     
 	public static var CHAR_LCUB:Number 		= 0x7B;		// {     
 	public static var CHAR_VERBAR:Number 	= 0x7C;		// |     
 	public static var CHAR_RCUB:Number 		= 0x7D;		// }     
@@ -359,7 +359,7 @@ class org.as2lib.regexp.AsciiUtil extends BasicClass {
     }
 
     public static function isLower(ch:Number):Boolean {
-        return ((ch - CHAR_a) | (CHAR_z - ch)) >= 0;
+        return ((ch - CHAR_LOW_A) | (CHAR_LOW_Z - ch)) >= 0;
     }
 
     public static function isUpper(ch:Number):Boolean {

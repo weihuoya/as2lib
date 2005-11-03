@@ -16,6 +16,7 @@
  
 import org.as2lib.regexp.node.Node;
 import org.as2lib.regexp.node.TreeInfo;
+import org.as2lib.regexp.AsciiUtil;
  
 /**
  * {@code UnixDollar} is a node to anchor at the end of a line or the end 
@@ -35,10 +36,12 @@ class org.as2lib.regexp.node.UnixDollar extends Node {
     public function match(matcher:Object, i:Number, seq:String):Boolean {
         if (i < matcher.to) {
             var ch:Number = seq.charCodeAt(i);
-            if (ch == ord('\n')) {
+            if (ch == AsciiUtil.CHAR_LF) {
                 // If not multiline, then only possible to
                 // match at very end or one before end
-                if (multiline == false && i != matcher.to - 1) return false;
+                if (multiline == false && i != matcher.to - 1) {
+                	return false;
+                }
             } else {
                 return false;
             }

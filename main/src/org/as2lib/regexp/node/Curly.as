@@ -49,12 +49,13 @@ class org.as2lib.regexp.node.Curly extends Node {
             }
             return false;
         }
-        if (type == Pattern.GREEDY)
+        if (type == Pattern.GREEDY) {
             return match0(matcher, i, j, seq);
-        else if (type == Pattern.LAZY)
+        } else if (type == Pattern.LAZY) {
             return match1(matcher, i, j, seq);
-        else
+        } else {
             return match2(matcher, i, j, seq);
+        }
     }
     
     // Greedy match.
@@ -72,7 +73,9 @@ class org.as2lib.regexp.node.Curly extends Node {
             var k:Number = matcher.last - i;
             
             // Zero length match
-            if (k == 0) break;
+            if (k == 0) {
+            	break;
+            }
             
             // Move up index and number matched
             i = matcher.last;
@@ -80,9 +83,13 @@ class org.as2lib.regexp.node.Curly extends Node {
             
             // We are greedy so match as many as we can
             while (j < cmax) {
-                if (!atom.match(matcher, i, seq)) break;
+                if (!atom.match(matcher, i, seq)) {
+                	break;
+                }
                 if (i + k != matcher.last) {
-                    if (match0(matcher, matcher.last, j+1, seq)) return true;
+                    if (match0(matcher, matcher.last, j+1, seq)) {
+                    	return true;
+                    }
                     break;
                 }
                 i += k;
@@ -91,8 +98,9 @@ class org.as2lib.regexp.node.Curly extends Node {
             
             // Handle backing off if match fails
             while (j >= backLimit) {
-               if (next.match(matcher, i, seq))
+               if (next.match(matcher, i, seq)) {
                     return true;
+               }
                 i -= k;
                 j--;
             }
@@ -107,17 +115,21 @@ class org.as2lib.regexp.node.Curly extends Node {
     private function match1(matcher:Object, i:Number, j:Number, seq:String):Boolean {
         while (true) {
             // Try finishing match without consuming any more
-            if (next.match(matcher, i, seq))
+            if (next.match(matcher, i, seq)) {
                 return true;
+            }
             // At the maximum, no match found
-            if (j >= cmax)
+            if (j >= cmax) {
                 return false;
+            }
             // Okay, must try one more atom
-            if (!atom.match(matcher, i, seq))
+            if (!atom.match(matcher, i, seq)) {
                 return false;
+            }
             // If we haven't moved forward then must break out
-            if (i == matcher.last)
+            if (i == matcher.last) {
                 return false;
+            }
             // Move up index and number matched
             i = matcher.last;
             j++;
@@ -126,10 +138,12 @@ class org.as2lib.regexp.node.Curly extends Node {
     
     private function match2(matcher:Object, i:Number, j:Number, seq:String):Boolean {
         for (; j < cmax; j++) {
-            if (!atom.match(matcher, i, seq)) 
+            if (!atom.match(matcher, i, seq)) { 
             	break;
-            if (i == matcher.last) 
+            }
+            if (i == matcher.last) { 
             	break;
+            }
             i = matcher.last;
         }
         return next.match(matcher, i, seq);
@@ -161,10 +175,11 @@ class org.as2lib.regexp.node.Curly extends Node {
             info.maxValid = false;
         }
 
-        if (info.deterministic && cmin == cmax)
+        if (info.deterministic && cmin == cmax) {
             info.deterministic = detm;
-        else
+        } else {
             info.deterministic = false;
+        }
 
         return next.study(info);
     }

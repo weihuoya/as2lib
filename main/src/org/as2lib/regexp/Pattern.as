@@ -164,8 +164,9 @@ class org.as2lib.regexp.Pattern extends BasicClass
     }
 
     public function split(input:String, limit:Number):Array { 
-    	if (limit == null) limit = 0;
-    
+    	if (limit == null) {
+    		limit = 0;
+    	}
         var index:Number = 0;
         var matchLimited:Boolean = limit > 0;
         var matchList:Array = new Array();
@@ -185,7 +186,9 @@ class org.as2lib.regexp.Pattern extends BasicClass
         }
 
         // If no match was found, return this
-        if (index == 0) return [input.toString()];
+        if (index == 0) {
+        	return [input.toString()];
+        }
 
         // Add remaining segment
         if (!matchLimited || matchList.length < limit) {
@@ -221,7 +224,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
 
         // Check extra pattern characters
         if (patternLength != cursor) {
-            if (peekChar() == ord(')')) {
+            if (peekChar() == AsciiUtil.CHAR_RPAR) {
                 throwError("Unmatched closing ')'", arguments);
             } else {
                 throwError("Unexpected internal error", arguments);
@@ -332,11 +335,11 @@ class org.as2lib.regexp.Pattern extends BasicClass
     }
 
     private function peekPastWhitespace(ch:Number):Number {
-        while (AsciiUtil.isSpace(ch) || ch == ord('#')) {
+        while (AsciiUtil.isSpace(ch) || ch == AsciiUtil.CHAR_NUM) {
             while (AsciiUtil.isSpace(ch)) {
                 ch = temp[++cursor];
             }
-            if (ch == ord('#')) {
+            if (ch == AsciiUtil.CHAR_NUM) {
                 ch = peekPastLine();
             }
         }
@@ -344,11 +347,11 @@ class org.as2lib.regexp.Pattern extends BasicClass
     }
 
     private function parsePastWhitespace(ch:Number):Number {
-        while (AsciiUtil.isSpace(ch) || ch == ord('#')) {
+        while (AsciiUtil.isSpace(ch) || ch == AsciiUtil.CHAR_NUM) {
             while (AsciiUtil.isSpace(ch)) {
                 ch = temp[cursor++];
             }
-            if (ch == ord('#')) {
+            if (ch == AsciiUtil.CHAR_NUM) {
                 ch = parsePastLine();
             }
         }
@@ -373,12 +376,12 @@ class org.as2lib.regexp.Pattern extends BasicClass
 
     private function isLineSeparator(ch:Number):Boolean {
         if (hasFlag(UNIX_LINES)) {
-            return ch == ord('\n');
+            return (ch == AsciiUtil.CHAR_LF);
         } else {
-            return (ch == ord('\n') ||
-                    ch == ord('\r') ||
-                    (ch|1) == ord('\u2029') ||
-                    ch == ord('\u0085'));
+            return (ch == AsciiUtil.CHAR_LF ||
+                    ch == AsciiUtil.CHAR_CR ||
+                    (ch|1) == 0x2029 ||
+                    ch == 0x0085);
         }
     }
 
@@ -406,7 +409,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
             } else {
                 prev = new Branch(prev, node);
             }
-            if (peekChar() != ord('|')) {
+            if (peekChar() != AsciiUtil.CHAR_VERBAR) {
                 return prev;
             }
             nextChar();
@@ -421,14 +424,15 @@ class org.as2lib.regexp.Pattern extends BasicClass
         var ch :Number;
         while (true) {
             ch = peekChar();
-            if (ch == ord('(')) {
+            if (ch == AsciiUtil.CHAR_LPAR) {
                 // Because group handles its own closure,
                 // we need to treat it differently
                 node = parseGroup();
                 
                 // Check for comment or flag group
-                if (node == null) continue;
-                
+                if (node == null) {
+                	continue;
+                }
                 if (head == null) {
                     head = node;
                 } else {
@@ -438,16 +442,16 @@ class org.as2lib.regexp.Pattern extends BasicClass
                 // Double return:Tail was returned in root
                 tail = root;
                 continue;
-            } else if (ch == ord('[')) {
+            } else if (ch == AsciiUtil.CHAR_LSQB) {
                 node = parseClass(true);
-            } else if (ch == ord('\\')) {
+            } else if (ch == AsciiUtil.CHAR_BSOL) {
                 ch = nextEscapedChar();
-                if (ch == ord('p') || ch == ord('P')) {
-                    var comp:Boolean = (ch == ord('P'));
+                if (ch == AsciiUtil.CHAR_LOW_P || ch == AsciiUtil.CHAR_P) {
+                    var comp:Boolean = (ch == AsciiUtil.CHAR_P);
                     var oneLetter:Boolean = true;
                     ch = nextChar(); 
                     // Consume figure bracket if present
-                    if (ch != 0x7B) {
+                    if (ch != AsciiUtil.CHAR_LCUB) {
                         unreadChar();
                     } else {
                         oneLetter = false;
@@ -458,7 +462,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
                     node = parseAtom();
                 }
             }
-            else if (ch == ord('^')) {
+            else if (ch == AsciiUtil.CHAR_CIRC) {
                 nextChar();
                 if (hasFlag(MULTILINE)) {
                     if (hasFlag(UNIX_LINES)) {
@@ -470,7 +474,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
                     node = new Begin();
                 }
             }
-            else if (ch == ord('$')) {
+            else if (ch == AsciiUtil.CHAR_DOLLAR) {
                 nextChar();
                 if (hasFlag(UNIX_LINES)) {
                     node = new UnixDollar(hasFlag(MULTILINE));
@@ -478,7 +482,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
                     node = new Dollar(hasFlag(MULTILINE));
                 }
             }
-            else if (ch == ord('.')) {
+            else if (ch == AsciiUtil.CHAR_PERIOD) {
                 nextChar();
                 if (hasFlag(DOTALL)) {
                     node = new All();
@@ -490,14 +494,14 @@ class org.as2lib.regexp.Pattern extends BasicClass
                     }
                 }
             }
-            else if (ch == ord('|') || ch == ord(')')) {
+            else if (ch == AsciiUtil.CHAR_VERBAR || ch == AsciiUtil.CHAR_RPAR) {
                 break;
             }
             // Now interpreting dangling square and figure brackets as literals
-            else if (ch == ord(']') || ch == 0x7D) {
+            else if (ch == AsciiUtil.CHAR_RSQB || ch == AsciiUtil.CHAR_RCUB) {
                 node = parseAtom();
             }
-            else if (ch == ord('?') || ch == ord('*') || ch == ord('+')) {
+            else if (ch == AsciiUtil.CHAR_QUEST || ch == AsciiUtil.CHAR_AST || ch == AsciiUtil.CHAR_PLUS) {
                 nextChar();
                 throwError("Dangling meta character '" + chr(ch) + "'", arguments);
             }
@@ -531,12 +535,10 @@ class org.as2lib.regexp.Pattern extends BasicClass
         var prev:Number = -1;
         var ch:Number = peekChar();
         while (true) {
-        	
-        	// check for "*", "+", "?", open figure bracker 
-        	if (ch == 0x2A ||
-        		ch == 0x2B ||
-        		ch == 0x3F ||
-        		ch == 0x7B ) 
+        	if (ch == AsciiUtil.CHAR_AST ||
+        		ch == AsciiUtil.CHAR_PLUS ||
+        		ch == AsciiUtil.CHAR_QUEST ||
+        		ch == AsciiUtil.CHAR_LCUB ) 
     		{
                 if (first > 1) {
                 	// Unwind one character
@@ -544,32 +546,28 @@ class org.as2lib.regexp.Pattern extends BasicClass
                     first--;
                 }
             // check for "$", ".", "^", "(", "[", "|", ")"
-        	} else if (ch == 0x24 ||
-        			 ch == 0x2E ||
-        			 ch == 0x5E ||
-        			 ch == 0x28 ||
-        			 ch == 0x5B ||
-        			 ch == 0x7C ||
-        			 ch == 0x29	)
+        	} else if (ch == AsciiUtil.CHAR_DOLLAR ||
+        			 ch == AsciiUtil.CHAR_PERIOD ||
+        			 ch == AsciiUtil.CHAR_CIRC ||
+        			 ch == AsciiUtil.CHAR_LPAR ||
+        			 ch == AsciiUtil.CHAR_LSQB ||
+        			 ch == AsciiUtil.CHAR_VERBAR ||
+        			 ch == AsciiUtil.CHAR_RPAR	)
         	{
                 break;
-            // check for "\"
-        	} else if (ch == 0x5C) { 
+        	} else if (ch == AsciiUtil.CHAR_BSOL) { 
                 ch = nextEscapedChar();
-                // "P" or "p"
-                if (ch == 0x70 || ch == 0x50) { 
+                if (ch == AsciiUtil.CHAR_LOW_P || ch == AsciiUtil.CHAR_P) { 
                 	// Property
                     if (first > 0) { 
                     	// Slice is waiting; handle it first
                         unreadChar();
                     } else { // No slice; just return the family node
-	                    // "P" or "p"
-                        if (ch == 0x70 || ch == 0x50) {
-                            var comp:Boolean = (ch == 0x50);
+                        if (ch == AsciiUtil.CHAR_LOW_P || ch == AsciiUtil.CHAR_P) {
+                            var comp:Boolean = (ch == AsciiUtil.CHAR_P);
                             var oneLetter:Boolean = true;
                             ch = nextChar(); 
-                            // Consume open figure bracket if present
-                            if (ch != 0x7B) {
+                            if (ch != AsciiUtil.CHAR_LCUB) {
                                 unreadChar();
                             } else {
                                 oneLetter = false;
@@ -623,17 +621,17 @@ class org.as2lib.regexp.Pattern extends BasicClass
         while (!done) {
             var ch:Number = peekChar();
             switch(ch) {
-                case ord('0'):
-                case ord('1'):
-                case ord('2'):
-                case ord('3'):
-                case ord('4'):
-                case ord('5'):
-                case ord('6'):
-                case ord('7'):
-                case ord('8'):
-                case ord('9'):
-                    var newRefNum:Number = (refNum * 10) + (ch - ord('0'));
+                case AsciiUtil.CHAR_0:
+                case AsciiUtil.CHAR_1:
+                case AsciiUtil.CHAR_2:
+                case AsciiUtil.CHAR_3:
+                case AsciiUtil.CHAR_4:
+                case AsciiUtil.CHAR_5:
+                case AsciiUtil.CHAR_6:
+                case AsciiUtil.CHAR_7:
+                case AsciiUtil.CHAR_8:
+                case AsciiUtil.CHAR_9:
+                    var newRefNum:Number = (refNum * 10) + (ch - AsciiUtil.CHAR_0);
                     // Add another number if it doesn't make a group
                     // that doesn't exist
                     if (groupCount - 1 < newRefNum) {
@@ -658,69 +656,85 @@ class org.as2lib.regexp.Pattern extends BasicClass
     private function parseEscape(inclass:Boolean, create:Boolean):Number {
         var ch:Number = skipChar();
         switch (ch) {
-            case ord('0'):
+            case AsciiUtil.CHAR_0:
                 return parseOctal();
-            case ord('1'):
-            case ord('2'):
-            case ord('3'):
-            case ord('4'):
-            case ord('5'):
-            case ord('6'):
-            case ord('7'):
-            case ord('8'):
-            case ord('9'):
-                if (inclass) break;
-                if (groupCount < (ch - ord('0'))) {
+            case AsciiUtil.CHAR_1:
+            case AsciiUtil.CHAR_2:
+            case AsciiUtil.CHAR_3:
+            case AsciiUtil.CHAR_4:
+            case AsciiUtil.CHAR_5:
+            case AsciiUtil.CHAR_6:
+            case AsciiUtil.CHAR_7:
+            case AsciiUtil.CHAR_8:
+            case AsciiUtil.CHAR_9:
+                if (inclass) {
+                	break;
+                }
+                if (groupCount < (ch - AsciiUtil.CHAR_0)) {
                     throwError("No such group yet exists at this point in the pattern", arguments);
                 }
                 if (create) {
-                    root = parseBackRef(ch - ord('0'));
+                    root = parseBackRef(ch - AsciiUtil.CHAR_0);
                 }
                 return null;
-            case ord('A'):
-                if (inclass) break;
-                if (create) root = new Begin();
+            case AsciiUtil.CHAR_A:
+                if (inclass) {
+                	break;
+                }
+                if (create) {
+                	root = new Begin();
+                }
                 return null;
-            case ord('B'):
-                if (inclass) break;
-                if (create) root = new Bound(Bound.NONE);
+            case AsciiUtil.CHAR_B:
+                if (inclass) {
+                	break;
+                }
+                if (create) {
+                	root = new Bound(Bound.NONE);
+                }
                 return null;
-            case ord('C'):
+            case AsciiUtil.CHAR_C:
                 break;
-            case ord('D'):
-                if (create) root = new NotPosix(AsciiUtil.DIGIT);
+            case AsciiUtil.CHAR_D:
+                if (create) {
+                	root = new NotPosix(AsciiUtil.DIGIT);
+                }
                 return null;
-            case ord('E'):
-            case ord('F'):
+            case AsciiUtil.CHAR_E:
+            case AsciiUtil.CHAR_F:
                 break;
-            case ord('G'):
-                if (inclass) break;
-                if (create) root = new LastMatch();
+            case AsciiUtil.CHAR_G:
+                if (inclass) {
+                	break;
+                }
+                if (create) {
+                	root = new LastMatch();
+                }
                 return null;
-            case ord('H'):
-            case ord('I'):
-            case ord('J'):
-            case ord('K'):
-            case ord('L'):
-            case ord('M'):
-            case ord('N'):
-            case ord('O'):
-            case ord('P'):
+            case AsciiUtil.CHAR_H:
+            case AsciiUtil.CHAR_I:
+            case AsciiUtil.CHAR_J:
+            case AsciiUtil.CHAR_K:
+            case AsciiUtil.CHAR_L:
+            case AsciiUtil.CHAR_M:
+            case AsciiUtil.CHAR_N:
+            case AsciiUtil.CHAR_O:
+            case AsciiUtil.CHAR_P:
                 break;
-            case ord('Q'):
+            case AsciiUtil.CHAR_Q:
                 if (create) {
                     // Disable metacharacters. We will return a slice
                     // up to the next \E
                     var i:Number = cursor;
                     var c:Number;
                     while ((c = readEscapedChar()) != 0) {
-                        if (c == ord('\\')) {
+                        if (c == AsciiUtil.CHAR_BSOL) {
                             c = readEscapedChar();
-                            if (c == ord('E') || c == 0) break;
+                            if (c == AsciiUtil.CHAR_E || c == 0) break;
                         }
                     }
                     var j:Number = cursor-1;
-                    if (c == ord('E')) {
+                    if (c == AsciiUtil.CHAR_E) {
                         j--;
                     } else {
                         unreadChar();
@@ -731,22 +745,26 @@ class org.as2lib.regexp.Pattern extends BasicClass
                     root = createSlice(buffer, j-i);
                 }
                 return null;
-            case ord('R'):
+            case AsciiUtil.CHAR_R:
                 break;
-            case ord('S'):
-                if (create) root = new NotPosix(AsciiUtil.SPACE);
+            case AsciiUtil.CHAR_S:
+                if (create) {
+                	root = new NotPosix(AsciiUtil.SPACE);
+                }
                 return null;
-            case ord('T'):
-            case ord('U'):
-            case ord('V'):
+            case AsciiUtil.CHAR_T:
+            case AsciiUtil.CHAR_U:
+            case AsciiUtil.CHAR_V:
                 break;
-            case ord('W'):
-                if (create) root = new NotPosix(AsciiUtil.WORD);
+            case AsciiUtil.CHAR_W:
+                if (create) {
+                	root = new NotPosix(AsciiUtil.WORD);
+                }
                 return null;
-            case ord('X'):
-            case ord('Y'):
+            case AsciiUtil.CHAR_X:
+            case AsciiUtil.CHAR_Y:
                 break;
-            case ord('Z'):
+            case AsciiUtil.CHAR_Z:
                 if (inclass) break;
                 if (create) {
                     if (hasFlag(UNIX_LINES)) {
@@ -756,56 +774,70 @@ class org.as2lib.regexp.Pattern extends BasicClass
                 	}
                 }
                 return null;
-            case ord('a'):
-                return Number(ord('\007'));
-            case ord('b'):
-                if (inclass) break;
-                if (create) root = new Bound(Bound.BOTH);
+            case AsciiUtil.CHAR_LOW_A:
+                return AsciiUtil.CHAR_BEL;
+            case AsciiUtil.CHAR_LOW_B:
+                if (inclass) {
+                	break;
+                }
+                if (create) {
+                	root = new Bound(Bound.BOTH);
+                }
                 return null;
-            case ord('c'):
+            case AsciiUtil.CHAR_LOW_C:
                 return parseControl();
-            case ord('d'):
-                if (create) root = new Posix(AsciiUtil.DIGIT);
+            case AsciiUtil.CHAR_LOW_D:
+                if (create) {
+                	root = new Posix(AsciiUtil.DIGIT);
+                }
                 return null;
-            case ord('e'):
-                return Number(ord('\033'));
-            case ord('f'):
-                return Number(ord('\f'));
-            case ord('g'):
-            case ord('h'):
-            case ord('i'):
-            case ord('j'):
-            case ord('k'):
-            case ord('l'):
-            case ord('m'):
+            case AsciiUtil.CHAR_LOW_E:
+                return AsciiUtil.CHAR_ESC;
+            case AsciiUtil.CHAR_LOW_F:
+                return AsciiUtil.CHAR_FF;
+            case AsciiUtil.CHAR_LOW_G:
+            case AsciiUtil.CHAR_LOW_H:
+            case AsciiUtil.CHAR_LOW_I:
+            case AsciiUtil.CHAR_LOW_J:
+            case AsciiUtil.CHAR_LOW_K:
+            case AsciiUtil.CHAR_LOW_L:
+            case AsciiUtil.CHAR_LOW_M:
                 break;
-            case ord('n'):
-                return Number(ord('\n'));
-            case ord('o'):
-            case ord('p'):
-            case ord('q'):
+            case AsciiUtil.CHAR_LOW_N:
+                return AsciiUtil.CHAR_LF;
+            case AsciiUtil.CHAR_LOW_O:
+            case AsciiUtil.CHAR_LOW_P:
+            case AsciiUtil.CHAR_LOW_Q:
                 break;
-            case ord('r'):
-                return Number(ord('\r'));
-            case ord('s'):
-                if (create) root = new Posix(AsciiUtil.SPACE);
+            case AsciiUtil.CHAR_LOW_R:
+                return AsciiUtil.CHAR_CR;
+            case AsciiUtil.CHAR_LOW_S:
+                if (create) {
+                	root = new Posix(AsciiUtil.SPACE);
+                }
                 return null;
-            case ord('t'):
-                return Number(ord('\t'));
-            case ord('u'):
+            case AsciiUtil.CHAR_LOW_T:
+                return AsciiUtil.CHAR_HT;
+            case AsciiUtil.CHAR_LOW_U:
                 return parseUnicode();
-            case ord('v'):
-                return Number(ord('\013'));
-            case ord('w'):
-                if (create) root = new Posix(AsciiUtil.WORD);
+            case AsciiUtil.CHAR_LOW_V:
+                return AsciiUtil.CHAR_VT;
+            case AsciiUtil.CHAR_LOW_W:
+                if (create) {
+                	root = new Posix(AsciiUtil.WORD);
+                }
                 return null;
-            case ord('x'):
+            case AsciiUtil.CHAR_LOW_X:
                 return parseHexal();
-            case ord('y'):
+            case AsciiUtil.CHAR_LOW_Y:
                 break;
-            case ord('z'):
-                if (inclass) break;
-                if (create) root = new End();
+            case AsciiUtil.CHAR_LOW_Z:
+                if (inclass) {
+                	break;
+                }
+                if (create) {
+                	root = new End();
+                }
                 return null;
             default:
                 return ch;
@@ -823,10 +855,10 @@ class org.as2lib.regexp.Pattern extends BasicClass
         var ch:Number = nextChar();
         while (true) {
             switch (ch) {
-                case ord('^'):
+                case AsciiUtil.CHAR_CIRC:
                     // Negates if first char in a class, otherwise literal
                     if (firstInClass) {
-                        if (temp[cursor-1] != ord('[')) break;
+                        if (temp[cursor-1] != AsciiUtil.CHAR_LSQB) break;
                         ch = nextChar();
                         include = !include;
                         continue;
@@ -834,7 +866,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
                         // ^ not first in class, treat as literal
                         break;
                     }
-                case ord('['):
+                case AsciiUtil.CHAR_LSQB:
                     firstInClass = false;
                     node = parseClass(true);
                     if (prev == null) {
@@ -844,14 +876,14 @@ class org.as2lib.regexp.Pattern extends BasicClass
                     }
                     ch = peekChar();
                     continue;
-                case ord('&'):
+                case AsciiUtil.CHAR_AMP:
                     firstInClass = false;
                     ch = nextChar();
-                    if (ch == ord('&')) {
+                    if (ch == AsciiUtil.CHAR_AMP) {
                         ch = nextChar();
                         var rightNode:Node = null;
-                        while (ch != ord(']') && ch != ord('&')) {
-                            if (ch == ord('[')) {
+                        while (ch != AsciiUtil.CHAR_RSQB && ch != AsciiUtil.CHAR_AMP) {
+                            if (ch == AsciiUtil.CHAR_LSQB) {
                                 if (rightNode == null) {
                                     rightNode = parseClass(true);
                                 } else {
@@ -863,7 +895,9 @@ class org.as2lib.regexp.Pattern extends BasicClass
                             }
                             ch = peekChar();
                         }
-                        if (rightNode != null) node = rightNode;
+                        if (rightNode != null) {
+                        	node = rightNode;
+                        }
                         if (prev == null) {
                             if (rightNode == null) {
                                 throwError("Bad class syntax", arguments);
@@ -885,7 +919,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
                         throwError("Unclosed character class", arguments);
                     }
                     break;
-                case ord(']'):
+                case AsciiUtil.CHAR_RSQB:
                     firstInClass = false;
                     if (prev != null) {
                         if (consume) nextChar();
@@ -921,14 +955,14 @@ class org.as2lib.regexp.Pattern extends BasicClass
 
     private function parseRange(bits:BitClass):Node {
         var ch:Number = peekChar();
-        if (ch == ord('\\')) {
+        if (ch == AsciiUtil.CHAR_BSOL) {
             ch = nextEscapedChar();
-            if (ch == ord('p') || ch == ord('P')) { // A property
-                var comp:Boolean = (ch == ord('P'));
+            if (ch == AsciiUtil.CHAR_LOW_P || ch == AsciiUtil.CHAR_P) { // A property
+                var comp:Boolean = (ch == AsciiUtil.CHAR_P);
                 var oneLetter:Boolean = true;
                 // Consume fugure bracket if present
                 ch = nextChar();
-                if (ch == 0x7B) {
+                if (ch == AsciiUtil.CHAR_LCUB) {
                     unreadChar();
                 } else {
                     oneLetter = false;
@@ -937,21 +971,23 @@ class org.as2lib.regexp.Pattern extends BasicClass
             } else { // ordinary escape
                 unreadChar();
                 ch = parseEscape(true, true);
-                if (ch == null) return root;
+                if (ch == null) {
+                	return root;
+                }
             }
         } else {
             ch = parseSingle();
         }
         if (ch != null) {
-            if (peekChar() == ord('-')) {
+            if (peekChar() == AsciiUtil.CHAR_MINUS) {
                 var endRange:Number = temp[cursor+1];
-                if (endRange == ord('[')) {
+                if (endRange == AsciiUtil.CHAR_LSQB) {
                     if (ch < 256) {
                         return bits.addChar(ch, getFlags());
                     }
                     return ceateSingle(ch);
                 }
-                if (endRange != ord(']')) {
+                if (endRange != AsciiUtil.CHAR_RSQB) {
                     nextChar();
                     var m:Number = parseSingle();
                     if (m < ch) {
@@ -975,7 +1011,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
     private function parseSingle(Void):Number {
         var ch:Number = peekChar();
         switch (ch) {
-	        case ord('\\'):
+	        case AsciiUtil.CHAR_BSOL:
 	            return parseEscape(true, false);
 	        default:
 	            nextChar();
@@ -994,32 +1030,32 @@ class org.as2lib.regexp.Pattern extends BasicClass
         var save:Number = flags;
         root = null;
         var ch:Number = nextChar();
-        if (ch == ord('?')) {
+        if (ch == AsciiUtil.CHAR_QUEST) {
             ch = skipChar();
             switch (ch) {
-            case ord(':'):  //  (?:xxx) pure group
+            case AsciiUtil.CHAR_COLON:  //  (?:xxx) pure group
                 head = createGroup(true);
                 tail = root;
                 head.setNext(parseExpression(tail));
                 break;
-            case ord('='):  // (?=xxx) and (?!xxx) lookahead
-            case ord('!'):
+            case AsciiUtil.CHAR_EQUALS:  // (?=xxx) and (?!xxx) lookahead
+            case AsciiUtil.CHAR_EXCL:
                 head = createGroup(true);
                 tail = root;
                 head.setNext(parseExpression(tail));
-                if (ch == ord('=')) {
+                if (ch == AsciiUtil.CHAR_EQUALS) {
                     head = tail = new Pos(head);
                 } else {
                     head = tail = new Neg(head);
                 }
                 break;
-            case ord('>'):  // (?>xxx)  independent group
+            case AsciiUtil.CHAR_GT:  // (?>xxx)  independent group
                 head = createGroup(true);
                 tail = root;
                 head.setNext(parseExpression(tail));
                 head = tail = new Ques(head, INDEPENDENT);
                 break;
-            case ord('<'):  // (?<xxx)  look behind
+            case AsciiUtil.CHAR_LT:  // (?<xxx)  look behind
                 ch = readChar();
                 head = createGroup(true);
                 tail = root;
@@ -1027,35 +1063,34 @@ class org.as2lib.regexp.Pattern extends BasicClass
                 var info:TreeInfo = new TreeInfo();
                 head.study(info);
                 if (info.maxValid == false) {
-                    throwError("Look-behind group does not have "
-                                 + "an obvious maximum length", arguments);
+                    throwError("Look-behind group does not have an obvious maximum length", arguments);
                 }
-                if (ch == ord('=')) {
+                if (ch == AsciiUtil.CHAR_EQUALS) {
                     head = tail = new Behind(head, info.maxLength, info.minLength);
-                } else if (ch == ord('!')) {
+                } else if (ch == AsciiUtil.CHAR_EXCL) {
                     head = tail = new NotBehind(head, info.maxLength, info.minLength);
                 } else {
                     throwError("Unknown look-behind group", arguments);
                 }
                 break;
-            case ord('1'):case ord('2'):case ord('3'):case ord('4'):case ord('5'):
-            case ord('6'):case ord('7'):case ord('8'):case ord('9'):
-                if (groupNodes[ch - ord('0')] != null) {
-                    head = tail = new GroupRef(groupNodes[ch - ord('0')]);
+            case AsciiUtil.CHAR_1:case AsciiUtil.CHAR_2:case AsciiUtil.CHAR_3:case AsciiUtil.CHAR_4:case AsciiUtil.CHAR_5:
+            case AsciiUtil.CHAR_6:case AsciiUtil.CHAR_7:case AsciiUtil.CHAR_8:case AsciiUtil.CHAR_9:
+                if (groupNodes[ch - AsciiUtil.CHAR_0] != null) {
+                    head = tail = new GroupRef(groupNodes[ch - AsciiUtil.CHAR_0]);
                     break;
                 }
                 throwError("Unknown group reference", arguments);
-            case ord('$'):
-            case ord('@'):
+            case AsciiUtil.CHAR_DOLLAR:
+            case AsciiUtil.CHAR_COMMAT:
 				throwError("Unknown group type", arguments);
             default:   // (?xxx:) inlined match flags
                 unreadChar();
                 addFlag();
                 ch = readChar();
-                if (ch == ord(')')) {
+                if (ch == AsciiUtil.CHAR_RPAR) {
                     return null;    // Inline modifier only
                 }
-                if (ch != ord(':')) {
+                if (ch != AsciiUtil.CHAR_COLON) {
                     throwError("Unknown inline modifier", arguments);
                 }
                 head = createGroup(true);
@@ -1069,7 +1104,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
             head.setNext(parseExpression(tail));
         }
 
-        acceptChar(Number(ord(')')), "Unclosed group");
+        acceptChar(AsciiUtil.CHAR_RPAR, "Unclosed group");
         flags = save;
 
         // Check for quantifiers
@@ -1127,7 +1162,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
                     loop = new LazyLoop(this.localCount, tmp);
                 }
                 var prolog:Prolog = new Prolog(loop);
-                this.localCount += 1;
+                localCount += 1;
                 loop.setCmin(curly.getCmin());
                 loop.setCmax(curly.getCmax());
                 loop.setBody(head);
@@ -1160,25 +1195,25 @@ class org.as2lib.regexp.Pattern extends BasicClass
         var ch:Number = peekChar();
         while (true) {
             switch (ch) {
-            case ord('i'):
+            case AsciiUtil.CHAR_LOW_I:
                 flags |= CASE_INSENSITIVE;
                 break;
-            case ord('m'):
+            case AsciiUtil.CHAR_LOW_M:
                 flags |= MULTILINE;
                 break;
-            case ord('s'):
+            case AsciiUtil.CHAR_LOW_S:
                 flags |= DOTALL;
                 break;
-            case ord('d'):
+            case AsciiUtil.CHAR_LOW_D:
                 flags |= UNIX_LINES;
                 break;
-            case ord('u'):
+            case AsciiUtil.CHAR_LOW_U:
                 flags |= UNICODE_CASE;
                 break;
-            case ord('x'):
+            case AsciiUtil.CHAR_LOW_X:
                 flags |= COMMENTS;
                 break;
-            case ord('-'): // subFlag then fall through
+            case AsciiUtil.CHAR_MINUS: // subFlag then fall through
                 ch = nextChar();
                 subFlag();
             default:
@@ -1192,22 +1227,22 @@ class org.as2lib.regexp.Pattern extends BasicClass
         var ch:Number = peekChar();
         while (true) {
             switch (ch) {
-            case ord('i'):
+            case AsciiUtil.CHAR_LOW_I:
                 flags &= ~CASE_INSENSITIVE;
                 break;
-            case ord('m'):
+            case AsciiUtil.CHAR_LOW_M:
                 flags &= ~MULTILINE;
                 break;
-            case ord('s'):
+            case AsciiUtil.CHAR_LOW_S:
                 flags &= ~DOTALL;
                 break;
-            case ord('d'):
+            case AsciiUtil.CHAR_LOW_D:
                 flags &= ~UNIX_LINES;
                 break;
-            case ord('u'):
+            case AsciiUtil.CHAR_LOW_U:
                 flags &= ~UNICODE_CASE;
                 break;
-            case ord('x'):
+            case AsciiUtil.CHAR_LOW_X:
                 flags &= ~COMMENTS;
                 break;
             default:
@@ -1229,57 +1264,57 @@ class org.as2lib.regexp.Pattern extends BasicClass
         var atom:Node;
         var ch:Number = peekChar();
         switch (ch) {
-        case ord('?'):
+        case AsciiUtil.CHAR_QUEST:
             ch = nextChar();
-            if (ch == ord('?')) {
+            if (ch == AsciiUtil.CHAR_QUEST) {
                 nextChar();
                 return new Ques(prev, LAZY);
-            } else if (ch == ord('+')) {
+            } else if (ch == AsciiUtil.CHAR_PLUS) {
                 nextChar();
                 return new Ques(prev, POSSESSIVE);
             }
             return new Ques(prev, GREEDY);
-        case ord('*'):
+        case AsciiUtil.CHAR_AST:
             ch = nextChar();
-            if (ch == ord('?')) {
+            if (ch == AsciiUtil.CHAR_QUEST) {
                 nextChar();
                 return new Curly(prev, 0, MAX_REPS, LAZY);
-            } else if (ch == ord('+')) {
+            } else if (ch == AsciiUtil.CHAR_PLUS) {
                 nextChar();
                 return new Curly(prev, 0, MAX_REPS, POSSESSIVE);
             }
             return new Curly(prev, 0, MAX_REPS, GREEDY);
-        case ord('+'):
+        case AsciiUtil.CHAR_PLUS:
             ch = nextChar();
-            if (ch == ord('?')) {
+            if (ch == AsciiUtil.CHAR_QUEST) {
                 nextChar();
                 return new Curly(prev, 1, MAX_REPS, LAZY);
-            } else if (ch == ord('+')) {
+            } else if (ch == AsciiUtil.CHAR_PLUS) {
                 nextChar();
                 return new Curly(prev, 1, MAX_REPS, POSSESSIVE);
             }
             return new Curly(prev, 1, MAX_REPS, GREEDY);
-        case 0x7B:
+        case AsciiUtil.CHAR_LCUB:
             ch = temp[cursor+1];
             if (AsciiUtil.isDigit(ch)) {
                 skipChar();
                 var cmin:Number = 0;
                 do {
-                    cmin = cmin * 10 + (ch - ord('0'));
+                    cmin = cmin * 10 + (ch - AsciiUtil.CHAR_0);
                 } while (AsciiUtil.isDigit((ch = readChar())));
                 var cmax:Number = cmin;
-                if (ch == ord(',')) {
+                if (ch == AsciiUtil.CHAR_COMMA) {
                     ch = readChar();
                     cmax = MAX_REPS;
-                    if (ch != 0x7D) {
+                    if (ch != AsciiUtil.CHAR_RCUB) {
                         cmax = 0;
                         while (AsciiUtil.isDigit(ch)) {
-                            cmax = cmax * 10 + (ch - ord('0'));
+                            cmax = cmax * 10 + (ch - AsciiUtil.CHAR_0);
                             ch = readChar();
                         }
                     }
                 }
-                if (ch != 0x7D) {
+                if (ch != AsciiUtil.CHAR_RCUB) {
                     throwError("Unclosed counted closure", arguments);
                 }
                 if (((cmin) | (cmax) | (cmax - cmin)) < 0) {
@@ -1287,10 +1322,10 @@ class org.as2lib.regexp.Pattern extends BasicClass
                 }
                 var curly:Curly;
                 ch = peekChar();
-                if (ch == ord('?')) {
+                if (ch == AsciiUtil.CHAR_QUEST) {
                     nextChar();
                     curly = new Curly(prev, cmin, cmax, LAZY);
-                } else if (ch == ord('+')) {
+                } else if (ch == AsciiUtil.CHAR_PLUS) {
                     nextChar();
                     curly = new Curly(prev, cmin, cmax, POSSESSIVE);
                 } else {
@@ -1319,18 +1354,18 @@ class org.as2lib.regexp.Pattern extends BasicClass
      */
     private function parseOctal(Void):Number {
         var n:Number = readChar();
-        if (((n - ord('0')) | (ord('7') - n)) >= 0) {
+        if (((n - AsciiUtil.CHAR_0) | (AsciiUtil.CHAR_7 - n)) >= 0) {
             var m:Number = readChar();
-            if (((m - ord('0')) | (ord('7') - m)) >= 0) {
+            if (((m - AsciiUtil.CHAR_0) | (AsciiUtil.CHAR_7 - m)) >= 0) {
                 var o:Number = readChar();
-                if ((((o - ord('0')) | (ord('7') - o)) >= 0) && (((n - ord('0')) | (ord('3') - n)) >= 0)) {
-                    return (n - ord('0')) * 64 + (m - ord('0')) * 8 + (o - ord('0'));
+                if ((((o - AsciiUtil.CHAR_0) | (AsciiUtil.CHAR_7 - o)) >= 0) && (((n - AsciiUtil.CHAR_0) | (AsciiUtil.CHAR_3 - n)) >= 0)) {
+                    return (n - AsciiUtil.CHAR_0) * 64 + (m - AsciiUtil.CHAR_0) * 8 + (o - AsciiUtil.CHAR_0);
                 }
                 unreadChar();
-                return (n - ord('0')) * 8 + (m - ord('0'));
+                return (n - AsciiUtil.CHAR_0) * 8 + (m - AsciiUtil.CHAR_0);
             }
             unreadChar();
-            return (n - ord('0'));
+            return (n - AsciiUtil.CHAR_0);
         }
         throwError("Illegal octal escape sequence", arguments);
         return null;
