@@ -43,12 +43,12 @@ class org.as2lib.regexp.node.Bound extends Node {
         var left:Boolean = false;
         if (i > matcher.from) {
             ch = seq.charCodeAt(i-1);
-            left = (ch == 0x5F || AsciiUtil.isLower(ch) || AsciiUtil.isDigit(ch));
+            left = (ch == AsciiUtil.CHAR_LOWBAR || AsciiUtil.isLower(ch) || AsciiUtil.isDigit(ch));
         }
         var right:Boolean = false;
         if (i < matcher.to) {
             ch = seq.charCodeAt(i);
-            right = (ch == 0x5F || AsciiUtil.isLower(ch) || AsciiUtil.isDigit(ch));
+            right = (ch == AsciiUtil.CHAR_LOWBAR || AsciiUtil.isLower(ch) || AsciiUtil.isDigit(ch));
         }
         return ((Number(left) ^ Number(right)) ? (right ? LEFT : RIGHT) : NONE);
     }

@@ -38,14 +38,17 @@ class org.as2lib.regexp.node.Start extends Node {
     }
     
     public function match(matcher:Object, i:Number, seq:String):Boolean {
-        if (i > matcher.to - minLength) return false;
+        if (i > matcher.to - minLength) {
+        	return false;
+        }
         var ret:Boolean = false;
         var guard:Number = matcher.to - minLength;
         
         for (; i <= guard; i++) {
-            if (ret = next.match(matcher, i, seq)) break;
+            if (ret = next.match(matcher, i, seq)) {
+            	break;
+            }
         }
-        
         if (ret) {
             matcher.first = i;
             matcher.groups[0] = matcher.first;

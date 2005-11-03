@@ -17,6 +17,7 @@
 import org.as2lib.regexp.Pattern;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.Exception;
+import org.as2lib.regexp.AsciiUtil;
 
 /**
  * {@code Matcher} provides implementations of the match, search and 
@@ -107,17 +108,15 @@ class org.as2lib.regexp.Matcher extends BasicClass {
     }
 
     public function reset(input:String):Matcher {
-    	if (input != null) text = input;
+    	if (input != null) {
+    		text = input;
+    	}
     	
         first = -1;
         last = -1;
         oldLast = -1;
-        for (var i = 0; i < groups.length; i++) {
-            groups[i] = -1;
-        }
-        for (var i = 0; i < locals.length; i++) {
-            locals[i] = -1;
-        }
+        clearGroups();
+        clearLocals();
         lastAppendPosition = 0;
 		return this;
     }
@@ -150,7 +149,9 @@ class org.as2lib.regexp.Matcher extends BasicClass {
         if (first < 0) {
             throw new Exception("No match found", this, arguments);
         }
-        if (group == null) group  = 0;
+        if (group == null) {
+        	group  = 0;
+        }
         if (group < 0 || group > getGroupCount()) {
             throw new Exception("No group " + group, this, arguments);
         }
@@ -175,9 +176,7 @@ class org.as2lib.regexp.Matcher extends BasicClass {
 	           last++;
 	        }
 	        if (last > to) {
-	            for (var i = 0; i < groups.length; i++) {
-	                groups[i] = -1;
-	            }
+	        	clearGroups();
 	            return false;
 	        }
 			newFrom = last;
@@ -192,13 +191,13 @@ class org.as2lib.regexp.Matcher extends BasicClass {
         first  	= from;
         last   	= -1;
         oldLast = oldLast < 0 ? from : oldLast;
-        for (var i = 0; i < groups.length; i++) {
-        	groups[i] = -1;
-        }
+        clearGroups();
         acceptMode = NOANCHOR;
 
         var result:Boolean = parentPattern["root"].match(this, from, text);
-        if (!result) first = -1;
+        if (!result) {
+        	first = -1;
+        }
         oldLast = last;
         return result;
     }
@@ -222,12 +221,12 @@ class org.as2lib.regexp.Matcher extends BasicClass {
 
         while (cursor < replacement.length) {
             var nextChar:Number = replacement.charCodeAt(cursor);
-            if (nextChar == 0x5C) { // check for "\"
+            if (nextChar == AsciiUtil.CHAR_BSOL) {
                 cursor++;
                 nextChar = replacement.charCodeAt(cursor);
                 result += chr(nextChar);
                 cursor++;
-            } else if (nextChar == 0x24) { // check for "$"
+            } else if (nextChar == AsciiUtil.CHAR_DOLLAR) { 
                 // Skip past $
                 cursor++;
 
@@ -298,7 +297,9 @@ class org.as2lib.regexp.Matcher extends BasicClass {
     public function replaceFirst(replacement:String):String {
         var temp:String = new String();
         reset();
-        if (find()) appendReplacement(temp, replacement);
+        if (find()) {
+        	appendReplacement(temp, replacement);
+        }
         appendTail(temp);
         return temp;
     }
@@ -309,13 +310,13 @@ class org.as2lib.regexp.Matcher extends BasicClass {
         first 	= from;
         last 	= -1;
         oldLast = oldLast < 0 ? from : oldLast;
-        for (var i = 0; i < groups.length; i++) {
-            groups[i] = -1;
-        }
+        clearGroups();
         acceptMode = anchor;
 
         var result:Boolean = parentPattern["matchRoot"].match(this, from, text);
-        if (!result) first = -1;
+        if (!result) {
+        	first = -1;
+        }
         oldLast = last;
         return result;
     }
@@ -328,4 +329,15 @@ class org.as2lib.regexp.Matcher extends BasicClass {
         return text.substring(beginIndex, endIndex);
     }
 
+	private function clearGroups(Void):Void {
+        for (var i = 0; i < groups.length; i++) {
+            groups[i] = -1;
+        }
+	}
+
+	private function clearLocals(Void):Void {
+        for (var i = 0; i < locals.length; i++) {
+            locals[i] = -1;
+        }
+	}	
 }

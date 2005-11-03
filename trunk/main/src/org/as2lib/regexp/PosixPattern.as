@@ -346,8 +346,8 @@ class org.as2lib.regexp.PosixPattern extends Pattern {
             readChar();
         } else {
             var i:Number = cursor;
-            markChar(0x7D);
-            while(readChar() != 0x7D) {
+            markChar(AsciiUtil.CHAR_RCUB);
+            while(readChar() != AsciiUtil.CHAR_RCUB) {
             	// stuff
             }
             markChar(0);
@@ -380,8 +380,9 @@ class org.as2lib.regexp.PosixPattern extends Pattern {
             }
         }
         var n:Node = Node(families.get(name));
-        if (n != null) return n;
-
+        if (n != null) {
+        	return n;
+        }
         throwFamilyError(name, "Unknown character family", arguments);
     }	
 	
@@ -394,15 +395,16 @@ class org.as2lib.regexp.PosixPattern extends Pattern {
             }
         }
         var n:Node = Node(categories.get(name));
-        if (n != null) return n;
-
+        if (n != null) {
+        	return n;
+        }
         throwFamilyError(name, "Unknown character category", arguments);
     }
 
     private function throwFamilyError(name:String, type:String, args:FunctionArguments):Void {
-        throwError(type + " " + chr(0x7B) + name + chr(0x7D), args);
+        throwError(type + " {" + name + "}", args);
     }
-	
+
 	public function PosixPattern(newPattern:String, newFlags:Number) {
 		super(newPattern, newFlags);
 	}

@@ -50,8 +50,9 @@ class org.as2lib.regexp.node.Loop extends Node {
                 var b:Boolean = body.match(matcher, i, seq);
                 // If match failed we must backtrack, so
                 // the loop count should NOT be incremented
-                if (!b)
+                if (!b) {
                     matcher.locals[countIndex] = count;
+                }
                 // Return success or failure since we are under
                 // minimum
                 return b;
@@ -63,10 +64,11 @@ class org.as2lib.regexp.node.Loop extends Node {
                 var b:Boolean = body.match(matcher, i, seq);
                 // If match failed we must backtrack, so
                 // the loop count should NOT be incremented
-                if (!b)
+                if (!b) {
                     matcher.locals[countIndex] = count;
-                else
+                } else {
                     return true;
+                }
             }
         }
         return next.match(matcher, i, seq);
@@ -81,8 +83,9 @@ class org.as2lib.regexp.node.Loop extends Node {
         } else if (0 < cmax) {
             matcher.locals[countIndex] = 1;
             ret = body.match(matcher, i, seq);
-            if (ret == false)
+            if (ret == false) {
                 ret = next.match(matcher, i, seq);
+            }
         } else {
             ret = next.match(matcher, i, seq);
         }

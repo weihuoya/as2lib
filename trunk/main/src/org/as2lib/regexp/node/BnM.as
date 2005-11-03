@@ -132,7 +132,9 @@ class org.as2lib.regexp.node.BnM extends Node {
                     break;
                 }
             }
-            if (f) continue;
+            if (f) {
+            	continue;
+            }
             // Entire pattern matched starting at i
             matcher.first = i;
             var ret:Boolean = next.match(matcher, i + patternLength, seq);
