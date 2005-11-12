@@ -34,9 +34,8 @@ class org.as2lib.util.MethodUtil extends BasicClass {
 		var m:Function = scope[methodName];
 		if (m) {
 			if (scope.__proto__[methodName] == scope.__proto__.__proto__[methodName]) {
-				var s = scope.__proto__.__proto__;
-				while (s[methodName] == s.__proto__[methodName]
-						&& s.__proto__[methodName] == s.__proto__.__proto__[methodName]) {
+				var s = scope.__proto__;
+				while (s.__proto__[methodName] == s.__proto__.__proto__[methodName]) {
 					s = s.__proto__;
 				}
 				s.__as2lib__invoker = function() {
