@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -23,7 +23,7 @@ import org.log4f.logging.IPublisher;
 import org.log4f.logging.util.List;
 
 /**
- * {@code Log4fLogger} acts as a wrapper for a {@code org.log4f.logging.logger}
+ * {@code Log4fLogger} acts as a wrapper for a {@code org.log4f.logging.Logger}
  * instance of the Log4F Framework from Peter Armstrong.
  * 
  * <p>Log4F (http://sourceforge.net/projects/log4f), by Peter Armstrong, is a
