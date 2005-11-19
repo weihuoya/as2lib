@@ -46,4 +46,18 @@ interface org.as2lib.data.holder.Properties extends BasicInterface {
 	 */
 	public function setProperty(key:String, value:String):Void;
 	
+	/**
+	 * Returns the keys of all set properties. These keys are of type {@code String}.
+	 * 
+	 * @return the keys of all set properties
+	 */
+	public function getKeys(Void):Array;
+	
+	/**
+	 * Returns the values of all set properties. These values are of type {@code String}.
+	 * 
+	 * @return the values of all set properties
+	 */
+	public function getValues(Void):Array;
+	
 }

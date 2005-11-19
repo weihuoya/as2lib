@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -28,8 +28,14 @@ import org.as2lib.util.StringUtil;
  */
 class org.as2lib.data.holder.properties.SimpleProperties extends BasicClass implements Properties {
 	
-	/** All properties. */
-	private var l:Array;
+	/** Indeces of all keys and values by key. */
+	private var i:Object;
+	
+	/** All keys by index. */
+	private var k:Array;
+	
+	/** All values by index. */
+	private var v:Array;
 	
 	/** The characters that have to be escaped. */
 	private static var escapeMap:Array =
@@ -39,7 +45,9 @@ class org.as2lib.data.holder.properties.SimpleProperties extends BasicClass impl
 	 * Constructs a new {@code SimpleProperties} instance.
 	 */
 	public function SimpleProperties(Void) {
-		l = new Array();
+		i = new Object();
+		k = new Array();
+		v = new Array();
 	}
 	
 	/**
@@ -53,7 +61,7 @@ class org.as2lib.data.holder.properties.SimpleProperties extends BasicClass impl
 	 * @return the value mapped to the given {@code key} or the given {@code defaultValue}
 	 */
 	public function getProperty(key:String, defaultValue:String):String {
-		var value:String = l[key];
+		var value:String = v[i[key]];
 		if (value == null) {
 			if (defaultValue != null) {
 				return StringUtil.escape(defaultValue, escapeMap, false);
@@ -71,7 +79,35 @@ class org.as2lib.data.holder.properties.SimpleProperties extends BasicClass impl
 	 * @param value the value to map to the {@code key}
 	 */
 	public function setProperty(key:String, value:String):Void {
-		l[StringUtil.escape(key)] = StringUtil.escape(value, escapeMap, false);
+		key = StringUtil.escape(key);
+		value = StringUtil.escape(value, escapeMap, false);
+		i[key] = k.length;
+		k.push(key);
+		v.push(value);
+	}
+	
+	/**
+	 * Returns the keys of all set properties. These keys are of type {@code String}.
+	 * 
+	 * <p>The order of the returned keys is the same in which the properties were set.
+	 * At position 0 is the key of the first property and so on.
+	 * 
+	 * @return the keys of all set properties
+	 */
+	public function getKeys(Void):Array {
+		return k.concat();
+	}
+	
+	/**
+	 * Returns the values of all set properties. These values are of type {@code String}.
+	 * 
+	 * <p>The order of the returned values is the same in which the properties were set.
+	 * At position 0 is the value of the first property and so on.
+	 * 
+	 * @return the values of all set properties
+	 */
+	public function getValues(Void):Array {
+		return v.concat();
 	}
 	
 }

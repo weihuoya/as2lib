@@ -6,6 +6,10 @@
   <release name="as2lib 0.9.4" day="14" month="11" year="2005">
     <year value="2005">
       <month value="11">
+        <day value="19">
+          <entry type="add" package="org.as2lib.data.holder" class="Properties" method="getValues"></entry>
+          <entry type="add" package="org.as2lib.data.holder" class="Properties" method="getKeys"></entry>
+        </day>
         <day value="12">
           <entry type="bugfix" package="org.as2lib.util" class="MethodUtil" method="invoke">Fixed serious bug that made 'super' work incorrectly.</entry>
         </day>
