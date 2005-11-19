@@ -35,6 +35,10 @@ class org.as2lib.env.log.parser.SpecialLoggerStub {
 		testCase["assertSame"]("SpecialLoggerStub.verify: unexpected name count", nameCount, 1);
 		testCase["assertSame"]("SpecialLoggerStub.verify: unexpected handler count", handlerCount, 3);
 		testCase["assertSame"]("SpecialLoggerStub.verify: unexpected level count", levelCount, 1);
+		count = 0;
+		handlerCount = 0;
+		nameCount = 0;
+		levelCount = 0;
 	}
 	
 	public function SpecialLoggerStub(Void) {
@@ -61,7 +65,7 @@ class org.as2lib.env.log.parser.SpecialLoggerStub {
 			if (handlerCount <= 3) {
 				testCase["assertTrue"]("SpecialLoggerStub.addHandler: wrong handler class", handler instanceof HandlerStub);
 			} else {
-				testCase["fail"]("SpecialLoggerStub.addHandler: unexpected call; too much handlers");
+				testCase["fail"]("SpecialLoggerStub.addHandler: unexpected call; too many handlers");
 			}
 		} else {
 			testCase["fail"]("SpecialLoggerStub.addHandler: unexpected call");

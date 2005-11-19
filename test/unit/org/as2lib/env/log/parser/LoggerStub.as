@@ -39,6 +39,12 @@ class org.as2lib.env.log.parser.LoggerStub {
 		testCase["assertSame"]("LoggerStub.verify: unexpected boolean count", booleanCount, 1);
 		testCase["assertSame"]("LoggerStub.verify: unexpected string count", stringCount, 1);
 		testCase["assertSame"]("LoggerStub.verify: unexpected handler count", handlerCount, 1);
+		count = 0;
+		nameCount = 0;
+		numberCount = 0;
+		stringCount = 0;
+		booleanCount = 0;
+		handlerCount = 0;
 	}
 	
 	public function LoggerStub() {
