@@ -114,10 +114,11 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 	 */
 	public function PropertiesLogConfigurationParser(logManager) {
 		if (logManager) {
-			this.manager = logManager;
+			manager = logManager;
 		} else {
-			this.manager = LogManager;
+			manager = LogManager;
 		}
+		properties = new Array();
 	}
 	
 	/**
@@ -159,6 +160,30 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 				}
 				properties[extractPropertyPath(key)].a.push(key);
 			}
+			if (classes.length > 0) {
+				if (extractPropertyName(key) != "constructor-arg") {
+					var valueObject = properties[classes.pop()];
+					var instance = new Object();
+					instance.__proto__ = valueObject.v.prototype;
+					instance.__constructor__ = valueObject.v;
+					var arguments:Array = new Array();
+					for (var k:Number = 0; k < valueObject.a.length; k++) {
+						arguments.push(properties[valueObject.a[k]].v);
+					}
+					valueObject.v.apply(instance, arguments);
+					valueObject.v = instance;
+					valueObject.a = null;
+				}
+			}
+			for (var j:Number = properties.length - 1; j >= 0; j--) {
+				if (isConstructorArgument(properties[j])) {
+					properties.pop();
+					continue;
+				}
+				if (key.indexOf(properties[j]) == -1) {
+					addOrSetProperty(properties.pop().toString());
+				}
+			}
 			if (value.indexOf("+") == 0) {
 				var className:String = value.substr(1);
 				var clazz:Function = findClass(className);
@@ -169,28 +194,30 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 				properties.push(key);
 				classes.push(key);
 			} else {
-				if (classes.length > 0) {
-					if (extractPropertyName(key) != "constructor-arg") {
-						var valueObject = properties[classes.pop()];
-						var instance = new Object();
-						instance.__proto__ = valueObject.v.prototype;
-						valueObject.v.apply(instance, valueObject.a);
-						valueObject.v = instance;
-						valueObject.a = null;
-					}
-				}
-				for (var j:Number = properties.length - 1; j >= 0; j--) {
-					if (key.indexOf(properties[j]) == -1) {
-						addOrSetProperty(properties[j]);
-					}
-				}
 				var convertedValue = convertValue(value);
 				properties[key] = {v: convertedValue};
 				properties.push(key);
 			}
 		}
+		if (classes.length > 0) {
+			var valueObject = properties[classes.pop()];
+			var instance = new Object();
+			instance.__proto__ = valueObject.v.prototype;
+			instance.__constructor__ = valueObject.v;
+			var arguments:Array = new Array();
+			for (var k:Number = 0; k < valueObject.a.length; k++) {
+				arguments.push(properties[valueObject.a[k]].v);
+			}
+			valueObject.v.apply(instance, arguments);
+			valueObject.v = instance;
+			valueObject.a = null;
+		}
 		for (var j:Number = properties.length - 1; j >= 0; j--) {
-			addOrSetProperty(properties[j]);
+			if (isConstructorArgument(properties[j])) {
+				properties.pop();
+				continue;
+			}
+			addOrSetProperty(properties.pop().toString());
 		}
 	}
 	
@@ -239,7 +266,9 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 	 * @return the path of the property
 	 */
 	private function extractPropertyPath(key:String):String {
-		return key.substr(0, key.lastIndexOf("."));
+		var dotIndex:Number = key.lastIndexOf(".");
+		if (dotIndex == -1) return null;
+		return key.substr(0, dotIndex);
 	}
 	
 	/**
@@ -269,7 +298,7 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 	 */
 	private function convertValue(value:String) {
 		if (value.indexOf("-") == 0) {
-			return AbstractLogLevel.forName(value);
+			return AbstractLogLevel.forName(value.substr(1));
 		}
 		return super.convertValue(value);
 	}
