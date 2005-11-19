@@ -31,6 +31,8 @@ class org.as2lib.env.log.parser.RepositoryStub {
 	public static function verify(Void):Void {
 		testCase["assertSame"]("RepositoryStub.verify: unexpected instantiation count", count, 1);
 		testCase["assertSame"]("RepositoryStub.verify: unexpected name count", loggerCount, 2);
+		count = 0;
+		loggerCount = 0;
 	}
 	
 	public function RepositoryStub(Void) {

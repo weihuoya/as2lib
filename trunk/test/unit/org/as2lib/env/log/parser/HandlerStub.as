@@ -30,6 +30,8 @@ class org.as2lib.env.log.parser.HandlerStub {
 	public static function verify(Void):Void {
 		testCase["assertSame"]("HandlerStub.verify: unexpected instantiation count", count, 4);
 		testCase["assertSame"]("HandlerStub.verify: unexpected level count", levelCount, 3);
+		count = 0;
+		levelCount = 0;
 	}
 	
 	public function HandlerStub() {
@@ -49,15 +51,15 @@ class org.as2lib.env.log.parser.HandlerStub {
 	public function setLevel(level:LogLevel):Void {
 		levelCount++;
 		if (count == 1) {
-			testCase["assertSame"]("1. level should be ERROR", level, AbstractLogLevel.ERROR);
+			testCase["assertSame"]("HandlerStub.setLevel: 1. level should be ERROR", level, AbstractLogLevel.ERROR);
 			return;
 		}
 		if (count == 2) {
-			testCase["assertSame"]("2. level should be INFO", level, AbstractLogLevel.INFO);
+			testCase["assertSame"]("HandlerStub.setLevel: 2. level should be INFO", level, AbstractLogLevel.INFO);
 			return;
 		}
 		if (count == 3) {
-			testCase["assertSame"]("3. level should be WARNING", level, AbstractLogLevel.WARNING);
+			testCase["assertSame"]("HandlerStub.setLevel: 3. level should be WARNING", level, AbstractLogLevel.WARNING);
 			return;
 		}
 		testCase["fail"]("HandlerStub.setLevel: unexpected invocation");

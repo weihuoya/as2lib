@@ -26,6 +26,7 @@ class org.as2lib.env.log.parser.LevelStub {
 	
 	public static function verify(Void):Void {
 		testCase["assertSame"]("LevelStub.verify: unexpected instantiation count", count, 1);
+		count = 0;
 	}
 	
 	public function LevelStub(number:Number, string:String, boolean:Boolean) {

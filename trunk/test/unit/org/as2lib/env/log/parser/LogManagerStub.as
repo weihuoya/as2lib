@@ -54,6 +54,8 @@ class org.as2lib.env.log.parser.LogManagerStub {
 	public function verify(Void):Void {
 		testCase["assertTrue"]("LogManagerStub.verify: logger not set", rep);
 		testCase["assertTrue"]("LogManagerStub.verify: repository not set", log);
+		rep = undefined;
+		log = undefined;
 	}
 	
 }
