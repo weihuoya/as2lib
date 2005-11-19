@@ -162,17 +162,7 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 			}
 			if (classes.length > 0) {
 				if (extractPropertyName(key) != "constructor-arg") {
-					var valueObject = properties[classes.pop()];
-					var instance = new Object();
-					instance.__proto__ = valueObject.v.prototype;
-					instance.__constructor__ = valueObject.v;
-					var arguments:Array = new Array();
-					for (var k:Number = 0; k < valueObject.a.length; k++) {
-						arguments.push(properties[valueObject.a[k]].v);
-					}
-					valueObject.v.apply(instance, arguments);
-					valueObject.v = instance;
-					valueObject.a = null;
+					createInstance(classes.pop().toString());
 				}
 			}
 			for (var j:Number = properties.length - 1; j >= 0; j--) {
@@ -200,17 +190,7 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 			}
 		}
 		if (classes.length > 0) {
-			var valueObject = properties[classes.pop()];
-			var instance = new Object();
-			instance.__proto__ = valueObject.v.prototype;
-			instance.__constructor__ = valueObject.v;
-			var arguments:Array = new Array();
-			for (var k:Number = 0; k < valueObject.a.length; k++) {
-				arguments.push(properties[valueObject.a[k]].v);
-			}
-			valueObject.v.apply(instance, arguments);
-			valueObject.v = instance;
-			valueObject.a = null;
+			createInstance(classes.pop().toString());
 		}
 		for (var j:Number = properties.length - 1; j >= 0; j--) {
 			if (isConstructorArgument(properties[j])) {
@@ -219,6 +199,26 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 			}
 			addOrSetProperty(properties.pop().toString());
 		}
+	}
+	
+	/**
+	 * Creates the instance of the given {@code key}.
+	 * 
+	 * @param key the key that specifies the instance to create
+	 */
+	private function createInstance(key:String):Void {
+		var object = properties[key];
+		var clazz:Function = object.v;
+		var instance = new Object();
+		instance.__proto__ = clazz.prototype;
+		instance.__constructor__ = clazz;
+		var arguments:Array = new Array();
+		for (var i:Number = 0; i < object.a.length; i++) {
+			arguments.push(properties[object.a[i]].v);
+		}
+		clazz.apply(instance, arguments);
+		object.v = instance;
+		object.a = null;
 	}
 	
 	/**
@@ -233,6 +233,9 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 		var propertyPath:String = extractPropertyPath(key);
 		var bean = propertyPath == null ? manager : properties[propertyPath].v;
 		var propertyName:String = extractPropertyName(key);
+		if (bean == null) {
+			throw new LogConfigurationParseException("There is no property with key [" + propertyPath + "] to add or set the property [" + propertyName + "] on.", this, arguments);
+		}
 		var methodName = generateMethodName("add", propertyName);
 		if (!existsMethod(bean, methodName)) {
 			methodName = generateMethodName("set", propertyName);
