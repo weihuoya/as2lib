@@ -6,6 +6,12 @@
   <release name="as2lib 0.9.4" day="14" month="11" year="2005">
     <year value="2005">
       <month value="11">
+        <day value="21">
+          <entry type="add" package="static org.as2lib.env.reflect" class="Delegate" method="create">Overloads to the different create methods.</entry>
+          <entry type="change" package="static org.as2lib.env.reflect" class="Delegate" method="create"><change-rename to="createByMethod"/></entry>
+          <entry type="change" package="static org.as2lib.env.reflect" class="Delegate" method="createExtendedDelegate"><change-rename to="createByMethodAndArguments"/></entry>
+          <entry type="add" package="static org.as2lib.env.reflect" class="Delegate" method="createByName"></entry>
+        </day>
         <day value="19">
           <entry type="add" package="org.as2lib.env.log.parser" class="PropertiesLogConfigurationParser"></entry>
           <entry type="add" package="org.as2lib.data.holder" class="Properties" method="getValues"></entry>
