@@ -64,7 +64,7 @@ class org.as2lib.env.log.stringifier.SosMessageStringifier extends PatternLogMes
 				levelKey = SosHandler.FATAL_KEY;
 				break;
 			default :
-				levelKey = SosHandler.DEBUG_KEY; 
+				levelKey = SosHandler.DEBUG_KEY;
 		};
 		return ("<showMessage key='" + levelKey + "'>" + super.execute(target) + "</showMessage>\n");
 	}
