@@ -47,7 +47,7 @@ class org.as2lib.env.log.stringifier.SosMessageStringifier extends PatternLogMes
 		var message:LogMessage = target;
 		var level:LogLevel = message.getLevel();
 		var levelKey:String;
-		switch(level){
+		switch(level) {
 			case AbstractLogLevel.DEBUG:
 				levelKey = SosHandler.DEBUG_KEY;
 				break;
@@ -59,14 +59,14 @@ class org.as2lib.env.log.stringifier.SosMessageStringifier extends PatternLogMes
 				break;
 			case AbstractLogLevel.WARNING:
 				levelKey = SosHandler.WARNING_KEY;
-				break;		
+				break;
 			case AbstractLogLevel.FATAL:
 				levelKey = SosHandler.FATAL_KEY;
 				break;
 			default :
 				levelKey = SosHandler.DEBUG_KEY; 
 		};
-		return "<showMessage key='" + levelKey + "'>" + super.execute(target) + "</showMessage>\n";
+		return ("<showMessage key='" + levelKey + "'>" + super.execute(target) + "</showMessage>\n");
 	}
 	
 }
