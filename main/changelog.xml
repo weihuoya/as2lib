@@ -7,10 +7,12 @@
     <year value="2005">
       <month value="11">
       	<day value="24">
-      		<entry type="add" package="org.as2lib.env.log.handler" class="XmlSocketHandler" method="convertMessage">Overwrites parent method to add CDATA wrapping tag to the stringified message to avoid conflicts during message sending through XMLSocket</entry>
-      		<entry type="remove" package="org.as2lib.env.log.stringifier" class="SosMessageStringifier">Class was used for incorrect purposes</entry>
-      		<entry type="enhancement" package="org.as2lib.env.log.handler" class="SosHandler">Message wrapping to the SOS-specified XML tags are moved from the SosMessageStringifier class</entry>
-      		<entry type="add" package="org.as2lib.env.log.handler" class="SosHandler" method="getInstance">Returns the same instance of the SosHandler class</entry>
+      	  <entry type="add" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier">Added support for 'sourceMethodName'.</entry>
+      	  <entry type="add" package="org.as2lib.env.log.logger" class="SimpleHierarchicalLogger">Added support for second parameter 'sourceMethodName' for all log methods.</entry>
+      	  <entry type="add" package="org.as2lib.env.log.handler" class="XmlSocketHandler" method="convertMessage">Overwrites parent method to add CDATA wrapping tag to the stringified message to avoid conflicts during message sending through XMLSocket</entry>
+      	  <entry type="remove" package="org.as2lib.env.log.stringifier" class="SosMessageStringifier">Class was used for incorrect purposes</entry>
+      	  <entry type="enhancement" package="org.as2lib.env.log.handler" class="SosHandler">Message wrapping to the SOS-specified XML tags are moved from the SosMessageStringifier class</entry>
+      	  <entry type="add" package="org.as2lib.env.log.handler" class="SosHandler" method="getInstance">Returns the same instance of the SosHandler class</entry>
       	</day>
         <day value="21">
           <entry type="add" package="static org.as2lib.env.reflect" class="Delegate" method="create">Overloads to the different create methods.</entry>
