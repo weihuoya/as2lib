@@ -76,7 +76,7 @@ class org.as2lib.env.log.handler.SosHandler extends XmlSocketHandler {
 	 *
 	 * @param messageStringifier (optional) the log message stringifier to be used by
 	 * the returned handler
-	 * @return a fludge handler
+	 * @return a sos handler
 	 */
 	public static function getInstance(messageStringifier:Stringifier):SosHandler {
 		if (!sosHandler) sosHandler = new SosHandler(messageStringifier);
@@ -101,7 +101,7 @@ class org.as2lib.env.log.handler.SosHandler extends XmlSocketHandler {
 	}
 	
 	/**
-	 * rites the passed-in {@code message} to the SOS Console.
+	 * Writes the passed-in {@code message} to the SOS Console.
 	 *
 	 * <p>The string representation of the {@code message} to log is obtained via
 	 * the {@code convertMessage} method.
