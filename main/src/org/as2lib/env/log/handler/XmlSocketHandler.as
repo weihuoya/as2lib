@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -53,6 +53,20 @@ class org.as2lib.env.log.handler.XmlSocketHandler extends AbstractLogHandler imp
 		this.socket = new XMLSocket();
 		this.socket.connect(host, port);
 		this.messageStringifier = messageStringifier;
+	}
+	
+	/**
+	 * Converts the passed-in {@code message} into a string and wraps it using 
+	 * <![CDATA[ ... ]]> tag.
+	 * 
+	 * <p>Invokes parent {@code convertMessage} method to apply stringifier to 
+	 * passed-in {@code message} and wraps result with <![CDATA[ ... ]]> tag.
+	 * 
+	 * @param message the log message to convert
+	 * @return the string representation of the passed-in {@code message}
+	 */
+	private function convertMessage(message:LogMessage):String {
+		return ("<![CDATA[" + super.convertMessage(message) + "]]>");
 	}
 	
 	/**
