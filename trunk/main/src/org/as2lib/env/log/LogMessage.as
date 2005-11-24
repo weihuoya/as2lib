@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -52,6 +52,9 @@ class org.as2lib.env.log.LogMessage extends BasicClass {
 	/** The number of milliseconds elapsed from 1/1/1970 until log message was created. */
 	private var timeStamp:Number;
 	
+	/** The name of the source method of this message. */
+	private var sourceMethodName:String;
+	
 	/**
 	 * Returns either the stringifier set via {@link #setStringifier} or the default
 	 * one which is an instance of class {@link PatternLogMessageStringifier}.
@@ -86,8 +89,9 @@ class org.as2lib.env.log.LogMessage extends BasicClass {
 	 * @param loggerName the name of the logger that logs the {@code message}
 	 * @param timeStamp (optional) the number of milliseconds elapsed from 1/1/1970
 	 * until log this message was created
+	 * @param sourceMethodName the name of the source method of this message
 	 */
-	public function LogMessage(message, level:LogLevel, loggerName:String, timeStamp:Number) {
+	public function LogMessage(message, level:LogLevel, loggerName:String, timeStamp:Number, sourceMethodName:String) {
 		this.message = message;
 		this.level = level;
 		this.loggerName = loggerName;
@@ -131,6 +135,15 @@ class org.as2lib.env.log.LogMessage extends BasicClass {
 	 */
 	public function getTimeStamp(Void):Number {
 		return timeStamp;
+	}
+	
+	/**
+	 * Returns the name of the source method of this message.
+	 * 
+	 * @param the name of the source method of this message
+	 */
+	public function getSourceMethodName(Void):String {
+		return sourceMethodName;
 	}
 	
 	/**

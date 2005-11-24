@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -28,34 +28,39 @@ import org.as2lib.env.log.LogLevel;
  */
 class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicClass implements Stringifier {
 	
-	/** Determines whether to show the level in the string representation. */
+	/** Determines whether to show the level. */
 	private var showLevel:Boolean;
 	
-	/** Determines whether to show the name of the logger in the string representation. */
+	/** Determines whether to show the name of the logger. */
 	private var showLoggerName:Boolean;
 	
 	/** The time formatter to format the time stamp if desired. */
 	private var timeFormatter:DateFormatter;
 	
+	/** Determines whether to show the source method name. */
+	private var showSourceMethodName:Boolean;
+	
 	/**
 	 * Constructs a new {@code PatternLogMessageStringifier} instance.
 	 *
-	 * <p>Level and logger name are shown by default.
-	 *
+	 * <p>Level, logger name and source method name are shown by default.
+	 * 
 	 * <p>If {@code timeFormat} is not passed-in or is {@code null} the date-time is not
 	 * shown in the log message.
-	 *
+	 * 
 	 * @param showLevel determines whether to show levels in the string representation
 	 * @param shoLoggerName determines whether to show the logger name in the string
 	 * representation
 	 * @param timeFormat (optional) the time format pattern used to format the time
 	 * stamp
+	 * @param showSourceMethodName determines whether to show the source method name
 	 * @see org.as2lib.util.DateFormatter
 	 */
-	public function PatternLogMessageStringifier(showLevel:Boolean, showLoggerName:Boolean, timeFormat:String) {
+	public function PatternLogMessageStringifier(showLevel:Boolean, showLoggerName:Boolean, timeFormat:String, showSourceMethodName:Boolean) {
 		this.showLevel = showLevel == null ? true : showLevel;
 		this.showLoggerName = showLoggerName == null ? true : showLoggerName;
 		if (timeFormat != null) this.timeFormatter = new DateFormatter(timeFormat);
+		this.showSourceMethodName = showSourceMethodName == null ? true : showSourceMethodName;
 	}
 	
 	/**
@@ -63,7 +68,7 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 	 *
 	 * <p>The returned string is composed as follows:
 	 * <pre>
-	 *   theTime  theLogLevel  theLoggerName - theMessage
+	 *   theTime  theLogLevel  theLoggerName.theSourceMethodName - theMessage
 	 * </pre>
 	 *
 	 * <p>Depending on your custom settings, which information to show and which not, a
@@ -78,21 +83,37 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 		if (timeFormatter) {
 			var timeStamp:Number = message.getTimeStamp();
 			if (timeStamp != null) {
-				info += timeFormatter.format(new Date(timeStamp)) + "  ";
+				info += timeFormatter.format(new Date(timeStamp));
 			}
 		}
 		if (showLevel) {
 			var level:LogLevel = message.getLevel();
 			if (level) {
-				info += level.toString() + "  ";
+				if (info != "") info += "  ";
+				info += level.toString();
 			}
 		}
 		if (showLoggerName) {
 			var name:String = message.getLoggerName();
 			if (name != null) {
-				info += name + " - ";
+				if (info != "") info += "  ";
+				info += name;
 			}
 		}
+		if (showSourceMethodName) {
+			var name:String = message.getSourceMethodName();
+			if (name != null) {
+				if (info != "") {
+					if (showLoggerName && message.getLoggerName() != null) {
+						info += ".";
+					} else {
+						info += "  ";
+					}
+				}
+				info += name;
+			}
+		}
+		if (info != "") info += " - ";
 		return (info + message.getMessage());
 	}
 	

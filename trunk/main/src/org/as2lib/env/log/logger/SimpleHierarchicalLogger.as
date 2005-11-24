@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -379,12 +379,13 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 *
 	 * @param message the message object to log
 	 * @param level the specific level at which the {@code message} shall be logged
+	 * @param sourceMethodName the name of the source method
 	 * @see #isEnabled
 	 */
-	public function log(message, level:LogLevel):Void {
+	public function log(message, level:LogLevel, sourceMethodName:String):Void {
 		if (isEnabled(level)) {
 			if (!addedParentHandlers) addParentHandlers();
-			distributor.write(new LogMessage(message, level, name));
+			distributor.write(new LogMessage(message, level, name, null, sourceMethodName));
 		}
 	}
 	
@@ -403,10 +404,11 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 * message is logged. They are stored in this logger to reference them faster.
 	 *
 	 * @param message the message object to log
+	 * @param sourceMethodName the name of the source method
 	 * @see #isDebugEnabled
 	 */
 	public function debug(message):Void {
-		log(message, debugLevel);
+		log(message, debugLevel, arguments[1]);
 	}
 	
 	/**
@@ -424,10 +426,11 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 * message is logged. They are stored in this logger to reference them faster.
 	 *
 	 * @param message the message object to log
+	 * @param sourceMethodName the name of the source method
 	 * @see #isInfoEnabled
 	 */
 	public function info(message):Void {
-		log(message, infoLevel);
+		log(message, infoLevel, arguments[1]);
 	}
 	
 	/**
@@ -445,10 +448,11 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 * message is logged. They are stored in this logger to reference them faster.
 	 *
 	 * @param message the message object to log
+	 * @param sourceMethodName the name of the source method
 	 * @see #isWarningEnabled
 	 */
 	public function warning(message):Void {
-		log(message, warningLevel);
+		log(message, warningLevel, arguments[1]);
 	}
 	
 	/**
@@ -466,10 +470,11 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 * message is logged. They are stored in this logger to reference them faster.
 	 *
 	 * @param message the message object to log
+	 * @param sourceMethodName the name of the source method
 	 * @see #isErrorEnabled
 	 */
 	public function error(message):Void {
-		log(message, errorLevel);
+		log(message, errorLevel, arguments[1]);
 	}
 	
 	/**
@@ -487,10 +492,11 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	 * message is logged. They are stored in this logger to reference them faster.
 	 *
 	 * @param message the message object to log
+	 * @param sourceMethodName the name of the source method
 	 * @see #isFatalEnabled
 	 */
 	public function fatal(message):Void {
-		log(message, fatalLevel);
+		log(message, fatalLevel, arguments[1]);
 	}
 	
 }
