@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -15,8 +15,11 @@
  */
 
 import org.as2lib.env.log.handler.XmlSocketHandler;
+import org.as2lib.env.log.level.AbstractLogLevel;
+import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.stringifier.SimpleLogMessageStringifier;
 import org.as2lib.util.Stringifier;
-import org.as2lib.env.log.stringifier.SosMessageStringifier;
 
 /**
  * {@code SosHandler} uses the {@code XMLSocket} to log the message to
@@ -29,6 +32,9 @@ import org.as2lib.env.log.stringifier.SosMessageStringifier;
  * @see <a href="http://sos.powerflasher.com">SOS - SocketOutputServer</a>
  */
 class org.as2lib.env.log.handler.SosHandler extends XmlSocketHandler {
+	
+	/** Holds a sos handler. */
+	private static var sosHandler:SosHandler;
 	
 	/** Color of debug messages. */
 	private static var DEBUG:Number = 0xFFFFFF;
@@ -61,6 +67,23 @@ class org.as2lib.env.log.handler.SosHandler extends XmlSocketHandler {
 	public static var FATAL_KEY:String = "FATAL";
 	
 	/**
+	 * Returns an instance of this class.
+	 *
+	 * <p>This method always returns the same instance.
+	 *
+	 * <p>The {@code messageStringifier} argument is only recognized on first
+	 * invocation of this method.
+	 *
+	 * @param messageStringifier (optional) the log message stringifier to be used by
+	 * the returned handler
+	 * @return a fludge handler
+	 */
+	public static function getInstance(messageStringifier:Stringifier):SosHandler {
+		if (!sosHandler) sosHandler = new SosHandler(messageStringifier);
+		return sosHandler;
+	}	
+	
+	/**
 	 * Constructs a new {@code SosHandler} instance.
 	 * 
 	 * <p>If {@code messageStringifier} is not specified an instance of class
@@ -69,12 +92,46 @@ class org.as2lib.env.log.handler.SosHandler extends XmlSocketHandler {
 	 * @param messageStringifier (optional) the log message stringifier to use
 	 */
 	public function SosHandler(messageStringifier:Stringifier) {
-		super("localhost", 4445, (!messageStringifier ? new SosMessageStringifier() : messageStringifier));
+		super("localhost", 4445, (!messageStringifier ? new SimpleLogMessageStringifier() : messageStringifier));
 		socket.send("<setKey><name>" + DEBUG_KEY + "</name><color>" + DEBUG + "</color></setKey>");
 		socket.send("<setKey><name>" + INFO_KEY + "</name><color>" + INFO + "</color></setKey>");
 		socket.send("<setKey><name>" + WARNING_KEY + "</name><color>" + WARNING + "</color></setKey>");
 		socket.send("<setKey><name>" + ERROR_KEY + "</name><color>" + ERROR + "</color></setKey>");
 		socket.send("<setKey><name>" + FATAL_KEY + "</name><color>" + FATAL + "</color></setKey>");
 	}
+	
+	/**
+	 * rites the passed-in {@code message} to the SOS Console.
+	 *
+	 * <p>The string representation of the {@code message} to log is obtained via
+	 * the {@code convertMessage} method.
+	 *
+	 * @param message the message to log
+	 */
+	public function write(message:LogMessage):Void {
+		var level:LogLevel = message.getLevel();
+		var levelKey:String;
+		switch(level) {
+			case AbstractLogLevel.DEBUG:
+				levelKey = SosHandler.DEBUG_KEY;
+				break;
+			case AbstractLogLevel.ERROR:
+				levelKey = SosHandler.ERROR_KEY;
+				break;
+			case AbstractLogLevel.INFO:
+				levelKey = SosHandler.INFO_KEY;
+				break;
+			case AbstractLogLevel.WARNING:
+				levelKey = SosHandler.WARNING_KEY;
+				break;
+			case AbstractLogLevel.FATAL:
+				levelKey = SosHandler.FATAL_KEY;
+				break;
+			default :
+				levelKey = SosHandler.DEBUG_KEY;
+		};
+		socket.send("<showMessage key='" + levelKey + "'>" + convertMessage(message) + "</showMessage>\n");
+	}
+	
 	
 }
