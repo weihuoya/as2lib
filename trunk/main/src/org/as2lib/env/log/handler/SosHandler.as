@@ -18,7 +18,6 @@ import org.as2lib.env.log.handler.XmlSocketHandler;
 import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogMessage;
-import org.as2lib.env.log.stringifier.SimpleLogMessageStringifier;
 import org.as2lib.util.Stringifier;
 
 /**
@@ -87,12 +86,12 @@ class org.as2lib.env.log.handler.SosHandler extends XmlSocketHandler {
 	 * Constructs a new {@code SosHandler} instance.
 	 * 
 	 * <p>If {@code messageStringifier} is not specified an instance of class
-	 * {@link SosMessageStringifier} will be used.
+	 * {@link SimpleLogMessageStringifier} will be used.
 	 * 
 	 * @param messageStringifier (optional) the log message stringifier to use
 	 */
 	public function SosHandler(messageStringifier:Stringifier) {
-		super("localhost", 4445, (!messageStringifier ? new SimpleLogMessageStringifier() : messageStringifier));
+		super("localhost", 4445, messageStringifier);
 		socket.send("<setKey><name>" + DEBUG_KEY + "</name><color>" + DEBUG + "</color></setKey>");
 		socket.send("<setKey><name>" + INFO_KEY + "</name><color>" + INFO + "</color></setKey>");
 		socket.send("<setKey><name>" + WARNING_KEY + "</name><color>" + WARNING + "</color></setKey>");
@@ -133,5 +132,18 @@ class org.as2lib.env.log.handler.SosHandler extends XmlSocketHandler {
 		socket.send("<showMessage key='" + levelKey + "'>" + convertMessage(message) + "</showMessage>\n");
 	}
 	
+	/**
+	 * Converts the passed-in {@code message} into a string and wraps it using 
+	 * <![CDATA[ ... ]]> tag.
+	 * 
+	 * <p>Invokes parent {@code convertMessage} method to apply stringifier to 
+	 * passed-in {@code message} and wraps result with <![CDATA[ ... ]]> tag.
+	 * 
+	 * @param message the log message to convert
+	 * @return the string representation of the passed-in {@code message}
+	 */
+	private function convertMessage(message:LogMessage):String {
+		return ("<![CDATA[" + super.convertMessage(message) + "]]>");
+	}
 	
 }
