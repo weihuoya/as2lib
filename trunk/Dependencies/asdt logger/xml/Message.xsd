@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2005 rel. 3 U bearbeitet (http://www.altova.com) von Sascha Wolter (Press) -->
+<!-- Mit XMLSpy v2005 rel. 3 U bearbeitet (http://www.altova.com) von Sascha Wolter (www.saschawolter.de) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="Message">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="message" type="xs:string" use="required"/>
+			<xs:attribute name="timestamp" type="xs:integer" use="optional"/>
+			<xs:attribute name="line" type="xs:integer" use="optional"/>
+			<xs:attribute name="className" type="xs:string" use="optional"/>
+			<xs:attribute name="level" type="xs:byte" use="optional"/>
+			<xs:attribute name="fileName" type="xs:anyURI" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
