@@ -6,6 +6,9 @@
   <release name="as2lib 0.9.4" day="14" month="11" year="2005">
     <year value="2005">
       <month value="11">
+      	<day value="29">
+      	  <entry type="add" package="org.as2lib.env.log.handler" class="AsdtHandler">Log handler for ASDT Eclipse plugin logger console is added</entry>
+      	</day>
       	<day value="28">
       	  <entry type="remove" package="org.as2lib.env.log.handler" class="XmlSocketHandler" method="convertMessage">Moved to the SosHandler class</entry>
       	  <entry type="add" package="org.as2lib.env.log.handler" class="SosHandler" method="convertMessage">Overwrites parent method to add CDATA wrapping tag to the stringified message to avoid conflicts during message sending through XMLSocket to SOS Console</entry>
