@@ -1,4 +1,4 @@
-﻿﻿/*
+﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -26,27 +26,27 @@ import org.as2lib.aop.advice.AroundAdvice;
  * @author Simon Wacker
  */
 class org.as2lib.aop.advice.AbstractAroundAdvice extends AbstractAdvice {
-	
-	/**
-	 * Constructs a new {@code AbstractAroundAdvice} instance.
-	 * 
-	 * @param aspect (optional) the aspect that contains this advice
-	 */
-	private function AbstractAroundAdvice(aspect:Aspect) {
-		super(aspect);
-	}
-	
-	/**
-	 * Executes this advice's {@code execute} method, passing the given
-	 * {@code joinPoint} and arguments.
-	 * 
-	 * @param joinPoint the reached join point
-	 * @return the result of the execution of this advice's {@code execute} method
-	 * @throws * if the execution of tis adivce's {@code execute} method results in an
-	 * exception
-	 */
-	private function executeJoinPoint(joinPoint:JoinPoint) {
-		return AroundAdvice(this).execute(joinPoint, joinPoint.getArguments());
-	}
-	
+    
+    /**
+     * Constructs a new {@code AbstractAroundAdvice} instance.
+     * 
+     * @param aspect (optional) the aspect that contains this advice
+     */
+    private function AbstractAroundAdvice(aspect:Aspect) {
+        super(aspect);
+    }
+    
+    /**
+     * Executes this advice's {@code execute} method, passing the given
+     * {@code joinPoint} and arguments.
+     * 
+     * @param joinPoint the reached join point
+     * @return the result of the execution of this advice's {@code execute} method
+     * @throws * if the execution of tis adivce's {@code execute} method results in an
+     * exception
+     */
+    private function executeJoinPoint(joinPoint:JoinPoint) {
+        return AroundAdvice(this).execute(joinPoint, joinPoint.getArguments());
+    }
+    
 }
