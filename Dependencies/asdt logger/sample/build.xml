@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding="utf-8"?>
+<project name="buildSampleLogger" default="deploy" basedir=".">
+	<description>
+        simple example build file
+	</description>
+
+	<!-- set global properties for this build -->
+	
+	<property name="swfmill" value="C:/Programme/swfmill/swfmill.exe"/>
+	<property name="mtasc" value="D:/download/flash_tools/mtasc/mtasc.exe"/>
+	<property name="asdt.logger.classes" value="${basedir}/../flash_classes" />
+	<property name="core" location="D:\openDir\mtasc\std\std"/>
+
+	<property name="src" location="."/>
+	<property name="deploy" location="."/>
+	
+	<property name="main"  value="Sample.as"/>
+	<property name="trace"  value="Log.addMessage"/>
+
+	<target name="deploy" description="compile Sample Logger" >
+		<!-- compile ActionScript code to a swf file -->
+		<echo message="Compile bytecode to a swf file" />		
+		<exec dir="${basedir}" failonerror="true" executable="cmd.exe" os="Windows 2000, Windows XP" >
+		 	<arg line='/c ${mtasc} -swf "${deploy}\sample.swf" -header 800:600:21 -cp "${src}" -cp "${core}" -main "${main}" -strict -separate -cp "${asdt.logger.classes}" -trace "${trace}" -v' />
+		</exec>
+	</target>
+	
+  <target name="clean" description="clean Sample Logger" >
+    <!-- Delete the ${deploy} directory trees -->
+    <delete file="sample.swf" />
+  </target>
+	
+</project>
