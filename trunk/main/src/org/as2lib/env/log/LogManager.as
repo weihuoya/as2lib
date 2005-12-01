@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -179,10 +179,11 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 	 * @param logger the logger to return on calls to the {@code #getLogger} method
 	 */
 	public static function setLogger(logger:Logger):Void {
-		repository = getBlankLoggerRepository();
-		repository.getLogger = function(loggerName:String):Logger {
+		var loggerRepository:LoggerRepository = getBlankLoggerRepository();
+		loggerRepository.getLogger = function(loggerName:String):Logger {
 			return logger;
 		};
+		setLoggerRepository(loggerRepository);
 	}
 	
 	/**
