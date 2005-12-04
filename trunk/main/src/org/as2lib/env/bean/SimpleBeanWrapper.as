@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.util.StringUtil;
+import org.as2lib.util.TextUtil;
 import org.as2lib.util.ClassUtil;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
@@ -192,7 +192,7 @@ class org.as2lib.env.bean.SimpleBeanWrapper extends AbstractBeanWrapper implemen
 		if (propertyName.indexOf(METHOD_PREFIX) == 0) {
 			return propertyName.substring(METHOD_PREFIX.length);
 		}
-		return StringUtil.ucFirst(propertyName);
+		return TextUtil.ucFirst(propertyName);
 	}
 	
 	private function transformPropertyValue(propertyValue:PropertyValue) {
