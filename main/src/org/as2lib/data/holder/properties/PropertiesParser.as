@@ -18,7 +18,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.properties.SimpleProperties;
 import org.as2lib.data.holder.Properties;
 import org.as2lib.data.type.MultilineString;
-import org.as2lib.util.StringUtil;
+import org.as2lib.util.TrimUtil;
 
 /**
  * {@code PropertiesParser} parses a properties source string into a {@link Properties}
@@ -75,7 +75,7 @@ class org.as2lib.data.holder.properties.PropertiesParser extends BasicClass {
 		for (i=0; i<c; i++) {
 			var line:String = lines.getLine(i);
 			// Trim the line
-			line = StringUtil.trim(line);
+			line = TrimUtil.trim(line);
 			// Ignore Comments
 			if ( line.indexOf("#") != 0 && line.indexOf("!") != 0 && line.length != 0) {
 				// Line break processing
@@ -85,20 +85,20 @@ class org.as2lib.data.holder.properties.PropertiesParser extends BasicClass {
 					useNextLine = false;
 				} else {
 					var sep:Number = getSeperation(line);
-					key = StringUtil.rightTrim(line.substr(0,sep));
+					key = TrimUtil.rightTrim(line.substr(0,sep));
 					value = line.substring(sep+1);
 					formerKey = key;
 					formerValue = value;
 				}
 				// Trim the content
-				value = StringUtil.leftTrim(value);
+				value = TrimUtil.leftTrim(value);
 				// Allow normal lines
 				if (value.charAt(value.length-1) == "\\") {
 					formerValue = value =  value.substr(0, value.length-1);
 					useNextLine = true;
 				} else {
 					// Commit Property
-					result.setProperty(key, value);
+					result.setProp(key, value);
 				}
 			}
 		}
