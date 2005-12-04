@@ -131,7 +131,7 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	 * 
 	 * @param n the number to round
 	 * @param c the number of decimal spaces
-	 * @returns the rounded number
+	 * @return the rounded number
 	 */
 	public static function round(n:Number, c:Number):Number {
 		var r:Number = Math.pow(10,c);
@@ -139,14 +139,29 @@ class org.as2lib.util.MathUtil extends BasicClass {
 	}
 	
 	/**
-	 * Floors the passed-in number {@code n}.
+	 * Ceils the passed-in number {@code n} to the next higher value.
+	 * 
+	 * <p>It works basically the same as the {@code Math.ceil} method, but it adds a
+	 * new argument to specify the number of decimal spaces.
+	 * 
+	 * @param n the number to ceil
+	 * @param c the number of decimal spaces
+	 * @return the ceiled number
+	 */
+	public static function ceil(n:Number, c:Number):Number {
+		var r:Number = Math.pow(10,c);
+		return Math.ceil(n*r)/r;
+	}
+	
+	/**
+	 * Floors the passed-in number {@code n} to the next lower value.
 	 * 
 	 * <p>It works basically the same as the {@code Math.floor} method, but it adds a
 	 * new argument to specify the number of decimal spaces.
 	 * 
-	 * @param n the number to round
+	 * @param n the number to floor
 	 * @param c the number of decimal spaces
-	 * @returns the rounded number
+	 * @return the floored number
 	 */
 	public static function floor(n:Number, c:Number):Number {
 		var r:Number = Math.pow(10,c);
