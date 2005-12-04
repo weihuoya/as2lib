@@ -57,13 +57,13 @@ class org.as2lib.data.holder.properties.SimpleProperties extends BasicClass impl
 	 * 
 	 * @param key the key to return the value for
 	 * @param defaultValue the default value to return if there is no value mapped to the
-	 * given {@code key}
+	 * 		  given {@code key}, "null" is accepted, "undefined" isn't accepted
 	 * @return the value mapped to the given {@code key} or the given {@code defaultValue}
 	 */
-	public function getProperty(key:String, defaultValue:String):String {
+	public function getProp(key:String, defaultValue:String):String {
 		var value:String = v[i[key]];
 		if (value == null) {
-			if (defaultValue != null) {
+			if (defaultValue !== undefined) {
 				return StringUtil.escape(defaultValue, escapeMap, false);
 			}
 			return key;
@@ -78,7 +78,7 @@ class org.as2lib.data.holder.properties.SimpleProperties extends BasicClass impl
 	 * @param key the key to map the {@code value} to
 	 * @param value the value to map to the {@code key}
 	 */
-	public function setProperty(key:String, value:String):Void {
+	public function setProp(key:String, value:String):Void {
 		key = StringUtil.escape(key);
 		value = StringUtil.escape(value, escapeMap, false);
 		i[key] = k.length;

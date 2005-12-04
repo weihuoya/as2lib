@@ -35,7 +35,7 @@ interface org.as2lib.data.holder.Properties extends BasicInterface {
 	 * given {@code key}
 	 * @return the value mapped to the given {@code key} or the given {@code defaultValue}
 	 */
-	public function getProperty(key:String, defaultValue:String):String;
+	public function getProp(key:String, defaultValue:String):String;
 	
 	/**
 	 * Sets the given {@code value} for the given {@code key}; the {@code value} is mapped
@@ -44,7 +44,7 @@ interface org.as2lib.data.holder.Properties extends BasicInterface {
 	 * @param key the key to map the {@code value} to
 	 * @param value the value to map to the {@code key}
 	 */
-	public function setProperty(key:String, value:String):Void;
+	public function setProp(key:String, value:String):Void;
 	
 	/**
 	 * Returns the keys of all set properties. These keys are of type {@code String}.
