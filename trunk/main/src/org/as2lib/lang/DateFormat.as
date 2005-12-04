@@ -15,10 +15,12 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.data.holder.Properties;
+import org.as2lib.lang.en.EnglishDateNames;
+import org.as2lib.util.StringUtil;
 
 /**
- * {@code DateFormatter} formats a given date with a specified pattern.
+ * {@code DateFormat} formats a given date with a specified pattern.
  * 
  * <p>Use the declared constants as placeholders for specific parts of the date-time.
  *
@@ -30,7 +32,7 @@ import org.as2lib.env.except.IllegalArgumentException;
  * 
  * <p>Example:
  * <code>
- *   var formatter:DateFormatter = new DateFormatter("dd.mm.yyyy HH:nn:ss S");
+ *   var formatter:DateFormat = new DateFormat("dd.mm.yyyy HH:nn:ss S");
  *   trace(formatter.format(new Date(2005, 2, 29, 18, 14, 3, 58)));
  * </code>
  *
@@ -40,11 +42,12 @@ import org.as2lib.env.except.IllegalArgumentException;
  * </pre>
  *
  * @author Simon Wacker
+ * @author Martin Heidegger
  */
-class org.as2lib.util.DateFormatter extends BasicClass {
+class org.as2lib.lang.DateFormat extends BasicClass {
 	
 	/** The default date format pattern. */
-	public static var DEFAULT_DATE_FORMAT:String = "dd.mm.yyyy HH:nn:ss";
+	public static var DEFAULT_DATE_FORMAT:String = "MEDIUM";
 	
 	/** Placeholder for year in date format. */
 	public static var YEAR:String = "y";
@@ -79,76 +82,43 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	/** Quotation beginning and ending token. */
 	public static var QUOTE:String = "'";
 	
-	/** Fully written out string for january. */
-	public static var JANUARY:String = "January";
+	/** Keys to be used for the names of months, days, etc. */
+	private var names:Properties;
 	
-	/** Fully written out string for february. */
-	public static var FEBRUARY:String = "February";
-	
-	/** Fully written out string for march. */
-	public static var MARCH:String = "March";
-	
-	/** Fully written out string for april. */
-	public static var APRIL:String = "April";
-	
-	/** Fully written out string for may. */
-	public static var MAY:String = "May";
-	
-	/** Fully written out string for june. */
-	public static var JUNE:String = "June";
-	
-	/** Fully written out string for july. */
-	public static var JULY:String = "July";
-	
-	/** Fully written out string for august. */
-	public static var AUGUST:String = "August";
-	
-	/** Fully written out string for september. */
-	public static var SEPTEMBER:String = "September";
-	
-	/** Fully written out string for october. */
-	public static var OCTOBER:String = "October";
-	
-	/** Fully written out string for november. */
-	public static var NOVEMBER:String = "November";
-	
-	/** Fully written out string for december. */
-	public static var DECEMBER:String = "December";
-	
-	/** Fully written out string for monday. */
-	public static var MONDAY:String = "Monday";
-	
-	/** Fully written out string for tuesday. */
-	public static var TUESDAY:String = "Tuesday";
-	
-	/** Fully written out string for wednesday. */
-	public static var WEDNESDAY:String = "Wednesday";
-	
-	/** Fully written out string for thursday. */
-	public static var THURSDAY:String = "Thursday";
-	
-	/** Fully written out string for friday. */
-	public static var FRIDAY:String = "Friday";
-	
-	/** Fully written out string for saturday. */
-	public static var SATURDAY:String = "Saturday";
-	
-	/** Fully written out string for sunday. */
-	public static var SUNDAY:String = "Sunday";
-	
-	/** The pattern to format the date with. */
+	/** Formatting to be used for generating the string representation. */
 	private var dateFormat:String;
 	
+	private var m:Array;
+	
 	/**
-	 * Constructs a new {@code DateFormatter} instance.
+	 * Constructs a new {@code DateFormat} instance.
+	 *
+	 * <p>To format a 
 	 *
 	 * <p>If you do not pass-in a {@code dateFormat} or if the passed-in one is
 	 * {@code null} or {@code undefined} the {@code DEFAULT_DATE_FORMAT} is used.
 	 * 
-	 * @param dateFormat (optional) the pattern describing the date and time format
+	 * <p>If you do not pass-in a {@code language} or if the passed-in one is
+	 * {@code null} or {@code undefined} the {@code LocaleManager.getInstance()}
+	 * is used.
+	 * 
+	 * @param dateFormat (optional) format 
+	 * @param language (optional) language to be used for 
 	 */
-	public function DateFormatter(dateFormat:String) {
+	public function DateFormat(dateFormat:String, names:Properties) {
+		this.names = names == null ? EnglishDateNames.getInstance() : names;
 		this.dateFormat = dateFormat == null ? DEFAULT_DATE_FORMAT : dateFormat;
+		m = [];
+		m[YEAR] = "formatYear";
+		m[MONTH_AS_NUMBER] = "formatMonthAsNumber";
+		m[MONTH_AS_TEXT] = "formatMonthAsText";
+		m[DAY_AS_NUMBER] = "formatDayAsNumber";
+		m[DAY_AS_TEXT] = "formatDayAsText";
+		m[HOUR_IN_AM_PM] = "formatHourInAmPm";
+		m[HOUR_IN_DAY] = "formatHourInDay";
+		m[MINUTE] = "formatMinute";
+		m[SECOND] = "formatSecond";
+		m[MILLISECOND] = "formatMillisecond";
 	}
 	
 	/**
@@ -159,94 +129,65 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * date-time will be used instead.
 	 *
 	 * @param date the date-time value to format into a date-time string
+	 * @param dateFormat (optional) format to overwrite the class default format
 	 * @return the formatted date-time string
 	 */
-	public function format(date:Date):String {
+	public function format(date:Date, dateFormat:String):String {
 		if (!date) date = new Date();
+		if (!dateFormat) dateFormat = this.dateFormat;
+		
+		var dF:String = dateFormat.toUpperCase();
+		switch (dF) {
+			case "SHORT":
+			case "LONG":
+			case "MEDIUM":
+			case "FULL":
+			case null:
+				dateFormat = names.getProp(dF);
+		}
+		
 		var result:String = "";
-		for (var i:Number = 0; i < dateFormat.length; i++) {
-			if (dateFormat.substr(i, 1) == YEAR) {
-				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
-				result += formatYear(date.getFullYear(), tokenCount);
-				i += tokenCount - 1;
-				continue;
-			}
-			if (dateFormat.substr(i, 1) == MONTH_AS_NUMBER) {
-				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
-				result += formatMonthAsNumber(date.getMonth(), tokenCount);
-				i += tokenCount - 1;
-				continue;
-			}
-			if (dateFormat.substr(i, 1) == MONTH_AS_TEXT) {
-				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
-				result += formatMonthAsText(date.getMonth(), tokenCount);
-				i += tokenCount - 1;
-				continue;
-			}
-			if (dateFormat.substr(i, 1) == DAY_AS_NUMBER) {
-				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
-				result += formatDayAsNumber(date.getDate(), tokenCount);
-				i += tokenCount - 1;
-				continue;
-			}
-			if (dateFormat.substr(i, 1) == DAY_AS_TEXT) {
-				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
-				result += formatDayAsText(date.getDay(), tokenCount);
-				i += tokenCount - 1;
-				continue;
-			}
-			if (dateFormat.substr(i, 1) == HOUR_IN_AM_PM) {
-				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
-				result += formatHourInAmPm(date.getHours(), tokenCount);
-				i += tokenCount - 1;
-				continue;
-			}
-			if (dateFormat.substr(i, 1) == HOUR_IN_DAY) {
-				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
-				result += formatHourInDay(date.getHours(), tokenCount);
-				i += tokenCount - 1;
-				continue;
-			}
-			if (dateFormat.substr(i, 1) == MINUTE) {
-				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
-				result += formatMinute(date.getMinutes(), tokenCount);
-				i += tokenCount - 1;
-				continue;
-			}
-			if (dateFormat.substr(i, 1) == SECOND) {
-				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
-				result += formatSecond(date.getSeconds(), tokenCount);
-				i += tokenCount - 1;
-				continue;
-			}
-			if (dateFormat.substr(i, 1) == MILLISECOND) {
-				var tokenCount:Number = getTokenCount(dateFormat.substr(i));
-				result += formatMillisecond(date.getMilliseconds(), tokenCount);
-				i += tokenCount - 1;
-				continue;
-			}
-			if (dateFormat.substr(i, 1) == QUOTE) {
-				if (dateFormat.substr(i + 1, 1) == QUOTE) {
-					result += "'";
-					i++;
-					continue;
-				}
-				var nextQuote:Number = i;
-				var oldQuote:Number;
-				while (true) {
-					oldQuote = nextQuote;
-					nextQuote = dateFormat.indexOf("'", nextQuote + 1);
-					if (dateFormat.substr(nextQuote + 1, 1) != QUOTE) {
-						break;
+		var i:Number = 0;
+		var tokenCount:Number;
+		var token:String;
+		var char:String;
+		
+		while (i < dateFormat.length) {
+			char = dateFormat.charAt(i);
+			
+			var method:String = m[char];
+			if (method) {
+				tokenCount = -1;
+				token = dateFormat.charAt(i);
+				while (dateFormat.charAt(i+(++tokenCount)) == token);
+				result += this[method](date, tokenCount);
+				i += tokenCount;
+			} else {
+				if (char == QUOTE) {
+					if (dateFormat.charAt(i + 1) == QUOTE) {
+						result += "'";
+						i+=2;
+					} else {
+						var quoteStart:Number = i;
+						var quoteEnd:Number = i+1;
+						while (quoteEnd < dateFormat.length-1) {
+							if (dateFormat.charAt(quoteEnd) == QUOTE) {
+								if (dateFormat.charAt(quoteEnd+1) != QUOTE) {
+									break;
+								}
+								quoteEnd += 2;
+							} else {
+								quoteEnd++;
+							}
+						}
+						result += dateFormat.substring(quoteStart+1, quoteEnd).split("''").join("'");
+						i = quoteEnd+1;
 					}
-					result += dateFormat.substring(oldQuote + 1, nextQuote + 1);
-					nextQuote++;
+				} else {
+					result += char;
+					i++;
 				}
-				result += dateFormat.substring(oldQuote + 1, nextQuote);
-				i = nextQuote;
-				continue;
 			}
-			result += dateFormat.substr(i, 1);
 		}
 		return result;
 	}
@@ -259,15 +200,14 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * 0 is returned.
 	 *
 	 * @param string the string to search through
+	 * @param start start of reading in the string
 	 * @return the number of tokens that occur in a succession
 	 */
-	private function getTokenCount(string:String):Number {
+	private function getTokenCount(string:String, start:Number):Number {
 		if (!string) return 0;
-		var result:Number = 0;
-		var token:String = string.substr(0, 1);
-		while (string.substr(result, 1) == token) {
-			result++;
-		}
+		var result:Number = -1;
+		var token:String = string.charAt(start);
+		while (string.charAt(start+(++result)) == token);
 		return result;
 	}
 	
@@ -281,15 +221,7 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * @return the specified number of 0s
 	 */
 	private function getZeros(count:Number):String {
-		if (count < 1 || count == null) return "";
-		if (count < 2) return "0";
-		var result:String = "00";
-		count -= 2;
-		while (count) {
-			result += "0";
-			count--;
-		}
-		return result;
+		return StringUtil.multiply("0", count);
 	}
 	
 	/**
@@ -304,18 +236,18 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * <p>If the passed-in {@code digitCount} is {@code null} or {@code undefined}, 0
 	 * is used instead.
 	 *
-	 * @param year the year to format to a string
+	 * @param date date to get the year from the account
 	 * @param digitCount the number of favored digits
 	 * @return the string representation of the year
-	 * @throws IllegalArgumentException if the passed-in {@code year} is
+	 * @//TODO: throws IllegalArgumentException if the passed-in {@code year} is
 	 * {@code null} or {@code undefined}
 	 */
-	private function formatYear(year:Number, digitCount:Number):String {
+	private function formatYear(date:Date, digitCount:Number):String {
+		var year:Number = date.getFullYear();
 		if (year == null) {
-			throw new IllegalArgumentException("Argument 'year' [" + year + "] must not be 'null' nor 'undefined'.", this, arguments);
+			year = 0;
 		}
-		if (digitCount == null) digitCount = 0;
-		if (digitCount < 4) {
+		if (digitCount == null || digitCount < 4) {
 			return year.toString().substr(2);
 		}
 		return (getZeros(digitCount - 4) + year.toString());
@@ -336,12 +268,11 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * @param month the month to format to a number string
 	 * @param digitCount the number of favored digits
 	 * @return the number representation of the month
-	 * @throws IllegalArgumentException if the passed-in {@code month} is
-	 * less than 0 or greater than 11 or {@code null} or {@code undefined}
 	 */
-	private function formatMonthAsNumber(month:Number, digitCount:Number):String {
+	private function formatMonthAsNumber(date:Date, digitCount:Number):String {
+		var month:Number = date.getMonth();
 		if (month < 0 || month > 11 || month == null) {
-			throw new IllegalArgumentException("Argument 'month' [" + month + "] must not be less than 0 nor greater than 11 nor 'null' nor 'undefined'.", this, arguments);
+			month = 0;
 		}
 		if (digitCount == null) digitCount = 0;
 		var string:String = (month + 1).toString();
@@ -358,61 +289,21 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 *
 	 * <p>If the passed-in {@code tokenCount} is {@code null} or {@code undefined}, 0
 	 * is used instead.
+	 * 
+	 * <p>If the passed-in {@code month} is smaller than 0 or bigger than 11,
+	 * 0 is used instead. 
 	 *
 	 * @param month the month to format to a string
 	 * @param tokenCount the number of favored tokens
 	 * @return the string representation of the month
-	 * @throws IllegalArgumentException if the passed-in {@code month} is
-	 * less than 0 or greater than 11 or {@code null} or {@code undefined}
 	 */
-	private function formatMonthAsText(month:Number, tokenCount:Number):String {
+	private function formatMonthAsText(date:Date, tokenCount:Number):String {
+		var month:Number = date.getMonth();
 		if (month < 0 || month > 11 || month == null) {
-			throw new IllegalArgumentException("Argument 'month' [" + month + "] must not be less than 0 nor greater than 11 nor 'null' nor 'undefined'.", this, arguments);
+			month = 0;
 		}
-		if (tokenCount == null) tokenCount = 0;
-		var result:String;
-		switch (month) {
-			case 0:
-				result = JANUARY;
-				break;
-			case 1:
-				result = FEBRUARY;
-				break;
-			case 2:
-				result = MARCH;
-				break;
-			case 3:
-				result = APRIL;
-				break;
-			case 4:
-				result = MAY;
-				break;
-			case 5:
-				result = JUNE;
-				break;
-			case 6:
-				result = JULY;
-				break;
-			case 7:
-				result = AUGUST;
-				break;
-			case 8:
-				result = SEPTEMBER;
-				break;
-			case 9:
-				result = OCTOBER;
-				break;
-			case 10:
-				result = NOVEMBER;
-				break;
-			case 11:
-				result = DECEMBER;
-				break;
-		}
-		if (tokenCount < 4) {
-			return result.substr(0, 3);
-		}
-		return result;
+		var key:String = (tokenCount < 4 || tokenCount == null) ? "short" : "long";
+		return names.getProp(key+".month."+(Math.abs(month)+1));
 	}
 	
 	/**
@@ -430,12 +321,14 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * @param day the day of month to format to a number string
 	 * @param digitCount the number of digits
 	 * @return the number representation of the day
-	 * @throws IllegalArgumentException if the passed-in {@code day} is less
+	 * @//TODO: throws IllegalArgumentException if the passed-in {@code day} is less
 	 * than 1 or greater than 31 or {@code null} or {@code undefined}
 	 */
-	private function formatDayAsNumber(day:Number, digitCount:Number):String {
+	private function formatDayAsNumber(date:Date, digitCount:Number):String {
+		var day:Number = date.getDate();
 		if (day < 1 || day > 31 || day == null) {
-			throw new IllegalArgumentException("Argument 'day' [" + day + "] must not be less than 1 nor greater than 31 nor 'null' nor 'undefined'.", this, arguments);
+			day = 1;
+			//TODO: throw new IllegalArgumentException("Argument 'day' [" + day + "] must not be less than 1 nor greater than 31 nor 'null' nor 'undefined'.", this, arguments);
 		}
 		if (digitCount == null) digitCount = 0;
 		var string:String = day.toString();
@@ -456,42 +349,17 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * @param day the day to format to a string
 	 * @param tokenCount the number of favored tokens
 	 * @return the string representation of the day
-	 * @throws IllegalArgumentException if the passed-in {@code day} is less
+	 * @//TODO: throws IllegalArgumentException if the passed-in {@code day} is less
 	 * than 0 or greater than 6 or {@code null} or {@code undefined}
 	 */
-	private function formatDayAsText(day:Number, tokenCount:Number):String {
+	private function formatDayAsText(date:Date, tokenCount:Number):String {
+		var day:Number = date.getDay();
 		if (day < 0 || day > 6 || day == null) {
-			throw new IllegalArgumentException("Argument 'day' [" + day + "] must not be less than 0 nor greater than 6 nor 'null' nor 'undefined'.", this, arguments);
-		}
-		if (tokenCount == null) tokenCount = 0;
-		var result:String;
-		switch (day) {
-			case 0:
-				result = SUNDAY;
-				break;
-			case 1:
-				result = MONDAY;
-				break;
-			case 2:
-				result = TUESDAY;
-				break;
-			case 3:
-				result = WEDNESDAY;
-				break;
-			case 4:
-				result = THURSDAY;
-				break;
-			case 5:
-				result = FRIDAY;
-				break;
-			case 6:
-				result = SATURDAY;
-				break;
-		}
-		if (tokenCount < 4) {
-			return result.substr(0, 2);
-		}
-		return result;
+			day = 0;
+		} 
+		day++;
+		var key:String = (tokenCount < 4  || tokenCount == null) ? "short.day." : "long.day.";
+		return names.getProp(key+day);
 	}
 	
 	/**
@@ -509,12 +377,13 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * @param hour the hour to format
 	 * @param digitCount the number of favored digits
 	 * @return the string representation of {@code hour}
-	 * @throws IllegalArgumentException if the passed-in {@code hour} is less
+	 * @//TODO: throws IllegalArgumentException if the passed-in {@code hour} is less
 	 * than 0 or greater than 23 or {@code null} or {@code undefined}
 	 */
-	private function formatHourInAmPm(hour:Number, digitCount:Number):String {
+	private function formatHourInAmPm(date:Date, digitCount:Number):String {
+		var hour:Number = date.getHours();
 		if (hour < 0 || hour > 23 || hour == null) {
-			throw new IllegalArgumentException("Argument 'hour' [" + hour + "] must not be less than 0 nor greater than 23 nor 'null' nor 'undefined'.", this, arguments);
+			hour = 0;
 		}
 		if (digitCount == null) digitCount = 0;
 		var string:String;
@@ -544,12 +413,13 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * @param hour the hour to format
 	 * @param digitCount the number of favored digits
 	 * @return the string representation of {@code hour}
-	 * @throws IllegalArgumentException if the passed-in {@code hour} is less
+	 * @//TODO: throws IllegalArgumentException if the passed-in {@code hour} is less
 	 * than 0 or greater than 23 or {@code null} or {@code undefined}
 	 */
-	private function formatHourInDay(hour:Number, digitCount:Number):String {
+	private function formatHourInDay(date:Date, digitCount:Number):String {
+		var hour:Number = date.getHours();
 		if (hour < 0 || hour > 23 || hour == null) {
-			throw new IllegalArgumentException("Argument 'hour' [" + hour + "] must not be less than 0 nor greater than 23 nor 'null' nor 'undefined'.", this, arguments);
+			hour = 0;
 		}
 		if (digitCount == null) digitCount = 0;
 		var string:String = hour.toString();
@@ -572,12 +442,13 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * @param minute the minute to format
 	 * @param digitCount the number of favored digits
 	 * @return the string representation of the {@code minute}
-	 * @throws IllegalArgumentException if the passed-in {@code minute} is
+	 * @//TODO: throws IllegalArgumentException if the passed-in {@code minute} is
 	 * less than 0 or greater than 59 or {@code null} or {@code undefined}
 	 */
-	private function formatMinute(minute:Number, digitCount:Number):String {
+	private function formatMinute(date:Date, digitCount:Number):String {
+		var minute:Number = date.getMinutes();
 		if (minute < 0 || minute > 59 || minute == null) {
-			throw new IllegalArgumentException("Argument 'minute' [" + minute + "] must not be less than 0 nor greater than 59 nor 'null' nor 'undefined'.", this, arguments);
+			//TODO: throw new IllegalArgumentException("Argument 'minute' [" + minute + "] must not be less than 0 nor greater than 59 nor 'null' nor 'undefined'.", this, arguments);
 		}
 		if (digitCount == null) digitCount = 0;
 		var string:String = minute.toString();
@@ -600,12 +471,13 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * @param second the second to format
 	 * @param digitCount the number of favored digits
 	 * @return the string representation of the {@code second}
-	 * @throws IllegalArgumentException if the passed-in {@code second} is
+	 * @//TODO: throws IllegalArgumentException if the passed-in {@code second} is
 	 * less than 0 or greater than 59 or {@code null} or {@code undefined}
 	 */
-	private function formatSecond(second:Number, digitCount:Number):String {
+	private function formatSecond(date:Date, digitCount:Number):String {
+		var second:Number = date.getSeconds();
 		if (second < 0 || second > 59 || second == null) {
-			throw new IllegalArgumentException("Argument 'second' [" + second + "] must not be less than 0 nor greater than 59 nor 'null' nor 'undefined'.", this, arguments);
+			////TODO: throw new IllegalArgumentException("Argument 'second' [" + second + "] must not be less than 0 nor greater than 59 nor 'null' nor 'undefined'.", this, arguments);
 		}
 		if (digitCount == null) digitCount = 0;
 		var string:String = second.toString();
@@ -629,12 +501,13 @@ class org.as2lib.util.DateFormatter extends BasicClass {
 	 * @param millisecond the millisecond to format
 	 * @param digitCount the number of favored digits
 	 * @return the string representation of the {@code millisecond}
-	 * @throws IllegalArgumentException if the passed-in {@code millisecond}
+	 * @//TODO: throws IllegalArgumentException if the passed-in {@code millisecond}
 	 * is less than 0 or greater than 999 or {@code null} or {@code undefined}
 	 */
-	private function formatMillisecond(millisecond:Number, digitCount:Number):String {
+	private function formatMillisecond(date:Date, digitCount:Number):String {
+		var millisecond:Number = date.getMilliseconds();
 		if (millisecond < 0 || millisecond > 999 || millisecond == null) {
-			throw new IllegalArgumentException("Argument 'millisecond' [" + millisecond + "] must not be less than 0 nor greater than 999 nor 'null' nor 'undefined'.", this, arguments);
+			//TODO: throw new IllegalArgumentException("Argument 'millisecond' [" + millisecond + "] must not be less than 0 nor greater than 999 nor 'null' nor 'undefined'.", this, arguments);
 		}
 		if (digitCount == null) digitCount = 0;
 		var string:String = millisecond.toString();
