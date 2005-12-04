@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.util.StringUtil;
+import org.as2lib.util.TextUtil;
 
 /**
  * {@code AbstractLogConfigurationParser} provides methods needed by most
@@ -49,7 +49,7 @@ class org.as2lib.env.log.parser.AbstractLogConfigurationParser extends BasicClas
 	 * @return the generated method name
 	 */
 	private function generateMethodName(prefix:String, body:String):String {
-		return (prefix + StringUtil.ucFirst(body));
+		return (prefix + TextUtil.ucFirst(body));
 	}
 	
 	/**

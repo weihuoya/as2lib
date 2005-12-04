@@ -29,6 +29,7 @@ import org.as2lib.aop.pointcut.WithinPointcut;
 import org.as2lib.aop.pointcut.PointcutFactory;
 import org.as2lib.aop.pointcut.PointcutRule;
 import org.as2lib.aop.joinpoint.AbstractJoinPoint;
+import org.as2lib.util.TrimUtil;
 
 /**
  * {@code DynamicPointcutFactory} is a pointcut factory that can be dynamically expanded
@@ -225,7 +226,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 		if (!pattern) return null;
 		// this should be refactored, it is not a perfect solution, but it works for now
 		if (pattern.indexOf(" ") != -1) {
-			pattern = StringUtil.trim(pattern);
+			pattern = TrimUtil.trim(pattern);
 			while (pattern.indexOf("  ") != -1) {
 				pattern = StringUtil.replace(pattern, "  ", " ");
 			}

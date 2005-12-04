@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.except.IllegalArgumentException;
 
 /**
  * {@code StringUtil} offers a lot of different methods to work with strings.
@@ -26,6 +25,10 @@ import org.as2lib.env.except.IllegalArgumentException;
  * @author Flashforum.de Community
  */
 class org.as2lib.util.StringUtil extends BasicClass {
+
+	/** Default map for escaping keys. */	
+	public static var DEFAULT_ESCAPE_MAP:Array = 
+		["\\t", "\t", "\\n", "\n", "\\r", "\r", "\\\"", "\"", "\\\\", "\\", "\\'", "\'", "\\f", "\f", "\\b", "\b", "\\", ""];
 	
 	/**
 	 * Replaces all occurencies of the passed-in string {@code what} with the passed-in
@@ -39,144 +42,6 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 */
 	public static function replace(string:String, what:String, to:String):String {
 		return string.split(what).join(to);
-	}
-	
-	/**
-	 * Removes all empty characters at the beginning and at the end of the passed-in 
-	 * {@code string}.
-	 *
-	 * <p>Characters that are removed: spaces {@code " "}, line forwards {@code "\n"} 
-	 * and extended line forwarding {@code "\t\n"}.
-	 * 
-	 * @param string the string to trim
-	 * @return the trimmed string
-	 */
-	public static function trim(string:String):String {
-		return leftTrim(rightTrim(string));
-	}
-	
-	/**
-	 * Removes all empty characters at the beginning of a string.
-	 *
-	 * <p>Characters that are removed: spaces {@code " "}, line forwards {@code "\n"} 
-	 * and extended line forwarding {@code "\t\n"}.
-	 * 
-	 * @param string the string to trim
-	 * @return the trimmed string
-	 */
-	public static function leftTrim(string:String):String {
-		return leftTrimForChars(string, "\n\t\n ");
-	}
-
-	/**
-	 * Removes all empty characters at the end of a string.
-	 * 
-	 * <p>Characters that are removed: spaces {@code " "}, line forwards {@code "\n"} 
-	 * and extended line forwarding {@code "\t\n"}.
-	 * 
-	 * @param string the string to trim
-	 * @return the trimmed string
-	 */	
-	public static function rightTrim(string:String):String {
-		return rightTrimForChars(string, "\n\t\n ");
-	}
-	
-	/**
-	 * Removes all characters at the beginning of the {@code string} that match to the
-	 * set of {@code chars}.
-	 * 
-	 * <p>This method splits all {@code chars} and removes occurencies at the beginning.
-	 * 
-	 * <p>Example:
-	 * <code>
-	 *   trace(StringUtil.rightTrimForChars("ymoynkeym", "ym")); // oynkeym
-	 *   trace(StringUtil.rightTrimForChars("monkey", "mo")); // nkey
-	 *   trace(StringUtil.rightTrimForChars("monkey", "om")); // nkey
-	 * </code>
-	 * 
-	 * @param string the string to trim
-	 * @param chars the characters to remove from the beginning of the {@code string}
-	 * @return the trimmed string
-	 */
-	public static function leftTrimForChars(string:String, chars:String):String {
-		var from:Number = 0;
-		var to:Number = string.length;
-		while (from < to && chars.indexOf(string.charAt(from)) >= 0){
-			from++;
-		}
-		return (from > 0 ? string.substr(from, to) : string);
-	}
-	
-	/**
-	 * Removes all characters at the end of the {@code string} that match to the set of
-	 * {@code chars}.
-	 * 
-	 * <p>This method splits all {@code chars} and removes occurencies at the end.
-	 * 
-	 * <p>Example:
-	 * <code>
-	 *   trace(StringUtil.rightTrimForChars("ymoynkeym", "ym")); // ymoynke
-	 *   trace(StringUtil.rightTrimForChars("monkey***", "*y")); // monke
-	 *   trace(StringUtil.rightTrimForChars("monke*y**", "*y")); // monke
-	 * </code>
-	 * 
-	 * @param string the string to trim
-	 * @param chars the characters to remove from the end of the {@code string}
-	 * @return the trimmed string
-	 */
-	public static function rightTrimForChars(string:String, chars:String):String {
-		var from:Number = 0;
-		var to:Number = string.length - 1;
-		while (from < to && chars.indexOf(string.charAt(to)) >= 0) {
-			to--;
-		}
-		return (to >= 0 ? string.substr(from, to+1) : string);
-	}
-	
-	/**
-	 * Removes all characters at the beginning of the {@code string} that matches the
-	 * {@code char}.
-	 * 
-	 * <p>Example:
-	 * <code>
-	 *   trace(StringUtil.leftTrimForChar("yyyymonkeyyyy", "y"); // monkeyyyy
-	 * </code>
-	 * 
-	 * @param string the string to trim
-	 * @param char the character to remove
-	 * @return the trimmed string
-	 * @throws IllegalArgumentException if you try to remove more than one character
-	 */
-	public static function leftTrimForChar(string:String, char:String):String {
-		if(char.length != 1) {
-			throw new IllegalArgumentException("The Second Attribute char [" + char + "] must exactly one character.", 
-					eval("th" + "is"), 
-					arguments);
-		}
-		return leftTrimForChars(string, char);
-	}
-	
-	/**
-	 * Removes all characters at the end of the {@code string} that matches the passed-in
-	 * {@code char}.
-	 * 
-	 * <p>Example:
-	 * <code>
-	 *   trace(StringUtil.rightTrimForChar("yyyymonkeyyyy", "y"); // yyyymonke
-	 * </code>
-	 * 
-	 * @param string the string to trim
-	 * @param char the character to remove
-	 * @return the trimmed string
-	 * @throws IllegalArgumentException if you try to remove more than one character
-	 */
-	public static function rightTrimForChar(string:String, char:String):String {
-		if(char.length != 1) {
-			throw new IllegalArgumentException("The Second Attribute char [" + char + "] must exactly one character.", 
-												eval("th" + "is"), 
-												arguments);
-		}
-		return rightTrimForChars(string, char);
 	}
 
 	/**
@@ -216,14 +81,12 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 * @param string the string to validate
 	 * @param length the length the {@code string} should have
 	 * @return {@code true} if the length of {@code string} is bigger or equal to the
-	 * expected length else {@code false}
-	 * @throws IllegalArgumentException if the expected length is less than 0
+	 * 		   expected length else {@code false}, if no length was applied, it 
+	 * 		   will always return {@code false}
 	 */
 	public static function assureLength(string:String, length:Number):Boolean {
 		if (length < 0 || (!length && length !== 0)) {
-			throw new IllegalArgumentException("The given length [" + length + "] has to be bigger or equals 0.", 
-					eval("th" + "is"), 
-					arguments);
+			return false;
 		}
 		return (string.length >= length);
 	}
@@ -314,16 +177,15 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 * <p>{@code indent} will be floored.
 	 * 
 	 * @param string the string that contains lines to indent
-	 * @param indent the size of the indent
+	 * @param indent the size of the indent, will be set to 0 if its small than 0
 	 * @return the indented string
-	 * @throws IllegalArgumentException if the {@code size} is smaller than 0
 	 */
 	public static function addSpaceIndent(string:String, size:Number):String {
 		if (string == null) {
 			string = "";
 		}
 		if (size < 0) {
-			throw new IllegalArgumentException("The given size has to be bigger or equals null.", eval("th"+"is"), arguments);
+			size = 0;
 		}
 		var indentString:String = multiply(" ", size);
 		return indentString+replace(string, "\n", "\n"+indentString);
@@ -349,66 +211,24 @@ class org.as2lib.util.StringUtil extends BasicClass {
 		}
 		return result;
 	}
-
-	/**
-	 * Capitalizes the first character of the passed-in {@code string}.
-	 * 
-	 * @param string the string of which the first character shall be capitalized
-	 * @return the passed-in {@code string} with the first character capitalized
-	 */
-	public static function ucFirst(string:String):String {
-		 return string.charAt(0).toUpperCase() + string.substr(1);
-	}
-
-	/**
-	 * Capitalizes the first character of every word in the passed-in {@code string}.
-	 * 
-	 * @param string the string of which the first character of every word shall be
-	 * capitalized
-	 * @return the {@code string} with the first character of every word capitalized
-	 */
-	public static function ucWords(string:String):String {
-		var w:Array = string.split(" ");
-		var l:Number = w.length;
-		for (var i:Number = 0; i < l; i++){
-			w[i] = StringUtil.ucFirst(w[i]);
-		}
-		return w.join(" ");
-	}
 	
 	/**
-	 * Returns the first character of the passed-in {@code string}.
+	 * Replaces keys defined in a keymap.
 	 * 
-	 * @param string the string to return the first character of
-	 * @return the first character of the {@code string}
-	 */
-	public static function firstChar(string:String):String {
-		return string.charAt(0);
-	}
-	
-	/**
-	 * Returns the last character of the passed-in {@code string}.
+	 * <p>This method helps if you need to escape characters in a string. But it
+	 * can be basically used for any kind of keys to be replaced.
 	 * 
-	 * @param string the string to return the last character of
-	 * @return the last character of the {@code string}
+	 * <p>To be expected as keymap is a map like:
+	 * <code>
+	 *   ["keyToReplace1", "replacedTo1", "keyToReplace2", "replacedTo2", ... ]
+	 * </code> 
+	 * 
+	 * @param string String that contains content to be removed.
+	 * @param keyMap Map that contains all keys. (DEFAULT_ESCAPE_MAP will be used
+	 * 		  if no keyMap gets passed.
+	 * @param ignoreUnicode Pass "true" to ignore automatic parsing of unicode escaped characters.
+	 * @return Escaped string.
 	 */
-	public static function lastChar(string:String):String {
-		return string.charAt(string.length-1);
-	}
-	
-	private static function getCharValue(char:String):Number {
-		var code:Number = char.toUpperCase().charCodeAt(0);
-		// Number Area
-		if (code > 47 && code < 58) return (code-48);
-		// String Area
-		if (code > 64 && code < 91) return (code-55);
-		// Default value
-		return 0;
-	}
-	
-	public static var DEFAULT_ESCAPE_MAP:Array = 
-		["\\t", "\t", "\\n", "\n", "\\r", "\r", "\\\"", "\"", "\\\\", "\\", "\\'", "\'", "\\f", "\f", "\\b", "\b", "\\", ""];
-	
 	public static function escape(string:String, keyMap:Array, ignoreUnicode:Boolean):String {
 		if (!keyMap) {
 			keyMap = DEFAULT_ESCAPE_MAP;
