@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.util.StringUtil;
+import org.as2lib.util.TextUtil;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.PrimitiveTypeMap;
 import org.as2lib.env.except.IllegalArgumentException;
@@ -99,7 +99,7 @@ class org.as2lib.test.mock.support.StateArgumentMatcher extends BasicClass imple
 	 * @param expectedPropertyValue the expected value of the property
 	 * @return {@code true} if the property has the expected value else {@code false}	 */
 	private function checkProperty(target, propertyName:String, expectedPropertyValue):Boolean {
-		var getter:String = "get" + StringUtil.ucFirst(propertyName);
+		var getter:String = "get" + TextUtil.ucFirst(propertyName);
 		if (target[getter]) {
 			return (target[getter]() === expectedPropertyValue);
 		}

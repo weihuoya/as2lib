@@ -16,7 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.util.Stringifier;
-import org.as2lib.util.DateFormatter;
+import org.as2lib.lang.DateFormat;
 import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.LogLevel;
 
@@ -35,7 +35,7 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
     private var showLoggerName:Boolean;
     
     /** The time formatter to format the time stamp if desired. */
-    private var timeFormatter:DateFormatter;
+    private var timeFormat:DateFormat;
     
     /** Determines whether to show the source method name. */
     private var showSourceMethodName:Boolean;
@@ -59,7 +59,7 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
     public function PatternLogMessageStringifier(showLevel:Boolean, showLoggerName:Boolean, timeFormat:String, showSourceMethodName:Boolean) {
         this.showLevel = showLevel == null ? true : showLevel;
         this.showLoggerName = showLoggerName == null ? true : showLoggerName;
-        if (timeFormat != null) this.timeFormatter = new DateFormatter(timeFormat);
+        if (timeFormat != null) this.timeFormat = new DateFormat(timeFormat);
         this.showSourceMethodName = showSourceMethodName == null ? true : showSourceMethodName;
     }
     
@@ -80,10 +80,10 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
     public function execute(target):String {
         var message:LogMessage = target;
         var info:String = "";
-        if (timeFormatter) {
+        if (timeFormat) {
             var timeStamp:Number = message.getTimeStamp();
             if (timeStamp != null) {
-                info += timeFormatter.format(new Date(timeStamp));
+                info += timeFormat.format(new Date(timeStamp));
             }
         }
         if (showLevel) {
