@@ -247,10 +247,13 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	}
 	
 	/**
-	 * Adds a process to the list of processes.
+	 * Adds a {@link Process} to the list of processes to execute.
 	 * 
-	 * @param p Process to be added.
-	 * @return Internal Id of the process.
+	 * <p>Its possible to at the same process more than one times. It will be
+	 * executed as often as you add it.
+	 * 
+	 * @param p {@code Process} to be added
+	 * @return internal identifier of the process
 	 */
 	public function addProcess(p:Process):Number {
 		if(p != this) {
@@ -261,13 +264,13 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	}
 	
 	/**
-	 * Removes a process from the list of executed processes.
+	 * Removes all instances of a process that were added to the {@code Batch}.
 	 * 
 	 * <p>If a process has been added more than one times, it removes all
 	 * executions.
 	 * 
-	 * @param p Process to be removed.
-	 * @see #removeProcessById
+	 * @param process {@link Process} to be removed
+	 * @see removeProcessById
 	 */
 	public function removeProcess(p:Process):Void {
 		var i:Number = list.length;

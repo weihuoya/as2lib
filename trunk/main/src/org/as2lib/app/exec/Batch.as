@@ -49,33 +49,6 @@ import org.as2lib.app.exec.Process;
  * @see Process
  */
 interface org.as2lib.app.exec.Batch extends Process {
-	
-	/**
-	 * Adds a {@link Process} to the list of processes to execute.
-	 * 
-	 * <p>Its possible to at the same process more than one times. It will be
-	 * executed as often as you add it.
-	 * 
-	 * @param process {@link Process} to be added
-	 * @return internal identifier of the process
-	 */
-	public function addProcess(process:Process):Number;
-	
-	/**
-	 * Removes all instances of a process that were added to the {@code Batch}.
-	 * 
-	 * @param process {@link Process} to be removed
-	 */
-    public function removeProcess(process:Process):Void;
-    
-    /**
-     * Removes a {@code Process} with a certain id of the {@code Batch}.
-     * 
-     * <p>This is necessary if you add the same process more than once.
-     * 
-     * @param id identifier for the certain {@code Process}
-     */
-    public function removeProcessById(id:Number):Void ;
     
     /**
      * Returns the currently execution {@code Process}
