@@ -57,7 +57,7 @@ class org.as2lib.data.holder.properties.SimpleProperties extends BasicClass impl
 	 * 
 	 * @param key the key to return the value for
 	 * @param defaultValue the default value to return if there is no value mapped to the
-	 * 		  given {@code key}, "null" is accepted, "undefined" isn't accepted
+	 * given {@code key}, {@code null} is accepted, {@code undefined} not
 	 * @return the value mapped to the given {@code key} or the given {@code defaultValue}
 	 */
 	public function getProp(key:String, defaultValue:String):String {
