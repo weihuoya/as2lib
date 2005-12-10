@@ -36,7 +36,7 @@ import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * {@code MockControl} is the central class of the mock object framework. You use
-		 * it to create your mock object, set expectations and verify whether these
+ * it to create your mock object, set expectations and verify whether these
  * expectations have been met.
  *
  * <p>The normal workflow is creating a mock control for a specific class or
