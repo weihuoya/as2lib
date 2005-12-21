@@ -134,6 +134,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	public function load(uri:String, method:String, parameters:Map, callBack:Executable):Void {
 		super.load(uri, method, parameters, callBack);
 		result = null;
+		endTime = null;
 		if(parameters) {
 			var keys:Iterator = parameters.keyIterator();
 			while (keys.hasNext()) {
@@ -213,8 +214,8 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	 */
 	private function checkFinished():Boolean {
 		holder = eval(""+holder._target);
-		if ( holder.getBytesTotal() > 10 
-			&& holder.getBytesTotal() - holder.getBytesLoaded() < 10) { 
+		if (holder.getBytesTotal() > 10 
+				&& holder.getBytesTotal() - holder.getBytesLoaded() < 10) { 
 			return true;
 		}
 		return false;
