@@ -25,7 +25,7 @@ import org.as2lib.util.Stringifier;
  * POWERFLASHER's SOS XML-Socket-Server.
  * 
  * <p>It logs colorized and formatted debug information to POWERFLASHER's SOS
- * XML-Socket-Server
+ * XML-Socket-Server.
  * 
  * @author Christoph Atteneder
  * @see <a href="http://sos.powerflasher.com">SOS - SocketOutputServer</a>

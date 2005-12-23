@@ -15,14 +15,14 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.log.LogHandler;
-import org.as2lib.env.log.LogMessage;
-import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.level.AbstractLogLevel;
+import org.as2lib.env.log.LogHandler;
+import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.LogMessage;
 
 import LuminicBox.Log.ConsolePublisher;
-import LuminicBox.Log.LogEvent;
 import LuminicBox.Log.Level;
+import LuminicBox.Log.LogEvent;
 
 /**
  * {@code LuminicBoxHandler} is a wrapper of the {@code ConsolePublisher} class

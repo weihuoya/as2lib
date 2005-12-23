@@ -17,9 +17,9 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
 
-import org.log4f.logging.Level;
 import org.log4f.logging.IFilter;
 import org.log4f.logging.IPublisher;
+import org.log4f.logging.Level;
 import org.log4f.logging.util.List;
 
 /**
