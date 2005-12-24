@@ -6,6 +6,9 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2005">
 			<month value="12">
+				<day value="24">
+				  <entry type="add" package="org.as2lib.env.log.logger" class="AsdtLogger">Logger class for ASDT Eclipse plugin logging console is added</entry>
+				</day>
 				<day value="23">
 				  <entry type="add" package="org.as2lib.env.log.logger" class="SosLogger">Logger class for SOS XML Socket Server is added</entry>
 				</day>
