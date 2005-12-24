@@ -256,7 +256,7 @@ class org.as2lib.env.log.logger.SosLogger extends AbstractLogger implements Logg
 		if (isEnabled(level)) {
 			var m:LogMessage = new LogMessage(message, level, name);
 			socket.send("<showMessage key='" + level.toNumber() + "'><![CDATA[" 
-					+ message.toString() + "]]></showMessage>\n");
+					+ m.toString() + "]]></showMessage>\n");
 		}
 	}
 	
