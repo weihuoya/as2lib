@@ -25,7 +25,15 @@ import org.as2lib.env.log.LogMessage;
  * 
  * <p>It logs colorized and formatted debug information to POWERFLASHER's SOS
  * XML-Socket-Server.
-
+ *
+ * <p>Use this class in your application to log messages. This enables you 
+ * to switch between almost every available Logging API without having to 
+ * change the logs in your application but  just the underlying configuration 
+ * on startup.
+ * 
+ * <p>Note that this logger uses the {@link LogMessage} class to wrap and decorate 
+ * log messages.
+ * 
  * @author Igor Sadovskiy
  * @see org.as2lib.env.log.handler.SosHandler
  * @see <a href="http://sos.powerflasher.com">SOS - SocketOutputServer</a>
