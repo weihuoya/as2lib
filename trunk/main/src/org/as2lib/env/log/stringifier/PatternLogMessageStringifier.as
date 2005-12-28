@@ -437,7 +437,9 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 				break;
 			case "o":
 				return function(m:LogMessage):String {
-					return z(m.getSourceMethodName(), l, i, a) + arguments.callee.n(m);
+					var n:String = m.getSourceMethodName();
+					if (n == null) n = "[unknown]";
+					return z(n, l, i, a) + arguments.callee.n(m);
 				};
 				break;
 			case "O":
@@ -447,13 +449,16 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 						var o = m.getSourceObject();
 						if (o == null) o = ReflectUtil.getTypeByName(m.getLoggerName());
 						n = ReflectUtil.getMethodName(m.getSourceMethod(), o);
+						if (n == null) n = "[unknown]";
 					}
 					return z(n, l, i, a) + arguments.callee.n(m);
 				};
 				break;
 			case "c":
 				return function(m:LogMessage):String {
-					return z(y(ReflectUtil.getTypeName(m.getSourceObject()), Number(d)), l, i, a) + arguments.callee.n(m);
+					var n:String = ReflectUtil.getTypeName(m.getSourceObject());
+					if (n == null) n = "[unknown]";
+					return z(y(n, Number(d)), l, i, a) + arguments.callee.n(m);
 				};
 				break;
 		}
