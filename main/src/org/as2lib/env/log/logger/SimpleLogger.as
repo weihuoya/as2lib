@@ -318,7 +318,13 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			distributor.write(new LogMessage(message, level, name));
+			var logMessage:LogMessage = new LogMessage(message, level, name, null, arguments[3]);
+			if (typeof(arguments[2]) == "string") {
+				logMessage.setSourceMethodName(arguments[2]);
+			} else {
+				logMessage.setSourceObject(arguments[2]);
+			}
+			distributor.write(logMessage);
 		}
 	}
 	
@@ -332,9 +338,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * @see #isDebugEnabled
 	 */
 	public function debug(message):Void {
-		if (isDebugEnabled()) {
-			distributor.write(new LogMessage(message, debugLevel, name));
-		}
+		log(message, debugLevel, arguments[1], arguments.caller);
 	}
 	
 	/**
@@ -347,9 +351,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * @see #isInfoEnabled
 	 */
 	public function info(message):Void {
-		if (isInfoEnabled()) {
-			distributor.write(new LogMessage(message, infoLevel, name));
-		}
+		log(message, infoLevel, arguments[1], arguments.caller);
 	}
 	
 	/**
@@ -362,9 +364,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * @see #isWarningEnabled
 	 */
 	public function warning(message):Void {
-		if (isWarningEnabled()) {
-			distributor.write(new LogMessage(message, warningLevel, name));
-		}
+		log(message, warningLevel, arguments[1], arguments.caller);
 	}
 	
 	/**
@@ -377,9 +377,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * @see #isErrorEnabled
 	 */
 	public function error(message):Void {
-		if (isErrorEnabled()) {
-			distributor.write(new LogMessage(message, errorLevel, name));
-		}
+		log(message, errorLevel, arguments[1], arguments.caller);
 	}
 	
 	/**
@@ -392,9 +390,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 * @see #isFatalEnabled
 	 */
 	public function fatal(message):Void {
-		if (isFatalEnabled()) {
-			distributor.write(new LogMessage(message, fatalLevel, name));
-		}
+		log(message, fatalLevel, arguments[1], arguments.caller);
 	}
 	
 }
