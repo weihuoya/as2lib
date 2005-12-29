@@ -19,8 +19,6 @@ import org.as2lib.env.log.LogConfigurationParser;
 import org.as2lib.env.log.LogManager;
 import org.as2lib.env.log.parser.AbstractLogConfigurationParser;
 import org.as2lib.env.log.parser.LogConfigurationParseException;
-import org.as2lib.env.reflect.ClassNotFoundException;
-import org.as2lib.env.reflect.NoSuchMethodException;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
@@ -239,11 +237,6 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 	 * @throws IllegalArgumentException if argument {@code xmlLogConfiguration} is
 	 * {@code null} or {@code undefined}
 	 * @throws LogConfigurationParseException if the bean definition could not be parsed
-	 * because of a malformed xml
-	 * @throws ClassNotFoundException if a class corresponding to a given class name could
-	 * not be found
-	 * @throws NoSuchMethodException if a method with a given name does not exist on the
-	 * bean to create
 	 */
 	public function parse(xmlLogConfiguration:String):Void {
 		if (xmlLogConfiguration == null) {
@@ -311,10 +304,6 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 	 * @return the bean resulting from the given {@code beanDefinition}
 	 * @throws LogConfigurationParseException if the bean definition could not be parsed
 	 * because of for example missing information
-	 * @throws ClassNotFoundException if a class corresponding to a given class name could
-	 * not be found
-	 * @throws NoSuchMethodException if a method with a given name does not exist on the
-	 * bean to create
 	 */
 	private function parseBeanDefinition(beanDefinition:XMLNode) {
 		if (!beanDefinition) {
@@ -336,7 +325,7 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 			className = beanDefinition.attributes["class"];
 			beanClass = findClass(className);
 			if (!beanClass) {
-				throw new ClassNotFoundException("A class corresponding to the class name [" + className + "] of node [" + beanDefinition.nodeName + "] could not be found. You either misspelled the class name or forgot to import the class in your swf.", this, arguments);
+				throw new LogConfigurationParseException("A class corresponding to the class name [" + className + "] of node [" + beanDefinition.nodeName + "] could not be found. You either misspelled the class name or forgot to import the class in your swf.", this, arguments);
 			}
 		} else {
 			beanClass = beanDefinition.attributes["class"];
@@ -365,7 +354,7 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 			}
 			if (beanClass[methodName] == null) {
 				if (className == null) className = ReflectUtil.getTypeNameForType(beanClass);
-				throw new NoSuchMethodException("A static method with name [" + methodName + "] does not exist on class [" + className + "].", this, arguments);
+				throw new LogConfigurationParseException("A static method with name [" + methodName + "] does not exist on class [" + className + "].", this, arguments);
 			}
 			bean = beanClass[methodName].apply(beanClass, args);
 		} else if (beanType == VARIABLE_TYPE) {
@@ -501,12 +490,12 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 				var className:String = definitions[n].attributes["class"];
 				var clazz:Function = findClass(className);
 				if (clazz == null) {
-					throw new ClassNotFoundException("A class with the name [" + className + "] could not be found.", this, arguments);
+					throw new LogConfigurationParseException("A class with the name [" + className + "] could not be found.", this, arguments);
 				}
 				var name:String = definitions[n].attributes.name;
 				if (definitions[n].attributes.type == METHOD_TYPE) {
 					if (clazz[name] == null) {
-						throw new NoSuchMethodException("A static method with name [" + name + "] does not exist on the class [" + className + "].", this, arguments);
+						throw new LogConfigurationParseException("A static method with name [" + name + "] does not exist on the class [" + className + "].", this, arguments);
 					}
 					bean[methodName](clazz[name](value));
 					continue;
@@ -555,7 +544,7 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 	 * @param name the base name
 	 * @param prefixes the prefixes as {@code String} values to combine with the base name
 	 * @return the method name that exists on the {@code object}
-	 * @throws NoSuchMethodException if there is no name-prefix combination that exists
+	 * @throws LogConfigurationParseException if there is no name-prefix combination that exists
 	 * on the given {@code object}
 	 */
 	private function findMethodName(bean, name:String, prefixes:Array):String {
@@ -565,7 +554,7 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 				return result;
 			}
 		}
-		throw new NoSuchMethodException("There is no method with the base name [" + name + "] combined with any of the prefixes [" + prefixes + "] on the bean [" + bean + "].", this, arguments);
+		throw new LogConfigurationParseException("There is no method with the base name [" + name + "] combined with any of the prefixes [" + prefixes + "] on the bean [" + bean + "].", this, arguments);
 	}
 	
 }
