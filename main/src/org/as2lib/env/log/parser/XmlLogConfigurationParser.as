@@ -213,6 +213,8 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 		} else {
 			this.manager = LogManager;
 		}
+		definitions = new Object();
+		singletons = new Object();
 	}
 	
 	/**
@@ -224,8 +226,7 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 	 * @param clazz the class to register with the {@code id}
 	 */
 	public function registerClass(id:String, clazz:Function):Void {
-		var node:XMLNode = new XMLNode();
-		node.attributes.id = id;
+		var node:XMLNode = new XMLNode(1, "register");
 		node.attributes["class"] = clazz;
 		definitions[id] = node;
 	}
@@ -244,8 +245,6 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 		}
 		var rootNode:XMLNode = parseXml(xmlLogConfiguration);
 		if (rootNode.attributes.enabled != "false") {
-			definitions = new Object();
-			singletons = new Object();
 			var childNodes:Array = rootNode.childNodes;
 			for (var i:Number = 0; i < childNodes.length; i++) {
 				var childNode:XMLNode = childNodes[i];
@@ -258,6 +257,8 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 				}
 			}
 		}
+		definitions = new Object();
+		singletons = new Object();
 	}
 	
 	/**
@@ -385,7 +386,10 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 	 * {@code false}
 	 */
 	private function isSingleton(beanDefinition:XMLNode):Boolean {
-		if (beanDefinition.attributes.type != SINGLETON_TYPE) return false;
+		if (beanDefinition.attributes.type != null
+				&& beanDefinition.attributes.type != SINGLETON_TYPE) {
+			return false;
+		}
 		return (getSingleton(beanDefinition) != null);
 	}
 	
