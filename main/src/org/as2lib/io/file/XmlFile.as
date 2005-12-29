@@ -38,6 +38,7 @@ class org.as2lib.io.file.XmlFile extends SimpleTextFile {
 	public function XmlFile(source:String, size:Byte, uri:String) {
 		super(source, size, uri);
 		xml = new XML();
+		xml.ignoreWhite = true;
 		xml.parseXML(source);
 	}
 	
