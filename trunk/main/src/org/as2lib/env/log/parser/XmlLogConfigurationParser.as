@@ -179,7 +179,7 @@ import org.as2lib.env.reflect.ReflectUtil;
  *       &lt;logger name="main" level="ERROR"&gt;
  *         &lt;handler&gt;&lt;constructor-arg id="stringifier"/&gt;&lt;/handler&gt;
  *       &lt;/logger&gt;
- *       &lt;logger name="com.simonwacker.talk.fft05"&gt;
+ *       &lt;logger name="org.as2lib.sample.filebrowser"&gt;
  *         &lt;handler class="org.as2lib.env.log.handler.LevelFilterHandler"&gt;
  *           &lt;constructor-arg id="handler"&gt;&lt;constructor-arg id="stringifier"/&gt;&lt;/constructor-arg&gt;
  *           &lt;constructor-arg id="level"&gt;INFO&lt;/constructor-arg&gt;
