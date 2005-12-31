@@ -40,8 +40,8 @@ class org.as2lib.env.event.distributor.AbstractEventDistributorControl extends T
 	 * @throws IllegalArgumentException if the passed-in {@code listenerType} is
 	 * {@code null} or {@code undefined}
 	 */
-	public function AbstractEventDistributorControl(listenerType:Function, checkListenerType:Boolean) {
-		super (listenerType, checkListenerType);
+	private function AbstractEventDistributorControl(listenerType:Function, checkListenerType:Boolean) {
+		super(listenerType, checkListenerType);
 	}
 	
 	/**
