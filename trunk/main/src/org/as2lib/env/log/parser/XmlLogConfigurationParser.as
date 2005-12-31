@@ -171,6 +171,7 @@ import org.as2lib.env.reflect.ReflectUtil;
  * <code>
  *   &lt;logging&gt;
  *     &lt;register id="logger" class="org.as2lib.env.log.logger.SimpleHierarchicalLogger"/&gt;
+ *     &lt;register id="handler" class="org.as2lib.env.log.handler.TraceHandler"/&gt;
  *     &lt;register id="level" name="forName" class="org.as2lib.env.log.level.AbstractLogLevel" type="method"/&gt;
  *     &lt;register id="stringifier" class="org.as2lib.env.log.stringifier.PatternLogMessageStringifier" type="singleton"&gt;
  *       &lt;constructor-arg&gt;%d{HH:nn:ss.SSS} %7l %n{1}.%O  %m&lt;/constructor-arg&gt;
