@@ -377,6 +377,9 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 		return function(m:LogMessage):String {
 			return l + arguments.callee.n(m);
 		};
+		// Flex 1.5 compiler does not recognize the first return and raises an error.
+		// We work around this by returning null at the end, also this will never be made.
+		return null;
 	}
 	
 	/**
@@ -462,6 +465,7 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 				};
 				break;
 		}
+		return null;
 	}
 	
 }
