@@ -4,6 +4,13 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="as2lib http://www.as2lib.org/changelog_0.91.xsd">
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
+		<year value="2006">
+			<month value="1">
+				<day value="2">
+					<entry type="add" package="org.as2lib.env.except" class="Throwable" method="contains">Checks whether the throwable is of a given type or has a nested cause of a given type.</entry>
+				</day>
+			</month>
+		</year>
 		<year value="2005">
 			<month value="12">
 				<day value="24">

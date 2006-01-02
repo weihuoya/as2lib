@@ -146,6 +146,16 @@ interface org.as2lib.env.except.Throwable extends BasicInterface {
 	public function getCause(Void);
 	
 	/**
+	 * Check whether this throwable contains a throwable of the given type: either it
+	 * is of the given type itself or it contains a nested cause of the given type.
+	 * 
+	 * @param type the type to check whether it is contained by this throwable
+	 * @return {@code true} if this throwable contains the given type else {@code false}
+	 * @see #initCause
+	 */
+	public function contains(type:Function):Boolean;
+	
+	/**
 	 * Returns the message that describes in detail what went wrong.
 	 *
 	 * <p>The message should be understandable, even for non-programmers. It should
