@@ -199,11 +199,34 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 	 * already been initialized
 	 * @see #getCause
 	 */
-	public function initCause(newCause):Throwable {
-		if (!newCause) throw new IllegalArgumentException("Cause must not be null or undefined.", this, arguments);
-		if (cause) throw new IllegalStateException("The cause [" + cause + "] has already been initialized.", this, arguments);
-		cause = newCause;
+	public function initCause(cause):Throwable {
+		if (!cause) throw new IllegalArgumentException("Cause must not be null or undefined.", this, arguments);
+		if (this.cause) throw new IllegalStateException("The cause [" + cause + "] has already been initialized.", this, arguments);
+		this.cause = cause;
 		return Throwable(this);
+	}
+	
+	/**
+	 * Check whether this throwable contains a throwable of the given type: either it
+	 * is of the given type itself or it contains a nested cause of the given type.
+	 * 
+	 * @param type the type to check whether it is contained by this throwable
+	 * @return {@code true} if this throwable contains the given type else {@code false}
+	 * @see #initCause
+	 */
+	public function contains(type:Function):Boolean {
+		if (this instanceof type) {
+			return true;
+		}
+		if (cause != null) {
+			if (cause instanceof type) {
+				return true;
+			}
+			if (cause instanceof Throwable) {
+				return Throwable(cause).contains(type);
+			}
+		}
+		return false;
 	}
 	
 	/**
