@@ -253,7 +253,8 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 	 * @param id the id to register the {@code clazz} with
 	 * @param clazz the class to register with the {@code id}
 	 */
-	public function registerClass(id:String, clazz:Function):Void {
+	public function registerClazz(id:String, clazz:Function):Void {
+		// name 'registerClass' hides fungtion in ancestor class in Flex
 		var node:XMLNode = new XMLNode(1, "register");
 		node.attributes["class"] = clazz;
 		definitions[id] = node;
