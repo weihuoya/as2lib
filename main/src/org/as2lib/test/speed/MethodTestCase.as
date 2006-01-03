@@ -34,7 +34,7 @@ import org.as2lib.test.speed.MethodInvocation;
 class org.as2lib.test.speed.MethodTestCase extends AbstractTest implements Test {
 	
 	/** Makes the static variables of the super-class accessible through this class. */
-	private static var __proto__:Function = AbstractTest;
+	private static var __proto__:Object = AbstractTest;
 	
 	/** The previous method invocation. */
 	private static var p:MethodInvocation;

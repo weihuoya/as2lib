@@ -91,7 +91,7 @@ import org.as2lib.data.holder.map.KeyMapIterator;
 class org.as2lib.data.holder.map.PrimitiveTypeMap extends AbstractMap implements Map {
 
 	/** Makes the static variables of the super-class accessible through this class. */
-	private static var __proto__:Function = AbstractMap;
+	private static var __proto__:Object = AbstractMap;
 	
 	/** Contains the mappings. */
 	private var map:Object;

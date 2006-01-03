@@ -53,7 +53,7 @@ import org.as2lib.data.holder.IndexOutOfBoundsException;
 class org.as2lib.data.holder.list.ArrayList extends AbstractList implements List {
 	
 	/** Makes the static variables of the super-class accessible through this class. */
-	private static var __proto__:Function = AbstractList;
+	private static var __proto__:Object = AbstractList;
 	
 	/** Holds added values. */
 	private var data:Array;
