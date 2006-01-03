@@ -83,7 +83,7 @@ import org.as2lib.env.log.LogMessage;
 class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger implements ConfigurableLogger, ConfigurableHierarchicalLogger {
 	
 	/** Makes the static variables of the super-class accessible through this class. */
-	private static var __proto__:Function = AbstractLogger;
+	private static var __proto__:Object = AbstractLogger;
 	
 	/** The actual level. */
 	private var level:LogLevel;

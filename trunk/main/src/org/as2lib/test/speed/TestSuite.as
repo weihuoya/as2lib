@@ -36,7 +36,7 @@ import org.as2lib.test.speed.PropertyTestCase;
 class org.as2lib.test.speed.TestSuite extends AbstractTest implements Test {
 	
 	/** Makes the static variables of the super-class accessible through this class. */
-	private static var __proto__:Function = AbstractTest;
+	private static var __proto__:Object = AbstractTest;
 	
 	/** This test suite's name. */
 	private var name:String;

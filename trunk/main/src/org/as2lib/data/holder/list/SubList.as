@@ -32,7 +32,7 @@ import org.as2lib.data.holder.list.ListIterator;
 class org.as2lib.data.holder.list.SubList extends AbstractList implements List {
 	
 	/** Makes the static variables of the super-class accessible through this class. */
-	private static var __proto__:Function = AbstractList;
+	private static var __proto__:Object = AbstractList;
 	
 	/** The list this is a sub-list of. */
 	private var list:List;

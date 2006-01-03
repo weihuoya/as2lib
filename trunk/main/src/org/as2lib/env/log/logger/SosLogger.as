@@ -41,7 +41,7 @@ import org.as2lib.env.log.LogMessage;
 class org.as2lib.env.log.logger.SosLogger extends AbstractLogger implements Logger {
 	
 	/** Makes the static variables of the super-class accessible through this class. */
-	private static var __proto__:Function = AbstractLogger;
+	private static var __proto__:Object = AbstractLogger;
 	
 	/** The set level. */
 	private var level:LogLevel;

@@ -44,7 +44,7 @@ import ascb.util.logging.Level;
 class org.as2lib.env.log.logger.AscbLogger extends AbstractLogger implements Logger {
 	
 	/** Makes the static variables of the super-class accessible through this class. */
-	private static var __proto__:Function = AbstractLogger;
+	private static var __proto__:Object = AbstractLogger;
 	
 	/** The {@code Logger} instance of ASCB every task is delegated to. */
 	private var logger:ascb.util.logging.Logger;

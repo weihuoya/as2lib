@@ -28,7 +28,7 @@ import org.as2lib.test.speed.MethodInvocationHolder;
 class org.as2lib.test.speed.SimpleTestSuiteResult extends AbstractTestSuiteResult implements ConfigurableTestSuiteResult {
 	
 	/** Makes the static variables of the super-class accessible through this class. */
-	private static var __proto__:Function = AbstractTestSuiteResult;
+	private static var __proto__:Object = AbstractTestSuiteResult;
 	
 	/** Name of this result. */
 	private var name:String;
