@@ -49,7 +49,7 @@ class org.as2lib.data.type.Integer extends Number implements BasicInterface {
 	}
 	
 	/**
-	 * Returns this integer number.
+	 * Returns this integer as number.
 	 * 
 	 * @return this integer as number
 	 */
