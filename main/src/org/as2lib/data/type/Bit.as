@@ -213,6 +213,16 @@ class org.as2lib.data.type.Bit extends BasicClass {
 	}
 	
 	/**
+	 * Returns this value in bytes.
+	 * 
+	 * @return this value in bytes
+	 * @see #getBytes
+	 */
+	public function valueOf():Object {
+		return getBytes();
+	}
+	
+	/**
 	 * Extended toString method for a well formatted bit value.
 	 * 
 	 * <p>This method uses the next matching size and adds the matching Shortname for it.
@@ -241,10 +251,4 @@ class org.as2lib.data.type.Bit extends BasicClass {
 		}
 	}
 	
-	/**
-	 * 
-	 */
-	public function valueOf():Number {
-		return getBytes();
-	}
 }

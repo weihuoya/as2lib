@@ -37,11 +37,11 @@ class org.as2lib.data.type.Degree extends Number implements Angle {
 	}
 	
 	/**
-	 * Returns the angle in degree as number.
+	 * Returns this angle in degree.
 	 * 
-	 * @return the angle in degree as number
+	 * @return this angle in degree
 	 */
-	public function valueOf(Void):Number {
+	public function toNumber(Void):Number {
 		return degree;
 	}
 	
@@ -51,7 +51,7 @@ class org.as2lib.data.type.Degree extends Number implements Angle {
 	 * @return the angle in radian
 	 */
 	public function toRadian(Void):Number {
-		return (degree * Math.PI/180);
+		return (degree * Math.PI / 180);
 	}
 	
 	/**
@@ -60,6 +60,15 @@ class org.as2lib.data.type.Degree extends Number implements Angle {
 	 * @return the angle in degree
 	 */
 	public function toDegree(Void):Number {
+		return degree;
+	}
+	
+	/**
+	 * Returns the angle in degree as number.
+	 * 
+	 * @return the angle in degree as number
+	 */
+	public function valueOf():Object {
 		return degree;
 	}
 	
