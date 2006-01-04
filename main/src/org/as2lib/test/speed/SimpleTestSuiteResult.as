@@ -73,9 +73,9 @@ class org.as2lib.test.speed.SimpleTestSuiteResult extends AbstractTestSuiteResul
 	 */
 	public function toString():String {
 		var rootTestResult:TestSuiteResult = TestSuiteResult(arguments[0]);
-		if (!rootTestResult) rootTestResult = getThis();
+		if (!rootTestResult) rootTestResult = thiz;
 		var result:String = getTimePercentage(rootTestResult.getTime()) + "%";
-		result += ", " + getThis().getTime() + " ms";
+		result += ", " + thiz.getTime() + " ms";
 		result += " - " + getMethodInvocationPercentage(rootTestResult.getMethodInvocationCount()) + "%";
 		result += ", " + getMethodInvocationCount() + " inv.";
 		result += " - " + getAverageTime() + " ms/inv.";
@@ -84,8 +84,8 @@ class org.as2lib.test.speed.SimpleTestSuiteResult extends AbstractTestSuiteResul
 		} else if (getTestResultCount() == 1 && !TestSuiteResult(this.testResults[0]).hasMethodInvocations()) {
 			result += " - " + this.testResults[0].getName();
 		} else {
-			result += " - " + getThis().getName();
-			var totalTime:Number = getThis().getTime();
+			result += " - " + thiz.getName();
+			var totalTime:Number = thiz.getTime();
 			for (var i:Number = 0; i < this.testResults.length; i++) {
 				var testResult:TestResult = this.testResults[i];
 				if (TestSuiteResult(testResult).hasMethodInvocations()
