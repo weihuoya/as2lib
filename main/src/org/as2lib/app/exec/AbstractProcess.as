@@ -256,7 +256,7 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	 * 
 	 * @throws AbstractOperationException if the method was not extended
 	 */
-	private function run(Void):Void {
+	private function run() {
 		throw new AbstractOperationException(".run is abstract and has to be implemented.", this, arguments);
 	}
 	

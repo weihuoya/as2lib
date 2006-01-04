@@ -158,7 +158,7 @@ class org.as2lib.test.unit.TestCaseRunner
 	/**
 	 * Implementation of {@link AbstractProcess#run} for the start of the {@code Process}.
 	 */
-	private function run(Void):Void {
+	private function run() {
 		working = true;
 		// Processor to manage the concrete processing of the TestCase
 		Processor.getInstance().addStepByStepProcess(this);
