@@ -38,6 +38,12 @@ import org.as2lib.env.reflect.ReflectUtil;
  */
 class org.as2lib.env.log.aspect.TraceLoggingAspect extends IndentedLoggingAspect {
 	
+	/** The default logged join points pointcut. */
+	public static var DEFAULT_LOGGED_JOIN_POINTS_POINTCUT:String = "execution(* ..*.*()) && !within(org.as2lib.env.log.aspect.TraceLoggingAspect) && !within(org.as2lib.env.log.aspect.IndentedLoggingAspect)";
+
+	/** The default logging methods pointcut. */
+	public static var DEFAULT_LOGGING_METHODS_POINTCUT:String = "execution(org.as2lib.env.log.logger.SimpleHierarchicalLogger.debug())";
+	
 	/** This class's logger. */
 	private static var logger:Logger;
 	
@@ -70,13 +76,8 @@ class org.as2lib.env.log.aspect.TraceLoggingAspect extends IndentedLoggingAspect
 	 * log messages
 	 */
 	public function TraceLoggingAspect(loggedJoinPointsPointcut:String, loggingMethodsPointcut:String) {
-		if (loggedJoinPointsPointcut == null) {
-			loggedJoinPointsPointcut = "execution(* ..*.*()) && !within(org.as2lib.env.log.aspect.TraceLoggingAspect) && !within(org.as2lib.env.log.aspect.IndentedLoggingAspect)";
-		}
-		if (loggingMethodsPointcut == null) {
-			loggingMethodsPointcut = "execution(org.as2lib.env.log.logger.SimpleHierarchicalLogger.debug())";
-		}
-		super(loggedJoinPointsPointcut, loggingMethodsPointcut);
+		super(loggedJoinPointsPointcut == null ? DEFAULT_LOGGED_JOIN_POINTS_POINTCUT : loggedJoinPointsPointcut,
+				loggingMethodsPointcut == null ? DEFAULT_LOGGING_METHODS_POINTCUT : loggingMethodsPointcut);
 	}
 	
 	/**
