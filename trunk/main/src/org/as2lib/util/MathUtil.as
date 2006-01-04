@@ -97,7 +97,8 @@ class org.as2lib.util.MathUtil extends BasicClass {
 		if (n == 0) {
 			return 1;
 		}
-		var d:Number = n.valueOf(); // Performance Speed up (this way the instance will not be used anymore
+		// performance improvement (use the primitive not the instance)
+		var d:Number = n.toNumber();
 		var i:Number = d-1;
 		while (i) {
 			d = d*i;
@@ -119,7 +120,7 @@ class org.as2lib.util.MathUtil extends BasicClass {
 				r.push(i);
 			}
 		}
-		if (n != 0) r.push(n.valueOf());
+		if (n != 0) r.push(n.toNumber());
 		return r;
 	}
 	
