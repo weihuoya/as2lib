@@ -49,11 +49,20 @@ class org.as2lib.data.type.Integer extends Number implements BasicInterface {
 	}
 	
 	/**
+	 * Returns this integer number.
+	 * 
+	 * @return this integer as number
+	 */
+	public function toNumber(Void):Number {
+		return int;
+	}
+	
+	/**
 	 * Returns this integer as number.
 	 * 
 	 * @return this integer as number
 	 */
-	public function valueOf(Void):Number {
+	public function valueOf():Object {
 		return int;
 	}
 	

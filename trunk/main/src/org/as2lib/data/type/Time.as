@@ -334,8 +334,10 @@ class org.as2lib.data.type.Time extends BasicClass {
 	 * Returns the value of the time distance (in ms).
 	 * 
 	 * @return value in ms
+	 * @see #inMilliSeconds
 	 */
-	public function valueOf():Number {
+	public function valueOf():Object {
 		return ms;
 	}
+	
 }
