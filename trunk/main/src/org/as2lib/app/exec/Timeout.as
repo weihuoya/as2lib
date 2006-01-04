@@ -151,7 +151,7 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExec
 	 * <p>Implementation of {@link AbstractProcess#run} for using it as a
 	 * process.
 	 */
-	public function run(Void):Void {
+	public function run() {
 		execute.apply(this, arguments);
 	}
 	
