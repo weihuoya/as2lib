@@ -18,6 +18,7 @@ class org.as2lib.lang.MergedLocale extends ConcreteLocale {
 	}
 	
 	public function getMessage(key:String, defaultValue:String, args:Array):String { 
+		return null;
 	}
 	
 	public function getLocaleCode(Void):String {
