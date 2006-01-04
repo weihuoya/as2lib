@@ -51,19 +51,14 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	/** Test results of all sub-tests. */
 	private var testResults:Array;
 	
+	/** This instance properly typed. */
+	private var thiz:TestSuiteResult;
+	
 	/**
 	 * Constructs a new {@code AbstractTestSuiteResult} instance.	 */
 	private function AbstractTestSuiteResult(Void) {
 		this.testResults = new Array();
-	}
-	
-	/**
-	 * Returns this instance with correct type. This is needed for proper compile-time
-	 * checks.
-	 * 
-	 * @return this instance with its correct type	 */
-	private function getThis(Void):TestSuiteResult {
-		return TestSuiteResult(this);
+		thiz = TestSuiteResult(this);
 	}
 	
 	/**
@@ -72,7 +67,7 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	 * @return the time needed per method invocation
 	 */
 	public function getAverageTime(Void):Number {
-		return (Math.round((getThis().getTime() / getThis().getMethodInvocationCount()) * 100) / 100);
+		return (Math.round((thiz.getTime() / thiz.getMethodInvocationCount()) * 100) / 100);
 	}
 	
 	/**
@@ -103,7 +98,7 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	 * {@code false}
 	 */
 	public function hasMethodInvocations(Void):Boolean {
-		return (getThis().getAllMethodInvocations().length > 0);
+		return (thiz.getAllMethodInvocations().length > 0);
 	}
 	
 	/**
@@ -112,7 +107,7 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	 * @return the total number of method invocations
 	 */
 	public function getMethodInvocationCount(Void):Number {
-		return getThis().getAllMethodInvocations().length;
+		return thiz.getAllMethodInvocations().length;
 	}
 	
 	/**
@@ -124,7 +119,7 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	 * @return the percentage of method invocations of this result
 	 */
 	public function getMethodInvocationPercentage(totalMethodInvocationCount:Number):Number {
-		return (Math.round((getThis().getMethodInvocationCount() / totalMethodInvocationCount) * 10000) / 100);
+		return (Math.round((thiz.getMethodInvocationCount() / totalMethodInvocationCount) * 10000) / 100);
 	}
 	
 	/**
@@ -313,7 +308,7 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	 * percentage.
 	 */
 	private function getTimePercentageComparator(Void):Function {
-		var scope:TestResult = getThis();
+		var scope:TestResult = thiz;
 		// returning function directly is not flex compatible
 		// flex compiler would not recognize return statement
 		// seems to be a flex compiler bug
@@ -358,7 +353,7 @@ class org.as2lib.test.speed.AbstractTestSuiteResult extends AbstractTestResult {
 	 * count in percentage
 	 */
 	private function getMethodInvocationPercentageComparator(Void):Function {
-		var scope:TestSuiteResult = getThis();
+		var scope:TestSuiteResult = thiz;
 		// returning function directly is not flex compatible
 		// flex compiler would not recognize return statement
 		// seems to be a flex compiler bug

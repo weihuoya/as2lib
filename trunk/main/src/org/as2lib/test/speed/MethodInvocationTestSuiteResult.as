@@ -79,15 +79,15 @@ class org.as2lib.test.speed.MethodInvocationTestSuiteResult extends AbstractTest
 	 */
 	public function toString():String {
 		var rootTestResult:TestSuiteResult = TestSuiteResult(arguments[0]);
-		if (!rootTestResult) rootTestResult = getThis();
+		if (!rootTestResult) rootTestResult = thiz;
 		var result:String = getTimePercentage(rootTestResult.getTime()) + "%";
-		result += ", " + getThis().getTime() + " ms";
+		result += ", " + thiz.getTime() + " ms";
 		result += " - " + getMethodInvocationPercentage(rootTestResult.getMethodInvocationCount()) + "%";
 		result += ", " + getMethodInvocationCount() + " inv.";
 		result += " - " + getAverageTime() + " ms/inv.";
 		result += " - " + getName();
 		if (hasTestResults()) {
-			var totalTime:Number = getThis().getTime();
+			var totalTime:Number = thiz.getTime();
 			for (var i:Number = 0; i < this.testResults.length; i++) {
 				var testResult:TestResult = this.testResults[i];
 				if (TestSuiteResult(testResult).hasMethodInvocations()
