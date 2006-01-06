@@ -6,6 +6,10 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="1">
+				<day value="6">
+					<entry type="add" package="org.as2lib.data.holder" class="Properties" method="putAll">Copies all key-value pairs from the given source.</entry>
+					<entry type="add" package="org.as2lib.data.holder" class="Properties" method="clear">Removes all key-value pairs.</entry>
+				</day>
 				<day value="2">
 					<entry type="add" package="org.as2lib.env.except" class="Throwable" method="contains">Checks whether the throwable is of a given type or has a nested cause of a given type.</entry>
 				</day>

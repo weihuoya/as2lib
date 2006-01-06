@@ -60,4 +60,16 @@ interface org.as2lib.data.holder.Properties extends BasicInterface {
 	 */
 	public function getValues(Void):Array;
 	
+	/**
+	 * Copies all properties from the given {@code source} to this instance.
+	 * 
+	 * @param source the properties to copy to this instance
+	 */
+	public function putAll(source:Properties):Void;
+	
+	/**
+	 * Removes all properties (key-value pairs).
+	 */
+	public function clear(Void):Void;
+	
 }
