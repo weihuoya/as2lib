@@ -110,4 +110,27 @@ class org.as2lib.data.holder.properties.SimpleProperties extends BasicClass impl
 		return v.concat();
 	}
 	
+	/**
+	 * Copies all properties from the given {@code source} to this instance.
+	 * 
+	 * @param source the properties to copy to this instance
+	 */
+	public function putAll(source:Properties):Void {
+		var values:Array = source.getValues();
+		var keys:Array = source.getKeys();
+		var l:Number = keys.length;
+		for (var i:Number = 0; i < l; i = i-(-1)) {
+			setProp(keys[i], values[i]);
+		}
+	}
+	
+	/**
+	 * Removes all properties (key-value pairs).
+	 */
+	public function clear(Void):Void {
+		i = new Object();
+		k = new Array();
+		v = new Array();
+	}
+	
 }
