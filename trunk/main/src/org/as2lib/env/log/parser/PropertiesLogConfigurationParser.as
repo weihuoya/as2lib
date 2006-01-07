@@ -22,8 +22,6 @@ import org.as2lib.env.log.LogConfigurationParser;
 import org.as2lib.env.log.LogManager;
 import org.as2lib.env.log.parser.AbstractLogConfigurationParser;
 import org.as2lib.env.log.parser.LogConfigurationParseException;
-import org.as2lib.env.reflect.ClassNotFoundException;
-import org.as2lib.env.reflect.NoSuchMethodException;
 
 /**
  * {@code PropertiesLogConfigurationParser} parses log configuration files in
@@ -128,12 +126,7 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 	 * parse
 	 * @throws IllegalArgumentException if argument {@code xmlLogConfiguration} is
 	 * {@code null} or {@code undefined}
-	 * @throws LogConfigurationParseException if you try to set a property on an instance
-	 * that does not exist
-	 * @throws ClassNotFoundException if a class corresponding to a given class name could
-	 * not be found
-	 * @throws NoSuchMethodException if a method with a given name does not exist on the
-	 * bean to create
+	 * @throws LogConfigurationParseException in case of parse errors
 	 */
 	public function parse(propertiesLogConfiguration:String):Void {
 		if (propertiesLogConfiguration == null) {
@@ -178,7 +171,7 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 				var className:String = value.substr(1);
 				var clazz:Function = findClass(className);
 				if (clazz == null) {
-					throw new ClassNotFoundException("A class corresponding to the class name [" + className + "] of key [" + key + "] could not be found. You either misspelled the class name or forgot to import the class in your swf.", this, arguments);
+					throw new LogConfigurationParseException("A class corresponding to the class name [" + className + "] of key [" + key + "] could not be found. You either misspelled the class name or forgot to import the class in your swf.", this, arguments);
 				}
 				properties[key] = {v: clazz, a: new Array()};
 				properties.push(key);
@@ -212,11 +205,11 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 		var instance = new Object();
 		instance.__proto__ = clazz.prototype;
 		instance.__constructor__ = clazz;
-		var arguments:Array = new Array();
+		var args:Array = new Array();
 		for (var i:Number = 0; i < object.a.length; i++) {
-			arguments.push(properties[object.a[i]].v);
+			args.push(properties[object.a[i]].v);
 		}
-		clazz.apply(instance, arguments);
+		clazz.apply(instance, args);
 		object.v = instance;
 		object.a = null;
 	}
@@ -240,7 +233,7 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 		if (!existsMethod(bean, methodName)) {
 			methodName = generateMethodName("set", propertyName);
 			if (!existsMethod(bean, methodName)) {
-				throw new NoSuchMethodException("Neither a method with name [" + generateMethodName("add", propertyName) + "] nor [" + methodName + "] exists on bean [" + propertyPath + "].", this, arguments);
+				throw new LogConfigurationParseException("Neither a method with name [" + generateMethodName("add", propertyName) + "] nor [" + methodName + "] exists on bean [" + propertyPath + "].", this, arguments);
 			}
 		}
 		bean[methodName](value);
