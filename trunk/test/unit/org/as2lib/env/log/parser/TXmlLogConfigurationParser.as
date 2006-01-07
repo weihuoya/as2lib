@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
+import org.as2lib.env.log.parser.LogManagerStub;
 import org.as2lib.env.log.parser.XmlLogConfigurationParser;
 import org.as2lib.test.mock.MockControl;
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.env.reflect.NoSuchMethodException;
-import org.as2lib.env.log.parser.LogManagerStub;
 
 /**
  * @author Simon Wacker
@@ -81,13 +80,13 @@ class org.as2lib.env.log.parser.TXmlLogConfigurationParser extends TestCase {
 		var p:XmlLogConfigurationParser = new XmlLogConfigurationParser(Object);
 		try {
 			p.parse("<logging><repository></repository></logging>");
-			fail("expected NoSuchMethodException for child node 'repository'");
-		} catch (e:org.as2lib.env.reflect.NoSuchMethodException) {
+			fail("expected LogConfigurationParseException for child node 'repository'");
+		} catch (e:org.as2lib.env.log.parser.LogConfigurationParseException) {
 		}
 		try {
 			p.parse("<logging><repository></repository></logging>");
-			fail("expected NoSuchMethodException for child node 'logger'");
-		} catch (e:org.as2lib.env.reflect.NoSuchMethodException) {
+			fail("expected LogConfigurationParseException for child node 'logger'");
+		} catch (e:org.as2lib.env.log.parser.LogConfigurationParseException) {
 		}
 	}
 	
@@ -125,8 +124,8 @@ class org.as2lib.env.log.parser.TXmlLogConfigurationParser extends TestCase {
 		var p:XmlLogConfigurationParser = new XmlLogConfigurationParser(m);
 		try {
 			p.parse("<logging><repository class='org.as2lib.env.log.repository.UnknownLoggerRepository'></repository></logging>");
-			fail("expected ClassNotFoundException");
-		} catch (e:org.as2lib.env.reflect.ClassNotFoundException) {
+			fail("expected LogConfigurationParseException");
+		} catch (e:org.as2lib.env.log.parser.LogConfigurationParseException) {
 		}
 		
 		m.verify();
@@ -157,8 +156,8 @@ class org.as2lib.env.log.parser.TXmlLogConfigurationParser extends TestCase {
 		var p:XmlLogConfigurationParser = new XmlLogConfigurationParser(m);
 		try {
 			p.parse("<logging><repository class='Object'><unknownNode></unknownNode></repository></logging>");
-			fail("expected NoSuchMethodException");
-		} catch (e:org.as2lib.env.reflect.NoSuchMethodException) {
+			fail("expected LogConfigurationParseException");
+		} catch (e:org.as2lib.env.log.parser.LogConfigurationParseException) {
 		}
 		
 		m.verify();
@@ -208,8 +207,8 @@ class org.as2lib.env.log.parser.TXmlLogConfigurationParser extends TestCase {
 		var p:XmlLogConfigurationParser = new XmlLogConfigurationParser(m);
 		try {
 			p.parse("<logging><repository class='Object' unknownAttribute='blubber'></repository></logging>");
-			fail("expected NoSuchMethodException");
-		} catch (e:org.as2lib.env.reflect.NoSuchMethodException) {
+			fail("expected LogConfigurationParseException");
+		} catch (e:org.as2lib.env.log.parser.LogConfigurationParseException) {
 		}
 		
 		m.verify();
@@ -223,8 +222,9 @@ class org.as2lib.env.log.parser.TXmlLogConfigurationParser extends TestCase {
 		org.as2lib.env.log.parser.LevelStub.testCase = this;
 		
 		var c:String = "<logging>";
-		c += "  <register name='logger' class='org.as2lib.env.log.parser.LoggerStub'/>";
-		c += "  <register name='handler' class='org.as2lib.env.log.parser.HandlerStub'/>";
+		c += "  <register id='level' name='forName' class='org.as2lib.env.log.level.AbstractLogLevel' type='method'/>";
+		c += "  <register id='logger' class='org.as2lib.env.log.parser.LoggerStub'/>";
+		c += "  <register id='handler' class='org.as2lib.env.log.parser.HandlerStub'/>";
 		c += "  <repository class='org.as2lib.env.log.parser.RepositoryStub'>";
 		c += "    <logger level='FATAL' class='org.as2lib.env.log.parser.SpecialLoggerStub'>";
 		c += "      <name>com.simonwacker.test</name>";
