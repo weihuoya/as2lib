@@ -154,7 +154,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 	 * @return new instance with the resulting amount of time
 	 */
 	public function plus(timeDifference:Time):Time {
-		return new Time(ms+timeDifference.valueOf());
+		return new Time(ms + timeDifference.inMilliSeconds());
 	}
 	
 	/**
@@ -164,7 +164,7 @@ class org.as2lib.data.type.Time extends BasicClass {
 	 * @return new instance with the resulting amount of time
 	 */
 	public function minus(timeDifference:Time):Time {
-		return new Time(ms-timeDifference.valueOf());
+		return new Time(ms - timeDifference.inMilliSeconds());
 	}
 	
 	/**
