@@ -38,7 +38,7 @@ class org.as2lib.env.log.parser.RepositoryStub {
 	public function RepositoryStub(Void) {
 		count++;
 		if (count == 1) {
-			testCase["assertSame"]("RepositoryStub.new: unexpected args", arguments.length, 0);
+			testCase["assertSame"]("RepositoryStub.new: unexpected args [" + arguments + "]", arguments.length, 0);
 		} else {
 			testCase["fail"]("RepositoryStub.new: unexpected inv.");
 		}
