@@ -6,6 +6,10 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="1">
+				<day value="9">
+					<entry type="add" package="org.as2lib.bean">Support for beans and bean factories.</entry>
+					<entry type="add" package="org.as2lib.context">Support for application contexts.</entry>
+				</day>
 				<day value="6">
 					<entry type="add" package="org.as2lib.data.holder" class="Properties" method="putAll">Copies all key-value pairs from the given source.</entry>
 					<entry type="add" package="org.as2lib.data.holder" class="Properties" method="clear">Removes all key-value pairs.</entry>
