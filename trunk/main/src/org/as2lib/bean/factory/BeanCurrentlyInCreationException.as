@@ -22,7 +22,7 @@ import org.as2lib.bean.factory.BeanCreationException;
 class org.as2lib.bean.factory.BeanCurrentlyInCreationException extends BeanCreationException {
 	
 	public function BeanCurrentlyInCreationException(beanName:String, message:String, scope, args:Array) {
-		super(null, beanName, (message == null ? "Requested bean is currently in creation." : message), scope, args);
+		super(null, beanName, (message == null ? "Requested bean is currently in creation: Is there an unresolvable circular reference?" : message), scope, args);
 	}
 	
 }
