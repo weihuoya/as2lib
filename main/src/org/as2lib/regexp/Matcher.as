@@ -285,10 +285,10 @@ class org.as2lib.regexp.Matcher extends BasicClass {
         if (result) {
             var temp:String = new String();
             do {
-                appendReplacement(temp, replacement);
+                temp = appendReplacement(temp, replacement);
                 result = find();
             } while (result);
-            appendTail(temp);
+            temp = appendTail(temp);
             return temp;
         }
         return text;
@@ -298,9 +298,9 @@ class org.as2lib.regexp.Matcher extends BasicClass {
         var temp:String = new String();
         reset();
         if (find()) {
-        	appendReplacement(temp, replacement);
+        	temp = appendReplacement(temp, replacement);
         }
-        appendTail(temp);
+        temp = appendTail(temp);
         return temp;
     }
 

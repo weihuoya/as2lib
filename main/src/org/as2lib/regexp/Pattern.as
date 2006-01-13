@@ -438,7 +438,6 @@ class org.as2lib.regexp.Pattern extends BasicClass
                 } else {
                     tail.setNext(node);
                 }
-                
                 // Double return:Tail was returned in root
                 tail = root;
                 continue;
@@ -506,7 +505,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
                 throwError("Dangling meta character '" + chr(ch) + "'", arguments);
             }
             else { 
-	            if (ch == 0) {
+	            if (ch == AsciiUtil.CHAR_NUL) {
 	                if (cursor >= patternLength) {
 	                    break;
 	                }
@@ -545,7 +544,6 @@ class org.as2lib.regexp.Pattern extends BasicClass
                     cursor = prev;    
                     first--;
                 }
-            // check for "$", ".", "^", "(", "[", "|", ")"
         	} else if (ch == AsciiUtil.CHAR_DOLLAR ||
         			 ch == AsciiUtil.CHAR_PERIOD ||
         			 ch == AsciiUtil.CHAR_CIRC ||
@@ -554,7 +552,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
         			 ch == AsciiUtil.CHAR_VERBAR ||
         			 ch == AsciiUtil.CHAR_RPAR	)
         	{
-                break;
+                // skip char
         	} else if (ch == AsciiUtil.CHAR_BSOL) { 
                 ch = nextEscapedChar();
                 if (ch == AsciiUtil.CHAR_LOW_P || ch == AsciiUtil.CHAR_P) { 
@@ -575,8 +573,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
                             return parseFamily(comp, oneLetter);
                         }
                     }
-                }
-                else {
+                } else {
 	                unreadChar();
 	                prev = cursor;
 	                ch = parseEscape(false, first == 0);
@@ -592,7 +589,7 @@ class org.as2lib.regexp.Pattern extends BasicClass
 	                cursor = prev;
                 }
         	} else {
-        		if (ch == 0) {
+        		if (ch == AsciiUtil.CHAR_NUL) {
 	                if (cursor >= patternLength) {
 	                    break;
 	                }
