@@ -317,8 +317,14 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			bd.setLazyInit(TRUE_VALUE == lazyInit);
 			return BeanDefinition(bd);
 		}
+		catch (exception:org.as2lib.bean.factory.BeanDefinitionStoreException) {
+			throw exception;
+		}
 		catch (exception:org.as2lib.env.reflect.ClassNotFoundException) {
 			throw (new BeanDefinitionStoreException(beanName, "Bean class [" + className + "] not found.", this, arguments)).initCause(exception);
+		}
+		catch (exception) {
+			throw (new BeanDefinitionStoreException(beanName, "Unexpected failure during bean definition parsing.", this, arguments)).initCause(exception);
 		}
 	}
 	
@@ -387,7 +393,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	 * Parse a constructor-arg element.
 	 */
 	private function parseConstructorArgElement(element:XMLNode, beanName:String, argumentValues:ConstructorArgumentValues):Void {
-		var value = parseProperty(element, beanName, null);
+		var value = parsePropertyValue(element, beanName, null);
 		var indexAttribute:String = element.attributes[INDEX_ATTRIBUTE];
 		var typeAttribute:String = element.attributes[TYPE_ATTRIBUTE];
 		var type:Function;
@@ -423,7 +429,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		if (propertyValues.contains(propertyName)) {
 			throw new BeanDefinitionStoreException(beanName, "Multiple 'property' definitions for property '" + propertyName + "'.", this, arguments);
 		}
-		var value = parseProperty(element, beanName, propertyName);
+		var value = parsePropertyValue(element, beanName, propertyName);
 		var typeName:String = element.attributes[TYPE_ATTRIBUTE];
 		var type:Function;
 		if (typeName != null && typeName != "") {
@@ -439,7 +445,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	 * Get the value of a property element. May be a list etc.
 	 * Also used for constructor arguments, "propertyName" being null in this case.
 	 */
-	private function parseProperty(element:XMLNode, beanName:String, propertyName:String) {
+	private function parsePropertyValue(element:XMLNode, beanName:String, propertyName:String) {
 		var elementName:String;
 		if (propertyName == null) {
 			elementName = "<constructor-arg> element";
@@ -466,6 +472,9 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			throw new BeanDefinitionStoreException(beanName, elementName + " is only allowed to contain either a 'ref' attribute or a 'value' attribute or a sub-element.", this, arguments);
 		}
 		if (refAttribute != null) {
+			if (refAttribute == "") {
+				throw new BeanDefinitionStoreException(beanName, elementName + " contains empty 'ref' attribute.", this, arguments);
+			}
 			return new RuntimeBeanReference(element.attributes[REF_ATTRIBUTE]);
 		}
 		if (valueAttribute != null) {
@@ -490,20 +499,25 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		}
 		if (element.nodeName == REF_ELEMENT) {
 			// A generic reference to any name of any bean.
-			var beanRef:String = element.attributes[BEAN_REF_ATTRIBUTE];
-			if (beanRef == null || beanRef == "") {
+			var refName:String = element.attributes[BEAN_REF_ATTRIBUTE];
+			var toParent:Boolean = false;
+			if (refName == null || refName == "") {
 				// A reference to the id of another bean in the same XML file.
-				beanRef = element.attributes[LOCAL_REF_ATTRIBUTE];
-				if (beanRef == null || beanRef == "") {
+				refName = element.attributes[LOCAL_REF_ATTRIBUTE];
+				if (refName == null || refName == "") {
 					// A reference to the id of another bean in a parent context.
-					beanRef = element.attributes[PARENT_REF_ATTRIBUTE];
-					if (beanRef == null || beanRef == "") {
+					refName = element.attributes[PARENT_REF_ATTRIBUTE];
+					toParent = true;
+					if (refName == null || refName == "") {
 						throw new BeanDefinitionStoreException(beanName, "'bean', 'local' or 'parent' is required for a reference.", this, arguments);
 					}
-					return new RuntimeBeanReference(beanRef, true);
+					return new RuntimeBeanReference(refName, true);
 				}
 			}
-			return new RuntimeBeanReference(beanRef);
+			if (refName == null || refName == "") {
+				throw new BeanDefinitionStoreException(beanName, "<ref> element contains empty target attribute", this, arguments);
+			}
+			return new RuntimeBeanReference(refName);
 		}
 		if (element.nodeName == IDREF_ELEMENT) {
 			// A generic reference to any name of any bean.
@@ -512,7 +526,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 				// A reference to the id of another bean in the same XML file.
 				beanRef = element.attributes[LOCAL_REF_ATTRIBUTE];
 				if (beanRef == null || beanRef == "") {
-					throw new BeanDefinitionStoreException(beanName, "Either 'bean' or 'local' is required for an idref.", this, arguments);
+					throw new BeanDefinitionStoreException(beanName, "Either 'bean' or 'local' is required for <idref> element.", this, arguments);
 				}
 			}
 			return beanRef;
@@ -597,6 +611,9 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 				key = keyAttribute;
 			}
 			else if (keyRefAttribute != null) {
+				if (keyRefAttribute == "") {
+					throw new BeanDefinitionStoreException(beanName, "<entry> element contains empty 'key-ref' attribute.", this, arguments);
+				}
 				key = new RuntimeBeanReference(keyRefAttribute);
 			}
 			else if (keyElement != null) {
@@ -612,12 +629,15 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			if ((valueAttribute != null && valueRefAttribute != null) ||
 					((valueAttribute != null || valueRefAttribute != null)) && valueElement != null) {
 				throw new BeanDefinitionStoreException(beanName, "<entry> is only allowed to contain either " +
-						"a 'value' attribute OR a 'value-ref' attribute OR a value sub-element.", this, arguments);
+						"'value' attribute OR 'value-ref' attribute OR <value> sub-element.", this, arguments);
 			}
 			if (valueAttribute != null) {
 				value = valueAttribute;
 			}
-			else if (valueRefAttribute) {
+			else if (valueRefAttribute != null) {
+				if (valueRefAttribute == "") {
+					throw new BeanDefinitionStoreException(beanName, "<entry> element contains empty 'value-ref' attribute.", this, arguments);
+				}
 				value = new RuntimeBeanReference(valueRefAttribute);
 			}
 			else if (valueElement != null) {
@@ -667,6 +687,9 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		return properties;
 	}
 	
+	/**
+	 * Parse the merge attribute of a collection element, if any.
+	 */
 	private function parseMergeAttribute(collectionElement:XMLNode):Boolean {
 		var value:String = collectionElement.attributes[MERGE_ATTRIBUTE];
 		if (DEFAULT_VALUE == value) {
