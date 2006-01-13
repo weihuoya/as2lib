@@ -6,6 +6,10 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="1">
+				<day value="13">
+					<entry type="bugfix" package="org.as2lib.regexp" class="Matcher" method="replaceFirst">Replacement and tail addition to the result string is fixed</entry>
+					<entry type="bugfix" package="org.as2lib.regexp" class="Matcher" method="replaceAll">Replacement and tail addition to the result string is fixed</entry>
+				</day>
 				<day value="9">
 					<entry type="add" package="org.as2lib.bean">Support for beans and bean factories.</entry>
 					<entry type="add" package="org.as2lib.context">Support for application contexts.</entry>
