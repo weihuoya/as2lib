@@ -21,8 +21,8 @@ import org.as2lib.bean.InvalidPropertyException;
  */
 class org.as2lib.bean.NotReadablePropertyException extends InvalidPropertyException {
 	
-	public function NotReadablePropertyException(message:String, scope, args:Array) {
-		super(message, scope, args);
+	public function NotReadablePropertyException(bean, propertyName:String, scope, args:Array) {
+		super(bean, propertyName, "Bean property '" + propertyName + "' is not readable.", scope, args);
 	}
-
+	
 }

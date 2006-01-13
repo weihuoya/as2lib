@@ -20,17 +20,23 @@ import org.as2lib.bean.converter.BooleanConverter;
 import org.as2lib.bean.converter.ClassConverter;
 import org.as2lib.bean.converter.NumberConverter;
 import org.as2lib.bean.converter.StringArrayConverter;
+import org.as2lib.bean.InvalidPropertyException;
 import org.as2lib.bean.MethodInvocationException;
 import org.as2lib.bean.NotReadablePropertyException;
 import org.as2lib.bean.NotWritablePropertyException;
+import org.as2lib.bean.NullValueInNestedPathException;
+import org.as2lib.bean.PropertyAccessExceptionsException;
 import org.as2lib.bean.PropertyValue;
 import org.as2lib.bean.PropertyValueConverter;
 import org.as2lib.bean.PropertyValueConverterHolder;
 import org.as2lib.bean.PropertyValues;
+import org.as2lib.data.holder.List;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
+import org.as2lib.data.holder.map.PrimitiveTypeMap;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.overload.Overload;
+import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.util.ClassUtil;
 import org.as2lib.util.StringUtil;
 import org.as2lib.util.TextUtil;
@@ -41,193 +47,392 @@ import org.as2lib.util.TextUtil;
 class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements BeanWrapper {
 	
 	private var wrappedBean;
-	private var propertyValueConverters:Map;
+	private var nestedPath:String;
+	private var rootBean;
+	private var defaultConverters:Map;
+	private var customConverters:Map;
+	private var nestedBeanWrappers:Map;
 	
-	public function SimpleBeanWrapper(wrappedBean) {
-		setWrappedBean(wrappedBean);
-		propertyValueConverters = new HashMap();
-		registerPropertyValueConverter(Number, null, new NumberConverter());
-		registerPropertyValueConverter(Boolean, null, new BooleanConverter());
-		registerPropertyValueConverter(Function, null, new ClassConverter());
-		registerPropertyValueConverter(Array, null, new StringArrayConverter());
+	public function SimpleBeanWrapper(wrappedBean, nestedPath:String, rootBean) {
+		this.wrappedBean = wrappedBean;
+		this.nestedPath = nestedPath;
+		this.rootBean = rootBean;
+		defaultConverters = new HashMap();
+		defaultConverters.put(Number, new NumberConverter());
+		defaultConverters.put(Boolean, new BooleanConverter());
+		defaultConverters.put(Function, new ClassConverter());
+		defaultConverters.put(Array, new StringArrayConverter());
 	}
 	
-	public function hasWritableProperty(propertyName:String):Boolean {
-		var transformedPropertyName:String = transformPropertyName(propertyName);
-		if (isVariableName(propertyName)) {
-			// detection of whether variable is declared is not possible
-			return true;
+	public function isWritableProperty(propertyName:String):Boolean {
+		if (propertyName == null) {
+			throw new IllegalArgumentException("Cannot find writability status for 'null' property.", this, arguments);
 		}
-		if (isMethodName(propertyName)) {
-			return (wrappedBean[transformedPropertyName] != null);
+		if (getNestedPropertySeparatorIndex(propertyName) > -1) {
+			var nestedBeanWrapper:BeanWrapper;
+			try {
+				nestedBeanWrapper = getBeanWrapperForPropertyPath(propertyName);
+			}
+			catch (exception:org.as2lib.bean.InvalidPropertyException) {
+				// cannot be evaluated, so can't be writable
+			}
+			return nestedBeanWrapper.isWritableProperty(getFinalPath(propertyName));
 		}
-		return (wrappedBean["set" + transformedPropertyName] != null);
+		var tokens:Array = getPropertyNameTokens(propertyName);
+		return (findMethodName(SET_PROPERTY_PREFIXES, tokens.actualName) != null);
+	}
+	
+	public function isReadableProperty(propertyName:String):Boolean {
+		if (propertyName == null) {
+			throw new IllegalArgumentException("Cannot find readability status for 'null' property.", this, arguments);
+		}
+		if (getNestedPropertySeparatorIndex(propertyName) > -1) {
+			var nestedBeanWrapper:BeanWrapper;
+			try {
+				nestedBeanWrapper = getBeanWrapperForPropertyPath(propertyName);
+			}
+			catch (exception:org.as2lib.bean.InvalidPropertyException) {
+				// cannot be evaluated, so can't be readable
+			}
+			return nestedBeanWrapper.isReadableProperty(getFinalPath(propertyName));
+		}
+		var tokens:Array = getPropertyNameTokens(propertyName);
+		return (findMethodName(GET_PROPERTY_PREFIXES, tokens.actualName) != null);
+	}
+	
+	private function findMethodName(prefixes:Array, actualPropertyName:String):String {
+		actualPropertyName = TextUtil.ucFirst(actualPropertyName);
+		for (var i:Number = 0; i < prefixes.length; i++) {
+			try {
+				var methodName:String = prefixes[i] + actualPropertyName;
+				if (wrappedBean[methodName] != null) {
+					return methodName;
+				}
+			} catch (exception) {
+				// ignore exception that may be thrown by __resolve or a Flash property
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Get the last component of the path. Also works if not nested.
+	 * @param bw BeanWrapper to work on
+	 * @param nestedPath property path we know is nested
+	 * @return last component of the path (the property on the target bean)
+	 */
+	private function getFinalPath(nestedPath:String):String {
+		return nestedPath.substring(getNestedPropertySeparatorIndex(nestedPath, true) + 1);
+	}
+	
+	private function getBeanWrapperForPropertyPath(propertyPath:String):BeanWrapper {
+		var position:Number = getNestedPropertySeparatorIndex(propertyPath);
+		// handle nested properties recursively
+		if (position > -1) {
+			var nestedProperty:String = propertyPath.substring(0, position);
+			var nestedPath:String = propertyPath.substring(position + 1);
+			var nestedBeanWrapper:SimpleBeanWrapper = getNestedBeanWrapper(nestedProperty);
+			return nestedBeanWrapper.getBeanWrapperForPropertyPath(nestedPath);
+		}
+		return this;
+	}
+	
+	/**
+	 * Retrieve a BeanWrapper for the given nested property.
+	 * Create a new one if not found in the cache.
+	 * <p>Note: Caching nested BeanWrappers is necessary now,
+	 * to keep registered custom editors for nested properties.
+	 * @param nestedProperty property to create the BeanWrapper for
+	 * @return the BeanWrapper instance, either cached or newly created
+	 */
+	private function getNestedBeanWrapper(nestedProperty:String):SimpleBeanWrapper {
+		if (nestedBeanWrappers == null) {
+			nestedBeanWrappers = new PrimitiveTypeMap();
+		}
+		var tokens:Array = getPropertyNameTokens(nestedProperty);
+		var canonicalName:String = tokens.canonicalName;
+		var propertyValue = getPropertyValue(nestedProperty);
+		if (propertyValue == null) {
+			throw new NullValueInNestedPathException(wrappedBean, nestedPath + canonicalName);
+		}
+		// Lookup cached sub-BeanWrapper, create new one if not found.
+		var nestedBeanWrapper:SimpleBeanWrapper = nestedBeanWrappers.get(canonicalName);
+		if (nestedBeanWrapper == null || nestedBeanWrapper.getWrappedBean() != propertyValue) {
+			nestedBeanWrapper = new SimpleBeanWrapper(propertyValue, nestedPath + canonicalName + NESTED_PROPERTY_SEPARATOR, this);
+			// Inherit all type-specific PropertyEditors.
+			//copyDefaultPropertyValueConverters(nestedBeanWrapper);
+			copyCustomPropertyValueConverters(nestedBeanWrapper, canonicalName);
+			nestedBeanWrappers.put(canonicalName, nestedBeanWrapper);
+		}
+		return nestedBeanWrapper;
+	}
+	
+	/**
+	 * Copy the custom editors registered in this instance to the given target registry.
+	 * @param target the target registry to copy to
+	 * @param nestedProperty the nested property path of the target registry, if any.
+	 * If this is non-null, only editors registered for a path below this nested property
+	 * will be copied.
+	 */
+	private function copyCustomPropertyValueConverters(target:BeanWrapper, nestedProperty:String):Void {
+		var actualPropertyName:String = (nestedProperty != null ? getPropertyName(nestedProperty) : null);
+		if (customConverters != null) {
+			var values:Array = customConverters.getValues();
+			var keys:Array = customConverters.getKeys();
+			for (var i:Number = 0; i < keys.length; i++) {
+				if (keys[i] instanceof Function) {
+					var requiredType:Function = keys[i];
+					var converter:PropertyValueConverter = values[i];
+					target.registerPropertyValueConverter(requiredType, converter);
+					return;
+				}
+				if ((keys[i] instanceof String || typeof(keys[i]) == "string") && nestedProperty != null) {
+					var converterPath:String = keys[i];
+					var position:Number = getNestedPropertySeparatorIndex(converterPath);
+					if (position != -1) {
+						var converterNestedProperty = converterPath.substring(0, position);
+						var converterNestedPath:String = converterPath.substring(position + 1);
+						if (converterNestedProperty == nestedProperty || converterNestedProperty == actualPropertyName) {
+							var converterHolder:PropertyValueConverterHolder = values[i];
+							target.registerPropertyValueConverter(converterHolder.getRegisteredType(), converterNestedPath, converterHolder.getPropertyValueConverter());
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Return the actual property name for the given property path.
+	 * @param propertyPath the property path to determine the property name
+	 * for (can include property keys, for example for specifying a map entry)
+	 * @return the actual property name, without any key elements
+	 */
+	private function getPropertyName(propertyPath:String):String {
+		var separatorIndex:Number = propertyPath.indexOf(PROPERTY_KEY_PREFIX);
+		return (separatorIndex != -1 ? propertyPath.substring(0, separatorIndex) : propertyPath);
+	}
+	
+	/**
+	 * Parse the given property name into the corresponding property name tokens.
+	 * @param propertyName the property name to parse
+	 * @return representation of the parsed property tokens
+	 */
+	private function getPropertyNameTokens(propertyName:String):Array {
+		var tokens:Array = new Array();
+		var actualName:String;
+		var keys:Array = new Array();
+		var searchIndex:Number = 0;
+		while (searchIndex != -1) {
+			var keyStart:Number = propertyName.indexOf(PROPERTY_KEY_PREFIX, searchIndex);
+			searchIndex = -1;
+			if (keyStart != -1) {
+				var keyEnd:Number = propertyName.indexOf(PROPERTY_KEY_SUFFIX, keyStart + PROPERTY_KEY_PREFIX.length);
+				if (keyEnd != -1) {
+					if (actualName == null) {
+						actualName = propertyName.substring(0, keyStart);
+					}
+					var key:String = propertyName.substring(keyStart + PROPERTY_KEY_PREFIX.length, keyEnd);
+					if ((StringUtil.startsWith(key, "'") && StringUtil.endsWith(key, "'"))
+							|| (StringUtil.startsWith(key, "\"") && StringUtil.endsWith(key, "\""))) {
+						key = key.substring(1, key.length - 1);
+					}
+					keys.push(key);
+					searchIndex = keyEnd + PROPERTY_KEY_SUFFIX.length;
+				}
+			}
+		}
+		tokens.actualName = (actualName != null ? actualName : propertyName);
+		tokens.canonicalName = tokens.actualName;
+		if (keys.length > 0) {
+			tokens.canonicalName +=
+					PROPERTY_KEY_PREFIX +
+					arrayToDelimitedString(keys, PROPERTY_KEY_SUFFIX + PROPERTY_KEY_PREFIX) +
+					PROPERTY_KEY_SUFFIX;
+			tokens.keys = keys;
+		}
+		return tokens;
+	}
+	
+	/**
+	 * Convenience method to return a String array as a delimited (e.g. CSV)
+	 * String. E.g. useful for toString() implementations.
+	 * @param arr array to display. Elements may be of any type (toString
+	 * will be called on each element).
+	 * @param delim delimiter to use (probably a ",")
+	 */
+	public function arrayToDelimitedString(array:Array, delimiter:String) {
+		if (array == null) {
+			return "";
+		}
+		var result:String;
+		for (var i:Number = 0; i < array.length; i++) {
+			if (i > 0) {
+				result += delimiter;
+			}
+			result += array[i];
+		}
+		return result;
+	}
+	
+	private function getNestedPropertySeparatorIndex(propertyPath:String, last:Boolean):Number {
+		if (last == null) last = false;
+		var inKey:Boolean = false;
+		var length:Number = propertyPath.length;
+		var i:Number = (last ? length - 1 : 0);
+		while (last ? i >= 0 : i < length) {
+			switch (propertyPath.charAt(i)) {
+				case PROPERTY_KEY_PREFIX:
+				case PROPERTY_KEY_SUFFIX:
+					inKey = !inKey;
+					break;
+				case NESTED_PROPERTY_SEPARATOR:
+					if (!inKey) {
+						return i;
+					}
+			}
+			if (last) {
+				i--;
+			}
+			else {
+				i++;
+			}
+		}
+		return -1;
 	}
 	
 	public function getPropertyValue(propertyName:String) {
-		if (isNestedProperty(propertyName)) {
-			var oldWrappedBean = wrappedBean;
-			var nodes:Array = propertyName.split(NESTED_PROPERTY_SEPARATOR);
-			for (var i:Number = 0; i < nodes.length - 1; i++) {
-				wrappedBean = getPropertyValue(nodes[i]);
-			}
-			var value = getPropertyValue(nodes[nodes.length - 1]);
-			wrappedBean = oldWrappedBean;
-			return value;
+		if (getNestedPropertySeparatorIndex(propertyName) > -1) {
+			var nestedBeanWrapper:BeanWrapper = getBeanWrapperForPropertyPath(propertyName);
+			return nestedBeanWrapper.getPropertyValue(getFinalPath(propertyName));
 		}
-		var transformedPropertyName:String = transformPropertyName(propertyName);
-		var key:String = getKey(propertyName);
-		if (isVariableName(propertyName)) {
-			return getPropertyValueByVariableAccess(transformedPropertyName, key);
+		var tokens:Array = getPropertyNameTokens(propertyName);
+		var methodName:String = findMethodName(GET_PROPERTY_PREFIXES, tokens.actualName);
+		if (methodName == null) {
+			throw new NotReadablePropertyException(rootBean, nestedPath + propertyName, this, arguments);
 		}
-		if (isMethodName(propertyName)) {
-			return getPropertyValueByMethodInvocation(transformedPropertyName, key);
-		}
-		return getPropertyValueByMethodInvocation("get" + transformedPropertyName, key);
-	}
-	
-	private function getPropertyValueByVariableAccess(variableName:String, key:String) {
+		var keys:Array = tokens.keys;
+		var value;
 		try {
-			if (key != null) {
-				return wrappedBean[variableName][key];
-			}
-			return wrappedBean[variableName];
-		} catch (exception) {
-			throw (new MethodInvocationException("Variable get-access to variable '" + variableName + "' failed.", this, arguments)).initCause(exception);
-		}
-	}
-	
-	private function getPropertyValueByMethodInvocation(methodName:String, key:String) {
-		if (wrappedBean[methodName] == null) {
-			throw new NotReadablePropertyException("Method with name '" + methodName + "' does not exist on wrapped bean [" + wrappedBean + "].", this, arguments);
-		}
-		try {
-			if (key != null) {
+			if (keys.length == 1) {
+				var key:String = keys[0];
 				if (isNaN(key)) {
-					return wrappedBean[methodName](key);
+					value = wrappedBean[methodName](key);
 				} else {
-					return wrappedBean[methodName](Number(key));
+					value = wrappedBean[methodName](Number(key));
+				}
+			} else {
+				value = wrappedBean[methodName]();
+			}
+		}
+		catch (exception) {
+			throw (new MethodInvocationException(propertyName, "Method invocation of method '" + methodName +
+					"' on wrapped bean [" + wrappedBean + "] failed.", this, arguments)).initCause(exception);
+		}
+		if (keys != null) {
+			for (var i:Number = 0; i < keys.length; i++) {
+				var key:String = keys[i];
+				if (value == null) {
+					if (keys.length == 1) {
+						break;
+					}
+					throw new NullValueInNestedPathException(rootBean, nestedPath + propertyName,
+							"Cannot access indexed value of property referenced in indexed " +
+							"property path '" + propertyName + "': returned 'null'.", this, arguments);
+				}
+				// Array or Object may be associative arrays
+				if (value instanceof Array || value.__proto__ == Object.prototype) {
+					if (isNaN(key)) {
+						value = value[key];
+					} else {
+						value = value[Number(key)];
+					}
+				}
+				else if (value instanceof List) {
+					var list:List = value;
+					if (isNaN(key)) {
+						throw new InvalidPropertyException(rootBean, nestedPath + propertyName,
+								"Invalid index in property path '" + propertyName + "'", this, arguments);
+					}
+					value = list.get(Number(key));
+				}
+				else if (value instanceof Map) {
+					var map:Map = value;
+					if (isNaN(key)) {
+						value = map.get(key);
+					} else {
+						value = map.get(Number(key));
+					}
+				}
+				else {
+					if (keys.length == 1) {
+						break;
+					}
+					throw new InvalidPropertyException(rootBean, nestedPath + propertyName,
+							"Property referenced in indexed property path '" + propertyName +
+							"' is neither an Array nor a List nor a Map; returned value was [" + value + "].", this, arguments);
 				}
 			}
-			return wrappedBean[methodName]();
-		} catch (exception) {
-			throw (new MethodInvocationException("Method invocation of method '" + methodName + "' on wrapped bean [" + wrappedBean + "] failed.", this, arguments)).initCause(exception);
 		}
+		return value;
 	}
 	
 	public function setPropertyValue(propertyValue:PropertyValue):Void {
 		var propertyName:String = propertyValue.getName();
-		if (isNestedProperty(propertyName)) {
-			var oldWrappedBean = wrappedBean;
-			var nodes:Array = propertyName.split(NESTED_PROPERTY_SEPARATOR);
-			for (var i:Number = 0; i < nodes.length - 1; i++) {
-				wrappedBean = getPropertyValue(nodes[i]);
-			}
-			setPropertyValue(new PropertyValue(nodes[nodes.length - 1], propertyValue.getValue(), propertyValue.getType()));
-			wrappedBean = oldWrappedBean;
-			return;
-		}
-		var transformedPropertyName:String = transformPropertyName(propertyName);
-		var key:String = getKey(propertyName);
 		var value = convertPropertyValue(propertyValue);
-		if (isVariableName(propertyName)) {
-			setPropertyValueByVariableAccess(transformedPropertyName, key, value);
-			return;
-		}
-		if (isMethodName(propertyName)) {
-			setPropertyValueByMethodInvocation(transformedPropertyName, key, value);
-			return;
-		}
-		try {
-			setPropertyValueByMethodInvocation("set" + transformedPropertyName, key, value);
-		}
-		catch (exception:org.as2lib.bean.NotWritablePropertyException) {
+		if (getNestedPropertySeparatorIndex(propertyName) > -1) {
+			var nestedBeanWrapper:BeanWrapper;
 			try {
-				setPropertyValueByMethodInvocation("add" + transformedPropertyName, key, value);
+				nestedBeanWrapper = getBeanWrapperForPropertyPath(propertyName);
 			}
-			catch (ex:org.as2lib.bean.NotWritablePropertyException) {
-				setPropertyValueByMethodInvocation("put" + transformedPropertyName, key, value);
+			catch (exception:org.as2lib.bean.NotReadablePropertyException) {
+				throw (new NotWritablePropertyException(rootBean, nestedPath + propertyName,
+						"Nested property in path '" + propertyName + "' does not exist.", this, arguments)).initCause(exception);
 			}
+			nestedBeanWrapper.setPropertyValue(new PropertyValue(getFinalPath(propertyName), value, propertyValue.getType()));
+			return;
 		}
-	}
-	
-	private function setPropertyValueByVariableAccess(variableName, key, propertyValue):Void {
+		var tokens:Array = getPropertyNameTokens(propertyName);
+		var methodName:String = findMethodName(SET_PROPERTY_PREFIXES, tokens.actualName);
+		if (methodName == null) {
+			throw new NotWritablePropertyException(rootBean, nestedPath + propertyName,
+					"Bean property '" + propertyName + "' is not writable.", this, arguments);
+		}
+		var keys:Array = tokens.keys;
 		try {
-			if (key != null) {
-				wrappedBean[variableName][key] = propertyValue;
-			} else {
-				wrappedBean[variableName] = propertyValue;
-			}
-		} catch (exception) {
-			throw (new MethodInvocationException("Variable set-access to variable '" + variableName + "' failed.", this, arguments)).initCause(exception);
-		}
-	}
-	
-	private function setPropertyValueByMethodInvocation(methodName, key, value):Void {
-		if (wrappedBean[methodName] == null) {
-			throw new NotWritablePropertyException("Method with name '" + methodName + "' does not exist on wrapped bean [" + wrappedBean + "].", this, arguments);
-		}
-		try {
-			if (key != null) {
-				if (isNaN(key)) {
-					wrappedBean[methodName](key, value);
+			if (keys != null) {
+				if (keys.length == 1) {
+					var key:String = keys[0];
+					if (isNaN(key)) {
+						wrappedBean[methodName](key, value);
+					} else {
+						wrappedBean[methodName](Number(key), value);
+					}
 				} else {
-					wrappedBean[methodName](Number(key), value);
+					// TODO: get property for all keys except last one and set property of returned property to value
 				}
 			} else {
 				wrappedBean[methodName](value);
 			}
-		} catch (exception) {
-			throw (new MethodInvocationException("Method invocation of method '" + methodName + "' on wrapped bean [" + wrappedBean + "] failed.", this, arguments)).initCause(exception);
 		}
-	}
-	
-	private function isNestedProperty(propertyName:String):Boolean {
-		return (propertyName.indexOf(NESTED_PROPERTY_SEPARATOR) > -1);
-	}
-	
-	private function isVariableName(name:String):Boolean {
-		return (name.indexOf(VARIABLE_PREFIX) == 0);
-	}
-	
-	private function isMethodName(name:String):Boolean {
-		return (name.indexOf(METHOD_PREFIX) == 0);
-	}
-	
-	private function getKey(propertyName:String):String {
-		if (propertyName.indexOf(PROPERTY_KEY_PREFIX) < 0 && propertyName.charAt(propertyName.length-1) != PROPERTY_KEY_SUFFIX) {
-			return null;
+		catch (exception) {
+			throw (new MethodInvocationException(propertyName, "Method invocation of method '" + methodName +
+					"' on wrapped bean [" + wrappedBean + "] failed.", this, arguments)).initCause(exception);
 		}
-		var key:String = propertyName.substring(propertyName.indexOf(PROPERTY_KEY_PREFIX) + 1, propertyName.length - 1);
-		if (key.indexOf("\"") > -1) {
-			return key.substring(key.indexOf("\"") + 1, key.lastIndexOf("\""));
-		}
-		if (key.indexOf("'") > -1) {
-			return key.substring(key.indexOf("'") + 1, key.lastIndexOf("'"));
-		}
-		return key;
-	}
-	
-	private function transformPropertyName(propertyName:String):String {
-		if (propertyName == null || propertyName == "") {
-			throw new IllegalArgumentException("Name of property must not be 'null', 'undefined' or empty.", this, arguments);
-		}
-		if (StringUtil.startsWith(propertyName, VARIABLE_PREFIX)) {
-			return propertyName.substring(VARIABLE_PREFIX.length);
-		}
-		if (StringUtil.startsWith(propertyName, METHOD_PREFIX)) {
-			return propertyName.substring(METHOD_PREFIX.length);
-		}
-		if (propertyName.indexOf(PROPERTY_KEY_PREFIX) > -1) {
-			propertyName = propertyName.substr(0, propertyName.indexOf(PROPERTY_KEY_PREFIX));
-		}
-		return TextUtil.ucFirst(propertyName);
 	}
 	
 	private function convertPropertyValue(propertyValue:PropertyValue) {
 		var value:String = propertyValue.getValue();
 		if (typeof(value) == "string" || value instanceof String) {
 			var type:Function = propertyValue.getType();
+			if (type == null) {
+				if (!isNaN(value)) {
+					type = Number;
+				}
+				else if (value == "true" || value == "false") {
+					type = Boolean;
+				}
+			}
 			var propertyValueConverter:PropertyValueConverter = findPropertyValueConverter(type, propertyValue.getName());
 			if (propertyValueConverter != null) {
 				return propertyValueConverter.convertPropertyValue(propertyValue.getValue(), type);
@@ -236,36 +441,60 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 		return value;
 	}
 	
-	public function setPropertyValues(propertyValues:PropertyValues):Void {
+	public function setPropertyValues(propertyValues:PropertyValues, ignoreUnknown:Boolean):Void {
+		var propertyAccessExceptions:Array = new Array();
 		var values:Array = propertyValues.getPropertyValues();
 		for (var i:Number = 0; i < values.length; i++) {
-			setPropertyValue(values[i]);
+			try {
+				setPropertyValue(values[i]);
+			}
+			catch (exception:org.as2lib.bean.NotWritablePropertyException) {
+				if (!ignoreUnknown) {
+					throw exception;
+				}
+			}
+			catch (exception:org.as2lib.bean.PropertyAccessException) {
+				propertyAccessExceptions.push(exception);
+			}
+		}
+		if (propertyAccessExceptions.length > 0) {
+			throw new PropertyAccessExceptionsException(this, propertyAccessExceptions, arguments);
 		}
 	}
 	
 	public function findPropertyValueConverter(requiredType:Function, propertyName:String):PropertyValueConverter {
-		if (propertyName != null) {
-			var holder:PropertyValueConverterHolder = propertyValueConverters.get(propertyName);
-			var converter:PropertyValueConverter = holder.getPropertyValueConverter(requiredType);
-			if (converter != null) {
-				return converter;
-			}
+		var result:PropertyValueConverter = findPropertyValueConverterInMap(requiredType, propertyName, customConverters);
+		if (result == null) {
+			result = findPropertyValueConverterInMap(requiredType, propertyName, defaultConverters);
 		}
-		if (requiredType != null) {
-			var converter:PropertyValueConverter = propertyValueConverters.get(requiredType);
-			if (converter == null) {
-				var keys:Array = propertyValueConverters.getKeys();
-				for (var i:Number = 0; i < keys.length; i++) {
-					var key = keys[i];
-					if (typeof(key) == "function") {
-						if (ClassUtil.isSubClassOf(requiredType, key) || ClassUtil.isImplementationOf(requiredType, key)) {
-							converter = propertyValueConverters.get(key);
-							break;
+		return result;
+	}
+	
+	private function findPropertyValueConverterInMap(requiredType:Function, propertyName:String, converters:Map):PropertyValueConverter {
+		if (converters != null) {
+			if (propertyName != null) {
+				var holder:PropertyValueConverterHolder = converters.get(propertyName);
+				var converter:PropertyValueConverter = holder.getPropertyValueConverter(requiredType);
+				if (converter != null) {
+					return converter;
+				}
+			}
+			if (requiredType != null) {
+				var converter:PropertyValueConverter = converters.get(requiredType);
+				if (converter == null) {
+					var keys:Array = converters.getKeys();
+					for (var i:Number = 0; i < keys.length; i++) {
+						var key = keys[i];
+						if (typeof(key) == "function") {
+							if (ClassUtil.isSubClassOf(requiredType, key) || ClassUtil.isImplementationOf(requiredType, key)) {
+								converter = converters.get(key);
+								break;
+							}
 						}
 					}
 				}
+				return converter;
 			}
-			return converter;
 		}
 		return null;
 	}
@@ -285,10 +514,13 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 		if (requiredType == null && propertyName == null) {
 			throw new IllegalArgumentException("Either argument 'requiredType' or 'propertyName' is required.", this, arguments);
 		}
+		if (customConverters == null) {
+			customConverters = new HashMap();
+		}
 		if (propertyName != null) {
-			propertyValueConverters.put(propertyName, new PropertyValueConverterHolder(propertyValueConverter, requiredType));
+			customConverters.put(propertyName, new PropertyValueConverterHolder(propertyValueConverter, requiredType));
 		} else {
-			propertyValueConverters.put(requiredType, propertyValueConverter);
+			customConverters.put(requiredType, propertyValueConverter);
 		}
 	}
 	

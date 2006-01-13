@@ -385,7 +385,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		for (var i:Number = 0; i < propertyNames.length; i++) {
 			var propertyName:String = propertyNames[i];
 			if (!propertyValues.contains(propertyName)) {
-				if (beanWrapper.hasWritableProperty(propertyName)) {
+				if (beanWrapper.isWritableProperty(propertyName)) {
 					var propertyValue = getBean(propertyName);
 					propertyValues.addPropertyValue(propertyName, propertyValue);
 					if (mergedBeanDefinition.isSingleton()) {

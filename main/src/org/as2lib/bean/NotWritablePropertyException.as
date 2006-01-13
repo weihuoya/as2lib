@@ -21,8 +21,8 @@ import org.as2lib.bean.InvalidPropertyException;
  */
 class org.as2lib.bean.NotWritablePropertyException extends InvalidPropertyException {
 	
-	public function NotWritablePropertyException(message:String, scope, args:Array) {
-		super(message, scope, args);
+	public function NotWritablePropertyException(bean, propertyName:String, message:String, scope, args:Array) {
+		super(bean, propertyName, message, scope, args);
 	}
 
 }
