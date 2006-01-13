@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.log.handler.XmlSocketHandler;
+import org.as2lib.env.log.handler.AbstractLogHandler;
 import org.as2lib.env.log.level.AbstractLogLevel;
+import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogMessage;
 import org.as2lib.util.Stringifier;
 
 /**
- * {@code AsdtHandler} uses the {@code XMLSocket} to log the message to
- * ASDT Eclipse Plugin's logger console.
- *  * 
+ * {@code AsdtHandler} logs messages with {@code Logger.addMessage} method.
+ *   
  * @author Igor Sadovskiy
  * @see <a href="http://www.asdt.org">AS Development Tool (ASDT)</a>
  */
-class org.as2lib.env.log.handler.AsdtHandler extends XmlSocketHandler {
+class org.as2lib.env.log.handler.AsdtHandler extends AbstractLogHandler implements LogHandler {
     
     /** Holds a asdt handler. */
     private static var asdtHandler:AsdtHandler;
@@ -55,11 +55,11 @@ class org.as2lib.env.log.handler.AsdtHandler extends XmlSocketHandler {
      * @param messageStringifier (optional) the log message stringifier to use
      */
     public function AsdtHandler(messageStringifier:Stringifier) {
-        super("localhost", 1024, messageStringifier);
+        super(messageStringifier);
     }
     
     /**
-     * Writes the passed-in {@code message} to the SOS Console.
+     * Writes the passed-in {@code message} to the Asdt Logger Plugin Console.
      *
      * <p>The string representation of the {@code message} to log is obtained via
      * the {@code convertMessage} method.
@@ -68,33 +68,8 @@ class org.as2lib.env.log.handler.AsdtHandler extends XmlSocketHandler {
      */
     public function write(message:LogMessage):Void {
         var level:Number = convertLevel(message.getLevel());
-        
-        var element:XML = new XML();
-        element.nodeName = "Message";
-        element.nodeType = 1;
-        element.attributes["xmlns:xsi"] = "http://www.w3.org/2001/XMLSchema-instance";
-        element.attributes["xsi:noNamespaceSchemaLocation"] = "Message.xsd";
-        
-        if (message.getMessage()) {
-            element.attributes.message = convertMessage(message);
-        }
-        if (message.getSourceMethodName()) {
-            element.attributes.className = message.getSourceMethodName();
-        }
-        if (message.getLevel()) {
-            element.attributes.level = level;
-        }
-        if (message.getTimeStamp()) {
-            element.attributes.timestamp = message.getTimeStamp();
-        }
-        
-        var packet:XML = new XML();
-        packet.ignoreWhite = true;
-        packet.docTypeDecl = "";
-        packet.xmlDecl = '<?xml version="1.0" encoding="UTF-8"?>';
-        packet.appendChild(element);
-        
-        socket.send(packet);
+        var m:String = convertMessage(message);
+        Log.addMessage(m, level, message.getSourceObject());
     }
     
     /**
