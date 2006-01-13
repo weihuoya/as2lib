@@ -21,12 +21,15 @@ import org.as2lib.core.BasicClass;
  */
 class org.as2lib.bean.AbstractBeanWrapper extends BasicClass {
 	
-	public static var METHOD_PREFIX:String = "&";
-	public static var VARIABLE_PREFIX:String = "$";
+	/*public static var METHOD_PREFIX:String = "&";
+	public static var VARIABLE_PREFIX:String = "$";*/
 	
 	public static var NESTED_PROPERTY_SEPARATOR:String = ".";
 	public static var PROPERTY_KEY_PREFIX:String = "[";
 	public static var PROPERTY_KEY_SUFFIX:String = "]";
+	
+	public static var GET_PROPERTY_PREFIXES:Array = ["get", "is"];
+	public static var SET_PROPERTY_PREFIXES:Array = ["set", "add", "put"];
 	
 	/*public static var ARRAY_PREFIX:String = "array:";
 	public static var MAP_PREFIX:String = "map:";

@@ -14,20 +14,15 @@
  * limitations under the License.
  */
 
-import org.as2lib.bean.PropertyAccessException;
-import org.as2lib.env.reflect.ReflectUtil;
+import org.as2lib.bean.InvalidPropertyException;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.bean.TypeMismatchException extends PropertyAccessException {
+class org.as2lib.bean.NullValueInNestedPathException extends InvalidPropertyException {
 	
-	public function TypeMismatchException(propertyName:String, propertyValue, requiredType:Function, scope, args:Array) {
-		super(propertyName, 
-				"Failed to convert property value of type [" +
-				(propertyValue != null ? ReflectUtil.getTypeName(propertyValue) : null) + "]" +
-				(requiredType != null ? " to required type [" + ReflectUtil.getTypeNameForType(requiredType) + "]" : "") +
-				(propertyName != null ? " for property '" + propertyName + "'" : ""), scope, args);
+	public function NullValueInNestedPathException(bean, propertyName:String, message:String, scope, args:Array) {
+		super(bean, propertyName, (message == null ? "Value of nested property '" + propertyName + "' is 'null'." : message), scope, args);
 	}
 	
 }

@@ -15,14 +15,28 @@
  */
 
 import org.as2lib.bean.FatalBeanException;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * @author Simon Wacker
  */
 class org.as2lib.bean.InvalidPropertyException extends FatalBeanException {
 	
-	public function InvalidPropertyException(message:String, scope, args:Array) {
-		super(message, scope, args);
+	private var bean;
+	private var propertyName:String;
+	
+	public function InvalidPropertyException(bean, propertyName:String, message:String, scope, args:Array) {
+		super("Invalid property '" + propertyName + "' of bean class [" + ReflectUtil.getTypeName(bean) + "]: " + message, scope, args);
+		this.bean = bean;
+		this.propertyName = propertyName;
+	}
+	
+	public function getBean(Void) {
+		return bean;
+	}
+	
+	public function getPropertyName(Void):String {
+		return propertyName;
 	}
 
 }

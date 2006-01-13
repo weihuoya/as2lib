@@ -21,8 +21,8 @@ import org.as2lib.bean.PropertyAccessException;
  */
 class org.as2lib.bean.MethodInvocationException extends PropertyAccessException {
 	
-	public function MethodInvocationException(message:String, scope, args:Array) {
-		super(message, scope, args);
+	public function MethodInvocationException(propertyName:String, message:String, scope, args:Array) {
+		super(propertyName, message, scope, args);
 	}
 
 }

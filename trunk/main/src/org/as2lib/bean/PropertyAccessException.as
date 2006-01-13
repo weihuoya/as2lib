@@ -21,8 +21,15 @@ import org.as2lib.bean.BeanException;
  */
 class org.as2lib.bean.PropertyAccessException extends BeanException {
 	
-	public function PropertyAccessException(message:String, scope, args:Array) {
+	private var propertyName:String;
+	
+	public function PropertyAccessException(propertyName:String, message:String, scope, args:Array) {
 		super(message, scope, args);
+		this.propertyName = propertyName;
+	}
+	
+	public function getPropertyName(Void):String {
+		return propertyName;
 	}
 	
 }

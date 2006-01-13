@@ -24,10 +24,11 @@ import org.as2lib.core.BasicInterface;
  */
 interface org.as2lib.bean.BeanWrapper extends BasicInterface {
 	
-	public function hasWritableProperty(propertyName:String):Boolean;
+	public function isWritableProperty(propertyName:String):Boolean;
+	public function isReadableProperty(propertyName:String):Boolean;
 	public function getPropertyValue(propertyName:String);
 	public function setPropertyValue(propertyValue:PropertyValue):Void;
-	public function setPropertyValues(propertyValues:PropertyValues):Void;
+	public function setPropertyValues(propertyValues:PropertyValues, ignoreUnknown:Boolean):Void;
 	public function findPropertyValueConverter(requiredType:Function, propertyPath:String):PropertyValueConverter;
 	public function registerPropertyValueConverter():Void;
 	public function registerPropertyValueConverterForType(requiredType:Function, propertyValueConverter:PropertyValueConverter):Void;
