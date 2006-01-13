@@ -96,6 +96,9 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	/** Map between dependent bean names: bean name --> dependent bean name */
 	private var dependentBeanMap:Map;
 	
+	/** Whether to automatically try to resolve circular references between beans */
+	private var allowCircularReferences:Boolean;
+	
 	private var propertyValueConverters:Map;
 	
 	//---------------------------------------------------------------------
@@ -112,6 +115,29 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		dependentBeanMap = new PrimitiveTypeMap();
 		propertyValueConverters = new HashMap();
 		beanPostProcessors = new Array();
+		allowCircularReferences = true;
+	}
+	
+	/**
+	 * Set whether to allow circular references between beans - and automatically
+	 * try to resolve them.
+	 * <p>Note that circular reference resolution means that one of the involved beans
+	 * will receive a reference to another bean that is not fully initialized yet.
+	 * This can lead to subtle and not-so-subtle side effects on initialization;
+	 * it does work fine for many scenarios, though.
+	 * <p>Default is "true". Turn this off to throw an exception when encountering
+	 * a circular reference, disallowing them completely.
+	 */
+	public function setAllowCircularReferences(allowCircularReferences:Boolean):Void {
+		this.allowCircularReferences = allowCircularReferences;
+	}
+	
+	/**
+	 * Return whether to allow circular references between beans - and automatically
+	 * try to resolve them.
+	 */
+	public function isAllowCircularReferences(Void):Boolean {
+		return allowCircularReferences;
 	}
 	
 	//---------------------------------------------------------------------
@@ -229,8 +255,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			}
 			// Eagerly cache singletons to be able to resolve circular references
 			// even when triggered by lifecycle interfaces like BeanFactoryAware.
-			if (singletonCache.get(beanName) == CURRENTLY_IN_CREATION) {
-				addSingleton(beanName, result);
+			if (allowCircularReferences) {
+				if (singletonCache.get(beanName) == CURRENTLY_IN_CREATION) {
+					addSingleton(beanName, result);
+				}
 			}
 			errorMessage = "Initialization of bean failed.";
 			// Give any InstantiationAwareBeanPostProcessors the opportunity to modify the state
