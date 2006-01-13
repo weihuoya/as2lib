@@ -118,28 +118,6 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		allowCircularReferences = true;
 	}
 	
-	/**
-	 * Set whether to allow circular references between beans - and automatically
-	 * try to resolve them.
-	 * <p>Note that circular reference resolution means that one of the involved beans
-	 * will receive a reference to another bean that is not fully initialized yet.
-	 * This can lead to subtle and not-so-subtle side effects on initialization;
-	 * it does work fine for many scenarios, though.
-	 * <p>Default is "true". Turn this off to throw an exception when encountering
-	 * a circular reference, disallowing them completely.
-	 */
-	public function setAllowCircularReferences(allowCircularReferences:Boolean):Void {
-		this.allowCircularReferences = allowCircularReferences;
-	}
-	
-	/**
-	 * Return whether to allow circular references between beans - and automatically
-	 * try to resolve them.
-	 */
-	public function isAllowCircularReferences(Void):Boolean {
-		return allowCircularReferences;
-	}
-	
 	//---------------------------------------------------------------------
 	// Implementation of AutowireCapableBeanFactory interface
 	//---------------------------------------------------------------------
@@ -168,6 +146,36 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	
 	public function setAllowBeanDefinitionOverriding(allowBeanDefinitionOverriding:Boolean):Void {
 		this.allowBeanDefinitionOverriding = allowBeanDefinitionOverriding;
+	}
+	
+	/**
+	 * Return whether it should be allowed to override bean definitions by registering
+	 * a different definition with the same name, automatically replacing the former.
+	 */
+	public function isAllowBeanDefinitionOverriding(Void):Boolean {
+		return allowBeanDefinitionOverriding;
+	}
+	
+	/**
+	 * Set whether to allow circular references between beans - and automatically
+	 * try to resolve them.
+	 * <p>Note that circular reference resolution means that one of the involved beans
+	 * will receive a reference to another bean that is not fully initialized yet.
+	 * This can lead to subtle and not-so-subtle side effects on initialization;
+	 * it does work fine for many scenarios, though.
+	 * <p>Default is "true". Turn this off to throw an exception when encountering
+	 * a circular reference, disallowing them completely.
+	 */
+	public function setAllowCircularReferences(allowCircularReferences:Boolean):Void {
+		this.allowCircularReferences = allowCircularReferences;
+	}
+	
+	/**
+	 * Return whether to allow circular references between beans - and automatically
+	 * try to resolve them.
+	 */
+	public function isAllowCircularReferences(Void):Boolean {
+		return allowCircularReferences;
 	}
 	
 	public function applyBeanPropertyValues(existingBean, beanName:String):Void {
