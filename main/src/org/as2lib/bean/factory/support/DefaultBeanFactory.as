@@ -66,12 +66,6 @@ import org.as2lib.util.MethodUtil;
  */
 class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFactory implements ConfigurableBeanFactory, ConfigurableListableBeanFactory, ConfigurableHierarchicalBeanFactory, BeanDefinitionRegistry {
 	
-	/**
-	 * Marker object to be temporarily registered in the singleton cache
-	 * while instantiating a bean, to be able to detect circular references.
-	 */
-	private static var CURRENTLY_IN_CREATION = new Object();
-	
 	//---------------------------------------------------------------------
 	// Instance data
 	//---------------------------------------------------------------------
@@ -101,6 +95,9 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	
 	private var propertyValueConverters:Map;
 	
+	/** Names of beans that are currently in creation */
+	private var currentlyInCreation:Array;
+	
 	//---------------------------------------------------------------------
 	// Constructors
 	//---------------------------------------------------------------------
@@ -115,6 +112,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		dependentBeanMap = new PrimitiveTypeMap();
 		propertyValueConverters = new HashMap();
 		beanPostProcessors = new Array();
+		currentlyInCreation = new Array();
 		allowCircularReferences = true;
 	}
 	
@@ -199,7 +197,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 	}
 	
-	private function getBeanByNameAndBean(name:String, bean) {
+	private function getBeanForSingleton(name:String, bean) {
 		var beanName:String = transformBeanName(name);
 		if (isFactoryDereference(name) && !(bean instanceof FactoryBean)) {
 			throw new BeanIsNotAFactoryException(beanName, bean.__constructor__, this, arguments);
@@ -264,7 +262,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			// Eagerly cache singletons to be able to resolve circular references
 			// even when triggered by lifecycle interfaces like BeanFactoryAware.
 			if (allowCircularReferences) {
-				if (singletonCache.get(beanName) == CURRENTLY_IN_CREATION) {
+				if (isSingletonCurrentlyInCreation(beanName)) {
 					addSingleton(beanName, result);
 				}
 			}
@@ -501,7 +499,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		if (mergedInnerBeanDefinition.isSingleton()) {
 			registerDependentBean(innerBeanName, beanName);
 		}
-		return getBeanByNameAndBean(innerBeanName, innerBean);
+		return getBeanForSingleton(innerBeanName, innerBean);
 	}
 
 	/**
@@ -855,10 +853,23 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		var beanName:String = transformBeanName(name);
 		if (singletonCache.containsKey(beanName)) {
 			var singleton = singletonCache.get(beanName);
-			if (singleton == CURRENTLY_IN_CREATION) {
-				throw new BeanCurrentlyInCreationException(beanName, null, this, arguments);
+			if (isSingletonCurrentlyInCreation(beanName)) {
+				/*if (logger.isDebugEnabled()) {
+					logger.debug("Returning eagerly cached instance of singleton bean '" + beanName +
+							"' that is not fully initialized yet - a consequence of a circular reference");
+				}*/
 			}
-			return getBeanByNameAndBean(name, singleton);
+			else {
+				/*if (logger.isDebugEnabled()) {
+					logger.debug("Returning cached instance of singleton bean '" + beanName + "'");
+				}*/
+			}
+			return getBeanForSingleton(name, singleton);
+		}
+		// Fail if we're already creating this singleton instance:
+		// We're assumably within a circular reference.
+		if (isSingletonCurrentlyInCreation(beanName)) {
+			throw new BeanCurrentlyInCreationException(beanName, null, this, arguments);
 		}
 		var beanDefinition:RootBeanDefinition;
 		try {
@@ -870,17 +881,23 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			throw exception;
 		}
 		if (beanDefinition.isSingleton()) {
-			singletonCache.put(beanName, CURRENTLY_IN_CREATION);
+			currentlyInCreation[beanName] = true;
 			var bean;
 			try {
 				bean = createBean(beanName, beanDefinition);
 				singletonCache.put(beanName, bean);
 			}
 			catch (exception:org.as2lib.bean.BeanException) {
+				// Explicitly remove instance from singleton cache:
+				// It might have been put there eagerly by the creation process,
+				// to allow for circular reference resolution.
 				singletonCache.remove(beanName);
 				throw exception;
 			}
-			return getBeanByNameAndBean(name, bean);
+			finally {
+				delete currentlyInCreation[beanName];
+			}
+			return getBeanForSingleton(name, bean);
 		}
 		return createBean(beanName, beanDefinition);
 	}
@@ -918,7 +935,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			var singleton:Boolean = true;
 			var bean;
 			bean = singletonCache.get(beanName);
-			if (bean != null && bean != CURRENTLY_IN_CREATION) {
+			if (bean != null) {
 				if (bean instanceof FactoryBean && !isFactoryDereference(name)) {
 					var factoryBean:FactoryBean = FactoryBean(getBean(FACTORY_BEAN_PREFIX + beanName));
 					return factoryBean.isSingleton();
@@ -951,9 +968,6 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			var beanClass:Function = null;
 			var bean = null;
 			bean = singletonCache.get(beanName);
-			if (bean == CURRENTLY_IN_CREATION) {
-				throw new BeanCurrentlyInCreationException(beanName, null, this, arguments);
-			}
 			if (bean != null) {
 				beanClass = eval("_global." + ReflectUtil.getTypeName(bean));
 			}
@@ -1000,6 +1014,14 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	//---------------------------------------------------------------------
 	// Implementation of ConfigurableBeanFactory interface
 	//---------------------------------------------------------------------
+	
+	/**
+	 * Return whether the specified singleton is currently in creation
+	 * @param beanName the name of the bean
+	 */ 
+	private function isSingletonCurrentlyInCreation(beanName:String):Boolean {
+		return (currentlyInCreation[beanName] == true);
+	}
 	
 	public function registerSingleton(beanName:String, singleton):Void {
 		if (singletonCache.containsKey(beanName)) {
@@ -1211,9 +1233,6 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		try {
 			var bean;
 			bean = singletonCache.get(beanName);
-			if (bean == CURRENTLY_IN_CREATION) {
-				throw new BeanCurrentlyInCreationException(beanName, null, this, arguments);
-			}
 			if (bean != null) {
 				return (bean instanceof FactoryBean);
 			}
