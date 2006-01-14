@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import org.as2lib.regexp.Pattern;
-import org.as2lib.regexp.node.TreeInfo;
-import org.as2lib.regexp.node.Not;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.Exception;
+import org.as2lib.regexp.node.Not;
+import org.as2lib.regexp.node.TreeInfo;
+import org.as2lib.regexp.Pattern;
 
 /**
  * {@code Node} is a base class for all node classes. Subclasses should 

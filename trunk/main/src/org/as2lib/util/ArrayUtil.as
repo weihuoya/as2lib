@@ -246,6 +246,29 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	}
 	
 	/**
+	 * Fills {@code length} first items of the given array {@code array} with 
+	 * specified value {@code value}. If {@code length} is not specified, current 
+	 * actual {@code array}s length is used.
+	 * 
+	 * @param array the array to fill 
+	 * @param value the value used to fill {@code array}s items
+	 * @param length (optional) the amount of the {@code array}s items
+	 * to fill; if {@code length} is not specified, current actual {@code array}s 
+	 * length is used
+	 */
+	public static function fill(array:Array, value, length:Number):Void {
+		if (array == null) {
+			return;
+		}
+		if (length == null) {
+			length = array.length;	
+		}
+		for (var i = 0; i < length; i++) {
+			array[i] = value;	
+		}
+	}
+	
+	/**
 	 * Private constructor.
 	 */
 	private function ArrayUtil(Void) {

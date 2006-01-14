@@ -17,6 +17,7 @@
 import org.as2lib.regexp.node.Node;
 import org.as2lib.regexp.node.Slice;
 import org.as2lib.regexp.node.TreeInfo;
+import org.as2lib.util.ArrayUtil;
  
 /**
  * {@code BnM} attempts to match a slice in the input using the Boyer-Moore 
@@ -65,9 +66,13 @@ class org.as2lib.regexp.node.BnM extends Node {
         // be used anyway.
         if (patternLength < 4) return node;
         
-        var i, j:Number;
-        var lastOcc:Array = Array(128); 
-        var optoSft:Array = Array(patternLength);
+        var i:Number;
+        var j:Number;
+        var lastOcc:Array = new Array(128); 
+        var optoSft:Array = new Array(patternLength);
+        
+        // initialize lastOcc array with zero values
+        ArrayUtil.fill(lastOcc, 0);
         
         // Precalculate part of the bad character shift
         // It is a table for where in the pattern each
@@ -103,7 +108,7 @@ class org.as2lib.regexp.node.BnM extends Node {
         }
         // Set the guard value because of unicode compression
         optoSft[patternLength-1] = 1;
-        return new BnM(src, lastOcc, optoSft, node.next);
+        return (new BnM(src, lastOcc, optoSft, node.next));
     }
     
     public function BnM(src:Array, lastOcc:Array, optoSft:Array, next:Node) {
@@ -114,7 +119,7 @@ class org.as2lib.regexp.node.BnM extends Node {
     }
     
     public function match(matcher:Object, i:Number, seq:String):Boolean {
-        var src:Array = buffer; // of char
+        var src:Array = buffer; 
         var patternLength:Number = src.length;
         var last:Number = matcher.to - patternLength;
 
@@ -124,6 +129,7 @@ class org.as2lib.regexp.node.BnM extends Node {
             var f:Boolean = false;
             for (var j = patternLength - 1; j >= 0; j--) {
                 var ch:Number = seq.charCodeAt(i+j);
+                //LogManager.getLogger().debug(src[j] + " -- " + ch);
                 if (src[j] != ch) {
                     // Shift search to the right by the maximum of the
                     // bad character shift and the good suffix shift
