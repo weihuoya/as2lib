@@ -6,6 +6,10 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="1">
+				<day value="14">
+					<entry type="bugfix" package="org.as2lib.regexp.node" class="BnM">Internal arrays creation and initialization is fixed</entry>
+					<entry type="add" package="org.as2lib.util" class="ArrayUtil" method="fill"></entry>
+				</day>
 				<day value="13">
 					<entry type="bugfix" package="org.as2lib.regexp" class="Matcher" method="replaceFirst">Replacement and tail addition to the result string is fixed</entry>
 					<entry type="bugfix" package="org.as2lib.regexp" class="Matcher" method="replaceAll">Replacement and tail addition to the result string is fixed</entry>
