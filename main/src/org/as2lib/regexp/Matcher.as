@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import org.as2lib.regexp.Pattern;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.Exception;
 import org.as2lib.regexp.AsciiUtil;
+import org.as2lib.regexp.Pattern;
 
 /**
  * {@code Matcher} provides implementations of the match, search and 
