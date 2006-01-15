@@ -424,6 +424,7 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 	 * @return the converter function for the given data
 	 */
 	private function createConverter(t:String, l:Boolean, i:Number, a:Number, s:Boolean, d:String):Function {
+		// TODO: Refactor code and add support for proper handling of undefined values that shall not be shown at beginning of pattern (Remove literal text after conversion specifier in that case?).
 		// Applies align left/right, minimum and maximum rules to string.
 		var z:Function = function(w:String, x:Boolean, y:Number, b:Number):String {
 			if (w == null) w = "unknown";
