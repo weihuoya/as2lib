@@ -98,6 +98,7 @@ import org.xml.sax.SAXException;
  *   <li>split</li>
  *   <li>package</li>
  *   <li>infer</li>
+ *   <li>argument</li>
  * </ul>
  * 
  * <p>You must either provide "src", "srcdir", "srcset" or "srcxml".
@@ -136,9 +137,10 @@ public class Mtasc extends Task {
     private Path sourceDirectory;
     private File source;
     private Path pack;
+    private ArrayList arguments;
     private ArrayList sourceSets;
     private ArrayList sourceList;
-    private ArrayList sourceXmlList;
+    private Path sourceXml;
     private Path classpath;
     private Path exclude;
     private File swf;
@@ -163,14 +165,14 @@ public class Mtasc extends Task {
     /**
      * Constructs a new {@code Mtasc} instance.
      * 
-     * <p>Note that {@code split} is by default set to {@code true}.
+     * <p>Note that {@code split} is by default set to {@code false}.
      */
     public Mtasc() {
         this.compileFiles = new ArrayList();
         this.sourceSets = new ArrayList();
         this.sourceList = new ArrayList();
-        this.sourceXmlList = new ArrayList();
-        this.split = true;
+        this.arguments = new ArrayList();
+        this.split = false;
     }
     
     /**
@@ -301,15 +303,16 @@ public class Mtasc extends Task {
     }
     
     /**
-     * Adds a new src xml file. The src xml file must contain nodes with class-
-     * attributes. The values of all class-attribues are added as src-files. The
-     * class attributes' values must look as follows:
-     * <code>org.as2lib.env.log.Logger</code>
+     * Creates and returns a new xml source path.
      * 
-     * @param srcXml the source xml to add
+     * @return a new xml source path
+     * @see #setSrcXml
      */
-    public void addSrcXml(File srcXml) {
-        this.sourceXmlList.add(srcXml);
+    public Path createSrcXml() {
+        if (sourceXml == null) {
+            sourceXml = new Path(getProject());
+        }
+        return sourceXml.createPath();
     }
     
     /**
@@ -318,10 +321,23 @@ public class Mtasc extends Task {
      * class attributes' values must look as follows:
      * <code>org.as2lib.env.log.Logger</code>
      * 
-     * @param srcXml the source xml to set
+     * @param sourceXml the source xml to set
      */
-    public void setSrcXml(File srcXml) {
-        this.sourceXmlList.add(srcXml);
+    public void setSrcXml(Path sourceXml) {
+        if (this.sourceXml == null) {
+            this.sourceXml = sourceXml;
+        } else {
+            this.sourceXml.append(sourceXml);
+        }
+    }
+    
+    /**
+     * Returns the xml source path.
+     * 
+     * @return the xml source path
+     */
+    public Path getSrcXml() {
+        return sourceXml;
     }
     
     /**
@@ -806,6 +822,43 @@ public class Mtasc extends Task {
     }
     
     /**
+     * Returns all added custom arguments.
+     * 
+     * @return all added custom arguments
+     */
+    public Argument[] getArguments() {
+        return (Argument[]) arguments.toArray(new Argument[]{});
+    }
+    
+    /**
+     * Creates a new custom argument.
+     * 
+     * <p>Custom arguments can be used to leverage the functionality offfered by enhanced
+     * MTASC compilers like Hacked MTASC (HAMTASC) from Ralf Bokelberg. Custom arguments
+     * allow you to specify your own name-value pairs or flags that shall be included in
+     * the resulting command.
+     * 
+     * <p>You can for example specify an assert function when compiling with HAMTASC.
+     * This would result in {@code -rb_assert MyClass.myFunction} being added to the
+     * command.
+     * <code>
+     *   &lt;argument name="rb_assert" value="MyClass.myFunction"/&gt;
+     * </code>
+     * 
+     * <p>You can also add flags by not specifying a value.
+     * <code>
+     *   &lt;argument name="rb_check_void_parameter"/&gt;
+     * </code>
+     * 
+     * @return the new argument
+     */
+    public Argument createArgument() {
+        Argument result = new Argument();
+        arguments.add(result);
+        return result;
+    }
+    
+    /**
      * Returns whether this mtasc task has any sources to compile.
      * 
      * @return true if this mtasc task has any sources else false
@@ -815,7 +868,8 @@ public class Mtasc extends Task {
                 && this.sourceSets.size() == 0
                 && this.source == null
                 && this.sourceList.size() == 0
-                && (this.pack == null || this.pack.size() == 0)) {
+                && (this.pack == null || this.pack.size() == 0)
+                && (this.sourceXml == null || this.sourceXml.size() == 0)) {
             return false;
         }
         return true;
@@ -847,7 +901,7 @@ public class Mtasc extends Task {
         		&& this.sourceSets.size() == 0
         		&& this.source == null
                 && this.sourceList.size() == 0
-                && this.sourceXmlList.size() == 0
+                && (this.sourceXml == null || this.sourceXml.size() == 0)
                 && (this.pack == null || this.pack.size() == 0)) {
             throw new BuildException("Either 'src', 'srcset', 'srcxml', 'srcdir' or 'pack' must be set.", getLocation());
         }
@@ -864,7 +918,7 @@ public class Mtasc extends Task {
      * Adds all compile files.
      */
     private void addCompileFiles() {
-        addCompileFilesByXmlFiles((File[]) this.sourceXmlList.toArray(new File[]{}));
+        addCompileFilesByXmlFiles(this.sourceXml);
         addCompileFiles(this.sourceDirectory);
         addCompileFiles((File[]) this.sourceList.toArray(new File[]{}));
         addCompileFiles((FileSet[]) this.sourceSets.toArray(new FileSet[]{}));
@@ -876,38 +930,63 @@ public class Mtasc extends Task {
      * 
      * @param xmlFiles the xml files to look for source files in
      */
-    private void addCompileFilesByXmlFiles(File[] xmlFiles) {
-        if (xmlFiles != null) {
-            for (int i = 0; i < xmlFiles.length; i++) {
-                File file = xmlFiles[i];
-                InputStream is = null;
-                try {
-                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                    DocumentBuilder builder = factory.newDocumentBuilder();
-                    is = new FileInputStream(file);
-                    Document doc = builder.parse(is);
-                    Element root = doc.getDocumentElement();
-                    addCompileFiles(root);
-                } catch (ParserConfigurationException e) {
-                    e.printStackTrace();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (SAXException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (is != null) {
-                        try {
-                            is.close();
-                        }
-                        catch (IOException ex) {
-                            log("Could not close input stream.");
-                        }
+    private void addCompileFilesByXmlFiles(Path xmlFiles) {
+        if (xmlFiles != null && xmlFiles.size() > 0) {
+            String[] sl = xmlFiles.list();
+            for (int i = 0; i < sl.length; i++) {
+                File sf = getProject().resolveFile(sl[i]);
+                if (!sf.exists()) {
+                    throw new BuildException("Source file '"
+                                             + sf.getPath()
+                                             + "' does not exist.", getLocation());
+                }
+                if (sf.isDirectory()) {
+                    DirectoryScanner ds = new DirectoryScanner();
+                    ds.setBasedir(sf);
+                    ds.setCaseSensitive(true);
+                    ds.setIncludes(new String[] {"**/*.*"});
+                    ds.scan();
+                    String[] fl = ds.getIncludedFiles();
+                    for (int k = 0; k < fl.length; k++) {
+                        File sn = new File(xmlFiles.toString() + "/" + fl[k]);
+                        addCompileFiles(parseSourceXmlFile(sn));
                     }
+                }
+                else {
+                    addCompileFiles(parseSourceXmlFile(sf));
                 }
             }
         }
+    }
+    
+    private Element parseSourceXmlFile(File xmlFile) {
+        InputStream is = null;
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            is = new FileInputStream(xmlFile);
+            Document doc = builder.parse(is);
+            Element root = doc.getDocumentElement();
+            return root;
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                }
+                catch (IOException ex) {
+                    log("Could not close input stream.");
+                }
+            }
+        }
+        return null;
     }
     
     /**
@@ -924,7 +1003,7 @@ public class Mtasc extends Task {
                     Element e = (Element) n;
                     if (e.hasAttribute("class")){
                         String clazz = e.getAttribute("class");
-                        clazz = clazz.replace(".", "/");
+                        clazz = clazz.replace('.', '/');
                         clazz += ".as";
                         addCompileFile(new File(clazz));
                     }
@@ -1009,11 +1088,11 @@ public class Mtasc extends Task {
      */
     private void addCompileFile(File sourceFile) throws BuildException {
         if (sourceFile != null) {
-            if (!sourceFile.exists()) {
+            /*if (!sourceFile.exists()) {
                 throw new BuildException("Source file '"
                                          + sourceFile.getPath()
                                          + "' does not exist.", getLocation());
-            }
+            }*/
             if (sourceFile.isAbsolute() && this.classpath != null) {
                 String p = sourceFile.getPath();
                 String[] classpaths = this.classpath.list();
@@ -1133,6 +1212,15 @@ public class Mtasc extends Task {
         if (this.separate) command.createArgument().setValue(SEPARATE);
         if (this.flash6) command.createArgument().setValue(FLASH6);
         if (this.infer) command.createArgument().setValue(INFER);
+        for (int i = 0; i < arguments.size(); i++) {
+            Argument ar = (Argument) arguments.get(i);
+            if (ar.getName() != null) {
+                command.createArgument().setValue("-" + ar.getName());
+            }
+            if (ar.getValue() != null) {
+                command.createArgument().setValue(ar.getValue());
+            }
+        }
         addExcludes(command);
         addClasspaths(command);
         addPackages(command);
@@ -1219,6 +1307,36 @@ public class Mtasc extends Task {
         } catch (IOException e) {
             throw new BuildException("error running " + command.getCommandline()[0] + " compiler", e, getLocation());
         }
+    }
+    
+    /**
+     * {@code Argument} represents a custom argument you may add to leverage
+     * functionalites offered by enhanced MTASC compilers like HAMTASC.
+     */
+    public static class Argument {
+        
+        private String name;
+        private String value;
+        
+        public Argument() {
+        }
+        
+        public String getName() {
+            return name;
+        }
+        
+        public void setName(String name) {
+            this.name = name;
+        }
+        
+        public String getValue() {
+            return value;
+        }
+        
+        public void setValue(String value) {
+            this.value = value;
+        }
+        
     }
     
 }
