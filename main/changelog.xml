@@ -7,6 +7,7 @@
 		<year value="2006">
 			<month value="1">
 				<day value="15">
+					<entry type="add" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier">Added control over undefined information via asterisk (*) format modifier.</entry>
 					<entry type="add" package="org.as2lib.context.support" class="EnFlashApplication">Added context support for enflash that registers enflash-objects as singleton beans.</entry>
 				</day>
 				<day value="14">
