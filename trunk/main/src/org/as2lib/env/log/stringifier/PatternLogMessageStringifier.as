@@ -145,6 +145,7 @@ import org.as2lib.util.StringUtil;
  *     <td>Left Justify</td>
  *     <td>Minimum Width</td>
  *     <td>Maximum Width</td>
+ *     <td>Skip Undefined</td>
  *     <td>Comment</td>
  *   </tr>
  *   <tr>
@@ -152,6 +153,7 @@ import org.as2lib.util.StringUtil;
  *     <td>false</td>
  *     <td>20</td>
  *     <td>none</td>
+ *     <td>false</td>
  *     <td>Left pad with spaces if the level name is less than 20 characters long.</td>
  *   </tr>
  *   <tr>
@@ -159,6 +161,7 @@ import org.as2lib.util.StringUtil;
  *     <td>true</td>
  *     <td>20</td>
  *     <td>none</td>
+ *     <td>false</td>
  *     <td>Right pad with spaces if the category name is less than 20 characters long.</td>
  *   </tr>
  *   <tr>
@@ -166,6 +169,7 @@ import org.as2lib.util.StringUtil;
  *     <td>NA</td>
  *     <td>none</td>
  *     <td>30</td>
+ *     <td>false</td>
  *     <td>Truncate from the end if the level name is longer than 30 characters.</td>
  *   </tr>
  *   <tr>
@@ -173,6 +177,7 @@ import org.as2lib.util.StringUtil;
  *     <td>false</td>
  *     <td>20</td>
  *     <td>30</td>
+ *     <td>false</td>
  *     <td>
  *       Left pad with spaces if the level name is shorter than 20 characters. However, if
  *       level name is longer than 30 characters, then truncate from the end.</td>
@@ -182,9 +187,23 @@ import org.as2lib.util.StringUtil;
  *     <td>true</td>
  *     <td>20</td>
  *     <td>30</td>
+ *     <td>false</td>
  *     <td>
  *       Right pad with spaces if the level name is shorter than 20 characters. However, if
  *       level name is longer than 30 characters, then truncate from the end.</td>
+ *   </tr>
+ *   <tr>
+ *     <td>%-10*c</td>
+ *     <td>true</td>
+ *     <td>10</td>
+ *     <td>none</td>
+ *     <td>true</td>
+ *     <td>
+ *       Right pad with spaces if the category name is less than 10 characters long. If
+ *       the category name is {@code null} or {@code undefined}, skip this conversion
+ *       specifier and literal text that occurs directly before this conversion specifier
+ *       and after the previous conversion specifier.
+ *     </td>
  *   </tr>
  * </table>
  * 
@@ -196,7 +215,7 @@ import org.as2lib.util.StringUtil;
 class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicClass implements Stringifier {
 	
 	/** The default pattern if none has been specified. */
-	public static var DEFAULT_PATTERN:String = "%d{HH:nn:ss.SSS} %l %n - %m";
+	public static var DEFAULT_PATTERN:String = "%d{HH:nn:ss.SSS} %l %*n - %m";
 	
 	/** The escape character coming before a converter character. */
 	private static var ESCAPE_CHARACTER:String = "%";
@@ -275,6 +294,7 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 		var min:Number;
 		var max:Number;
 		var left:Boolean = false;
+		var skip:Boolean = false;
 		var s:Number = LITERAL_STATE;
 		var c:String;
 		var i:Number = 0;
@@ -298,6 +318,7 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 							min = null;
 							max = null;
 							left = false;
+							skip = false;
 						}
 					} else {
 						x += c;
@@ -310,6 +331,9 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 							break;
 						case ".":
 							s = DOT_STATE;
+							break;
+						case "*":
+							skip = true;
 							break;
 						default:
 							if (!isNaN(Number(c))) {
@@ -324,7 +348,7 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 									}
 									i = z + 1;
 								}
-								p.n = createConverter(c, left, min, max, b);
+								p.n = createConverter(c, left, min, max, skip, b);
 								p = p.n;
 								s = LITERAL_STATE;
 							}
@@ -375,7 +399,12 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 	 */
 	private function createLiteralConverter(l:String):Function {
 		return function(m:LogMessage):String {
-			return l + arguments.callee.n(m);
+			var x:String = arguments.callee.n(m);
+			if (arguments.callee.s) {
+				arguments.callee.s = false;
+				return x;
+			}
+			return (l + x);
 		};
 		// Flex 1.5 compiler does not recognize the first return and raises an error.
 		// We work around this by returning null at the end, also this will never be made.
@@ -390,11 +419,14 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 	 * {@code false}
 	 * @param i the minimum number of characters
 	 * @param a the maximum number of characters
+	 * @param s whether to skip {@code null} or {@code undefined} values
 	 * @param d any additional data
 	 * @return the converter function for the given data
 	 */
-	private function createConverter(t:String, l:Boolean, i:Number, a:Number, d:String):Function {
+	private function createConverter(t:String, l:Boolean, i:Number, a:Number, s:Boolean, d:String):Function {
+		// Applies align left/right, minimum and maximum rules to string.
 		var z:Function = function(w:String, x:Boolean, y:Number, b:Number):String {
+			if (w == null) w = "unknown";
 			if (w.length < y && y != null) {
 				if (x) {
 					return (w + StringUtil.multiply(" ", y - w.length));
@@ -406,7 +438,9 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 			}
 			return w;
 		};
+		// Returns the requested number of nodes from the given string.
 		var y:Function = function(w:String, b:Number):String {
+			if (w == null) return w;
 			var x:Array = w.split(".");
 			if (b >= x.length) return w;
 			var r:String = "";
@@ -420,48 +454,77 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 		switch (t) {
 			case "m":
 				return function(m:LogMessage):String {
-					return z(m.getMessage(), l, i, a) + arguments.callee.n(m);
+					var x:String = m.getMessage();
+					if (x == null && s) {
+						arguments.caller.s = true;
+						return arguments.callee.n(m);
+					}
+					return z(x, l, i, a) + arguments.callee.n(m);
 				};
 				break;
 			case "l":
 				return function(m:LogMessage):String {
-					return z(m.getLevel().toString(), l, i, a) + arguments.callee.n(m);
+					var x:String = m.getLevel().toString();
+					if (x == null && s) {
+						arguments.caller.s = true;
+						return arguments.callee.n(m);
+					}
+					return z(x, l, i, a) + arguments.callee.n(m);
 				};
 				break;
 			case "n":
 				return function(m:LogMessage):String {
-					return z(y(m.getLoggerName(), Number(d)), l, i, a) + arguments.callee.n(m);
+					var x:String = m.getLoggerName();
+					if (x == null && s) {
+						arguments.caller.s = true;
+						return arguments.callee.n(m);
+					}
+					return z(y(x, Number(d)), l, i, a) + arguments.callee.n(m);
 				};
 				break;
 			case "d":
 				return function(m:LogMessage):String {
-					return z(((new DateFormat(d)).format(new Date(m.getTimeStamp()))), l, i, a) + arguments.callee.n(m);
+					var x:String = (new DateFormat(d)).format(new Date(m.getTimeStamp()));
+					if (x == null && s) {
+						arguments.caller.s = true;
+						return arguments.callee.n(m);
+					}
+					return z(x, l, i, a) + arguments.callee.n(m);
 				};
 				break;
 			case "o":
 				return function(m:LogMessage):String {
-					var n:String = m.getSourceMethodName();
-					if (n == null) n = "[unknown]";
-					return z(n, l, i, a) + arguments.callee.n(m);
+					var x:String = m.getSourceMethodName();
+					if (x == null && s) {
+						arguments.caller.s = true;
+						return arguments.callee.n(m);
+					}
+					return z(x, l, i, a) + arguments.callee.n(m);
 				};
 				break;
 			case "O":
 				return function(m:LogMessage):String {
-					var n:String = m.getSourceMethodName();
-					if (n == null) {
+					var x:String = m.getSourceMethodName();
+					if (x == null) {
 						var o = m.getSourceObject();
 						if (o == null) o = ReflectUtil.getTypeByName(m.getLoggerName());
-						n = ReflectUtil.getMethodName(m.getSourceMethod(), o);
-						if (n == null) n = "[unknown]";
+						x = ReflectUtil.getMethodName(m.getSourceMethod(), o);
+						if (x == null && s) {
+							arguments.caller.s = true;
+							return arguments.callee.n(m);
+						}
 					}
-					return z(n, l, i, a) + arguments.callee.n(m);
+					return z(x, l, i, a) + arguments.callee.n(m);
 				};
 				break;
 			case "c":
 				return function(m:LogMessage):String {
-					var n:String = ReflectUtil.getTypeName(m.getSourceObject());
-					if (n == null) n = "[unknown]";
-					return z(y(n, Number(d)), l, i, a) + arguments.callee.n(m);
+					var x:String = ReflectUtil.getTypeName(m.getSourceObject());
+					if (x == null && s) {
+						arguments.caller.s = true;
+						return arguments.callee.n(m);
+					}
+					return z(y(x, Number(d)), l, i, a) + arguments.callee.n(m);
 				};
 				break;
 		}

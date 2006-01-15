@@ -159,4 +159,24 @@ class org.as2lib.env.log.stringifier.TPatternLogMessageStringifier extends TestC
 		assertSame("3.", s.execute(m), "some text 19:10:32.001 FATAL  org.as2lib.env.bean.StillToCome  -  Blubber.");
 	}
 	
+	public function testNullValues(Void):Void {
+		var m:LogMessage = new LogMessage();
+		var s:PatternLogMessageStringifier = new PatternLogMessageStringifier("some text %-6.6l * %n  -  %.34m ...");
+		assertSame(s.execute(m), "some text unknow * unknown  -  unknown ...");
+		
+		s = new PatternLogMessageStringifier("some text %-6.6*l * %n  -  %.34m ...");
+		assertSame(s.execute(m), " * unknown  -  unknown ...");
+		
+		s = new PatternLogMessageStringifier("some text %-6.6*l * %*n  -  %.34m ...");
+		assertSame(s.execute(m), "  -  unknown ...");
+		
+		s = new PatternLogMessageStringifier("some text %-6.6*l * %*n  -  %.34*m ...");
+		assertSame(s.execute(m), " ...");
+		
+		s = new PatternLogMessageStringifier("%d{HH:nn:ss.SSS} %l %*n - %m");
+		var date:Date = new Date(2002, 4, 24, 11, 53, 23, 44);
+		m = new LogMessage("This is my log message.", AbstractLogLevel.INFO, null, date.getTime());
+		assertSame(s.execute(m), "11:53:23.044 INFO - This is my log message.");
+	}
+	
 }
