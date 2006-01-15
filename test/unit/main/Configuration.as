@@ -26,10 +26,14 @@ import org.as2lib.app.conf.UnitTestExecution;
  */
 class main.Configuration extends AbstractConfiguration {
 	
-    public static function init(Void):Void {
-    	initProcess(new UnitTestExecution());
+	public function init(Void):Void {
+		initProcess(new UnitTestExecution());
+		/*var factory:TestSuiteFactory = new TestSuiteFactory();
+		var runner:TestRunner = factory.collectAllTestCases().getTestRunner();
+		runner.addListener(new MainListener(_root));
+		runner.start();*/
     }
-    
+	
 	private function setReferences(Void):Void {
 		// File tests
 		use(org.as2lib.io.file.TSimpleTextFile);
@@ -151,6 +155,8 @@ class main.Configuration extends AbstractConfiguration {
 		use(org.as2lib.env.log.level.TDynamicLogLevel);
 		use(org.as2lib.env.log.handler.TLevelFilterHandler);
 		use(org.as2lib.env.log.parser.TXmlLogConfigurationParser);
+		use(org.as2lib.env.log.parser.TPropertiesLogConfigurationParser);
+		use(org.as2lib.env.log.stringifier.TPatternLogMessageStringifier);
 		
 		// org.as2lib.env.event
 		use(org.as2lib.env.event.TSimpleEventListenerSource);
@@ -183,6 +189,7 @@ class main.Configuration extends AbstractConfiguration {
 		//use(org.as2lib.env.bean.TMutablePropertyValueSet);
 		//use(org.as2lib.env.bean.TPropertyValue);
 		//use(org.as2lib.env.bean.TSimpleBeanWrapper);
+		use(org.as2lib.bean.factory.TDefaultBeanFactory);
 		
 		// org.as2lib.env.bean.factory.support
 		//use(org.as2lib.env.bean.factory.support.TDefaultBeanFactory);

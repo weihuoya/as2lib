@@ -14,49 +14,31 @@
  * limitations under the License.
  */
 
+import org.as2lib.env.log.handler.DebugItHandler;
 import org.as2lib.env.log.logger.RootLogger;
-import org.as2lib.env.log.level.AbstractLogLevel;
-import org.as2lib.env.log.handler.LuminicBoxHandler;
-import org.as2lib.env.log.repository.LoggerHierarchy;
 import org.as2lib.env.log.LogManager;
+import org.as2lib.env.log.repository.LoggerHierarchy;
+
+import main.Configuration;
 
 /**
- * {@code Mtasc} is intended for configuration of applications compiled with MTASC.
- * 
- * <p>It allows you to define all MTASC specific configurations similar to the
- * configuration in {@link main.Configuration}.
- * 
- * <p>The current code contains an example that matches usual cases. If you have
- * additional configuration you have to overwrite (not extend!) this class in your
- * directory. All that must stay to be compatible is the {@link #init} method.
- * 
- * @see main.Configuration
- * @author Martin Heidegger
- * @version 1.0
+ * @author Simon Wacker
  */
-class main.Mtasc {
+class main.Mtasc extends Configuration {
 	
-	/**
-	 * Initializes and starts the MTASC configuration.
-	 * 
-	 * @param container the root movie-clip that is passed by MTASC to the main method
-	 */
-	public static function init(container:MovieClip):Void {
-		// sets up logging
-		setUpLogging();
+	public function Mtasc(Void) {
 	}
 	
-	/**
-	 * Sets up MTASC specific logging. This configures the As2lib Logging API to log
-	 * to Flashout.
-	 */
-	private static function setUpLogging(Void):Void {
-		// creates a new root logger
-		var root:RootLogger = new RootLogger(AbstractLogLevel.ALL);
-		// TODO: Create a Mtasc - only working logger ...
-		root.addHandler(new LuminicBoxHandler());
-		// sets the logger hierarchy as repository
-		LogManager.setLoggerRepository(new LoggerHierarchy(root)); 
+	public function init(container:MovieClip):Void {
+		setupLogging();
+		super.init();
+	}
+	
+	private function setupLogging(Void):Void {
+		var rootLogger:RootLogger = new RootLogger(RootLogger.ALL);
+		rootLogger.addHandler(new DebugItHandler());
+		var hierarchy:LoggerHierarchy = new LoggerHierarchy(rootLogger);
+		LogManager.setLoggerRepository(hierarchy); 
 	}
 	
 }
