@@ -19,59 +19,64 @@ import org.as2lib.app.exec.Process;
 import org.as2lib.util.ClassUtil;
 
 /**
- * Helper class for a simpler creation of Configurations.
- * <p>Helper to start processes that might be useful within a configuration: like starting
- * a TestRunner or predefined action templates.
- *
+ * {@code AbstractConfiguration} provides helper methods to make your configuration
+ * simpler. It provides helper methods to start processes, that are useful in many
+ * situations, like when you need to run a {@code TestRunner} or an arbitrary
+ * action template.
+ * 
  * @author Martin Heidegger
- * @version 1.0
+ * @author Simon Wacker
+ * @version 2.0
  */
 class org.as2lib.app.conf.AbstractConfiguration extends AbstractProcess {
 	
 	/**
-	 * Helper method to initialise a application.
-	 * 
 	 * @overload #initClass
 	 * @overload #initConfig
 	 */
-	public static function init(Void):Void {
-		if(typeof arguments[0] == "function") {
+	public function init():Void {
+		if (typeof(arguments[0]) == "function") {
 			initClass(arguments[0]);
-		} else if(arguments[0] instanceof Process) {
+			return;
+		}
+		if (arguments[0] instanceof Process) {
 			initProcess(arguments[0]);
+			return;
 		}
 	}
 	
 	/**
-	 * Initializes a Configuration class.
-	 * <p> Applies {@code .init()} to a configuration class and does nothing with any other class.
+	 * Instantiates the given {@code clazz} with noe constructor arguments if it is an
+	 * implementation of the {@link Process} interface and starts the process.
 	 * 
-	 * @see Configuration
+	 * @param clazz the process class to instantiate and start
 	 */
-	public static function initClass(clazz:Function):Void {
-		if(ClassUtil.isImplementationOf(clazz, Process)) {
+	public function initClass(clazz:Function):Void {
+		if (ClassUtil.isImplementationOf(clazz, Process)) {
 			initProcess(new clazz());
 		}
 	}
 	
 	/**
-	 * Initializes a Configuration instance.
-	 * <p>Applies {@code .init()} to the configuration instance.
+	 * Starts the given {@code process}.
 	 * 
-	 * @see Configuration
+	 * @param process the process to start
 	 */
-	public static function initProcess(process:Process):Void {
+	public function initProcess(process:Process):Void {
 		process.start();
 	}
 	
 	/**
-	 * Helper method to get references to classes. 
-	 * <p>Mtasc doesn't allow references without useage like: <code>MyTest;</code>
-	 * so use this method to create references to your tests like: <code> use(MyTest); </code>
+	 * References the given {@code clazz}, so that it is included in the swf.
+	 * 
+	 * <p>Mtasc does not allow references without useage like: {@code MyTest;};
+	 * so use this method to reference classes you want to be included in the swf:
+	 * {@code use(MyTest);}. This referencing method is for example needed when you are
+	 * working with test cases and want them to be included, so that they get executed.
 	 *
-	 * @param cls Class to be referenced. 
+	 * @param clazz the class that shall be included in the swf
 	 */
-	private function use(cls:Function):Void {
+	public function use(clazz:Function):Void {
 	}
 	
 }
