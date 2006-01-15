@@ -14,39 +14,45 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
+
 import main.Mtasc;
-import main.Configuration;
 
 /**
- * Default access point for a application with Mtasc.
- * <p>Use this class for starting up your application with the MTASC compiler found at http://www.mtasc.org.
- * It will start your MTASC configuration in {@link main.Mtasc} and your configuration for all 
- * environments in {@link main.Configuration}.
+ * {@code MtascApplication} is the default access point for applications compiled
+ * with Mtasc.
  * 
- * <p>Simply use this class as main startup class in the mtasc preferences.
+ * <p>Use this class to initialize your application with the MTASC compiler.
+ * 
+ * <p>Simply use this class as main entry point class in your mtasc compile settings.
  * <code>
- *   [MTASC directory]\mtasc.exe -cp "[your project path]" -cp "[as2lib project path]" org/as2lib/app/conf/MtascApplication.as
+ *   [MTASC directory]\mtasc.exe -cp "[your project path]" -cp "[as2lib project path]" -main org/as2lib/app/conf/MtascApplication.as
  * </code>
+ * 
+ * <p>The {@link #main} method creates an instance of your MTASC configuration class,
+ * {@link main.Mtasc}, and executes the {@code init} method on the instance passing
+ * the arguments that were passed to this class's static {@code main} method.
  * 
  * @author Martin Heidegger
  * @author Simon Wacker
- * @version 1.0
+ * @version 2.0
+ * @see <a href="http://www.mtasc.org">Motion-Twin ActionScript 2.0 Compiler</a>
  */
-class org.as2lib.app.conf.MtascApplication {
+class org.as2lib.app.conf.MtascApplication extends BasicClass {
 	
 	/**
-	 * Executes the configuration for the mtasc environment in {@link main.Mtasc} and the 
-	 * configuration for all environments in {@link main.Configuration}. These are the
-	 * {@link Mtasc#init} and {@link Configuration#init} methods.
+	 * Executes the {@code init} method for the mtasc environment in {@link main.Mtasc}.
+	 * It therefor creates an instance of the {@code Mtasc} class and invokes the
+	 * {@code init} method on it, passing the arguments that were passed to this method.
 	 * 
-	 * <p>The {@code Mtasc.init} method is passed the {@code container} movie-clip, that
-	 * is by default {@code _root} if this class is used as main method for MTASC.
+	 * <p>The {@code Mtasc.init} method is passed the {@code movieClip}, that is by
+	 * {@code _root} if this class is used as main method for MTASC.
 	 * 
-	 * @param container the root movie-clip that is passed by MTASC to the main method
+	 * @param movieClip the root movie-clip that is passed by MTASC to the main method
 	 */
-	public static function main(container:MovieClip):Void {
-		Mtasc.init.apply(Mtasc, arguments);
-		Configuration.init.apply(Configuration, arguments);
+	public static function main(movieClip:MovieClip):Void {
+		var mtasc:Mtasc = new Mtasc();
+		mtasc.init.apply(mtasc, arguments);
 	}
 	
 }

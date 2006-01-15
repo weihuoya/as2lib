@@ -14,48 +14,50 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.log.logger.RootLogger;
-import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.handler.FlashoutHandler;
-import org.as2lib.env.log.repository.LoggerHierarchy;
+import org.as2lib.env.log.level.AbstractLogLevel;
+import org.as2lib.env.log.logger.RootLogger;
 import org.as2lib.env.log.LogManager;
+import org.as2lib.env.log.repository.LoggerHierarchy;
+
+import main.Configuration;
 
 /**
  * {@code Mtasc} is intended for configuration of applications compiled with MTASC.
  * 
- * <p>It allows you to define all MTASC specific configurations similar to the
- * configuration in {@link main.Configuration}.
+ * <p>All MTASC specific configuration should be done in this class.
  * 
- * <p>The current code contains an example that matches usual cases. If you have
- * additional configuration you have to overwrite (not extend!) this class in your
- * directory. All that must stay to be compatible is the {@link #init} method.
+ * <p>This sample class uses a common configuration that suffices for small applications.
+ * If you need another configuration override (not extend!) this class in the {@code main}
+ * package in your application directory. The only method that must be declared to be
+ * compatible is {@link #init}.
  * 
- * @see main.Configuration
+ * <p>Configuration that is the same for Flash, Flex and Mtasc is sourced-out into the
+ * {@link Configuration} class.
+ * 
  * @author Martin Heidegger
- * @version 1.0
+ * @author Simon Wacker
+ * @version 2.0
+ * @see <a href="http://www.mtasc.org">Motion-Twin ActionScript 2.0 Compiler</a>
  */
-class main.Mtasc {
+class main.Mtasc extends Configuration {
 	
 	/**
-	 * Initializes and starts the MTASC configuration.
+	 * Configures and starts the application for MTASC.
 	 * 
 	 * @param container the root movie-clip that is passed by MTASC to the main method
 	 */
-	public static function init(container:MovieClip):Void {
-		// sets up logging
+	public function init(movieClip:MovieClip):Void {
 		setUpLogging();
+		super.init();
 	}
 	
 	/**
-	 * Sets up MTASC specific logging. This configures the As2lib Logging API to log
-	 * to Flashout.
+	 * Configures As2lib Logging to log to Flashout.
 	 */
-	private static function setUpLogging(Void):Void {
-		// creates a new root logger
+	private function setUpLogging(Void):Void {
 		var root:RootLogger = new RootLogger(AbstractLogLevel.ALL);
-		// TODO: Create a Mtasc - only working logger ...
 		root.addHandler(new FlashoutHandler());
-		// sets the logger hierarchy as repository
 		LogManager.setLoggerRepository(new LoggerHierarchy(root)); 
 	}
 	

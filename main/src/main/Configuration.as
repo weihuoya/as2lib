@@ -14,68 +14,65 @@
  * limitations under the License.
  */
 
+import org.as2lib.core.BasicClass;
+
 /**
- * {@code Configuration} is intended for general configuration at startup, that
- * is the same for Flash, Flex and MTASC.
+ * {@code Configuration} is intended for general configuration at start-up, that
+ * is the same for Flash, Flex and MTASC. The {@link Flash}, {@link Flex} and
+ * {@link Mtasc} classes extend this class.
  * 
- * <p>{@code Configuration} is a central part of a configuration system. It should
- * contain only the not-plattform-specific configuration. If you want to use this
- * configuration take a look at {@link org.as2lib.app.conf.FlashoutApplication},
- * {@link org.as2lib.app.conf.MtascApplication} and {@link org.as2lib.app.conf.FlashApplication}.
- * 
- * <p>{@code Configuration} sould be overwritten. Other classes reference to it but
- * itself contains no code. If you want to overwrite it you can create the same class
- * in your application directory with your configuration code.
+ * <p>Note that this class is not necessary, it is just needed if there is common
+ * start-up code for your application in Flash, Flex and Mtasc to avoid code
+ * duplication.
  * 
  * <p>Example:
  * <code>
- *   import com.domain.app.*;
+ *   import com.domain.myapplication.MyApplication;
  *   
  *   class main.Configuration {
- *       public static var app:MyApplication;
- *       
- *       public static function init(Void);Void {
- *           app = new MySuperApplication();
- *           app.start();
- *       }
+ *     private var application:MyApplication;
+ *     
+ *     public function init(Void);Void {
+ *       application = new MyApplication();
+ *       application.start();
+ *     }
  *   }
  * </code>
  * 
- * <p>It is important to have a static {@code init} method that does all the needed
- * configuration. This method must, as in the above example, be declared in a class
- * that has the same namespace ({@code main}) and name ({@code Configuration} as
- * this example class. Besides that you can declare any further method in the class
- * or extend any class and implement any interface you like.
+ * <p>While the configuration done in the {@code Flash}, {@code Flex} and {@code Mtasc}
+ * class may suffice for your application, this class does not, because it contains
+ * no code. You must override this class in the {@code main} package of your application.
+ * Because there obviously exist at least to {@code Configuration} class, this one
+ * and the one of you application, you must keep careful attention to the order of
+ * your classpaths. Your application classes must have a higher priority.
  * 
- * <p>If you now want to use this class MTASC you must pay attention to the class
- * paths of the compiler to get it to run!
- * <br>The Macromedia Flash MX 2004 Compiler takes the topmost as most important so
- * you would have to set your classpaths like this:
+ * <p>The Macromedia Flash Compiler takes the topmost as most important so you have
+ * to set your classpaths like this:
  * <pre>
- *   D:\Projects\MyApplication\src\
- *   D:\Libraries\as2lib\main\src\
+ *   D:/projects/myapplication/src/
+ *   D:/libraries/as2lib/main/src/
  * </pre>
- * <br>The MTASC compiler (http://www.mtasc.org) works the opposite way. The tompost
- * classpath is less important. So you would have to set your classpaths like this:
- * <pre>-cp "D:/Libraries/as2lib/main/src" -cp "D:/Projects/MyApplication/src/"</pre>
- * <br>If you work with the eclipse plugin (http://asdt.sf.net) that uses mtasc you
- * have to set the classpaths in your project directory in the same way (you can add
- * external folders by using alias folders).
+ * 
+ * <p>The MTASC compiler works the opposite way. The topmost classpath is less important.
+ * So you have to set your classpaths like this:
+ * <pre>-cp "D:/libraries/as2lib/main/src/" -cp "D:/projects/myapplication/src/"</pre>
+ * 
+ * <p>If you work with the ASDT eclipse plugin that uses mtasc you have to set the classpaths
+ * in your project directory as you do for MTASC (you can add external folders by using alias
+ * folders).
  * 
  * @author Martin Heidegger
- * @version 1.0
- * @see org.as2lib.app.conf.FlashApplication
- * @see org.as2lib.app.conf.MtascApplication
- * @see org.as2lib.app.conf.FlashoutApplication
+ * @author Simon Wacker
+ * @version 2.0
  */
-class main.Configuration {
+class main.Configuration extends BasicClass {
 	
 	/**
-	 * This method is used by the {@code main} or {@code init} method of the classes
-	 * {@link org.as2lib.app.conf.FlashoutApplication}, {@link org.as2lib.app.conf.FlashApplication}
-	 * and {@link org.as2lib.app.conf.MtascApplication}.
+	 * Configures and starts the application.
 	 */
-	public static function init(Void):Void {
+	public function init(Void):Void {
+		// do common configuration
+		// start the application
 	}
 	
 }

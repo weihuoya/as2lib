@@ -14,29 +14,30 @@
  * limitations under the License.
  */
 
-import org.as2lib.app.exec.Process;
 import org.as2lib.app.exec.AbstractProcess;
+import org.as2lib.app.exec.Process;
 import org.as2lib.test.unit.LoggerTestListener;
-import org.as2lib.test.unit.TestSuiteFactory;
 import org.as2lib.test.unit.TestSuite;
+import org.as2lib.test.unit.TestSuiteFactory;
 
 /**
- * Prepared configuration to execute Testcases.
- * <p>Use this class to simplify your configuration for the execution of Testcases.
- * <p>As common for as2lib configuration you can use this configuration within your application
- * execution to start and configure a TestSystem.
+ * {@code UnitTestExecution} is a process that executes all test cases available
+ * at run-time.
  * 
- * Example:
+ * <p>Use this class to simplify your test case execution. You can use this
+ * configuration within your application initialization to start and configure
+ * the testing system.
+ * 
+ * <p>Example:
  * <code>
  *   import org.as2lib.app.conf.AbstractConfiguration;
  *   import com.domain.test.*
  *   
  *   class main.Configuration extends AbstractConfiguration {
- *     public static function init(Void):Void {
- *       init(UnitTestExecution);
+ *     public function init(Void):Void {
+ *       super.init(UnitTestExecution);
  *     }
- *     
- *     public function setReferences(Void):Void {
+ *     private function setReferences(Void):Void {
  *       use(MyTestCase);
  *       use(MyTestCase2);
  *       use(MyTestCase3);
@@ -45,22 +46,19 @@ import org.as2lib.test.unit.TestSuite;
  * </code>
  *
  * @author Martin Heidegger
- * @version 1.0
+ * @author Simon Wacker
+ * @version 2.0
  */
 class org.as2lib.app.conf.UnitTestExecution extends AbstractProcess implements Process {
 	
 	/**
-	 * Runs all available Testcases.
+	 * Runs all available test cases.
 	 */
-	public function run(Void):Void {
-		
-		// Execute all Testcases that are available at runtime
+	public function run() {
 		var factory:TestSuiteFactory = new TestSuiteFactory();
-		
 		var testSuite:TestSuite = factory.collectAllTestCases();
 		testSuite.addListener(LoggerTestListener.getInstance());
-		
-		// Starts the Runner as a subprocess.
 		startSubProcess(testSuite);
 	}
+	
 }

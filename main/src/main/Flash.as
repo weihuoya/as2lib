@@ -14,46 +14,55 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.log.logger.RootLogger;
-import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.handler.TraceHandler;
-import org.as2lib.env.log.repository.LoggerHierarchy;
+import org.as2lib.env.log.level.AbstractLogLevel;
+import org.as2lib.env.log.logger.RootLogger;
 import org.as2lib.env.log.LogManager;
+import org.as2lib.env.log.repository.LoggerHierarchy;
+
+import main.Configuration;
 
 /**
  * {@code Flash} is intended for configuration of applications compiled with Flash.
  * 
- * <p>It allows you to define all Flash specific configurations similar to the
- * configuration in {@link main.Configuration}.
+ * <p>All Flash specific configuration should be done in this class.
  * 
- * <p>The current code uses a common configuration. If you have additional configuration
- * you have to overwrite (not extend!) this class in your application directory. The
- * only method that must be declared to be compatible is {@link #init}.
+ * <p>This sample class uses a common configuration that suffices for small applications.
+ * If you need another configuration override (not extend!) this class in the {@code main}
+ * package in your application directory. The only method that must be declared to be
+ * compatible is {@link #init}.
+ * 
+ * <p>Configuration that is the same for Flash, Flex and Mtasc is sourced-out into the
+ * {@link Configuration} class.
  * 
  * @author Martin Heidegger
- * @version 1.0
- * @see main.Configuration
+ * @author Simon Wacker
+ * @version 2.0
  */
-class main.Flash {
+class main.Flash extends Configuration {
 	
 	/**
-	 * Initializes and starts the Flash configuration.
-	 * 
-	 * @see org.as2lib.app.conf.FlashApplication
+	 * Constructs a new {@code Flash} instance.
 	 */
-	public static function init(Void):Void {
-		// inits of logging setup
-		setUpLogging();
+	public function Flash(Void) {
 	}
 	
 	/**
-	 * Sets up common logging in the Flash environment that uses {@code trace}.
+	 * Configures and starts the application for Flash.
+	 * 
+	 * @see org.as2lib.app.conf.FlashApplication
 	 */
-	private static function setUpLogging(Void):Void {
-		// traces log messages
+	public function init(Void):Void {
+		setUpLogging();
+		super.init();
+	}
+	
+	/**
+	 * Sets up logging as common in the Flash environment using {@code trace}.
+	 */
+	private function setUpLogging(Void):Void {
 		var root:RootLogger = new RootLogger(AbstractLogLevel.ALL);
 		root.addHandler(new TraceHandler());
-		// sets the logger hierarchy as repository
 		LogManager.setLoggerRepository(new LoggerHierarchy(root)); 
 	}
 	

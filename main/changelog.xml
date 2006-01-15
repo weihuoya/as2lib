@@ -9,6 +9,7 @@
 				<day value="15">
 					<entry type="add" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier">Added control over undefined information via asterisk (*) format modifier.</entry>
 					<entry type="add" package="org.as2lib.context.support" class="EnFlashApplication">Added context support for enflash that registers enflash-objects as singleton beans.</entry>
+					<entry type="change" package="org.as2lib.app.conf / main">Work with instances instead of classes and static methods. This for example allows configuration classes to implement interfaces.</entry>
 				</day>
 				<day value="14">
 					<entry type="bugfix" package="org.as2lib.regexp.node" class="BnM">Internal arrays creation and initialization is fixed</entry>
