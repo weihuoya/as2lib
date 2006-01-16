@@ -312,4 +312,15 @@ class org.as2lib.util.TArrayUtil extends TestCase {
 		assertFalse("[null] is not the same as [undefined]", ArrayUtil.isSame([null], [undefined]));
 		assertFalse("[undefined] is not the same as [null]", ArrayUtil.isSame([undefined], [null]));
 	}
+	
+	/**
+	 * Validates different possibilities of usage of fill.
+	 */
+	public function testFill(Void):Void {
+		// Test Usual cases
+		assertTrue("Filling [] array using 3 first elements with 0 value should get [0,0,0]", ArrayUtil.isSame( ArrayUtil.fill([], 0, 3), [0,0,0] ));
+		assertTrue("Filling [] array without specified {@code length} argument should get []", ArrayUtil.isSame( ArrayUtil.fill([], 0), [] ));
+		assertTrue("Filling [1,2,3] array with 0 value should get [0,0,0]", ArrayUtil.isSame( ArrayUtil.fill([1,2,3], 0), [0,0,0] ));
+		assertTrue("Filling [1,2,3,4,5] array using 3 first elements with 0 value should get [0,0,0,4,5]", ArrayUtil.isSame( ArrayUtil.fill([1,2,3,4,5], 0, 3), [0,0,0,4,5] ));
+	}
 }

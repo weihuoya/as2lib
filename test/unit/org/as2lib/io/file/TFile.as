@@ -65,7 +65,7 @@ class org.as2lib.io.file.TFile extends TestCase implements FileListener {
 		assertFalse("File may not be loaded by simple loading it: "+file.getLocation(), file.isLoaded());
 	}
 	public function onLoad(fileInfo:FileEventInfo):Void {
-		var file:File = fileInfo.getFile()
+		var file:File = fileInfo.getFile();
 		var location:String = file.getLocation();
 		switch(location){
 			case MAC_LINEBREAKS_FILE:
@@ -138,7 +138,7 @@ class org.as2lib.io.file.TFile extends TestCase implements FileListener {
 		assertNotEmpty("Total Bytes in "+file.getLocation()+" may never be undefined", file.getBytesTotal());
 		assertFalse(file.getLocation()+" cant be finished while progress event was sent", file.isLoaded());
 		assertTrue(file.getLocation()+" should be in loading state if the progress event was sent", file.isLoading());
-		assertTrue(file.getLocation()+" sended a progress event, so it mus exist!", file.exists())
+		assertTrue(file.getLocation()+" sended a progress event, so it mus exist!", file.exists());
 	}
 	public function tearDown(Void):Void {
 		delete file;
