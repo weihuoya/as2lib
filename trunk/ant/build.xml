@@ -51,7 +51,7 @@
     
     <copy tofile="${dist.dir}/as2ant.jar" file="${build.dir}/as2ant.jar" preservelastmodified="true"/>
     
-    <zip destfile="${dist.dir}/as2ant_1.0_alpha.zip" basedir="${dist.dir}"/>
+    <zip destfile="${dist.dir}/as2ant.zip" basedir="${dist.dir}"/>
   </target>
   
   <!--
