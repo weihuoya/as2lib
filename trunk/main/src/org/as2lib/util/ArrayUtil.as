@@ -250,15 +250,18 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 	 * specified value {@code value}. If {@code length} is not specified, current 
 	 * actual {@code array}s length is used.
 	 * 
+	 * <p>The modifications are directly made to the passed-in {@code array}.  	 *
+	 *  
 	 * @param array the array to fill 
 	 * @param value the value used to fill {@code array}s items
 	 * @param length (optional) the amount of the {@code array}s items
 	 * to fill; if {@code length} is not specified, current actual {@code array}s 
 	 * length is used
+	 * @return array the passed-in {@code array}
 	 */
-	public static function fill(array:Array, value, length:Number):Void {
+	public static function fill(array:Array, value, length:Number):Array {
 		if (array == null) {
-			return;
+			return array;
 		}
 		if (length == null) {
 			length = array.length;	
@@ -266,6 +269,7 @@ class org.as2lib.util.ArrayUtil extends BasicClass {
 		for (var i = 0; i < length; i++) {
 			array[i] = value;	
 		}
+		return array;
 	}
 	
 	/**
