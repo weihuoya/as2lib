@@ -6,6 +6,9 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="1">
+				<day value="16">
+					<entry type="change" package="org.as2lib.util" class="ArrayUtil" method="fill"><change-returnType from="Void" to="Array"></change-returnType></entry>
+				</day>
 				<day value="15">
 					<entry type="add" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier">Added control over undefined information via asterisk (*) format modifier.</entry>
 					<entry type="add" package="org.as2lib.context.support" class="EnFlashApplication">Added context support for enflash that registers enflash-objects as singleton beans.</entry>
