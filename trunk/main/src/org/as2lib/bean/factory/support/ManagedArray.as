@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.bean.Mergable;
-import org.as2lib.util.ArrayUtil;
 
 /**
  * @author Simon Wacker
