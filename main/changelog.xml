@@ -7,6 +7,7 @@
 		<year value="2006">
 			<month value="1">
 				<day value="17">
+					<entry type="add" package="org.as2lib.bean.converter" class="PackageConverter">Added support for converting string values to packages.</entry>
 					<entry type="add" package="org.as2lib.bean.factory.parser" class="XmlBeanDefinitionParser">Added support for special types 'Package' and 'Class' and support for managed arrays.</entry>
 					<entry type="add" package="org.as2lib.bean.factory.support" class="ManagedArray">Added support for managed arrays that may contain bean references etc.</entry>
 				</day>
