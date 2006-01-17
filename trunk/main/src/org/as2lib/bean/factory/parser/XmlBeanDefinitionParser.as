@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.as2lib.bean.AbstractBeanWrapper;
 import org.as2lib.bean.factory.BeanDefinitionStoreException;
 import org.as2lib.bean.factory.config.BeanDefinition;
 import org.as2lib.bean.factory.config.BeanDefinitionHolder;
@@ -25,6 +26,7 @@ import org.as2lib.bean.factory.support.AbstractBeanDefinition;
 import org.as2lib.bean.factory.support.BeanDefinitionRegistry;
 import org.as2lib.bean.factory.support.ChildBeanDefinition;
 import org.as2lib.bean.factory.support.LookupOverride;
+import org.as2lib.bean.factory.support.ManagedArray;
 import org.as2lib.bean.factory.support.ManagedList;
 import org.as2lib.bean.factory.support.ManagedMap;
 import org.as2lib.bean.factory.support.ManagedProperties;
@@ -97,6 +99,9 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	public static var VALUE_ATTRIBUTE:String = "value";
 	public static var LOOKUP_METHOD_ELEMENT:String = "lookup-method";
 	
+	public static var PACKAGE_TYPE_VALUE:String = "Package";
+	public static var CLASS_TYPE_VALUE:String = "Class";
+	
 	public static var REPLACED_METHOD_ELEMENT:String = "replaced-method";
 	public static var REPLACER_ATTRIBUTE:String = "replacer";
 	
@@ -108,6 +113,8 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	
 	public static var VALUE_ELEMENT:String = "value";
 	public static var NULL_ELEMENT:String = "null";
+	public static var ARRAY_ELEMENT:String = "array";
+	public static var ELEMENT_ELEMENT:String = "element";
 	public static var LIST_ELEMENT:String = "list";
 	public static var MAP_ELEMENT:String = "map";
 	public static var ENTRY_ELEMENT:String = "entry";
@@ -393,7 +400,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	 * Parse a constructor-arg element.
 	 */
 	private function parseConstructorArgElement(element:XMLNode, beanName:String, argumentValues:ConstructorArgumentValues):Void {
-		var value = parsePropertyValue(element, beanName, null);
+		var value = parsePropertyValue(element, beanName, "<constructor-arg> element");
 		var indexAttribute:String = element.attributes[INDEX_ATTRIBUTE];
 		var typeAttribute:String = element.attributes[TYPE_ATTRIBUTE];
 		var type:Function;
@@ -429,13 +436,21 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		if (propertyValues.contains(propertyName)) {
 			throw new BeanDefinitionStoreException(beanName, "Multiple 'property' definitions for property '" + propertyName + "'.", this, arguments);
 		}
-		var value = parsePropertyValue(element, beanName, propertyName);
+		var value = parsePropertyValue(element, beanName, "<property> element for property '" + propertyName + "'");
 		var typeName:String = element.attributes[TYPE_ATTRIBUTE];
 		var type:Function;
 		if (typeName != null && typeName != "") {
-			type = eval("_global." + typeName);
-			if (type == null) {
-				throw new BeanDefinitionStoreException(beanName, "Type for type name '" + typeName + "' of property '" + propertyName + "' could not be found.", this, arguments);
+			if (typeName == CLASS_TYPE_VALUE) {
+				type = Function;
+			}
+			else if (typeName == PACKAGE_TYPE_VALUE) {
+				type = AbstractBeanWrapper.PACKAGE_TYPE;
+			}
+			else {
+				type = eval("_global." + typeName);
+				if (type == null) {
+					throw new BeanDefinitionStoreException(beanName, "Type for type name '" + typeName + "' of property '" + propertyName + "' could not be found.", this, arguments);
+				}
 			}
 		}
 		propertyValues.addPropertyValue(propertyName, value, type);
@@ -445,14 +460,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	 * Get the value of a property element. May be a list etc.
 	 * Also used for constructor arguments, "propertyName" being null in this case.
 	 */
-	private function parsePropertyValue(element:XMLNode, beanName:String, propertyName:String) {
-		var elementName:String;
-		if (propertyName == null) {
-			elementName = "<constructor-arg> element";
-		}
-		else {
-			elementName = "<property> element for property '" + propertyName + "'";
-		}
+	private function parsePropertyValue(element:XMLNode, beanName:String, elementName:String) {
 		// Should only have one child element: ref, value, list, etc.
 		var nodes = element.childNodes;
 		var subElement:XMLNode;
@@ -542,6 +550,9 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			// It's a distinguished null value.
 			return null;
 		}
+		if (element.nodeName == ARRAY_ELEMENT) {
+			return parseArrayElement(element, beanName);
+		}
 		if (element.nodeName == LIST_ELEMENT) {
 			return parseListElement(element, beanName);
 		}
@@ -555,12 +566,36 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
+	 * Parses an array element.
+	 */
+	private function parseArrayElement(arrayElement:XMLNode, beanName:String):Array {
+		var nodes:Array = arrayElement.childNodes;
+		var typeAttribute:String = arrayElement.attributes[TYPE_ATTRIBUTE];
+		var array:Array = new ManagedArray();
+		array.setMergeEnabled(parseMergeAttribute(arrayElement));
+		for (var i:Number = 0; i < array.length; i++) {
+			var node:XMLNode = nodes[i];
+			var value;
+			if (node.nodeName == ELEMENT_ELEMENT) {
+				if (typeAttribute != null && node.attributes[TYPE_ATTRIBUTE] == null) {
+					node.attributes[TYPE_ATTRIBUTE] = typeAttribute;
+				}
+				value = parsePropertyValue(node, beanName, "<element> element for array");
+			} else {
+				value = parsePropertySubElement(node, beanName);
+			}
+			array.push(value);
+		}
+		return array;
+	}
+	
+	/**
 	 * Parse a list element.
 	 */
-	private function parseListElement(collectionElement:XMLNode, beanName:String):List {
-		var nodes:Array = collectionElement.childNodes;
+	private function parseListElement(listElement:XMLNode, beanName:String):List {
+		var nodes:Array = listElement.childNodes;
 		var list:ManagedList = new ManagedList();
-		list.setMergeEnabled(parseMergeAttribute(collectionElement));
+		list.setMergeEnabled(parseMergeAttribute(listElement));
 		for (var i:Number = 0; i < nodes.length; i++) {
 			var node:XMLNode = nodes[i];
 			list.insert(parsePropertySubElement(node, beanName));
