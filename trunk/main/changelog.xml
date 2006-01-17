@@ -6,6 +6,9 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="1">
+				<day value="17">
+					<entry type="add" package="org.as2lib.bean.factory.support" class="ManagedArray">Added support for managed arrays that may contain bean references etc.</entry>
+				</day>
 				<day value="16">
 					<entry type="change" package="org.as2lib.util" class="ArrayUtil" method="fill"><change-returnType from="Void" to="Array"></change-returnType></entry>
 				</day>

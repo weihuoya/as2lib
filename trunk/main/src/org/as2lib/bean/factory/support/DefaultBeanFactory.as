@@ -44,6 +44,7 @@ import org.as2lib.bean.factory.NoSuchBeanDefinitionException;
 import org.as2lib.bean.factory.support.AbstractBeanFactory;
 import org.as2lib.bean.factory.support.BeanDefinitionRegistry;
 import org.as2lib.bean.factory.support.ChildBeanDefinition;
+import org.as2lib.bean.factory.support.ManagedArray;
 import org.as2lib.bean.factory.support.ManagedList;
 import org.as2lib.bean.factory.support.ManagedMap;
 import org.as2lib.bean.factory.support.RootBeanDefinition;
@@ -478,6 +479,9 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			var ref:RuntimeBeanReference = value;
 			return resolveReference(valueName, ref, beanName, beanDefinition);
 		}
+		if (value instanceof ManagedArray) {
+			return resolveManagedArray(valueName, value);
+		}
 		if (value instanceof ManagedList) {
 			// May need to resolve contained runtime references.
 			return resolveManagedList(valueName, value);
@@ -529,14 +533,21 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 	}
 	
+	private function resolveManagedArray(valueName:String, managedArray:Array):Array {
+		var result:Array = new Array();
+		for (var i:Number = 0; i < managedArray.length; i++) {
+			result.push(resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX + i + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, managedArray[i]));
+		}
+		return result;
+	}
+	
 	/**
 	 * For each element in the ManagedList, resolve reference if necessary.
 	 */
 	private function resolveManagedList(valueName:String, managedList:List):List {
 		var result:List = new ArrayList();
 		for (var i:Number = 0; i < managedList.size(); i++) {
-			result.insert(
-					resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX + i + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, managedList.get(i)));
+			result.insert(resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX + i + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, managedList.get(i)));
 		}
 		return result;
 	}
