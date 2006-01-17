@@ -29,11 +29,8 @@ class org.as2lib.bean.factory.support.ManagedMap extends BasicClass implements M
 	
 	private var mergeEnabled:Boolean;
 	
-	public function ManagedMap(targetMap:Map) {
-		if (targetMap == null) {
-			targetMap = new HashMap();
-		}
-		this.targetMap = targetMap;
+	public function ManagedMap(Void) {
+		targetMap = new HashMap();
 	}
 	
 	public function containsKey(key):Boolean {
