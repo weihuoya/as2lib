@@ -19,6 +19,7 @@ import org.as2lib.bean.BeanWrapper;
 import org.as2lib.bean.converter.BooleanConverter;
 import org.as2lib.bean.converter.ClassConverter;
 import org.as2lib.bean.converter.NumberConverter;
+import org.as2lib.bean.converter.PackageConverter;
 import org.as2lib.bean.converter.StringArrayConverter;
 import org.as2lib.bean.InvalidPropertyException;
 import org.as2lib.bean.MethodInvocationException;
@@ -54,12 +55,13 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	
 	public function SimpleBeanWrapper(wrappedBean, nestedPath:String, rootBean) {
 		this.wrappedBean = wrappedBean;
-		this.nestedPath = nestedPath;
-		this.rootBean = rootBean;
+		this.nestedPath = (nestedPath != null ? nestedPath : "");
+		this.rootBean = (nestedPath != null ? rootBean : wrappedBean);
 		defaultConverters = new HashMap();
 		defaultConverters.put(Number, new NumberConverter());
 		defaultConverters.put(Boolean, new BooleanConverter());
 		defaultConverters.put(Function, new ClassConverter());
+		defaultConverters.put(PACKAGE_TYPE, new PackageConverter());
 		defaultConverters.put(Array, new StringArrayConverter());
 	}
 	
