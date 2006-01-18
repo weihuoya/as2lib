@@ -573,7 +573,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		var typeAttribute:String = arrayElement.attributes[TYPE_ATTRIBUTE];
 		var array:Array = new ManagedArray();
 		array.setMergeEnabled(parseMergeAttribute(arrayElement));
-		for (var i:Number = 0; i < array.length; i++) {
+		for (var i:Number = 0; i < nodes.length; i++) {
 			var node:XMLNode = nodes[i];
 			var value;
 			if (node.nodeName == ELEMENT_ELEMENT) {
