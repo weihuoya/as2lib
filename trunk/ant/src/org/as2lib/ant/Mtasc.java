@@ -317,8 +317,8 @@ public class Mtasc extends Task {
     
     /**
      * Sets a new src xml file. The src xml file must contain nodes with class-
-     * attributes. The values of all class-attribues are added as src-files. The
-     * class attributes' values must look as follows:
+     * or type-attributes. The values of all class- or type-attribues are added
+     * as src-files. These attributes' values must look as follows:
      * <code>org.as2lib.env.log.Logger</code>
      * 
      * @param sourceXml the source xml to set
@@ -1001,11 +1001,33 @@ public class Mtasc extends Task {
                 Node n = nl.item(i);
                 if (n instanceof Element) {
                     Element e = (Element) n;
+                    String clazz = null;
                     if (e.hasAttribute("class")){
-                        String clazz = e.getAttribute("class");
+                        clazz = e.getAttribute("class");
+                    }
+                    if (e.hasAttribute("type")) {
+                        clazz = e.getAttribute("type");
+                    }
+                    if (clazz != null) {
                         clazz = clazz.replace('.', '/');
                         clazz += ".as";
-                        addCompileFile(new File(clazz));
+                        boolean exists = false;
+                        if (classpath != null && classpath.size() > 0) {
+                            String[] a = classpath.list();
+                            for (int k = 0; k < a.length; k++) {
+                                String p = a[k];
+                                File temp = new File(p + "/" + clazz);
+                                if (temp.exists()) {
+                                    exists = true;
+                                }
+                            }
+                        }
+                        if (exists) {
+                            addCompileFile(new File(clazz));
+                        }
+                        else {
+                            log("Class '" + clazz + "' read from xml source file does not exist.");
+                        }
                     }
                 }
                 if (n.hasChildNodes()) {
