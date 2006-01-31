@@ -22,11 +22,21 @@ class org.as2lib.lang.ConcreteLocale extends BasicClass implements Locale {
 		return code;
 	}
 	
-	public function getMessage(key:String, defaultValue:String, args:Array):String {
-		var result:String = mF.format(content.getProp(key, null), args);
-		if (result === null) {
-			result = defaultValue;
+	public function getMessage(key:String, defaultKey:String, args:Array):String {
+		var prop:String = content.getProp(key, null);
+		if (prop === null) {
+			prop = content.getProp(defaultKey, null);
+			if (prop === null) {
+				if (defaultKey === null) {
+					return null;
+				} else {
+					return key;
+				}
+			} else {
+				return mF.format(prop, args);
+			}
+		} else {
+			return mF.format(prop, args);
 		}
-		return result;
 	}
 }
