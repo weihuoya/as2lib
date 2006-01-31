@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.as2lib.aop.Weaver;
 import org.as2lib.bean.converter.ClassConverter;
 import org.as2lib.bean.factory.BeanFactory;
 import org.as2lib.bean.factory.config.BeanFactoryPostProcessor;
@@ -56,6 +57,11 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 */
 	public static var EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME:String = "eventDistributorControl";
 	
+	/**
+	 * Names of the {@link Weaver} bean in this factory.
+	 */
+	public static var WEAVER_BEAN_NAME:String = "weaver";
+	
 	/** Parent context. */
 	private var parent:ApplicationContext;
 	
@@ -76,6 +82,9 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	
 	/** Event distributor control to distribute events. */
 	private var eventDistributorControl:EventDistributorControl;
+	
+	/** Weaver to weave-in cross-cutting concerns code. */
+	private var weaver:Weaver;
 	
 	/**
 	 * Constructs a new {@code AbstractApplicationContext} instance.
@@ -223,6 +232,8 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			invokeBeanFactoryPostProcessors();
 			// registers bean processors that intercept bean creation
 			registerBeanPostProcessors();
+			// initializes weaver for this context
+			initWeaver();
 			// initializes message source for this context
 			initMessageSource();
 			// initializes event distributor control for this context
@@ -286,13 +297,23 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			getBeanFactory().addBeanPostProcessor(beanProcessors[i]);
 		}
 	}
+	
+	/**
+	 * Initializes the weaver if it exists.
+	 */
+	private function initWeaver(Void):Void {
+		if (containsLocalBean(WEAVER_BEAN_NAME)) {
+			weaver = getBean(WEAVER_BEAN_NAME, Weaver);
+			weaver.weave();
+		}
+	}
 
 	/**
 	 * Initializes the message source.
 	 */
 	private function initMessageSource(Void):Void {
 		if (containsLocalBean(MESSAGE_SOURCE_BEAN_NAME)) {
-			messageSource = MessageSource(getBean(MESSAGE_SOURCE_BEAN_NAME, MessageSource));
+			messageSource = getBean(MESSAGE_SOURCE_BEAN_NAME, MessageSource);
 			// Make MessageSource aware of parent MessageSource.
 			if (parent != null && messageSource instanceof HierarchicalMessageSource) {
 				var hms:HierarchicalMessageSource = HierarchicalMessageSource(messageSource);
@@ -316,8 +337,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 */
 	private function initEventDistributorControl(Void):Void {
 		if (containsLocalBean(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME)) {
-			eventDistributorControl = EventDistributorControl(
-					getBean(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME, EventDistributorControl));
+			eventDistributorControl = getBean(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME, EventDistributorControl);
 		}
 		else {
 			eventDistributorControl = new SimpleEventDistributorControl(ApplicationListener, false);
