@@ -100,8 +100,8 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	/** Time until the method breaks with "File not found". */
 	public static var TIMEOUT:Time = new Time(3000);
 	
-	/** Helper for loading the {@code File}. */
-	private var holder:MovieClip;
+	/** Movie clip to load the file into. */
+	private var movieClip:MovieClip;
 	
 	/** Loaded {@code File}. */
 	private var result:File;
@@ -109,10 +109,19 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	/**
 	 * Constructs a new {@code SwfFileLoader} instance.
 	 * 
-	 * @param holder {@code MovieClip} instance to load the {@code .swf} into
+	 * @param movieClip the movie clip to load the file into
 	 */
-	public function SwfFileLoader(holder:MovieClip) {
-		this.holder = holder;
+	public function SwfFileLoader(movieClip:MovieClip) {
+		this.movieClip = movieClip;
+	}
+	
+	/**
+	 * Sets the movie clip to load the file into.
+	 * 
+	 * @param movieClip the movie clip to load the file into
+	 */
+	public function setMovieClip(movieClip:MovieClip):Void {
+		this.movieClip = movieClip;
 	}
 	
 	/**
@@ -139,10 +148,10 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 			var keys:Iterator = parameters.keyIterator();
 			while (keys.hasNext()) {
 				var key = keys.next();
-				holder[key.toString()] = parameters.get(key);
+				movieClip[key.toString()] = parameters.get(key);
 			}
 		}
-		holder.loadMovie(uri, method);
+		movieClip.loadMovie(uri, method);
 		sendStartEvent();
 		FrameImpulse.getInstance().addFrameImpulseListener(this);
 	}
@@ -168,7 +177,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	 * @return amount of bytes that has been loaded
 	 */
 	public function getBytesLoaded(Void):Byte {
-		var result:Number = holder.getBytesLoaded();
+		var result:Number = movieClip.getBytesLoaded();
 		if (result >= 0) {
 			return new Byte(result);
 		}
@@ -183,7 +192,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	 * @return amount of bytes to load
 	 */
 	public function getBytesTotal(Void):Byte {
-		var total:Number = holder.getBytesTotal();
+		var total:Number = movieClip.getBytesTotal();
 		if (total >= 0) {
 			return new Byte(total);
 		}
@@ -213,9 +222,9 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	 * @return {@code true} if the {@code .swf} finished loading
 	 */
 	private function checkFinished():Boolean {
-		holder = eval(""+holder._target);
-		if (holder.getBytesTotal() > 10 
-				&& holder.getBytesTotal() - holder.getBytesLoaded() < 10) { 
+		movieClip = eval("" + movieClip._target);
+		if (movieClip.getBytesTotal() > 10 
+				&& movieClip.getBytesTotal() - movieClip.getBytesLoaded() < 10) { 
 			return true;
 		}
 		return false;
@@ -227,7 +236,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	 * @return {@code true} if the duration exceeded the {@code TIMEOUT} value
 	 */
 	private function checkTimeout():Boolean {
-		if (holder.getBytesTotal() > 10) {
+		if (movieClip.getBytesTotal() > 10) {
 			return false;
 		}
 		return (getDuration().valueOf() > TIMEOUT);
@@ -239,7 +248,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	private function successLoading(Void):Void {
 		finished = true;
 		started = false;
-		result = new SwfFile(holder, uri, getBytesTotal());
+		result = new SwfFile(movieClip, uri, getBytesTotal());
 		endTime = getTimer();
 		sendCompleteEvent();
 		tearDown();
