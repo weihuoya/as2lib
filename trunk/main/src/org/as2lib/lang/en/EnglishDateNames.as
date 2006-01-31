@@ -15,10 +15,10 @@ dynamic class org.as2lib.lang.en.EnglishDateNames extends SimpleProperties {
 	
 	private function EnglishDateNames() {
 		
-		s("SHORT", "dd.mm.yy nn. - hh");
-		s("MEDIUM", "MM dd, yyyy - hh:nn");
-		s("LONG", "MMMM dd, yyyy - hh:nn");
-		s("FULL", "DDDD, MMMM dd, yyyy - hh:nn:ss");
+		s("SHORT", "dd.mm.yy hh:nn");
+		s("MEDIUM", "MM dd, yyyy, hh:nn");
+		s("LONG", "MMMM dd, yyyy, hh:nn");
+		s("FULL", "DDDD, MMMM dd, yyyy, hh:nn:ss");
 		
 		s("long.day.1", "Sunday");
 		s("long.day.2", "Monday");

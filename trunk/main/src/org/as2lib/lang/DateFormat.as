@@ -142,8 +142,10 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 			case "LONG":
 			case "MEDIUM":
 			case "FULL":
-			case null:
 				dateFormat = names.getProp(dF);
+				break;
+			case null:
+				dateFormat = names.getProp("FULL");
 		}
 		
 		var result:String = "";

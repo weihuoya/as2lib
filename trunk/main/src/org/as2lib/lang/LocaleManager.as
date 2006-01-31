@@ -57,7 +57,7 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 		languageCode = defaultLocaleCode;
 	}
 	
-	public function useLocale(languageCode:String):Void {
+	public function setLocale(languageCode:String):Void {
 		if (this.languageCode != languageCode) {
 			this.languageCode = languageCode;
 			
