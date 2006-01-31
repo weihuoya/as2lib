@@ -21,6 +21,10 @@ import org.as2lib.bean.converter.ClassConverter;
 import org.as2lib.bean.converter.NumberConverter;
 import org.as2lib.bean.converter.PackageConverter;
 import org.as2lib.bean.converter.StringArrayConverter;
+import org.as2lib.bean.factory.support.ManagedArray;
+import org.as2lib.bean.factory.support.ManagedList;
+import org.as2lib.bean.factory.support.ManagedMap;
+import org.as2lib.bean.factory.support.ManagedProperties;
 import org.as2lib.bean.InvalidPropertyException;
 import org.as2lib.bean.MethodInvocationException;
 import org.as2lib.bean.NotReadablePropertyException;
@@ -35,6 +39,7 @@ import org.as2lib.data.holder.List;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.data.holder.map.PrimitiveTypeMap;
+import org.as2lib.data.holder.Properties;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.util.ClassUtil;
@@ -380,7 +385,7 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	
 	public function setPropertyValue(propertyValue:PropertyValue):Void {
 		var propertyName:String = propertyValue.getName();
-		var value = convertPropertyValue(propertyValue);
+		var value = convertPropertyValue(propertyValue.getName(), propertyValue.getValue(), propertyValue.getType());
 		if (getNestedPropertySeparatorIndex(propertyName) > -1) {
 			var nestedBeanWrapper:BeanWrapper;
 			try {
@@ -422,10 +427,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 		}
 	}
 	
-	private function convertPropertyValue(propertyValue:PropertyValue) {
-		var value:String = propertyValue.getValue();
+	public function convertPropertyValue(name:String, value, type:Function) {
 		if (typeof(value) == "string" || value instanceof String) {
-			var type:Function = propertyValue.getType();
 			if (type == null) {
 				if (!isNaN(value)) {
 					type = Number;
@@ -434,10 +437,66 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 					type = Boolean;
 				}
 			}
-			var propertyValueConverter:PropertyValueConverter = findPropertyValueConverter(type, propertyValue.getName());
+			var propertyValueConverter:PropertyValueConverter = findPropertyValueConverter(type, name);
 			if (propertyValueConverter != null) {
-				return propertyValueConverter.convertPropertyValue(propertyValue.getValue(), type);
+				return propertyValueConverter.convertPropertyValue(value, type);
 			}
+		}
+		// TODO: Convert not only managed arrays, lists, ... but also normal arrays, lists, ... (type conversion of sub-elements is not possible there)
+		if (value instanceof ManagedArray) {
+			var result:Array;
+			if (type == null) {
+				result = new Array();
+			}
+			else {
+				// TODO: Check if type is assignable from Array.
+				result = new type();
+			}
+			var array:ManagedArray = value;
+			var elementType:Function = array.getElementType();
+			for (var i:Number = 0; i < array.length; i++) {
+				var element = convertPropertyValue(name + PROPERTY_KEY_PREFIX + i + PROPERTY_KEY_SUFFIX, array[i], elementType);
+				result.push(element);
+			}
+			return result;
+		}
+		if (value instanceof ManagedList) {
+			// TODO: Check whether type is null and whether it is assignable from List.
+			var result:List = new type();
+			var list:ManagedList = value;
+			var array:Array = list.toArray();
+			var elementType:Function = list.getElementType();
+			for (var i:Number = 0; i < array.length; i++) {
+				var element = convertPropertyValue(name + PROPERTY_KEY_PREFIX + i + PROPERTY_KEY_SUFFIX, array[i], elementType);
+				result.insert(element);
+			}
+			return result;
+		}
+		if (value instanceof ManagedMap) {
+			// TODO: Check whether type is null and whether it is assignable from Map.
+			var result:Map = new type();
+			var map:ManagedMap = value;
+			var keys:Array = map.getKeys();
+			var values:Array = map.getValues();
+			var keyType:Function = map.getKeyType();
+			var valueType:Function = map.getValueType();
+			for (var i:Number = 0; i < keys.length; i++) {
+				var k = convertPropertyValue(name, keys[i], keyType);
+				var v = convertPropertyValue(name + PROPERTY_KEY_PREFIX + keys[i] + PROPERTY_KEY_SUFFIX, values[i], valueType);
+				result.put(k, v);
+			}
+			return result;
+		}
+		if (value instanceof ManagedProperties) {
+			// TODO: Check whether type is null and whether it is assignable from Properties.
+			var result:Properties = new type();
+			var properties:ManagedProperties = value;
+			var keys:Array = properties.getKeys();
+			var values:Array = properties.getValues();
+			for (var i:Number = 0; i < keys.length; i++) {
+				result.setProp(keys[i], values[i]);
+			}
+			return result;
 		}
 		return value;
 	}
