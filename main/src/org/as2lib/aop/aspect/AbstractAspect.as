@@ -33,11 +33,63 @@ class org.as2lib.aop.aspect.AbstractAspect extends BasicClass {
 	/** All added advices. */
 	private var advices:Array;
 	
+	/** The affected types. */
+	private var affectedTypes:Array;
+	
+	/** The affected packages. */
+	private var affectedPackages:Array;
+	
 	/**
 	 * Constructs a new {@code AbstractAspect} instance.
 	 */
 	private function AbstractAspect(Void) {
-		this.advices = new Array();
+		advices = new Array();
+		affectedTypes = new Array();
+		affectedPackages = new Array();
+	}
+	
+	public function getAffectedTypes(Void):Array {
+		return affectedTypes.concat();
+	}
+	
+	/**
+	 * Adds a type that shall be affected by this aspect.
+	 * 
+	 * @param type the type to affect
+	 */
+	public function addAffectedType(affectedType:Function):Void {
+		affectedTypes.push(affectedType);
+	}
+	
+	/**
+	 * Adds the types that shall be affected by this aspect.
+	 * 
+	 * @param affectedTypes the types to affect
+	 */
+	public function addAffectedTypes(affectedTypes:Array):Void {
+		this.affectedTypes = this.affectedTypes.concat(affectedTypes);
+	}
+	
+	public function getAffectedPackages(Void):Array {
+		return affectedPackages.concat();
+	}
+	
+	/**
+	 * Adds a package whose types shall be affected.
+	 * 
+	 * @param affectedPackage the package whose type shall be affected
+	 */
+	public function addAffectedPackage(affectedPackage:Object):Void {
+		affectedPackages.push(affectedPackage);
+	}
+	
+	/**
+	 * Adds the affected packages that shall be affected by this aspect.
+	 * 
+	 * @param affectedPackages the affected packages
+	 */
+	public function addAffectedPackages(affectedPackages:Array):Void {
+		this.affectedPackages = this.affectedPackages.concat(affectedPackages);
 	}
 	
 	/**
@@ -48,7 +100,7 @@ class org.as2lib.aop.aspect.AbstractAspect extends BasicClass {
 	 * @return all added advices
 	 */
 	public function getAdvices(Void):Array {
-		return this.advices.concat();
+		return advices.concat();
 	}
 	
 	/**
@@ -74,7 +126,7 @@ class org.as2lib.aop.aspect.AbstractAspect extends BasicClass {
 	 */
 	private function addAdviceByAdvice(advice:Advice):Void {
 		if (advice) {
-			this.advices.push(advice);
+			advices.push(advice);
 		}
 	}
 	

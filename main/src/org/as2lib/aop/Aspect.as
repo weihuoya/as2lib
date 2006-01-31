@@ -35,4 +35,22 @@ interface org.as2lib.aop.Aspect extends BasicInterface {
 	 */
 	public function getAdvices(Void):Array;
 	
+	/**
+	 * Returns the types that shall be affected by this aspect. This means that the
+	 * returned types will be searched through for join points that match any of the
+	 * advices of this aspect.
+	 * 
+	 * @return the affected types
+	 */
+	public function getAffectedTypes(Void):Array;
+	
+	/**
+	 * Returns the packages whose types shall be affected by this aspect. This means
+	 * that all the types of the returned packages or any sub-packages will be searched
+	 * through for join points that match any of the advices of this aspect.
+	 * 
+	 * @return the affected packages
+	 */
+	public function getAffectedPackages(Void):Array;
+	
 }

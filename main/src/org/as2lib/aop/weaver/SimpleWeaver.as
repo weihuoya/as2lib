@@ -171,6 +171,34 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 	}
 	
 	/**
+	 * Adds the given instances of type {@link Aspect} for the affected
+	 * packages and types of the individual aspect.
+	 * 
+	 * @param aspects the aspects to add
+	 */
+	public function addAspects(aspects:Array):Void {
+		for (var i:Number = 0; i < aspects.length; i++) {
+			var aspect:Aspect = Aspect(aspects[i]);
+			if (aspect != null) {
+				var affectedPackages:Array = aspect.getAffectedPackages();
+				if (affectedPackages.length > 0) {
+					for (var j:Number = 0; j < affectedPackages.length; j++) {
+						var affectedPackage:Object = affectedPackages[j];
+						addAspectForAllTypesInPackage(aspect, affectedPackage);
+					}
+				}
+				var affectedTypes:Array = aspect.getAffectedTypes();
+				if (affectedTypes.length > 0) {
+					for (var j:Number = 0; j < affectedTypes.length; j++) {
+						var affectedType:Function = Function(affectedTypes[j]);
+						addAspectForOneAffectedType(aspect, affectedType);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
 	 * @overload #addAspectForAllTypes
 	 * @overload #addAspectForAllTypesInPackage
 	 * @overload #addAspectForMultipleAffectedTypes
