@@ -14,20 +14,15 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicInterface;
-import org.as2lib.data.holder.Properties;
+import org.as2lib.lang.EnglishLocale;
 
 /**
- * @author Martin Heidegger
  * @author Simon Wacker
  */
-interface org.as2lib.lang.Locale extends BasicInterface {
+class org.as2lib.lang.UnitedStatesLocale extends EnglishLocale {
 	
-	public function getLanguage(Void):String;
-	public function getLanguageCode(Void):String;
-	public function getCountry(Void):String;
-	public function getCountryCode(Void):String;
-	public function getSymbols(Void):Properties;
-	public function getMessage(key:String, defaultKey:String, args:Array):String;
+	public function UnitedStatesLocale(Void) {
+		super("US");
+	}
 	
 }
