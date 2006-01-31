@@ -23,6 +23,7 @@ import org.as2lib.data.holder.map.PrimitiveTypeMap;
 import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.env.overload.Overload;
 import org.as2lib.lang.Locale;
+import org.as2lib.lang.LocaleManager;
 import org.as2lib.lang.MessageFormat;
 
 /**
@@ -126,12 +127,12 @@ class org.as2lib.context.support.AbstractMessageSource extends BasicClass {
 	
 	public function getMessage():String {
 		var o:Overload = new Overload(this);
-		o.addHandler([MessageSourceResolvable], thiz.getMessageByResolvable());
-		o.addHandler([MessageSourceResolvable, Locale], thiz.getMessageByResolvable());
-		o.addHandler([String, Array], thiz.getMessageByCodeAndArguments());
-		o.addHandler([String, Array, Locale], thiz.getMessageByCodeAndArguments());
-		o.addHandler([String, Array, String], thiz.getMessageWithDefaultMessage());
-		o.addHandler([String, Array, String, Locale], thiz.getMessageWithDefaultMessage());
+		o.addHandler([MessageSourceResolvable], thiz.getMessageByResolvable);
+		o.addHandler([MessageSourceResolvable, Locale], thiz.getMessageByResolvable);
+		o.addHandler([String, Array], thiz.getMessageByCodeAndArguments);
+		o.addHandler([String, Array, Locale], thiz.getMessageByCodeAndArguments);
+		o.addHandler([String, Array, String], thiz.getMessageWithDefaultMessage);
+		o.addHandler([String, Array, String, Locale], thiz.getMessageWithDefaultMessage);
 		return o.forward(arguments);
 	}
 	
@@ -204,8 +205,7 @@ class org.as2lib.context.support.AbstractMessageSource extends BasicClass {
 			return null;
 		}
 		if (locale == null) {
-			// TODO
-			//locale = Locale.getDefault();
+			locale = LocaleManager.getInstance().getDefaultLocale();
 		}
 		if (args == null || args.length == 0) {
 			// Optimized resolution: no arguments to apply,
@@ -220,8 +220,7 @@ class org.as2lib.context.support.AbstractMessageSource extends BasicClass {
 		else {
 			var messageFormat:MessageFormat = resolveCode(code, locale);
 			if (messageFormat != null) {
-				// TODO
-				return null;//messageFormat.format(resolveArguments(args, locale));
+				return messageFormat.format(resolveArguments(args, locale));
 			}
 		}
 		// Not found -> check parent, if any.
@@ -308,8 +307,7 @@ class org.as2lib.context.support.AbstractMessageSource extends BasicClass {
 			messageFormat = createMessageFormat(message, locale);
 			cachedMessageFormats.put(message, messageFormat);
 		}
-		// TODO
-		return null;//messageFormat.format(resolveArguments(args, locale));
+		return messageFormat.format(resolveArguments(args, locale));
 	}
 	
 	/**
@@ -325,8 +323,7 @@ class org.as2lib.context.support.AbstractMessageSource extends BasicClass {
 		var messageFormat:MessageFormat = new MessageFormat();
 		messageFormat.setLocale(locale);
 		if (message != null) {
-			//TODO
-			//messageFormat.applyPattern(message);
+			messageFormat.applyPattern(message);
 		}
 		return messageFormat;
 	}
@@ -346,10 +343,10 @@ class org.as2lib.context.support.AbstractMessageSource extends BasicClass {
 		var resolvedArgs:Array = new Array();
 		for (var i:Number = 0; i < args.length; i++) {
 			if (args[i] instanceof MessageSourceResolvable) {
-				resolvedArgs.add(getMessageByResolvable(args[i], locale));
+				resolvedArgs.push(getMessageByResolvable(args[i], locale));
 			}
 			else {
-				resolvedArgs.add(args[i]);
+				resolvedArgs.push(args[i]);
 			}
 		}
 		return resolvedArgs;
