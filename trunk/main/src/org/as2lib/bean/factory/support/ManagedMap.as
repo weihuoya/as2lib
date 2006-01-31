@@ -18,75 +18,37 @@ import org.as2lib.bean.Mergable;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.map.HashMap;
 
 /**
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.ManagedMap extends BasicClass implements Map, Mergable {
 	
-	private var targetMap:Map;
-	
+	private var keys:Array;
+	private var values:Array;
+	private var keyType:Function;
+	private var valueType:Function;
 	private var mergeEnabled:Boolean;
 	
 	public function ManagedMap(Void) {
-		targetMap = new HashMap();
+		keys = new Array();
+		values = new Array();
 	}
 	
-	public function containsKey(key):Boolean {
-		return targetMap.containsKey(key);
+	public function getKeyType(Void):Function {
+		return keyType;
 	}
-
-	public function containsValue(value):Boolean {
-		return targetMap.containsValue(value);
+	
+	public function setKeyType(keyType:Function):Void {
+		this.keyType = keyType;
 	}
-
-	public function getKeys(Void):Array {
-		return targetMap.getKeys();
+	
+	public function getValueType(Void):Function {
+		return valueType;
 	}
-
-	public function getValues(Void):Array {
-		return targetMap.getValues();
-	}
-
-	public function get(key) {
-		return targetMap.get(key);
-	}
-
-	public function put(key, value) {
-		return targetMap.put(key, value);
-	}
-
-	public function putAll(map:Map):Void {
-		targetMap.putAll(map);
-	}
-
-	public function remove(key) {
-		return targetMap.remove(key);
-	}
-
-	public function clear(Void):Void {
-		targetMap.clear();
-	}
-
-	public function iterator(Void):Iterator {
-		return targetMap.iterator();
-	}
-
-	public function valueIterator(Void):Iterator {
-		return targetMap.valueIterator();
-	}
-
-	public function keyIterator(Void):Iterator {
-		return targetMap.keyIterator();
-	}
-
-	public function size(Void):Number {
-		return targetMap.size();
-	}
-
-	public function isEmpty(Void):Boolean {
-		return targetMap.isEmpty();
+	
+	public function setValueType(valueType:Function):Void {
+		this.valueType = valueType;
 	}
 	
 	public function isMergeEnabled(Void):Boolean {
@@ -100,12 +62,62 @@ class org.as2lib.bean.factory.support.ManagedMap extends BasicClass implements M
 	public function merge(parent):Void {
 		if (parent instanceof Map) {
 			var parentMap:Map = parent;
-			var temp:Map = new HashMap();
-			temp.putAll(parentMap);
-			temp.putAll(this);
-			targetMap.clear();
-			targetMap.putAll(temp);
+			keys = parentMap.getKeys().concat(keys);
+			values = parentMap.getValues().concat(values);
 		}
 	}
 	
+	public function put(key, value) {
+		keys.push(key);
+		values.push(value);
+	}
+	
+	public function getKeys(Void):Array {
+		return keys;
+	}
+	
+	public function getValues(Void):Array {
+		return values;
+	}
+	
+	public function containsKey(key):Boolean {
+		return null;
+	}
+
+	public function containsValue(value):Boolean {
+		return null;
+	}
+
+	public function get(key) {
+	}
+
+	public function putAll(map:Map):Void {
+	}
+
+	public function remove(key) {
+	}
+
+	public function clear(Void):Void {
+	}
+
+	public function iterator(Void):Iterator {
+		return null;
+	}
+
+	public function valueIterator(Void):Iterator {
+		return null;
+	}
+
+	public function keyIterator(Void):Iterator {
+		return null;
+	}
+
+	public function size(Void):Number {
+		return null;
+	}
+
+	public function isEmpty(Void):Boolean {
+		return null;
+	}
+
 }

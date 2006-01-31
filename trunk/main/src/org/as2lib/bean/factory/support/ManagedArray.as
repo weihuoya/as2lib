@@ -21,9 +21,18 @@ import org.as2lib.bean.Mergable;
  */
 class org.as2lib.bean.factory.support.ManagedArray extends Array implements Mergable {
 	
+	private var elementType:Function;
 	private var mergeEnabled:Boolean;
 	
 	public function ManagedArray(Void) {
+	}
+	
+	public function getElementType(Void):Function {
+		return elementType;
+	}
+	
+	public function setElementType(elementType:Function):Void {
+		this.elementType = elementType;
 	}
 	
 	public function isMergeEnabled(Void):Boolean {

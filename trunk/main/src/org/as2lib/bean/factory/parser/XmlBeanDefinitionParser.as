@@ -33,11 +33,9 @@ import org.as2lib.bean.factory.support.ManagedProperties;
 import org.as2lib.bean.factory.support.MethodOverrides;
 import org.as2lib.bean.factory.support.ReplaceOverride;
 import org.as2lib.bean.factory.support.RootBeanDefinition;
+import org.as2lib.bean.PropertyValue;
 import org.as2lib.bean.PropertyValues;
 import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.List;
-import org.as2lib.data.holder.Map;
-import org.as2lib.data.holder.Properties;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ClassNotFoundException;
 import org.as2lib.util.StringUtil;
@@ -114,14 +112,15 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	public static var VALUE_ELEMENT:String = "value";
 	public static var NULL_ELEMENT:String = "null";
 	public static var ARRAY_ELEMENT:String = "array";
-	public static var ELEMENT_ELEMENT:String = "element";
 	public static var LIST_ELEMENT:String = "list";
 	public static var MAP_ELEMENT:String = "map";
 	public static var ENTRY_ELEMENT:String = "entry";
 	public static var KEY_ELEMENT:String = "key";
 	public static var KEY_ATTRIBUTE:String = "key";
 	public static var KEY_REF_ATTRIBUTE:String = "key-ref";
+	public static var VALUE_TYPE_ATTRIBUTE:String = "value-type";
 	public static var VALUE_REF_ATTRIBUTE:String = "value-ref";
+	public static var KEY_TYPE_ATTRIBUTE:String = "key-type";
 	public static var PROPS_ELEMENT:String = "props";
 	public static var PROP_ELEMENT:String = "prop";
 	public static var MERGE_ATTRIBUTE:String = "merge";
@@ -359,7 +358,8 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		for (var i:Number = 0; i < nodes.length; i++) {
 			var node:XMLNode = nodes[i];
 			if (PROPERTY_ELEMENT == node.nodeName) {
-				parsePropertyElement(node, beanName, result);
+				var pv:PropertyValue = parsePropertyElement(node, beanName, result);
+				result.addPropertyValueByPropertyValue(pv);
 			}
 		}
 		return result;
@@ -400,35 +400,38 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	 * Parse a constructor-arg element.
 	 */
 	private function parseConstructorArgElement(element:XMLNode, beanName:String, argumentValues:ConstructorArgumentValues):Void {
-		var value = parsePropertyValue(element, beanName, "<constructor-arg> element");
+		var index:Number;
 		var indexAttribute:String = element.attributes[INDEX_ATTRIBUTE];
-		var typeAttribute:String = element.attributes[TYPE_ATTRIBUTE];
-		var type:Function;
-		if (typeAttribute != null && typeAttribute != "") {
-			type = eval("_global." + typeAttribute);
-			if (type == null) {
-				throw new BeanDefinitionStoreException(beanName, "Type '" + typeAttribute + "' for constructor argument '" + indexAttribute + "' not found.", this, arguments);
-			}
-		}
 		if (indexAttribute != null && indexAttribute != "") {
 			if (isNaN(indexAttribute)) {
 				throw new BeanDefinitionStoreException(beanName, "Attribute 'index' of tag 'constructor-arg' must be a number.", this, arguments);
 			}
-			var index:Number = Number(indexAttribute);
+			index = Number(indexAttribute);
 			if (index < 0) {
 				throw new BeanDefinitionStoreException(beanName, "'index' cannot be lower than 0.", this, arguments);
 			}
-			argumentValues.addArgumentValue(index, new ConstructorArgumentValue(value, type));
+		}
+		var typeName:String = element.attributes[TYPE_ATTRIBUTE];
+		var type:Function;
+		if (typeName != null && typeName != "") {
+			type = resolveType(typeName);
+			if (type == null) {
+				throw new BeanDefinitionStoreException(beanName, "Type '" + typeName + "' for constructor argument '" + indexAttribute + "' not found.", this, arguments);
+			}
+		}
+		var value = parsePropertyValue(element, beanName, "<constructor-arg> element");
+		if (index == null) {
+			argumentValues.addArgumentValue(new ConstructorArgumentValue(value, type));
 		}
 		else {
-			argumentValues.addArgumentValue(new ConstructorArgumentValue(value, type));
+			argumentValues.addArgumentValue(index, new ConstructorArgumentValue(value, type));
 		}
 	}
 	
 	/**
 	 * Parse a property element.
 	 */
-	private function parsePropertyElement(element:XMLNode, beanName:String, propertyValues:PropertyValues):Void {
+	private function parsePropertyElement(element:XMLNode, beanName:String, propertyValues:PropertyValues):PropertyValue {
 		var propertyName:String = element.attributes[NAME_ATTRIBUTE];
 		if (propertyName == null || propertyName == "") {
 			throw new BeanDefinitionStoreException(beanName, "Tag 'property' must have a 'name' attribute.", this, arguments);
@@ -436,24 +439,31 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		if (propertyValues.contains(propertyName)) {
 			throw new BeanDefinitionStoreException(beanName, "Multiple 'property' definitions for property '" + propertyName + "'.", this, arguments);
 		}
-		var value = parsePropertyValue(element, beanName, "<property> element for property '" + propertyName + "'");
 		var typeName:String = element.attributes[TYPE_ATTRIBUTE];
 		var type:Function;
 		if (typeName != null && typeName != "") {
-			if (typeName == CLASS_TYPE_VALUE) {
-				type = Function;
-			}
-			else if (typeName == PACKAGE_TYPE_VALUE) {
-				type = AbstractBeanWrapper.PACKAGE_TYPE;
-			}
-			else {
-				type = eval("_global." + typeName);
-				if (type == null) {
-					throw new BeanDefinitionStoreException(beanName, "Type for type name '" + typeName + "' of property '" + propertyName + "' could not be found.", this, arguments);
-				}
+			type = resolveType(typeName);
+			if (type == null) {
+				throw new BeanDefinitionStoreException(beanName, "Type for type name '" + typeName + "' of property '" + propertyName + "' could not be found.", this, arguments);
 			}
 		}
-		propertyValues.addPropertyValue(propertyName, value, type);
+		var value = parsePropertyValue(element, beanName, "<property> element for property '" + propertyName + "'");
+		return new PropertyValue(propertyName, value, type);
+	}
+	
+	/**
+	 * Resolves the type for the given {@code typeName}.
+	 * 
+	 * @param typeName the name of the type to resolve
+	 */
+	private function resolveType(typeName:String):Function {
+		if (typeName == CLASS_TYPE_VALUE) {
+			return Function;
+		}
+		if (typeName == PACKAGE_TYPE_VALUE) {
+			return AbstractBeanWrapper.PACKAGE_TYPE;
+		}
+		return eval("_global." + typeName);
 	}
 	
 	/**
@@ -553,14 +563,16 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		if (element.nodeName == ARRAY_ELEMENT) {
 			return parseArrayElement(element, beanName);
 		}
-		if (element.nodeName == LIST_ELEMENT) {
-			return parseListElement(element, beanName);
-		}
-		if (element.nodeName == MAP_ELEMENT) {
-			return parseMapElement(element, beanName);
-		}
-		if (element.nodeName == PROPS_ELEMENT) {
-			return parsePropsElement(element, beanName);
+		if (element.nodeName == LIST_ELEMENT || element.nodeName == MAP_ELEMENT || element.nodeName == PROPS_ELEMENT) {
+			if (element.nodeName == LIST_ELEMENT) {
+				return parseListElement(element, beanName);
+			}
+			if (element.nodeName == MAP_ELEMENT) {
+				return parseMapElement(element, beanName);
+			}
+			if (element.nodeName == PROPS_ELEMENT) {
+				return parsePropsElement(element, beanName);
+			}
 		}
 		throw new BeanDefinitionStoreException(beanName, "Unknown property sub-element: <" + element.nodeName + ">.", this, arguments);
 	}
@@ -568,22 +580,21 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	/**
 	 * Parses an array element.
 	 */
-	private function parseArrayElement(arrayElement:XMLNode, beanName:String):Array {
+	private function parseArrayElement(arrayElement:XMLNode, beanName:String):ManagedArray {
 		var nodes:Array = arrayElement.childNodes;
-		var typeAttribute:String = arrayElement.attributes[TYPE_ATTRIBUTE];
-		var array:Array = new ManagedArray();
+		var elementTypeName:String = arrayElement.attributes[TYPE_ATTRIBUTE];
+		var elementType:Function;
+		if (elementTypeName != null && elementTypeName != "") {
+			elementType = resolveType(elementTypeName);
+			if (elementType == null) {
+				throw new BeanDefinitionStoreException(beanName, "Type for type name '" + elementTypeName + "' of <array> element could not be found.", this, arguments);
+			}
+		}
+		var array:ManagedArray = new ManagedArray();
+		array.setElementType(elementType);
 		array.setMergeEnabled(parseMergeAttribute(arrayElement));
 		for (var i:Number = 0; i < nodes.length; i++) {
-			var node:XMLNode = nodes[i];
-			var value;
-			if (node.nodeName == ELEMENT_ELEMENT) {
-				if (typeAttribute != null && node.attributes[TYPE_ATTRIBUTE] == null) {
-					node.attributes[TYPE_ATTRIBUTE] = typeAttribute;
-				}
-				value = parsePropertyValue(node, beanName, "<element> element for array");
-			} else {
-				value = parsePropertySubElement(node, beanName);
-			}
+			var value = parsePropertySubElement(nodes[i], beanName);
 			array.push(value);
 		}
 		return array;
@@ -592,13 +603,22 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	/**
 	 * Parse a list element.
 	 */
-	private function parseListElement(listElement:XMLNode, beanName:String):List {
+	private function parseListElement(listElement:XMLNode, beanName:String):ManagedList {
 		var nodes:Array = listElement.childNodes;
+		var elementTypeName:String = listElement.attributes[TYPE_ATTRIBUTE];
+		var elementType:Function;
+		if (elementTypeName != null && elementTypeName != "") {
+			elementType = resolveType(elementTypeName);
+			if (elementType == null) {
+				throw new BeanDefinitionStoreException(beanName, "Type for type name '" + elementTypeName + "' of <list> element could not be found.", this, arguments);
+			}
+		}
 		var list:ManagedList = new ManagedList();
+		list.setElementType(elementType);
 		list.setMergeEnabled(parseMergeAttribute(listElement));
 		for (var i:Number = 0; i < nodes.length; i++) {
 			var node:XMLNode = nodes[i];
-			list.insert(parsePropertySubElement(node, beanName));
+			list.insertByValue(parsePropertySubElement(node, beanName));
 		}
 		return list;
 	}
@@ -606,9 +626,27 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	/**
 	 * Parse a map element.
 	 */
-	private function parseMapElement(mapElement:XMLNode, beanName:String):Map {
+	private function parseMapElement(mapElement:XMLNode, beanName:String):ManagedMap {
 		var entryElements:Array = getChildElementsByTagName(mapElement, ENTRY_ELEMENT);
+		var keyTypeName:String = mapElement.attributes[KEY_TYPE_ATTRIBUTE];
+		var keyType:Function;
+		if (keyTypeName != null && keyTypeName != "") {
+			keyType = resolveType(keyTypeName);
+			if (keyType == null) {
+				throw new BeanDefinitionStoreException(beanName, "Key type for type name '" + keyTypeName + "' of <map> element could not be found.", this, arguments);
+			}
+		}
+		var valueTypeName:String = mapElement.attributes[VALUE_TYPE_ATTRIBUTE];
+		var valueType:Function;
+		if (valueTypeName != null && valueTypeName != "") {
+			valueType = resolveType(valueTypeName);
+			if (valueType == null) {
+				throw new BeanDefinitionStoreException(beanName, "Value type for type name '" + valueTypeName + "' of <map> element could not be found.", this, arguments);
+			}
+		}
 		var map:ManagedMap = new ManagedMap();
+		map.setKeyType(keyType);
+		map.setValueType(valueType);
 		map.setMergeEnabled(parseMergeAttribute(mapElement));
 		for (var i:Number = 0; i < entryElements.length; i++) {
 			var entryElement:XMLNode = entryElements[i];
@@ -707,7 +745,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	/**
 	 * Parse a props element.
 	 */
-	private function parsePropsElement(propsElement:XMLNode, beanName:String):Properties {
+	private function parsePropsElement(propsElement:XMLNode, beanName:String):ManagedProperties {
 		var properties:ManagedProperties = new ManagedProperties();
 		properties.setMergeEnabled(parseMergeAttribute(propsElement));
 		var propElements:Array = getChildElementsByTagName(propsElement, PROP_ELEMENT);

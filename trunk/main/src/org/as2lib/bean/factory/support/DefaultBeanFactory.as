@@ -53,7 +53,6 @@ import org.as2lib.bean.PropertyValueConverter;
 import org.as2lib.bean.PropertyValues;
 import org.as2lib.bean.SimpleBeanWrapper;
 import org.as2lib.data.holder.List;
-import org.as2lib.data.holder.list.ArrayList;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
 import org.as2lib.data.holder.map.PrimitiveTypeMap;
@@ -353,7 +352,13 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		var bean;
 		var args:Array = resolveConstructorArguments(mergedBeanDefinition.getConstructorArgumentValues());
 		try {
-			bean = MethodUtil.invoke(factoryMethodName, factory, args);
+			if (isStatic) {
+				bean = factory[factoryMethodName].apply(factory, args);
+			}
+			else {
+				// TODO: MethodUtil.invoke seems to cause trouble with static methods.
+				bean = MethodUtil.invoke(factoryMethodName, factory, args);
+			}
 		}
 		catch (exception) {
 			throw (new BeanDefinitionStoreException(beanName, "Factory method [" + factoryMethodName + "] threw an exception", this, arguments)).initCause(exception);
@@ -368,18 +373,13 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	
 	private function resolveConstructorArguments(constructorArgumentValues:ConstructorArgumentValues):Array {
 		var result:Array = new Array();
-		var beanWrapper:BeanWrapper = new SimpleBeanWrapper();
+		var beanWrapper:SimpleBeanWrapper = new SimpleBeanWrapper();
 		initBeanWrapper(beanWrapper);
 		var avs:Array = constructorArgumentValues.getArgumentValues();
 		for (var i:Number = 0; i < avs.length; i++) {
 			var argument:ConstructorArgumentValue = avs[i];
 			var value = resolveValue("constructor argument with index " + i, argument.getValue());
-			if (typeof(value) == "string" || value instanceof String) {
-				var converter:PropertyValueConverter = beanWrapper.findPropertyValueConverter(argument.getType());
-				if (converter != null) {
-					value = converter.convertPropertyValue(value, argument.getType());
-				}
-			}
+			value = beanWrapper.convertPropertyValue("constructor-arg", argument.getType(), argument.getValue());
 			result.push(value);
 		}
 		return result;
@@ -533,38 +533,35 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 	}
 	
-	private function resolveManagedArray(valueName:String, managedArray:Array):Array {
-		var result:Array = new Array();
+	private function resolveManagedArray(valueName:String, managedArray:ManagedArray):Array {
 		for (var i:Number = 0; i < managedArray.length; i++) {
-			result.push(resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX + i + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, managedArray[i]));
+			managedArray[i] = resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX + i + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, managedArray[i]);
 		}
-		return result;
+		return managedArray;
 	}
 	
 	/**
 	 * For each element in the ManagedList, resolve reference if necessary.
 	 */
-	private function resolveManagedList(valueName:String, managedList:List):List {
-		var result:List = new ArrayList();
-		for (var i:Number = 0; i < managedList.size(); i++) {
-			result.insert(resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX + i + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, managedList.get(i)));
+	private function resolveManagedList(valueName:String, managedList:ManagedList):List {
+		var values:Array = managedList.toArray();
+		for (var i:Number = 0; i < values.length; i++) {
+			values[i] = resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX + i + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, values[i]);
 		}
-		return result;
+		return managedList;
 	}
 	
 	/**
 	 * For each element in the ManagedMap, resolve reference if necessary.
 	 */
-	private function resolveManagedMap(valueName:String, managedMap:Map):Map {
-		var result:Map = new HashMap();
+	private function resolveManagedMap(valueName:String, managedMap:ManagedMap):Map {
 		var keys:Array = managedMap.getKeys();
 		var values:Array = managedMap.getValues();
 		for (var i:Number = 0; i < keys.length; i++) {
-			result.put(
-					resolveValue(valueName, keys[i]),
-					resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX + keys[i] + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, values[i]));
+			keys[i] = resolveValue(valueName, keys[i]);
+			values[i] = resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX + keys[i] + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, values[i]);
 		}
-		return result;
+		return managedMap;
 	}
 	
 	/**

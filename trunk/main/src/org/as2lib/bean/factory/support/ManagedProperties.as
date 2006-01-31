@@ -15,17 +15,21 @@
  */
 
 import org.as2lib.bean.Mergable;
+import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Properties;
-import org.as2lib.data.holder.properties.SimpleProperties;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.bean.factory.support.ManagedProperties extends SimpleProperties implements Mergable {
+class org.as2lib.bean.factory.support.ManagedProperties extends BasicClass implements Properties, Mergable {
 	
+	private var keys:Array;
+	private var values:Array;
 	private var mergeEnabled:Boolean;
 	
 	public function ManagedProperties(Void) {
+		keys = new Array();
+		values = new Array();
 	}
 	
 	public function isMergeEnabled(Void):Boolean {
@@ -39,12 +43,32 @@ class org.as2lib.bean.factory.support.ManagedProperties extends SimpleProperties
 	public function merge(parent):Void {
 		if (parent instanceof Properties) {
 			var parentProperties:Properties = parent;
-			var temp:SimpleProperties = new SimpleProperties();
-			temp.putAll(parentProperties);
-			temp.putAll(this);
-			clear();
-			putAll(temp);
+			keys = parentProperties.getKeys().concat(keys);
+			values = parentProperties.getValues().concat(values);
 		}
 	}
 	
+	public function setProp(key:String, value:String):Void {
+		keys.push(key);
+		values.push(value);
+	}
+
+	public function getKeys(Void):Array {
+		return keys;
+	}
+
+	public function getValues(Void):Array {
+		return values;
+	}
+	
+	public function getProp(key:String, defaultValue:String):String {
+		return null;
+	}
+
+	public function putAll(source:Properties):Void {
+	}
+
+	public function clear(Void):Void {
+	}
+
 }
