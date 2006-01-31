@@ -1,88 +1,139 @@
+/*
+ * Copyright the original author or authors.
+ * 
+ * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.mozilla.org/MPL/MPL-1.1.html
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import org.as2lib.core.BasicClass;
 import org.as2lib.lang.DateFormat;
+import org.as2lib.lang.Locale;
 import org.as2lib.lang.NumberFormat;
-import org.as2lib.data.holder.Properties;
 
 /**
  * @author Martin Heidegger
+ * @author Simon Wacker
  */
 class org.as2lib.lang.MessageFormat extends BasicClass {
 	
+	private var pattern:String;
+	private var tokens:Array;
+	private var locale:Locale;
 	private var dateFormat:DateFormat;
 	private var numberFormat:NumberFormat;
-	private var map:Array;
-	private var messageLookup:Properties;
 	
-	public function MessageFormat(defaultMessageLookup:Properties, defaultNumberFormat:String, defaultDateFormat:String, store:Boolean) {
-		dateFormat = new DateFormat(defaultDateFormat, defaultMessageLookup);
-		numberFormat = new NumberFormat(defaultNumberFormat);
-		messageLookup = defaultMessageLookup;
-		if (store) {
-			map = new Array();
+	public function MessageFormat(pattern:String, locale:Locale) {
+		applyPattern(pattern);
+		setLocale(locale);
+	}
+	
+	public function applyPattern(pattern:String):Void {
+		if (pattern != null) {
+			this.pattern = pattern;
+			tokens = getTokens(pattern);
 		}
+	}
+	
+	public function getLocale(Void):Locale {
+		return locale;
+	}
+	
+	public function setLocale(locale:Locale):Void {
+		if (locale != null) {
+			this.locale = locale;
+			if (dateFormat == null) {
+				dateFormat = new DateFormat(null, locale);
+			}
+			if (numberFormat == null) {
+				numberFormat = new NumberFormat(null, locale);
+			}
+		}
+	}
+	
+	public function getNumberFormat(Void):NumberFormat {
+		return numberFormat;
 	}
 	
 	public function setNumberFormat(numberFormat:NumberFormat):Void {
 		this.numberFormat = numberFormat;
 	}
 	
+	public function getDateFormat(Void):DateFormat {
+		return dateFormat;
+	}
+	
 	public function setDateFormat(dateFormat:DateFormat):Void {
 		this.dateFormat = dateFormat;
 	}
 	
-	public function format(string:String, args:Array):String {
-		var i:Number;
-		var tokens:Array;
+	public function format(args:Array, pattern:String):String {
 		var result:String = "";
-		if (map) {
-			tokens = map[string];
-			if (!tokens) {
-				tokens = getTokens(string);
-				map[string] = tokens;
-			}
-		} else {
-			tokens = getTokens(string);
+		var tokens:Array = tokens;
+		if (this.pattern != pattern && pattern != null) {
+			tokens = getTokens(pattern);
 		}
-		for (i=0; i<tokens.length; i++) {
+		else if (tokens == null) {
+			if (pattern != null) {
+				this.tokens = tokens = getTokens(pattern);
+			}
+			else if (this.pattern != null) {
+				this.tokens = tokens = getTokens(this.pattern);
+			}
+		}
+		for (var i:Number = 0; i < tokens.length; i++) {
 			var token = tokens[i];
-			if (typeof token == "string") {
+			if (typeof(token) == "string") {
 				result += tokens[i];
-			} else {
+			}
+			else {
 				var num:Number = Number(token[0]);
-				if (!num && token[0].length > 1) {
+				/*if (!num && token[0].length > 1) {
 					var args2:Array = token.slice(1);
 					var args3:Array = [];
 					var content:String = messageLookup.getProp(token[0]);
-					if (content != string) {
+					if (content != pattern) {
 						for (var j:String in args2) {
 							if (args[args2[j]]) {
 								args3[j] = args[args2[j]];
-							} else {
+							}
+							else {
 								args3[j] = j;
 							}
 						}
-						result += this.format(content, args3);
-					}
-				} else {
-					var arg = args[num];
-					if (token.length == 1) {
-						if (arg) {
-							result += arg;
-						}
-					} else {
-						var type:String = token[1].toLowerCase();
-						var format:String = token[2];
-						if (type == "date") {
-							if (arg instanceof Date) {
-								result += dateFormat.format(arg, format);							
-							}
-						} else if (type == "number") {
-							if (arg instanceof Number || typeof arg == "number") {
-								result += numberFormat.format(arg, format, token[3].toLowerCase(), token[4].toLowerCase(), token[5].toLowerCase());
-							}
-						}
+						result += format(args3, content);
 					}
 				}
+				else {*/
+					var arg = args[num];
+					if (token.length == 1) {
+						if (arg != null) {
+							result += arg;
+						}
+					}
+					else {
+						var type:String = token[1].toLowerCase();
+						var style:String = token[2];
+						if (type == "date") {
+							if (arg instanceof Date) {
+								result += dateFormat.format(arg, style);
+							}
+						}
+						else if (type == "number") {
+							if (arg instanceof Number || typeof(arg) == "number") {
+								result += numberFormat.format(arg, style, token[3].toLowerCase(), token[4].toLowerCase());
+							}
+						}
+					}
+				//}
 			}
 		}
 		return result;
@@ -91,31 +142,35 @@ class org.as2lib.lang.MessageFormat extends BasicClass {
 	private function getTokens(string):Array {
 		var result:Array = new Array();
 		var tokenStart:Number = 0;
-		var i:Number;
 		var escape:Boolean = false;
-		for (i=0; i<string.length; i++) {
+		for (var i:Number = 0; i < string.length; i++) {
 			var c:String = string.charAt(i);
 			if (c == "'") {
-				escape = true;
-				if (i == string.length-1) {
-					result.push(string.substring(tokenStart));
+				if (string.charAt(i + 1) != "'") {
+					escape = true;
+					if (i == string.length - 1) {
+						result.push(string.substring(tokenStart));
+					}
 				}
-			} else {
+			}
+			else {
 				if (!escape) {
 					if (c == "{" ) {
-						result.push(string.substring(tokenStart,i));
-						tokenStart = i+1;
-					} else if (c == "}") {
-						result.push(string.substring(tokenStart,i).split(","));
-						tokenStart = i+1;
-					} else if (i == string.length-1) {
+						result.push(string.substring(tokenStart, i));
+						tokenStart = i + 1;
+					}
+					else if (c == "}") {
+						result.push(string.substring(tokenStart, i).split(","));
+						tokenStart = i + 1;
+					}
+					else if (i == string.length - 1) {
 						result.push(string.substring(tokenStart));
 					} 
 				}
 				escape = false;
 			}
-			
 		}
 		return result;
 	}
+	
 }

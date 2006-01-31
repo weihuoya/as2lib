@@ -16,7 +16,8 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Properties;
-import org.as2lib.lang.en.EnglishDateNames;
+import org.as2lib.lang.Locale;
+import org.as2lib.lang.LocaleManager;
 import org.as2lib.util.StringUtil;
 
 /**
@@ -82,33 +83,32 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 	/** Quotation beginning and ending token. */
 	public static var QUOTE:String = "'";
 	
-	/** Keys to be used for the names of months, days, etc. */
-	private var names:Properties;
+	/** The locale to look-up names of months, days etc. */
+	private var locale:Locale;
 	
-	/** Formatting to be used for generating the string representation. */
+	/** Date format to generate the string representation of a given date. */
 	private var dateFormat:String;
 	
+	/** Names of methods to invoke when specific placeholders are encountered. */
 	private var m:Array;
 	
 	/**
 	 * Constructs a new {@code DateFormat} instance.
 	 *
-	 * <p>To format a 
-	 *
 	 * <p>If you do not pass-in a {@code dateFormat} or if the passed-in one is
 	 * {@code null} or {@code undefined} the {@code DEFAULT_DATE_FORMAT} is used.
 	 * 
-	 * <p>If you do not pass-in a {@code language} or if the passed-in one is
-	 * {@code null} or {@code undefined} the {@code LocaleManager.getInstance()}
-	 * is used.
+	 * <p>If you do not pass-in a {@code locale} or if the passed-in one is
+	 * {@code null} or {@code undefined}, the shared locale returned by
+	 * {@code LocaleManager.getInstance()} is used.
 	 * 
-	 * @param dateFormat (optional) format 
-	 * @param language (optional) language to be used for 
+	 * @param dateFormat (optional) the date format pattern
+	 * @param locale (optional) the locale to look-up names of months etc.
 	 */
-	public function DateFormat(dateFormat:String, names:Properties) {
-		this.names = names == null ? EnglishDateNames.getInstance() : names;
-		this.dateFormat = dateFormat == null ? DEFAULT_DATE_FORMAT : dateFormat;
-		m = [];
+	public function DateFormat(dateFormat:String, locale:Locale) {
+		this.dateFormat = (dateFormat == null) ? DEFAULT_DATE_FORMAT : dateFormat;
+		this.locale = (locale == null) ? LocaleManager.getInstance() : locale;
+		m = new Array();
 		m[YEAR] = "formatYear";
 		m[MONTH_AS_NUMBER] = "formatMonthAsNumber";
 		m[MONTH_AS_TEXT] = "formatMonthAsText";
@@ -130,62 +130,66 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 	 *
 	 * @param date the date-time value to format into a date-time string
 	 * @param dateFormat (optional) format to overwrite the class default format
+	 * @param locale (optional) the locale to look-up names of months etc.
 	 * @return the formatted date-time string
 	 */
-	public function format(date:Date, dateFormat:String):String {
-		if (!date) date = new Date();
-		if (!dateFormat) dateFormat = this.dateFormat;
-		
-		var dF:String = dateFormat.toUpperCase();
-		switch (dF) {
+	public function format(date:Date, dateFormat:String, locale:Locale):String {
+		if (date == null) date = new Date();
+		if (dateFormat == null) dateFormat = this.dateFormat;
+		if (locale == null) locale = this.locale;
+		var symbols:Properties = locale.getSymbols();
+		var df:String = dateFormat.toUpperCase();
+		switch (df) {
 			case "SHORT":
 			case "LONG":
 			case "MEDIUM":
 			case "FULL":
-				dateFormat = names.getProp(dF);
+				dateFormat = symbols.getProp(df);
 				break;
 			case null:
-				dateFormat = names.getProp("FULL");
+				dateFormat = symbols.getProp("FULL");
 		}
-		
 		var result:String = "";
 		var i:Number = 0;
 		var tokenCount:Number;
 		var token:String;
 		var char:String;
-		
-		while (i < dateFormat.length) {
+		var l:Number = dateFormat.length;
+		while (i < l) {
 			char = dateFormat.charAt(i);
-			
 			var method:String = m[char];
-			if (method) {
+			if (method != null) {
 				tokenCount = -1;
 				token = dateFormat.charAt(i);
 				while (dateFormat.charAt(i+(++tokenCount)) == token);
-				result += this[method](date, tokenCount);
+				result += this[method](date, tokenCount, symbols);
 				i += tokenCount;
-			} else {
+			}
+			else {
 				if (char == QUOTE) {
 					if (dateFormat.charAt(i + 1) == QUOTE) {
 						result += "'";
-						i+=2;
-					} else {
+						i += 2;
+					}
+					else {
 						var quoteStart:Number = i;
-						var quoteEnd:Number = i+1;
-						while (quoteEnd < dateFormat.length-1) {
+						var quoteEnd:Number = i + 1;
+						while (quoteEnd < l - 1) {
 							if (dateFormat.charAt(quoteEnd) == QUOTE) {
-								if (dateFormat.charAt(quoteEnd+1) != QUOTE) {
+								if (dateFormat.charAt(quoteEnd + 1) != QUOTE) {
 									break;
 								}
 								quoteEnd += 2;
-							} else {
+							}
+							else {
 								quoteEnd++;
 							}
 						}
-						result += dateFormat.substring(quoteStart+1, quoteEnd).split("''").join("'");
-						i = quoteEnd+1;
+						result += dateFormat.substring(quoteStart + 1, quoteEnd).split("''").join("'");
+						i = quoteEnd + 1;
 					}
-				} else {
+				}
+				else {
 					result += char;
 					i++;
 				}
@@ -297,15 +301,16 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 	 *
 	 * @param month the month to format to a string
 	 * @param tokenCount the number of favored tokens
+	 * @param symbols the symbols to look-up month names
 	 * @return the string representation of the month
 	 */
-	private function formatMonthAsText(date:Date, tokenCount:Number):String {
+	private function formatMonthAsText(date:Date, tokenCount:Number, symbols:Properties):String {
 		var month:Number = date.getMonth();
 		if (month < 0 || month > 11 || month == null) {
 			month = 0;
 		}
 		var key:String = (tokenCount < 4 || tokenCount == null) ? "short" : "long";
-		return names.getProp(key+".month."+(Math.abs(month)+1));
+		return symbols.getProp(key + ".month." + (Math.abs(month) + 1));
 	}
 	
 	/**
@@ -350,18 +355,19 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 	 *
 	 * @param day the day to format to a string
 	 * @param tokenCount the number of favored tokens
+	 * @param symbols the symbols to look-up day names
 	 * @return the string representation of the day
 	 * @//TODO: throws IllegalArgumentException if the passed-in {@code day} is less
 	 * than 0 or greater than 6 or {@code null} or {@code undefined}
 	 */
-	private function formatDayAsText(date:Date, tokenCount:Number):String {
+	private function formatDayAsText(date:Date, tokenCount:Number, symbols:Properties):String {
 		var day:Number = date.getDay();
 		if (day < 0 || day > 6 || day == null) {
 			day = 0;
 		} 
 		day++;
 		var key:String = (tokenCount < 4  || tokenCount == null) ? "short.day." : "long.day.";
-		return names.getProp(key+day);
+		return symbols.getProp(key + day);
 	}
 	
 	/**
