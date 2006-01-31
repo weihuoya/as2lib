@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.data.holder.Properties;
 import org.as2lib.lang.DateFormat;
 import org.as2lib.lang.Locale;
 import org.as2lib.lang.NumberFormat;
@@ -77,17 +78,10 @@ class org.as2lib.lang.MessageFormat extends BasicClass {
 	
 	public function format(args:Array, pattern:String):String {
 		var result:String = "";
+		var symbols:Properties = locale.getSymbols();
 		var tokens:Array = tokens;
-		if (this.pattern != pattern && pattern != null) {
+		if (tokens == null) {
 			tokens = getTokens(pattern);
-		}
-		else if (tokens == null) {
-			if (pattern != null) {
-				this.tokens = tokens = getTokens(pattern);
-			}
-			else if (this.pattern != null) {
-				this.tokens = tokens = getTokens(this.pattern);
-			}
 		}
 		for (var i:Number = 0; i < tokens.length; i++) {
 			var token = tokens[i];
@@ -96,10 +90,10 @@ class org.as2lib.lang.MessageFormat extends BasicClass {
 			}
 			else {
 				var num:Number = Number(token[0]);
-				/*if (!num && token[0].length > 1) {
+				if (num == null && token[0].length > 1) {
 					var args2:Array = token.slice(1);
 					var args3:Array = [];
-					var content:String = messageLookup.getProp(token[0]);
+					var content:String = symbols.getProp(token[0]);
 					if (content != pattern) {
 						for (var j:String in args2) {
 							if (args[args2[j]]) {
@@ -112,7 +106,7 @@ class org.as2lib.lang.MessageFormat extends BasicClass {
 						result += format(args3, content);
 					}
 				}
-				else {*/
+				else {
 					var arg = args[num];
 					if (token.length == 1) {
 						if (arg != null) {
@@ -133,7 +127,7 @@ class org.as2lib.lang.MessageFormat extends BasicClass {
 							}
 						}
 					}
-				//}
+				}
 			}
 		}
 		return result;
