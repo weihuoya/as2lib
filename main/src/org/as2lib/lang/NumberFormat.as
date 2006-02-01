@@ -28,7 +28,7 @@ import org.as2lib.util.MathUtil;
  */
 class org.as2lib.lang.NumberFormat extends BasicClass {
 	
-	public static var DEFAULT_NUMBER_FORMAT:String = "SIMPLE";
+	public static var DEFAULT_NUMBER_FORMAT:String = "NUMBER";
 	
 	private var numberFormat:String;
 	private var locale:Locale;
@@ -45,7 +45,14 @@ class org.as2lib.lang.NumberFormat extends BasicClass {
 		var round:String = symbols.getProp("round");
 		var comma:String = symbols.getProp("comma");
 		var currency:String = symbols.getProp("currency");
-		numberFormat = symbols.getProp(numberFormat.toUpperCase());
+		var nf:String = numberFormat.toUpperCase();
+		switch (nf) {
+			case "NUMBER":
+			case "INTEGER":
+			case "CURRENCY":
+			case "PERCENT":
+				numberFormat = symbols.getProp(nf);
+		}
 		var i:Number = 0;
 		var l:Number = numberFormat.length;
 		var last:Number = 0;
