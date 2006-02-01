@@ -20,21 +20,23 @@ class org.as2lib.lang.TLocaleManager extends TestCase {
 		enMsg = new SimpleProperties();
 		enMsg.setProp("welcome", "hello {0}");
 		enMsg.setProp("bye", "bye {0}");
-		en = new ConcreteLocale("en", enMsg);
+		en = new ConcreteLocale("en", "GB", enMsg);
 		
 		deMsg = new SimpleProperties();
 		deMsg.setProp("welcome", "Hallo {0}");
-		de = new ConcreteLocale("de", deMsg);
+		de = new ConcreteLocale("de", "DE", deMsg);
 		
-		localeManager = new LocaleManager("en");
+		localeManager = new LocaleManager();
 		localeManager.addLocale(de);
 		localeManager.addLocale(en);
-		localeManager.setLocale("de");
+		localeManager.setDefaultLocale("de");
 	}
 	
 	public function testLookup() {
-		assertEquals("default lookup should be used locale lookup", localeManager.getMessage("welcome", null, ["thomas"]), "Hallo thomas");
-		assertEquals("empty result should result in using default lookup", localeManager.getMessage("bye", null, ["thomas"]), "bye thomas");
-		assertEquals("unknown result in eighter used or default locale should end in the key", localeManager.getMessage("unknown", "unknown"), "unknown");
+		assertEquals("get message from default german locale", localeManager.getMessage("welcome", null, ["thomas"]), "Hallo thomas");
+		localeManager.setDefaultLocale("en");
+		assertEquals("get message from default english locale", localeManager.getMessage("bye", null, ["thomas"]), "bye thomas");
+		assertEquals("unknown result results in key", localeManager.getMessage("unknown", "unknown"), "unknown");
 	}
+	
 }

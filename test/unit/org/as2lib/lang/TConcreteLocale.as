@@ -7,7 +7,9 @@ import org.as2lib.data.holder.Properties;
  * @author HeideggerMartin
  */
 class org.as2lib.lang.TConcreteLocale extends TLocale {
-	public function getLocale(content:Properties):Locale {
-		return new ConcreteLocale("de", content);
+	
+	public function getLocale(symbols:Properties):Locale {
+		return new ConcreteLocale("de", "DE", symbols);
 	}
+	
 }
