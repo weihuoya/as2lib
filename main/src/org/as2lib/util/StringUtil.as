@@ -230,6 +230,9 @@ class org.as2lib.util.StringUtil extends BasicClass {
 	 * @return Escaped string.
 	 */
 	public static function escape(string:String, keyMap:Array, ignoreUnicode:Boolean):String {
+		if (string == null) {
+			return string;
+		}
 		if (!keyMap) {
 			keyMap = DEFAULT_ESCAPE_MAP;
 		}
