@@ -58,17 +58,17 @@ class org.as2lib.lang.NumberFormat extends BasicClass {
 		var last:Number = 0;
 		var sep:Array = [];
 		while (i < l) {
-			var c:String = format.charAt(i);
+			var c:String = numberFormat.charAt(i);
 			if (c == "'") {
-				if (format.charAt(i + 1) == "'") {
+				if (numberFormat.charAt(i + 1) == "'") {
 					i += 2;
 				}
 				else {
 					var quoteStart:Number = i;
-					var quoteEnd:Number = i+1;
-					while (quoteEnd < format.length - 1) {
-						if (format.charAt(quoteEnd) == "'") {
-							if (format.charAt(quoteEnd+1) != "'") {
+					var quoteEnd:Number = i + 1;
+					while (quoteEnd < l - 1) {
+						if (numberFormat.charAt(quoteEnd) == "'") {
+							if (numberFormat.charAt(quoteEnd+1) != "'") {
 								break;
 							}
 							quoteEnd += 2;
@@ -77,16 +77,16 @@ class org.as2lib.lang.NumberFormat extends BasicClass {
 							quoteEnd++;
 						}
 					}
-					i = quoteEnd+1;
+					i = quoteEnd + 1;
 				}
 			}
 			else if (c == ";") {
-				sep.push(format.substring(last, i));
+				sep.push(numberFormat.substring(last, i));
 				last = i + 1;
 			}
 			i++;
 		}
-		sep.push(format.substr(last));
+		sep.push(numberFormat.substr(last));
 		if (number < 0) {
 			if (sep.length > 1) {
 				return doFormat(number, sep[1], round, comma, currency);
