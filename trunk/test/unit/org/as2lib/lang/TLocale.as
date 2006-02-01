@@ -1,7 +1,7 @@
-import org.as2lib.test.unit.TestCase;
-import org.as2lib.lang.Locale;
 import org.as2lib.data.holder.Properties;
 import org.as2lib.data.holder.properties.SimpleProperties;
+import org.as2lib.lang.Locale;
+import org.as2lib.test.unit.TestCase;
 
 /**
  * @author Martin Heidegger
@@ -44,4 +44,5 @@ class org.as2lib.lang.TLocale extends TestCase {
 		
 		assertEquals("multiple arguments should be multiple checked", language.getMessage("multiple.placeHolder",null,["hello", "world"]), "hello,hello,hello world");
 	}
+	
 }
