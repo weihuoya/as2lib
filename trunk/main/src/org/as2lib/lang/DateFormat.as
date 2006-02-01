@@ -145,9 +145,6 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 			case "MEDIUM":
 			case "FULL":
 				dateFormat = symbols.getProp(df);
-				break;
-			case null:
-				dateFormat = symbols.getProp("FULL");
 		}
 		var result:String = "";
 		var i:Number = 0;
