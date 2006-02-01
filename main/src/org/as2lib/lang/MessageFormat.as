@@ -49,15 +49,7 @@ class org.as2lib.lang.MessageFormat extends BasicClass {
 	}
 	
 	public function setLocale(locale:Locale):Void {
-		if (locale != null) {
-			this.locale = locale;
-			if (dateFormat == null) {
-				dateFormat = new DateFormat(null, locale);
-			}
-			if (numberFormat == null) {
-				numberFormat = new NumberFormat(null, locale);
-			}
-		}
+		this.locale = locale;
 	}
 	
 	public function getNumberFormat(Void):NumberFormat {
@@ -76,11 +68,19 @@ class org.as2lib.lang.MessageFormat extends BasicClass {
 		this.dateFormat = dateFormat;
 	}
 	
-	public function format(args:Array, pattern:String):String {
+	public function format(args:Array, pattern:String, locale:Locale):String {
+		if (pattern == null) pattern = this.pattern;
+		if (locale == null) locale = this.locale;
+		if (dateFormat == null) {
+			dateFormat = new DateFormat();
+		}
+		if (numberFormat == null) {
+			numberFormat = new NumberFormat();
+		}
 		var result:String = "";
 		var symbols:Properties = locale.getSymbols();
 		var tokens:Array = tokens;
-		if (tokens == null) {
+		if (tokens == null || pattern != null && pattern != this.pattern) {
 			tokens = getTokens(pattern);
 		}
 		for (var i:Number = 0; i < tokens.length; i++) {
@@ -118,12 +118,13 @@ class org.as2lib.lang.MessageFormat extends BasicClass {
 						var style:String = token[2];
 						if (type == "date") {
 							if (arg instanceof Date) {
-								result += dateFormat.format(arg, style);
+								result += dateFormat.format(arg, style, locale);
 							}
 						}
 						else if (type == "number") {
 							if (arg instanceof Number || typeof(arg) == "number") {
-								result += numberFormat.format(arg, style, token[3].toLowerCase(), token[4].toLowerCase());
+								// token[3].toLowerCase(), token[4].toLowerCase()
+								result += numberFormat.format(arg, style, locale);
 							}
 						}
 					}
