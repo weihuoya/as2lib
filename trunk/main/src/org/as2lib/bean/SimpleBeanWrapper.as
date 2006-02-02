@@ -35,6 +35,7 @@ import org.as2lib.bean.PropertyValue;
 import org.as2lib.bean.PropertyValueConverter;
 import org.as2lib.bean.PropertyValueConverterHolder;
 import org.as2lib.bean.PropertyValues;
+import org.as2lib.bean.TypeMismatchException;
 import org.as2lib.data.holder.List;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
@@ -42,6 +43,7 @@ import org.as2lib.data.holder.map.PrimitiveTypeMap;
 import org.as2lib.data.holder.Properties;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.overload.Overload;
+import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.util.ClassUtil;
 import org.as2lib.util.StringUtil;
 import org.as2lib.util.TextUtil;
@@ -449,7 +451,9 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 				result = new Array();
 			}
 			else {
-				// TODO: Check if type is assignable from Array.
+				if (!ClassUtil.isAssignable(type, Array)) {
+					throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(Array) + "].", this, arguments);
+				}
 				result = new type();
 			}
 			var array:ManagedArray = value;
@@ -461,7 +465,12 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 			return result;
 		}
 		if (value instanceof ManagedList) {
-			// TODO: Check whether type is null and whether it is assignable from List.
+			if (type == null) {
+				throw new TypeMismatchException(name, value, List, "Supplied list implementation is 'null'. Note that the type of a managed list (the list implementation to instantiate) must be declared.", this, arguments);
+			}
+			if (!ClassUtil.isAssignable(type, List)) {
+				throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(List) + "].", this, arguments);
+			}
 			var result:List = new type();
 			var list:ManagedList = value;
 			var array:Array = list.toArray();
@@ -473,7 +482,12 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 			return result;
 		}
 		if (value instanceof ManagedMap) {
-			// TODO: Check whether type is null and whether it is assignable from Map.
+			if (type == null) {
+				throw new TypeMismatchException(name, value, Map, "Supplied map implementation is 'null'. Note that the type of a managed map (the map implementation to instantiate) must be declared.", this, arguments);
+			}
+			if (!ClassUtil.isAssignable(type, Map)) {
+				throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(Map) + "].", this, arguments);
+			}
 			var result:Map = new type();
 			var map:ManagedMap = value;
 			var keys:Array = map.getKeys();
@@ -488,7 +502,12 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 			return result;
 		}
 		if (value instanceof ManagedProperties) {
-			// TODO: Check whether type is null and whether it is assignable from Properties.
+			if (type == null) {
+				throw new TypeMismatchException(name, value, Properties, "Supplied properties implementation is 'null'. Note that the type of a managed properties (the properties implementation to instantiate) must be declared.", this, arguments);
+			}
+			if (!ClassUtil.isAssignable(type, Properties)) {
+				throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(Properties) + "].", this, arguments);
+			}
 			var result:Properties = new type();
 			var properties:ManagedProperties = value;
 			var keys:Array = properties.getKeys();

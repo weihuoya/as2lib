@@ -22,12 +22,13 @@ import org.as2lib.env.reflect.ReflectUtil;
  */
 class org.as2lib.bean.TypeMismatchException extends PropertyAccessException {
 	
-	public function TypeMismatchException(propertyName:String, propertyValue, requiredType:Function, scope, args:Array) {
+	public function TypeMismatchException(propertyName:String, propertyValue, requiredType:Function, message:String, scope, args:Array) {
 		super(propertyName, 
 				"Failed to convert property value of type [" +
 				(propertyValue != null ? ReflectUtil.getTypeName(propertyValue) : null) + "]" +
 				(requiredType != null ? " to required type [" + ReflectUtil.getTypeNameForType(requiredType) + "]" : "") +
-				(propertyName != null ? " for property '" + propertyName + "'" : ""), scope, args);
+				(propertyName != null ? " for property '" + propertyName + "'" : "") +
+				(message != null ? ": " + message : ""), scope, args);
 	}
 	
 }
