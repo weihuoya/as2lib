@@ -66,6 +66,19 @@ class org.as2lib.util.ClassUtil extends BasicClass {
 	}
 	
 	/**
+	 * Checks whether the given {@code sub}-class or {@code sub}-interface is assignable
+	 * from the given {@code zuper}-class or {@code zuper}-interface, that means whether
+	 * {@code sub} is an implementation of {@code zuper} or extends {@code zuper}.
+	 * 
+	 * @param sub the possible sub-class or sub-interface
+	 * @param zuper the possible super-class or super-interface
+	 * @return {@code true} if the given {@code sub} is assignable from {@code zuper}
+	 */
+	public static function isAssignable(sub:Function, zuper:Function):Boolean {
+		return (createCleanInstance(sub) instanceof zuper);
+	}
+	
+	/**
 	 * Creates a new instance of the passed-in {@code clazz} without invoking its 
 	 * constructor.
 	 * 
