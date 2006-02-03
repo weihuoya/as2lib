@@ -242,8 +242,6 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 	 * @param date date to get the year from the account
 	 * @param digitCount the number of favored digits
 	 * @return the string representation of the year
-	 * @//TODO: throws IllegalArgumentException if the passed-in {@code year} is
-	 * {@code null} or {@code undefined}
 	 */
 	private function formatYear(date:Date, digitCount:Number):String {
 		var year:Number = date.getFullYear();
@@ -325,14 +323,11 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 	 * @param day the day of month to format to a number string
 	 * @param digitCount the number of digits
 	 * @return the number representation of the day
-	 * @//TODO: throws IllegalArgumentException if the passed-in {@code day} is less
-	 * than 1 or greater than 31 or {@code null} or {@code undefined}
 	 */
 	private function formatDayAsNumber(date:Date, digitCount:Number):String {
 		var day:Number = date.getDate();
 		if (day < 1 || day > 31 || day == null) {
 			day = 1;
-			//TODO: throw new IllegalArgumentException("Argument 'day' [" + day + "] must not be less than 1 nor greater than 31 nor 'null' nor 'undefined'.", this, arguments);
 		}
 		if (digitCount == null) digitCount = 0;
 		var string:String = day.toString();
@@ -354,8 +349,6 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 	 * @param tokenCount the number of favored tokens
 	 * @param symbols the symbols to look-up day names
 	 * @return the string representation of the day
-	 * @//TODO: throws IllegalArgumentException if the passed-in {@code day} is less
-	 * than 0 or greater than 6 or {@code null} or {@code undefined}
 	 */
 	private function formatDayAsText(date:Date, tokenCount:Number, symbols:Properties):String {
 		var day:Number = date.getDay();
@@ -382,8 +375,6 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 	 * @param hour the hour to format
 	 * @param digitCount the number of favored digits
 	 * @return the string representation of {@code hour}
-	 * @//TODO: throws IllegalArgumentException if the passed-in {@code hour} is less
-	 * than 0 or greater than 23 or {@code null} or {@code undefined}
 	 */
 	private function formatHourInAmPm(date:Date, digitCount:Number):String {
 		var hour:Number = date.getHours();
@@ -393,8 +384,7 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 		if (digitCount == null) digitCount = 0;
 		var string:String;
 		if (hour == 0) {
-			// 12.toString() causes a compiler error
-			string = (12).toString();
+			string = "12";
 		} else if (hour > 12) {
 			string = (hour - 12).toString();
 		} else {
@@ -418,8 +408,6 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 	 * @param hour the hour to format
 	 * @param digitCount the number of favored digits
 	 * @return the string representation of {@code hour}
-	 * @//TODO: throws IllegalArgumentException if the passed-in {@code hour} is less
-	 * than 0 or greater than 23 or {@code null} or {@code undefined}
 	 */
 	private function formatHourInDay(date:Date, digitCount:Number):String {
 		var hour:Number = date.getHours();
@@ -447,13 +435,11 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 	 * @param minute the minute to format
 	 * @param digitCount the number of favored digits
 	 * @return the string representation of the {@code minute}
-	 * @//TODO: throws IllegalArgumentException if the passed-in {@code minute} is
-	 * less than 0 or greater than 59 or {@code null} or {@code undefined}
 	 */
 	private function formatMinute(date:Date, digitCount:Number):String {
 		var minute:Number = date.getMinutes();
 		if (minute < 0 || minute > 59 || minute == null) {
-			//TODO: throw new IllegalArgumentException("Argument 'minute' [" + minute + "] must not be less than 0 nor greater than 59 nor 'null' nor 'undefined'.", this, arguments);
+			minute = 0;
 		}
 		if (digitCount == null) digitCount = 0;
 		var string:String = minute.toString();
@@ -476,13 +462,11 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 	 * @param second the second to format
 	 * @param digitCount the number of favored digits
 	 * @return the string representation of the {@code second}
-	 * @//TODO: throws IllegalArgumentException if the passed-in {@code second} is
-	 * less than 0 or greater than 59 or {@code null} or {@code undefined}
 	 */
 	private function formatSecond(date:Date, digitCount:Number):String {
 		var second:Number = date.getSeconds();
 		if (second < 0 || second > 59 || second == null) {
-			////TODO: throw new IllegalArgumentException("Argument 'second' [" + second + "] must not be less than 0 nor greater than 59 nor 'null' nor 'undefined'.", this, arguments);
+			second = 0;
 		}
 		if (digitCount == null) digitCount = 0;
 		var string:String = second.toString();
@@ -506,13 +490,11 @@ class org.as2lib.lang.DateFormat extends BasicClass {
 	 * @param millisecond the millisecond to format
 	 * @param digitCount the number of favored digits
 	 * @return the string representation of the {@code millisecond}
-	 * @//TODO: throws IllegalArgumentException if the passed-in {@code millisecond}
-	 * is less than 0 or greater than 999 or {@code null} or {@code undefined}
 	 */
 	private function formatMillisecond(date:Date, digitCount:Number):String {
 		var millisecond:Number = date.getMilliseconds();
 		if (millisecond < 0 || millisecond > 999 || millisecond == null) {
-			//TODO: throw new IllegalArgumentException("Argument 'millisecond' [" + millisecond + "] must not be less than 0 nor greater than 999 nor 'null' nor 'undefined'.", this, arguments);
+			millisecond = 0;
 		}
 		if (digitCount == null) digitCount = 0;
 		var string:String = millisecond.toString();
