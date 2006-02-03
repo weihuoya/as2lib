@@ -59,6 +59,7 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 	 * {@code false}
 	 */
 	public function match(joinPoint:String, pattern:String):Boolean {
+		// TODO: Reimplement algorithm, make it more performant.
 		if (!joinPoint) return false;
 		if (!pattern) return true;
 		if (pattern == "* ..*.*") return true;
@@ -81,9 +82,6 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 		return wildcardMatch(joinPoint, pattern);
 	}
 	
-	/**
-	 * TODO: Documentation
-	 */
 	private function wildcardMatch(jp:String, p:String):Boolean {
 		var a:Array = jp.split(".");
 		var b:Array = p.split(".");
@@ -129,9 +127,6 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 		return true;
 	}
 	
-	/**
-	 * TODO: Documentation
-	 */
 	private static function matchString(s:String, p:String):Boolean {
 		if (p == "*") return true;
 		if (p.indexOf("*") > -1) {
