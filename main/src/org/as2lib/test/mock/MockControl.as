@@ -387,7 +387,6 @@ class org.as2lib.test.mock.MockControl extends BasicClass {
 			// 'toString' must be excluded because it is used everytime output is made.
 			// For example in the success and failure messages of the unit testing api.
 			if (method == "toString" && !owner.areToStringInvocationsHandled()) {
-				// TODO: Source out into own stringifier class (MockStringifier)
 				return "[mock " + ReflectUtil.getTypeNameForInstance(owner.getMock()) + "]";
 				//return owner.getMock().__proto__.toString.apply(owner.getMock());
 			}
