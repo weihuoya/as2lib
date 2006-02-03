@@ -118,8 +118,6 @@ class org.as2lib.env.except.AbstractThrowable extends Error {
 		this.message = message;
 		stackTrace = new Array();
 		addStackTraceElement(thrower, args.callee, args);
-		// TODO: Implement findMethod to display the next line correctly.
-		// addStackTraceElement(undefined, args.caller, new Array());
 	}
 	
 	/**
