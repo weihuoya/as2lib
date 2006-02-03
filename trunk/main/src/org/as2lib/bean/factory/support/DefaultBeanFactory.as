@@ -356,7 +356,6 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 				bean = factory[factoryMethodName].apply(factory, args);
 			}
 			else {
-				// TODO: MethodUtil.invoke seems to cause trouble with static methods.
 				bean = MethodUtil.invoke(factoryMethodName, factory, args);
 			}
 		}
