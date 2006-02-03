@@ -61,6 +61,9 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	
 	/**
 	 * Constructs a new {@code DynamicPointcutFactory} instance.
+	 * 
+	 * <p>Bounds all default pointcuts: the or-, and-, not-, execution-, set-,
+	 * get-, and within-pointcuts.
 	 */
 	public function DynamicPointcutFactory(Void) {
 		factoryMap = new HashMap();
@@ -98,7 +101,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	}
 	
 	/**
-	 * TODO: Documentation
+	 * Binds the or-pointcut to patterns that contain {@code '||'} strings.
 	 */
 	private function bindOrPointcut(Void):Void {
 		var rule:PointcutRule = getBlankPointcutRule();
@@ -113,7 +116,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	}
 	
 	/**
-	 * TODO: Documentation
+	 * Binds the and-pointcut to patterns the contain {@code '&&'} strings.
 	 */
 	private function bindAndPointcut(Void):Void {
 		var rule:PointcutRule = getBlankPointcutRule();
@@ -128,7 +131,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	}
 	
 	/**
-	 * TODO: Documentation
+	 * Binds the not-pointcut to patterns that starts with the {@code '!'} character.
 	 */
 	private function bindNotPointcut(Void):Void {
 		var rule:PointcutRule = getBlankPointcutRule();
@@ -144,7 +147,8 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	}
 	
 	/**
-	 * TODO: Documentation
+	 * Binds the execution-pointcut to patterns that start with the string
+	 * {@code 'execution'}.
 	 */
 	private function bindExecutionPointcut(Void):Void {
 		var rule:PointcutRule = getBlankPointcutRule();
@@ -164,7 +168,8 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	}
 	
 	/**
-	 * TODO: Documentation
+	 * Binds the set-property pointcut to patterns that start with the string
+	 * {@code 'set'}.
 	 */
 	private function bindSetPropertyPointcut(Void):Void {
 		var rule:PointcutRule = getBlankPointcutRule();
@@ -180,7 +185,8 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	}
 	
 	/**
-	 * TODO: Documentation
+	 * Binds the get-property pointcut to patterns that start with the string
+	 * {@code 'get'}.
 	 */
 	private function bindGetPropertyPointcut(Void):Void {
 		var rule:PointcutRule = getBlankPointcutRule();
@@ -196,7 +202,7 @@ class org.as2lib.aop.pointcut.DynamicPointcutFactory extends BasicClass implemen
 	}
 	
 	/**
-	 * TODO: Documentation
+	 * Binds the within-pointcut to patterns that start with the string {@code 'within'}.
 	 */
 	private function bindWithinPointcut(Void):Void {
 		var rule:PointcutRule = getBlankPointcutRule();
