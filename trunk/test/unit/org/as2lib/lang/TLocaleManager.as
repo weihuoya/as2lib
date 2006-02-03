@@ -29,12 +29,12 @@ class org.as2lib.lang.TLocaleManager extends TestCase {
 		localeManager = new LocaleManager();
 		localeManager.addLocale(de);
 		localeManager.addLocale(en);
-		localeManager.setDefaultLocale("de");
+		localeManager.setTargetLocale("de");
+		localeManager.setDefaultLocale("en");
 	}
 	
 	public function testLookup() {
-		assertEquals("get message from default german locale", localeManager.getMessage("welcome", null, ["thomas"]), "Hallo thomas");
-		localeManager.setDefaultLocale("en");
+		assertEquals("get message from target german locale", localeManager.getMessage("welcome", null, ["thomas"]), "Hallo thomas");
 		assertEquals("get message from default english locale", localeManager.getMessage("bye", null, ["thomas"]), "bye thomas");
 		assertEquals("unknown result results in key", localeManager.getMessage("unknown", "unknown"), "unknown");
 	}
