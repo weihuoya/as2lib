@@ -35,37 +35,64 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 		return instance;
 	}
 	
+	private var locales:Array;
 	private var defaultLanguageCode:String;
 	private var defaultCountryCode:String;
-	private var locales:Array;
+	private var targetLanguageCode:String;
+	private var targetCountryCode:String;
 	
-	public function LocaleManager(defaultLocaleCode:String) {
+	public function LocaleManager(defaultLanguageCode:String, defaultCountryCode:String) {
 		locales = new Array();
-		setDefaultLocale(defaultLocaleCode);
+		setDefaultLocale(defaultLanguageCode, defaultCountryCode);
+		setTargetLocale(System.capabilities.language);
 	}
 	
 	public function getLanguage(Void):String {
-		return getDefaultLocale().getLanguage();
+		return getTargetLocale().getLanguage();
 	}
 	
 	public function getLanguageCode(Void):String {
-		return getDefaultLocale().getLanguageCode();
+		return getTargetLocale().getLanguageCode();
 	}
 	
 	public function getCountry(Void):String {
-		return getDefaultLocale().getCountry();
+		return getTargetLocale().getCountry();
 	}
 	
 	public function getCountryCode(Void):String {
-		return getDefaultLocale().getCountryCode();
+		return getTargetLocale().getCountryCode();
 	}
 	
 	public function getSymbols(Void):Properties {
-		return getDefaultLocale().getSymbols();
+		return getTargetLocale().getSymbols();
 	}
 	
 	public function getMessage(key:String, defaultValue:String, args:Array):String {
-		return getDefaultLocale().getMessage(key, defaultValue, args);
+		var result:String = getTargetLocale().getMessage(key, null, args);
+		if (result === null) {
+			result = getDefaultLocale().getMessage(key, defaultValue, args);
+		}
+		return result;
+	}
+	
+	public function getTargetLocale(Void):Locale {
+		var result:Locale = locales[targetLanguageCode + targetCountryCode];
+		if (result == null) {
+			result = locales[targetLanguageCode];
+			if (result == null) {
+				result = getDefaultLocale();
+			}
+		}
+		return result;
+	}
+	
+	public function setTargetLocale(targetLanguageCode:String, targetCountryCode:String):Void {
+		if (this.targetLanguageCode != targetLanguageCode || this.targetCountryCode != targetCountryCode) {
+			this.targetLanguageCode = targetLanguageCode;
+			this.targetCountryCode = targetCountryCode;
+			var distributor:LocaleListener = distributorControl.getDistributor(LocaleListener);
+			distributor.onLocaleChange(this);
+		}
 	}
 	
 	public function getDefaultLocale(Void):Locale {
@@ -87,14 +114,9 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 		return result;
 	}
 	
-	public function setDefaultLocale(languageCode:String, countryCode:String):Void {
-		if (languageCode == null) {
-			languageCode = System.capabilities.language;
-		}
-		this.defaultLanguageCode = languageCode;
-		this.defaultCountryCode = countryCode;
-		var distributor:LocaleListener = distributorControl.getDistributor(LocaleListener);
-		distributor.onLocaleChange(this);
+	public function setDefaultLocale(defaultLanguageCode:String, defaultCountryCode:String):Void {
+		this.defaultLanguageCode = defaultLanguageCode;
+		this.defaultCountryCode = defaultCountryCode;
 	}
 	
 	public function getLocale(languageCode:String, countryCode:String):Locale {
