@@ -6,6 +6,9 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="2">
+				<day value="3">
+					<entry type="bugfix" package="static org.as2lib.util" class="MethodUtil" method="invoke">Using invoke for static method caused infinite loop.</entry>
+				</day>
 				<day value="2">
 					<entry type="add" package="org.as2lib.util" class="ClassUtil" method="isAssignable">Checks whether one class is assignable from another class.</entry>
 				</day>
