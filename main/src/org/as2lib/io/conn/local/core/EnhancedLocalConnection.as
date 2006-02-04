@@ -15,13 +15,13 @@
  */
  
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.overload.Overload;
 import org.as2lib.env.event.distributor.EventDistributorControl;
 import org.as2lib.env.event.distributor.SimpleEventDistributorControl;
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
-import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
+import org.as2lib.env.overload.Overload;
 import org.as2lib.io.conn.core.client.MethodInvocationException;
+import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
+import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
 import org.as2lib.io.conn.local.core.ReservedConnectionException;
 import org.as2lib.io.conn.local.core.UnknownConnectionException;
 
@@ -292,12 +292,13 @@ class org.as2lib.io.conn.local.core.EnhancedLocalConnection extends BasicClass {
 			owner["clientArray"].splice(index, 1);
 			if (info.level == "error") {
 				// "owner.dispatchError" is not MTASC compatible because "dispatchError" is private
-				owner["dispatchError"](new MethodInvocationErrorInfo(connectionName, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR));
-				listener.onError(new MethodInvocationErrorInfo(connectionName, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR));
+				owner["dispatchError"](new MethodInvocationErrorInfo(null, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR));
+				listener.onError(new MethodInvocationErrorInfo(null, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR));
 			}
 		};
-		if (!client.send.apply(client, [connectionName, methodName].concat(args)))
+		if (!client.send.apply(client, [connectionName, methodName].concat(args))) {
 			throw new MethodInvocationException("Arguments [" + args + "] are out of size.", this, arguments);
+		}
 		return listener;
 	}
 	

@@ -181,15 +181,13 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 		responseService["onReturn"] = function(returnValue):Void {
 			// "owner.responseServices" is not MTASC compatible because "responseServices" is private
 			owner["responseServices"].splice(index, 1);
-			// "owner.url" is not MTASC compatible because "url" is private
-			callback.onReturn(new MethodInvocationReturnInfo(owner["url"], methodName, args, returnValue));
+			callback.onReturn(new MethodInvocationReturnInfo(owner, methodName, args, returnValue));
 			this.close();
 		};
 		responseService["onError"] = function(errorCode:Number, exception):Void {
 			// "owner.responseServices" is not MTASC compatible because "responseServices" is private
 			owner["responseServices"].splice(index, 1);
-			// "owner.url" is not MTASC compatible because "url" is private
-			callback.onError(new MethodInvocationErrorInfo(owner["url"], methodName, args, errorCode, exception));
+			callback.onError(new MethodInvocationErrorInfo(owner, methodName, args, errorCode, null, exception));
 			this.close();
 		};
 		try {
@@ -201,6 +199,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 		
 		var errorListener:MethodInvocationErrorListener = getBlankMethodInvocationErrorListener();
 		errorListener.onError = function(info:MethodInvocationErrorInfo) {
+			info.setServiceProxy(this);
 			callback.onError(info);
 		};
 		

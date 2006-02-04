@@ -15,6 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.io.conn.core.client.ClientServiceProxy;
+import org.as2lib.io.conn.core.ServiceProxy;
 
 /**
  * {@code MethodInvocationErrorInfo} informs the client of an error that occured on
@@ -30,22 +32,22 @@ import org.as2lib.core.BasicClass;
 class org.as2lib.io.conn.core.event.MethodInvocationErrorInfo extends BasicClass {
 	
 	/** Indicates an error of unknown origin. */
-	public static var UNKNOWN_ERROR:Number = 0;
+	public static var UNKNOWN_ERROR:String = "unknownError";
 	
 	/** Indicates an error caused because of a not existing service. */
-	public static var UNKNOWN_SERVICE_ERROR:Number = 1;
+	public static var UNKNOWN_SERVICE_ERROR:String = "unknownServiceError";
 	
 	/** Indicates that the method to invoke does not exist. */
-	public static var UNKNOWN_METHOD_ERROR:Number = 2;
+	public static var UNKNOWN_METHOD_ERROR:String = "unknownMethodError";
 	
 	/** Indicates an error caused by arguments that are out of size. */
-	public static var OVERSIZED_ARGUMENTS_ERROR:Number = 3;
+	public static var OVERSIZED_ARGUMENTS_ERROR:String = "oversizedArgumentsError";
 	
 	/** Indicates that the service method to invoke threw an exception. */
-	public static var METHOD_EXCEPTION_ERROR:Number = 4;
+	public static var METHOD_EXCEPTION_ERROR:String = "methodExceptionError";
 	
-	/** Url of the service the method should have been invoked on. */
-	private var serviceUrl:String;
+	/** The service proxy that tried to invoke the method. */
+	private var serviceProxy:ServiceProxy;
 	
 	/** The name of the method to be executed. */
 	private var methodName:String;
@@ -56,6 +58,9 @@ class org.as2lib.io.conn.core.event.MethodInvocationErrorInfo extends BasicClass
 	/** A number indicating the type of the error. */
 	private var errorCode:Number;
 	
+	/** The error message describing the error. */
+	private var errorMessage:String;
+	
 	/** The exception that caused the error. */
 	private var exception;
 	
@@ -65,27 +70,38 @@ class org.as2lib.io.conn.core.event.MethodInvocationErrorInfo extends BasicClass
 	 * <p>If {@code errorCode} is {@code null} or {@code undefined}, {@link #UNKNOWN_ERROR}
 	 * is used.
 	 * 
-	 * @param serviceUrl the url to the service the method should be or was invoked on
+	 * @param serviceProxy the service proxy that tried to invoke the method
 	 * @param methodName the name of the method that should be or was invoked on the service
 	 * @param methodArguments the arguments used as parameters for the method invocation
-	 * @param error a number indicating the type of the error
+	 * @param errorCode the error code indicating the type of the error
+	 * @param errorMessage the message that describes the error
 	 * @param exception the exception that caused the error
 	 */
-	public function MethodInvocationErrorInfo(serviceUrl:String, methodName:String, methodArguments:Array, errorCode:Number, exception) {
-		this.serviceUrl = serviceUrl;
+	public function MethodInvocationErrorInfo(serviceProxy:ServiceProxy, methodName:String, methodArguments:Array, errorCode:String, errorMessage:String, exception) {
+		this.serviceProxy = serviceProxy;
 		this.methodName = methodName;
 		this.methodArguments = methodArguments;
 		this.errorCode = errorCode == null ? UNKNOWN_ERROR : errorCode;
-		this.exception = exception == null ? null : exception;
+		this.errorMessage = errorMessage;
+		this.exception = exception;
 	}
 	
 	/**
-	 * Returns the url to the service the method should be or was invoked on.
+	 * Returns the service proxy that tried to invoke the method that caused this error.
 	 * 
-	 * @return the url to the service the method should be or was invoked on
+	 * @return the service proxy that tried to invoke the method
 	 */
-	public function getServiceUrl(Void):String {
-		return serviceUrl;
+	public function getServiceProxy(Void):ServiceProxy {
+		return serviceProxy;
+	}
+	
+	/**
+	 * Sets the service proxy that tried to invoke the method that caused this errir.
+	 * 
+	 * @param serviceProxy the service proxy that tried to invoke the method
+	 */
+	public function setServiceProxy(serviceProxy:ServiceProxy):Void {
+		this.serviceProxy = serviceProxy;
 	}
 	
 	/**
@@ -108,14 +124,23 @@ class org.as2lib.io.conn.core.event.MethodInvocationErrorInfo extends BasicClass
 	}
 	
 	/**
-	 * Returns the error code that describes this error.
+	 * Returns the error code that describes the type of this error.
 	 *
 	 * <p>The error code matches one of the declared error constants.
 	 * 
 	 * @return the error code that describes the type of this error
 	 */
-	public function getErrorCode(Void):Number {
+	public function getErrorCode(Void):String {
 		return errorCode;
+	}
+	
+	/**
+	 * Returns the error message that describes this error.
+	 * 
+	 * @return the error message describing this error
+	 */
+	public function getErrorMessage(Void):String {
+		return errorMessage;
 	}
 	
 	/**
