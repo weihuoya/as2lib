@@ -227,27 +227,4 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 		return result;
 	}
 	
-	/**
-	 * Enables you to invoke the method to be invoked on the 'remote' service directly
-	 * on this proxy.
-	 * 
-	 * <p>The usage is mostly the same.
-	 * <code>myProxy.myMethod("myArg1");</code>
-	 * <code>myProxy.myMethod("myArg1", myCallback);</code>
-	 * <code>var callback:MethodInvocationCallback = myProxy.myMethod("myArg1");</code>
-	 * 
-	 * @param methodName the name of the method to invoke on the 'remote' service
-	 * @return the function to execute as the actual method passing the actual arguments
-	 */
-	private function __resolve(methodName:String):Function {
-		var owner:ClientServiceProxy = this;
-		return (function():MethodInvocationCallback {
-			if (arguments[arguments.length] instanceof MethodInvocationCallback) {
-				return owner.invokeByNameAndArgumentsAndCallback(methodName, arguments, MethodInvocationCallback(arguments.pop()));
-			} else {
-				return owner.invokeByNameAndArgumentsAndCallback(methodName, arguments, null);
-			}
-		});
-	}
-
 }
