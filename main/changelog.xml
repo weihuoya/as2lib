@@ -7,6 +7,10 @@
 		<year value="2006">
 			<month value="2">
 				<day value="4">
+					<entry type="add" package="org.as2lib.io.conn.core.client" class="ClientServiceProxyFactoryBean">Convenient implementation of factory bean to retrieve typed service proxy in application contexts.</entry>
+					<entry type="add" package="org.as2lib.io.conn.local.client" class="LocalClientServiceProxyFactoryBean">Creates typed service proxies for local connections.</entry>
+					<entry type="add" package="org.as2lib.io.conn.webservice" class="WebServiceProxyFactoryBean">Creates typed service proxies for webservices.</entry>
+					<entry type="add" package="org.as2lib.io.conn.remoting" class="RemotingServiceProxyFactoryBean">Creates typed service proxies for remoting.</entry>
 					<entry type="add" package="org.as2lib.io.conn.webservice" class="WebServiceProxy">Proxy for web service.</entry>
 					<entry type="add" package="org.as2lib.io.conn.remoting" class="RemotingServiceProxy">Proxy for remoting service.</entry>
 				</day>
