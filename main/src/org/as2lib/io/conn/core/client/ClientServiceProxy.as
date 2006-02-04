@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicInterface;
 import org.as2lib.io.conn.core.event.MethodInvocationCallback;
+import org.as2lib.io.conn.core.ServiceProxy;
 
 /**
  * {@code ClientServiceProxy} handles client requests to a certain service and its
@@ -24,7 +24,7 @@ import org.as2lib.io.conn.core.event.MethodInvocationCallback;
  * @author Simon Wacker
  * @author Christoph Atteneder
  */
-interface org.as2lib.io.conn.core.client.ClientServiceProxy extends BasicInterface {
+interface org.as2lib.io.conn.core.client.ClientServiceProxy extends ServiceProxy {
 	
 	/**
 	 * @overload #invokeByName

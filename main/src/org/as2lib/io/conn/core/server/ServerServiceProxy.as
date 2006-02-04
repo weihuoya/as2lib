@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import org.as2lib.core.BasicInterface;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
+import org.as2lib.io.conn.core.ServiceProxy;
 
 /**
  * {@code ServerServiceProxy} handles client requests to a certain service and its
@@ -24,7 +24,7 @@ import org.as2lib.io.conn.core.event.MethodInvocationErrorListener;
  * @author Simon Wacker
  * @author Christoph Atteneder
  */
-interface org.as2lib.io.conn.core.server.ServerServiceProxy extends BasicInterface {
+interface org.as2lib.io.conn.core.server.ServerServiceProxy extends ServiceProxy {
 	
 	/**
 	 * Runs the service and listens for requests of clients.
