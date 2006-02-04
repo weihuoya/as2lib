@@ -100,7 +100,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	private var running:Boolean;
 	
 	/** Stores the current service url. */
-	private var currentServiceUrl:String;
+	private var currentServiceUri:String;
 	
 	/**
 	 * Constructs a new {@code LocalServerServiceProxy} instance.
@@ -115,7 +115,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 		this.path = path;
 		this.service = service;
 		running = false;
-		currentServiceUrl = null;
+		currentServiceUri = null;
 		errorDistributorControl = new SimpleEventDistributorControl(MethodInvocationErrorListener, false);
 		errorDistributor = errorDistributorControl.getDistributor();
 	}
@@ -161,12 +161,12 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	public function run(host:String):Void {
 		if (isRunning()) this.stop();
 		try {
-			currentServiceUrl = generateServiceUrl(host, path);
-			getConnection().connect(currentServiceUrl);
+			currentServiceUri = generateServiceUrl(host, path);
+			getConnection().connect(currentServiceUri);
 			running = true;
 		} catch(exception:org.as2lib.io.conn.local.core.ReservedConnectionException) {
 			// "new ReservedServiceException" without braces is not MTASC compatible
-			throw (new ReservedServiceException("Service with url [" + currentServiceUrl + "] is already in use.", this, arguments)).initCause(exception);
+			throw (new ReservedServiceException("Service with url [" + currentServiceUri + "] is already in use.", this, arguments)).initCause(exception);
 		}
 	}
 	
@@ -176,7 +176,7 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	public function stop(Void):Void {
 		getConnection().close();
 		running = false;
-		currentServiceUrl = null;
+		currentServiceUri = null;
 	}
 	
 	/**
@@ -202,10 +202,10 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 			if (service[methodName]) {
 				service[methodName].apply(service, args);
 			} else {
-				errorDistributor.onError(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null));
+				errorDistributor.onError(new MethodInvocationErrorInfo(this, methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null));
 			}
 		} catch (exception) {
-			errorDistributor.onError(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, exception));
+			errorDistributor.onError(new MethodInvocationErrorInfo(this, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, null, exception));
 		}
 	}
 	
@@ -262,8 +262,8 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 		var listener:MethodInvocationErrorListener = getBlankMethodInvocationErrorListener();
 		var owner:LocalServerServiceProxy = this;
 		listener.onError = function(info:MethodInvocationErrorInfo):Void {
-			// "owner.errorDistributor" and "owner.currentServiceUrl" are not MTASC compatible
-			owner["errorDistributor"].onError(new MethodInvocationErrorInfo(owner["currentServiceUrl"], methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR, null));
+			// "owner.errorDistributor" and "owner.currentServiceUri" are not MTASC compatible
+			owner["errorDistributor"].onError(new MethodInvocationErrorInfo(this, methodName, args, MethodInvocationErrorInfo.UNKNOWN_ERROR, null, null));
 		};
 		try {
 			if (service[methodName]) {
@@ -271,11 +271,11 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 				sendResponse(methodName, args, responseServiceUrl, "onReturn", [returnValue], listener);
 			} else {
 				sendResponse(methodName, args, responseServiceUrl, "onError", [MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null], listener);
-				errorDistributor.onError(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null));
+				errorDistributor.onError(new MethodInvocationErrorInfo(this, methodName, args, MethodInvocationErrorInfo.UNKNOWN_METHOD_ERROR, null, null));
 			}
 		} catch (serviceMethodException) {
 			sendResponse(methodName, args, responseServiceUrl, "onError", [MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, serviceMethodException], listener);
-			errorDistributor.onError(new MethodInvocationErrorInfo(currentServiceUrl, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, serviceMethodException));
+			errorDistributor.onError(new MethodInvocationErrorInfo(this, methodName, args, MethodInvocationErrorInfo.METHOD_EXCEPTION_ERROR, null, serviceMethodException));
 		}
 	}
 	
@@ -307,9 +307,9 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 		try {
 			getConnection().send(responseServiceUrl, responseMethod, responseArguments, responseListener);
 		} catch (uce:org.as2lib.io.conn.local.core.UnknownConnectionException) {
-			errorDistributor.onError(new MethodInvocationErrorInfo(currentServiceUrl, methodName, methodArguments, MethodInvocationErrorInfo.UNKNOWN_SERVICE_ERROR, uce));
+			errorDistributor.onError(new MethodInvocationErrorInfo(this, methodName, methodArguments, MethodInvocationErrorInfo.UNKNOWN_SERVICE_ERROR, null, uce));
 		} catch (mie:org.as2lib.io.conn.core.client.MethodInvocationException) {
-			errorDistributor.onError(new MethodInvocationErrorInfo(currentServiceUrl, methodName, methodArguments, MethodInvocationErrorInfo.OVERSIZED_ARGUMENTS_ERROR, mie));
+			errorDistributor.onError(new MethodInvocationErrorInfo(this, methodName, methodArguments, MethodInvocationErrorInfo.OVERSIZED_ARGUMENTS_ERROR, null, mie));
 		}
 	}
 	
@@ -320,6 +320,16 @@ class org.as2lib.io.conn.local.server.LocalServerServiceProxy extends AbstractSe
 	 */
 	public function getService(Void) {
 		return service;
+	}
+	
+	/**
+	 * Returns the current uri of this service. This uri may change if this service is
+	 * stopped and run on another server.
+	 * 
+	 * @return the current service uri
+	 */
+	public function getServiceUri(Void):String {
+		return currentServiceUri;
 	}
 	
 	/**

@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.io.conn.core.ServiceProxy;
 
 /**
  * {@code MethodInvocationReturnInfo} informs clients that the method invocation
@@ -30,8 +31,8 @@ class org.as2lib.io.conn.core.event.MethodInvocationReturnInfo extends BasicClas
 	/** The return value returned by the invoked method. */
 	private var returnValue;
 	
-	/** Url of the service the method was invoked on. */
-	private var serviceUrl:String;
+	/** The service proxy that invoked the method. */
+	private var serviceProxy:ServiceProxy;
 	
 	/** The name of the method that was invoked. */
 	private var methodName:String;
@@ -42,25 +43,25 @@ class org.as2lib.io.conn.core.event.MethodInvocationReturnInfo extends BasicClas
 	/**
 	 * Constructs a new {@code MethodInvocationReturnInfo} instance.
 	 * 
-	 * @param serviceUrl the url to the service the method was invoked on
+	 * @param serviceProxy the service proxy that invoked the method
 	 * @param methodName the name of the method that was invoked
 	 * @param methodArguments the arguments used as parameters for the method invocation
 	 * @param returnValue the result of the method invocation
 	 */
-	public function MethodInvocationReturnInfo(serviceUrl:String, methodName:String, methodArguments:Array, returnValue) {
-		this.serviceUrl = serviceUrl;
+	public function MethodInvocationReturnInfo(serviceProxy:ServiceProxy, methodName:String, methodArguments:Array, returnValue) {
+		this.serviceProxy = serviceProxy;
 		this.methodName = methodName;
 		this.methodArguments = methodArguments;
 		this.returnValue = returnValue;
 	}
 	
 	/**
-	 * Returns the url to the service the method was invoked on.
-	 *
-	 * @return the url to the service the method was invoked on
+	 * Returns the service proxy that invoked the method.
+	 * 
+	 * @return the service proxy that invoked the method
 	 */
-	public function getServiceUrl(Void):String {
-		return serviceUrl;
+	public function getServiceProxy(Void):ServiceProxy {
+		return serviceProxy;
 	}
 	
 	/**
