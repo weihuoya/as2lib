@@ -228,19 +228,6 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 	}
 	
 	/**
-	 * Returns a blank method invocation callback. This is a callback with no implemented
-	 * methods.
-	 * 
-	 * @return a blank method invocation callback
-	 */
-	private function getBlankMethodInvocationCallback(Void):MethodInvocationCallback {
-		var result = new Object();
-		result.__proto__ = MethodInvocationCallback["prototype"];
-		result.__constructor__ = MethodInvocationCallback;
-		return result;
-	}
-	
-	/**
 	 * Enables you to invoke the method to be invoked on the 'remote' service directly
 	 * on this proxy.
 	 * 
