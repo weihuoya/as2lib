@@ -31,7 +31,7 @@ class org.as2lib.bean.AbstractBeanWrapper extends BasicClass {
 	public static var GET_PROPERTY_PREFIXES:Array = ["get", "is"];
 	public static var SET_PROPERTY_PREFIXES:Array = ["set", "add", "put"];
 	
-	public static var PACKAGE_TYPE:Function = function() {};
+	public static var PACKAGE_TYPE:Function = new Function(); // 'function() {}' is not Flash compatible
 	
 	/*public static var ARRAY_PREFIX:String = "array:";
 	public static var MAP_PREFIX:String = "map:";
