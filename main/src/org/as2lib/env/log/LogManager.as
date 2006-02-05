@@ -85,7 +85,7 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 	 * @overload #getLoggerByObject
 	 */
 	public static function getLogger():Logger {
-		// do not use Overloading API hear because 'LogManager' must be as light-weight as possible
+		// do not use Overloading API here because 'LogManager' must be as light-weight as possible
 		if (arguments[0].__proto__ != String.prototype) {
 			return getLoggerByObject(arguments[0]);
 		}
@@ -113,7 +113,7 @@ class org.as2lib.env.log.LogManager extends BasicClass {
 	}
 	
 	/**
-	 * Returns the logger according the passed-in {@code loggerName}.
+	 * Returns the logger according to the passed-in {@code loggerName}.
 	 * 
 	 * <p>Uses the set logger repository to receive the logger that is returned.
 	 * 
