@@ -205,7 +205,7 @@ class org.as2lib.context.support.AbstractMessageSource extends BasicClass {
 			return null;
 		}
 		if (locale == null) {
-			locale = LocaleManager.getInstance().getDefaultLocale();
+			locale = LocaleManager.getInstance();
 		}
 		if (args == null || args.length == 0) {
 			// Optimized resolution: no arguments to apply,
