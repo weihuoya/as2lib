@@ -83,7 +83,7 @@ interface org.as2lib.aop.JoinPoint extends BasicInterface {
 	 * @return {@code true} if the given {@code pattern} matches this join point else
 	 * {@code false}
 	 * @see WildcardMatcher
-	 * @see <a href="http://www.simonwacker.com/blog/archives/000053">Wildcards</a>
+	 * @see <a href="http://www.simonwacker.com/blog/archives/000053.php">Wildcards</a>
 	 */
 	public function matches(pattern:String):Boolean;
 	
