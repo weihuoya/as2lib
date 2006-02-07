@@ -18,13 +18,14 @@ import org.as2lib.context.HierarchicalMessageSource;
 import org.as2lib.context.MessageSource;
 import org.as2lib.context.MessageSourceResolvable;
 import org.as2lib.context.NoSuchMessageException;
-import org.as2lib.context.support.AbstractMessageSource;
+import org.as2lib.core.BasicClass;
+import org.as2lib.env.overload.Overload;
 import org.as2lib.lang.Locale;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.context.support.DelegatingMessageSource extends AbstractMessageSource implements HierarchicalMessageSource {
+class org.as2lib.context.support.DelegatingMessageSource extends BasicClass implements HierarchicalMessageSource {
 	
 	/** This message source's parent. */
 	private var parent:MessageSource;
@@ -44,6 +45,17 @@ class org.as2lib.context.support.DelegatingMessageSource extends AbstractMessage
 
 	public function getParentMessageSource(Void):MessageSource {
 		return parent;
+	}
+	
+	public function getMessage():String {
+		var o:Overload = new Overload(this);
+		o.addHandler([MessageSourceResolvable], getMessageByResolvable);
+		o.addHandler([MessageSourceResolvable, Locale], getMessageByResolvable);
+		o.addHandler([String, Array], getMessageByCodeAndArguments);
+		o.addHandler([String, Array, Locale], getMessageByCodeAndArguments);
+		o.addHandler([String, Array, String], getMessageWithDefaultMessage);
+		o.addHandler([String, Array, String, Locale], getMessageWithDefaultMessage);
+		return o.forward(arguments);
 	}
 	
 	public function getMessageWithDefaultMessage(code:String, args:Array, defaultMessage:String, locale:Locale):String {
