@@ -36,9 +36,7 @@ class org.as2lib.bean.PropertyValueConverterHolder extends BasicClass {
 	}
 	
 	public function getPropertyValueConverter(requiredType:Function):PropertyValueConverter {
-		if (!registeredType || !requiredType
-				|| ClassUtil.isSubClassOf(requiredType, registeredType)
-				|| ClassUtil.isImplementationOf(requiredType, registeredType)) {
+		if (ClassUtil.isAssignable(requiredType, registeredType)) {
 			return propertyValueConverter;
 		}
 		return null;
