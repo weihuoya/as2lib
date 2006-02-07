@@ -35,7 +35,6 @@ import org.as2lib.context.support.ApplicationContextAwareProcessor;
 import org.as2lib.context.support.DelegatingMessageSource;
 import org.as2lib.data.holder.Map;
 import org.as2lib.env.event.distributor.EventDistributorControl;
-import org.as2lib.env.event.distributor.SimpleEventDistributorControl;
 import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.reflect.ReflectUtil;
@@ -178,15 +177,28 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	/**
 	 * Returns the event distributor control to publish events with.
 	 * 
+	 * <p>Note that there is no default event distributor control.
+	 * 
 	 * @return the event distributor control
-	 * @throws IllegalStateException if this context has not been initialized yet
+	 * @throws IllegalStateException if either there is no event distributor control
+	 * or it has not been initialized yet
 	 */
 	public function getEventDistributorControl(Void):EventDistributorControl {
 		if (eventDistributorControl == null) {
-			throw new IllegalStateException("Event distributor control not initialized - " +
-					"Call 'refresh' before publishing events via this context [" + this + "].", this, arguments);
+			throw new IllegalStateException("Event distributor control not initialized: " +
+					"Declare an event distributor or call 'refresh' before publishing events via this context [" + this + "].", this, arguments);
 		}
 		return eventDistributorControl;
+	}
+	
+	/**
+	 * Returns whether this context has an event distributor control.
+	 * 
+	 * @return {@code ture} if there is an event distributor and it has been initialized,
+	 * otherwise {@code false}
+	 */
+	public function hasEventDistributorControl(Void):Boolean {
+		return (eventDistributorControl != null);
 	}
 	
 	//---------------------------------------------------------------------
@@ -245,7 +257,9 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			// instantiates singletons this late to allow them to access the message source
 			beanFactory.preInstantiateSingletons();
 			// publishes corresponding event
-			publishEvent(new ContextRefreshedEvent(getThis()));
+			if (hasEventDistributorControl()) {
+				publishEvent(new ContextRefreshedEvent(getThis()));
+			}
 			active = true;
 		}
 		catch (exception:org.as2lib.bean.BeanException) {
@@ -333,14 +347,11 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	/**
 	 * Initializes the event distributor control.
 	 * 
-	 * <p>Uses {@link SimpleEventDistributorControl if none is defined in the context.
+	 * <p>Note that there is no default distributor.
 	 */
 	private function initEventDistributorControl(Void):Void {
 		if (containsLocalBean(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME)) {
 			eventDistributorControl = getBean(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME, EventDistributorControl);
-		}
-		else {
-			eventDistributorControl = new SimpleEventDistributorControl(ApplicationListener, false);
 		}
 	}
 	
@@ -414,7 +425,9 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	public function close(Void):Void {
 		if (active) {
 			try {
-				publishEvent(new ContextClosedEvent(getThis()));
+				if (hasEventDistributorControl()) {
+					publishEvent(new ContextClosedEvent(getThis()));
+				}
 			}
 			finally {
 				// Destroy all cached singletons in this context, invoking
