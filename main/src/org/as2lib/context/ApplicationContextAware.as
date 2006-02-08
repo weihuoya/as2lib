@@ -18,6 +18,9 @@ import org.as2lib.context.ApplicationContext;
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code ApplicationContextAware} can be implemented by beans that need to know which
+ * application context manages them.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.context.ApplicationContextAware extends BasicInterface {

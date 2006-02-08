@@ -18,6 +18,9 @@ import org.as2lib.context.ApplicationEvent;
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code ApplicationEventPublisher} publishes application events. Most oftenly the
+ * context itself implements this interface.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.context.ApplicationEventPublisher extends BasicInterface {

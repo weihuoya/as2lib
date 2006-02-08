@@ -18,6 +18,11 @@ import org.as2lib.context.MessageSource;
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code MessageSourceAware} can be implemented by beans that need to look-up
+ * internationalized messages with a given code.
+ * 
+ * <p>The code may be the error code of an exception.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.context.MessageSourceAware extends BasicInterface {

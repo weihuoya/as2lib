@@ -18,6 +18,9 @@ import org.as2lib.context.ApplicationContext;
 import org.as2lib.context.ApplicationEvent;
 
 /**
+ * {@code ContextClosedEvent} is published when the given application context was
+ * closed.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.context.event.ContextClosedEvent extends ApplicationEvent {

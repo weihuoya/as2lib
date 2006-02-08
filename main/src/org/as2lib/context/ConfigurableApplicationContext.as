@@ -19,6 +19,13 @@ import org.as2lib.bean.factory.config.ConfigurableListableBeanFactory;
 import org.as2lib.context.ApplicationContext;
 
 /**
+ * {@code ConfigurableApplicationContext} provides means to configure an application
+ * context in addition to the application context client methods in the {@code ApplicationContext}
+ * interface.
+ * 
+ * <p>Configuration and lifecycle methods are encapsulated here to avoid making them
+ * obvious to application context client code.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.context.ConfigurableApplicationContext extends ApplicationContext {

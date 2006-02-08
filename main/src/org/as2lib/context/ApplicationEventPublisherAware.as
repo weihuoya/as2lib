@@ -18,6 +18,10 @@ import org.as2lib.context.ApplicationEventPublisher;
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@ApplicationEventPublisherAware} can be implemented by beans that wanna be aware
+ * of the event publisher, of the context that manages them, to publish application
+ * events.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.context.ApplicationEventPublisherAware extends BasicInterface {
