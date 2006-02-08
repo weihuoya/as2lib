@@ -18,6 +18,9 @@ import org.as2lib.context.ApplicationEvent;
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code ApplicationListener} must be implemented by beans that need to be notified
+ * of application events.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.context.ApplicationListener extends BasicInterface {

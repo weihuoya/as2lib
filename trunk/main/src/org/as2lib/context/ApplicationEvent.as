@@ -18,6 +18,9 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.context.ApplicationContext;
 
 /**
+ * {@code ApplicationEvent} holds basic information needed by application events.
+ * Specific events must sub-class this abstract class.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.context.ApplicationEvent extends BasicClass {

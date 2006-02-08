@@ -17,6 +17,9 @@
 import org.as2lib.context.MessageSource;
 
 /**
+ * {@code HierarchicalMessageSource} adds the capability to resolve messages
+ * hierarchically to the basic message source.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.context.HierarchicalMessageSource extends MessageSource {

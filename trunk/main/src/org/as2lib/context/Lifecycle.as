@@ -17,6 +17,13 @@
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code Lifecycle} defines methods for start/stop lifecycle control. The typical use
+ * case for this is to control asynchronous processing.
+ * 
+ * <p>Can be implemented by both components (typically a bean defined in a bean factory)
+ * and containers (typically an {@link ApplicationContext}). Containers will propagate
+ * start/stop signals to all components that implement this interface.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.context.Lifecycle extends BasicInterface {

@@ -15,6 +15,9 @@
  */
 
 /**
+ * {@code MessageSourceResolvable} is an interface for objects that are suitable for
+ * message resolution in a {@link MessageSource}.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.context.MessageSourceResolvable {

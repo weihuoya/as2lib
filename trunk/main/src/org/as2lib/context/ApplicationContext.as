@@ -19,6 +19,32 @@ import org.as2lib.context.MessageSource;
 import org.as2lib.bean.factory.ListableBeanFactory;
 
 /**
+ * {@code ApplicationContext} provides configuration options for applications. These
+ * options are read-only while the application is running, but may be reloaded if the
+ * implementation supports this.
+ * 
+ * <p>An application context provides:
+ * <ul>
+ *   <li>
+ *     Bean factory methods, inherited from {@code ListableBeanFactory}. This avoids the
+ *     need for applications to use singletons and provides a convenient way to wire
+ *     objects.
+ *   </li>
+ *   <li>The ability to resolve messages, supporting internationalization.</li>
+ *   <li>The ability to publish application events.</li>
+ *   <li>
+ *     Inheritance from a parent context. Definitions in a descendant context will always
+ *     take priority. This means, for example, that a single parent context can be used
+ *     by an entire application, while each part has its own child context that is
+ *     independent of that of any other part.
+ *   </li>
+ * </ul>
+ * 
+ * <p>In addition to standard bean factory lifecycle capabilities, application contexts
+ * need to detect {@link ApplicationContextAware} beans and invoke the {@code setApplicationContext}
+ * method accordingly. The same must be done for {@link ApplicationEventPublisherAware}
+ * and {@link MessageSourceAware} beans.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.context.ApplicationContext extends ListableBeanFactory {

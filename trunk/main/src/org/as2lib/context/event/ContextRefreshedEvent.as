@@ -18,6 +18,9 @@ import org.as2lib.context.ApplicationContext;
 import org.as2lib.context.ApplicationEvent;
 
 /**
+ * {@code ContextRefreshedEvent} is published when the given application context was
+ * refreshed.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.context.event.ContextRefreshedEvent extends ApplicationEvent {
