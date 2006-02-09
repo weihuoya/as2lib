@@ -18,14 +18,29 @@ import org.as2lib.context.MessageSourceResolvable;
 import org.as2lib.core.BasicClass;
 
 /**
+ * {@code DefaultMessageSourceResolvable} offers an easy way to store all the necessary
+ * values needed to resolve a message via a {@link MessageSource}.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.context.support.DefaultMessageSourceResolvable extends BasicClass implements MessageSourceResolvable {
 	
+	/** The codes. */
 	private var codes:Array;
+	
+	/** The arguments. */
 	private var arguments:Array;
+	
+	/** The default message. */
 	private var defaultMessage:String;
 	
+	/**
+	 * Constructs a new {@code DefaultMessageSourceResolvable} instance.
+	 * 
+	 * @param codes the codes to use
+	 * @param argumetns the arguments to use
+	 * @param defaultMessage the default message to use
+	 */
 	public function DefaultMessageSourceResolvable(codes:Array, arguments:Array, defaultMessage:String) {
 		this.codes = codes;
 		this.arguments = arguments;
