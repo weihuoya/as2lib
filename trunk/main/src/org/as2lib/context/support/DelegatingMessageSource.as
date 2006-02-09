@@ -23,6 +23,9 @@ import org.as2lib.env.overload.Overload;
 import org.as2lib.lang.Locale;
 
 /**
+ * {@code DelegatingMessageSource} delegates all message look-ups to its parent message
+ * source.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.context.support.DelegatingMessageSource extends BasicClass implements HierarchicalMessageSource {

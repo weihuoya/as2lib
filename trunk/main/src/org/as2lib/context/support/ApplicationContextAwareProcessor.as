@@ -22,6 +22,15 @@ import org.as2lib.context.MessageSourceAware;
 import org.as2lib.core.BasicClass;
 
 /**
+ * {@code ApplicationContextAwareProcessor} passes the {@link ApplicationEventPublisher},
+ * {@link MessageSource} and {@link ApplicationContext} to beans that implement the
+ * {@link ApplicationEventPublisherAware}, {@link MessageSourceAware} and/or {@link ApplicationContextAware}
+ * interfaces, respectively. If all of them are implemented, they are satisfied in the
+ * given order.
+ * 
+ * <p>Application contexts will automatically register this processor with their underlying
+ * bean factory. Applications do not use this class directly.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.context.support.ApplicationContextAwareProcessor extends BasicClass implements BeanPostProcessor {

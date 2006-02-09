@@ -22,6 +22,14 @@ import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.env.except.IllegalStateException;
 
 /**
+ * {@code AbstractRefreshableApplicationContext} is the base class for application
+ * contexts that are supposed to support multiple refreshes, creating a new internal
+ * bean factory every time.
+ * 
+ * <p>The only method to be implemented by subclasses is {@link #loadBeanDefinitions},
+ * which gets invoked on each refresh. A concrete implementation is supposed to load
+ * bean definitions into the given bean factory.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.context.support.AbstractRefreshableApplicationContext extends AbstractApplicationContext {
@@ -29,6 +37,11 @@ class org.as2lib.context.support.AbstractRefreshableApplicationContext extends A
 	/** Bean factory for this context */
 	private var beanFactory:ConfigurableListableBeanFactory;
 	
+	/**
+	 * Constructs a new {@code AbstractRefreshableApplicationContext} instance.
+	 * 
+	 * @param parent the parent of this application context
+	 */
 	public function AbstractRefreshableApplicationContext(parent:ApplicationContext) {
 		super(parent);
 	}
@@ -59,12 +72,14 @@ class org.as2lib.context.support.AbstractRefreshableApplicationContext extends A
 	}
 	
 	/**
-	 * Create the bean factory for this context.
-	 * <p>Default implementation creates a DefaultListableBeanFactory with the
+	 * Creates the bean factory for this context.
+	 * 
+	 * <p>Default implementation creates a {@link DefaultListableBeanFactory} with the
 	 * internal bean factory of this context's parent as parent bean factory.
+	 * 
 	 * <p>Can be overridden in subclasses.
+	 * 
 	 * @return the bean factory for this context
-	 * @see org.springframework.beans.factory.support.DefaultListableBeanFactory
 	 * @see #getInternalParentBeanFactory
 	 */
 	private function createBeanFactory(Void):ConfigurableListableBeanFactory {
@@ -72,13 +87,10 @@ class org.as2lib.context.support.AbstractRefreshableApplicationContext extends A
 	}
 	
 	/**
-	 * Load bean definitions into the given bean factory, typically through
-	 * delegating to one or more bean definition readers.
+	 * Loads bean definitions into the given bean factory.
+	 * 
 	 * @param beanFactory the bean factory to load bean definitions into
-	 * @throws IOException if loading of bean definition files failed
 	 * @throws BeansException if parsing of the bean definitions failed
-	 * @see org.springframework.beans.factory.support.PropertiesBeanDefinitionReader
-	 * @see org.springframework.beans.factory.xml.XmlBeanDefinitionReader
 	 */
 	private function loadBeanDefinitions(beanFactory:ConfigurableListableBeanFactory):Void {
 		throw new AbstractOperationException("This method is marked as abstract and must be overridden by sub-classes.", this, arguments);

@@ -40,6 +40,24 @@ import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
+ * {@code AbstractApplicationContext} provides implementations of methods that are
+ * mostly the same for application contexts. This abstract implementation does not
+ * mandate the type of storage used for configuration.
+ * 
+ * <p>The template method design pattern is used, requiring concrete sub-classes to
+ * implement the abstract methods {@link #refreshBeanFactory} and {@link #getBeanFactory}.
+ * 
+ * <p>In contrast to a plain bean factory, an application context is supposed to detect
+ * special beans defined in its internal bean factory: Therefore, this class automatically
+ * registers {@link BeanFactoryPostProcessor}, {@link BeanPostProcessor} and {@link ApplicationListener}
+ * instances that are defined as beans in this context.
+ * 
+ * <p>A {@link MessageSource} implementation may also be supplied as a bean in the context,
+ * with the name "messageSource"; else, message resolution is delegated to the parent context.
+ * Furthermore, a distributor control for application events can be supplied as "eventDistributorControl"
+ * bean in the context; else, publishing application events is not possible, and will
+ * raise errors if it is nevertheless tried.
+ *  
  * @author Simon Wacker
  */
 class org.as2lib.context.support.AbstractApplicationContext extends AbstractBeanFactory implements ApplicationEventPublisher {
@@ -52,7 +70,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	
 	/**
 	 * Name of the {@link EventDistributorControl} bean in the factory.
-	 * If none is supplied, the default {@link SimpleEventDistributorControl} is used.
+	 * If none is supplied, publishing application events is not possible and will raise errors.
 	 */
 	public static var EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME:String = "eventDistributorControl";
 	
@@ -517,6 +535,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	
 	//---------------------------------------------------------------------
 	// Implementation of Lifecycle interface
+	// TODO: Use org.as2lib.app.exec.Process instead (but it is still too heavy-weight)
 	//---------------------------------------------------------------------
 	
 	public function start(Void):Void {
