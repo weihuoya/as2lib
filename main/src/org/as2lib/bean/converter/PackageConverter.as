@@ -19,17 +19,29 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
+ * {@code PackageConverter} converts values to packages.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.converter.PackageConverter extends BasicClass implements PropertyValueConverter {
 	
+	/**
+	 * Constructs a new {@code PackageConverter} instance.
+	 */
 	public function PackageConverter(Void) {
 	}
 	
+	/**
+	 * Converts the given {@code value} to a package. The value is supposed to be
+	 * the fully qualified name of a package, that is a package path, and it must
+	 * exist in {@code _global}.
+	 * 
+	 * @param value the package path
+	 * @param type the type of the package (ignored by this implementation}
+	 * @return the package
+	 * @throws IllegalArgumentException if there is no package with the given name
+	 */
 	public function convertPropertyValue(value:String, type:Function) {
-		if (value == "" || value == null) {
-			return null;
-		}
 		var package:Object = eval("_global." + value);
 		if (package != null) {
 			return package;
