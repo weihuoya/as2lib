@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.bean.Mergable;
+import org.as2lib.bean.Mergeable;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.List;
@@ -22,7 +22,7 @@ import org.as2lib.data.holder.List;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.bean.factory.support.ManagedList extends BasicClass implements List, Mergable {
+class org.as2lib.bean.factory.support.ManagedList extends BasicClass implements List, Mergeable {
 	
 	private var values:Array;
 	private var elementType:Function;

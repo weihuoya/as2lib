@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.bean.Mergable;
+import org.as2lib.bean.Mergeable;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.Map;
@@ -22,7 +22,7 @@ import org.as2lib.data.holder.Map;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.bean.factory.support.ManagedMap extends BasicClass implements Map, Mergable {
+class org.as2lib.bean.factory.support.ManagedMap extends BasicClass implements Map, Mergeable {
 	
 	private var keys:Array;
 	private var values:Array;
