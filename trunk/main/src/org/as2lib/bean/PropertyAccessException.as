@@ -17,17 +17,35 @@
 import org.as2lib.bean.BeanException;
 
 /**
+ * {@code PropertyAccessException} is the super-class for exceptions related to
+ * a property access, such as type mismatch or method invocation exception.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.PropertyAccessException extends BeanException {
 	
+	/** The name of the property that could not be accessed. */
 	private var propertyName:String;
 	
+	/**
+	 * Constructs a new {@code PropertyAccessException} instance.
+	 * 
+	 * @param propertyName the name of the property that could not be accessed
+	 * @param message the message describing this exception in detail
+	 * @param scope the {@code this}-scope of the method throwing this exception
+	 * @param args the arguments passed to the method that throws this exception
+	 */
 	public function PropertyAccessException(propertyName:String, message:String, scope, args:Array) {
+		// TODO: Add 'bean' as additional parameter.
 		super(message, scope, args);
 		this.propertyName = propertyName;
 	}
 	
+	/**
+	 * Returns the name of the property that could not be accessed.
+	 * 
+	 * @return the name of the property that could not bea accessed
+	 */
 	public function getPropertyName(Void):String {
 		return propertyName;
 	}

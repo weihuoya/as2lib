@@ -17,10 +17,20 @@
 import org.as2lib.env.except.Exception;
 
 /**
+ * {@code BeanException} super-class for all non-fatal exceptions thrown in the
+ * {@code bean} package and sub-packages.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.BeanException extends Exception {
 	
+	/**
+	 * Constructs a new {@code BeanException} instance.
+	 * 
+	 * @param message the message describing this exception
+	 * @param scope the scope on which the throwing method is invoked
+	 * @param args the arguments passed-to the throwing method
+	 */
 	public function BeanException(message:String, scope, args:Array) {
 		super(message, scope, args);
 	}

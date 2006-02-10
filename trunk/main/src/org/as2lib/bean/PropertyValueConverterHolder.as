@@ -19,22 +19,48 @@ import org.as2lib.util.ClassUtil;
 import org.as2lib.bean.PropertyValueConverter;
 
 /**
+ * {@code PropertyValueConverterHolder} holds a property value converter with its
+ * registered type.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.PropertyValueConverterHolder extends BasicClass {
 	
+	/** The property value converter. */
 	private var propertyValueConverter:PropertyValueConverter;
+	
+	/** The registered type of the property value converter. */
 	private var registeredType:Function;
 	
+	/**
+	 * Constructs a new {@code PropertyValueConverterHolder} instance.
+	 * 
+	 * @param propertyValueConverter the property value converter
+	 * @param registeredType the type the converter is registered for
+	 */
 	public function PropertyValueConverterHolder(propertyValueConverter:PropertyValueConverter, registeredType:Function) {
+		// TODO: Remove this class and either use an associative array to register converter to type (or store type directly in converter). The latter would require changes in the registerPropertyValueConverter methods.
 		this.propertyValueConverter = propertyValueConverter;
 		this.registeredType = registeredType;
 	}
 	
+	/**
+	 * Returns the type the converter is registered with.
+	 * 
+	 * @return the type the converter is registered with
+	 */
 	public function getRegisteredType(Void):Function {
 		return registeredType;
 	}
 	
+	/**
+	 * Returns the property value converter of the given required type is assignable
+	 * from the registered type of the converter.
+	 * 
+	 * @param requiredType the type a converter is needed for
+	 * @return the converter if the required type is assignable from the registred type
+	 * else {@code null}
+	 */
 	public function getPropertyValueConverter(requiredType:Function):PropertyValueConverter {
 		if (ClassUtil.isAssignable(requiredType, registeredType)) {
 			return propertyValueConverter;
