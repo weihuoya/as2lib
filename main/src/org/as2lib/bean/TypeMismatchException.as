@@ -18,10 +18,23 @@ import org.as2lib.bean.PropertyAccessException;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
+ * {@code TypeMismatchException} is thrown on a type mismatch when trying to set a
+ * bean property.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.TypeMismatchException extends PropertyAccessException {
 	
+	/**
+	 * Constructs a new {@code TypeMismatchException} instance.
+	 * 
+	 * @param propertyName the name of the property that was about to be set
+	 * @param propertyValue the value to set for the property
+	 * @param requiredType the type the value was expected to have or be converted to
+	 * @param message the message describing this exception in further detail
+	 * @param scope the {@code this}-scope of the method that throws this exception
+	 * @param args the arguments that were passed-to the throwing method
+	 */
 	public function TypeMismatchException(propertyName:String, propertyValue, requiredType:Function, message:String, scope, args:Array) {
 		super(propertyName, 
 				"Failed to convert property value of type [" +

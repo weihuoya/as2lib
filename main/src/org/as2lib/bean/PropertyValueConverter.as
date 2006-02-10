@@ -17,10 +17,20 @@
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code PropertyValueConverter} converts a value to a given type.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.PropertyValueConverter extends BasicInterface {
 	
+	/**
+	 * Converts the given {@code value} to the given {@code type} if possible.
+	 * 
+	 * @param value the value to convert
+	 * @param type the type to convert the value to
+	 * @throws IllegalArgumentException if the given value cannot be converted to
+	 * the given type
+	 */
 	public function convertPropertyValue(value:String, type:Function);
 	
 }

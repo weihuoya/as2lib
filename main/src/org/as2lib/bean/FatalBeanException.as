@@ -17,10 +17,20 @@
 import org.as2lib.bean.BeanException;
 
 /**
+ * {@code FatalBeanException} super-class for all fatal exceptions thrown in the
+ * {@code bean} package and sub-packages.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.FatalBeanException extends BeanException {
 	
+	/**
+	 * Constructs a new {@code FatalBeanException} instance.
+	 * 
+	 * @param message the message describing this exception
+	 * @param scope the scope on which the throwing method is invoked
+	 * @param args the arguments passed-to the throwing method
+	 */
 	public function FatalBeanException(message:String, scope, args:Array) {
 		super(message, scope, args);
 	}

@@ -17,10 +17,21 @@
 import org.as2lib.bean.InvalidPropertyException;
 
 /**
+ * {@code NotWritablePropertyException} is thrown on an attempt to set the value of a
+ * property that is not writable, because there is no setter method.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.NotWritablePropertyException extends InvalidPropertyException {
 	
+	/**
+	 * Constructs a new {@code NotWritablePropertyException} instance.
+	 * 
+	 * @param bean the offending bean
+	 * @param propertyName the name of the property that threw an exception on set-access
+	 * @param scope the {@code this}-scope of the method throwing this exception
+	 * @param args the arguments passed to the throwing method
+	 */
 	public function NotWritablePropertyException(bean, propertyName:String, message:String, scope, args:Array) {
 		super(bean, propertyName, message, scope, args);
 	}

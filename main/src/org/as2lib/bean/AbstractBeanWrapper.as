@@ -17,23 +17,35 @@
 import org.as2lib.core.BasicClass;
 
 /**
+ * {@code AbstractBeanWrapper} declares constants needed by {@link BeanWrapper}
+ * implementations.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.AbstractBeanWrapper extends BasicClass {
 	
-	/*public static var METHOD_PREFIX:String = "&";
-	public static var VARIABLE_PREFIX:String = "$";*/
-	
+	/** Separator for nested properties. */
 	public static var NESTED_PROPERTY_SEPARATOR:String = ".";
+	
+	/** Prefix to separate properties from keys. */
 	public static var PROPERTY_KEY_PREFIX:String = "[";
+	
+	/** Suffix of a property keys. */
 	public static var PROPERTY_KEY_SUFFIX:String = "]";
 	
+	/** Prefixes for property getter methods. */
 	public static var GET_PROPERTY_PREFIXES:Array = ["get", "is"];
+	
+	/** Prefixes for property setter methods. */
 	public static var SET_PROPERTY_PREFIXES:Array = ["set", "add", "put"];
 	
+	/** Placeholder to indicate that value shall be converted to a package. */
 	public static var PACKAGE_TYPE:Function = new Function(); // 'function() {}' is not Flash compatible
 	
-	/*public static var ARRAY_PREFIX:String = "array:";
+	/*public static var METHOD_PREFIX:String = "&";
+	public static var VARIABLE_PREFIX:String = "$";
+	
+	public static var ARRAY_PREFIX:String = "array:";
 	public static var MAP_PREFIX:String = "map:";
 	public static var LIST_PREFIX:String = "list:";
 	public static var QUEUE_PREFIX:String = "queue:";

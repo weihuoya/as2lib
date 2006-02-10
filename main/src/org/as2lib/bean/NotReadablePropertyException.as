@@ -17,10 +17,21 @@
 import org.as2lib.bean.InvalidPropertyException;
 
 /**
+ * {@code NotReadablePropertyException} is thrown on an attempt to get the value of a
+ * property that is not readable, because there is no getter method.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.NotReadablePropertyException extends InvalidPropertyException {
 	
+	/**
+	 * Constructs a new {@code NotReadablePropertyException} instance.
+	 * 
+	 * @param bean the offending bean
+	 * @param propertyName the name of the property that threw an exception on get-access
+	 * @param scope the {@code this}-scope of the method throwing this exception
+	 * @param args the arguments passed to the throwing method
+	 */
 	public function NotReadablePropertyException(bean, propertyName:String, scope, args:Array) {
 		super(bean, propertyName, "Bean property '" + propertyName + "' is not readable.", scope, args);
 	}
