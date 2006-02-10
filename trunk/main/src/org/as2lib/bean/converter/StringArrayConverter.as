@@ -18,14 +18,24 @@ import org.as2lib.bean.PropertyValueConverter;
 import org.as2lib.core.BasicClass;
 
 /**
+ * {@code StringArrayConverter} converts a value string to an array.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.converter.StringArrayConverter extends BasicClass implements PropertyValueConverter {
 	
+	/** The default separator of the string array. */
 	public static var DEFAULT_SEPARATOR:String = ",";
 	
+	/** The used separator. */
 	private var separator:String;
 	
+	/**
+	 * Constructs a new {@code StringArrayConverter} instance.
+	 * 
+	 * @param separator the separator the string-array is supposed to be separated with,
+	 * the default is {@link #DEFAULT_SEPARATOR}
+	 */
 	public function StringArrayConverter(separator:String) {
 		if (separator == null) {
 			separator = DEFAULT_SEPARATOR;
@@ -33,10 +43,26 @@ class org.as2lib.bean.converter.StringArrayConverter extends BasicClass implemen
 		this.separator = separator;
 	}
 	
+	/**
+	 * Converts the given {@code value} to an array or the given {@code type}.
+	 * 
+	 * <p>If {@code type} is not {@code null} it is instantiated and the appropriate
+	 * array fill methods are invoked on it to fill it with contents of the provided
+	 * string-array.
+	 * 
+	 * <p>Otherwise an instance of type {@code Array} is created and filled with
+	 * the contents of the given string-array. The individual elements of the
+	 * string-array are supposed to be separated by the separator given on construction
+	 * of this converter.
+	 * 
+	 * <p>If {@code value} is {@code null} or an empty string, an empty array will
+	 * be returned.
+	 * 
+	 * @param value the string-array to convert to an {@code Array}
+	 * @param type the type to convert the string-array to
+	 * @return the array
+	 */
 	public function convertPropertyValue(value:String, type:Function) {
-		if (value == null) {
-			return null;
-		}
 		if (type != null && type != Array) {
 			var array:Array = new type();
 			if (value != "") {

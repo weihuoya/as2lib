@@ -19,17 +19,30 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 
 /**
+ * {@code ClassConverter} converts values to classes.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.converter.ClassConverter extends BasicClass implements PropertyValueConverter {
 	
+	/**
+	 * Constructs a new {@code ClassConverter} instance.
+	 */
 	public function ClassConverter(Void) {
 	}
 	
+	/**
+	 * Converts the given {@code value} to a class that must exist in {@code _global}.
+	 * 
+	 * <p>{@code value} is supposed to be the fully qualified name of a class and must
+	 * be available in the swf, that is in {@code _global} to be looked-up and returned.
+	 * 
+	 * @param value the value to convert to a class
+	 * @param type the type to convert the value to (ignored by this implementation)
+	 * @return the converted value
+	 * @throws IllegalArgumentException if there is no class with the given name
+	 */
 	public function convertPropertyValue(value:String, type:Function) {
-		if (value == "" || value == null) {
-			return null;
-		}
 		var clazz:Function = eval("_global." + value);
 		if (clazz != null) {
 			return clazz;
