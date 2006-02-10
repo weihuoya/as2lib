@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import org.as2lib.bean.Mergable;
+import org.as2lib.bean.Mergeable;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.bean.factory.support.ManagedArray extends Array implements Mergable {
+class org.as2lib.bean.factory.support.ManagedArray extends Array implements Mergeable {
 	
 	private var elementType:Function;
 	private var mergeEnabled:Boolean;
