@@ -17,6 +17,12 @@
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code BeanNameAware} can be implemented by beans that want to be aware of their
+ * bean name in a bean factory.
+ * 
+ * <p>For a list of all bean lifecycle methods, see the {@link BeanFactory}
+ * documentation.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.factory.BeanNameAware extends BasicInterface {

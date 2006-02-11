@@ -17,6 +17,15 @@
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code DisposableBean} can be implemented by beans that want to release resources
+ * on destruction. A bean factory is supposed to invoke the destroy method if it
+ * disposes a cached singleton. An application context is supposed to dispose all
+ * of its singletons on close.
+ * 
+ * <p>An alternative to implementing this interface is specifying a custom destroy-method,
+ * for example in an XML bean definition. For a list of all bean lifecycle methods, see
+ * the {@link BeanFactory} documentation. 
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.factory.DisposableBean extends BasicInterface {

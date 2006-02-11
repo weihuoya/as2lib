@@ -17,6 +17,9 @@
 import org.as2lib.bean.factory.BeanFactory;
 
 /**
+ * {@code HierarchicalBeanFactory} is implemented by bean factories that can be
+ * part of a hierarchy.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.factory.HierarchicalBeanFactory extends BeanFactory {

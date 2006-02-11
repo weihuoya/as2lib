@@ -18,6 +18,16 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.bean.factory.BeanFactory;
 
 /**
+ * {@code BeanFactoryAware} can be implemented by beans that wish to be aware of
+ * their owning bean factory. Beans can for example look-up collaborating beans
+ * via the factory.
+ * 
+ * <p>Note that most beans will choose to receive references to collaborating
+ * beans via respective bean properties.
+ * 
+ * <p>For a list of all bean lifecycle methods, see the {@link BeanFactory}
+ * documentation.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.factory.BeanFactoryAware extends BasicInterface {

@@ -18,6 +18,23 @@ import org.as2lib.data.holder.Map;
 import org.as2lib.bean.factory.BeanFactory;
 
 /**
+ * {@code ListableBeanFactory} is an extension of the {@code BeanFactory} interface
+ * to be implemented by bean factories that can enumerate all their bean instances,
+ * rather than attempting bean lookup by name one by one as requested by clients.
+ * Bean factories that preload all their beans (for example, DOM-based XML factories)
+ * may implement this interface.
+ * 
+ * <p>The methods in this interface will just respect bean definitions. They will
+ * ignore any singleton beans that have been registered by other means like through
+ * the {@link ConfigurableBeanFactory#registerSingleton} method, with the exception
+ * of {@link #getBeansOfType} which will match such manually registered singletons too.
+ * Of course, {@code BeanFactory}'s methods do allow access to such special beans too.
+ * In typical scenarios, all beans will be defined by bean definitions anyway.
+ * 
+ * <p>With the exception of {@link #getBeanDefinitionCoun}t and {@link #containsBeanDefinition},
+ * the methods in this interface are not designed for frequent invocation. Implementations
+ * may be slow.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.factory.ListableBeanFactory extends BeanFactory {
