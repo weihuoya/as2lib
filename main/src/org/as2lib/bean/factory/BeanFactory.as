@@ -17,6 +17,68 @@
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code BeanFactory} is the root interface for accessing the bean container. This
+ * is the basic client view of a bean container; further interfaces such as
+ * {@link ListableBeanFactory} and {@link ConfigurableBeanFactory} are available for
+ * specific purposes.
+ * 
+ * <p>This interface is implemented by classes that hold a number of bean definitions,
+ * each uniquely identified by a name. Depending on the bean definition, the factory
+ * will return either an independent instance of a contained object (the prototype
+ * design pattern), or a single shared instance (a superior alternative to the singleton
+ * design pattern, in which the instance is a singleton in the scope of the factory).
+ * Which type of instance will be returned depends on the bean factory configuration:
+ * the API is the same. The singleton approach is more useful and more common in practice.
+ * 
+ * <p>The point of this approach is that the bean factory is a central registry of
+ * application components, and centralizes configuration of application components
+ * (no more do individual objects need to read properties files, for example).
+ * 
+ * <p>Note that it is generally better to rely on dependency injection ("push" configuration)
+ * to configure application objects through setters or constructors, rather than use any
+ * form of "pull" configuration like a bean factory lookup. As2lib's dependency injection
+ * functionality is implemented using {@code BeanFactory} and its subinterfaces.
+ * 
+ * <p>Normally a bean factory will load or be populated with bean definitions stored
+ * in a configuration source (such as an XML document), and use the {@code org.as2lib.bean}
+ * package to configure the beans. However, an implementation could simply return objects
+ * it creates as necessary directly in code. There are no constraints on how the definitions
+ * could be stored: DB, XML, properties file etc. Implementations are encouraged to support
+ * references amongst beans, to either singletons or prototypes.
+ * 
+ * <p>In contrast to the methods in {@link ListableBeanFactory}, all of the methods in this
+ * interface will also check parent factories if this is a {@link HierarchicalBeanFactory}.
+ * If a bean is not found in this factory instance, the immediate parent is asked. Beans in
+ * this factory instance are supposed to override beans of the same name in any parent factory.
+ * 
+ * <p>Bean factory implementations should support the standard bean lifecycle interfaces as
+ * far as possible. The maximum set of initialization methods and their standard order is:
+ * <ol>
+ *   <li>{@link BeanNameAware#setBeanName}</li>
+ *   <li>{@link BeanFactoryAware#setBeanFactory}</li>
+ *   <li>
+ *     {@link ApplicationEventPublisherAware#setApplicationEventPublisher} (only applicable
+ *     when running in an application context)
+ *   </li>
+ *   <li>
+ *     {@link MessageSourceAware#setMessageSource} (only applicable when running in an application
+ *     context)
+ *   </li>
+ *   <li>
+ *     {@link ApplicationContextAware#setApplicationContext} (only applicable when running in an
+ *     application context)</li>
+ *   <li>{@link BeanPostProcessor#postProcessBeforeInitialization}</li>
+ *   <li>{@link InitializingBean#afterPropertiesSet}</li>
+ *   <li>a custom init-method definition</li>
+ *   <li>{@link BeanPostProcessor#postProcessAfterInitialization}</li>
+ * </ol>
+ * 
+ * <p>On shutdown of a bean factory, the following lifecycle methods apply:
+ * <ol>
+ *   <li>{@link DisposableBean#destroy}</li>
+ *   <li>a custom destroy-method definition</li>
+ * </ol>
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.factory.BeanFactory extends BasicInterface {

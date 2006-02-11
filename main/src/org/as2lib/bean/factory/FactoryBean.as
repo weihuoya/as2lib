@@ -17,6 +17,17 @@
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code FactoryBean} can be implemented by objects used within a bean factory
+ * that are themselves factories. If a bean implements this interface, it is used
+ * as a factory, not directly as a bean.
+ * 
+ * <p>Note: A bean that implements this interface cannot be used as a normal bean.
+ * A factory bean is defined in a bean style, but the object exposed for bean
+ * references is always the object that it creates.
+ * 
+ * <p>Factory beans can support singletons and prototypes, and can either create
+ * objects lazily on demand or eagerly on startup.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.factory.FactoryBean extends BasicInterface {

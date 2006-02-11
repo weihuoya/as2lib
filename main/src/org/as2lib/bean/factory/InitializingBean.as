@@ -17,6 +17,15 @@
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code InitializingBean} can be implemented by beans that need to react once
+ * all their properties have been set by a bean factory: for example, to perform
+ * custom initialization, or merely to check that all mandatory properties have
+ * been set.
+ * 
+ * <p>An alternative to implementing this interface is specifying a custom init-method,
+ * for example in an XML bean definition. For a list of all bean lifecycle methods,
+ * see the {@link BeanFactory} documentation. 
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.factory.InitializingBean extends BasicInterface {
