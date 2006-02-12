@@ -20,6 +20,16 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.AbstractOperationException;
 
 /**
+ * {@code AbstractFactoryBean} is a simple template superclass for {@link FactoryBean}
+ * implementations thats allows for creating a singleton or a prototype, depending on
+ * the {@code singleton} flag.
+ * 
+ * <p>If the {@code singleton} flag is {@code true} (the default), this class will
+ * create the singleton instance once on initialization and subsequently return the
+ * same instance. Else, this class will create a new instance each time. Subclasses
+ * are responsible for implementing the abstract {@link #createInstance} template
+ * method to actually create the objects to expose.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.config.AbstractFactoryBean extends BasicClass implements InitializingBean, DisposableBean {
@@ -39,6 +49,17 @@ class org.as2lib.bean.factory.config.AbstractFactoryBean extends BasicClass impl
 	
 	public function isSingleton(Void):Boolean {
 		return singleton;
+	}
+	
+	/**
+	 * Sets if a singleton shall be created once, or a new object on each request.
+	 * 
+	 * <p>Default is {@code true}, a singleton.
+	 * 
+	 * @param singleton whether this factory returns a singleton or a prototype object
+	 */
+	public function setSingleton(singleton:Boolean):Void {
+		this.singleton = singleton;
 	}
 	
 	public function afterPropertiesSet(Void):Void {

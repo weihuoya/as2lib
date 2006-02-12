@@ -17,6 +17,12 @@
 import org.as2lib.bean.factory.config.BeanPostProcessor;
 
 /**
+ * {@code DestructionAwareBeanPostProcessor} adds a before-destruction callback
+ * to bean post processors.
+ * 
+ * <p>The typical usage is to invoke custom destruction callbacks on specific bean
+ * types, matching corresponding initialization callbacks.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.factory.config.DestructionAwareBeanPostProcessor extends BeanPostProcessor {

@@ -17,6 +17,17 @@
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code BeanPostProcessor} allows for custom modification of new bean instances,
+ * for example checking for marker interfaces or wrapping them with proxies.
+ * 
+ * <p>Application contexts usually auto-detect bean-post-processor beans in their
+ * bean definitions and apply them before any other beans are created. Plain bean
+ * factories allow for programmatic registration of post-processors.
+ * 
+ * <p>Typically, post-processors that populate beans via marker interfaces or the
+ * like implement {@link #postProcessBeforeInitialization}, and post-processors
+ * that wrap beans with proxies normally implement {@link #postProcessAfterInitialization}.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.factory.config.BeanPostProcessor extends BasicInterface {

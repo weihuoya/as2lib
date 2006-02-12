@@ -18,6 +18,16 @@ import org.as2lib.bean.factory.config.BeanDefinition;
 import org.as2lib.core.BasicClass;
 
 /**
+ * {@code BeanDefinitionHolder} holds a bean definition with name and aliases.
+ * 
+ * <p>It is recognized by {@link DefaultBeanFactory} for inner bean definitions.
+ * Registered by {@link XmlBeanDefinitionParser}, which also uses it as general
+ * holder for a parsed bean definition.
+ * 
+ * <p>It can also be used for programmatic registration of inner bean definitions.
+ * If you do not care about {@link BeanNameAware} and the like, registering a
+ * {@link RootBeanDefinition} or {@link ChildBeanDefinition} is sufficient.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.config.BeanDefinitionHolder extends BasicClass {
@@ -71,6 +81,11 @@ class org.as2lib.bean.factory.config.BeanDefinitionHolder extends BasicClass {
 		return aliases;
 	}
 	
+	/**
+	 * Returns the string representation of this instance.
+	 * 
+	 * @return this instance's string representation
+	 */
 	public function toString():String {
 		return "Bean definition with name '" + beanName + "': " + beanDefinition + ".";
 	}
