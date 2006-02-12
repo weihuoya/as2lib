@@ -18,10 +18,20 @@ import org.as2lib.bean.factory.support.BeanDefinitionRegistry;
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code BeanDefinitionParser} parses bean definitions encoded in different formats,
+ * like XML, Properties Files, etc.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.factory.parser.BeanDefinitionParser extends BasicInterface {
 	
-	public function parse(beanDefinition:String, registry:BeanDefinitionRegistry):Void;
+	/**
+	 * Parses the given bean definition(s) and adds the bean definition(s) to the given
+	 * bean definition registry.
+	 * 
+	 * @param beanDefinition the bean definition(s) to parse
+	 * @param registry the registry to add the parsed bean definition(s) to
+	 */
+	public function parse(beanDefinitions:String, registry:BeanDefinitionRegistry):Void;
 	
 }

@@ -42,15 +42,22 @@ import org.as2lib.util.StringUtil;
 import org.as2lib.util.TrimUtil;
 
 /**
+ * {@code XmlBeanDefinitionParser} parses bean definitions encoded in XML format.
+ * 
+ * <p>Instantiated per bean definitions to parse: State is held in instance variables
+ * during the execution of the {@code parse} method, for example global settings that
+ * are defined for all bean definitions in the XML document.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass implements BeanDefinitionParser {
 	
+	/** */
 	public static var BEAN_NAME_DELIMITERS:String = ",; ";
 	
 	/**
-	 * Value of a T/F attribute that represents true.
-	 * Anything else represents false. Case seNsItive.
+	 * Value of a boolean attribute that represents {@code true}.
+	 * Anything else represents {@code false}. Case sensitive.
 	 */
 	public static var TRUE_VALUE:String = "true";
 	public static var DEFAULT_VALUE:String = "default";
@@ -145,37 +152,61 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	
 	private var defaultMerge:String;
 	
+	/**
+	 * Constructs a new {@code XmlBeanDefinitionParser} instance.
+	 * 
+	 * @param registry the registry to use if none is passed-to in the {@code parse}
+	 * method
+	 */
 	public function XmlBeanDefinitionParser(registry:BeanDefinitionRegistry) {
 		this.registry = registry;
 	}
 	
-	public function parse(beanDefinition:String, registry:BeanDefinitionRegistry):Void {
+	/**
+	 * Parses the given bean definition(s), and adds them to the given registry if not
+	 * {@code null}, otherwise the one given on instantiation is used.
+	 * 
+	 * @param beanDefinitions the bean definition(s) to parse
+	 * @param registry the registry to add bean definitions to
+	 * @throws IllegalArgumentException if both the given registry and the one given on
+	 * instantiation is {@code null}
+	 */
+	public function parse(beanDefinitions:String, registry:BeanDefinitionRegistry):Void {
 		if (this.registry == null) {
 			if (registry == null) {
 				throw new IllegalArgumentException("Argument 'registry' must not be 'null' nor 'undefined' if you did not specify a registry on construction of this instance.", this, arguments);
 			}
 			this.registry = registry;
 		}
-		var root:XMLNode = parseXml(beanDefinition);
+		var root:XMLNode = parseXml(beanDefinitions);
 		initDefaults(root);
 		preProcessXml(root);
 		parseBeanDefinitions(root);
 		postProcessXml(root);
 	}
 	
-	private function parseXml(beanDefinition:String):XMLNode {
+	/**
+	 * Parses the given bean definition(s) and returns the root element.
+	 * 
+	 * @param beanDefinitions the bean definition(s) to parse
+	 * @param the root element of the given bean definition(s)
+	 * @throws BeanDefinitionStoreException if the given bean definition(s) could not
+	 * be parsed
+	 */
+	private function parseXml(beanDefinitions:String):XMLNode {
 		var xml:XML = new XML();
 		xml.ignoreWhite = true;
-		xml.parseXML(beanDefinition);
+		xml.parseXML(beanDefinitions);
 		if (xml.status != 0) {
-			throw new BeanDefinitionStoreException(null, "Bean definition [" + beanDefinition + "] is syntactically malformed.", this, arguments);
+			throw new BeanDefinitionStoreException(null, "Bean definition [" + beanDefinitions + "] is syntactically malformed.", this, arguments);
 		}
 		return xml.lastChild;
 	}
 	
 	/**
-	 * Initialize the default lazy-init, autowire and dependency check settings.
-	 *
+	 * Initializes the default lazy-init, autowire and dependency check settings.
+	 * 
+	 * @param root the root element
 	 * @see #setDefaultLazyInit
 	 * @see #setDefaultAutowire
 	 * @see #setDefaultDependencyCheck
@@ -193,12 +224,22 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		defaultMerge = root.attributes[DEFAULT_MERGE_ATTRIBUTE];
 	}
 	
+	/**
+	 * Allows the XML to be extensible by processing any custom element types first,
+	 * before we start to process the bean definitions. This method is a natural
+	 * extension point for any other custom pre-processing of the XML.
+	 * 
+	 * <p>This default implementation is empty. Subclasses can override this method
+	 * to convert custom elements into standard bean definitions, for example.
+	 * 
+	 * @param root the root element to pre-process
+	 */
 	private function preProcessXml(root:XMLNode):Void {
 	}
 	
 	/**
 	 * Parses the elements at the root level in the document: "import", "alias", "bean".
-	 *
+	 * 
 	 * @param root the root node of the xml document
 	 */
 	private function parseBeanDefinitions(root:XMLNode):Void {
@@ -225,14 +266,16 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Parse a standard bean definition into a BeanDefinitionHolder,
-	 * including bean name and aliases.
-	 * <p>Bean elements specify their canonical name as "id" attribute
-	 * and their aliases as a delimited "name" attribute.
-	 * <p>If no "id" specified, uses the first name in the "name" attribute
-	 * as canonical name, registering all others as aliases.
-	 * <p>Callers should specify whether this element represents an inner bean
-	 * definition or not by setting the <code>isInnerBean</code> argument appropriately
+	 * Parses a standard bean definition into a bean definition holder, including bean
+	 * name and aliases.
+	 * 
+	 * <p>Bean elements specify their canonical name as "id" attribute and their aliases
+	 * as a delimited "name" attribute.
+	 * 
+	 * <p>If no "id" is specified, the first name in the "name" attribute is used as
+	 * canonical name, registering all others as aliases.
+	 * 
+	 * @param element the bean definition element to parse
 	 */
 	private function parseBeanDefinitionElement(element:XMLNode):BeanDefinitionHolder {
 		var id:String = element.attributes[ID_ATTRIBUTE];
@@ -335,7 +378,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Parse constructor-arg sub-elements of the given bean element.
+	 * Parses constructor-arg sub-elements of the given bean element.
+	 * 
+	 * @param beanElement the bean element to parse
+	 * @param beanName the name of the bean
 	 */
 	private function parseConstructorArgElements(beanElement:XMLNode, beanName:String):ConstructorArgumentValues {
 		var result:ConstructorArgumentValues = new ConstructorArgumentValues();
@@ -350,7 +396,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Parse property sub-elements of the given bean element.
+	 * Parses property sub-elements of the given bean element.
+	 * 
+	 * @param beanElement the bean element to parse
+	 * @param beanName the name of the bean
 	 */
 	private function parsePropertyElements(beanElement:XMLNode, beanName:String):PropertyValues {
 		var result:PropertyValues = new PropertyValues();
@@ -358,15 +407,18 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		for (var i:Number = 0; i < nodes.length; i++) {
 			var node:XMLNode = nodes[i];
 			if (PROPERTY_ELEMENT == node.nodeName) {
-				var pv:PropertyValue = parsePropertyElement(node, beanName, result);
-				result.addPropertyValueByPropertyValue(pv);
+				parsePropertyElement(node, beanName, result);
 			}
 		}
 		return result;
 	}
 	
 	/**
-	 * Parse lookup-override sub-elements of the given bean element.
+	 * Parses lookup-override sub-elements of the given bean element.
+	 * 
+	 * @param beanElement the bean element to parse
+	 * @param beanName the name of the bean
+	 * @param overrides the list to add overrides to
 	 */
 	private function parseLookupOverrideSubElements(beanElement:XMLNode, beanName:String, overrides:MethodOverrides):Void {
 		var nodes = beanElement.childNodes;
@@ -381,7 +433,11 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Parse replaced-method sub-elements of the given bean element.
+	 * Parses replaced-method sub-elements of the given bean element.
+	 * 
+	 * @param beanElement the bean element to parse
+	 * @param beanName the name of the bean
+	 * @param overrides the list to add overrides to
 	 */
 	private function parseReplacedMethodSubElements(beanElement:XMLNode, beanName:String, overrides:MethodOverrides) {
 		var nodes:Array = beanElement.childNodes;
@@ -397,7 +453,11 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 
 	/**
-	 * Parse a constructor-arg element.
+	 * Parses a constructor-arg element.
+	 * 
+	 * @param element the constructor-arg element to parse
+	 * @param beanName the name of the bean declaring the constructor-arg element
+	 * @param argumentValues the constructor argument values to add the parsed value to
 	 */
 	private function parseConstructorArgElement(element:XMLNode, beanName:String, argumentValues:ConstructorArgumentValues):Void {
 		var index:Number;
@@ -429,9 +489,13 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Parse a property element.
+	 * Parses a property element.
+	 * 
+	 * @param element the property element to parse
+	 * @param beanName the name of the bean declaring the property element
+	 * @param propertyValues the property values to add parsed values to
 	 */
-	private function parsePropertyElement(element:XMLNode, beanName:String, propertyValues:PropertyValues):PropertyValue {
+	private function parsePropertyElement(element:XMLNode, beanName:String, propertyValues:PropertyValues):Void {
 		var propertyName:String = element.attributes[NAME_ATTRIBUTE];
 		if (propertyName == null || propertyName == "") {
 			throw new BeanDefinitionStoreException(beanName, "Tag 'property' must have a 'name' attribute.", this, arguments);
@@ -448,7 +512,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			}
 		}
 		var value = parsePropertyValue(element, beanName, "<property> element for property '" + propertyName + "'");
-		return new PropertyValue(propertyName, value, type);
+		propertyValues.addPropertyValueByPropertyValue(new PropertyValue(propertyName, value, type));
 	}
 	
 	/**
@@ -467,10 +531,14 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Get the value of a property element. May be a list etc.
-	 * Also used for constructor arguments, "propertyName" being null in this case.
+	 * Gets the value of a property element. May be a list etc. This method is slso
+	 * used for constructor arguments.
+	 * 
+	 * @param element the property element to parse
+	 * @param beanName the bean name
+	 * @param propertyName the name of the property
 	 */
-	private function parsePropertyValue(element:XMLNode, beanName:String, elementName:String) {
+	private function parsePropertyValue(element:XMLNode, beanName:String, propertyName:String) {
 		// Should only have one child element: ref, value, list, etc.
 		var nodes = element.childNodes;
 		var subElement:XMLNode;
@@ -478,7 +546,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			var candidateElement:XMLNode = nodes[i];
 			if (DESCRIPTION_ELEMENT != candidateElement.nodeName) {
 				if (subElement != null) {
-					throw new BeanDefinitionStoreException(beanName, elementName + " must not contain more than one sub-element.", this, arguments);
+					throw new BeanDefinitionStoreException(beanName, propertyName + " must not contain more than one sub-element.", this, arguments);
 				}
 				subElement = candidateElement;
 			}
@@ -487,11 +555,11 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		var valueAttribute:String = element.attributes[VALUE_ATTRIBUTE];
 		if ((refAttribute != null && valueAttribute != null) ||
 				((refAttribute != null || valueAttribute != null)) && subElement != null) {
-			throw new BeanDefinitionStoreException(beanName, elementName + " is only allowed to contain either a 'ref' attribute or a 'value' attribute or a sub-element.", this, arguments);
+			throw new BeanDefinitionStoreException(beanName, propertyName + " is only allowed to contain either a 'ref' attribute or a 'value' attribute or a sub-element.", this, arguments);
 		}
 		if (refAttribute != null) {
 			if (refAttribute == "") {
-				throw new BeanDefinitionStoreException(beanName, elementName + " contains empty 'ref' attribute.", this, arguments);
+				throw new BeanDefinitionStoreException(beanName, propertyName + " contains empty 'ref' attribute.", this, arguments);
 			}
 			return new RuntimeBeanReference(element.attributes[REF_ATTRIBUTE]);
 		}
@@ -500,16 +568,18 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		}
 		if (subElement == null) {
 			// Neither child element nor "ref" or "value" attribute found.
-			throw new BeanDefinitionStoreException(beanName, elementName + " must specify a ref or value.", this, arguments);
+			throw new BeanDefinitionStoreException(beanName, propertyName + " must specify a ref or value.", this, arguments);
 		}
 		return parsePropertySubElement(subElement, beanName);
 	}
 	
 	/**
-	 * Parse a value, ref or collection sub-element of a property or
-	 * constructor-arg element.
-	 *
-	 * @param ele subelement of property element; we don't know which yet
+	 * Parses a value, ref or collection sub-element of a property or constructor-arg
+	 * element.
+	 * 
+	 * @param element the subelement of property element; we don't know which yet
+	 * @param beanName the name of the bean
+	 * @return the parsed property sub-element
 	 */
 	private function parsePropertySubElement(element:XMLNode, beanName:String) {
 		if (element.nodeName == BEAN_ELEMENT) {
@@ -579,6 +649,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	
 	/**
 	 * Parses an array element.
+	 * 
+	 * @param arrayElement the array element to parse
+	 * @param beanName the name of the bean
+	 * @return the managed array to be converted to a real array
 	 */
 	private function parseArrayElement(arrayElement:XMLNode, beanName:String):ManagedArray {
 		var nodes:Array = arrayElement.childNodes;
@@ -601,7 +675,11 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Parse a list element.
+	 * Parses a list element.
+	 * 
+	 * @param listElement the list element to parse
+	 * @param beanName the name of the bean
+	 * @return the managed list to be converted to a real list
 	 */
 	private function parseListElement(listElement:XMLNode, beanName:String):ManagedList {
 		var nodes:Array = listElement.childNodes;
@@ -624,7 +702,11 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Parse a map element.
+	 * Parses a map element.
+	 * 
+	 * @param mapElement the map element to parse
+	 * @param beanName the bean name
+	 * @return the managed map to be converted to a real map
 	 */
 	private function parseMapElement(mapElement:XMLNode, beanName:String):ManagedMap {
 		var entryElements:Array = getChildElementsByTagName(mapElement, ENTRY_ELEMENT);
@@ -726,7 +808,11 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Parse a key sub-element of a map element.
+	 * Parses a key sub-element of a map element.
+	 * 
+	 * @param keyElement the key sub-element of a map
+	 * @param beanName the name of the bean
+	 * @return the parsed key-element
 	 */
 	private function parseKeyElement(keyElement:XMLNode, beanName:String) {
 		var nodes:Array = keyElement.childNodes;
@@ -743,7 +829,11 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Parse a props element.
+	 * Parses a props element.
+	 * 
+	 * @param propsElement the properties element to parse
+	 * @param beanName the name of the bean
+	 * @return the managed properties to be converted to a real properties
 	 */
 	private function parsePropsElement(propsElement:XMLNode, beanName:String):ManagedProperties {
 		var properties:ManagedProperties = new ManagedProperties();
@@ -761,7 +851,11 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Parse the merge attribute of a collection element, if any.
+	 * Parses the merge attribute of a collection element, if any.
+	 * 
+	 * @param collectionElement the collection element to parse
+	 * @return {@code true} if the collection shall be merged if necessary else
+	 * {@code false}
 	 */
 	private function parseMergeAttribute(collectionElement:XMLNode):Boolean {
 		var value:String = collectionElement.attributes[MERGE_ATTRIBUTE];
@@ -771,6 +865,13 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		return TRUE_VALUE == value;
 	}
 	
+	/**
+	 * Returns all child elements with the given node name of the given element.
+	 * 
+	 * @param element the element to return child elements of
+	 * @param nodeName the node name of the child elements to return
+	 * @return all child elements with the given node name
+	 */
 	private function getChildElementsByTagName(element:XMLNode, nodeName:String):Array {
 		var result:Array = new Array();
 		var nodes:Array = element.childNodes;
@@ -783,6 +884,12 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		return result;
 	}
 	
+	/**
+	 * Returns the dependency check constant indicated by the given attribute.
+	 * 
+	 * @param attribute the attribute to convert to a dependency check constant
+	 * @return the dependency check constant of the given attribute
+	 */
 	private function getDependencyCheck(attribute:String):Number {
 		if (DEPENDENCY_CHECK_ALL_ATTRIBUTE_VALUE == attribute) {
 			return AbstractBeanDefinition.DEPENDENCY_CHECK_ALL;
@@ -795,7 +902,13 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		}
 		return AbstractBeanDefinition.DEPENDENCY_CHECK_NONE;
 	}
-
+	
+	/**
+	 * Returns the autowire mode indiecated by the given attribute.
+	 * 
+	 * @param attribute the attribute to convert to an autowire mode
+	 * @return the autowire mode corresponding to the given attribute
+	 */
 	private function getAutowireMode(attribute:String):Number {
 		if (AUTOWIRE_BY_NAME_VALUE == attribute) {
 			return AbstractBeanDefinition.AUTOWIRE_BY_NAME;
@@ -804,16 +917,15 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Create a new RootBeanDefinition or ChildBeanDefinition for the given
-	 * class name, parent, constructor arguments, and property values.
+	 * Creates a new {@link RootBeanDefinition} or {@link ChildBeanDefinition} for the
+	 * given class name, parent, constructor arguments, and property values.
+	 * 
 	 * @param className the name of the bean class, if any
 	 * @param parent the name of the parent bean, if any
-	 * @param cargs the constructor arguments, if any
-	 * @param pvs the property values, if any
-	 * @param classLoader the ClassLoader to use for loading bean classes
-	 * (can be <code>null</code> to just register bean classes by name)
+	 * @param constructorArgumentValues the constructor arguments, if any
+	 * @param propertyValues the property values, if any
 	 * @return the bean definition
-	 * @throws ClassNotFoundException if the bean class could not be loaded
+	 * @throws ClassNotFoundException if the bean class could not be resolved
 	 */
 	public function createBeanDefinition(className:String, parent:String, constructorArgumentValues:ConstructorArgumentValues, propertyValues:PropertyValues):AbstractBeanDefinition {
 		var beanClass:Function;
@@ -836,14 +948,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Generate a bean name for the given bean definition, unique within the
-	 * given bean factory.
+	 * Generates a bean name for the given bean definition, unique within the bean
+	 * definition registry.
+	 * 
 	 * @param beanDefinition the bean definition to generate a bean name for
-	 * @param beanFactory the bean factory that the definition is going to be
-	 * registered with (to check for existing bean names)
-	 * @param isInnerBean whether the given bean definition will be registered
-	 * as inner bean or as top-level bean (allowing for special name generation
-	 * for inner beans vs. top-level beans)
 	 * @return the bean name to use
 	 * @throws BeanDefinitionStoreException if no unique name can be generated
 	 * for the given bean definition
@@ -872,6 +980,14 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		return id;
 	}
 	
+	/**
+	 * Converts the given string to a string array, by splitting it at the given
+	 * delimiters.
+	 * 
+	 * @param string the string to tokenize
+	 * @param delimiters the delimiters to split the string at
+	 * @return the converted string
+	 */
 	private function tokenizeToStringArray(string:String, delimiters:String):Array {
 		var length:Number = BEAN_NAME_DELIMITERS.length - 1;
 		var character:String = BEAN_NAME_DELIMITERS.charAt(length);
@@ -881,6 +997,16 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		return string.split(character);
 	}
 	
+	/**
+	 * Allows the XML to be extensible by processing any custom element types last,
+	 * after we finished processing the bean definitions. This method is a natural
+	 * extension point for any other custom post-processing of the XML.
+	 * 
+	 * <p>This default implementation is empty. Subclasses can override this method
+	 * to convert custom elements into standard bean definitions, for example.
+	 * 
+	 * @param root the root element to post-process
+	 */
 	private function postProcessXml(root:XMLNode):Void {
 	}
 	
