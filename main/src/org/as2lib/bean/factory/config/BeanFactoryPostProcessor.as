@@ -18,6 +18,16 @@ import org.as2lib.bean.factory.config.ConfigurableListableBeanFactory;
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code BeanFactoryPostProcessor} allows for custom modification of an application
+ * context's bean definitions, adapting the bean property values of the context's
+ * underlying bean factory.
+ * 
+ * <p>Application contexts usually auto-detect bean-factory-post-processor beans in
+ * their bean definitions and apply them before any other beans get created.
+ * 
+ * <p>Useful for custom config files targeted at system administrators that override
+ * bean properties configured in the application context.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.factory.config.BeanFactoryPostProcessor extends BasicInterface {

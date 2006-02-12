@@ -25,7 +25,27 @@ import org.as2lib.bean.PropertyValueConverter;
  */
 interface org.as2lib.bean.factory.config.ConfigurableListableBeanFactory extends ListableBeanFactory {
 	
+	/**
+	 * Returns the registered bean definition for the given bean, allowing access
+	 * to its property values and constructor argument values (which can be
+	 * modified during bean factory post-processing).
+	 * 
+	 * <p>A returned bean definition object should not be a copy but the original
+	 * definition object as registered in the factory. This means that it should
+	 * be castable to a more specific implementation type, if necessary.
+	 * 
+	 * @param beanName the name of the bean
+	 * @return the registered bean definition
+	 * @throws NoSuchBeanDefinitionException if there is no bean with the given name
+	 */
 	public function getBeanDefinition(beanName:String, includingAncestors:Boolean):BeanDefinition;
+	
+	/**
+	 * Pre-instantiates all non-lazy-init singletons, also considering {@code FactoryBean}
+	 * instances. Typically invoked at the end of factory setup, if desired.
+	 * 
+	 * @throws BeanException if one of the singleton beans could not be created
+	 */
 	public function preInstantiateSingletons(Void):Void;
 	
 	public function containsSingleton(beanName:String):Boolean;

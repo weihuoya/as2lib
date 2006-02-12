@@ -17,6 +17,13 @@
 import org.as2lib.bean.factory.config.BeanPostProcessor;
 
 /**
+ * {@code InstantiationAwareBeanPostProcessor} adds a before- and after-instantiation
+ * callbacks to bean post processors.
+ * 
+ * <p>Typically used to suppress default instantiation for specific target beans, for
+ * example to create proxies with special target sources (pooling targets, lazily
+ * initializing targets, et cetera).
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.factory.config.InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
