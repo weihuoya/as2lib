@@ -6,6 +6,11 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="2">
+				<day value="13">
+					<entry type="enhancement" package="org.as2lib.env.reflect" class="DelegateManager">Single internal cache for all delegates is implemented</entry>
+					<entry type="add" package="org.as2lib.env.reflect" class="DelegateManager" method="clear"></entry>
+					<entry type="add" package="org.as2lib.env.reflect" class="DelegateManager" method="remove"></entry>
+				</day>
 				<day value="6">
 					<entry type="add" package="org.as2lib.env.reflect" class="DelegateManager">Proxy class to create delegate methods with internal cache is added.</entry>
 				</day>
