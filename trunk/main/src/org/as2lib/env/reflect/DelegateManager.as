@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -21,15 +21,15 @@ import org.as2lib.env.overload.Overload;
 import org.as2lib.env.reflect.Delegate;
 
 /**
- * {@code DelegateManager} provides proxy methods for {@link Delegate#createByMethod}
- * and {@link Delegate#createByName} that cache created delegates.
+ * {@code DelegateManager} provides proxy method for {@link Delegate#create} that cache 
+ * created delegates. Also it provides routines allowed to manage cached delegates.
  * 
- * Each {@code Delegate#create} call returns a new instance of the delegate for the 
+ * <p>Each {@code Delegate#create} call returns a new instance of the delegate for the 
  * passed-in method and scope. It causes inconvenience using delegates as event listeners
  * with the MX-like event dispatching model. It requires to create special class members
  * to store references to the created delegates to remove event listeners later.
  * 
- * Delegate methods obtained through {@code DelegateManager} class are cached. So
+ * <p>Delegate methods obtained through {@code DelegateManager} class are cached. So
  * every {@code DelegateManager#create} call for the same scope and method will return
  * the same delegate.
  * 
@@ -48,105 +48,98 @@ import org.as2lib.env.reflect.Delegate;
  *	   
  *   	private function onButtonClick():Void {
  *   		trace("Click!");
- *   		myButton.removeEventListener("click", DelegateManager.create(this, onButtonClick));
+ *   		myButton.removeEventListener("click", DelegateManager.remove(this, onButtonClick));
  *   	}
  *   }
  *  
  * </code>
  * 
  * @author Igor Sadovskiy
- * @version 1.0
+ * @version 1.1
  * @see org.as2lib.env.reflect.Delegate
  */
 class org.as2lib.env.reflect.DelegateManager extends BasicClass {
 	
-	/** Scope cache for delegate created by method. */
-	private static var methodCache:Map;
-	
-	/** Scopes cache for delegates created by name. */
-	private static var nameCache:Map;
+	/** Scope cache for delegates. */
+	private static var scopeCache:Map;
 	
 	/**
-	 * @overload #createByMethod
-	 * @overload #createByName
-	 */
-	public static function create():Function {
-		var o:Overload = new Overload(eval("th" + "is"));
-		o.addHandler([Object, Function], createByMethod);
-		o.addHandler([Object, String], createByName);
-		return o.forward(arguments);
-	}
-	
-	/**
-	 * Looks if a delegate method for the given {@code scope} and {@code method} has
-	 * already been created by the {@code createByMethod} method and returns it if found.
-	 * Otherwise a new delegate is created and put into the cache so that it can be
-	 * reused in the future.
+	 * Looks if a delegate method for the given {@code scope} and {@code method} already
+	 * has been created by the {@code #create} method and returns it if found.
+	 * Otherwise a new delegate is created and put into the cache so it can be
+	 * reused in the future. {@code method} could be both method's name or reference 
+	 * to the method. 
+	 * 
+	 * <p>Note, delegates created for the same {@code scope} and {@code method}
+	 * but used different method's representation types (for example, first as 
+	 * {@code String} and second as {@code Function}) will be represented by different 
+	 * delegates in the cache. 
 	 * 
 	 * @param scope the scope to invoke the given {@code method} on
-	 * @param method the method to invoke on the given {@code scope}
+	 * @param method the reference to the method or method's name to invoke on the 
+	 * given {@code scope}
 	 * @return the method that delegates invocations to the given {@code method} on the
 	 * given {@code scope}
 	 * @see Delegate#createByMethod
+	 * @see Delegate#createByName
 	 */
-	public static function createByMethod(scope, method:Function):Function {
+	public static function create(scope, method):Function {
 		// checks if cache is initialized
-		if (methodCache == null) methodCache = new HashMap();
-		return getDelegateFromCache(methodCache, scope, method);
+		if (scopeCache == null) scopeCache = new HashMap();
+		
+		// checks for delegate cache in the scope cache
+		var delegateCache:Map = scopeCache.get(scope);
+		if (delegateCache == null) {
+			delegateCache = new HashMap();
+			scopeCache.put(scope, delegateCache);
+		}
+		
+		// checks delegate cache for delegate
+		var delegate:Function = delegateCache.get(method);
+		if (delegate == null) {
+			delegate = Delegate.create(scope, method);
+			delegateCache.put(method, delegate);
+		}
+		
+		return delegate;
 	}
 	
 	/**
-	 * Looks if a delegate method for the given {@code scope} and {@code methodName} has
-	 * already been created by the {@code #createByName} method and returns it if found.
-	 * Otherwise a new delegate is created and put into the cache so that it can be reused
-	 * in the future. 
+	 * Removes delegate method for the given {@code scope} and {@code method} if it 
+	 * already has been created by the {@code #create} method from the cache and returns 
+	 * a reference to. {@code method} could be both method's name or reference 
+	 * to the method. 
 	 * 
-	 * @param scope the scope to invoke the method on
-	 * @param methodName the name of the method to invoke
-	 * @return a delegate that invokes the method with the given {@code methodName} on
-	 * the given {@code scope}
-	 * @see Delegate#createByName
+	 * @param scope the scope to invoke the given {@code method} on
+	 * @param method the reference to the method or method's name to invoke on the 
+	 * given {@code scope}
+	 * @return the method that delegates invocations to the given {@code method} on the
+	 * given {@code scope} stored in cache. If specified {@code method} for the given 
+	 * {@code scope} isn't found in cache returns {@code null}.
+	 * @see #create
 	 */
-	public static function createByName(scope, methodName:String):Function {
-		// checks if cache is initialized
-		if (nameCache == null) nameCache = new HashMap();
-		return getDelegateFromCache(nameCache, scope, methodName);
+	public static function remove(scope, method):Function {
+		if (scopeCache == null) return null;
+		
+		var delegateCache:Map = scopeCache.get(scope);
+		if (delegateCache == null) return null;
+		
+		return delegateCache.remove(method);
 	}
-
+	
 	/**
-	 * Searches in the specified cache for a delegate and creates a new one if not
-	 * found.
+	 * Removes all delegates from cache for the given {@code scope} regardless of method's 
+	 * type. If {@code scope} isn't specified clears all delegates for all scopes.
 	 * 
-	 * @param cache the cache to search in
-	 * @param scope the scope of the delegate to search for
-	 * @param method the method, either a concrete method or a method name, of the
-	 * delegate to search for
-	 * @return the found or created delegate
+	 * @param scope the scope which delegates must be removed from cache. If {@code scope}
+	 * isn't specified all delegates for all scopes will be removed.
 	 */
-	private static function getDelegateFromCache(cache:Map, scope, method):Function {
-		var result:Function;		
-		var delegates:Map;
-		// checks for scope in cache
-		if (cache.get(scope) != null) {
-			delegates = cache.get(scope); 
-			// checks for cached delegate
-			if (delegates.get(method) != null) {
-				result = delegates.get(method); 	
-			}
-			else {
-				result = Delegate.create(scope, method);
-				delegates.put(method, result);
-			}
+	public static function clear(scope):Void {
+		if (scope != null) {
+			Map(scopeCache.get(scope)).clear();	
+		} else { 
+			scopeCache.clear();
 		}
-		else {
-			// create delegate
-			result = Delegate.create(scope, method);
-			// create delegate's cache
-			delegates = new HashMap();
-			delegates.put(method, result);
-			cache.put(scope, delegates);
-		}
-		return result;
 	}
 	
 	/**
