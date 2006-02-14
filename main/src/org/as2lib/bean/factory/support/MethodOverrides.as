@@ -18,12 +18,27 @@ import org.as2lib.bean.factory.support.MethodOverride;
 import org.as2lib.core.BasicClass;
 
 /**
+ * {@code MethodOverrides} is a set of method overrides, determining which, if any,
+ * methods on a managed object the Spring IoC container will override at runtime.
+ * 
+ * <p>The currently supported method override variants are {@link LookupOverride}
+ * and {@link ReplaceOverride}.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.MethodOverrides extends BasicClass {
 	
+	/** All added {@code MethodOverride} instances. */
 	private var overrides:Array;
 	
+	/**
+	 * Constructs a new {@code MethodOverrides} instance.
+	 * 
+	 * <p>Supplying the source on construction is faster than using the
+	 * {@code addOverrides} method because duplicates must not be checked.
+	 * 
+	 * @param source the method overrides to add to this instance
+	 */
 	public function MethodOverrides(source:MethodOverrides) {
 		overrides = new Array();
 		if (source != null) {
@@ -35,7 +50,9 @@ class org.as2lib.bean.factory.support.MethodOverrides extends BasicClass {
 	}
 	
 	/**
-	 * Copy all given method overrides into this object.
+	 * Copies all given method overrides into this instance.
+	 * 
+	 * @param source the method overrides to copy
 	 */
 	public function addOverrides(source:MethodOverrides):Void {
 		if (source != null) {
@@ -47,7 +64,9 @@ class org.as2lib.bean.factory.support.MethodOverrides extends BasicClass {
 	}
 
 	/**
-	 * Add the given method override.
+	 * Adds the given method override.
+	 * 
+	 * @param override the method override to add
 	 */
 	public function addOverride(override:MethodOverride):Void {
 		for (var i:Number = 0; i < overrides.length; i++) {
@@ -60,9 +79,10 @@ class org.as2lib.bean.factory.support.MethodOverrides extends BasicClass {
 	}
 	
 	/**
-	 * Return the override for the given method, if any.
-	 * @param method method to check for overrides for
-	 * @return the method override, or <code>null</code> if none
+	 * Returns the override for the given method, if any.
+	 * 
+	 * @param method the method to check for overrides for
+	 * @return the method override, or {@code null} if none
 	 */
 	public function getOverride(methodName:String):MethodOverride {
 		for (var i:Number = 0; i < overrides.length; i++) {
@@ -75,19 +95,22 @@ class org.as2lib.bean.factory.support.MethodOverrides extends BasicClass {
 	}
 
 	/**
-	 * Return all method overrides contained by this object.
-	 * @return Set of MethodOverride objects
-	 * @see MethodOverride
+	 * Returns all added method overrides.
+	 * 
+	 * @return an array of {@ink MethodOverride} instances
 	 */
 	public function getOverrides(Void):Array {
 		return overrides;
 	}
 
 	/**
-	 * Return whether the set of method overrides is empty.
+	 * Returns whether this instance contains any method overrides.
+	 * 
+	 * @return {@code true} if this instance contains no method overrides else
+	 * {@code false}
 	 */
 	public function isEmpty(Void):Boolean {
 		return (overrides.length == 0);
 	}
-
+	
 }

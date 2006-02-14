@@ -19,14 +19,28 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Properties;
 
 /**
+ * {@code ManagedProperties} represents a properties that may be merged with a parent
+ * properties.
+ * 
+ * <p>Note that this {@code Properties} implementation implements only the {@code setProp},
+ * {@code getKeys} and {@code getValues} methods.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.ManagedProperties extends BasicClass implements Properties, Mergeable {
 	
+	/** All set keys. */
 	private var keys:Array;
+	
+	/** All set values. */
 	private var values:Array;
+	
+	/** Is mergin enabled? */
 	private var mergeEnabled:Boolean;
 	
+	/**
+	 * Constructs a new {@code ManagedProperties} instance.
+	 */
 	public function ManagedProperties(Void) {
 		keys = new Array();
 		values = new Array();
@@ -52,11 +66,11 @@ class org.as2lib.bean.factory.support.ManagedProperties extends BasicClass imple
 		keys.push(key);
 		values.push(value);
 	}
-
+	
 	public function getKeys(Void):Array {
 		return keys;
 	}
-
+	
 	public function getValues(Void):Array {
 		return values;
 	}
@@ -64,11 +78,11 @@ class org.as2lib.bean.factory.support.ManagedProperties extends BasicClass imple
 	public function getProp(key:String, defaultValue:String):String {
 		return null;
 	}
-
+	
 	public function putAll(source:Properties):Void {
 	}
-
+	
 	public function clear(Void):Void {
 	}
-
+	
 }

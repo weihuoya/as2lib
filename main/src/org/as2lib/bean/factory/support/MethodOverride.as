@@ -15,26 +15,46 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.except.AbstractOperationException;
 
 /**
+ * {@code MethodOverride} represents the override of a method on a managed bean by
+ * the IoC container.
+ * 
+ * <p>Note that the override mechanism is not intended as a generic means of inserting
+ * crosscutting code: use AOP for that.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.MethodOverride extends BasicClass {
 	
+	/** The name of the method to override. */
 	private var methodName:String;
 	
+	/**
+	 * Constructs a new {@code MethodOverride} instance.
+	 * 
+	 * @param methodName the name of the method to override
+	 */
 	private function MethodOverride(methodName:String) {
 		this.methodName = methodName;
 	}
 	
+	/**
+	 * Returns the name of the method to override.
+	 * 
+	 * @return the name of the method to override
+	 */
 	public function getMethodName(Void):String {
 		return methodName;
 	}
 	
+	/**
+	 * Checks whether the given method name matches the name of the method to override.
+	 * 
+	 * @return whether this override matches the given method name
+	 */
 	public function matches(methodName:String):Boolean {
-		throw new AbstractOperationException("This method is marked as abstract and must be overridden by sub-classes.", this, arguments);
-		return null;
+		return (this.methodName == methodName);
 	}
 	
 }

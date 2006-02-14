@@ -17,10 +17,20 @@
 import org.as2lib.bean.FatalBeanException;
 
 /**
+ * {@code BeanDefinitionValidationException} is thrown when the validation of a bean
+ * definition failed.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.BeanDefinitionValidationException extends FatalBeanException {
 	
+	/**
+	 * Constructs a new {@code BeanDefinitionValidationException} instance.
+	 * 
+	 * @param message the message describing this exception in detail
+	 * @param scope the {@code this}-scope of the method that throws this exception
+	 * @param args the arguments passed-to the method that throws this exception
+	 */
 	public function BeanDefinitionValidationException(message:String, scope, args:Array) {
 		super(message, scope, args);
 	}

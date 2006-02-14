@@ -20,22 +20,46 @@ import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.List;
 
 /**
+ * {@code ManagedList} represents a list that may include run-time bean references
+ * and whose elements are converted to a specific type if given.
+ * 
+ * <p>Note that only the methods {@code insertByValue} and {@code toArray} of the
+ * {@code List} interface are implemented by this list.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.ManagedList extends BasicClass implements List, Mergeable {
 	
+	/** The values added to this list. */
 	private var values:Array;
+	
+	/** The required element type. */
 	private var elementType:Function;
+	
+	/** Is merging enabled? */
 	private var mergeEnabled:Boolean;
 	
+	/**
+	 * Constructs a new {@code ManagedList} instance.
+	 */
 	public function ManagedList(Void) {
 		values = new Array();
 	}
 	
+	/**
+	 * Returns the required type of this list's elements.
+	 * 
+	 * @return the required element type
+	 */
 	public function getElementType(Void):Function {
 		return elementType;
 	}
 	
+	/**
+	 * Sets the required type of this list's elements.
+	 * 
+	 * @param elementType the required element type
+	 */
 	public function setElementType(elementType:Function):Void {
 		this.elementType = elementType;
 	}

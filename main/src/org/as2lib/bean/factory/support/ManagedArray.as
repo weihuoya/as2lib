@@ -17,20 +17,39 @@
 import org.as2lib.bean.Mergeable;
 
 /**
+ * {@code ManagedArray} represents an array which may include run-time bean references
+ * and whose elements are converted to a specific type if given.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.ManagedArray extends Array implements Mergeable {
 	
+	/** The required element type. */
 	private var elementType:Function;
+	
+	/** Is merging enabled? */
 	private var mergeEnabled:Boolean;
 	
+	/**
+	 * Constructs a new {@code ManagedArray} instance.
+	 */
 	public function ManagedArray(Void) {
 	}
 	
+	/**
+	 * Returns the required type of this array's elements.
+	 * 
+	 * @return the required element type
+	 */
 	public function getElementType(Void):Function {
 		return elementType;
 	}
 	
+	/**
+	 * Sets the required type of this array's elements.
+	 * 
+	 * @param elementType the required element type
+	 */
 	public function setElementType(elementType:Function):Void {
 		this.elementType = elementType;
 	}
