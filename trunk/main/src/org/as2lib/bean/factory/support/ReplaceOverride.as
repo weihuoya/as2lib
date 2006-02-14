@@ -17,23 +17,37 @@
 import org.as2lib.bean.factory.support.MethodOverride;
 
 /**
+ * {@code ReplaceOverride} is an extension of method override that represents an
+ * arbitrary override of a method by the IoC container.
+ * 
+ * <p>Every method can be overridden, irrespective of its parameters and return types.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.ReplaceOverride extends MethodOverride {
 	
+	/** The bean name of the method replacer. */
 	private var methodReplacerBeanName:String;
 	
+	/**
+	 * Constructs a new {@code ReplaceOverride} instance.
+	 * 
+	 * @param methodName the name of the method to replace
+	 * @param methodReplacerBeanName the bean name of the method replacer
+	 */
 	public function ReplaceOverride(methodName:String, methodReplacerBeanName:String) {
 		super(methodName);
 		this.methodReplacerBeanName = methodReplacerBeanName;
 	}
 	
+	/**
+	 * Returns the name of the bean implementing the {@link MethodReplacer} interface
+	 * to invoke instead of the replaced method.
+	 * 
+	 * @return the bean name of the method replacer
+	 */
 	public function getMethodReplacerBeanName(Void):String {
 		return methodReplacerBeanName;
-	}
-	
-	public function matches(methodName:String):Boolean {
-		return (this.methodName == methodName);
 	}
 	
 }

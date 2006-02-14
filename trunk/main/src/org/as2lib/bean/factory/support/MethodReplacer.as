@@ -17,16 +17,20 @@
 import org.as2lib.core.BasicInterface;
 
 /**
+ * {@code MethodReplacer} is to be implemented by classes that can reimplement any
+ * method on an IoC-managed object: the method injection form of dependency injection.
+ * 
  * @author Simon Wacker
  */
 interface org.as2lib.bean.factory.support.MethodReplacer extends BasicInterface {
 	
 	/**
-	 * Reimplement the given method.
-	 * @param obj the instance we're reimplementing the method for
-	 * @param method the method to reimplement
-	 * @param args arguments to the method
-	 * @return return value for the method
+	 * Reimplements the given method.
+	 * 
+	 * @param object the instance we are reimplementing the method for
+	 * @param methodName the name of the method to reimplement
+	 * @param args the arguments passed-to the reimplemented method on invocation
+	 * @return the return value of the reimplemented method
 	 */
 	public function reimplement(object, methodName:String, args:Array);
 	

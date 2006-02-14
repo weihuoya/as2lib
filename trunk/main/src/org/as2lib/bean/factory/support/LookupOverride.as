@@ -17,23 +17,37 @@
 import org.as2lib.bean.factory.support.MethodOverride;
 
 /**
+ * {@code LookupOverride} represents an override of a method that looks up a bean
+ * in the same IoC context.
+ * 
+ * <p>Methods eligible for lookup override should not have arguments.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.LookupOverride extends MethodOverride {
 	
+	/** The name of the bean to look up. */
 	private var beanName:String;
 	
+	/**
+	 * Constructs a new {@code LookupOverride} instance.
+	 * 
+	 * @param methodName the name of the method to override
+	 * @param beanName the name of the bean in the current bean factory or application
+	 * context that the overriden method should return
+	 */
 	public function LookupOverride(methodName:String, beanName:String) {
 		super(methodName);
 		this.beanName = beanName;
 	}
 	
+	/**
+	 * Returns the name of the bean that should be returned by this override.
+	 * 
+	 * @return the name of the bean that shall be looked-up
+	 */
 	public function getBeanName(Void):String {
 		return beanName;
-	}
-	
-	public function matches(methodName:String):Boolean {
-		return (this.methodName == methodName);
 	}
 	
 }

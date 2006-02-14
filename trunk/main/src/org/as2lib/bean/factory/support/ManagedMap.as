@@ -20,33 +20,71 @@ import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.Map;
 
 /**
+ * {@code ManagedMap} represents a map that may contain run-time bean references and
+ * whose keys and values are converted to specific types if given.
+ * 
+ * <p>Note that this {@code Map} implementation implements only the methods {@code put},
+ * {@code getKeys} and {@code getValues}.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.ManagedMap extends BasicClass implements Map, Mergeable {
 	
+	/** The put keys. */
 	private var keys:Array;
+	
+	/** The put values. */
 	private var values:Array;
+	
+	/** The required key type. */
 	private var keyType:Function;
+	
+	/** The required value type. */
 	private var valueType:Function;
+	
+	/** Is merging enabled for this map. */
 	private var mergeEnabled:Boolean;
 	
+	/**
+	 * Constructs a new {@code ManagedMap} instance.
+	 */
 	public function ManagedMap(Void) {
 		keys = new Array();
 		values = new Array();
 	}
 	
+	/**
+	 * Returns the required type of the keys.
+	 * 
+	 * @return the required key type
+	 */
 	public function getKeyType(Void):Function {
 		return keyType;
 	}
 	
+	/**
+	 * Sets the required key type.
+	 * 
+	 * @param keyType the required key type
+	 */
 	public function setKeyType(keyType:Function):Void {
 		this.keyType = keyType;
 	}
 	
+	/**
+	 * Returns the required type of the values.
+	 * 
+	 * @return the required value type
+	 */
 	public function getValueType(Void):Function {
 		return valueType;
 	}
 	
+	/**
+	 * Sets the required value type.
+	 * 
+	 * @param valueType the required value type
+	 */
 	public function setValueType(valueType:Function):Void {
 		this.valueType = valueType;
 	}
