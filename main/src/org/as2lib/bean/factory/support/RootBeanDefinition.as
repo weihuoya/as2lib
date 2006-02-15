@@ -24,10 +24,26 @@ import org.as2lib.bean.PropertyValues;
 import org.as2lib.env.overload.Overload;
 
 /**
+ * {@code RootBeanDefinition} is the most common type of bean definition. Root bean
+ * definitions do not derive from a parent bean definition, and usually have a class
+ * plus optionally constructor argument values and property values.
+ * 
+ * <p>Note that root bean definitions do not have to specify a bean class: This can be
+ * useful for deriving childs from such definitions, each with its own bean class but
+ * inheriting common property values and other settings.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDefinition implements BeanDefinition {
 	
+	/**
+	 * @overload RootBeanDefinitionByValues
+	 * @overload RootBeanDefinitionByClass
+	 * @overload RootBeanDefinitionByClassAndPropertyValuesAndSingleton
+	 * @overload RootBeanDefinitionByClassAndSingleton
+	 * @overload RootBeanDefinitionByClassAndAutowireAndDependency
+	 * @overload RootBeanDefinitionBySource
+	 */
 	public function RootBeanDefinition() {
 		var o:Overload = new Overload(this);
 		o.addHandler([], RootBeanDefinitionByValues);
@@ -41,15 +57,26 @@ class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDef
 		o.forward(arguments);
 	}
 	
+	/**
+	 * Constructs a new {@code RootBeanDefinition} with the given constructor argument
+	 * and property values.
+	 * 
+	 * @param constructorArgumentValues the constructor argument values
+	 * @param propertyValues the property values
+	 */
 	private function RootBeanDefinitionByValues(constructorArgumentValues:ConstructorArgumentValues, propertyValues:PropertyValues):Void {
 		setConstructorArgumentValues(constructorArgumentValues);
 		setPropertyValues(propertyValues);
 	}
 	
-	private function RootBeanDefinitionByClass(beanClass:Function):Void {
-		setBeanClass(beanClass);
-	}
-	
+	/**
+	 * Constructs a new {@code RootBeanDefinition} with the given bean class, property
+	 * values and singleton flag.
+	 * 
+	 * @param beanClass the class of the bean
+	 * @param propertyValues the property values
+	 * @param singleton whether the defined bean is a singleton
+	 */
 	private function RootBeanDefinitionByClassAndPropertyValuesAndSingleton(beanClass:Function, propertyValues:PropertyValues, singleton:Boolean):Void {
 		setBeanClass(beanClass);
 		if (propertyValues != null) {
@@ -60,10 +87,25 @@ class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDef
 		}
 	}
 	
+	/**
+	 * Constructs a new {@code RootBeanDefinition} with the given bean class and
+	 * singleton flag.
+	 * 
+	 * @param beanClass the class of the bean
+	 * @param singleton whether the defined bean is a singleton
+	 */
 	private function RootBeanDefinitionByClassAndSingleton(beanClass:Function, singleton:Boolean):Void {
 		RootBeanDefinitionByClassAndPropertyValuesAndSingleton(beanClass, null, singleton);
 	}
 	
+	/**
+	 * Constructs a new {@code RootBeanDefinition} with the given bean class, autowire
+	 * mode and dependency check code.
+	 * 
+	 * @param beanClass the class of the bean
+	 * @param autowireMode the autowire mode
+	 * @param dependencyCheck the dependency check code
+	 */
 	private function RootBeanDefinitionByClassAndAutowireAndDependency(beanClass:Function, autowireMode:Number, dependencyCheck:Boolean):Void {
 		setBeanClass(beanClass);
 		setAutowireMode(autowireMode);
@@ -72,6 +114,12 @@ class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDef
 		}
 	}
 	
+	/**
+	 * Constructs a new {@code RootBeanDefinition} by copying the given source bean
+	 * definition.
+	 * 
+	 * @param source the bean definition to copy
+	 */
 	private function RootBeanDefinitionBySource(source:AbstractBeanDefinition):Void {
 		if (source.hasBeanClass()) {
 			setBeanClass(source.getBeanClass());
@@ -106,5 +154,5 @@ class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDef
 	public function toString():String {
 		return "Root bean: " + super.toString();
 	}
-
+	
 }
