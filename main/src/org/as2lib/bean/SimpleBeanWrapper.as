@@ -68,6 +68,14 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	private var customConverters:Map;
 	private var nestedBeanWrappers:Map;
 	
+	/**
+	 * Constructs a new {@code SimpleBeanWrapper} instance.
+	 * 
+	 * @param wrappedBean the bean to wrap
+	 * @param nestedPath the nested path of the bean if it is itself the value of
+	 * another bean
+	 * @param rootBean the root bean from which the path started
+	 */
 	public function SimpleBeanWrapper(wrappedBean, nestedPath:String, rootBean) {
 		this.wrappedBean = wrappedBean;
 		this.nestedPath = (nestedPath != null ? nestedPath : "");
@@ -116,6 +124,15 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 		return (findMethodName(GET_PROPERTY_PREFIXES, tokens.actualName) != null);
 	}
 	
+	/**
+	 * Finds a method name that exists on the wrapped bean.
+	 * 
+	 * @param prefixes the method name prefixes to combine with the property name to
+	 * get a possible method name
+	 * @param actualPropertyName the property name to combine with the prefixes
+	 * @return the first prefix-property-name combination that exists on the wrapped
+	 * bean or {@code null} if none
+	 */
 	private function findMethodName(prefixes:Array, actualPropertyName:String):String {
 		actualPropertyName = TextUtil.ucFirst(actualPropertyName);
 		for (var i:Number = 0; i < prefixes.length; i++) {
@@ -132,15 +149,22 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	}
 	
 	/**
-	 * Get the last component of the path. Also works if not nested.
-	 * @param bw BeanWrapper to work on
-	 * @param nestedPath property path we know is nested
-	 * @return last component of the path (the property on the target bean)
+	 * Gets the last component of the path.
+	 * 
+	 * @param nestedPath the property path we know is nested
+	 * @return the last component of the path (the property on the target bean)
 	 */
 	private function getFinalPath(nestedPath:String):String {
 		return nestedPath.substring(getNestedPropertySeparatorIndex(nestedPath, true) + 1);
 	}
 	
+	/**
+	 * Gets the bean wrapper for the given property path. This bean wrapper is returned
+	 * if the given property path is not a nested path.
+	 * 
+	 * @param propertyPath the property path to get a bean wrapper for
+	 * @return the bean wrapper for the property path
+	 */
 	private function getBeanWrapperForPropertyPath(propertyPath:String):BeanWrapper {
 		var position:Number = getNestedPropertySeparatorIndex(propertyPath);
 		// handle nested properties recursively
@@ -154,12 +178,14 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	}
 	
 	/**
-	 * Retrieve a BeanWrapper for the given nested property.
-	 * Create a new one if not found in the cache.
-	 * <p>Note: Caching nested BeanWrappers is necessary now,
-	 * to keep registered custom editors for nested properties.
-	 * @param nestedProperty property to create the BeanWrapper for
-	 * @return the BeanWrapper instance, either cached or newly created
+	 * Retrieves a bean wrapper for the given nested property. Creates a new one
+	 * if not found in the cache.
+	 * 
+	 * <p>Note: Caching nested bean wrappers is necessary now, to keep registered
+	 * property value converters for nested properties.
+	 * 
+	 * @param nestedProperty the property to create the bewn wrapper for
+	 * @return the bean wrapper, either cached or newly created
 	 */
 	private function getNestedBeanWrapper(nestedProperty:String):SimpleBeanWrapper {
 		if (nestedBeanWrappers == null) {
@@ -184,11 +210,13 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	}
 	
 	/**
-	 * Copy the custom editors registered in this instance to the given target registry.
+	 * Copies the property value converters registered in this instance to the given
+	 * target registry.
+	 * 
 	 * @param target the target registry to copy to
 	 * @param nestedProperty the nested property path of the target registry, if any.
-	 * If this is non-null, only editors registered for a path below this nested property
-	 * will be copied.
+	 * If this is non-{@code null}, only converters registered for a path below this
+	 * nested property will be copied
 	 */
 	private function copyCustomPropertyValueConverters(target:BeanWrapper, nestedProperty:String):Void {
 		var actualPropertyName:String = (nestedProperty != null ? getPropertyName(nestedProperty) : null);
@@ -219,7 +247,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	}
 	
 	/**
-	 * Return the actual property name for the given property path.
+	 * Returns the actual property name for the given property path.
+	 * 
 	 * @param propertyPath the property path to determine the property name
 	 * for (can include property keys, for example for specifying a map entry)
 	 * @return the actual property name, without any key elements
@@ -230,7 +259,10 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	}
 	
 	/**
-	 * Parse the given property name into the corresponding property name tokens.
+	 * Parses the given property name into the corresponding property name tokens. The
+	 * returned array is an associative array with the variables {@code actualName},
+	 * {@code canonicalName} and {@code keys}.
+	 * 
 	 * @param propertyName the property name to parse
 	 * @return representation of the parsed property tokens
 	 */
@@ -271,13 +303,13 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	}
 	
 	/**
-	 * Convenience method to return a String array as a delimited (e.g. CSV)
-	 * String. E.g. useful for toString() implementations.
-	 * @param arr array to display. Elements may be of any type (toString
-	 * will be called on each element).
-	 * @param delim delimiter to use (probably a ",")
+	 * Returns a string array as a delimited string.
+	 * 
+	 * @param array array to display. Elements may be of any type (toString will
+	 * be called on each element).
+	 * @param delimiter the delimiter to use (probably a ",")
 	 */
-	public function arrayToDelimitedString(array:Array, delimiter:String) {
+	public function arrayToDelimitedString(array:Array, delimiter:String):String {
 		if (array == null) {
 			return "";
 		}
