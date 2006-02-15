@@ -38,6 +38,8 @@ interface org.as2lib.bean.factory.config.BeanDefinition extends BasicInterface {
 	 * Returns the bean class of this bean.
 	 * 
 	 * @return the bean class
+	 * @throws IllegalStateException if the bean definition does not carry a resolved
+	 * bean class
 	 */
 	public function getBeanClass(Void):Function;
 	
