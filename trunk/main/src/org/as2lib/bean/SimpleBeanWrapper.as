@@ -61,11 +61,22 @@ import org.as2lib.util.TextUtil;
  */
 class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements BeanWrapper {
 	
+	/** The wrapped bean. */
 	private var wrappedBean;
+	
+	/** The nested property path. */
 	private var nestedPath:String;
+	
+	/** The root bean. */
 	private var rootBean;
+	
+	/** The default property value converters. */
 	private var defaultConverters:Map;
+	
+	/** The custom property value converters. */
 	private var customConverters:Map;
+	
+	/** The cached nested bean wrappers. */
 	private var nestedBeanWrappers:Map;
 	
 	/**
@@ -323,6 +334,14 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 		return result;
 	}
 	
+	/**
+	 * Determines the first (or last) nested property separator in the given property
+	 * path, ignoring dots in keys (like "map[my.key]").
+	 * 
+	 * @param propertyPath the property path to check
+	 * @param last whether to return the last separator rather than the first
+	 * @return the index of the nested property separator, or {@code -1} if none
+	 */
 	private function getNestedPropertySeparatorIndex(propertyPath:String, last:Boolean):Number {
 		if (last == null) last = false;
 		var inKey:Boolean = false;
@@ -589,6 +608,14 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 		return result;
 	}
 	
+	/**
+	 * Finds the property value converter for the given required type and property name
+	 * in the given converter map.
+	 * 
+	 * @param requiredType the required type to find a converter for
+	 * @param propertyName the specific property name to find a converter for
+	 * @param converters the map of property value converters to search in
+	 */
 	private function findPropertyValueConverterInMap(requiredType:Function, propertyName:String, converters:Map):PropertyValueConverter {
 		if (converters != null) {
 			if (propertyName != null) {
