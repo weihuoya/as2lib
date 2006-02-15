@@ -21,6 +21,21 @@ import org.as2lib.bean.factory.support.BeanDefinitionValidationException;
 import org.as2lib.bean.PropertyValues;
 
 /**
+ * {@code ChildBeanDefinition} is a bean definition for beans which inherit settings
+ * from their parent.
+ * 
+ * <p>Will use the bean class of the parent if none specified, but can also override it.
+ * In the latter case, the child bean class must be compatible with the parent, i.e.
+ * accept the parent's property values and constructor argument values, if any.
+ * 
+ * <p>A child bean definition will inherit constructor argument values, property values
+ * and method overrides from the parent, with the option to add new values. If init
+ * method, destroy method and/or static factory method are specified, they will override
+ * the corresponding parent settings.
+ * 
+ * <p>The remaining settings will always be taken from the child definition: depends on,
+ * autowire mode, dependency check, singleton, lazy init.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.ChildBeanDefinition extends AbstractBeanDefinition implements BeanDefinition {
@@ -28,13 +43,22 @@ class org.as2lib.bean.factory.support.ChildBeanDefinition extends AbstractBeanDe
 	/** The name of the parent bean definition. */
 	private var parentName:String;
 	
+	/**
+	 * Constructs a new {@code ChildBeanDefinition} instance.
+	 * 
+	 * @param parentName the name of the parent bean definition
+	 * @param constructorArgumentValues the values of the constructor arguments
+	 * @param propertyValues the values of the properties
+	 */
 	public function ChildBeanDefinition(parentName:String, constructorArgumentValues:ConstructorArgumentValues, propertyValues:PropertyValues) {
 		super(constructorArgumentValues, propertyValues);
 		this.parentName = parentName;
 	}
 	
 	/**
-	 * Returns the name of the parent definition of this bean definition.
+	 * Returns the name of the parent bean definition of this bean definition.
+	 * 
+	 * @return the name of the parent bean definition
 	 */
 	public function getParentName(Void):String {
 		return parentName;

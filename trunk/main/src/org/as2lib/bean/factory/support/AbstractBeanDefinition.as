@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.bean.factory.config.ConstructorArgumentValues;
+import org.as2lib.bean.factory.support.AbstractBeanFactory;
 import org.as2lib.bean.factory.support.BeanDefinitionValidationException;
 import org.as2lib.bean.factory.support.MethodOverride;
 import org.as2lib.bean.factory.support.MethodOverrides;
@@ -24,84 +25,117 @@ import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
+ * {@code AbstractBeanDefinition} is the base class for bean definition objects,
+ * factoring out common properties of {@link RootBeanDefinition} and
+ * {@link ChildBeanDefinition}.
+ * 
+ * <p>The autowire constants match the ones defined in the {@link AbstractBeanFactory}
+ * class.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass {
 	
 	/**
 	 * Constant that indicates no autowiring at all.
+	 * 
 	 * @see #setAutowireMode
 	 */
-	public static var AUTOWIRE_NO:Number = 0;
-
+	public static var AUTOWIRE_NO:Number = AbstractBeanFactory.AUTOWIRE_NO;
+	
 	/**
 	 * Constant that indicates autowiring bean properties by name.
+	 * 
 	 * @see #setAutowireMode
 	 */
-	public static var AUTOWIRE_BY_NAME:Number = 1;
+	public static var AUTOWIRE_BY_NAME:Number = AbstractBeanFactory.AUTOWIRE_BY_NAME;
 	
 	/**
 	 * Constant that indicates no dependency check at all.
+	 * 
 	 * @see #setDependencyCheck
 	 */
 	public static var DEPENDENCY_CHECK_NONE:Number = 0;
 	
 	/**
 	 * Constant that indicates dependency checking for object references.
+	 * 
 	 * @see #setDependencyCheck
 	 */
 	public static var DEPENDENCY_CHECK_OBJECTS:Number = 1;
 	
 	/**
 	 * Constant that indicates dependency checking for "simple" properties.
+	 * 
 	 * @see #setDependencyCheck
-	 * @see org.springframework.beans.BeanUtils#isSimpleProperty
 	 */
 	public static var DEPENDENCY_CHECK_SIMPLE:Number = 2;
 	
 	/**
-	 * Constant that indicates dependency checking for all properties
-	 * (object references as well as "simple" properties).
+	 * Constant that indicates dependency checking for all properties (object
+	 * references as well as "simple" properties).
+	 * 
 	 * @see #setDependencyCheck
 	 */
 	public static var DEPENDENCY_CHECK_ALL:Number = 3;
 	
+	/** The class of the bean. */
 	private var beanClass:Function;
 	
+	/** The name of the bean class. */
 	private var beanClassName:String;
 	
+	/** Is this bean abstract? */
 	private var abstract:Boolean;
-
+	
+	/** Is this bean a singleton? */
 	private var singleton:Boolean;
-
+	
+	/** Is this bean lazily initialized? */
 	private var lazyInit:Boolean;
 	
+	/** The autowire mode. */
 	private var autowireMode:Number;
-
+	
+	/** The dependency check code. */
 	private var dependencyCheck:Number;
-
+	
+	/** The names of the beans this bean depends on. */
 	private var dependsOn:Array;
-
+	
+	/** The argument values of the constructor used when instantiating this bean. */
 	private var constructorArgumentValues:ConstructorArgumentValues;
-
+	
+	/** The property values of this bean. */
 	private var propertyValues:PropertyValues;
-
+	
+	/** The method overrides of this bean. */
 	private var methodOverrides:MethodOverrides;
-
+	
+	/** The name of the factory bean. */
 	private var factoryBeanName:String;
-
+	
+	/** The name of the factory method. */
 	private var factoryMethodName:String;
-
+	
+	/** The name of the init method. */
 	private var initMethodName:String;
-
+	
+	/** The name of the destroy method. */
 	private var destroyMethodName:String;
-
+	
+	/** Is the execution of the init method enforced? */
 	private var enforceInitMethod:Boolean;
-
+	
+	/** Is the execution of the destroy method enforced? */
 	private var enforceDestroyMethod:Boolean;
 	
 	/**
 	 * Constructs a new {@code AbstractBeanDefinition} instance.
+	 * 
+	 * <p>This bean definition is by default a singleton, but it is not abstract,
+	 * it is not lazily initialized, it enforces init and destroy methods, it does
+	 * not check dependencies and it does no autowiring.
 	 * 
 	 * @param constructorArgumentValues the constructor argument values
 	 * @param propertyValues the property values
@@ -132,6 +166,9 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	 *   <li>Will always take dependsOn, autowireMode, dependencyCheck from the
 	 *       given bean definition.
 	 * </ul>
+	 * 
+	 * @param beanDefinition the bean definition holding settings to override in this
+	 * bean definition
 	 */
 	public function override(beanDefinition:AbstractBeanDefinition):Void {
 		if (beanDefinition.hasBeanClass()) {
@@ -162,26 +199,19 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		}
 	}
 	
-	/**
-	 * Returns whether this definition specifies a bean class.
-	 */
 	public function hasBeanClass(Void):Boolean {
 		return (beanClass != null);
 	}
 	
 	/**
 	 * Specifies the class for this bean.
+	 * 
+	 * @param beanClass the class of this bean
 	 */
 	public function setBeanClass(beanClass:Function):Void {
 		this.beanClass = beanClass;
 	}
 	
-	/**
-	 * Returns the class of the wrapped bean.
-	 * 
-	 * @throws IllegalStateException if the bean definition does not carry a resolved
-	 * bean class
-	 */
 	public function getBeanClass(Void):Function {
 		if (!hasBeanClass()) {
 			throw new IllegalStateException("Bean definition does not carry a bean class.", this, arguments);
@@ -198,15 +228,14 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	}
 	
 	/**
-	 * Specifies the class name for this bean.
+	 * Sets the class name for the defined bean.
+	 * 
+	 * @param beanClassName the class name for the defined bean
 	 */
 	public function setBeanClassName(beanClassName:String):Void {
 		this.beanClassName = beanClassName;
 	}
-
-	/**
-	 * Returns the class name of the wrapped bean.
-	 */
+	
 	public function getBeanClassName(Void):String {
 		if (beanClassName == null && beanClass != null) {
 			beanClassName = ReflectUtil.getTypeNameForType(beanClass);
@@ -218,85 +247,74 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	 * Sets if this bean is "abstract", i.e. not meant to be instantiated itself but
 	 * rather just serving as parent for concrete child bean definitions.
 	 * 
-	 * <p>Default is "false". Specify true to tell the bean factory to not try to
-	 * instantiate that particular bean in any case.
+	 * <p>Default is {@code false}. Specify {@code true} to tell the bean factory
+	 * to not try to instantiate this particular bean in any case.
+	 * 
+	 * @param abstract whether this bean definition is abstract
 	 */
 	public function setAbstract(abstract:Boolean):Void {
 		this.abstract = abstract;
 	}
-
-	/**
-	 * Return whether this bean is "abstract", i.e. not meant to be instantiated
-	 * itself but rather just serving as parent for concrete child bean definitions.
-	 */
+	
 	public function isAbstract(Void):Boolean {
 		return abstract;
 	}
 
 	/**
-	 * Set if this a <b>Singleton</b>, with a single, shared instance returned
-	 * on all calls. If false, the BeanFactory will apply the <b>Prototype</b>
+	 * Sets if this is a <b>singleton</b>, with a single, shared instance returned
+	 * on all calls. If {@code false}, the bean factory will apply the <b>prototype</b>
 	 * design pattern, with each caller requesting an instance getting an
-	 * independent instance. How this is defined will depend on the BeanFactory.
-	 * <p>"Singletons" are the commoner type, so the default is true.
+	 * independent instance. How this is defined will depend on the bean factory.
+	 * <p>"Singletons" are the more common type, so the default is {@code true}.
+	 * 
+	 * @param sngleton whether the defined bean is a singleton
 	 */
 	public function setSingleton(singleton:Boolean):Void {
 		this.singleton = singleton;
 	}
-
-	/**
-	 * Return whether this a <b>Singleton</b>, with a single, shared instance
-	 * returned on all calls.
-	 */
+	
 	public function isSingleton(Void):Boolean {
 		return singleton;
 	}
 
 	/**
-	 * Set whether this bean should be lazily initialized.
-	 * Only applicable to a singleton bean.
-	 * If false, it will get instantiated on startup by bean factories
-	 * that perform eager initialization of singletons.
+	 * Sets whether this bean shall be lazily initialized. Only applicable to a
+	 * singleton bean. If {@code false}, it will get instantiated on startup by
+	 * bean factories that perform eager initialization of singletons.
+	 * 
+	 * @param lazyInit whether to init singletons lazily
 	 */
 	public function setLazyInit(lazyInit:Boolean):Void {
 		this.lazyInit = lazyInit;
 	}
-
-	/**
-	 * Return whether this bean should be lazily initialized, i.e. not
-	 * eagerly instantiated on startup. Only applicable to a singleton bean.
-	 */
+	
 	public function isLazyInit(Void):Boolean {
 		return lazyInit;
 	}
 	
 	/**
-	 * Set the autowire mode. This determines whether any automagical detection
-	 * and setting of bean references will happen. Default is AUTOWIRE_NO,
-	 * which means there's no autowire.
-	 * @param autowireMode the autowire mode to set.
-	 * Must be one of the constants defined in this class.
+	 * Sets the autowire mode. This determines whether any automagical detection
+	 * and setting of bean references will happen. Default is {@code AUTOWIRE_NO},
+	 * which means there is no autowiring.
+	 * 
+	 * @param autowireMode the autowire mode to set; must be one of the constants
+	 * defined in this class
 	 * @see #AUTOWIRE_NO
 	 * @see #AUTOWIRE_BY_NAME
-	 * @see #AUTOWIRE_BY_TYPE
-	 * @see #AUTOWIRE_CONSTRUCTOR
-	 * @see #AUTOWIRE_AUTODETECT
 	 */
 	public function setAutowireMode(autowireMode:Number):Void {
 		this.autowireMode = autowireMode;
 	}
 	
-	/**
-	 * Return the autowire mode as specified in the bean definition.
-	 */
 	public function getAutowireMode(Void):Number {
 		return autowireMode;
 	}
 	
 	/**
-	 * Set the dependency check code.
-	 * @param dependencyCheck the code to set.
-	 * Must be one of the four constants defined in this class.
+	 * Sets the dependency check code.
+	 * 
+	 * @param dependencyCheck the code to set. Must be one of the constants defined
+	 * in this class.
 	 * @see #DEPENDENCY_CHECK_NONE
 	 * @see #DEPENDENCY_CHECK_OBJECTS
 	 * @see #DEPENDENCY_CHECK_SIMPLE
@@ -305,63 +323,55 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	public function setDependencyCheck(dependencyCheck:Number):Void {
 		this.dependencyCheck = dependencyCheck;
 	}
-
-	/**
-	 * Return the dependency check code.
-	 */
+	
 	public function getDependencyCheck(Void):Number {
 		return dependencyCheck;
 	}
-
+	
 	/**
-	 * Set the names of the beans that this bean depends on being initialized.
+	 * Sets the names of the beans that this bean depends on being initialized.
 	 * The bean factory will guarantee that these beans get initialized before.
+	 * 
 	 * <p>Note that dependencies are normally expressed through bean properties or
 	 * constructor arguments. This property should just be necessary for other kinds
-	 * of dependencies like statics (*ugh*) or database preparation on startup.
+	 * of dependencies like statics (*ugh*).
+	 * 
+	 * @param dependsOn the names of the beans this bean depends on
 	 */
 	public function setDependsOn(dependsOn:Array):Void {
 		this.dependsOn = dependsOn;
 	}
-
-	/**
-	 * Return the bean names that this bean depends on.
-	 */
+	
 	public function getDependsOn(Void):Array {
 		return dependsOn;
 	}
 	
 	/**
-	 * Specify constructor argument values for this bean.
+	 * Specifies constructor argument values for this bean.
+	 * 
+	 * @param constructorArgumentValues the constructor argument values for this bean
 	 */
 	public function setConstructorArgumentValues(constructorArgumentValues:ConstructorArgumentValues):Void {
 		this.constructorArgumentValues = (constructorArgumentValues != null) ? constructorArgumentValues : new ConstructorArgumentValues();
 	}
 	
-	/**
-	 * Return constructor argument values for this bean, if any.
-	 */
 	public function getConstructorArgumentValues(Void):ConstructorArgumentValues {
 		return constructorArgumentValues;
 	}
-
-	/**
-	 * Return if there are constructor argument values defined for this bean.
-	 */
+	
 	public function hasConstructorArgumentValues(Void):Boolean {
 		return (constructorArgumentValues != null && !constructorArgumentValues.isEmpty());
 	}
 
 	/**
-	 * Specify property values for this bean, if any.
+	 * Specifies property values for this bean, if any.
+	 * 
+	 * @param propertyValues the property values to specify
 	 */
 	public function setPropertyValues(propertyValues:PropertyValues):Void {
 		this.propertyValues = (propertyValues != null) ? propertyValues : new PropertyValues();
 	}
-
-	/**
-	 * Return property values for this bean, if any.
-	 */
+	
 	public function getPropertyValues(Void):PropertyValues {
 		return propertyValues;
 	}
@@ -371,124 +381,108 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	}
 
 	/**
-	 * Specify method overrides for the bean, if any.
+	 * Specifies method overrides for this bean, if any.
+	 * 
+	 * @param methodOverrides the method overrides
 	 */
 	public function setMethodOverrides(methodOverrides:MethodOverrides):Void {
 		this.methodOverrides = (methodOverrides != null) ? methodOverrides : new MethodOverrides();
 	}
-
-	/**
-	 * Return information about methods to be overridden by the IoC
-	 * container. This will be empty if there are no method overrides.
-	 * Never returns null.
-	 */
+	
 	public function getMethodOverrides(Void):MethodOverrides {
 		return methodOverrides;
 	}
-
-
+	
 	/**
-	 * Specify the factory bean to use, if any.
+	 * Specifies the factory bean to use, if any.
+	 * 
+	 * @param factoryBeanName the factory bean to use
 	 */
 	public function setFactoryBeanName(factoryBeanName:String):Void {
 		this.factoryBeanName = factoryBeanName;
 	}
-
-	/**
-	 * Returns the factory bean name, if any.
-	 */
+	
 	public function getFactoryBeanName(Void):String {
 		return factoryBeanName;
 	}
-
+	
 	/**
-	 * Specify a factory method, if any. This method will be invoked with
+	 * Specifies a factory method, if any. This method will be invoked with
 	 * constructor arguments, or with no arguments if none are specified.
 	 * The static method will be invoked on the specifed factory bean,
 	 * if any, or on the local bean class else.
-	 * @param factoryMethodName static factory method name, or <code>null</code> if
+	 * 
+	 * @param factoryMethodName static factory method name, or {@code null} if
 	 * normal constructor creation should be used
 	 * @see #getBeanClass
+	 * @see getFactoryBeanName
 	 */
 	public function setFactoryMethodName(factoryMethodName:String):Void {
 		this.factoryMethodName = factoryMethodName;
 	}
-
-	/**
-	 * Return a factory method, if any.
-	 */
+	
 	public function getFactoryMethodName(Void):String {
 		return factoryMethodName;
 	}
-
+	
 	/**
-	 * Set the name of the initializer method. The default is null
+	 * Sets the name of the initializer method. The default is {@code null}
 	 * in which case there is no initializer method.
+	 * 
+	 * @param initMethodName the name of the init method
 	 */
 	public function setInitMethodName(initMethodName:String):Void {
 		this.initMethodName = initMethodName;
 	}
-
-	/**
-	 * Return the name of the initializer method.
-	 */
+	
 	public function getInitMethodName(Void):String {
 		return initMethodName;
 	}
-
+	
 	/**
 	 * Specifies whether or not the configured init method is the default.
-	 * Default value is <code>false</code>.
+	 * Default value is {@code true}.
+	 * 
+	 * @param enforceInitMethod whether to enforce init method execution
 	 * @see #setInitMethodName
 	 */
 	public function setEnforceInitMethod(enforceInitMethod:Boolean):Void {
 		this.enforceInitMethod = enforceInitMethod;
 	}
-
-	/**
-	 * Indicates whether the configured init method is the default.
-	 * @see #getInitMethodName()
-	 */
+	
 	public function isEnforceInitMethod(Void):Boolean {
 		return enforceInitMethod;
 	}
-
+	
 	/**
-	 * Set the name of the destroy method. The default is null
+	 * Set the name of the destroy method. The default is {@code null}
 	 * in which case there is no destroy method.
+	 * 
+	 * @param destroyMethodName the name of the destroy method
 	 */
 	public function setDestroyMethodName(destroyMethodName:String):Void {
 		this.destroyMethodName = destroyMethodName;
 	}
-
-	/**
-	 * Return the name of the destroy method.
-	 */
+	
 	public function getDestroyMethodName(Void):String {
 		return destroyMethodName;
 	}
-
+	
 	/**
 	 * Specifies whether or not the configured destroy method is the default.
-	 * Default value is <code>false</code>.
+	 * Default value is {@code true}.
+	 * 
+	 * @param enforceDestroyMethod whether to enforce destroy method execution
 	 * @see #setDestroyMethodName
 	 */
 	public function setEnforceDestroyMethod(enforceDestroyMethod:Boolean):Void {
 		this.enforceDestroyMethod = enforceDestroyMethod;
 	}
-
-	/**
-	 * Indicates whether the configured destroy method is the default.
-	 * @see #getDestroyMethodName
-	 */
+	
 	public function isEnforceDestroyMethod(Void):Boolean {
 		return enforceDestroyMethod;
 	}
 	
-	/**
-	 * Validate this bean definition.
-	 * @throws BeanDefinitionValidationException in case of validation failure
-	 */
 	public function validate(Void):Void {
 		if (lazyInit && !singleton) {
 			throw new BeanDefinitionValidationException("Lazy initialization is only applicable to singleton beans.", this, arguments);
@@ -496,7 +490,7 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		if (!getMethodOverrides().isEmpty() && getFactoryMethodName() != null) {
 			throw new BeanDefinitionValidationException(
 					"Cannot combine static factory method with method overrides: " +
-					"the static factory method must create the instance", this, arguments);
+					"the static factory method must create the instance.", this, arguments);
 		}
 		if (hasBeanClass()) {
 			// Check that lookup methods exists
@@ -508,9 +502,10 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	}
 	
 	/**
-	 * Validate the given method override.
-	 * Checks for existence of a method with the specified name.
-	 * @param mo the MethodOverride object to validate
+	 * Validates the given method override by chhecking for existence of a method
+	 * with the specified name.
+	 * 
+	 * @param methodOverride the method override to validate
 	 * @throws BeanDefinitionValidationException in case of validation failure
 	 */
 	private function validateMethodOverride(methodOverride:MethodOverride):Void {
@@ -521,6 +516,11 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		}
 	}
 	
+	/**
+	 * Returns the string representation of this instance.
+	 * 
+	 * @return this instance's string representation
+	 */
 	public function toString():String {
 		var result:String = "class [";
 		result += getBeanClassName() + "]";
