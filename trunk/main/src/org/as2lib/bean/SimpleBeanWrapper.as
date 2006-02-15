@@ -49,6 +49,14 @@ import org.as2lib.util.StringUtil;
 import org.as2lib.util.TextUtil;
 
 /**
+ * {@code SimpleBeanWrapper} is the default implementation of the {@code BeanWrapper}
+ * interface that should be sufficient for all typical use cases. It caches
+ * introspection results for efficiency.
+ * 
+ * <p>Note: Auto-registers default property value converters from the {@code org.as2lib.bean.converter}
+ * Applications can invoke the {@link #registerPropertyValueConverter} method to
+ * register a converter for a particular instance.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements BeanWrapper {
