@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
+import org.as2lib.bean.factory.HierarchicalBeanFactory;
 import org.as2lib.data.holder.Map;
-import org.as2lib.bean.factory.BeanFactory;
 
 /**
- * {@code ListableBeanFactory} is an extension of the {@code BeanFactory} interface
- * to be implemented by bean factories that can enumerate all their bean instances,
- * rather than attempting bean lookup by name one by one as requested by clients.
- * Bean factories that preload all their beans (for example, DOM-based XML factories)
- * may implement this interface.
+ * {@code ListableBeanFactory} is an extension of the {@code HierarchicalBeanFactory}
+ * interface to be implemented by bean factories that can enumerate all their bean
+ * instances, rather than attempting bean lookup by name one by one as requested by
+ * clients. Bean factories that preload all their beans (for example, DOM-based XML
+ * factories) may implement this interface.
  * 
  * <p>The methods in this interface will just respect bean definitions. They will
  * ignore any singleton beans that have been registered by other means like through
@@ -37,7 +37,7 @@ import org.as2lib.bean.factory.BeanFactory;
  * 
  * @author Simon Wacker
  */
-interface org.as2lib.bean.factory.ListableBeanFactory extends BeanFactory {
+interface org.as2lib.bean.factory.ListableBeanFactory extends HierarchicalBeanFactory {
 	
 	/**
 	 * Checks if this bean factory contains a bean definition with the given name.
