@@ -19,8 +19,8 @@ import org.as2lib.core.BasicInterface;
 /**
  * {@code BeanFactory} is the root interface for accessing the bean container. This
  * is the basic client view of a bean container; further interfaces such as
- * {@link ListableBeanFactory} and {@link ConfigurableBeanFactory} are available for
- * specific purposes.
+ * {@link ListableBeanFactory} and {@link ConfigurableListableBeanFactory} are
+ * available for specific purposes.
  * 
  * <p>This interface is implemented by classes that hold a number of bean definitions,
  * each uniquely identified by a name. Depending on the bean definition, the factory

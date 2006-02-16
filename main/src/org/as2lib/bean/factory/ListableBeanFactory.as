@@ -26,7 +26,7 @@ import org.as2lib.data.holder.Map;
  * 
  * <p>The methods in this interface will just respect bean definitions. They will
  * ignore any singleton beans that have been registered by other means like through
- * the {@link ConfigurableBeanFactory#registerSingleton} method, with the exception
+ * the {@link ConfigurableListableBeanFactory#registerSingleton} method, with the exception
  * of {@link #getBeansOfType} which will match such manually registered singletons too.
  * Of course, {@code BeanFactory}'s methods do allow access to such special beans too.
  * In typical scenarios, all beans will be defined by bean definitions anyway.

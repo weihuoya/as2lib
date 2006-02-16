@@ -27,8 +27,6 @@ import org.as2lib.bean.factory.BeanNotOfRequiredTypeException;
 import org.as2lib.bean.factory.config.BeanDefinition;
 import org.as2lib.bean.factory.config.BeanDefinitionHolder;
 import org.as2lib.bean.factory.config.BeanPostProcessor;
-import org.as2lib.bean.factory.config.ConfigurableBeanFactory;
-import org.as2lib.bean.factory.config.ConfigurableHierarchicalBeanFactory;
 import org.as2lib.bean.factory.config.ConfigurableListableBeanFactory;
 import org.as2lib.bean.factory.config.ConstructorArgumentValue;
 import org.as2lib.bean.factory.config.ConstructorArgumentValues;
@@ -75,7 +73,7 @@ import org.as2lib.util.MethodUtil;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFactory implements ConfigurableBeanFactory, ConfigurableListableBeanFactory, ConfigurableHierarchicalBeanFactory, BeanDefinitionRegistry {
+class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFactory implements ConfigurableListableBeanFactory, BeanDefinitionRegistry {
 	
 	//---------------------------------------------------------------------
 	// Instance data
@@ -1255,20 +1253,16 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		propertyValueConverters.put(requiredType, propertyValueConverter);
 	}
 	
+	public function setParentBeanFactory(parentBeanFactory:BeanFactory):Void {
+		this.parentBeanFactory = parentBeanFactory;
+	}
+	
 	//---------------------------------------------------------------------
 	// Implementation of HierarchicalBeanFactory interface
 	//---------------------------------------------------------------------
 	
 	public function getParentBeanFactory(Void):BeanFactory {
 		return parentBeanFactory;
-	}
-	
-	//---------------------------------------------------------------------
-	// Implementation of ConfigurableHierarchicalBeanFactory interface
-	//---------------------------------------------------------------------
-	
-	public function setParentBeanFactory(parentBeanFactory:BeanFactory):Void {
-		this.parentBeanFactory = parentBeanFactory;
 	}
 	
 	//---------------------------------------------------------------------
