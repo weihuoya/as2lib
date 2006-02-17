@@ -42,9 +42,12 @@ import org.as2lib.bean.factory.NoSuchBeanDefinitionException;
 import org.as2lib.bean.factory.support.AbstractBeanFactory;
 import org.as2lib.bean.factory.support.BeanDefinitionRegistry;
 import org.as2lib.bean.factory.support.ChildBeanDefinition;
+import org.as2lib.bean.factory.support.LookupOverride;
 import org.as2lib.bean.factory.support.ManagedArray;
 import org.as2lib.bean.factory.support.ManagedList;
 import org.as2lib.bean.factory.support.ManagedMap;
+import org.as2lib.bean.factory.support.MethodReplacer;
+import org.as2lib.bean.factory.support.ReplaceOverride;
 import org.as2lib.bean.factory.support.RootBeanDefinition;
 import org.as2lib.bean.PropertyValue;
 import org.as2lib.bean.PropertyValueConverter;
@@ -395,10 +398,42 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		var constructorArguments:Array = resolveConstructorArguments(mergedBeanDefinition.getConstructorArgumentValues());
 		try {
 			beanClass.apply(bean, constructorArguments);
-		} catch (exception) {
+		}
+		catch (exception) {
 			throw (new BeanDefinitionStoreException(beanName, "Could not instantiate class [" + ReflectUtil.getTypeNameForType(beanClass) + "]: Constructor threw an exception.", this, arguments)).initCause(exception);
 		}
+		applyMethodOverrides(beanName, bean, mergedBeanDefinition);
 		return bean;
+	}
+	
+	/**
+	 * Applies the method overrides of the given bean definition to the given bean.
+	 * 
+	 * @param beanName the name of the bean
+	 * @param bean the bean to apply method overrides to
+	 * @param mergedBeanDefinition the bean definition of the bean
+	 */
+	private function applyMethodOverrides(beanName:String, bean, mergedBeanDefinition:RootBeanDefinition):Void {
+		var overrides:Array = mergedBeanDefinition.getMethodOverrides().getOverrides();
+		for (var i:Number = 0; i < overrides.length; i++) {
+			var owner:BeanFactory = this;
+			if (overrides[i] instanceof LookupOverride) {
+				var lo:LookupOverride = overrides[i];
+				var bn:String = lo.getBeanName();
+				bean[lo.getMethodName()] = function() {
+					return owner.getBeanByName(bn);
+				};
+			}
+			else if (overrides[i] instanceof ReplaceOverride) {
+				var ro:ReplaceOverride = overrides[i];
+				var bn:String = ro.getMethodReplacerBeanName();
+				var mn:String = ro.getMethodName();
+				bean[mn] = function() {
+					var mr:MethodReplacer = owner.getBeanByNameAndType(bn, MethodReplacer);
+					return mr.reimplement(this, mn, arguments);
+				};
+			}
+		}
 	}
 	
 	/**
