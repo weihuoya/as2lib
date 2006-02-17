@@ -34,10 +34,10 @@ class org.as2lib.bean.AbstractBeanWrapper extends BasicClass {
 	public static var PROPERTY_KEY_SUFFIX:String = "]";
 	
 	/** Prefixes for property getter methods. */
-	public static var GET_PROPERTY_PREFIXES:Array = ["get", "is"];
+	public static var GET_PROPERTY_PREFIXES:Array = ["get", "is", "__get__"];
 	
 	/** Prefixes for property setter methods. */
-	public static var SET_PROPERTY_PREFIXES:Array = ["set", "add", "put"];
+	public static var SET_PROPERTY_PREFIXES:Array = ["set", "add", "put", "init", "initWith", "__set__"];
 	
 	/** Placeholder to indicate that value shall be converted to a package. */
 	public static var PACKAGE_TYPE:Function = new Function(); // 'function() {}' is not Flash compatible
