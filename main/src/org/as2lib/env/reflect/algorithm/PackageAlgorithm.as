@@ -95,7 +95,7 @@ class org.as2lib.env.reflect.algorithm.PackageAlgorithm extends BasicClass {
 	 *   <dt>name</dt>
 	 *   <dd>The name as {@code String} of the searched for package.</dd>
 	 *   <dt>parent</dt>
-	 *   <dd>The parent represented by a {@ling PackageInfo} instance the searched for
+	 *   <dd>The parent represented by a {@link PackageInfo} instance the searched for
 	 *       package is a member of.</dd>
 	 * </dl>
 	 *

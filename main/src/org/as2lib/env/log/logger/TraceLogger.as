@@ -58,7 +58,7 @@ import org.as2lib.env.log.logger.AbstractLogger;
  *   }
  * </code>
  * 
- * <p>This logger cannot be used with the {@ling LoggerHierarchy} because it does
+ * <p>This logger cannot be used with the {@link LoggerHierarchy} because it does
  * not offer hierarchy support. If you want to use your logger in a hierarchy use
  * the {@link SimpleHierarchicalLogger} instead.
  *
