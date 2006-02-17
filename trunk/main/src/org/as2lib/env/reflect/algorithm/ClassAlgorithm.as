@@ -199,7 +199,7 @@ class org.as2lib.env.reflect.algorithm.ClassAlgorithm extends BasicClass {
 	 *   <dt>name</dt>
 	 *   <dd>The name as {@code String} of the searched for class.</dd>
 	 *   <dt>package</dt>
-	 *   <dd>The package represented by a {@ling PackageInfo} instance the class is
+	 *   <dd>The package represented by a {@link PackageInfo} instance the class is
 	 *       a member of.</dd>
 	 * </dl>
 	 *
