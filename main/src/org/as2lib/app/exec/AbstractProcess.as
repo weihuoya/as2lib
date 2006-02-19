@@ -289,7 +289,7 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 			// removes current as listener
 			process.removeListener(this);
 			// Remove the process and executes the registered callback.
-			subProcesses.remove(process).execute();
+			subProcesses.remove(process).execute(process);
 			// Resume exeuction
 			resume();
 		}
