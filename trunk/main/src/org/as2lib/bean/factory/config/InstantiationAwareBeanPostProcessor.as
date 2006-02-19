@@ -58,7 +58,7 @@ interface org.as2lib.bean.factory.config.InstantiationAwareBeanPostProcessor ext
 	 * should be skipped. Normal implementations should return true. Returning false will
 	 * also prevent any subsequent InstantiationAwareBeanPostProcessor instances
 	 * being invoked on this bean instance.
-	 * @throws BeansException in the case of errors
+	 * @throws BeanException in the case of errors
 	 */
 	public function postProcessAfterInstantiation(bean, beanName:String):Boolean;
 	

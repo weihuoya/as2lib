@@ -149,7 +149,7 @@ interface org.as2lib.io.file.FileLoader extends EventListenerSource {
 	/**
 	 * Returns the percentage of the execution of {@code null} if its not evaluable.
 	 * 
-	 * @returns the percentage of the execution or {@code null} if its not evaluable
+	 * @return the percentage of the execution or {@code null} if its not evaluable
 	 */
 	public function getPercentage(Void):Number;
 	

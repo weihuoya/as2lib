@@ -395,7 +395,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * context-specific refresh work. Called on initialization of special beans, before
 	 * instantiation of singletons.
 	 * 
-	 * @throws BeansException in case of errors during refresh
+	 * @throws BeanException in case of errors during refresh
 	 * @see #refresh
 	 */
 	private function onRefresh(Void):Void {

@@ -139,7 +139,7 @@ class org.as2lib.env.log.LogMessage extends BasicClass {
 	 * Returns the number of milliseconds elapsed from 1/1/1970 until message was
 	 * created.
 	 *
-	 * @returns the number of milliseconds elapsed from 1/1/1970 until message was
+	 * @return the number of milliseconds elapsed from 1/1/1970 until message was
 	 * created.
 	 */
 	public function getTimeStamp(Void):Number {

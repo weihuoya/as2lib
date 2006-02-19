@@ -298,7 +298,7 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	/**
 	 * Getter for the current percentage of execution.
 	 * 
-	 * @returns Amount of solved execution in percent.
+	 * @return Amount of solved execution in percent.
 	 */
     public function getPercentage(Void):Number {
 		return percent;

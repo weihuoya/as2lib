@@ -46,7 +46,7 @@ import org.as2lib.env.event.distributor.ConsumableEventDistributorControl;
  * because the event is consumed.
  * 
  * @author Simon Wacker
- * @authro Martin Heidegger
+ * @author Martin Heidegger
  */
 class org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControl extends AbstractEventDistributorControl implements ConsumableEventDistributorControl {
 	
