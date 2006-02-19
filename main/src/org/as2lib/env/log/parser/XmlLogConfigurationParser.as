@@ -486,7 +486,8 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 	}
 	
 	/**
-	 * Extracts nodes with the given {@code nodeName} from the given {@codes} array.
+	 * Extracts nodes with the given {@code nodeName} from the given {@code nodes}
+	 * array.
 	 * 
 	 * @param nodes the nodes to extract from
 	 * @return the extracted and parsed nodes

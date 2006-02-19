@@ -90,7 +90,7 @@ class org.as2lib.context.support.AbstractRefreshableApplicationContext extends A
 	 * Loads bean definitions into the given bean factory.
 	 * 
 	 * @param beanFactory the bean factory to load bean definitions into
-	 * @throws BeansException if parsing of the bean definitions failed
+	 * @throws BeanException if parsing of the bean definitions failed
 	 */
 	private function loadBeanDefinitions(beanFactory:ConfigurableListableBeanFactory):Void {
 		throw new AbstractOperationException("This method is marked as abstract and must be overridden by sub-classes.", this, arguments);

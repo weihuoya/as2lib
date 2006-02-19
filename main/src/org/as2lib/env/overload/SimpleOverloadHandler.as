@@ -244,7 +244,7 @@ class org.as2lib.env.overload.SimpleOverloadHandler extends BasicClass implement
 	 * <p>The string representation is composed as follows:
 	 * <pre>[object SimpleOverloadHandler(firstArgumentType, ..)]</pre>
 	 * 
-	 * @returns the string representation of this overload handler
+	 * @return the string representation of this overload handler
 	 */
 	public function toString():String {
 		var result:String = "[object SimpleOverloadHandler";

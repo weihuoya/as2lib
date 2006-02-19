@@ -97,7 +97,7 @@ class org.as2lib.bean.factory.support.MethodOverrides extends BasicClass {
 	/**
 	 * Returns all added method overrides.
 	 * 
-	 * @return an array of {@ink MethodOverride} instances
+	 * @return an array of {@link MethodOverride} instances
 	 */
 	public function getOverrides(Void):Array {
 		return overrides;

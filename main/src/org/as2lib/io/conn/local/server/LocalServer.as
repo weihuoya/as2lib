@@ -219,7 +219,7 @@ class org.as2lib.io.conn.local.server.LocalServer extends BasicClass implements 
 	 * Returns whether this server is running.
 	 *
 	 * <p>This server is by default not running. It runs as soon as you call the
-	 * {@link #run} method. And stops when you call the {@ink #stop} method.
+	 * {@link #run} method. And stops when you call the {@link #stop} method.
 	 * 
 	 * @return {@code true} if this server is running else {@code false}
 	 */

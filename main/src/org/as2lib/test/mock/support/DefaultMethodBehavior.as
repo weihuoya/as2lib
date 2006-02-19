@@ -200,7 +200,7 @@ class org.as2lib.test.mock.support.DefaultMethodBehavior extends BasicClass impl
 	 * Responses depending on the current number of actual method calls.
 	 *
 	 * @return the response's return value
-	 * @throw the response's throwable
+	 * @throws the response's throwable
 	 */
 	public function response(Void) {
 		return MethodResponse(methodResponses[getCurrentMethodResponseIndex()]).response();

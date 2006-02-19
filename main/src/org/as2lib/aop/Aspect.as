@@ -31,7 +31,7 @@ interface org.as2lib.aop.Aspect extends BasicInterface {
 	 * Returns the advices that were added externally or internally to this aspect.
 	 * These advices will be used for the weaving process.
 	 * 
-	 * @returns the advices used by the weaver
+	 * @return the advices used by the weaver
 	 */
 	public function getAdvices(Void):Array;
 	
