@@ -184,7 +184,7 @@ class org.as2lib.io.conn.local.client.LocalClientServiceProxy extends AbstractCl
 			callback.onReturn(new MethodInvocationReturnInfo(owner, methodName, args, returnValue));
 			this.close();
 		};
-		responseService["onError"] = function(errorCode:Number, exception):Void {
+		responseService["onError"] = function(errorCode:String, exception):Void {
 			// "owner.responseServices" is not MTASC compatible because "responseServices" is private
 			owner["responseServices"].splice(index, 1);
 			callback.onError(new MethodInvocationErrorInfo(owner, methodName, args, errorCode, null, exception));
