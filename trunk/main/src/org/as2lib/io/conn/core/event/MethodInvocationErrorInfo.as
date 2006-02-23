@@ -55,8 +55,8 @@ class org.as2lib.io.conn.core.event.MethodInvocationErrorInfo extends BasicClass
 	/** The arguments used for the invocation. */
 	private var methodArguments:Array;
 	
-	/** A number indicating the type of the error. */
-	private var errorCode:Number;
+	/** The error code describing the type of error. */
+	private var errorCode:String;
 	
 	/** The error message describing the error. */
 	private var errorMessage:String;
@@ -126,7 +126,7 @@ class org.as2lib.io.conn.core.event.MethodInvocationErrorInfo extends BasicClass
 	/**
 	 * Returns the error code that describes the type of this error.
 	 *
-	 * <p>The error code matches one of the declared error constants.
+	 * <p>The error code may match one of the declared error constants.
 	 * 
 	 * @return the error code that describes the type of this error
 	 */
