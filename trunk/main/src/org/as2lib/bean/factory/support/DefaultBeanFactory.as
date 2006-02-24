@@ -494,7 +494,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		for (var i:Number = 0; i < avs.length; i++) {
 			var argument:ConstructorArgumentValue = avs[i];
 			var value = resolveValue("constructor argument with index " + i, argument.getValue());
-			value = beanWrapper.convertPropertyValue("constructor-arg", argument.getType(), argument.getValue());
+			value = beanWrapper.convertPropertyValue("constructor-arg", value, argument.getType());
 			result.push(value);
 		}
 		return result;
