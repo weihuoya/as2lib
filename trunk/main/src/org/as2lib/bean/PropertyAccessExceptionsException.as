@@ -17,7 +17,7 @@
 import org.as2lib.bean.BeanException;
 import org.as2lib.bean.BeanWrapper;
 import org.as2lib.bean.PropertyAccessException;
-import org.as2lib.env.reflect.ReflectUtil;
+import org.as2lib.util.StringUtil;
 
 /**
  * {@code PropertyAccessExceptionsException} is a combined exception, composed of
@@ -105,18 +105,22 @@ class org.as2lib.bean.PropertyAccessExceptionsException extends BeanException {
 	}
 	
 	public function getMessage(Void):String {
-		var result:String = "PropertyAccessExceptionsException (" + getExceptionCount() + " errors)";
-		result += "; nested propertyAccessExceptions are: ";
+		var result:String = "PropertyAccessExceptionsException (" + getExceptionCount() + " error(s))";
+		result += ": Nested property access exceptions are: \n";
 		for (var i:Number = 0; i < propertyAccessExceptions.length; i++) {
 			var pae:PropertyAccessException = this.propertyAccessExceptions[i];
-			result += "[";
+			result += StringUtil.addSpaceIndent(pae.toString(), 2);
+			if (i < propertyAccessExceptions.length - 1) {
+				result += "\n";
+			}
+			/*result += "[";
 			result += ReflectUtil.getTypeNameForInstance(pae);
 			result += ": ";
 			result += pae.getMessage();
 			result += "]";
 			if (i < propertyAccessExceptions.length - 1) {
 				result += ", ";
-			}
+			}*/
 		}
 		return result;
 	}
