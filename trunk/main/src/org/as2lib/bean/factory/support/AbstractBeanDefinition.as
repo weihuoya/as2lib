@@ -214,7 +214,7 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	
 	public function getBeanClass(Void):Function {
 		if (!hasBeanClass()) {
-			throw new IllegalStateException("Bean definition does not carry a bean class.", this, arguments);
+			throw new IllegalStateException("Bean definition [" + toString() + "] does not carry a bean class.", this, arguments);
 		}
 		if (beanClassName != null) {
 			// Updates the bean class if it has changed. This may happen when AOP is used.
