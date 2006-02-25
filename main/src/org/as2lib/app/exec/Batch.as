@@ -56,4 +56,16 @@ interface org.as2lib.app.exec.Batch extends Process {
      * @return currently executing {@code Process}
      */
     public function getCurrentProcess(Void):Process;	
+    
+    /**
+	 * Adds a {@link Process} to the list of processes to execute.
+	 * 
+	 * <p>Its possible to at the same process more than one times. It will be
+	 * executed as often as you add it.
+	 * 
+	 * @param process {@code Process} to be added
+	 * @return internal identifier of the process
+	 */
+	public function addProcess(process:Process):Number;
+    
 }
