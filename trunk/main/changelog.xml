@@ -7,6 +7,9 @@
 		<year value="2006">
 			<month value="2">
 				<day value="25">
+					<entry type="add" package="org.as2lib.bean.factory.config" class="VariableRetrievingFactoryBean">Gets a variable from a bean; mostly used to get constants.</entry>
+					<entry type="add" package="org.as2lib.bean.factory.config" class="PropertyPathFactoryBean">Gets a property from a bean given a bean and a property path.</entry>
+					<entry type="add" package="org.as2lib.bean.factory.config" class="MethodInvokingFactoryBean">Invokes a method given a target bean and a method name.</entry>
 					<entry type="add" package="org.as2lib.io.file" class="FileLoaderProcess">Added flag to specify whether error shall be ignored or not.</entry>
 					<entry type="add" package="org.as2lib.env.reflect" class="DelegateFactoryBean">Creates delegates given a target bean and method name.</entry>
 					<entry type="add" package="org.as2lib.env.log.parser" class="LogConfigurationProcess">Loads and parses a log configuration.</entry>
