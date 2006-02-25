@@ -51,7 +51,7 @@ import org.as2lib.lang.MessageFormat;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.context.support.AbstractMessageSource extends BasicClass {
+class org.as2lib.context.support.AbstractMessageSource extends BasicClass implements MessageSource {
 	
 	/** The parent of this message source. */
 	private var parentMessageSource:MessageSource;
@@ -63,9 +63,9 @@ class org.as2lib.context.support.AbstractMessageSource extends BasicClass {
 	private var alwaysUseMessageFormat:Boolean;
 	
 	/**
-	 * Cache to hold already generated MessageFormats per message.
-	 * Used for passed-in default messages. MessageFormats for resolved
-	 * codes are cached on a specific basis in subclasses.
+	 * Cache to hold already generated {@link MessageFormat} instances per message.
+	 * Used for passed-in default messages. Message formats for resolved codes are
+	 * cached on a specific basis in subclasses.
 	 */
 	private var cachedMessageFormats:Map;
 	
@@ -165,6 +165,7 @@ class org.as2lib.context.support.AbstractMessageSource extends BasicClass {
 		var o:Overload = new Overload(this);
 		o.addHandler([MessageSourceResolvable], thiz.getMessageByResolvable);
 		o.addHandler([MessageSourceResolvable, Locale], thiz.getMessageByResolvable);
+		o.addHandler([String], thiz.getMessageByCodeAndArguments);
 		o.addHandler([String, Array], thiz.getMessageByCodeAndArguments);
 		o.addHandler([String, Array, Locale], thiz.getMessageByCodeAndArguments);
 		o.addHandler([String, Array, String], thiz.getMessageWithDefaultMessage);
