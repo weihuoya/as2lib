@@ -7,6 +7,7 @@
 		<year value="2006">
 			<month value="2">
 				<day value="25">
+					<entry type="add" package="org.as2lib.io.file" class="FileLoaderProcess">Added flag to specify whether error shall be ignored or not.</entry>
 					<entry type="add" package="org.as2lib.env.reflect" class="DelegateFactoryBean">Creates delegates given a target bean and method name.</entry>
 					<entry type="add" package="org.as2lib.env.log.parser" class="LogConfigurationProcess">Loads and parses a log configuration.</entry>
 				</day>
